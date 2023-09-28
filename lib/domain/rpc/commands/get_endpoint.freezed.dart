@@ -37,28 +37,28 @@ class _$RPCGetEndpointCommandDataCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_RPCGetEndpointCommandDataCopyWith<$Res> {
-  factory _$$_RPCGetEndpointCommandDataCopyWith(
-          _$_RPCGetEndpointCommandData value,
-          $Res Function(_$_RPCGetEndpointCommandData) then) =
-      __$$_RPCGetEndpointCommandDataCopyWithImpl<$Res>;
+abstract class _$$RPCGetEndpointCommandDataImplCopyWith<$Res> {
+  factory _$$RPCGetEndpointCommandDataImplCopyWith(
+          _$RPCGetEndpointCommandDataImpl value,
+          $Res Function(_$RPCGetEndpointCommandDataImpl) then) =
+      __$$RPCGetEndpointCommandDataImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_RPCGetEndpointCommandDataCopyWithImpl<$Res>
+class __$$RPCGetEndpointCommandDataImplCopyWithImpl<$Res>
     extends _$RPCGetEndpointCommandDataCopyWithImpl<$Res,
-        _$_RPCGetEndpointCommandData>
-    implements _$$_RPCGetEndpointCommandDataCopyWith<$Res> {
-  __$$_RPCGetEndpointCommandDataCopyWithImpl(
-      _$_RPCGetEndpointCommandData _value,
-      $Res Function(_$_RPCGetEndpointCommandData) _then)
+        _$RPCGetEndpointCommandDataImpl>
+    implements _$$RPCGetEndpointCommandDataImplCopyWith<$Res> {
+  __$$RPCGetEndpointCommandDataImplCopyWithImpl(
+      _$RPCGetEndpointCommandDataImpl _value,
+      $Res Function(_$RPCGetEndpointCommandDataImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_RPCGetEndpointCommandData extends _RPCGetEndpointCommandData {
-  const _$_RPCGetEndpointCommandData() : super._();
+class _$RPCGetEndpointCommandDataImpl extends _RPCGetEndpointCommandData {
+  const _$RPCGetEndpointCommandDataImpl() : super._();
 
   @override
   String toString() {
@@ -69,7 +69,7 @@ class _$_RPCGetEndpointCommandData extends _RPCGetEndpointCommandData {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RPCGetEndpointCommandData);
+            other is _$RPCGetEndpointCommandDataImpl);
   }
 
   @override
@@ -77,7 +77,7 @@ class _$_RPCGetEndpointCommandData extends _RPCGetEndpointCommandData {
 }
 
 abstract class _RPCGetEndpointCommandData extends RPCGetEndpointCommandData {
-  const factory _RPCGetEndpointCommandData() = _$_RPCGetEndpointCommandData;
+  const factory _RPCGetEndpointCommandData() = _$RPCGetEndpointCommandDataImpl;
   const _RPCGetEndpointCommandData._() : super._();
 }
 
@@ -125,24 +125,25 @@ class _$RPCGetEndpointResultDataCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_RPCGetEndpointResultDataCopyWith<$Res>
+abstract class _$$RPCGetEndpointResultDataImplCopyWith<$Res>
     implements $RPCGetEndpointResultDataCopyWith<$Res> {
-  factory _$$_RPCGetEndpointResultDataCopyWith(
-          _$_RPCGetEndpointResultData value,
-          $Res Function(_$_RPCGetEndpointResultData) then) =
-      __$$_RPCGetEndpointResultDataCopyWithImpl<$Res>;
+  factory _$$RPCGetEndpointResultDataImplCopyWith(
+          _$RPCGetEndpointResultDataImpl value,
+          $Res Function(_$RPCGetEndpointResultDataImpl) then) =
+      __$$RPCGetEndpointResultDataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String endpoint});
 }
 
 /// @nodoc
-class __$$_RPCGetEndpointResultDataCopyWithImpl<$Res>
+class __$$RPCGetEndpointResultDataImplCopyWithImpl<$Res>
     extends _$RPCGetEndpointResultDataCopyWithImpl<$Res,
-        _$_RPCGetEndpointResultData>
-    implements _$$_RPCGetEndpointResultDataCopyWith<$Res> {
-  __$$_RPCGetEndpointResultDataCopyWithImpl(_$_RPCGetEndpointResultData _value,
-      $Res Function(_$_RPCGetEndpointResultData) _then)
+        _$RPCGetEndpointResultDataImpl>
+    implements _$$RPCGetEndpointResultDataImplCopyWith<$Res> {
+  __$$RPCGetEndpointResultDataImplCopyWithImpl(
+      _$RPCGetEndpointResultDataImpl _value,
+      $Res Function(_$RPCGetEndpointResultDataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -150,7 +151,7 @@ class __$$_RPCGetEndpointResultDataCopyWithImpl<$Res>
   $Res call({
     Object? endpoint = null,
   }) {
-    return _then(_$_RPCGetEndpointResultData(
+    return _then(_$RPCGetEndpointResultDataImpl(
       endpoint: null == endpoint
           ? _value.endpoint
           : endpoint // ignore: cast_nullable_to_non_nullable
@@ -161,8 +162,8 @@ class __$$_RPCGetEndpointResultDataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RPCGetEndpointResultData extends _RPCGetEndpointResultData {
-  const _$_RPCGetEndpointResultData({required this.endpoint}) : super._();
+class _$RPCGetEndpointResultDataImpl extends _RPCGetEndpointResultData {
+  const _$RPCGetEndpointResultDataImpl({required this.endpoint}) : super._();
 
   @override
   final String endpoint;
@@ -176,7 +177,7 @@ class _$_RPCGetEndpointResultData extends _RPCGetEndpointResultData {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RPCGetEndpointResultData &&
+            other is _$RPCGetEndpointResultDataImpl &&
             (identical(other.endpoint, endpoint) ||
                 other.endpoint == endpoint));
   }
@@ -187,20 +188,20 @@ class _$_RPCGetEndpointResultData extends _RPCGetEndpointResultData {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RPCGetEndpointResultDataCopyWith<_$_RPCGetEndpointResultData>
-      get copyWith => __$$_RPCGetEndpointResultDataCopyWithImpl<
-          _$_RPCGetEndpointResultData>(this, _$identity);
+  _$$RPCGetEndpointResultDataImplCopyWith<_$RPCGetEndpointResultDataImpl>
+      get copyWith => __$$RPCGetEndpointResultDataImplCopyWithImpl<
+          _$RPCGetEndpointResultDataImpl>(this, _$identity);
 }
 
 abstract class _RPCGetEndpointResultData extends RPCGetEndpointResultData {
   const factory _RPCGetEndpointResultData({required final String endpoint}) =
-      _$_RPCGetEndpointResultData;
+      _$RPCGetEndpointResultDataImpl;
   const _RPCGetEndpointResultData._() : super._();
 
   @override
   String get endpoint;
   @override
   @JsonKey(ignore: true)
-  _$$_RPCGetEndpointResultDataCopyWith<_$_RPCGetEndpointResultData>
+  _$$RPCGetEndpointResultDataImplCopyWith<_$RPCGetEndpointResultDataImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

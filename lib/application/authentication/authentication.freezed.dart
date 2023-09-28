@@ -66,25 +66,25 @@ class _$PasswordAuthenticationStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_PasswordAuthenticationStateCopyWith<$Res>
+abstract class _$$PasswordAuthenticationStateImplCopyWith<$Res>
     implements $PasswordAuthenticationStateCopyWith<$Res> {
-  factory _$$_PasswordAuthenticationStateCopyWith(
-          _$_PasswordAuthenticationState value,
-          $Res Function(_$_PasswordAuthenticationState) then) =
-      __$$_PasswordAuthenticationStateCopyWithImpl<$Res>;
+  factory _$$PasswordAuthenticationStateImplCopyWith(
+          _$PasswordAuthenticationStateImpl value,
+          $Res Function(_$PasswordAuthenticationStateImpl) then) =
+      __$$PasswordAuthenticationStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int failedAttemptsCount, int maxAttemptsCount});
 }
 
 /// @nodoc
-class __$$_PasswordAuthenticationStateCopyWithImpl<$Res>
+class __$$PasswordAuthenticationStateImplCopyWithImpl<$Res>
     extends _$PasswordAuthenticationStateCopyWithImpl<$Res,
-        _$_PasswordAuthenticationState>
-    implements _$$_PasswordAuthenticationStateCopyWith<$Res> {
-  __$$_PasswordAuthenticationStateCopyWithImpl(
-      _$_PasswordAuthenticationState _value,
-      $Res Function(_$_PasswordAuthenticationState) _then)
+        _$PasswordAuthenticationStateImpl>
+    implements _$$PasswordAuthenticationStateImplCopyWith<$Res> {
+  __$$PasswordAuthenticationStateImplCopyWithImpl(
+      _$PasswordAuthenticationStateImpl _value,
+      $Res Function(_$PasswordAuthenticationStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -93,7 +93,7 @@ class __$$_PasswordAuthenticationStateCopyWithImpl<$Res>
     Object? failedAttemptsCount = null,
     Object? maxAttemptsCount = null,
   }) {
-    return _then(_$_PasswordAuthenticationState(
+    return _then(_$PasswordAuthenticationStateImpl(
       failedAttemptsCount: null == failedAttemptsCount
           ? _value.failedAttemptsCount
           : failedAttemptsCount // ignore: cast_nullable_to_non_nullable
@@ -108,8 +108,8 @@ class __$$_PasswordAuthenticationStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_PasswordAuthenticationState extends _PasswordAuthenticationState {
-  const _$_PasswordAuthenticationState(
+class _$PasswordAuthenticationStateImpl extends _PasswordAuthenticationState {
+  const _$PasswordAuthenticationStateImpl(
       {required this.failedAttemptsCount, required this.maxAttemptsCount})
       : super._();
 
@@ -127,7 +127,7 @@ class _$_PasswordAuthenticationState extends _PasswordAuthenticationState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PasswordAuthenticationState &&
+            other is _$PasswordAuthenticationStateImpl &&
             (identical(other.failedAttemptsCount, failedAttemptsCount) ||
                 other.failedAttemptsCount == failedAttemptsCount) &&
             (identical(other.maxAttemptsCount, maxAttemptsCount) ||
@@ -141,16 +141,16 @@ class _$_PasswordAuthenticationState extends _PasswordAuthenticationState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PasswordAuthenticationStateCopyWith<_$_PasswordAuthenticationState>
-      get copyWith => __$$_PasswordAuthenticationStateCopyWithImpl<
-          _$_PasswordAuthenticationState>(this, _$identity);
+  _$$PasswordAuthenticationStateImplCopyWith<_$PasswordAuthenticationStateImpl>
+      get copyWith => __$$PasswordAuthenticationStateImplCopyWithImpl<
+          _$PasswordAuthenticationStateImpl>(this, _$identity);
 }
 
 abstract class _PasswordAuthenticationState
     extends PasswordAuthenticationState {
   const factory _PasswordAuthenticationState(
       {required final int failedAttemptsCount,
-      required final int maxAttemptsCount}) = _$_PasswordAuthenticationState;
+      required final int maxAttemptsCount}) = _$PasswordAuthenticationStateImpl;
   const _PasswordAuthenticationState._() : super._();
 
   @override
@@ -159,7 +159,7 @@ abstract class _PasswordAuthenticationState
   int get maxAttemptsCount;
   @override
   @JsonKey(ignore: true)
-  _$$_PasswordAuthenticationStateCopyWith<_$_PasswordAuthenticationState>
+  _$$PasswordAuthenticationStateImplCopyWith<_$PasswordAuthenticationStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -213,23 +213,25 @@ class _$PinAuthenticationStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_PinAuthenticationStateCopyWith<$Res>
+abstract class _$$PinAuthenticationStateImplCopyWith<$Res>
     implements $PinAuthenticationStateCopyWith<$Res> {
-  factory _$$_PinAuthenticationStateCopyWith(_$_PinAuthenticationState value,
-          $Res Function(_$_PinAuthenticationState) then) =
-      __$$_PinAuthenticationStateCopyWithImpl<$Res>;
+  factory _$$PinAuthenticationStateImplCopyWith(
+          _$PinAuthenticationStateImpl value,
+          $Res Function(_$PinAuthenticationStateImpl) then) =
+      __$$PinAuthenticationStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int failedAttemptsCount, int maxAttemptsCount});
 }
 
 /// @nodoc
-class __$$_PinAuthenticationStateCopyWithImpl<$Res>
+class __$$PinAuthenticationStateImplCopyWithImpl<$Res>
     extends _$PinAuthenticationStateCopyWithImpl<$Res,
-        _$_PinAuthenticationState>
-    implements _$$_PinAuthenticationStateCopyWith<$Res> {
-  __$$_PinAuthenticationStateCopyWithImpl(_$_PinAuthenticationState _value,
-      $Res Function(_$_PinAuthenticationState) _then)
+        _$PinAuthenticationStateImpl>
+    implements _$$PinAuthenticationStateImplCopyWith<$Res> {
+  __$$PinAuthenticationStateImplCopyWithImpl(
+      _$PinAuthenticationStateImpl _value,
+      $Res Function(_$PinAuthenticationStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -238,7 +240,7 @@ class __$$_PinAuthenticationStateCopyWithImpl<$Res>
     Object? failedAttemptsCount = null,
     Object? maxAttemptsCount = null,
   }) {
-    return _then(_$_PinAuthenticationState(
+    return _then(_$PinAuthenticationStateImpl(
       failedAttemptsCount: null == failedAttemptsCount
           ? _value.failedAttemptsCount
           : failedAttemptsCount // ignore: cast_nullable_to_non_nullable
@@ -253,8 +255,8 @@ class __$$_PinAuthenticationStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_PinAuthenticationState extends _PinAuthenticationState {
-  const _$_PinAuthenticationState(
+class _$PinAuthenticationStateImpl extends _PinAuthenticationState {
+  const _$PinAuthenticationStateImpl(
       {required this.failedAttemptsCount, required this.maxAttemptsCount})
       : super._();
 
@@ -272,7 +274,7 @@ class _$_PinAuthenticationState extends _PinAuthenticationState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PinAuthenticationState &&
+            other is _$PinAuthenticationStateImpl &&
             (identical(other.failedAttemptsCount, failedAttemptsCount) ||
                 other.failedAttemptsCount == failedAttemptsCount) &&
             (identical(other.maxAttemptsCount, maxAttemptsCount) ||
@@ -286,15 +288,15 @@ class _$_PinAuthenticationState extends _PinAuthenticationState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PinAuthenticationStateCopyWith<_$_PinAuthenticationState> get copyWith =>
-      __$$_PinAuthenticationStateCopyWithImpl<_$_PinAuthenticationState>(
-          this, _$identity);
+  _$$PinAuthenticationStateImplCopyWith<_$PinAuthenticationStateImpl>
+      get copyWith => __$$PinAuthenticationStateImplCopyWithImpl<
+          _$PinAuthenticationStateImpl>(this, _$identity);
 }
 
 abstract class _PinAuthenticationState extends PinAuthenticationState {
   const factory _PinAuthenticationState(
       {required final int failedAttemptsCount,
-      required final int maxAttemptsCount}) = _$_PinAuthenticationState;
+      required final int maxAttemptsCount}) = _$PinAuthenticationStateImpl;
   const _PinAuthenticationState._() : super._();
 
   @override
@@ -303,8 +305,8 @@ abstract class _PinAuthenticationState extends PinAuthenticationState {
   int get maxAttemptsCount;
   @override
   @JsonKey(ignore: true)
-  _$$_PinAuthenticationStateCopyWith<_$_PinAuthenticationState> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$PinAuthenticationStateImplCopyWith<_$PinAuthenticationStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -351,22 +353,22 @@ class _$StartupAuthentStateCopyWithImpl<$Res, $Val extends StartupAuthentState>
 }
 
 /// @nodoc
-abstract class _$$_StartupAuthentStateCopyWith<$Res>
+abstract class _$$StartupAuthentStateImplCopyWith<$Res>
     implements $StartupAuthentStateCopyWith<$Res> {
-  factory _$$_StartupAuthentStateCopyWith(_$_StartupAuthentState value,
-          $Res Function(_$_StartupAuthentState) then) =
-      __$$_StartupAuthentStateCopyWithImpl<$Res>;
+  factory _$$StartupAuthentStateImplCopyWith(_$StartupAuthentStateImpl value,
+          $Res Function(_$StartupAuthentStateImpl) then) =
+      __$$StartupAuthentStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({DateTime? lockDate});
 }
 
 /// @nodoc
-class __$$_StartupAuthentStateCopyWithImpl<$Res>
-    extends _$StartupAuthentStateCopyWithImpl<$Res, _$_StartupAuthentState>
-    implements _$$_StartupAuthentStateCopyWith<$Res> {
-  __$$_StartupAuthentStateCopyWithImpl(_$_StartupAuthentState _value,
-      $Res Function(_$_StartupAuthentState) _then)
+class __$$StartupAuthentStateImplCopyWithImpl<$Res>
+    extends _$StartupAuthentStateCopyWithImpl<$Res, _$StartupAuthentStateImpl>
+    implements _$$StartupAuthentStateImplCopyWith<$Res> {
+  __$$StartupAuthentStateImplCopyWithImpl(_$StartupAuthentStateImpl _value,
+      $Res Function(_$StartupAuthentStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -374,7 +376,7 @@ class __$$_StartupAuthentStateCopyWithImpl<$Res>
   $Res call({
     Object? lockDate = freezed,
   }) {
-    return _then(_$_StartupAuthentState(
+    return _then(_$StartupAuthentStateImpl(
       lockDate: freezed == lockDate
           ? _value.lockDate
           : lockDate // ignore: cast_nullable_to_non_nullable
@@ -385,8 +387,8 @@ class __$$_StartupAuthentStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_StartupAuthentState extends _StartupAuthentState {
-  const _$_StartupAuthentState({this.lockDate}) : super._();
+class _$StartupAuthentStateImpl extends _StartupAuthentState {
+  const _$StartupAuthentStateImpl({this.lockDate}) : super._();
 
   /// After that date, application should lock when displayed
   @override
@@ -401,7 +403,7 @@ class _$_StartupAuthentState extends _StartupAuthentState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_StartupAuthentState &&
+            other is _$StartupAuthentStateImpl &&
             (identical(other.lockDate, lockDate) ||
                 other.lockDate == lockDate));
   }
@@ -412,14 +414,14 @@ class _$_StartupAuthentState extends _StartupAuthentState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_StartupAuthentStateCopyWith<_$_StartupAuthentState> get copyWith =>
-      __$$_StartupAuthentStateCopyWithImpl<_$_StartupAuthentState>(
+  _$$StartupAuthentStateImplCopyWith<_$StartupAuthentStateImpl> get copyWith =>
+      __$$StartupAuthentStateImplCopyWithImpl<_$StartupAuthentStateImpl>(
           this, _$identity);
 }
 
 abstract class _StartupAuthentState extends StartupAuthentState {
   const factory _StartupAuthentState({final DateTime? lockDate}) =
-      _$_StartupAuthentState;
+      _$StartupAuthentStateImpl;
   const _StartupAuthentState._() : super._();
 
   @override
@@ -428,6 +430,6 @@ abstract class _StartupAuthentState extends StartupAuthentState {
   DateTime? get lockDate;
   @override
   @JsonKey(ignore: true)
-  _$$_StartupAuthentStateCopyWith<_$_StartupAuthentState> get copyWith =>
+  _$$StartupAuthentStateImplCopyWith<_$StartupAuthentStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

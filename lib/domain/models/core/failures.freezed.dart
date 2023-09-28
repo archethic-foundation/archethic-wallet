@@ -116,25 +116,25 @@ class _$FailureCopyWithImpl<$Res, $Val extends Failure>
 }
 
 /// @nodoc
-abstract class _$$_LoggedOutCopyWith<$Res> {
-  factory _$$_LoggedOutCopyWith(
-          _$_LoggedOut value, $Res Function(_$_LoggedOut) then) =
-      __$$_LoggedOutCopyWithImpl<$Res>;
+abstract class _$$LoggedOutImplCopyWith<$Res> {
+  factory _$$LoggedOutImplCopyWith(
+          _$LoggedOutImpl value, $Res Function(_$LoggedOutImpl) then) =
+      __$$LoggedOutImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_LoggedOutCopyWithImpl<$Res>
-    extends _$FailureCopyWithImpl<$Res, _$_LoggedOut>
-    implements _$$_LoggedOutCopyWith<$Res> {
-  __$$_LoggedOutCopyWithImpl(
-      _$_LoggedOut _value, $Res Function(_$_LoggedOut) _then)
+class __$$LoggedOutImplCopyWithImpl<$Res>
+    extends _$FailureCopyWithImpl<$Res, _$LoggedOutImpl>
+    implements _$$LoggedOutImplCopyWith<$Res> {
+  __$$LoggedOutImplCopyWithImpl(
+      _$LoggedOutImpl _value, $Res Function(_$LoggedOutImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_LoggedOut extends _LoggedOut {
-  const _$_LoggedOut() : super._();
+class _$LoggedOutImpl extends _LoggedOut {
+  const _$LoggedOutImpl() : super._();
 
   @override
   String toString() {
@@ -144,7 +144,7 @@ class _$_LoggedOut extends _LoggedOut {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_LoggedOut);
+        (other.runtimeType == runtimeType && other is _$LoggedOutImpl);
   }
 
   @override
@@ -256,30 +256,30 @@ class _$_LoggedOut extends _LoggedOut {
 }
 
 abstract class _LoggedOut extends Failure {
-  const factory _LoggedOut() = _$_LoggedOut;
+  const factory _LoggedOut() = _$LoggedOutImpl;
   const _LoggedOut._() : super._();
 }
 
 /// @nodoc
-abstract class _$$_NetworkFailureCopyWith<$Res> {
-  factory _$$_NetworkFailureCopyWith(
-          _$_NetworkFailure value, $Res Function(_$_NetworkFailure) then) =
-      __$$_NetworkFailureCopyWithImpl<$Res>;
+abstract class _$$NetworkFailureImplCopyWith<$Res> {
+  factory _$$NetworkFailureImplCopyWith(_$NetworkFailureImpl value,
+          $Res Function(_$NetworkFailureImpl) then) =
+      __$$NetworkFailureImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_NetworkFailureCopyWithImpl<$Res>
-    extends _$FailureCopyWithImpl<$Res, _$_NetworkFailure>
-    implements _$$_NetworkFailureCopyWith<$Res> {
-  __$$_NetworkFailureCopyWithImpl(
-      _$_NetworkFailure _value, $Res Function(_$_NetworkFailure) _then)
+class __$$NetworkFailureImplCopyWithImpl<$Res>
+    extends _$FailureCopyWithImpl<$Res, _$NetworkFailureImpl>
+    implements _$$NetworkFailureImplCopyWith<$Res> {
+  __$$NetworkFailureImplCopyWithImpl(
+      _$NetworkFailureImpl _value, $Res Function(_$NetworkFailureImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_NetworkFailure extends _NetworkFailure {
-  const _$_NetworkFailure() : super._();
+class _$NetworkFailureImpl extends _NetworkFailure {
+  const _$NetworkFailureImpl() : super._();
 
   @override
   String toString() {
@@ -289,7 +289,7 @@ class _$_NetworkFailure extends _NetworkFailure {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_NetworkFailure);
+        (other.runtimeType == runtimeType && other is _$NetworkFailureImpl);
   }
 
   @override
@@ -401,25 +401,25 @@ class _$_NetworkFailure extends _NetworkFailure {
 }
 
 abstract class _NetworkFailure extends Failure {
-  const factory _NetworkFailure() = _$_NetworkFailure;
+  const factory _NetworkFailure() = _$NetworkFailureImpl;
   const _NetworkFailure._() : super._();
 }
 
 /// @nodoc
-abstract class _$$_QuotaExceededFailureCopyWith<$Res> {
-  factory _$$_QuotaExceededFailureCopyWith(_$_QuotaExceededFailure value,
-          $Res Function(_$_QuotaExceededFailure) then) =
-      __$$_QuotaExceededFailureCopyWithImpl<$Res>;
+abstract class _$$QuotaExceededFailureImplCopyWith<$Res> {
+  factory _$$QuotaExceededFailureImplCopyWith(_$QuotaExceededFailureImpl value,
+          $Res Function(_$QuotaExceededFailureImpl) then) =
+      __$$QuotaExceededFailureImplCopyWithImpl<$Res>;
   @useResult
   $Res call({DateTime? cooldownEndDate});
 }
 
 /// @nodoc
-class __$$_QuotaExceededFailureCopyWithImpl<$Res>
-    extends _$FailureCopyWithImpl<$Res, _$_QuotaExceededFailure>
-    implements _$$_QuotaExceededFailureCopyWith<$Res> {
-  __$$_QuotaExceededFailureCopyWithImpl(_$_QuotaExceededFailure _value,
-      $Res Function(_$_QuotaExceededFailure) _then)
+class __$$QuotaExceededFailureImplCopyWithImpl<$Res>
+    extends _$FailureCopyWithImpl<$Res, _$QuotaExceededFailureImpl>
+    implements _$$QuotaExceededFailureImplCopyWith<$Res> {
+  __$$QuotaExceededFailureImplCopyWithImpl(_$QuotaExceededFailureImpl _value,
+      $Res Function(_$QuotaExceededFailureImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -427,7 +427,7 @@ class __$$_QuotaExceededFailureCopyWithImpl<$Res>
   $Res call({
     Object? cooldownEndDate = freezed,
   }) {
-    return _then(_$_QuotaExceededFailure(
+    return _then(_$QuotaExceededFailureImpl(
       cooldownEndDate: freezed == cooldownEndDate
           ? _value.cooldownEndDate
           : cooldownEndDate // ignore: cast_nullable_to_non_nullable
@@ -438,8 +438,8 @@ class __$$_QuotaExceededFailureCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_QuotaExceededFailure extends _QuotaExceededFailure {
-  const _$_QuotaExceededFailure({this.cooldownEndDate}) : super._();
+class _$QuotaExceededFailureImpl extends _QuotaExceededFailure {
+  const _$QuotaExceededFailureImpl({this.cooldownEndDate}) : super._();
 
   @override
   final DateTime? cooldownEndDate;
@@ -453,7 +453,7 @@ class _$_QuotaExceededFailure extends _QuotaExceededFailure {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_QuotaExceededFailure &&
+            other is _$QuotaExceededFailureImpl &&
             (identical(other.cooldownEndDate, cooldownEndDate) ||
                 other.cooldownEndDate == cooldownEndDate));
   }
@@ -464,9 +464,10 @@ class _$_QuotaExceededFailure extends _QuotaExceededFailure {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_QuotaExceededFailureCopyWith<_$_QuotaExceededFailure> get copyWith =>
-      __$$_QuotaExceededFailureCopyWithImpl<_$_QuotaExceededFailure>(
-          this, _$identity);
+  _$$QuotaExceededFailureImplCopyWith<_$QuotaExceededFailureImpl>
+      get copyWith =>
+          __$$QuotaExceededFailureImplCopyWithImpl<_$QuotaExceededFailureImpl>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -575,35 +576,35 @@ class _$_QuotaExceededFailure extends _QuotaExceededFailure {
 
 abstract class _QuotaExceededFailure extends Failure {
   const factory _QuotaExceededFailure({final DateTime? cooldownEndDate}) =
-      _$_QuotaExceededFailure;
+      _$QuotaExceededFailureImpl;
   const _QuotaExceededFailure._() : super._();
 
   DateTime? get cooldownEndDate;
   @JsonKey(ignore: true)
-  _$$_QuotaExceededFailureCopyWith<_$_QuotaExceededFailure> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$QuotaExceededFailureImplCopyWith<_$QuotaExceededFailureImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_ServiceNotFoundCopyWith<$Res> {
-  factory _$$_ServiceNotFoundCopyWith(
-          _$_ServiceNotFound value, $Res Function(_$_ServiceNotFound) then) =
-      __$$_ServiceNotFoundCopyWithImpl<$Res>;
+abstract class _$$ServiceNotFoundImplCopyWith<$Res> {
+  factory _$$ServiceNotFoundImplCopyWith(_$ServiceNotFoundImpl value,
+          $Res Function(_$ServiceNotFoundImpl) then) =
+      __$$ServiceNotFoundImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_ServiceNotFoundCopyWithImpl<$Res>
-    extends _$FailureCopyWithImpl<$Res, _$_ServiceNotFound>
-    implements _$$_ServiceNotFoundCopyWith<$Res> {
-  __$$_ServiceNotFoundCopyWithImpl(
-      _$_ServiceNotFound _value, $Res Function(_$_ServiceNotFound) _then)
+class __$$ServiceNotFoundImplCopyWithImpl<$Res>
+    extends _$FailureCopyWithImpl<$Res, _$ServiceNotFoundImpl>
+    implements _$$ServiceNotFoundImplCopyWith<$Res> {
+  __$$ServiceNotFoundImplCopyWithImpl(
+      _$ServiceNotFoundImpl _value, $Res Function(_$ServiceNotFoundImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_ServiceNotFound extends _ServiceNotFound {
-  const _$_ServiceNotFound() : super._();
+class _$ServiceNotFoundImpl extends _ServiceNotFound {
+  const _$ServiceNotFoundImpl() : super._();
 
   @override
   String toString() {
@@ -613,7 +614,7 @@ class _$_ServiceNotFound extends _ServiceNotFound {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_ServiceNotFound);
+        (other.runtimeType == runtimeType && other is _$ServiceNotFoundImpl);
   }
 
   @override
@@ -725,30 +726,30 @@ class _$_ServiceNotFound extends _ServiceNotFound {
 }
 
 abstract class _ServiceNotFound extends Failure {
-  const factory _ServiceNotFound() = _$_ServiceNotFound;
+  const factory _ServiceNotFound() = _$ServiceNotFoundImpl;
   const _ServiceNotFound._() : super._();
 }
 
 /// @nodoc
-abstract class _$$_ServiceAlreadyExistsCopyWith<$Res> {
-  factory _$$_ServiceAlreadyExistsCopyWith(_$_ServiceAlreadyExists value,
-          $Res Function(_$_ServiceAlreadyExists) then) =
-      __$$_ServiceAlreadyExistsCopyWithImpl<$Res>;
+abstract class _$$ServiceAlreadyExistsImplCopyWith<$Res> {
+  factory _$$ServiceAlreadyExistsImplCopyWith(_$ServiceAlreadyExistsImpl value,
+          $Res Function(_$ServiceAlreadyExistsImpl) then) =
+      __$$ServiceAlreadyExistsImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_ServiceAlreadyExistsCopyWithImpl<$Res>
-    extends _$FailureCopyWithImpl<$Res, _$_ServiceAlreadyExists>
-    implements _$$_ServiceAlreadyExistsCopyWith<$Res> {
-  __$$_ServiceAlreadyExistsCopyWithImpl(_$_ServiceAlreadyExists _value,
-      $Res Function(_$_ServiceAlreadyExists) _then)
+class __$$ServiceAlreadyExistsImplCopyWithImpl<$Res>
+    extends _$FailureCopyWithImpl<$Res, _$ServiceAlreadyExistsImpl>
+    implements _$$ServiceAlreadyExistsImplCopyWith<$Res> {
+  __$$ServiceAlreadyExistsImplCopyWithImpl(_$ServiceAlreadyExistsImpl _value,
+      $Res Function(_$ServiceAlreadyExistsImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_ServiceAlreadyExists extends _ServiceAlreadyExists {
-  const _$_ServiceAlreadyExists() : super._();
+class _$ServiceAlreadyExistsImpl extends _ServiceAlreadyExists {
+  const _$ServiceAlreadyExistsImpl() : super._();
 
   @override
   String toString() {
@@ -758,7 +759,8 @@ class _$_ServiceAlreadyExists extends _ServiceAlreadyExists {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_ServiceAlreadyExists);
+        (other.runtimeType == runtimeType &&
+            other is _$ServiceAlreadyExistsImpl);
   }
 
   @override
@@ -870,30 +872,30 @@ class _$_ServiceAlreadyExists extends _ServiceAlreadyExists {
 }
 
 abstract class _ServiceAlreadyExists extends Failure {
-  const factory _ServiceAlreadyExists() = _$_ServiceAlreadyExists;
+  const factory _ServiceAlreadyExists() = _$ServiceAlreadyExistsImpl;
   const _ServiceAlreadyExists._() : super._();
 }
 
 /// @nodoc
-abstract class _$$_InsuffientFundsCopyWith<$Res> {
-  factory _$$_InsuffientFundsCopyWith(
-          _$_InsuffientFunds value, $Res Function(_$_InsuffientFunds) then) =
-      __$$_InsuffientFundsCopyWithImpl<$Res>;
+abstract class _$$InsuffientFundsImplCopyWith<$Res> {
+  factory _$$InsuffientFundsImplCopyWith(_$InsuffientFundsImpl value,
+          $Res Function(_$InsuffientFundsImpl) then) =
+      __$$InsuffientFundsImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_InsuffientFundsCopyWithImpl<$Res>
-    extends _$FailureCopyWithImpl<$Res, _$_InsuffientFunds>
-    implements _$$_InsuffientFundsCopyWith<$Res> {
-  __$$_InsuffientFundsCopyWithImpl(
-      _$_InsuffientFunds _value, $Res Function(_$_InsuffientFunds) _then)
+class __$$InsuffientFundsImplCopyWithImpl<$Res>
+    extends _$FailureCopyWithImpl<$Res, _$InsuffientFundsImpl>
+    implements _$$InsuffientFundsImplCopyWith<$Res> {
+  __$$InsuffientFundsImplCopyWithImpl(
+      _$InsuffientFundsImpl _value, $Res Function(_$InsuffientFundsImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_InsuffientFunds extends _InsuffientFunds {
-  const _$_InsuffientFunds() : super._();
+class _$InsuffientFundsImpl extends _InsuffientFunds {
+  const _$InsuffientFundsImpl() : super._();
 
   @override
   String toString() {
@@ -903,7 +905,7 @@ class _$_InsuffientFunds extends _InsuffientFunds {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_InsuffientFunds);
+        (other.runtimeType == runtimeType && other is _$InsuffientFundsImpl);
   }
 
   @override
@@ -1015,30 +1017,30 @@ class _$_InsuffientFunds extends _InsuffientFunds {
 }
 
 abstract class _InsuffientFunds extends Failure {
-  const factory _InsuffientFunds() = _$_InsuffientFunds;
+  const factory _InsuffientFunds() = _$InsuffientFundsImpl;
   const _InsuffientFunds._() : super._();
 }
 
 /// @nodoc
-abstract class _$$_InauthorizedCopyWith<$Res> {
-  factory _$$_InauthorizedCopyWith(
-          _$_Inauthorized value, $Res Function(_$_Inauthorized) then) =
-      __$$_InauthorizedCopyWithImpl<$Res>;
+abstract class _$$InauthorizedImplCopyWith<$Res> {
+  factory _$$InauthorizedImplCopyWith(
+          _$InauthorizedImpl value, $Res Function(_$InauthorizedImpl) then) =
+      __$$InauthorizedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_InauthorizedCopyWithImpl<$Res>
-    extends _$FailureCopyWithImpl<$Res, _$_Inauthorized>
-    implements _$$_InauthorizedCopyWith<$Res> {
-  __$$_InauthorizedCopyWithImpl(
-      _$_Inauthorized _value, $Res Function(_$_Inauthorized) _then)
+class __$$InauthorizedImplCopyWithImpl<$Res>
+    extends _$FailureCopyWithImpl<$Res, _$InauthorizedImpl>
+    implements _$$InauthorizedImplCopyWith<$Res> {
+  __$$InauthorizedImplCopyWithImpl(
+      _$InauthorizedImpl _value, $Res Function(_$InauthorizedImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Inauthorized extends _Inauthorized {
-  const _$_Inauthorized() : super._();
+class _$InauthorizedImpl extends _Inauthorized {
+  const _$InauthorizedImpl() : super._();
 
   @override
   String toString() {
@@ -1048,7 +1050,7 @@ class _$_Inauthorized extends _Inauthorized {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Inauthorized);
+        (other.runtimeType == runtimeType && other is _$InauthorizedImpl);
   }
 
   @override
@@ -1160,30 +1162,30 @@ class _$_Inauthorized extends _Inauthorized {
 }
 
 abstract class _Inauthorized extends Failure {
-  const factory _Inauthorized() = _$_Inauthorized;
+  const factory _Inauthorized() = _$InauthorizedImpl;
   const _Inauthorized._() : super._();
 }
 
 /// @nodoc
-abstract class _$$_InvalidValueCopyWith<$Res> {
-  factory _$$_InvalidValueCopyWith(
-          _$_InvalidValue value, $Res Function(_$_InvalidValue) then) =
-      __$$_InvalidValueCopyWithImpl<$Res>;
+abstract class _$$InvalidValueImplCopyWith<$Res> {
+  factory _$$InvalidValueImplCopyWith(
+          _$InvalidValueImpl value, $Res Function(_$InvalidValueImpl) then) =
+      __$$InvalidValueImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_InvalidValueCopyWithImpl<$Res>
-    extends _$FailureCopyWithImpl<$Res, _$_InvalidValue>
-    implements _$$_InvalidValueCopyWith<$Res> {
-  __$$_InvalidValueCopyWithImpl(
-      _$_InvalidValue _value, $Res Function(_$_InvalidValue) _then)
+class __$$InvalidValueImplCopyWithImpl<$Res>
+    extends _$FailureCopyWithImpl<$Res, _$InvalidValueImpl>
+    implements _$$InvalidValueImplCopyWith<$Res> {
+  __$$InvalidValueImplCopyWithImpl(
+      _$InvalidValueImpl _value, $Res Function(_$InvalidValueImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_InvalidValue extends _InvalidValue {
-  const _$_InvalidValue() : super._();
+class _$InvalidValueImpl extends _InvalidValue {
+  const _$InvalidValueImpl() : super._();
 
   @override
   String toString() {
@@ -1193,7 +1195,7 @@ class _$_InvalidValue extends _InvalidValue {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_InvalidValue);
+        (other.runtimeType == runtimeType && other is _$InvalidValueImpl);
   }
 
   @override
@@ -1305,25 +1307,25 @@ class _$_InvalidValue extends _InvalidValue {
 }
 
 abstract class _InvalidValue extends Failure {
-  const factory _InvalidValue() = _$_InvalidValue;
+  const factory _InvalidValue() = _$InvalidValueImpl;
   const _InvalidValue._() : super._();
 }
 
 /// @nodoc
-abstract class _$$_OtherFailureCopyWith<$Res> {
-  factory _$$_OtherFailureCopyWith(
-          _$_OtherFailure value, $Res Function(_$_OtherFailure) then) =
-      __$$_OtherFailureCopyWithImpl<$Res>;
+abstract class _$$OtherFailureImplCopyWith<$Res> {
+  factory _$$OtherFailureImplCopyWith(
+          _$OtherFailureImpl value, $Res Function(_$OtherFailureImpl) then) =
+      __$$OtherFailureImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Object? cause, StackTrace? stack});
 }
 
 /// @nodoc
-class __$$_OtherFailureCopyWithImpl<$Res>
-    extends _$FailureCopyWithImpl<$Res, _$_OtherFailure>
-    implements _$$_OtherFailureCopyWith<$Res> {
-  __$$_OtherFailureCopyWithImpl(
-      _$_OtherFailure _value, $Res Function(_$_OtherFailure) _then)
+class __$$OtherFailureImplCopyWithImpl<$Res>
+    extends _$FailureCopyWithImpl<$Res, _$OtherFailureImpl>
+    implements _$$OtherFailureImplCopyWith<$Res> {
+  __$$OtherFailureImplCopyWithImpl(
+      _$OtherFailureImpl _value, $Res Function(_$OtherFailureImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1332,7 +1334,7 @@ class __$$_OtherFailureCopyWithImpl<$Res>
     Object? cause = freezed,
     Object? stack = freezed,
   }) {
-    return _then(_$_OtherFailure(
+    return _then(_$OtherFailureImpl(
       cause: freezed == cause ? _value.cause : cause,
       stack: freezed == stack
           ? _value.stack
@@ -1344,8 +1346,8 @@ class __$$_OtherFailureCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_OtherFailure extends _OtherFailure {
-  const _$_OtherFailure({this.cause, this.stack}) : super._();
+class _$OtherFailureImpl extends _OtherFailure {
+  const _$OtherFailureImpl({this.cause, this.stack}) : super._();
 
   @override
   final Object? cause;
@@ -1361,7 +1363,7 @@ class _$_OtherFailure extends _OtherFailure {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_OtherFailure &&
+            other is _$OtherFailureImpl &&
             const DeepCollectionEquality().equals(other.cause, cause) &&
             (identical(other.stack, stack) || other.stack == stack));
   }
@@ -1373,8 +1375,8 @@ class _$_OtherFailure extends _OtherFailure {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_OtherFailureCopyWith<_$_OtherFailure> get copyWith =>
-      __$$_OtherFailureCopyWithImpl<_$_OtherFailure>(this, _$identity);
+  _$$OtherFailureImplCopyWith<_$OtherFailureImpl> get copyWith =>
+      __$$OtherFailureImplCopyWithImpl<_$OtherFailureImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1483,12 +1485,12 @@ class _$_OtherFailure extends _OtherFailure {
 
 abstract class _OtherFailure extends Failure {
   const factory _OtherFailure({final Object? cause, final StackTrace? stack}) =
-      _$_OtherFailure;
+      _$OtherFailureImpl;
   const _OtherFailure._() : super._();
 
   Object? get cause;
   StackTrace? get stack;
   @JsonKey(ignore: true)
-  _$$_OtherFailureCopyWith<_$_OtherFailure> get copyWith =>
+  _$$OtherFailureImplCopyWith<_$OtherFailureImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

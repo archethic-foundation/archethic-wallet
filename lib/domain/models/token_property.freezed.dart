@@ -73,11 +73,11 @@ class _$TokenPropertyCopyWithImpl<$Res, $Val extends TokenProperty>
 }
 
 /// @nodoc
-abstract class _$$_TokenPropertyCopyWith<$Res>
+abstract class _$$TokenPropertyImplCopyWith<$Res>
     implements $TokenPropertyCopyWith<$Res> {
-  factory _$$_TokenPropertyCopyWith(
-          _$_TokenProperty value, $Res Function(_$_TokenProperty) then) =
-      __$$_TokenPropertyCopyWithImpl<$Res>;
+  factory _$$TokenPropertyImplCopyWith(
+          _$TokenPropertyImpl value, $Res Function(_$TokenPropertyImpl) then) =
+      __$$TokenPropertyImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -87,11 +87,11 @@ abstract class _$$_TokenPropertyCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_TokenPropertyCopyWithImpl<$Res>
-    extends _$TokenPropertyCopyWithImpl<$Res, _$_TokenProperty>
-    implements _$$_TokenPropertyCopyWith<$Res> {
-  __$$_TokenPropertyCopyWithImpl(
-      _$_TokenProperty _value, $Res Function(_$_TokenProperty) _then)
+class __$$TokenPropertyImplCopyWithImpl<$Res>
+    extends _$TokenPropertyCopyWithImpl<$Res, _$TokenPropertyImpl>
+    implements _$$TokenPropertyImplCopyWith<$Res> {
+  __$$TokenPropertyImplCopyWithImpl(
+      _$TokenPropertyImpl _value, $Res Function(_$TokenPropertyImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -101,7 +101,7 @@ class __$$_TokenPropertyCopyWithImpl<$Res>
     Object? propertyValue = freezed,
     Object? publicKeys = null,
   }) {
-    return _then(_$_TokenProperty(
+    return _then(_$TokenPropertyImpl(
       propertyName: null == propertyName
           ? _value.propertyName
           : propertyName // ignore: cast_nullable_to_non_nullable
@@ -120,8 +120,8 @@ class __$$_TokenPropertyCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TokenProperty extends _TokenProperty {
-  const _$_TokenProperty(
+class _$TokenPropertyImpl extends _TokenProperty {
+  const _$TokenPropertyImpl(
       {required this.propertyName,
       required this.propertyValue,
       required final List<TokenPropertyAccess> publicKeys})
@@ -149,7 +149,7 @@ class _$_TokenProperty extends _TokenProperty {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TokenProperty &&
+            other is _$TokenPropertyImpl &&
             (identical(other.propertyName, propertyName) ||
                 other.propertyName == propertyName) &&
             const DeepCollectionEquality()
@@ -168,15 +168,16 @@ class _$_TokenProperty extends _TokenProperty {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TokenPropertyCopyWith<_$_TokenProperty> get copyWith =>
-      __$$_TokenPropertyCopyWithImpl<_$_TokenProperty>(this, _$identity);
+  _$$TokenPropertyImplCopyWith<_$TokenPropertyImpl> get copyWith =>
+      __$$TokenPropertyImplCopyWithImpl<_$TokenPropertyImpl>(this, _$identity);
 }
 
 abstract class _TokenProperty extends TokenProperty {
   const factory _TokenProperty(
-      {required final String propertyName,
-      required final dynamic propertyValue,
-      required final List<TokenPropertyAccess> publicKeys}) = _$_TokenProperty;
+          {required final String propertyName,
+          required final dynamic propertyValue,
+          required final List<TokenPropertyAccess> publicKeys}) =
+      _$TokenPropertyImpl;
   const _TokenProperty._() : super._();
 
   @override
@@ -187,6 +188,6 @@ abstract class _TokenProperty extends TokenProperty {
   List<TokenPropertyAccess> get publicKeys;
   @override
   @JsonKey(ignore: true)
-  _$$_TokenPropertyCopyWith<_$_TokenProperty> get copyWith =>
+  _$$TokenPropertyImplCopyWith<_$TokenPropertyImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

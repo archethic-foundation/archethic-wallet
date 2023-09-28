@@ -94,12 +94,12 @@ class _$ContactCreationFormStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_ContactCreationFormStateCopyWith<$Res>
+abstract class _$$ContactCreationFormStateImplCopyWith<$Res>
     implements $ContactCreationFormStateCopyWith<$Res> {
-  factory _$$_ContactCreationFormStateCopyWith(
-          _$_ContactCreationFormState value,
-          $Res Function(_$_ContactCreationFormState) then) =
-      __$$_ContactCreationFormStateCopyWithImpl<$Res>;
+  factory _$$ContactCreationFormStateImplCopyWith(
+          _$ContactCreationFormStateImpl value,
+          $Res Function(_$ContactCreationFormStateImpl) then) =
+      __$$ContactCreationFormStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -112,12 +112,13 @@ abstract class _$$_ContactCreationFormStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ContactCreationFormStateCopyWithImpl<$Res>
+class __$$ContactCreationFormStateImplCopyWithImpl<$Res>
     extends _$ContactCreationFormStateCopyWithImpl<$Res,
-        _$_ContactCreationFormState>
-    implements _$$_ContactCreationFormStateCopyWith<$Res> {
-  __$$_ContactCreationFormStateCopyWithImpl(_$_ContactCreationFormState _value,
-      $Res Function(_$_ContactCreationFormState) _then)
+        _$ContactCreationFormStateImpl>
+    implements _$$ContactCreationFormStateImplCopyWith<$Res> {
+  __$$ContactCreationFormStateImplCopyWithImpl(
+      _$ContactCreationFormStateImpl _value,
+      $Res Function(_$ContactCreationFormStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -130,7 +131,7 @@ class __$$_ContactCreationFormStateCopyWithImpl<$Res>
     Object? favorite = null,
     Object? error = null,
   }) {
-    return _then(_$_ContactCreationFormState(
+    return _then(_$ContactCreationFormStateImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -161,8 +162,8 @@ class __$$_ContactCreationFormStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ContactCreationFormState extends _ContactCreationFormState {
-  const _$_ContactCreationFormState(
+class _$ContactCreationFormStateImpl extends _ContactCreationFormState {
+  const _$ContactCreationFormStateImpl(
       {this.name = '',
       this.address = '',
       this.publicKey = '',
@@ -199,7 +200,7 @@ class _$_ContactCreationFormState extends _ContactCreationFormState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ContactCreationFormState &&
+            other is _$ContactCreationFormStateImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.publicKey, publicKey) ||
@@ -218,9 +219,9 @@ class _$_ContactCreationFormState extends _ContactCreationFormState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ContactCreationFormStateCopyWith<_$_ContactCreationFormState>
-      get copyWith => __$$_ContactCreationFormStateCopyWithImpl<
-          _$_ContactCreationFormState>(this, _$identity);
+  _$$ContactCreationFormStateImplCopyWith<_$ContactCreationFormStateImpl>
+      get copyWith => __$$ContactCreationFormStateImplCopyWithImpl<
+          _$ContactCreationFormStateImpl>(this, _$identity);
 }
 
 abstract class _ContactCreationFormState extends ContactCreationFormState {
@@ -230,7 +231,7 @@ abstract class _ContactCreationFormState extends ContactCreationFormState {
       final String publicKey,
       final String publicKeyRecovered,
       final bool favorite,
-      final String error}) = _$_ContactCreationFormState;
+      final String error}) = _$ContactCreationFormStateImpl;
   const _ContactCreationFormState._() : super._();
 
   @override
@@ -247,6 +248,6 @@ abstract class _ContactCreationFormState extends ContactCreationFormState {
   String get error;
   @override
   @JsonKey(ignore: true)
-  _$$_ContactCreationFormStateCopyWith<_$_ContactCreationFormState>
+  _$$ContactCreationFormStateImplCopyWith<_$ContactCreationFormStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

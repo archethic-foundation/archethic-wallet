@@ -81,12 +81,12 @@ class _$RPCSignTransactionsCommandDataCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_RPCSignTransactionsCommandDataCopyWith<$Res>
+abstract class _$$RPCSignTransactionsCommandDataImplCopyWith<$Res>
     implements $RPCSignTransactionsCommandDataCopyWith<$Res> {
-  factory _$$_RPCSignTransactionsCommandDataCopyWith(
-          _$_RPCSignTransactionsCommandData value,
-          $Res Function(_$_RPCSignTransactionsCommandData) then) =
-      __$$_RPCSignTransactionsCommandDataCopyWithImpl<$Res>;
+  factory _$$RPCSignTransactionsCommandDataImplCopyWith(
+          _$RPCSignTransactionsCommandDataImpl value,
+          $Res Function(_$RPCSignTransactionsCommandDataImpl) then) =
+      __$$RPCSignTransactionsCommandDataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -96,13 +96,13 @@ abstract class _$$_RPCSignTransactionsCommandDataCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_RPCSignTransactionsCommandDataCopyWithImpl<$Res>
+class __$$RPCSignTransactionsCommandDataImplCopyWithImpl<$Res>
     extends _$RPCSignTransactionsCommandDataCopyWithImpl<$Res,
-        _$_RPCSignTransactionsCommandData>
-    implements _$$_RPCSignTransactionsCommandDataCopyWith<$Res> {
-  __$$_RPCSignTransactionsCommandDataCopyWithImpl(
-      _$_RPCSignTransactionsCommandData _value,
-      $Res Function(_$_RPCSignTransactionsCommandData) _then)
+        _$RPCSignTransactionsCommandDataImpl>
+    implements _$$RPCSignTransactionsCommandDataImplCopyWith<$Res> {
+  __$$RPCSignTransactionsCommandDataImplCopyWithImpl(
+      _$RPCSignTransactionsCommandDataImpl _value,
+      $Res Function(_$RPCSignTransactionsCommandDataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -112,7 +112,7 @@ class __$$_RPCSignTransactionsCommandDataCopyWithImpl<$Res>
     Object? pathSuffix = freezed,
     Object? rpcSignTransactionCommandData = null,
   }) {
-    return _then(_$_RPCSignTransactionsCommandData(
+    return _then(_$RPCSignTransactionsCommandDataImpl(
       serviceName: null == serviceName
           ? _value.serviceName
           : serviceName // ignore: cast_nullable_to_non_nullable
@@ -131,9 +131,9 @@ class __$$_RPCSignTransactionsCommandDataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RPCSignTransactionsCommandData
+class _$RPCSignTransactionsCommandDataImpl
     extends _RPCSignTransactionsCommandData {
-  const _$_RPCSignTransactionsCommandData(
+  const _$RPCSignTransactionsCommandDataImpl(
       {required this.serviceName,
       this.pathSuffix,
       required final List<RPCSignTransactionCommandData>
@@ -170,7 +170,7 @@ class _$_RPCSignTransactionsCommandData
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RPCSignTransactionsCommandData &&
+            other is _$RPCSignTransactionsCommandDataImpl &&
             (identical(other.serviceName, serviceName) ||
                 other.serviceName == serviceName) &&
             (identical(other.pathSuffix, pathSuffix) ||
@@ -187,18 +187,20 @@ class _$_RPCSignTransactionsCommandData
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RPCSignTransactionsCommandDataCopyWith<_$_RPCSignTransactionsCommandData>
-      get copyWith => __$$_RPCSignTransactionsCommandDataCopyWithImpl<
-          _$_RPCSignTransactionsCommandData>(this, _$identity);
+  _$$RPCSignTransactionsCommandDataImplCopyWith<
+          _$RPCSignTransactionsCommandDataImpl>
+      get copyWith => __$$RPCSignTransactionsCommandDataImplCopyWithImpl<
+          _$RPCSignTransactionsCommandDataImpl>(this, _$identity);
 }
 
 abstract class _RPCSignTransactionsCommandData
     extends RPCSignTransactionsCommandData {
   const factory _RPCSignTransactionsCommandData(
-      {required final String serviceName,
-      final String? pathSuffix,
-      required final List<RPCSignTransactionCommandData>
-          rpcSignTransactionCommandData}) = _$_RPCSignTransactionsCommandData;
+          {required final String serviceName,
+          final String? pathSuffix,
+          required final List<RPCSignTransactionCommandData>
+              rpcSignTransactionCommandData}) =
+      _$RPCSignTransactionsCommandDataImpl;
   const _RPCSignTransactionsCommandData._() : super._();
 
   @override
@@ -215,7 +217,8 @@ abstract class _RPCSignTransactionsCommandData
   List<RPCSignTransactionCommandData> get rpcSignTransactionCommandData;
   @override
   @JsonKey(ignore: true)
-  _$$_RPCSignTransactionsCommandDataCopyWith<_$_RPCSignTransactionsCommandData>
+  _$$RPCSignTransactionsCommandDataImplCopyWith<
+          _$RPCSignTransactionsCommandDataImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -266,25 +269,25 @@ class _$RPCSignTransactionsResultDataCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_RPCSignTransactionsResultDataCopyWith<$Res>
+abstract class _$$RPCSignTransactionsResultDataImplCopyWith<$Res>
     implements $RPCSignTransactionsResultDataCopyWith<$Res> {
-  factory _$$_RPCSignTransactionsResultDataCopyWith(
-          _$_RPCSignTransactionsResultData value,
-          $Res Function(_$_RPCSignTransactionsResultData) then) =
-      __$$_RPCSignTransactionsResultDataCopyWithImpl<$Res>;
+  factory _$$RPCSignTransactionsResultDataImplCopyWith(
+          _$RPCSignTransactionsResultDataImpl value,
+          $Res Function(_$RPCSignTransactionsResultDataImpl) then) =
+      __$$RPCSignTransactionsResultDataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({List<RPCSignTransactionResultDetailData> signedTxs});
 }
 
 /// @nodoc
-class __$$_RPCSignTransactionsResultDataCopyWithImpl<$Res>
+class __$$RPCSignTransactionsResultDataImplCopyWithImpl<$Res>
     extends _$RPCSignTransactionsResultDataCopyWithImpl<$Res,
-        _$_RPCSignTransactionsResultData>
-    implements _$$_RPCSignTransactionsResultDataCopyWith<$Res> {
-  __$$_RPCSignTransactionsResultDataCopyWithImpl(
-      _$_RPCSignTransactionsResultData _value,
-      $Res Function(_$_RPCSignTransactionsResultData) _then)
+        _$RPCSignTransactionsResultDataImpl>
+    implements _$$RPCSignTransactionsResultDataImplCopyWith<$Res> {
+  __$$RPCSignTransactionsResultDataImplCopyWithImpl(
+      _$RPCSignTransactionsResultDataImpl _value,
+      $Res Function(_$RPCSignTransactionsResultDataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -292,7 +295,7 @@ class __$$_RPCSignTransactionsResultDataCopyWithImpl<$Res>
   $Res call({
     Object? signedTxs = null,
   }) {
-    return _then(_$_RPCSignTransactionsResultData(
+    return _then(_$RPCSignTransactionsResultDataImpl(
       signedTxs: null == signedTxs
           ? _value._signedTxs
           : signedTxs // ignore: cast_nullable_to_non_nullable
@@ -303,8 +306,9 @@ class __$$_RPCSignTransactionsResultDataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RPCSignTransactionsResultData extends _RPCSignTransactionsResultData {
-  const _$_RPCSignTransactionsResultData(
+class _$RPCSignTransactionsResultDataImpl
+    extends _RPCSignTransactionsResultData {
+  const _$RPCSignTransactionsResultDataImpl(
       {required final List<RPCSignTransactionResultDetailData> signedTxs})
       : _signedTxs = signedTxs,
         super._();
@@ -326,7 +330,7 @@ class _$_RPCSignTransactionsResultData extends _RPCSignTransactionsResultData {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RPCSignTransactionsResultData &&
+            other is _$RPCSignTransactionsResultDataImpl &&
             const DeepCollectionEquality()
                 .equals(other._signedTxs, _signedTxs));
   }
@@ -338,23 +342,25 @@ class _$_RPCSignTransactionsResultData extends _RPCSignTransactionsResultData {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RPCSignTransactionsResultDataCopyWith<_$_RPCSignTransactionsResultData>
-      get copyWith => __$$_RPCSignTransactionsResultDataCopyWithImpl<
-          _$_RPCSignTransactionsResultData>(this, _$identity);
+  _$$RPCSignTransactionsResultDataImplCopyWith<
+          _$RPCSignTransactionsResultDataImpl>
+      get copyWith => __$$RPCSignTransactionsResultDataImplCopyWithImpl<
+          _$RPCSignTransactionsResultDataImpl>(this, _$identity);
 }
 
 abstract class _RPCSignTransactionsResultData
     extends RPCSignTransactionsResultData {
   const factory _RPCSignTransactionsResultData(
           {required final List<RPCSignTransactionResultDetailData> signedTxs}) =
-      _$_RPCSignTransactionsResultData;
+      _$RPCSignTransactionsResultDataImpl;
   const _RPCSignTransactionsResultData._() : super._();
 
   @override
   List<RPCSignTransactionResultDetailData> get signedTxs;
   @override
   @JsonKey(ignore: true)
-  _$$_RPCSignTransactionsResultDataCopyWith<_$_RPCSignTransactionsResultData>
+  _$$RPCSignTransactionsResultDataImplCopyWith<
+          _$RPCSignTransactionsResultDataImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -431,12 +437,12 @@ class _$RPCSignTransactionCommandDataCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_RPCSignTransactionCommandDataCopyWith<$Res>
+abstract class _$$RPCSignTransactionCommandDataImplCopyWith<$Res>
     implements $RPCSignTransactionCommandDataCopyWith<$Res> {
-  factory _$$_RPCSignTransactionCommandDataCopyWith(
-          _$_RPCSignTransactionCommandData value,
-          $Res Function(_$_RPCSignTransactionCommandData) then) =
-      __$$_RPCSignTransactionCommandDataCopyWithImpl<$Res>;
+  factory _$$RPCSignTransactionCommandDataImplCopyWith(
+          _$RPCSignTransactionCommandDataImpl value,
+          $Res Function(_$RPCSignTransactionCommandDataImpl) then) =
+      __$$RPCSignTransactionCommandDataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({Data data, String type, int version});
@@ -446,13 +452,13 @@ abstract class _$$_RPCSignTransactionCommandDataCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_RPCSignTransactionCommandDataCopyWithImpl<$Res>
+class __$$RPCSignTransactionCommandDataImplCopyWithImpl<$Res>
     extends _$RPCSignTransactionCommandDataCopyWithImpl<$Res,
-        _$_RPCSignTransactionCommandData>
-    implements _$$_RPCSignTransactionCommandDataCopyWith<$Res> {
-  __$$_RPCSignTransactionCommandDataCopyWithImpl(
-      _$_RPCSignTransactionCommandData _value,
-      $Res Function(_$_RPCSignTransactionCommandData) _then)
+        _$RPCSignTransactionCommandDataImpl>
+    implements _$$RPCSignTransactionCommandDataImplCopyWith<$Res> {
+  __$$RPCSignTransactionCommandDataImplCopyWithImpl(
+      _$RPCSignTransactionCommandDataImpl _value,
+      $Res Function(_$RPCSignTransactionCommandDataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -462,7 +468,7 @@ class __$$_RPCSignTransactionCommandDataCopyWithImpl<$Res>
     Object? type = null,
     Object? version = null,
   }) {
-    return _then(_$_RPCSignTransactionCommandData(
+    return _then(_$RPCSignTransactionCommandDataImpl(
       data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
@@ -481,8 +487,9 @@ class __$$_RPCSignTransactionCommandDataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RPCSignTransactionCommandData extends _RPCSignTransactionCommandData {
-  const _$_RPCSignTransactionCommandData(
+class _$RPCSignTransactionCommandDataImpl
+    extends _RPCSignTransactionCommandData {
+  const _$RPCSignTransactionCommandDataImpl(
       {required this.data, required this.type, required this.version})
       : super._();
 
@@ -507,7 +514,7 @@ class _$_RPCSignTransactionCommandData extends _RPCSignTransactionCommandData {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RPCSignTransactionCommandData &&
+            other is _$RPCSignTransactionCommandDataImpl &&
             (identical(other.data, data) || other.data == data) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.version, version) || other.version == version));
@@ -519,9 +526,10 @@ class _$_RPCSignTransactionCommandData extends _RPCSignTransactionCommandData {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RPCSignTransactionCommandDataCopyWith<_$_RPCSignTransactionCommandData>
-      get copyWith => __$$_RPCSignTransactionCommandDataCopyWithImpl<
-          _$_RPCSignTransactionCommandData>(this, _$identity);
+  _$$RPCSignTransactionCommandDataImplCopyWith<
+          _$RPCSignTransactionCommandDataImpl>
+      get copyWith => __$$RPCSignTransactionCommandDataImplCopyWithImpl<
+          _$RPCSignTransactionCommandDataImpl>(this, _$identity);
 }
 
 abstract class _RPCSignTransactionCommandData
@@ -529,7 +537,7 @@ abstract class _RPCSignTransactionCommandData
   const factory _RPCSignTransactionCommandData(
       {required final Data data,
       required final String type,
-      required final int version}) = _$_RPCSignTransactionCommandData;
+      required final int version}) = _$RPCSignTransactionCommandDataImpl;
   const _RPCSignTransactionCommandData._() : super._();
 
   @override
@@ -546,7 +554,8 @@ abstract class _RPCSignTransactionCommandData
   int get version;
   @override
   @JsonKey(ignore: true)
-  _$$_RPCSignTransactionCommandDataCopyWith<_$_RPCSignTransactionCommandData>
+  _$$RPCSignTransactionCommandDataImplCopyWith<
+          _$RPCSignTransactionCommandDataImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -626,12 +635,12 @@ class _$RPCSignTransactionResultDetailDataCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_RPCSignTransactionResultDetailDataCopyWith<$Res>
+abstract class _$$RPCSignTransactionResultDetailDataImplCopyWith<$Res>
     implements $RPCSignTransactionResultDetailDataCopyWith<$Res> {
-  factory _$$_RPCSignTransactionResultDetailDataCopyWith(
-          _$_RPCSignTransactionResultDetailData value,
-          $Res Function(_$_RPCSignTransactionResultDetailData) then) =
-      __$$_RPCSignTransactionResultDetailDataCopyWithImpl<$Res>;
+  factory _$$RPCSignTransactionResultDetailDataImplCopyWith(
+          _$RPCSignTransactionResultDetailDataImpl value,
+          $Res Function(_$RPCSignTransactionResultDetailDataImpl) then) =
+      __$$RPCSignTransactionResultDetailDataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -642,13 +651,13 @@ abstract class _$$_RPCSignTransactionResultDetailDataCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_RPCSignTransactionResultDetailDataCopyWithImpl<$Res>
+class __$$RPCSignTransactionResultDetailDataImplCopyWithImpl<$Res>
     extends _$RPCSignTransactionResultDetailDataCopyWithImpl<$Res,
-        _$_RPCSignTransactionResultDetailData>
-    implements _$$_RPCSignTransactionResultDetailDataCopyWith<$Res> {
-  __$$_RPCSignTransactionResultDetailDataCopyWithImpl(
-      _$_RPCSignTransactionResultDetailData _value,
-      $Res Function(_$_RPCSignTransactionResultDetailData) _then)
+        _$RPCSignTransactionResultDetailDataImpl>
+    implements _$$RPCSignTransactionResultDetailDataImplCopyWith<$Res> {
+  __$$RPCSignTransactionResultDetailDataImplCopyWithImpl(
+      _$RPCSignTransactionResultDetailDataImpl _value,
+      $Res Function(_$RPCSignTransactionResultDetailDataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -659,7 +668,7 @@ class __$$_RPCSignTransactionResultDetailDataCopyWithImpl<$Res>
     Object? previousSignature = null,
     Object? originSignature = null,
   }) {
-    return _then(_$_RPCSignTransactionResultDetailData(
+    return _then(_$RPCSignTransactionResultDetailDataImpl(
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -682,9 +691,9 @@ class __$$_RPCSignTransactionResultDetailDataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RPCSignTransactionResultDetailData
+class _$RPCSignTransactionResultDetailDataImpl
     extends _RPCSignTransactionResultDetailData {
-  const _$_RPCSignTransactionResultDetailData(
+  const _$RPCSignTransactionResultDetailDataImpl(
       {required this.address,
       required this.previousPublicKey,
       required this.previousSignature,
@@ -716,7 +725,7 @@ class _$_RPCSignTransactionResultDetailData
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RPCSignTransactionResultDetailData &&
+            other is _$RPCSignTransactionResultDetailDataImpl &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.previousPublicKey, previousPublicKey) ||
                 other.previousPublicKey == previousPublicKey) &&
@@ -733,10 +742,10 @@ class _$_RPCSignTransactionResultDetailData
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RPCSignTransactionResultDetailDataCopyWith<
-          _$_RPCSignTransactionResultDetailData>
-      get copyWith => __$$_RPCSignTransactionResultDetailDataCopyWithImpl<
-          _$_RPCSignTransactionResultDetailData>(this, _$identity);
+  _$$RPCSignTransactionResultDetailDataImplCopyWith<
+          _$RPCSignTransactionResultDetailDataImpl>
+      get copyWith => __$$RPCSignTransactionResultDetailDataImplCopyWithImpl<
+          _$RPCSignTransactionResultDetailDataImpl>(this, _$identity);
 }
 
 abstract class _RPCSignTransactionResultDetailData
@@ -746,7 +755,7 @@ abstract class _RPCSignTransactionResultDetailData
           required final String previousPublicKey,
           required final String previousSignature,
           required final String originSignature}) =
-      _$_RPCSignTransactionResultDetailData;
+      _$RPCSignTransactionResultDetailDataImpl;
   const _RPCSignTransactionResultDetailData._() : super._();
 
   @override
@@ -767,7 +776,7 @@ abstract class _RPCSignTransactionResultDetailData
   String get originSignature;
   @override
   @JsonKey(ignore: true)
-  _$$_RPCSignTransactionResultDetailDataCopyWith<
-          _$_RPCSignTransactionResultDetailData>
+  _$$RPCSignTransactionResultDetailDataImplCopyWith<
+          _$RPCSignTransactionResultDetailDataImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

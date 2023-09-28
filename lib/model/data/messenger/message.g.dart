@@ -6,17 +6,18 @@ part of 'message.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class DiscussionMessageAdapter extends TypeAdapter<_$_DiscussionMessage> {
+class DiscussionMessageImplAdapter
+    extends TypeAdapter<_$DiscussionMessageImpl> {
   @override
   final int typeId = 15;
 
   @override
-  _$_DiscussionMessage read(BinaryReader reader) {
+  _$DiscussionMessageImpl read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return _$_DiscussionMessage(
+    return _$DiscussionMessageImpl(
       senderGenesisPublicKey: fields[0] as String,
       content: fields[1] as String,
       date: fields[2] as DateTime,
@@ -25,7 +26,7 @@ class DiscussionMessageAdapter extends TypeAdapter<_$_DiscussionMessage> {
   }
 
   @override
-  void write(BinaryWriter writer, _$_DiscussionMessage obj) {
+  void write(BinaryWriter writer, _$DiscussionMessageImpl obj) {
     writer
       ..writeByte(4)
       ..writeByte(0)
@@ -44,7 +45,7 @@ class DiscussionMessageAdapter extends TypeAdapter<_$_DiscussionMessage> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is DiscussionMessageAdapter &&
+      other is DiscussionMessageImplAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

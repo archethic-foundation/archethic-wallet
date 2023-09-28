@@ -67,11 +67,11 @@ class _$NotificationsSetupCopyWithImpl<$Res, $Val extends NotificationsSetup>
 }
 
 /// @nodoc
-abstract class _$$_NotificationsSetupCopyWith<$Res>
+abstract class _$$NotificationsSetupImplCopyWith<$Res>
     implements $NotificationsSetupCopyWith<$Res> {
-  factory _$$_NotificationsSetupCopyWith(_$_NotificationsSetup value,
-          $Res Function(_$_NotificationsSetup) then) =
-      __$$_NotificationsSetupCopyWithImpl<$Res>;
+  factory _$$NotificationsSetupImplCopyWith(_$NotificationsSetupImpl value,
+          $Res Function(_$NotificationsSetupImpl) then) =
+      __$$NotificationsSetupImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -80,11 +80,11 @@ abstract class _$$_NotificationsSetupCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_NotificationsSetupCopyWithImpl<$Res>
-    extends _$NotificationsSetupCopyWithImpl<$Res, _$_NotificationsSetup>
-    implements _$$_NotificationsSetupCopyWith<$Res> {
-  __$$_NotificationsSetupCopyWithImpl(
-      _$_NotificationsSetup _value, $Res Function(_$_NotificationsSetup) _then)
+class __$$NotificationsSetupImplCopyWithImpl<$Res>
+    extends _$NotificationsSetupCopyWithImpl<$Res, _$NotificationsSetupImpl>
+    implements _$$NotificationsSetupImplCopyWith<$Res> {
+  __$$NotificationsSetupImplCopyWithImpl(_$NotificationsSetupImpl _value,
+      $Res Function(_$NotificationsSetupImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -93,7 +93,7 @@ class __$$_NotificationsSetupCopyWithImpl<$Res>
     Object? listenedAddresses = null,
     Object? lastFcmToken = freezed,
   }) {
-    return _then(_$_NotificationsSetup(
+    return _then(_$NotificationsSetupImpl(
       listenedAddresses: null == listenedAddresses
           ? _value._listenedAddresses
           : listenedAddresses // ignore: cast_nullable_to_non_nullable
@@ -109,8 +109,8 @@ class __$$_NotificationsSetupCopyWithImpl<$Res>
 /// @nodoc
 
 @HiveType(typeId: HiveTypeIds.notificationsSetup)
-class _$_NotificationsSetup extends _NotificationsSetup {
-  const _$_NotificationsSetup(
+class _$NotificationsSetupImpl extends _NotificationsSetup {
+  const _$NotificationsSetupImpl(
       {@HiveField(0, defaultValue: [])
       required final List<String> listenedAddresses,
       @HiveField(1) this.lastFcmToken})
@@ -140,7 +140,7 @@ class _$_NotificationsSetup extends _NotificationsSetup {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_NotificationsSetup &&
+            other is _$NotificationsSetupImpl &&
             const DeepCollectionEquality()
                 .equals(other._listenedAddresses, _listenedAddresses) &&
             (identical(other.lastFcmToken, lastFcmToken) ||
@@ -154,8 +154,8 @@ class _$_NotificationsSetup extends _NotificationsSetup {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_NotificationsSetupCopyWith<_$_NotificationsSetup> get copyWith =>
-      __$$_NotificationsSetupCopyWithImpl<_$_NotificationsSetup>(
+  _$$NotificationsSetupImplCopyWith<_$NotificationsSetupImpl> get copyWith =>
+      __$$NotificationsSetupImplCopyWithImpl<_$NotificationsSetupImpl>(
           this, _$identity);
 }
 
@@ -163,7 +163,7 @@ abstract class _NotificationsSetup extends NotificationsSetup {
   const factory _NotificationsSetup(
       {@HiveField(0, defaultValue: [])
       required final List<String> listenedAddresses,
-      @HiveField(1) final String? lastFcmToken}) = _$_NotificationsSetup;
+      @HiveField(1) final String? lastFcmToken}) = _$NotificationsSetupImpl;
   const _NotificationsSetup._() : super._();
 
   @override
@@ -174,6 +174,6 @@ abstract class _NotificationsSetup extends NotificationsSetup {
   String? get lastFcmToken;
   @override
   @JsonKey(ignore: true)
-  _$$_NotificationsSetupCopyWith<_$_NotificationsSetup> get copyWith =>
+  _$$NotificationsSetupImplCopyWith<_$NotificationsSetupImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

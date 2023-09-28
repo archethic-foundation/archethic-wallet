@@ -75,20 +75,20 @@ class _$AccessRecipientCopyWithImpl<$Res, $Val extends AccessRecipient>
 }
 
 /// @nodoc
-abstract class _$$_AccessPublicKeyCopyWith<$Res> {
-  factory _$$_AccessPublicKeyCopyWith(
-          _$_AccessPublicKey value, $Res Function(_$_AccessPublicKey) then) =
-      __$$_AccessPublicKeyCopyWithImpl<$Res>;
+abstract class _$$AccessPublicKeyImplCopyWith<$Res> {
+  factory _$$AccessPublicKeyImplCopyWith(_$AccessPublicKeyImpl value,
+          $Res Function(_$AccessPublicKeyImpl) then) =
+      __$$AccessPublicKeyImplCopyWithImpl<$Res>;
   @useResult
   $Res call({@HiveField(0) String publicKey});
 }
 
 /// @nodoc
-class __$$_AccessPublicKeyCopyWithImpl<$Res>
-    extends _$AccessRecipientCopyWithImpl<$Res, _$_AccessPublicKey>
-    implements _$$_AccessPublicKeyCopyWith<$Res> {
-  __$$_AccessPublicKeyCopyWithImpl(
-      _$_AccessPublicKey _value, $Res Function(_$_AccessPublicKey) _then)
+class __$$AccessPublicKeyImplCopyWithImpl<$Res>
+    extends _$AccessRecipientCopyWithImpl<$Res, _$AccessPublicKeyImpl>
+    implements _$$AccessPublicKeyImplCopyWith<$Res> {
+  __$$AccessPublicKeyImplCopyWithImpl(
+      _$AccessPublicKeyImpl _value, $Res Function(_$AccessPublicKeyImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -96,7 +96,7 @@ class __$$_AccessPublicKeyCopyWithImpl<$Res>
   $Res call({
     Object? publicKey = null,
   }) {
-    return _then(_$_AccessPublicKey(
+    return _then(_$AccessPublicKeyImpl(
       publicKey: null == publicKey
           ? _value.publicKey
           : publicKey // ignore: cast_nullable_to_non_nullable
@@ -110,8 +110,9 @@ class __$$_AccessPublicKeyCopyWithImpl<$Res>
 @HiveType(
     adapterName: 'PubKeyAccessRecipientAdapter',
     typeId: HiveTypeIds.pubKeyAccessRecipient)
-class _$_AccessPublicKey extends _AccessPublicKey {
-  const _$_AccessPublicKey({@HiveField(0) required this.publicKey}) : super._();
+class _$AccessPublicKeyImpl extends _AccessPublicKey {
+  const _$AccessPublicKeyImpl({@HiveField(0) required this.publicKey})
+      : super._();
 
   @override
   @HiveField(0)
@@ -126,7 +127,7 @@ class _$_AccessPublicKey extends _AccessPublicKey {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AccessPublicKey &&
+            other is _$AccessPublicKeyImpl &&
             (identical(other.publicKey, publicKey) ||
                 other.publicKey == publicKey));
   }
@@ -137,8 +138,9 @@ class _$_AccessPublicKey extends _AccessPublicKey {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AccessPublicKeyCopyWith<_$_AccessPublicKey> get copyWith =>
-      __$$_AccessPublicKeyCopyWithImpl<_$_AccessPublicKey>(this, _$identity);
+  _$$AccessPublicKeyImplCopyWith<_$AccessPublicKeyImpl> get copyWith =>
+      __$$AccessPublicKeyImplCopyWithImpl<_$AccessPublicKeyImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -205,31 +207,31 @@ class _$_AccessPublicKey extends _AccessPublicKey {
 
 abstract class _AccessPublicKey extends AccessRecipient {
   const factory _AccessPublicKey(
-      {@HiveField(0) required final String publicKey}) = _$_AccessPublicKey;
+      {@HiveField(0) required final String publicKey}) = _$AccessPublicKeyImpl;
   const _AccessPublicKey._() : super._();
 
   @HiveField(0)
   String get publicKey;
   @JsonKey(ignore: true)
-  _$$_AccessPublicKeyCopyWith<_$_AccessPublicKey> get copyWith =>
+  _$$AccessPublicKeyImplCopyWith<_$AccessPublicKeyImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_AccessContactCopyWith<$Res> {
-  factory _$$_AccessContactCopyWith(
-          _$_AccessContact value, $Res Function(_$_AccessContact) then) =
-      __$$_AccessContactCopyWithImpl<$Res>;
+abstract class _$$AccessContactImplCopyWith<$Res> {
+  factory _$$AccessContactImplCopyWith(
+          _$AccessContactImpl value, $Res Function(_$AccessContactImpl) then) =
+      __$$AccessContactImplCopyWithImpl<$Res>;
   @useResult
   $Res call({@HiveField(0) Contact contact});
 }
 
 /// @nodoc
-class __$$_AccessContactCopyWithImpl<$Res>
-    extends _$AccessRecipientCopyWithImpl<$Res, _$_AccessContact>
-    implements _$$_AccessContactCopyWith<$Res> {
-  __$$_AccessContactCopyWithImpl(
-      _$_AccessContact _value, $Res Function(_$_AccessContact) _then)
+class __$$AccessContactImplCopyWithImpl<$Res>
+    extends _$AccessRecipientCopyWithImpl<$Res, _$AccessContactImpl>
+    implements _$$AccessContactImplCopyWith<$Res> {
+  __$$AccessContactImplCopyWithImpl(
+      _$AccessContactImpl _value, $Res Function(_$AccessContactImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -237,7 +239,7 @@ class __$$_AccessContactCopyWithImpl<$Res>
   $Res call({
     Object? contact = null,
   }) {
-    return _then(_$_AccessContact(
+    return _then(_$AccessContactImpl(
       contact: null == contact
           ? _value.contact
           : contact // ignore: cast_nullable_to_non_nullable
@@ -251,8 +253,8 @@ class __$$_AccessContactCopyWithImpl<$Res>
 @HiveType(
     adapterName: 'ContactAccessRecipientAdapter',
     typeId: HiveTypeIds.contactAccessRecipient)
-class _$_AccessContact extends _AccessContact {
-  const _$_AccessContact({@HiveField(0) required this.contact}) : super._();
+class _$AccessContactImpl extends _AccessContact {
+  const _$AccessContactImpl({@HiveField(0) required this.contact}) : super._();
 
   @override
   @HiveField(0)
@@ -267,7 +269,7 @@ class _$_AccessContact extends _AccessContact {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AccessContact &&
+            other is _$AccessContactImpl &&
             (identical(other.contact, contact) || other.contact == contact));
   }
 
@@ -277,8 +279,8 @@ class _$_AccessContact extends _AccessContact {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AccessContactCopyWith<_$_AccessContact> get copyWith =>
-      __$$_AccessContactCopyWithImpl<_$_AccessContact>(this, _$identity);
+  _$$AccessContactImplCopyWith<_$AccessContactImpl> get copyWith =>
+      __$$AccessContactImplCopyWithImpl<_$AccessContactImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -345,12 +347,12 @@ class _$_AccessContact extends _AccessContact {
 
 abstract class _AccessContact extends AccessRecipient {
   const factory _AccessContact({@HiveField(0) required final Contact contact}) =
-      _$_AccessContact;
+      _$AccessContactImpl;
   const _AccessContact._() : super._();
 
   @HiveField(0)
   Contact get contact;
   @JsonKey(ignore: true)
-  _$$_AccessContactCopyWith<_$_AccessContact> get copyWith =>
+  _$$AccessContactImplCopyWith<_$AccessContactImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

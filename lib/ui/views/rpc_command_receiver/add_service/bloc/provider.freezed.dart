@@ -74,12 +74,12 @@ class _$AddServiceConfirmationFormStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_AddServiceConfirmationFormStateCopyWith<$Res>
+abstract class _$$AddServiceConfirmationFormStateImplCopyWith<$Res>
     implements $AddServiceConfirmationFormStateCopyWith<$Res> {
-  factory _$$_AddServiceConfirmationFormStateCopyWith(
-          _$_AddServiceConfirmationFormState value,
-          $Res Function(_$_AddServiceConfirmationFormState) then) =
-      __$$_AddServiceConfirmationFormStateCopyWithImpl<$Res>;
+  factory _$$AddServiceConfirmationFormStateImplCopyWith(
+          _$AddServiceConfirmationFormStateImpl value,
+          $Res Function(_$AddServiceConfirmationFormStateImpl) then) =
+      __$$AddServiceConfirmationFormStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({RPCCommand<RPCSendTransactionCommandData> signTransactionCommand});
@@ -90,13 +90,13 @@ abstract class _$$_AddServiceConfirmationFormStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_AddServiceConfirmationFormStateCopyWithImpl<$Res>
+class __$$AddServiceConfirmationFormStateImplCopyWithImpl<$Res>
     extends _$AddServiceConfirmationFormStateCopyWithImpl<$Res,
-        _$_AddServiceConfirmationFormState>
-    implements _$$_AddServiceConfirmationFormStateCopyWith<$Res> {
-  __$$_AddServiceConfirmationFormStateCopyWithImpl(
-      _$_AddServiceConfirmationFormState _value,
-      $Res Function(_$_AddServiceConfirmationFormState) _then)
+        _$AddServiceConfirmationFormStateImpl>
+    implements _$$AddServiceConfirmationFormStateImplCopyWith<$Res> {
+  __$$AddServiceConfirmationFormStateImplCopyWithImpl(
+      _$AddServiceConfirmationFormStateImpl _value,
+      $Res Function(_$AddServiceConfirmationFormStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -104,7 +104,7 @@ class __$$_AddServiceConfirmationFormStateCopyWithImpl<$Res>
   $Res call({
     Object? signTransactionCommand = null,
   }) {
-    return _then(_$_AddServiceConfirmationFormState(
+    return _then(_$AddServiceConfirmationFormStateImpl(
       signTransactionCommand: null == signTransactionCommand
           ? _value.signTransactionCommand
           : signTransactionCommand // ignore: cast_nullable_to_non_nullable
@@ -115,9 +115,9 @@ class __$$_AddServiceConfirmationFormStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AddServiceConfirmationFormState
+class _$AddServiceConfirmationFormStateImpl
     extends _AddServiceConfirmationFormState {
-  const _$_AddServiceConfirmationFormState(
+  const _$AddServiceConfirmationFormStateImpl(
       {required this.signTransactionCommand})
       : super._();
 
@@ -133,7 +133,7 @@ class _$_AddServiceConfirmationFormState
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AddServiceConfirmationFormState &&
+            other is _$AddServiceConfirmationFormStateImpl &&
             (identical(other.signTransactionCommand, signTransactionCommand) ||
                 other.signTransactionCommand == signTransactionCommand));
   }
@@ -144,24 +144,24 @@ class _$_AddServiceConfirmationFormState
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AddServiceConfirmationFormStateCopyWith<
-          _$_AddServiceConfirmationFormState>
-      get copyWith => __$$_AddServiceConfirmationFormStateCopyWithImpl<
-          _$_AddServiceConfirmationFormState>(this, _$identity);
+  _$$AddServiceConfirmationFormStateImplCopyWith<
+          _$AddServiceConfirmationFormStateImpl>
+      get copyWith => __$$AddServiceConfirmationFormStateImplCopyWithImpl<
+          _$AddServiceConfirmationFormStateImpl>(this, _$identity);
 }
 
 abstract class _AddServiceConfirmationFormState
     extends AddServiceConfirmationFormState {
   const factory _AddServiceConfirmationFormState(
       {required final RPCCommand<RPCSendTransactionCommandData>
-          signTransactionCommand}) = _$_AddServiceConfirmationFormState;
+          signTransactionCommand}) = _$AddServiceConfirmationFormStateImpl;
   const _AddServiceConfirmationFormState._() : super._();
 
   @override
   RPCCommand<RPCSendTransactionCommandData> get signTransactionCommand;
   @override
   @JsonKey(ignore: true)
-  _$$_AddServiceConfirmationFormStateCopyWith<
-          _$_AddServiceConfirmationFormState>
+  _$$AddServiceConfirmationFormStateImplCopyWith<
+          _$AddServiceConfirmationFormStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

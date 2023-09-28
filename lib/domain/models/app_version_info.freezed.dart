@@ -79,11 +79,11 @@ class _$AppVersionInfoCopyWithImpl<$Res, $Val extends AppVersionInfo>
 }
 
 /// @nodoc
-abstract class _$$_AppVersionInfoCopyWith<$Res>
+abstract class _$$AppVersionInfoImplCopyWith<$Res>
     implements $AppVersionInfoCopyWith<$Res> {
-  factory _$$_AppVersionInfoCopyWith(
-          _$_AppVersionInfo value, $Res Function(_$_AppVersionInfo) then) =
-      __$$_AppVersionInfoCopyWithImpl<$Res>;
+  factory _$$AppVersionInfoImplCopyWith(_$AppVersionInfoImpl value,
+          $Res Function(_$AppVersionInfoImpl) then) =
+      __$$AppVersionInfoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -94,11 +94,11 @@ abstract class _$$_AppVersionInfoCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_AppVersionInfoCopyWithImpl<$Res>
-    extends _$AppVersionInfoCopyWithImpl<$Res, _$_AppVersionInfo>
-    implements _$$_AppVersionInfoCopyWith<$Res> {
-  __$$_AppVersionInfoCopyWithImpl(
-      _$_AppVersionInfo _value, $Res Function(_$_AppVersionInfo) _then)
+class __$$AppVersionInfoImplCopyWithImpl<$Res>
+    extends _$AppVersionInfoCopyWithImpl<$Res, _$AppVersionInfoImpl>
+    implements _$$AppVersionInfoImplCopyWith<$Res> {
+  __$$AppVersionInfoImplCopyWithImpl(
+      _$AppVersionInfoImpl _value, $Res Function(_$AppVersionInfoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -109,7 +109,7 @@ class __$$_AppVersionInfoCopyWithImpl<$Res>
     Object? canUpdate = null,
     Object? platform = freezed,
   }) {
-    return _then(_$_AppVersionInfo(
+    return _then(_$AppVersionInfoImpl(
       storeVersion: null == storeVersion
           ? _value.storeVersion
           : storeVersion // ignore: cast_nullable_to_non_nullable
@@ -132,8 +132,9 @@ class __$$_AppVersionInfoCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AppVersionInfo extends _AppVersionInfo with DiagnosticableTreeMixin {
-  const _$_AppVersionInfo(
+class _$AppVersionInfoImpl extends _AppVersionInfo
+    with DiagnosticableTreeMixin {
+  const _$AppVersionInfoImpl(
       {required this.storeVersion,
       required this.storeUrl,
       this.canUpdate = false,
@@ -170,7 +171,7 @@ class _$_AppVersionInfo extends _AppVersionInfo with DiagnosticableTreeMixin {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AppVersionInfo &&
+            other is _$AppVersionInfoImpl &&
             (identical(other.storeVersion, storeVersion) ||
                 other.storeVersion == storeVersion) &&
             (identical(other.storeUrl, storeUrl) ||
@@ -188,8 +189,9 @@ class _$_AppVersionInfo extends _AppVersionInfo with DiagnosticableTreeMixin {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AppVersionInfoCopyWith<_$_AppVersionInfo> get copyWith =>
-      __$$_AppVersionInfoCopyWithImpl<_$_AppVersionInfo>(this, _$identity);
+  _$$AppVersionInfoImplCopyWith<_$AppVersionInfoImpl> get copyWith =>
+      __$$AppVersionInfoImplCopyWithImpl<_$AppVersionInfoImpl>(
+          this, _$identity);
 }
 
 abstract class _AppVersionInfo extends AppVersionInfo {
@@ -197,7 +199,7 @@ abstract class _AppVersionInfo extends AppVersionInfo {
       {required final String storeVersion,
       required final String storeUrl,
       final bool canUpdate,
-      final TargetPlatform? platform}) = _$_AppVersionInfo;
+      final TargetPlatform? platform}) = _$AppVersionInfoImpl;
   const _AppVersionInfo._() : super._();
 
   @override
@@ -210,6 +212,6 @@ abstract class _AppVersionInfo extends AppVersionInfo {
   TargetPlatform? get platform;
   @override
   @JsonKey(ignore: true)
-  _$$_AppVersionInfoCopyWith<_$_AppVersionInfo> get copyWith =>
+  _$$AppVersionInfoImplCopyWith<_$AppVersionInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

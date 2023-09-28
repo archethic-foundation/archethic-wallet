@@ -74,22 +74,22 @@ class _$NftCategoryCopyWithImpl<$Res, $Val extends NftCategory>
 }
 
 /// @nodoc
-abstract class _$$_NftCategoryCopyWith<$Res>
+abstract class _$$NftCategoryImplCopyWith<$Res>
     implements $NftCategoryCopyWith<$Res> {
-  factory _$$_NftCategoryCopyWith(
-          _$_NftCategory value, $Res Function(_$_NftCategory) then) =
-      __$$_NftCategoryCopyWithImpl<$Res>;
+  factory _$$NftCategoryImplCopyWith(
+          _$NftCategoryImpl value, $Res Function(_$NftCategoryImpl) then) =
+      __$$NftCategoryImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int id, dynamic name, String image});
 }
 
 /// @nodoc
-class __$$_NftCategoryCopyWithImpl<$Res>
-    extends _$NftCategoryCopyWithImpl<$Res, _$_NftCategory>
-    implements _$$_NftCategoryCopyWith<$Res> {
-  __$$_NftCategoryCopyWithImpl(
-      _$_NftCategory _value, $Res Function(_$_NftCategory) _then)
+class __$$NftCategoryImplCopyWithImpl<$Res>
+    extends _$NftCategoryCopyWithImpl<$Res, _$NftCategoryImpl>
+    implements _$$NftCategoryImplCopyWith<$Res> {
+  __$$NftCategoryImplCopyWithImpl(
+      _$NftCategoryImpl _value, $Res Function(_$NftCategoryImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -99,7 +99,7 @@ class __$$_NftCategoryCopyWithImpl<$Res>
     Object? name = freezed,
     Object? image = null,
   }) {
-    return _then(_$_NftCategory(
+    return _then(_$NftCategoryImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -115,12 +115,12 @@ class __$$_NftCategoryCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_NftCategory extends _NftCategory {
-  const _$_NftCategory({this.id = 0, this.name = '', this.image = ''})
+class _$NftCategoryImpl extends _NftCategory {
+  const _$NftCategoryImpl({this.id = 0, this.name = '', this.image = ''})
       : super._();
 
-  factory _$_NftCategory.fromJson(Map<String, dynamic> json) =>
-      _$$_NftCategoryFromJson(json);
+  factory _$NftCategoryImpl.fromJson(Map<String, dynamic> json) =>
+      _$$NftCategoryImplFromJson(json);
 
   @override
   @JsonKey()
@@ -141,7 +141,7 @@ class _$_NftCategory extends _NftCategory {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_NftCategory &&
+            other is _$NftCategoryImpl &&
             (identical(other.id, id) || other.id == id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             (identical(other.image, image) || other.image == image));
@@ -155,12 +155,12 @@ class _$_NftCategory extends _NftCategory {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_NftCategoryCopyWith<_$_NftCategory> get copyWith =>
-      __$$_NftCategoryCopyWithImpl<_$_NftCategory>(this, _$identity);
+  _$$NftCategoryImplCopyWith<_$NftCategoryImpl> get copyWith =>
+      __$$NftCategoryImplCopyWithImpl<_$NftCategoryImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_NftCategoryToJson(
+    return _$$NftCategoryImplToJson(
       this,
     );
   }
@@ -168,11 +168,13 @@ class _$_NftCategory extends _NftCategory {
 
 abstract class _NftCategory extends NftCategory {
   const factory _NftCategory(
-      {final int id, final dynamic name, final String image}) = _$_NftCategory;
+      {final int id,
+      final dynamic name,
+      final String image}) = _$NftCategoryImpl;
   const _NftCategory._() : super._();
 
   factory _NftCategory.fromJson(Map<String, dynamic> json) =
-      _$_NftCategory.fromJson;
+      _$NftCategoryImpl.fromJson;
 
   @override
   int get id;
@@ -182,6 +184,6 @@ abstract class _NftCategory extends NftCategory {
   String get image;
   @override
   @JsonKey(ignore: true)
-  _$$_NftCategoryCopyWith<_$_NftCategory> get copyWith =>
+  _$$NftCategoryImplCopyWith<_$NftCategoryImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

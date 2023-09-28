@@ -109,11 +109,11 @@ class _$SecuredSettingsCopyWithImpl<$Res, $Val extends SecuredSettings>
 }
 
 /// @nodoc
-abstract class _$$_SecuredSettingsCopyWith<$Res>
+abstract class _$$SecuredSettingsImplCopyWith<$Res>
     implements $SecuredSettingsCopyWith<$Res> {
-  factory _$$_SecuredSettingsCopyWith(
-          _$_SecuredSettings value, $Res Function(_$_SecuredSettings) then) =
-      __$$_SecuredSettingsCopyWithImpl<$Res>;
+  factory _$$SecuredSettingsImplCopyWith(_$SecuredSettingsImpl value,
+          $Res Function(_$SecuredSettingsImpl) then) =
+      __$$SecuredSettingsImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -129,11 +129,11 @@ abstract class _$$_SecuredSettingsCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SecuredSettingsCopyWithImpl<$Res>
-    extends _$SecuredSettingsCopyWithImpl<$Res, _$_SecuredSettings>
-    implements _$$_SecuredSettingsCopyWith<$Res> {
-  __$$_SecuredSettingsCopyWithImpl(
-      _$_SecuredSettings _value, $Res Function(_$_SecuredSettings) _then)
+class __$$SecuredSettingsImplCopyWithImpl<$Res>
+    extends _$SecuredSettingsCopyWithImpl<$Res, _$SecuredSettingsImpl>
+    implements _$$SecuredSettingsImplCopyWith<$Res> {
+  __$$SecuredSettingsImplCopyWithImpl(
+      _$SecuredSettingsImpl _value, $Res Function(_$SecuredSettingsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -146,7 +146,7 @@ class __$$_SecuredSettingsCopyWithImpl<$Res>
     Object? yubikeyClientAPIKey = freezed,
     Object? keychainSecuredInfos = freezed,
   }) {
-    return _then(_$_SecuredSettings(
+    return _then(_$SecuredSettingsImpl(
       seed: freezed == seed
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
@@ -177,8 +177,8 @@ class __$$_SecuredSettingsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SecuredSettings extends _SecuredSettings {
-  const _$_SecuredSettings(
+class _$SecuredSettingsImpl extends _SecuredSettings {
+  const _$SecuredSettingsImpl(
       {this.seed,
       this.pin,
       this.password,
@@ -209,7 +209,7 @@ class _$_SecuredSettings extends _SecuredSettings {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SecuredSettings &&
+            other is _$SecuredSettingsImpl &&
             (identical(other.seed, seed) || other.seed == seed) &&
             (identical(other.pin, pin) || other.pin == pin) &&
             (identical(other.password, password) ||
@@ -229,18 +229,20 @@ class _$_SecuredSettings extends _SecuredSettings {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SecuredSettingsCopyWith<_$_SecuredSettings> get copyWith =>
-      __$$_SecuredSettingsCopyWithImpl<_$_SecuredSettings>(this, _$identity);
+  _$$SecuredSettingsImplCopyWith<_$SecuredSettingsImpl> get copyWith =>
+      __$$SecuredSettingsImplCopyWithImpl<_$SecuredSettingsImpl>(
+          this, _$identity);
 }
 
 abstract class _SecuredSettings extends SecuredSettings {
   const factory _SecuredSettings(
-      {final String? seed,
-      final String? pin,
-      final String? password,
-      final String? yubikeyClientID,
-      final String? yubikeyClientAPIKey,
-      final KeychainSecuredInfos? keychainSecuredInfos}) = _$_SecuredSettings;
+          {final String? seed,
+          final String? pin,
+          final String? password,
+          final String? yubikeyClientID,
+          final String? yubikeyClientAPIKey,
+          final KeychainSecuredInfos? keychainSecuredInfos}) =
+      _$SecuredSettingsImpl;
   const _SecuredSettings._() : super._();
 
   @override
@@ -257,6 +259,6 @@ abstract class _SecuredSettings extends SecuredSettings {
   KeychainSecuredInfos? get keychainSecuredInfos;
   @override
   @JsonKey(ignore: true)
-  _$$_SecuredSettingsCopyWith<_$_SecuredSettings> get copyWith =>
+  _$$SecuredSettingsImplCopyWith<_$SecuredSettingsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

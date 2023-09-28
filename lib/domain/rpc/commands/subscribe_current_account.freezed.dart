@@ -39,29 +39,29 @@ class _$RPCSubscribeCurrentAccountCommandDataCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_RPCSubscribeCurrentAccountCommandDataCopyWith<$Res> {
-  factory _$$_RPCSubscribeCurrentAccountCommandDataCopyWith(
-          _$_RPCSubscribeCurrentAccountCommandData value,
-          $Res Function(_$_RPCSubscribeCurrentAccountCommandData) then) =
-      __$$_RPCSubscribeCurrentAccountCommandDataCopyWithImpl<$Res>;
+abstract class _$$RPCSubscribeCurrentAccountCommandDataImplCopyWith<$Res> {
+  factory _$$RPCSubscribeCurrentAccountCommandDataImplCopyWith(
+          _$RPCSubscribeCurrentAccountCommandDataImpl value,
+          $Res Function(_$RPCSubscribeCurrentAccountCommandDataImpl) then) =
+      __$$RPCSubscribeCurrentAccountCommandDataImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_RPCSubscribeCurrentAccountCommandDataCopyWithImpl<$Res>
+class __$$RPCSubscribeCurrentAccountCommandDataImplCopyWithImpl<$Res>
     extends _$RPCSubscribeCurrentAccountCommandDataCopyWithImpl<$Res,
-        _$_RPCSubscribeCurrentAccountCommandData>
-    implements _$$_RPCSubscribeCurrentAccountCommandDataCopyWith<$Res> {
-  __$$_RPCSubscribeCurrentAccountCommandDataCopyWithImpl(
-      _$_RPCSubscribeCurrentAccountCommandData _value,
-      $Res Function(_$_RPCSubscribeCurrentAccountCommandData) _then)
+        _$RPCSubscribeCurrentAccountCommandDataImpl>
+    implements _$$RPCSubscribeCurrentAccountCommandDataImplCopyWith<$Res> {
+  __$$RPCSubscribeCurrentAccountCommandDataImplCopyWithImpl(
+      _$RPCSubscribeCurrentAccountCommandDataImpl _value,
+      $Res Function(_$RPCSubscribeCurrentAccountCommandDataImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_RPCSubscribeCurrentAccountCommandData
+class _$RPCSubscribeCurrentAccountCommandDataImpl
     extends _RPCSubscribeCurrentAccountCommandData {
-  const _$_RPCSubscribeCurrentAccountCommandData() : super._();
+  const _$RPCSubscribeCurrentAccountCommandDataImpl() : super._();
 
   @override
   String toString() {
@@ -72,7 +72,7 @@ class _$_RPCSubscribeCurrentAccountCommandData
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RPCSubscribeCurrentAccountCommandData);
+            other is _$RPCSubscribeCurrentAccountCommandDataImpl);
   }
 
   @override
@@ -82,6 +82,6 @@ class _$_RPCSubscribeCurrentAccountCommandData
 abstract class _RPCSubscribeCurrentAccountCommandData
     extends RPCSubscribeCurrentAccountCommandData {
   const factory _RPCSubscribeCurrentAccountCommandData() =
-      _$_RPCSubscribeCurrentAccountCommandData;
+      _$RPCSubscribeCurrentAccountCommandDataImpl;
   const _RPCSubscribeCurrentAccountCommandData._() : super._();
 }

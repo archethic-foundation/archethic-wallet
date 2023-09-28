@@ -6,9 +6,9 @@ part of 'keychain_secured_infos.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_KeychainSecuredInfos _$$_KeychainSecuredInfosFromJson(
+_$KeychainSecuredInfosImpl _$$KeychainSecuredInfosImplFromJson(
         Map<String, dynamic> json) =>
-    _$_KeychainSecuredInfos(
+    _$KeychainSecuredInfosImpl(
       seed: (json['seed'] as List<dynamic>).map((e) => e as int).toList(),
       version: json['version'] as int,
       services: (json['services'] as Map<String, dynamic>?)?.map(
@@ -20,8 +20,8 @@ _$_KeychainSecuredInfos _$$_KeychainSecuredInfosFromJson(
           const {},
     );
 
-Map<String, dynamic> _$$_KeychainSecuredInfosToJson(
-        _$_KeychainSecuredInfos instance) =>
+Map<String, dynamic> _$$KeychainSecuredInfosImplToJson(
+        _$KeychainSecuredInfosImpl instance) =>
     <String, dynamic>{
       'seed': instance.seed,
       'version': instance.version,

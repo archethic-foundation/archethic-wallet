@@ -122,11 +122,11 @@ class _$AddTokenFormStateCopyWithImpl<$Res, $Val extends AddTokenFormState>
 }
 
 /// @nodoc
-abstract class _$$_AddTokenFormStateCopyWith<$Res>
+abstract class _$$AddTokenFormStateImplCopyWith<$Res>
     implements $AddTokenFormStateCopyWith<$Res> {
-  factory _$$_AddTokenFormStateCopyWith(_$_AddTokenFormState value,
-          $Res Function(_$_AddTokenFormState) then) =
-      __$$_AddTokenFormStateCopyWithImpl<$Res>;
+  factory _$$AddTokenFormStateImplCopyWith(_$AddTokenFormStateImpl value,
+          $Res Function(_$AddTokenFormStateImpl) then) =
+      __$$AddTokenFormStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -143,11 +143,11 @@ abstract class _$$_AddTokenFormStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_AddTokenFormStateCopyWithImpl<$Res>
-    extends _$AddTokenFormStateCopyWithImpl<$Res, _$_AddTokenFormState>
-    implements _$$_AddTokenFormStateCopyWith<$Res> {
-  __$$_AddTokenFormStateCopyWithImpl(
-      _$_AddTokenFormState _value, $Res Function(_$_AddTokenFormState) _then)
+class __$$AddTokenFormStateImplCopyWithImpl<$Res>
+    extends _$AddTokenFormStateCopyWithImpl<$Res, _$AddTokenFormStateImpl>
+    implements _$$AddTokenFormStateImplCopyWith<$Res> {
+  __$$AddTokenFormStateImplCopyWithImpl(_$AddTokenFormStateImpl _value,
+      $Res Function(_$AddTokenFormStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -164,7 +164,7 @@ class __$$_AddTokenFormStateCopyWithImpl<$Res>
     Object? errorInitialSupplyText = null,
     Object? errorAmountText = null,
   }) {
-    return _then(_$_AddTokenFormState(
+    return _then(_$AddTokenFormStateImpl(
       addTokenProcessStep: null == addTokenProcessStep
           ? _value.addTokenProcessStep
           : addTokenProcessStep // ignore: cast_nullable_to_non_nullable
@@ -211,8 +211,8 @@ class __$$_AddTokenFormStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AddTokenFormState extends _AddTokenFormState {
-  const _$_AddTokenFormState(
+class _$AddTokenFormStateImpl extends _AddTokenFormState {
+  const _$AddTokenFormStateImpl(
       {this.addTokenProcessStep = AddTokenProcessStep.form,
       required this.feeEstimation,
       required this.accountBalance,
@@ -263,7 +263,7 @@ class _$_AddTokenFormState extends _AddTokenFormState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AddTokenFormState &&
+            other is _$AddTokenFormStateImpl &&
             (identical(other.addTokenProcessStep, addTokenProcessStep) ||
                 other.addTokenProcessStep == addTokenProcessStep) &&
             (identical(other.feeEstimation, feeEstimation) ||
@@ -301,8 +301,8 @@ class _$_AddTokenFormState extends _AddTokenFormState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AddTokenFormStateCopyWith<_$_AddTokenFormState> get copyWith =>
-      __$$_AddTokenFormStateCopyWithImpl<_$_AddTokenFormState>(
+  _$$AddTokenFormStateImplCopyWith<_$AddTokenFormStateImpl> get copyWith =>
+      __$$AddTokenFormStateImplCopyWithImpl<_$AddTokenFormStateImpl>(
           this, _$identity);
 }
 
@@ -317,7 +317,7 @@ abstract class _AddTokenFormState extends AddTokenFormState {
       final String errorNameText,
       final String errorSymbolText,
       final String errorInitialSupplyText,
-      final String errorAmountText}) = _$_AddTokenFormState;
+      final String errorAmountText}) = _$AddTokenFormStateImpl;
   const _AddTokenFormState._() : super._();
 
   @override
@@ -342,6 +342,6 @@ abstract class _AddTokenFormState extends AddTokenFormState {
   String get errorAmountText;
   @override
   @JsonKey(ignore: true)
-  _$$_AddTokenFormStateCopyWith<_$_AddTokenFormState> get copyWith =>
+  _$$AddTokenFormStateImplCopyWith<_$AddTokenFormStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -70,23 +70,25 @@ class _$KeychainServiceKeyPairCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_KeychainServiceKeyPairCopyWith<$Res>
+abstract class _$$KeychainServiceKeyPairImplCopyWith<$Res>
     implements $KeychainServiceKeyPairCopyWith<$Res> {
-  factory _$$_KeychainServiceKeyPairCopyWith(_$_KeychainServiceKeyPair value,
-          $Res Function(_$_KeychainServiceKeyPair) then) =
-      __$$_KeychainServiceKeyPairCopyWithImpl<$Res>;
+  factory _$$KeychainServiceKeyPairImplCopyWith(
+          _$KeychainServiceKeyPairImpl value,
+          $Res Function(_$KeychainServiceKeyPairImpl) then) =
+      __$$KeychainServiceKeyPairImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({List<int> privateKey, List<int> publicKey});
 }
 
 /// @nodoc
-class __$$_KeychainServiceKeyPairCopyWithImpl<$Res>
+class __$$KeychainServiceKeyPairImplCopyWithImpl<$Res>
     extends _$KeychainServiceKeyPairCopyWithImpl<$Res,
-        _$_KeychainServiceKeyPair>
-    implements _$$_KeychainServiceKeyPairCopyWith<$Res> {
-  __$$_KeychainServiceKeyPairCopyWithImpl(_$_KeychainServiceKeyPair _value,
-      $Res Function(_$_KeychainServiceKeyPair) _then)
+        _$KeychainServiceKeyPairImpl>
+    implements _$$KeychainServiceKeyPairImplCopyWith<$Res> {
+  __$$KeychainServiceKeyPairImplCopyWithImpl(
+      _$KeychainServiceKeyPairImpl _value,
+      $Res Function(_$KeychainServiceKeyPairImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -95,7 +97,7 @@ class __$$_KeychainServiceKeyPairCopyWithImpl<$Res>
     Object? privateKey = null,
     Object? publicKey = null,
   }) {
-    return _then(_$_KeychainServiceKeyPair(
+    return _then(_$KeychainServiceKeyPairImpl(
       privateKey: null == privateKey
           ? _value._privateKey
           : privateKey // ignore: cast_nullable_to_non_nullable
@@ -110,15 +112,15 @@ class __$$_KeychainServiceKeyPairCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_KeychainServiceKeyPair extends _KeychainServiceKeyPair {
-  const _$_KeychainServiceKeyPair(
+class _$KeychainServiceKeyPairImpl extends _KeychainServiceKeyPair {
+  const _$KeychainServiceKeyPairImpl(
       {required final List<int> privateKey, required final List<int> publicKey})
       : _privateKey = privateKey,
         _publicKey = publicKey,
         super._();
 
-  factory _$_KeychainServiceKeyPair.fromJson(Map<String, dynamic> json) =>
-      _$$_KeychainServiceKeyPairFromJson(json);
+  factory _$KeychainServiceKeyPairImpl.fromJson(Map<String, dynamic> json) =>
+      _$$KeychainServiceKeyPairImplFromJson(json);
 
   final List<int> _privateKey;
   @override
@@ -145,7 +147,7 @@ class _$_KeychainServiceKeyPair extends _KeychainServiceKeyPair {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_KeychainServiceKeyPair &&
+            other is _$KeychainServiceKeyPairImpl &&
             const DeepCollectionEquality()
                 .equals(other._privateKey, _privateKey) &&
             const DeepCollectionEquality()
@@ -162,13 +164,13 @@ class _$_KeychainServiceKeyPair extends _KeychainServiceKeyPair {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_KeychainServiceKeyPairCopyWith<_$_KeychainServiceKeyPair> get copyWith =>
-      __$$_KeychainServiceKeyPairCopyWithImpl<_$_KeychainServiceKeyPair>(
-          this, _$identity);
+  _$$KeychainServiceKeyPairImplCopyWith<_$KeychainServiceKeyPairImpl>
+      get copyWith => __$$KeychainServiceKeyPairImplCopyWithImpl<
+          _$KeychainServiceKeyPairImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_KeychainServiceKeyPairToJson(
+    return _$$KeychainServiceKeyPairImplToJson(
       this,
     );
   }
@@ -177,11 +179,11 @@ class _$_KeychainServiceKeyPair extends _KeychainServiceKeyPair {
 abstract class _KeychainServiceKeyPair extends KeychainServiceKeyPair {
   const factory _KeychainServiceKeyPair(
       {required final List<int> privateKey,
-      required final List<int> publicKey}) = _$_KeychainServiceKeyPair;
+      required final List<int> publicKey}) = _$KeychainServiceKeyPairImpl;
   const _KeychainServiceKeyPair._() : super._();
 
   factory _KeychainServiceKeyPair.fromJson(Map<String, dynamic> json) =
-      _$_KeychainServiceKeyPair.fromJson;
+      _$KeychainServiceKeyPairImpl.fromJson;
 
   @override
   List<int> get privateKey;
@@ -189,6 +191,6 @@ abstract class _KeychainServiceKeyPair extends KeychainServiceKeyPair {
   List<int> get publicKey;
   @override
   @JsonKey(ignore: true)
-  _$$_KeychainServiceKeyPairCopyWith<_$_KeychainServiceKeyPair> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$KeychainServiceKeyPairImplCopyWith<_$KeychainServiceKeyPairImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

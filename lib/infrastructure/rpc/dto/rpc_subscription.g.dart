@@ -6,27 +6,27 @@ part of 'rpc_subscription.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_RPCUnsubscribeCommandDTO _$$_RPCUnsubscribeCommandDTOFromJson(
+_$RPCUnsubscribeCommandDTOImpl _$$RPCUnsubscribeCommandDTOImplFromJson(
         Map<String, dynamic> json) =>
-    _$_RPCUnsubscribeCommandDTO(
+    _$RPCUnsubscribeCommandDTOImpl(
       subscriptionId: json['subscriptionId'] as String,
     );
 
-Map<String, dynamic> _$$_RPCUnsubscribeCommandDTOToJson(
-        _$_RPCUnsubscribeCommandDTO instance) =>
+Map<String, dynamic> _$$RPCUnsubscribeCommandDTOImplToJson(
+        _$RPCUnsubscribeCommandDTOImpl instance) =>
     <String, dynamic>{
       'subscriptionId': instance.subscriptionId,
     };
 
-_$_RPCSubscriptionUpdateDTO _$$_RPCSubscriptionUpdateDTOFromJson(
+_$RPCSubscriptionUpdateDTOImpl _$$RPCSubscriptionUpdateDTOImplFromJson(
         Map<String, dynamic> json) =>
-    _$_RPCSubscriptionUpdateDTO(
+    _$RPCSubscriptionUpdateDTOImpl(
       subscriptionId: json['subscriptionId'] as String,
       data: json['data'] as Map<String, dynamic>,
     );
 
-Map<String, dynamic> _$$_RPCSubscriptionUpdateDTOToJson(
-        _$_RPCSubscriptionUpdateDTO instance) =>
+Map<String, dynamic> _$$RPCSubscriptionUpdateDTOImplToJson(
+        _$RPCSubscriptionUpdateDTOImpl instance) =>
     <String, dynamic>{
       'subscriptionId': instance.subscriptionId,
       'data': instance.data,

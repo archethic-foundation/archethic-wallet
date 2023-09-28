@@ -84,10 +84,11 @@ class _$AppWalletCopyWithImpl<$Res, $Val extends AppWallet>
 }
 
 /// @nodoc
-abstract class _$$_AppWalletCopyWith<$Res> implements $AppWalletCopyWith<$Res> {
-  factory _$$_AppWalletCopyWith(
-          _$_AppWallet value, $Res Function(_$_AppWallet) then) =
-      __$$_AppWalletCopyWithImpl<$Res>;
+abstract class _$$AppWalletImplCopyWith<$Res>
+    implements $AppWalletCopyWith<$Res> {
+  factory _$$AppWalletImplCopyWith(
+          _$AppWalletImpl value, $Res Function(_$AppWalletImpl) then) =
+      __$$AppWalletImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -100,11 +101,11 @@ abstract class _$$_AppWalletCopyWith<$Res> implements $AppWalletCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_AppWalletCopyWithImpl<$Res>
-    extends _$AppWalletCopyWithImpl<$Res, _$_AppWallet>
-    implements _$$_AppWalletCopyWith<$Res> {
-  __$$_AppWalletCopyWithImpl(
-      _$_AppWallet _value, $Res Function(_$_AppWallet) _then)
+class __$$AppWalletImplCopyWithImpl<$Res>
+    extends _$AppWalletCopyWithImpl<$Res, _$AppWalletImpl>
+    implements _$$AppWalletImplCopyWith<$Res> {
+  __$$AppWalletImplCopyWithImpl(
+      _$AppWalletImpl _value, $Res Function(_$AppWalletImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -114,7 +115,7 @@ class __$$_AppWalletCopyWithImpl<$Res>
     Object? appKeychain = null,
     Object? keychainSecuredInfos = null,
   }) {
-    return _then(_$_AppWallet(
+    return _then(_$AppWalletImpl(
       seed: null == seed
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
@@ -133,8 +134,8 @@ class __$$_AppWalletCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AppWallet extends _AppWallet {
-  const _$_AppWallet(
+class _$AppWalletImpl extends _AppWallet {
+  const _$AppWalletImpl(
       {required this.seed,
       required this.appKeychain,
       required this.keychainSecuredInfos})
@@ -157,7 +158,7 @@ class _$_AppWallet extends _AppWallet {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AppWallet &&
+            other is _$AppWalletImpl &&
             (identical(other.seed, seed) || other.seed == seed) &&
             (identical(other.appKeychain, appKeychain) ||
                 other.appKeychain == appKeychain) &&
@@ -172,15 +173,16 @@ class _$_AppWallet extends _AppWallet {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AppWalletCopyWith<_$_AppWallet> get copyWith =>
-      __$$_AppWalletCopyWithImpl<_$_AppWallet>(this, _$identity);
+  _$$AppWalletImplCopyWith<_$AppWalletImpl> get copyWith =>
+      __$$AppWalletImplCopyWithImpl<_$AppWalletImpl>(this, _$identity);
 }
 
 abstract class _AppWallet extends AppWallet {
   const factory _AppWallet(
-      {required final String seed,
-      required final AppKeychain appKeychain,
-      required final KeychainSecuredInfos keychainSecuredInfos}) = _$_AppWallet;
+          {required final String seed,
+          required final AppKeychain appKeychain,
+          required final KeychainSecuredInfos keychainSecuredInfos}) =
+      _$AppWalletImpl;
   const _AppWallet._() : super._();
 
   @override
@@ -191,6 +193,6 @@ abstract class _AppWallet extends AppWallet {
   KeychainSecuredInfos get keychainSecuredInfos;
   @override
   @JsonKey(ignore: true)
-  _$$_AppWalletCopyWith<_$_AppWallet> get copyWith =>
+  _$$AppWalletImplCopyWith<_$AppWalletImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

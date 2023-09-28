@@ -6,17 +6,17 @@ part of 'keychain_service_keypair.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_KeychainServiceKeyPair _$$_KeychainServiceKeyPairFromJson(
+_$KeychainServiceKeyPairImpl _$$KeychainServiceKeyPairImplFromJson(
         Map<String, dynamic> json) =>
-    _$_KeychainServiceKeyPair(
+    _$KeychainServiceKeyPairImpl(
       privateKey:
           (json['privateKey'] as List<dynamic>).map((e) => e as int).toList(),
       publicKey:
           (json['publicKey'] as List<dynamic>).map((e) => e as int).toList(),
     );
 
-Map<String, dynamic> _$$_KeychainServiceKeyPairToJson(
-        _$_KeychainServiceKeyPair instance) =>
+Map<String, dynamic> _$$KeychainServiceKeyPairImplToJson(
+        _$KeychainServiceKeyPairImpl instance) =>
     <String, dynamic>{
       'privateKey': instance.privateKey,
       'publicKey': instance.publicKey,

@@ -113,11 +113,11 @@ class _$DiscussionCopyWithImpl<$Res, $Val extends Discussion>
 }
 
 /// @nodoc
-abstract class _$$_DiscussionCopyWith<$Res>
+abstract class _$$DiscussionImplCopyWith<$Res>
     implements $DiscussionCopyWith<$Res> {
-  factory _$$_DiscussionCopyWith(
-          _$_Discussion value, $Res Function(_$_Discussion) then) =
-      __$$_DiscussionCopyWithImpl<$Res>;
+  factory _$$DiscussionImplCopyWith(
+          _$DiscussionImpl value, $Res Function(_$DiscussionImpl) then) =
+      __$$DiscussionImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -133,11 +133,11 @@ abstract class _$$_DiscussionCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_DiscussionCopyWithImpl<$Res>
-    extends _$DiscussionCopyWithImpl<$Res, _$_Discussion>
-    implements _$$_DiscussionCopyWith<$Res> {
-  __$$_DiscussionCopyWithImpl(
-      _$_Discussion _value, $Res Function(_$_Discussion) _then)
+class __$$DiscussionImplCopyWithImpl<$Res>
+    extends _$DiscussionCopyWithImpl<$Res, _$DiscussionImpl>
+    implements _$$DiscussionImplCopyWith<$Res> {
+  __$$DiscussionImplCopyWithImpl(
+      _$DiscussionImpl _value, $Res Function(_$DiscussionImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -150,7 +150,7 @@ class __$$_DiscussionCopyWithImpl<$Res>
     Object? creationDate = null,
     Object? lastMessage = freezed,
   }) {
-    return _then(_$_Discussion(
+    return _then(_$DiscussionImpl(
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -182,8 +182,8 @@ class __$$_DiscussionCopyWithImpl<$Res>
 /// @nodoc
 
 @HiveType(typeId: HiveTypeIds.discussion)
-class _$_Discussion extends _Discussion {
-  const _$_Discussion(
+class _$DiscussionImpl extends _Discussion {
+  const _$DiscussionImpl(
       {@HiveField(0) required this.address,
       @HiveField(1) this.name,
       @HiveField(2) required final List<String> membersPubKeys,
@@ -234,7 +234,7 @@ class _$_Discussion extends _Discussion {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Discussion &&
+            other is _$DiscussionImpl &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.name, name) || other.name == name) &&
             const DeepCollectionEquality()
@@ -260,8 +260,8 @@ class _$_Discussion extends _Discussion {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_DiscussionCopyWith<_$_Discussion> get copyWith =>
-      __$$_DiscussionCopyWithImpl<_$_Discussion>(this, _$identity);
+  _$$DiscussionImplCopyWith<_$DiscussionImpl> get copyWith =>
+      __$$DiscussionImplCopyWithImpl<_$DiscussionImpl>(this, _$identity);
 }
 
 abstract class _Discussion extends Discussion {
@@ -271,7 +271,7 @@ abstract class _Discussion extends Discussion {
       @HiveField(2) required final List<String> membersPubKeys,
       @HiveField(3) required final List<String> adminsPubKeys,
       @HiveField(4) required final DateTime creationDate,
-      @HiveField(5) final DiscussionMessage? lastMessage}) = _$_Discussion;
+      @HiveField(5) final DiscussionMessage? lastMessage}) = _$DiscussionImpl;
   const _Discussion._() : super._();
 
   @override
@@ -294,6 +294,6 @@ abstract class _Discussion extends Discussion {
   DiscussionMessage? get lastMessage;
   @override
   @JsonKey(ignore: true)
-  _$$_DiscussionCopyWith<_$_Discussion> get copyWith =>
+  _$$DiscussionImplCopyWith<_$DiscussionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

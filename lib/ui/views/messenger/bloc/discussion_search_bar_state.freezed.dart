@@ -94,12 +94,12 @@ class _$DiscussionSearchBarStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_DiscussionSearchBarStateCopyWith<$Res>
+abstract class _$$DiscussionSearchBarStateImplCopyWith<$Res>
     implements $DiscussionSearchBarStateCopyWith<$Res> {
-  factory _$$_DiscussionSearchBarStateCopyWith(
-          _$_DiscussionSearchBarState value,
-          $Res Function(_$_DiscussionSearchBarState) then) =
-      __$$_DiscussionSearchBarStateCopyWithImpl<$Res>;
+  factory _$$DiscussionSearchBarStateImplCopyWith(
+          _$DiscussionSearchBarStateImpl value,
+          $Res Function(_$DiscussionSearchBarStateImpl) then) =
+      __$$DiscussionSearchBarStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -113,12 +113,13 @@ abstract class _$$_DiscussionSearchBarStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_DiscussionSearchBarStateCopyWithImpl<$Res>
+class __$$DiscussionSearchBarStateImplCopyWithImpl<$Res>
     extends _$DiscussionSearchBarStateCopyWithImpl<$Res,
-        _$_DiscussionSearchBarState>
-    implements _$$_DiscussionSearchBarStateCopyWith<$Res> {
-  __$$_DiscussionSearchBarStateCopyWithImpl(_$_DiscussionSearchBarState _value,
-      $Res Function(_$_DiscussionSearchBarState) _then)
+        _$DiscussionSearchBarStateImpl>
+    implements _$$DiscussionSearchBarStateImplCopyWith<$Res> {
+  __$$DiscussionSearchBarStateImplCopyWithImpl(
+      _$DiscussionSearchBarStateImpl _value,
+      $Res Function(_$DiscussionSearchBarStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -129,7 +130,7 @@ class __$$_DiscussionSearchBarStateCopyWithImpl<$Res>
     Object? error = null,
     Object? discussion = freezed,
   }) {
-    return _then(_$_DiscussionSearchBarState(
+    return _then(_$DiscussionSearchBarStateImpl(
       searchCriteria: null == searchCriteria
           ? _value.searchCriteria
           : searchCriteria // ignore: cast_nullable_to_non_nullable
@@ -152,8 +153,8 @@ class __$$_DiscussionSearchBarStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_DiscussionSearchBarState extends _DiscussionSearchBarState {
-  const _$_DiscussionSearchBarState(
+class _$DiscussionSearchBarStateImpl extends _DiscussionSearchBarState {
+  const _$DiscussionSearchBarStateImpl(
       {this.searchCriteria = '',
       this.loading = false,
       this.error = '',
@@ -181,7 +182,7 @@ class _$_DiscussionSearchBarState extends _DiscussionSearchBarState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_DiscussionSearchBarState &&
+            other is _$DiscussionSearchBarStateImpl &&
             (identical(other.searchCriteria, searchCriteria) ||
                 other.searchCriteria == searchCriteria) &&
             (identical(other.loading, loading) || other.loading == loading) &&
@@ -197,9 +198,9 @@ class _$_DiscussionSearchBarState extends _DiscussionSearchBarState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_DiscussionSearchBarStateCopyWith<_$_DiscussionSearchBarState>
-      get copyWith => __$$_DiscussionSearchBarStateCopyWithImpl<
-          _$_DiscussionSearchBarState>(this, _$identity);
+  _$$DiscussionSearchBarStateImplCopyWith<_$DiscussionSearchBarStateImpl>
+      get copyWith => __$$DiscussionSearchBarStateImplCopyWithImpl<
+          _$DiscussionSearchBarStateImpl>(this, _$identity);
 }
 
 abstract class _DiscussionSearchBarState extends DiscussionSearchBarState {
@@ -207,7 +208,7 @@ abstract class _DiscussionSearchBarState extends DiscussionSearchBarState {
       {final String searchCriteria,
       final bool loading,
       final String error,
-      final Discussion? discussion}) = _$_DiscussionSearchBarState;
+      final Discussion? discussion}) = _$DiscussionSearchBarStateImpl;
   const _DiscussionSearchBarState._() : super._();
 
   @override
@@ -220,6 +221,6 @@ abstract class _DiscussionSearchBarState extends DiscussionSearchBarState {
   Discussion? get discussion;
   @override
   @JsonKey(ignore: true)
-  _$$_DiscussionSearchBarStateCopyWith<_$_DiscussionSearchBarState>
+  _$$DiscussionSearchBarStateImplCopyWith<_$DiscussionSearchBarStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

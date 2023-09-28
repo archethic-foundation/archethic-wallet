@@ -75,20 +75,20 @@ class _$CredentialsCopyWithImpl<$Res, $Val extends Credentials>
 }
 
 /// @nodoc
-abstract class _$$PinCredentialsCopyWith<$Res> {
-  factory _$$PinCredentialsCopyWith(
-          _$PinCredentials value, $Res Function(_$PinCredentials) then) =
-      __$$PinCredentialsCopyWithImpl<$Res>;
+abstract class _$$PinCredentialsImplCopyWith<$Res> {
+  factory _$$PinCredentialsImplCopyWith(_$PinCredentialsImpl value,
+          $Res Function(_$PinCredentialsImpl) then) =
+      __$$PinCredentialsImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String pin});
 }
 
 /// @nodoc
-class __$$PinCredentialsCopyWithImpl<$Res>
-    extends _$CredentialsCopyWithImpl<$Res, _$PinCredentials>
-    implements _$$PinCredentialsCopyWith<$Res> {
-  __$$PinCredentialsCopyWithImpl(
-      _$PinCredentials _value, $Res Function(_$PinCredentials) _then)
+class __$$PinCredentialsImplCopyWithImpl<$Res>
+    extends _$CredentialsCopyWithImpl<$Res, _$PinCredentialsImpl>
+    implements _$$PinCredentialsImplCopyWith<$Res> {
+  __$$PinCredentialsImplCopyWithImpl(
+      _$PinCredentialsImpl _value, $Res Function(_$PinCredentialsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -96,7 +96,7 @@ class __$$PinCredentialsCopyWithImpl<$Res>
   $Res call({
     Object? pin = null,
   }) {
-    return _then(_$PinCredentials(
+    return _then(_$PinCredentialsImpl(
       pin: null == pin
           ? _value.pin
           : pin // ignore: cast_nullable_to_non_nullable
@@ -107,8 +107,8 @@ class __$$PinCredentialsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PinCredentials extends PinCredentials {
-  const _$PinCredentials({required this.pin}) : super._();
+class _$PinCredentialsImpl extends PinCredentials {
+  const _$PinCredentialsImpl({required this.pin}) : super._();
 
   @override
   final String pin;
@@ -122,7 +122,7 @@ class _$PinCredentials extends PinCredentials {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PinCredentials &&
+            other is _$PinCredentialsImpl &&
             (identical(other.pin, pin) || other.pin == pin));
   }
 
@@ -132,8 +132,9 @@ class _$PinCredentials extends PinCredentials {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$PinCredentialsCopyWith<_$PinCredentials> get copyWith =>
-      __$$PinCredentialsCopyWithImpl<_$PinCredentials>(this, _$identity);
+  _$$PinCredentialsImplCopyWith<_$PinCredentialsImpl> get copyWith =>
+      __$$PinCredentialsImplCopyWithImpl<_$PinCredentialsImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -199,30 +200,31 @@ class _$PinCredentials extends PinCredentials {
 }
 
 abstract class PinCredentials extends Credentials {
-  const factory PinCredentials({required final String pin}) = _$PinCredentials;
+  const factory PinCredentials({required final String pin}) =
+      _$PinCredentialsImpl;
   const PinCredentials._() : super._();
 
   String get pin;
   @JsonKey(ignore: true)
-  _$$PinCredentialsCopyWith<_$PinCredentials> get copyWith =>
+  _$$PinCredentialsImplCopyWith<_$PinCredentialsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$PasswordCredentialsCopyWith<$Res> {
-  factory _$$PasswordCredentialsCopyWith(_$PasswordCredentials value,
-          $Res Function(_$PasswordCredentials) then) =
-      __$$PasswordCredentialsCopyWithImpl<$Res>;
+abstract class _$$PasswordCredentialsImplCopyWith<$Res> {
+  factory _$$PasswordCredentialsImplCopyWith(_$PasswordCredentialsImpl value,
+          $Res Function(_$PasswordCredentialsImpl) then) =
+      __$$PasswordCredentialsImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String password, String seed});
 }
 
 /// @nodoc
-class __$$PasswordCredentialsCopyWithImpl<$Res>
-    extends _$CredentialsCopyWithImpl<$Res, _$PasswordCredentials>
-    implements _$$PasswordCredentialsCopyWith<$Res> {
-  __$$PasswordCredentialsCopyWithImpl(
-      _$PasswordCredentials _value, $Res Function(_$PasswordCredentials) _then)
+class __$$PasswordCredentialsImplCopyWithImpl<$Res>
+    extends _$CredentialsCopyWithImpl<$Res, _$PasswordCredentialsImpl>
+    implements _$$PasswordCredentialsImplCopyWith<$Res> {
+  __$$PasswordCredentialsImplCopyWithImpl(_$PasswordCredentialsImpl _value,
+      $Res Function(_$PasswordCredentialsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -231,7 +233,7 @@ class __$$PasswordCredentialsCopyWithImpl<$Res>
     Object? password = null,
     Object? seed = null,
   }) {
-    return _then(_$PasswordCredentials(
+    return _then(_$PasswordCredentialsImpl(
       password: null == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
@@ -246,8 +248,8 @@ class __$$PasswordCredentialsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PasswordCredentials extends PasswordCredentials {
-  const _$PasswordCredentials({required this.password, required this.seed})
+class _$PasswordCredentialsImpl extends PasswordCredentials {
+  const _$PasswordCredentialsImpl({required this.password, required this.seed})
       : super._();
 
   @override
@@ -264,7 +266,7 @@ class _$PasswordCredentials extends PasswordCredentials {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PasswordCredentials &&
+            other is _$PasswordCredentialsImpl &&
             (identical(other.password, password) ||
                 other.password == password) &&
             (identical(other.seed, seed) || other.seed == seed));
@@ -276,8 +278,8 @@ class _$PasswordCredentials extends PasswordCredentials {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$PasswordCredentialsCopyWith<_$PasswordCredentials> get copyWith =>
-      __$$PasswordCredentialsCopyWithImpl<_$PasswordCredentials>(
+  _$$PasswordCredentialsImplCopyWith<_$PasswordCredentialsImpl> get copyWith =>
+      __$$PasswordCredentialsImplCopyWithImpl<_$PasswordCredentialsImpl>(
           this, _$identity);
 
   @override
@@ -346,13 +348,13 @@ class _$PasswordCredentials extends PasswordCredentials {
 abstract class PasswordCredentials extends Credentials {
   const factory PasswordCredentials(
       {required final String password,
-      required final String seed}) = _$PasswordCredentials;
+      required final String seed}) = _$PasswordCredentialsImpl;
   const PasswordCredentials._() : super._();
 
   String get password;
   String get seed;
   @JsonKey(ignore: true)
-  _$$PasswordCredentialsCopyWith<_$PasswordCredentials> get copyWith =>
+  _$$PasswordCredentialsImplCopyWith<_$PasswordCredentialsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -422,11 +424,12 @@ class _$AuthenticationSettingsCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_AuthenticationSettingsCopyWith<$Res>
+abstract class _$$AuthenticationSettingsImplCopyWith<$Res>
     implements $AuthenticationSettingsCopyWith<$Res> {
-  factory _$$_AuthenticationSettingsCopyWith(_$_AuthenticationSettings value,
-          $Res Function(_$_AuthenticationSettings) then) =
-      __$$_AuthenticationSettingsCopyWithImpl<$Res>;
+  factory _$$AuthenticationSettingsImplCopyWith(
+          _$AuthenticationSettingsImpl value,
+          $Res Function(_$AuthenticationSettingsImpl) then) =
+      __$$AuthenticationSettingsImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -437,12 +440,13 @@ abstract class _$$_AuthenticationSettingsCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_AuthenticationSettingsCopyWithImpl<$Res>
+class __$$AuthenticationSettingsImplCopyWithImpl<$Res>
     extends _$AuthenticationSettingsCopyWithImpl<$Res,
-        _$_AuthenticationSettings>
-    implements _$$_AuthenticationSettingsCopyWith<$Res> {
-  __$$_AuthenticationSettingsCopyWithImpl(_$_AuthenticationSettings _value,
-      $Res Function(_$_AuthenticationSettings) _then)
+        _$AuthenticationSettingsImpl>
+    implements _$$AuthenticationSettingsImplCopyWith<$Res> {
+  __$$AuthenticationSettingsImplCopyWithImpl(
+      _$AuthenticationSettingsImpl _value,
+      $Res Function(_$AuthenticationSettingsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -453,7 +457,7 @@ class __$$_AuthenticationSettingsCopyWithImpl<$Res>
     Object? lock = null,
     Object? lockTimeout = null,
   }) {
-    return _then(_$_AuthenticationSettings(
+    return _then(_$AuthenticationSettingsImpl(
       authenticationMethod: null == authenticationMethod
           ? _value.authenticationMethod
           : authenticationMethod // ignore: cast_nullable_to_non_nullable
@@ -476,8 +480,8 @@ class __$$_AuthenticationSettingsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AuthenticationSettings extends _AuthenticationSettings {
-  const _$_AuthenticationSettings(
+class _$AuthenticationSettingsImpl extends _AuthenticationSettings {
+  const _$AuthenticationSettingsImpl(
       {required this.authenticationMethod,
       required this.pinPadShuffle,
       required this.lock,
@@ -502,7 +506,7 @@ class _$_AuthenticationSettings extends _AuthenticationSettings {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AuthenticationSettings &&
+            other is _$AuthenticationSettingsImpl &&
             (identical(other.authenticationMethod, authenticationMethod) ||
                 other.authenticationMethod == authenticationMethod) &&
             (identical(other.pinPadShuffle, pinPadShuffle) ||
@@ -519,9 +523,9 @@ class _$_AuthenticationSettings extends _AuthenticationSettings {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AuthenticationSettingsCopyWith<_$_AuthenticationSettings> get copyWith =>
-      __$$_AuthenticationSettingsCopyWithImpl<_$_AuthenticationSettings>(
-          this, _$identity);
+  _$$AuthenticationSettingsImplCopyWith<_$AuthenticationSettingsImpl>
+      get copyWith => __$$AuthenticationSettingsImplCopyWithImpl<
+          _$AuthenticationSettingsImpl>(this, _$identity);
 }
 
 abstract class _AuthenticationSettings extends AuthenticationSettings {
@@ -530,7 +534,7 @@ abstract class _AuthenticationSettings extends AuthenticationSettings {
           required final bool pinPadShuffle,
           required final UnlockOption lock,
           required final LockTimeoutOption lockTimeout}) =
-      _$_AuthenticationSettings;
+      _$AuthenticationSettingsImpl;
   const _AuthenticationSettings._() : super._();
 
   @override
@@ -543,6 +547,6 @@ abstract class _AuthenticationSettings extends AuthenticationSettings {
   LockTimeoutOption get lockTimeout;
   @override
   @JsonKey(ignore: true)
-  _$$_AuthenticationSettingsCopyWith<_$_AuthenticationSettings> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$AuthenticationSettingsImplCopyWith<_$AuthenticationSettingsImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

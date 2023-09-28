@@ -87,12 +87,12 @@ class _$RPCSendTransactionCommandDataCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_RPCSendTransactionCommandDataCopyWith<$Res>
+abstract class _$$RPCSendTransactionCommandDataImplCopyWith<$Res>
     implements $RPCSendTransactionCommandDataCopyWith<$Res> {
-  factory _$$_RPCSendTransactionCommandDataCopyWith(
-          _$_RPCSendTransactionCommandData value,
-          $Res Function(_$_RPCSendTransactionCommandData) then) =
-      __$$_RPCSendTransactionCommandDataCopyWithImpl<$Res>;
+  factory _$$RPCSendTransactionCommandDataImplCopyWith(
+          _$RPCSendTransactionCommandDataImpl value,
+          $Res Function(_$RPCSendTransactionCommandDataImpl) then) =
+      __$$RPCSendTransactionCommandDataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({Data data, String type, int version});
@@ -102,13 +102,13 @@ abstract class _$$_RPCSendTransactionCommandDataCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_RPCSendTransactionCommandDataCopyWithImpl<$Res>
+class __$$RPCSendTransactionCommandDataImplCopyWithImpl<$Res>
     extends _$RPCSendTransactionCommandDataCopyWithImpl<$Res,
-        _$_RPCSendTransactionCommandData>
-    implements _$$_RPCSendTransactionCommandDataCopyWith<$Res> {
-  __$$_RPCSendTransactionCommandDataCopyWithImpl(
-      _$_RPCSendTransactionCommandData _value,
-      $Res Function(_$_RPCSendTransactionCommandData) _then)
+        _$RPCSendTransactionCommandDataImpl>
+    implements _$$RPCSendTransactionCommandDataImplCopyWith<$Res> {
+  __$$RPCSendTransactionCommandDataImplCopyWithImpl(
+      _$RPCSendTransactionCommandDataImpl _value,
+      $Res Function(_$RPCSendTransactionCommandDataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -118,7 +118,7 @@ class __$$_RPCSendTransactionCommandDataCopyWithImpl<$Res>
     Object? type = null,
     Object? version = null,
   }) {
-    return _then(_$_RPCSendTransactionCommandData(
+    return _then(_$RPCSendTransactionCommandDataImpl(
       data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
@@ -137,8 +137,9 @@ class __$$_RPCSendTransactionCommandDataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RPCSendTransactionCommandData extends _RPCSendTransactionCommandData {
-  const _$_RPCSendTransactionCommandData(
+class _$RPCSendTransactionCommandDataImpl
+    extends _RPCSendTransactionCommandData {
+  const _$RPCSendTransactionCommandDataImpl(
       {required this.data, required this.type, required this.version})
       : super._();
 
@@ -163,7 +164,7 @@ class _$_RPCSendTransactionCommandData extends _RPCSendTransactionCommandData {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RPCSendTransactionCommandData &&
+            other is _$RPCSendTransactionCommandDataImpl &&
             (identical(other.data, data) || other.data == data) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.version, version) || other.version == version));
@@ -175,9 +176,10 @@ class _$_RPCSendTransactionCommandData extends _RPCSendTransactionCommandData {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RPCSendTransactionCommandDataCopyWith<_$_RPCSendTransactionCommandData>
-      get copyWith => __$$_RPCSendTransactionCommandDataCopyWithImpl<
-          _$_RPCSendTransactionCommandData>(this, _$identity);
+  _$$RPCSendTransactionCommandDataImplCopyWith<
+          _$RPCSendTransactionCommandDataImpl>
+      get copyWith => __$$RPCSendTransactionCommandDataImplCopyWithImpl<
+          _$RPCSendTransactionCommandDataImpl>(this, _$identity);
 }
 
 abstract class _RPCSendTransactionCommandData
@@ -185,7 +187,7 @@ abstract class _RPCSendTransactionCommandData
   const factory _RPCSendTransactionCommandData(
       {required final Data data,
       required final String type,
-      required final int version}) = _$_RPCSendTransactionCommandData;
+      required final int version}) = _$RPCSendTransactionCommandDataImpl;
   const _RPCSendTransactionCommandData._() : super._();
 
   @override
@@ -202,6 +204,7 @@ abstract class _RPCSendTransactionCommandData
   int get version;
   @override
   @JsonKey(ignore: true)
-  _$$_RPCSendTransactionCommandDataCopyWith<_$_RPCSendTransactionCommandData>
+  _$$RPCSendTransactionCommandDataImplCopyWith<
+          _$RPCSendTransactionCommandDataImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

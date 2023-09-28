@@ -69,22 +69,22 @@ class _$MarketPriceCopyWithImpl<$Res, $Val extends MarketPrice>
 }
 
 /// @nodoc
-abstract class _$$_MarketPriceCopyWith<$Res>
+abstract class _$$MarketPriceImplCopyWith<$Res>
     implements $MarketPriceCopyWith<$Res> {
-  factory _$$_MarketPriceCopyWith(
-          _$_MarketPrice value, $Res Function(_$_MarketPrice) then) =
-      __$$_MarketPriceCopyWithImpl<$Res>;
+  factory _$$MarketPriceImplCopyWith(
+          _$MarketPriceImpl value, $Res Function(_$MarketPriceImpl) then) =
+      __$$MarketPriceImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({double amount, int lastLoading, bool useOracle});
 }
 
 /// @nodoc
-class __$$_MarketPriceCopyWithImpl<$Res>
-    extends _$MarketPriceCopyWithImpl<$Res, _$_MarketPrice>
-    implements _$$_MarketPriceCopyWith<$Res> {
-  __$$_MarketPriceCopyWithImpl(
-      _$_MarketPrice _value, $Res Function(_$_MarketPrice) _then)
+class __$$MarketPriceImplCopyWithImpl<$Res>
+    extends _$MarketPriceCopyWithImpl<$Res, _$MarketPriceImpl>
+    implements _$$MarketPriceImplCopyWith<$Res> {
+  __$$MarketPriceImplCopyWithImpl(
+      _$MarketPriceImpl _value, $Res Function(_$MarketPriceImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -94,7 +94,7 @@ class __$$_MarketPriceCopyWithImpl<$Res>
     Object? lastLoading = null,
     Object? useOracle = null,
   }) {
-    return _then(_$_MarketPrice(
+    return _then(_$MarketPriceImpl(
       amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
@@ -113,8 +113,8 @@ class __$$_MarketPriceCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_MarketPrice extends _MarketPrice {
-  const _$_MarketPrice(
+class _$MarketPriceImpl extends _MarketPrice {
+  const _$MarketPriceImpl(
       {required this.amount,
       required this.lastLoading,
       required this.useOracle})
@@ -136,7 +136,7 @@ class _$_MarketPrice extends _MarketPrice {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MarketPrice &&
+            other is _$MarketPriceImpl &&
             (identical(other.amount, amount) || other.amount == amount) &&
             (identical(other.lastLoading, lastLoading) ||
                 other.lastLoading == lastLoading) &&
@@ -150,15 +150,15 @@ class _$_MarketPrice extends _MarketPrice {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MarketPriceCopyWith<_$_MarketPrice> get copyWith =>
-      __$$_MarketPriceCopyWithImpl<_$_MarketPrice>(this, _$identity);
+  _$$MarketPriceImplCopyWith<_$MarketPriceImpl> get copyWith =>
+      __$$MarketPriceImplCopyWithImpl<_$MarketPriceImpl>(this, _$identity);
 }
 
 abstract class _MarketPrice extends MarketPrice {
   const factory _MarketPrice(
       {required final double amount,
       required final int lastLoading,
-      required final bool useOracle}) = _$_MarketPrice;
+      required final bool useOracle}) = _$MarketPriceImpl;
   const _MarketPrice._() : super._();
 
   @override
@@ -169,6 +169,6 @@ abstract class _MarketPrice extends MarketPrice {
   bool get useOracle;
   @override
   @JsonKey(ignore: true)
-  _$$_MarketPriceCopyWith<_$_MarketPrice> get copyWith =>
+  _$$MarketPriceImplCopyWith<_$MarketPriceImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

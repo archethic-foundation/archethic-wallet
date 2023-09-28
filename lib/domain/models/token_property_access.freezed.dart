@@ -57,22 +57,22 @@ class _$TokenPropertyAccessCopyWithImpl<$Res, $Val extends TokenPropertyAccess>
 }
 
 /// @nodoc
-abstract class _$$_TokenPropertyAccessCopyWith<$Res>
+abstract class _$$TokenPropertyAccessImplCopyWith<$Res>
     implements $TokenPropertyAccessCopyWith<$Res> {
-  factory _$$_TokenPropertyAccessCopyWith(_$_TokenPropertyAccess value,
-          $Res Function(_$_TokenPropertyAccess) then) =
-      __$$_TokenPropertyAccessCopyWithImpl<$Res>;
+  factory _$$TokenPropertyAccessImplCopyWith(_$TokenPropertyAccessImpl value,
+          $Res Function(_$TokenPropertyAccessImpl) then) =
+      __$$TokenPropertyAccessImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String publicKey});
 }
 
 /// @nodoc
-class __$$_TokenPropertyAccessCopyWithImpl<$Res>
-    extends _$TokenPropertyAccessCopyWithImpl<$Res, _$_TokenPropertyAccess>
-    implements _$$_TokenPropertyAccessCopyWith<$Res> {
-  __$$_TokenPropertyAccessCopyWithImpl(_$_TokenPropertyAccess _value,
-      $Res Function(_$_TokenPropertyAccess) _then)
+class __$$TokenPropertyAccessImplCopyWithImpl<$Res>
+    extends _$TokenPropertyAccessCopyWithImpl<$Res, _$TokenPropertyAccessImpl>
+    implements _$$TokenPropertyAccessImplCopyWith<$Res> {
+  __$$TokenPropertyAccessImplCopyWithImpl(_$TokenPropertyAccessImpl _value,
+      $Res Function(_$TokenPropertyAccessImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -80,7 +80,7 @@ class __$$_TokenPropertyAccessCopyWithImpl<$Res>
   $Res call({
     Object? publicKey = null,
   }) {
-    return _then(_$_TokenPropertyAccess(
+    return _then(_$TokenPropertyAccessImpl(
       publicKey: null == publicKey
           ? _value.publicKey
           : publicKey // ignore: cast_nullable_to_non_nullable
@@ -91,8 +91,8 @@ class __$$_TokenPropertyAccessCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TokenPropertyAccess extends _TokenPropertyAccess {
-  const _$_TokenPropertyAccess({required this.publicKey}) : super._();
+class _$TokenPropertyAccessImpl extends _TokenPropertyAccess {
+  const _$TokenPropertyAccessImpl({required this.publicKey}) : super._();
 
   @override
   final String publicKey;
@@ -106,7 +106,7 @@ class _$_TokenPropertyAccess extends _TokenPropertyAccess {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TokenPropertyAccess &&
+            other is _$TokenPropertyAccessImpl &&
             (identical(other.publicKey, publicKey) ||
                 other.publicKey == publicKey));
   }
@@ -117,20 +117,20 @@ class _$_TokenPropertyAccess extends _TokenPropertyAccess {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TokenPropertyAccessCopyWith<_$_TokenPropertyAccess> get copyWith =>
-      __$$_TokenPropertyAccessCopyWithImpl<_$_TokenPropertyAccess>(
+  _$$TokenPropertyAccessImplCopyWith<_$TokenPropertyAccessImpl> get copyWith =>
+      __$$TokenPropertyAccessImplCopyWithImpl<_$TokenPropertyAccessImpl>(
           this, _$identity);
 }
 
 abstract class _TokenPropertyAccess extends TokenPropertyAccess {
   const factory _TokenPropertyAccess({required final String publicKey}) =
-      _$_TokenPropertyAccess;
+      _$TokenPropertyAccessImpl;
   const _TokenPropertyAccess._() : super._();
 
   @override
   String get publicKey;
   @override
   @JsonKey(ignore: true)
-  _$$_TokenPropertyAccessCopyWith<_$_TokenPropertyAccess> get copyWith =>
+  _$$TokenPropertyAccessImplCopyWith<_$TokenPropertyAccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

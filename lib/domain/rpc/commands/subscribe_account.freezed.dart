@@ -60,25 +60,25 @@ class _$RPCSubscribeAccountCommandDataCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_RPCSubscribeAccountCommandDataCopyWith<$Res>
+abstract class _$$RPCSubscribeAccountCommandDataImplCopyWith<$Res>
     implements $RPCSubscribeAccountCommandDataCopyWith<$Res> {
-  factory _$$_RPCSubscribeAccountCommandDataCopyWith(
-          _$_RPCSubscribeAccountCommandData value,
-          $Res Function(_$_RPCSubscribeAccountCommandData) then) =
-      __$$_RPCSubscribeAccountCommandDataCopyWithImpl<$Res>;
+  factory _$$RPCSubscribeAccountCommandDataImplCopyWith(
+          _$RPCSubscribeAccountCommandDataImpl value,
+          $Res Function(_$RPCSubscribeAccountCommandDataImpl) then) =
+      __$$RPCSubscribeAccountCommandDataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String accountName});
 }
 
 /// @nodoc
-class __$$_RPCSubscribeAccountCommandDataCopyWithImpl<$Res>
+class __$$RPCSubscribeAccountCommandDataImplCopyWithImpl<$Res>
     extends _$RPCSubscribeAccountCommandDataCopyWithImpl<$Res,
-        _$_RPCSubscribeAccountCommandData>
-    implements _$$_RPCSubscribeAccountCommandDataCopyWith<$Res> {
-  __$$_RPCSubscribeAccountCommandDataCopyWithImpl(
-      _$_RPCSubscribeAccountCommandData _value,
-      $Res Function(_$_RPCSubscribeAccountCommandData) _then)
+        _$RPCSubscribeAccountCommandDataImpl>
+    implements _$$RPCSubscribeAccountCommandDataImplCopyWith<$Res> {
+  __$$RPCSubscribeAccountCommandDataImplCopyWithImpl(
+      _$RPCSubscribeAccountCommandDataImpl _value,
+      $Res Function(_$RPCSubscribeAccountCommandDataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -86,7 +86,7 @@ class __$$_RPCSubscribeAccountCommandDataCopyWithImpl<$Res>
   $Res call({
     Object? accountName = null,
   }) {
-    return _then(_$_RPCSubscribeAccountCommandData(
+    return _then(_$RPCSubscribeAccountCommandDataImpl(
       accountName: null == accountName
           ? _value.accountName
           : accountName // ignore: cast_nullable_to_non_nullable
@@ -97,9 +97,9 @@ class __$$_RPCSubscribeAccountCommandDataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RPCSubscribeAccountCommandData
+class _$RPCSubscribeAccountCommandDataImpl
     extends _RPCSubscribeAccountCommandData {
-  const _$_RPCSubscribeAccountCommandData({required this.accountName})
+  const _$RPCSubscribeAccountCommandDataImpl({required this.accountName})
       : super._();
 
   @override
@@ -114,7 +114,7 @@ class _$_RPCSubscribeAccountCommandData
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RPCSubscribeAccountCommandData &&
+            other is _$RPCSubscribeAccountCommandDataImpl &&
             (identical(other.accountName, accountName) ||
                 other.accountName == accountName));
   }
@@ -125,21 +125,24 @@ class _$_RPCSubscribeAccountCommandData
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RPCSubscribeAccountCommandDataCopyWith<_$_RPCSubscribeAccountCommandData>
-      get copyWith => __$$_RPCSubscribeAccountCommandDataCopyWithImpl<
-          _$_RPCSubscribeAccountCommandData>(this, _$identity);
+  _$$RPCSubscribeAccountCommandDataImplCopyWith<
+          _$RPCSubscribeAccountCommandDataImpl>
+      get copyWith => __$$RPCSubscribeAccountCommandDataImplCopyWithImpl<
+          _$RPCSubscribeAccountCommandDataImpl>(this, _$identity);
 }
 
 abstract class _RPCSubscribeAccountCommandData
     extends RPCSubscribeAccountCommandData {
   const factory _RPCSubscribeAccountCommandData(
-      {required final String accountName}) = _$_RPCSubscribeAccountCommandData;
+          {required final String accountName}) =
+      _$RPCSubscribeAccountCommandDataImpl;
   const _RPCSubscribeAccountCommandData._() : super._();
 
   @override
   String get accountName;
   @override
   @JsonKey(ignore: true)
-  _$$_RPCSubscribeAccountCommandDataCopyWith<_$_RPCSubscribeAccountCommandData>
+  _$$RPCSubscribeAccountCommandDataImplCopyWith<
+          _$RPCSubscribeAccountCommandDataImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

@@ -91,11 +91,11 @@ class _$TokenTransferWalletCopyWithImpl<$Res, $Val extends TokenTransferWallet>
 }
 
 /// @nodoc
-abstract class _$$_TokenTransferWalletCopyWith<$Res>
+abstract class _$$TokenTransferWalletImplCopyWith<$Res>
     implements $TokenTransferWalletCopyWith<$Res> {
-  factory _$$_TokenTransferWalletCopyWith(_$_TokenTransferWallet value,
-          $Res Function(_$_TokenTransferWallet) then) =
-      __$$_TokenTransferWalletCopyWithImpl<$Res>;
+  factory _$$TokenTransferWalletImplCopyWith(_$TokenTransferWalletImpl value,
+          $Res Function(_$TokenTransferWalletImpl) then) =
+      __$$TokenTransferWalletImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -107,11 +107,11 @@ abstract class _$$_TokenTransferWalletCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_TokenTransferWalletCopyWithImpl<$Res>
-    extends _$TokenTransferWalletCopyWithImpl<$Res, _$_TokenTransferWallet>
-    implements _$$_TokenTransferWalletCopyWith<$Res> {
-  __$$_TokenTransferWalletCopyWithImpl(_$_TokenTransferWallet _value,
-      $Res Function(_$_TokenTransferWallet) _then)
+class __$$TokenTransferWalletImplCopyWithImpl<$Res>
+    extends _$TokenTransferWalletCopyWithImpl<$Res, _$TokenTransferWalletImpl>
+    implements _$$TokenTransferWalletImplCopyWith<$Res> {
+  __$$TokenTransferWalletImplCopyWithImpl(_$TokenTransferWalletImpl _value,
+      $Res Function(_$TokenTransferWalletImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -123,7 +123,7 @@ class __$$_TokenTransferWalletCopyWithImpl<$Res>
     Object? tokenId = freezed,
     Object? toContactName = freezed,
   }) {
-    return _then(_$_TokenTransferWallet(
+    return _then(_$TokenTransferWalletImpl(
       amount: freezed == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
@@ -150,8 +150,8 @@ class __$$_TokenTransferWalletCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_TokenTransferWallet extends _TokenTransferWallet {
-  const _$_TokenTransferWallet(
+class _$TokenTransferWalletImpl extends _TokenTransferWallet {
+  const _$TokenTransferWalletImpl(
       {this.amount,
       this.to,
       this.tokenAddress,
@@ -159,8 +159,8 @@ class _$_TokenTransferWallet extends _TokenTransferWallet {
       this.toContactName})
       : super._();
 
-  factory _$_TokenTransferWallet.fromJson(Map<String, dynamic> json) =>
-      _$$_TokenTransferWalletFromJson(json);
+  factory _$TokenTransferWalletImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TokenTransferWalletImplFromJson(json);
 
   @override
   final int? amount;
@@ -182,7 +182,7 @@ class _$_TokenTransferWallet extends _TokenTransferWallet {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TokenTransferWallet &&
+            other is _$TokenTransferWalletImpl &&
             (identical(other.amount, amount) || other.amount == amount) &&
             (identical(other.to, to) || other.to == to) &&
             (identical(other.tokenAddress, tokenAddress) ||
@@ -200,13 +200,13 @@ class _$_TokenTransferWallet extends _TokenTransferWallet {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TokenTransferWalletCopyWith<_$_TokenTransferWallet> get copyWith =>
-      __$$_TokenTransferWalletCopyWithImpl<_$_TokenTransferWallet>(
+  _$$TokenTransferWalletImplCopyWith<_$TokenTransferWalletImpl> get copyWith =>
+      __$$TokenTransferWalletImplCopyWithImpl<_$TokenTransferWalletImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TokenTransferWalletToJson(
+    return _$$TokenTransferWalletImplToJson(
       this,
     );
   }
@@ -218,11 +218,11 @@ abstract class _TokenTransferWallet extends TokenTransferWallet {
       final String? to,
       final String? tokenAddress,
       final int? tokenId,
-      final String? toContactName}) = _$_TokenTransferWallet;
+      final String? toContactName}) = _$TokenTransferWalletImpl;
   const _TokenTransferWallet._() : super._();
 
   factory _TokenTransferWallet.fromJson(Map<String, dynamic> json) =
-      _$_TokenTransferWallet.fromJson;
+      _$TokenTransferWalletImpl.fromJson;
 
   @override
   int? get amount;
@@ -236,6 +236,6 @@ abstract class _TokenTransferWallet extends TokenTransferWallet {
   String? get toContactName;
   @override
   @JsonKey(ignore: true)
-  _$$_TokenTransferWalletCopyWith<_$_TokenTransferWallet> get copyWith =>
+  _$$TokenTransferWalletImplCopyWith<_$TokenTransferWalletImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

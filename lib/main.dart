@@ -4,11 +4,11 @@ import 'dart:developer' as dev;
 import 'dart:io';
 
 import 'package:aewallet/application/authentication/authentication.dart';
+import 'package:aewallet/application/migrations/migration_manager.dart';
 import 'package:aewallet/application/notification/providers.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/application/version_manager.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/domain/repositories/settings.dart';
@@ -409,7 +409,9 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
       await initializeProviders();
       await checkLoggedIn();
       await SecurityManager().checkDeviceSecurity(ref, context);
-      ref.read(VersionProviders.checkCurrentVersion);
+      await ref
+          .read(LocalDataMigrationProviders.localDataMigration.notifier)
+          .migrateLocalData();
     });
   }
 

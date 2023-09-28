@@ -79,11 +79,11 @@ class _$NftSearchBarStateCopyWithImpl<$Res, $Val extends NftSearchBarState>
 }
 
 /// @nodoc
-abstract class _$$_NftSearchBarStateCopyWith<$Res>
+abstract class _$$NftSearchBarStateImplCopyWith<$Res>
     implements $NftSearchBarStateCopyWith<$Res> {
-  factory _$$_NftSearchBarStateCopyWith(_$_NftSearchBarState value,
-          $Res Function(_$_NftSearchBarState) then) =
-      __$$_NftSearchBarStateCopyWithImpl<$Res>;
+  factory _$$NftSearchBarStateImplCopyWith(_$NftSearchBarStateImpl value,
+          $Res Function(_$NftSearchBarStateImpl) then) =
+      __$$NftSearchBarStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -94,11 +94,11 @@ abstract class _$$_NftSearchBarStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_NftSearchBarStateCopyWithImpl<$Res>
-    extends _$NftSearchBarStateCopyWithImpl<$Res, _$_NftSearchBarState>
-    implements _$$_NftSearchBarStateCopyWith<$Res> {
-  __$$_NftSearchBarStateCopyWithImpl(
-      _$_NftSearchBarState _value, $Res Function(_$_NftSearchBarState) _then)
+class __$$NftSearchBarStateImplCopyWithImpl<$Res>
+    extends _$NftSearchBarStateCopyWithImpl<$Res, _$NftSearchBarStateImpl>
+    implements _$$NftSearchBarStateImplCopyWith<$Res> {
+  __$$NftSearchBarStateImplCopyWithImpl(_$NftSearchBarStateImpl _value,
+      $Res Function(_$NftSearchBarStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -109,7 +109,7 @@ class __$$_NftSearchBarStateCopyWithImpl<$Res>
     Object? error = null,
     Object? tokenInformation = freezed,
   }) {
-    return _then(_$_NftSearchBarState(
+    return _then(_$NftSearchBarStateImpl(
       searchCriteria: null == searchCriteria
           ? _value.searchCriteria
           : searchCriteria // ignore: cast_nullable_to_non_nullable
@@ -132,8 +132,8 @@ class __$$_NftSearchBarStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_NftSearchBarState extends _NftSearchBarState {
-  const _$_NftSearchBarState(
+class _$NftSearchBarStateImpl extends _NftSearchBarState {
+  const _$NftSearchBarStateImpl(
       {this.searchCriteria = '',
       this.loading = false,
       this.error = '',
@@ -161,7 +161,7 @@ class _$_NftSearchBarState extends _NftSearchBarState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_NftSearchBarState &&
+            other is _$NftSearchBarStateImpl &&
             (identical(other.searchCriteria, searchCriteria) ||
                 other.searchCriteria == searchCriteria) &&
             (identical(other.loading, loading) || other.loading == loading) &&
@@ -177,8 +177,8 @@ class _$_NftSearchBarState extends _NftSearchBarState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_NftSearchBarStateCopyWith<_$_NftSearchBarState> get copyWith =>
-      __$$_NftSearchBarStateCopyWithImpl<_$_NftSearchBarState>(
+  _$$NftSearchBarStateImplCopyWith<_$NftSearchBarStateImpl> get copyWith =>
+      __$$NftSearchBarStateImplCopyWithImpl<_$NftSearchBarStateImpl>(
           this, _$identity);
 }
 
@@ -187,7 +187,7 @@ abstract class _NftSearchBarState extends NftSearchBarState {
       {final String searchCriteria,
       final bool loading,
       final String error,
-      final TokenInformation? tokenInformation}) = _$_NftSearchBarState;
+      final TokenInformation? tokenInformation}) = _$NftSearchBarStateImpl;
   const _NftSearchBarState._() : super._();
 
   @override
@@ -200,6 +200,6 @@ abstract class _NftSearchBarState extends NftSearchBarState {
   TokenInformation? get tokenInformation;
   @override
   @JsonKey(ignore: true)
-  _$$_NftSearchBarStateCopyWith<_$_NftSearchBarState> get copyWith =>
+  _$$NftSearchBarStateImplCopyWith<_$NftSearchBarStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

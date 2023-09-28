@@ -92,11 +92,12 @@ class _$SendTransactionCommandCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_SendTransactionCommandCopyWith<$Res>
+abstract class _$$SendTransactionCommandImplCopyWith<$Res>
     implements $SendTransactionCommandCopyWith<$Res> {
-  factory _$$_SendTransactionCommandCopyWith(_$_SendTransactionCommand value,
-          $Res Function(_$_SendTransactionCommand) then) =
-      __$$_SendTransactionCommandCopyWithImpl<$Res>;
+  factory _$$SendTransactionCommandImplCopyWith(
+          _$SendTransactionCommandImpl value,
+          $Res Function(_$SendTransactionCommandImpl) then) =
+      __$$SendTransactionCommandImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({Account senderAccount, Data data, String type, int version});
@@ -106,12 +107,13 @@ abstract class _$$_SendTransactionCommandCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SendTransactionCommandCopyWithImpl<$Res>
+class __$$SendTransactionCommandImplCopyWithImpl<$Res>
     extends _$SendTransactionCommandCopyWithImpl<$Res,
-        _$_SendTransactionCommand>
-    implements _$$_SendTransactionCommandCopyWith<$Res> {
-  __$$_SendTransactionCommandCopyWithImpl(_$_SendTransactionCommand _value,
-      $Res Function(_$_SendTransactionCommand) _then)
+        _$SendTransactionCommandImpl>
+    implements _$$SendTransactionCommandImplCopyWith<$Res> {
+  __$$SendTransactionCommandImplCopyWithImpl(
+      _$SendTransactionCommandImpl _value,
+      $Res Function(_$SendTransactionCommandImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -122,7 +124,7 @@ class __$$_SendTransactionCommandCopyWithImpl<$Res>
     Object? type = null,
     Object? version = null,
   }) {
-    return _then(_$_SendTransactionCommand(
+    return _then(_$SendTransactionCommandImpl(
       senderAccount: null == senderAccount
           ? _value.senderAccount
           : senderAccount // ignore: cast_nullable_to_non_nullable
@@ -145,8 +147,8 @@ class __$$_SendTransactionCommandCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SendTransactionCommand extends _SendTransactionCommand {
-  const _$_SendTransactionCommand(
+class _$SendTransactionCommandImpl extends _SendTransactionCommand {
+  const _$SendTransactionCommandImpl(
       {required this.senderAccount,
       required this.data,
       required this.type,
@@ -177,7 +179,7 @@ class _$_SendTransactionCommand extends _SendTransactionCommand {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SendTransactionCommand &&
+            other is _$SendTransactionCommandImpl &&
             (identical(other.senderAccount, senderAccount) ||
                 other.senderAccount == senderAccount) &&
             (identical(other.data, data) || other.data == data) &&
@@ -192,9 +194,9 @@ class _$_SendTransactionCommand extends _SendTransactionCommand {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SendTransactionCommandCopyWith<_$_SendTransactionCommand> get copyWith =>
-      __$$_SendTransactionCommandCopyWithImpl<_$_SendTransactionCommand>(
-          this, _$identity);
+  _$$SendTransactionCommandImplCopyWith<_$SendTransactionCommandImpl>
+      get copyWith => __$$SendTransactionCommandImplCopyWithImpl<
+          _$SendTransactionCommandImpl>(this, _$identity);
 }
 
 abstract class _SendTransactionCommand extends SendTransactionCommand {
@@ -202,7 +204,7 @@ abstract class _SendTransactionCommand extends SendTransactionCommand {
       {required final Account senderAccount,
       required final Data data,
       required final String type,
-      required final int version}) = _$_SendTransactionCommand;
+      required final int version}) = _$SendTransactionCommandImpl;
   const _SendTransactionCommand._() : super._();
 
   @override
@@ -221,6 +223,6 @@ abstract class _SendTransactionCommand extends SendTransactionCommand {
   int get version;
   @override
   @JsonKey(ignore: true)
-  _$$_SendTransactionCommandCopyWith<_$_SendTransactionCommand> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$SendTransactionCommandImplCopyWith<_$SendTransactionCommandImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

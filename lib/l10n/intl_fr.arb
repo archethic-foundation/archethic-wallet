@@ -579,5 +579,7 @@
 	"areYouSureLeaveDiscussion": "Êtes-vous sûr de vouloir quitter la discussion ?",
 	"youAreNoLongPartOfDiscussion": "Vous ne faites plus partie de la discussion, vous ne pouvez donc plus poster de messages",
 	"doYouWantNewUsersReadOldMessages": "Autoriser les nouveaux membres à voir les messages précédents ?",
-	"youHaveBeenDeletedFromADiscussion": "Vous avez été supprimé d'une discussion"
+	"youHaveBeenDeletedFromADiscussion": "Vous avez été supprimé d'une discussion",
+	"youHaveBeenAddedTOADiscussion": "Vous avez été ajouté à une discussion",
+	"localDataMigrationMessage": "Mise à jour de votre application en cours.\nVeuillez patienter..."
 }

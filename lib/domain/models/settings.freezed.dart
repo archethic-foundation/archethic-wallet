@@ -157,10 +157,11 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
 }
 
 /// @nodoc
-abstract class _$$_SettingsCopyWith<$Res> implements $SettingsCopyWith<$Res> {
-  factory _$$_SettingsCopyWith(
-          _$_Settings value, $Res Function(_$_Settings) then) =
-      __$$_SettingsCopyWithImpl<$Res>;
+abstract class _$$SettingsImplCopyWith<$Res>
+    implements $SettingsCopyWith<$Res> {
+  factory _$$SettingsImplCopyWith(
+          _$SettingsImpl value, $Res Function(_$SettingsImpl) then) =
+      __$$SettingsImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -182,11 +183,11 @@ abstract class _$$_SettingsCopyWith<$Res> implements $SettingsCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_SettingsCopyWithImpl<$Res>
-    extends _$SettingsCopyWithImpl<$Res, _$_Settings>
-    implements _$$_SettingsCopyWith<$Res> {
-  __$$_SettingsCopyWithImpl(
-      _$_Settings _value, $Res Function(_$_Settings) _then)
+class __$$SettingsImplCopyWithImpl<$Res>
+    extends _$SettingsCopyWithImpl<$Res, _$SettingsImpl>
+    implements _$$SettingsImplCopyWith<$Res> {
+  __$$SettingsImplCopyWithImpl(
+      _$SettingsImpl _value, $Res Function(_$SettingsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -208,7 +209,7 @@ class __$$_SettingsCopyWithImpl<$Res>
     Object? priceChartIntervalOption = null,
     Object? theme = null,
   }) {
-    return _then(_$_Settings(
+    return _then(_$SettingsImpl(
       currency: null == currency
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
@@ -275,8 +276,8 @@ class __$$_SettingsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Settings extends _Settings {
-  const _$_Settings(
+class _$SettingsImpl extends _Settings {
+  const _$SettingsImpl(
       {required this.currency,
       required this.primaryCurrency,
       required this.language,
@@ -334,7 +335,7 @@ class _$_Settings extends _Settings {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Settings &&
+            other is _$SettingsImpl &&
             (identical(other.currency, currency) ||
                 other.currency == currency) &&
             (identical(other.primaryCurrency, primaryCurrency) ||
@@ -388,8 +389,8 @@ class _$_Settings extends _Settings {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SettingsCopyWith<_$_Settings> get copyWith =>
-      __$$_SettingsCopyWithImpl<_$_Settings>(this, _$identity);
+  _$$SettingsImplCopyWith<_$SettingsImpl> get copyWith =>
+      __$$SettingsImplCopyWithImpl<_$SettingsImpl>(this, _$identity);
 }
 
 abstract class _Settings extends Settings {
@@ -408,7 +409,7 @@ abstract class _Settings extends Settings {
       required final int mainScreenCurrentPage,
       required final bool showPriceChart,
       required final MarketPriceHistoryInterval priceChartIntervalOption,
-      required final ThemeOptions theme}) = _$_Settings;
+      required final ThemeOptions theme}) = _$SettingsImpl;
   const _Settings._() : super._();
 
   @override
@@ -443,6 +444,6 @@ abstract class _Settings extends Settings {
   ThemeOptions get theme;
   @override
   @JsonKey(ignore: true)
-  _$$_SettingsCopyWith<_$_Settings> get copyWith =>
+  _$$SettingsImplCopyWith<_$SettingsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
