@@ -1,12 +1,9 @@
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_header.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/popup_dialog.dart';
+import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/tab_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -57,12 +54,25 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet> {
                 NFTHeader(
                   currentNftCategoryIndex: nftCreation.currentNftCategoryIndex,
                   onPressBack: () async {
-                    await showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (BuildContext context) {
-                        return const _NFTCreationBackPopup();
+                    AppDialogs.showConfirmDialog(
+                      context,
+                      ref,
+                      AppLocalizations.of(context)!.exitNFTCreationProcessTitle,
+                      AppLocalizations.of(context)!
+                          .exitNFTCreationProcessSubtitle,
+                      AppLocalizations.of(context)!.yes,
+                      () {
+                        /**
+                   * Go back 2 times:
+                   * - Popup
+                   * - Nft form creation
+                   */
+                        var count = 0;
+                        Navigator.popUntil(context, (route) {
+                          return count++ == 2;
+                        });
                       },
+                      cancelText: AppLocalizations.of(context)!.no,
                     );
                   },
                 ),
@@ -163,63 +173,6 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet> {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _NFTCreationBackPopup extends ConsumerWidget {
-  const _NFTCreationBackPopup();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
-    return PopupDialog(
-      title: Text(
-        localizations.exitNFTCreationProcessTitle,
-        style: theme.textStyleSize16W400Primary,
-      ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            localizations.exitNFTCreationProcessSubtitle,
-            style: theme.textStyleSize14W200Primary,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: [
-              AppButtonTiny(
-                AppButtonTinyType.primary,
-                localizations.no,
-                Dimens.buttonTopDimens,
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-              AppButtonTiny(
-                AppButtonTinyType.primary,
-                localizations.yes,
-                Dimens.buttonTopDimens,
-                onPressed: () {
-                  /**
-                   * Go back 2 times:
-                   * - Popup
-                   * - Nft form creation
-                   */
-                  var count = 0;
-                  Navigator.popUntil(context, (route) {
-                    return count++ == 2;
-                  });
-                },
-              ),
-            ],
-          ),
-        ],
       ),
     );
   }
