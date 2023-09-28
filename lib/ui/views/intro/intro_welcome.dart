@@ -306,6 +306,7 @@ class _CGU extends ConsumerWidget {
               activeColor: theme.text,
               controlAffinity: ListTileControlAffinity.leading,
               secondary: TextFieldButton(
+                iconSize: 34,
                 icon: Symbols.policy,
                 onPressed: () {
                   UIUtil.showWebview(
