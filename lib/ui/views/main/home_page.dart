@@ -3,12 +3,14 @@ import 'dart:ui';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
+import 'package:aewallet/application/migrations/migration_manager.dart';
 import 'package:aewallet/application/notification/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/domain/repositories/notifications_repository.dart';
+import 'package:aewallet/local_data_migration_widget.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/menu/settings_drawer/settings_drawer.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
@@ -76,6 +78,12 @@ class _HomePageState extends ConsumerState<HomePage>
 
     if (tabController == null) {
       return Container();
+    }
+
+    final localDataMigration =
+        ref.watch(LocalDataMigrationProviders.localDataMigration);
+    if (localDataMigration.migrationInProgress) {
+      return const LocalDataMigrationWidget();
     }
 
     return Scaffold(

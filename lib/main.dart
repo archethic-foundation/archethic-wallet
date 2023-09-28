@@ -409,7 +409,9 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
       await initializeProviders();
       await checkLoggedIn();
       await SecurityManager().checkDeviceSecurity(ref, context);
-      await ref.read(VersionProviders.migrateLocalData.future);
+      await ref
+          .read(LocalDataMigrationProviders.localDataMigration.notifier)
+          .migrateLocalData();
     });
   }
 
