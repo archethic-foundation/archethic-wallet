@@ -81,6 +81,7 @@ class NFTListDetailPopup {
         );
 
         ref.read(AccountProviders.selectedAccount.notifier).refreshNFTs();
+        ref.invalidate(AccountProviders.getAccountNFTFiltered);
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
