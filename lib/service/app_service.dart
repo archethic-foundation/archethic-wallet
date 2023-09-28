@@ -866,8 +866,8 @@ class AppService {
             final contact = await sl.get<DBHelper>().getContactWithAddress(
                   transaction.data!.ledger!.uco!.transfers[i].to!,
                 );
-            if (contact != null && contact.format.length > 1) {
-              recipientContactName = contact.format.substring(1);
+            if (contact != null) {
+              recipientContactName = contact.format;
             }
 
             if (recipientContactName.isEmpty) {
