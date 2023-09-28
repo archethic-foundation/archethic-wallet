@@ -185,8 +185,8 @@ class DBHelper {
         : contactName;
 
     for (final contact in contactsList) {
-      if (contact.format.toLowerCase() ==
-          Uri.decodeFull(nameWithoutAt).toLowerCase()) {
+      if (contact.name.replaceFirst('@', '').toLowerCase() ==
+          Uri.encodeFull(nameWithoutAt).toLowerCase()) {
         contactSelected = contact;
       }
     }
