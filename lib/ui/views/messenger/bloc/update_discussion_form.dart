@@ -158,7 +158,9 @@ class UpdateDiscussionFormNotifier
   }
 
   Future<Result<String?, Failure>> updateDiscussion(
-          WidgetRef ref, BuildContext context) =>
+    WidgetRef ref,
+    BuildContext context,
+  ) =>
       Result.guard(() async {
         final errorMessage = validator();
         if (errorMessage != null) {

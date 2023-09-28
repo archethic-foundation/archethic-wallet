@@ -289,8 +289,8 @@ class _HomePageState extends ConsumerState<HomePage>
 
     final extra = event.extra as Map<String, dynamic>;
 
-    if (extra.containsKey("membersAddedToNotify")) {
-      final listMembersAdded = extra["membersAddedToNotify"];
+    if (extra.containsKey('membersAddedToNotify')) {
+      final listMembersAdded = extra['membersAddedToNotify'];
       if (listMembersAdded!.isNotEmpty) {
         for (final memberPubKey in listMembersAdded) {
           final contact = await ref.read(
@@ -331,8 +331,8 @@ class _HomePageState extends ConsumerState<HomePage>
       }
     }
 
-    if (extra.containsKey("membersDeletedToNotify")) {
-      final listMembersDeleted = extra["membersDeletedToNotify"];
+    if (extra.containsKey('membersDeletedToNotify')) {
+      final listMembersDeleted = extra['membersDeletedToNotify'];
       if (listMembersDeleted!.isNotEmpty) {
         for (final memberPubKey in listMembersDeleted) {
           final contact = await ref.read(

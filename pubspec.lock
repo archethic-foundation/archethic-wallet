@@ -62,7 +62,7 @@ packages:
     description:
       path: "."
       ref: dev
-      resolved-ref: bbf1d2c4bb9db8e6abe5f124283a6c16cedf94e1
+      resolved-ref: "514a3c2fa76919712d1e26c88757cbd9300f1c2a"
       url: "https://github.com/archethic-foundation/libdart.git"
     source: git
     version: "3.3.0"
@@ -423,10 +423,10 @@ packages:
     dependency: "direct dev"
     description:
       name: dependency_validator
-      sha256: "08349175533ed0bd06eb9b6043cde66c45b2bfc7ebc222a7542cdb1324f1bf03"
+      sha256: f727a5627aa405965fab4aef4f468e50a9b632ba0737fd2f98c932fec6d712b9
       url: "https://pub.dev"
     source: hosted
-    version: "3.2.2"
+    version: "3.2.3"
   device_info_plus:
     dependency: transitive
     description:
