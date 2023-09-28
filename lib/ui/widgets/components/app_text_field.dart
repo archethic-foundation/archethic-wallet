@@ -7,8 +7,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// TextField button
 class TextFieldButton extends ConsumerWidget {
-  const TextFieldButton(
-      {@required this.icon, this.iconSize = 20, this.onPressed, super.key});
+  const TextFieldButton({
+    @required this.icon,
+    this.iconSize = 20,
+    this.onPressed,
+    super.key,
+  });
 
   final IconData? icon;
   final double iconSize;
