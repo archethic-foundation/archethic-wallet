@@ -96,7 +96,7 @@ class BuySheet extends ConsumerWidget {
                           UIUtil.showWebview(
                             context,
                             'https://app.uniswap.org/#/swap?outputCurrency=0x8a3d77e9d6968b780564936d15b09805827c21fa&use=V2',
-                            'Bithumb',
+                            'Uniswap',
                           );
                         },
                         child: SvgPicture.asset(
@@ -131,9 +131,10 @@ class BuySheet extends ConsumerWidget {
                             'PancakeSwap',
                           );
                         },
-                        child: Image.asset(
-                          'assets/buy/Pancake.png',
-                          color: theme.text,
+                        child: SvgPicture.asset(
+                          'assets/buy/Pancake.svg',
+                          colorFilter:
+                              ColorFilter.mode(theme.text!, BlendMode.srcIn),
                           height: 40,
                         ),
                       ),
