@@ -146,6 +146,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                   ref,
                   theme.text!,
                   theme.snackBarShadow!,
+                  icon: Symbols.info,
                 );
               },
               child: FittedBox(

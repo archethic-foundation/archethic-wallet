@@ -64,6 +64,7 @@ class AddDiscussionSheet extends ConsumerWidget {
                   ref,
                   theme.text!,
                   theme.snackBarShadow!,
+                  icon: Symbols.info,
                 );
               },
               child: SheetHeader(

@@ -144,6 +144,7 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage> {
                             ref,
                             theme.text!,
                             theme.snackBarShadow!,
+                            icon: Symbols.info,
                           );
                         },
                         child: Row(
