@@ -60,21 +60,19 @@ packages:
   archethic_lib_dart:
     dependency: "direct main"
     description:
-      path: "."
-      ref: dev
-      resolved-ref: "514a3c2fa76919712d1e26c88757cbd9300f1c2a"
-      url: "https://github.com/archethic-foundation/libdart.git"
-    source: git
+      name: archethic_lib_dart
+      sha256: "74f3d361b87dec371b7d51d0a8ee098a0436fda071add9200a57912ab0a6ca53"
+      url: "https://pub.dev"
+    source: hosted
     version: "3.3.0"
   archethic_messaging_lib_dart:
     dependency: "direct main"
     description:
-      path: "."
-      ref: main
-      resolved-ref: "03a6ca9baffbcc20f83de8a156cde50a19d99626"
-      url: "https://github.com/archethic-foundation/messaging_dart_sdk.git"
-    source: git
-    version: "1.0.0"
+      name: archethic_messaging_lib_dart
+      sha256: c0ec83ed3847a8f196f74cd5e164fc136c50dbb34ea16827877a37314c42354d
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.7"
   archive:
     dependency: transitive
     description:
