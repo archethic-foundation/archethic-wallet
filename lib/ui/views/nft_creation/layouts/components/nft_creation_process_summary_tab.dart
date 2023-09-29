@@ -58,14 +58,12 @@ class _NFTCreationProcessSummaryTabState
                             key: const Key('createTheNFT'),
                             icon: Symbols.diamond,
                             onPressed: () async {
-                              final isNameOk =
-                                  nftCreationNotifier.controlName(context);
                               final isFileOk =
                                   nftCreationNotifier.controlFile(context);
                               final isUrlOk =
                                   nftCreationNotifier.controlURL(context);
 
-                              if (isNameOk && (isFileOk || isUrlOk)) {
+                              if (isFileOk || isUrlOk) {
                                 nftCreationNotifier.setNftCreationProcessStep(
                                   NftCreationProcessStep.confirmation,
                                 );
@@ -79,9 +77,6 @@ class _NFTCreationProcessSummaryTabState
                   ),
                 ),
                 const NFTCreationProcessFilePreview(),
-                //const NFTCreationProcessFileAccess(
-                //  readOnly: true,
-                //),
                 const NFTCreationProcessPropertiesList(
                   readOnly: true,
                 ),

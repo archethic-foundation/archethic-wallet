@@ -52,7 +52,7 @@ class _AddTokenTextFieldNameState extends ConsumerState<AddTokenTextFieldName> {
         LengthLimitingTextInputFormatter(40),
       ],
       onChanged: (text) async {
-        addTokenNotifier.setName(
+        await addTokenNotifier.setName(
           context: context,
           name: text,
         );

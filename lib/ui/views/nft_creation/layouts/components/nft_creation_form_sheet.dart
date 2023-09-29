@@ -138,24 +138,24 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet> {
                   if (nftCreation.name.isEmpty ||
                       (nftCreation.fileDecodedForPreview == null &&
                           nftCreation.isFileImportFile())) {
-                    ref.read(
-                      NftCreationFormProvider.nftCreationForm(
-                        nftCreationArgs,
-                      ).notifier,
-                    )
-                      ..controlFile(context)
-                      ..controlName(context);
+                    ref
+                        .read(
+                          NftCreationFormProvider.nftCreationForm(
+                            nftCreationArgs,
+                          ).notifier,
+                        )
+                        .controlFile(context);
                   }
                   if (nftCreation.name.isEmpty ||
                       (nftCreation.fileDecodedForPreview == null &&
                           nftCreation.isFileImportUrl())) {
-                    ref.read(
-                      NftCreationFormProvider.nftCreationForm(
-                        nftCreationArgs,
-                      ).notifier,
-                    )
-                      ..controlURL(context)
-                      ..controlName(context);
+                    ref
+                        .read(
+                          NftCreationFormProvider.nftCreationForm(
+                            nftCreationArgs,
+                          ).notifier,
+                        )
+                        .controlURL(context);
                   }
                   ref
                       .read(

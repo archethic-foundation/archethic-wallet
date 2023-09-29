@@ -66,7 +66,9 @@ class NftCreationFormState with _$NftCreationFormState {
   }
 
   bool get canCreateNFT =>
-      feeEstimation.value != null && feeEstimation.value! > 0;
+      feeEstimation.value != null &&
+      feeEstimation.value! > 0 &&
+      isControlsOk == true;
 
   bool get canAddProperty =>
       propertyName.isNotEmpty && propertyValue.isNotEmpty;

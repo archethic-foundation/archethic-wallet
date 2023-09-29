@@ -59,7 +59,7 @@ class AppButtonTinyConnectivity extends ConsumerWidget {
         size: 14,
       ),
       key: key,
-      onPressed: isConnected ? onPressed : () {},
+      onPressed: isConnected && !disabled ? onPressed : null,
       disabled: disabled,
     );
   }
@@ -70,7 +70,7 @@ class AppButtonTiny extends ConsumerWidget {
     this.type,
     this.buttonText,
     this.dimens, {
-    required this.onPressed,
+    this.onPressed,
     this.showProgressIndicator = false,
     this.disabled = false,
     this.icon,
@@ -82,7 +82,7 @@ class AppButtonTiny extends ConsumerWidget {
   final AppButtonTinyType type;
   final String buttonText;
   final List<double> dimens;
-  final Function onPressed;
+  final Function? onPressed;
   final bool disabled;
   final Icon? icon;
   final double? width;
@@ -112,7 +112,7 @@ class AppButtonTinyWithoutExpanded extends ConsumerWidget {
     this.type,
     this.buttonText,
     this.dimens, {
-    required this.onPressed,
+    this.onPressed,
     this.showProgressIndicator = false,
     this.disabled = false,
     this.icon,
@@ -124,7 +124,7 @@ class AppButtonTinyWithoutExpanded extends ConsumerWidget {
   final AppButtonTinyType type;
   final String buttonText;
   final List<double> dimens;
-  final Function onPressed;
+  final Function? onPressed;
   final bool disabled;
   final Icon? icon;
   final double? width;
@@ -143,7 +143,7 @@ class AppButtonTinyWithoutExpanded extends ConsumerWidget {
               FeedbackType.light,
               preferences.activeVibrations,
             );
-        onPressed();
+        onPressed!();
       }
       return;
     }
@@ -245,7 +245,9 @@ class _NoIconButton extends ConsumerWidget {
           AutoSizeText(
             buttonText,
             textAlign: TextAlign.center,
-            style: theme.textStyleSize12W400EquinoxMainButtonLabel,
+            style: onPressed == null
+                ? theme.textStyleSize12W400EquinoxMainButtonLabelDisabled
+                : theme.textStyleSize12W400EquinoxMainButtonLabel,
             maxLines: 1,
             stepGranularity: 0.5,
           ),
@@ -316,12 +318,9 @@ class _IconButton extends ConsumerWidget {
           AutoSizeText(
             buttonText,
             textAlign: TextAlign.center,
-            style: theme.textStyleSize12W400EquinoxMainButtonLabel.copyWith(
-              color: onPressed == null
-                  ? theme
-                      .textStyleSize12W400EquinoxMainButtonLabelDisabled.color
-                  : theme.textStyleSize12W400EquinoxMainButtonLabel.color,
-            ),
+            style: onPressed == null
+                ? theme.textStyleSize12W400EquinoxMainButtonLabelDisabled
+                : theme.textStyleSize12W400EquinoxMainButtonLabel,
             maxLines: 1,
             stepGranularity: 0.5,
           ),

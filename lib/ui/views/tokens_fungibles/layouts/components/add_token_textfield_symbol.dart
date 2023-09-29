@@ -55,7 +55,7 @@ class _AddTokenTextFieldSymbolState
             LengthLimitingTextInputFormatter(10),
           ],
           onChanged: (text) async {
-            addTokenNotifier.setSymbol(
+            await addTokenNotifier.setSymbol(
               context: context,
               symbol: text,
             );
