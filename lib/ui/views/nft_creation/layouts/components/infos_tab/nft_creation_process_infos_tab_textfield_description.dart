@@ -21,7 +21,15 @@ class _NFTCreationProcessInfosTabTextFieldDescriptionState
   void initState() {
     super.initState();
     nftDescriptionFocusNode = FocusNode();
-    nftDescriptionController = TextEditingController();
+    final nftCreation = ref.read(
+      NftCreationFormProvider.nftCreationForm(
+        ref.read(
+          NftCreationFormProvider.nftCreationFormArgs,
+        ),
+      ),
+    );
+    nftDescriptionController =
+        TextEditingController(text: nftCreation.description);
   }
 
   @override

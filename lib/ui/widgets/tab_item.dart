@@ -9,34 +9,44 @@ class TabItem extends ConsumerWidget {
     super.key,
     required this.icon,
     required this.label,
+    this.enabled = true,
   });
 
   final IconData icon;
   final String label;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     return Tab(
-      child: Column(
-        children: [
-          Icon(
-            icon,
-            weight: IconSize.weightM,
-            opticalSize: IconSize.opticalSizeM,
-            grade: IconSize.gradeM,
-          ),
-          const SizedBox(
-            height: 2,
-          ),
-          Text(
-            label,
-            style: theme.textStyleSize10W400Primary,
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
+      child: enabled
+          ? _tabitem(ref)
+          : Opacity(
+              opacity: 0.3,
+              child: _tabitem(ref),
+            ),
+    );
+  }
+
+  Widget _tabitem(WidgetRef ref) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+    return Column(
+      children: [
+        Icon(
+          icon,
+          weight: IconSize.weightM,
+          opticalSize: IconSize.opticalSizeM,
+          grade: IconSize.gradeM,
+        ),
+        const SizedBox(
+          height: 2,
+        ),
+        Text(
+          label,
+          style: theme.textStyleSize10W400Primary,
+          textAlign: TextAlign.center,
+        ),
+      ],
     );
   }
 }

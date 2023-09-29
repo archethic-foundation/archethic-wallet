@@ -20,7 +20,14 @@ class _NFTCreationProcessInfosTabTextFieldNameState
   void initState() {
     super.initState();
     nftNameFocusNode = FocusNode();
-    nftNameController = TextEditingController();
+    final nftCreation = ref.read(
+      NftCreationFormProvider.nftCreationForm(
+        ref.read(
+          NftCreationFormProvider.nftCreationFormArgs,
+        ),
+      ),
+    );
+    nftNameController = TextEditingController(text: nftCreation.name);
   }
 
   @override

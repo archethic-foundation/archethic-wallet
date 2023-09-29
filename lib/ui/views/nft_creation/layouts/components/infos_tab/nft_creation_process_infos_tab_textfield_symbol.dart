@@ -20,7 +20,14 @@ class _NFTCreationProcessInfosTabTextFieldSymbolState
   void initState() {
     super.initState();
     nftSymbolFocusNode = FocusNode();
-    nftSymbolController = TextEditingController();
+    final nftCreation = ref.read(
+      NftCreationFormProvider.nftCreationForm(
+        ref.read(
+          NftCreationFormProvider.nftCreationFormArgs,
+        ),
+      ),
+    );
+    nftSymbolController = TextEditingController(text: nftCreation.symbol);
   }
 
   @override
