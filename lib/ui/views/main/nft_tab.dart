@@ -58,47 +58,58 @@ class NFTTabBody extends ConsumerWidget {
 
         await ref.read(AccountProviders.selectedAccount.notifier).refreshNFTs();
       }),
-      child: SingleChildScrollView(
-        child: ScrollConfiguration(
-          behavior: ScrollConfiguration.of(context).copyWith(
-            dragDevices: {
-              PointerDeviceKind.touch,
-              PointerDeviceKind.mouse,
-              PointerDeviceKind.trackpad,
-            },
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              theme.background3Small!,
+            ),
+            fit: BoxFit.fill,
+            opacity: 0.7,
           ),
-          child: SafeArea(
-            top: false,
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).padding.top + 10,
-                    left: 20,
-                    right: 20,
+        ),
+        child: SingleChildScrollView(
+          child: ScrollConfiguration(
+            behavior: ScrollConfiguration.of(context).copyWith(
+              dragDevices: {
+                PointerDeviceKind.touch,
+                PointerDeviceKind.mouse,
+                PointerDeviceKind.trackpad,
+              },
+            ),
+            child: SafeArea(
+              top: false,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).padding.top + 10,
+                      left: 20,
+                      right: 20,
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          AppLocalizations.of(context)!.nftTabDescriptionHeader,
+                          style: theme.textStyleSize12W400Primary,
+                          textAlign: TextAlign.justify,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const NFTSearchBar(),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const NftCategoryMenu(),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
                   ),
-                  child: Column(
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.nftTabDescriptionHeader,
-                        style: theme.textStyleSize12W400Primary,
-                        textAlign: TextAlign.justify,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const NFTSearchBar(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const NftCategoryMenu(),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

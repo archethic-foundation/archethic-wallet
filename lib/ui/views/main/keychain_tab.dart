@@ -17,35 +17,30 @@ class KeychainTab extends ConsumerWidget {
     final accountsList =
         ref.watch(AccountProviders.sortedAccounts).valueOrNull ?? [];
 
-    return SafeArea(
-      top: false,
-      child: Container(
-        height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              theme.background1Small!,
-            ),
-            fit: BoxFit.fill,
-            opacity: 0.7,
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(
+            theme.background3Small!,
           ),
+          fit: BoxFit.fill,
+          opacity: 0.7,
         ),
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top + 10,
-            bottom: 10,
+      ),
+      child: SingleChildScrollView(
+        child: ScrollConfiguration(
+          behavior: ScrollConfiguration.of(context).copyWith(
+            dragDevices: {
+              PointerDeviceKind.touch,
+              PointerDeviceKind.mouse,
+              PointerDeviceKind.trackpad,
+            },
           ),
-          child: Column(
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(context).copyWith(
-                    dragDevices: {
-                      PointerDeviceKind.touch,
-                      PointerDeviceKind.mouse,
-                      PointerDeviceKind.trackpad,
-                    },
-                  ),
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Stack(
+              children: [
+                Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 15,
@@ -60,13 +55,21 @@ class KeychainTab extends ConsumerWidget {
                     ),
                   ),
                 ),
-              ),
-              const Row(
-                children: [
-                  AddAccountButton(),
-                ],
-              ),
-            ],
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).padding.bottom,
+                    ),
+                    child: const Row(
+                      children: [
+                        AddAccountButton(),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

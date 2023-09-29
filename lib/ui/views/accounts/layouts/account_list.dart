@@ -60,9 +60,9 @@ class AccountsListWidget extends ConsumerWidget {
           ),
           child: ListView.builder(
             physics: const AlwaysScrollableScrollPhysics(),
-            padding: const EdgeInsets.only(
-              top: 15,
-              bottom: 15,
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).padding.top + 10,
+              bottom: MediaQuery.of(context).padding.bottom + 40,
             ),
             itemCount: accountsList.length,
             itemBuilder: (BuildContext context, int index) {
