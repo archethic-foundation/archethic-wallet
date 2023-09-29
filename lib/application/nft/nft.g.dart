@@ -189,6 +189,168 @@ class _GetNFTInfoProviderElement
       (origin as _GetNFTInfoProvider).keychainServiceKeyPair;
 }
 
+String _$isAccountOwnerHash() => r'e09934656b37af9382f5a6f4cecf1f8f21604c98';
+
+/// See also [_isAccountOwner].
+@ProviderFor(_isAccountOwner)
+const _isAccountOwnerProvider = _IsAccountOwnerFamily();
+
+/// See also [_isAccountOwner].
+class _IsAccountOwnerFamily extends Family<AsyncValue<bool>> {
+  /// See also [_isAccountOwner].
+  const _IsAccountOwnerFamily();
+
+  /// See also [_isAccountOwner].
+  _IsAccountOwnerProvider call(
+    String accountAddress,
+    String tokenAddress,
+    String tokenId,
+  ) {
+    return _IsAccountOwnerProvider(
+      accountAddress,
+      tokenAddress,
+      tokenId,
+    );
+  }
+
+  @override
+  _IsAccountOwnerProvider getProviderOverride(
+    covariant _IsAccountOwnerProvider provider,
+  ) {
+    return call(
+      provider.accountAddress,
+      provider.tokenAddress,
+      provider.tokenId,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_isAccountOwnerProvider';
+}
+
+/// See also [_isAccountOwner].
+class _IsAccountOwnerProvider extends AutoDisposeFutureProvider<bool> {
+  /// See also [_isAccountOwner].
+  _IsAccountOwnerProvider(
+    String accountAddress,
+    String tokenAddress,
+    String tokenId,
+  ) : this._internal(
+          (ref) => _isAccountOwner(
+            ref as _IsAccountOwnerRef,
+            accountAddress,
+            tokenAddress,
+            tokenId,
+          ),
+          from: _isAccountOwnerProvider,
+          name: r'_isAccountOwnerProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$isAccountOwnerHash,
+          dependencies: _IsAccountOwnerFamily._dependencies,
+          allTransitiveDependencies:
+              _IsAccountOwnerFamily._allTransitiveDependencies,
+          accountAddress: accountAddress,
+          tokenAddress: tokenAddress,
+          tokenId: tokenId,
+        );
+
+  _IsAccountOwnerProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.accountAddress,
+    required this.tokenAddress,
+    required this.tokenId,
+  }) : super.internal();
+
+  final String accountAddress;
+  final String tokenAddress;
+  final String tokenId;
+
+  @override
+  Override overrideWith(
+    FutureOr<bool> Function(_IsAccountOwnerRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _IsAccountOwnerProvider._internal(
+        (ref) => create(ref as _IsAccountOwnerRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        accountAddress: accountAddress,
+        tokenAddress: tokenAddress,
+        tokenId: tokenId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<bool> createElement() {
+    return _IsAccountOwnerProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is _IsAccountOwnerProvider &&
+        other.accountAddress == accountAddress &&
+        other.tokenAddress == tokenAddress &&
+        other.tokenId == tokenId;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, accountAddress.hashCode);
+    hash = _SystemHash.combine(hash, tokenAddress.hashCode);
+    hash = _SystemHash.combine(hash, tokenId.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin _IsAccountOwnerRef on AutoDisposeFutureProviderRef<bool> {
+  /// The parameter `accountAddress` of this provider.
+  String get accountAddress;
+
+  /// The parameter `tokenAddress` of this provider.
+  String get tokenAddress;
+
+  /// The parameter `tokenId` of this provider.
+  String get tokenId;
+}
+
+class _IsAccountOwnerProviderElement
+    extends AutoDisposeFutureProviderElement<bool> with _IsAccountOwnerRef {
+  _IsAccountOwnerProviderElement(super.provider);
+
+  @override
+  String get accountAddress =>
+      (origin as _IsAccountOwnerProvider).accountAddress;
+  @override
+  String get tokenAddress => (origin as _IsAccountOwnerProvider).tokenAddress;
+  @override
+  String get tokenId => (origin as _IsAccountOwnerProvider).tokenId;
+}
+
 String _$getNFTListHash() => r'3221ef9cab2cda3e080eb3eadded6f202dcb4dbe';
 
 /// See also [_getNFTList].

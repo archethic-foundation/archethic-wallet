@@ -1,4 +1,5 @@
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/nft/nft.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/account.dart';
@@ -35,10 +36,8 @@ class NFTDetail extends ConsumerStatefulWidget {
     required this.tokenId,
     required this.detailCollection,
     this.nameInCollection,
-    this.displaySendButton = true,
   });
 
-  final bool displaySendButton;
   final String name;
   final String address;
   final String symbol;
@@ -76,6 +75,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
 
     if (accountSelected == null) return const SizedBox();
+
     return SafeArea(
       minimum:
           EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
@@ -183,36 +183,52 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
               ),
             ),
           ),
-          if (widget.displaySendButton)
-            Row(
-              children: <Widget>[
-                AppButtonTinyConnectivity(
-                  localizations.send,
-                  Dimens.buttonTopDimens,
-                  key: const Key('sendNFT'),
-                  icon: Symbols.call_made,
-                  onPressed: () async {
-                    sl.get<HapticUtil>().feedback(
-                          FeedbackType.light,
-                          preferences.activeVibrations,
-                        );
-                    final accountToken = getAccountToken(accountSelected);
-
-                    await TransferSheet(
-                      transferType: TransferType.nft,
-                      accountToken: accountToken,
-                      recipient: const TransferRecipient.address(
-                        address: Address(address: ''),
-                      ),
-                      tokenId: widget.tokenId,
-                    ).show(
-                      context: context,
-                      ref: ref,
-                    );
-                  },
-                ),
-              ],
+          FutureBuilder(
+            future: ref.watch(
+              NFTProviders.isAccountOwner(
+                accountSelected.genesisAddress,
+                widget.address,
+                widget.tokenId,
+              ).future,
             ),
+            builder: (
+              BuildContext context,
+              AsyncSnapshot<bool> snapshot,
+            ) {
+              if (snapshot.hasData && snapshot.data == true) {
+                return Row(
+                  children: <Widget>[
+                    AppButtonTinyConnectivity(
+                      localizations.send,
+                      Dimens.buttonTopDimens,
+                      key: const Key('sendNFT'),
+                      icon: Symbols.call_made,
+                      onPressed: () async {
+                        sl.get<HapticUtil>().feedback(
+                              FeedbackType.light,
+                              preferences.activeVibrations,
+                            );
+                        final accountToken = getAccountToken(accountSelected);
+
+                        await TransferSheet(
+                          transferType: TransferType.nft,
+                          accountToken: accountToken,
+                          recipient: const TransferRecipient.address(
+                            address: Address(address: ''),
+                          ),
+                          tokenId: widget.tokenId,
+                        ).show(
+                          context: context,
+                          ref: ref,
+                        );
+                      },
+                    ),
+                  ],
+                );
+              }
+              return const SizedBox();
+            },
+          ),
           Row(
             children: <Widget>[
               AppButtonTinyConnectivity(
