@@ -58,30 +58,28 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
       ),
       child: Stack(
         children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 15, right: 15),
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(context).copyWith(
-                  dragDevices: {
-                    PointerDeviceKind.touch,
-                    PointerDeviceKind.mouse,
-                    PointerDeviceKind.trackpad,
-                  },
-                ),
-                child: contactsList.map(
-                  data: (data) {
-                    return ContactList(contactsList: data.value);
-                  },
-                  error: (error) => const SizedBox(),
-                  loading: (loading) => Center(
-                    child: SizedBox(
-                      height: 50,
-                      width: 50,
-                      child: CircularProgressIndicator(
-                        color: theme.text,
-                        strokeWidth: 1,
-                      ),
+          Padding(
+            padding: const EdgeInsets.only(left: 15, right: 15),
+            child: ScrollConfiguration(
+              behavior: ScrollConfiguration.of(context).copyWith(
+                dragDevices: {
+                  PointerDeviceKind.touch,
+                  PointerDeviceKind.mouse,
+                  PointerDeviceKind.trackpad,
+                },
+              ),
+              child: contactsList.map(
+                data: (data) {
+                  return ContactList(contactsList: data.value);
+                },
+                error: (error) => const SizedBox(),
+                loading: (loading) => Center(
+                  child: SizedBox(
+                    height: 50,
+                    width: 50,
+                    child: CircularProgressIndicator(
+                      color: theme.text,
+                      strokeWidth: 1,
                     ),
                   ),
                 ),
