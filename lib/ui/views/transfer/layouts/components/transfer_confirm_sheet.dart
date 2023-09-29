@@ -110,6 +110,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
       theme.text!,
       theme.snackBarShadow!,
       duration: const Duration(milliseconds: 5000),
+      icon: Symbols.info,
     );
     final transfer = ref.read(TransferFormProvider.transferForm);
     if (transfer.transferType == TransferType.nft) {

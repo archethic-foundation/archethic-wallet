@@ -139,6 +139,7 @@ class BalanceInfosPopup {
       ref,
       theme.text!,
       theme.snackBarShadow!,
+      icon: Symbols.info,
     );
   }
 }

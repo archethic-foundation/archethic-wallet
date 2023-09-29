@@ -125,6 +125,7 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
       ref,
       theme.text!,
       theme.snackBarShadow!,
+      icon: Symbols.info,
       duration: const Duration(milliseconds: 5000),
     );
 

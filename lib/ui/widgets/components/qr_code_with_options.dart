@@ -149,6 +149,7 @@ class QRCodeWithOptions extends ConsumerWidget {
                             ref,
                             theme.text!,
                             theme.snackBarShadow!,
+                            icon: Symbols.info,
                           );
                         },
                         child: SizedBox(

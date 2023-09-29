@@ -90,6 +90,7 @@ class NFTListDetailPopup {
           theme.text!,
           theme.snackBarShadow!,
           duration: const Duration(seconds: 3),
+          icon: Symbols.info,
         );
       },
       child: Column(
