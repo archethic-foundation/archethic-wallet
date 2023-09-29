@@ -143,6 +143,7 @@
 	"understandButton": "Je comprends",
 	"confirmSecretPhrase": "Confirmez votre phrase secrète.",
 	"confirmSecretPhraseKo": "L'ordre n'est pas correct.",
+	"confirmSecretPhraseOk": "Votre phrase secrète a été confirmée avec succès.",
 	"backupSecretPhrase": "Phrase secrète de récupération",
 	"ok": "Ok",
 	"addressInfos": "Mon adresse publique pour recevoir des fonds",
