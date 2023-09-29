@@ -108,24 +108,6 @@ class CustomizationMenuView extends ConsumerWidget {
                       const _SettingsListItem.spacer(),
                     ],
                   ),
-                  //List Top Gradient End
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Container(
-                      height: 20,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: <Color>[
-                            theme.drawerBackground!,
-                            theme.backgroundDark00!,
-                          ],
-                          begin: const AlignmentDirectional(0.5, -1),
-                          end: const AlignmentDirectional(0.5, 1),
-                        ),
-                      ),
-                    ),
-                  ), //List Top Gradient End
                 ],
               ),
             ),

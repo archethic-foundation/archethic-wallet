@@ -40,7 +40,7 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet> {
               image: AssetImage(
                 theme.background4Small!,
               ),
-              fit: BoxFit.fitHeight,
+              fit: BoxFit.fill,
             ),
             gradient: LinearGradient(
               begin: Alignment.topLeft,
