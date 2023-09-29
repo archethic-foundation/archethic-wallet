@@ -65,6 +65,9 @@ class NftCreationFormState with _$NftCreationFormState {
         .contains(fileImportType);
   }
 
+  bool get canAccessToSummary =>
+      (file != null || fileURL != null) && name.isNotEmpty;
+
   bool get canCreateNFT =>
       feeEstimation.value != null &&
       feeEstimation.value! > 0 &&

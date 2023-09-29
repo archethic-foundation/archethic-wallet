@@ -134,6 +134,7 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet> {
                         icon: Symbols.check_circle,
                         label: AppLocalizations.of(context)!
                             .nftCreationProcessTabSummaryHeader,
+                        enabled: nftCreation.canAccessToSummary,
                       ),
                     ],
                     onTap: (selectedIndex) {

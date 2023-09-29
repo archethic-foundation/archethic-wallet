@@ -92,9 +92,10 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
             alignment: Alignment.topCenter,
             child: Padding(
               padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).padding.top + 10,
-                  left: 15,
-                  right: 15),
+                top: MediaQuery.of(context).padding.top + 10,
+                left: 15,
+                right: 15,
+              ),
               child: TextFormField(
                 textAlignVertical: TextAlignVertical.center,
                 decoration: InputDecoration(
@@ -144,7 +145,8 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).padding.bottom),
+                bottom: MediaQuery.of(context).padding.bottom,
+              ),
               child: Row(
                 children: [
                   AppButtonTinyConnectivity(
