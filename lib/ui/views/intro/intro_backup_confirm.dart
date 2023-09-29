@@ -434,6 +434,14 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                                       widget.seed!,
                                     );
                                   } else {
+                                    UIUtil.showSnackbar(
+                                      localizations.confirmSecretPhraseOk,
+                                      context,
+                                      ref,
+                                      theme.text!,
+                                      theme.snackBarShadow!,
+                                      icon: Symbols.info,
+                                    );
                                     Navigator.pop(context);
                                   }
                                 }
