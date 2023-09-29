@@ -412,6 +412,7 @@
   "addPublicKeyHeader": "Add access",
   "publicKeyAddHint": "Enter a public key",
   "nftCategoryChangeCategory": "Move to a new category...",
+  "nftCategoryChangeCategoryOk": "The move has been successfully completed.",
   "nftWithoutCategory": "Without category",
   "nftCategory": "Category",
   "getPublicKeyHeader": "Access",

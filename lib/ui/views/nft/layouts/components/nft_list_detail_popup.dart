@@ -2,6 +2,7 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_category_dialog.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -82,6 +83,14 @@ class NFTListDetailPopup {
 
         ref.read(AccountProviders.selectedAccount.notifier).refreshNFTs();
         ref.invalidate(AccountProviders.getAccountNFTFiltered);
+        UIUtil.showSnackbar(
+          AppLocalizations.of(context)!.nftCategoryChangeCategoryOk,
+          context,
+          ref,
+          theme.text!,
+          theme.snackBarShadow!,
+          duration: const Duration(seconds: 3),
+        );
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
