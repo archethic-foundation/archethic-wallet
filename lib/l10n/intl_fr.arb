@@ -404,6 +404,7 @@
 	"addPublicKeyHeader": "Ajouter des accès",
 	"publicKeyAddHint": "Entrer une clé publique",
 	"nftCategoryChangeCategory": "Ranger dans une nouvelle catégorie...",
+	"nftCategoryChangeCategoryOk": "Le déplacement a été effectué avec succès.",
 	"nftWithoutCategory": "Sans catégorie",
 	"nftCategory": "Catégorie",
 	"getPublicKeyHeader": "Accès",
