@@ -311,7 +311,7 @@ class _IconButton extends ConsumerWidget {
               ),
             )
           else
-            icon!,
+            onPressed == null ? Opacity(opacity: 0.3, child: icon) : icon!,
           const SizedBox(
             width: 5,
           ),
