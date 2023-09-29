@@ -303,29 +303,39 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                                     .asMap()
                                     .entries
                                     .map((MapEntry entry) {
-                                  return SizedBox(
-                                    height: 35,
-                                    child: Chip(
-                                      avatar: CircleAvatar(
-                                        backgroundColor: Colors.grey.shade800,
-                                        child: Text(
-                                          (entry.key + 1).toString(),
-                                          style: theme
-                                              .textStyleSize12W100Primary60,
+                                  return Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 35,
+                                        child: Chip(
+                                          avatar: CircleAvatar(
+                                            backgroundColor:
+                                                Colors.grey.shade800,
+                                            child: Text(
+                                              (entry.key + 1).toString(),
+                                              style: theme
+                                                  .textStyleSize12W100Primary60,
+                                            ),
+                                          ),
+                                          label: Text(
+                                            entry.value,
+                                            style: theme
+                                                .textStyleSize12W400Primary,
+                                          ),
+                                          onDeleted: () {
+                                            setState(() {
+                                              wordListToSelect.add(entry.value);
+                                              wordListSelected
+                                                  .removeAt(entry.key);
+                                            });
+                                          },
+                                          deleteIconColor: Colors.white,
                                         ),
                                       ),
-                                      label: Text(
-                                        entry.value,
-                                        style: theme.textStyleSize12W400Primary,
+                                      const SizedBox(
+                                        height: 5,
                                       ),
-                                      onDeleted: () {
-                                        setState(() {
-                                          wordListToSelect.add(entry.value);
-                                          wordListSelected.removeAt(entry.key);
-                                        });
-                                      },
-                                      deleteIconColor: Colors.white,
-                                    ),
+                                    ],
                                   );
                                 }).toList(),
                               ),
@@ -346,22 +356,30 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                                     .asMap()
                                     .entries
                                     .map((MapEntry entry) {
-                                  return SizedBox(
-                                    height: 35,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        wordListSelected.add(entry.value);
-                                        wordListToSelect.removeAt(entry.key);
-                                        setState(() {});
-                                      },
-                                      child: Chip(
-                                        label: Text(
-                                          entry.value,
-                                          style:
-                                              theme.textStyleSize12W400Primary,
+                                  return Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 35,
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            wordListSelected.add(entry.value);
+                                            wordListToSelect
+                                                .removeAt(entry.key);
+                                            setState(() {});
+                                          },
+                                          child: Chip(
+                                            label: Text(
+                                              entry.value,
+                                              style: theme
+                                                  .textStyleSize12W400Primary,
+                                            ),
+                                          ),
                                         ),
                                       ),
-                                    ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                    ],
                                   );
                                 }).toList(),
                               ),
