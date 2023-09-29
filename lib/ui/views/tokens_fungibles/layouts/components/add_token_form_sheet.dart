@@ -104,23 +104,9 @@ class AddTokenFormSheet extends ConsumerWidget {
                       Dimens.buttonBottomDimens,
                       key: const Key('createToken'),
                       onPressed: () async {
-                        final isNameOk = addTokenNotifier.controlName(context);
-                        final isSymbolOk =
-                            addTokenNotifier.controlSymbol(context);
-                        final isInitialSupplyOk =
-                            addTokenNotifier.controlInitialSupply(context);
-                        final isAmountOk = addTokenNotifier.controlAmount(
-                          context,
-                          accountSelected,
+                        addTokenNotifier.setAddTokenProcessStep(
+                          AddTokenProcessStep.confirmation,
                         );
-                        if (isNameOk &&
-                            isSymbolOk &&
-                            isInitialSupplyOk &&
-                            isAmountOk) {
-                          addTokenNotifier.setAddTokenProcessStep(
-                            AddTokenProcessStep.confirmation,
-                          );
-                        }
                       },
                       disabled: !addToken.canAddToken,
                     ),

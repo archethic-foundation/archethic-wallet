@@ -58,7 +58,7 @@ class _AddTokenTextFieldInitialSupplyState
         ),
       ],
       onChanged: (text) async {
-        addTokenNotifier.setInitialSupply(
+        await addTokenNotifier.setInitialSupply(
           context: context,
           initialSupply: double.tryParse(text.replaceAll(' ', '')) ?? 0,
         );

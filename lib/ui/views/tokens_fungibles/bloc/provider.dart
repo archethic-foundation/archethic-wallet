@@ -9,7 +9,6 @@ import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
-import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/state.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
@@ -82,12 +81,11 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
 
     state = state.copyWith(
       feeEstimation: AsyncValue.data(fees),
-      errorNameText: '',
+      errorAmountText: '',
     );
-    if (state.feeEstimationOrZero >
-        state.accountBalance.nativeTokenValue - fees) {
+    if (state.feeEstimationOrZero > state.accountBalance.nativeTokenValue) {
       state = state.copyWith(
-        errorNameText:
+        errorAmountText:
             AppLocalizations.of(context)!.insufficientBalance.replaceAll(
                   '%1',
                   state.symbolFees(context),
@@ -142,6 +140,21 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
     required BuildContext context,
     required String name,
   }) async {
+    _initError();
+    if (name.isEmpty) {
+      state = state.copyWith(
+        errorNameText: AppLocalizations.of(context)!.tokenNameMissing,
+      );
+      return;
+    }
+
+    if (kTokenFordiddenName.contains(name.toUpperCase())) {
+      state = state.copyWith(
+        errorNameText: AppLocalizations.of(context)!.tokenNameUCO,
+      );
+      return;
+    }
+
     state = state.copyWith(
       name: name,
     );
@@ -149,6 +162,15 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
       context,
     );
     return;
+  }
+
+  void _initError() {
+    setErrors(
+      errorAmountText: '',
+      errorInitialSupplyText: '',
+      errorNameText: '',
+      errorSymbolText: '',
+    );
   }
 
   void setErrors({
@@ -169,6 +191,22 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
     required BuildContext context,
     required String symbol,
   }) async {
+    _initError();
+
+    if (symbol.isEmpty) {
+      state = state.copyWith(
+        errorSymbolText: AppLocalizations.of(context)!.tokenSymbolMissing,
+      );
+      return;
+    }
+
+    if (kTokenFordiddenName.contains(symbol.toUpperCase())) {
+      state = state.copyWith(
+        errorSymbolText: AppLocalizations.of(context)!.tokenSymbolUCO,
+      );
+      return;
+    }
+
     state = state.copyWith(
       symbol: symbol,
     );
@@ -182,6 +220,25 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
     required BuildContext context,
     required double initialSupply,
   }) async {
+    _initError();
+
+    if (initialSupply <= 0) {
+      state = state.copyWith(
+        errorInitialSupplyText:
+            AppLocalizations.of(context)!.tokenInitialSupplyPositive,
+      );
+      return;
+    }
+
+    // TODO(reddwarf03): Pb avec la gestion des bigint à régler (1)
+    if (initialSupply > 9999999999) {
+      state = state.copyWith(
+        errorInitialSupplyText:
+            AppLocalizations.of(context)!.tokenInitialSupplyTooHigh,
+      );
+      return;
+    }
+
     state = state.copyWith(
       initialSupply: initialSupply,
     );
@@ -195,91 +252,6 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
     state = state.copyWith(
       addTokenProcessStep: addTokenProcessStep,
     );
-  }
-
-  bool controlName(
-    BuildContext context,
-  ) {
-    if (state.name.isEmpty) {
-      state = state.copyWith(
-        errorNameText: AppLocalizations.of(context)!.tokenNameMissing,
-      );
-      return false;
-    }
-
-    if (kTokenFordiddenName.contains(state.name.toUpperCase())) {
-      state = state.copyWith(
-        errorNameText: AppLocalizations.of(context)!.tokenNameUCO,
-      );
-      return false;
-    }
-
-    return true;
-  }
-
-  bool controlSymbol(
-    BuildContext context,
-  ) {
-    if (state.symbol.isEmpty) {
-      state = state.copyWith(
-        errorSymbolText: AppLocalizations.of(context)!.tokenSymbolMissing,
-      );
-      return false;
-    }
-
-    if (kTokenFordiddenName.contains(state.symbol.toUpperCase())) {
-      state = state.copyWith(
-        errorSymbolText: AppLocalizations.of(context)!.tokenSymbolUCO,
-      );
-      return false;
-    }
-    return true;
-  }
-
-  bool controlInitialSupply(
-    BuildContext context,
-  ) {
-    if (state.initialSupply <= 0) {
-      state = state.copyWith(
-        errorInitialSupplyText:
-            AppLocalizations.of(context)!.tokenInitialSupplyPositive,
-      );
-      return false;
-    }
-
-    // TODO(reddwarf03): Pb avec la gestion des bigint à régler (1)
-    if (state.initialSupply > 9999999999) {
-      state = state.copyWith(
-        errorInitialSupplyText:
-            AppLocalizations.of(context)!.tokenInitialSupplyTooHigh,
-      );
-      return false;
-    }
-
-    return true;
-  }
-
-  bool controlAmount(
-    BuildContext context,
-    Account accountSelected,
-  ) {
-    final feeEstimation = state.feeEstimation.valueOrNull ?? 0;
-
-    if (feeEstimation > accountSelected.balance!.nativeTokenValue) {
-      state = state.copyWith(
-        errorAmountText:
-            AppLocalizations.of(context)!.insufficientBalance.replaceAll(
-                  '%1',
-                  state.symbolFees(context),
-                ),
-      );
-      return false;
-    }
-
-    state = state.copyWith(
-      errorAmountText: '',
-    );
-    return true;
   }
 
   Future<void> send(BuildContext context) async {

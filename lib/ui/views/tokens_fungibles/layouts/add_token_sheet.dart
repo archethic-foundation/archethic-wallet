@@ -63,6 +63,9 @@ class AddTokenSheetBody extends ConsumerWidget {
         if (addToken.errorInitialSupplyText.isNotEmpty) {
           errorMessages.add(addToken.errorInitialSupplyText);
         }
+        if (addToken.errorAmountText.isNotEmpty) {
+          errorMessages.add(addToken.errorAmountText);
+        }
 
         UIUtil.showSnackbar(
           errorMessages.join('\n'),
@@ -72,13 +75,6 @@ class AddTokenSheetBody extends ConsumerWidget {
           theme.snackBarShadow!,
           duration: const Duration(seconds: 5),
         );
-
-        ref.read(AddTokenFormProvider.addTokenForm.notifier).setErrors(
-              errorAmountText: '',
-              errorInitialSupplyText: '',
-              errorNameText: '',
-              errorSymbolText: '',
-            );
       },
     );
 

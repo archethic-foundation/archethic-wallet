@@ -110,8 +110,7 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
       feeEstimation: AsyncValue.data(fees),
       error: '',
     );
-    if (state.feeEstimationOrZero >
-        state.accountBalance.nativeTokenValue - fees) {
+    if (state.feeEstimationOrZero > state.accountBalance.nativeTokenValue) {
       state = state.copyWith(
         error: AppLocalizations.of(context)!.insufficientBalance.replaceAll(
               '%1',
@@ -381,7 +380,17 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
     );
   }
 
-  void setName(String name) {
+  void setName(BuildContext context, String name) {
+    state = state.copyWith(error: '');
+
+    if (name.isEmpty) {
+      state = state.copyWith(
+        name: name,
+        error: AppLocalizations.of(context)!.nftNameEmpty,
+      );
+      return;
+    }
+
     state = state.copyWith(name: name, error: '');
     setProperty('name', name);
   }
@@ -604,18 +613,6 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
       resetState();
       return;
     }
-  }
-
-  bool controlName(
-    BuildContext context,
-  ) {
-    if (state.name.isEmpty) {
-      state = state.copyWith(
-        error: AppLocalizations.of(context)!.nftNameEmpty,
-      );
-      return false;
-    }
-    return true;
   }
 
   bool controlFile(

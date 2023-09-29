@@ -70,7 +70,7 @@ class _NFTCreationProcessInfosTabTextFieldNameState
         LengthLimitingTextInputFormatter(40),
       ],
       onChanged: (text) {
-        nftCreationNotifier.setName(text);
+        nftCreationNotifier.setName(context, text);
       },
       suffixButton: hasQRCode
           ? TextFieldButton(
