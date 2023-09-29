@@ -59,18 +59,19 @@ class NFTRepository {
   ) async {
     final accountLastAddressMap =
         await sl.get<ApiService>().getLastTransaction([accountAddress]);
+    var accounLastAddress = '';
     if (accountLastAddressMap[accountAddress] == null ||
         accountLastAddressMap[accountAddress]!.address == null ||
         accountLastAddressMap[accountAddress]!.address!.address == null) {
-      return false;
+      accounLastAddress = accountAddress;
+    } else {
+      accounLastAddress =
+          accountLastAddressMap[accountAddress]!.address!.address!;
     }
-
-    final accounLastAddress =
-        accountLastAddressMap[accountAddress]!.address!.address;
 
     final accountLastInputsMap =
         await sl.get<ApiService>().getTransactionInputs(
-      [accounLastAddress!],
+      [accounLastAddress],
       request: 'amount, from, tokenAddress, spent, timestamp, type, tokenId',
     );
 

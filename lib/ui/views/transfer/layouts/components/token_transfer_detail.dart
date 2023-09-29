@@ -108,12 +108,15 @@ class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
                   style: theme.textStyleSize12W400Primary,
                 )
               else
-                Text(
-                  AmountFormatters.standard(
-                    transfer.amount,
-                    'NFT "$nftName"',
+                Expanded(
+                  child: Text(
+                    AmountFormatters.standard(
+                      transfer.amount,
+                      'NFT "$nftName"',
+                    ),
+                    style: theme.textStyleSize12W400Primary,
+                    textAlign: TextAlign.end,
                   ),
-                  style: theme.textStyleSize12W400Primary,
                 ),
             ],
           ),
@@ -147,12 +150,15 @@ class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
                   style: theme.textStyleSize12W400Primary,
                 )
               else
-                Text(
-                  AmountFormatters.standard(
-                    transfer.accountToken!.amount! - transfer.amount,
-                    'NFT "$nftName"',
+                Expanded(
+                  child: Text(
+                    AmountFormatters.standard(
+                      transfer.accountToken!.amount! - transfer.amount,
+                      'NFT "$nftName"',
+                    ),
+                    style: theme.textStyleSize12W400Primary,
+                    textAlign: TextAlign.end,
                   ),
-                  style: theme.textStyleSize12W400Primary,
                 ),
             ],
           ),
