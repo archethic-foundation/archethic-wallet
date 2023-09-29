@@ -56,11 +56,10 @@ class NFTRepository {
 
     final token = tokenMap[address]!;
 
-    final tokenWithoutFile = {...token.properties}
-      ..removeWhere((key, value) => key == 'content');
+    final tokenProperties = {...token.properties};
 
     if (token.ownerships != null && token.ownerships!.isNotEmpty) {
-      tokenWithoutFile.addAll(
+      tokenProperties.addAll(
         _tokenPropertiesDecryptedSecret(
           keypair: keychainServiceKeyPair,
           ownerships: token.ownerships!,
@@ -75,7 +74,7 @@ class NFTRepository {
       decimals: token.decimals,
       supply: fromBigInt(token.supply).toDouble(),
       symbol: token.symbol,
-      tokenProperties: tokenWithoutFile,
+      tokenProperties: tokenProperties,
       tokenCollection: token.collection,
     );
     return tokenInformation;
