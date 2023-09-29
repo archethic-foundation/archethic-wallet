@@ -40,19 +40,17 @@ class KeychainTab extends ConsumerWidget {
             height: MediaQuery.of(context).size.height,
             child: Stack(
               children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 15,
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        AccountsListWidget(
-                          currencyName: settings.currency.name,
-                          accountsList: accountsList,
-                        ),
-                      ],
-                    ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 15,
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      AccountsListWidget(
+                        currencyName: settings.currency.name,
+                        accountsList: accountsList,
+                      ),
+                    ],
                   ),
                 ),
                 Align(
