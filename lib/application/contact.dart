@@ -40,7 +40,7 @@ Future<Contact?> _getSelectedContact(_GetSelectedContactRef ref) async {
 
   return ref.watch(
     _getContactWithNameProvider(
-      Uri.encodeFull(selectedAccount.nameDisplayed),
+      selectedAccount.nameDisplayed,
     ).future,
   );
 }

@@ -19,7 +19,8 @@ class RPCGetAccountsCommandHandler extends RPCCommandHandler<
         'accounts': model.accounts
             .map(
               (account) => {
-                'name': account.name,
+                'shortName': account.shortName,
+                'serviceName': account.serviceName,
                 'genesisAddress': account.genesisAddress,
               },
             )

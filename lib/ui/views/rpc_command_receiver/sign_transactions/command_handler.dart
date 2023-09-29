@@ -32,12 +32,19 @@ class SignTransactionsCommandHandler extends CommandHandler {
             final keychain =
                 await sl.get<archethic.ApiService>().getKeychain(seed);
 
-            final addressGenesis = archethic.uint8ListToHex(
-              keychain.deriveAddress(
-                serviceName,
-                pathSuffix: pathSuffix,
-              ),
-            );
+            var addressGenesis = '';
+            try {
+              addressGenesis = archethic.uint8ListToHex(
+                keychain.deriveAddress(
+                  serviceName,
+                  pathSuffix: pathSuffix,
+                ),
+              );
+            } catch (e) {
+              return Result.failure(
+                RPCFailure.serviceNotFound(),
+              );
+            }
 
             final originPrivateKey =
                 sl.get<archethic.ApiService>().getOriginKey();

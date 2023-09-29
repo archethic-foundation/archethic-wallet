@@ -11,8 +11,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
 final accountUpdateProvider = StreamProvider.autoDispose
-    .family<Account?, String>((ref, accountName) async* {
-  yield await ref.watch(AccountProviders.account(accountName).future);
+    .family<Account?, String>((ref, serviceName) async* {
+  yield await ref.watch(AccountProviders.account(serviceName).future);
 });
 
 class SubscribeAccountHandler extends CommandHandler {
@@ -25,7 +25,7 @@ class SubscribeAccountHandler extends CommandHandler {
             command as RPCCommand<RPCSubscribeAccountCommandData>;
 
             final accountExists = await ref.read(
-              AccountProviders.accountExists(command.data.accountName).future,
+              AccountProviders.accountExists(command.data.serviceName).future,
             );
             if (!accountExists) {
               return Result.failure(RPCFailure.unknownAccount());
@@ -35,7 +35,7 @@ class SubscribeAccountHandler extends CommandHandler {
               RPCSubscription(
                 id: const Uuid().v4(),
                 updates: ref.streamWithCurrentValue(
-                  accountUpdateProvider(command.data.accountName),
+                  accountUpdateProvider(command.data.serviceName),
                 ),
               ),
             );

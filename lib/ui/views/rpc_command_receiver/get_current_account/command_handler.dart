@@ -26,7 +26,8 @@ class GetCurrentAccountCommandHandler extends CommandHandler {
             }
 
             final account = AppAccount(
-              name: selectedAccount.nameDisplayed,
+              serviceName: selectedAccount.name,
+              shortName: selectedAccount.nameDisplayed,
               genesisAddress: selectedAccount.genesisAddress,
             );
 

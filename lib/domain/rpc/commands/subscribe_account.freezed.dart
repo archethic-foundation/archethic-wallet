@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$RPCSubscribeAccountCommandData {
-  String get accountName => throw _privateConstructorUsedError;
+  String get serviceName => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $RPCSubscribeAccountCommandDataCopyWith<RPCSubscribeAccountCommandData>
@@ -31,7 +31,7 @@ abstract class $RPCSubscribeAccountCommandDataCopyWith<$Res> {
       _$RPCSubscribeAccountCommandDataCopyWithImpl<$Res,
           RPCSubscribeAccountCommandData>;
   @useResult
-  $Res call({String accountName});
+  $Res call({String serviceName});
 }
 
 /// @nodoc
@@ -48,12 +48,12 @@ class _$RPCSubscribeAccountCommandDataCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? accountName = null,
+    Object? serviceName = null,
   }) {
     return _then(_value.copyWith(
-      accountName: null == accountName
-          ? _value.accountName
-          : accountName // ignore: cast_nullable_to_non_nullable
+      serviceName: null == serviceName
+          ? _value.serviceName
+          : serviceName // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -68,7 +68,7 @@ abstract class _$$RPCSubscribeAccountCommandDataImplCopyWith<$Res>
       __$$RPCSubscribeAccountCommandDataImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String accountName});
+  $Res call({String serviceName});
 }
 
 /// @nodoc
@@ -84,12 +84,12 @@ class __$$RPCSubscribeAccountCommandDataImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? accountName = null,
+    Object? serviceName = null,
   }) {
     return _then(_$RPCSubscribeAccountCommandDataImpl(
-      accountName: null == accountName
-          ? _value.accountName
-          : accountName // ignore: cast_nullable_to_non_nullable
+      serviceName: null == serviceName
+          ? _value.serviceName
+          : serviceName // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -99,15 +99,15 @@ class __$$RPCSubscribeAccountCommandDataImplCopyWithImpl<$Res>
 
 class _$RPCSubscribeAccountCommandDataImpl
     extends _RPCSubscribeAccountCommandData {
-  const _$RPCSubscribeAccountCommandDataImpl({required this.accountName})
+  const _$RPCSubscribeAccountCommandDataImpl({required this.serviceName})
       : super._();
 
   @override
-  final String accountName;
+  final String serviceName;
 
   @override
   String toString() {
-    return 'RPCSubscribeAccountCommandData(accountName: $accountName)';
+    return 'RPCSubscribeAccountCommandData(serviceName: $serviceName)';
   }
 
   @override
@@ -115,12 +115,12 @@ class _$RPCSubscribeAccountCommandDataImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RPCSubscribeAccountCommandDataImpl &&
-            (identical(other.accountName, accountName) ||
-                other.accountName == accountName));
+            (identical(other.serviceName, serviceName) ||
+                other.serviceName == serviceName));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, accountName);
+  int get hashCode => Object.hash(runtimeType, serviceName);
 
   @JsonKey(ignore: true)
   @override
@@ -134,12 +134,12 @@ class _$RPCSubscribeAccountCommandDataImpl
 abstract class _RPCSubscribeAccountCommandData
     extends RPCSubscribeAccountCommandData {
   const factory _RPCSubscribeAccountCommandData(
-          {required final String accountName}) =
+          {required final String serviceName}) =
       _$RPCSubscribeAccountCommandDataImpl;
   const _RPCSubscribeAccountCommandData._() : super._();
 
   @override
-  String get accountName;
+  String get serviceName;
   @override
   @JsonKey(ignore: true)
   _$$RPCSubscribeAccountCommandDataImplCopyWith<

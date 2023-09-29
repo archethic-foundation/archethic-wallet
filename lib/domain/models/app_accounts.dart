@@ -5,7 +5,8 @@ part 'app_accounts.freezed.dart';
 @freezed
 class AppAccount with _$AppAccount {
   const factory AppAccount({
-    required String name,
+    required String shortName,
+    required String serviceName,
     required String genesisAddress,
   }) = _AppAccount;
 
