@@ -101,6 +101,7 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
       theme.text!,
       theme.snackBarShadow!,
       duration: const Duration(milliseconds: 5000),
+      icon: Symbols.info,
     );
 
     ref

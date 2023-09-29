@@ -79,6 +79,7 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
       ref,
       theme.text!,
       theme.snackBarShadow!,
+      icon: Symbols.info,
     );
     Navigator.of(context).pop();
   }
@@ -102,6 +103,7 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
       theme.text!,
       theme.snackBarShadow!,
       duration: const Duration(milliseconds: 5000),
+      icon: Symbols.info,
     );
     await ref.read(SessionProviders.session.notifier).refresh();
     if (mounted) {

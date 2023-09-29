@@ -185,6 +185,7 @@ class ContactDetail extends ConsumerWidget {
                             ref,
                             theme.text!,
                             theme.snackBarShadow!,
+                            icon: Symbols.info,
                           );
                           Navigator.of(context).pop();
                         },

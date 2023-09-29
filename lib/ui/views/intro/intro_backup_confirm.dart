@@ -28,6 +28,7 @@ import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class IntroBackupConfirm extends ConsumerStatefulWidget {
   const IntroBackupConfirm({
@@ -106,6 +107,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
             theme.text!,
             theme.snackBarShadow!,
             duration: const Duration(milliseconds: 5000),
+            icon: Symbols.info,
           );
 
           if (keychainAccessRequested) break;
@@ -135,6 +137,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
             theme.text!,
             theme.snackBarShadow!,
             duration: const Duration(milliseconds: 5000),
+            icon: Symbols.info,
           );
 
           if (newWalletRequested) break;
