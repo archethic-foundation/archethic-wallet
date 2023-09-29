@@ -167,7 +167,7 @@ class HistoryChart extends StatelessWidget {
                                 CurrencyUtil.formatWithNumberOfDigits(
                                   currency,
                                   value,
-                                  3,
+                                  4,
                                 ),
                                 style: axisTextStyle,
                               );
