@@ -1,4 +1,3 @@
-import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
@@ -29,8 +28,6 @@ class SignTransactionsConfirmationForm extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
-    final accountSelected =
-        ref.watch(AccountProviders.selectedAccount).valueOrNull;
 
     final formState = ref.watch(
       SignTransactionsConfirmationProviders.form(command),
@@ -74,7 +71,10 @@ class SignTransactionsConfirmationForm extends ConsumerWidget {
                                     )
                                     .replaceAll(
                                       '%2',
-                                      accountSelected!.nameDisplayed,
+                                      _getShortName(
+                                        formData.value.signTransactionCommand
+                                            .data.serviceName,
+                                      ),
                                     )
                                 : localizations
                                     .signXTransactionsCommandReceivedNotification
@@ -91,7 +91,10 @@ class SignTransactionsConfirmationForm extends ConsumerWidget {
                                     )
                                     .replaceAll(
                                       '%3',
-                                      accountSelected!.nameDisplayed,
+                                      _getShortName(
+                                        formData.value.signTransactionCommand
+                                            .data.serviceName,
+                                      ),
                                     ),
                             style: theme.textStyleSize12W400Primary,
                           ),
@@ -145,6 +148,20 @@ class SignTransactionsConfirmationForm extends ConsumerWidget {
           ),
         );
       },
+    );
+  }
+
+  String _getShortName(String name) {
+    var result = name;
+    if (name.startsWith('archethic-wallet-')) {
+      result = result.replaceFirst('archethic-wallet-', '');
+    }
+    if (name.startsWith('aeweb-')) {
+      result = result.replaceFirst('aeweb-', '');
+    }
+
+    return Uri.decodeFull(
+      result,
     );
   }
 }

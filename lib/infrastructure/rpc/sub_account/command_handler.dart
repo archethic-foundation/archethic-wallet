@@ -13,7 +13,7 @@ class RPCSubscribeAccountCommandHandler
       RPCCommand(
         origin: dto.origin.toModel(),
         data: RPCSubscribeAccountCommandData(
-          accountName: dto.payload['name'],
+          serviceName: dto.payload['serviceName'],
         ),
       );
 

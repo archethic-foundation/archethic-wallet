@@ -19,7 +19,8 @@ class RPCGetCurrentAccountCommandHandler extends RPCCommandHandler<
   @override
   Map<String, dynamic> resultFromModel(RPCGetCurrentAccountResultData model) =>
       {
-        'name': model.account.name,
+        'shortName': model.account.shortName,
+        'serviceName': model.account.serviceName,
         'genesisAddress': model.account.genesisAddress,
       };
 }

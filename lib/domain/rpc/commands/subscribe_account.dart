@@ -5,7 +5,7 @@ part 'subscribe_account.freezed.dart';
 @freezed
 class RPCSubscribeAccountCommandData with _$RPCSubscribeAccountCommandData {
   const factory RPCSubscribeAccountCommandData({
-    required String accountName,
+    required String serviceName,
   }) = _RPCSubscribeAccountCommandData;
   const RPCSubscribeAccountCommandData._();
 }
