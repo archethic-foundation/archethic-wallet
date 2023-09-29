@@ -28,6 +28,18 @@ Future<TokenInformation?> _getNFTInfo(
 }
 
 @riverpod
+Future<bool> _isAccountOwner(
+  _IsAccountOwnerRef ref,
+  String accountAddress,
+  String tokenAddress,
+  String tokenId,
+) async {
+  return ref
+      .watch(_nftRepositoryProvider)
+      .isAccountOwner(accountAddress, tokenAddress, tokenId);
+}
+
+@riverpod
 Future<(List<AccountToken>, List<AccountToken>)> _getNFTList(
   _GetNFTListRef ref,
   String address,
@@ -40,6 +52,50 @@ Future<(List<AccountToken>, List<AccountToken>)> _getNFTList(
 }
 
 class NFTRepository {
+  Future<bool> isAccountOwner(
+    String accountAddress,
+    String tokenAddress,
+    String tokenId,
+  ) async {
+    final accountLastAddressMap =
+        await sl.get<ApiService>().getLastTransaction([accountAddress]);
+    if (accountLastAddressMap[accountAddress] == null ||
+        accountLastAddressMap[accountAddress]!.address == null ||
+        accountLastAddressMap[accountAddress]!.address!.address == null) {
+      return false;
+    }
+
+    final accounLastAddress =
+        accountLastAddressMap[accountAddress]!.address!.address;
+
+    final accountLastInputsMap =
+        await sl.get<ApiService>().getTransactionInputs(
+      [accounLastAddress!],
+      request: 'amount, from, tokenAddress, spent, timestamp, type, tokenId',
+    );
+
+    if (accountLastInputsMap[accounLastAddress] == null) {
+      return false;
+    }
+
+    final _tokenId = int.tryParse(tokenId);
+
+    final accountLastInputs = accountLastInputsMap[accounLastAddress];
+    for (final input in accountLastInputs!) {
+      if (_tokenId == null) {
+        if (input.tokenAddress == tokenAddress) {
+          return true;
+        }
+      } else {
+        if (input.tokenAddress == tokenAddress && input.tokenId == _tokenId) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
   Future<TokenInformation?> getNFTInfo(
     String address,
     KeychainServiceKeyPair keychainServiceKeyPair,
@@ -212,4 +268,5 @@ class NFTRepository {
 abstract class NFTProviders {
   static const getNFTInfo = _getNFTInfoProvider;
   static const getNFTList = _getNFTListProvider;
+  static const isAccountOwner = _isAccountOwnerProvider;
 }
