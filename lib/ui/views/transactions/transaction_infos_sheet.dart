@@ -1,11 +1,15 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:developer';
+
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/transaction_infos.dart';
 import 'package:aewallet/service/app_service.dart';
+import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -89,7 +93,8 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
                               ? _TransactionInfos(
                                   list: list,
                                   scrollController: scrollController,
-                                  notificationRecipientAddress: widget.notificationRecipientAddress,
+                                  notificationRecipientAddress:
+                                      widget.notificationRecipientAddress,
                                 )
                               : _TransactionLoading(),
                         ),
@@ -304,10 +309,9 @@ class _TransactionBuildInfos extends ConsumerWidget {
                                           style:
                                               theme.textStyleSize14W600Primary,
                                         ),
-                                        SelectableText(
-                                          transactionInfo.valueInfo,
-                                          style:
-                                              theme.textStyleSize14W100Primary,
+                                        _transactionInfoValue(
+                                          ref,
+                                          transactionInfo,
                                         ),
                                       ],
                                     ),
@@ -328,5 +332,49 @@ class _TransactionBuildInfos extends ConsumerWidget {
             ],
           )
         : const SizedBox();
+  }
+
+  Widget _transactionInfoValue(
+      WidgetRef ref, TransactionInfos transactionInfo) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+
+    if (transactionInfo.domain == 'UCOLedger' &&
+        transactionInfo.titleInfo == 'To') {
+      log('transactionInfo.valueInfo: ${transactionInfo.valueInfo}');
+      return ref
+          .watch(
+            ContactProviders.getContactWithAddress(transactionInfo.valueInfo),
+          )
+          .map(
+            data: (data) {
+              if (data.value == null) {
+                log('transactionInfo.valueInfo: ${transactionInfo.valueInfo} : data null');
+                return SelectableText(
+                  transactionInfo.valueInfo,
+                  style: theme.textStyleSize14W100Primary,
+                );
+              } else {
+                log('transactionInfo.valueInfo: ${transactionInfo.valueInfo} : data not null');
+                return SelectableText(
+                  data.value!.format,
+                  style: theme.textStyleSize14W100Primary,
+                );
+              }
+            },
+            error: (error) => SelectableText(
+              transactionInfo.valueInfo,
+              style: theme.textStyleSize14W100Primary,
+            ),
+            loading: (loading) => SelectableText(
+              transactionInfo.valueInfo,
+              style: theme.textStyleSize14W100Primary,
+            ),
+          );
+    } else {
+      return SelectableText(
+        transactionInfo.valueInfo,
+        style: theme.textStyleSize14W100Primary,
+      );
+    }
   }
 }

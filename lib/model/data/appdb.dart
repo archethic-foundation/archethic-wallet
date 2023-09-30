@@ -104,8 +104,12 @@ class DBHelper {
     final box = await Hive.openBox<Contact>(contactsTable);
     final contactsList = box.values.toList();
     final addressContact = <String>[];
-    for (final contacts in contactsList) {
-      addressContact.add(contacts.address);
+    for (final contact in contactsList) {
+      if (address == contact.address) {
+        return contact;
+      }
+
+      addressContact.add(contact.address);
     }
 
     final lastTransactionMap = await sl.get<ApiService>().getLastTransaction(
