@@ -33,52 +33,52 @@ class AccountTab extends ConsumerWidget {
     final preferences = ref.watch(SettingsProviders.settings);
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
-    return ArchethicRefreshIndicator(
-      onRefresh: () => Future<void>.sync(() async {
-        sl.get<HapticUtil>().feedback(
-              FeedbackType.light,
-              preferences.activeVibrations,
-            );
-
-        final connectivityStatusProvider =
-            ref.read(connectivityStatusProviders);
-        if (connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
-          return;
-        }
-
-        await ref
-            .read(AccountProviders.selectedAccount.notifier)
-            .refreshRecentTransactions();
-        ref
-          ..invalidate(BlogProviders.fetchArticles)
-          ..invalidate(ContactProviders.fetchContacts)
-          ..invalidate(MarketPriceProviders.currencyMarketPrice);
-      }),
-      child: ScrollConfiguration(
-        behavior: ScrollConfiguration.of(context).copyWith(
-          dragDevices: {
-            PointerDeviceKind.touch,
-            PointerDeviceKind.mouse,
-            PointerDeviceKind.trackpad,
-          },
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(
+            theme.background2Small!,
+          ),
+          fit: BoxFit.fill,
+          opacity: 0.7,
         ),
-        child: SingleChildScrollView(
-          child: Stack(
-            children: [
-              Column(
-                children: <Widget>[
-                  /// BACKGROUND IMAGE
-                  DecoratedBox(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(
-                          theme.background2Small!,
-                        ),
-                        fit: BoxFit.fill,
-                        opacity: 0.7,
-                      ),
-                    ),
-                    child: ArchethicScrollbar(
+      ),
+      child: ArchethicRefreshIndicator(
+        onRefresh: () => Future<void>.sync(() async {
+          sl.get<HapticUtil>().feedback(
+                FeedbackType.light,
+                preferences.activeVibrations,
+              );
+
+          final connectivityStatusProvider =
+              ref.read(connectivityStatusProviders);
+          if (connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
+            return;
+          }
+
+          await ref
+              .read(AccountProviders.selectedAccount.notifier)
+              .refreshRecentTransactions();
+          ref
+            ..invalidate(BlogProviders.fetchArticles)
+            ..invalidate(ContactProviders.fetchContacts)
+            ..invalidate(MarketPriceProviders.currencyMarketPrice);
+        }),
+        child: ScrollConfiguration(
+          behavior: ScrollConfiguration.of(context).copyWith(
+            dragDevices: {
+              PointerDeviceKind.touch,
+              PointerDeviceKind.mouse,
+              PointerDeviceKind.trackpad,
+            },
+          ),
+          child: SingleChildScrollView(
+            child: Stack(
+              children: [
+                Column(
+                  children: <Widget>[
+                    /// BACKGROUND IMAGE
+                    ArchethicScrollbar(
                       child: Padding(
                         padding: EdgeInsets.only(
                           top: MediaQuery.of(context).padding.top + 10,
@@ -146,12 +146,12 @@ class AccountTab extends ConsumerWidget {
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              if (!kIsWeb && (Platform.isAndroid || Platform.isIOS))
-                const AppUpdateButton(),
-            ],
+                  ],
+                ),
+                if (!kIsWeb && (Platform.isAndroid || Platform.isIOS))
+                  const AppUpdateButton(),
+              ],
+            ),
           ),
         ),
       ),

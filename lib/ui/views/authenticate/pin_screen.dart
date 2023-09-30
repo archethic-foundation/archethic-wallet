@@ -333,7 +333,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
               image: AssetImage(
                 theme.background3Small!,
               ),
-              fit: BoxFit.fitHeight,
+              fit: BoxFit.fill,
             ),
             gradient: LinearGradient(
               begin: Alignment.topLeft,

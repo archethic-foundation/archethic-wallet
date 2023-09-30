@@ -67,7 +67,7 @@ class AppLockScreen extends ConsumerWidget {
                     image: AssetImage(
                       theme.background3Small!,
                     ),
-                    fit: BoxFit.fitHeight,
+                    fit: BoxFit.fill,
                   ),
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
