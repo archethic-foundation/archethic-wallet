@@ -39,7 +39,7 @@ class NFTListPerCategory extends ConsumerWidget {
             image: AssetImage(
               theme.background2Small!,
             ),
-            fit: BoxFit.fitHeight,
+            fit: BoxFit.fill,
           ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,

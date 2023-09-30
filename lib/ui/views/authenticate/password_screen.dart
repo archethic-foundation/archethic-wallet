@@ -90,7 +90,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
               image: AssetImage(
                 theme.background5Small!,
               ),
-              fit: BoxFit.fitHeight,
+              fit: BoxFit.fill,
             ),
             gradient: LinearGradient(
               begin: Alignment.topLeft,

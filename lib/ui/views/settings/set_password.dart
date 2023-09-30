@@ -68,7 +68,7 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
             image: AssetImage(
               theme.background1Small!,
             ),
-            fit: BoxFit.fitHeight,
+            fit: BoxFit.fill,
           ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
