@@ -13,7 +13,6 @@ import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/model/transaction_infos.dart';
-import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/number_util.dart';
@@ -861,33 +860,13 @@ class AppService {
             i < transaction.data!.ledger!.uco!.transfers.length;
             i++) {
           if (transaction.data!.ledger!.uco!.transfers[i].to != null) {
-            var recipientContactName = '';
-
-            final contact = await sl.get<DBHelper>().getContactWithAddress(
-                  transaction.data!.ledger!.uco!.transfers[i].to!,
-                );
-            if (contact != null) {
-              recipientContactName = contact.format;
-            }
-
-            if (recipientContactName.isEmpty) {
-              transactionsInfos.add(
-                TransactionInfos(
-                  domain: 'UCOLedger',
-                  titleInfo: 'To',
-                  valueInfo: transaction.data!.ledger!.uco!.transfers[i].to!,
-                ),
-              );
-            } else {
-              transactionsInfos.add(
-                TransactionInfos(
-                  domain: 'UCOLedger',
-                  titleInfo: 'To',
-                  valueInfo:
-                      '$recipientContactName\n${transaction.data!.ledger!.uco!.transfers[i].to!}',
-                ),
-              );
-            }
+            transactionsInfos.add(
+              TransactionInfos(
+                domain: 'UCOLedger',
+                titleInfo: 'To',
+                valueInfo: transaction.data!.ledger!.uco!.transfers[i].to!,
+              ),
+            );
           }
           if (transaction.data!.ledger!.uco!.transfers[i].amount != null) {
             transactionsInfos.add(
