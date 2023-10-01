@@ -183,52 +183,82 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
               ),
             ),
           ),
-          FutureBuilder(
-            future: ref.watch(
-              NFTProviders.isAccountOwner(
-                accountSelected.genesisAddress,
-                widget.address,
-                widget.tokenId,
-              ).future,
-            ),
-            builder: (
-              BuildContext context,
-              AsyncSnapshot<bool> snapshot,
-            ) {
-              if (snapshot.hasData && snapshot.data == true) {
-                return Row(
-                  children: <Widget>[
-                    AppButtonTinyConnectivity(
-                      localizations.send,
-                      Dimens.buttonTopDimens,
-                      key: const Key('sendNFT'),
-                      icon: Symbols.call_made,
-                      onPressed: () async {
-                        sl.get<HapticUtil>().feedback(
-                              FeedbackType.light,
-                              preferences.activeVibrations,
-                            );
-                        final accountToken = getAccountToken(accountSelected);
+          if (widget.collection.isEmpty)
+            FutureBuilder(
+              future: ref.watch(
+                NFTProviders.isAccountOwner(
+                  accountSelected.genesisAddress,
+                  widget.address,
+                  widget.tokenId,
+                ).future,
+              ),
+              builder: (
+                BuildContext context,
+                AsyncSnapshot<bool> snapshot,
+              ) {
+                if (snapshot.hasData) {
+                  if (snapshot.data == true) {
+                    return Row(
+                      children: <Widget>[
+                        AppButtonTinyConnectivity(
+                          localizations.send,
+                          Dimens.buttonTopDimens,
+                          key: const Key('sendNFT'),
+                          icon: Symbols.call_made,
+                          onPressed: () async {
+                            sl.get<HapticUtil>().feedback(
+                                  FeedbackType.light,
+                                  preferences.activeVibrations,
+                                );
+                            final accountToken =
+                                getAccountToken(accountSelected);
 
-                        await TransferSheet(
-                          transferType: TransferType.nft,
-                          accountToken: accountToken,
-                          recipient: const TransferRecipient.address(
-                            address: Address(address: ''),
-                          ),
-                          tokenId: widget.tokenId,
-                        ).show(
-                          context: context,
-                          ref: ref,
-                        );
-                      },
+                            await TransferSheet(
+                              transferType: TransferType.nft,
+                              accountToken: accountToken,
+                              recipient: const TransferRecipient.address(
+                                address: Address(address: ''),
+                              ),
+                              tokenId: widget.tokenId,
+                            ).show(
+                              context: context,
+                              ref: ref,
+                            );
+                          },
+                        ),
+                      ],
+                    );
+                  } else {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Symbols.info,
+                          size: 15,
+                          weight: IconSize.weightM,
+                          opticalSize: IconSize.opticalSizeM,
+                          grade: IconSize.gradeM,
+                        ),
+                        const SizedBox(width: 5),
+                        Text(AppLocalizations.of(context)!.nftNotOwnerInfo),
+                      ],
+                    );
+                  }
+                } else {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 17),
+                    child: SizedBox.square(
+                      dimension: 16,
+                      child: CircularProgressIndicator(
+                        color: theme
+                            .textStyleSize12W400EquinoxMainButtonLabel.color,
+                        strokeWidth: 1,
+                      ),
                     ),
-                  ],
-                );
-              }
-              return const SizedBox();
-            },
-          ),
+                  );
+                }
+              },
+            ),
           Row(
             children: <Widget>[
               AppButtonTinyConnectivity(
