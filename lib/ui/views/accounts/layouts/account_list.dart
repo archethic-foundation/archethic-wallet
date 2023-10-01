@@ -36,13 +36,13 @@ class AccountsListWidget extends ConsumerWidget {
                 FeedbackType.light,
                 settings.activeVibrations,
               );
-          ShowSendingAnimation.build(context, theme);
+
           final connectivityStatusProvider =
               ref.read(connectivityStatusProviders);
           if (connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
             return;
           }
-
+          ShowSendingAnimation.build(context, theme);
           await ref.read(SessionProviders.session.notifier).refresh();
           await ref
               .read(AccountProviders.selectedAccount.notifier)

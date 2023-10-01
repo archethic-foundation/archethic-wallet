@@ -50,9 +50,10 @@ class AccountTab extends ConsumerWidget {
                 preferences.activeVibrations,
               );
 
-          final connectivityStatusProvider =
+          final _connectivityStatusProvider =
               ref.read(connectivityStatusProviders);
-          if (connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
+          if (_connectivityStatusProvider ==
+              ConnectivityStatus.isDisconnected) {
             return;
           }
 
@@ -96,21 +97,13 @@ class AccountTab extends ConsumerWidget {
                             if (preferences.showPriceChart &&
                                 connectivityStatusProvider ==
                                     ConnectivityStatus.isConnected)
-                              const Stack(
-                                children: <Widget>[
-                                  BalanceInfosChart(),
-                                ],
-                              )
-                            else
-                              const SizedBox(),
+                              const BalanceInfosChart(),
 
                             /// KPI
                             if (preferences.showPriceChart &&
                                 connectivityStatusProvider ==
                                     ConnectivityStatus.isConnected)
-                              const BalanceInfosKpi()
-                            else
-                              const SizedBox(),
+                              const BalanceInfosKpi(),
 
                             Divider(
                               height: 1,
