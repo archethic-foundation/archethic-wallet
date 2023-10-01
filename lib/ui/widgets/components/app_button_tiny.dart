@@ -61,6 +61,7 @@ class AppButtonTinyConnectivity extends ConsumerWidget {
       key: key,
       onPressed: isConnected && !disabled ? onPressed : null,
       disabled: disabled,
+      showProgressIndicator: showProgressIndicator,
     );
   }
 }
