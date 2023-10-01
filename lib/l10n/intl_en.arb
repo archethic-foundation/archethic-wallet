@@ -606,5 +606,6 @@
   "doYouWantNewUsersReadOldMessages": "Allow the new members to see the previous messages?",
   "youHaveBeenDeletedFromADiscussion": "You have been deleted from a discussion",
   "youHaveBeenAddedTOADiscussion": "You have been added to a discussion",
-  "localDataMigrationMessage": "Update your current application.\nPlease wait..."
+  "localDataMigrationMessage": "Update your current application.\nPlease wait...",
+  "nftNotOwnerInfo": "You are not the owner of this NFT"
 }

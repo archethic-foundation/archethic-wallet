@@ -583,5 +583,6 @@
 	"doYouWantNewUsersReadOldMessages": "Autoriser les nouveaux membres à voir les messages précédents ?",
 	"youHaveBeenDeletedFromADiscussion": "Vous avez été supprimé d'une discussion",
 	"youHaveBeenAddedTOADiscussion": "Vous avez été ajouté à une discussion",
-	"localDataMigrationMessage": "Mise à jour de votre application en cours.\nVeuillez patienter..."
+	"localDataMigrationMessage": "Mise à jour de votre application en cours.\nVeuillez patienter...",
+	"nftNotOwnerInfo": "Vous n'êtes pas propriétaire de ce NFT"
 }
