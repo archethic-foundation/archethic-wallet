@@ -18,9 +18,13 @@ class TransferInput extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final amountFormatted = transaction.amount!.toStringAsFixed(2);
-
     final hasTransactionInfo = transaction.tokenInformation != null;
+
+    final amountFormatted = transaction.amount!.toStringAsFixed(
+      hasTransactionInfo && transaction.tokenInformation!.type == 'non-fungible'
+          ? 0
+          : 2,
+    );
 
     return TransferEntryTemplate(
       label: hasTransactionInfo
