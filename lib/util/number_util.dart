@@ -75,6 +75,21 @@ class NumberUtil {
     return sanitized;
   }
 
+  /// Format a number (in string) with blank separator for each thousand
+  static String formatThousandsStr(
+    String input, {
+    bool round = false,
+    int minAmountToRound = 1000000,
+  }) {
+    final _input = double.tryParse(input);
+    if (_input == null) {
+      return input;
+    }
+
+    return formatThousands(_input,
+        round: round, minAmountToRound: minAmountToRound);
+  }
+
   /// Format a number with blank separator for each thousand
   static String formatThousands(
     num input, {
