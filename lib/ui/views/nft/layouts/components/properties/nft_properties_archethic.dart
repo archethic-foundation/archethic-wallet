@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/util/string_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -50,15 +51,17 @@ class NFTPropertiesArchethic extends ConsumerWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 20),
                               child: AutoSizeText(
-                                property.entries.first.key,
+                                property.entries.first.key.breakText(30),
                                 style: theme.textStyleSize12W600Primary,
                               ),
                             ),
+                            const SizedBox(height: 5),
                             Container(
-                              width: 200,
                               padding: const EdgeInsets.only(left: 20),
                               child: AutoSizeText(
-                                property.entries.first.value,
+                                property.entries.first.value
+                                    .toString()
+                                    .breakText(30),
                                 style: theme.textStyleSize12W400Primary,
                               ),
                             ),
