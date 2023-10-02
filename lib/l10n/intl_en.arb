@@ -133,7 +133,7 @@
   "copy": "Copy",
   "confirmSecretPhraseExplanation": "Select the words to put them in the correct order.",
   "importSecretPhrase": "Import Secret Phrase",
-  "importSecretPhraseHint": "Please enter your 24-word secret phrase below.",
+  "importSecretPhraseHint": "Enter your 24-word secret phrase below. Click the icon on the right to paste the complete phrase (with the 24 words separated by a space).",
   "qrMnemonicError": "QR doesn't contain a valid secret phrase",
   "mnemonicInvalidWord": "%1 is not a valid word",
   "mnemonicSizeError": "Secret phrase may only contain 24 words",

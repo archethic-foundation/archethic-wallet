@@ -133,7 +133,7 @@
 	"copy": "Copier",
 	"confirmSecretPhraseExplanation": "Sélectionnez les mots pour les mettre dans le bon ordre.",
 	"importSecretPhrase": "Importer une phrase secrète",
-	"importSecretPhraseHint": "Veuillez entrer votre phrase secrète de 24 mots ci-dessous.",
+	"importSecretPhraseHint": "Entrez votre phrase secrète de 24 mots.\nCliquez sur l'icone à droite pour coller la phrase complète (les 24 mots séparés par un espace).",
 	"qrMnemonicError": "Le QR code ne contient pas de phrase secrète valide",
 	"mnemonicInvalidWord": "%1 n'est pas un mot valide",
 	"mnemonicSizeError": "La phrase secrète ne peut contenir que 24 mots",
