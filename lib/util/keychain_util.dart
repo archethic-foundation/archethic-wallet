@@ -149,9 +149,7 @@ class KeychainUtil with KeychainServiceMixin {
 
   Future<HiveAppWalletDTO?> getListAccountsFromKeychain(
     Keychain keychain,
-    HiveAppWalletDTO? appWallet,
-    String currency,
-    String tokenName, {
+    HiveAppWalletDTO? appWallet, {
     bool loadBalance = true,
   }) async {
     final accounts = List<Account>.empty(growable: true);

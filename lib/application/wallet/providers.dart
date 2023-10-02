@@ -43,9 +43,6 @@ class _SessionNotifier extends Notifier<Session> {
     }
 
     final loggedInState = state.loggedIn!;
-    final selectedCurrency = ref.read(
-      SettingsProviders.settings.select((settings) => settings.currency),
-    );
 
     try {
       final keychain =
@@ -59,8 +56,6 @@ class _SessionNotifier extends Notifier<Session> {
       final newWalletDTO = await KeychainUtil().getListAccountsFromKeychain(
         keychain,
         HiveAppWalletDTO.fromModel(loggedInState.wallet),
-        selectedCurrency.name,
-        AccountBalance.cryptoCurrencyLabel,
       );
       if (newWalletDTO == null) return;
 
@@ -122,8 +117,6 @@ class _SessionNotifier extends Notifier<Session> {
     required List<String> mnemonics,
     required String languageCode,
   }) async {
-    final settings = ref.read(SettingsProviders.settings);
-
     await sl.get<DBHelper>().clearAppWallet();
 
     final seed = AppMnemomics.mnemonicListToSeed(
@@ -139,8 +132,6 @@ class _SessionNotifier extends Notifier<Session> {
       final appWallet = await KeychainUtil().getListAccountsFromKeychain(
         keychain,
         null,
-        settings.currency.name,
-        AccountBalance.cryptoCurrencyLabel,
         loadBalance: false,
       );
 
