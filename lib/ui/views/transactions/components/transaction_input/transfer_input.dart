@@ -3,6 +3,7 @@ import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transfer_entry_template.dart';
 import 'package:aewallet/ui/views/transactions/components/transaction_input/transaction_input_icon.dart';
+import 'package:aewallet/util/number_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,10 +21,13 @@ class TransferInput extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final hasTransactionInfo = transaction.tokenInformation != null;
 
-    final amountFormatted = transaction.amount!.toStringAsFixed(
-      hasTransactionInfo && transaction.tokenInformation!.type == 'non-fungible'
-          ? 0
-          : 2,
+    final amountFormatted = NumberUtil.formatThousandsStr(
+      transaction.amount!.toStringAsFixed(
+        hasTransactionInfo &&
+                transaction.tokenInformation!.type == 'non-fungible'
+            ? 0
+            : 2,
+      ),
     );
 
     return TransferEntryTemplate(
