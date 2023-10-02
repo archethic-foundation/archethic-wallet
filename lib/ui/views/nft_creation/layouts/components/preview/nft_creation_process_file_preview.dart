@@ -12,7 +12,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class NFTCreationProcessFilePreview extends ConsumerWidget {
-  const NFTCreationProcessFilePreview({super.key});
+  const NFTCreationProcessFilePreview({
+    super.key,
+    this.displayNFTInfo = true,
+  });
+
+  final bool displayNFTInfo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -50,7 +55,7 @@ class NFTCreationProcessFilePreview extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     return Column(
       children: [
-        if (nftCreation.name.isNotEmpty)
+        if (nftCreation.name.isNotEmpty && displayNFTInfo)
           Padding(
             padding: const EdgeInsets.only(top: 10),
             child: Align(
@@ -60,7 +65,7 @@ class NFTCreationProcessFilePreview extends ConsumerWidget {
               ),
             ),
           ),
-        if (nftCreation.symbol.isNotEmpty)
+        if (nftCreation.symbol.isNotEmpty && displayNFTInfo)
           Padding(
             padding: const EdgeInsets.only(top: 10, bottom: 10),
             child: Align(
@@ -71,7 +76,7 @@ class NFTCreationProcessFilePreview extends ConsumerWidget {
               ),
             ),
           ),
-        if (nftCreation.description.isNotEmpty)
+        if (nftCreation.description.isNotEmpty && displayNFTInfo)
           Padding(
             padding: const EdgeInsets.only(top: 10, bottom: 10),
             child: Align(

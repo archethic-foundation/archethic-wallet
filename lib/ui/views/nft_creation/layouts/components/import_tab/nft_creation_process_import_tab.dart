@@ -71,7 +71,9 @@ class _NFTCreationProcessImportTabState
                 ],
               ),
             ),
-            const NFTCreationProcessFilePreview(),
+            const NFTCreationProcessFilePreview(
+              displayNFTInfo: false,
+            ),
             Text(
               localizations.nftChooseSource,
               style: theme.textStyleSize12W100Primary,
