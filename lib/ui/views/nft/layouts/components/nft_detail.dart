@@ -240,7 +240,10 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                           grade: IconSize.gradeM,
                         ),
                         const SizedBox(width: 5),
-                        Text(AppLocalizations.of(context)!.nftNotOwnerInfo),
+                        Text(
+                          AppLocalizations.of(context)!.nftNotOwnerInfo,
+                          style: theme.textStyleSize12W100Primary,
+                        ),
                       ],
                     );
                   }
@@ -250,8 +253,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                     child: SizedBox.square(
                       dimension: 16,
                       child: CircularProgressIndicator(
-                        color: theme
-                            .textStyleSize12W400EquinoxMainButtonLabel.color,
+                        color: theme.textStyleSize10W100Primary.color,
                         strokeWidth: 1,
                       ),
                     ),
