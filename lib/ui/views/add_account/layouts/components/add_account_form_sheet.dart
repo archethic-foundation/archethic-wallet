@@ -74,11 +74,11 @@ class AddAccountFormSheet extends ConsumerWidget {
                         child: Icon(
                           Symbols.info,
                           color: theme.text,
-                          size: 20,
+                          size: 14,
                         ),
                       ),
                       const SizedBox(
-                        height: 5,
+                        width: 5,
                       ),
                       AutoSizeText(
                         localizations.introNewWalletGetFirstInfosNameInfos,
