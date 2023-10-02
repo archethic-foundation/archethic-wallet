@@ -5,6 +5,7 @@ on:
     branches:
       - testnet
       - mainnet
+      - Build-448---Review
 
 jobs:
   build-linux:
