@@ -16,7 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AddServiceConfirmationFormState {
-  RPCCommand<RPCSendTransactionCommandData> get signTransactionCommand =>
+  RPCSessionOrigin get sessionOrigin => throw _privateConstructorUsedError;
+  SendTransactionRequest get signTransactionCommand =>
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -32,10 +33,12 @@ abstract class $AddServiceConfirmationFormStateCopyWith<$Res> {
       _$AddServiceConfirmationFormStateCopyWithImpl<$Res,
           AddServiceConfirmationFormState>;
   @useResult
-  $Res call({RPCCommand<RPCSendTransactionCommandData> signTransactionCommand});
+  $Res call(
+      {RPCSessionOrigin sessionOrigin,
+      SendTransactionRequest signTransactionCommand});
 
-  $RPCCommandCopyWith<RPCSendTransactionCommandData, $Res>
-      get signTransactionCommand;
+  $RPCSessionOriginCopyWith<$Res> get sessionOrigin;
+  $SendTransactionRequestCopyWith<$Res> get signTransactionCommand;
 }
 
 /// @nodoc
@@ -52,22 +55,34 @@ class _$AddServiceConfirmationFormStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? sessionOrigin = null,
     Object? signTransactionCommand = null,
   }) {
     return _then(_value.copyWith(
+      sessionOrigin: null == sessionOrigin
+          ? _value.sessionOrigin
+          : sessionOrigin // ignore: cast_nullable_to_non_nullable
+              as RPCSessionOrigin,
       signTransactionCommand: null == signTransactionCommand
           ? _value.signTransactionCommand
           : signTransactionCommand // ignore: cast_nullable_to_non_nullable
-              as RPCCommand<RPCSendTransactionCommandData>,
+              as SendTransactionRequest,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $RPCCommandCopyWith<RPCSendTransactionCommandData, $Res>
-      get signTransactionCommand {
-    return $RPCCommandCopyWith<RPCSendTransactionCommandData, $Res>(
-        _value.signTransactionCommand, (value) {
+  $RPCSessionOriginCopyWith<$Res> get sessionOrigin {
+    return $RPCSessionOriginCopyWith<$Res>(_value.sessionOrigin, (value) {
+      return _then(_value.copyWith(sessionOrigin: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $SendTransactionRequestCopyWith<$Res> get signTransactionCommand {
+    return $SendTransactionRequestCopyWith<$Res>(_value.signTransactionCommand,
+        (value) {
       return _then(_value.copyWith(signTransactionCommand: value) as $Val);
     });
   }
@@ -82,11 +97,14 @@ abstract class _$$AddServiceConfirmationFormStateImplCopyWith<$Res>
       __$$AddServiceConfirmationFormStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({RPCCommand<RPCSendTransactionCommandData> signTransactionCommand});
+  $Res call(
+      {RPCSessionOrigin sessionOrigin,
+      SendTransactionRequest signTransactionCommand});
 
   @override
-  $RPCCommandCopyWith<RPCSendTransactionCommandData, $Res>
-      get signTransactionCommand;
+  $RPCSessionOriginCopyWith<$Res> get sessionOrigin;
+  @override
+  $SendTransactionRequestCopyWith<$Res> get signTransactionCommand;
 }
 
 /// @nodoc
@@ -102,13 +120,18 @@ class __$$AddServiceConfirmationFormStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? sessionOrigin = null,
     Object? signTransactionCommand = null,
   }) {
     return _then(_$AddServiceConfirmationFormStateImpl(
+      sessionOrigin: null == sessionOrigin
+          ? _value.sessionOrigin
+          : sessionOrigin // ignore: cast_nullable_to_non_nullable
+              as RPCSessionOrigin,
       signTransactionCommand: null == signTransactionCommand
           ? _value.signTransactionCommand
           : signTransactionCommand // ignore: cast_nullable_to_non_nullable
-              as RPCCommand<RPCSendTransactionCommandData>,
+              as SendTransactionRequest,
     ));
   }
 }
@@ -118,15 +141,17 @@ class __$$AddServiceConfirmationFormStateImplCopyWithImpl<$Res>
 class _$AddServiceConfirmationFormStateImpl
     extends _AddServiceConfirmationFormState {
   const _$AddServiceConfirmationFormStateImpl(
-      {required this.signTransactionCommand})
+      {required this.sessionOrigin, required this.signTransactionCommand})
       : super._();
 
   @override
-  final RPCCommand<RPCSendTransactionCommandData> signTransactionCommand;
+  final RPCSessionOrigin sessionOrigin;
+  @override
+  final SendTransactionRequest signTransactionCommand;
 
   @override
   String toString() {
-    return 'AddServiceConfirmationFormState(signTransactionCommand: $signTransactionCommand)';
+    return 'AddServiceConfirmationFormState(sessionOrigin: $sessionOrigin, signTransactionCommand: $signTransactionCommand)';
   }
 
   @override
@@ -134,12 +159,15 @@ class _$AddServiceConfirmationFormStateImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AddServiceConfirmationFormStateImpl &&
+            (identical(other.sessionOrigin, sessionOrigin) ||
+                other.sessionOrigin == sessionOrigin) &&
             (identical(other.signTransactionCommand, signTransactionCommand) ||
                 other.signTransactionCommand == signTransactionCommand));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, signTransactionCommand);
+  int get hashCode =>
+      Object.hash(runtimeType, sessionOrigin, signTransactionCommand);
 
   @JsonKey(ignore: true)
   @override
@@ -153,12 +181,15 @@ class _$AddServiceConfirmationFormStateImpl
 abstract class _AddServiceConfirmationFormState
     extends AddServiceConfirmationFormState {
   const factory _AddServiceConfirmationFormState(
-      {required final RPCCommand<RPCSendTransactionCommandData>
-          signTransactionCommand}) = _$AddServiceConfirmationFormStateImpl;
+          {required final RPCSessionOrigin sessionOrigin,
+          required final SendTransactionRequest signTransactionCommand}) =
+      _$AddServiceConfirmationFormStateImpl;
   const _AddServiceConfirmationFormState._() : super._();
 
   @override
-  RPCCommand<RPCSendTransactionCommandData> get signTransactionCommand;
+  RPCSessionOrigin get sessionOrigin;
+  @override
+  SendTransactionRequest get signTransactionCommand;
   @override
   @JsonKey(ignore: true)
   _$$AddServiceConfirmationFormStateImplCopyWith<

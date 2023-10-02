@@ -2,12 +2,12 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/core/result.dart';
-import 'package:aewallet/domain/rpc/commands/command.dart';
-import 'package:aewallet/domain/rpc/commands/send_transaction.dart';
+import 'package:aewallet/domain/rpc/command.dart';
 import 'package:aewallet/domain/usecases/transaction/send_transaction.dart';
 import 'package:aewallet/domain/usecases/usecase.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:archethic_wallet_client/archethic_wallet_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -18,20 +18,22 @@ part 'provider.g.dart';
 @freezed
 class AddServiceConfirmationFormState with _$AddServiceConfirmationFormState {
   const factory AddServiceConfirmationFormState({
-    required RPCCommand<RPCSendTransactionCommandData> signTransactionCommand,
+    required RPCSessionOrigin sessionOrigin,
+    required SendTransactionRequest signTransactionCommand,
   }) = _AddServiceConfirmationFormState;
   const AddServiceConfirmationFormState._();
 }
 
 class AddServiceConfirmationFormNotifier extends AutoDisposeFamilyAsyncNotifier<
     AddServiceConfirmationFormState,
-    RPCCommand<RPCSendTransactionCommandData>> {
+    RPCAuthenticatedCommand<SendTransactionRequest>> {
   @override
   Future<AddServiceConfirmationFormState> build(
-    RPCCommand<RPCSendTransactionCommandData> arg,
+    RPCAuthenticatedCommand<SendTransactionRequest> arg,
   ) async {
     return AddServiceConfirmationFormState(
-      signTransactionCommand: arg,
+      sessionOrigin: arg.origin,
+      signTransactionCommand: arg.data,
     );
   }
 
@@ -48,9 +50,9 @@ class AddServiceConfirmationFormNotifier extends AutoDisposeFamilyAsyncNotifier<
               .run(
             SendTransactionCommand(
               senderAccount: accountSelected!,
-              data: data.value.signTransactionCommand.data.data,
-              type: data.value.signTransactionCommand.data.type,
-              version: data.value.signTransactionCommand.data.version,
+              data: data.value.signTransactionCommand.data,
+              type: data.value.signTransactionCommand.type,
+              version: data.value.signTransactionCommand.version,
             ),
             onProgress: onProgress,
           )
@@ -81,7 +83,7 @@ class AddServiceConfirmationProviders {
   static final form = AsyncNotifierProvider.autoDispose.family<
       AddServiceConfirmationFormNotifier,
       AddServiceConfirmationFormState,
-      RPCCommand<RPCSendTransactionCommandData>>(
+      RPCAuthenticatedCommand<AddServiceRequest>>(
     AddServiceConfirmationFormNotifier.new,
   );
 }

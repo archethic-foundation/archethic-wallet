@@ -1,21 +1,22 @@
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/core/result.dart';
+import 'package:aewallet/domain/rpc/command.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
-import 'package:aewallet/domain/rpc/commands/command.dart';
-import 'package:aewallet/domain/rpc/commands/get_services_from_keychain.dart';
 import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class GetServicesFromKeychainCommandHandler extends CommandHandler {
+class GetServicesFromKeychainCommandHandler extends CommandHandler<
+    awc.GetServicesFromKeychainRequest, awc.GetServicesFromKeychainResult> {
   GetServicesFromKeychainCommandHandler({
     required WidgetRef ref,
   }) : super(
           canHandle: (command) =>
-              command is RPCCommand<RPCGetServicesFromKeychainCommandData>,
+              command is RPCCommand<awc.GetServicesFromKeychainRequest>,
           handle: (command) async {
-            command as RPCCommand<RPCGetServicesFromKeychainCommandData>;
+            command as RPCCommand<awc.GetServicesFromKeychainRequest>;
 
             final networkSettings = ref.watch(
               SettingsProviders.settings.select((settings) => settings.network),
@@ -41,7 +42,7 @@ class GetServicesFromKeychainCommandHandler extends CommandHandler {
             });
 
             return Result.success(
-              RPCGetServicesFromKeychainResultData(services: services),
+              awc.GetServicesFromKeychainResult(services: services),
             );
           },
         );

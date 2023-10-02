@@ -1,7 +1,6 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/domain/models/core/result.dart';
-import 'package:aewallet/domain/rpc/commands/command.dart';
-import 'package:aewallet/domain/rpc/commands/send_transaction.dart';
+import 'package:aewallet/domain/rpc/command.dart';
 import 'package:aewallet/domain/usecases/usecase.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -18,6 +17,7 @@ import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,7 +32,7 @@ class AddServiceConfirmationForm extends ConsumerWidget
     super.key,
   });
 
-  final RPCCommand<RPCSendTransactionCommandData> command;
+  final RPCAuthenticatedCommand<awc.AddServiceRequest> command;
   final String serviceName;
 
   static const String routerPage = '/add_service_confirmation';
@@ -158,7 +158,6 @@ class AddServiceConfirmationForm extends ConsumerWidget
 
   Widget displayInfoDetail(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-
     final accountSelected =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
 

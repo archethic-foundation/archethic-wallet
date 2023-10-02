@@ -2,14 +2,13 @@ import 'dart:io';
 
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/core/result.dart';
+import 'package:aewallet/domain/rpc/command.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
-import 'package:aewallet/domain/rpc/commands/command.dart';
-import 'package:aewallet/domain/rpc/commands/failure.dart';
-import 'package:aewallet/domain/rpc/commands/sign_transactions.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/sign_transactions/layouts/sign_transactions_confirmation_form.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
+import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,20 +16,20 @@ import 'package:window_manager/window_manager.dart';
 
 const slippage = 1.01;
 
-class SignTransactionsCommandHandler extends CommandHandler {
+class SignTransactionsCommandHandler extends CommandHandler<
+    awc.SignTransactionRequest, awc.SignTransactionsResult> {
   SignTransactionsCommandHandler({
     required BuildContext context,
     required WidgetRef ref,
   }) : super(
           canHandle: (command) =>
-              command is RPCCommand<RPCSignTransactionsCommandData>,
+              command is RPCAuthenticatedCommand<awc.SignTransactionRequest>,
           handle: (command) async {
-            command as RPCCommand<RPCSignTransactionsCommandData>;
+            command as RPCAuthenticatedCommand<awc.SignTransactionRequest>;
 
-            final signedTransactionList =
-                <RPCSignTransactionResultDetailData>[];
+            final signedTransactionList = <awc.SignTransactionsResultDetail>[];
             final serviceName = command.data.serviceName;
-            final pathSuffix = command.data.pathSuffix ?? '';
+            final pathSuffix = command.data.pathSuffix;
 
             final seed =
                 ref.read(SessionProviders.session).loggedIn!.wallet.seed;
@@ -47,8 +46,8 @@ class SignTransactionsCommandHandler extends CommandHandler {
                 ),
               );
             } catch (e) {
-              return Result.failure(
-                RPCFailure.serviceNotFound(),
+              return const Result.failure(
+                awc.Failure.serviceNotFound,
               );
             }
 
@@ -64,7 +63,7 @@ class SignTransactionsCommandHandler extends CommandHandler {
 
             var globalFees = 0.0;
             for (final rpcSignTransactionCommandData
-                in command.data.rpcSignTransactionCommandData) {
+                in command.data.transactions) {
               final transaction = archethic.Transaction(
                 type: rpcSignTransactionCommandData.type,
                 data: rpcSignTransactionCommandData.data,
@@ -109,13 +108,13 @@ class SignTransactionsCommandHandler extends CommandHandler {
             );
 
             if (confirmation == null || confirmation == false) {
-              return Result.failure(
-                RPCFailure.userRejected(),
+              return const Result.failure(
+                awc.Failure.userRejected,
               );
             }
 
             for (final rpcSignTransactionCommandData
-                in command.data.rpcSignTransactionCommandData) {
+                in command.data.transactions) {
               final transaction = archethic.Transaction(
                 type: rpcSignTransactionCommandData.type,
                 data: rpcSignTransactionCommandData.data,
@@ -133,7 +132,7 @@ class SignTransactionsCommandHandler extends CommandHandler {
                   .originSign(originPrivateKey);
 
               final rpcSignTransactionResultDetailData =
-                  RPCSignTransactionResultDetailData(
+                  awc.SignTransactionsResultDetail(
                 address: signedTransaction.address!.address ?? '',
                 originSignature: signedTransaction.originSignature ?? '',
                 previousPublicKey: signedTransaction.previousPublicKey ?? '',
@@ -145,7 +144,7 @@ class SignTransactionsCommandHandler extends CommandHandler {
             }
 
             return Result.success(
-              RPCSignTransactionsResultData(signedTxs: signedTransactionList),
+              awc.SignTransactionsResult(signedTxs: signedTransactionList),
             );
           },
         );

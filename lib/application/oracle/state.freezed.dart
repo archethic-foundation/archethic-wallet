@@ -74,22 +74,22 @@ class _$ArchethicOracleUCOCopyWithImpl<$Res, $Val extends ArchethicOracleUCO>
 }
 
 /// @nodoc
-abstract class _$$ArchethicOracleUCOImplCopyWith<$Res>
+abstract class _$$_ArchethicOracleUCOCopyWith<$Res>
     implements $ArchethicOracleUCOCopyWith<$Res> {
-  factory _$$ArchethicOracleUCOImplCopyWith(_$ArchethicOracleUCOImpl value,
-          $Res Function(_$ArchethicOracleUCOImpl) then) =
-      __$$ArchethicOracleUCOImplCopyWithImpl<$Res>;
+  factory _$$_ArchethicOracleUCOCopyWith(_$_ArchethicOracleUCO value,
+          $Res Function(_$_ArchethicOracleUCO) then) =
+      __$$_ArchethicOracleUCOCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int timestamp, double eur, double usd});
 }
 
 /// @nodoc
-class __$$ArchethicOracleUCOImplCopyWithImpl<$Res>
-    extends _$ArchethicOracleUCOCopyWithImpl<$Res, _$ArchethicOracleUCOImpl>
-    implements _$$ArchethicOracleUCOImplCopyWith<$Res> {
-  __$$ArchethicOracleUCOImplCopyWithImpl(_$ArchethicOracleUCOImpl _value,
-      $Res Function(_$ArchethicOracleUCOImpl) _then)
+class __$$_ArchethicOracleUCOCopyWithImpl<$Res>
+    extends _$ArchethicOracleUCOCopyWithImpl<$Res, _$_ArchethicOracleUCO>
+    implements _$$_ArchethicOracleUCOCopyWith<$Res> {
+  __$$_ArchethicOracleUCOCopyWithImpl(
+      _$_ArchethicOracleUCO _value, $Res Function(_$_ArchethicOracleUCO) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -99,7 +99,7 @@ class __$$ArchethicOracleUCOImplCopyWithImpl<$Res>
     Object? eur = null,
     Object? usd = null,
   }) {
-    return _then(_$ArchethicOracleUCOImpl(
+    return _then(_$_ArchethicOracleUCO(
       timestamp: null == timestamp
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
@@ -118,12 +118,11 @@ class __$$ArchethicOracleUCOImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ArchethicOracleUCOImpl implements _ArchethicOracleUCO {
-  const _$ArchethicOracleUCOImpl(
-      {this.timestamp = 0, this.eur = 0, this.usd = 0});
+class _$_ArchethicOracleUCO implements _ArchethicOracleUCO {
+  const _$_ArchethicOracleUCO({this.timestamp = 0, this.eur = 0, this.usd = 0});
 
-  factory _$ArchethicOracleUCOImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ArchethicOracleUCOImplFromJson(json);
+  factory _$_ArchethicOracleUCO.fromJson(Map<String, dynamic> json) =>
+      _$$_ArchethicOracleUCOFromJson(json);
 
   @override
   @JsonKey()
@@ -144,7 +143,7 @@ class _$ArchethicOracleUCOImpl implements _ArchethicOracleUCO {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ArchethicOracleUCOImpl &&
+            other is _$_ArchethicOracleUCO &&
             (identical(other.timestamp, timestamp) ||
                 other.timestamp == timestamp) &&
             (identical(other.eur, eur) || other.eur == eur) &&
@@ -158,13 +157,13 @@ class _$ArchethicOracleUCOImpl implements _ArchethicOracleUCO {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ArchethicOracleUCOImplCopyWith<_$ArchethicOracleUCOImpl> get copyWith =>
-      __$$ArchethicOracleUCOImplCopyWithImpl<_$ArchethicOracleUCOImpl>(
+  _$$_ArchethicOracleUCOCopyWith<_$_ArchethicOracleUCO> get copyWith =>
+      __$$_ArchethicOracleUCOCopyWithImpl<_$_ArchethicOracleUCO>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ArchethicOracleUCOImplToJson(
+    return _$$_ArchethicOracleUCOToJson(
       this,
     );
   }
@@ -174,10 +173,10 @@ abstract class _ArchethicOracleUCO implements ArchethicOracleUCO {
   const factory _ArchethicOracleUCO(
       {final int timestamp,
       final double eur,
-      final double usd}) = _$ArchethicOracleUCOImpl;
+      final double usd}) = _$_ArchethicOracleUCO;
 
   factory _ArchethicOracleUCO.fromJson(Map<String, dynamic> json) =
-      _$ArchethicOracleUCOImpl.fromJson;
+      _$_ArchethicOracleUCO.fromJson;
 
   @override
   int get timestamp;
@@ -187,6 +186,6 @@ abstract class _ArchethicOracleUCO implements ArchethicOracleUCO {
   double get usd;
   @override
   @JsonKey(ignore: true)
-  _$$ArchethicOracleUCOImplCopyWith<_$ArchethicOracleUCOImpl> get copyWith =>
+  _$$_ArchethicOracleUCOCopyWith<_$_ArchethicOracleUCO> get copyWith =>
       throw _privateConstructorUsedError;
 }

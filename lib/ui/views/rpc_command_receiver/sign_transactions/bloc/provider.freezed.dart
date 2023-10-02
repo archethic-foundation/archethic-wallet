@@ -16,8 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SignTransactionsConfirmationFormState {
-  RPCCommand<RPCSignTransactionsCommandData> get signTransactionCommand =>
-      throw _privateConstructorUsedError;
+  dynamic get signTransactionCommand => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SignTransactionsConfirmationFormStateCopyWith<
@@ -33,11 +32,7 @@ abstract class $SignTransactionsConfirmationFormStateCopyWith<$Res> {
       _$SignTransactionsConfirmationFormStateCopyWithImpl<$Res,
           SignTransactionsConfirmationFormState>;
   @useResult
-  $Res call(
-      {RPCCommand<RPCSignTransactionsCommandData> signTransactionCommand});
-
-  $RPCCommandCopyWith<RPCSignTransactionsCommandData, $Res>
-      get signTransactionCommand;
+  $Res call({dynamic signTransactionCommand});
 }
 
 /// @nodoc
@@ -54,24 +49,14 @@ class _$SignTransactionsConfirmationFormStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? signTransactionCommand = null,
+    Object? signTransactionCommand = freezed,
   }) {
     return _then(_value.copyWith(
-      signTransactionCommand: null == signTransactionCommand
+      signTransactionCommand: freezed == signTransactionCommand
           ? _value.signTransactionCommand
           : signTransactionCommand // ignore: cast_nullable_to_non_nullable
-              as RPCCommand<RPCSignTransactionsCommandData>,
+              as dynamic,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $RPCCommandCopyWith<RPCSignTransactionsCommandData, $Res>
-      get signTransactionCommand {
-    return $RPCCommandCopyWith<RPCSignTransactionsCommandData, $Res>(
-        _value.signTransactionCommand, (value) {
-      return _then(_value.copyWith(signTransactionCommand: value) as $Val);
-    });
   }
 }
 
@@ -84,12 +69,7 @@ abstract class _$$SignTransactionsConfirmationFormStateImplCopyWith<$Res>
       __$$SignTransactionsConfirmationFormStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {RPCCommand<RPCSignTransactionsCommandData> signTransactionCommand});
-
-  @override
-  $RPCCommandCopyWith<RPCSignTransactionsCommandData, $Res>
-      get signTransactionCommand;
+  $Res call({dynamic signTransactionCommand});
 }
 
 /// @nodoc
@@ -105,13 +85,12 @@ class __$$SignTransactionsConfirmationFormStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? signTransactionCommand = null,
+    Object? signTransactionCommand = freezed,
   }) {
     return _then(_$SignTransactionsConfirmationFormStateImpl(
-      signTransactionCommand: null == signTransactionCommand
-          ? _value.signTransactionCommand
-          : signTransactionCommand // ignore: cast_nullable_to_non_nullable
-              as RPCCommand<RPCSignTransactionsCommandData>,
+      signTransactionCommand: freezed == signTransactionCommand
+          ? _value.signTransactionCommand!
+          : signTransactionCommand,
     ));
   }
 }
@@ -125,7 +104,7 @@ class _$SignTransactionsConfirmationFormStateImpl
       : super._();
 
   @override
-  final RPCCommand<RPCSignTransactionsCommandData> signTransactionCommand;
+  final dynamic signTransactionCommand;
 
   @override
   String toString() {
@@ -137,12 +116,13 @@ class _$SignTransactionsConfirmationFormStateImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SignTransactionsConfirmationFormStateImpl &&
-            (identical(other.signTransactionCommand, signTransactionCommand) ||
-                other.signTransactionCommand == signTransactionCommand));
+            const DeepCollectionEquality()
+                .equals(other.signTransactionCommand, signTransactionCommand));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, signTransactionCommand);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(signTransactionCommand));
 
   @JsonKey(ignore: true)
   @override
@@ -156,13 +136,12 @@ class _$SignTransactionsConfirmationFormStateImpl
 abstract class _SignTransactionsConfirmationFormState
     extends SignTransactionsConfirmationFormState {
   const factory _SignTransactionsConfirmationFormState(
-          {required final RPCCommand<RPCSignTransactionsCommandData>
-              signTransactionCommand}) =
+          {required final dynamic signTransactionCommand}) =
       _$SignTransactionsConfirmationFormStateImpl;
   const _SignTransactionsConfirmationFormState._() : super._();
 
   @override
-  RPCCommand<RPCSignTransactionsCommandData> get signTransactionCommand;
+  dynamic get signTransactionCommand;
   @override
   @JsonKey(ignore: true)
   _$$SignTransactionsConfirmationFormStateImplCopyWith<

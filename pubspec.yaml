@@ -30,6 +30,12 @@ dependencies:
   #    url: https://github.com/archethic-foundation/messaging_dart_sdk.git
   #    ref: main
 
+  archethic_wallet_client:
+    path: ../archethic-wallet-client-dart
+  #  git:
+  #    url: https://github.com/archethic-foundation/archethic-wallet-client-dart.git
+  #    ref: aeip/23_dapp_secured_session
+
   # An ASN1 parser library for Dart. Encodes / decodes from ASN1 Objects to BER bytes
   asn1lib: ^1.5.0
 

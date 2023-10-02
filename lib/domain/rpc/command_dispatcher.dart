@@ -2,10 +2,11 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:aewallet/domain/models/core/result.dart';
-import 'package:aewallet/domain/rpc/commands/failure.dart';
+import 'package:aewallet/domain/rpc/command.dart';
+import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:collection/collection.dart';
 
-/// [CommandDispatcher] is a [Command] queue.
+/// [CommandBus] is a [Command] queue.
 /// Queue can be consumed by many handlers. When a command
 /// comes in, it is processed by the first handler which
 /// accepts it. (see [CommandHandler.canHandle])
@@ -18,35 +19,39 @@ import 'package:collection/collection.dart';
 ///  - RPC pushes a [Command].
 ///  - UI consumes the [Command]
 ///     => it might display a confirmation popup.
-///     => eventually command is processed, and result is returned to the [CommandDispatcher]
+///     => eventually command is processed, and result is returned to the [CommandBus]
 ///  - RPC receives the [Command] result. It returns it to the DApp.
 ///
-class Command<C> {
+class Command<CommandDataT, SuccessDataT> {
   Command(
     this.completer,
     this.command,
   );
 
-  final Completer completer;
-  final C command;
+  final Completer<Result<SuccessDataT, awc.Failure>> completer;
+  final CommandDataT command;
 }
 
-class CommandHandler<C, S> {
+class CommandHandler<CommandDataT, SuccessDataT> {
   const CommandHandler({
     required this.handle,
     required this.canHandle,
   });
 
-  final Future<Result<S, RPCFailure>> Function(C command) handle;
+  final Future<Result<SuccessDataT, awc.Failure>> Function(
+    RPCCommand<dynamic> command,
+  ) handle;
 
   final bool Function(dynamic commandData) canHandle;
 }
 
 // Executed before Handlers.
-// If an [RPCFailure] is returned, processing stops here.
-typedef CommandGuard<C> = FutureOr<RPCFailure?> Function(C command);
+// If an [awc.Failure] is returned, processing stops here.
+typedef CommandGuard<CommandDataT> = FutureOr<awc.Failure?> Function(
+  CommandDataT command,
+);
 
-class CommandDispatcher {
+class CommandBus {
   final _waitingCommands = Queue<Command>();
 
   // ignore: prefer_collection_literals
@@ -63,14 +68,14 @@ class CommandDispatcher {
 
   /// Add a guard.
   /// [CommandGuard]s are executed before processing any command. If the guard's
-  /// result is an [RPCFailure], then processing stops returning that failure.
+  /// result is an [awc.Failure], then processing stops returning that failure.
   void addGuard(CommandGuard guard) {
     _guards.add(guard);
   }
 
   /// Add a [CommandHandler].
-  void addHandler(
-    CommandHandler commandHandler,
+  void addHandler<CommandDataT, SuccessDataT>(
+    CommandHandler<CommandDataT, SuccessDataT> commandHandler,
   ) {
     _handlers.add(commandHandler);
 
@@ -79,12 +84,12 @@ class CommandDispatcher {
     }
   }
 
-  Future<Result<S, RPCFailure>> add<C, S>(
-    C command,
+  Future<Result<SuccessDataT, awc.Failure>> add<CommandDataT, SuccessDataT>(
+    CommandDataT command,
   ) async {
-    final completer = Completer<Result<S, RPCFailure>>();
+    final completer = Completer<Result<SuccessDataT, awc.Failure>>();
     _waitingCommands.add(
-      Command(
+      Command<CommandDataT, SuccessDataT>(
         completer,
         command,
       ),
@@ -94,17 +99,20 @@ class CommandDispatcher {
     return completer.future;
   }
 
-  CommandHandler? _findHandler<C, S>(
-    C commandData,
+  CommandHandler<CommandDataT, SuccessDataT>?
+      _findHandler<CommandDataT, SuccessDataT>(
+    Command<CommandDataT, SuccessDataT> command,
   ) {
-    return _handlers.firstWhereOrNull(
+    return _handlers
+        .whereType<CommandHandler<CommandDataT, SuccessDataT>>()
+        .firstWhereOrNull(
       (handler) {
-        return handler.canHandle(commandData);
+        return handler.canHandle(command.command);
       },
     );
   }
 
-  Future<RPCFailure?> _guard<C>(C command) async {
+  Future<awc.Failure?> _guard<CommandDataT>(CommandDataT command) async {
     for (final guard in _guards) {
       final failure = await guard(command);
       if (failure != null) return failure;
@@ -116,20 +124,21 @@ class CommandDispatcher {
     if (_handlers.isEmpty) return;
     if (_waitingCommands.isEmpty) return;
 
-    final command = _waitingCommands.first;
-    _waitingCommands.removeFirst();
-    final handler = _findHandler(command.command);
+    final command = _waitingCommands.removeFirst();
+    final handler = _findHandler(command);
 
     if (handler == null) {
-      command.completer.completeError(
-        RPCFailure.unsupportedMethod(),
+      command.completer.complete(
+        const Result.failure(
+          awc.Failure.unsupportedMethod,
+        ),
       );
       return;
     }
 
     final guardFailure = await _guard(command.command);
     if (guardFailure != null) {
-      command.completer.completeError(guardFailure);
+      command.completer.complete(Result.failure(guardFailure));
       return;
     }
 
@@ -137,7 +146,7 @@ class CommandDispatcher {
         .handle(command.command)
         .then(
           command.completer.complete,
-          onError: command.completer.completeError,
+          onError: (error) => command.completer.complete(Result.failure(error)),
         )
         .whenComplete(_process);
   }

@@ -2,22 +2,23 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:aewallet/domain/rpc/subscription.dart';
+import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/infrastructure/rpc/add_service/command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/dto/rpc_command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/dto/rpc_request.dart';
-import 'package:aewallet/infrastructure/rpc/dto/rpc_subscription.dart';
-import 'package:aewallet/infrastructure/rpc/get_accounts/command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/get_current_account/command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/get_endpoint/command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/get_services_from_keychain/command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/keychain_derive_address/command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/keychain_derive_keypair/command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/refresh_current_account/command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/send_transaction/command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/sign_transactions/command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/sub_account/command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/sub_current_account/command_handler.dart';
+import 'package:aewallet/infrastructure/rpc/dto/rpc_receiver.dart';
+import 'package:aewallet/infrastructure/rpc/get_accounts/command_receiver.dart';
+import 'package:aewallet/infrastructure/rpc/get_current_account/command_receiver.dart';
+import 'package:aewallet/infrastructure/rpc/get_endpoint/command_receiver.dart';
+import 'package:aewallet/infrastructure/rpc/get_services_from_keychain/command_receiver.dart';
+import 'package:aewallet/infrastructure/rpc/keychain_derive_address/command_receiver.dart';
+import 'package:aewallet/infrastructure/rpc/keychain_derive_keypair/command_receiver.dart';
+import 'package:aewallet/infrastructure/rpc/open_session_challenge/command_receiver.dart';
+import 'package:aewallet/infrastructure/rpc/open_session_handshake/command_receiver.dart';
+import 'package:aewallet/infrastructure/rpc/refresh_current_account/command_receiver.dart';
+import 'package:aewallet/infrastructure/rpc/send_transaction/command_receiver.dart';
+import 'package:aewallet/infrastructure/rpc/sign_transactions/command_receiver.dart';
+import 'package:aewallet/infrastructure/rpc/sub_account/command_receiver.dart';
+import 'package:aewallet/infrastructure/rpc/sub_current_account/command_receiver.dart';
+import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:flutter/foundation.dart';
 import 'package:json_rpc_2/json_rpc_2.dart';
 import 'package:web_socket_channel/io.dart';
@@ -35,39 +36,49 @@ class _SubscribablePeer {
   void registerMethod(String name, Function callback) =>
       _peer.registerMethod(name, callback);
 
-  void registerSubscriptionMethod(
+  void registerSubscriptionMethod<CommandDataT, NotificationDataT>(
     String name,
-    Future<RPCSubscriptionDTO> Function(dynamic params) subscriptionCallback,
+    Future<
+            (
+              RPCSubscriptionReceiver<CommandDataT, NotificationDataT>,
+              awc.Subscription<Map<String, dynamic>>
+            )>
+        Function(
+      dynamic params,
+    ) subscriptionCallback,
   ) {
     registerMethod(
       name,
       (params) async {
-        final result = await subscriptionCallback(params);
+        final (subscriptionReceiver, subscription) =
+            await subscriptionCallback(params);
 
-        final streamSubscription = result.updates.listen((value) {
+        final streamSubscription = subscription.updates.listen((value) {
           _peer.sendNotification('addSubscriptionNotification', value);
         });
-        _registerSubscription(result.id, streamSubscription);
+        _registerSubscription(subscription.id, streamSubscription);
 
-        return result.toJson();
+        final resultPayload = subscriptionReceiver.encodeResult(subscription);
+        return subscriptionReceiver.messageCodec.build(resultPayload).toJson();
       },
     );
   }
 
   void registerUnsubscriptionMethod(
     String name,
+    RPCUnsubscriptionReceiverFactory receiverFactory,
   ) {
     registerMethod(
       name,
-      (params) async {
-        final requestDTO = RPCRequestDTO.fromJson(
-          params.value,
-        );
+      (Parameters params) async {
+        final commandReceiver = await receiverFactory.build(params.value);
 
-        final unsubscribeCommand = RPCUnsubscribeCommandDTO.fromJson(
-          requestDTO.payload,
-        );
+        final message = commandReceiver.messageCodec.fromJson(params.value);
+        final unsubscribeCommand =
+            commandReceiver.requestToCommand(message).data;
+
         _removeSubscription(unsubscribeCommand.subscriptionId);
+
         return {};
       },
     );
@@ -138,67 +149,92 @@ class ArchethicWebsocketRPCServer {
           final peerServer = _SubscribablePeer(Peer(channel.cast<String>()))
             ..registerMethod(
               'sendTransaction',
-              (params) => _handle(RPCSendTransactionCommandHandler(), params),
+              (params) => _handle(rpcSendTransactionReceiverFactory, params),
             )
             ..registerMethod(
               'getEndpoint',
-              (params) => _handle(RPCGetEndpointCommandHandler(), params),
+              (params) => _handle(rpcGetEndpointCommandReceiverFactory, params),
             )
             ..registerMethod(
               'refreshCurrentAccount',
-              (params) =>
-                  _handle(RPCRefreshCurrentAccountCommandHandler(), params),
+              (params) => _handle(
+                rpcRefreshCurrentAccountCommandReceiverFactory,
+                params,
+              ),
             )
             ..registerMethod(
               'getCurrentAccount',
-              (params) => _handle(RPCGetCurrentAccountCommandHandler(), params),
+              (params) =>
+                  _handle(rpcGetCurrentAccountCommandReceiverFactory, params),
             )
             ..registerMethod(
               'getAccounts',
-              (params) => _handle(RPCGetAccountsCommandHandler(), params),
+              (params) => _handle(rpcGetAccountsCommandReceiverFactory, params),
             )
             ..registerSubscriptionMethod(
               'subscribeAccount',
               (params) => _handleSubscription(
-                RPCSubscribeAccountCommandHandler(),
+                rpcSubscribeAccountCommandReceiver,
                 params,
               ),
             )
             ..registerUnsubscriptionMethod(
               'unsubscribeAccount',
+              RPCUnsubscriptionReceiverFactory.authenticated(),
             )
-            ..registerSubscriptionMethod(
+            ..registerSubscriptionMethod<awc.SubscribeCurrentAccountRequest,
+                awc.SubscribeAccountNotification?>(
               'subscribeCurrentAccount',
-              (params) => _handleSubscription(
-                RPCSubscribeCurrentAccountCommandHandler(),
+              (params) => _handleSubscription<
+                  awc.SubscribeCurrentAccountRequest,
+                  awc.SubscribeAccountNotification?>(
+                rpcSubscribeCurrentAccountCommandReceiver,
                 params,
               ),
             )
             ..registerUnsubscriptionMethod(
               'unsubscribeCurrentAccount',
+              RPCUnsubscriptionReceiverFactory.authenticated(),
             )
             ..registerMethod(
               'addService',
-              (params) => _handle(RPCAddServiceCommandHandler(), params),
+              (params) => _handle(rpcAddServiceReceiverFactory, params),
             )
             ..registerMethod(
               'getServicesFromKeychain',
               (params) =>
-                  _handle(RPCGetServicesFromKeychainCommandHandler(), params),
+                  _handle(rpcGetServicesFromKeychainReceiverFactory, params),
             )
             ..registerMethod(
               'keychainDeriveKeypair',
               (params) =>
-                  _handle(RPCKeychainDeriveKeypairCommandHandler(), params),
+                  _handle(rpcKeychainDeriveKeypairReceiverFactory, params),
             )
             ..registerMethod(
               'keychainDeriveAddress',
               (params) =>
-                  _handle(RPCKeychainDeriveAddressCommandHandler(), params),
+                  _handle(rpcKeychainDeriveAddressReceiverFactory, params),
             )
             ..registerMethod(
               'signTransactions',
-              (params) => _handle(RPCSignTransactionsCommandHandler(), params),
+              (params) => _handle(rpcSignTransactionReceiverFactory, params),
+            )
+            ..registerMethod(
+              'openSessionHandshake',
+              (params) async {
+                final result = await _handle(
+                  rpcOpenSessionHandshakeCommandReceiverFactory,
+                  params,
+                );
+                return result;
+              },
+            )
+            ..registerMethod(
+              'openSessionChallenge',
+              (params) => _handle(
+                rpcOpenSessionChallengeCommandReceiverFactory,
+                params,
+              ),
             );
 
           _openedSockets.add(peerServer);
@@ -248,61 +284,76 @@ class ArchethicWebsocketRPCServer {
   }
 
   Future<Map<String, dynamic>> _handle(
-    RPCCommandHandler commandHandler,
+    RPCCommandReceiverFactory commandReceiverFactory,
     Parameters params,
   ) async {
-    final result = await commandHandler.handle(params.value);
-    return result.map(
-      success: commandHandler.resultFromModel,
-      failure: (failure) {
-        log(
-          'Command failed',
-          name: logName,
-          error: failure,
-        );
+    try {
+      final commandReceiver = await commandReceiverFactory.build(params.value);
+      final success = await commandReceiver.handle().valueOrThrow;
 
-        throw RpcException(
-          failure.code,
-          failure.message ?? 'Command failed',
-        );
-      },
-    );
+      // 4. Transformation du R en Json, puis creation du RPCMessage
+      final resultPayload = commandReceiver.encodeResult(success);
+      return commandReceiver.messageCodec.build(resultPayload).toJson();
+    } catch (failure) {
+      failure as awc.Failure;
+      log(
+        'Command failed',
+        name: logName,
+        error: failure,
+      );
+
+      throw RpcException(
+        failure.code,
+        failure.message,
+      );
+    }
   }
 
-  Future<RPCSubscriptionDTO> _handleSubscription(
-    RPCSubscriptionHandler commandHandler,
+  Future<
+      (
+        RPCSubscriptionReceiver<CommandDataT,
+            NotificationDataT> subscriptionReceiver,
+        awc.Subscription<Map<String, dynamic>> subscription
+      )> _handleSubscription<CommandDataT, NotificationDataT>(
+    RPCSubscriptionReceiverFactory<CommandDataT, NotificationDataT>
+        commandReceiverFactory,
     Parameters params,
   ) async {
-    final result = await commandHandler.handle(params.value);
-    return result.map(
-      success: (success) {
-        success as RPCSubscription;
-        return RPCSubscriptionDTO(
+    try {
+      final commandReceiver = await commandReceiverFactory.build(params.value);
+      final success = await commandReceiver.handle().valueOrThrow;
+
+      return (
+        commandReceiver,
+        awc.Subscription(
           id: success.id,
           updates: success.updates
               .map(
-                (update) => RPCSubscriptionUpdateDTO(
-                  subscriptionId: success.id,
-                  data: commandHandler.notificationFromModel(update),
-                ),
+                (update) => commandReceiver.messageCodec
+                    .build(
+                      awc.SubscriptionUpdate(
+                        subscriptionId: success.id,
+                        data: commandReceiver.encodeNotification(update),
+                      ).toJson(),
+                    )
+                    .toJson(),
               )
-              .distinct()
-              .map((dto) => dto.toJson()),
-        );
-      },
-      failure: (failure) {
-        log(
-          'Command failed',
-          name: logName,
-          error: failure,
-        );
+              .distinct(),
+        ),
+      );
+    } catch (failure) {
+      failure as awc.Failure;
+      log(
+        'Command failed',
+        name: logName,
+        error: failure,
+      );
 
-        throw RpcException(
-          failure.code,
-          failure.message ?? 'Command failed',
-        );
-      },
-    );
+      throw RpcException(
+        failure.code,
+        failure.message,
+      );
+    }
   }
 }
 
