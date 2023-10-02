@@ -53,13 +53,20 @@ class NFTCreationProcessAccessLabel extends ConsumerWidget {
           break;
       }
     }
-    return Container(
-      width: MediaQuery.of(context).size.width - 180,
-      padding: const EdgeInsets.only(left: 20),
-      child: AutoSizeText(
-        label,
-        style: theme.textStyleSize12W400Primary,
-      ),
+    return Column(
+      children: [
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Divider(),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: AutoSizeText(
+            label,
+            style: theme.textStyleSize12W400Primary,
+          ),
+        ),
+      ],
     );
   }
 }

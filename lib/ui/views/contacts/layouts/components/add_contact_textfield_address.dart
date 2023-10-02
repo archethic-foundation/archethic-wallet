@@ -48,6 +48,7 @@ class _AddContactTextFieldAddressState
         ref.watch(ContactCreationFormProvider.contactCreationForm.notifier);
 
     return AppTextField(
+      textAlign: TextAlign.start,
       focusNode: addressFocusNode,
       controller: addressController,
       style: theme.textStyleSize14W100Primary,

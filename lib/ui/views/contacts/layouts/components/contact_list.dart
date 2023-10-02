@@ -26,7 +26,7 @@ class ContactList extends ConsumerWidget {
       ),
       physics: const AlwaysScrollableScrollPhysics(),
       padding: EdgeInsets.only(
-        top: MediaQuery.of(context).padding.top + 60,
+        top: MediaQuery.of(context).padding.top + 80,
         bottom: MediaQuery.of(context).padding.bottom + 40,
       ),
       itemCount: contactsList.length,

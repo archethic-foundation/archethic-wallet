@@ -67,13 +67,14 @@ class _NFTCreationProcessPropertiesTabTextfieldValueState
 
     return AppTextField(
       key: const Key('nftValue'),
+      textAlign: TextAlign.start,
       focusNode: nftPropertyValueFocusNode,
       controller: nftPropertyValueController,
       cursorColor: theme.text,
       textInputAction: TextInputAction.next,
       labelText: AppLocalizations.of(context)!.nftPropertyValueHint,
       autocorrect: false,
-      maxLines: 10,
+      maxLines: 3,
       keyboardType: TextInputType.text,
       style: theme.textStyleSize16W600Primary,
       inputFormatters: <LengthLimitingTextInputFormatter>[

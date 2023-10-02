@@ -67,6 +67,7 @@ class _NFTCreationProcessPropertiesTabTextfieldNameState
     );
 
     return AppTextField(
+      textAlign: TextAlign.start,
       focusNode: nftPropertyNameFocusNode,
       controller: nftPropertyNameController,
       cursorColor: theme.text,

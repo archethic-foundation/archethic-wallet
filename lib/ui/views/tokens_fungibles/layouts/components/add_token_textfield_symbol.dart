@@ -43,6 +43,7 @@ class _AddTokenTextFieldSymbolState
     return Column(
       children: [
         AppTextField(
+          textAlign: TextAlign.start,
           focusNode: symbolFocusNode,
           controller: symbolController,
           cursorColor: theme.text,
