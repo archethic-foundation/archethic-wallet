@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
@@ -106,6 +107,10 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
       icon: Symbols.info,
     );
     await ref.read(SessionProviders.session.notifier).refresh();
+    await ref
+        .read(AccountProviders.selectedAccount.notifier)
+        .refreshRecentTransactions();
+
     if (mounted) {
       Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
     }
