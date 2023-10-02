@@ -314,7 +314,7 @@
 	"introNewWalletGetFirstInfosWelcome": "Bienvenue dans le Wallet Archethic.",
 	"introNewWalletGetFirstInfosNameRequest": "Quel nom souhaitez-vous donner à ce compte, compte qui sera stocké dans votre porte-clés décentralisé ?",
 	"introNewWalletGetFirstInfosNameInfos": "Il vous permettra de distinguer ce compte avec les autres comptes que vous pourrez, si vous le souhaitez, créer par la suite.\n\nATTENTION : Ce nom sera rattaché à votre porte-clés décentralisé et ne pourra plus être modifié.",
-	"introNewWalletGetFirstInfosNameBlank": "Veuillez renseigner un nom pour ce compte",
+	"introNewWalletGetFirstInfosNameBlank": "Nom du nouveau compte",
 	"introNewWalletGetFirstInfosNameCharacterNonValid": "Le nom ne peut pas contenir des \"\\\" ou des espaces",
 	"introNewWalletGetFirstInfosNetworkHeader": "Si vous souhaitez créer un wallet dans les réseaux de test ou de développement, veuillez cliquer ici...",
 	"introNewWalletGetFirstInfosNetworkChoice": "Réseau actuel :",

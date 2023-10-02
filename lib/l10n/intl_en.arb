@@ -322,7 +322,7 @@
   "introNewWalletGetFirstInfosWelcome": "Welcome to Archethic Wallet.",
   "introNewWalletGetFirstInfosNameRequest": "What name would you like to give to this account, which account will be stored in your decentralized keychain?",
   "introNewWalletGetFirstInfosNameInfos": "It will allow you to distinguish this account from other accounts that you can, if you want, create later.\n\nWARNING : This name will be added to your decentralized keychain and cannot be modified.",
-  "introNewWalletGetFirstInfosNameBlank": "Please enter a name for this account",
+  "introNewWalletGetFirstInfosNameBlank": "Name of the new account",
   "introNewWalletGetFirstInfosNameCharacterNonValid": "The name cannot contain \"\\\" and space characters",
   "introNewWalletGetFirstInfosNetworkHeader": "If you want to create a wallet in the test or development networks, please click here...",
   "introNewWalletGetFirstInfosNetworkChoice": "Current network :",
