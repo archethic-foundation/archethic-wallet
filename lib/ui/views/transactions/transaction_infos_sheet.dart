@@ -335,7 +335,9 @@ class _TransactionBuildInfos extends ConsumerWidget {
   }
 
   Widget _transactionInfoValue(
-      WidgetRef ref, TransactionInfos transactionInfo) {
+    WidgetRef ref,
+    TransactionInfos transactionInfo,
+  ) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
     if (transactionInfo.domain == 'UCOLedger' &&
