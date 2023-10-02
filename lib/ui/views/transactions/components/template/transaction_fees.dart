@@ -35,7 +35,7 @@ class TransactionFees extends ConsumerWidget {
       settings.currency.name,
       marketPrice.amount,
       transaction.fee!,
-      8,
+      3,
     );
 
     return Row(
@@ -48,11 +48,11 @@ class TransactionFees extends ConsumerWidget {
         else if (settings.showBalances == true)
           primaryCurrency.primaryCurrency == AvailablePrimaryCurrencyEnum.native
               ? Text(
-                  '${localizations.txListFees} ${transaction.fee!} ${AccountBalance.cryptoCurrencyLabel} ($amountConverted)',
+                  '${localizations.txListFees} ${transaction.fee!.toStringAsFixed(3)} ${AccountBalance.cryptoCurrencyLabel} ($amountConverted)',
                   style: theme.textStyleSize12W400Primary,
                 )
               : Text(
-                  '${localizations.txListFees} $amountConverted (${transaction.fee!} ${AccountBalance.cryptoCurrencyLabel})',
+                  '${localizations.txListFees} $amountConverted (${transaction.fee!.toStringAsFixed(3)} ${AccountBalance.cryptoCurrencyLabel})',
                   style: theme.textStyleSize12W400Primary,
                 )
         else
