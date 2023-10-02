@@ -255,7 +255,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                                   Expanded(
                                     child: Text(
                                       localizations.importSecretPhraseHint,
-                                      style: theme.textStyleSize16W600Primary,
+                                      style: theme.textStyleSize12W100Primary,
                                       textAlign: TextAlign.start,
                                     ),
                                   ),
