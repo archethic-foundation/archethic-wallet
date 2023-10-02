@@ -86,20 +86,24 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
                       Container(
                         padding: const EdgeInsets.only(left: 20),
                         child: AutoSizeText(
-                          propertyName,
+                          propertyName.breakText(20),
+                          maxLines: 10,
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: false,
                           style: theme.textStyleSize12W600Primary,
                         ),
                       ),
+                      const SizedBox(
+                        height: 5,
+                      ),
                       Container(
                         padding: const EdgeInsets.only(left: 20),
-                        child: Expanded(
-                          child: AutoSizeText(
-                            propertyValue.toString().breakText(20),
-                            maxLines: 10,
-                            overflow: TextOverflow.ellipsis,
-                            softWrap: false,
-                            style: theme.textStyleSize12W400Primary,
-                          ),
+                        child: AutoSizeText(
+                          propertyValue.toString().breakText(20),
+                          maxLines: 10,
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: false,
+                          style: theme.textStyleSize12W400Primary,
                         ),
                       ),
                     ],

@@ -74,10 +74,11 @@ class _NFTCreationProcessPropertiesTabTextfieldNameState
       textInputAction: TextInputAction.next,
       labelText: AppLocalizations.of(context)!.nftPropertyNameHint,
       autocorrect: false,
+      maxLines: 2,
       keyboardType: TextInputType.text,
       style: theme.textStyleSize16W600Primary,
       inputFormatters: <LengthLimitingTextInputFormatter>[
-        LengthLimitingTextInputFormatter(20),
+        LengthLimitingTextInputFormatter(60),
       ],
       onChanged: (text) {
         nftCreationNotifier.setPropertyName(
