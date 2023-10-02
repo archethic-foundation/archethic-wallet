@@ -149,14 +149,14 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
                 decoration: widget.prefixButton == null &&
                         widget.suffixButton == null
                     ? InputDecoration(
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
                         labelText: widget.labelText ?? '',
                         labelStyle: theme.textStyleSize16W400Primary60,
                         hintText: widget.hintText,
-                        prefixIcon: const SizedBox(width: 48, height: 48),
-                        suffixIcon: const SizedBox(width: 48, height: 48),
                       )
                     : widget.prefixButton != null && widget.suffixButton == null
                         ? InputDecoration(
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
                             contentPadding: const EdgeInsets.only(right: 48),
                             labelText: widget.labelText ?? '',
                             labelStyle: theme.textStyleSize16W400Primary60,
@@ -166,6 +166,8 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
                         : widget.prefixButton == null &&
                                 widget.suffixButton != null
                             ? InputDecoration(
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
                                 contentPadding: const EdgeInsets.only(left: 48),
                                 labelText: widget.labelText ?? '',
                                 labelStyle: theme.textStyleSize16W400Primary60,
@@ -174,6 +176,8 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
                                     const SizedBox(width: 48, height: 48),
                               )
                             : InputDecoration(
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
                                 labelText: widget.labelText ?? '',
                                 labelStyle: theme.textStyleSize16W400Primary60,
                                 hintText: widget.hintText,

@@ -40,6 +40,7 @@ class _AddTokenTextFieldNameState extends ConsumerState<AddTokenTextFieldName> {
         ref.watch(AddTokenFormProvider.addTokenForm.notifier);
 
     return AppTextField(
+      textAlign: TextAlign.start,
       focusNode: nameFocusNode,
       controller: nameController,
       cursorColor: theme.text,

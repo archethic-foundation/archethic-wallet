@@ -46,6 +46,7 @@ class _AddContactTextFieldPublicKeyState
         ref.watch(ContactCreationFormProvider.contactCreationForm.notifier);
 
     return AppTextField(
+      textAlign: TextAlign.start,
       focusNode: publicKeyFocusNode,
       controller: publicKeyController,
       style: theme.textStyleSize14W100Primary,

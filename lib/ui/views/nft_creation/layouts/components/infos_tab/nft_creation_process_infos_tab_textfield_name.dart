@@ -65,6 +65,7 @@ class _NFTCreationProcessInfosTabTextFieldNameState
 
     return AppTextField(
       key: const Key('nftCreationField'),
+      textAlign: TextAlign.start,
       focusNode: nftNameFocusNode,
       controller: nftNameController,
       cursorColor: theme.text,

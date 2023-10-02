@@ -44,6 +44,7 @@ class _AddTokenTextFieldInitialSupplyState
         ref.watch(AddTokenFormProvider.addTokenForm.notifier);
 
     return AppTextField(
+      textAlign: TextAlign.start,
       focusNode: initialSupplyFocusNode,
       controller: initialSupplyController,
       cursorColor: theme.text,

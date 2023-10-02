@@ -66,6 +66,7 @@ class _NFTCreationProcessInfosTabTextFieldSymbolState
     return Column(
       children: [
         AppTextField(
+          textAlign: TextAlign.start,
           focusNode: nftSymbolFocusNode,
           controller: nftSymbolController,
           cursorColor: theme.text,

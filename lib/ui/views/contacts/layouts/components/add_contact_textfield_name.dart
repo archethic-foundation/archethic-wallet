@@ -39,6 +39,7 @@ class _AddContactTextFieldNameState
         ref.watch(ContactCreationFormProvider.contactCreationForm.notifier);
 
     return AppTextField(
+      textAlign: TextAlign.start,
       focusNode: nameFocusNode,
       controller: nameController,
       textInputAction: TextInputAction.next,
