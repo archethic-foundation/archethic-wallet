@@ -86,8 +86,11 @@ class NumberUtil {
       return input;
     }
 
-    return formatThousands(_input,
-        round: round, minAmountToRound: minAmountToRound);
+    return formatThousands(
+      _input,
+      round: round,
+      minAmountToRound: minAmountToRound,
+    );
   }
 
   /// Format a number with blank separator for each thousand

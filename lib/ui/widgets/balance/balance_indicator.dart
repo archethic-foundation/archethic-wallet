@@ -9,6 +9,7 @@ import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
+import 'package:aewallet/util/number_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
@@ -19,9 +20,11 @@ class BalanceIndicatorWidget extends ConsumerWidget {
   const BalanceIndicatorWidget({
     super.key,
     this.displaySwitchButton = true,
+    this.allDigits = true,
   });
 
   final bool displaySwitchButton;
+  final bool allDigits;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -35,24 +38,28 @@ class BalanceIndicatorWidget extends ConsumerWidget {
             children: [
               if (primaryCurrency.primaryCurrency ==
                   AvailablePrimaryCurrencyEnum.native)
-                const Column(
+                Column(
                   children: [
                     _BalanceIndicatorNative(
                       primary: true,
+                      allDigits: allDigits,
                     ),
                     _BalanceIndicatorFiat(
                       primary: false,
+                      allDigits: allDigits,
                     ),
                   ],
                 )
               else
-                const Column(
+                Column(
                   children: [
                     _BalanceIndicatorFiat(
                       primary: true,
+                      allDigits: allDigits,
                     ),
                     _BalanceIndicatorNative(
                       primary: false,
+                      allDigits: allDigits,
                     ),
                   ],
                 ),
@@ -91,9 +98,13 @@ class _BalanceIndicatorButton extends ConsumerWidget {
 }
 
 class _BalanceIndicatorFiat extends ConsumerWidget {
-  const _BalanceIndicatorFiat({required this.primary});
+  const _BalanceIndicatorFiat({
+    required this.primary,
+    this.allDigits = true,
+  });
 
   final bool primary;
+  final bool allDigits;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -129,9 +140,11 @@ class _BalanceIndicatorFiat extends ConsumerWidget {
                   : theme.textStyleSize14W100Primary,
             ),
           TextSpan(
-            text: CurrencyUtil.format(
-              currency.name,
-              fiatValue,
+            text: NumberUtil.formatThousandsStr(
+              CurrencyUtil.format(
+                currency.name,
+                fiatValue,
+              ),
             ),
             style: primary
                 ? theme.textStyleSize16W700Primary
@@ -151,9 +164,13 @@ class _BalanceIndicatorFiat extends ConsumerWidget {
 }
 
 class _BalanceIndicatorNative extends ConsumerWidget {
-  const _BalanceIndicatorNative({required this.primary});
+  const _BalanceIndicatorNative({
+    required this.primary,
+    this.allDigits = true,
+  });
 
   final bool primary;
+  final bool allDigits;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -176,13 +193,24 @@ class _BalanceIndicatorNative extends ConsumerWidget {
                   ? theme.textStyleSize16W100Primary
                   : theme.textStyleSize14W100Primary,
             ),
-          TextSpan(
-            text:
-                '${accountSelectedBalance.nativeTokenValueToString()} ${accountSelectedBalance.nativeTokenName}',
-            style: primary
-                ? theme.textStyleSize16W700Primary
-                : theme.textStyleSize14W700Primary,
-          ),
+          if (allDigits == true)
+            TextSpan(
+              text: '${NumberUtil.formatThousandsStr(
+                accountSelectedBalance.nativeTokenValueToString(),
+              )} ${accountSelectedBalance.nativeTokenName}',
+              style: primary
+                  ? theme.textStyleSize16W700Primary
+                  : theme.textStyleSize14W700Primary,
+            )
+          else
+            TextSpan(
+              text: '${NumberUtil.formatThousandsStr(
+                accountSelectedBalance.nativeTokenValueToString(digits: 2),
+              )} ${accountSelectedBalance.nativeTokenName}',
+              style: primary
+                  ? theme.textStyleSize16W700Primary
+                  : theme.textStyleSize14W700Primary,
+            ),
           if (primary == false)
             TextSpan(
               text: ')',
