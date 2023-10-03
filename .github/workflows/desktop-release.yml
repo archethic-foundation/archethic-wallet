@@ -80,6 +80,11 @@ jobs:
       - name: Publish to store
         run: flutter pub run msix:create --store
 
+      - name: Copy MSIX file to /artifacts
+        run: |
+          mkdir artifacts
+          cp build/windows/runner/Release/aewallet.msix artifacts/
+
       - name: Get Version from pubspec.yaml
         id: get_version
         run: |
