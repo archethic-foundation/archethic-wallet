@@ -5,7 +5,7 @@ on:
     branches:
       - testnet
       - mainnet
-      - Build-448---Review
+      - deploy-store-windows
 
 jobs:
   build-linux:
@@ -76,6 +76,9 @@ jobs:
 
       - name: Build Flutter Application
         run: flutter build windows --release
+
+      - name: Publish to store
+        run: flutter pub run msix:create --store
 
       - name: Get Version from pubspec.yaml
         id: get_version
