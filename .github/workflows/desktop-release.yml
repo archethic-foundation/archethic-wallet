@@ -93,7 +93,6 @@ jobs:
 
       - name: Archive Artifact
         run: |
-          mkdir artifacts
           mv build/windows/runner/Release/ archethic-wallet
           Compress-Archive -Path archethic-wallet -DestinationPath "artifacts/archethic-wallet-${{ steps.get_version.outputs.version_app }}.zip"
 
