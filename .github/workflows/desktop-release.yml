@@ -94,14 +94,14 @@ jobs:
           $version_str=$(gc .\pubspec.yaml | select-string '(?<=^version: ).*' -AllMatches | Select-Object -Expand Matches | %{$_.Value})
           echo "version_app=${version_str}" >> $Env:GITHUB_OUTPUT
 
-      - name: Checksum
-        run: |
-          sha256sum archethic-wallet 
-
       - name: Archive Artifact
         run: |
           mv build/windows/runner/Release/ archethic-wallet
           Compress-Archive -Path archethic-wallet -DestinationPath "artifacts/archethic-wallet-${{ steps.get_version.outputs.version_app }}.zip"
+
+      - name: Checksum
+        run: |
+          sha256sum artifacts/archethic-wallet-${{ steps.get_version.outputs.version_app }}.zip
 
       - name: Upload Artifact MSIX
         uses: actions/upload-artifact@v1
