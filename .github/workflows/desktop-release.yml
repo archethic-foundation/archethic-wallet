@@ -48,6 +48,10 @@ jobs:
         run: |
           ls -R
 
+      - name: Checksum
+        run: |
+          sha256sum archethic_wallet-${{ steps.get_version.outputs.version_app }}-x86_64.AppImage
+
       - name: Upload AppImage Artifact
         uses: actions/upload-artifact@v1
         with:
@@ -89,6 +93,10 @@ jobs:
         run: |
           $version_str=$(gc .\pubspec.yaml | select-string '(?<=^version: ).*' -AllMatches | Select-Object -Expand Matches | %{$_.Value})
           echo "version_app=${version_str}" >> $Env:GITHUB_OUTPUT
+
+      - name: Checksum
+        run: |
+          sha256sum archethic-wallet 
 
       - name: Archive Artifact
         run: |
