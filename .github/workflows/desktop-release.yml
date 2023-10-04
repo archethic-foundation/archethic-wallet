@@ -1,10 +1,9 @@
 name: Build and Package Desktop apps
 
 on:
-  push:
-    branches:
-      - testnet
-      - mainnet
+  release:
+    types:
+      - created
 
 jobs:
   build-linux:
