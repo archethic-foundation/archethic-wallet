@@ -58,7 +58,8 @@ class NFTTabBody extends ConsumerWidget {
 
         await ref.read(AccountProviders.selectedAccount.notifier).refreshNFTs();
       }),
-      child: DecoratedBox(
+      child: Container(
+        height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
