@@ -279,6 +279,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                                         final pastedWords = data?.text
                                             ?.trimLeft()
                                             .trimRight()
+                                            .toLowerCase()
                                             .split(RegExp('[^a-zA-ZÀ-ÿ]'))
                                             .where(
                                               (element) => element.isNotEmpty,
