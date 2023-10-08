@@ -275,8 +275,11 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                                         final data = await Clipboard.getData(
                                           'text/plain',
                                         );
+
                                         final pastedWords = data?.text
-                                            ?.split(RegExp('[^a-z]'))
+                                            ?.trimLeft()
+                                            .trimRight()
+                                            .split(RegExp('[^a-zA-ZÀ-ÿ]'))
                                             .where(
                                               (element) => element.isNotEmpty,
                                             );
