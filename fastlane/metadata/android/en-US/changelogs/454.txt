@@ -1,0 +1,3 @@
+Archethic Wallet - Version 2.2.1 Build 454
+
+- Fix bugs
