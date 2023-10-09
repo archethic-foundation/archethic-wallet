@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/recovery_phrase_saved.dart';
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -132,10 +133,15 @@ class AppSeedBackupSheet extends ConsumerWidget {
                                   Dimens.buttonBottomDimens,
                                   key: const Key('saveRecoveryPhrase'),
                                   onPressed: () async {
+                                    final languageSeed = ref.read(
+                                      SettingsProviders.settings.select(
+                                        (settings) => settings.languageSeed,
+                                      ),
+                                    );
                                     final seed =
                                         AppMnemomics.mnemonicListToSeed(
-                                      mnemonic!,
-                                    );
+                                            mnemonic!,
+                                            languageCode: languageSeed);
                                     Sheets.showAppHeightNineSheet(
                                       context: context,
                                       ref: ref,
