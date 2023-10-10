@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
@@ -13,7 +12,6 @@ import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/rpc_failure_message.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/send_transaction/bloc/provider.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
@@ -171,45 +169,36 @@ class SendTransactionConfirmationForm extends ConsumerWidget {
                       localizations.confirm,
                       Dimens.buttonBottomDimens,
                       onPressed: () async {
-                        final auth = await AuthFactory.authenticate(
+                        ShowSendingAnimation.build(
                           context,
-                          ref,
-                          activeVibrations: ref
-                              .read(SettingsProviders.settings)
-                              .activeVibrations,
+                          theme,
                         );
-                        if (auth) {
-                          ShowSendingAnimation.build(
-                            context,
-                            theme,
-                          );
 
-                          final result = await formNotifier.send(
-                            (progress) {
-                              _showSendProgress(
-                                context,
-                                ref,
-                                theme,
-                                progress,
-                              );
-                            },
-                          );
+                        final result = await formNotifier.send(
+                          (progress) {
+                            _showSendProgress(
+                              context,
+                              ref,
+                              theme,
+                              progress,
+                            );
+                          },
+                        );
 
-                          result.map(
-                            success: (success) {},
-                            failure: (failure) {
-                              _showSendFailed(
-                                context,
-                                ref,
-                                theme,
-                                failure,
-                              );
-                            },
-                          );
+                        result.map(
+                          success: (success) {},
+                          failure: (failure) {
+                            _showSendFailed(
+                              context,
+                              ref,
+                              theme,
+                              failure,
+                            );
+                          },
+                        );
 
-                          Navigator.of(context).pop(); // Hide SendingAnimation
-                          Navigator.of(context).pop(result);
-                        }
+                        Navigator.of(context).pop(); // Hide SendingAnimation
+                        Navigator.of(context).pop(result);
                       },
                     ),
                   ],
