@@ -2,10 +2,8 @@
 import 'dart:async';
 
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
-import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -15,7 +13,6 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/add_account/bloc/provider.dart';
 import 'package:aewallet/ui/views/add_account/bloc/state.dart';
 import 'package:aewallet/ui/views/add_account/layouts/components/add_account_detail.dart';
-import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
@@ -38,22 +35,9 @@ class AddAccountConfirmSheet extends ConsumerStatefulWidget {
 class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
   bool? animationOpen;
 
-  StreamSubscription<AuthenticatedEvent>? _authSub;
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
 
   void _registerBus() {
-    _authSub = EventTaxiImpl.singleton()
-        .registerTo<AuthenticatedEvent>()
-        .listen((AuthenticatedEvent event) {
-      final theme = ref.watch(ThemeProviders.selectedTheme);
-      ShowSendingAnimation.build(
-        context,
-        theme,
-      );
-
-      ref.watch(AddAccountFormProvider.addAccountForm.notifier).send(context);
-    });
-
     _sendTxSub = EventTaxiImpl.singleton()
         .registerTo<TransactionSendEvent>()
         .listen((TransactionSendEvent event) async {
@@ -144,7 +128,6 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
 
   @override
   void dispose() {
-    _authSub?.cancel();
     _sendTxSub?.cancel();
     super.dispose();
   }
@@ -199,16 +182,14 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
                         size: 14,
                       ),
                       onPressed: () async {
-                        final auth = await AuthFactory.authenticate(
+                        ShowSendingAnimation.build(
                           context,
-                          ref,
-                          activeVibrations: ref
-                              .read(SettingsProviders.settings)
-                              .activeVibrations,
+                          theme,
                         );
-                        if (auth) {
-                          EventTaxiImpl.singleton().fire(AuthenticatedEvent());
-                        }
+                        await ref
+                            .read(
+                                AddAccountFormProvider.addAccountForm.notifier)
+                            .send(context);
                       },
                     ),
                   ],

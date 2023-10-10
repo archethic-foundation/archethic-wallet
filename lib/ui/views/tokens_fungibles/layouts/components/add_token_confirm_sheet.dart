@@ -2,16 +2,13 @@
 import 'dart:async';
 
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/provider.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/state.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/layouts/components/add_token_detail.dart';
@@ -36,22 +33,9 @@ class AddTokenConfirmSheet extends ConsumerStatefulWidget {
 class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
   bool? animationOpen;
 
-  StreamSubscription<AuthenticatedEvent>? _authSub;
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
 
   void _registerBus() {
-    _authSub = EventTaxiImpl.singleton()
-        .registerTo<AuthenticatedEvent>()
-        .listen((AuthenticatedEvent event) {
-      final theme = ref.read(ThemeProviders.selectedTheme);
-      ShowSendingAnimation.build(
-        context,
-        theme,
-      );
-
-      ref.read(AddTokenFormProvider.addTokenForm.notifier).send(context);
-    });
-
     _sendTxSub = EventTaxiImpl.singleton()
         .registerTo<TransactionSendEvent>()
         .listen((TransactionSendEvent event) async {
@@ -139,7 +123,6 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
 
   @override
   void dispose() {
-    _authSub?.cancel();
     _sendTxSub?.cancel();
     super.dispose();
   }
@@ -189,16 +172,13 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
                       key: const Key('confirm'),
                       icon: Symbols.check,
                       onPressed: () async {
-                        final auth = await AuthFactory.authenticate(
+                        ShowSendingAnimation.build(
                           context,
-                          ref,
-                          activeVibrations: ref
-                              .read(SettingsProviders.settings)
-                              .activeVibrations,
+                          theme,
                         );
-                        if (auth) {
-                          EventTaxiImpl.singleton().fire(AuthenticatedEvent());
-                        }
+                        await ref
+                            .read(AddTokenFormProvider.addTokenForm.notifier)
+                            .send(context);
                       },
                     ),
                   ],

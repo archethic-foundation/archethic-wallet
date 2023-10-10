@@ -2,16 +2,13 @@
 import 'dart:async';
 
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/ui/themes/themes.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_detail.dart';
@@ -37,29 +34,9 @@ class NftCreationConfirmSheet extends ConsumerStatefulWidget {
 class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
   bool? animationOpen;
 
-  StreamSubscription<AuthenticatedEvent>? _authSub;
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
 
   void _registerBus() {
-    _authSub = EventTaxiImpl.singleton()
-        .registerTo<AuthenticatedEvent>()
-        .listen((AuthenticatedEvent event) {
-      final theme = ref.read(ThemeProviders.selectedTheme);
-      ShowSendingAnimation.build(
-        context,
-        theme,
-      );
-      ref
-          .read(
-            NftCreationFormProvider.nftCreationForm(
-              ref.read(
-                NftCreationFormProvider.nftCreationFormArgs,
-              ),
-            ).notifier,
-          )
-          .send(context);
-    });
-
     _sendTxSub = EventTaxiImpl.singleton()
         .registerTo<TransactionSendEvent>()
         .listen((TransactionSendEvent event) async {
@@ -160,7 +137,6 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
 
   @override
   void dispose() {
-    _authSub?.cancel();
     _sendTxSub?.cancel();
     super.dispose();
   }
@@ -241,17 +217,21 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
                             key: const Key('confirm'),
                             icon: Symbols.check,
                             onPressed: () async {
-                              final auth = await AuthFactory.authenticate(
+                              ShowSendingAnimation.build(
                                 context,
-                                ref,
-                                activeVibrations: ref
-                                    .read(SettingsProviders.settings)
-                                    .activeVibrations,
+                                theme,
                               );
-                              if (auth) {
-                                EventTaxiImpl.singleton()
-                                    .fire(AuthenticatedEvent());
-                              }
+
+                              await ref
+                                  .read(
+                                    NftCreationFormProvider.nftCreationForm(
+                                      ref.read(
+                                        NftCreationFormProvider
+                                            .nftCreationFormArgs,
+                                      ),
+                                    ).notifier,
+                                  )
+                                  .send(context);
                             },
                             disabled:
                                 nftCreation.canConfirmNFTCreation == false,
