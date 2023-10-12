@@ -188,7 +188,8 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
                         );
                         await ref
                             .read(
-                                AddAccountFormProvider.addAccountForm.notifier)
+                              AddAccountFormProvider.addAccountForm.notifier,
+                            )
                             .send(context);
                       },
                     ),
