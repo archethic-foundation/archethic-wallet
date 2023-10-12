@@ -19,11 +19,21 @@ class _AddTokenTextFieldInitialSupplyState
   @override
   void initState() {
     super.initState();
-    final addToken = ref.read(AddTokenFormProvider.addTokenForm);
     initialSupplyFocusNode = FocusNode();
-    initialSupplyController = TextEditingController(
-      text:
-          addToken.initialSupply == 0 ? '' : addToken.initialSupply.toString(),
+    _updateAmountTextController();
+  }
+
+  void _updateAmountTextController() {
+    final addToken = ref.read(AddTokenFormProvider.addTokenForm);
+    initialSupplyController = TextEditingController();
+    initialSupplyController.value =
+        AmountTextInputFormatter(precision: 8).formatEditUpdate(
+      TextEditingValue.empty,
+      TextEditingValue(
+        text: addToken.initialSupply == 0
+            ? ''
+            : addToken.initialSupply.toString(),
+      ),
     );
   }
 
@@ -42,6 +52,13 @@ class _AddTokenTextFieldInitialSupplyState
     final localizations = AppLocalizations.of(context)!;
     final addTokenNotifier =
         ref.watch(AddTokenFormProvider.addTokenForm.notifier);
+    final addToken = ref.read(AddTokenFormProvider.addTokenForm);
+    if (!(addToken.initialSupply != 0.0 ||
+        (initialSupplyController.text == '' ||
+            initialSupplyController.text == '0' ||
+            initialSupplyController.text == '0.'))) {
+      _updateAmountTextController();
+    }
 
     return AppTextField(
       textAlign: TextAlign.start,
