@@ -4,7 +4,9 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/models/token.dart';
 import 'package:aewallet/model/data/account_token.dart';
+import 'package:aewallet/ui/util/address_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/tokens/certified_token_icon.dart';
@@ -186,20 +188,52 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                             width: 10,
                           ),
                           Expanded(
-                            child: Row(
-                              children: [
-                                Text(
-                                  accountFungibleToken.tokenInformation!.name!,
-                                  style: theme.textStyleSize12W600Primary,
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                CertifiedTokenIcon(
-                                  address: accountFungibleToken
-                                      .tokenInformation!.address!,
-                                ),
-                              ],
+                            child: InkWell(
+                              key: const Key('viewExplorer'),
+                              onTap: () {
+                                UIUtil.showWebview(
+                                  context,
+                                  '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${accountFungibleToken.tokenInformation!.address!}',
+                                  '',
+                                );
+                              },
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        accountFungibleToken
+                                            .tokenInformation!.name!,
+                                        style: theme.textStyleSize12W600Primary,
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      CertifiedTokenIcon(
+                                        address: accountFungibleToken
+                                            .tokenInformation!.address!,
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        AddressFormatters(
+                                          accountFungibleToken
+                                              .tokenInformation!.address!,
+                                        ).getShortString4(),
+                                        style: theme.textStyleSize12W400Primary,
+                                      ),
+                                      const SizedBox(width: 5),
+                                      const Icon(
+                                        Symbols.open_in_new,
+                                        size: 11,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
