@@ -249,7 +249,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
               ? theme.backgroundAccountsListCardSelected
               : Colors.transparent,
           child: Container(
-            height: widget.account.serviceType != 'aeweb' ? 100 : 70,
+            height: 100,
             color: widget.account.selected!
                 ? theme.backgroundAccountsListCardSelected
                 : theme.backgroundAccountsListCard,
@@ -296,8 +296,8 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
                         children: [
                           Container(
                             alignment: Alignment.center,
-                            height: 30,
-                            width: 30,
+                            height: 40,
+                            width: 40,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: theme.backgroundDark!.withOpacity(0.3),
@@ -310,7 +310,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
                               child: Icon(
                                 Symbols.open_in_new,
                                 color: theme.backgroundDarkest,
-                                size: 16,
+                                size: 20,
                               ),
                               onTap: () async {
                                 sl.get<HapticUtil>().feedback(
@@ -330,8 +330,8 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
                           ),
                           Container(
                             alignment: Alignment.center,
-                            height: 30,
-                            width: 30,
+                            height: 40,
+                            width: 40,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: theme.backgroundDark!.withOpacity(0.3),
@@ -344,7 +344,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
                               child: Icon(
                                 Symbols.delete,
                                 color: theme.backgroundDarkest,
-                                size: 16,
+                                size: 20,
                               ),
                               onTap: () async {
                                 final session =
@@ -353,7 +353,15 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
                                     .get<ApiService>()
                                     .getKeychain(session!.wallet.seed);
 
-                                if (keychain.services.length == 1) {
+                                var nbOfAccounts = 0;
+                                keychain.services.forEach((key, value) {
+                                  if (key.startsWith('archethic-wallet')) {
+                                    nbOfAccounts++;
+                                  }
+                                });
+                                if (nbOfAccounts <= 1 &&
+                                    widget.account.name
+                                        .startsWith('archethic-wallet')) {
                                   UIUtil.showSnackbar(
                                     AppLocalizations.of(context)!
                                         .removeKeychainAtLeast1,
@@ -442,6 +450,9 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
                                   style: theme.textStyleSize12W400Primary,
                                 ),
                               ),
+                              const SizedBox(
+                                height: 7,
+                              ),
                               AccountListItemTokenInfo(account: widget.account),
                             ],
                           )
@@ -459,6 +470,9 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
                                 style: theme.textStyleSize12W400Primary,
                                 textAlign: TextAlign.end,
                               ),
+                              const SizedBox(
+                                height: 7,
+                              ),
                               AccountListItemTokenInfo(account: widget.account),
                             ],
                           )
@@ -474,6 +488,9 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
                         AutoSizeText(
                           '···········',
                           style: theme.textStyleSize12W600Primary60,
+                        ),
+                        const SizedBox(
+                          height: 7,
                         ),
                         if (widget.account.serviceType != 'aeweb')
                           AutoSizeText(
