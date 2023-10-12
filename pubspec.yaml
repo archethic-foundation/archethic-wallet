@@ -315,6 +315,7 @@ flutter:
     - assets/themes/purple/
     - lib/model/json-schemas/nft/opensea.json
     - lib/model/json-schemas/nft/archethic.json
+    - lib/domain/repositories/tokens/certified_tokens.json
 
   fonts:
     - family: Montserrat

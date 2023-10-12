@@ -279,6 +279,7 @@
   "nodeAuthorizationDate": "Authorization date : ",
   "nodeEnrollmentDate": "Enrollment date : ",
   "currencyOracleInfo": "This icon means that the conversion uses an oracle provided by Archethic.",
+  "certifiedTokenInfo": "This icon means that the token is certified by the Archethic Foundation.",
   "sendToMeError": "You can't send %1 to your own wallet.",
   "viewExplorer": "View on explorer",
   "total": "Total :",

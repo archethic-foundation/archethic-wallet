@@ -1,9 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/data/account_balance.dart';
-import 'package:aewallet/ui/views/transactions/components/template/transfer_entry_template.dart';
+import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/transactions/components/transaction_output/transaction_output_icon.dart';
+import 'package:aewallet/ui/widgets/tokens/certified_token_icon.dart';
 import 'package:aewallet/util/number_util.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -19,6 +22,8 @@ class TransferOutput extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final hasTransactionInfo = transaction.tokenInformation != null;
 
     final amountFormatted = NumberUtil.formatThousandsStr(
@@ -30,11 +35,32 @@ class TransferOutput extends ConsumerWidget {
       ),
     );
 
-    return TransferEntryTemplate(
-      label: hasTransactionInfo
-          ? '-$amountFormatted ${isCurrencyNative ? (transaction.tokenInformation!.symbol! == '' ? 'NFT' : transaction.tokenInformation!.symbol!) : transaction.tokenInformation!.symbol!}'
-          : '-$amountFormatted ${AccountBalance.cryptoCurrencyLabel}',
-      icon: const TransactionOutputIcon(),
+    return Row(
+      children: [
+        AutoSizeText(
+          hasTransactionInfo
+              ? '-$amountFormatted ${isCurrencyNative ? (transaction.tokenInformation!.symbol! == '' ? 'NFT' : transaction.tokenInformation!.symbol!) : transaction.tokenInformation!.symbol!}'
+              : '-$amountFormatted ${AccountBalance.cryptoCurrencyLabel}',
+          style: theme.textStyleSize12W400Primary,
+        ),
+        if (transaction.tokenInformation != null &&
+            transaction.tokenInformation!.type == 'fungible' &&
+            transaction.tokenAddress != null)
+          Row(
+            children: [
+              const SizedBox(
+                width: 2,
+              ),
+              CertifiedTokenIcon(
+                address: transaction.tokenAddress!,
+              ),
+            ],
+          ),
+        const SizedBox(
+          width: 2,
+        ),
+        const TransactionOutputIcon(),
+      ],
     );
   }
 }

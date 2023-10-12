@@ -187,9 +187,30 @@ class _TransferTextFieldAmountState
               Container(
                 margin: const EdgeInsets.only(left: 40),
                 alignment: Alignment.centerLeft,
-                child: AutoSizeText(
-                  '${NumberUtil.formatThousands(transfer.accountToken!.amount!)} ${transfer.accountToken!.tokenInformation!.symbol}',
-                  style: theme.textStyleSize14W100Primary,
+                child: Row(
+                  children: [
+                    AutoSizeText(
+                      '${NumberUtil.formatThousands(transfer.accountToken!.amount!)} ${transfer.accountToken!.tokenInformation!.symbol}',
+                      style: theme.textStyleSize14W100Primary,
+                    ),
+                    if (transfer.accountToken != null &&
+                        transfer.accountToken!.tokenInformation != null &&
+                        transfer.accountToken!.tokenInformation!.type ==
+                            'fungible' &&
+                        transfer.accountToken!.tokenInformation!.address !=
+                            null)
+                      Row(
+                        children: [
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          CertifiedTokenIcon(
+                            address: transfer
+                                .accountToken!.tokenInformation!.address!,
+                          ),
+                        ],
+                      ),
+                  ],
                 ),
               ),
             ],
