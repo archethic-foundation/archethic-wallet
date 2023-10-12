@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/certified_tokens.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/application/verified_tokens.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -11,8 +11,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-class CertifiedTokenIcon extends ConsumerWidget {
-  const CertifiedTokenIcon({
+class VerifiedTokenIcon extends ConsumerWidget {
+  const VerifiedTokenIcon({
     required this.address,
     super.key,
   });
@@ -27,7 +27,7 @@ class CertifiedTokenIcon extends ConsumerWidget {
 
     return FutureBuilder<bool>(
       future: ref.read(
-        CertifiedTokensProviders.isCertifiedToken(address).future,
+        VerifiedTokensProviders.isVerifiedToken(address).future,
       ),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
@@ -42,7 +42,7 @@ class CertifiedTokenIcon extends ConsumerWidget {
                   context,
                   ref,
                   localizations.information,
-                  localizations.certifiedTokenInfo,
+                  localizations.verifiedTokenInfo,
                 );
               },
               child: Icon(

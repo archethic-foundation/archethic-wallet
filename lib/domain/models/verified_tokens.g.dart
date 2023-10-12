@@ -1,14 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'certified_tokens.dart';
+part of 'verified_tokens.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$CertifiedTokensImpl _$$CertifiedTokensImplFromJson(
-        Map<String, dynamic> json) =>
-    _$CertifiedTokensImpl(
+_$VerifiedTokensImpl _$$VerifiedTokensImplFromJson(Map<String, dynamic> json) =>
+    _$VerifiedTokensImpl(
       mainnet:
           (json['mainnet'] as List<dynamic>).map((e) => e as String).toList(),
       testnet:
@@ -17,8 +16,8 @@ _$CertifiedTokensImpl _$$CertifiedTokensImplFromJson(
           (json['devnet'] as List<dynamic>).map((e) => e as String).toList(),
     );
 
-Map<String, dynamic> _$$CertifiedTokensImplToJson(
-        _$CertifiedTokensImpl instance) =>
+Map<String, dynamic> _$$VerifiedTokensImplToJson(
+        _$VerifiedTokensImpl instance) =>
     <String, dynamic>{
       'mainnet': instance.mainnet,
       'testnet': instance.testnet,

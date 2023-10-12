@@ -204,7 +204,7 @@ class _TransferTextFieldAmountState
                           const SizedBox(
                             width: 5,
                           ),
-                          CertifiedTokenIcon(
+                          VerifiedTokenIcon(
                             address: transfer
                                 .accountToken!.tokenInformation!.address!,
                           ),

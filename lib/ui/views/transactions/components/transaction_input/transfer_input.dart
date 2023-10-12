@@ -4,7 +4,7 @@ import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/transactions/components/transaction_input/transaction_input_icon.dart';
-import 'package:aewallet/ui/widgets/tokens/certified_token_icon.dart';
+import 'package:aewallet/ui/widgets/tokens/verified_token_icon.dart';
 import 'package:aewallet/util/number_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +51,7 @@ class TransferInput extends ConsumerWidget {
               const SizedBox(
                 width: 2,
               ),
-              CertifiedTokenIcon(
+              VerifiedTokenIcon(
                 address: transaction.tokenAddress!,
               ),
             ],

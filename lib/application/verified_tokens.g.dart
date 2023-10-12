@@ -1,46 +1,45 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'certified_tokens.dart';
+part of 'verified_tokens.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$certifiedTokensRepositoryHash() =>
-    r'bfb9f4584aabd06bb41eec37fa22d711aefcaa54';
+String _$verifiedTokensRepositoryHash() =>
+    r'a5536a493a63ddbd1102cb6e91c31a402641f749';
 
-/// See also [_certifiedTokensRepository].
-@ProviderFor(_certifiedTokensRepository)
-final _certifiedTokensRepositoryProvider =
-    Provider<CertifiedTokensRepository>.internal(
-  _certifiedTokensRepository,
-  name: r'_certifiedTokensRepositoryProvider',
+/// See also [_verifiedTokensRepository].
+@ProviderFor(_verifiedTokensRepository)
+final _verifiedTokensRepositoryProvider =
+    Provider<VerifiedTokensRepository>.internal(
+  _verifiedTokensRepository,
+  name: r'_verifiedTokensRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$certifiedTokensRepositoryHash,
+      : _$verifiedTokensRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _CertifiedTokensRepositoryRef = ProviderRef<CertifiedTokensRepository>;
-String _$getCertifiedTokensHash() =>
-    r'24cb78dcd93ab6250ac6be32e05d51e5558be114';
+typedef _VerifiedTokensRepositoryRef = ProviderRef<VerifiedTokensRepository>;
+String _$getVerifiedTokensHash() => r'fdd8866488e517f410a06ff21dbafbbdc420d431';
 
-/// See also [_getCertifiedTokens].
-@ProviderFor(_getCertifiedTokens)
-final _getCertifiedTokensProvider = FutureProvider<CertifiedTokens>.internal(
-  _getCertifiedTokens,
-  name: r'_getCertifiedTokensProvider',
+/// See also [_getVerifiedTokens].
+@ProviderFor(_getVerifiedTokens)
+final _getVerifiedTokensProvider = FutureProvider<VerifiedTokens>.internal(
+  _getVerifiedTokens,
+  name: r'_getVerifiedTokensProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$getCertifiedTokensHash,
+      : _$getVerifiedTokensHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _GetCertifiedTokensRef = FutureProviderRef<CertifiedTokens>;
-String _$getCertifiedTokensFromNetworkHash() =>
-    r'87004e363bda55dd10bd13758b1f56b2c78f3978';
+typedef _GetVerifiedTokensRef = FutureProviderRef<VerifiedTokens>;
+String _$getVerifiedTokensFromNetworkHash() =>
+    r'c0e1bb98b8f28bb42ff04583c7f338d9c8b6992c';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -63,29 +62,29 @@ class _SystemHash {
   }
 }
 
-/// See also [_getCertifiedTokensFromNetwork].
-@ProviderFor(_getCertifiedTokensFromNetwork)
-const _getCertifiedTokensFromNetworkProvider =
-    _GetCertifiedTokensFromNetworkFamily();
+/// See also [_getVerifiedTokensFromNetwork].
+@ProviderFor(_getVerifiedTokensFromNetwork)
+const _getVerifiedTokensFromNetworkProvider =
+    _GetVerifiedTokensFromNetworkFamily();
 
-/// See also [_getCertifiedTokensFromNetwork].
-class _GetCertifiedTokensFromNetworkFamily
+/// See also [_getVerifiedTokensFromNetwork].
+class _GetVerifiedTokensFromNetworkFamily
     extends Family<AsyncValue<List<String>>> {
-  /// See also [_getCertifiedTokensFromNetwork].
-  const _GetCertifiedTokensFromNetworkFamily();
+  /// See also [_getVerifiedTokensFromNetwork].
+  const _GetVerifiedTokensFromNetworkFamily();
 
-  /// See also [_getCertifiedTokensFromNetwork].
-  _GetCertifiedTokensFromNetworkProvider call(
+  /// See also [_getVerifiedTokensFromNetwork].
+  _GetVerifiedTokensFromNetworkProvider call(
     AvailableNetworks network,
   ) {
-    return _GetCertifiedTokensFromNetworkProvider(
+    return _GetVerifiedTokensFromNetworkProvider(
       network,
     );
   }
 
   @override
-  _GetCertifiedTokensFromNetworkProvider getProviderOverride(
-    covariant _GetCertifiedTokensFromNetworkProvider provider,
+  _GetVerifiedTokensFromNetworkProvider getProviderOverride(
+    covariant _GetVerifiedTokensFromNetworkProvider provider,
   ) {
     return call(
       provider.network,
@@ -104,33 +103,33 @@ class _GetCertifiedTokensFromNetworkFamily
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'_getCertifiedTokensFromNetworkProvider';
+  String? get name => r'_getVerifiedTokensFromNetworkProvider';
 }
 
-/// See also [_getCertifiedTokensFromNetwork].
-class _GetCertifiedTokensFromNetworkProvider
+/// See also [_getVerifiedTokensFromNetwork].
+class _GetVerifiedTokensFromNetworkProvider
     extends FutureProvider<List<String>> {
-  /// See also [_getCertifiedTokensFromNetwork].
-  _GetCertifiedTokensFromNetworkProvider(
+  /// See also [_getVerifiedTokensFromNetwork].
+  _GetVerifiedTokensFromNetworkProvider(
     AvailableNetworks network,
   ) : this._internal(
-          (ref) => _getCertifiedTokensFromNetwork(
-            ref as _GetCertifiedTokensFromNetworkRef,
+          (ref) => _getVerifiedTokensFromNetwork(
+            ref as _GetVerifiedTokensFromNetworkRef,
             network,
           ),
-          from: _getCertifiedTokensFromNetworkProvider,
-          name: r'_getCertifiedTokensFromNetworkProvider',
+          from: _getVerifiedTokensFromNetworkProvider,
+          name: r'_getVerifiedTokensFromNetworkProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$getCertifiedTokensFromNetworkHash,
-          dependencies: _GetCertifiedTokensFromNetworkFamily._dependencies,
+                  : _$getVerifiedTokensFromNetworkHash,
+          dependencies: _GetVerifiedTokensFromNetworkFamily._dependencies,
           allTransitiveDependencies:
-              _GetCertifiedTokensFromNetworkFamily._allTransitiveDependencies,
+              _GetVerifiedTokensFromNetworkFamily._allTransitiveDependencies,
           network: network,
         );
 
-  _GetCertifiedTokensFromNetworkProvider._internal(
+  _GetVerifiedTokensFromNetworkProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -144,13 +143,13 @@ class _GetCertifiedTokensFromNetworkProvider
 
   @override
   Override overrideWith(
-    FutureOr<List<String>> Function(_GetCertifiedTokensFromNetworkRef provider)
+    FutureOr<List<String>> Function(_GetVerifiedTokensFromNetworkRef provider)
         create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: _GetCertifiedTokensFromNetworkProvider._internal(
-        (ref) => create(ref as _GetCertifiedTokensFromNetworkRef),
+      override: _GetVerifiedTokensFromNetworkProvider._internal(
+        (ref) => create(ref as _GetVerifiedTokensFromNetworkRef),
         from: from,
         name: null,
         dependencies: null,
@@ -163,12 +162,12 @@ class _GetCertifiedTokensFromNetworkProvider
 
   @override
   FutureProviderElement<List<String>> createElement() {
-    return _GetCertifiedTokensFromNetworkProviderElement(this);
+    return _GetVerifiedTokensFromNetworkProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is _GetCertifiedTokensFromNetworkProvider &&
+    return other is _GetVerifiedTokensFromNetworkProvider &&
         other.network == network;
   }
 
@@ -181,44 +180,44 @@ class _GetCertifiedTokensFromNetworkProvider
   }
 }
 
-mixin _GetCertifiedTokensFromNetworkRef on FutureProviderRef<List<String>> {
+mixin _GetVerifiedTokensFromNetworkRef on FutureProviderRef<List<String>> {
   /// The parameter `network` of this provider.
   AvailableNetworks get network;
 }
 
-class _GetCertifiedTokensFromNetworkProviderElement
+class _GetVerifiedTokensFromNetworkProviderElement
     extends FutureProviderElement<List<String>>
-    with _GetCertifiedTokensFromNetworkRef {
-  _GetCertifiedTokensFromNetworkProviderElement(super.provider);
+    with _GetVerifiedTokensFromNetworkRef {
+  _GetVerifiedTokensFromNetworkProviderElement(super.provider);
 
   @override
   AvailableNetworks get network =>
-      (origin as _GetCertifiedTokensFromNetworkProvider).network;
+      (origin as _GetVerifiedTokensFromNetworkProvider).network;
 }
 
-String _$isCertifiedTokenHash() => r'ebf6019ca3928d9edbfb5220f4b48423169c92ef';
+String _$isVerifiedTokenHash() => r'295f85e4c894d16e497f6ef83a40be21204500ff';
 
-/// See also [_isCertifiedToken].
-@ProviderFor(_isCertifiedToken)
-const _isCertifiedTokenProvider = _IsCertifiedTokenFamily();
+/// See also [_isVerifiedToken].
+@ProviderFor(_isVerifiedToken)
+const _isVerifiedTokenProvider = _IsVerifiedTokenFamily();
 
-/// See also [_isCertifiedToken].
-class _IsCertifiedTokenFamily extends Family<AsyncValue<bool>> {
-  /// See also [_isCertifiedToken].
-  const _IsCertifiedTokenFamily();
+/// See also [_isVerifiedToken].
+class _IsVerifiedTokenFamily extends Family<AsyncValue<bool>> {
+  /// See also [_isVerifiedToken].
+  const _IsVerifiedTokenFamily();
 
-  /// See also [_isCertifiedToken].
-  _IsCertifiedTokenProvider call(
+  /// See also [_isVerifiedToken].
+  _IsVerifiedTokenProvider call(
     String address,
   ) {
-    return _IsCertifiedTokenProvider(
+    return _IsVerifiedTokenProvider(
       address,
     );
   }
 
   @override
-  _IsCertifiedTokenProvider getProviderOverride(
-    covariant _IsCertifiedTokenProvider provider,
+  _IsVerifiedTokenProvider getProviderOverride(
+    covariant _IsVerifiedTokenProvider provider,
   ) {
     return call(
       provider.address,
@@ -237,32 +236,32 @@ class _IsCertifiedTokenFamily extends Family<AsyncValue<bool>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'_isCertifiedTokenProvider';
+  String? get name => r'_isVerifiedTokenProvider';
 }
 
-/// See also [_isCertifiedToken].
-class _IsCertifiedTokenProvider extends FutureProvider<bool> {
-  /// See also [_isCertifiedToken].
-  _IsCertifiedTokenProvider(
+/// See also [_isVerifiedToken].
+class _IsVerifiedTokenProvider extends FutureProvider<bool> {
+  /// See also [_isVerifiedToken].
+  _IsVerifiedTokenProvider(
     String address,
   ) : this._internal(
-          (ref) => _isCertifiedToken(
-            ref as _IsCertifiedTokenRef,
+          (ref) => _isVerifiedToken(
+            ref as _IsVerifiedTokenRef,
             address,
           ),
-          from: _isCertifiedTokenProvider,
-          name: r'_isCertifiedTokenProvider',
+          from: _isVerifiedTokenProvider,
+          name: r'_isVerifiedTokenProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$isCertifiedTokenHash,
-          dependencies: _IsCertifiedTokenFamily._dependencies,
+                  : _$isVerifiedTokenHash,
+          dependencies: _IsVerifiedTokenFamily._dependencies,
           allTransitiveDependencies:
-              _IsCertifiedTokenFamily._allTransitiveDependencies,
+              _IsVerifiedTokenFamily._allTransitiveDependencies,
           address: address,
         );
 
-  _IsCertifiedTokenProvider._internal(
+  _IsVerifiedTokenProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -276,12 +275,12 @@ class _IsCertifiedTokenProvider extends FutureProvider<bool> {
 
   @override
   Override overrideWith(
-    FutureOr<bool> Function(_IsCertifiedTokenRef provider) create,
+    FutureOr<bool> Function(_IsVerifiedTokenRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: _IsCertifiedTokenProvider._internal(
-        (ref) => create(ref as _IsCertifiedTokenRef),
+      override: _IsVerifiedTokenProvider._internal(
+        (ref) => create(ref as _IsVerifiedTokenRef),
         from: from,
         name: null,
         dependencies: null,
@@ -294,12 +293,12 @@ class _IsCertifiedTokenProvider extends FutureProvider<bool> {
 
   @override
   FutureProviderElement<bool> createElement() {
-    return _IsCertifiedTokenProviderElement(this);
+    return _IsVerifiedTokenProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is _IsCertifiedTokenProvider && other.address == address;
+    return other is _IsVerifiedTokenProvider && other.address == address;
   }
 
   @override
@@ -311,17 +310,17 @@ class _IsCertifiedTokenProvider extends FutureProvider<bool> {
   }
 }
 
-mixin _IsCertifiedTokenRef on FutureProviderRef<bool> {
+mixin _IsVerifiedTokenRef on FutureProviderRef<bool> {
   /// The parameter `address` of this provider.
   String get address;
 }
 
-class _IsCertifiedTokenProviderElement extends FutureProviderElement<bool>
-    with _IsCertifiedTokenRef {
-  _IsCertifiedTokenProviderElement(super.provider);
+class _IsVerifiedTokenProviderElement extends FutureProviderElement<bool>
+    with _IsVerifiedTokenRef {
+  _IsVerifiedTokenProviderElement(super.provider);
 
   @override
-  String get address => (origin as _IsCertifiedTokenProvider).address;
+  String get address => (origin as _IsVerifiedTokenProvider).address;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
