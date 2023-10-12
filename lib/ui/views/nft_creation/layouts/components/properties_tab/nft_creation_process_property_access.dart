@@ -87,7 +87,6 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
                         padding: const EdgeInsets.only(left: 20),
                         child: AutoSizeText(
                           propertyName.breakText(20),
-                          maxLines: 10,
                           overflow: TextOverflow.ellipsis,
                           softWrap: false,
                           style: theme.textStyleSize12W600Primary,
@@ -100,7 +99,6 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
                         padding: const EdgeInsets.only(left: 20),
                         child: AutoSizeText(
                           propertyValue.toString().breakText(20),
-                          maxLines: 10,
                           overflow: TextOverflow.ellipsis,
                           softWrap: false,
                           style: theme.textStyleSize12W400Primary,
