@@ -140,8 +140,9 @@ class AppSeedBackupSheet extends ConsumerWidget {
                                     );
                                     final seed =
                                         AppMnemomics.mnemonicListToSeed(
-                                            mnemonic!,
-                                            languageCode: languageSeed);
+                                      mnemonic!,
+                                      languageCode: languageSeed,
+                                    );
                                     Sheets.showAppHeightNineSheet(
                                       context: context,
                                       ref: ref,

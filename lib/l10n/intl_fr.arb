@@ -270,7 +270,7 @@
 	"nodeAuthorizationDate": "Authorization date: ",
 	"nodeEnrollmentDate": "Enrollment date: ",
 	"currencyOracleInfo": "Cet icône signifie que la conversion utilise un oracle fourni par Archethic.",
-	"certifiedTokenInfo": "Cet icône signifie que le jeton est certifié par la Fondation Archethic.",
+	"verifiedTokenInfo": "Cet icône signifie que le jeton est verifié par la Fondation Archethic.",
 	"sendToMeError": "Vous ne pouvez pas envoyer de %1 dans votre propre portefeuille.",
 	"viewExplorer": "Voir dans l'explorer",
 	"total": "Total :",
