@@ -6,6 +6,7 @@ import 'dart:typed_data';
 
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
+import 'package:aewallet/infrastructure/repositories/transaction/transaction_keychain_builder.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
 import 'package:aewallet/model/blockchain/keychain_secured_infos_service.dart';
@@ -131,6 +132,57 @@ class KeychainUtil with KeychainServiceMixin {
             params: <String, Object>{
               'keychainAddress':
                   keychainTransaction.address!.address!.toUpperCase(),
+              'originPrivateKey': originPrivateKey,
+              'keychain': keychain,
+            },
+          );
+        }
+      },
+      onError: (error) async {
+        onError(
+          error,
+          transactionSender,
+          TransactionSendEventType.keychain,
+        );
+      },
+    );
+  }
+
+  Future<void> removeService(
+    NetworksSetting networkSettings,
+    String service,
+    Keychain keychain,
+  ) async {
+    final originPrivateKey = sl.get<ApiService>().getOriginKey();
+    final servicesRemoved = Map<String, Service>.from(keychain.services)
+      ..removeWhere((key, value) => key == service);
+    final transaction = await KeychainTransactionBuilder.build(
+      keychain: keychain.copyWith(services: servicesRemoved),
+      originPrivateKey: originPrivateKey,
+    );
+
+    final TransactionSenderInterface transactionSender =
+        ArchethicTransactionSender(
+      phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
+      websocketEndpoint: networkSettings.getWebsocketUri(),
+      apiService: sl.get<ApiService>(),
+    );
+
+    await transactionSender.send(
+      transaction: transaction,
+      onConfirmation: (event) async {
+        if (TransactionConfirmation.isEnoughConfirmations(
+          event.nbConfirmations,
+          event.maxConfirmations,
+          TransactionValidationRatios.createKeychain,
+        )) {
+          transactionSender.close();
+          onConfirmation(
+            event,
+            transactionSender,
+            TransactionSendEventType.keychain,
+            params: <String, Object>{
+              'keychainAddress': transaction.address!.address!.toUpperCase(),
               'originPrivateKey': originPrivateKey,
               'keychain': keychain,
             },

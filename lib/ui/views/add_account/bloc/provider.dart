@@ -189,6 +189,100 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
       },
     );
   }
+
+  Future<void> removeAccount(BuildContext context, String account) async {
+    final transactionRepository = ref.read(AddAccountFormProvider._repository);
+
+    final localizations = AppLocalizations.of(context)!;
+
+    late Transaction transaction;
+
+    transaction = Transaction.keychain(
+      name: 'archethic-wallet-${Uri.encodeFull(state.name)}',
+      seed: state.seed,
+    );
+
+    transactionRepository.send(
+      transaction: transaction,
+      onConfirmation: (confirmation) async {
+        if (archethic.TransactionConfirmation.isEnoughConfirmations(
+          confirmation.nbConfirmations,
+          confirmation.maxConfirmations,
+          TransactionValidationRatios.addAccount,
+        )) {
+          transactionRepository.close();
+          EventTaxiImpl.singleton().fire(
+            TransactionSendEvent(
+              transactionType: TransactionSendEventType.keychain,
+              response: 'ok',
+              nbConfirmations: confirmation.nbConfirmations,
+              transactionAddress: confirmation.transactionAddress,
+              maxConfirmations: confirmation.maxConfirmations,
+            ),
+          );
+        }
+      },
+      onError: (error) async {
+        error.maybeMap(
+          connectivity: (_) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.keychain,
+                response: localizations.noConnection,
+                nbConfirmations: 0,
+              ),
+            );
+          },
+          consensusNotReached: (_) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.keychain,
+                response: localizations.consensusNotReached,
+                nbConfirmations: 0,
+              ),
+            );
+          },
+          timeout: (_) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.keychain,
+                response: localizations.transactionTimeOut,
+                nbConfirmations: 0,
+              ),
+            );
+          },
+          invalidConfirmation: (_) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.keychain,
+                nbConfirmations: 0,
+                maxConfirmations: 0,
+                response: 'ko',
+              ),
+            );
+          },
+          other: (error) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.keychain,
+                response: localizations.genericError,
+                nbConfirmations: 0,
+              ),
+            );
+          },
+          orElse: () {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.keychain,
+                response: '',
+                nbConfirmations: 0,
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
 }
 
 abstract class AddAccountFormProvider {
