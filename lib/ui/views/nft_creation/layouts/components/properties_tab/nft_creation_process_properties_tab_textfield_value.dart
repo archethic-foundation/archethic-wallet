@@ -78,7 +78,7 @@ class _NFTCreationProcessPropertiesTabTextfieldValueState
       keyboardType: TextInputType.text,
       style: theme.textStyleSize16W600Primary,
       inputFormatters: <LengthLimitingTextInputFormatter>[
-        LengthLimitingTextInputFormatter(100),
+        LengthLimitingTextInputFormatter(500),
       ],
       onChanged: (text) {
         nftCreationNotifier.setPropertyValue(
