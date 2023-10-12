@@ -398,6 +398,8 @@
   "addAccountConfirmed": "The account was created with %1 confirmations on %2",
   "transferConfirmed1": "The transfer was made with %1 confirmation on %2",
   "transferConfirmed": "The transfer was made with %1 confirmations on %2",
+  "retireAccountConfirmed1": "The account was retired with %1 confirmation on %2",
+  "retireAccountConfirmed": "The account was retired with %1 confirmations on %2",
   "build": "Build :",
   "nftCategoryArt": "Art",
   "nftCategoryAccess": "Access",
@@ -608,5 +610,9 @@
   "youHaveBeenDeletedFromADiscussion": "You have been deleted from a discussion",
   "youHaveBeenAddedTOADiscussion": "You have been added to a discussion",
   "localDataMigrationMessage": "Update your current application.\nPlease wait...",
-  "nftNotOwnerInfo": "You are not the owner of this NFT"
+  "nftNotOwnerInfo": "You are not the owner of this NFT",
+  "removeKeychainDetail": "You are about to retire the account %1 from your keychain.\nYou will no longer have access to the funds or associated tokens.\nRefer to your keychain history to access information related to this account.",
+  "removeKeychainAction": "Remove",
+  "removeKeychainLater": "You will be able to find your account if you recreate it later with the same name.",
+  "removeKeychainAtLeast1": "You must keep at least one account in your keychain."
 }

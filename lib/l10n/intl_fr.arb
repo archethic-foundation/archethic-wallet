@@ -390,6 +390,8 @@
 	"addAccountConfirmed": "Le compte a été créé avec %1 confirmations sur %2",
 	"transferConfirmed1": "Le transfert a été effectué avec %1 confirmation sur %2",
 	"transferConfirmed": "Le transfert a été effectué avec %1 confirmations sur %2",
+	"retireAccountConfirmed1": "Le compte a été retiré du porte-clés avec %1 confirmation sur %2",
+	"retireAccountConfirmed": "Le compte a été retiré du porte-clés avec %1 confirmations sur %2",
 	"build": "Build : ",
 	"nftCategoryArt": "Art",
 	"nftCategoryAccess": "Accès",
@@ -585,5 +587,9 @@
 	"youHaveBeenDeletedFromADiscussion": "Vous avez été supprimé d'une discussion",
 	"youHaveBeenAddedTOADiscussion": "Vous avez été ajouté à une discussion",
 	"localDataMigrationMessage": "Mise à jour de votre application en cours.\nVeuillez patienter...",
-	"nftNotOwnerInfo": "Vous n'êtes pas propriétaire de ce NFT"
+	"nftNotOwnerInfo": "Vous n'êtes pas propriétaire de ce NFT",
+	"removeKeychainDetail": "Vous vous apprêtez à retirer de votre porte-clés le compte %1.\nVous n'aurez plus accès ni aux fonds, ni aux tokens associés.\nRéférez vous à l'historique de votre porte-clés afin de pouvoir accéder aux informations relatives à ce compte.",
+	"removeKeychainAction": "Retirer le compte",
+	"removeKeychainLater": "Vous pourrez retrouver votre compte si vous le récréez plus tard avec le même nom.",
+	"removeKeychainAtLeast1": "Vous devez conserver au moins un service dans votre porte-clés."
 }
