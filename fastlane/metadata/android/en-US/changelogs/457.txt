@@ -1,0 +1,7 @@
+Archethic Wallet - Version 2.2.2 Build 457
+
+- Update UCO value automatically from Oracle
+- Remove account from a keychain
+- Increase the size of a NFT property value
+- Certified token management
+- Eliminate intermediate authentications
