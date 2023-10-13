@@ -72,7 +72,7 @@ class _TransferTextFieldAmountState
     if (accountSelected == null || selectedCurrencyMarketPrice == null) {
       return const SizedBox();
     }
-    final valueLabel = ref.read(
+    final valueLabel = ref.watch(
       PrimaryCurrencyProviders.convertedValueLabel(
         amount: transfer.amount,
         tokenPrice: selectedCurrencyMarketPrice.amount,

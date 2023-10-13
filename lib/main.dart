@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/migrations/migration_manager.dart';
 import 'package:aewallet/application/notification/providers.dart';
+import 'package:aewallet/application/oracle/provider.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
@@ -389,7 +390,7 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
         _goToIntroScreen();
         return;
       }
-
+      ref.read(ArchethicOracleUCOProviders.archethicOracleUCO.notifier).init();
       Navigator.of(context).pushReplacementNamed('/home');
     } catch (e, stack) {
       dev.log(e.toString(), error: e, stackTrace: stack);
