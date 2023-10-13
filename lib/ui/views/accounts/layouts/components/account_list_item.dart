@@ -294,132 +294,131 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
                       ),
                       Row(
                         children: [
-                          Container(
-                            alignment: Alignment.center,
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: theme.backgroundDark!.withOpacity(0.3),
-                              border: Border.all(
-                                color:
-                                    theme.backgroundDarkest!.withOpacity(0.2),
+                          InkWell(
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: theme.backgroundDark!.withOpacity(0.3),
+                                border: Border.all(
+                                  color:
+                                      theme.backgroundDarkest!.withOpacity(0.2),
+                                ),
                               ),
-                            ),
-                            child: InkWell(
                               child: Icon(
                                 Symbols.open_in_new,
                                 color: theme.backgroundDarkest,
                                 size: 20,
                               ),
-                              onTap: () async {
-                                sl.get<HapticUtil>().feedback(
-                                      FeedbackType.light,
-                                      preferences.activeVibrations,
-                                    );
-                                UIUtil.showWebview(
-                                  context,
-                                  '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.account.lastAddress}',
-                                  '',
-                                );
-                              },
                             ),
+                            onTap: () async {
+                              sl.get<HapticUtil>().feedback(
+                                    FeedbackType.light,
+                                    preferences.activeVibrations,
+                                  );
+                              UIUtil.showWebview(
+                                context,
+                                '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.account.lastAddress}',
+                                '',
+                              );
+                            },
                           ),
                           const SizedBox(
                             width: 10,
                           ),
-                          Container(
-                            alignment: Alignment.center,
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: theme.backgroundDark!.withOpacity(0.3),
-                              border: Border.all(
-                                color:
-                                    theme.backgroundDarkest!.withOpacity(0.2),
+                          InkWell(
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: theme.backgroundDark!.withOpacity(0.3),
+                                border: Border.all(
+                                  color:
+                                      theme.backgroundDarkest!.withOpacity(0.2),
+                                ),
                               ),
-                            ),
-                            child: InkWell(
                               child: Icon(
                                 Symbols.delete,
                                 color: theme.backgroundDarkest,
                                 size: 20,
                               ),
-                              onTap: () async {
-                                final session =
-                                    ref.read(SessionProviders.session).loggedIn;
-                                final keychain = await sl
-                                    .get<ApiService>()
-                                    .getKeychain(session!.wallet.seed);
-
-                                var nbOfAccounts = 0;
-                                keychain.services.forEach((key, value) {
-                                  if (key.startsWith('archethic-wallet')) {
-                                    nbOfAccounts++;
-                                  }
-                                });
-                                if (nbOfAccounts <= 1 &&
-                                    widget.account.name
-                                        .startsWith('archethic-wallet')) {
-                                  UIUtil.showSnackbar(
-                                    AppLocalizations.of(context)!
-                                        .removeKeychainAtLeast1,
-                                    context,
-                                    ref,
-                                    theme.text!,
-                                    theme.snackBarShadow!,
-                                    icon: Symbols.info,
-                                  );
-                                  return;
-                                }
-
-                                final language = ref.read(
-                                  LanguageProviders.selectedLanguage,
-                                );
-
-                                sl.get<HapticUtil>().feedback(
-                                      FeedbackType.light,
-                                      preferences.activeVibrations,
-                                    );
-                                AppDialogs.showConfirmDialog(
-                                    context,
-                                    ref,
-                                    CaseChange.toUpperCase(
-                                      localizations.warning,
-                                      language.getLocaleString(),
-                                    ),
-                                    localizations.removeKeychainDetail
-                                        .replaceAll(
-                                      '%1',
-                                      widget.account.nameDisplayed,
-                                    ),
-                                    localizations.removeKeychainAction, () {
-                                  // Show another confirm dialog
-                                  AppDialogs.showConfirmDialog(
-                                    context,
-                                    ref,
-                                    localizations.areYouSure,
-                                    localizations.removeKeychainLater,
-                                    localizations.yes,
-                                    () async {
-                                      ShowSendingAnimation.build(
-                                        context,
-                                        theme,
-                                      );
-
-                                      await KeychainUtil().removeService(
-                                        ref
-                                            .read(SettingsProviders.settings)
-                                            .network,
-                                        widget.account.name,
-                                        keychain,
-                                      );
-                                    },
-                                  );
-                                });
-                              },
                             ),
+                            onTap: () async {
+                              final session =
+                                  ref.read(SessionProviders.session).loggedIn;
+                              final keychain = await sl
+                                  .get<ApiService>()
+                                  .getKeychain(session!.wallet.seed);
+
+                              var nbOfAccounts = 0;
+                              keychain.services.forEach((key, value) {
+                                if (key.startsWith('archethic-wallet')) {
+                                  nbOfAccounts++;
+                                }
+                              });
+                              if (nbOfAccounts <= 1 &&
+                                  widget.account.name
+                                      .startsWith('archethic-wallet')) {
+                                UIUtil.showSnackbar(
+                                  AppLocalizations.of(context)!
+                                      .removeKeychainAtLeast1,
+                                  context,
+                                  ref,
+                                  theme.text!,
+                                  theme.snackBarShadow!,
+                                  icon: Symbols.info,
+                                );
+                                return;
+                              }
+
+                              final language = ref.read(
+                                LanguageProviders.selectedLanguage,
+                              );
+
+                              sl.get<HapticUtil>().feedback(
+                                    FeedbackType.light,
+                                    preferences.activeVibrations,
+                                  );
+                              AppDialogs.showConfirmDialog(
+                                  context,
+                                  ref,
+                                  CaseChange.toUpperCase(
+                                    localizations.warning,
+                                    language.getLocaleString(),
+                                  ),
+                                  localizations.removeKeychainDetail.replaceAll(
+                                    '%1',
+                                    widget.account.nameDisplayed,
+                                  ),
+                                  localizations.removeKeychainAction, () {
+                                // Show another confirm dialog
+                                AppDialogs.showConfirmDialog(
+                                  context,
+                                  ref,
+                                  localizations.areYouSure,
+                                  localizations.removeKeychainLater,
+                                  localizations.yes,
+                                  () async {
+                                    ShowSendingAnimation.build(
+                                      context,
+                                      theme,
+                                    );
+
+                                    await KeychainUtil().removeService(
+                                      ref
+                                          .read(SettingsProviders.settings)
+                                          .network,
+                                      widget.account.name,
+                                      keychain,
+                                    );
+                                  },
+                                );
+                              });
+                            },
                           ),
                         ],
                       ),
