@@ -173,6 +173,11 @@ class _SignTransactionButton extends StatelessWidget {
       ),
       onPressed: () async {
         const addressIndex = '';
+        final blockchainTxVersion = int.parse(
+          (await sl.get<ApiService>().getBlockchainVersion())
+              .version
+              .transaction,
+        );
 
         /*String addressIndex =
                 StateContainer.of(context)
@@ -182,6 +187,7 @@ class _SignTransactionButton extends StatelessWidget {
                     .padLeft(8, '0');*/
         final transaction = Transaction(
           type: 'transfer',
+          version: blockchainTxVersion,
           data: Transaction.initData(),
         );
         for (final transfer in ucoTransferList!) {

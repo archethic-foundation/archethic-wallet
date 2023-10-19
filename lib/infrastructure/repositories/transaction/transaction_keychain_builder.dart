@@ -28,8 +28,15 @@ extension KeychainTransactionBuilder on archethic.Transaction {
       ),
     );
 
+    final blockchainTxVersion = int.parse(
+      (await sl.get<archethic.ApiService>().getBlockchainVersion())
+          .version
+          .transaction,
+    );
+
     final keychainTransaction = archethic.Transaction(
       type: 'keychain',
+      version: blockchainTxVersion,
       data: archethic.Transaction.initData(),
     ).setContent(jsonEncode(keychain.toDID()));
 

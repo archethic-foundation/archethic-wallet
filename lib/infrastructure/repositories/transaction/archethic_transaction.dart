@@ -128,6 +128,12 @@ class ArchethicTransactionRepository
 
     final index = indexMap[transfer.transactionLastAddress] ?? 0;
 
+    final blockchainTxVersion = int.parse(
+      (await sl.get<archethic.ApiService>().getBlockchainVersion())
+          .version
+          .transaction,
+    );
+
     var tokenTransferList = <archethic.TokenTransfer>[];
     var ucoTransferList = <archethic.UCOTransfer>[];
 
@@ -170,6 +176,7 @@ class ArchethicTransactionRepository
       tokenTransferList: tokenTransferList,
       ucoTransferList: ucoTransferList,
       message: transfer.message,
+      txVersion: blockchainTxVersion,
     );
   }
 
@@ -184,6 +191,12 @@ class ArchethicTransactionRepository
     );
 
     final index = indexMap[token.transactionLastAddress] ?? 0;
+
+    final blockchainTxVersion = int.parse(
+      (await sl.get<archethic.ApiService>().getBlockchainVersion())
+          .version
+          .transaction,
+    );
 
     return AddTokenTransactionBuilder.build(
       tokenName: token.name,
@@ -206,6 +219,7 @@ class ArchethicTransactionRepository
       serviceName: token.accountSelectedName,
       aeip: token.aeip,
       tokenProperties: token.properties,
+      txVersion: blockchainTxVersion,
     );
   }
 
