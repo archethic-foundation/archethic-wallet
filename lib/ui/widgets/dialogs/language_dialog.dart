@@ -39,7 +39,7 @@ class LanguageDialog {
             padding: const EdgeInsets.only(bottom: 10),
             child: Text(
               AppLocalizations.of(context)!.language,
-              style: theme.textStyleSize24W700EquinoxPrimary,
+              style: theme.textStyleSize24W700TelegrafPrimary,
             ),
           ),
           shape: RoundedRectangleBorder(

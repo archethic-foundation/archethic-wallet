@@ -45,7 +45,7 @@ class BalanceInfosChart extends ConsumerWidget {
                   children: [
                     Text(
                       localizations.priceChartHeader,
-                      style: theme.textStyleSize14W600EquinoxPrimary,
+                      style: theme.textStyleSize14W600TelegrafPrimary,
                     ),
                     const IconDataWidget(
                       icon: Symbols.show_chart,

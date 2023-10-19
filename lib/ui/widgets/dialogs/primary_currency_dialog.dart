@@ -41,7 +41,7 @@ class PrimaryCurrencyDialog {
             padding: const EdgeInsets.only(bottom: 10),
             child: Text(
               AppLocalizations.of(context)!.primaryCurrency,
-              style: theme.textStyleSize24W700EquinoxPrimary,
+              style: theme.textStyleSize24W700TelegrafPrimary,
             ),
           ),
           shape: RoundedRectangleBorder(

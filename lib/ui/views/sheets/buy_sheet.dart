@@ -30,127 +30,136 @@ class BuySheet extends ConsumerWidget {
                 child: ArchethicScrollbar(
                   child: Column(
                     children: <Widget>[
-                      InkWell(
-                        onTap: () async {
-                          UIUtil.showWebview(
-                            context,
-                            'https://rubic.exchange/?fromChain=ETH&toChain=ETH&from=ETH&to=UCO',
-                            'Rubic',
-                          );
-                        },
-                        child: SvgPicture.asset(
-                          'assets/buy/Rubic.svg',
-                          colorFilter:
-                              ColorFilter.mode(theme.text!, BlendMode.srcIn),
-                          height: 40,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 40),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            InkWell(
+                              onTap: () async {
+                                UIUtil.showWebview(
+                                  context,
+                                  'https://app.uniswap.org/#/swap?outputCurrency=0x8a3d77e9d6968b780564936d15b09805827c21fa&use=V2',
+                                  'Uniswap',
+                                );
+                              },
+                              child: Column(
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/buy/Ethereum.svg',
+                                    height: 40,
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  SvgPicture.asset(
+                                    'assets/buy/Uniswap.svg',
+                                    width: 50,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () async {
+                                UIUtil.showWebview(
+                                  context,
+                                  'https://pancakeswap.finance/swap?inputCurrency=0xe9e7cea3dedca5984780bafc599bd69add087d56&outputCurrency=0xb001f1E7c8bda414aC7Cf7Ecba5469fE8d24B6de',
+                                  'PancakeSwap',
+                                );
+                              },
+                              child: Column(
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/buy/BSC.svg',
+                                    height: 40,
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  SvgPicture.asset(
+                                    'assets/buy/Pancake.svg',
+                                    width: 55,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () async {
+                                UIUtil.showWebview(
+                                  context,
+                                  'https://info.quickswap.exchange/#/pair/0x25bae75f6760ac30554cc62f9282307c3038c3a0',
+                                  'Quick',
+                                );
+                              },
+                              child: Column(
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/buy/Polygon.svg',
+                                    height: 40,
+                                  ),
+                                  const SizedBox(
+                                    height: 23,
+                                  ),
+                                  SvgPicture.asset(
+                                    'assets/buy/Quickswap.svg',
+                                    height: 50,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 30),
-                      InkWell(
-                        onTap: () async {
-                          UIUtil.showWebview(
-                            context,
-                            'https://info.quickswap.exchange/#/pair/0x25bae75f6760ac30554cc62f9282307c3038c3a0',
-                            'Quick',
-                          );
-                        },
-                        child: Image.asset(
-                          'assets/buy/Quickswap.png',
-                          color: theme.text,
-                          height: 40,
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Divider(
+                          height: 1,
+                          color: theme.backgroundDarkest!.withOpacity(0.1),
                         ),
                       ),
-                      const SizedBox(height: 30),
-                      InkWell(
-                        onTap: () async {
-                          UIUtil.showWebview(
-                            context,
-                            'https://www.probit.com/en-us/',
-                            'Probit',
-                          );
-                        },
-                        child: Image.asset(
-                          'assets/buy/Probit.png',
-                          color: theme.text,
-                          height: 40,
-                        ),
+                      const SizedBox(
+                        height: 50,
                       ),
-                      const SizedBox(height: 30),
-                      InkWell(
-                        onTap: () async {
-                          UIUtil.showWebview(
-                            context,
-                            'https://www.bitglobal.com/en-us',
-                            'Bithumb',
-                          );
-                        },
-                        child: Image.asset(
-                          'assets/buy/Bithumb.png',
-                          color: theme.text,
-                          height: 40,
-                        ),
-                      ),
-                      const SizedBox(height: 30),
-                      InkWell(
-                        onTap: () async {
-                          UIUtil.showWebview(
-                            context,
-                            'https://app.uniswap.org/#/swap?outputCurrency=0x8a3d77e9d6968b780564936d15b09805827c21fa&use=V2',
-                            'Uniswap',
-                          );
-                        },
-                        child: SvgPicture.asset(
-                          'assets/buy/Uniswap.svg',
-                          colorFilter:
-                              ColorFilter.mode(theme.text!, BlendMode.srcIn),
-                          height: 40,
-                        ),
-                      ),
-                      const SizedBox(height: 30),
-                      InkWell(
-                        onTap: () async {
-                          UIUtil.showWebview(
-                            context,
-                            'https://zebitex.com',
-                            'Zebitex',
-                          );
-                        },
-                        child: SvgPicture.asset(
-                          'assets/buy/Zebitex.svg',
-                          colorFilter:
-                              ColorFilter.mode(theme.text!, BlendMode.srcIn),
-                          height: 40,
-                        ),
-                      ),
-                      const SizedBox(height: 30),
-                      InkWell(
-                        onTap: () async {
-                          UIUtil.showWebview(
-                            context,
-                            'https://pancakeswap.finance/swap?inputCurrency=0xe9e7cea3dedca5984780bafc599bd69add087d56&outputCurrency=0xb001f1E7c8bda414aC7Cf7Ecba5469fE8d24B6de',
-                            'PancakeSwap',
-                          );
-                        },
-                        child: SvgPicture.asset(
-                          'assets/buy/Pancake.svg',
-                          colorFilter:
-                              ColorFilter.mode(theme.text!, BlendMode.srcIn),
-                          height: 40,
-                        ),
-                      ),
-                      const SizedBox(height: 30),
-                      InkWell(
-                        onTap: () async {
-                          UIUtil.showWebview(
-                            context,
-                            'https://dapps.zam.io/bridge',
-                            'Zamio',
-                          );
-                        },
-                        child: Image.asset(
-                          'assets/buy/Zamio.png',
-                          color: theme.text,
-                          height: 40,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          children: [
+                            InkWell(
+                              onTap: () async {
+                                UIUtil.showWebview(
+                                  context,
+                                  'https://www.probit.com/en-us/',
+                                  'Probit',
+                                );
+                              },
+                              child: Image.asset(
+                                'assets/buy/Probit.png',
+                                color: theme.text,
+                                height: 40,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 50,
+                            ),
+                            InkWell(
+                              onTap: () async {
+                                UIUtil.showWebview(
+                                  context,
+                                  'https://www.bitglobal.com/en-us',
+                                  'Bithumb',
+                                );
+                              },
+                              child: Image.asset(
+                                'assets/buy/Bithumb.png',
+                                color: theme.text,
+                                height: 40,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],

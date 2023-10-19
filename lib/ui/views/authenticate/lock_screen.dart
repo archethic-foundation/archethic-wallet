@@ -97,7 +97,7 @@ class AppLockScreen extends ConsumerWidget {
                               margin: const EdgeInsets.only(top: 10),
                               child: Text(
                                 localizations.locked,
-                                style: theme.textStyleSize24W700EquinoxPrimary,
+                                style: theme.textStyleSize24W700TelegrafPrimary,
                               ),
                             ),
                           Container(

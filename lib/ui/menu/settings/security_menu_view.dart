@@ -18,12 +18,41 @@ class SecurityMenuView extends ConsumerWidget {
         backgroundColor: theme.background,
         title: AutoSizeText(
           localizations.securityHeader,
-          style: theme.textStyleSize24W700EquinoxPrimary,
+          style: theme.textStyleSize24W700TelegrafPrimary,
         ),
       ),
       body: SafeArea(
         child: Column(
           children: <Widget>[
+            // Back button and Security Text
+            Container(
+              margin: const EdgeInsets.only(bottom: 10, top: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      //Back button
+                      Container(
+                        height: 40,
+                        width: 40,
+                        margin: const EdgeInsets.only(right: 10, left: 10),
+                        child: BackButton(
+                          key: const Key('back'),
+                          color: theme.text,
+                          onPressed: close,
+                        ),
+                      ),
+                      //Security Header Text
+                      Text(
+                        localizations.securityHeader,
+                        style: theme.textStyleSize24W700TelegrafPrimary,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
             Expanded(
               child: Stack(
                 children: <Widget>[
@@ -57,7 +86,7 @@ class SecurityMenuView extends ConsumerWidget {
                       _SettingsListItem.singleLineWithInfos(
                         heading: localizations.removeWallet,
                         info: localizations.removeWalletDescription,
-                        headingStyle: theme.textStyleSize16W600EquinoxRed,
+                        headingStyle: theme.textStyleSize16W600TelegrafRed,
                         icon: Symbols.delete,
                         onPressed: () {
                           final language = ref.read(
@@ -269,7 +298,7 @@ class _BackupSecretPhraseListItem extends ConsumerWidget {
 
     return _SettingsListItem.singleLine(
       heading: localizations.backupSecretPhrase,
-      headingStyle: theme.textStyleSize16W600EquinoxPrimary,
+      headingStyle: theme.textStyleSize16W600TelegrafPrimary,
       icon: Symbols.key,
       onPressed: () async {
         final preferences = ref.read(SettingsProviders.settings);

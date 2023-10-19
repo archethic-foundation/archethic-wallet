@@ -62,7 +62,7 @@ class LastArticlesState extends ConsumerState<LastArticles> {
               children: [
                 Text(
                   AppLocalizations.of(context)!.blogHeader,
-                  style: theme.textStyleSize14W600EquinoxPrimary,
+                  style: theme.textStyleSize14W600TelegrafPrimary,
                 ),
                 InkWell(
                   onTap: () {

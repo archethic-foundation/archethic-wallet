@@ -187,7 +187,7 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                             ),
                             child: AutoSizeText(
                               localizations.recoveryPhrase,
-                              style: theme.textStyleSize24W700EquinoxPrimary,
+                              style: theme.textStyleSize24W700TelegrafPrimary,
                             ),
                           ),
                           const SizedBox(

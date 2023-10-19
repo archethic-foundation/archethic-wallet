@@ -134,7 +134,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
                         ),
                         child: Text(
                           localizations.passwordMethod,
-                          style: theme.textStyleSize24W700EquinoxPrimary,
+                          style: theme.textStyleSize24W700TelegrafPrimary,
                           textAlign: TextAlign.center,
                         ),
                       ),

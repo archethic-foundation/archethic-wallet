@@ -62,7 +62,7 @@ class ContactsDialog {
                 children: [
                   Text(
                     localizations.addressBookHeader,
-                    style: theme.textStyleSize24W700EquinoxPrimary,
+                    style: theme.textStyleSize24W700TelegrafPrimary,
                   ),
                   AppTextField(
                     focusNode: searchNameFocusNode,

@@ -425,13 +425,13 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
               tabs: [
                 Text(
                   localizations.recentTransactionsHeader,
-                  style: theme.textStyleSize14W600EquinoxPrimary,
+                  style: theme.textStyleSize14W600TelegrafPrimary,
                   textAlign: TextAlign.center,
                 ),
                 Text(
                   key: const Key('fungibleTokenTab'),
                   localizations.tokensHeader,
-                  style: theme.textStyleSize14W600EquinoxPrimary,
+                  style: theme.textStyleSize14W600TelegrafPrimary,
                   textAlign: TextAlign.center,
                 ),
               ],

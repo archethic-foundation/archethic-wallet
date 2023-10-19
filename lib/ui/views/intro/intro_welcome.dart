@@ -10,7 +10,6 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/dialogs/language_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
@@ -296,26 +295,24 @@ class _CGU extends ConsumerWidget {
               right: 15,
             ),
             child: CheckboxListTile(
-              title: Text(
-                localizations.welcomeDisclaimerChoice,
-                style: theme.textStyleSize14W600Primary,
-              ),
-              value: cguChecked,
-              onChanged: onToggleCGU,
-              checkColor: theme.background,
-              activeColor: theme.text,
-              controlAffinity: ListTileControlAffinity.leading,
-              secondary: TextFieldButton(
-                iconSize: 34,
-                icon: Symbols.policy,
-                onPressed: () {
+              title: InkWell(
+                onTap: () {
                   UIUtil.showWebview(
                     context,
                     'https://archethic.net/aewallet-privacy.html',
                     localizations.welcomeDisclaimerLink,
                   );
                 },
+                child: Text(
+                  localizations.welcomeDisclaimerChoice,
+                  style: theme.textStyleSize12W400UnderlinePrimary,
+                ),
               ),
+              value: cguChecked,
+              onChanged: onToggleCGU,
+              checkColor: theme.background,
+              activeColor: theme.text,
+              controlAffinity: ListTileControlAffinity.leading,
             ),
           ),
         ),

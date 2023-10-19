@@ -228,7 +228,7 @@ class _NetworkTitle extends ConsumerWidget {
       padding: const EdgeInsets.only(bottom: 10),
       child: Text(
         localizations.networksHeader,
-        style: theme.textStyleSize24W700EquinoxPrimary,
+        style: theme.textStyleSize24W700TelegrafPrimary,
       ),
     );
   }

@@ -277,7 +277,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                               alignment: AlignmentDirectional.centerStart,
                               child: AutoSizeText(
                                 localizations.confirmSecretPhrase,
-                                style: theme.textStyleSize24W700EquinoxPrimary,
+                                style: theme.textStyleSize24W700TelegrafPrimary,
                               ),
                             ),
                             Container(
@@ -478,7 +478,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                                       );
                                     },
                                     titleStyle: theme
-                                        .textStyleSize14W600EquinoxPrimaryRed,
+                                        .textStyleSize14W600TelegrafPrimaryRed,
                                     additionalContent:
                                         localizations.archethicDoesntKeepCopy,
                                     additionalContentStyle:

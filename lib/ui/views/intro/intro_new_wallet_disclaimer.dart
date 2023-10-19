@@ -86,7 +86,7 @@ class IntroNewWalletDisclaimer extends ConsumerWidget {
                                 AutoSizeText(
                                   localizations.warning,
                                   style: theme
-                                      .textStyleSize24W700EquinoxPrimaryRed,
+                                      .textStyleSize24W700TelegrafPrimaryRed,
                                 ),
                               ],
                             ),

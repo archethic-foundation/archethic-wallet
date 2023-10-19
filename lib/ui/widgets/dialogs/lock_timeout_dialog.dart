@@ -52,7 +52,7 @@ class LockTimeoutDialog {
             padding: const EdgeInsets.only(bottom: 10),
             child: Text(
               AppLocalizations.of(context)!.autoLockHeader,
-              style: theme.textStyleSize24W700EquinoxPrimary,
+              style: theme.textStyleSize24W700TelegrafPrimary,
             ),
           ),
           shape: RoundedRectangleBorder(

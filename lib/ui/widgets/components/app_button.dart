@@ -73,7 +73,7 @@ class AppButton extends ConsumerWidget {
                     child: AutoSizeText(
                       buttonText,
                       textAlign: TextAlign.center,
-                      style: theme.textStyleSize18W600EquinoxMainButtonLabel,
+                      style: theme.textStyleSize18W600TelegrafMainButtonLabel,
                       maxLines: 1,
                       stepGranularity: 0.5,
                     ),
@@ -99,7 +99,7 @@ class AppButton extends ConsumerWidget {
                     label: AutoSizeText(
                       buttonText,
                       textAlign: TextAlign.center,
-                      style: theme.textStyleSize18W600EquinoxMainButtonLabel,
+                      style: theme.textStyleSize18W600TelegrafMainButtonLabel,
                       maxLines: 1,
                       stepGranularity: 0.5,
                     ),
@@ -143,7 +143,7 @@ class AppButton extends ConsumerWidget {
                       buttonText,
                       textAlign: TextAlign.center,
                       style: theme
-                          .textStyleSize18W600EquinoxMainButtonLabelDisabled,
+                          .textStyleSize18W600TelegrafMainButtonLabelDisabled,
                       maxLines: 1,
                       stepGranularity: 0.5,
                     ),
@@ -171,7 +171,7 @@ class AppButton extends ConsumerWidget {
                       buttonText,
                       textAlign: TextAlign.center,
                       style: theme
-                          .textStyleSize18W600EquinoxMainButtonLabelDisabled,
+                          .textStyleSize18W600TelegrafMainButtonLabelDisabled,
                       maxLines: 1,
                       stepGranularity: 0.5,
                     ),

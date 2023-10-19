@@ -53,7 +53,7 @@ class AuthentificationMethodDialog {
         return AlertDialog(
           title: Text(
             localizations.authMethod,
-            style: theme.textStyleSize24W700EquinoxPrimary,
+            style: theme.textStyleSize24W700TelegrafPrimary,
           ),
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(Radius.circular(16)),

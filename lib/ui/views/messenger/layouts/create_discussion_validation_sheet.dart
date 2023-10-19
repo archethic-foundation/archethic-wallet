@@ -92,7 +92,7 @@ class _CreateDiscussionValidationSheetState
                   ),
                   AutoSizeText(
                     localizations.newDiscussion,
-                    style: theme.textStyleSize24W700EquinoxPrimary,
+                    style: theme.textStyleSize24W700TelegrafPrimary,
                     textAlign: TextAlign.center,
                     maxLines: 1,
                     stepGranularity: 0.1,
@@ -174,7 +174,7 @@ class _CreateDiscussionValidationSheetState
                           color: formState.canSubmit
                               ? theme.mainButtonLabel
                               : theme
-                                  .textStyleSize18W600EquinoxMainButtonLabelDisabled
+                                  .textStyleSize18W600TelegrafMainButtonLabelDisabled
                                   .color,
                           size: 14,
                         ),

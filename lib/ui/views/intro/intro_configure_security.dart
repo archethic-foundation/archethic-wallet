@@ -98,7 +98,7 @@ class _IntroConfigureSecurityState
                           children: <Widget>[
                             AutoSizeText(
                               localizations.securityHeader,
-                              style: theme.textStyleSize20W700EquinoxPrimary,
+                              style: theme.textStyleSize20W700TelegrafPrimary,
                               textAlign: TextAlign.justify,
                               maxLines: 6,
                               stepGranularity: 0.5,

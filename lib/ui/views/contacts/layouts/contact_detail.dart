@@ -78,7 +78,7 @@ class ContactDetail extends ConsumerWidget {
                           flex: 2,
                           child: AutoSizeText(
                             contact.format,
-                            style: theme.textStyleSize24W700EquinoxPrimary,
+                            style: theme.textStyleSize24W700TelegrafPrimary,
                             textAlign: TextAlign.center,
                             maxLines: 1,
                             stepGranularity: 0.1,
@@ -108,12 +108,12 @@ class ContactDetail extends ConsumerWidget {
                   tabs: [
                     Text(
                       localizations.contactAddressTabHeader,
-                      style: theme.textStyleSize14W600EquinoxPrimary,
+                      style: theme.textStyleSize14W600TelegrafPrimary,
                       textAlign: TextAlign.center,
                     ),
                     Text(
                       localizations.contactPublicKeyTabHeader,
-                      style: theme.textStyleSize14W600EquinoxPrimary,
+                      style: theme.textStyleSize14W600TelegrafPrimary,
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -198,14 +198,14 @@ class ContactDetail extends ConsumerWidget {
                         Icon(
                           Symbols.delete,
                           color:
-                              theme.textStyleSize14W600EquinoxPrimaryRed.color,
+                              theme.textStyleSize14W600TelegrafPrimaryRed.color,
                         ),
                         const SizedBox(
                           width: 8,
                         ),
                         Text(
                           localizations.deleteContact,
-                          style: theme.textStyleSize14W600EquinoxPrimaryRed,
+                          style: theme.textStyleSize14W600TelegrafPrimaryRed,
                         ),
                       ],
                     ),

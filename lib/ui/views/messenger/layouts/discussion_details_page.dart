@@ -286,7 +286,8 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage> {
                               Icon(
                                 Symbols.logout,
                                 color: theme
-                                    .textStyleSize14W600EquinoxPrimaryRed.color,
+                                    .textStyleSize14W600TelegrafPrimaryRed
+                                    .color,
                               ),
                               const SizedBox(
                                 width: 8,
@@ -294,7 +295,7 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage> {
                               Text(
                                 localizations.leaveDiscussion,
                                 style:
-                                    theme.textStyleSize14W600EquinoxPrimaryRed,
+                                    theme.textStyleSize14W600TelegrafPrimaryRed,
                               ),
                             ],
                           ),

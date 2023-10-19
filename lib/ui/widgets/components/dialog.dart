@@ -34,7 +34,7 @@ class AppDialogs {
         return AlertDialog(
           title: Text(
             title,
-            style: titleStyle ?? theme.textStyleSize14W600EquinoxPrimary,
+            style: titleStyle ?? theme.textStyleSize14W600TelegrafPrimary,
           ),
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(Radius.circular(16)),
@@ -341,7 +341,7 @@ class PulsatingCircleLogoState extends ConsumerState<PulsatingCircleLogo>
               ? widget.title!
               : AppLocalizations.of(context)!.pleaseWait,
           textAlign: TextAlign.center,
-          style: theme.textStyleSize16W600EquinoxPrimary,
+          style: theme.textStyleSize16W600TelegrafPrimary,
         ),
       ],
     );

@@ -58,8 +58,8 @@ class _SettingsListItemWithDefaultValue extends _SettingsListItem {
                     child: Text(
                       heading,
                       style: disabled
-                          ? theme.textStyleSize16W600EquinoxPrimary30
-                          : theme.textStyleSize16W600EquinoxPrimary,
+                          ? theme.textStyleSize16W600TelegrafPrimary30
+                          : theme.textStyleSize16W600TelegrafPrimary,
                     ),
                   ),
                   AutoSizeText(
@@ -140,7 +140,7 @@ class _SettingsListItemWithDefaultValueWithInfos extends _SettingsListItem {
                     children: <Widget>[
                       Text(
                         heading,
-                        style: theme.textStyleSize16W600EquinoxPrimary,
+                        style: theme.textStyleSize16W600TelegrafPrimary,
                       ),
                       Text(
                         defaultMethod.getDisplayName(context),

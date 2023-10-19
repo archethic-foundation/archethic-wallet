@@ -47,7 +47,17 @@ extension AppStyles on BaseTheme {
     );
   }
 
-  TextStyle get textStyleSize14W600EquinoxPrimary {
+  TextStyle get textStyleSize12W400UnderlinePrimary {
+    return TextStyle(
+      fontFamily: secondaryFont,
+      fontSize: AppFontSizes.size12,
+      fontWeight: FontWeight.w400,
+      color: text,
+      decoration: TextDecoration.underline,
+    );
+  }
+
+  TextStyle get textStyleSize14W600TelegrafPrimary {
     return TextStyle(
       fontFamily: mainFont,
       fontSize: AppFontSizes.size14,
@@ -56,7 +66,7 @@ extension AppStyles on BaseTheme {
     );
   }
 
-  TextStyle get textStyleSize14W600EquinoxPrimaryRed {
+  TextStyle get textStyleSize14W600TelegrafPrimaryRed {
     return TextStyle(
       fontFamily: mainFont,
       fontSize: AppFontSizes.size14,
@@ -65,7 +75,7 @@ extension AppStyles on BaseTheme {
     );
   }
 
-  TextStyle get textStyleSize14W600EquinoxPrimaryDisabled {
+  TextStyle get textStyleSize14W600TelegrafPrimaryDisabled {
     return TextStyle(
       fontFamily: mainFont,
       fontSize: AppFontSizes.size14,
@@ -83,7 +93,7 @@ extension AppStyles on BaseTheme {
     );
   }
 
-  TextStyle get textStyleSize18W600EquinoxMainButtonLabelDisabled {
+  TextStyle get textStyleSize18W600TelegrafMainButtonLabelDisabled {
     return TextStyle(
       fontFamily: mainFont,
       fontSize: AppFontSizes.size18,
@@ -92,7 +102,7 @@ extension AppStyles on BaseTheme {
     );
   }
 
-  TextStyle get textStyleSize12W400EquinoxMainButtonLabelDisabled {
+  TextStyle get textStyleSize12W400TelegrafMainButtonLabelDisabled {
     return TextStyle(
       fontFamily: mainFont,
       fontSize: AppFontSizes.size12,
@@ -119,7 +129,7 @@ extension AppStyles on BaseTheme {
     );
   }
 
-  TextStyle get textStyleSize20W700EquinoxPrimary {
+  TextStyle get textStyleSize20W700TelegrafPrimary {
     return TextStyle(
       fontFamily: mainFont,
       fontSize: AppFontSizes.size20,
@@ -173,7 +183,7 @@ extension AppStyles on BaseTheme {
     );
   }
 
-  TextStyle get textStyleSize25W900EquinoxPrimary {
+  TextStyle get textStyleSize25W900TelegrafPrimary {
     return TextStyle(
       fontFamily: mainFont,
       fontSize: 25,
@@ -183,7 +193,7 @@ extension AppStyles on BaseTheme {
     );
   }
 
-  TextStyle get textStyleSize25W900EquinoxPrimary60 {
+  TextStyle get textStyleSize25W900TelegrafPrimary60 {
     return TextStyle(
       fontFamily: mainFont,
       fontSize: 25,
@@ -193,7 +203,7 @@ extension AppStyles on BaseTheme {
     );
   }
 
-  TextStyle get textStyleSize35W900EquinoxPrimary {
+  TextStyle get textStyleSize35W900TelegrafPrimary {
     return TextStyle(
       fontFamily: mainFont,
       fontSize: 35,
@@ -310,7 +320,7 @@ extension AppStyles on BaseTheme {
     );
   }
 
-  TextStyle get textStyleSize16W600EquinoxPrimary {
+  TextStyle get textStyleSize16W600TelegrafPrimary {
     return TextStyle(
       fontFamily: mainFont,
       fontSize: AppFontSizes.size16,
@@ -319,7 +329,7 @@ extension AppStyles on BaseTheme {
     );
   }
 
-  TextStyle get textStyleSize16W600EquinoxRed {
+  TextStyle get textStyleSize16W600TelegrafRed {
     return TextStyle(
       fontFamily: mainFont,
       fontSize: AppFontSizes.size16,
@@ -328,7 +338,7 @@ extension AppStyles on BaseTheme {
     );
   }
 
-  TextStyle get textStyleSize16W600EquinoxPrimary30 {
+  TextStyle get textStyleSize16W600TelegrafPrimary30 {
     return TextStyle(
       fontFamily: mainFont,
       fontSize: AppFontSizes.size16,
@@ -355,7 +365,7 @@ extension AppStyles on BaseTheme {
     );
   }
 
-  TextStyle get textStyleSize24W700EquinoxPrimary {
+  TextStyle get textStyleSize24W700TelegrafPrimary {
     return TextStyle(
       fontFamily: mainFont,
       fontSize: AppFontSizes.size24,
@@ -364,7 +374,7 @@ extension AppStyles on BaseTheme {
     );
   }
 
-  TextStyle get textStyleSize24W700EquinoxPrimaryRed {
+  TextStyle get textStyleSize24W700TelegrafPrimaryRed {
     return TextStyle(
       fontFamily: mainFont,
       fontSize: AppFontSizes.size24,
@@ -391,7 +401,7 @@ extension AppStyles on BaseTheme {
     );
   }
 
-  TextStyle get textStyleSize18W600EquinoxMainButtonLabel {
+  TextStyle get textStyleSize18W600TelegrafMainButtonLabel {
     return TextStyle(
       fontFamily: mainFont,
       fontSize: AppFontSizes.size18,
@@ -400,7 +410,7 @@ extension AppStyles on BaseTheme {
     );
   }
 
-  TextStyle get textStyleSize12W400EquinoxMainButtonLabel {
+  TextStyle get textStyleSize12W400TelegrafMainButtonLabel {
     return TextStyle(
       fontFamily: mainFont,
       fontSize: AppFontSizes.size12,
@@ -445,7 +455,7 @@ extension AppStyles on BaseTheme {
     );
   }
 
-  TextStyle get textStyleSize12W400EquinoxConnectivityBanner {
+  TextStyle get textStyleSize12W400TelegrafConnectivityBanner {
     return TextStyle(
       fontFamily: mainFont,
       fontSize: AppFontSizes.size12,
