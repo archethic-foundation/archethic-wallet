@@ -204,12 +204,12 @@ class _ActionButton extends ConsumerWidget {
                   if (enabled)
                     Text(
                       text,
-                      style: theme.textStyleSize14W600EquinoxPrimary,
+                      style: theme.textStyleSize14W600TelegrafPrimary,
                     )
                   else
                     Text(
                       text,
-                      style: theme.textStyleSize14W600EquinoxPrimaryDisabled,
+                      style: theme.textStyleSize14W600TelegrafPrimaryDisabled,
                     ),
                 ],
               ),
@@ -236,12 +236,12 @@ class _ActionButton extends ConsumerWidget {
                 if (enabled)
                   Text(
                     text,
-                    style: theme.textStyleSize14W600EquinoxPrimary,
+                    style: theme.textStyleSize14W600TelegrafPrimary,
                   )
                 else
                   Text(
                     text,
-                    style: theme.textStyleSize14W600EquinoxPrimaryDisabled,
+                    style: theme.textStyleSize14W600TelegrafPrimaryDisabled,
                   ),
               ],
             ),

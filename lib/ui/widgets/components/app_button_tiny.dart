@@ -247,8 +247,8 @@ class _NoIconButton extends ConsumerWidget {
             buttonText,
             textAlign: TextAlign.center,
             style: onPressed == null
-                ? theme.textStyleSize12W400EquinoxMainButtonLabelDisabled
-                : theme.textStyleSize12W400EquinoxMainButtonLabel,
+                ? theme.textStyleSize12W400TelegrafMainButtonLabelDisabled
+                : theme.textStyleSize12W400TelegrafMainButtonLabel,
             maxLines: 1,
             stepGranularity: 0.5,
           ),
@@ -257,7 +257,7 @@ class _NoIconButton extends ConsumerWidget {
             SizedBox.square(
               dimension: 10,
               child: CircularProgressIndicator(
-                color: theme.textStyleSize12W400EquinoxMainButtonLabel.color,
+                color: theme.textStyleSize12W400TelegrafMainButtonLabel.color,
                 strokeWidth: 2,
               ),
             ),
@@ -304,9 +304,9 @@ class _IconButton extends ConsumerWidget {
                 dimension: 8,
                 child: CircularProgressIndicator(
                   color: onPressed == null
-                      ? theme.textStyleSize12W400EquinoxMainButtonLabelDisabled
+                      ? theme.textStyleSize12W400TelegrafMainButtonLabelDisabled
                           .color
-                      : theme.textStyleSize12W400EquinoxMainButtonLabel.color,
+                      : theme.textStyleSize12W400TelegrafMainButtonLabel.color,
                   strokeWidth: 1,
                 ),
               ),
@@ -320,8 +320,8 @@ class _IconButton extends ConsumerWidget {
             buttonText,
             textAlign: TextAlign.center,
             style: onPressed == null
-                ? theme.textStyleSize12W400EquinoxMainButtonLabelDisabled
-                : theme.textStyleSize12W400EquinoxMainButtonLabel,
+                ? theme.textStyleSize12W400TelegrafMainButtonLabelDisabled
+                : theme.textStyleSize12W400TelegrafMainButtonLabel,
             maxLines: 1,
             stepGranularity: 0.5,
           ),
@@ -357,7 +357,7 @@ class _IconButtonOutline extends ConsumerWidget {
       label: AutoSizeText(
         buttonText,
         textAlign: TextAlign.center,
-        style: theme.textStyleSize12W400EquinoxMainButtonLabelDisabled,
+        style: theme.textStyleSize12W400TelegrafMainButtonLabelDisabled,
         maxLines: 1,
         stepGranularity: 0.5,
       ),

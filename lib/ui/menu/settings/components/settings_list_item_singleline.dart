@@ -61,8 +61,8 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
                   width: Responsive.drawerWidth(context) - 100,
                   child: Text(
                     heading,
-                    style:
-                        headingStyle ?? theme.textStyleSize16W600EquinoxPrimary,
+                    style: headingStyle ??
+                        theme.textStyleSize16W600TelegrafPrimary,
                   ),
                 ),
                 SizedBox(

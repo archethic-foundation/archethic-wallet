@@ -162,7 +162,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                 fit: BoxFit.fitWidth,
                 child: AutoSizeText(
                   localizations.keychainHeader,
-                  style: theme.textStyleSize24W700EquinoxPrimary,
+                  style: theme.textStyleSize24W700TelegrafPrimary,
                 ),
               ).animate().fade(duration: const Duration(milliseconds: 300)),
             )
@@ -171,7 +171,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                   fit: BoxFit.fitWidth,
                   child: Text(
                     selectedAccount?.nameDisplayed ?? ' ',
-                    style: theme.textStyleSize24W700EquinoxPrimary,
+                    style: theme.textStyleSize24W700TelegrafPrimary,
                   ),
                 ).animate().fade(duration: const Duration(milliseconds: 300))
               : preferences.mainScreenCurrentPage == 3
@@ -179,7 +179,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                       fit: BoxFit.fitWidth,
                       child: AutoSizeText(
                         'NFT',
-                        style: theme.textStyleSize24W700EquinoxPrimary,
+                        style: theme.textStyleSize24W700TelegrafPrimary,
                       ),
                     )
                       .animate()
@@ -189,7 +189,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                           fit: BoxFit.fitWidth,
                           child: AutoSizeText(
                             localizations.messengerHeader,
-                            style: theme.textStyleSize24W700EquinoxPrimary,
+                            style: theme.textStyleSize24W700TelegrafPrimary,
                           ),
                         ).animate().fade(
                             duration: const Duration(milliseconds: 300),
@@ -198,7 +198,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                           fit: BoxFit.fitWidth,
                           child: AutoSizeText(
                             localizations.addressBookHeader,
-                            style: theme.textStyleSize24W700EquinoxPrimary,
+                            style: theme.textStyleSize24W700TelegrafPrimary,
                           ),
                         ).animate().fade(
                             duration: const Duration(milliseconds: 300),

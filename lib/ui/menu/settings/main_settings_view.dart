@@ -61,14 +61,14 @@ class MainMenuView extends ConsumerWidget {
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.securityHeader,
-                        headingStyle: theme.textStyleSize16W600EquinoxPrimary,
+                        headingStyle: theme.textStyleSize16W600TelegrafPrimary,
                         icon: Symbols.security,
                         onPressed: showSecurity,
                       ),
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.customHeader,
-                        headingStyle: theme.textStyleSize16W600EquinoxPrimary,
+                        headingStyle: theme.textStyleSize16W600TelegrafPrimary,
                         icon: Symbols.tune,
                         onPressed: showCustom,
                       ),
@@ -94,7 +94,7 @@ class MainMenuView extends ConsumerWidget {
                         const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.aboutHeader,
-                        headingStyle: theme.textStyleSize16W600EquinoxPrimary,
+                        headingStyle: theme.textStyleSize16W600TelegrafPrimary,
                         icon: Symbols.info,
                         onPressed: showAbout,
                       ),

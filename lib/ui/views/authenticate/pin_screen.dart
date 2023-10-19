@@ -371,7 +371,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
                       margin: const EdgeInsets.symmetric(horizontal: 40),
                       child: AutoSizeText(
                         _header,
-                        style: theme.textStyleSize24W700EquinoxPrimary,
+                        style: theme.textStyleSize24W700TelegrafPrimary,
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         stepGranularity: 0.1,

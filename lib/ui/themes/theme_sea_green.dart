@@ -14,9 +14,9 @@ class SeaGreenTheme implements BaseTheme {
 
   // Fonts
   @override
-  String? mainFont = 'Equinox';
+  String? mainFont = 'Telegraf';
   @override
-  String? secondaryFont = 'Montserrat';
+  String? secondaryFont = 'Telegraf';
 
   // Main Buttons
   @override
@@ -116,11 +116,14 @@ class SeaGreenTheme implements BaseTheme {
   @override
   Color? backgroundAccountsListCardSelected = Colors.white.withOpacity(0.1);
   @override
-  Color? backgroundRecentTxListCardTransferOutput = Colors.redAccent[400]!.withOpacity(0.3);
+  Color? backgroundRecentTxListCardTransferOutput =
+      Colors.redAccent[400]!.withOpacity(0.3);
   @override
-  Color? backgroundRecentTxListCardTokenCreation = Colors.blueAccent[100]!.withOpacity(0.2);
+  Color? backgroundRecentTxListCardTokenCreation =
+      Colors.blueAccent[100]!.withOpacity(0.2);
   @override
-  Color? backgroundRecentTxListCardTransferInput = Colors.greenAccent[400]!.withOpacity(0.3);
+  Color? backgroundRecentTxListCardTransferInput =
+      Colors.greenAccent[400]!.withOpacity(0.3);
   @override
   Color? backgroundFungiblesTokensListCard = Colors.white.withOpacity(0.1);
   @override
@@ -175,7 +178,8 @@ class SeaGreenTheme implements BaseTheme {
   @override
   Brightness? brightness = Brightness.dark;
   @override
-  SystemUiOverlayStyle? statusBar = SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent);
+  SystemUiOverlayStyle? statusBar =
+      SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent);
 
   @override
   BoxShadow? boxShadow = const BoxShadow(color: Colors.transparent);

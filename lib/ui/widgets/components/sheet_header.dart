@@ -63,7 +63,7 @@ class SheetHeader extends ConsumerWidget {
                         ),
                       AutoSizeText(
                         title,
-                        style: theme.textStyleSize24W700EquinoxPrimary,
+                        style: theme.textStyleSize24W700TelegrafPrimary,
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         stepGranularity: 0.1,

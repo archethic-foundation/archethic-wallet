@@ -86,7 +86,7 @@ class _SettingsListTitle extends _SettingsListItem {
         ),
         child: Text(
           text,
-          style: theme.textStyleSize20W700EquinoxPrimary,
+          style: theme.textStyleSize20W700TelegrafPrimary,
         ),
       ),
     );

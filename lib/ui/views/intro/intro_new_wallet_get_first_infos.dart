@@ -114,8 +114,8 @@ class _IntroNewWalletDisclaimerState
                                   AutoSizeText(
                                     localizations
                                         .introNewWalletGetFirstInfosWelcome,
-                                    style:
-                                        theme.textStyleSize24W700EquinoxPrimary,
+                                    style: theme
+                                        .textStyleSize24W700TelegrafPrimary,
                                     textAlign: TextAlign.left,
                                   ),
                                   const SizedBox(

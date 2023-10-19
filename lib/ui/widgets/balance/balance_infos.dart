@@ -65,7 +65,7 @@ class BalanceInfos extends ConsumerWidget {
                             padding: const EdgeInsets.only(left: 10),
                             child: AutoSizeText(
                               AccountBalance.cryptoCurrencyLabel,
-                              style: theme.textStyleSize35W900EquinoxPrimary,
+                              style: theme.textStyleSize35W900TelegrafPrimary,
                             ),
                           ),
                           if (settings.showBalances)
@@ -83,7 +83,7 @@ class BalanceInfos extends ConsumerWidget {
                             padding: const EdgeInsets.only(left: 10),
                             child: AutoSizeText(
                               settings.currency.name,
-                              style: theme.textStyleSize35W900EquinoxPrimary,
+                              style: theme.textStyleSize35W900TelegrafPrimary,
                             ),
                           ),
                           if (settings.showBalances)
@@ -139,7 +139,7 @@ class _BalanceInfosNativeShowed extends ConsumerWidget {
       children: [
         AutoSizeText(
           accountSelectedBalance.nativeTokenValueToString(digits: 2),
-          style: theme.textStyleSize25W900EquinoxPrimary,
+          style: theme.textStyleSize25W900TelegrafPrimary,
         ),
         AutoSizeText(
           CurrencyUtil.format(
@@ -187,7 +187,7 @@ class _BalanceInfosFiatShowed extends ConsumerWidget {
             fiatValue,
           ),
           textAlign: TextAlign.center,
-          style: theme.textStyleSize25W900EquinoxPrimary,
+          style: theme.textStyleSize25W900TelegrafPrimary,
         ),
         AutoSizeText(
           '${accountSelectedBalance.nativeTokenValueToString(digits: 2)} ${accountSelectedBalance.nativeTokenName}',
@@ -210,7 +210,7 @@ class _BalanceInfosNotShowed extends ConsumerWidget {
       children: [
         AutoSizeText(
           '···········',
-          style: theme.textStyleSize25W900EquinoxPrimary60,
+          style: theme.textStyleSize25W900TelegrafPrimary60,
         ),
         AutoSizeText(
           '···········',

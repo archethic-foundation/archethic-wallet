@@ -21,12 +21,39 @@ class CustomizationMenuView extends ConsumerWidget {
         backgroundColor: theme.background,
         title: AutoSizeText(
           localizations.customHeader,
-          style: theme.textStyleSize24W700EquinoxPrimary,
+          style: theme.textStyleSize24W700TelegrafPrimary,
         ),
       ),
       body: SafeArea(
         child: Column(
           children: <Widget>[
+            Container(
+              margin: const EdgeInsets.only(bottom: 10, top: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      //Back button
+                      Container(
+                        height: 40,
+                        width: 40,
+                        margin: const EdgeInsets.only(right: 10, left: 10),
+                        child: BackButton(
+                          key: const Key('back'),
+                          color: theme.text,
+                          onPressed: onClose,
+                        ),
+                      ),
+                      Text(
+                        localizations.customHeader,
+                        style: theme.textStyleSize24W700TelegrafPrimary,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
             Expanded(
               child: Stack(
                 children: <Widget>[

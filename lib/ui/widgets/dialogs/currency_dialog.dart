@@ -50,7 +50,7 @@ class CurrencyDialog {
               children: [
                 Text(
                   AppLocalizations.of(context)!.currency,
-                  style: theme.textStyleSize24W700EquinoxPrimary,
+                  style: theme.textStyleSize24W700TelegrafPrimary,
                 ),
               ],
             ),

@@ -59,7 +59,7 @@ class NftCategoryDialog {
                 children: [
                   Text(
                     localizations.nftCategory,
-                    style: theme.textStyleSize24W700EquinoxPrimary,
+                    style: theme.textStyleSize24W700TelegrafPrimary,
                   ),
                 ],
               ),

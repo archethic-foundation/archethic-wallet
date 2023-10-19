@@ -44,7 +44,7 @@ class AccountsDialog {
               children: [
                 Text(
                   localizations.keychainHeader,
-                  style: theme.textStyleSize24W700EquinoxPrimary,
+                  style: theme.textStyleSize24W700TelegrafPrimary,
                 ),
                 const SizedBox(
                   height: 5,

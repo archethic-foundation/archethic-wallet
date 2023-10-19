@@ -55,7 +55,7 @@ class _SettingsListItemSwitch extends _SettingsListItem {
               width: Responsive.drawerWidth(context) - 130,
               child: Text(
                 heading,
-                style: theme.textStyleSize16W600EquinoxPrimary,
+                style: theme.textStyleSize16W600TelegrafPrimary,
               ),
             ),
             const Spacer(),
