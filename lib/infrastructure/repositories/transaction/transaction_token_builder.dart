@@ -20,9 +20,11 @@ extension AddTokenTransactionBuilder on archethic.Transaction {
     required String tokenType,
     required List<int> aeip,
     required List<TokenProperty> tokenProperties,
+    required int txVersion,
   }) {
     final transaction = archethic.Transaction(
       type: 'token',
+      version: txVersion,
       data: archethic.Transaction.initData(),
     );
 

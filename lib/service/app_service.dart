@@ -955,8 +955,14 @@ class AppService {
     final lastTransactionMap = await sl
         .get<ApiService>()
         .getLastTransaction([address], request: 'chainLength');
-    final transaction =
-        Transaction(type: 'transfer', data: Transaction.initData());
+    final blockchainTxVersion = int.parse(
+      (await sl.get<ApiService>().getBlockchainVersion()).version.transaction,
+    );
+
+    final transaction = Transaction(
+        type: 'transfer',
+        version: blockchainTxVersion,
+        data: Transaction.initData());
     for (final transfer in listUcoTransfer) {
       transaction.addUCOTransfer(transfer.to!, transfer.amount!);
     }

@@ -49,7 +49,7 @@ Future<void> _setupServiceLocatorNetworkDependencies() async {
     ..registerLazySingleton<ApiService>(
       () => ApiService(
         network,
-        logsActivation: false,
+        logsActivation: true,
       ),
     )
     ..registerLazySingleton<AddressService>(
