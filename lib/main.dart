@@ -20,6 +20,7 @@ import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/providers_observer.dart';
+import 'package:aewallet/ui/menu/settings/settings_sheet.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
@@ -286,6 +287,15 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
                   );
                 },
                 settings: settings,
+              ),
+              '/security_menu_view': MaterialPageRoute<AppLockScreen>(
+                builder: (_) => const SecurityMenuView(),
+              ),
+              '/customization_menu_view': MaterialPageRoute<AppLockScreen>(
+                builder: (_) => const CustomizationMenuView(),
+              ),
+              '/about_menu_view': MaterialPageRoute<AppLockScreen>(
+                builder: (_) => const AboutMenuView(),
               ),
               '/lock_screen_transition': MaterialPageRoute<AppLockScreen>(
                 builder: (_) => const AppLockScreen(),

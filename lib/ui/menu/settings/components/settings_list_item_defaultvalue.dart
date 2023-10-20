@@ -1,5 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-part of '../settings_drawer.dart';
+part of '../settings_sheet.dart';
 
 class _SettingsListItemWithDefaultValue extends _SettingsListItem {
   const _SettingsListItemWithDefaultValue({

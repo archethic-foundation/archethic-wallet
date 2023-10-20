@@ -1,5 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-part of 'settings_drawer.dart';
+part of 'settings_sheet.dart';
 
 class MainMenuView extends ConsumerWidget {
   const MainMenuView({
@@ -36,9 +36,6 @@ class MainMenuView extends ConsumerWidget {
         ),
       ),
       child: SafeArea(
-        minimum: EdgeInsets.only(
-          top: MediaQuery.of(context).padding.top + 30,
-        ),
         child: Column(
           children: <Widget>[
             // Settings items
@@ -46,7 +43,6 @@ class MainMenuView extends ConsumerWidget {
               child: Stack(
                 children: <Widget>[
                   ListView(
-                    padding: const EdgeInsets.only(top: 15),
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(top: 10, bottom: 10),

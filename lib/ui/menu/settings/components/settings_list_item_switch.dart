@@ -1,5 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-part of '../settings_drawer.dart';
+part of '../settings_sheet.dart';
 
 class _SettingsListItemSwitch extends _SettingsListItem {
   const _SettingsListItemSwitch({
@@ -40,7 +40,7 @@ class _SettingsListItemSwitch extends _SettingsListItem {
       },
       child: Container(
         height: 50,
-        margin: const EdgeInsetsDirectional.only(start: 10),
+        margin: const EdgeInsetsDirectional.only(start: 10, end: 10),
         child: Row(
           children: <Widget>[
             Container(
@@ -58,6 +58,7 @@ class _SettingsListItemSwitch extends _SettingsListItem {
                 style: theme.textStyleSize16W600EquinoxPrimary,
               ),
             ),
+            const Spacer(),
             Container(
               padding: const EdgeInsets.only(left: 2),
               height: 30,

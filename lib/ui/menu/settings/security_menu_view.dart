@@ -1,75 +1,35 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-part of 'settings_drawer.dart';
+part of 'settings_sheet.dart';
 
 class SecurityMenuView extends ConsumerWidget {
   const SecurityMenuView({
-    required this.close,
     super.key,
   });
-
-  final VoidCallback close;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: theme.drawerBackground,
-        gradient: LinearGradient(
-          colors: <Color>[
-            theme.drawerBackground!,
-            theme.backgroundDark!,
-          ],
-          begin: Alignment.center,
-          end: const Alignment(5, 0),
+
+    return Scaffold(
+      backgroundColor: theme.background,
+      appBar: AppBar(
+        backgroundColor: theme.background,
+        title: AutoSizeText(
+          localizations.securityHeader,
+          style: theme.textStyleSize24W700EquinoxPrimary,
         ),
       ),
-      child: SafeArea(
-        minimum: const EdgeInsets.only(
-          top: 60,
-        ),
+      body: SafeArea(
         child: Column(
           children: <Widget>[
-            // Back button and Security Text
-            Container(
-              margin: const EdgeInsets.only(bottom: 10, top: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      //Back button
-                      Container(
-                        height: 40,
-                        width: 40,
-                        margin: const EdgeInsets.only(right: 10, left: 10),
-                        child: BackButton(
-                          key: const Key('back'),
-                          color: theme.text,
-                          onPressed: close,
-                        ),
-                      ),
-                      //Security Header Text
-                      Text(
-                        localizations.securityHeader,
-                        style: theme.textStyleSize24W700EquinoxPrimary,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
             Expanded(
               child: Stack(
                 children: <Widget>[
                   ListView(
                     padding: const EdgeInsets.only(top: 15),
                     children: <Widget>[
-                      const _SettingsListItem.spacer(),
-                      _SettingsListItem.title(text: localizations.preferences),
-
                       // Authentication Method
                       const _SettingsListItem.spacer(),
                       const _AuthMethodSettingsListItem(),

@@ -8,6 +8,7 @@ import 'package:aewallet/application/nft/nft_category.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
+import 'package:aewallet/ui/menu/settings/settings_sheet.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/messenger/layouts/create_discussion_sheet.dart';
@@ -65,18 +66,26 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
       automaticallyImplyLeading: false,
       leading: IconButton(
         icon: const Icon(
-          Symbols.menu,
+          Symbols.settings,
           weight: IconSize.weightM,
           opticalSize: IconSize.opticalSizeM,
           grade: IconSize.gradeM,
         ),
-        onPressed: () => Scaffold.of(context).openDrawer(),
+        onPressed: () {
+          showDialog<void>(
+            useSafeArea: false,
+            context: context,
+            builder: (context) => const Dialog.fullscreen(
+              child: SettingsSheetWallet(),
+            ),
+          );
+        },
       ),
       actions: [
         if (preferences.mainScreenCurrentPage == 3)
           IconButton(
             icon: const Icon(
-              Symbols.settings,
+              Symbols.tune,
               weight: IconSize.weightM,
               opticalSize: IconSize.opticalSizeM,
               grade: IconSize.gradeM,
