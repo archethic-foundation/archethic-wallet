@@ -12,10 +12,8 @@ import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/domain/repositories/notifications_repository.dart';
 import 'package:aewallet/local_data_migration_widget.dart';
 import 'package:aewallet/model/data/contact.dart';
-import 'package:aewallet/ui/menu/settings_drawer/settings_drawer.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/responsive.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/main/account_tab.dart';
@@ -93,12 +91,6 @@ class _HomePageState extends ConsumerState<HomePage>
       drawerEdgeDragWidth: 0,
       resizeToAvoidBottomInset: false,
       backgroundColor: theme.background,
-      drawer: SizedBox(
-        width: Responsive.drawerWidth(context),
-        child: const Drawer(
-          child: SettingsSheetWallet(),
-        ),
-      ),
       body: IncomingTransactionsNotifier(
         child: TabBarView(
           physics: const NeverScrollableScrollPhysics(),

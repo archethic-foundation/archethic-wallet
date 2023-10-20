@@ -58,4 +58,4 @@ part 'components/settings_list_item_switch.dart';
 part 'customization_menu_view.dart';
 part 'main_settings_view.dart';
 part 'security_menu_view.dart';
-part 'settings_drawer_wallet.dart';
+part 'settings_sheet_wallet.dart';

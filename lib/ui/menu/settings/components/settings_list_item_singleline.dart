@@ -1,5 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-part of '../settings_drawer.dart';
+part of '../settings_sheet.dart';
 
 class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
   const _SettingsListItemSingleLineWithInfos({
@@ -39,7 +39,7 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
       },
       child: Container(
         height: 100,
-        margin: const EdgeInsetsDirectional.only(start: 10),
+        margin: const EdgeInsetsDirectional.only(start: 10, end: 10),
         child: Row(
           children: <Widget>[
             Container(
@@ -77,6 +77,7 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
                 ),
               ],
             ),
+            const Spacer(),
             if (displayChevron != null && displayChevron == true)
               Icon(
                 Symbols.chevron_right,
@@ -126,7 +127,7 @@ class _SettingsListItemSingleLine extends _SettingsListItem {
       },
       child: Container(
         height: 50,
-        margin: const EdgeInsetsDirectional.only(start: 10),
+        margin: const EdgeInsetsDirectional.only(start: 10, end: 10),
         child: Row(
           children: <Widget>[
             Container(
@@ -144,6 +145,7 @@ class _SettingsListItemSingleLine extends _SettingsListItem {
                 style: headingStyle,
               ),
             ),
+            const Spacer(),
             Icon(
               Symbols.chevron_right,
               color: theme.iconDrawer,
