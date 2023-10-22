@@ -136,7 +136,8 @@ class _TransferTextFieldAmountState
                                       await transferNotifier.setAmount(
                                         context: context,
                                         amount: double.tryParse(
-                                                text.replaceAll(' ', '')) ??
+                                              text.replaceAll(' ', ''),
+                                            ) ??
                                             0,
                                       );
                                     },
