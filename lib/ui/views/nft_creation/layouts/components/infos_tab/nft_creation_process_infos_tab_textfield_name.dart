@@ -38,9 +38,12 @@ class _NFTCreationProcessInfosTabTextFieldNameState
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(
+    BuildContext context,
+  ) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
+
     final nftCreationNotifier = ref.watch(
       NftCreationFormProvider.nftCreationForm(
         ref.read(
@@ -62,60 +65,112 @@ class _NFTCreationProcessInfosTabTextFieldNameState
         }
       },
     );
-
-    return AppTextField(
-      key: const Key('nftCreationField'),
-      textAlign: TextAlign.start,
-      focusNode: nftNameFocusNode,
-      controller: nftNameController,
-      cursorColor: theme.text,
-      textInputAction: TextInputAction.done,
-      labelText: AppLocalizations.of(context)!.nftNameHint,
-      autocorrect: false,
-      keyboardType: TextInputType.text,
-      style: theme.textStyleSize16W600Primary,
-      inputFormatters: <LengthLimitingTextInputFormatter>[
-        LengthLimitingTextInputFormatter(40),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 5),
+          child: Text(
+            AppLocalizations.of(context)!.nftNameHint,
+          ),
+        ),
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.9,
+          child: Row(
+            children: [
+              Expanded(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              10,
+                            ),
+                            border: Border.all(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer,
+                              width: 0.5,
+                            ),
+                            gradient:
+                                WalletThemeBase.gradientInputFormBackground,
+                          ),
+                          child: TextField(
+                            key: const Key('nftCreationField'),
+                            style: TextStyle(
+                              fontFamily: WalletThemeBase.mainFont,
+                              fontSize: 14,
+                            ),
+                            autocorrect: false,
+                            controller: nftNameController,
+                            onChanged: (text) async {
+                              nftCreationNotifier.setName(context, text);
+                            },
+                            focusNode: nftNameFocusNode,
+                            textInputAction: TextInputAction.done,
+                            keyboardType: TextInputType.text,
+                            inputFormatters: <TextInputFormatter>[
+                              LengthLimitingTextInputFormatter(40),
+                            ],
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.only(left: 10),
+                            ),
+                          ),
+                        ),
+                      ),
+                      if (hasQRCode)
+                        TextFieldButton(
+                          icon: Symbols.qr_code_scanner,
+                          onPressed: () async {
+                            sl.get<HapticUtil>().feedback(
+                                  FeedbackType.light,
+                                  preferences.activeVibrations,
+                                );
+                            final scanResult = await UserDataUtil.getQRData(
+                              DataType.raw,
+                              context,
+                              ref,
+                            );
+                            if (scanResult == null) {
+                              UIUtil.showSnackbar(
+                                AppLocalizations.of(context)!.qrInvalidAddress,
+                                context,
+                                ref,
+                                theme.text!,
+                                theme.snackBarShadow!,
+                              );
+                            } else if (QRScanErrs.errorList
+                                .contains(scanResult)) {
+                              UIUtil.showSnackbar(
+                                scanResult,
+                                context,
+                                ref,
+                                theme.text!,
+                                theme.snackBarShadow!,
+                              );
+                              return;
+                            } else {
+                              nftNameController.text = scanResult;
+                            }
+                          },
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ],
-      onChanged: (text) {
-        nftCreationNotifier.setName(context, text);
-      },
-      suffixButton: hasQRCode
-          ? TextFieldButton(
-              icon: Symbols.qr_code_scanner,
-              onPressed: () async {
-                sl.get<HapticUtil>().feedback(
-                      FeedbackType.light,
-                      preferences.activeVibrations,
-                    );
-                final scanResult = await UserDataUtil.getQRData(
-                  DataType.raw,
-                  context,
-                  ref,
-                );
-                if (scanResult == null) {
-                  UIUtil.showSnackbar(
-                    AppLocalizations.of(context)!.qrInvalidAddress,
-                    context,
-                    ref,
-                    theme.text!,
-                    theme.snackBarShadow!,
-                  );
-                } else if (QRScanErrs.errorList.contains(scanResult)) {
-                  UIUtil.showSnackbar(
-                    scanResult,
-                    context,
-                    ref,
-                    theme.text!,
-                    theme.snackBarShadow!,
-                  );
-                  return;
-                } else {
-                  nftNameController.text = scanResult;
-                }
-              },
-            )
-          : null,
-    );
+    )
+        .animate()
+        .fade(duration: const Duration(milliseconds: 200))
+        .scale(duration: const Duration(milliseconds: 200));
   }
 }

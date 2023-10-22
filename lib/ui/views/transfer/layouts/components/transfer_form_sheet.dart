@@ -44,19 +44,16 @@ class TransferFormSheet extends ConsumerWidget {
             SheetHeader(
               title: title,
               widgetBeforeTitle: const NetworkIndicator(),
-              widgetAfterTitle: const BalanceIndicatorWidget(),
             ),
             Expanded(
               child: Container(
-                margin: const EdgeInsets.only(bottom: 10),
+                margin: const EdgeInsets.only(bottom: 10, left: 20, right: 20),
                 child: ArchethicScrollbar(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       const SizedBox(height: 25),
-                      Container(
-                        alignment: Alignment.topCenter,
-                        child: const TransferTextFieldAddress(),
-                      ),
+                      const TransferTextFieldAddress(),
                       if (transfer.transferType != TransferType.nft)
                         Container(
                           padding: const EdgeInsets.only(
@@ -66,6 +63,7 @@ class TransferFormSheet extends ConsumerWidget {
                           alignment: Alignment.topCenter,
                           child: const TransferTextFieldAmount(),
                         ),
+                      const BalanceIndicatorWidget(allDigits: false),
                       FeeInfos(
                         asyncFeeEstimation: transfer.feeEstimation,
                         estimatedFeesNote:
@@ -73,7 +71,7 @@ class TransferFormSheet extends ConsumerWidget {
                                 ? localizations.estimatedFeesNoteNFT
                                 : localizations.estimatedFeesNote,
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 20),
                       const TransferTextFieldMessage(),
                     ],
                   ),

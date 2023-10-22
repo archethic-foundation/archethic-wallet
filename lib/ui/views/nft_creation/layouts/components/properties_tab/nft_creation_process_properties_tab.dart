@@ -24,8 +24,8 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
       child: Container(
         padding: EdgeInsets.only(
           top: 20,
-          left: 5,
-          right: 5,
+          left: 20,
+          right: 20,
           bottom: bottom + 80,
         ),
         child: Column(

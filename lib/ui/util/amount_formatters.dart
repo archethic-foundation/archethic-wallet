@@ -12,9 +12,7 @@ class AmountFormatters {
   ) =>
       '${NumberUtil.formatThousands(amount)} $symbol';
 
-  static String standardSmallValue(
-    double amount,
-    String symbol,
-  ) =>
-      '${amount.toStringAsFixed(8)} $symbol';
+  static String standardSmallValue(double amount, String symbol,
+          {int decimal = 8}) =>
+      '${amount.toStringAsFixed(decimal)} $symbol';
 }

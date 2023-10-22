@@ -263,10 +263,10 @@
 	"transactionChainExplorerDesc": "Explorer chaque transaction contenue dans votre chaîne.",
 	"transactionChainExplorerLastAddress": "Dernière adresse",
 	"estimatedFees": "Frais estimés :",
-	"estimatedFeesNote": "Note : Les frais seront estimés quand le destinataire et le montant seront spécifiés.",
-	"estimatedFeesNoteNFT": "Note : Les frais seront estimés quand le destinataire sera spécifié.",
+	"estimatedFeesNote": "Les frais seront estimés quand le destinataire et le montant seront spécifiés.",
+	"estimatedFeesNoteNFT": "Les frais seront estimés quand le destinataire sera spécifié.",
 	"estimatedFeesCalculationNote": "Le calcul des frais est en cours",
-	"estimatedFeesAddTokenNote": "Note : Les frais seront estimés quand le nom et l'offre initiale seront spécifiés.",
+	"estimatedFeesAddTokenNote": "Les frais seront estimés quand le nom et l'offre initiale seront spécifiés.",
 	"nodeAuthorizationDate": "Authorization date: ",
 	"nodeEnrollmentDate": "Enrollment date: ",
 	"currencyOracleInfo": "Cet icône signifie que la conversion utilise un oracle fourni par Archethic.",
@@ -591,5 +591,6 @@
 	"removeKeychainDetail": "Vous vous apprêtez à retirer de votre porte-clés le compte %1.\nVous n'aurez plus accès ni aux fonds, ni aux tokens associés.\nRéférez vous à l'historique de votre porte-clés afin de pouvoir accéder aux informations relatives à ce compte.",
 	"removeKeychainAction": "Retirer le compte",
 	"removeKeychainLater": "Vous pourrez retrouver votre compte si vous le récréez plus tard avec le même nom.",
-	"removeKeychainAtLeast1": "Vous devez conserver au moins un service dans votre porte-clés."
+	"removeKeychainAtLeast1": "Vous devez conserver au moins un service dans votre porte-clés.",
+	"balance": "Balance"
 }

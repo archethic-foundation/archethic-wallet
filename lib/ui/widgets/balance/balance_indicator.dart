@@ -11,8 +11,8 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/number_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
@@ -31,18 +31,30 @@ class BalanceIndicatorWidget extends ConsumerWidget {
     final preferences = ref.watch(SettingsProviders.settings);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+    final localizations = AppLocalizations.of(context)!;
 
     return preferences.showBalances
         ? Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              Row(
+                children: [
+                  Text('${localizations.balance}: '),
+                  if (displaySwitchButton == true)
+                    const _BalanceIndicatorButton(),
+                ],
+              ),
               if (primaryCurrency.primaryCurrency ==
                   AvailablePrimaryCurrencyEnum.native)
-                Column(
+                Row(
                   children: [
                     _BalanceIndicatorNative(
                       primary: true,
                       allDigits: allDigits,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 3),
+                      child: Text('/'),
                     ),
                     _BalanceIndicatorFiat(
                       primary: false,
@@ -51,11 +63,15 @@ class BalanceIndicatorWidget extends ConsumerWidget {
                   ],
                 )
               else
-                Column(
+                Row(
                   children: [
                     _BalanceIndicatorFiat(
                       primary: true,
                       allDigits: allDigits,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 3),
+                      child: Text('/'),
                     ),
                     _BalanceIndicatorNative(
                       primary: false,
@@ -63,10 +79,6 @@ class BalanceIndicatorWidget extends ConsumerWidget {
                     ),
                   ],
                 ),
-              const SizedBox(
-                width: 10,
-              ),
-              if (displaySwitchButton == true) const _BalanceIndicatorButton(),
             ],
           )
         : const SizedBox();
@@ -82,8 +94,8 @@ class _BalanceIndicatorButton extends ConsumerWidget {
     final preferences = ref.watch(SettingsProviders.settings);
     return IconButton(
       icon: const Icon(Symbols.currency_exchange),
-      alignment: Alignment.centerRight,
       color: theme.textFieldIcon,
+      iconSize: 14,
       onPressed: () async {
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,
@@ -128,37 +140,14 @@ class _BalanceIndicatorFiat extends ConsumerWidget {
         .valueOrNull;
     if (fiatValue == null) return const SizedBox();
 
-    return RichText(
-      text: TextSpan(
-        text: '',
-        children: <InlineSpan>[
-          if (primary == false)
-            TextSpan(
-              text: '(',
-              style: primary
-                  ? theme.textStyleSize16W100Primary
-                  : theme.textStyleSize14W100Primary,
-            ),
-          TextSpan(
-            text: NumberUtil.formatThousandsStr(
-              CurrencyUtil.format(
-                currency.name,
-                fiatValue,
-              ),
-            ),
-            style: primary
-                ? theme.textStyleSize16W700Primary
-                : theme.textStyleSize14W700Primary,
-          ),
-          if (primary == false)
-            TextSpan(
-              text: ')',
-              style: primary
-                  ? theme.textStyleSize16W100Primary
-                  : theme.textStyleSize14W100Primary,
-            ),
-        ],
+    return Text(
+      NumberUtil.formatThousandsStr(
+        CurrencyUtil.format(
+          currency.name,
+          fiatValue,
+        ),
       ),
+      style: theme.textStyleSize14W100Primary,
     );
   }
 }
@@ -182,44 +171,21 @@ class _BalanceIndicatorNative extends ConsumerWidget {
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
     if (accountSelectedBalance == null) return const SizedBox();
-    return RichText(
-      text: TextSpan(
-        text: '',
-        children: <InlineSpan>[
-          if (primary == false)
-            TextSpan(
-              text: '(',
-              style: primary
-                  ? theme.textStyleSize16W100Primary
-                  : theme.textStyleSize14W100Primary,
-            ),
-          if (allDigits == true)
-            TextSpan(
-              text: '${NumberUtil.formatThousandsStr(
-                accountSelectedBalance.nativeTokenValueToString(),
-              )} ${accountSelectedBalance.nativeTokenName}',
-              style: primary
-                  ? theme.textStyleSize16W700Primary
-                  : theme.textStyleSize14W700Primary,
-            )
-          else
-            TextSpan(
-              text: '${NumberUtil.formatThousandsStr(
-                accountSelectedBalance.nativeTokenValueToString(digits: 2),
-              )} ${accountSelectedBalance.nativeTokenName}',
-              style: primary
-                  ? theme.textStyleSize16W700Primary
-                  : theme.textStyleSize14W700Primary,
-            ),
-          if (primary == false)
-            TextSpan(
-              text: ')',
-              style: primary
-                  ? theme.textStyleSize16W100Primary
-                  : theme.textStyleSize14W100Primary,
-            ),
-        ],
-      ),
-    );
+
+    if (allDigits == true) {
+      return Text(
+        '${NumberUtil.formatThousandsStr(
+          accountSelectedBalance.nativeTokenValueToString(),
+        )} ${accountSelectedBalance.nativeTokenName}',
+        style: theme.textStyleSize14W100Primary,
+      );
+    } else {
+      return Text(
+        '${NumberUtil.formatThousandsStr(
+          accountSelectedBalance.nativeTokenValueToString(digits: 2),
+        )} ${accountSelectedBalance.nativeTokenName}',
+        style: theme.textStyleSize14W100Primary,
+      );
+    }
   }
 }

@@ -221,10 +221,13 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
           debugShowCheckedModeBanner: false,
           title: 'Archethic Wallet',
           theme: ThemeData(
-            dialogBackgroundColor: theme.backgroundDark,
-            colorSchemeSeed: theme.text,
-            fontFamily: theme.secondaryFont,
-            brightness: theme.brightness,
+            brightness: Brightness.dark,
+            fontFamily: 'Telegraf',
+            useMaterial3: true,
+          ),
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
+            fontFamily: 'Telegraf',
             useMaterial3: true,
           ),
           localizationsDelegates: const [

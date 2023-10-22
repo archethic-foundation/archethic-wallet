@@ -38,7 +38,9 @@ class _NFTCreationProcessInfosTabTextFieldSymbolState
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(
+    BuildContext context,
+  ) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
 
@@ -64,39 +66,92 @@ class _NFTCreationProcessInfosTabTextFieldSymbolState
     );
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AppTextField(
-          textAlign: TextAlign.start,
-          focusNode: nftSymbolFocusNode,
-          controller: nftSymbolController,
-          cursorColor: theme.text,
-          textInputAction: TextInputAction.done,
-          labelText: localizations.tokenSymbolHint,
-          autocorrect: false,
-          keyboardType: TextInputType.text,
-          style: theme.textStyleSize16W600Primary,
-          inputFormatters: [
-            LengthLimitingTextInputFormatter(10),
-          ],
-          onChanged: (text) async {
-            nftCreationNotifier.setSymbol(
-              text,
-            );
-          },
-        ),
-        Container(
-          alignment: Alignment.centerLeft,
-          margin: const EdgeInsets.only(
-            left: 40,
-            top: 5,
-            bottom: 5,
-          ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 5),
           child: Text(
-            localizations.tokenSymbolMaxNumberCharacter,
-            style: theme.textStyleSize10W100Primary,
+            AppLocalizations.of(context)!.tokenSymbolHint,
+          ),
+        ),
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.9,
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                  10,
+                                ),
+                                border: Border.all(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer,
+                                  width: 0.5,
+                                ),
+                                gradient:
+                                    WalletThemeBase.gradientInputFormBackground,
+                              ),
+                              child: TextField(
+                                key: const Key('nftCreationField'),
+                                style: TextStyle(
+                                  fontFamily: WalletThemeBase.mainFont,
+                                  fontSize: 14,
+                                ),
+                                autocorrect: false,
+                                controller: nftSymbolController,
+                                onChanged: (text) async {
+                                  nftCreationNotifier.setSymbol(
+                                    text,
+                                  );
+                                },
+                                focusNode: nftSymbolFocusNode,
+                                textInputAction: TextInputAction.done,
+                                keyboardType: TextInputType.text,
+                                inputFormatters: <TextInputFormatter>[
+                                  LengthLimitingTextInputFormatter(10),
+                                ],
+                                decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding: EdgeInsets.only(left: 10),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(
+                  top: 5,
+                  bottom: 5,
+                ),
+                child: Text(
+                  localizations.tokenSymbolMaxNumberCharacter,
+                  style: theme.textStyleSize10W100Primary,
+                ),
+              ),
+            ],
           ),
         ),
       ],
-    );
+    )
+        .animate()
+        .fade(duration: const Duration(milliseconds: 200))
+        .scale(duration: const Duration(milliseconds: 200));
   }
 }

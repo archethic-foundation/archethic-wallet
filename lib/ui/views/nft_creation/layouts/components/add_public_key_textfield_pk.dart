@@ -1,5 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
 part of '../add_public_key.dart';
 
 class AddPublicKeyTextFieldPk extends ConsumerStatefulWidget {
@@ -20,7 +19,6 @@ class _AddPublicKeyTextFieldPkState
   @override
   void initState() {
     super.initState();
-
     publicKeyFocusNode = FocusNode();
     publicKeyController = TextEditingController();
     _updatePublicKeyTextController();
@@ -96,95 +94,171 @@ class _AddPublicKeyTextFieldPkState
         }
       },
     );
-    return AppTextField(
-      focusNode: publicKeyFocusNode,
-      controller: publicKeyController,
-      cursorColor: theme.text,
-      inputFormatters: <TextInputFormatter>[
-        UpperCaseTextFormatter(),
-        LengthLimitingTextInputFormatter(
-          nftCreation.propertyAccessRecipient.maybeWhen(
-            publicKey: (_) => 68,
-            orElse: () => 20,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 5),
+          child: Text(
+            AppLocalizations.of(context)!.enterPublicKey,
+          ),
+        ),
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.9,
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                  10,
+                                ),
+                                border: Border.all(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer,
+                                  width: 0.5,
+                                ),
+                                gradient:
+                                    WalletThemeBase.gradientInputFormBackground,
+                              ),
+                              child: Opacity(
+                                opacity: nftCreation.propertyAccessRecipient
+                                        .isPublicKeyValid
+                                    ? 1.0
+                                    : 0.6,
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 10),
+                                  child: TextField(
+                                    style: TextStyle(
+                                      fontFamily: WalletThemeBase.addressFont,
+                                      fontSize: 14,
+                                    ),
+                                    autocorrect: false,
+                                    controller: publicKeyController,
+                                    onChanged: (text) async {
+                                      nftCreationNotifier
+                                          .setPropertyAccessRecipientNameOrPublicKey(
+                                        context: context,
+                                        text: text,
+                                      );
+                                    },
+                                    focusNode: publicKeyFocusNode,
+                                    textInputAction: TextInputAction.done,
+                                    maxLines: null,
+                                    keyboardType: TextInputType.text,
+                                    inputFormatters: <TextInputFormatter>[
+                                      UpperCaseTextFormatter(),
+                                      LengthLimitingTextInputFormatter(
+                                        nftCreation.propertyAccessRecipient
+                                            .maybeWhen(
+                                          publicKey: (_) => 68,
+                                          orElse: () => 20,
+                                        ),
+                                      ),
+                                    ],
+                                    decoration: const InputDecoration(
+                                      border: InputBorder.none,
+                                      contentPadding: EdgeInsets.only(left: 10),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  if (hasQRCode)
+                    TextFieldButton(
+                      icon: Symbols.qr_code_scanner,
+                      onPressed: () async {
+                        sl.get<HapticUtil>().feedback(
+                              FeedbackType.light,
+                              preferences.activeVibrations,
+                            );
+                        final scanResult = await UserDataUtil.getQRData(
+                          DataType.address,
+                          context,
+                          ref,
+                        );
+                        if (scanResult == null) {
+                          UIUtil.showSnackbar(
+                            AppLocalizations.of(context)!.qrInvalidAddress,
+                            context,
+                            ref,
+                            theme.text!,
+                            theme.snackBarShadow!,
+                          );
+                        } else if (QRScanErrs.errorList.contains(scanResult)) {
+                          UIUtil.showSnackbar(
+                            scanResult,
+                            context,
+                            ref,
+                            theme.text!,
+                            theme.snackBarShadow!,
+                          );
+                          return;
+                        } else {
+                          final publicKey = PublicKey(scanResult);
+                          await nftCreationNotifier.setContactPublicKey(
+                            context: context,
+                            publicKey: publicKey,
+                          );
+                          _updatePublicKeyTextController();
+                        }
+                      },
+                    ),
+                  PasteIcon(
+                    onPaste: (String value) {
+                      publicKeyController.text = value;
+                      nftCreationNotifier
+                          .setPropertyAccessRecipientNameOrPublicKey(
+                        context: context,
+                        text: value,
+                      );
+                    },
+                  ),
+                  TextFieldButton(
+                    icon: Symbols.contacts,
+                    onPressed: () async {
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.light,
+                            preferences.activeVibrations,
+                          );
+                      final contact =
+                          await ContactsDialog.getDialog(context, ref);
+                      if (contact == null) return;
+
+                      await nftCreationNotifier.setPropertyAccessRecipient(
+                        context: context,
+                        contact:
+                            PropertyAccessRecipient.contact(contact: contact),
+                      );
+
+                      _updatePublicKeyTextController();
+                    },
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ],
-      textInputAction: TextInputAction.done,
-      maxLines: null,
-      autocorrect: false,
-      labelText: AppLocalizations.of(context)!.enterPublicKey,
-      prefixButton: TextFieldButton(
-        icon: Symbols.contacts,
-        onPressed: () async {
-          sl.get<HapticUtil>().feedback(
-                FeedbackType.light,
-                preferences.activeVibrations,
-              );
-          final contact = await ContactsDialog.getDialog(context, ref);
-          if (contact == null) return;
-
-          await nftCreationNotifier.setPropertyAccessRecipient(
-            context: context,
-            contact: PropertyAccessRecipient.contact(contact: contact),
-          );
-
-          _updatePublicKeyTextController();
-        },
-      ),
-      fadePrefixOnCondition: true,
-      prefixShowFirstCondition: true,
-      suffixButton: hasQRCode
-          ? TextFieldButton(
-              icon: Symbols.qr_code_scanner,
-              onPressed: () async {
-                sl.get<HapticUtil>().feedback(
-                      FeedbackType.light,
-                      preferences.activeVibrations,
-                    );
-                final scanResult = await UserDataUtil.getQRData(
-                  DataType.address,
-                  context,
-                  ref,
-                );
-                if (scanResult == null) {
-                  UIUtil.showSnackbar(
-                    AppLocalizations.of(context)!.qrInvalidAddress,
-                    context,
-                    ref,
-                    theme.text!,
-                    theme.snackBarShadow!,
-                  );
-                } else if (QRScanErrs.errorList.contains(scanResult)) {
-                  UIUtil.showSnackbar(
-                    scanResult,
-                    context,
-                    ref,
-                    theme.text!,
-                    theme.snackBarShadow!,
-                  );
-                  return;
-                } else {
-                  final publicKey = PublicKey(scanResult);
-                  await nftCreationNotifier.setContactPublicKey(
-                    context: context,
-                    publicKey: publicKey,
-                  );
-                  _updatePublicKeyTextController();
-                }
-              },
-            )
-          : null,
-      suffixShowFirstCondition: true,
-      fadeSuffixOnCondition: true,
-      style: nftCreation.propertyAccessRecipient.isPublicKeyValid
-          ? theme.textStyleSize14W700Primary
-          : theme.textStyleSize14W700Primary60,
-      onChanged: (String text) async {
-        nftCreationNotifier.setPropertyAccessRecipientNameOrPublicKey(
-          context: context,
-          text: text,
-        );
-      },
-    );
+    )
+        .animate()
+        .fade(duration: const Duration(milliseconds: 200))
+        .scale(duration: const Duration(milliseconds: 200));
   }
 }
