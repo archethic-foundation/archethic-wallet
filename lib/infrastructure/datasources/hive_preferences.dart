@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'dart:ui';
 
 import 'package:aewallet/domain/models/market_price_history.dart';
@@ -6,7 +7,6 @@ import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/available_networks.dart';
-import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:hive/hive.dart';
@@ -248,16 +248,6 @@ class HivePreferencesDatasource {
       return null;
     }
   }
-
-  Future<void> setTheme(ThemeSetting theme) =>
-      _setValue(curTheme, theme.getIndex());
-
-  ThemeSetting getTheme() => ThemeSetting(
-        ThemeOptions.values[_getValue(
-          curTheme,
-          defaultValue: ThemeOptions.dark.index,
-        )],
-      );
 
   Future<void> clearAll() async {
     await _box.clear();

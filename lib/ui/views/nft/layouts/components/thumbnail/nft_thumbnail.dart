@@ -1,6 +1,4 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail_aeweb.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail_error.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail_http.dart';
@@ -30,7 +28,6 @@ class NFTThumbnail extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return Column(
       children: [
@@ -39,7 +36,7 @@ class NFTThumbnail extends ConsumerWidget {
             padding: const EdgeInsets.only(top: 10),
             child: Text(
               nameInCollection!,
-              style: theme.textStyleSize12W400Primary,
+              style: ArchethicThemeStyles.textStyleSize12W400Primary,
             ),
           ),
         if (TokenUtil.isTokenFile(properties))

@@ -1,9 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/settings/mnemonic_display.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
@@ -43,7 +44,7 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final preferences = ref.watch(SettingsProviders.settings);
     final language = ref.watch(
       SettingsProviders.settings.select(
@@ -54,19 +55,22 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: theme.backgroundDarkest,
+      backgroundColor: ArchethicTheme.backgroundDarkest,
       body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              theme.background4Small!,
+              ArchethicTheme.backgroundSmall,
             ),
-            fit: BoxFit.fitHeight,
+            fit: BoxFit.fill,
           ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: <Color>[theme.backgroundDark!, theme.background!],
+            colors: <Color>[
+              ArchethicTheme.backgroundDark,
+              ArchethicTheme.background,
+            ],
           ),
         ),
         child: LayoutBuilder(
@@ -93,7 +97,7 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                                 width: 50,
                                 child: BackButton(
                                   key: const Key('back'),
-                                  color: theme.text,
+                                  color: ArchethicTheme.text,
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
@@ -187,7 +191,8 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                             ),
                             child: AutoSizeText(
                               localizations.recoveryPhrase,
-                              style: theme.textStyleSize24W700TelegrafPrimary,
+                              style: ArchethicThemeStyles
+                                  .textStyleSize24W700Primary,
                             ),
                           ),
                           const SizedBox(
@@ -210,7 +215,8 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                                         localizations
                                             .recoveryPhraseIntroExplanation,
                                         textAlign: TextAlign.justify,
-                                        style: theme.textStyleSize12W100Primary,
+                                        style: ArchethicThemeStyles
+                                            .textStyleSize12W100Primary,
                                       ),
                                     ),
                                   ),

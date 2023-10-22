@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:flutter/material.dart';
 // Project imports:
 import 'package:flutter_gen/gen_l10n/localizations.dart';

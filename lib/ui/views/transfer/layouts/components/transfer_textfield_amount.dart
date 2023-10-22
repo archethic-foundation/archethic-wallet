@@ -46,7 +46,7 @@ class _TransferTextFieldAmountState
     BuildContext context,
   ) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final settings = ref.watch(SettingsProviders.settings);
     final transfer = ref.watch(TransferFormProvider.transferForm);
     final transferNotifier =
@@ -184,7 +184,8 @@ class _TransferTextFieldAmountState
                           alignment: Alignment.centerLeft,
                           child: AutoSizeText(
                             '1 ${transfer.symbol(context)} = ${CurrencyUtil.getAmountPlusSymbol(currency.name, selectedCurrencyMarketPrice.amount)}',
-                            style: theme.textStyleSize14W100Primary,
+                            style:
+                                ArchethicThemeStyles.textStyleSize14W100Primary,
                           ),
                         ),
                         if (transfer.amount != 0)
@@ -193,7 +194,8 @@ class _TransferTextFieldAmountState
                             child: Text(
                               '= $valueLabel',
                               textAlign: TextAlign.right,
-                              style: theme.textStyleSize14W100Primary,
+                              style: ArchethicThemeStyles
+                                  .textStyleSize14W100Primary,
                             ),
                           )
                         else
@@ -208,7 +210,8 @@ class _TransferTextFieldAmountState
                           children: [
                             AutoSizeText(
                               '${NumberUtil.formatThousands(transfer.accountToken!.amount!)} ${transfer.accountToken!.tokenInformation!.symbol}',
-                              style: theme.textStyleSize14W100Primary,
+                              style: ArchethicThemeStyles
+                                  .textStyleSize14W100Primary,
                             ),
                             if (transfer.accountToken != null &&
                                 transfer.accountToken!.tokenInformation !=

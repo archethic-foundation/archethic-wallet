@@ -1,12 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
@@ -73,7 +73,6 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
     return SizedBox(
       width: double.maxFinite,
@@ -114,7 +113,8 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
                 decoration: BoxDecoration(
                   image: pickerItem.decorationImageItem,
                   border: Border.all(
-                    color: isItemSelected ? Colors.green : theme.text30!,
+                    color:
+                        isItemSelected ? Colors.green : ArchethicTheme.text30,
                   ),
                   borderRadius: const BorderRadius.all(Radius.circular(12)),
                 ),
@@ -140,7 +140,8 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
                                       pickerItem.icon!,
                                       color: widget.pickerItems![index].enabled
                                           ? widget.pickerItems![index].iconColor
-                                          : theme.pickerItemIconDisabled,
+                                          : ArchethicTheme
+                                              .pickerItemIconDisabled,
                                     ),
                             ),
                           const SizedBox(width: 10),
@@ -152,8 +153,9 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
                                   child: Text(
                                     pickerItem.label,
                                     style: widget.pickerItems![index].enabled
-                                        ? theme.textStyleSize14W600Primary
-                                        : theme
+                                        ? ArchethicThemeStyles
+                                            .textStyleSize14W600Primary
+                                        : ArchethicThemeStyles
                                             .textStyleSize14W600PrimaryDisabled,
                                   ),
                                 ),
@@ -163,8 +165,9 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
                                     child: Text(
                                       widget.pickerItems![index].subLabel!,
                                       style: widget.pickerItems![index].enabled
-                                          ? theme.textStyleSize14W600Primary
-                                          : theme
+                                          ? ArchethicThemeStyles
+                                              .textStyleSize14W600Primary
+                                          : ArchethicThemeStyles
                                               .textStyleSize14W600PrimaryDisabled,
                                     ),
                                   )
@@ -189,7 +192,8 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
                       if (pickerItem.description != null)
                         Text(
                           pickerItem.description!,
-                          style: theme.textStyleSize12W100Primary,
+                          style:
+                              ArchethicThemeStyles.textStyleSize12W100Primary,
                         ),
                     ],
                   ),

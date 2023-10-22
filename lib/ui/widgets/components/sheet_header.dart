@@ -1,7 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
+
 // Package imports:
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,7 +25,6 @@ class SheetHeader extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     return Column(
       children: <Widget>[
         Row(
@@ -45,7 +45,7 @@ class SheetHeader extends ConsumerWidget {
                   height: 5,
                   width: MediaQuery.of(context).size.width * 0.15,
                   decoration: BoxDecoration(
-                    color: theme.text60,
+                    color: ArchethicTheme.text60,
                     borderRadius: BorderRadius.circular(100),
                   ),
                 ),
@@ -63,7 +63,7 @@ class SheetHeader extends ConsumerWidget {
                         ),
                       AutoSizeText(
                         title,
-                        style: theme.textStyleSize24W700TelegrafPrimary,
+                        style: ArchethicThemeStyles.textStyleSize24W700Primary,
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         stepGranularity: 0.1,

@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
+
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
@@ -18,12 +19,12 @@ class NFTCreationProcessFilePreviewFile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     return Column(
       children: [
         DecoratedBox(
           decoration: BoxDecoration(
-            color: theme.text,
+            color: ArchethicTheme.text,
             border: Border.all(),
           ),
           child: Image.memory(
@@ -37,7 +38,7 @@ class NFTCreationProcessFilePreviewFile extends ConsumerWidget {
           child: Align(
             child: Text(
               '${localizations.formatLabel} ${nftCreation.fileTypeMime!}',
-              style: theme.textStyleSize12W400Primary,
+              style: ArchethicThemeStyles.textStyleSize12W400Primary,
             ),
           ),
         ),
@@ -46,7 +47,7 @@ class NFTCreationProcessFilePreviewFile extends ConsumerWidget {
           child: Align(
             child: Text(
               '${localizations.nftAddFileSize} ${filesize(nftCreation.fileSize)}',
-              style: theme.textStyleSize12W400Primary,
+              style: ArchethicThemeStyles.textStyleSize12W400Primary,
             ),
           ),
         ),

@@ -1,4 +1,4 @@
-part of encrypt;
+part of '../encrypt.dart';
 
 /// Interface for the Algorithms.
 abstract class Algorithm {

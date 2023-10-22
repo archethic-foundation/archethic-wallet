@@ -16,7 +16,6 @@ class _SettingsListItemSwitch extends _SettingsListItem {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
     final thumbIcon = MaterialStateProperty.resolveWith<Icon?>(
       (Set<MaterialState> states) {
@@ -55,7 +54,7 @@ class _SettingsListItemSwitch extends _SettingsListItem {
               width: Responsive.drawerWidth(context) - 130,
               child: Text(
                 heading,
-                style: theme.textStyleSize16W600TelegrafPrimary,
+                style: ArchethicThemeStyles.textStyleSize16W600Primary,
               ),
             ),
             const Spacer(),
@@ -75,9 +74,9 @@ class _SettingsListItemSwitch extends _SettingsListItem {
                         );
                     onChanged?.call(value);
                   },
-                  inactiveTrackColor: theme.inactiveTrackColorSwitch,
-                  activeTrackColor: theme.activeTrackColorSwitch,
-                  activeColor: theme.activeColorSwitch,
+                  inactiveTrackColor: ArchethicTheme.inactiveTrackColorSwitch,
+                  activeTrackColor: ArchethicTheme.activeTrackColorSwitch,
+                  activeColor: ArchethicTheme.activeColorSwitch,
                 ),
               ),
             ),

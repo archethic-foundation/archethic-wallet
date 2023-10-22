@@ -1,11 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/models/token.dart';
 import 'package:aewallet/model/data/account_token.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/address_formatters.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
@@ -32,7 +33,7 @@ class FungiblesTokensListWidget extends ConsumerWidget {
               .select((value) => value.valueOrNull?.accountTokens),
         ) ??
         [];
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     var index = 0;
     if (fungibleTokensAsyncValue.isEmpty == true) {
       return Container(
@@ -44,12 +45,12 @@ class FungiblesTokensListWidget extends ConsumerWidget {
           child: Card(
             shape: RoundedRectangleBorder(
               side: BorderSide(
-                color: theme.backgroundFungiblesTokensListCard!,
+                color: ArchethicTheme.backgroundFungiblesTokensListCard,
               ),
               borderRadius: BorderRadius.circular(10),
             ),
             elevation: 0,
-            color: theme.backgroundFungiblesTokensListCard,
+            color: ArchethicTheme.backgroundFungiblesTokensListCard,
             child: Container(
               padding: const EdgeInsets.all(9.5),
               width: MediaQuery.of(context).size.width,
@@ -63,7 +64,7 @@ class FungiblesTokensListWidget extends ConsumerWidget {
                   const SizedBox(width: 8),
                   Text(
                     localizations.fungiblesTokensListNoTokenYet,
-                    style: theme.textStyleSize12W100Primary,
+                    style: ArchethicThemeStyles.textStyleSize12W100Primary,
                   ),
                 ],
               ),
@@ -122,7 +123,6 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
     final localizations = AppLocalizations.of(context)!;
     return Column(
@@ -130,12 +130,12 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
         Card(
           shape: RoundedRectangleBorder(
             side: BorderSide(
-              color: theme.backgroundFungiblesTokensListCard!,
+              color: ArchethicTheme.backgroundFungiblesTokensListCard,
             ),
             borderRadius: BorderRadius.circular(10),
           ),
           elevation: 0,
-          color: theme.backgroundFungiblesTokensListCard,
+          color: ArchethicTheme.backgroundFungiblesTokensListCard,
           child: Container(
             padding: const EdgeInsets.all(9.5),
             width: MediaQuery.of(context).size.width,
@@ -153,17 +153,18 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                             width: 40,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              color: theme.backgroundDark!.withOpacity(0.3),
+                              color: ArchethicTheme.backgroundDark
+                                  .withOpacity(0.3),
                               border: Border.all(
-                                color:
-                                    theme.backgroundDarkest!.withOpacity(0.2),
+                                color: ArchethicTheme.backgroundDarkest
+                                    .withOpacity(0.2),
                                 width: 2,
                               ),
                             ),
                             child: IconButton(
                               icon: Icon(
                                 Symbols.arrow_circle_up,
-                                color: theme.backgroundDarkest,
+                                color: ArchethicTheme.backgroundDarkest,
                                 size: 21,
                               ),
                               onPressed: () async {
@@ -205,7 +206,8 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                                       Text(
                                         accountFungibleToken
                                             .tokenInformation!.name!,
-                                        style: theme.textStyleSize12W600Primary,
+                                        style: ArchethicThemeStyles
+                                            .textStyleSize12W600Primary,
                                       ),
                                       const SizedBox(
                                         width: 5,
@@ -223,7 +225,8 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                                           accountFungibleToken
                                               .tokenInformation!.address!,
                                         ).getShortString4(),
-                                        style: theme.textStyleSize12W400Primary,
+                                        style: ArchethicThemeStyles
+                                            .textStyleSize12W400Primary,
                                       ),
                                       const SizedBox(width: 5),
                                       const Icon(
@@ -248,11 +251,13 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                             NumberUtil.formatThousands(
                               accountFungibleToken.amount!,
                             ),
-                            style: theme.textStyleSize12W400Primary,
+                            style:
+                                ArchethicThemeStyles.textStyleSize12W400Primary,
                           ),
                           Text(
                             accountFungibleToken.tokenInformation!.symbol!,
-                            style: theme.textStyleSize12W600Primary,
+                            style:
+                                ArchethicThemeStyles.textStyleSize12W600Primary,
                           ),
                         ],
                       )
@@ -263,11 +268,13 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                         children: [
                           Text(
                             '···········',
-                            style: theme.textStyleSize12W600Primary60,
+                            style: ArchethicThemeStyles
+                                .textStyleSize12W600Primary60,
                           ),
                           Text(
                             accountFungibleToken.tokenInformation!.symbol!,
-                            style: theme.textStyleSize12W600Primary,
+                            style:
+                                ArchethicThemeStyles.textStyleSize12W600Primary,
                           ),
                         ],
                       ),
@@ -293,7 +300,8 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                         const SizedBox(width: 5),
                         Text(
                           localizations.notOfficialUCOWarning,
-                          style: theme.textStyleSize10W100Primary,
+                          style:
+                              ArchethicThemeStyles.textStyleSize10W100Primary,
                           textAlign: TextAlign.end,
                         ),
                       ],

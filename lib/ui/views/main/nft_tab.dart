@@ -1,9 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/main/bloc/nft_search_bar_provider.dart';
 import 'package:aewallet/ui/views/main/bloc/nft_search_bar_state.dart';
 import 'package:aewallet/ui/views/main/components/nft_search_bar.dart';
@@ -40,7 +41,6 @@ class NFTTabBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
 
     return ArchethicRefreshIndicator(
@@ -63,7 +63,7 @@ class NFTTabBody extends ConsumerWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              theme.background3Small!,
+              ArchethicTheme.backgroundSmall,
             ),
             fit: BoxFit.fill,
             opacity: 0.7,
@@ -92,7 +92,8 @@ class NFTTabBody extends ConsumerWidget {
                       children: [
                         Text(
                           AppLocalizations.of(context)!.nftTabDescriptionHeader,
-                          style: theme.textStyleSize12W400Primary,
+                          style:
+                              ArchethicThemeStyles.textStyleSize12W400Primary,
                           textAlign: TextAlign.justify,
                         ),
                         const SizedBox(

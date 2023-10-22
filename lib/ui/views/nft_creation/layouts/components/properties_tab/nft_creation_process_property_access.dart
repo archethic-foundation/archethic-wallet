@@ -1,7 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/properties_access/nft_creation_process_access_label.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/properties_access/nft_creation_process_file_access_add_button.dart';
@@ -37,7 +38,7 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
     }
 
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final preferences = ref.watch(SettingsProviders.settings);
     final nftCreationArgs = ref.watch(
       NftCreationFormProvider.nftCreationFormArgs,
@@ -63,12 +64,12 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
                   width: 2,
                 )
               : BorderSide(
-                  color: theme.backgroundAccountsListCardSelected!,
+                  color: ArchethicTheme.backgroundAccountsListCardSelected,
                 ),
           borderRadius: BorderRadius.circular(10),
         ),
         elevation: 0,
-        color: theme.backgroundAccountsListCardSelected,
+        color: ArchethicTheme.backgroundAccountsListCardSelected,
         child: Padding(
           padding: const EdgeInsets.only(
             top: 10,
@@ -89,7 +90,8 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
                           propertyName.breakText(20),
                           overflow: TextOverflow.ellipsis,
                           softWrap: false,
-                          style: theme.textStyleSize12W600Primary,
+                          style:
+                              ArchethicThemeStyles.textStyleSize12W600Primary,
                         ),
                       ),
                       const SizedBox(
@@ -101,7 +103,8 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
                           propertyValue.toString().breakText(20),
                           overflow: TextOverflow.ellipsis,
                           softWrap: false,
-                          style: theme.textStyleSize12W400Primary,
+                          style:
+                              ArchethicThemeStyles.textStyleSize12W400Primary,
                         ),
                       ),
                     ],

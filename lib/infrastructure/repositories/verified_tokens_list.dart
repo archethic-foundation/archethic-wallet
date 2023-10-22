@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'dart:convert';
 import 'package:aewallet/domain/models/verified_tokens.dart';
 import 'package:aewallet/domain/repositories/tokens/verified_tokens_repository.dart';

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:aewallet/application/app_version_update_info.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -30,7 +30,7 @@ class AppUpdateButton extends ConsumerWidget {
 
     final localizations = AppLocalizations.of(context)!;
     final appVersionInfo = ref.watch(AppVersionInfoProviders.getAppVersionInfo);
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final preferences = ref.watch(SettingsProviders.settings);
 
     return appVersionInfo.map(
@@ -46,9 +46,9 @@ class AppUpdateButton extends ConsumerWidget {
                   width: 40,
                   child: FittedBox(
                     child: FloatingActionButton(
-                      backgroundColor: theme.background,
-                      foregroundColor: theme.textFieldIcon,
-                      splashColor: theme.textFieldIcon,
+                      backgroundColor: ArchethicTheme.background,
+                      foregroundColor: ArchethicTheme.textFieldIcon,
+                      splashColor: ArchethicTheme.textFieldIcon,
                       onPressed: () {
                         sl.get<HapticUtil>().feedback(
                               FeedbackType.light,

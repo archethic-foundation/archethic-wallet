@@ -1,6 +1,5 @@
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/account.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -16,7 +15,7 @@ class AccountListItemTokenInfo extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -25,25 +24,25 @@ class AccountListItemTokenInfo extends ConsumerWidget {
             account.balance!.tokensFungiblesNb > 1
                 ? '${account.balance!.tokensFungiblesNb} ${localizations.tokens}'
                 : '${account.balance!.tokensFungiblesNb} ${localizations.token}',
-            style: theme.textStyleSize12W400Primary,
+            style: ArchethicThemeStyles.textStyleSize12W400Primary,
             textAlign: TextAlign.end,
           )
         else
           AutoSizeText(
             localizations.noToken,
-            style: theme.textStyleSize12W400Primary45,
+            style: ArchethicThemeStyles.textStyleSize12W400Primary45,
             textAlign: TextAlign.end,
           ),
         if (account.balance != null && account.balance!.nftNb > 0)
           AutoSizeText(
             '${account.balance!.nftNb} ${localizations.nft}',
-            style: theme.textStyleSize12W400Primary,
+            style: ArchethicThemeStyles.textStyleSize12W400Primary,
             textAlign: TextAlign.end,
           )
         else
           AutoSizeText(
             localizations.noNFT,
-            style: theme.textStyleSize12W400Primary45,
+            style: ArchethicThemeStyles.textStyleSize12W400Primary45,
             textAlign: TextAlign.end,
           ),
       ],

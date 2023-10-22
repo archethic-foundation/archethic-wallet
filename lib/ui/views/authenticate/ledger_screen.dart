@@ -1,15 +1,15 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'dart:developer';
 
 // Project imports:
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/ledger/archethic_ledger_util.dart';
-// Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:convert/convert.dart';
@@ -76,7 +76,6 @@ class _LedgerScreenState extends ConsumerState<LedgerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -86,7 +85,10 @@ class _LedgerScreenState extends ConsumerState<LedgerScreen> {
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: <Color>[theme.backgroundDark!, theme.background!],
+                colors: <Color>[
+                  ArchethicTheme.backgroundDark,
+                  ArchethicTheme.background,
+                ],
               ),
             ),
           ),
@@ -115,7 +117,8 @@ class _LedgerScreenState extends ConsumerState<LedgerScreen> {
                             margin: const EdgeInsets.symmetric(horizontal: 40),
                             child: AutoSizeText(
                               'Ledger',
-                              style: theme.textStyleSize16W400Primary,
+                              style: ArchethicThemeStyles
+                                  .textStyleSize16W400Primary,
                               textAlign: TextAlign.center,
                               maxLines: 1,
                               stepGranularity: 0.1,
@@ -161,7 +164,6 @@ class _SignTransactionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final selectedAccount =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
     if (selectedAccount == null) return const SizedBox();
@@ -169,7 +171,7 @@ class _SignTransactionButton extends StatelessWidget {
     return ElevatedButton(
       child: Text(
         'Ledger - Verify transaction',
-        style: theme.textStyleSize16W200Primary,
+        style: ArchethicThemeStyles.textStyleSize16W200Primary,
       ),
       onPressed: () async {
         const addressIndex = '';
@@ -232,12 +234,10 @@ class _GetPublicKeyButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     return ElevatedButton(
       child: Text(
         'Ledger - Get Public Key',
-        style: theme.textStyleSize16W200Primary,
+        style: ArchethicThemeStyles.textStyleSize16W200Primary,
       ),
       onPressed: () async {
         await sl.get<LedgerNanoSImpl>().connectLedger(getPubKeyAPDU());

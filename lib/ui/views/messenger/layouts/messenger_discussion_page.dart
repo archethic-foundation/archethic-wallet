@@ -1,13 +1,13 @@
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/date_util.dart';
@@ -29,7 +29,6 @@ class MessengerDiscussionPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final selectedContact =
         ref.watch(ContactProviders.getSelectedContact).valueOrNull;
 
@@ -39,14 +38,17 @@ class MessengerDiscussionPage extends ConsumerWidget {
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage(
-            theme.background3Small!,
+            ArchethicTheme.backgroundSmall,
           ),
-          fit: BoxFit.fitHeight,
+          fit: BoxFit.fill,
         ),
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: <Color>[theme.backgroundDark!, theme.background!],
+          colors: <Color>[
+            ArchethicTheme.backgroundDark,
+            ArchethicTheme.background,
+          ],
         ),
       ),
       child: Scaffold(
@@ -152,7 +154,6 @@ class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
 
     return discussion.maybeMap(
       data: (data) {
-        final theme = ref.watch(ThemeProviders.selectedTheme);
         final isCreating = ref.watch(
           MessengerProviders.messageCreationForm(data.value)
               .select((value) => value.isCreating),
@@ -185,7 +186,7 @@ class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
                           width: 20,
                           height: 20,
                           child: CircularProgressIndicator(
-                            color: theme.text,
+                            color: ArchethicTheme.text,
                           ),
                         ),
                       ),
@@ -220,7 +221,7 @@ class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
                             },
                       icon: Icon(
                         Symbols.send,
-                        color: theme.text,
+                        color: ArchethicTheme.text,
                         weight: IconSize.weightM,
                         opticalSize: IconSize.opticalSizeM,
                         grade: IconSize.gradeM,
@@ -255,8 +256,6 @@ class _MessageTextField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     return Stack(
       children: [
         TextField(
@@ -277,7 +276,7 @@ class _MessageTextField extends ConsumerWidget {
             height: 1,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              gradient: theme.gradient,
+              gradient: ArchethicTheme.gradient,
             ),
           ),
         ),
@@ -295,7 +294,6 @@ class _MessageCreationFormFees extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final text =
         ref.watch(MessengerProviders.messageCreationForm(discussion)).text;
 
@@ -312,7 +310,7 @@ class _MessageCreationFormFees extends ConsumerWidget {
 
     if (nativeFeeEstimation == null) {
       return LoadingAnimationWidget.prograssiveDots(
-        color: theme.text!,
+        color: ArchethicTheme.text,
         size: 12,
       );
     }
@@ -327,7 +325,7 @@ class _MessageCreationFormFees extends ConsumerWidget {
 
     if (fiatFeeEstimation == null) {
       return LoadingAnimationWidget.prograssiveDots(
-        color: theme.text!,
+        color: ArchethicTheme.text,
         size: 12,
       );
     }
@@ -348,7 +346,7 @@ class _MessageCreationFormFees extends ConsumerWidget {
           fiatFeeEstimation,
           2,
         )})',
-        style: theme.textStyleSize12W100Primary,
+        style: ArchethicThemeStyles.textStyleSize12W100Primary,
         textAlign: TextAlign.center,
       ),
     );
@@ -368,7 +366,6 @@ class _MessagesList extends ConsumerStatefulWidget {
 class _MessagesListState extends ConsumerState<_MessagesList> {
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final me = ref.watch(ContactProviders.getSelectedContact).valueOrNull;
     final pagingController = ref
         .watch(MessengerProviders.paginatedMessages(widget.discussionAddress));
@@ -397,7 +394,7 @@ class _MessagesListState extends ConsumerState<_MessagesList> {
                 padding: const EdgeInsets.only(left: 42, right: 8, bottom: 8),
                 child: _MessageItem(
                   key: Key(message.address),
-                  color: theme.background!,
+                  color: ArchethicTheme.background,
                   message: message,
                   showSender: false,
                 ),
@@ -410,7 +407,7 @@ class _MessagesListState extends ConsumerState<_MessagesList> {
               padding: const EdgeInsets.only(left: 8, right: 42, bottom: 8),
               child: _MessageItem(
                 key: Key(message.address),
-                color: theme.iconDataWidgetIconBackground!,
+                color: ArchethicTheme.iconDataWidgetIconBackground,
                 message: message,
                 showSender: true,
               ),
@@ -436,8 +433,6 @@ class _MessageItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     final _contact = ref.watch(
       ContactProviders.getContactWithGenesisPublicKey(
         message.senderGenesisPublicKey,
@@ -471,7 +466,7 @@ class _MessageItem extends ConsumerWidget {
                 data: (contact) {
                   return Text(
                     contact?.format ?? '',
-                    style: theme.textStyleSize12W600Primary,
+                    style: ArchethicThemeStyles.textStyleSize12W600Primary,
                   );
                 },
                 loading: () => const SizedBox(),
@@ -480,13 +475,13 @@ class _MessageItem extends ConsumerWidget {
             const SizedBox(height: 3),
             SelectableText(
               message.content,
-              style: theme.textStyleSize12W400Primary,
+              style: ArchethicThemeStyles.textStyleSize12W400Primary,
             ),
             Align(
               alignment: Alignment.bottomRight,
               child: Text(
                 message.date.formatLong(context),
-                style: theme.textStyleSize10W100Primary,
+                style: ArchethicThemeStyles.textStyleSize10W100Primary,
               ),
             ),
           ],

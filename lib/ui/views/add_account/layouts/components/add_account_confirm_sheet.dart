@@ -1,14 +1,14 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'dart:async';
 
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
-import 'package:aewallet/ui/themes/themes.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/routes.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/add_account/bloc/provider.dart';
 import 'package:aewallet/ui/views/add_account/bloc/state.dart';
@@ -41,29 +41,28 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
     _sendTxSub = EventTaxiImpl.singleton()
         .registerTo<TransactionSendEvent>()
         .listen((TransactionSendEvent event) async {
-      final theme = ref.watch(ThemeProviders.selectedTheme);
       if (event.response != 'ok' && event.nbConfirmations == 0) {
         // Send failed
-        _showSendFailed(event, theme);
+        _showSendFailed(event);
         return;
       }
 
       if (event.response == 'ok') {
-        await _showSendSucceed(event, theme);
+        await _showSendSucceed(event);
         return;
       }
 
-      _showNotEnoughConfirmation(theme);
+      _showNotEnoughConfirmation();
     });
   }
 
-  void _showNotEnoughConfirmation(BaseTheme theme) {
+  void _showNotEnoughConfirmation() {
     UIUtil.showSnackbar(
       AppLocalizations.of(context)!.notEnoughConfirmations,
       context,
       ref,
-      theme.text!,
-      theme.snackBarShadow!,
+      ArchethicTheme.text,
+      ArchethicTheme.snackBarShadow,
       icon: Symbols.info,
     );
     Navigator.of(context).pop();
@@ -71,7 +70,6 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
 
   Future<void> _showSendSucceed(
     TransactionSendEvent event,
-    BaseTheme theme,
   ) async {
     UIUtil.showSnackbar(
       event.nbConfirmations == 1
@@ -85,8 +83,8 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
               .replaceAll('%2', event.maxConfirmations.toString()),
       context,
       ref,
-      theme.text!,
-      theme.snackBarShadow!,
+      ArchethicTheme.text,
+      ArchethicTheme.snackBarShadow,
       duration: const Duration(milliseconds: 5000),
       icon: Symbols.info,
     );
@@ -102,7 +100,6 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
 
   void _showSendFailed(
     TransactionSendEvent event,
-    BaseTheme theme,
   ) {
     // Send failed
     if (animationOpen!) {
@@ -112,8 +109,8 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
       event.response!,
       context,
       ref,
-      theme.text!,
-      theme.snackBarShadow!,
+      ArchethicTheme.text,
+      ArchethicTheme.snackBarShadow,
       duration: const Duration(seconds: 5),
     );
     Navigator.of(context).pop();
@@ -135,7 +132,7 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final addAccountNotifier =
         ref.watch(AddAccountFormProvider.addAccountForm.notifier);
 
@@ -155,7 +152,7 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
                   padding: const EdgeInsets.only(left: 30, right: 30),
                   child: Text(
                     localizations.addAccountConfirmationMessage,
-                    style: theme.textStyleSize14W600Primary,
+                    style: ArchethicThemeStyles.textStyleSize14W600Primary,
                   ),
                 ),
                 const SizedBox(
@@ -178,13 +175,12 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
                       key: const Key('confirm'),
                       icon: Icon(
                         Symbols.check,
-                        color: theme.mainButtonLabel,
+                        color: ArchethicTheme.mainButtonLabel,
                         size: 14,
                       ),
                       onPressed: () async {
                         ShowSendingAnimation.build(
                           context,
-                          theme,
                         );
                         await ref
                             .read(
@@ -204,7 +200,7 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
                       key: const Key('cancel'),
                       icon: Icon(
                         Symbols.arrow_back_ios,
-                        color: theme.mainButtonLabel,
+                        color: ArchethicTheme.mainButtonLabel,
                         size: 14,
                       ),
                       onPressed: () {

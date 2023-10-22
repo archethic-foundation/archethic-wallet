@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class ItemRemoveButton extends ConsumerWidget {
     if (readOnly) {
       return const SizedBox();
     }
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final preferences = ref.watch(SettingsProviders.settings);
     return Padding(
       padding: const EdgeInsets.only(right: 5),
@@ -33,16 +34,16 @@ class ItemRemoveButton extends ConsumerWidget {
         width: 40,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: theme.backgroundDark!.withOpacity(0.3),
+          color: ArchethicTheme.backgroundDark.withOpacity(0.3),
           border: Border.all(
-            color: theme.backgroundDarkest!.withOpacity(0.2),
+            color: ArchethicTheme.backgroundDarkest.withOpacity(0.2),
             width: 2,
           ),
         ),
         child: IconButton(
           icon: Icon(
             Symbols.close,
-            color: theme.backgroundDarkest,
+            color: ArchethicTheme.backgroundDarkest,
             size: 21,
           ),
           onPressed: () {

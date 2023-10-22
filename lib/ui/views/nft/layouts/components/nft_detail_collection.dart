@@ -1,10 +1,8 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:ui';
 
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/responsive.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_detail.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail.dart';
 import 'package:aewallet/ui/widgets/components/dynamic_height_grid_view.dart';
@@ -35,7 +33,7 @@ class NFTDetailCollection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final preferences = ref.watch(SettingsProviders.settings);
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     return Padding(
       padding: const EdgeInsets.only(
         left: 10,
@@ -66,7 +64,7 @@ class NFTDetailCollection extends ConsumerWidget {
                 children: [
                   Text(
                     '${tokenInformation['name']}',
-                    style: theme.textStyleSize10W100Primary,
+                    style: ArchethicThemeStyles.textStyleSize10W100Primary,
                   ),
                   const SizedBox(
                     height: 5,

@@ -1,10 +1,11 @@
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
+
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/access_recipient.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
@@ -56,7 +57,7 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final settings = ref.watch(SettingsProviders.settings);
     final preferences = ref.watch(SettingsProviders.settings);
     final selectedContact =
@@ -73,14 +74,17 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage> {
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(
-                theme.background3Small!,
+                ArchethicTheme.backgroundSmall,
               ),
-              fit: BoxFit.fitHeight,
+              fit: BoxFit.fill,
             ),
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: <Color>[theme.backgroundDark!, theme.background!],
+              colors: <Color>[
+                ArchethicTheme.backgroundDark,
+                ArchethicTheme.background,
+              ],
             ),
           ),
           child: Scaffold(
@@ -102,7 +106,7 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage> {
                     ),
                     child: Text(
                       localizations.modify,
-                      style: theme.textStyleSize12W400Primary,
+                      style: ArchethicThemeStyles.textStyleSize12W400Primary,
                     ),
                   ),
               ],
@@ -124,7 +128,7 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage> {
                           ),
                         ),
                         textAlign: TextAlign.center,
-                        style: theme.textStyleSize28W700Primary,
+                        style: ArchethicThemeStyles.textStyleSize28W700Primary,
                       ),
                       const SizedBox(
                         height: 15,
@@ -142,8 +146,8 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage> {
                             localizations.addressCopied,
                             context,
                             ref,
-                            theme.text!,
-                            theme.snackBarShadow!,
+                            ArchethicTheme.text,
+                            ArchethicTheme.snackBarShadow,
                             icon: Symbols.info,
                           );
                         },
@@ -151,7 +155,7 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage> {
                           children: [
                             Icon(
                               Symbols.content_copy,
-                              color: theme.text,
+                              color: ArchethicTheme.text,
                               weight: IconSize.weightM,
                               opticalSize: IconSize.opticalSizeM,
                               grade: IconSize.gradeM,
@@ -161,7 +165,8 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage> {
                             ),
                             Text(
                               localizations.addressCopy,
-                              style: theme.textStyleSize14W700Primary,
+                              style: ArchethicThemeStyles
+                                  .textStyleSize14W700Primary,
                             ),
                           ],
                         ),
@@ -254,7 +259,6 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage> {
 
                                 ShowSendingAnimation.build(
                                   context,
-                                  theme,
                                 );
                                 final result =
                                     await formNotifier.leaveDiscussion();
@@ -271,8 +275,8 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage> {
                                       localizations.updateDiscussionFailure,
                                       context,
                                       ref,
-                                      theme.text!,
-                                      theme.snackBarShadow!,
+                                      ArchethicTheme.text,
+                                      ArchethicTheme.snackBarShadow,
                                       duration: const Duration(seconds: 5),
                                     );
                                   },
@@ -285,17 +289,16 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage> {
                             children: [
                               Icon(
                                 Symbols.logout,
-                                color: theme
-                                    .textStyleSize14W600TelegrafPrimaryRed
-                                    .color,
+                                color: ArchethicThemeStyles
+                                    .textStyleSize14W600PrimaryRed.color,
                               ),
                               const SizedBox(
                                 width: 8,
                               ),
                               Text(
                                 localizations.leaveDiscussion,
-                                style:
-                                    theme.textStyleSize14W600TelegrafPrimaryRed,
+                                style: ArchethicThemeStyles
+                                    .textStyleSize14W600PrimaryRed,
                               ),
                             ],
                           ),
@@ -304,7 +307,8 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage> {
                         Text(
                           localizations.youAreNoLongPartOfDiscussion,
                           textAlign: TextAlign.center,
-                          style: theme.textStyleSize14W200Primary,
+                          style:
+                              ArchethicThemeStyles.textStyleSize14W200Primary,
                         ),
                     ],
                   ),

@@ -1,6 +1,6 @@
 // ignore_for_file: sort_constructors_first, require_trailing_commas
 
-part of encrypt;
+part of '../encrypt.dart';
 
 class SecureRandom {
   static final Random _generator = Random.secure();

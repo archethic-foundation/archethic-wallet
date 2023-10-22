@@ -1,11 +1,10 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/nft/nft.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_token.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_detail_collection.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_detail_properties.dart';
@@ -68,7 +67,6 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final preferences = ref.watch(SettingsProviders.settings);
     final accountSelected =
@@ -131,7 +129,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
               padding: const EdgeInsets.only(top: 10),
               child: Text(
                 '[${widget.symbol}]',
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
             ),
           Expanded(
@@ -242,7 +240,8 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                         const SizedBox(width: 5),
                         Text(
                           AppLocalizations.of(context)!.nftNotOwnerInfo,
-                          style: theme.textStyleSize12W100Primary,
+                          style:
+                              ArchethicThemeStyles.textStyleSize12W100Primary,
                         ),
                       ],
                     );
@@ -253,7 +252,8 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                     child: SizedBox.square(
                       dimension: 16,
                       child: CircularProgressIndicator(
-                        color: theme.textStyleSize10W100Primary.color,
+                        color: ArchethicThemeStyles
+                            .textStyleSize10W100Primary.color,
                         strokeWidth: 1,
                       ),
                     ),

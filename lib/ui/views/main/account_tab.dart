@@ -6,7 +6,7 @@ import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/blog/last_articles_list.dart';
 import 'package:aewallet/ui/views/main/components/app_update_button.dart';
 import 'package:aewallet/ui/views/main/components/menu_widget_wallet.dart';
@@ -29,7 +29,6 @@ class AccountTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
@@ -37,7 +36,7 @@ class AccountTab extends ConsumerWidget {
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage(
-            theme.background2Small!,
+            ArchethicTheme.backgroundSmall,
           ),
           fit: BoxFit.fill,
           opacity: 0.7,
@@ -107,7 +106,7 @@ class AccountTab extends ConsumerWidget {
 
                             Divider(
                               height: 1,
-                              color: theme.backgroundDarkest!.withOpacity(0.1),
+                              color: ArchethicTheme.backgroundDarkest.withOpacity(0.1),
                             ),
 
                             const SizedBox(
@@ -119,7 +118,7 @@ class AccountTab extends ConsumerWidget {
                             ),
                             Divider(
                               height: 1,
-                              color: theme.backgroundDarkest!.withOpacity(0.1),
+                              color: ArchethicTheme.backgroundDarkest.withOpacity(0.1),
                             ),
                             const ExpandablePageView(
                               children: [

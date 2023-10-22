@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'dart:async';
 import 'dart:developer' as dev;
 import 'dart:io';
@@ -9,7 +10,6 @@ import 'package:aewallet/application/notification/providers.dart';
 import 'package:aewallet/application/oracle/provider.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/domain/repositories/settings.dart';
@@ -21,8 +21,9 @@ import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/providers_observer.dart';
 import 'package:aewallet/ui/menu/settings/settings_sheet.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/routes.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/ui/views/authenticate/lock_screen.dart';
 import 'package:aewallet/ui/views/intro/intro_backup_confirm.dart';
@@ -199,14 +200,14 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final deeplinkRpcReceiver = sl.get<ArchethicDeeplinkRPCServer>();
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final language = ref.watch(LanguageProviders.selectedLanguage);
     if (FeatureFlags.messagingActive) {
       NotificationProviders.keepPushSettingsUpToDateWorker(ref);
     }
 
     SystemChrome.setSystemUIOverlayStyle(
-      theme.statusBar!,
+      ArchethicTheme.statusBar,
     );
     return GestureDetector(
       onTap: () {
@@ -214,8 +215,8 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
         FocusScope.of(context).requestFocus(FocusNode());
       },
       child: OKToast(
-        textStyle: theme.textStyleSize14W700Background,
-        backgroundColor: theme.background,
+        textStyle: ArchethicThemeStyles.textStyleSize14W700Background,
+        backgroundColor: ArchethicTheme.background,
         child: MaterialApp(
           navigatorKey: rootNavigatorKey,
           debugShowCheckedModeBanner: false,
@@ -432,7 +433,7 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ref.read(ThemeProviders.selectedTheme).background,
+      backgroundColor: ArchethicTheme.background,
     );
   }
 }

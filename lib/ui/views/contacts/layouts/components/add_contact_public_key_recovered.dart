@@ -1,6 +1,4 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/contacts/bloc/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -16,7 +14,6 @@ class AddContactPublicKeyRecovered extends ConsumerWidget {
     final contactCreation =
         ref.watch(ContactCreationFormProvider.contactCreationForm);
 
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
 
     return Container(
@@ -31,7 +28,7 @@ class AddContactPublicKeyRecovered extends ConsumerWidget {
           Text(
             localizations.contactPublicKeyGetAuto,
             textAlign: TextAlign.left,
-            style: theme.textStyleSize12W100Primary,
+            style: ArchethicThemeStyles.textStyleSize12W100Primary,
           ),
           const SizedBox(
             height: 10,
@@ -39,7 +36,7 @@ class AddContactPublicKeyRecovered extends ConsumerWidget {
           SelectableText(
             contactCreation.publicKeyRecovered.toUpperCase(),
             textAlign: TextAlign.left,
-            style: theme.textStyleSize14W100Primary,
+            style: ArchethicThemeStyles.textStyleSize14W100Primary,
           ),
         ],
       ),

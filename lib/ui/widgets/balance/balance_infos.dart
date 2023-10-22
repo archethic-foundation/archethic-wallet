@@ -1,14 +1,15 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/price_history/providers.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/models/market_price_history.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/primary_currency.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/sheets/chart_sheet.dart';
 import 'package:aewallet/ui/widgets/balance/components/balance_infos_popup.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
@@ -34,7 +35,6 @@ class BalanceInfos extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final accountSelectedBalance = ref.watch(
       AccountProviders.selectedAccount
           .select((value) => value.valueOrNull?.balance),
@@ -51,7 +51,7 @@ class BalanceInfos extends ConsumerWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: DecoratedBox(
-            decoration: theme.getDecorationBalance(),
+            decoration: ArchethicTheme.getDecorationBalance(),
             child: SizedBox(
               width: MediaQuery.of(context).size.width * 0.95,
               child: Padding(
@@ -65,7 +65,8 @@ class BalanceInfos extends ConsumerWidget {
                             padding: const EdgeInsets.only(left: 10),
                             child: AutoSizeText(
                               AccountBalance.cryptoCurrencyLabel,
-                              style: theme.textStyleSize35W900TelegrafPrimary,
+                              style: ArchethicThemeStyles
+                                  .textStyleSize35W900Primary,
                             ),
                           ),
                           if (settings.showBalances)
@@ -83,7 +84,8 @@ class BalanceInfos extends ConsumerWidget {
                             padding: const EdgeInsets.only(left: 10),
                             child: AutoSizeText(
                               settings.currency.name,
-                              style: theme.textStyleSize35W900TelegrafPrimary,
+                              style: ArchethicThemeStyles
+                                  .textStyleSize35W900Primary,
                             ),
                           ),
                           if (settings.showBalances)
@@ -119,7 +121,6 @@ class _BalanceInfosNativeShowed extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(
       SettingsProviders.settings.select((settings) => settings.currency),
     );
@@ -139,7 +140,7 @@ class _BalanceInfosNativeShowed extends ConsumerWidget {
       children: [
         AutoSizeText(
           accountSelectedBalance.nativeTokenValueToString(digits: 2),
-          style: theme.textStyleSize25W900TelegrafPrimary,
+          style: ArchethicThemeStyles.textStyleSize25W900Primary,
         ),
         AutoSizeText(
           CurrencyUtil.format(
@@ -147,7 +148,7 @@ class _BalanceInfosNativeShowed extends ConsumerWidget {
             fiatValue,
           ),
           textAlign: TextAlign.center,
-          style: theme.textStyleSize12W600Primary,
+          style: ArchethicThemeStyles.textStyleSize12W600Primary,
         ),
       ],
     );
@@ -162,7 +163,6 @@ class _BalanceInfosFiatShowed extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(
       SettingsProviders.settings.select((settings) => settings.currency),
     );
@@ -187,11 +187,11 @@ class _BalanceInfosFiatShowed extends ConsumerWidget {
             fiatValue,
           ),
           textAlign: TextAlign.center,
-          style: theme.textStyleSize25W900TelegrafPrimary,
+          style: ArchethicThemeStyles.textStyleSize25W900Primary,
         ),
         AutoSizeText(
           '${accountSelectedBalance.nativeTokenValueToString(digits: 2)} ${accountSelectedBalance.nativeTokenName}',
-          style: theme.textStyleSize12W600Primary,
+          style: ArchethicThemeStyles.textStyleSize12W600Primary,
         ),
       ],
     );
@@ -203,19 +203,18 @@ class _BalanceInfosNotShowed extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         AutoSizeText(
           '···········',
-          style: theme.textStyleSize25W900TelegrafPrimary60,
+          style: ArchethicThemeStyles.textStyleSize25W900Primary60,
         ),
         AutoSizeText(
           '···········',
           textAlign: TextAlign.center,
-          style: theme.textStyleSize12W600Primary60,
+          style: ArchethicThemeStyles.textStyleSize12W600Primary60,
         ),
       ],
     );

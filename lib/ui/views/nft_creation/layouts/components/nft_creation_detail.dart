@@ -1,8 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/settings/theme.dart';
+
 import 'package:aewallet/model/data/account_balance.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:aewallet/util/number_util.dart';
@@ -18,7 +19,7 @@ class NftCreationDetail extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final nftCreation = ref.watch(
       NftCreationFormProvider.nftCreationForm(
         ref.read(
@@ -43,12 +44,12 @@ class NftCreationDetail extends ConsumerWidget {
             children: [
               Text(
                 localizations.tokenName,
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
               Expanded(
                 child: Text(
                   nftCreation.name,
-                  style: theme.textStyleSize12W400Primary,
+                  style: ArchethicThemeStyles.textStyleSize12W400Primary,
                   textAlign: TextAlign.end,
                 ),
               ),
@@ -59,11 +60,11 @@ class NftCreationDetail extends ConsumerWidget {
               children: [
                 Text(
                   localizations.tokenSymbol,
-                  style: theme.textStyleSize12W400Primary,
+                  style: ArchethicThemeStyles.textStyleSize12W400Primary,
                 ),
                 Text(
                   nftCreation.symbol,
-                  style: theme.textStyleSize12W400Primary,
+                  style: ArchethicThemeStyles.textStyleSize12W400Primary,
                 ),
               ],
             ),
@@ -71,11 +72,11 @@ class NftCreationDetail extends ConsumerWidget {
             children: [
               Text(
                 localizations.tokenInitialSupply,
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
               Text(
                 NumberUtil.formatThousands(nftCreation.initialSupply),
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
             ],
           ),
@@ -83,14 +84,14 @@ class NftCreationDetail extends ConsumerWidget {
             children: [
               Text(
                 localizations.estimatedFees,
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
               Text(
                 AmountFormatters.standardSmallValue(
                   nftCreation.feeEstimationOrZero,
                   AccountBalance.cryptoCurrencyLabel,
                 ),
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
             ],
           ),
@@ -98,7 +99,7 @@ class NftCreationDetail extends ConsumerWidget {
             children: [
               Text(
                 localizations.availableAfterMint,
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
               Text(
                 AmountFormatters.standard(
@@ -106,7 +107,7 @@ class NftCreationDetail extends ConsumerWidget {
                       nftCreation.feeEstimationOrZero,
                   nftCreation.symbolFees(context),
                 ),
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
             ],
           ),
@@ -116,15 +117,15 @@ class NftCreationDetail extends ConsumerWidget {
                 child: CheckboxListTile(
                   title: Text(
                     localizations.nftInfosCreationConfirmationWarning,
-                    style: theme.textStyleSize12W400Primary,
+                    style: ArchethicThemeStyles.textStyleSize12W400Primary,
                   ),
                   value: nftCreation.checkPreventUserPublicInfo,
                   onChanged: (newValue) {
                     nftCreationNotifier
                         .setCheckPreventUserPublicInfo(newValue ?? false);
                   },
-                  checkColor: theme.background,
-                  activeColor: theme.text,
+                  checkColor: ArchethicTheme.background,
+                  activeColor: ArchethicTheme.text,
                   controlAffinity: ListTileControlAffinity.leading,
                 ),
               ),

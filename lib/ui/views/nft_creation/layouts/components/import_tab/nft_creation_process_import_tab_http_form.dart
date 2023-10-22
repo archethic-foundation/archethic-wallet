@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/settings/theme.dart';
+
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/import_tab/nft_creation_process_import_tab_template_form.dart';
 import 'package:aewallet/util/url_util.dart';
@@ -18,7 +19,6 @@ class NFTCreationProcessImportTabHTTPForm extends ConsumerWidget with UrlUtil {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return NFTCreationProcessImportTabTemplateForm(
       title: localizations.nftAddImportURLTitle,
@@ -31,8 +31,8 @@ class NFTCreationProcessImportTabHTTPForm extends ConsumerWidget with UrlUtil {
             errorText,
             contextForm,
             ref,
-            theme.text!,
-            theme.snackBarShadow!,
+            ArchethicTheme.text,
+            ArchethicTheme.snackBarShadow,
           );
         }
 

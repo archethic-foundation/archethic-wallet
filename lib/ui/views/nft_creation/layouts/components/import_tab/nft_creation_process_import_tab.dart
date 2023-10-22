@@ -15,7 +15,6 @@ class _NFTCreationProcessImportTabState
     extends ConsumerState<NFTCreationProcessImportTab> {
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final nftCreation = ref.watch(
       NftCreationFormProvider.nftCreationForm(
@@ -42,7 +41,7 @@ class _NFTCreationProcessImportTabState
                     id: nftCreation.currentNftCategoryIndex,
                   ),
                 ),
-                style: theme.textStyleSize12W100Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
                 textAlign: TextAlign.justify,
               ),
             ),
@@ -56,7 +55,7 @@ class _NFTCreationProcessImportTabState
                     padding: const EdgeInsets.only(top: 2),
                     child: Icon(
                       Symbols.warning,
-                      color: theme.warning,
+                      color: ArchethicTheme.warning,
                       size: 12,
                     ),
                   ),
@@ -64,7 +63,8 @@ class _NFTCreationProcessImportTabState
                   Expanded(
                     child: Text(
                       localizations.nftInfosImportWarning,
-                      style: theme.textStyleSize12W100PrimaryWarning,
+                      style: ArchethicThemeStyles
+                          .textStyleSize12W100PrimaryWarning,
                       textAlign: TextAlign.justify,
                     ),
                   ),
@@ -76,7 +76,7 @@ class _NFTCreationProcessImportTabState
             ),
             Text(
               localizations.nftChooseSource,
-              style: theme.textStyleSize12W100Primary,
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
             ),
             const Column(
               children: [

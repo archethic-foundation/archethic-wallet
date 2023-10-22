@@ -1,8 +1,8 @@
 import 'package:aewallet/application/contact.dart';
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/contacts/layouts/add_contact.dart';
 import 'package:aewallet/ui/views/contacts/layouts/components/contact_list.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
@@ -38,7 +38,6 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final contactsList = ref.watch(
       ContactProviders.fetchContacts(
@@ -50,7 +49,7 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage(
-            theme.background4Small!,
+            ArchethicTheme.backgroundSmall,
           ),
           fit: BoxFit.fill,
           opacity: 0.7,
@@ -78,7 +77,7 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
                     height: 50,
                     width: 50,
                     child: CircularProgressIndicator(
-                      color: theme.text,
+                      color: ArchethicTheme.text,
                       strokeWidth: 1,
                     ),
                   ),
@@ -100,7 +99,7 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
                   contentPadding: EdgeInsets.zero,
                   prefixIcon: Icon(
                     Symbols.search,
-                    color: theme.text,
+                    color: ArchethicTheme.text,
                     size: 18,
                     weight: IconSize.weightM,
                     opticalSize: IconSize.opticalSizeM,
@@ -115,16 +114,16 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
                     ),
                     borderSide: BorderSide.none,
                   ),
-                  hintStyle: theme.textStyleSize12W400Primary,
+                  hintStyle: ArchethicThemeStyles.textStyleSize12W400Primary,
                   filled: true,
-                  //fillColor: theme.text30,
+                  //fillColor: ArchethicTheme.text30,
                   hintText: localizations.searchField,
                 ),
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
                 textAlign: TextAlign.center,
                 controller: searchNameController,
                 autocorrect: false,
-                cursorColor: theme.text,
+                cursorColor: ArchethicTheme.text,
                 inputFormatters: <TextInputFormatter>[
                   UpperCaseTextFormatter(),
                   LengthLimitingTextInputFormatter(20),

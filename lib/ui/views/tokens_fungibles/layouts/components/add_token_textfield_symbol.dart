@@ -37,7 +37,7 @@ class _AddTokenTextFieldSymbolState
   ) {
     final addTokenNotifier =
         ref.watch(AddTokenFormProvider.addTokenForm.notifier);
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final localizations = AppLocalizations.of(context)!;
 
     return Column(
@@ -113,7 +113,8 @@ class _AddTokenTextFieldSymbolState
                         ),
                         child: Text(
                           localizations.tokenSymbolMaxNumberCharacter,
-                          style: theme.textStyleSize10W100Primary,
+                          style:
+                              ArchethicThemeStyles.textStyleSize10W100Primary,
                         ),
                       ),
                     ],

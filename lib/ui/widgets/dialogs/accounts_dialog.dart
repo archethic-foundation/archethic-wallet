@@ -1,7 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/settings/theme.dart';
+
 import 'package:aewallet/model/data/account.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -35,7 +36,7 @@ class AccountsDialog {
       context: context,
       builder: (BuildContext context) {
         final localizations = AppLocalizations.of(context)!;
-        final theme = ref.read(ThemeProviders.selectedTheme);
+
         return AlertDialog(
           title: Padding(
             padding: const EdgeInsets.only(bottom: 10),
@@ -44,7 +45,7 @@ class AccountsDialog {
               children: [
                 Text(
                   localizations.keychainHeader,
-                  style: theme.textStyleSize24W700TelegrafPrimary,
+                  style: ArchethicThemeStyles.textStyleSize24W700Primary,
                 ),
                 const SizedBox(
                   height: 5,
@@ -52,12 +53,12 @@ class AccountsDialog {
                 if (accounts.length > 1)
                   Text(
                     localizations.selectAccountDescSeveral,
-                    style: theme.textStyleSize12W100Primary,
+                    style: ArchethicThemeStyles.textStyleSize12W100Primary,
                   )
                 else
                   Text(
                     localizations.selectAccountDescOne,
-                    style: theme.textStyleSize12W100Primary,
+                    style: ArchethicThemeStyles.textStyleSize12W100Primary,
                   ),
               ],
             ),
@@ -65,7 +66,7 @@ class AccountsDialog {
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(Radius.circular(16)),
             side: BorderSide(
-              color: theme.text45!,
+              color: ArchethicTheme.text45,
             ),
           ),
           content: SingleChildScrollView(

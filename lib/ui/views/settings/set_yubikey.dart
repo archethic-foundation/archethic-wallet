@@ -1,16 +1,16 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
 import 'package:aewallet/model/authentication_method.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
-// Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -64,21 +64,24 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              theme.background3Small!,
+              ArchethicTheme.backgroundSmall,
             ),
             fit: BoxFit.fill,
           ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: <Color>[theme.backgroundDark!, theme.background!],
+            colors: <Color>[
+              ArchethicTheme.backgroundDark,
+              ArchethicTheme.background,
+            ],
           ),
         ),
         child: TapOutsideUnfocus(
@@ -124,7 +127,8 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
                                     alignment: AlignmentDirectional.centerStart,
                                     child: AutoSizeText(
                                       widget.header!,
-                                      style: theme.textStyleSize14W600Primary,
+                                      style: ArchethicThemeStyles
+                                          .textStyleSize14W600Primary,
                                     ),
                                   ),
                                 if (widget.description != null)
@@ -136,12 +140,13 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
                                     ),
                                     child: Linkify(
                                       text: widget.description!,
-                                      style: theme.textStyleSize12W100Primary,
+                                      style: ArchethicThemeStyles
+                                          .textStyleSize12W100Primary,
                                       textAlign: TextAlign.left,
                                       options: const LinkifyOptions(
                                         humanize: false,
                                       ),
-                                      linkStyle: theme
+                                      linkStyle: ArchethicThemeStyles
                                           .textStyleSize12W100Primary
                                           .copyWith(
                                         decoration: TextDecoration.underline,
@@ -162,7 +167,8 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
                                   margin: const EdgeInsets.only(top: 3),
                                   child: Text(
                                     _clientIDValidationText,
-                                    style: theme.textStyleSize14W600Primary,
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize14W600Primary,
                                   ),
                                 ),
                                 Container(
@@ -173,7 +179,8 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
                                   margin: const EdgeInsets.only(top: 3),
                                   child: Text(
                                     _clientAPIKeyValidationText,
-                                    style: theme.textStyleSize14W600Primary,
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize14W600Primary,
                                   ),
                                 ),
                                 const SizedBox(
@@ -217,15 +224,14 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
   }
 
   Column getClientIDContainer() {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     return Column(
       children: <Widget>[
         AppTextField(
           topMargin: 30,
           focusNode: _clientIDFocusNode,
           controller: _clientIDController,
-          cursorColor: theme.text,
-          style: theme.textStyleSize16W700Primary,
+          cursorColor: ArchethicTheme.text,
+          style: ArchethicThemeStyles.textStyleSize16W700Primary,
           inputFormatters: <LengthLimitingTextInputFormatter>[
             LengthLimitingTextInputFormatter(10),
           ],
@@ -249,15 +255,14 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
   }
 
   Column getClientAPIKeyContainer() {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     return Column(
       children: <Widget>[
         AppTextField(
           topMargin: 10,
           focusNode: _clientAPIKeyFocusNode,
           controller: _clientAPIKeyController,
-          cursorColor: theme.text,
-          style: theme.textStyleSize16W700Primary,
+          cursorColor: ArchethicTheme.text,
+          style: ArchethicThemeStyles.textStyleSize16W700Primary,
           inputFormatters: <LengthLimitingTextInputFormatter>[
             LengthLimitingTextInputFormatter(40),
           ],

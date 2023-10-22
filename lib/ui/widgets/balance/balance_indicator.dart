@@ -1,11 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/primary_currency.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -90,11 +91,10 @@ class _BalanceIndicatorButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
     return IconButton(
       icon: const Icon(Symbols.currency_exchange),
-      color: theme.textFieldIcon,
+      color: ArchethicTheme.textFieldIcon,
       iconSize: 14,
       onPressed: () async {
         sl.get<HapticUtil>().feedback(
@@ -124,7 +124,7 @@ class _BalanceIndicatorFiat extends ConsumerWidget {
       AccountProviders.selectedAccount
           .select((value) => value.valueOrNull?.balance),
     );
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final currency = ref.watch(
       SettingsProviders.settings.select((settings) => settings.currency),
     );
@@ -147,7 +147,7 @@ class _BalanceIndicatorFiat extends ConsumerWidget {
           fiatValue,
         ),
       ),
-      style: theme.textStyleSize14W100Primary,
+      style: ArchethicThemeStyles.textStyleSize14W100Primary,
     );
   }
 }
@@ -168,8 +168,6 @@ class _BalanceIndicatorNative extends ConsumerWidget {
           .select((value) => value.valueOrNull?.balance),
     );
 
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     if (accountSelectedBalance == null) return const SizedBox();
 
     if (allDigits == true) {
@@ -177,14 +175,14 @@ class _BalanceIndicatorNative extends ConsumerWidget {
         '${NumberUtil.formatThousandsStr(
           accountSelectedBalance.nativeTokenValueToString(),
         )} ${accountSelectedBalance.nativeTokenName}',
-        style: theme.textStyleSize14W100Primary,
+        style: ArchethicThemeStyles.textStyleSize14W100Primary,
       );
     } else {
       return Text(
         '${NumberUtil.formatThousandsStr(
           accountSelectedBalance.nativeTokenValueToString(digits: 2),
         )} ${accountSelectedBalance.nativeTokenName}',
-        style: theme.textStyleSize14W100Primary,
+        style: ArchethicThemeStyles.textStyleSize14W100Primary,
       );
     }
   }

@@ -1,6 +1,6 @@
 // ignore_for_file: sort_constructors_first, type_annotate_public_apis, hash_and_equals, use_super_parameters, require_trailing_commas, prefer_conditional_assignment, avoid_equals_and_hash_code_on_mutable_classes
 
-part of encrypt;
+part of '../encrypt.dart';
 
 /// Represents an encripted value.
 class Encrypted {

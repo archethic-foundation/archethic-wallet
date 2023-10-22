@@ -1,9 +1,8 @@
 import 'package:aewallet/application/contact.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/public_key.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
@@ -77,7 +76,6 @@ class UpdateDiscussionAddMembersState
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final formNotifier =
         ref.watch(MessengerProviders.updateDiscussionForm.notifier);
@@ -116,7 +114,8 @@ class UpdateDiscussionAddMembersState
                                   child: Expanded(
                                     child: Text(
                                       localizations.noContacts,
-                                      style: theme.textStyleSize14W200Primary,
+                                      style: ArchethicThemeStyles
+                                          .textStyleSize14W200Primary,
                                     ),
                                   ),
                                 ),

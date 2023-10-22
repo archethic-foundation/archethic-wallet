@@ -2,11 +2,11 @@ import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
+
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/primary_currency.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +30,6 @@ class SingleContactBalance extends ConsumerWidget {
           contact: contact,
         );
 
-        final theme = ref.watch(ThemeProviders.selectedTheme);
         final settings = ref.watch(SettingsProviders.settings);
         final primaryCurrency =
             ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
@@ -56,13 +55,13 @@ class SingleContactBalance extends ConsumerWidget {
                   children: [
                     AutoSizeText(
                       '${accountBalance.nativeTokenValueToString(digits: 2)} ${accountBalance.nativeTokenName}',
-                      style: theme.textStyleSize12W400Primary,
+                      style: ArchethicThemeStyles.textStyleSize12W400Primary,
                       textAlign: TextAlign.end,
                     ),
                     AutoSizeText(
                       fiatAmountString,
                       textAlign: TextAlign.end,
-                      style: theme.textStyleSize12W400Primary,
+                      style: ArchethicThemeStyles.textStyleSize12W400Primary,
                     ),
                   ],
                 )
@@ -72,11 +71,11 @@ class SingleContactBalance extends ConsumerWidget {
                     AutoSizeText(
                       fiatAmountString,
                       textAlign: TextAlign.end,
-                      style: theme.textStyleSize12W400Primary,
+                      style: ArchethicThemeStyles.textStyleSize12W400Primary,
                     ),
                     AutoSizeText(
                       '${accountBalance.nativeTokenValueToString(digits: 2)} ${accountBalance.nativeTokenName}',
-                      style: theme.textStyleSize12W400Primary,
+                      style: ArchethicThemeStyles.textStyleSize12W400Primary,
                       textAlign: TextAlign.end,
                     ),
                   ],
@@ -87,13 +86,13 @@ class SingleContactBalance extends ConsumerWidget {
             children: [
               AutoSizeText(
                 '···········',
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
                 textAlign: TextAlign.end,
               ),
               AutoSizeText(
                 '···········',
                 textAlign: TextAlign.end,
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
             ],
           );

@@ -1,8 +1,9 @@
 import 'dart:io';
 import 'package:aewallet/application/settings/language.dart';
-import 'package:aewallet/application/settings/theme.dart';
+
 import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/model/available_language.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/util/case_converter.dart';
@@ -82,13 +83,12 @@ class SecurityManager {
         },
       );
     } else {
-      final theme = ref.watch(ThemeProviders.selectedTheme);
       UIUtil.showSnackbar(
         localizations.rootWarning,
         context,
         ref,
-        theme.text!,
-        theme.snackBarShadow!,
+        ArchethicTheme.text,
+        ArchethicTheme.snackBarShadow,
         duration: const Duration(seconds: 10),
       );
     }

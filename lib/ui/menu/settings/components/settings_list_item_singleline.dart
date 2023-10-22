@@ -20,7 +20,6 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
 
     return TextButton(
@@ -62,7 +61,7 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
                   child: Text(
                     heading,
                     style: headingStyle ??
-                        theme.textStyleSize16W600TelegrafPrimary,
+                        ArchethicThemeStyles.textStyleSize16W600Primary,
                   ),
                 ),
                 SizedBox(
@@ -72,7 +71,7 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
                     maxLines: 5,
                     stepGranularity: 0.1,
                     minFontSize: 8,
-                    style: theme.textStyleSize12W100Primary,
+                    style: ArchethicThemeStyles.textStyleSize12W100Primary,
                   ),
                 ),
               ],
@@ -81,7 +80,7 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
             if (displayChevron != null && displayChevron == true)
               Icon(
                 Symbols.chevron_right,
-                color: theme.iconDrawer,
+                color: ArchethicTheme.iconDrawer,
                 weight: IconSize.weightM,
                 opticalSize: IconSize.opticalSizeM,
                 grade: IconSize.gradeM,
@@ -109,7 +108,7 @@ class _SettingsListItemSingleLine extends _SettingsListItem {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final preferences = ref.watch(SettingsProviders.settings);
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     return TextButton(
       style: ButtonStyle(
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -148,7 +147,7 @@ class _SettingsListItemSingleLine extends _SettingsListItem {
             const Spacer(),
             Icon(
               Symbols.chevron_right,
-              color: theme.iconDrawer,
+              color: ArchethicTheme.iconDrawer,
               weight: IconSize.weightM,
               opticalSize: IconSize.opticalSizeM,
               grade: IconSize.gradeM,

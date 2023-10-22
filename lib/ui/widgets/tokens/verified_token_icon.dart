@@ -1,7 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
+
 import 'package:aewallet/application/verified_tokens.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -22,7 +24,7 @@ class VerifiedTokenIcon extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final preferences = ref.watch(SettingsProviders.settings);
 
     return FutureBuilder<bool>(
@@ -47,7 +49,7 @@ class VerifiedTokenIcon extends ConsumerWidget {
               },
               child: Icon(
                 Symbols.verified,
-                color: theme.activeColorSwitch,
+                color: ArchethicTheme.activeColorSwitch,
                 size: 15,
               ),
             );

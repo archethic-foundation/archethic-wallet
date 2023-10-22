@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/domain/models/market_price_history.dart';
 import 'package:aewallet/util/currency_util.dart';
 // Package imports:

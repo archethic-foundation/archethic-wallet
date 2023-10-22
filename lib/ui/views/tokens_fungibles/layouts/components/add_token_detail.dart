@@ -1,9 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/account_balance.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/provider.dart';
 import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:aewallet/util/number_util.dart';
@@ -19,7 +19,7 @@ class AddTokenDetail extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final addToken = ref.watch(AddTokenFormProvider.addTokenForm);
     final accountSelected =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
@@ -33,12 +33,12 @@ class AddTokenDetail extends ConsumerWidget {
             children: [
               Text(
                 localizations.tokenName,
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
               Expanded(
                 child: Text(
                   addToken.name,
-                  style: theme.textStyleSize12W400Primary,
+                  style: ArchethicThemeStyles.textStyleSize12W400Primary,
                   textAlign: TextAlign.end,
                 ),
               ),
@@ -48,11 +48,11 @@ class AddTokenDetail extends ConsumerWidget {
             children: [
               Text(
                 localizations.tokenSymbol,
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
               Text(
                 addToken.symbol,
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
             ],
           ),
@@ -60,11 +60,11 @@ class AddTokenDetail extends ConsumerWidget {
             children: [
               Text(
                 localizations.tokenInitialSupply,
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
               Text(
                 NumberUtil.formatThousands(addToken.initialSupply),
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
             ],
           ),
@@ -72,14 +72,14 @@ class AddTokenDetail extends ConsumerWidget {
             children: [
               Text(
                 localizations.estimatedFees,
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
               Text(
                 AmountFormatters.standardSmallValue(
                   addToken.feeEstimationOrZero,
                   AccountBalance.cryptoCurrencyLabel,
                 ),
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
             ],
           ),
@@ -87,7 +87,7 @@ class AddTokenDetail extends ConsumerWidget {
             children: [
               Text(
                 localizations.availableAfterCreation,
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
               Text(
                 AmountFormatters.standard(
@@ -95,7 +95,7 @@ class AddTokenDetail extends ConsumerWidget {
                       addToken.feeEstimationOrZero,
                   addToken.symbolFees(context),
                 ),
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
             ],
           ),

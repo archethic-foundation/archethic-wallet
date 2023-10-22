@@ -1,10 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
@@ -172,7 +173,6 @@ class _ActionButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10),
       child: onTap != null
@@ -191,25 +191,26 @@ class _ActionButton extends ConsumerWidget {
                         grade: IconSize.gradeM,
                         color: enabled
                             ? Colors.white
-                            : theme.text!.withOpacity(0.3),
+                            : ArchethicTheme.text.withOpacity(0.3),
                         size: 38,
                       ),
                     ),
                     shaderCallback: (Rect bounds) {
                       const rect = Rect.fromLTRB(0, 0, 40, 40);
-                      return theme.gradient!.createShader(rect);
+                      return ArchethicTheme.gradient.createShader(rect);
                     },
                   ),
                   const SizedBox(height: 5),
                   if (enabled)
                     Text(
                       text,
-                      style: theme.textStyleSize14W600TelegrafPrimary,
+                      style: ArchethicThemeStyles.textStyleSize14W600Primary,
                     )
                   else
                     Text(
                       text,
-                      style: theme.textStyleSize14W600TelegrafPrimaryDisabled,
+                      style: ArchethicThemeStyles
+                          .textStyleSize14W600PrimaryDisabled,
                     ),
                 ],
               ),
@@ -222,26 +223,28 @@ class _ActionButton extends ConsumerWidget {
                     height: 40,
                     child: Icon(
                       icon,
-                      color:
-                          enabled ? Colors.white : theme.text!.withOpacity(0.3),
+                      color: enabled
+                          ? Colors.white
+                          : ArchethicTheme.text.withOpacity(0.3),
                       size: 38,
                     ),
                   ),
                   shaderCallback: (Rect bounds) {
                     const rect = Rect.fromLTRB(0, 0, 40, 40);
-                    return theme.gradient!.createShader(rect);
+                    return ArchethicTheme.gradient.createShader(rect);
                   },
                 ),
                 const SizedBox(height: 5),
                 if (enabled)
                   Text(
                     text,
-                    style: theme.textStyleSize14W600TelegrafPrimary,
+                    style: ArchethicThemeStyles.textStyleSize14W600Primary,
                   )
                 else
                   Text(
                     text,
-                    style: theme.textStyleSize14W600TelegrafPrimaryDisabled,
+                    style:
+                        ArchethicThemeStyles.textStyleSize14W600PrimaryDisabled,
                   ),
               ],
             ),

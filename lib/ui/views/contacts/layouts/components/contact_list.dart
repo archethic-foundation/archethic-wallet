@@ -1,9 +1,10 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
-import 'package:aewallet/application/settings/theme.dart';
+
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/contacts/layouts/components/single_contact.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -17,12 +18,11 @@ class ContactList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final accounts = ref.watch(AccountProviders.accounts).valueOrNull;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return ListView.separated(
       separatorBuilder: (context, index) => Divider(
         height: 2,
-        color: theme.text15,
+        color: ArchethicTheme.text15,
       ),
       physics: const AlwaysScrollableScrollPhysics(),
       padding: EdgeInsets.only(

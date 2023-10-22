@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -16,7 +16,7 @@ class NetworkChoiceInfos extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final settings = ref.watch(SettingsProviders.settings);
     final network = settings.network;
     return InkWell(
@@ -40,7 +40,7 @@ class NetworkChoiceInfos extends ConsumerWidget {
               Expanded(
                 child: AutoSizeText(
                   localizations.introNewWalletGetFirstInfosNetworkHeader,
-                  style: theme.textStyleSize12W100Primary,
+                  style: ArchethicThemeStyles.textStyleSize12W100Primary,
                   textAlign: TextAlign.justify,
                 ),
               ),
@@ -51,12 +51,12 @@ class NetworkChoiceInfos extends ConsumerWidget {
           ),
           Text(
             '${localizations.introNewWalletGetFirstInfosNetworkChoice} ${network.getDisplayName(context)}',
-            style: theme.textStyleSize12W400Primary,
+            style: ArchethicThemeStyles.textStyleSize12W400Primary,
           ),
           if (network.networkDevEndpoint.isNotEmpty)
             Text(
               network.networkDevEndpoint,
-              style: theme.textStyleSize12W400Primary,
+              style: ArchethicThemeStyles.textStyleSize12W400Primary,
             ),
         ],
       ),

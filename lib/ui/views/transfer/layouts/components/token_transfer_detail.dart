@@ -1,9 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/account_balance.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/transfer_recipient_formatters.dart';
 import 'package:aewallet/ui/views/transfer/bloc/provider.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
@@ -40,7 +40,7 @@ class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final transfer = ref.watch(TransferFormProvider.transferForm);
     final accountSelected = ref
         .watch(
@@ -78,7 +78,7 @@ class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
                         transfer.amount,
                         transfer.symbol(context),
                       ),
-                      style: theme.textStyleSize28W700Primary,
+                      style: ArchethicThemeStyles.textStyleSize28W700Primary,
                     )
                   : const SizedBox(
                       height: 28,
@@ -89,7 +89,7 @@ class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
             children: [
               Text(
                 '${localizations.txListFrom} ${accountSelected.nameDisplayed}',
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
             ],
           ),
@@ -97,7 +97,7 @@ class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
             children: [
               Text(
                 '${localizations.txListTo} ${transfer.recipient.format(localizations)}',
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
               if (transfer.transferType != TransferType.nft)
                 Text(
@@ -105,7 +105,7 @@ class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
                     transfer.amount,
                     transfer.symbol(context),
                   ),
-                  style: theme.textStyleSize12W400Primary,
+                  style: ArchethicThemeStyles.textStyleSize12W400Primary,
                 )
               else
                 Expanded(
@@ -114,7 +114,7 @@ class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
                       transfer.amount,
                       'NFT "$nftName"',
                     ),
-                    style: theme.textStyleSize12W400Primary,
+                    style: ArchethicThemeStyles.textStyleSize12W400Primary,
                     textAlign: TextAlign.end,
                   ),
                 ),
@@ -124,14 +124,14 @@ class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
             children: [
               Text(
                 localizations.estimatedFees,
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
               Text(
                 AmountFormatters.standardSmallValue(
                   transfer.feeEstimation.valueOrNull ?? 0,
                   AccountBalance.cryptoCurrencyLabel,
                 ),
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
             ],
           ),
@@ -139,7 +139,7 @@ class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
             children: [
               Text(
                 localizations.availableAfterTransfer,
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
               if (transfer.transferType != TransferType.nft)
                 Text(
@@ -147,7 +147,7 @@ class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
                     transfer.accountToken!.amount! - transfer.amount,
                     transfer.symbol(context),
                   ),
-                  style: theme.textStyleSize12W400Primary,
+                  style: ArchethicThemeStyles.textStyleSize12W400Primary,
                 )
               else
                 Expanded(
@@ -156,7 +156,7 @@ class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
                       transfer.accountToken!.amount! - transfer.amount,
                       'NFT "$nftName"',
                     ),
-                    style: theme.textStyleSize12W400Primary,
+                    style: ArchethicThemeStyles.textStyleSize12W400Primary,
                     textAlign: TextAlign.end,
                   ),
                 ),
@@ -171,13 +171,14 @@ class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
                     children: [
                       Text(
                         localizations.sendMessageConfirmHeader,
-                        style: theme.textStyleSize12W400Primary,
+                        style: ArchethicThemeStyles.textStyleSize12W400Primary,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: Text(
                           transfer.message,
-                          style: theme.textStyleSize12W400Primary,
+                          style:
+                              ArchethicThemeStyles.textStyleSize12W400Primary,
                         ),
                       ),
                     ],

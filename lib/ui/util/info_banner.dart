@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/settings/theme.dart';
+
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -22,7 +23,6 @@ class InfoBanner extends ConsumerWidget {
         height: height,
       );
     }
-    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return Container(
       alignment: Alignment.center,
@@ -34,12 +34,12 @@ class InfoBanner extends ConsumerWidget {
         child: Card(
           shape: RoundedRectangleBorder(
             side: BorderSide(
-              color: theme.text!.withOpacity(0.4),
+              color: ArchethicTheme.text.withOpacity(0.4),
             ),
             borderRadius: BorderRadius.circular(10),
           ),
           elevation: 0,
-          color: theme.background,
+          color: ArchethicTheme.background,
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             width: MediaQuery.of(context).size.width,
@@ -47,7 +47,7 @@ class InfoBanner extends ConsumerWidget {
             child: Text(
               message,
               style: TextStyle(
-                color: theme.text,
+                color: ArchethicTheme.text,
                 fontSize: fontSize,
               ),
             ),

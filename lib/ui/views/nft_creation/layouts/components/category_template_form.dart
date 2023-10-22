@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/nft/nft_category.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -33,7 +34,7 @@ class CategoryTemplateForm extends ConsumerWidget {
           children: [
             Text(
               localizations.nftPropertiesRequiredByCategory,
-              style: theme.textStyleSize12W100Primary,
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
               textAlign: TextAlign.justify,
             ),
             NftPropertyAppTextField(
@@ -52,14 +53,14 @@ class CategoryTemplateForm extends ConsumerWidget {
               padding: const EdgeInsets.only(top: 20),
               child: Divider(
                 height: 2,
-                color: theme.text15,
+                color: ArchethicTheme.text15,
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 10),
               child: Text(
                 'Optional properties:',
-                style: theme.textStyleSize12W100Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
                 textAlign: TextAlign.justify,
               ),
             ),
@@ -76,7 +77,7 @@ class CategoryTemplateForm extends ConsumerWidget {
           children: [
             Text(
               localizations.nftPropertiesRequiredByCategory,
-              style: theme.textStyleSize12W100Primary,
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
               textAlign: TextAlign.justify,
             ),
             NftPropertyAppTextField(
@@ -101,14 +102,14 @@ class CategoryTemplateForm extends ConsumerWidget {
               padding: const EdgeInsets.only(top: 20),
               child: Divider(
                 height: 2,
-                color: theme.text15,
+                color: ArchethicTheme.text15,
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 10),
               child: Text(
                 'Optional properties:',
-                style: theme.textStyleSize12W100Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
                 textAlign: TextAlign.justify,
               ),
             ),

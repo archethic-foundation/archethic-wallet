@@ -1,8 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'dart:async';
 import 'dart:developer' as dev;
 
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/util/seeds.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -73,14 +74,13 @@ class UserDataUtil {
       }
       return _parseData(data, type);
     } on PlatformException catch (e) {
-      final theme = ref.read(ThemeProviders.selectedTheme);
       if (e.code == BarcodeScanner.cameraAccessDenied) {
         UIUtil.showSnackbar(
           AppLocalizations.of(context)!.qrInvalidPermissions,
           context,
           ref,
-          theme.text!,
-          theme.snackBarShadow!,
+          ArchethicTheme.text,
+          ArchethicTheme.snackBarShadow,
         );
         return QRScanErrs.permissionDenied;
       } else {
@@ -88,8 +88,8 @@ class UserDataUtil {
           AppLocalizations.of(context)!.qrUnknownError,
           context,
           ref,
-          theme.text!,
-          theme.snackBarShadow!,
+          ArchethicTheme.text,
+          ArchethicTheme.snackBarShadow,
         );
         return QRScanErrs.unknownError;
       }

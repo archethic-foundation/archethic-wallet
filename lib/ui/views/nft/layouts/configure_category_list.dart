@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/nft/nft_category.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/nft_category.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:flutter/foundation.dart';
@@ -94,7 +94,7 @@ class ReorderableWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final nftCategoryToSort = nftCategory;
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.8,
@@ -108,7 +108,7 @@ class ReorderableWidget extends ConsumerWidget {
             children: [
               Text(
                 localizations.availableCategories,
-                style: theme.textStyleSize12W100Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
                 textAlign: TextAlign.justify,
               ),
               ReorderableListView(
@@ -137,7 +137,8 @@ class ReorderableWidget extends ConsumerWidget {
                         ListTile(
                           title: Text(
                             nftCategory.name!,
-                            style: theme.textStyleSize12W400Primary,
+                            style:
+                                ArchethicThemeStyles.textStyleSize12W400Primary,
                           ),
                           leading: nftCategory.id != 0
                               ? IconButton(
@@ -145,7 +146,7 @@ class ReorderableWidget extends ConsumerWidget {
                                     Symbols.remove_circle,
                                     fill: 1,
                                   ),
-                                  hoverColor: theme.text,
+                                  hoverColor: ArchethicTheme.text,
                                   onPressed: () {
                                     nftCategoryToSort.removeWhere(
                                       (element) => element.id == nftCategory.id,
@@ -187,7 +188,7 @@ class ReorderableWidget extends ConsumerWidget {
                 padding: const EdgeInsets.only(top: 20),
                 child: Text(
                   localizations.hiddenCategories,
-                  style: theme.textStyleSize12W100Primary,
+                  style: ArchethicThemeStyles.textStyleSize12W100Primary,
                   textAlign: TextAlign.justify,
                 ),
               ),
@@ -204,7 +205,8 @@ class ReorderableWidget extends ConsumerWidget {
                           ListTile(
                             title: Text(
                               nftCategory.name!,
-                              style: theme.textStyleSize12W400Primary,
+                              style: ArchethicThemeStyles
+                                  .textStyleSize12W400Primary,
                             ),
                             leading: IconButton(
                               icon: const Icon(

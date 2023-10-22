@@ -1,11 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/network_choice_infos.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
@@ -48,7 +49,7 @@ class _IntroNewWalletDisclaimerState
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final settings = ref.watch(SettingsProviders.settings);
     final network = settings.network;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
@@ -59,14 +60,17 @@ class _IntroNewWalletDisclaimerState
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              theme.background2Small!,
+              ArchethicTheme.backgroundSmall,
             ),
-            fit: BoxFit.fitHeight,
+            fit: BoxFit.fill,
           ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: <Color>[theme.backgroundDark!, theme.background!],
+            colors: <Color>[
+              ArchethicTheme.backgroundDark,
+              ArchethicTheme.background,
+            ],
           ),
         ),
         child: LayoutBuilder(
@@ -94,7 +98,7 @@ class _IntroNewWalletDisclaimerState
                                   width: 50,
                                   child: BackButton(
                                     key: const Key('back'),
-                                    color: theme.text,
+                                    color: ArchethicTheme.text,
                                     onPressed: () {
                                       Navigator.pop(context);
                                     },
@@ -114,8 +118,8 @@ class _IntroNewWalletDisclaimerState
                                   AutoSizeText(
                                     localizations
                                         .introNewWalletGetFirstInfosWelcome,
-                                    style: theme
-                                        .textStyleSize24W700TelegrafPrimary,
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize24W700Primary,
                                     textAlign: TextAlign.left,
                                   ),
                                   const SizedBox(
@@ -124,7 +128,8 @@ class _IntroNewWalletDisclaimerState
                                   AutoSizeText(
                                     localizations
                                         .introNewWalletGetFirstInfosNameRequest,
-                                    style: theme.textStyleSize14W600Primary,
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize14W600Primary,
                                     textAlign: TextAlign.left,
                                   ),
                                   const SizedBox(
@@ -140,7 +145,8 @@ class _IntroNewWalletDisclaimerState
                                     autocorrect: false,
                                     controller: nameController,
                                     keyboardType: TextInputType.text,
-                                    style: theme.textStyleSize14W600Primary,
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize14W600Primary,
                                     inputFormatters: <TextInputFormatter>[
                                       LengthLimitingTextInputFormatter(20),
                                       UpperCaseTextFormatter(),
@@ -152,7 +158,8 @@ class _IntroNewWalletDisclaimerState
                                   AutoSizeText(
                                     localizations
                                         .introNewWalletGetFirstInfosNameInfos,
-                                    style: theme.textStyleSize12W100Primary,
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize12W100Primary,
                                     textAlign: TextAlign.justify,
                                   ),
                                   const SizedBox(
@@ -160,7 +167,7 @@ class _IntroNewWalletDisclaimerState
                                   ),
                                   Divider(
                                     height: 5,
-                                    color: theme.text15,
+                                    color: ArchethicTheme.text15,
                                   ),
                                   NetworkChoiceInfos(
                                     onTap: () {
@@ -175,7 +182,7 @@ class _IntroNewWalletDisclaimerState
                                   ),
                                   Divider(
                                     height: 5,
-                                    color: theme.text15,
+                                    color: ArchethicTheme.text15,
                                   ),
                                 ],
                               ),
@@ -198,8 +205,8 @@ class _IntroNewWalletDisclaimerState
                                     .introNewWalletGetFirstInfosNameBlank,
                                 context,
                                 ref,
-                                theme.text!,
-                                theme.snackBarShadow!,
+                                ArchethicTheme.text,
+                                ArchethicTheme.snackBarShadow,
                               );
                             } else {
                               AppDialogs.showConfirmDialog(

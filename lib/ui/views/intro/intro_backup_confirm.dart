@@ -1,18 +1,19 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'dart:async';
 
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/recovery_phrase_saved.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
 import 'package:aewallet/model/data/appdb.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/security_configuration.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
@@ -67,14 +68,14 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
         .registerTo<TransactionSendEvent>()
         .listen((TransactionSendEvent event) async {
       final localizations = AppLocalizations.of(context)!;
-      final theme = ref.read(ThemeProviders.selectedTheme);
+
       if (event.response != 'ok' && event.nbConfirmations == 0) {
         UIUtil.showSnackbar(
           '${localizations.sendError} (${event.response!})',
           context,
           ref,
-          theme.text!,
-          theme.snackBarShadow!,
+          ArchethicTheme.text,
+          ArchethicTheme.snackBarShadow,
         );
         Navigator.of(context).pop(false);
         return;
@@ -85,8 +86,8 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
           localizations.notEnoughConfirmations,
           context,
           ref,
-          theme.text!,
-          theme.snackBarShadow!,
+          ArchethicTheme.text,
+          ArchethicTheme.snackBarShadow,
         );
         Navigator.of(context).pop();
         return;
@@ -104,8 +105,8 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                     .replaceAll('%2', event.maxConfirmations.toString()),
             context,
             ref,
-            theme.text!,
-            theme.snackBarShadow!,
+            ArchethicTheme.text,
+            ArchethicTheme.snackBarShadow,
             duration: const Duration(milliseconds: 5000),
             icon: Symbols.info,
           );
@@ -134,8 +135,8 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                     .replaceAll('%2', event.maxConfirmations.toString()),
             context,
             ref,
-            theme.text!,
-            theme.snackBarShadow!,
+            ArchethicTheme.text,
+            ArchethicTheme.snackBarShadow,
             duration: const Duration(milliseconds: 5000),
             icon: Symbols.info,
           );
@@ -161,8 +162,8 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
               '${localizations.sendError} ($e)',
               context,
               ref,
-              theme.text!,
-              theme.snackBarShadow!,
+              ArchethicTheme.text,
+              ArchethicTheme.snackBarShadow,
             );
           }
           if (error == false) {
@@ -217,7 +218,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     return Scaffold(
@@ -227,14 +228,17 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              theme.background3Small!,
+              ArchethicTheme.backgroundSmall,
             ),
-            fit: BoxFit.fitHeight,
+            fit: BoxFit.fill,
           ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: <Color>[theme.backgroundDark!, theme.background!],
+            colors: <Color>[
+              ArchethicTheme.backgroundDark,
+              ArchethicTheme.background,
+            ],
           ),
         ),
         child: LayoutBuilder(
@@ -256,7 +260,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                           width: 50,
                           child: BackButton(
                             key: const Key('back'),
-                            color: theme.text,
+                            color: ArchethicTheme.text,
                             onPressed: () {
                               Navigator.pop(context);
                             },
@@ -277,7 +281,8 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                               alignment: AlignmentDirectional.centerStart,
                               child: AutoSizeText(
                                 localizations.confirmSecretPhrase,
-                                style: theme.textStyleSize24W700TelegrafPrimary,
+                                style: ArchethicThemeStyles
+                                    .textStyleSize24W700Primary,
                               ),
                             ),
                             Container(
@@ -288,7 +293,8 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                               ),
                               child: AutoSizeText(
                                 localizations.confirmSecretPhraseExplanation,
-                                style: theme.textStyleSize14W600Primary,
+                                style: ArchethicThemeStyles
+                                    .textStyleSize14W600Primary,
                                 textAlign: TextAlign.justify,
                                 maxLines: 6,
                                 stepGranularity: 0.5,
@@ -316,13 +322,13 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                                                 Colors.grey.shade800,
                                             child: Text(
                                               (entry.key + 1).toString(),
-                                              style: theme
+                                              style: ArchethicThemeStyles
                                                   .textStyleSize12W100Primary60,
                                             ),
                                           ),
                                           label: Text(
                                             entry.value,
-                                            style: theme
+                                            style: ArchethicThemeStyles
                                                 .textStyleSize12W400Primary,
                                           ),
                                           onDeleted: () {
@@ -345,7 +351,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                             ),
                             Divider(
                               height: 15,
-                              color: theme.text60,
+                              color: ArchethicTheme.text60,
                             ),
                             Container(
                               margin: const EdgeInsetsDirectional.only(
@@ -373,7 +379,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                                           child: Chip(
                                             label: Text(
                                               entry.value,
-                                              style: theme
+                                              style: ArchethicThemeStyles
                                                   .textStyleSize12W400Primary,
                                             ),
                                           ),
@@ -417,8 +423,8 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                                       localizations.confirmSecretPhraseKo,
                                       context,
                                       ref,
-                                      theme.text!,
-                                      theme.snackBarShadow!,
+                                      ArchethicTheme.text,
+                                      ArchethicTheme.snackBarShadow,
                                     );
                                   });
                                 } else {
@@ -438,8 +444,8 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                                       localizations.confirmSecretPhraseOk,
                                       context,
                                       ref,
-                                      theme.text!,
-                                      theme.snackBarShadow!,
+                                      ArchethicTheme.text,
+                                      ArchethicTheme.snackBarShadow,
                                       icon: Symbols.info,
                                     );
                                     Navigator.pop(context);
@@ -477,12 +483,12 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                                         widget.seed!,
                                       );
                                     },
-                                    titleStyle: theme
-                                        .textStyleSize14W600TelegrafPrimaryRed,
+                                    titleStyle: ArchethicThemeStyles
+                                        .textStyleSize14W600PrimaryRed,
                                     additionalContent:
                                         localizations.archethicDoesntKeepCopy,
-                                    additionalContentStyle:
-                                        theme.textStyleSize12W300PrimaryRed,
+                                    additionalContentStyle: ArchethicThemeStyles
+                                        .textStyleSize12W300PrimaryRed,
                                     cancelText: localizations
                                         .passRecoveryPhraseBackupSecureNow,
                                   );
@@ -509,10 +515,9 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
 
   Future<void> createKeychain() async {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.read(ThemeProviders.selectedTheme);
+
     ShowSendingAnimation.build(
       context,
-      theme,
       title: localizations.appWalletInitInProgress,
     );
 
@@ -534,13 +539,13 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
     } catch (e) {
       error = true;
       final localizations = AppLocalizations.of(context)!;
-      final theme = ref.read(ThemeProviders.selectedTheme);
+
       UIUtil.showSnackbar(
         '${localizations.sendError} ($e)',
         context,
         ref,
-        theme.text!,
-        theme.snackBarShadow!,
+        ArchethicTheme.text,
+        ArchethicTheme.snackBarShadow,
       );
     }
 

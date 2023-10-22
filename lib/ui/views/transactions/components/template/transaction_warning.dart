@@ -1,6 +1,4 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
@@ -15,8 +13,6 @@ class TransactionWarning extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -30,7 +26,7 @@ class TransactionWarning extends ConsumerWidget {
         const SizedBox(width: 5),
         Text(
           message,
-          style: theme.textStyleSize12W400Primary,
+          style: ArchethicThemeStyles.textStyleSize12W400Primary,
           textAlign: TextAlign.end,
         ),
       ],

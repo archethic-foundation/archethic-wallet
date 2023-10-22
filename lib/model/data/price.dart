@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:hive/hive.dart';
 

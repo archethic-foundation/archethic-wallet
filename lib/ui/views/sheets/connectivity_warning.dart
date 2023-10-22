@@ -1,8 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -18,7 +18,6 @@ class ConnectivityWarning extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
     final localizations = AppLocalizations.of(context)!;
     return SafeArea(
@@ -39,7 +38,7 @@ class ConnectivityWarning extends ConsumerWidget {
                       const SizedBox(width: 10),
                       Text(
                         localizations.connectivityWarningHeader,
-                        style: theme.textStyleSize14W600Primary,
+                        style: ArchethicThemeStyles.textStyleSize14W600Primary,
                       ),
                     ],
                   ),
@@ -48,7 +47,7 @@ class ConnectivityWarning extends ConsumerWidget {
                   ),
                   Text(
                     localizations.connectivityWarningDesc,
-                    style: theme.textStyleSize12W100Primary,
+                    style: ArchethicThemeStyles.textStyleSize12W100Primary,
                   ),
                   const SizedBox(
                     height: 30,

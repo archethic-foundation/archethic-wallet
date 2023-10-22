@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/settings/theme.dart';
+
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
@@ -13,7 +14,6 @@ class BuySheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     return Column(
       children: <Widget>[
         SheetHeader(title: AppLocalizations.of(context)!.transactionBuyHeader),
@@ -118,7 +118,7 @@ class BuySheet extends ConsumerWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Divider(
                           height: 1,
-                          color: theme.backgroundDarkest!.withOpacity(0.1),
+                          color: ArchethicTheme.backgroundDarkest.withOpacity(0.1),
                         ),
                       ),
                       const SizedBox(
@@ -138,7 +138,7 @@ class BuySheet extends ConsumerWidget {
                               },
                               child: Image.asset(
                                 'assets/buy/Probit.png',
-                                color: theme.text,
+                                color: ArchethicTheme.text,
                                 height: 40,
                               ),
                             ),
@@ -155,7 +155,7 @@ class BuySheet extends ConsumerWidget {
                               },
                               child: Image.asset(
                                 'assets/buy/Bithumb.png',
-                                color: theme.text,
+                                color: ArchethicTheme.text,
                                 height: 40,
                               ),
                             ),

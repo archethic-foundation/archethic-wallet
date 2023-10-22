@@ -1,10 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/connectivity_status.dart';
-import 'package:aewallet/application/settings/theme.dart';
+
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/model/authentication_method.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
 import 'package:aewallet/ui/views/settings/set_password.dart';
 import 'package:aewallet/ui/views/settings/set_yubikey.dart';
@@ -47,7 +49,7 @@ class _IntroConfigureSecurityState
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     return Scaffold(
@@ -56,14 +58,17 @@ class _IntroConfigureSecurityState
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              theme.background2Small!,
+              ArchethicTheme.backgroundSmall,
             ),
-            fit: BoxFit.fitHeight,
+            fit: BoxFit.fill,
           ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: <Color>[theme.backgroundDark!, theme.background!],
+            colors: <Color>[
+              ArchethicTheme.backgroundDark,
+              ArchethicTheme.background,
+            ],
           ),
         ),
         child: LayoutBuilder(
@@ -84,7 +89,7 @@ class _IntroConfigureSecurityState
                           width: 50,
                           child: BackButton(
                             key: const Key('back'),
-                            color: theme.text,
+                            color: ArchethicTheme.text,
                             onPressed: () {
                               Navigator.pop(context, false);
                             },
@@ -98,7 +103,8 @@ class _IntroConfigureSecurityState
                           children: <Widget>[
                             AutoSizeText(
                               localizations.securityHeader,
-                              style: theme.textStyleSize20W700TelegrafPrimary,
+                              style: ArchethicThemeStyles
+                                  .textStyleSize20W700Primary,
                               textAlign: TextAlign.justify,
                               maxLines: 6,
                               stepGranularity: 0.5,
@@ -112,7 +118,8 @@ class _IntroConfigureSecurityState
                               alignment: AlignmentDirectional.centerStart,
                               child: AutoSizeText(
                                 localizations.configureSecurityIntro,
-                                style: theme.textStyleSize14W600Primary,
+                                style: ArchethicThemeStyles
+                                    .textStyleSize14W600Primary,
                               ),
                             ),
                             Container(
@@ -123,7 +130,8 @@ class _IntroConfigureSecurityState
                               ),
                               child: AutoSizeText(
                                 localizations.configureSecurityExplanation,
-                                style: theme.textStyleSize12W100Primary,
+                                style: ArchethicThemeStyles
+                                    .textStyleSize12W100Primary,
                                 textAlign: TextAlign.justify,
                                 maxLines: 6,
                                 stepGranularity: 0.5,

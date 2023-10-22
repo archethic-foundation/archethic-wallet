@@ -1,13 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'dart:async';
 
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
-import 'package:aewallet/ui/themes/themes.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/routes.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
@@ -40,10 +40,11 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
     _sendTxSub = EventTaxiImpl.singleton()
         .registerTo<TransactionSendEvent>()
         .listen((TransactionSendEvent event) async {
-      final theme = ref.read(ThemeProviders.selectedTheme);
       if (event.response != 'ok' && event.nbConfirmations == 0) {
         // Send failed
-        _showSendFailed(event, theme);
+        _showSendFailed(
+          event,
+        );
         return;
       }
 
@@ -65,28 +66,27 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
 
         await ref.read(AccountProviders.selectedAccount.notifier).refreshNFTs();
 
-        await _showSendSucceed(event, theme);
+        await _showSendSucceed(event);
         return;
       }
 
-      _showNotEnoughConfirmation(theme);
+      _showNotEnoughConfirmation();
     });
   }
 
-  void _showNotEnoughConfirmation(BaseTheme theme) {
+  void _showNotEnoughConfirmation() {
     UIUtil.showSnackbar(
       AppLocalizations.of(context)!.notEnoughConfirmations,
       context,
       ref,
-      theme.text!,
-      theme.snackBarShadow!,
+      ArchethicTheme.text,
+      ArchethicTheme.snackBarShadow,
     );
     Navigator.of(context).pop();
   }
 
   Future<void> _showSendSucceed(
     TransactionSendEvent event,
-    BaseTheme theme,
   ) async {
     UIUtil.showSnackbar(
       event.nbConfirmations == 1
@@ -100,8 +100,8 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
               .replaceAll('%2', event.maxConfirmations.toString()),
       context,
       ref,
-      theme.text!,
-      theme.snackBarShadow!,
+      ArchethicTheme.text,
+      ArchethicTheme.snackBarShadow,
       icon: Symbols.info,
       duration: const Duration(milliseconds: 5000),
     );
@@ -111,7 +111,6 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
 
   void _showSendFailed(
     TransactionSendEvent event,
-    BaseTheme theme,
   ) {
     // Send failed
     if (animationOpen!) {
@@ -121,8 +120,8 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
       event.response!,
       context,
       ref,
-      theme.text!,
-      theme.snackBarShadow!,
+      ArchethicTheme.text,
+      ArchethicTheme.snackBarShadow,
       duration: const Duration(seconds: 5),
     );
     Navigator.of(context).pop();
@@ -144,7 +143,7 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final nftCreation = ref.watch(
       NftCreationFormProvider.nftCreationForm(
         ref.read(
@@ -166,14 +165,17 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              theme.background3Small!,
+              ArchethicTheme.backgroundSmall,
             ),
-            fit: BoxFit.fitHeight,
+            fit: BoxFit.fill,
           ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: <Color>[theme.backgroundDark!, theme.background!],
+            colors: <Color>[
+              ArchethicTheme.backgroundDark,
+              ArchethicTheme.background,
+            ],
           ),
         ),
         child: LayoutBuilder(
@@ -195,7 +197,8 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
                         padding: const EdgeInsets.only(left: 30, right: 30),
                         child: Text(
                           localizations.createNFTConfirmationMessage,
-                          style: theme.textStyleSize14W600Primary,
+                          style:
+                              ArchethicThemeStyles.textStyleSize14W600Primary,
                         ),
                       ),
                       const SizedBox(
@@ -219,7 +222,6 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
                             onPressed: () async {
                               ShowSendingAnimation.build(
                                 context,
-                                theme,
                               );
 
                               await ref
@@ -247,7 +249,7 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
                             key: const Key('cancel'),
                             icon: Icon(
                               Symbols.arrow_back_ios,
-                              color: theme.mainButtonLabel,
+                              color: ArchethicTheme.mainButtonLabel,
                               size: 14,
                             ),
                             onPressed: () {

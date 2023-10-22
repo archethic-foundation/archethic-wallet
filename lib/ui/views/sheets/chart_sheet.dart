@@ -1,9 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/price_history/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
+
 import 'package:aewallet/domain/models/market_price_history.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/widgets/balance/balance_infos.dart';
 import 'package:aewallet/ui/widgets/components/history_chart.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
@@ -38,7 +40,6 @@ class ChartSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final currency = ref.watch(
       SettingsProviders.settings.select((settings) => settings.currency),
     );
@@ -67,21 +68,22 @@ class ChartSheet extends ConsumerWidget {
                   intervals: chartInfos,
                   gradientColors: LinearGradient(
                     colors: <Color>[
-                      theme.text20!,
-                      theme.text!,
+                      ArchethicTheme.text20,
+                      ArchethicTheme.text,
                     ],
                   ),
                   gradientColorsBar: LinearGradient(
                     colors: <Color>[
-                      theme.text!.withOpacity(0.9),
-                      theme.text!.withOpacity(0),
+                      ArchethicTheme.text.withOpacity(0.9),
+                      ArchethicTheme.text.withOpacity(0),
                     ],
                     begin: Alignment.center,
                     end: Alignment.bottomCenter,
                   ),
-                  tooltipBg: theme.backgroundDark!,
-                  tooltipText: theme.textStyleSize12W100Primary,
-                  axisTextStyle: theme.textStyleSize12W100Primary,
+                  tooltipBg: ArchethicTheme.backgroundDark,
+                  tooltipText: ArchethicThemeStyles.textStyleSize12W100Primary,
+                  axisTextStyle:
+                      ArchethicThemeStyles.textStyleSize12W100Primary,
                   optionChartSelected: selectedInterval,
                   currency: currency.name,
                   completeChart: true,
@@ -123,14 +125,14 @@ class ChartSheet extends ConsumerWidget {
                 return BottomBarItem(
                   icon: Text(
                     optionChart.getChartOptionLabel(context),
-                    style: theme.textStyleSize12W100Primary,
+                    style: ArchethicThemeStyles.textStyleSize12W100Primary,
                   ),
                   backgroundColorOpacity:
-                      theme.bottomBarBackgroundColorOpacity!,
-                  activeIconColor: theme.bottomBarActiveIconColor,
-                  activeTitleColor: theme.bottomBarActiveTitleColor,
-                  activeColor: theme.bottomBarActiveColor!,
-                  inactiveColor: theme.bottomBarInactiveIcon,
+                      ArchethicTheme.bottomBarBackgroundColorOpacity,
+                  activeIconColor: ArchethicTheme.bottomBarActiveIconColor,
+                  activeTitleColor: ArchethicTheme.bottomBarActiveTitleColor,
+                  activeColor: ArchethicTheme.bottomBarActiveColor,
+                  inactiveColor: ArchethicTheme.bottomBarInactiveIcon,
                 );
               }).toList(),
             ),
@@ -147,14 +149,12 @@ class _ChartLoading extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     return Center(
       child: SizedBox(
         height: 78,
         child: Center(
           child: CircularProgressIndicator(
-            color: theme.text,
+            color: ArchethicTheme.text,
             strokeWidth: 1,
           ),
         ),
@@ -168,11 +168,10 @@ class _ChartLoadFailed extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final priceChartInterval = ref.watch(PriceHistoryProviders.scaleOption);
     return Center(
       child: TextButton(
-        child: Icon(Symbols.replay, color: theme.text, size: 30),
+        child: Icon(Symbols.replay, color: ArchethicTheme.text, size: 30),
         onPressed: () {
           ref.invalidate(
             PriceHistoryProviders.chartData(

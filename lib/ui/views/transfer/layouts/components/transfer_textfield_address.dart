@@ -67,7 +67,7 @@ class _TransferTextFieldAddressState
     final transferNotifier =
         ref.watch(TransferFormProvider.transferForm.notifier);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -172,16 +172,16 @@ class _TransferTextFieldAddressState
                             AppLocalizations.of(context)!.qrInvalidAddress,
                             context,
                             ref,
-                            theme.text!,
-                            theme.snackBarShadow!,
+                            ArchethicTheme.text,
+                            ArchethicTheme.snackBarShadow,
                           );
                         } else if (QRScanErrs.errorList.contains(scanResult)) {
                           UIUtil.showSnackbar(
                             scanResult,
                             context,
                             ref,
-                            theme.text!,
-                            theme.snackBarShadow!,
+                            ArchethicTheme.text,
+                            ArchethicTheme.snackBarShadow,
                           );
                           return;
                         } else {

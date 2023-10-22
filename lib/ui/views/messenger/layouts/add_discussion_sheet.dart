@@ -1,9 +1,9 @@
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/access_recipient_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/views/messenger/bloc/discussion_search_bar_provider.dart';
@@ -35,7 +35,7 @@ class AddDiscussionSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final settings = ref.watch(SettingsProviders.settings);
 
@@ -62,8 +62,8 @@ class AddDiscussionSheet extends ConsumerWidget {
                   localizations.addressCopied,
                   context,
                   ref,
-                  theme.text!,
-                  theme.snackBarShadow!,
+                  ArchethicTheme.text,
+                  ArchethicTheme.snackBarShadow,
                   icon: Symbols.info,
                 );
               },
@@ -143,7 +143,7 @@ class AddDiscussionSheet extends ConsumerWidget {
                   key: const Key('addRemoteMessengerGroup'),
                   icon: Icon(
                     Symbols.add,
-                    color: theme.mainButtonLabel,
+                    color: ArchethicTheme.mainButtonLabel,
                     size: 14,
                     weight: IconSize.weightM,
                     opticalSize: IconSize.opticalSizeM,
@@ -180,8 +180,6 @@ class _SectionTitle extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     return Align(
       alignment: Alignment.centerLeft,
       child: Padding(
@@ -193,7 +191,7 @@ class _SectionTitle extends ConsumerWidget {
         child: Text(
           text,
           textAlign: TextAlign.start,
-          style: theme.textStyleSize14W600Primary,
+          style: ArchethicThemeStyles.textStyleSize14W600Primary,
         ),
       ),
     );
@@ -217,7 +215,6 @@ class PublicKeyLine extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final accessRecipient = ref.watch(
       MessengerProviders.accessRecipientWithPublicKey(
@@ -228,18 +225,18 @@ class PublicKeyLine extends ConsumerWidget {
     return Card(
       shape: RoundedRectangleBorder(
         side: BorderSide(
-          color: theme.backgroundAccountsListCardSelected!,
+          color: ArchethicTheme.backgroundAccountsListCardSelected,
         ),
         borderRadius: BorderRadius.circular(10),
       ),
       clipBehavior: Clip.antiAlias,
       elevation: 0,
-      color: theme.backgroundAccountsListCardSelected,
+      color: ArchethicTheme.backgroundAccountsListCardSelected,
       child: InkWell(
         onTap: onTap,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-          color: theme.backgroundAccountsListCard,
+          color: ArchethicTheme.backgroundAccountsListCard,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -249,7 +246,7 @@ class PublicKeyLine extends ConsumerWidget {
                     data: (data) => data.value.format(localizations),
                     orElse: () => '...',
                   ),
-                  style: theme.textStyleSize12W600Primary,
+                  style: ArchethicThemeStyles.textStyleSize12W600Primary,
                 ),
               ),
               _MemberRole(
@@ -286,7 +283,6 @@ class _MemberRole extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final isAdmin = discussion.adminsPubKeys.any(
       (adminPubKey) => adminPubKey == memberPubKey,
     );
@@ -294,7 +290,7 @@ class _MemberRole extends ConsumerWidget {
     if (isAdmin) {
       return Text(
         'Admin',
-        style: theme.textStyleSize12W100Primary,
+        style: ArchethicThemeStyles.textStyleSize12W100Primary,
       );
     }
 

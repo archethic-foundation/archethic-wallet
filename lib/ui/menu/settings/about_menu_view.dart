@@ -8,15 +8,14 @@ class AboutMenuView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     return Scaffold(
-      backgroundColor: theme.background,
+      backgroundColor: ArchethicTheme.background,
       appBar: AppBar(
-        backgroundColor: theme.background,
+        backgroundColor: ArchethicTheme.background,
         title: AutoSizeText(
           localizations.aboutHeader,
-          style: theme.textStyleSize24W700TelegrafPrimary,
+          style: ArchethicThemeStyles.textStyleSize24W700Primary,
         ),
       ),
       body: SafeArea(
@@ -42,7 +41,8 @@ class AboutMenuView extends ConsumerWidget {
 
                                 return Text(
                                   asyncVersionString.asData?.value ?? '',
-                                  style: theme.textStyleSize14W100Primary,
+                                  style: ArchethicThemeStyles
+                                      .textStyleSize14W100Primary,
                                 );
                               },
                             ),
@@ -52,9 +52,9 @@ class AboutMenuView extends ConsumerWidget {
                       /*const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.aboutGeneralTermsAndConditions,
-                        headingStyle: theme.textStyleSize16W600Primary,
+                        headingStyle: ArchethicThemeStyles.textStyleSize16W600Primary,
                         icon: 'assets/icons/terms-and-conditions.png',
-                        iconColor: theme.iconDrawer!,
+                        iconColor: ArchethicTheme.iconDrawer!,
                         onPressed: () async {
                           UIUtil.showWebview(
                             context,
@@ -66,9 +66,9 @@ class AboutMenuView extends ConsumerWidget {
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.aboutWalletServiceTerms,
-                        headingStyle: theme.textStyleSize16W600Primary,
+                        headingStyle: ArchethicThemeStyles.textStyleSize16W600Primary,
                         icon: 'assets/icons/walletServiceTerms.png',
-                        iconColor: theme.iconDrawer!,
+                        iconColor: ArchethicTheme.iconDrawer!,
                         onPressed: () async {
                           UIUtil.showWebview(
                             context,
@@ -82,7 +82,8 @@ class AboutMenuView extends ConsumerWidget {
                           ConnectivityStatus.isConnected)
                         _SettingsListItem.singleLine(
                           heading: localizations.aboutPrivacyPolicy,
-                          headingStyle: theme.textStyleSize16W600Primary,
+                          headingStyle:
+                              ArchethicThemeStyles.textStyleSize16W600Primary,
                           icon: Symbols.policy_rounded,
                           onPressed: () async {
                             UIUtil.showWebview(

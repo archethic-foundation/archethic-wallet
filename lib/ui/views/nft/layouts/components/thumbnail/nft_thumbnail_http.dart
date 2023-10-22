@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
+
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail_error.dart';
 import 'package:aewallet/ui/widgets/components/image_network_widgeted.dart';
 import 'package:aewallet/util/token_util.dart';
@@ -24,7 +25,7 @@ class NFTThumbnailHTTP extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final raw = TokenUtil.getHTTPUrlFromToken(
       properties,
     );
@@ -53,7 +54,7 @@ class NFTThumbnailHTTP extends ConsumerWidget {
             padding: const EdgeInsets.all(10),
             child: SelectableText(
               '${localizations.nftHTTPFrom}\n${raw!}',
-              style: theme.textStyleSize12W100Primary,
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
             ),
           ),
         if (withContentInfo)
@@ -66,7 +67,7 @@ class NFTThumbnailHTTP extends ConsumerWidget {
                   padding: const EdgeInsets.only(top: 2),
                   child: Icon(
                     Symbols.warning,
-                    color: theme.warning,
+                    color: ArchethicTheme.warning,
                     size: 12,
                     weight: IconSize.weightM,
                     opticalSize: IconSize.opticalSizeM,
@@ -77,7 +78,8 @@ class NFTThumbnailHTTP extends ConsumerWidget {
                 Expanded(
                   child: Text(
                     localizations.nftHTTPLinkDisclaimer,
-                    style: theme.textStyleSize12W100PrimaryWarning,
+                    style:
+                        ArchethicThemeStyles.textStyleSize12W100PrimaryWarning,
                     textAlign: TextAlign.justify,
                   ),
                 ),

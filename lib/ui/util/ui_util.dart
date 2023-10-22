@@ -1,8 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'dart:async';
 
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
@@ -21,8 +21,6 @@ class UIUtil {
     ThreeLineAddressTextType type = ThreeLineAddressTextType.primary,
     String? contactName,
   }) {
-    final theme = ref.read(ThemeProviders.selectedTheme);
-
     var stringPartOne = '';
     var stringPartTwo = '';
     var stringPartThree = '';
@@ -69,11 +67,11 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
-                    style: theme.textStyleSize14W100Text60,
+                    style: ArchethicThemeStyles.textStyleSize14W100Text60,
                   ),
                   TextSpan(
                     text: stringPartTwo,
-                    style: theme.textStyleSize14W100Text60,
+                    style: ArchethicThemeStyles.textStyleSize14W100Text60,
                   ),
                 ],
               ),
@@ -85,7 +83,7 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartThree,
-                    style: theme.textStyleSize14W100Text60,
+                    style: ArchethicThemeStyles.textStyleSize14W100Text60,
                   ),
                 ],
               ),
@@ -97,11 +95,11 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartFour,
-                    style: theme.textStyleSize14W100Text60,
+                    style: ArchethicThemeStyles.textStyleSize14W100Text60,
                   ),
                   TextSpan(
                     text: stringPartFive,
-                    style: theme.textStyleSize14W100Text60,
+                    style: ArchethicThemeStyles.textStyleSize14W100Text60,
                   ),
                 ],
               ),
@@ -114,7 +112,7 @@ class UIUtil {
                 textAlign: TextAlign.center,
                 text: TextSpan(
                   text: contactName,
-                  style: theme.textStyleSize14W100Primary,
+                  style: ArchethicThemeStyles.textStyleSize14W100Primary,
                 ),
               )
             : const SizedBox();
@@ -128,11 +126,11 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
-                    style: theme.textStyleSize14W100Primary,
+                    style: ArchethicThemeStyles.textStyleSize14W100Primary,
                   ),
                   TextSpan(
                     text: stringPartTwo,
-                    style: theme.textStyleSize14W100Primary,
+                    style: ArchethicThemeStyles.textStyleSize14W100Primary,
                   ),
                 ],
               ),
@@ -144,7 +142,7 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartThree,
-                    style: theme.textStyleSize14W100Primary,
+                    style: ArchethicThemeStyles.textStyleSize14W100Primary,
                   ),
                 ],
               ),
@@ -156,11 +154,11 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartFour,
-                    style: theme.textStyleSize14W100Primary,
+                    style: ArchethicThemeStyles.textStyleSize14W100Primary,
                   ),
                   TextSpan(
                     text: stringPartFive,
-                    style: theme.textStyleSize14W100Primary,
+                    style: ArchethicThemeStyles.textStyleSize14W100Primary,
                   ),
                 ],
               ),
@@ -176,8 +174,8 @@ class UIUtil {
     String address, {
     TextStyle? textStyle,
   }) {
-    final theme = ref.read(ThemeProviders.selectedTheme);
-    final resolvedTextStyle = textStyle ?? theme.textStyleSize14W100Primary;
+    final resolvedTextStyle =
+        textStyle ?? ArchethicThemeStyles.textStyleSize14W100Primary;
     final stringPartOne = address.substring(0, 22);
     final stringPartTwo = address.substring(22, 44);
     final stringPartThree = address.substring(44, 64);
@@ -208,7 +206,6 @@ class UIUtil {
     Duration duration = const Duration(milliseconds: 3500),
     IconData icon = Symbols.warning,
   }) {
-    final theme = ref.read(ThemeProviders.selectedTheme);
     showToastWidget(
       Align(
         alignment: Alignment.topCenter,
@@ -244,7 +241,7 @@ class UIUtil {
               Expanded(
                 child: Text(
                   content,
-                  style: theme.textStyleSize14W200Bakckground,
+                  style: ArchethicThemeStyles.textStyleSize14W200Bakckground,
                   textAlign: TextAlign.start,
                 ),
               ),

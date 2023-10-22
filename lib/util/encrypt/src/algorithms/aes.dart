@@ -1,6 +1,6 @@
 // ignore_for_file: sort_constructors_first, prefer_final_locals, omit_local_variable_types, require_trailing_commas
 
-part of encrypt;
+part of '../../encrypt.dart';
 
 /// Wraps the AES Algorithm.
 class AES implements Algorithm {

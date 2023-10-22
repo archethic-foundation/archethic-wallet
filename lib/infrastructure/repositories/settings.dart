@@ -5,7 +5,6 @@ import 'package:aewallet/domain/repositories/settings.dart';
 import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/available_language.dart';
-import 'package:aewallet/model/available_themes.dart';
 
 class SettingsRepository implements SettingsRepositoryInterface {
   HivePreferencesDatasource? _preferences;
@@ -31,7 +30,6 @@ class SettingsRepository implements SettingsRepositoryInterface {
       showBlog: loadedPreferences.getShowBlog(),
       showPriceChart: loadedPreferences.getShowPriceChart(),
       priceChartIntervalOption: loadedPreferences.getPriceChartIntervalOption(),
-      theme: loadedPreferences.getTheme().theme,
     );
   }
 
@@ -55,6 +53,5 @@ class SettingsRepository implements SettingsRepositoryInterface {
     await loadedPreferences.setShowPriceChart(settings.showPriceChart);
     await loadedPreferences
         .setPriceChartIntervalOption(settings.priceChartIntervalOption);
-    await loadedPreferences.setTheme(ThemeSetting(settings.theme));
   }
 }

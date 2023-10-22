@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_header.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
@@ -95,7 +95,6 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet>
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final nftCreation = ref.watch(
       NftCreationFormProvider.nftCreationForm(
         ref.read(
@@ -133,19 +132,22 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet>
         extendBody: true,
         drawerEdgeDragWidth: 0,
         resizeToAvoidBottomInset: false,
-        backgroundColor: theme.background,
+        backgroundColor: ArchethicTheme.background,
         body: DecoratedBox(
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(
-                theme.background4Small!,
+                ArchethicTheme.backgroundSmall,
               ),
               fit: BoxFit.fill,
             ),
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: <Color>[theme.backgroundDark!, theme.background!],
+              colors: <Color>[
+                ArchethicTheme.backgroundDark,
+                ArchethicTheme.background,
+              ],
             ),
           ),
           child: SafeArea(
@@ -178,7 +180,7 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet>
                 ),
                 Divider(
                   height: 2,
-                  color: theme.text15,
+                  color: ArchethicTheme.text15,
                 ),
                 Expanded(
                   child: TabBarView(
@@ -206,8 +208,8 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet>
                   child: TabBar(
                     controller: _tabController,
                     dividerColor: Colors.transparent,
-                    labelColor: theme.text,
-                    indicatorColor: theme.text,
+                    labelColor: ArchethicTheme.text,
+                    indicatorColor: ArchethicTheme.text,
                     labelPadding: EdgeInsets.zero,
                     tabs: myTabs,
                   ),

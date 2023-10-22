@@ -1,9 +1,9 @@
 import 'package:aewallet/application/contact.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/util/date_util.dart';
 import 'package:flutter/material.dart';
@@ -63,17 +63,15 @@ class _LoadingDiscussionListItem extends DiscussionListItem {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     return Card(
       shape: RoundedRectangleBorder(
         side: BorderSide(
-          color: theme.backgroundAccountsListCardSelected!,
+          color: ArchethicTheme.backgroundAccountsListCardSelected,
         ),
         borderRadius: BorderRadius.circular(10),
       ),
       elevation: 0,
-      color: theme.backgroundAccountsListCardSelected,
+      color: ArchethicTheme.backgroundAccountsListCardSelected,
       child: const SizedBox(height: 48),
     );
   }
@@ -91,19 +89,18 @@ class _LoadedDiscussionListItem extends DiscussionListItem {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final displayName =
         ref.watch(MessengerProviders.discussionDisplayName(discussion));
     return Card(
       shape: RoundedRectangleBorder(
         side: BorderSide(
-          color: theme.backgroundAccountsListCardSelected!,
+          color: ArchethicTheme.backgroundAccountsListCardSelected,
         ),
         borderRadius: BorderRadius.circular(10),
       ),
       elevation: 0,
       clipBehavior: Clip.antiAlias,
-      color: theme.backgroundAccountsListCardSelected,
+      color: ArchethicTheme.backgroundAccountsListCardSelected,
       child: InkWell(
         onTap: onTap,
         child: Container(
@@ -118,7 +115,7 @@ class _LoadedDiscussionListItem extends DiscussionListItem {
                   Expanded(
                     child: Text(
                       displayName,
-                      style: theme.textStyleSize12W600Primary,
+                      style: ArchethicThemeStyles.textStyleSize12W600Primary,
                     ),
                   ),
                   const SizedBox(
@@ -126,7 +123,7 @@ class _LoadedDiscussionListItem extends DiscussionListItem {
                   ),
                   Text(
                     discussion.updateDate.formatShort(context),
-                    style: theme.textStyleSize12W100Primary,
+                    style: ArchethicThemeStyles.textStyleSize12W100Primary,
                   ),
                 ],
               ),
@@ -155,8 +152,6 @@ class _LastMessagePreview extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     final contactName = ref
         .watch(
           ContactProviders.getContactWithGenesisPublicKey(
@@ -177,11 +172,11 @@ class _LastMessagePreview extends ConsumerWidget {
             text: (contactName?.startsWith('@') ?? false)
                 ? '${contactName?.substring(1)} : '
                 : '$contactName : ',
-            style: theme.textStyleSize10W600Primary,
+            style: ArchethicThemeStyles.textStyleSize10W600Primary,
           ),
           TextSpan(
             text: message.content,
-            style: theme.textStyleSize10W400Primary,
+            style: ArchethicThemeStyles.textStyleSize10W400Primary,
           ),
         ],
       ),

@@ -8,7 +8,7 @@ class BalanceInfosChart extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final settings = ref.watch(SettingsProviders.settings);
 
     final chartInfos = ref
@@ -45,7 +45,7 @@ class BalanceInfosChart extends ConsumerWidget {
                   children: [
                     Text(
                       localizations.priceChartHeader,
-                      style: theme.textStyleSize14W600TelegrafPrimary,
+                      style: ArchethicThemeStyles.textStyleSize14W600Primary,
                     ),
                     const IconDataWidget(
                       icon: Symbols.show_chart,
@@ -64,21 +64,23 @@ class BalanceInfosChart extends ConsumerWidget {
                           intervals: chartInfos,
                           gradientColors: LinearGradient(
                             colors: <Color>[
-                              theme.text20!,
-                              theme.text!,
+                              ArchethicTheme.text20,
+                              ArchethicTheme.text,
                             ],
                           ),
                           gradientColorsBar: LinearGradient(
                             colors: <Color>[
-                              theme.text!.withOpacity(0.9),
-                              theme.text!.withOpacity(0),
+                              ArchethicTheme.text.withOpacity(0.9),
+                              ArchethicTheme.text.withOpacity(0),
                             ],
                             begin: Alignment.center,
                             end: Alignment.bottomCenter,
                           ),
-                          tooltipBg: theme.backgroundDark!,
-                          tooltipText: theme.textStyleSize12W100Primary,
-                          axisTextStyle: theme.textStyleSize12W100Primary,
+                          tooltipBg: ArchethicTheme.backgroundDark,
+                          tooltipText:
+                              ArchethicThemeStyles.textStyleSize12W100Primary,
+                          axisTextStyle:
+                              ArchethicThemeStyles.textStyleSize12W100Primary,
                           optionChartSelected:
                               settings.priceChartIntervalOption,
                           currency: settings.currency.name,

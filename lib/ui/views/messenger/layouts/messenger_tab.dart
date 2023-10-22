@@ -1,4 +1,4 @@
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/views/messenger/layouts/components/discussion_list_item.dart';
 import 'package:aewallet/ui/views/messenger/layouts/components/discussion_search_bar.dart';
@@ -23,13 +23,12 @@ class MessengerBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncDiscussions = ref.watch(MessengerProviders.sortedDiscussions);
-    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return DecoratedBox(
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage(
-            theme.background1Small!,
+            ArchethicTheme.backgroundSmall,
           ),
           fit: BoxFit.fill,
           opacity: 0.7,

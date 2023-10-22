@@ -1,21 +1,19 @@
 import 'dart:convert';
 
 import 'package:aewallet/domain/rpc/commands/sign_transactions.dart';
-import 'package:aewallet/ui/themes/themes.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class TransactionRaw extends StatefulWidget {
   const TransactionRaw(
-    this.command,
-    this.theme, {
+    this.command, {
     super.key,
   });
 
   final MapEntry<int, RPCSignTransactionCommandData> command;
-  final BaseTheme theme;
 
   @override
   TransactionRawState createState() => TransactionRawState();
@@ -56,7 +54,7 @@ class TransactionRawState extends State<TransactionRaw> {
                   '%1',
                   (widget.command.key + 1).toString(),
                 ),
-                style: widget.theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
             ],
           ),
@@ -68,18 +66,18 @@ class TransactionRawState extends State<TransactionRaw> {
                   child: Card(
                     shape: RoundedRectangleBorder(
                       side: BorderSide(
-                        color: widget.theme.backgroundTransferListOutline!,
+                        color: ArchethicTheme.backgroundTransferListOutline,
                       ),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     elevation: 0,
-                    color: widget.theme.backgroundTransferListCard,
+                    color: ArchethicTheme.backgroundTransferListCard,
                     child: Padding(
                       padding: const EdgeInsets.all(10),
                       child: SelectableText(
                         const JsonEncoder.withIndent('  ')
                             .convert(widget.command.value.data),
-                        style: widget.theme.textStyleSize12W400Primary,
+                        style: ArchethicThemeStyles.textStyleSize12W400Primary,
                       ),
                     ),
                   ),

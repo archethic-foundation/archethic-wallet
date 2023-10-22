@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
+
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail_error.dart';
 import 'package:aewallet/ui/widgets/components/image_network.dart';
 import 'package:aewallet/util/mime_util.dart';
@@ -21,7 +22,6 @@ class ImageNetworkWidgeted extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     if (MimeUtil.isSvgFromExtension(url)) {
       return Align(
@@ -38,13 +38,13 @@ class ImageNetworkWidgeted extends ConsumerWidget {
               padding: const EdgeInsets.only(top: 2, left: 10),
               child: Text(
                 errorMessage,
-                style: theme.textStyleSize12W100Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
             ),
           ),
           loading: Center(
             child: CircularProgressIndicator(
-              color: theme.text,
+              color: ArchethicTheme.text,
               strokeWidth: 1,
             ),
           ),

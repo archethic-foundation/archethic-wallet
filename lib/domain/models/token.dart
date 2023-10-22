@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/domain/models/token_property.dart';
 import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

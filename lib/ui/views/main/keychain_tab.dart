@@ -1,6 +1,6 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/accounts/layouts/account_list.dart';
 import 'package:aewallet/ui/views/accounts/layouts/components/add_account_button.dart';
 import 'package:flutter/gestures.dart';
@@ -12,7 +12,6 @@ class KeychainTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final settings = ref.watch(SettingsProviders.settings);
     final accountsList =
         ref.watch(AccountProviders.sortedAccounts).valueOrNull ?? [];
@@ -21,7 +20,7 @@ class KeychainTab extends ConsumerWidget {
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage(
-            theme.background3Small!,
+            ArchethicTheme.backgroundSmall,
           ),
           fit: BoxFit.fill,
           opacity: 0.7,

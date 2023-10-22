@@ -1,8 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'dart:convert';
 
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/properties/nft_properties_archethic.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/properties/nft_properties_opensea.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/properties/nft_properties_unknown.dart';
@@ -21,7 +21,6 @@ class NFTDetailProperties extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final description = properties['description'] ?? '';
 
     return Padding(
@@ -33,7 +32,7 @@ class NFTDetailProperties extends ConsumerWidget {
             if (description != '')
               Text(
                 description,
-                style: theme.textStyleSize10W400Primary,
+                style: ArchethicThemeStyles.textStyleSize10W400Primary,
               ),
             if (properties.isNotEmpty)
               Padding(

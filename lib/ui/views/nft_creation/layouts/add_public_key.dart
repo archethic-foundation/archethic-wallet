@@ -1,15 +1,16 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/public_key.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/themes/wallet_theme_base.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
@@ -68,7 +69,7 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final preferences = ref.watch(SettingsProviders.settings);
     final nftCreation = ref.watch(
       NftCreationFormProvider.nftCreationForm(
@@ -106,7 +107,8 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
                           padding: const EdgeInsets.all(20),
                           child: Text(
                             localizations.propertyAccessDescription,
-                            style: theme.textStyleSize12W100Primary,
+                            style:
+                                ArchethicThemeStyles.textStyleSize12W100Primary,
                             textAlign: TextAlign.justify,
                           ),
                         )
@@ -115,7 +117,8 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
                           padding: const EdgeInsets.all(20),
                           child: Text(
                             localizations.propertyAccessDescriptionReadOnly,
-                            style: theme.textStyleSize12W100Primary,
+                            style:
+                                ArchethicThemeStyles.textStyleSize12W100Primary,
                             textAlign: TextAlign.justify,
                           ),
                         ),

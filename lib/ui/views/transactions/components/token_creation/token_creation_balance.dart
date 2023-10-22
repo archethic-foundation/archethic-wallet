@@ -1,8 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transaction_hidden_value.dart';
 import 'package:aewallet/util/number_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -16,7 +16,6 @@ class TokenCreationBalance extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final settings = ref.watch(SettingsProviders.settings);
 
     final currency =
@@ -29,7 +28,7 @@ class TokenCreationBalance extends ConsumerWidget {
     return settings.showBalances
         ? AutoSizeText(
             '$currency $symbol',
-            style: theme.textStyleSize12W400Primary,
+            style: ArchethicThemeStyles.textStyleSize12W400Primary,
           )
         : const TransactionHiddenValue();
   }

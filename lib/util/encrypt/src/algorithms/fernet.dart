@@ -1,6 +1,6 @@
 // ignore_for_file: sort_constructors_first, prefer_const_constructors, prefer_conditional_assignment, omit_local_variable_types, prefer_final_locals, avoid_redundant_argument_values, unnecessary_parenthesis, cascade_invocations
 
-part of encrypt;
+part of '../../encrypt.dart';
 
 /// Wraps the Fernet Algorithm.
 class Fernet implements Algorithm {

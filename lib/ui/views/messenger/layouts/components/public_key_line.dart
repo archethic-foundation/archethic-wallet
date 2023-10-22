@@ -1,6 +1,6 @@
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/access_recipient_formatters.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +27,6 @@ class PublicKeyLine extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final accessRecipient = ref.watch(
       MessengerProviders.accessRecipientWithPublicKey(
@@ -38,18 +37,18 @@ class PublicKeyLine extends ConsumerWidget {
     return Card(
       shape: RoundedRectangleBorder(
         side: BorderSide(
-          color: theme.backgroundAccountsListCardSelected!,
+          color: ArchethicTheme.backgroundAccountsListCardSelected,
         ),
         borderRadius: BorderRadius.circular(10),
       ),
       clipBehavior: Clip.antiAlias,
       elevation: 0,
-      color: theme.backgroundAccountsListCardSelected,
+      color: ArchethicTheme.backgroundAccountsListCardSelected,
       child: InkWell(
         onTap: onTap,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          color: theme.backgroundAccountsListCard,
+          color: ArchethicTheme.backgroundAccountsListCard,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -59,7 +58,7 @@ class PublicKeyLine extends ConsumerWidget {
                     data: (data) => data.value.format(localizations),
                     orElse: () => '...',
                   ),
-                  style: theme.textStyleSize12W600Primary,
+                  style: ArchethicThemeStyles.textStyleSize12W600Primary,
                 ),
               ),
               _MemberRole(
@@ -98,7 +97,6 @@ class _MemberRole extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final isAdmin = listAdmins.any(
       (adminPubKey) => adminPubKey == memberPubKey,
@@ -107,7 +105,7 @@ class _MemberRole extends ConsumerWidget {
     if (isAdmin) {
       return Text(
         localizations.admin,
-        style: theme.textStyleSize10W600Primary,
+        style: ArchethicThemeStyles.textStyleSize10W600Primary,
       );
     }
 

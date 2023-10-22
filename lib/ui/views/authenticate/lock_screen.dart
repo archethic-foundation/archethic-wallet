@@ -1,8 +1,8 @@
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -37,7 +37,7 @@ class AppLockScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final activeVibrations = ref.watch(
       SettingsProviders.settings.select((value) => value.activeVibrations),
     );
@@ -57,7 +57,7 @@ class AppLockScreen extends ConsumerWidget {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: theme.backgroundDarkest,
+        backgroundColor: ArchethicTheme.backgroundDarkest,
         body: Stack(
           children: <Widget>[
             Positioned.fill(
@@ -65,14 +65,17 @@ class AppLockScreen extends ConsumerWidget {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(
-                      theme.background3Small!,
+                      ArchethicTheme.backgroundSmall,
                     ),
                     fit: BoxFit.fill,
                   ),
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    colors: <Color>[theme.backgroundDark!, theme.background!],
+                    colors: <Color>[
+                      ArchethicTheme.backgroundDark,
+                      ArchethicTheme.background,
+                    ],
                   ),
                 ),
               ),
@@ -97,7 +100,8 @@ class AppLockScreen extends ConsumerWidget {
                               margin: const EdgeInsets.only(top: 10),
                               child: Text(
                                 localizations.locked,
-                                style: theme.textStyleSize24W700TelegrafPrimary,
+                                style: ArchethicThemeStyles
+                                    .textStyleSize24W700Primary,
                               ),
                             ),
                           Container(
@@ -108,7 +112,8 @@ class AppLockScreen extends ConsumerWidget {
                             ),
                             child: Text(
                               localizations.tooManyFailedAttempts,
-                              style: theme.textStyleSize14W600Primary,
+                              style: ArchethicThemeStyles
+                                  .textStyleSize14W600Primary,
                               textAlign: TextAlign.center,
                             ),
                           ),

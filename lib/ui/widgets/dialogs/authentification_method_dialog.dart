@@ -1,9 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/authentication/authentication.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/model/authentication_method.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
 import 'package:aewallet/ui/views/settings/set_password.dart';
 import 'package:aewallet/ui/views/settings/set_yubikey.dart';
@@ -21,7 +22,6 @@ class AuthentificationMethodDialog {
     bool hasBiometrics,
     AuthenticationMethod curAuthMethod,
   ) async {
-    final theme = ref.read(ThemeProviders.selectedTheme);
     final settingsNotifier = ref.read(
       AuthenticationProviders.settings.notifier,
     );
@@ -39,7 +39,7 @@ class AuthentificationMethodDialog {
           AuthenticationMethod(value).getDisplayName(context),
           AuthenticationMethod(value).getDescription(context),
           AuthenticationMethod.getIcon(value),
-          theme.pickerItemIconEnabled,
+          ArchethicTheme.pickerItemIconEnabled,
           value,
           value != AuthMethod.biometricsUniris,
           displayed: displayed,
@@ -53,12 +53,12 @@ class AuthentificationMethodDialog {
         return AlertDialog(
           title: Text(
             localizations.authMethod,
-            style: theme.textStyleSize24W700TelegrafPrimary,
+            style: ArchethicThemeStyles.textStyleSize24W700Primary,
           ),
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(Radius.circular(16)),
             side: BorderSide(
-              color: theme.text45!,
+              color: ArchethicTheme.text45,
             ),
           ),
           content: SingleChildScrollView(
