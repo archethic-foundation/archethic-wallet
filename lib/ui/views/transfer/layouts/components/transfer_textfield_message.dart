@@ -35,30 +35,86 @@ class _TransferTextFieldMessageState
   Widget build(
     BuildContext context,
   ) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final transfer = ref.watch(TransferFormProvider.transferForm);
     final transferNotifier =
         ref.watch(TransferFormProvider.transferForm.notifier);
 
-    return AppTextField(
-      focusNode: messageFocusNode,
-      controller: messageController,
-      maxLines: 4,
-      labelText:
-          '${AppLocalizations.of(context)!.sendMessageHeader} (${transfer.message.runes.length}/200)',
-      onChanged: (String text) async {
-        transferNotifier.setMessage(
-          context: context,
-          message: text,
-        );
-      },
-      textInputAction: TextInputAction.newline,
-      keyboardType: TextInputType.multiline,
-      textAlign: TextAlign.left,
-      style: theme.textStyleSize14W600Primary,
-      inputFormatters: <TextInputFormatter>[
-        LengthLimitingTextInputFormatter(200),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 5),
+          child: Text(
+            '${AppLocalizations.of(context)!.sendMessageHeader} (${transfer.message.runes.length}/200)',
+          ),
+        ),
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.9,
+          child: Row(
+            children: [
+              Expanded(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              10,
+                            ),
+                            border: Border.all(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer,
+                              width: 0.5,
+                            ),
+                            gradient:
+                                WalletThemeBase.gradientInputFormBackground,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: TextField(
+                              style: TextStyle(
+                                fontFamily: WalletThemeBase.mainFont,
+                                fontSize: 14,
+                              ),
+                              maxLines: 4,
+                              autocorrect: false,
+                              controller: messageController,
+                              onChanged: (text) async {
+                                transferNotifier.setMessage(
+                                  context: context,
+                                  message: text,
+                                );
+                              },
+                              focusNode: messageFocusNode,
+                              textInputAction: TextInputAction.newline,
+                              keyboardType: TextInputType.multiline,
+                              inputFormatters: <TextInputFormatter>[
+                                LengthLimitingTextInputFormatter(200),
+                              ],
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.only(left: 10),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ],
-    );
+    )
+        .animate()
+        .fade(duration: const Duration(milliseconds: 200))
+        .scale(duration: const Duration(milliseconds: 200));
   }
 }

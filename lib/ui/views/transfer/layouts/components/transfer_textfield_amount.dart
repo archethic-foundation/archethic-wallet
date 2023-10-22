@@ -81,141 +81,209 @@ class _TransferTextFieldAmountState
     );
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AppTextField(
-          focusNode: sendAmountFocusNode,
-          controller: sendAmountController,
-          cursorColor: theme.text,
-          style: theme.textStyleSize16W700Primary,
-          inputFormatters: [
-            AmountTextInputFormatter(
-              precision: primaryCurrency.primaryCurrency ==
-                      AvailablePrimaryCurrencyEnum.native
-                  ? 8
-                  : localCurrencyFormat.decimalDigits!,
-            ),
-            LengthLimitingTextInputFormatter(16),
-          ],
-          onChanged: (String text) async {
-            await transferNotifier.setAmount(
-              context: context,
-              amount: double.tryParse(text.replaceAll(' ', '')) ?? 0,
-            );
-          },
-          textInputAction: TextInputAction.next,
-          maxLines: null,
-          autocorrect: false,
-          labelText: transfer.transferType == TransferType.uco
-              ? primaryCurrency.primaryCurrency ==
-                      AvailablePrimaryCurrencyEnum.native
-                  ? '${localizations.enterAmount} (${transfer.symbol(context)})'
-                  : '${AppLocalizations.of(context)!.enterAmount} (${settings.currency.name.toUpperCase()})'
-              : '${localizations.enterAmount} (${transfer.symbol(context)})',
-          prefixButton: SizedBox(
-            width: 48,
-            child: TextButton(
-              style: TextButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 5),
+          child: Text(
+            transfer.transferType == TransferType.uco
+                ? primaryCurrency.primaryCurrency ==
+                        AvailablePrimaryCurrencyEnum.native
+                    ? '${localizations.enterAmount} (${transfer.symbol(context)})'
+                    : '${AppLocalizations.of(context)!.enterAmount} (${settings.currency.name.toUpperCase()})'
+                : '${localizations.enterAmount} (${transfer.symbol(context)})',
+          ),
+        ),
+        Stack(
+          alignment: Alignment.centerRight,
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(
+                                      10,
+                                    ),
+                                    border: Border.all(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primaryContainer,
+                                      width: 0.5,
+                                    ),
+                                    gradient: WalletThemeBase
+                                        .gradientInputFormBackground,
+                                  ),
+                                  child: TextField(
+                                    style: TextStyle(
+                                      fontFamily: WalletThemeBase.mainFont,
+                                      fontSize: 14,
+                                    ),
+                                    autocorrect: false,
+                                    controller: sendAmountController,
+                                    onChanged: (String text) async {
+                                      await transferNotifier.setAmount(
+                                        context: context,
+                                        amount: double.tryParse(
+                                                text.replaceAll(' ', '')) ??
+                                            0,
+                                      );
+                                    },
+                                    textInputAction: TextInputAction.next,
+                                    maxLines: null,
+                                    focusNode: sendAmountFocusNode,
+                                    keyboardType:
+                                        const TextInputType.numberWithOptions(
+                                      decimal: true,
+                                    ),
+                                    inputFormatters: [
+                                      AmountTextInputFormatter(
+                                        precision:
+                                            primaryCurrency.primaryCurrency ==
+                                                    AvailablePrimaryCurrencyEnum
+                                                        .native
+                                                ? 8
+                                                : localCurrencyFormat
+                                                    .decimalDigits!,
+                                      ),
+                                      LengthLimitingTextInputFormatter(16),
+                                    ],
+                                    decoration: const InputDecoration(
+                                      border: InputBorder.none,
+                                      contentPadding: EdgeInsets.only(left: 10),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 3,
+                  ),
+                  if (transfer.transferType == TransferType.uco)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          child: AutoSizeText(
+                            '1 ${transfer.symbol(context)} = ${CurrencyUtil.getAmountPlusSymbol(currency.name, selectedCurrencyMarketPrice.amount)}',
+                            style: theme.textStyleSize14W100Primary,
+                          ),
+                        ),
+                        if (transfer.amount != 0)
+                          Container(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              '= $valueLabel',
+                              textAlign: TextAlign.right,
+                              style: theme.textStyleSize14W100Primary,
+                            ),
+                          )
+                        else
+                          const SizedBox(),
+                      ],
+                    )
+                  else
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            AutoSizeText(
+                              '${NumberUtil.formatThousands(transfer.accountToken!.amount!)} ${transfer.accountToken!.tokenInformation!.symbol}',
+                              style: theme.textStyleSize14W100Primary,
+                            ),
+                            if (transfer.accountToken != null &&
+                                transfer.accountToken!.tokenInformation !=
+                                    null &&
+                                transfer.accountToken!.tokenInformation!.type ==
+                                    'fungible' &&
+                                transfer.accountToken!.tokenInformation!
+                                        .address !=
+                                    null)
+                              Row(
+                                children: [
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  VerifiedTokenIcon(
+                                    address: transfer.accountToken!
+                                        .tokenInformation!.address!,
+                                  ),
+                                ],
+                              ),
+                          ],
+                        ),
+                      ],
+                    ),
+                ],
               ),
-              child: Text('MAX', style: theme.textStyleSize10W600Primary),
-              onPressed: () async {
-                transferNotifier.setDefineMaxAmountInProgress(
-                  defineMaxAmountInProgress: true,
-                );
-                sl.get<HapticUtil>().feedback(
-                      FeedbackType.light,
-                      settings.activeVibrations,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 10, bottom: 19),
+              child: InkWell(
+                onTap: () async {
+                  transferNotifier.setDefineMaxAmountInProgress(
+                    defineMaxAmountInProgress: true,
+                  );
+                  sl.get<HapticUtil>().feedback(
+                        FeedbackType.light,
+                        settings.activeVibrations,
+                      );
+                  if (transferNotifier.controlMaxSend(context) == false) {
+                    transferNotifier.setDefineMaxAmountInProgress(
+                      defineMaxAmountInProgress: false,
                     );
-                if (transferNotifier.controlMaxSend(context) == false) {
+                    return;
+                  }
+                  final selectedCurrencyMarketPrice = await ref.read(
+                    MarketPriceProviders.selectedCurrencyMarketPrice.future,
+                  );
+
+                  await transferNotifier.setMaxAmount(
+                    context: context,
+                    tokenPrice: selectedCurrencyMarketPrice.amount,
+                  );
+                  _updateAmountTextController();
                   transferNotifier.setDefineMaxAmountInProgress(
                     defineMaxAmountInProgress: false,
                   );
-                  return;
-                }
-                final selectedCurrencyMarketPrice = await ref.read(
-                  MarketPriceProviders.selectedCurrencyMarketPrice.future,
-                );
-
-                await transferNotifier.setMaxAmount(
-                  context: context,
-                  tokenPrice: selectedCurrencyMarketPrice.amount,
-                );
-                _updateAmountTextController();
-                transferNotifier.setDefineMaxAmountInProgress(
-                  defineMaxAmountInProgress: false,
-                );
-              },
-            ),
-          ),
-          fadePrefixOnCondition: true,
-          prefixShowFirstCondition: !transfer.defineMaxAmountInProgress &&
-              transfer.showMaxAmountButton(primaryCurrency),
-          keyboardType: const TextInputType.numberWithOptions(
-            decimal: true,
-          ),
-        ),
-        if (transfer.transferType == TransferType.uco)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(left: 40),
-                alignment: Alignment.centerLeft,
-                child: AutoSizeText(
-                  '1 ${transfer.symbol(context)} = ${CurrencyUtil.getAmountPlusSymbol(currency.name, selectedCurrencyMarketPrice.amount)}',
-                  style: theme.textStyleSize14W100Primary,
-                ),
-              ),
-              if (transfer.amount != 0)
-                Container(
-                  margin: const EdgeInsets.only(right: 40),
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    '= $valueLabel',
-                    textAlign: TextAlign.right,
-                    style: theme.textStyleSize14W100Primary,
-                  ),
+                },
+                child: Text(
+                  'MAX',
+                  style: TextStyle(color: WalletThemeBase.maxButtonColor),
                 )
-              else
-                const SizedBox(),
-            ],
-          )
-        else
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(left: 40),
-                alignment: Alignment.centerLeft,
-                child: Row(
-                  children: [
-                    AutoSizeText(
-                      '${NumberUtil.formatThousands(transfer.accountToken!.amount!)} ${transfer.accountToken!.tokenInformation!.symbol}',
-                      style: theme.textStyleSize14W100Primary,
+                    .animate()
+                    .fade(
+                      duration: const Duration(milliseconds: 500),
+                    )
+                    .scale(
+                      duration: const Duration(milliseconds: 500),
                     ),
-                    if (transfer.accountToken != null &&
-                        transfer.accountToken!.tokenInformation != null &&
-                        transfer.accountToken!.tokenInformation!.type ==
-                            'fungible' &&
-                        transfer.accountToken!.tokenInformation!.address !=
-                            null)
-                      Row(
-                        children: [
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          VerifiedTokenIcon(
-                            address: transfer
-                                .accountToken!.tokenInformation!.address!,
-                          ),
-                        ],
-                      ),
-                  ],
-                ),
               ),
-            ],
-          ),
+            ),
+          ],
+        ),
       ],
-    );
+    )
+        .animate()
+        .fade(duration: const Duration(milliseconds: 200))
+        .scale(duration: const Duration(milliseconds: 200));
   }
 }

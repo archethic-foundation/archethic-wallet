@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/wallet_theme_base.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
@@ -8,7 +9,6 @@ import 'package:aewallet/ui/views/tokens_fungibles/bloc/provider.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/state.dart';
 import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/network_indicator.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
@@ -16,6 +16,7 @@ import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aewallet/ui/widgets/fees/fee_infos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
@@ -50,13 +51,10 @@ class AddTokenFormSheet extends ConsumerWidget {
             SheetHeader(
               title: localizations.createFungibleToken,
               widgetBeforeTitle: const NetworkIndicator(),
-              widgetAfterTitle: const BalanceIndicatorWidget(
-                displaySwitchButton: false,
-              ),
             ),
             Expanded(
               child: Container(
-                margin: const EdgeInsets.only(bottom: 10),
+                margin: const EdgeInsets.only(bottom: 10, left: 20, right: 20),
                 child: ArchethicScrollbar(
                   child: Padding(
                     padding: EdgeInsets.only(bottom: bottom + 80),
@@ -80,13 +78,12 @@ class AddTokenFormSheet extends ConsumerWidget {
                             key: Key('ftOffer'),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: FeeInfos(
-                            asyncFeeEstimation: addToken.feeEstimation,
-                            estimatedFeesNote:
-                                localizations.estimatedFeesAddTokenNote,
-                          ),
+                        const SizedBox(height: 20),
+                        const BalanceIndicatorWidget(allDigits: false),
+                        FeeInfos(
+                          asyncFeeEstimation: addToken.feeEstimation,
+                          estimatedFeesNote:
+                              localizations.estimatedFeesAddTokenNote,
                         ),
                       ],
                     ),

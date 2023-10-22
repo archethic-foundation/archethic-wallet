@@ -1,19 +1,19 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/wallet_theme_base.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/add_account/bloc/provider.dart';
 import 'package:aewallet/ui/views/add_account/bloc/state.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';

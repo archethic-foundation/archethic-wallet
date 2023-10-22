@@ -1,8 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/market_price.dart';
+import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/account_balance.dart';
+import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/util/currency_util.dart';
@@ -25,6 +27,8 @@ class FeeInfos extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
+    final primaryCurrency =
+        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
 
     final nativeFeeEstimation = asyncFeeEstimation.valueOrNull;
     if (nativeFeeEstimation == null) {
@@ -52,22 +56,44 @@ class FeeInfos extends ConsumerWidget {
         )
         .name;
 
-    return Container(
+    return SizedBox(
       height: 40,
-      margin: const EdgeInsets.symmetric(
-        horizontal: 30,
-      ),
-      child: Text(
-        '+ ${localizations.estimatedFees} ${AmountFormatters.standardSmallValue(
-          nativeFeeEstimation,
-          AccountBalance.cryptoCurrencyLabel,
-        )}\n(${CurrencyUtil.formatWithNumberOfDigits(
-          currencyName,
-          fiatFeeEstimation,
-          8,
-        )})',
-        style: theme.textStyleSize14W100Primary,
-        textAlign: TextAlign.center,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            localizations.estimatedFees,
+            style: theme.textStyleSize14W100Primary,
+          ),
+          if (primaryCurrency.primaryCurrency ==
+              AvailablePrimaryCurrencyEnum.native)
+            Text(
+              '${AmountFormatters.standardSmallValue(
+                nativeFeeEstimation,
+                AccountBalance.cryptoCurrencyLabel,
+                decimal: 2,
+              )} / ${CurrencyUtil.formatWithNumberOfDigits(
+                currencyName,
+                fiatFeeEstimation,
+                2,
+              )}',
+              style: theme.textStyleSize14W100Primary,
+            )
+          else
+            Text(
+              '${CurrencyUtil.formatWithNumberOfDigits(
+                currencyName,
+                fiatFeeEstimation,
+                2,
+              )} / ${AmountFormatters.standardSmallValue(
+                nativeFeeEstimation,
+                AccountBalance.cryptoCurrencyLabel,
+                decimal: 2,
+              )}',
+              style: theme.textStyleSize14W100Primary,
+            ),
+        ],
       ),
     );
   }
@@ -83,11 +109,8 @@ class _CannotLoadFeeInfos extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
-    return Container(
+    return SizedBox(
       height: 40,
-      margin: const EdgeInsets.symmetric(
-        horizontal: 30,
-      ),
       child: Text(
         estimatedFeesNote,
         style: theme.textStyleSize14W100Primary,
@@ -104,18 +127,14 @@ class _LoadingFeeInfos extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
     final theme = ref.watch(ThemeProviders.selectedTheme);
 
-    return Container(
+    return SizedBox(
       height: 40,
-      margin: const EdgeInsets.symmetric(
-        horizontal: 30,
-      ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             localizations.estimatedFeesCalculationNote,
             style: theme.textStyleSize14W100Primary,
-            textAlign: TextAlign.center,
           ),
           Padding(
             padding: const EdgeInsets.only(

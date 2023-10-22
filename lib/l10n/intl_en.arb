@@ -272,10 +272,10 @@
   "transactionChainExplorerDesc": "Explore each transaction stored in your chain",
   "transactionChainExplorerLastAddress": "Last address",
   "estimatedFees": "Estimated fees :",
-  "estimatedFeesNote": "Note : The fees will be estimated when the recipient and the amount are specified.",
-  "estimatedFeesNoteNFT": "Note : The fees will be estimated when the recipient is specified.",
+  "estimatedFeesNote": "The fees will be estimated when the recipient and the amount are specified.",
+  "estimatedFeesNoteNFT": "The fees will be estimated when the recipient is specified.",
   "estimatedFeesCalculationNote": "Fees are being calculated",
-  "estimatedFeesAddTokenNote": "Note : The fees will be estimated when the name and the initial supply are specified.",
+  "estimatedFeesAddTokenNote": "The fees will be estimated when the name and the initial supply are specified.",
   "nodeAuthorizationDate": "Authorization date : ",
   "nodeEnrollmentDate": "Enrollment date : ",
   "currencyOracleInfo": "This icon means that the conversion uses an oracle provided by Archethic.",
@@ -614,5 +614,6 @@
   "removeKeychainDetail": "You are about to retire the account %1 from your keychain.\nYou will no longer have access to the funds or associated tokens.\nRefer to your keychain history to access information related to this account.",
   "removeKeychainAction": "Remove",
   "removeKeychainLater": "You will be able to find your account if you recreate it later with the same name.",
-  "removeKeychainAtLeast1": "You must keep at least one account in your keychain."
+  "removeKeychainAtLeast1": "You must keep at least one account in your keychain.",
+  "balance": "Balance"
 }
