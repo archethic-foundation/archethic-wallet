@@ -22,31 +22,6 @@ class AboutMenuView extends ConsumerWidget {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            Container(
-              margin: const EdgeInsets.only(bottom: 10, top: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Container(
-                    height: 40,
-                    width: 40,
-                    margin: const EdgeInsets.only(right: 10, left: 10),
-                    child: BackButton(
-                      key: const Key('back'),
-                      color: theme.text,
-                      onPressed: onClose,
-                    ),
-                  ),
-                  Expanded(
-                    child: AutoSizeText(
-                      localizations.aboutHeader,
-                      style: theme.textStyleSize24W700TelegrafPrimary,
-                      maxLines: 2,
-                    ),
-                  ),
-                ],
-              ),
-            ),
             Expanded(
               child: Stack(
                 children: <Widget>[

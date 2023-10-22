@@ -56,7 +56,7 @@ class _SettingsSheetWalletMobileState extends ConsumerState<SettingsSheetWallet>
         backgroundColor: theme.background,
         title: AutoSizeText(
           localizations.settings,
-          style: theme.textStyleSize24W700EquinoxPrimary,
+          style: theme.textStyleSize24W700TelegrafPrimary,
         ),
         centerTitle: true,
         leading: IconButton(

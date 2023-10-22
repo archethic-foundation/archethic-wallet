@@ -960,9 +960,10 @@ class AppService {
     );
 
     final transaction = Transaction(
-        type: 'transfer',
-        version: blockchainTxVersion,
-        data: Transaction.initData());
+      type: 'transfer',
+      version: blockchainTxVersion,
+      data: Transaction.initData(),
+    );
     for (final transfer in listUcoTransfer) {
       transaction.addUCOTransfer(transfer.to!, transfer.amount!);
     }
