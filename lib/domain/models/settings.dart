@@ -2,7 +2,6 @@ import 'package:aewallet/domain/models/market_price_history.dart';
 import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/available_networks.dart';
-import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -25,7 +24,6 @@ class Settings with _$Settings {
     required int mainScreenCurrentPage,
     required bool showPriceChart,
     required MarketPriceHistoryInterval priceChartIntervalOption,
-    required ThemeOptions theme,
   }) = _Settings;
 
   factory Settings.empty() => const Settings(
@@ -47,7 +45,6 @@ class Settings with _$Settings {
         showBlog: true,
         showPriceChart: true,
         priceChartIntervalOption: MarketPriceHistoryInterval.hour,
-        theme: ThemeOptions.dark,
       );
 
   const Settings._();

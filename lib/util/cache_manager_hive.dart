@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'dart:developer';
 import 'package:aewallet/infrastructure/datasources/secured_datasource_mixin.dart';
 import 'package:aewallet/model/data/appdb.dart';

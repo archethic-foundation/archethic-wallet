@@ -59,7 +59,7 @@ class _SettingsListSpacer extends _SettingsListItem {
   Widget build(BuildContext context, WidgetRef ref) {
     return Divider(
       height: 2,
-      color: ref.watch(ThemeProviders.selectedTheme).text15,
+      color: ArchethicTheme.text15,
     );
   }
 }
@@ -73,10 +73,9 @@ class _SettingsListTitle extends _SettingsListItem {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: theme.text05,
+        color: ArchethicTheme.text05,
       ),
       child: Container(
         alignment: Alignment.center,
@@ -86,7 +85,7 @@ class _SettingsListTitle extends _SettingsListItem {
         ),
         child: Text(
           text,
-          style: theme.textStyleSize20W700TelegrafPrimary,
+          style: ArchethicThemeStyles.textStyleSize20W700Primary,
         ),
       ),
     );

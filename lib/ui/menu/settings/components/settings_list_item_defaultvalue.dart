@@ -18,7 +18,6 @@ class _SettingsListItemWithDefaultValue extends _SettingsListItem {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
 
     return IgnorePointer(
@@ -58,15 +57,15 @@ class _SettingsListItemWithDefaultValue extends _SettingsListItem {
                     child: Text(
                       heading,
                       style: disabled
-                          ? theme.textStyleSize16W600TelegrafPrimary30
-                          : theme.textStyleSize16W600TelegrafPrimary,
+                          ? ArchethicThemeStyles.textStyleSize16W600Primary30
+                          : ArchethicThemeStyles.textStyleSize16W600Primary,
                     ),
                   ),
                   AutoSizeText(
                     defaultMethod.getDisplayName(context),
                     style: disabled
-                        ? theme.textStyleSize12W100Primary30
-                        : theme.textStyleSize12W100Primary,
+                        ? ArchethicThemeStyles.textStyleSize12W100Primary30
+                        : ArchethicThemeStyles.textStyleSize12W100Primary,
                     maxLines: 1,
                     stepGranularity: 0.1,
                     minFontSize: 8,
@@ -100,7 +99,6 @@ class _SettingsListItemWithDefaultValueWithInfos extends _SettingsListItem {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
 
     return TextButton(
@@ -140,13 +138,13 @@ class _SettingsListItemWithDefaultValueWithInfos extends _SettingsListItem {
                     children: <Widget>[
                       Text(
                         heading,
-                        style: theme.textStyleSize16W600TelegrafPrimary,
+                        style: ArchethicThemeStyles.textStyleSize16W600Primary,
                       ),
                       Text(
                         defaultMethod.getDisplayName(context),
                         style: disabled
-                            ? theme.textStyleSize12W100Primary30
-                            : theme.textStyleSize12W100Primary,
+                            ? ArchethicThemeStyles.textStyleSize12W100Primary30
+                            : ArchethicThemeStyles.textStyleSize12W100Primary,
                       ),
                     ],
                   ),
@@ -158,7 +156,7 @@ class _SettingsListItemWithDefaultValueWithInfos extends _SettingsListItem {
                     maxLines: 5,
                     stepGranularity: 0.1,
                     minFontSize: 8,
-                    style: theme.textStyleSize12W100Primary,
+                    style: ArchethicThemeStyles.textStyleSize12W100Primary,
                   ),
                 ),
               ],

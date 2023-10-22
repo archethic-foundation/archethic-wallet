@@ -1,5 +1,5 @@
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -10,15 +10,13 @@ class RawInfoPopup {
     LongPressEndDetails details,
     String info,
   ) async {
-    final theme = ref.read(ThemeProviders.selectedTheme);
-
     return showMenu(
-      color: theme.backgroundDark,
+      color: ArchethicTheme.backgroundDark,
       elevation: 5,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20).copyWith(topLeft: Radius.zero),
         side: BorderSide(
-          color: theme.text60!,
+          color: ArchethicTheme.text60,
         ),
       ),
       context: context,
@@ -39,7 +37,7 @@ class RawInfoPopup {
                   Expanded(
                     child: Text(
                       info,
-                      style: theme.textStyleSize12W100Primary,
+                      style: ArchethicThemeStyles.textStyleSize12W100Primary,
                     ),
                   ),
                 ],

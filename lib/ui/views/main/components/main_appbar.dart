@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'dart:ui';
 
 import 'package:aewallet/application/account/providers.dart';
@@ -6,10 +7,11 @@ import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/nft/nft_category.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
+
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/ui/menu/settings/settings_sheet.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/messenger/layouts/create_discussion_sheet.dart';
 import 'package:aewallet/ui/views/nft/layouts/configure_category_list.dart';
@@ -35,7 +37,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final preferences = ref.watch(SettingsProviders.settings);
     final hasNotifications =
         ref.watch(DeviceAbilities.hasNotificationsProvider);
@@ -60,7 +62,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
           ),
         ),
       ),
-      systemOverlayStyle: theme.brightness == Brightness.light
+      systemOverlayStyle: ArchethicTheme.brightness == Brightness.light
           ? SystemUiOverlayStyle.dark
           : SystemUiOverlayStyle.light,
       automaticallyImplyLeading: false,
@@ -153,8 +155,8 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                   localizations.addressCopied,
                   context,
                   ref,
-                  theme.text!,
-                  theme.snackBarShadow!,
+                  ArchethicTheme.text,
+                  ArchethicTheme.snackBarShadow,
                   icon: Symbols.info,
                 );
               },
@@ -162,7 +164,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                 fit: BoxFit.fitWidth,
                 child: AutoSizeText(
                   localizations.keychainHeader,
-                  style: theme.textStyleSize24W700TelegrafPrimary,
+                  style: ArchethicThemeStyles.textStyleSize24W700Primary,
                 ),
               ).animate().fade(duration: const Duration(milliseconds: 300)),
             )
@@ -171,7 +173,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                   fit: BoxFit.fitWidth,
                   child: Text(
                     selectedAccount?.nameDisplayed ?? ' ',
-                    style: theme.textStyleSize24W700TelegrafPrimary,
+                    style: ArchethicThemeStyles.textStyleSize24W700Primary,
                   ),
                 ).animate().fade(duration: const Duration(milliseconds: 300))
               : preferences.mainScreenCurrentPage == 3
@@ -179,7 +181,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                       fit: BoxFit.fitWidth,
                       child: AutoSizeText(
                         'NFT',
-                        style: theme.textStyleSize24W700TelegrafPrimary,
+                        style: ArchethicThemeStyles.textStyleSize24W700Primary,
                       ),
                     )
                       .animate()
@@ -189,7 +191,8 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                           fit: BoxFit.fitWidth,
                           child: AutoSizeText(
                             localizations.messengerHeader,
-                            style: theme.textStyleSize24W700TelegrafPrimary,
+                            style:
+                                ArchethicThemeStyles.textStyleSize24W700Primary,
                           ),
                         ).animate().fade(
                             duration: const Duration(milliseconds: 300),
@@ -198,7 +201,8 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                           fit: BoxFit.fitWidth,
                           child: AutoSizeText(
                             localizations.addressBookHeader,
-                            style: theme.textStyleSize24W700TelegrafPrimary,
+                            style:
+                                ArchethicThemeStyles.textStyleSize24W700Primary,
                           ),
                         ).animate().fade(
                             duration: const Duration(milliseconds: 300),
@@ -206,7 +210,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
       backgroundColor: Colors.transparent,
       elevation: 0,
       centerTitle: true,
-      iconTheme: IconThemeData(color: theme.text),
+      iconTheme: IconThemeData(color: ArchethicTheme.text),
     );
   }
 }

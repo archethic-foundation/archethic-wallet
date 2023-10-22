@@ -1,8 +1,7 @@
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
 import 'package:aewallet/domain/rpc/commands/sign_transactions.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/sign_transactions/bloc/provider.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/sign_transactions/layouts/transaction_raw.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
@@ -23,7 +22,6 @@ class SignTransactionsConfirmationForm extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
 
@@ -94,7 +92,8 @@ class SignTransactionsConfirmationForm extends ConsumerWidget {
                                             .data.serviceName,
                                       ),
                                     ),
-                            style: theme.textStyleSize12W400Primary,
+                            style:
+                                ArchethicThemeStyles.textStyleSize12W400Primary,
                           ),
                           Column(
                             children: command.data.rpcSignTransactionCommandData
@@ -103,7 +102,6 @@ class SignTransactionsConfirmationForm extends ConsumerWidget {
                                 .map((rpcSignTransactionCommandData) {
                               return TransactionRaw(
                                 rpcSignTransactionCommandData,
-                                theme,
                               );
                             }).toList(),
                           ),

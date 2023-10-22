@@ -1,13 +1,15 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'dart:math';
 
 // Project imports:
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
+
 import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/domain/models/settings.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -151,7 +153,6 @@ class _PinScreenState extends ConsumerState<PinScreen>
     String buttonText,
     BuildContext context,
   ) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
 
     return SizedBox(
@@ -160,8 +161,8 @@ class _PinScreenState extends ConsumerState<PinScreen>
       child: InkWell(
         key: Key('pinButton$buttonText'),
         borderRadius: BorderRadius.circular(200),
-        highlightColor: theme.text15,
-        splashColor: theme.text30,
+        highlightColor: ArchethicTheme.text15,
+        splashColor: ArchethicTheme.text30,
         onTap: () {},
         onTapDown: (TapDownDetails details) {
           sl.get<HapticUtil>().feedback(
@@ -202,7 +203,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
             shape: BoxShape.circle,
             boxShadow: <BoxShadow>[
               BoxShadow(
-                color: theme.background40!,
+                color: ArchethicTheme.background40,
                 blurRadius: 15,
                 spreadRadius: -15,
               ),
@@ -212,7 +213,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
           child: Text(
             buttonText,
             textAlign: TextAlign.center,
-            style: theme.textStyleSize20W700Primary,
+            style: ArchethicThemeStyles.textStyleSize20W700Primary,
           ),
         ),
       ),
@@ -299,7 +300,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final preferences = ref.watch(SettingsProviders.settings);
 
     final pinAuthentication = ref.watch(
@@ -331,14 +332,17 @@ class _PinScreenState extends ConsumerState<PinScreen>
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(
-                theme.background3Small!,
+                ArchethicTheme.backgroundSmall,
               ),
               fit: BoxFit.fill,
             ),
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: <Color>[theme.backgroundDark!, theme.background!],
+              colors: <Color>[
+                ArchethicTheme.backgroundDark,
+                ArchethicTheme.background,
+              ],
             ),
           ),
           child: Column(
@@ -358,7 +362,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
                           child: widget.canNavigateBack
                               ? BackButton(
                                   key: const Key('back'),
-                                  color: theme.text,
+                                  color: ArchethicTheme.text,
                                   onPressed: () {
                                     Navigator.pop(context, false);
                                   },
@@ -371,7 +375,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
                       margin: const EdgeInsets.symmetric(horizontal: 40),
                       child: AutoSizeText(
                         _header,
-                        style: theme.textStyleSize24W700TelegrafPrimary,
+                        style: ArchethicThemeStyles.textStyleSize24W700Primary,
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         stepGranularity: 0.1,
@@ -385,7 +389,8 @@ class _PinScreenState extends ConsumerState<PinScreen>
                         ),
                         child: AutoSizeText(
                           widget.description,
-                          style: theme.textStyleSize16W200Primary,
+                          style:
+                              ArchethicThemeStyles.textStyleSize16W200Primary,
                           textAlign: TextAlign.center,
                           maxLines: 1,
                           stepGranularity: 0.1,
@@ -409,7 +414,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
                               (index) => Icon(
                                 Symbols.circle,
                                 fill: 1,
-                                color: theme.text,
+                                color: ArchethicTheme.text,
                                 size: 15,
                               ),
                             ),
@@ -417,7 +422,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
                               max(_pinLength - displayedPin.length, 0),
                               (index) => Icon(
                                 Symbols.remove,
-                                color: theme.text,
+                                color: ArchethicTheme.text,
                                 size: 15,
                               ),
                             ),
@@ -433,7 +438,8 @@ class _PinScreenState extends ConsumerState<PinScreen>
                         ),
                         child: AutoSizeText(
                           '${localizations.attempt}${pinAuthentication.failedAttemptsCount}/${pinAuthentication.maxAttemptsCount}',
-                          style: theme.textStyleSize16W200Primary,
+                          style:
+                              ArchethicThemeStyles.textStyleSize16W200Primary,
                           textAlign: TextAlign.center,
                           maxLines: 1,
                           stepGranularity: 0.1,
@@ -549,8 +555,8 @@ class _PinScreenState extends ConsumerState<PinScreen>
                                   : buttonSize,
                               child: InkWell(
                                 borderRadius: BorderRadius.circular(200),
-                                highlightColor: theme.text15,
-                                splashColor: theme.text30,
+                                highlightColor: ArchethicTheme.text15,
+                                splashColor: ArchethicTheme.text30,
                                 onTap: () {},
                                 onTapDown: (TapDownDetails details) {
                                   sl.get<HapticUtil>().feedback(
@@ -564,7 +570,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
                                     shape: BoxShape.circle,
                                     boxShadow: <BoxShadow>[
                                       BoxShadow(
-                                        color: theme.background40!,
+                                        color: ArchethicTheme.background40,
                                         blurRadius: 15,
                                         spreadRadius: -15,
                                       ),
@@ -573,7 +579,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
                                   alignment: AlignmentDirectional.center,
                                   child: Icon(
                                     Symbols.backspace,
-                                    color: theme.text,
+                                    color: ArchethicTheme.text,
                                     size: 26,
                                     weight: IconSize.weightM,
                                     opticalSize: IconSize.opticalSizeM,

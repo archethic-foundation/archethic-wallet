@@ -1,8 +1,8 @@
 import 'dart:developer';
 
 import 'package:aewallet/application/authentication/authentication.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/authentication_method.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -147,8 +147,6 @@ class _LockMask extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     return WillPopScope(
       onWillPop: () async => false,
       child: SizedBox.expand(
@@ -156,7 +154,7 @@ class _LockMask extends ConsumerWidget {
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(
-                theme.background3Small!,
+                ArchethicTheme.backgroundSmall,
               ),
               fit: BoxFit.cover,
             ),

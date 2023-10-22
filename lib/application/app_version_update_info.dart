@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/domain/models/app_version_info.dart';
 import 'package:aewallet/infrastructure/repositories/app_version_update_info.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

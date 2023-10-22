@@ -6,15 +6,15 @@ import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/migrations/migration_manager.dart';
 import 'package:aewallet/application/notification/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/domain/repositories/notifications_repository.dart';
 import 'package:aewallet/local_data_migration_widget.dart';
 import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/main/account_tab.dart';
 import 'package:aewallet/ui/views/main/address_book_tab.dart';
@@ -71,7 +71,7 @@ class _HomePageState extends ConsumerState<HomePage>
   @override
   Widget build(BuildContext context) {
     _manageNotifications();
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final tabController = ref.watch(mainTabControllerProvider);
 
     if (tabController == null) {
@@ -90,7 +90,7 @@ class _HomePageState extends ConsumerState<HomePage>
       appBar: const MainAppBar(),
       drawerEdgeDragWidth: 0,
       resizeToAvoidBottomInset: false,
-      backgroundColor: theme.background,
+      backgroundColor: ArchethicTheme.background,
       body: IncomingTransactionsNotifier(
         child: TabBarView(
           physics: const NeverScrollableScrollPhysics(),
@@ -121,8 +121,8 @@ class _HomePageState extends ConsumerState<HomePage>
               child: TabBar(
                 dividerColor: Colors.transparent,
                 controller: tabController,
-                labelColor: theme.text,
-                indicatorColor: theme.text,
+                labelColor: ArchethicTheme.text,
+                indicatorColor: ArchethicTheme.text,
                 labelPadding: EdgeInsets.zero,
                 onTap: (selectedIndex) {
                   ref
@@ -201,7 +201,6 @@ class _HomePageState extends ConsumerState<HomePage>
   }
 
   Future manageNewDiscussionNotification(TxSentEvent event) async {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
 
     final discussion = await ref.read(
@@ -218,15 +217,13 @@ class _HomePageState extends ConsumerState<HomePage>
       localizations.youHaveBeenAddedToADiscussion,
       context,
       ref,
-      theme.text!,
-      theme.snackBarShadow!,
+      ArchethicTheme.text,
+      ArchethicTheme.snackBarShadow,
       icon: Symbols.chat,
     );
   }
 
   Future manageNewMessageNotification(TxSentEvent event) async {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     final transaction = await sl.get<ApiService>().getTransaction(
       [event.notificationRecipientAddress],
     );
@@ -269,8 +266,8 @@ class _HomePageState extends ConsumerState<HomePage>
       '$contactName : ${newMessage.content}',
       context,
       ref,
-      theme.text!,
-      theme.snackBarShadow!,
+      ArchethicTheme.text,
+      ArchethicTheme.snackBarShadow,
       icon: Symbols.chat,
     );
 
@@ -280,7 +277,6 @@ class _HomePageState extends ConsumerState<HomePage>
   }
 
   Future manageNewDiscussionUpdatedNotification(TxSentEvent event) async {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
 
     if (event.extra == null) {
@@ -323,8 +319,8 @@ class _HomePageState extends ConsumerState<HomePage>
             localizations.youHaveBeenAddedToADiscussion,
             context,
             ref,
-            theme.text!,
-            theme.snackBarShadow!,
+            ArchethicTheme.text,
+            ArchethicTheme.snackBarShadow,
             icon: Symbols.chat,
           );
         }
@@ -349,8 +345,8 @@ class _HomePageState extends ConsumerState<HomePage>
             localizations.youHaveBeenDeletedFromADiscussion,
             context,
             ref,
-            theme.text!,
-            theme.snackBarShadow!,
+            ArchethicTheme.text,
+            ArchethicTheme.snackBarShadow,
             icon: Symbols.comments_disabled,
           );
         }
@@ -400,7 +396,7 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final session = ref.watch(SessionProviders.session).loggedIn;
     final accountSelected = ref
         .watch(
@@ -419,19 +415,19 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
             width: MediaQuery.of(context).size.width,
             height: 80,
             child: TabBar(
-              labelColor: theme.text,
-              indicatorColor: theme.text,
+              labelColor: ArchethicTheme.text,
+              indicatorColor: ArchethicTheme.text,
               labelPadding: EdgeInsets.zero,
               tabs: [
                 Text(
                   localizations.recentTransactionsHeader,
-                  style: theme.textStyleSize14W600TelegrafPrimary,
+                  style: ArchethicThemeStyles.textStyleSize14W600Primary,
                   textAlign: TextAlign.center,
                 ),
                 Text(
                   key: const Key('fungibleTokenTab'),
                   localizations.tokensHeader,
-                  style: theme.textStyleSize14W600TelegrafPrimary,
+                  style: ArchethicThemeStyles.textStyleSize14W600Primary,
                   textAlign: TextAlign.center,
                 ),
               ],

@@ -1,8 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/connectivity_status.dart';
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
@@ -19,7 +20,7 @@ class IntroNewWalletDisclaimer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     return Scaffold(
@@ -28,14 +29,17 @@ class IntroNewWalletDisclaimer extends ConsumerWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              theme.background1Small!,
+              ArchethicTheme.backgroundSmall,
             ),
-            fit: BoxFit.fitHeight,
+            fit: BoxFit.fill,
           ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: <Color>[theme.backgroundDark!, theme.background!],
+            colors: <Color>[
+              ArchethicTheme.backgroundDark,
+              ArchethicTheme.background,
+            ],
           ),
         ),
         child: LayoutBuilder(
@@ -59,7 +63,7 @@ class IntroNewWalletDisclaimer extends ConsumerWidget {
                           width: 50,
                           child: BackButton(
                             key: const Key('back'),
-                            color: theme.text,
+                            color: ArchethicTheme.text,
                             onPressed: () {
                               Navigator.pop(context);
                             },
@@ -85,8 +89,8 @@ class IntroNewWalletDisclaimer extends ConsumerWidget {
                                 const SizedBox(width: 8),
                                 AutoSizeText(
                                   localizations.warning,
-                                  style: theme
-                                      .textStyleSize24W700TelegrafPrimaryRed,
+                                  style: ArchethicThemeStyles
+                                      .textStyleSize24W700PrimaryRed,
                                 ),
                               ],
                             ),
@@ -102,54 +106,61 @@ class IntroNewWalletDisclaimer extends ConsumerWidget {
                                 children: <Widget>[
                                   AutoSizeText(
                                     localizations.backupSafetyLabel1,
-                                    style: theme.textStyleSize14W600Primary,
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize14W600Primary,
                                   ),
                                   Divider(
                                     height: 20,
-                                    color: theme.text60,
+                                    color: ArchethicTheme.text60,
                                   ),
                                   AutoSizeText(
                                     localizations.backupSafetyLabel2,
-                                    style: theme.textStyleSize14W600Primary,
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize14W600Primary,
                                   ),
                                   const SizedBox(
                                     height: 20,
                                   ),
                                   AutoSizeText(
                                     localizations.backupSafetyLabel3,
-                                    style: theme.textStyleSize12W100Primary,
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize12W100Primary,
                                     textAlign: TextAlign.justify,
                                   ),
                                   Divider(
                                     height: 20,
-                                    color: theme.text60,
+                                    color: ArchethicTheme.text60,
                                   ),
                                   AutoSizeText(
                                     localizations.backupSafetyLabel4,
-                                    style: theme.textStyleSize14W600Primary,
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize14W600Primary,
                                   ),
                                   const SizedBox(
                                     height: 20,
                                   ),
                                   AutoSizeText(
                                     localizations.backupSafetyLabel5,
-                                    style: theme.textStyleSize12W100Primary,
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize12W100Primary,
                                     textAlign: TextAlign.justify,
                                   ),
                                   Divider(
                                     height: 20,
-                                    color: theme.text60,
+                                    color: ArchethicTheme.text60,
                                   ),
                                   AutoSizeText(
                                     localizations.backupSafetyLabel6,
-                                    style: theme.textStyleSize14W600Primary,
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize14W600Primary,
                                   ),
                                   const SizedBox(
                                     height: 20,
                                   ),
                                   AutoSizeText(
                                     localizations.backupSafetyLabel7,
-                                    style: theme.textStyleSize12W100Primary,
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize12W100Primary,
                                     textAlign: TextAlign.justify,
                                   ),
                                   const SizedBox(

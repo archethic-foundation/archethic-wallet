@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
+
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -21,7 +22,6 @@ class IconWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     return Container(
       width: width,
       height: height,
@@ -29,7 +29,7 @@ class IconWidget extends ConsumerWidget {
         shape: BoxShape.circle,
         boxShadow: <BoxShadow>[
           BoxShadow(
-            color: theme.iconDrawerBackground!,
+            color: ArchethicTheme.iconDrawerBackground,
           ),
         ],
       ),
@@ -39,7 +39,7 @@ class IconWidget extends ConsumerWidget {
             ? SvgPicture.asset(
                 icon,
                 colorFilter: ColorFilter.mode(
-                  color ?? theme.iconDrawer!,
+                  color ?? ArchethicTheme.iconDrawer,
                   BlendMode.srcIn,
                 ),
                 height: height,
@@ -47,7 +47,7 @@ class IconWidget extends ConsumerWidget {
               )
             : Image.asset(
                 icon,
-                color: color ?? theme.iconDrawer,
+                color: color ?? ArchethicTheme.iconDrawer,
               ),
       ),
     );
@@ -97,8 +97,6 @@ class _IconDataWidgetEnabled extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     return Container(
       width: width,
       height: height,
@@ -106,7 +104,8 @@ class _IconDataWidgetEnabled extends ConsumerWidget {
         shape: BoxShape.circle,
         boxShadow: <BoxShadow>[
           BoxShadow(
-            color: theme.iconDataWidgetIconBackground!.withOpacity(0.1),
+            color:
+                ArchethicTheme.iconDataWidgetIconBackground.withOpacity(0.1),
           ),
         ],
       ),
@@ -114,7 +113,7 @@ class _IconDataWidgetEnabled extends ConsumerWidget {
       child: SizedBox(
         child: Icon(
           icon,
-          color: theme.iconDrawer,
+          color: ArchethicTheme.iconDrawer,
           size: width,
           weight: IconSize.weightM,
           opticalSize: IconSize.opticalSizeM,
@@ -138,7 +137,6 @@ class _IconDataWidgetDisabled extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     return Container(
       width: width,
       height: height,
@@ -146,7 +144,7 @@ class _IconDataWidgetDisabled extends ConsumerWidget {
       child: SizedBox(
         child: Icon(
           icon,
-          color: theme.text!.withOpacity(0.3),
+          color: ArchethicTheme.text.withOpacity(0.3),
           size: width,
           weight: 200,
         ),

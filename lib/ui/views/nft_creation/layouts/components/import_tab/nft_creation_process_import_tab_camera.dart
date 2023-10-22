@@ -12,7 +12,7 @@ class NFTCreationProcessImportTabCamera extends ConsumerWidget {
     }
 
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final nftCreationArgs = ref.read(
       NftCreationFormProvider.nftCreationFormArgs,
     );
@@ -55,7 +55,7 @@ class NFTCreationProcessImportTabCamera extends ConsumerWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   localizations.nftAddImportCamera,
-                  style: theme.textStyleSize12W100Primary,
+                  style: ArchethicThemeStyles.textStyleSize12W100Primary,
                 ),
               ),
             ),

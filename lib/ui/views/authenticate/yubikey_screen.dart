@@ -1,13 +1,14 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'dart:async';
 
 // Project imports:
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/bus/otp_event.dart';
 import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/paste_icon.dart';
@@ -83,7 +84,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
 
   Future<void> _verifyOTP(String otp) async {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.read(ThemeProviders.selectedTheme);
+
     // TODO(chralu): utilisation provider ? (1)
     final preferences = await HivePreferencesDatasource.getInstance();
     final vault = await HiveVaultDatasource.getInstance();
@@ -97,8 +98,8 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
           localizations.yubikeyError_BAD_OTP,
           context,
           ref,
-          theme.text!,
-          theme.snackBarShadow!,
+          ArchethicTheme.text,
+          ArchethicTheme.snackBarShadow,
         );
         Navigator.of(context).pop(false);
         break;
@@ -107,8 +108,8 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
           localizations.yubikeyError_BACKEND_ERROR,
           context,
           ref,
-          theme.text!,
-          theme.snackBarShadow!,
+          ArchethicTheme.text,
+          ArchethicTheme.snackBarShadow,
         );
         Navigator.of(context).pop(false);
         break;
@@ -117,8 +118,8 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
           localizations.yubikeyError_BAD_SIGNATURE,
           context,
           ref,
-          theme.text!,
-          theme.snackBarShadow!,
+          ArchethicTheme.text,
+          ArchethicTheme.snackBarShadow,
         );
         Navigator.of(context).pop(false);
         break;
@@ -127,8 +128,8 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
           localizations.yubikeyError_MISSING_PARAMETER,
           context,
           ref,
-          theme.text!,
-          theme.snackBarShadow!,
+          ArchethicTheme.text,
+          ArchethicTheme.snackBarShadow,
         );
         Navigator.of(context).pop(false);
         break;
@@ -137,8 +138,8 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
           localizations.yubikeyError_NOT_ENOUGH_ANSWERS,
           context,
           ref,
-          theme.text!,
-          theme.snackBarShadow!,
+          ArchethicTheme.text,
+          ArchethicTheme.snackBarShadow,
         );
         Navigator.of(context).pop(false);
         break;
@@ -147,8 +148,8 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
           localizations.yubikeyError_NO_SUCH_CLIENT,
           context,
           ref,
-          theme.text!,
-          theme.snackBarShadow!,
+          ArchethicTheme.text,
+          ArchethicTheme.snackBarShadow,
         );
         Navigator.of(context).pop(false);
         break;
@@ -157,8 +158,8 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
           localizations.yubikeyError_OPERATION_NOT_ALLOWED,
           context,
           ref,
-          theme.text!,
-          theme.snackBarShadow!,
+          ArchethicTheme.text,
+          ArchethicTheme.snackBarShadow,
         );
         Navigator.of(context).pop(false);
         break;
@@ -167,8 +168,8 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
           localizations.yubikeyError_REPLAYED_OTP,
           context,
           ref,
-          theme.text!,
-          theme.snackBarShadow!,
+          ArchethicTheme.text,
+          ArchethicTheme.snackBarShadow,
         );
         Navigator.of(context).pop(false);
         break;
@@ -177,8 +178,8 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
           localizations.yubikeyError_REPLAYED_REQUEST,
           context,
           ref,
-          theme.text!,
-          theme.snackBarShadow!,
+          ArchethicTheme.text,
+          ArchethicTheme.snackBarShadow,
         );
         Navigator.of(context).pop(false);
         break;
@@ -187,8 +188,8 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
           localizations.yubikeyError_RESPONSE_KO,
           context,
           ref,
-          theme.text!,
-          theme.snackBarShadow!,
+          ArchethicTheme.text,
+          ArchethicTheme.snackBarShadow,
         );
         Navigator.of(context).pop(false);
         break;
@@ -197,8 +198,8 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
           verificationResponse.status,
           context,
           ref,
-          theme.text!,
-          theme.snackBarShadow!,
+          ArchethicTheme.text,
+          ArchethicTheme.snackBarShadow,
           icon: Symbols.info,
         );
         preferences.resetLockAttempts();
@@ -209,8 +210,8 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
           verificationResponse.status,
           context,
           ref,
-          theme.text!,
-          theme.snackBarShadow!,
+          ArchethicTheme.text,
+          ArchethicTheme.snackBarShadow,
         );
         Navigator.of(context).pop(false);
         break;
@@ -221,7 +222,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final preferences = ref.watch(SettingsProviders.settings);
 
     return WillPopScope(
@@ -232,14 +233,17 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(
-                theme.background5Small!,
+                ArchethicTheme.backgroundSmall,
               ),
               fit: BoxFit.fill,
             ),
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: <Color>[theme.backgroundDark!, theme.background!],
+              colors: <Color>[
+                ArchethicTheme.backgroundDark,
+                ArchethicTheme.background,
+              ],
             ),
           ),
           child: Material(
@@ -261,7 +265,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
                             child: widget.canNavigateBack
                                 ? BackButton(
                                     key: const Key('back'),
-                                    color: theme.text,
+                                    color: ArchethicTheme.text,
                                     onPressed: () {
                                       Navigator.pop(context, false);
                                     },
@@ -280,7 +284,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
                   ),
                   child: AutoSizeText(
                     'OTP',
-                    style: theme.textStyleSize16W400Primary,
+                    style: ArchethicThemeStyles.textStyleSize16W400Primary,
                     textAlign: TextAlign.center,
                     maxLines: 1,
                     stepGranularity: 0.1,
@@ -290,7 +294,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
                   ElevatedButton(
                     child: Text(
                       buttonNFCLabel,
-                      style: theme.textStyleSize16W200Primary,
+                      style: ArchethicThemeStyles.textStyleSize16W200Primary,
                     ),
                     onPressed: () async {
                       sl.get<HapticUtil>().feedback(
@@ -312,7 +316,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
                     ),
                     child: AutoSizeText(
                       localizations.yubikeyConnectInvite,
-                      style: theme.textStyleSize16W200Primary,
+                      style: ArchethicThemeStyles.textStyleSize16W200Primary,
                       textAlign: TextAlign.center,
                       maxLines: 1,
                       stepGranularity: 0.1,
@@ -347,7 +351,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
                       LengthLimitingTextInputFormatter(45),
                     ],
                     keyboardType: TextInputType.text,
-                    style: theme.textStyleSize16W600Primary,
+                    style: ArchethicThemeStyles.textStyleSize16W600Primary,
                     suffixButton: PasteIcon(
                       onPaste: (String value) {
                         enterOTPController!.text = value;

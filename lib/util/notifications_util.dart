@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -23,9 +24,14 @@ class NotificationsUtil {
     const android = AndroidInitializationSettings('@drawable/ic_notification');
     const iOS = IOSInitializationSettings();
     const macOS = MacOSInitializationSettings();
-    const linux = LinuxInitializationSettings(defaultActionName: 'Open notification');
-    const settings =
-        InitializationSettings(android: android, iOS: iOS, macOS: macOS, linux: linux);
+    const linux =
+        LinuxInitializationSettings(defaultActionName: 'Open notification');
+    const settings = InitializationSettings(
+      android: android,
+      iOS: iOS,
+      macOS: macOS,
+      linux: linux,
+    );
     await _notifications.initialize(
       settings,
       onSelectNotification: (payload) async {

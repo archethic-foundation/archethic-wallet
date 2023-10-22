@@ -1,15 +1,16 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/themes/wallet_theme_base.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/bloc/provider.dart';
 import 'package:aewallet/ui/views/contacts/bloc/state.dart';
@@ -64,7 +65,7 @@ class AddContactSheetBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final contactCreation =
         ref.watch(ContactCreationFormProvider.contactCreationForm);
     final contactCreationNotifier =
@@ -84,8 +85,8 @@ class AddContactSheetBody extends ConsumerWidget {
           errorMessages.join('\n'),
           context,
           ref,
-          theme.text!,
-          theme.snackBarShadow!,
+          ArchethicTheme.text,
+          ArchethicTheme.snackBarShadow,
           duration: const Duration(seconds: 5),
         );
         contactCreationNotifier.setError('');
@@ -128,7 +129,7 @@ class AddContactSheetBody extends ConsumerWidget {
                         alignment: Alignment.topLeft,
                         child: Icon(
                           Symbols.info,
-                          color: theme.text,
+                          color: ArchethicTheme.text,
                           size: 20,
                           weight: IconSize.weightM,
                           opticalSize: IconSize.opticalSizeM,
@@ -140,7 +141,7 @@ class AddContactSheetBody extends ConsumerWidget {
                       ),
                       Text(
                         localizations.addContactDescription,
-                        style: theme.textStyleSize12W100Primary,
+                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
                       ),
                     ],
                   ),
@@ -188,8 +189,8 @@ class AddContactSheetBody extends ConsumerWidget {
                                 .replaceAll('%1', newContact.format),
                             context,
                             ref,
-                            theme.text!,
-                            theme.snackBarShadow!,
+                            ArchethicTheme.text,
+                            ArchethicTheme.snackBarShadow,
                             icon: Symbols.info,
                           );
                           Navigator.of(context).pop();

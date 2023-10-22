@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 // Project imports:
 import 'package:aewallet/model/setting_item.dart';
 import 'package:aewallet/util/currency_util.dart';

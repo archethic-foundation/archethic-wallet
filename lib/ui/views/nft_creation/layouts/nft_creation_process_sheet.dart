@@ -4,10 +4,10 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/nft/nft_category.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/themes/wallet_theme_base.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
@@ -99,7 +99,6 @@ class NftCreationSheetBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final nftCreationProvider = NftCreationFormProvider.nftCreationForm(
       ref.read(
         NftCreationFormProvider.nftCreationFormArgs,
@@ -123,8 +122,8 @@ class NftCreationSheetBody extends ConsumerWidget {
           errorMessages.join('\n'),
           context,
           ref,
-          theme.text!,
-          theme.snackBarShadow!,
+          ArchethicTheme.text,
+          ArchethicTheme.snackBarShadow,
           duration: const Duration(seconds: 5),
         );
       },

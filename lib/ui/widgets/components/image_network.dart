@@ -1,8 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'dart:io';
 
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +31,6 @@ class ImageNetwork extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     if (!kIsWeb && (Platform.isAndroid || Platform.isIOS || Platform.isMacOS)) {
       return CachedNetworkImage(
@@ -44,7 +43,7 @@ class ImageNetwork extends ConsumerWidget {
             padding: const EdgeInsets.all(20),
             child: Text(
               localizations.imageNotAvailable,
-              style: theme.textStyleSize12W400Primary,
+              style: ArchethicThemeStyles.textStyleSize12W400Primary,
               textAlign: TextAlign.center,
             ),
           );

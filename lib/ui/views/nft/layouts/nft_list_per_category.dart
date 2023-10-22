@@ -1,8 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_header.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_list.dart';
@@ -21,7 +22,6 @@ class NFTListPerCategory extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final preferences = ref.watch(SettingsProviders.settings);
     final accountSelected = ref
@@ -37,14 +37,17 @@ class NFTListPerCategory extends ConsumerWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              theme.background2Small!,
+              ArchethicTheme.backgroundSmall,
             ),
             fit: BoxFit.fill,
           ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: <Color>[theme.backgroundDark!, theme.background!],
+            colors: <Color>[
+              ArchethicTheme.backgroundDark,
+              ArchethicTheme.background,
+            ],
           ),
         ),
         child: LayoutBuilder(

@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'dart:async';
 import 'dart:developer';
 
@@ -6,14 +7,14 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/recovery_phrase_saved.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/model/data/account.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/security_configuration.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
@@ -88,7 +89,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final preferences = ref.watch(SettingsProviders.settings);
     final languageSeed = ref.watch(
       SettingsProviders.settings.select(
@@ -123,14 +124,17 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              theme.background2Small!,
+              ArchethicTheme.backgroundSmall,
             ),
-            fit: BoxFit.fitHeight,
+            fit: BoxFit.fill,
           ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: <Color>[theme.backgroundDark!, theme.background!],
+            colors: <Color>[
+              ArchethicTheme.backgroundDark,
+              ArchethicTheme.background,
+            ],
           ),
         ),
         child: LayoutBuilder(
@@ -155,7 +159,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                           width: 50,
                           child: BackButton(
                             key: const Key('back'),
-                            color: theme.text,
+                            color: ArchethicTheme.text,
                             onPressed: () {
                               Navigator.pop(context);
                             },
@@ -234,7 +238,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                       alignment: AlignmentDirectional.centerStart,
                       child: AutoSizeText(
                         localizations.importSecretPhrase,
-                        style: theme.textStyleSize28W700Primary,
+                        style: ArchethicThemeStyles.textStyleSize28W700Primary,
                         maxLines: 1,
                         stepGranularity: 0.1,
                       ),
@@ -255,7 +259,8 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                                   Expanded(
                                     child: Text(
                                       localizations.importSecretPhraseHint,
-                                      style: theme.textStyleSize12W100Primary,
+                                      style: ArchethicThemeStyles
+                                          .textStyleSize12W100Primary,
                                       textAlign: TextAlign.start,
                                     ),
                                   ),
@@ -268,7 +273,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                                         weight: IconSize.weightM,
                                         opticalSize: IconSize.opticalSizeM,
                                         grade: IconSize.gradeM,
-                                        color: theme
+                                        color: ArchethicThemeStyles
                                             .textStyleSize16W600Primary.color,
                                       ),
                                       onPressed: () async {
@@ -299,8 +304,8 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                                             localizations.invalidSeedPaste,
                                             context,
                                             ref,
-                                            theme.text!,
-                                            theme.snackBarShadow!,
+                                            ArchethicTheme.text,
+                                            ArchethicTheme.snackBarShadow,
                                           );
 
                                           return;
@@ -329,7 +334,8 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                                 height: 40,
                                 child: Text(
                                   _mnemonicError,
-                                  style: theme.textStyleSize14W200Primary,
+                                  style: ArchethicThemeStyles
+                                      .textStyleSize14W200Primary,
                                 ),
                               )
                             else
@@ -410,7 +416,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                                                       controller:
                                                           textEditingController,
                                                       focusNode: focusNode,
-                                                      style: theme
+                                                      style: ArchethicThemeStyles
                                                           .textStyleSize12W400Primary,
                                                       autocorrect: false,
                                                       onChanged: (value) {
@@ -432,7 +438,8 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                                                         decoration:
                                                             BoxDecoration(
                                                           gradient:
-                                                              theme.gradient,
+                                                              ArchethicTheme
+                                                                  .gradient,
                                                         ),
                                                       ),
                                                     ),
@@ -494,15 +501,17 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                                 _mnemonicError,
                                 context,
                                 ref,
-                                theme.text!,
-                                theme.snackBarShadow!,
+                                ArchethicTheme.text,
+                                ArchethicTheme.snackBarShadow,
                               );
                               setState(() {
                                 isPressed = false;
                               });
                               return;
                             }
-                            ShowSendingAnimation.build(context, theme);
+                            ShowSendingAnimation.build(
+                              context,
+                            );
                             final newSession = await ref
                                 .read(SessionProviders.session.notifier)
                                 .restoreFromMnemonics(
@@ -519,8 +528,8 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                                 localizations.noKeychain,
                                 context,
                                 ref,
-                                theme.text!,
-                                theme.snackBarShadow!,
+                                ArchethicTheme.text,
+                                ArchethicTheme.snackBarShadow,
                               );
                               Navigator.of(context).pop();
                               return;
@@ -582,7 +591,6 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
   }
 
   Future<Account?> _accountsDialog(List<Account> accounts) async {
-    final theme = ref.read(ThemeProviders.selectedTheme);
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (var i = 0; i < accounts.length; i++) {
       if (accounts[i].serviceType == 'archethicWallet') {
@@ -617,7 +625,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
               children: [
                 Text(
                   localizations.keychainHeader,
-                  style: theme.textStyleSize24W700TelegrafPrimary,
+                  style: ArchethicThemeStyles.textStyleSize24W700Primary,
                 ),
                 const SizedBox(
                   height: 5,
@@ -625,12 +633,12 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                 if (accounts.length > 1)
                   Text(
                     localizations.selectAccountDescSeveral,
-                    style: theme.textStyleSize12W100Primary,
+                    style: ArchethicThemeStyles.textStyleSize12W100Primary,
                   )
                 else
                   Text(
                     localizations.selectAccountDescOne,
-                    style: theme.textStyleSize12W100Primary,
+                    style: ArchethicThemeStyles.textStyleSize12W100Primary,
                   ),
               ],
             ),
@@ -638,7 +646,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(Radius.circular(16)),
             side: BorderSide(
-              color: theme.text45!,
+              color: ArchethicTheme.text45,
             ),
           ),
           content: SingleChildScrollView(

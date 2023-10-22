@@ -9,7 +9,7 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final nftCreationArgs = ref.read(
       NftCreationFormProvider.nftCreationFormArgs,
@@ -35,7 +35,7 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
               padding: const EdgeInsets.only(bottom: 20),
               child: Text(
                 localizations.nftPropertyExplanation,
-                style: theme.textStyleSize12W100Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
                 textAlign: TextAlign.left,
               ),
             ),
@@ -54,7 +54,7 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
                   key: const Key('addNFTProperty'),
                   icon: Icon(
                     Symbols.add,
-                    color: theme.mainButtonLabel,
+                    color: ArchethicTheme.mainButtonLabel,
                     size: 14,
                   ),
                   onPressed: () {

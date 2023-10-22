@@ -3,17 +3,17 @@ import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/primary_currency.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/themes/wallet_theme_base.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/formatters.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/transfer/bloc/provider.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
@@ -116,7 +116,7 @@ class TransferSheetBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final transfer = ref.watch(TransferFormProvider.transferForm);
 
     ref.listen<TransferFormState>(
@@ -139,8 +139,8 @@ class TransferSheetBody extends ConsumerWidget {
           errorMessages.join('\n'),
           context,
           ref,
-          theme.text!,
-          theme.snackBarShadow!,
+          ArchethicTheme.text,
+          ArchethicTheme.snackBarShadow,
           duration: const Duration(seconds: 5),
         );
 

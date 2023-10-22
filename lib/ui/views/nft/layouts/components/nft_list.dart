@@ -1,11 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'dart:ui';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/nft/nft_category.dart';
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/responsive.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_list_detail.dart';
 import 'package:aewallet/ui/widgets/components/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,6 @@ class NFTList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final accountSelected =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
@@ -70,7 +70,7 @@ class NFTList extends ConsumerWidget {
                 alignment: Alignment.topLeft,
                 child: Icon(
                   Symbols.info,
-                  color: theme.text,
+                  color: ArchethicTheme.text,
                   size: 20,
                   weight: IconSize.weightM,
                   opticalSize: IconSize.opticalSizeM,
@@ -82,7 +82,7 @@ class NFTList extends ConsumerWidget {
               ),
               Text(
                 localizations.nftListEmptyExplanation,
-                style: theme.textStyleSize12W100Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
             ],
           ),

@@ -13,15 +13,14 @@ class CustomizationMenuView extends ConsumerWidget {
     final hasNotifications =
         ref.watch(DeviceAbilities.hasNotificationsProvider);
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return Scaffold(
-      backgroundColor: theme.background,
+      backgroundColor: ArchethicTheme.background,
       appBar: AppBar(
-        backgroundColor: theme.background,
+        backgroundColor: ArchethicTheme.background,
         title: AutoSizeText(
           localizations.customHeader,
-          style: theme.textStyleSize24W700TelegrafPrimary,
+          style: ArchethicThemeStyles.textStyleSize24W700Primary,
         ),
       ),
       body: SafeArea(
@@ -45,8 +44,6 @@ class CustomizationMenuView extends ConsumerWidget {
                       ),
                       const _SettingsListItem.spacer(),
                       const _LanguageSettingsListItem(),
-                      const _SettingsListItem.spacer(),
-                      const _ThemeSettingsListItem(),
                       const _SettingsListItem.spacer(),
                       const _ShowBalancesSettingsListItem(),
                       const _SettingsListItem.spacer(),
@@ -116,36 +113,6 @@ class _LanguageSettingsListItem extends ConsumerWidget {
       defaultMethod: LanguageSetting(language),
       icon: Symbols.translate,
       onPressed: () => LanguageDialog.getDialog(context, ref),
-    );
-  }
-}
-
-class _ThemeSettingsListItem extends ConsumerWidget {
-  const _ThemeSettingsListItem();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-
-    final themeOption = ref.watch(
-      SettingsProviders.settings.select((settings) => settings.theme),
-    );
-    return _SettingsListItem.withDefaultValue(
-      heading: localizations.themeHeader,
-      defaultMethod: ThemeSetting(themeOption),
-      icon: Symbols.palette,
-      onPressed: () async {
-        final pickedTheme = await ThemeDialog.getDialog(
-          context,
-          ref,
-          ThemeSetting(themeOption),
-        );
-        if (pickedTheme == null) return;
-
-        await ref
-            .read(SettingsProviders.settings.notifier)
-            .selectTheme(pickedTheme.theme);
-      },
     );
   }
 }

@@ -1,11 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'dart:async';
 
 // Project imports:
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/theme.dart';
+
 import 'package:aewallet/bus/transaction_send_event.dart';
-import 'package:aewallet/ui/themes/themes.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -48,36 +49,34 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
     _sendTxSub = EventTaxiImpl.singleton()
         .registerTo<TransactionSendEvent>()
         .listen((TransactionSendEvent event) async {
-      final theme = ref.read(ThemeProviders.selectedTheme);
       if (event.response != 'ok' && event.nbConfirmations == 0) {
         // Send failed
-        _showSendFailed(event, theme);
+        _showSendFailed(event);
         return;
       }
 
       if (event.response == 'ok') {
-        await _showSendSucceed(event, theme);
+        await _showSendSucceed(event);
         return;
       }
 
-      _showNotEnoughConfirmation(theme);
+      _showNotEnoughConfirmation();
     });
   }
 
-  void _showNotEnoughConfirmation(BaseTheme theme) {
+  void _showNotEnoughConfirmation() {
     UIUtil.showSnackbar(
       AppLocalizations.of(context)!.notEnoughConfirmations,
       context,
       ref,
-      theme.text!,
-      theme.snackBarShadow!,
+      ArchethicTheme.text,
+      ArchethicTheme.snackBarShadow,
     );
     Navigator.of(context).pop();
   }
 
   Future<void> _showSendSucceed(
     TransactionSendEvent event,
-    BaseTheme theme,
   ) async {
     UIUtil.showSnackbar(
       event.nbConfirmations == 1
@@ -91,8 +90,8 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
               .replaceAll('%2', event.maxConfirmations.toString()),
       context,
       ref,
-      theme.text!,
-      theme.snackBarShadow!,
+      ArchethicTheme.text,
+      ArchethicTheme.snackBarShadow,
       duration: const Duration(milliseconds: 5000),
       icon: Symbols.info,
     );
@@ -133,7 +132,6 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
 
   void _showSendFailed(
     TransactionSendEvent event,
-    BaseTheme theme,
   ) {
     // Send failed
     if (animationOpen!) {
@@ -143,8 +141,8 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
       event.response!,
       context,
       ref,
-      theme.text!,
-      theme.snackBarShadow!,
+      ArchethicTheme.text,
+      ArchethicTheme.snackBarShadow,
       duration: const Duration(seconds: 5),
     );
     Navigator.of(context).pop();
@@ -165,7 +163,6 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final transfer = ref.watch(TransferFormProvider.transferForm);
     final transferNotifier =
@@ -214,7 +211,6 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
                       onPressed: () async {
                         ShowSendingAnimation.build(
                           context,
-                          theme,
                         );
                         await ref
                             .read(TransferFormProvider.transferForm.notifier)
@@ -232,7 +228,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
                       key: const Key('back'),
                       icon: Icon(
                         Symbols.arrow_back_ios,
-                        color: theme.mainButtonLabel,
+                        color: ArchethicTheme.mainButtonLabel,
                         size: 14,
                       ),
                       onPressed: () {

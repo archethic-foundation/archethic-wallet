@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';

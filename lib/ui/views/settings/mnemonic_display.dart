@@ -1,7 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -41,7 +42,6 @@ class _MnemonicDisplayState extends ConsumerState<MnemonicDisplay> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
     return Column(
       children: <Widget>[
@@ -67,17 +67,18 @@ class _MnemonicDisplayState extends ConsumerState<MnemonicDisplay> {
                     padding: const EdgeInsets.all(5),
                     child: Chip(
                       avatar: CircleAvatar(
-                        backgroundColor: theme.numMnemonicBackground,
+                        backgroundColor: ArchethicTheme.numMnemonicBackground,
                         child: Text(
                           (entry.key + 1).toString(),
-                          style: theme.textStyleSize12W100Primary60,
+                          style:
+                              ArchethicThemeStyles.textStyleSize12W100Primary60,
                         ),
                       ),
                       label: Text(
                         _seedObscured && widget.obscureSeed
                             ? '•' * 6
                             : entry.value,
-                        style: theme.textStyleSize12W400Primary,
+                        style: ArchethicThemeStyles.textStyleSize12W400Primary,
                       ),
                     ),
                   );
@@ -90,11 +91,13 @@ class _MnemonicDisplayState extends ConsumerState<MnemonicDisplay> {
                   child: _seedObscured
                       ? AutoSizeText(
                           AppLocalizations.of(context)!.tapToReveal,
-                          style: theme.textStyleSize14W600Primary,
+                          style:
+                              ArchethicThemeStyles.textStyleSize14W600Primary,
                         )
                       : Text(
                           AppLocalizations.of(context)!.tapToHide,
-                          style: theme.textStyleSize14W600Primary,
+                          style:
+                              ArchethicThemeStyles.textStyleSize14W600Primary,
                         ),
                 ),
               const SizedBox(
@@ -108,7 +111,7 @@ class _MnemonicDisplayState extends ConsumerState<MnemonicDisplay> {
                       alignment: Alignment.topLeft,
                       child: Icon(
                         Symbols.info,
-                        color: theme.text,
+                        color: ArchethicTheme.text,
                         size: 20,
                         weight: IconSize.weightM,
                         opticalSize: IconSize.opticalSizeM,

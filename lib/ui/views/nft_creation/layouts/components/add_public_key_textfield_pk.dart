@@ -70,7 +70,6 @@ class _AddPublicKeyTextFieldPkState
   Widget build(
     BuildContext context,
   ) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
     final nftCreationArgs = ref.watch(
       NftCreationFormProvider.nftCreationFormArgs,
@@ -198,16 +197,16 @@ class _AddPublicKeyTextFieldPkState
                             AppLocalizations.of(context)!.qrInvalidAddress,
                             context,
                             ref,
-                            theme.text!,
-                            theme.snackBarShadow!,
+                            ArchethicTheme.text,
+                            ArchethicTheme.snackBarShadow,
                           );
                         } else if (QRScanErrs.errorList.contains(scanResult)) {
                           UIUtil.showSnackbar(
                             scanResult,
                             context,
                             ref,
-                            theme.text!,
-                            theme.snackBarShadow!,
+                            ArchethicTheme.text,
+                            ArchethicTheme.snackBarShadow,
                           );
                           return;
                         } else {

@@ -1,6 +1,6 @@
 // ignore_for_file: use_is_even_rather_than_modulo
 
-part of encrypt;
+part of '../encrypt.dart';
 
 Uint8List decodeHexString(String input) {
   assert(input.length % 2 == 0, 'Input needs to be an even length.');

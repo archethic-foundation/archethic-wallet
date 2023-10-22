@@ -1,6 +1,6 @@
 // ignore_for_file: unnecessary_this, use_super_parameters, require_trailing_commas, avoid_escaping_inner_quotes, sort_constructors_first, prefer_final_locals, unnecessary_parenthesis, omit_local_variable_types, constant_identifier_names, unnecessary_lambdas, avoid_redundant_argument_values, avoid_catching_errors
 
-part of encrypt;
+part of '../../encrypt.dart';
 
 // Abstract class for encryption and signing.
 abstract class AbstractRSA {

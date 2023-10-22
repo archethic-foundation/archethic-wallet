@@ -1,6 +1,6 @@
 // ignore_for_file: sort_constructors_first
 
-part of encrypt;
+part of '../encrypt.dart';
 
 class Signer {
   final SignerAlgorithm algo;

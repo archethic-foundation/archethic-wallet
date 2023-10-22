@@ -1,11 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
-// Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -39,7 +39,6 @@ class AppButtonTinyConnectivity extends ConsumerWidget {
     WidgetRef ref,
   ) {
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     final isConnected =
         connectivityStatusProvider == ConnectivityStatus.isConnected;
@@ -54,8 +53,8 @@ class AppButtonTinyConnectivity extends ConsumerWidget {
       icon: Icon(
         icon,
         color: (!disabled && isConnected)
-            ? theme.mainButtonLabel
-            : theme.mainButtonLabel!.withOpacity(0.3),
+            ? ArchethicTheme.mainButtonLabel
+            : ArchethicTheme.mainButtonLabel.withOpacity(0.3),
         size: 14,
       ),
       key: key,
@@ -135,7 +134,6 @@ class AppButtonTinyWithoutExpanded extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
 
     void handlePressed() {
@@ -154,7 +152,7 @@ class AppButtonTinyWithoutExpanded extends ConsumerWidget {
         return Container(
           width: width,
           decoration: ShapeDecoration(
-            gradient: theme.gradientMainButton,
+            gradient: ArchethicTheme.gradientMainButton,
             shape: const StadiumBorder(),
             shadows: [
               BoxShadow(
@@ -189,7 +187,7 @@ class AppButtonTinyWithoutExpanded extends ConsumerWidget {
         return Container(
           width: width,
           decoration: ShapeDecoration(
-            gradient: theme.gradientMainButton,
+            gradient: ArchethicTheme.gradientMainButton,
             shape: const StadiumBorder(),
           ),
           height: 35,
@@ -228,8 +226,6 @@ class _NoIconButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     return TextButton(
       key: key,
       style: TextButton.styleFrom(
@@ -247,8 +243,9 @@ class _NoIconButton extends ConsumerWidget {
             buttonText,
             textAlign: TextAlign.center,
             style: onPressed == null
-                ? theme.textStyleSize12W400TelegrafMainButtonLabelDisabled
-                : theme.textStyleSize12W400TelegrafMainButtonLabel,
+                ? ArchethicThemeStyles
+                    .textStyleSize12W400MainButtonLabelDisabled
+                : ArchethicThemeStyles.textStyleSize12W400MainButtonLabel,
             maxLines: 1,
             stepGranularity: 0.5,
           ),
@@ -257,7 +254,8 @@ class _NoIconButton extends ConsumerWidget {
             SizedBox.square(
               dimension: 10,
               child: CircularProgressIndicator(
-                color: theme.textStyleSize12W400TelegrafMainButtonLabel.color,
+                color: ArchethicThemeStyles
+                    .textStyleSize12W400MainButtonLabel.color,
                 strokeWidth: 2,
               ),
             ),
@@ -282,12 +280,10 @@ class _IconButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     return TextButton(
       key: key,
       style: TextButton.styleFrom(
-        foregroundColor: theme.text,
+        foregroundColor: ArchethicTheme.text,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -304,9 +300,10 @@ class _IconButton extends ConsumerWidget {
                 dimension: 8,
                 child: CircularProgressIndicator(
                   color: onPressed == null
-                      ? theme.textStyleSize12W400TelegrafMainButtonLabelDisabled
-                          .color
-                      : theme.textStyleSize12W400TelegrafMainButtonLabel.color,
+                      ? ArchethicThemeStyles
+                          .textStyleSize12W400MainButtonLabelDisabled.color
+                      : ArchethicThemeStyles
+                          .textStyleSize12W400MainButtonLabel.color,
                   strokeWidth: 1,
                 ),
               ),
@@ -320,8 +317,9 @@ class _IconButton extends ConsumerWidget {
             buttonText,
             textAlign: TextAlign.center,
             style: onPressed == null
-                ? theme.textStyleSize12W400TelegrafMainButtonLabelDisabled
-                : theme.textStyleSize12W400TelegrafMainButtonLabel,
+                ? ArchethicThemeStyles
+                    .textStyleSize12W400MainButtonLabelDisabled
+                : ArchethicThemeStyles.textStyleSize12W400MainButtonLabel,
             maxLines: 1,
             stepGranularity: 0.5,
           ),
@@ -344,8 +342,6 @@ class _IconButtonOutline extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     return TextButton.icon(
       key: key,
       style: TextButton.styleFrom(
@@ -357,7 +353,7 @@ class _IconButtonOutline extends ConsumerWidget {
       label: AutoSizeText(
         buttonText,
         textAlign: TextAlign.center,
-        style: theme.textStyleSize12W400TelegrafMainButtonLabelDisabled,
+        style: ArchethicThemeStyles.textStyleSize12W400MainButtonLabelDisabled,
         maxLines: 1,
         stepGranularity: 0.5,
       ),

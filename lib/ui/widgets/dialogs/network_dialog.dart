@@ -1,10 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/network/provider.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/available_networks.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
@@ -24,7 +25,6 @@ class NetworkDialog with UrlUtil {
     WidgetRef ref,
     NetworksSetting curNetworksSetting,
   ) async {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final endpointFocusNode = FocusNode();
     final endpointController = TextEditingController();
@@ -44,7 +44,7 @@ class NetworkDialog with UrlUtil {
         PickerItem(
           networkSetting.getDisplayName(context),
           networkSetting.getLink(),
-          '${theme.assetsFolder!}${theme.logoAlone!}.png',
+          '${ArchethicTheme.assetsFolder}${ArchethicTheme.logoAlone}.png',
           null,
           networkSetting,
           true,
@@ -90,8 +90,8 @@ class NetworkDialog with UrlUtil {
                                 errorText,
                                 context,
                                 ref,
-                                theme.text!,
-                                theme.snackBarShadow!,
+                                ArchethicTheme.text,
+                                ArchethicTheme.snackBarShadow,
                               );
                             }
 
@@ -163,7 +163,6 @@ class _NetworkDialogCustomInput extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return PopupDialog(
       title: const Padding(
@@ -184,14 +183,14 @@ class _NetworkDialogCustomInput extends ConsumerWidget {
                 controller: endpointController,
                 labelText: localizations.enterEndpoint,
                 keyboardType: TextInputType.text,
-                style: theme.textStyleSize14W600Primary,
+                style: ArchethicThemeStyles.textStyleSize14W600Primary,
                 inputFormatters: <TextInputFormatter>[
                   LengthLimitingTextInputFormatter(200),
                 ],
               ),
               Text(
                 'http://xxx.xxx.xxx.xxx:xxxx',
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
               const SizedBox(),
             ],
@@ -221,14 +220,13 @@ class _NetworkTitle extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Text(
         localizations.networksHeader,
-        style: theme.textStyleSize24W700TelegrafPrimary,
+        style: ArchethicThemeStyles.textStyleSize24W700Primary,
       ),
     );
   }
@@ -239,26 +237,25 @@ class _NetworkDevnetHeader extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
 
     return Column(
       children: [
         SvgPicture.asset(
-          '${theme.assetsFolder!}${theme.logoAlone!}.svg',
+          '${ArchethicTheme.assetsFolder}${ArchethicTheme.logoAlone}.svg',
           height: 30,
         ),
         Text(
           key: const Key('networkName'),
           ref.read(SettingsProviders.settings).network.getDisplayName(context),
-          style: theme.textStyleSize10W100Primary,
+          style: ArchethicThemeStyles.textStyleSize10W100Primary,
         ),
         const SizedBox(
           height: 20,
         ),
         Text(
           localizations.enterEndpointHeader,
-          style: theme.textStyleSize16W400Primary,
+          style: ArchethicThemeStyles.textStyleSize16W400Primary,
         ),
       ],
     );

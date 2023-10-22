@@ -1,12 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'dart:async';
 
 import 'package:aewallet/application/authentication/authentication.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/authentication.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
@@ -74,7 +75,6 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     final passwordAuthentication = ref.watch(
       AuthenticationProviders.passwordAuthentication,
@@ -88,14 +88,17 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(
-                theme.background5Small!,
+                ArchethicTheme.backgroundSmall,
               ),
               fit: BoxFit.fill,
             ),
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: <Color>[theme.backgroundDark!, theme.background!],
+              colors: <Color>[
+                ArchethicTheme.backgroundDark,
+                ArchethicTheme.background,
+              ],
             ),
           ),
           child: Material(
@@ -118,7 +121,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
                             child: widget.canNavigateBack
                                 ? BackButton(
                                     key: const Key('back'),
-                                    color: theme.text,
+                                    color: ArchethicTheme.text,
                                     onPressed: () {
                                       Navigator.pop(context, false);
                                     },
@@ -134,7 +137,8 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
                         ),
                         child: Text(
                           localizations.passwordMethod,
-                          style: theme.textStyleSize24W700TelegrafPrimary,
+                          style:
+                              ArchethicThemeStyles.textStyleSize24W700Primary,
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -162,7 +166,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
                         labelText: localizations.enterPasswordHint,
                         keyboardType: TextInputType.text,
                         obscureText: !enterPasswordVisible!,
-                        style: theme.textStyleSize16W700Primary,
+                        style: ArchethicThemeStyles.textStyleSize16W700Primary,
                         suffixButton: TextFieldButton(
                           icon: enterPasswordVisible!
                               ? Symbols.visibility
@@ -182,7 +186,8 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
                           ),
                           child: AutoSizeText(
                             '${localizations.attempt}${passwordAuthentication.failedAttemptsCount}/${passwordAuthentication.maxAttemptsCount}',
-                            style: theme.textStyleSize14W200Primary,
+                            style:
+                                ArchethicThemeStyles.textStyleSize14W200Primary,
                             textAlign: TextAlign.center,
                             maxLines: 1,
                             stepGranularity: 0.1,
@@ -193,7 +198,8 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
                         margin: const EdgeInsets.only(top: 3),
                         child: Text(
                           passwordError == null ? '' : passwordError!,
-                          style: theme.textStyleSize14W600Primary,
+                          style:
+                              ArchethicThemeStyles.textStyleSize14W600Primary,
                         ),
                       ),
                     ],

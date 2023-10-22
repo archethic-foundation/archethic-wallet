@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'dart:io';
 
 import 'package:aewallet/application/account/providers.dart';
@@ -8,20 +9,20 @@ import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/settings/version.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/infrastructure/rpc/websocket_server.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/available_language.dart';
-import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/model/device_unlock_option.dart';
 import 'package:aewallet/model/setting_item.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/responsive.dart';
-import 'package:aewallet/ui/util/styles.dart';
+
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/settings/backupseed_sheet.dart';
@@ -34,7 +35,6 @@ import 'package:aewallet/ui/widgets/dialogs/language_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/lock_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/lock_timeout_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/primary_currency_dialog.dart';
-import 'package:aewallet/ui/widgets/dialogs/theme_dialog.dart';
 import 'package:aewallet/util/cache_manager_hive.dart';
 import 'package:aewallet/util/case_converter.dart';
 import 'package:aewallet/util/get_it_instance.dart';

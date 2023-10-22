@@ -1,8 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -30,18 +31,17 @@ class NftPropertyAppTextField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
     return AppTextField(
       focusNode: focusNode,
       controller: textEditingController,
-      cursorColor: theme.text,
+      cursorColor: ArchethicTheme.text,
       textInputAction: TextInputAction.next,
       labelText: hint,
       autocorrect: false,
       keyboardType: TextInputType.text,
-      style: theme.textStyleSize16W600Primary,
+      style: ArchethicThemeStyles.textStyleSize16W600Primary,
       inputFormatters: <LengthLimitingTextInputFormatter>[
         LengthLimitingTextInputFormatter(30),
       ],
@@ -60,16 +60,16 @@ class NftPropertyAppTextField extends ConsumerWidget {
                     AppLocalizations.of(context)!.qrInvalidAddress,
                     context,
                     ref,
-                    theme.text!,
-                    theme.snackBarShadow!,
+                    ArchethicTheme.text,
+                    ArchethicTheme.snackBarShadow,
                   );
                 } else if (QRScanErrs.errorList.contains(scanResult)) {
                   UIUtil.showSnackbar(
                     scanResult,
                     context,
                     ref,
-                    theme.text!,
-                    theme.snackBarShadow!,
+                    ArchethicTheme.text,
+                    ArchethicTheme.snackBarShadow,
                   );
                   return;
                 } else {

@@ -1,7 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'dart:io';
 import 'dart:ui';
-import 'package:aewallet/application/settings/theme.dart';
+
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,13 +23,13 @@ class Sheets {
     Function? onDisposed,
   }) {
     assert(radius > 0.0);
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-    color ??= theme.backgroundDark;
-    bgColor ??= theme.sheetBackground;
+
+    color ??= ArchethicTheme.backgroundDark;
+    bgColor ??= ArchethicTheme.sheetBackground;
     final route = _AppHeightNineModalRoute<T>(
       builder: (BuildContext context) {
         return DecoratedBox(
-          decoration: theme.getDecorationSheet(),
+          decoration: ArchethicTheme.getDecorationSheet(),
           child: TweenAnimationBuilder(
             tween: Tween<double>(begin: 0, end: 1),
             duration: const Duration(milliseconds: 500),

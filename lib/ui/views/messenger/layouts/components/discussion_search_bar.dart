@@ -1,9 +1,9 @@
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/formatters.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/messenger/bloc/discussion_search_bar_provider.dart';
 import 'package:aewallet/ui/views/messenger/bloc/discussion_search_bar_state.dart';
@@ -55,7 +55,6 @@ class _DiscussionSearchBarState extends ConsumerState<DiscussionSearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
     final session = ref.watch(SessionProviders.session).loggedIn!;
@@ -90,8 +89,8 @@ class _DiscussionSearchBarState extends ConsumerState<DiscussionSearchBar> {
           discussionSearchBar.error,
           context,
           ref,
-          theme.text!,
-          theme.snackBarShadow!,
+          ArchethicTheme.text,
+          ArchethicTheme.snackBarShadow,
           duration: const Duration(seconds: 5),
         );
 
@@ -125,7 +124,7 @@ class _DiscussionSearchBarState extends ConsumerState<DiscussionSearchBar> {
             contentPadding: EdgeInsets.zero,
             prefixIcon: Icon(
               Symbols.search,
-              color: theme.text,
+              color: ArchethicTheme.text,
               size: 18,
               weight: IconSize.weightM,
               opticalSize: IconSize.opticalSizeM,
@@ -135,7 +134,7 @@ class _DiscussionSearchBarState extends ConsumerState<DiscussionSearchBar> {
                 ? InkWell(
                     child: Icon(
                       Symbols.qr_code_scanner,
-                      color: theme.text,
+                      color: ArchethicTheme.text,
                       size: 24,
                       weight: IconSize.weightM,
                       opticalSize: IconSize.opticalSizeM,
@@ -160,16 +159,16 @@ class _DiscussionSearchBarState extends ConsumerState<DiscussionSearchBar> {
                               .qrInvalidAddress,
                           context,
                           ref,
-                          theme.text!,
-                          theme.snackBarShadow!,
+                          ArchethicTheme.text,
+                          ArchethicTheme.snackBarShadow,
                         );
                       } else if (QRScanErrs.errorList.contains(scanResult)) {
                         UIUtil.showSnackbar(
                           scanResult,
                           context,
                           ref,
-                          theme.text!,
-                          theme.snackBarShadow!,
+                          ArchethicTheme.text,
+                          ArchethicTheme.snackBarShadow,
                         );
                         return;
                       } else {
@@ -187,19 +186,19 @@ class _DiscussionSearchBarState extends ConsumerState<DiscussionSearchBar> {
               ),
               borderSide: BorderSide.none,
             ),
-            hintStyle: theme.textStyleSize12W400Primary,
+            hintStyle: ArchethicThemeStyles.textStyleSize12W400Primary,
             filled: true,
-            fillColor: theme.text30,
+            fillColor: ArchethicTheme.text30,
             hintText: localizations.searchDiscussionHint,
           ),
-          style: theme.textStyleSize12W400Primary,
+          style: ArchethicThemeStyles.textStyleSize12W400Primary,
           textAlign: TextAlign.center,
           controller: searchController,
           autocorrect: false,
           maxLines:
               null, // max number of lines cannot be set because small devices (such as iPhone SE) cannot display 68 characters in 2 lines
           textInputAction: TextInputAction.search,
-          cursorColor: theme.text,
+          cursorColor: ArchethicTheme.text,
           inputFormatters: <TextInputFormatter>[
             UpperCaseTextFormatter(),
             LengthLimitingTextInputFormatter(68),

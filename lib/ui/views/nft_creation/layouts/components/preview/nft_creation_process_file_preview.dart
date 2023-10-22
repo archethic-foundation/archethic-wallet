@@ -1,6 +1,4 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/preview/nft_creation_process_file_preview_aeweb.dart';
@@ -52,7 +50,6 @@ class NFTCreationProcessFilePreview extends ConsumerWidget {
       return const SizedBox();
     }
 
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     return Column(
       children: [
         if (nftCreation.name.isNotEmpty && displayNFTInfo)
@@ -61,7 +58,7 @@ class NFTCreationProcessFilePreview extends ConsumerWidget {
             child: Align(
               child: Text(
                 nftCreation.name,
-                style: theme.textStyleSize16W400Primary,
+                style: ArchethicThemeStyles.textStyleSize16W400Primary,
               ),
             ),
           ),
@@ -72,7 +69,7 @@ class NFTCreationProcessFilePreview extends ConsumerWidget {
               child: Text(
                 key: const Key('nftCreationConfirmation'),
                 '[${nftCreation.symbol}]',
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
             ),
           ),
@@ -82,7 +79,7 @@ class NFTCreationProcessFilePreview extends ConsumerWidget {
             child: Align(
               child: Text(
                 nftCreation.description,
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
             ),
           ),

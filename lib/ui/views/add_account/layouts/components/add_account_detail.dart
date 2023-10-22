@@ -1,9 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/account_balance.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/add_account/bloc/provider.dart';
 import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class AddAccountDetail extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final addAccount = ref.watch(AddAccountFormProvider.addAccountForm);
     final accountSelected =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
@@ -32,12 +32,12 @@ class AddAccountDetail extends ConsumerWidget {
             children: [
               Text(
                 localizations.serviceName,
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
               Expanded(
                 child: Text(
                   addAccount.name,
-                  style: theme.textStyleSize12W400Primary,
+                  style: ArchethicThemeStyles.textStyleSize12W400Primary,
                   textAlign: TextAlign.end,
                 ),
               ),
@@ -47,11 +47,11 @@ class AddAccountDetail extends ConsumerWidget {
             children: [
               Text(
                 localizations.estimatedFees,
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
               Text(
                 '0 ${AccountBalance.cryptoCurrencyLabel}',
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
             ],
           ),
@@ -59,14 +59,14 @@ class AddAccountDetail extends ConsumerWidget {
             children: [
               Text(
                 localizations.availableAfterCreation,
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
               Text(
                 AmountFormatters.standard(
                   accountSelected!.balance!.nativeTokenValue,
                   addAccount.symbolFees(context),
                 ),
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
             ],
           ),

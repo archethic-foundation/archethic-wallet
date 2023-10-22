@@ -1,8 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/raw_info_popup.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/qr_code_with_options.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
@@ -31,7 +32,6 @@ class ContactDetailTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
 
     return Container(
@@ -60,8 +60,8 @@ class ContactDetailTab extends ConsumerWidget {
                         messageCopied,
                         context,
                         ref,
-                        theme.text!,
-                        theme.snackBarShadow!,
+                        ArchethicTheme.text,
+                        ArchethicTheme.snackBarShadow,
                         icon: Symbols.info,
                       );
                     },
@@ -86,7 +86,7 @@ class ContactDetailTab extends ConsumerWidget {
                     AutoSizeText(
                       warning!,
                       textAlign: TextAlign.left,
-                      style: theme.textStyleSize12W300PrimaryRed,
+                      style: ArchethicThemeStyles.textStyleSize12W300PrimaryRed,
                     ),
                   const SizedBox(
                     height: 10,
@@ -95,7 +95,7 @@ class ContactDetailTab extends ConsumerWidget {
                     alignment: Alignment.topLeft,
                     child: Icon(
                       Symbols.info,
-                      color: theme.text,
+                      color: ArchethicTheme.text,
                       size: 20,
                       weight: IconSize.weightM,
                       opticalSize: IconSize.opticalSizeM,
@@ -108,7 +108,7 @@ class ContactDetailTab extends ConsumerWidget {
                   AutoSizeText(
                     description,
                     textAlign: TextAlign.left,
-                    style: theme.textStyleSize12W100Primary,
+                    style: ArchethicThemeStyles.textStyleSize12W100Primary,
                   ),
                 ],
               ),

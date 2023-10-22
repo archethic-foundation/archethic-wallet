@@ -1,5 +1,5 @@
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/authentication_method.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/intro/intro_configure_security.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/util/biometrics_util.dart';
@@ -13,14 +13,13 @@ mixin SecurityConfigurationMixin {
     WidgetRef ref,
     String seed,
   ) async {
-    final theme = ref.read(ThemeProviders.selectedTheme);
     final biometricsAvalaible = await sl.get<BiometricUtil>().hasBiometrics();
     final accessModes = <PickerItem>[
       PickerItem(
         const AuthenticationMethod(AuthMethod.pin).getDisplayName(context),
         const AuthenticationMethod(AuthMethod.pin).getDescription(context),
         AuthenticationMethod.getIcon(AuthMethod.pin),
-        theme.pickerItemIconEnabled,
+        ArchethicTheme.pickerItemIconEnabled,
         AuthMethod.pin,
         true,
         key: const Key('accessModePIN'),
@@ -29,7 +28,7 @@ mixin SecurityConfigurationMixin {
         const AuthenticationMethod(AuthMethod.password).getDisplayName(context),
         const AuthenticationMethod(AuthMethod.password).getDescription(context),
         AuthenticationMethod.getIcon(AuthMethod.password),
-        theme.pickerItemIconEnabled,
+        ArchethicTheme.pickerItemIconEnabled,
         AuthMethod.password,
         true,
         key: const Key('accessModePassword'),
@@ -43,7 +42,7 @@ mixin SecurityConfigurationMixin {
           const AuthenticationMethod(AuthMethod.biometrics)
               .getDescription(context),
           AuthenticationMethod.getIcon(AuthMethod.biometrics),
-          theme.pickerItemIconEnabled,
+          ArchethicTheme.pickerItemIconEnabled,
           AuthMethod.biometrics,
           true,
         ),
@@ -57,7 +56,7 @@ mixin SecurityConfigurationMixin {
           const AuthenticationMethod(AuthMethod.biometricsUniris)
               .getDescription(context),
           AuthenticationMethod.getIcon(AuthMethod.biometricsUniris),
-          theme.pickerItemIconEnabled,
+          ArchethicTheme.pickerItemIconEnabled,
           AuthMethod.biometricsUniris,
           false,
         ),
@@ -69,7 +68,7 @@ mixin SecurityConfigurationMixin {
           const AuthenticationMethod(AuthMethod.yubikeyWithYubicloud)
               .getDescription(context),
           AuthenticationMethod.getIcon(AuthMethod.yubikeyWithYubicloud),
-          theme.pickerItemIconEnabled,
+          ArchethicTheme.pickerItemIconEnabled,
           AuthMethod.yubikeyWithYubicloud,
           true,
         ),

@@ -7,7 +7,6 @@ import 'package:aewallet/domain/repositories/settings.dart';
 import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/available_networks.dart';
-import 'package:aewallet/model/available_themes.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:flutter/foundation.dart';
@@ -47,7 +46,6 @@ class SettingsNotifier extends StateNotifier<Settings> {
           showBalances: true,
           showBlog: true,
           showPriceChart: true,
-          theme: ThemeOptions.dark,
         ),
       );
 
@@ -96,12 +94,6 @@ class SettingsNotifier extends StateNotifier<Settings> {
   Future<void> selectCurrency(AvailableCurrency currency) => _update(
         state.copyWith(
           currency: currency.currency,
-        ),
-      );
-
-  Future<void> selectTheme(ThemeOptions theme) => _update(
-        state.copyWith(
-          theme: theme,
         ),
       );
 

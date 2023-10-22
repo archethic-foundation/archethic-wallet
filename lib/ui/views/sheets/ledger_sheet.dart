@@ -1,20 +1,19 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:aewallet/ui/themes/styles.dart';
 // Project imports:
-import 'package:aewallet/application/settings/theme.dart';
+
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/ledger/archethic_ledger_util.dart';
-// Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:convert/convert.dart';
-// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -106,7 +105,6 @@ class _LedgerSheetState extends ConsumerState<LedgerSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     return SafeArea(
       minimum:
           EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
@@ -125,7 +123,7 @@ class _LedgerSheetState extends ConsumerState<LedgerSheet> {
                     children: <Widget>[
                       Text(
                         'Payload',
-                        style: theme.textStyleSize16W600Primary,
+                        style: ArchethicThemeStyles.textStyleSize16W600Primary,
                         textAlign: TextAlign.center,
                       ),
                       AppTextField(
@@ -148,14 +146,14 @@ class _LedgerSheetState extends ConsumerState<LedgerSheet> {
                           LengthLimitingTextInputFormatter(500),
                         ],
                         keyboardType: TextInputType.text,
-                        style: theme.textStyleSize16W600Primary,
+                        style: ArchethicThemeStyles.textStyleSize16W600Primary,
                       ),
                       const SizedBox(
                         height: 10,
                       ),
                       Text(
                         'Response',
-                        style: theme.textStyleSize16W600Primary,
+                        style: ArchethicThemeStyles.textStyleSize16W600Primary,
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(
@@ -165,23 +163,24 @@ class _LedgerSheetState extends ConsumerState<LedgerSheet> {
                         padding: const EdgeInsets.only(right: 10, left: 10),
                         child: SelectableText(
                           response,
-                          style: theme.textStyleSize16W200Primary,
+                          style:
+                              ArchethicThemeStyles.textStyleSize16W200Primary,
                           textAlign: TextAlign.center,
                         ),
                       ),
                       SelectableText(
                         'Info',
-                        style: theme.textStyleSize16W600Primary,
+                        style: ArchethicThemeStyles.textStyleSize16W600Primary,
                         textAlign: TextAlign.center,
                       ),
                       Text(
                         info,
-                        style: theme.textStyleSize16W200Primary,
+                        style: ArchethicThemeStyles.textStyleSize16W200Primary,
                         textAlign: TextAlign.center,
                       ),
                       SelectableText(
                         labelResponse,
-                        style: theme.textStyleSize16W200Primary,
+                        style: ArchethicThemeStyles.textStyleSize16W200Primary,
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(

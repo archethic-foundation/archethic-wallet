@@ -41,7 +41,6 @@ class _NFTCreationProcessInfosTabTextFieldSymbolState
   Widget build(
     BuildContext context,
   ) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
 
     final nftCreationNotifier = ref.watch(
@@ -142,7 +141,7 @@ class _NFTCreationProcessInfosTabTextFieldSymbolState
                 ),
                 child: Text(
                   localizations.tokenSymbolMaxNumberCharacter,
-                  style: theme.textStyleSize10W100Primary,
+                  style: ArchethicThemeStyles.textStyleSize10W100Primary,
                 ),
               ),
             ],

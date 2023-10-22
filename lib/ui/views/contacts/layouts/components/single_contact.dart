@@ -1,8 +1,8 @@
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/contacts/layouts/components/single_contact_balance.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
@@ -22,8 +22,6 @@ class SingleContact extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     return TextButton(
       style: ButtonStyle(
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -50,7 +48,7 @@ class SingleContact extends ConsumerWidget {
                 if (contact.type == ContactType.keychainService.name)
                   Icon(
                     Symbols.account_balance_wallet,
-                    color: theme.iconDrawer,
+                    color: ArchethicTheme.iconDrawer,
                     size: 25,
                     weight: IconSize.weightM,
                     opticalSize: IconSize.opticalSizeM,
@@ -62,7 +60,7 @@ class SingleContact extends ConsumerWidget {
                     children: [
                       Icon(
                         Symbols.person,
-                        color: theme.iconDrawer,
+                        color: ArchethicTheme.iconDrawer,
                         size: 25,
                         weight: IconSize.weightM,
                         opticalSize: IconSize.opticalSizeM,
@@ -71,7 +69,7 @@ class SingleContact extends ConsumerWidget {
                       if (contact.favorite == true)
                         Icon(
                           Symbols.favorite,
-                          color: theme.favoriteIconColor,
+                          color: ArchethicTheme.favoriteIconColor,
                           size: 12,
                           weight: IconSize.weightM,
                           opticalSize: IconSize.opticalSizeM,
@@ -86,7 +84,7 @@ class SingleContact extends ConsumerWidget {
                 Expanded(
                   child: Text(
                     contact.format,
-                    style: theme.textStyleSize14W600Primary,
+                    style: ArchethicThemeStyles.textStyleSize14W600Primary,
                   ),
                 ),
                 SingleContactBalance(

@@ -1,13 +1,14 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'dart:ui';
 
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/settings/version.dart';
 import 'package:aewallet/model/available_networks.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
@@ -31,7 +32,6 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     return Scaffold(
@@ -42,9 +42,9 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              theme.background4Small!,
+              ArchethicTheme.backgroundSmall,
             ),
-            fit: BoxFit.fitHeight,
+            fit: BoxFit.fill,
             opacity: 0.8,
           ),
         ),
@@ -118,13 +118,11 @@ class _Language extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     return IconButton(
       padding: const EdgeInsets.only(bottom: 4),
       icon: Icon(
         Symbols.translate,
-        color: theme.iconDrawer,
+        color: ArchethicTheme.iconDrawer,
         size: 25,
         weight: IconSize.weightM,
         opticalSize: IconSize.opticalSizeM,
@@ -163,7 +161,6 @@ class _LogoArchethic extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     return Center(
       child: Container(
         padding: const EdgeInsets.only(
@@ -175,7 +172,7 @@ class _LogoArchethic extends ConsumerWidget {
           child: AspectRatio(
             aspectRatio: 3 / 1,
             child: Image.asset(
-              '${theme.assetsFolder!}${theme.logo!}.png',
+              '${ArchethicTheme.assetsFolder}${ArchethicTheme.logo}.png',
               height: 200,
             ),
           ),
@@ -190,7 +187,6 @@ class _WelcomeTextFirst extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     return Container(
       margin: const EdgeInsets.only(
@@ -200,7 +196,7 @@ class _WelcomeTextFirst extends ConsumerWidget {
       child: AutoSizeText(
         localizations.welcomeText,
         maxLines: 3,
-        style: theme.textStyleSize16W400Primary,
+        style: ArchethicThemeStyles.textStyleSize16W400Primary,
       ),
     );
   }
@@ -211,7 +207,6 @@ class _WelcomeTextSecond extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     return Container(
       margin: const EdgeInsets.only(
@@ -222,7 +217,7 @@ class _WelcomeTextSecond extends ConsumerWidget {
       child: AutoSizeText(
         localizations.welcomeText2,
         maxLines: 5,
-        style: theme.textStyleSize12W100Primary,
+        style: ArchethicThemeStyles.textStyleSize12W100Primary,
       ),
     );
   }
@@ -284,7 +279,6 @@ class _CGU extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return Row(
       children: [
@@ -305,13 +299,14 @@ class _CGU extends ConsumerWidget {
                 },
                 child: Text(
                   localizations.welcomeDisclaimerChoice,
-                  style: theme.textStyleSize12W400UnderlinePrimary,
+                  style:
+                      ArchethicThemeStyles.textStyleSize12W400UnderlinePrimary,
                 ),
               ),
               value: cguChecked,
               onChanged: onToggleCGU,
-              checkColor: theme.background,
-              activeColor: theme.text,
+              checkColor: ArchethicTheme.background,
+              activeColor: ArchethicTheme.text,
               controlAffinity: ListTileControlAffinity.leading,
             ),
           ),
@@ -326,8 +321,6 @@ class _VersionInfo extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     return Padding(
       padding: const EdgeInsets.only(
         right: 30,
@@ -346,7 +339,7 @@ class _VersionInfo extends ConsumerWidget {
               return Text(
                 asyncVersionString.asData?.value ?? '',
                 textAlign: TextAlign.left,
-                style: theme.textStyleSize10W100Primary,
+                style: ArchethicThemeStyles.textStyleSize10W100Primary,
               );
             },
           ),

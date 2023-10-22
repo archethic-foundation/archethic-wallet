@@ -1,9 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/themes/wallet_theme_base.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/add_account/bloc/provider.dart';
 import 'package:aewallet/ui/views/add_account/bloc/state.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
@@ -27,7 +28,6 @@ class AddAccountFormSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final accountSelected =
@@ -60,7 +60,7 @@ class AddAccountFormSheet extends ConsumerWidget {
                     children: <Widget>[
                       Text(
                         localizations.introNewWalletGetFirstInfosNameRequest,
-                        style: theme.textStyleSize14W600Primary,
+                        style: ArchethicThemeStyles.textStyleSize14W600Primary,
                       ),
                       const Padding(
                         padding: EdgeInsets.only(top: 20),
@@ -73,7 +73,7 @@ class AddAccountFormSheet extends ConsumerWidget {
                         alignment: Alignment.topLeft,
                         child: Icon(
                           Symbols.info,
-                          color: theme.text,
+                          color: ArchethicTheme.text,
                           size: 14,
                         ),
                       ),
@@ -82,7 +82,7 @@ class AddAccountFormSheet extends ConsumerWidget {
                       ),
                       AutoSizeText(
                         localizations.introNewWalletGetFirstInfosNameInfos,
-                        style: theme.textStyleSize12W100Primary,
+                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
                       ),
                       const SizedBox(
                         height: 30,

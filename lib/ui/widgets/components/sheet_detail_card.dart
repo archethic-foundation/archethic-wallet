@@ -1,4 +1,4 @@
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,17 +14,16 @@ class SheetDetailCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     return SizedBox.fromSize(
       child: Card(
         shape: RoundedRectangleBorder(
           side: BorderSide(
-            color: theme.backgroundTransferListOutline!,
+            color: ArchethicTheme.backgroundTransferListOutline,
           ),
           borderRadius: BorderRadius.circular(10),
         ),
         elevation: 0,
-        color: theme.backgroundTransferListCard,
+        color: ArchethicTheme.backgroundTransferListCard,
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Row(

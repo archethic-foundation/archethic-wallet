@@ -1,8 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/theme.dart';
+
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/transactions/components/transaction_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -87,8 +89,6 @@ class _TransactionsEmpty extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     return Container(
       alignment: Alignment.center,
       color: Colors.transparent,
@@ -98,12 +98,12 @@ class _TransactionsEmpty extends ConsumerWidget {
         child: Card(
           shape: RoundedRectangleBorder(
             side: BorderSide(
-              color: theme.backgroundFungiblesTokensListCard!,
+              color: ArchethicTheme.backgroundFungiblesTokensListCard,
             ),
             borderRadius: BorderRadius.circular(10),
           ),
           elevation: 0,
-          color: theme.backgroundFungiblesTokensListCard,
+          color: ArchethicTheme.backgroundFungiblesTokensListCard,
           child: Container(
             padding: const EdgeInsets.all(9.5),
             width: MediaQuery.of(context).size.width,
@@ -121,7 +121,7 @@ class _TransactionsEmpty extends ConsumerWidget {
                 Text(
                   AppLocalizations.of(context)!
                       .recentTransactionsNoTransactionYet,
-                  style: theme.textStyleSize12W100Primary,
+                  style: ArchethicThemeStyles.textStyleSize12W100Primary,
                 ),
               ],
             ),

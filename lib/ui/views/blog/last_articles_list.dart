@@ -1,10 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'dart:math' as math;
 
 import 'package:aewallet/application/blog.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 import 'package:aewallet/ui/widgets/components/image_network.dart';
@@ -47,7 +48,7 @@ class LastArticlesState extends ConsumerState<LastArticles> {
       return const _LastArticlesNotShowed();
     }
     final asyncArticlesList = ref.watch(BlogProviders.fetchArticles);
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     const blogUrl = 'https://blog.archethic.net';
 
     return Column(
@@ -62,7 +63,7 @@ class LastArticlesState extends ConsumerState<LastArticles> {
               children: [
                 Text(
                   AppLocalizations.of(context)!.blogHeader,
-                  style: theme.textStyleSize14W600TelegrafPrimary,
+                  style: ArchethicThemeStyles.textStyleSize14W600Primary,
                 ),
                 InkWell(
                   onTap: () {
@@ -176,7 +177,6 @@ class SlidingCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final gauss = math.exp(-(math.pow(offset!.abs() - 0.5, 2) / 0.08));
     return Transform.translate(
       offset: Offset(-32 * gauss * offset!.sign, 0),
@@ -184,7 +184,7 @@ class SlidingCard extends ConsumerWidget {
         elevation: 5,
         shadowColor: Colors.black,
         margin: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
-        color: theme.backgroundDark,
+        color: ArchethicTheme.backgroundDark,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
           side: const BorderSide(color: Colors.white10),
@@ -214,7 +214,7 @@ class SlidingCard extends ConsumerWidget {
                         height: 150,
                         child: Center(
                           child: CircularProgressIndicator(
-                            color: theme.text,
+                            color: ArchethicTheme.text,
                             strokeWidth: 1,
                           ),
                         ),
@@ -251,7 +251,6 @@ class CardContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     return Padding(
       padding: const EdgeInsets.all(12),
       child: Column(
@@ -261,7 +260,7 @@ class CardContent extends ConsumerWidget {
             offset: Offset(8 * offset!, 0),
             child: Text(
               name!,
-              style: theme.textStyleSize14W600Primary,
+              style: ArchethicThemeStyles.textStyleSize14W600Primary,
             ),
           ),
           const SizedBox(height: 5),
@@ -269,7 +268,7 @@ class CardContent extends ConsumerWidget {
             offset: Offset(32 * offset!, 0),
             child: Text(
               '${date!} by ${author!}',
-              style: theme.textStyleSize12W400Primary,
+              style: ArchethicThemeStyles.textStyleSize12W400Primary,
             ),
           ),
         ],

@@ -1,14 +1,15 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/public_key.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/layouts/components/contact_detail_tab.dart';
 import 'package:aewallet/ui/views/contacts/layouts/components/single_contact_balance.dart';
@@ -38,7 +39,7 @@ class ContactDetail extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final preferences = ref.watch(SettingsProviders.settings);
 
     final accounts = ref.watch(AccountProviders.accounts).valueOrNull;
@@ -78,7 +79,8 @@ class ContactDetail extends ConsumerWidget {
                           flex: 2,
                           child: AutoSizeText(
                             contact.format,
-                            style: theme.textStyleSize24W700TelegrafPrimary,
+                            style:
+                                ArchethicThemeStyles.textStyleSize24W700Primary,
                             textAlign: TextAlign.center,
                             maxLines: 1,
                             stepGranularity: 0.1,
@@ -103,17 +105,17 @@ class ContactDetail extends ConsumerWidget {
               child: SizedBox(
                 height: 40,
                 child: TabBar(
-                  labelColor: theme.text,
-                  indicatorColor: theme.text,
+                  labelColor: ArchethicTheme.text,
+                  indicatorColor: ArchethicTheme.text,
                   tabs: [
                     Text(
                       localizations.contactAddressTabHeader,
-                      style: theme.textStyleSize14W600TelegrafPrimary,
+                      style: ArchethicThemeStyles.textStyleSize14W600Primary,
                       textAlign: TextAlign.center,
                     ),
                     Text(
                       localizations.contactPublicKeyTabHeader,
-                      style: theme.textStyleSize14W600TelegrafPrimary,
+                      style: ArchethicThemeStyles.textStyleSize14W600Primary,
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -183,8 +185,8 @@ class ContactDetail extends ConsumerWidget {
                             ),
                             context,
                             ref,
-                            theme.text!,
-                            theme.snackBarShadow!,
+                            ArchethicTheme.text,
+                            ArchethicTheme.snackBarShadow,
                             icon: Symbols.info,
                           );
                           Navigator.of(context).pop();
@@ -197,15 +199,16 @@ class ContactDetail extends ConsumerWidget {
                       children: [
                         Icon(
                           Symbols.delete,
-                          color:
-                              theme.textStyleSize14W600TelegrafPrimaryRed.color,
+                          color: ArchethicThemeStyles
+                              .textStyleSize14W600PrimaryRed.color,
                         ),
                         const SizedBox(
                           width: 8,
                         ),
                         Text(
                           localizations.deleteContact,
-                          style: theme.textStyleSize14W600TelegrafPrimaryRed,
+                          style: ArchethicThemeStyles
+                              .textStyleSize14W600PrimaryRed,
                         ),
                       ],
                     ),
@@ -238,7 +241,7 @@ class _ContactDetailActions extends ConsumerWidget {
         contact.format,
       ),
     );
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final selectedAccount =
         ref.read(AccountProviders.selectedAccount).valueOrNull;
 
@@ -273,7 +276,7 @@ class _ContactDetailActions extends ConsumerWidget {
                   data: (data) {
                     return Icon(
                       Symbols.favorite,
-                      color: theme.favoriteIconColor,
+                      color: ArchethicTheme.favoriteIconColor,
                       fill: data?.favorite == null || data!.favorite == false
                           ? 0
                           : 1,
@@ -281,7 +284,7 @@ class _ContactDetailActions extends ConsumerWidget {
                   },
                   orElse: () => Icon(
                     Symbols.favorite,
-                    color: theme.favoriteIconColor,
+                    color: ArchethicTheme.favoriteIconColor,
                   ),
                 ),
                 const SizedBox(

@@ -1,4 +1,4 @@
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,10 +13,8 @@ class ArchethicRefreshIndicator extends ConsumerWidget {
   final Future<void> Function() onRefresh;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     return RefreshIndicator(
-      backgroundColor: theme.backgroundDark,
+      backgroundColor: ArchethicTheme.backgroundDark,
       edgeOffset: 35,
       onRefresh: onRefresh,
       child: child,

@@ -1,10 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
-// Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,7 +36,6 @@ class AppButton extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
     switch (type) {
       case AppButtonType.primary:
@@ -44,7 +43,7 @@ class AppButton extends ConsumerWidget {
           child: Container(
             width: 400,
             decoration: ShapeDecoration(
-              gradient: theme.gradientMainButton,
+              gradient: ArchethicTheme.gradientMainButton,
               shape: const StadiumBorder(),
               shadows: [
                 BoxShadow(
@@ -73,7 +72,8 @@ class AppButton extends ConsumerWidget {
                     child: AutoSizeText(
                       buttonText,
                       textAlign: TextAlign.center,
-                      style: theme.textStyleSize18W600TelegrafMainButtonLabel,
+                      style: ArchethicThemeStyles
+                          .textStyleSize18W600MainButtonLabel,
                       maxLines: 1,
                       stepGranularity: 0.5,
                     ),
@@ -99,7 +99,8 @@ class AppButton extends ConsumerWidget {
                     label: AutoSizeText(
                       buttonText,
                       textAlign: TextAlign.center,
-                      style: theme.textStyleSize18W600TelegrafMainButtonLabel,
+                      style: ArchethicThemeStyles
+                          .textStyleSize18W600MainButtonLabel,
                       maxLines: 1,
                       stepGranularity: 0.5,
                     ),
@@ -121,7 +122,7 @@ class AppButton extends ConsumerWidget {
           child: Container(
             width: 400,
             decoration: ShapeDecoration(
-              gradient: theme.gradientMainButton,
+              gradient: ArchethicTheme.gradientMainButton,
               shape: const StadiumBorder(),
             ),
             height: 55,
@@ -142,8 +143,8 @@ class AppButton extends ConsumerWidget {
                     child: AutoSizeText(
                       buttonText,
                       textAlign: TextAlign.center,
-                      style: theme
-                          .textStyleSize18W600TelegrafMainButtonLabelDisabled,
+                      style: ArchethicThemeStyles
+                          .textStyleSize18W600MainButtonLabelDisabled,
                       maxLines: 1,
                       stepGranularity: 0.5,
                     ),
@@ -161,7 +162,7 @@ class AppButton extends ConsumerWidget {
                 : TextButton.icon(
                     key: key,
                     style: TextButton.styleFrom(
-                      foregroundColor: theme.text,
+                      foregroundColor: ArchethicTheme.text,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -170,8 +171,8 @@ class AppButton extends ConsumerWidget {
                     label: AutoSizeText(
                       buttonText,
                       textAlign: TextAlign.center,
-                      style: theme
-                          .textStyleSize18W600TelegrafMainButtonLabelDisabled,
+                      style: ArchethicThemeStyles
+                          .textStyleSize18W600MainButtonLabelDisabled,
                       maxLines: 1,
                       stepGranularity: 0.5,
                     ),

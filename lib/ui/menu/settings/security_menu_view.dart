@@ -8,17 +8,16 @@ class SecurityMenuView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     return Scaffold(
-      backgroundColor: theme.background,
+      backgroundColor: ArchethicTheme.background,
       appBar: AppBar(
-        backgroundColor: theme.background,
+        backgroundColor: ArchethicTheme.background,
         title: AutoSizeText(
           localizations.securityHeader,
-          style: theme.textStyleSize24W700TelegrafPrimary,
+          style: ArchethicThemeStyles.textStyleSize24W700Primary,
         ),
       ),
       body: SafeArea(
@@ -57,7 +56,8 @@ class SecurityMenuView extends ConsumerWidget {
                       _SettingsListItem.singleLineWithInfos(
                         heading: localizations.removeWallet,
                         info: localizations.removeWalletDescription,
-                        headingStyle: theme.textStyleSize16W600TelegrafRed,
+                        headingStyle:
+                            ArchethicThemeStyles.textStyleSize16W600Red,
                         icon: Symbols.delete,
                         onPressed: () {
                           final language = ref.read(
@@ -265,11 +265,10 @@ class _BackupSecretPhraseListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return _SettingsListItem.singleLine(
       heading: localizations.backupSecretPhrase,
-      headingStyle: theme.textStyleSize16W600TelegrafPrimary,
+      headingStyle: ArchethicThemeStyles.textStyleSize16W600Primary,
       icon: Symbols.key,
       onPressed: () async {
         final preferences = ref.read(SettingsProviders.settings);

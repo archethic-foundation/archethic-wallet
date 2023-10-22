@@ -1,9 +1,9 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/contacts/layouts/add_contact.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/views/messenger/layouts/create_discussion_validation_sheet.dart';
@@ -63,7 +63,6 @@ class CreateDiscussionSheetState extends ConsumerState<CreateDiscussionSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final formNotifier =
         ref.watch(MessengerProviders.createDiscussionForm.notifier);
@@ -109,7 +108,7 @@ class CreateDiscussionSheetState extends ConsumerState<CreateDiscussionSheet> {
                                     children: [
                                       Icon(
                                         Symbols.person_add,
-                                        color: theme.text,
+                                        color: ArchethicTheme.text,
                                         weight: IconSize.weightM,
                                         opticalSize: IconSize.opticalSizeM,
                                         grade: IconSize.gradeM,
@@ -119,18 +118,20 @@ class CreateDiscussionSheetState extends ConsumerState<CreateDiscussionSheet> {
                                       ),
                                       Text(
                                         localizations.newContact,
-                                        style: theme.textStyleSize14W700Primary,
+                                        style: ArchethicThemeStyles
+                                            .textStyleSize14W700Primary,
                                       ),
                                     ],
                                   ),
                                 ),
-                                Divider(color: theme.text),
+                                Divider(color: ArchethicTheme.text),
                                 const SizedBox(
                                   height: 15,
                                 ),
                                 Text(
                                   localizations.contactsHeader,
-                                  style: theme.textStyleSize14W200Primary
+                                  style: ArchethicThemeStyles
+                                      .textStyleSize14W200Primary
                                       .copyWith(fontWeight: FontWeight.bold),
                                 ),
                                 const SizedBox(
@@ -141,7 +142,8 @@ class CreateDiscussionSheetState extends ConsumerState<CreateDiscussionSheet> {
                                   child: Expanded(
                                     child: Text(
                                       localizations.noContacts,
-                                      style: theme.textStyleSize14W200Primary,
+                                      style: ArchethicThemeStyles
+                                          .textStyleSize14W200Primary,
                                     ),
                                   ),
                                 ),

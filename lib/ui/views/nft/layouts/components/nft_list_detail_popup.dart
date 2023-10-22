@@ -1,7 +1,7 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_category_dialog.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -20,16 +20,15 @@ class NFTListDetailPopup {
     String address,
     String tokenId,
   ) async {
-    final theme = ref.read(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
 
     return showMenu(
-      color: theme.backgroundDark,
+      color: ArchethicTheme.backgroundDark,
       elevation: 5,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20).copyWith(topLeft: Radius.zero),
         side: BorderSide(
-          color: theme.text60!,
+          color: ArchethicTheme.text60,
         ),
       ),
       context: context,
@@ -62,8 +61,6 @@ class NFTListDetailPopup {
     required String address,
     required String tokenId,
   }) {
-    final theme = ref.read(ThemeProviders.selectedTheme);
-
     final preferences = ref.read(SettingsProviders.settings);
     return PopupMenuItem(
       value: value,
@@ -87,8 +84,8 @@ class NFTListDetailPopup {
           AppLocalizations.of(context)!.nftCategoryChangeCategoryOk,
           context,
           ref,
-          theme.text!,
-          theme.snackBarShadow!,
+          ArchethicTheme.text,
+          ArchethicTheme.snackBarShadow,
           duration: const Duration(seconds: 3),
           icon: Symbols.info,
         );
@@ -101,14 +98,14 @@ class NFTListDetailPopup {
               Icon(
                 icon,
                 size: 20,
-                color: theme.text,
+                color: ArchethicTheme.text,
               ),
               const SizedBox(
                 width: 5,
               ),
               Text(
                 label,
-                style: theme.textStyleSize12W100Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
             ],
           ),

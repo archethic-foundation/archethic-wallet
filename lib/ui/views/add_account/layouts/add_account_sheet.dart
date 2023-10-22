@@ -1,6 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/add_account/bloc/provider.dart';
 import 'package:aewallet/ui/views/add_account/bloc/state.dart';
@@ -52,7 +54,6 @@ class AddAccountSheetBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final addAccount = ref.watch(AddAccountFormProvider.addAccountForm);
 
     ref.listen<AddAccountFormState>(
@@ -64,8 +65,8 @@ class AddAccountSheetBody extends ConsumerWidget {
           addAccount.errorText,
           context,
           ref,
-          theme.text!,
-          theme.snackBarShadow!,
+          ArchethicTheme.text,
+          ArchethicTheme.snackBarShadow,
           duration: const Duration(seconds: 5),
         );
 

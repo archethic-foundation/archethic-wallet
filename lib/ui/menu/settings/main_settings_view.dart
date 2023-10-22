@@ -16,7 +16,7 @@ class MainMenuView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final selectedAccount =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
@@ -25,11 +25,11 @@ class MainMenuView extends ConsumerWidget {
 
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: theme.drawerBackground,
+        color: ArchethicTheme.drawerBackground,
         gradient: LinearGradient(
           colors: <Color>[
-            theme.drawerBackground!,
-            theme.backgroundDark00!,
+            ArchethicTheme.drawerBackground,
+            ArchethicTheme.backgroundDark00,
           ],
           begin: Alignment.center,
           end: const Alignment(5, 0),
@@ -52,7 +52,8 @@ class MainMenuView extends ConsumerWidget {
                                 .read(SettingsProviders.settings)
                                 .network
                                 .getDisplayName(context),
-                            style: theme.textStyleSize12W400Primary,
+                            style:
+                                ArchethicThemeStyles.textStyleSize12W400Primary,
                           ),
                         ),
                       ),
@@ -61,14 +62,16 @@ class MainMenuView extends ConsumerWidget {
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.securityHeader,
-                        headingStyle: theme.textStyleSize16W600TelegrafPrimary,
+                        headingStyle:
+                            ArchethicThemeStyles.textStyleSize16W600Primary,
                         icon: Symbols.security,
                         onPressed: showSecurity,
                       ),
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.customHeader,
-                        headingStyle: theme.textStyleSize16W600TelegrafPrimary,
+                        headingStyle:
+                            ArchethicThemeStyles.textStyleSize16W600Primary,
                         icon: Symbols.tune,
                         onPressed: showCustom,
                       ),
@@ -94,7 +97,8 @@ class MainMenuView extends ConsumerWidget {
                         const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.aboutHeader,
-                        headingStyle: theme.textStyleSize16W600TelegrafPrimary,
+                        headingStyle:
+                            ArchethicThemeStyles.textStyleSize16W600Primary,
                         icon: Symbols.info,
                         onPressed: showAbout,
                       ),

@@ -1,9 +1,9 @@
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/access_recipient_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
@@ -55,7 +55,6 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final settings = ref.watch(SettingsProviders.settings);
 
@@ -67,14 +66,17 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage(
-            theme.background3Small!,
+            ArchethicTheme.backgroundSmall,
           ),
-          fit: BoxFit.fitHeight,
+          fit: BoxFit.fill,
         ),
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: <Color>[theme.backgroundDark!, theme.background!],
+          colors: <Color>[
+            ArchethicTheme.backgroundDark,
+            ArchethicTheme.background,
+          ],
         ),
       ),
       child: Scaffold(
@@ -106,7 +108,7 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                         const SizedBox(
                           height: 8,
                         ),
-                        Divider(color: theme.text),
+                        Divider(color: ArchethicTheme.text),
                         TextButton(
                           onPressed: () async {
                             final updateDiscussionAddMembers =
@@ -120,8 +122,8 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                                 localizations.noContactsToAdd,
                                 context,
                                 ref,
-                                theme.text!,
-                                theme.snackBarShadow!,
+                                ArchethicTheme.text,
+                                ArchethicTheme.snackBarShadow,
                               );
                               return;
                             }
@@ -139,7 +141,7 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                             children: [
                               Icon(
                                 Symbols.group_add,
-                                color: theme.text,
+                                color: ArchethicTheme.text,
                                 weight: IconSize.weightM,
                                 opticalSize: IconSize.opticalSizeM,
                                 grade: IconSize.gradeM,
@@ -149,7 +151,8 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                               ),
                               Text(
                                 localizations.addMembers,
-                                style: theme.textStyleSize14W700Primary,
+                                style: ArchethicThemeStyles
+                                    .textStyleSize14W700Primary,
                               ),
                             ],
                           ),
@@ -208,11 +211,11 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                                                         .format(localizations),
                                                     orElse: () => '...',
                                                   ),
-                                                  style: theme
+                                                  style: ArchethicThemeStyles
                                                       .textStyleSize16W700Primary,
                                                 ),
                                                 Divider(
-                                                  color: theme.text,
+                                                  color: ArchethicTheme.text,
                                                   thickness: 0.5,
                                                 ),
                                                 Column(
@@ -234,7 +237,7 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                                                             Text(
                                                               localizations
                                                                   .addAdmin,
-                                                              style: theme
+                                                              style: ArchethicThemeStyles
                                                                   .textStyleSize14W700Primary,
                                                             ),
                                                           ],
@@ -261,7 +264,7 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                                                             Text(
                                                               localizations
                                                                   .removeAdmin,
-                                                              style: theme
+                                                              style: ArchethicThemeStyles
                                                                   .textStyleSize14W700Primary,
                                                             ),
                                                           ],
@@ -289,7 +292,7 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                                                           Text(
                                                             localizations
                                                                 .removeDiscussion,
-                                                            style: theme
+                                                            style: ArchethicThemeStyles
                                                                 .textStyleSize14W700Primary,
                                                           ),
                                                         ],
@@ -363,7 +366,6 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
 
                         ShowSendingAnimation.build(
                           context,
-                          theme,
                         );
                         final result =
                             await formNotifier.updateDiscussion(ref, context);
@@ -377,8 +379,8 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                                 errorMessage,
                                 context,
                                 ref,
-                                theme.text!,
-                                theme.snackBarShadow!,
+                                ArchethicTheme.text,
+                                ArchethicTheme.snackBarShadow,
                               );
                               return;
                             }
@@ -391,8 +393,8 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                               localizations.updateDiscussionFailure,
                               context,
                               ref,
-                              theme.text!,
-                              theme.snackBarShadow!,
+                              ArchethicTheme.text,
+                              ArchethicTheme.snackBarShadow,
                               duration: const Duration(seconds: 5),
                             );
                           },

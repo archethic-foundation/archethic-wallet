@@ -38,7 +38,6 @@ class _AddContactTextFieldPublicKeyState
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final preferences = ref.watch(SettingsProviders.settings);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
@@ -49,7 +48,7 @@ class _AddContactTextFieldPublicKeyState
       textAlign: TextAlign.start,
       focusNode: publicKeyFocusNode,
       controller: publicKeyController,
-      style: theme.textStyleSize14W100Primary,
+      style: ArchethicThemeStyles.textStyleSize14W100Primary,
       inputFormatters: <TextInputFormatter>[
         UpperCaseTextFormatter(),
         LengthLimitingTextInputFormatter(68),
@@ -76,16 +75,16 @@ class _AddContactTextFieldPublicKeyState
                     AppLocalizations.of(context)!.qrInvalidAddress,
                     context,
                     ref,
-                    theme.text!,
-                    theme.snackBarShadow!,
+                    ArchethicTheme.text,
+                    ArchethicTheme.snackBarShadow,
                   );
                 } else if (QRScanErrs.errorList.contains(scanResult)) {
                   UIUtil.showSnackbar(
                     scanResult,
                     context,
                     ref,
-                    theme.text!,
-                    theme.snackBarShadow!,
+                    ArchethicTheme.text,
+                    ArchethicTheme.snackBarShadow,
                   );
                   return;
                 } else {

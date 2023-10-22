@@ -1,9 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/blockchain/token_information.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_detail.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_list_detail_popup.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail.dart';
@@ -41,8 +42,6 @@ class NFTListDetail extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     final preferences = ref.watch(SettingsProviders.settings);
 
     var propertiesToCount = 0;
@@ -62,7 +61,7 @@ class NFTListDetail extends ConsumerWidget {
         children: <Widget>[
           Text(
             name,
-            style: theme.textStyleSize12W600Primary,
+            style: ArchethicThemeStyles.textStyleSize12W600Primary,
           ),
 
           Padding(
@@ -103,7 +102,7 @@ class NFTListDetail extends ConsumerWidget {
               elevation: 5,
               shadowColor: Colors.black,
               margin: const EdgeInsets.only(left: 8, right: 8),
-              color: theme.backgroundDark,
+              color: ArchethicTheme.backgroundDark,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(25),
                 side: const BorderSide(color: Colors.white10),
@@ -141,7 +140,6 @@ class NFTCardBottom extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final selectedAccount =
         ref.watch(AccountProviders.selectedAccount).valueOrNull!;
     final nftInfosOffChain = selectedAccount.getftInfosOffChain(
@@ -191,7 +189,7 @@ class NFTCardBottom extends ConsumerWidget {
                           nftInfosOffChain.favorite == false
                       ? Icon(
                           Symbols.favorite_border,
-                          color: theme.favoriteIconColor,
+                          color: ArchethicTheme.favoriteIconColor,
                           size: 18,
                           weight: IconSize.weightM,
                           opticalSize: IconSize.opticalSizeM,
@@ -199,7 +197,7 @@ class NFTCardBottom extends ConsumerWidget {
                         )
                       : Icon(
                           Symbols.favorite,
-                          color: theme.favoriteIconColor,
+                          color: ArchethicTheme.favoriteIconColor,
                           size: 18,
                           weight: IconSize.weightM,
                           opticalSize: IconSize.opticalSizeM,
@@ -225,22 +223,21 @@ class _NFTLabelProperties extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
 
     return propertiesToCount == 0
         ? Text(
             localizations.noProperty,
-            style: theme.textStyleSize12W100Primary,
+            style: ArchethicThemeStyles.textStyleSize12W100Primary,
           )
         : propertiesToCount == 1
             ? Text(
                 '$propertiesToCount ${localizations.property}',
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               )
             : Text(
                 '$propertiesToCount ${localizations.properties}',
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               );
   }
 }

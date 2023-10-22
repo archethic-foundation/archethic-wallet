@@ -1,17 +1,18 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'dart:developer';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/transaction_infos.dart';
 import 'package:aewallet/service/app_service.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
@@ -114,11 +115,9 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
 class _TransactionLoading extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     return Center(
       child: CircularProgressIndicator(
-        color: theme.text,
+        color: ArchethicTheme.text,
         strokeWidth: 1,
       ),
     );
@@ -206,7 +205,6 @@ class _TransactionBuildInfos extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
     return (preferences.showBalances == true ||
             (preferences.showBalances == false &&
@@ -231,8 +229,8 @@ class _TransactionBuildInfos extends ConsumerWidget {
                         ),
                       ),
                     if (transactionInfo.titleInfo == '')
-                      Container(
-                        color: theme.text05,
+                      ColoredBox(
+                        color: ArchethicTheme.text05,
                         child: Container(
                           padding: const EdgeInsets.only(left: 15, top: 15),
                           child: Column(
@@ -263,7 +261,7 @@ class _TransactionBuildInfos extends ConsumerWidget {
                                                       context,
                                                       transactionInfo.domain,
                                                     ),
-                                                    style: theme
+                                                    style: ArchethicThemeStyles
                                                         .textStyleSize16W600Primary,
                                                   ),
                                                 ],
@@ -306,8 +304,8 @@ class _TransactionBuildInfos extends ConsumerWidget {
                                             context,
                                             transactionInfo.titleInfo,
                                           ),
-                                          style:
-                                              theme.textStyleSize14W600Primary,
+                                          style: ArchethicThemeStyles
+                                              .textStyleSize14W600Primary,
                                         ),
                                         _transactionInfoValue(
                                           ref,
@@ -324,7 +322,7 @@ class _TransactionBuildInfos extends ConsumerWidget {
                       ),
                     Divider(
                       height: 2,
-                      color: theme.text15,
+                      color: ArchethicTheme.text15,
                     ),
                   ],
                 ),
@@ -338,8 +336,6 @@ class _TransactionBuildInfos extends ConsumerWidget {
     WidgetRef ref,
     TransactionInfos transactionInfo,
   ) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     if (transactionInfo.domain == 'UCOLedger' &&
         transactionInfo.titleInfo == 'To') {
       log('transactionInfo.valueInfo: ${transactionInfo.valueInfo}');
@@ -353,29 +349,29 @@ class _TransactionBuildInfos extends ConsumerWidget {
                 log('transactionInfo.valueInfo: ${transactionInfo.valueInfo} : data null');
                 return SelectableText(
                   transactionInfo.valueInfo,
-                  style: theme.textStyleSize14W100Primary,
+                  style: ArchethicThemeStyles.textStyleSize14W100Primary,
                 );
               } else {
                 log('transactionInfo.valueInfo: ${transactionInfo.valueInfo} : data not null');
                 return SelectableText(
                   data.value!.format,
-                  style: theme.textStyleSize14W100Primary,
+                  style: ArchethicThemeStyles.textStyleSize14W100Primary,
                 );
               }
             },
             error: (error) => SelectableText(
               transactionInfo.valueInfo,
-              style: theme.textStyleSize14W100Primary,
+              style: ArchethicThemeStyles.textStyleSize14W100Primary,
             ),
             loading: (loading) => SelectableText(
               transactionInfo.valueInfo,
-              style: theme.textStyleSize14W100Primary,
+              style: ArchethicThemeStyles.textStyleSize14W100Primary,
             ),
           );
     } else {
       return SelectableText(
         transactionInfo.valueInfo,
-        style: theme.textStyleSize14W100Primary,
+        style: ArchethicThemeStyles.textStyleSize14W100Primary,
       );
     }
   }

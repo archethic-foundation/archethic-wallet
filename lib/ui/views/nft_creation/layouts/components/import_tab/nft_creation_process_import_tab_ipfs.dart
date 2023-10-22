@@ -7,7 +7,7 @@ class NFTCreationProcessImportTabIPFS extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final nftCreationArgs = ref.watch(
       NftCreationFormProvider.nftCreationFormArgs,
     );
@@ -41,7 +41,7 @@ class NFTCreationProcessImportTabIPFS extends ConsumerWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   localizations.nftAddImportIPFS,
-                  style: theme.textStyleSize12W100Primary,
+                  style: ArchethicThemeStyles.textStyleSize12W100Primary,
                 ),
               ),
             ),

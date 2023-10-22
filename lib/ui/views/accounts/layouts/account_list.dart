@@ -1,7 +1,7 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
+
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/ui/views/accounts/layouts/components/account_list_item.dart';
@@ -27,7 +27,6 @@ class AccountsListWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(SettingsProviders.settings);
-    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return Expanded(
       child: ArchethicRefreshIndicator(
@@ -42,7 +41,7 @@ class AccountsListWidget extends ConsumerWidget {
           if (connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
             return;
           }
-          ShowSendingAnimation.build(context, theme);
+          ShowSendingAnimation.build(context);
           await ref.read(SessionProviders.session.notifier).refresh();
           await ref
               .read(AccountProviders.selectedAccount.notifier)

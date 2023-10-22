@@ -1,10 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'dart:math';
 
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
@@ -59,21 +60,24 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              theme.background1Small!,
+              ArchethicTheme.backgroundSmall,
             ),
             fit: BoxFit.fill,
           ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: <Color>[theme.backgroundDark!, theme.background!],
+            colors: <Color>[
+              ArchethicTheme.backgroundDark,
+              ArchethicTheme.background,
+            ],
           ),
         ),
         child: TapOutsideUnfocus(
@@ -98,7 +102,7 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
                               width: 50,
                               child: BackButton(
                                 key: const Key('back'),
-                                color: theme.text,
+                                color: ArchethicTheme.text,
                                 onPressed: () {
                                   Navigator.pop(context, false);
                                 },
@@ -121,13 +125,14 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
                                     alignment: AlignmentDirectional.centerStart,
                                     child: AutoSizeText(
                                       widget.header!,
-                                      style: theme.textStyleSize14W600Primary,
+                                      style: ArchethicThemeStyles
+                                          .textStyleSize14W600Primary,
                                     ),
                                   ),
 
                                 AppTextField(
                                   topMargin: 30,
-                                  cursorColor: theme.text,
+                                  cursorColor: ArchethicTheme.text,
                                   focusNode: setPasswordFocusNode,
                                   controller: setPasswordController,
                                   textInputAction: TextInputAction.next,
@@ -160,7 +165,8 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
                                   labelText: localizations.createPasswordHint,
                                   keyboardType: TextInputType.text,
                                   obscureText: !setPasswordVisible!,
-                                  style: theme.textStyleSize16W700Primary,
+                                  style: ArchethicThemeStyles
+                                      .textStyleSize16W700Primary,
                                   onSubmitted: (text) {
                                     confirmPasswordFocusNode!.requestFocus();
                                   },
@@ -230,7 +236,7 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
                                           Text(
                                             localizations.passwordStrengthWeak,
                                             textAlign: TextAlign.end,
-                                            style: theme
+                                            style: ArchethicThemeStyles
                                                 .textStyleSize12W100Primary,
                                           )
                                         else
@@ -239,14 +245,14 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
                                                   localizations
                                                       .passwordStrengthAlright,
                                                   textAlign: TextAlign.end,
-                                                  style: theme
+                                                  style: ArchethicThemeStyles
                                                       .textStyleSize12W100Primary,
                                                 )
                                               : Text(
                                                   localizations
                                                       .passwordStrengthStrong,
                                                   textAlign: TextAlign.end,
-                                                  style: theme
+                                                  style: ArchethicThemeStyles
                                                       .textStyleSize12W100Primary,
                                                 ),
                                       ],
@@ -283,7 +289,8 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
                                   labelText: localizations.confirmPasswordHint,
                                   keyboardType: TextInputType.text,
                                   obscureText: !confirmPasswordVisible!,
-                                  style: theme.textStyleSize16W700Primary,
+                                  style: ArchethicThemeStyles
+                                      .textStyleSize16W700Primary,
                                   suffixButton: TextFieldButton(
                                     icon: confirmPasswordVisible!
                                         ? Symbols.visibility
@@ -303,7 +310,8 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
                                   margin: const EdgeInsets.only(top: 3),
                                   child: Text(
                                     passwordError == null ? '' : passwordError!,
-                                    style: theme.textStyleSize14W600Primary,
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize14W600Primary,
                                   ),
                                 ),
 
@@ -325,7 +333,7 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
                                               alignment: Alignment.topLeft,
                                               child: Icon(
                                                 Symbols.info,
-                                                color: theme.text,
+                                                color: ArchethicTheme.text,
                                                 size: 20,
                                               ),
                                             ),
@@ -334,7 +342,7 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
                                             ),
                                             Text(
                                               widget.description!,
-                                              style: theme
+                                              style: ArchethicThemeStyles
                                                   .textStyleSize12W100Primary,
                                               textAlign: TextAlign.left,
                                             ),

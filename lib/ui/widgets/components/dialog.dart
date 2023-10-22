@@ -1,7 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,6 @@ class AppDialogs {
     String? additionalContent,
     TextStyle? additionalContentStyle,
   }) async {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
     cancelText ??= AppLocalizations.of(context)!.cancel;
     await showDialog(
@@ -34,12 +34,13 @@ class AppDialogs {
         return AlertDialog(
           title: Text(
             title,
-            style: titleStyle ?? theme.textStyleSize14W600TelegrafPrimary,
+            style:
+                titleStyle ?? ArchethicThemeStyles.textStyleSize14W600Primary,
           ),
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(Radius.circular(16)),
             side: BorderSide(
-              color: theme.text45!,
+              color: ArchethicTheme.text45,
             ),
           ),
           content: Column(
@@ -51,13 +52,13 @@ class AppDialogs {
                   children: <InlineSpan>[
                     TextSpan(
                       text: content,
-                      style: theme.textStyleSize12W100Primary,
+                      style: ArchethicThemeStyles.textStyleSize12W100Primary,
                     ),
                     if (additionalContent != null)
                       TextSpan(
                         text: '\n\n$additionalContent',
                         style: additionalContentStyle ??
-                            theme.textStyleSize12W100Primary,
+                            ArchethicThemeStyles.textStyleSize12W100Primary,
                       ),
                   ],
                 ),
@@ -118,22 +119,22 @@ class AppDialogs {
       context: context,
       builder: (BuildContext context) {
         buttonLabel = buttonLabel ?? AppLocalizations.of(context)!.ok;
-        final theme = ref.watch(ThemeProviders.selectedTheme);
+
         final preferences = ref.watch(SettingsProviders.settings);
         return AlertDialog(
           title: Text(
             title,
-            style: theme.textStyleSize14W600Primary,
+            style: ArchethicThemeStyles.textStyleSize14W600Primary,
           ),
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(Radius.circular(16)),
             side: BorderSide(
-              color: theme.text45!,
+              color: ArchethicTheme.text45,
             ),
           ),
           content: Text(
             content,
-            style: theme.textStyleSize12W100Primary,
+            style: ArchethicThemeStyles.textStyleSize12W100Primary,
           ),
           actions: <Widget>[
             TextButton(
@@ -141,7 +142,7 @@ class AppDialogs {
                 constraints: const BoxConstraints(maxWidth: 100),
                 child: Text(
                   buttonLabel!,
-                  style: theme.textStyleSize12W400Primary,
+                  style: ArchethicThemeStyles.textStyleSize12W400Primary,
                 ),
               ),
               onPressed: () {
@@ -172,7 +173,6 @@ class _AppDialogsButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     return TextButton(
       onPressed: onPressed,
       child: Container(
@@ -180,7 +180,7 @@ class _AppDialogsButton extends ConsumerWidget {
         child: Text(
           textButton,
           textAlign: TextAlign.center,
-          style: theme.textStyleSize12W400Primary,
+          style: ArchethicThemeStyles.textStyleSize12W400Primary,
         ),
       ),
     );
@@ -300,11 +300,10 @@ class PulsatingCircleLogoState extends ConsumerState<PulsatingCircleLogo>
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final colors = [
-      theme.iconDrawer!.withOpacity(0.3),
-      theme.iconDrawer!.withOpacity(0.15),
-      theme.iconDrawer!.withOpacity(0.05),
+      ArchethicTheme.iconDrawer.withOpacity(0.3),
+      ArchethicTheme.iconDrawer.withOpacity(0.15),
+      ArchethicTheme.iconDrawer.withOpacity(0.05),
     ];
 
     return Column(
@@ -316,7 +315,7 @@ class PulsatingCircleLogoState extends ConsumerState<PulsatingCircleLogo>
             return Ink(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: theme.iconDrawer,
+                color: ArchethicTheme.iconDrawer,
                 shape: BoxShape.circle,
                 boxShadow: [
                   for (int i = 0; i < colors.length; i++)
@@ -327,7 +326,7 @@ class PulsatingCircleLogoState extends ConsumerState<PulsatingCircleLogo>
                 ],
               ),
               child: SvgPicture.asset(
-                '${theme.assetsFolder!}${theme.logoAlone!}.svg',
+                '${ArchethicTheme.assetsFolder}${ArchethicTheme.logoAlone}.svg',
                 height: 30,
               ),
             );
@@ -341,7 +340,7 @@ class PulsatingCircleLogoState extends ConsumerState<PulsatingCircleLogo>
               ? widget.title!
               : AppLocalizations.of(context)!.pleaseWait,
           textAlign: TextAlign.center,
-          style: theme.textStyleSize16W600TelegrafPrimary,
+          style: ArchethicThemeStyles.textStyleSize16W600Primary,
         ),
       ],
     );

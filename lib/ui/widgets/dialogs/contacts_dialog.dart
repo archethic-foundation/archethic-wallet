@@ -1,11 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/formatters.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +48,7 @@ class ContactsDialog {
       context: context,
       builder: (BuildContext context) {
         final localizations = AppLocalizations.of(context)!;
-        final theme = ref.read(ThemeProviders.selectedTheme);
+
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
@@ -62,7 +63,7 @@ class ContactsDialog {
                 children: [
                   Text(
                     localizations.addressBookHeader,
-                    style: theme.textStyleSize24W700TelegrafPrimary,
+                    style: ArchethicThemeStyles.textStyleSize24W700Primary,
                   ),
                   AppTextField(
                     focusNode: searchNameFocusNode,
@@ -71,7 +72,7 @@ class ContactsDialog {
                     autocorrect: false,
                     labelText: localizations.searchField,
                     keyboardType: TextInputType.text,
-                    style: theme.textStyleSize16W600Primary,
+                    style: ArchethicThemeStyles.textStyleSize16W600Primary,
                     inputFormatters: <TextInputFormatter>[
                       UpperCaseTextFormatter(),
                       LengthLimitingTextInputFormatter(20),
@@ -116,7 +117,7 @@ class ContactsDialog {
               shape: RoundedRectangleBorder(
                 borderRadius: const BorderRadius.all(Radius.circular(16)),
                 side: BorderSide(
-                  color: theme.text45!,
+                  color: ArchethicTheme.text45,
                 ),
               ),
               content: SingleChildScrollView(

@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/domain/models/token.dart';
 import 'package:aewallet/domain/models/transfer.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

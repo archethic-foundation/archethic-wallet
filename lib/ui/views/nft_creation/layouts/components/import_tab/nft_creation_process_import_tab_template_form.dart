@@ -1,8 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/connectivity_status.dart';
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/paste_icon.dart';
@@ -58,7 +59,6 @@ class _NFTCreationProcessImportTabFormUrlState
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
@@ -85,7 +85,7 @@ class _NFTCreationProcessImportTabFormUrlState
                     children: <Widget>[
                       Text(
                         widget.warningLabel,
-                        style: theme.textStyleSize12W100Primary,
+                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
                         textAlign: TextAlign.justify,
                       ),
                       const SizedBox(
@@ -94,13 +94,13 @@ class _NFTCreationProcessImportTabFormUrlState
                       AppTextField(
                         focusNode: urlFocusNode,
                         controller: urlController,
-                        cursorColor: theme.text,
+                        cursorColor: ArchethicTheme.text,
                         textInputAction: TextInputAction.next,
                         labelText: widget.placeholder,
                         autocorrect: false,
                         maxLines: 10,
                         keyboardType: TextInputType.text,
-                        style: theme.textStyleSize14W100Primary,
+                        style: ArchethicThemeStyles.textStyleSize14W100Primary,
                         suffixButton: PasteIcon(
                           onPaste: (String value) {
                             urlController.text = value;
@@ -124,7 +124,7 @@ class _NFTCreationProcessImportTabFormUrlState
                                 padding: const EdgeInsets.only(top: 2),
                                 child: Icon(
                                   Symbols.warning,
-                                  color: theme.warning,
+                                  color: ArchethicTheme.warning,
                                   size: 12,
                                   weight: IconSize.weightM,
                                   opticalSize: IconSize.opticalSizeM,
@@ -135,8 +135,8 @@ class _NFTCreationProcessImportTabFormUrlState
                               Expanded(
                                 child: Text(
                                   widget.disclaimer,
-                                  style:
-                                      theme.textStyleSize12W100PrimaryWarning,
+                                  style: ArchethicThemeStyles
+                                      .textStyleSize12W100PrimaryWarning,
                                   textAlign: TextAlign.justify,
                                 ),
                               ),
@@ -159,7 +159,7 @@ class _NFTCreationProcessImportTabFormUrlState
                         localizations.confirm,
                         icon: Icon(
                           Symbols.check,
-                          color: theme.mainButtonLabel,
+                          color: ArchethicTheme.mainButtonLabel,
                           size: 14,
                         ),
                         Dimens.buttonBottomDimens,
@@ -176,7 +176,8 @@ class _NFTCreationProcessImportTabFormUrlState
                         key: const Key('confirm'),
                         icon: Icon(
                           Symbols.check,
-                          color: theme.mainButtonLabel!.withOpacity(0.3),
+                          color:
+                              ArchethicTheme.mainButtonLabel.withOpacity(0.3),
                           size: 14,
                         ),
                         onPressed: () {},

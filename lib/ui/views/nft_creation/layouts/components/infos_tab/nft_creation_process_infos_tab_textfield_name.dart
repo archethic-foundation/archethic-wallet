@@ -41,7 +41,6 @@ class _NFTCreationProcessInfosTabTextFieldNameState
   Widget build(
     BuildContext context,
   ) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
 
     final nftCreationNotifier = ref.watch(
@@ -142,8 +141,8 @@ class _NFTCreationProcessInfosTabTextFieldNameState
                                 AppLocalizations.of(context)!.qrInvalidAddress,
                                 context,
                                 ref,
-                                theme.text!,
-                                theme.snackBarShadow!,
+                                ArchethicTheme.text,
+                                ArchethicTheme.snackBarShadow,
                               );
                             } else if (QRScanErrs.errorList
                                 .contains(scanResult)) {
@@ -151,8 +150,8 @@ class _NFTCreationProcessInfosTabTextFieldNameState
                                 scanResult,
                                 context,
                                 ref,
-                                theme.text!,
-                                theme.snackBarShadow!,
+                                ArchethicTheme.text,
+                                ArchethicTheme.snackBarShadow,
                               );
                               return;
                             } else {

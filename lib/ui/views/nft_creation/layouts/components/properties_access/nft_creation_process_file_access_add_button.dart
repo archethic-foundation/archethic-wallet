@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/add_public_key.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
@@ -25,7 +26,6 @@ class NFTCreationProcessFileAccessAddButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
     return Padding(
       padding: const EdgeInsets.only(right: 5),
@@ -35,16 +35,16 @@ class NFTCreationProcessFileAccessAddButton extends ConsumerWidget {
         width: 40,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: theme.backgroundDark!.withOpacity(0.3),
+          color: ArchethicTheme.backgroundDark.withOpacity(0.3),
           border: Border.all(
-            color: theme.backgroundDarkest!.withOpacity(0.2),
+            color: ArchethicTheme.backgroundDarkest.withOpacity(0.2),
             width: 2,
           ),
         ),
         child: IconButton(
           icon: Icon(
             Symbols.key,
-            color: theme.backgroundDarkest,
+            color: ArchethicTheme.backgroundDarkest,
             size: 21,
           ),
           onPressed: () {

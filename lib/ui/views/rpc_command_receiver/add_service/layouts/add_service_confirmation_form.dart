@@ -1,14 +1,13 @@
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
 import 'package:aewallet/domain/rpc/commands/send_transaction.dart';
 import 'package:aewallet/domain/usecases/usecase.dart';
 import 'package:aewallet/model/data/account_balance.dart';
-import 'package:aewallet/ui/themes/themes.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/add_service/bloc/provider.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/rpc_failure_message.dart';
@@ -36,7 +35,6 @@ class AddServiceConfirmationForm extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final accountSelected =
@@ -86,7 +84,8 @@ class AddServiceConfirmationForm extends ConsumerWidget {
                                   '%2',
                                   accountSelected!.nameDisplayed,
                                 ),
-                            style: theme.textStyleSize12W400Primary,
+                            style:
+                                ArchethicThemeStyles.textStyleSize12W400Primary,
                           ),
                           const SizedBox(
                             height: 30,
@@ -119,7 +118,6 @@ class AddServiceConfirmationForm extends ConsumerWidget {
                       onPressed: () async {
                         ShowSendingAnimation.build(
                           context,
-                          theme,
                         );
 
                         final result = await formNotifier.send(
@@ -127,7 +125,6 @@ class AddServiceConfirmationForm extends ConsumerWidget {
                             _showSendProgress(
                               context,
                               ref,
-                              theme,
                               progress,
                             );
                           },
@@ -139,7 +136,6 @@ class AddServiceConfirmationForm extends ConsumerWidget {
                             _showSendFailed(
                               context,
                               ref,
-                              theme,
                               failure,
                             );
                           },
@@ -161,7 +157,7 @@ class AddServiceConfirmationForm extends ConsumerWidget {
 
   Widget displayInfoDetail(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final accountSelected =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
 
@@ -174,12 +170,12 @@ class AddServiceConfirmationForm extends ConsumerWidget {
             children: [
               Text(
                 localizations.serviceName,
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
               Expanded(
                 child: Text(
                   serviceName,
-                  style: theme.textStyleSize12W400Primary,
+                  style: ArchethicThemeStyles.textStyleSize12W400Primary,
                   textAlign: TextAlign.end,
                 ),
               ),
@@ -189,11 +185,11 @@ class AddServiceConfirmationForm extends ConsumerWidget {
             children: [
               Text(
                 localizations.estimatedFees,
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
               Text(
                 '0 ${AccountBalance.cryptoCurrencyLabel}',
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
             ],
           ),
@@ -201,14 +197,14 @@ class AddServiceConfirmationForm extends ConsumerWidget {
             children: [
               Text(
                 localizations.availableAfterCreation,
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
               Text(
                 AmountFormatters.standard(
                   accountSelected!.balance!.nativeTokenValue,
                   AccountBalance.cryptoCurrencyLabel,
                 ),
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
             ],
           ),
@@ -220,7 +216,6 @@ class AddServiceConfirmationForm extends ConsumerWidget {
   void _showSendProgress(
     BuildContext context,
     WidgetRef ref,
-    BaseTheme theme,
     UseCaseProgress event,
   ) {
     UIUtil.showSnackbar(
@@ -235,8 +230,8 @@ class AddServiceConfirmationForm extends ConsumerWidget {
               .replaceAll('%2', event.total.toString()),
       context,
       ref,
-      theme.text!,
-      theme.snackBarShadow!,
+      ArchethicTheme.text,
+      ArchethicTheme.snackBarShadow,
       duration: const Duration(milliseconds: 5000),
       icon: Symbols.info,
     );
@@ -245,15 +240,14 @@ class AddServiceConfirmationForm extends ConsumerWidget {
   void _showSendFailed(
     BuildContext context,
     WidgetRef ref,
-    BaseTheme theme,
     TransactionError error,
   ) {
     UIUtil.showSnackbar(
       error.localizedMessage(AppLocalizations.of(context)!),
       context,
       ref,
-      theme.text!,
-      theme.snackBarShadow!,
+      ArchethicTheme.text,
+      ArchethicTheme.snackBarShadow,
       duration: const Duration(seconds: 5),
     );
   }

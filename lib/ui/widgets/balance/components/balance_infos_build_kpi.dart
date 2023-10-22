@@ -8,7 +8,7 @@ class BalanceInfosKpi extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final preferences = ref.watch(SettingsProviders.settings);
 
     final chartInfos = ref
@@ -55,7 +55,7 @@ class BalanceInfosKpi extends ConsumerWidget {
             children: <Widget>[
               AutoSizeText(
                 '1 ${accountSelectedBalance.nativeTokenName} = ${CurrencyUtil.getAmountPlusSymbol(selectedCurrency.name, currencyMarketPrice.amount)}',
-                style: theme.textStyleSize12W100Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
               const SizedBox(
                 width: 10,
@@ -68,7 +68,7 @@ class BalanceInfosKpi extends ConsumerWidget {
                 selectedPriceHistoryInterval.getChartOptionLabel(
                   context,
                 ),
-                style: theme.textStyleSize12W100Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
               const SizedBox(
                 width: 10,
@@ -89,7 +89,7 @@ class BalanceInfosKpi extends ConsumerWidget {
                   },
                   child: Icon(
                     Symbols.info,
-                    color: theme.text,
+                    color: ArchethicTheme.text,
                     size: 15,
                   ),
                 )
@@ -108,8 +108,6 @@ class _PriceEvolutionIndicator extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     final preferences = ref.watch(SettingsProviders.settings);
     final asyncPriceEvolution = ref.watch(
       PriceHistoryProviders.priceEvolution(
@@ -126,20 +124,20 @@ class _PriceEvolutionIndicator extends ConsumerWidget {
               AutoSizeText(
                 '${priceEvolution.toStringAsFixed(2)}%',
                 style: priceEvolution >= 0
-                    ? theme.textStyleSize12W100PositiveValue
-                    : theme.textStyleSize12W100NegativeValue,
+                    ? ArchethicThemeStyles.textStyleSize12W100PositiveValue
+                    : ArchethicThemeStyles.textStyleSize12W100NegativeValue,
               ),
               const SizedBox(width: 5),
               if (priceEvolution >= 0)
                 Icon(
                   Symbols.arrow_upward,
-                  color: theme.positiveValue,
+                  color: ArchethicTheme.positiveValue,
                   size: 14,
                 )
               else
                 Icon(
                   Symbols.arrow_downward,
-                  color: theme.negativeValue,
+                  color: ArchethicTheme.negativeValue,
                   size: 14,
                 ),
             ],

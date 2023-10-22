@@ -1,9 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/nft/nft_category.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/nft_category.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -44,7 +45,7 @@ class NftCategoryDialog {
       context: context,
       builder: (BuildContext context) {
         final localizations = AppLocalizations.of(context)!;
-        final theme = ref.watch(ThemeProviders.selectedTheme);
+
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
@@ -59,14 +60,14 @@ class NftCategoryDialog {
                 children: [
                   Text(
                     localizations.nftCategory,
-                    style: theme.textStyleSize24W700TelegrafPrimary,
+                    style: ArchethicThemeStyles.textStyleSize24W700Primary,
                   ),
                 ],
               ),
               shape: RoundedRectangleBorder(
                 borderRadius: const BorderRadius.all(Radius.circular(16)),
                 side: BorderSide(
-                  color: theme.text45!,
+                  color: ArchethicTheme.text45,
                 ),
               ),
               content: SingleChildScrollView(

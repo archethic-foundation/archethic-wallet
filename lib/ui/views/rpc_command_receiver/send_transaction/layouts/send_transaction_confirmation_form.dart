@@ -1,16 +1,15 @@
 import 'dart:convert';
 
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
 import 'package:aewallet/domain/rpc/commands/send_transaction.dart';
 import 'package:aewallet/domain/usecases/usecase.dart';
 import 'package:aewallet/model/data/account_balance.dart';
-import 'package:aewallet/ui/themes/themes.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/rpc_failure_message.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/send_transaction/bloc/provider.dart';
@@ -36,7 +35,6 @@ class SendTransactionConfirmationForm extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final accountSelected =
@@ -84,11 +82,13 @@ class SendTransactionConfirmationForm extends ConsumerWidget {
                                 children: [
                                   Text(
                                     localizations.estimatedFees,
-                                    style: theme.textStyleSize12W400Primary,
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize12W400Primary,
                                   ),
                                   Text(
                                     '${formData.value.feesEstimation} ${AccountBalance.cryptoCurrencyLabel}',
-                                    style: theme.textStyleSize12W400Primary,
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize12W400Primary,
                                   ),
                                 ],
                               ),
@@ -96,7 +96,8 @@ class SendTransactionConfirmationForm extends ConsumerWidget {
                                 children: [
                                   Text(
                                     localizations.availableAfterCreation,
-                                    style: theme.textStyleSize12W400Primary,
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize12W400Primary,
                                   ),
                                   Text(
                                     AmountFormatters.standard(
@@ -105,7 +106,8 @@ class SendTransactionConfirmationForm extends ConsumerWidget {
                                           formData.value.feesEstimation,
                                       AccountBalance.cryptoCurrencyLabel,
                                     ),
-                                    style: theme.textStyleSize12W400Primary,
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize12W400Primary,
                                   ),
                                 ],
                               ),
@@ -117,19 +119,21 @@ class SendTransactionConfirmationForm extends ConsumerWidget {
                                     .signTransactionListTransactionsHeader
                                     .replaceAll('%1', '')
                                     .trim(),
-                                style: theme.textStyleSize12W400Primary,
+                                style: ArchethicThemeStyles
+                                    .textStyleSize12W400Primary,
                               ),
                               SizedBox.fromSize(
                                 child: Card(
                                   shape: RoundedRectangleBorder(
                                     side: BorderSide(
-                                      color:
-                                          theme.backgroundTransferListOutline!,
+                                      color: ArchethicTheme
+                                          .backgroundTransferListOutline,
                                     ),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   elevation: 0,
-                                  color: theme.backgroundTransferListCard,
+                                  color:
+                                      ArchethicTheme.backgroundTransferListCard,
                                   child: Padding(
                                     padding: const EdgeInsets.all(10),
                                     child: SelectableText(
@@ -137,7 +141,8 @@ class SendTransactionConfirmationForm extends ConsumerWidget {
                                           .convert(
                                         command.data.data,
                                       ),
-                                      style: theme.textStyleSize12W400Primary,
+                                      style: ArchethicThemeStyles
+                                          .textStyleSize12W400Primary,
                                     ),
                                   ),
                                 ),
@@ -171,7 +176,6 @@ class SendTransactionConfirmationForm extends ConsumerWidget {
                       onPressed: () async {
                         ShowSendingAnimation.build(
                           context,
-                          theme,
                         );
 
                         final result = await formNotifier.send(
@@ -179,7 +183,6 @@ class SendTransactionConfirmationForm extends ConsumerWidget {
                             _showSendProgress(
                               context,
                               ref,
-                              theme,
                               progress,
                             );
                           },
@@ -191,7 +194,6 @@ class SendTransactionConfirmationForm extends ConsumerWidget {
                             _showSendFailed(
                               context,
                               ref,
-                              theme,
                               failure,
                             );
                           },
@@ -214,7 +216,6 @@ class SendTransactionConfirmationForm extends ConsumerWidget {
   void _showSendProgress(
     BuildContext context,
     WidgetRef ref,
-    BaseTheme theme,
     UseCaseProgress event,
   ) {
     UIUtil.showSnackbar(
@@ -229,8 +230,8 @@ class SendTransactionConfirmationForm extends ConsumerWidget {
               .replaceAll('%2', event.total.toString()),
       context,
       ref,
-      theme.text!,
-      theme.snackBarShadow!,
+      ArchethicTheme.text,
+      ArchethicTheme.snackBarShadow,
       duration: const Duration(milliseconds: 5000),
       icon: Symbols.info,
     );
@@ -239,15 +240,14 @@ class SendTransactionConfirmationForm extends ConsumerWidget {
   void _showSendFailed(
     BuildContext context,
     WidgetRef ref,
-    BaseTheme theme,
     TransactionError error,
   ) {
     UIUtil.showSnackbar(
       error.localizedMessage(AppLocalizations.of(context)!),
       context,
       ref,
-      theme.text!,
-      theme.snackBarShadow!,
+      ArchethicTheme.text,
+      ArchethicTheme.snackBarShadow,
       duration: const Duration(seconds: 5),
     );
   }

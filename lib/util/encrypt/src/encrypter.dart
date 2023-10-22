@@ -1,6 +1,6 @@
 // ignore_for_file: sort_constructors_first, require_trailing_commas
 
-part of encrypt;
+part of '../encrypt.dart';
 
 /// Wraps Algorithms in a unique Container.
 class Encrypter {

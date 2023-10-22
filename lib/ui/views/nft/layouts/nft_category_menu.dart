@@ -1,10 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/nft/nft_category.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/responsive.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/card_category.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -19,7 +19,6 @@ class NftCategoryMenu extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final selectedAccount =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
     final preferences = ref.watch(SettingsProviders.settings);
@@ -97,7 +96,8 @@ class NftCategoryMenu extends ConsumerWidget {
                         ),
                         badgeContent: Text(
                           count.toString(),
-                          style: theme.textStyleSize10W100Primary,
+                          style:
+                              ArchethicThemeStyles.textStyleSize10W100Primary,
                         ),
                       ),
                     ),
@@ -106,7 +106,7 @@ class NftCategoryMenu extends ConsumerWidget {
               Text(
                 nftCategories[index].name!,
                 textAlign: TextAlign.center,
-                style: theme.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
               ),
             ],
           ),

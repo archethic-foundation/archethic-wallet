@@ -1,13 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'dart:async';
 
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
-import 'package:aewallet/ui/themes/themes.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/routes.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/provider.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/state.dart';
@@ -39,36 +39,34 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
     _sendTxSub = EventTaxiImpl.singleton()
         .registerTo<TransactionSendEvent>()
         .listen((TransactionSendEvent event) async {
-      final theme = ref.read(ThemeProviders.selectedTheme);
       if (event.response != 'ok' && event.nbConfirmations == 0) {
         // Send failed
-        _showSendFailed(event, theme);
+        _showSendFailed(event);
         return;
       }
 
       if (event.response == 'ok') {
-        await _showSendSucceed(event, theme);
+        await _showSendSucceed(event);
         return;
       }
 
-      _showNotEnoughConfirmation(theme);
+      _showNotEnoughConfirmation();
     });
   }
 
-  void _showNotEnoughConfirmation(BaseTheme theme) {
+  void _showNotEnoughConfirmation() {
     UIUtil.showSnackbar(
       AppLocalizations.of(context)!.notEnoughConfirmations,
       context,
       ref,
-      theme.text!,
-      theme.snackBarShadow!,
+      ArchethicTheme.text,
+      ArchethicTheme.snackBarShadow,
     );
     Navigator.of(context).pop();
   }
 
   Future<void> _showSendSucceed(
     TransactionSendEvent event,
-    BaseTheme theme,
   ) async {
     UIUtil.showSnackbar(
       event.nbConfirmations == 1
@@ -82,8 +80,8 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
               .replaceAll('%2', event.maxConfirmations.toString()),
       context,
       ref,
-      theme.text!,
-      theme.snackBarShadow!,
+      ArchethicTheme.text,
+      ArchethicTheme.snackBarShadow,
       duration: const Duration(milliseconds: 5000),
       icon: Symbols.info,
     );
@@ -97,7 +95,6 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
 
   void _showSendFailed(
     TransactionSendEvent event,
-    BaseTheme theme,
   ) {
     // Send failed
     if (animationOpen!) {
@@ -107,8 +104,8 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
       event.response!,
       context,
       ref,
-      theme.text!,
-      theme.snackBarShadow!,
+      ArchethicTheme.text,
+      ArchethicTheme.snackBarShadow,
       duration: const Duration(seconds: 5),
     );
     Navigator.of(context).pop();
@@ -130,7 +127,7 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final addTokenNotifier =
         ref.watch(AddTokenFormProvider.addTokenForm.notifier);
 
@@ -150,7 +147,7 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
                   padding: const EdgeInsets.only(left: 30, right: 30),
                   child: Text(
                     localizations.addTokenConfirmationMessage,
-                    style: theme.textStyleSize14W600Primary,
+                    style: ArchethicThemeStyles.textStyleSize14W600Primary,
                   ),
                 ),
                 const SizedBox(
@@ -174,7 +171,6 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
                       onPressed: () async {
                         ShowSendingAnimation.build(
                           context,
-                          theme,
                         );
                         await ref
                             .read(AddTokenFormProvider.addTokenForm.notifier)
@@ -192,7 +188,7 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
                       key: const Key('cancel'),
                       icon: Icon(
                         Symbols.arrow_back_ios,
-                        color: theme.mainButtonLabel,
+                        color: ArchethicTheme.mainButtonLabel,
                         size: 14,
                       ),
                       onPressed: () {

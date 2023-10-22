@@ -1,12 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/primary_currency.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -25,7 +26,6 @@ class FeeInfos extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
@@ -64,7 +64,7 @@ class FeeInfos extends ConsumerWidget {
         children: [
           Text(
             localizations.estimatedFees,
-            style: theme.textStyleSize14W100Primary,
+            style: ArchethicThemeStyles.textStyleSize14W100Primary,
           ),
           if (primaryCurrency.primaryCurrency ==
               AvailablePrimaryCurrencyEnum.native)
@@ -78,7 +78,7 @@ class FeeInfos extends ConsumerWidget {
                 fiatFeeEstimation,
                 2,
               )}',
-              style: theme.textStyleSize14W100Primary,
+              style: ArchethicThemeStyles.textStyleSize14W100Primary,
             )
           else
             Text(
@@ -91,7 +91,7 @@ class FeeInfos extends ConsumerWidget {
                 AccountBalance.cryptoCurrencyLabel,
                 decimal: 2,
               )}',
-              style: theme.textStyleSize14W100Primary,
+              style: ArchethicThemeStyles.textStyleSize14W100Primary,
             ),
         ],
       ),
@@ -107,13 +107,11 @@ class _CannotLoadFeeInfos extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
-
     return SizedBox(
       height: 40,
       child: Text(
         estimatedFeesNote,
-        style: theme.textStyleSize14W100Primary,
+        style: ArchethicThemeStyles.textStyleSize14W100Primary,
       ),
     );
   }
@@ -125,7 +123,6 @@ class _LoadingFeeInfos extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     return SizedBox(
       height: 40,
@@ -134,7 +131,7 @@ class _LoadingFeeInfos extends ConsumerWidget {
         children: [
           Text(
             localizations.estimatedFeesCalculationNote,
-            style: theme.textStyleSize14W100Primary,
+            style: ArchethicThemeStyles.textStyleSize14W100Primary,
           ),
           Padding(
             padding: const EdgeInsets.only(
@@ -142,7 +139,7 @@ class _LoadingFeeInfos extends ConsumerWidget {
               top: 10,
             ),
             child: LoadingAnimationWidget.prograssiveDots(
-              color: theme.text!,
+              color: ArchethicTheme.text,
               size: 12,
             ),
           ),

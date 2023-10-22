@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/properties_access/nft_creation_process_access_label.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/properties_access/nft_creation_process_file_access_add_button.dart';
@@ -38,7 +39,7 @@ class NFTCreationProcessFileAccess extends ConsumerWidget {
         ),
       ).notifier,
     );
-    final theme = ref.watch(ThemeProviders.selectedTheme);
+
     final preferences = ref.watch(SettingsProviders.settings);
     final localizations = AppLocalizations.of(context)!;
 
@@ -56,12 +57,12 @@ class NFTCreationProcessFileAccess extends ConsumerWidget {
                   width: 2,
                 )
               : BorderSide(
-                  color: theme.backgroundAccountsListCardSelected!,
+                  color: ArchethicTheme.backgroundAccountsListCardSelected,
                 ),
           borderRadius: BorderRadius.circular(10),
         ),
         elevation: 0,
-        color: theme.backgroundAccountsListCardSelected,
+        color: ArchethicTheme.backgroundAccountsListCardSelected,
         child: Padding(
           padding: const EdgeInsets.only(
             top: 10,

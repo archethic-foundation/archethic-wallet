@@ -1,7 +1,7 @@
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
@@ -54,7 +54,6 @@ class _CreateDiscussionValidationSheetState
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
 
     final formNotifier =
@@ -77,7 +76,7 @@ class _CreateDiscussionValidationSheetState
                 height: 5,
                 width: MediaQuery.of(context).size.width * 0.15,
                 decoration: BoxDecoration(
-                  color: theme.text60,
+                  color: ArchethicTheme.text60,
                   borderRadius: BorderRadius.circular(100),
                 ),
               ),
@@ -85,14 +84,14 @@ class _CreateDiscussionValidationSheetState
                 children: [
                   BackButton(
                     key: const Key('back'),
-                    color: theme.text,
+                    color: ArchethicTheme.text,
                     onPressed: () {
                       Navigator.pop(context);
                     },
                   ),
                   AutoSizeText(
                     localizations.newDiscussion,
-                    style: theme.textStyleSize24W700TelegrafPrimary,
+                    style: ArchethicThemeStyles.textStyleSize24W700Primary,
                     textAlign: TextAlign.center,
                     maxLines: 1,
                     stepGranularity: 0.1,
@@ -116,7 +115,7 @@ class _CreateDiscussionValidationSheetState
               ),
               Text(
                 localizations.aboutToCreateADiscussion,
-                style: theme.textStyleSize14W600Primary,
+                style: ArchethicThemeStyles.textStyleSize14W600Primary,
               ),
               const SizedBox(
                 height: 15,
@@ -129,7 +128,8 @@ class _CreateDiscussionValidationSheetState
                       children: [
                         Text(
                           formState.membersList[index].format,
-                          style: theme.textStyleSize16W700Primary,
+                          style:
+                              ArchethicThemeStyles.textStyleSize16W700Primary,
                         ),
                         const Expanded(child: SizedBox()),
                         IconButton(
@@ -172,9 +172,9 @@ class _CreateDiscussionValidationSheetState
                           opticalSize: IconSize.opticalSizeM,
                           grade: IconSize.gradeM,
                           color: formState.canSubmit
-                              ? theme.mainButtonLabel
-                              : theme
-                                  .textStyleSize18W600TelegrafMainButtonLabelDisabled
+                              ? ArchethicTheme.mainButtonLabel
+                              : ArchethicThemeStyles
+                                  .textStyleSize18W600MainButtonLabelDisabled
                                   .color,
                           size: 14,
                         ),
@@ -182,7 +182,6 @@ class _CreateDiscussionValidationSheetState
                         onPressed: () async {
                           ShowSendingAnimation.build(
                             context,
-                            theme,
                           );
 
                           final result = await formNotifier.createDiscussion();
@@ -201,8 +200,8 @@ class _CreateDiscussionValidationSheetState
                                 localizations.addMessengerDiscussionFailure,
                                 context,
                                 ref,
-                                theme.text!,
-                                theme.snackBarShadow!,
+                                ArchethicTheme.text,
+                                ArchethicTheme.snackBarShadow,
                                 duration: const Duration(seconds: 5),
                               );
                             },

@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
+
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,7 +21,6 @@ class TextFieldButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     return SizedBox(
       height: 48,
       width: 48,
@@ -31,7 +31,7 @@ class TextFieldButton extends ConsumerWidget {
         child: Icon(
           icon,
           size: iconSize,
-          color: theme.textFieldIcon,
+          color: ArchethicTheme.textFieldIcon,
           weight: IconSize.weightM,
           opticalSize: IconSize.opticalSizeM,
           grade: IconSize.gradeM,
@@ -113,7 +113,6 @@ class AppTextField extends ConsumerStatefulWidget {
 class _AppTextFieldState extends ConsumerState<AppTextField> {
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     return Container(
       margin: EdgeInsets.only(
         left: widget.leftMargin ?? MediaQuery.of(context).size.width * 0.105,
@@ -133,7 +132,7 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
                 maxLines: widget.maxLines,
                 focusNode: widget.focusNode,
                 controller: widget.controller,
-                cursorColor: widget.cursorColor ?? theme.text,
+                cursorColor: widget.cursorColor ?? ArchethicTheme.text,
                 inputFormatters: widget.inputFormatters,
                 textInputAction: widget.textInputAction,
                 keyboardType: widget.keyboardType,
@@ -151,7 +150,8 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
                     ? InputDecoration(
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         labelText: widget.labelText ?? '',
-                        labelStyle: theme.textStyleSize16W400Primary60,
+                        labelStyle:
+                            ArchethicThemeStyles.textStyleSize16W400Primary60,
                         hintText: widget.hintText,
                       )
                     : widget.prefixButton != null && widget.suffixButton == null
@@ -159,7 +159,8 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             contentPadding: const EdgeInsets.only(right: 48),
                             labelText: widget.labelText ?? '',
-                            labelStyle: theme.textStyleSize16W400Primary60,
+                            labelStyle: ArchethicThemeStyles
+                                .textStyleSize16W400Primary60,
                             hintText: widget.hintText,
                             prefixIcon: const SizedBox(width: 48, height: 48),
                           )
@@ -170,7 +171,8 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
                                     FloatingLabelBehavior.always,
                                 contentPadding: const EdgeInsets.only(left: 48),
                                 labelText: widget.labelText ?? '',
-                                labelStyle: theme.textStyleSize16W400Primary60,
+                                labelStyle: ArchethicThemeStyles
+                                    .textStyleSize16W400Primary60,
                                 hintText: widget.hintText,
                                 suffixIcon:
                                     const SizedBox(width: 48, height: 48),
@@ -179,7 +181,8 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.always,
                                 labelText: widget.labelText ?? '',
-                                labelStyle: theme.textStyleSize16W400Primary60,
+                                labelStyle: ArchethicThemeStyles
+                                    .textStyleSize16W400Primary60,
                                 hintText: widget.hintText,
                                 prefixIconConstraints: const BoxConstraints(
                                   minWidth: 48,
@@ -197,7 +200,7 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
                   height: 1,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    gradient: theme.gradient,
+                    gradient: ArchethicTheme.gradient,
                   ),
                 ),
               ),

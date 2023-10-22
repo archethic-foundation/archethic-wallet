@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/settings/theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/raw_info_popup.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -33,7 +34,6 @@ class QRCodeWithOptions extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final preferences = ref.watch(SettingsProviders.settings);
 
     if (infoQRCode.isEmpty) {
@@ -55,8 +55,8 @@ class QRCodeWithOptions extends ConsumerWidget {
       child: Column(
         children: [
           QrImageView(
-            eyeStyle: QrEyeStyle(color: theme.text),
-            dataModuleStyle: QrDataModuleStyle(color: theme.text),
+            eyeStyle: QrEyeStyle(color: ArchethicTheme.text),
+            dataModuleStyle: QrDataModuleStyle(color: ArchethicTheme.text),
             data: infoQRCode,
             size: size,
             gapless: false,
@@ -69,7 +69,7 @@ class QRCodeWithOptions extends ConsumerWidget {
                 if (displayShareButton == true)
                   ClipOval(
                     child: Material(
-                      color: theme.text,
+                      color: ArchethicTheme.text,
                       child: InkWell(
                         onTap: () {
                           sl.get<HapticUtil>().feedback(
@@ -90,7 +90,7 @@ class QRCodeWithOptions extends ConsumerWidget {
                             height: 20,
                             child: Icon(
                               Symbols.share,
-                              color: theme.background,
+                              color: ArchethicTheme.background,
                               size: 16,
                             ),
                           ),
@@ -101,7 +101,7 @@ class QRCodeWithOptions extends ConsumerWidget {
                 if (displayDisplayButton == true)
                   ClipOval(
                     child: Material(
-                      color: theme.text,
+                      color: ArchethicTheme.text,
                       child: InkWell(
                         onTap: () {
                           sl.get<HapticUtil>().feedback(
@@ -122,7 +122,7 @@ class QRCodeWithOptions extends ConsumerWidget {
                             padding: const EdgeInsets.only(left: 1),
                             child: Icon(
                               Symbols.visibility,
-                              color: theme.background,
+                              color: ArchethicTheme.background,
                               size: 16,
                             ),
                           ),
@@ -133,7 +133,7 @@ class QRCodeWithOptions extends ConsumerWidget {
                 if (displayCopyButton == true)
                   ClipOval(
                     child: Material(
-                      color: theme.text,
+                      color: ArchethicTheme.text,
                       child: InkWell(
                         onTap: () {
                           sl.get<HapticUtil>().feedback(
@@ -147,8 +147,8 @@ class QRCodeWithOptions extends ConsumerWidget {
                             messageCopied,
                             context,
                             ref,
-                            theme.text!,
-                            theme.snackBarShadow!,
+                            ArchethicTheme.text,
+                            ArchethicTheme.snackBarShadow,
                             icon: Symbols.info,
                           );
                         },
@@ -157,7 +157,7 @@ class QRCodeWithOptions extends ConsumerWidget {
                           height: 20,
                           child: Icon(
                             Symbols.content_paste,
-                            color: theme.background,
+                            color: ArchethicTheme.background,
                             size: 14,
                           ),
                         ),

@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later';
-import 'package:aewallet/application/settings/theme.dart';
-import 'package:aewallet/ui/util/styles.dart';
+
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:aewallet/ui/widgets/components/image_network.dart';
 import 'package:aewallet/util/url_util.dart';
@@ -20,7 +21,6 @@ class NFTCreationProcessFilePreviewIPFS extends ConsumerWidget with UrlUtil {
   Widget build(BuildContext context, WidgetRef ref) {
     final fileUrl = nftCreation.fileURL;
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.watch(ThemeProviders.selectedTheme);
 
     if (fileUrl == null || fileUrl.isEmpty) {
       return const SizedBox();
@@ -36,7 +36,7 @@ class NFTCreationProcessFilePreviewIPFS extends ConsumerWidget with UrlUtil {
             height: 150,
             child: Center(
               child: CircularProgressIndicator(
-                color: theme.text,
+                color: ArchethicTheme.text,
                 strokeWidth: 1,
               ),
             ),
@@ -44,7 +44,7 @@ class NFTCreationProcessFilePreviewIPFS extends ConsumerWidget with UrlUtil {
         ),
         SelectableText(
           '${localizations.nftIPFSFrom}\n$fileUrl',
-          style: theme.textStyleSize12W100Primary,
+          style: ArchethicThemeStyles.textStyleSize12W100Primary,
         ),
       ],
     );

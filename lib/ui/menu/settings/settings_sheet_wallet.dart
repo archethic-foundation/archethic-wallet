@@ -48,15 +48,14 @@ class _SettingsSheetWalletMobileState extends ConsumerState<SettingsSheetWallet>
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final localizations = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: theme.background,
+        backgroundColor: ArchethicTheme.background,
         title: AutoSizeText(
           localizations.settings,
-          style: theme.textStyleSize24W700TelegrafPrimary,
+          style: ArchethicThemeStyles.textStyleSize24W700Primary,
         ),
         centerTitle: true,
         leading: IconButton(
@@ -68,7 +67,7 @@ class _SettingsSheetWalletMobileState extends ConsumerState<SettingsSheetWallet>
         child: Stack(
           children: <Widget>[
             Container(
-              color: theme.backgroundDark,
+              color: ArchethicTheme.backgroundDark,
               constraints: const BoxConstraints.expand(),
             ),
             MainMenuView(

@@ -1,10 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
-import 'package:aewallet/application/settings/theme.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/primary_currency.dart';
-import 'package:aewallet/ui/util/styles.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,7 +20,6 @@ class BalanceInfosPopup {
     TapDownDetails details,
     AccountBalance accountSelectedBalance,
   ) async {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
 
@@ -33,12 +33,12 @@ class BalanceInfosPopup {
     if (fiatBalance == null) return const SizedBox();
 
     return showMenu(
-      color: theme.backgroundDark,
+      color: ArchethicTheme.backgroundDark,
       elevation: 5,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20).copyWith(topLeft: Radius.zero),
         side: BorderSide(
-          color: theme.text60!,
+          color: ArchethicTheme.text60,
         ),
       ),
       context: context,
@@ -92,7 +92,6 @@ class BalanceInfosPopup {
     String id,
     String value,
   ) {
-    final theme = ref.watch(ThemeProviders.selectedTheme);
     return PopupMenuItem(
       value: id,
       onTap: () {
@@ -110,7 +109,7 @@ class BalanceInfosPopup {
               Icon(
                 Symbols.content_copy,
                 size: 20,
-                color: theme.text,
+                color: ArchethicTheme.text,
                 weight: IconSize.weightM,
                 opticalSize: IconSize.opticalSizeM,
                 grade: IconSize.gradeM,
@@ -120,7 +119,7 @@ class BalanceInfosPopup {
               ),
               Text(
                 value,
-                style: theme.textStyleSize12W100Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
             ],
           ),
@@ -132,13 +131,13 @@ class BalanceInfosPopup {
   static void _copyAmount(BuildContext context, WidgetRef ref, String amount) {
     Clipboard.setData(ClipboardData(text: amount));
     final localizations = AppLocalizations.of(context)!;
-    final theme = ref.read(ThemeProviders.selectedTheme);
+
     UIUtil.showSnackbar(
       localizations.amountCopied,
       context,
       ref,
-      theme.text!,
-      theme.snackBarShadow!,
+      ArchethicTheme.text,
+      ArchethicTheme.snackBarShadow,
       icon: Symbols.info,
     );
   }
