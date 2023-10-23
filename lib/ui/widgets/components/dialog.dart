@@ -3,6 +3,7 @@
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
@@ -32,75 +33,86 @@ class AppDialogs {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: ArchethicTheme.backgroundPopupColor,
+          elevation: 0,
           title: Text(
             title,
             style:
                 titleStyle ?? ArchethicThemeStyles.textStyleSize14W600Primary,
           ),
-          shape: RoundedRectangleBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(16)),
-            side: BorderSide(
-              color: ArchethicTheme.text45,
+          content: DecoratedBox(
+            decoration: BoxDecoration(
+              color: ArchethicTheme.backgroundPopupColor,
+              borderRadius: BorderRadius.circular(16),
             ),
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              RichText(
-                text: TextSpan(
-                  text: '',
-                  children: <InlineSpan>[
-                    TextSpan(
-                      text: content,
-                      style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                    ),
-                    if (additionalContent != null)
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                RichText(
+                  text: TextSpan(
+                    text: '',
+                    children: <InlineSpan>[
                       TextSpan(
-                        text: '\n\n$additionalContent',
-                        style: additionalContentStyle ??
-                            ArchethicThemeStyles.textStyleSize12W100Primary,
+                        text: content,
+                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
                       ),
-                  ],
+                      if (additionalContent != null)
+                        TextSpan(
+                          text: '\n\n$additionalContent',
+                          style: additionalContentStyle ??
+                              ArchethicThemeStyles.textStyleSize12W100Primary,
+                        ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _AppDialogsButton(
-                    key: const Key('cancelButton'),
-                    textButton: cancelText!,
-                    onPressed: () {
-                      sl.get<HapticUtil>().feedback(
-                            FeedbackType.light,
-                            preferences.activeVibrations,
-                          );
-                      Navigator.of(context).pop();
-                      if (cancelAction != null) {
-                        cancelAction();
-                      }
-                    },
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.only(
+                    bottom: 20,
                   ),
-                  const SizedBox(
-                    width: 10,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      AppButton(
+                        key: const Key('cancelButton'),
+                        labelBtn: AppLocalizations.of(
+                          context,
+                        )!
+                            .no,
+                        onPressed: () async {
+                          sl.get<HapticUtil>().feedback(
+                                FeedbackType.light,
+                                preferences.activeVibrations,
+                              );
+                          Navigator.of(context).pop();
+                          if (cancelAction != null) {
+                            cancelAction();
+                          }
+                        },
+                      ),
+                      AppButton(
+                        key: const Key('yesButton'),
+                        labelBtn: AppLocalizations.of(
+                          context,
+                        )!
+                            .yes,
+                        onPressed: () async {
+                          sl.get<HapticUtil>().feedback(
+                                FeedbackType.light,
+                                preferences.activeVibrations,
+                              );
+                          Navigator.of(context).pop();
+                          onPressed();
+                        },
+                      ),
+                    ],
                   ),
-                  _AppDialogsButton(
-                    key: const Key('yesButton'),
-                    textButton: buttonText,
-                    onPressed: () {
-                      sl.get<HapticUtil>().feedback(
-                            FeedbackType.light,
-                            preferences.activeVibrations,
-                          );
-                      Navigator.of(context).pop();
-                      onPressed();
-                    },
-                  ),
-                ],
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -122,6 +134,8 @@ class AppDialogs {
 
         final preferences = ref.watch(SettingsProviders.settings);
         return AlertDialog(
+          backgroundColor: ArchethicTheme.backgroundPopupColor,
+          elevation: 0,
           title: Text(
             title,
             style: ArchethicThemeStyles.textStyleSize14W600Primary,
@@ -157,32 +171,6 @@ class AppDialogs {
           ],
         );
       },
-    );
-  }
-}
-
-class _AppDialogsButton extends ConsumerWidget {
-  const _AppDialogsButton({
-    required this.textButton,
-    required this.onPressed,
-    super.key,
-  });
-
-  final VoidCallback onPressed;
-  final String textButton;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return TextButton(
-      onPressed: onPressed,
-      child: Container(
-        constraints: const BoxConstraints(maxWidth: 90),
-        child: Text(
-          textButton,
-          textAlign: TextAlign.center,
-          style: ArchethicThemeStyles.textStyleSize12W400Primary,
-        ),
-      ),
     );
   }
 }

@@ -3,19 +3,19 @@
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/network_choice_infos.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -62,7 +62,7 @@ class _IntroNewWalletDisclaimerState
             image: AssetImage(
               ArchethicTheme.backgroundSmall,
             ),
-            fit: BoxFit.fill,
+            fit: BoxFit.fitHeight,
           ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
@@ -114,7 +114,7 @@ class _IntroNewWalletDisclaimerState
                               alignment: Alignment.bottomLeft,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
+                                children: [
                                   AutoSizeText(
                                     localizations
                                         .introNewWalletGetFirstInfosWelcome,
@@ -135,22 +135,83 @@ class _IntroNewWalletDisclaimerState
                                   const SizedBox(
                                     height: 30,
                                   ),
-                                  AppTextField(
-                                    key: const Key('newAccountName'),
-                                    leftMargin: 0,
-                                    rightMargin: 0,
-                                    labelText: localizations
-                                        .introNewWalletGetFirstInfosNameBlank,
-                                    focusNode: nameFocusNode,
-                                    autocorrect: false,
-                                    controller: nameController,
-                                    keyboardType: TextInputType.text,
-                                    style: ArchethicThemeStyles
-                                        .textStyleSize14W600Primary,
-                                    inputFormatters: <TextInputFormatter>[
-                                      LengthLimitingTextInputFormatter(20),
-                                      UpperCaseTextFormatter(),
-                                    ],
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 5),
+                                    child: Text(
+                                      AppLocalizations.of(context)!
+                                          .introNewWalletGetFirstInfosNameBlank,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.9,
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: DecoratedBox(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Expanded(
+                                                  child: DecoratedBox(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                        10,
+                                                      ),
+                                                      border: Border.all(
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primaryContainer,
+                                                        width: 0.5,
+                                                      ),
+                                                      gradient: ArchethicThemeBase
+                                                          .gradientInputFormBackground,
+                                                    ),
+                                                    child: TextField(
+                                                      key: const Key(
+                                                        'newAccountName',
+                                                      ),
+                                                      style: TextStyle(
+                                                        fontFamily:
+                                                            ArchethicTheme
+                                                                .mainFont,
+                                                        fontSize: 14,
+                                                      ),
+                                                      autocorrect: false,
+                                                      controller:
+                                                          nameController,
+                                                      focusNode: nameFocusNode,
+                                                      textInputAction:
+                                                          TextInputAction.next,
+                                                      keyboardType:
+                                                          TextInputType.text,
+                                                      inputFormatters: <TextInputFormatter>[
+                                                        LengthLimitingTextInputFormatter(
+                                                          20,
+                                                        ),
+                                                      ],
+                                                      decoration:
+                                                          const InputDecoration(
+                                                        border:
+                                                            InputBorder.none,
+                                                        contentPadding:
+                                                            EdgeInsets.only(
+                                                          left: 10,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   const SizedBox(
                                     height: 40,
@@ -185,7 +246,14 @@ class _IntroNewWalletDisclaimerState
                                     color: ArchethicTheme.text15,
                                   ),
                                 ],
-                              ),
+                              )
+                                  .animate()
+                                  .fade(
+                                    duration: const Duration(milliseconds: 200),
+                                  )
+                                  .scale(
+                                    duration: const Duration(milliseconds: 200),
+                                  ),
                             ),
                           ],
                         ),

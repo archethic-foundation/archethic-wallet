@@ -1,5 +1,6 @@
+import 'package:flutter/material.dart';
+
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-part of 'wallet_theme_base.dart';
 
 class ArchethicThemeBase {
   /// Neutral
@@ -47,6 +48,14 @@ class ArchethicThemeBase {
       Color(0xFF562FED),
       Color(0xFFD55CFF),
     ],
+  );
+
+  static Gradient gradientInputFormBackground = LinearGradient(
+    colors: [
+      ArchethicThemeBase.neutral900.withOpacity(1),
+      ArchethicThemeBase.neutral900.withOpacity(0.3),
+    ],
+    stops: const [0, 1],
   );
 
   /// System

@@ -2,7 +2,6 @@
 
 import 'package:aewallet/model/setting_item.dart';
 import 'package:flutter/material.dart';
-// Project imports:
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 
 enum AuthMethod {

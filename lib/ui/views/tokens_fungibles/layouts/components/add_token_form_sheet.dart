@@ -1,8 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/ui/themes/wallet_theme_base.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/provider.dart';

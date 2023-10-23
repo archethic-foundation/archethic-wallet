@@ -127,8 +127,8 @@ class _AddPublicKeyTextFieldPkState
                                       .primaryContainer,
                                   width: 0.5,
                                 ),
-                                gradient:
-                                    WalletThemeBase.gradientInputFormBackground,
+                                gradient: ArchethicThemeBase
+                                    .gradientInputFormBackground,
                               ),
                               child: Opacity(
                                 opacity: nftCreation.propertyAccessRecipient
@@ -140,7 +140,7 @@ class _AddPublicKeyTextFieldPkState
                                       const EdgeInsets.symmetric(vertical: 10),
                                   child: TextField(
                                     style: TextStyle(
-                                      fontFamily: WalletThemeBase.addressFont,
+                                      fontFamily: ArchethicTheme.addressFont,
                                       fontSize: 14,
                                     ),
                                     autocorrect: false,

@@ -65,7 +65,7 @@ class NFTTabBody extends ConsumerWidget {
             image: AssetImage(
               ArchethicTheme.backgroundSmall,
             ),
-            fit: BoxFit.fill,
+            fit: BoxFit.fitHeight,
             opacity: 0.7,
           ),
         ),

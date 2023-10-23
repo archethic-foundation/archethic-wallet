@@ -62,7 +62,7 @@ class _SettingsListItemSwitch extends _SettingsListItem {
               padding: const EdgeInsets.only(left: 2),
               height: 30,
               child: FittedBox(
-                fit: BoxFit.fill,
+                fit: BoxFit.fitHeight,
                 child: Switch(
                   value: isSwitched,
                   thumbIcon: thumbIcon,

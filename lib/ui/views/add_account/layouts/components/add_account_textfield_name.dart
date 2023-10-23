@@ -71,11 +71,10 @@ class _AddAccountTextFieldNameState
                               width: 0.5,
                             ),
                             gradient:
-                                WalletThemeBase.gradientInputFormBackground,
+                                ArchethicThemeBase.gradientInputFormBackground,
                           ),
                           child: TextField(
-                            style: TextStyle(
-                              fontFamily: WalletThemeBase.mainFont,
+                            style: const TextStyle(
                               fontSize: 14,
                             ),
                             autocorrect: false,

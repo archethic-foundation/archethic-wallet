@@ -1,7 +1,7 @@
 {
   "@@last_modified": "2021-12-07T12:33:16.270871",
   "noConnectionBanner": "No connection",
-  "welcomeText": "Digital Sovereignty at your Fingertips",
+  "welcomeText": "Digital Sovereignty at your fingertips",
   "welcomeText2": "Archethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "noData": "No data",
   "cancel": "Cancel",
@@ -323,7 +323,7 @@
   "introNewWalletGetFirstInfosWelcome": "Welcome to Archethic Wallet.",
   "introNewWalletGetFirstInfosNameRequest": "Let's start by naming your first account, which will be stored on your decentralized keychain",
   "introNewWalletGetFirstInfosNameInfos": "It will allow you to distinguish this account from other accounts that you can, if you want, create later.\n\nWARNING : This name will be added to your decentralized keychain and cannot be modified.",
-  "introNewWalletGetFirstInfosNameBlank": "Name of the new account",
+  "introNewWalletGetFirstInfosNameBlank": "Please, enter the name of the new account",
   "introNewWalletGetFirstInfosNameCharacterNonValid": "The name cannot contain \"\\\" and space characters",
   "introNewWalletGetFirstInfosNetworkHeader": "If you want to create a wallet in the test or development networks, please click here...",
   "introNewWalletGetFirstInfosNetworkChoice": "Current network :",

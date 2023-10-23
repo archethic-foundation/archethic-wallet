@@ -58,7 +58,7 @@ class NFTList extends ConsumerWidget {
                     width: MediaQuery.of(context).size.width,
                     child: Image.asset(
                       'assets/images/nft-empty.png',
-                      fit: BoxFit.fill,
+                      fit: BoxFit.fitHeight,
                     ),
                   ),
                 ),

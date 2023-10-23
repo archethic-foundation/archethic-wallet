@@ -97,12 +97,11 @@ class _NFTCreationProcessInfosTabTextFieldNameState
                               width: 0.5,
                             ),
                             gradient:
-                                WalletThemeBase.gradientInputFormBackground,
+                                ArchethicThemeBase.gradientInputFormBackground,
                           ),
                           child: TextField(
                             key: const Key('nftCreationField'),
-                            style: TextStyle(
-                              fontFamily: WalletThemeBase.mainFont,
+                            style: const TextStyle(
                               fontSize: 14,
                             ),
                             autocorrect: false,
