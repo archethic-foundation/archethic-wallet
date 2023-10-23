@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 class ArchethicThemeStyles {
   static TextStyle get textStyleSize16W200Primary {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w200,
       color: ArchethicTheme.text,
@@ -13,7 +12,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize16W400Primary {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w400,
       color: ArchethicTheme.text,
@@ -22,7 +20,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize16W400Primary60 {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w400,
       color: ArchethicTheme.text60,
@@ -31,7 +28,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize16W700Primary {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w700,
       color: ArchethicTheme.text,
@@ -40,7 +36,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize14W600Primary {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w600,
       color: ArchethicTheme.text,
@@ -49,7 +44,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize12W400UnderlinePrimary {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w400,
       color: ArchethicTheme.text,
@@ -58,8 +52,7 @@ class ArchethicThemeStyles {
   }
 
   static TextStyle get textStyleSize14W600PrimaryRed {
-    return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
+    return const TextStyle(
       fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w600,
       color: Colors.red,
@@ -68,7 +61,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize14W600PrimaryDisabled {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w600,
       color: ArchethicTheme.text.withOpacity(0.3),
@@ -77,7 +69,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize18W600MainButtonLabelDisabled {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size18,
       fontWeight: FontWeight.w600,
       color: ArchethicTheme.mainButtonLabel.withOpacity(0.3),
@@ -86,7 +77,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize12W400MainButtonLabelDisabled {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w400,
       color: ArchethicTheme.mainButtonLabel.withOpacity(0.3),
@@ -95,7 +85,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize14W700Background {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w700,
       color: ArchethicTheme.background,
@@ -104,7 +93,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize20W700Primary {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size20,
       fontWeight: FontWeight.w700,
       color: ArchethicTheme.text,
@@ -113,7 +101,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize14W700Primary {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w700,
       color: ArchethicTheme.text,
@@ -122,7 +109,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize14W100Text60 {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w100,
       color: ArchethicTheme.text60,
@@ -131,7 +117,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize14W100Primary {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w100,
       color: ArchethicTheme.text,
@@ -140,7 +125,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize14W200Primary {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w200,
       color: ArchethicTheme.text,
@@ -149,7 +133,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize14W200Bakckground {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w400,
       color: ArchethicTheme.background,
@@ -158,7 +141,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize25W900Primary {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: 25,
       fontWeight: FontWeight.w900,
       letterSpacing: 1,
@@ -168,7 +150,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize25W900Primary60 {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: 25,
       fontWeight: FontWeight.w900,
       letterSpacing: 1,
@@ -178,7 +159,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize35W900Primary {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: 35,
       fontWeight: FontWeight.w900,
       color: ArchethicTheme.text,
@@ -187,7 +167,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize12W100PositiveValue {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w800,
       color: ArchethicTheme.positiveValue,
@@ -196,7 +175,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize12W100NegativeValue {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w800,
       color: ArchethicTheme.negativeValue,
@@ -205,7 +183,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize12W100Primary60 {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       color: ArchethicTheme.text60,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w100,
@@ -214,7 +191,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize12W100Primary {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       color: ArchethicTheme.text,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w100,
@@ -223,7 +199,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize12W100PrimaryWarning {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       color: ArchethicTheme.warning,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w100,
@@ -232,7 +207,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize12W100Background {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       color: ArchethicTheme.background,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w100,
@@ -240,8 +214,7 @@ class ArchethicThemeStyles {
   }
 
   static TextStyle get textStyleSize12W300PrimaryRed {
-    return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
+    return const TextStyle(
       color: Colors.red,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w300,
@@ -250,7 +223,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize12W100Primary30 {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       color: ArchethicTheme.text,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w100,
@@ -259,7 +231,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize10W100Primary {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       color: ArchethicTheme.text,
       fontSize: AppFontSizes.size10,
       fontWeight: FontWeight.w100,
@@ -268,7 +239,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize10W400Primary {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       color: ArchethicTheme.text,
       fontSize: AppFontSizes.size10,
       fontWeight: FontWeight.w400,
@@ -277,7 +247,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize10W600Primary {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       color: ArchethicTheme.text,
       fontSize: AppFontSizes.size10,
       fontWeight: FontWeight.w600,
@@ -286,7 +255,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize16W600Primary {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w600,
       color: ArchethicTheme.text,
@@ -294,8 +262,7 @@ class ArchethicThemeStyles {
   }
 
   static TextStyle get textStyleSize16W600Red {
-    return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
+    return const TextStyle(
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w600,
       color: Colors.red,
@@ -304,7 +271,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize16W600Primary30 {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w600,
       color: ArchethicTheme.text30,
@@ -313,7 +279,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize12W600Primary {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w600,
       color: ArchethicTheme.text,
@@ -322,7 +287,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize12W600Primary60 {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w600,
       color: ArchethicTheme.text.withOpacity(0.6),
@@ -331,7 +295,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize24W700Primary {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size24,
       fontWeight: FontWeight.w700,
       color: ArchethicTheme.text,
@@ -339,8 +302,7 @@ class ArchethicThemeStyles {
   }
 
   static TextStyle get textStyleSize24W700PrimaryRed {
-    return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
+    return const TextStyle(
       fontSize: AppFontSizes.size24,
       fontWeight: FontWeight.w700,
       color: Colors.red,
@@ -349,7 +311,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize28W700Primary {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size28,
       fontWeight: FontWeight.w700,
       color: ArchethicTheme.text,
@@ -358,7 +319,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize20W700Warning {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size20,
       fontWeight: FontWeight.w700,
       color: ArchethicTheme.warning,
@@ -367,7 +327,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize18W600MainButtonLabel {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size18,
       fontWeight: FontWeight.w600,
       color: ArchethicTheme.mainButtonLabel,
@@ -376,7 +335,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize12W400MainButtonLabel {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w400,
       color: ArchethicTheme.mainButtonLabel,
@@ -385,7 +343,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize16W100Primary {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w100,
       color: ArchethicTheme.text,
@@ -394,7 +351,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize12W400Primary {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w400,
       color: ArchethicTheme.text,
@@ -403,7 +359,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize12W400Primary45 {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w400,
       color: ArchethicTheme.text45,
@@ -412,7 +367,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize14W700Primary60 {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w700,
       color: ArchethicTheme.text60,
@@ -421,7 +375,6 @@ class ArchethicThemeStyles {
 
   static TextStyle get textStyleSize12W400ConnectivityBanner {
     return TextStyle(
-      fontFamily: ArchethicTheme.mainFont,
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w400,
       color: ArchethicTheme.bannerTextColor,

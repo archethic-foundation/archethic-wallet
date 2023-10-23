@@ -68,7 +68,7 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
           image: AssetImage(
             ArchethicTheme.backgroundSmall,
           ),
-          fit: BoxFit.fill,
+          fit: BoxFit.fitHeight,
         ),
         gradient: LinearGradient(
           begin: Alignment.topLeft,

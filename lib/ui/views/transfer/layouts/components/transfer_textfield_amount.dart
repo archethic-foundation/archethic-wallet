@@ -122,12 +122,11 @@ class _TransferTextFieldAmountState
                                           .primaryContainer,
                                       width: 0.5,
                                     ),
-                                    gradient: WalletThemeBase
+                                    gradient: ArchethicThemeBase
                                         .gradientInputFormBackground,
                                   ),
                                   child: TextField(
-                                    style: TextStyle(
-                                      fontFamily: WalletThemeBase.mainFont,
+                                    style: const TextStyle(
                                       fontSize: 14,
                                     ),
                                     autocorrect: false,
@@ -271,7 +270,7 @@ class _TransferTextFieldAmountState
                 },
                 child: Text(
                   'MAX',
-                  style: TextStyle(color: WalletThemeBase.maxButtonColor),
+                  style: TextStyle(color: ArchethicTheme.maxButtonColor),
                 )
                     .animate()
                     .fade(

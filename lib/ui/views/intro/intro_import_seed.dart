@@ -126,7 +126,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
             image: AssetImage(
               ArchethicTheme.backgroundSmall,
             ),
-            fit: BoxFit.fill,
+            fit: BoxFit.fitHeight,
           ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,

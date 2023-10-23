@@ -139,7 +139,7 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet>
               image: AssetImage(
                 ArchethicTheme.backgroundSmall,
               ),
-              fit: BoxFit.fill,
+              fit: BoxFit.fitHeight,
             ),
             gradient: LinearGradient(
               begin: Alignment.topLeft,

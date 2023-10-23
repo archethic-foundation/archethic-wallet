@@ -17,7 +17,7 @@ mixin SecurityConfigurationMixin {
     final accessModes = <PickerItem>[
       PickerItem(
         const AuthenticationMethod(AuthMethod.pin).getDisplayName(context),
-        const AuthenticationMethod(AuthMethod.pin).getDescription(context),
+        null,
         AuthenticationMethod.getIcon(AuthMethod.pin),
         ArchethicTheme.pickerItemIconEnabled,
         AuthMethod.pin,
@@ -26,7 +26,7 @@ mixin SecurityConfigurationMixin {
       ),
       PickerItem(
         const AuthenticationMethod(AuthMethod.password).getDisplayName(context),
-        const AuthenticationMethod(AuthMethod.password).getDescription(context),
+        null,
         AuthenticationMethod.getIcon(AuthMethod.password),
         ArchethicTheme.pickerItemIconEnabled,
         AuthMethod.password,
@@ -39,8 +39,7 @@ mixin SecurityConfigurationMixin {
         PickerItem(
           const AuthenticationMethod(AuthMethod.biometrics)
               .getDisplayName(context),
-          const AuthenticationMethod(AuthMethod.biometrics)
-              .getDescription(context),
+          null,
           AuthenticationMethod.getIcon(AuthMethod.biometrics),
           ArchethicTheme.pickerItemIconEnabled,
           AuthMethod.biometrics,
@@ -53,8 +52,7 @@ mixin SecurityConfigurationMixin {
         PickerItem(
           const AuthenticationMethod(AuthMethod.biometricsUniris)
               .getDisplayName(context),
-          const AuthenticationMethod(AuthMethod.biometricsUniris)
-              .getDescription(context),
+          null,
           AuthenticationMethod.getIcon(AuthMethod.biometricsUniris),
           ArchethicTheme.pickerItemIconEnabled,
           AuthMethod.biometricsUniris,
@@ -65,8 +63,7 @@ mixin SecurityConfigurationMixin {
         PickerItem(
           const AuthenticationMethod(AuthMethod.yubikeyWithYubicloud)
               .getDisplayName(context),
-          const AuthenticationMethod(AuthMethod.yubikeyWithYubicloud)
-              .getDescription(context),
+          null,
           AuthenticationMethod.getIcon(AuthMethod.yubikeyWithYubicloud),
           ArchethicTheme.pickerItemIconEnabled,
           AuthMethod.yubikeyWithYubicloud,

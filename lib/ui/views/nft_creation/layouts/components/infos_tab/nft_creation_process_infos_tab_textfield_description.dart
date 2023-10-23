@@ -97,13 +97,12 @@ class _NFTCreationProcessInfosTabTextFieldDescriptionState
                               width: 0.5,
                             ),
                             gradient:
-                                WalletThemeBase.gradientInputFormBackground,
+                                ArchethicThemeBase.gradientInputFormBackground,
                           ),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             child: TextField(
-                              style: TextStyle(
-                                fontFamily: WalletThemeBase.mainFont,
+                              style: const TextStyle(
                                 fontSize: 14,
                               ),
                               maxLines: 6,

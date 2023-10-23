@@ -64,7 +64,6 @@ class FeeInfos extends ConsumerWidget {
         children: [
           Text(
             localizations.estimatedFees,
-            style: ArchethicThemeStyles.textStyleSize14W100Primary,
           ),
           if (primaryCurrency.primaryCurrency ==
               AvailablePrimaryCurrencyEnum.native)
@@ -140,7 +139,7 @@ class _LoadingFeeInfos extends ConsumerWidget {
             ),
             child: LoadingAnimationWidget.prograssiveDots(
               color: ArchethicTheme.text,
-              size: 12,
+              size: 10,
             ),
           ),
         ],

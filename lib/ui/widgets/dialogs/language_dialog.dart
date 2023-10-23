@@ -35,6 +35,8 @@ class LanguageDialog {
       builder: (BuildContext context) {
         final selectedLanguage = ref.read(LanguageProviders.selectedLanguage);
         return AlertDialog(
+          backgroundColor: ArchethicTheme.backgroundPopupColor,
+          elevation: 0,
           title: Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: Text(
@@ -42,11 +44,8 @@ class LanguageDialog {
               style: ArchethicThemeStyles.textStyleSize24W700Primary,
             ),
           ),
-          shape: RoundedRectangleBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(16)),
-            side: BorderSide(
-              color: ArchethicTheme.text45,
-            ),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(16)),
           ),
           content: PickerWidget(
             pickerItems: pickerItemsList,

@@ -38,7 +38,7 @@ class AccountTab extends ConsumerWidget {
           image: AssetImage(
             ArchethicTheme.backgroundSmall,
           ),
-          fit: BoxFit.fill,
+          fit: BoxFit.fitHeight,
           opacity: 0.7,
         ),
       ),
@@ -104,22 +104,10 @@ class AccountTab extends ConsumerWidget {
                                     ConnectivityStatus.isConnected)
                               const BalanceInfosKpi(),
 
-                            Divider(
-                              height: 1,
-                              color: ArchethicTheme.backgroundDarkest.withOpacity(0.1),
-                            ),
-
                             const SizedBox(
-                              height: 15,
+                              height: 30,
                             ),
                             const MenuWidgetWallet(),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Divider(
-                              height: 1,
-                              color: ArchethicTheme.backgroundDarkest.withOpacity(0.1),
-                            ),
                             const ExpandablePageView(
                               children: [
                                 TxList(),

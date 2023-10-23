@@ -1,17 +1,18 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/ui/themes/wallet_theme_base.dart';
+import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gradient_borders/gradient_borders.dart';
 
 class ArchethicTheme {
   // Fonts
   static String mainFont = 'Telegraf';
+  static String addressFont = 'Roboto';
 
   // Main Buttons
   static Color mainButtonLabel = ArchethicThemeBase.neutral0;
   static Color middleButtonLabel = ArchethicThemeBase.neutral0;
   static Gradient gradientMainButton = ArchethicThemeBase.gradientPinkPurple500;
+  static Color maxButtonColor = ArchethicThemeBase.raspberry500;
 
   // IconData Widget
   static Color iconDataWidgetIconBackground =
@@ -78,6 +79,8 @@ class ArchethicTheme {
       ArchethicThemeBase.neutral0.withOpacity(0.1);
   static Color backgroundTransferListOutline =
       ArchethicThemeBase.neutral0.withOpacity(0.1);
+  static Color backgroundPopupColor = ArchethicThemeBase.purple500;
+  static Color divider = ArchethicThemeBase.blue500.withOpacity(0.1);
 
   // Bottom Bar
   static num bottomBarBackgroundColorOpacity = 0.2;
@@ -86,7 +89,9 @@ class ArchethicTheme {
       ArchethicThemeBase.neutral0.withOpacity(0.8);
   static Color bottomBarActiveColor = ArchethicThemeBase.neutral0;
   static Color bottomBarInactiveIcon = ArchethicThemeBase.neutral0;
-  static String backgroundSmall = 'assets/themes/archethic/main-background.jpg';
+  static String backgroundSmall = 'assets/themes/archethic/main-background.png';
+  static String backgroundWelcome =
+      'assets/themes/archethic/background_welcome.png';
 
   // Animation Overlay
   static Color animationOverlayMedium =
@@ -108,15 +113,6 @@ class ArchethicTheme {
   static String logoAlone = 'logo_alone';
   static Gradient gradient = ArchethicThemeBase.gradientPinkPurple500;
 
-  static Decoration getDecorationBalance() {
-    return BoxDecoration(
-      border: GradientBoxBorder(
-        gradient: ArchethicThemeBase.gradientPinkPurple500,
-      ),
-      borderRadius: BorderRadius.circular(10),
-    );
-  }
-
   static Decoration getDecorationSheet() {
     return const BoxDecoration(
       borderRadius: BorderRadius.only(
@@ -125,7 +121,7 @@ class ArchethicTheme {
       ),
       image: DecorationImage(
         image: AssetImage('assets/themes/archethic/sheet-background.png'),
-        fit: BoxFit.fill,
+        fit: BoxFit.fitHeight,
       ),
     );
   }

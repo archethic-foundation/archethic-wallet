@@ -10,7 +10,11 @@ class SecurityMenuView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-
+    final authenticationMethod = ref.watch(
+      AuthenticationProviders.settings.select(
+        (settings) => settings.authenticationMethod,
+      ),
+    );
     return Scaffold(
       backgroundColor: ArchethicTheme.background,
       appBar: AppBar(
@@ -45,8 +49,10 @@ class SecurityMenuView extends ConsumerWidget {
                         const _ActiveServerRPCSettingsListItem(),
                       if (ArchethicWebsocketRPCServer.isPlatformCompatible)
                         const _SettingsListItem.spacer(),
-                      const _PinPadShuffleSettingsListItem(),
-                      const _SettingsListItem.spacer(),
+                      if (authenticationMethod == AuthMethod.pin)
+                        const _PinPadShuffleSettingsListItem(),
+                      if (authenticationMethod == AuthMethod.pin)
+                        const _SettingsListItem.spacer(),
                       if (connectivityStatusProvider ==
                           ConnectivityStatus.isConnected)
                         const _SyncBlockchainSettingsListItem(),
@@ -237,13 +243,7 @@ class _PinPadShuffleSettingsListItem extends ConsumerWidget {
         (settings) => settings.pinPadShuffle,
       ),
     );
-    final authenticationMethod = ref.watch(
-      AuthenticationProviders.settings.select(
-        (settings) => settings.authenticationMethod,
-      ),
-    );
 
-    if (authenticationMethod != AuthMethod.pin) return const SizedBox();
     return _SettingsListItem.withSwitch(
       heading: localizations.pinPadShuffle,
       icon: Symbols.shuffle,

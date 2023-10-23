@@ -48,6 +48,8 @@ class LockTimeoutDialog {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: ArchethicTheme.backgroundPopupColor,
+          elevation: 0,
           title: Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: Text(
@@ -55,11 +57,8 @@ class LockTimeoutDialog {
               style: ArchethicThemeStyles.textStyleSize24W700Primary,
             ),
           ),
-          shape: RoundedRectangleBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(16)),
-            side: BorderSide(
-              color: ArchethicTheme.text45,
-            ),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(16)),
           ),
           content: SingleChildScrollView(
             child: PickerWidget(

@@ -99,14 +99,13 @@ class _NFTCreationProcessPropertiesTabTextfieldNameState
                               width: 0.5,
                             ),
                             gradient:
-                                WalletThemeBase.gradientInputFormBackground,
+                                ArchethicThemeBase.gradientInputFormBackground,
                           ),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             child: TextField(
                               key: const Key('nftName'),
-                              style: TextStyle(
-                                fontFamily: WalletThemeBase.mainFont,
+                              style: const TextStyle(
                                 fontSize: 14,
                               ),
                               maxLines: 2,

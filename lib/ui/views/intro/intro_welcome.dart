@@ -42,10 +42,10 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              ArchethicTheme.backgroundSmall,
+              ArchethicTheme.backgroundWelcome,
             ),
-            fit: BoxFit.fill,
-            opacity: 0.8,
+            fit: BoxFit.fitHeight,
+            opacity: 0.4,
           ),
         ),
         child: LayoutBuilder(
@@ -196,7 +196,7 @@ class _WelcomeTextFirst extends ConsumerWidget {
       child: AutoSizeText(
         localizations.welcomeText,
         maxLines: 3,
-        style: ArchethicThemeStyles.textStyleSize16W400Primary,
+        style: ArchethicThemeStyles.textStyleSize20W700Primary,
       ),
     );
   }

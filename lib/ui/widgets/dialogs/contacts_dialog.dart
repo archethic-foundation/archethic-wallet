@@ -52,6 +52,8 @@ class ContactsDialog {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
+              backgroundColor: ArchethicTheme.backgroundPopupColor,
+              elevation: 0,
               insetPadding: const EdgeInsets.only(
                 top: 100,
                 bottom: 100,
@@ -114,11 +116,8 @@ class ContactsDialog {
                   ),
                 ],
               ),
-              shape: RoundedRectangleBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(16)),
-                side: BorderSide(
-                  color: ArchethicTheme.text45,
-                ),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(16)),
               ),
               content: SingleChildScrollView(
                 child: PickerWidget(

@@ -1,194 +1,119 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-
-import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
-import 'package:auto_size_text/auto_size_text.dart';
+import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 enum AppButtonType { primary, primaryOutline }
 
-class AppButton extends ConsumerWidget {
-  const AppButton(
-    this.type,
-    this.buttonText,
-    this.dimens, {
-    required this.onPressed,
-    this.disabled = false,
-    this.icon,
+class AppButton extends StatefulWidget {
+  const AppButton({
     super.key,
+    required this.labelBtn,
+    this.icon,
+    this.onPressed,
+    this.height = 30,
+    this.disabled = false,
   });
-
-  final AppButtonType type;
-  final String buttonText;
-  final List<double> dimens;
-  final Function onPressed;
+  final IconData? icon;
+  final String labelBtn;
+  final Function? onPressed;
   final bool disabled;
-  final Icon? icon;
+  final double height;
 
-  // Primary button builder
   @override
-  Widget build(
-    BuildContext context,
-    WidgetRef ref,
-  ) {
-    final preferences = ref.watch(SettingsProviders.settings);
-    switch (type) {
-      case AppButtonType.primary:
-        return Expanded(
-          child: Container(
-            width: 400,
-            decoration: ShapeDecoration(
-              gradient: ArchethicTheme.gradientMainButton,
-              shape: const StadiumBorder(),
-              shadows: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.5),
-                  blurRadius: 7,
-                  spreadRadius: 1,
-                  offset: const Offset(0, 5),
-                ),
-              ],
-            ),
-            height: 55,
-            margin: EdgeInsetsDirectional.fromSTEB(
-              dimens[0],
-              dimens[1],
-              dimens[2],
-              dimens[3],
-            ),
-            child: icon == null
-                ? TextButton(
-                    key: key,
-                    style: TextButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: AutoSizeText(
-                      buttonText,
-                      textAlign: TextAlign.center,
-                      style: ArchethicThemeStyles
-                          .textStyleSize18W600MainButtonLabel,
-                      maxLines: 1,
-                      stepGranularity: 0.5,
-                    ),
-                    onPressed: () {
-                      if (!disabled) {
-                        sl.get<HapticUtil>().feedback(
-                              FeedbackType.light,
-                              preferences.activeVibrations,
-                            );
-                        onPressed();
-                      }
-                      return;
-                    },
-                  )
-                : TextButton.icon(
-                    key: key,
-                    style: TextButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    icon: icon!,
-                    label: AutoSizeText(
-                      buttonText,
-                      textAlign: TextAlign.center,
-                      style: ArchethicThemeStyles
-                          .textStyleSize18W600MainButtonLabel,
-                      maxLines: 1,
-                      stepGranularity: 0.5,
-                    ),
-                    onPressed: () {
-                      if (!disabled) {
-                        sl.get<HapticUtil>().feedback(
-                              FeedbackType.light,
-                              preferences.activeVibrations,
-                            );
-                        onPressed();
-                      }
-                      return;
-                    },
+  AppButtonState createState() => AppButtonState();
+}
+
+class AppButtonState extends State<AppButton> {
+  bool _over = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) {
+        setState(() {
+          _over = true;
+        });
+      },
+      onExit: (_) {
+        setState(() {
+          _over = false;
+        });
+      },
+      child: widget.disabled
+          ? OutlinedButton(
+              style: ButtonStyle(
+                side: MaterialStateProperty.all(BorderSide.none),
+                overlayColor: MaterialStateProperty.all(Colors.transparent),
+              ),
+              onPressed: null,
+              child: _buttonContent(),
+            )
+          : widget.onPressed == null
+              ? OutlinedButton(
+                  style: ButtonStyle(
+                    side: MaterialStateProperty.all(BorderSide.none),
+                    overlayColor: MaterialStateProperty.all(Colors.transparent),
                   ),
-          ),
-        );
-      case AppButtonType.primaryOutline:
-        return Expanded(
-          child: Container(
-            width: 400,
-            decoration: ShapeDecoration(
-              gradient: ArchethicTheme.gradientMainButton,
-              shape: const StadiumBorder(),
-            ),
-            height: 55,
-            margin: EdgeInsetsDirectional.fromSTEB(
-              dimens[0],
-              dimens[1],
-              dimens[2],
-              dimens[3],
-            ),
-            child: icon == null
-                ? TextButton(
-                    key: key,
-                    style: TextButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: AutoSizeText(
-                      buttonText,
-                      textAlign: TextAlign.center,
-                      style: ArchethicThemeStyles
-                          .textStyleSize18W600MainButtonLabelDisabled,
-                      maxLines: 1,
-                      stepGranularity: 0.5,
-                    ),
-                    onPressed: () {
-                      if (!disabled) {
-                        sl.get<HapticUtil>().feedback(
-                              FeedbackType.light,
-                              preferences.activeVibrations,
-                            );
-                        onPressed();
-                      }
-                      return;
-                    },
-                  )
-                : TextButton.icon(
-                    key: key,
-                    style: TextButton.styleFrom(
-                      foregroundColor: ArchethicTheme.text,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    icon: icon!,
-                    label: AutoSizeText(
-                      buttonText,
-                      textAlign: TextAlign.center,
-                      style: ArchethicThemeStyles
-                          .textStyleSize18W600MainButtonLabelDisabled,
-                      maxLines: 1,
-                      stepGranularity: 0.5,
-                    ),
-                    onPressed: () {
-                      if (!disabled) {
-                        sl.get<HapticUtil>().feedback(
-                              FeedbackType.light,
-                              preferences.activeVibrations,
-                            );
-                        onPressed();
-                      }
-                      return;
-                    },
+                  onPressed: null,
+                  child: _buttonContent(),
+                ).animate(target: _over ? 0 : 1).fade(end: 0.8)
+              : OutlinedButton(
+                  style: ButtonStyle(
+                    side: MaterialStateProperty.all(BorderSide.none),
+                    overlayColor: MaterialStateProperty.all(Colors.transparent),
                   ),
+                  onPressed: () {
+                    widget.onPressed!();
+                  },
+                  child: _buttonContent(),
+                ).animate(target: _over ? 0 : 1).fade(end: 0.8),
+    );
+  }
+
+  Widget _buttonContent() {
+    return Container(
+      alignment: Alignment.center,
+      height: widget.height,
+      padding: const EdgeInsets.symmetric(
+        horizontal: 20,
+      ),
+      decoration: ShapeDecoration(
+        gradient: ArchethicThemeBase.gradientPinkPurple500,
+        shape: const StadiumBorder(),
+        shadows: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.5),
+            blurRadius: 7,
+            spreadRadius: 1,
+            offset: const Offset(0, 5),
           ),
-        );
-    }
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (widget.icon != null)
+            Icon(
+              widget.icon,
+              color: widget.disabled
+                  ? Colors.white.withOpacity(0.5)
+                  : Colors.white,
+              size: 12,
+            ),
+          if (widget.icon != null) const SizedBox(width: 5),
+          Text(
+            widget.labelBtn,
+            style: TextStyle(
+              color: widget.disabled
+                  ? Colors.white.withOpacity(0.5)
+                  : Colors.white,
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
+            ),
+            maxLines: 1,
+          ),
+        ],
+      ),
+    );
   }
 }

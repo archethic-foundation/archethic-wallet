@@ -38,6 +38,8 @@ class AccountsDialog {
         final localizations = AppLocalizations.of(context)!;
 
         return AlertDialog(
+          backgroundColor: ArchethicTheme.backgroundPopupColor,
+          elevation: 0,
           title: Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: Column(
@@ -63,11 +65,8 @@ class AccountsDialog {
               ],
             ),
           ),
-          shape: RoundedRectangleBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(16)),
-            side: BorderSide(
-              color: ArchethicTheme.text45,
-            ),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(16)),
           ),
           content: SingleChildScrollView(
             child: PickerWidget(
