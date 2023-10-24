@@ -38,8 +38,9 @@ class TransferFormSheet extends ConsumerWidget {
 
     return TapOutsideUnfocus(
       child: SafeArea(
-        minimum:
-            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        minimum: EdgeInsets.only(
+          bottom: MediaQuery.of(context).size.height * 0.035,
+        ),
         child: Column(
           children: <Widget>[
             SheetHeader(

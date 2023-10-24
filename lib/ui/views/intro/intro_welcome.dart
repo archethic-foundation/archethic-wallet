@@ -53,7 +53,6 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
               SafeArea(
             minimum: EdgeInsets.only(
               bottom: MediaQuery.of(context).size.height * 0.035,
-              top: MediaQuery.of(context).size.height * 0.02,
             ),
             child: Stack(
               children: [

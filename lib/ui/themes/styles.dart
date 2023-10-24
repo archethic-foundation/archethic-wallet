@@ -18,6 +18,7 @@ class ArchethicThemeStyles {
     );
   }
 
+  // TODO: To remove
   static TextStyle get textStyleSize16W400Primary60 {
     return TextStyle(
       fontSize: AppFontSizes.size16,
@@ -338,14 +339,6 @@ class ArchethicThemeStyles {
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w400,
       color: ArchethicTheme.mainButtonLabel,
-    );
-  }
-
-  static TextStyle get textStyleSize16W100Primary {
-    return TextStyle(
-      fontSize: AppFontSizes.size16,
-      fontWeight: FontWeight.w100,
-      color: ArchethicTheme.text,
     );
   }
 

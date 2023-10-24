@@ -306,56 +306,11 @@ flutter:
     - family: UiIcons
       fonts:
         - asset: assets/fonts/ui_icons.ttf
-    - family: Telegraf
+    - family: PPTelegraf
       fonts:
-        - asset: assets/fonts/Telegraf-Regular.woff
-          weight: 400
-          style: normal
-        - asset: assets/fonts/Telegraf-Bold.woff
-          weight: 700
-          style: normal
-        - asset: assets/fonts/Telegraf-Light.woff
-          weight: 300
-          style: normal
-        - asset: assets/fonts/Telegraf-Medium.woff
-          weight: 500
-          style: normal
-        - asset: assets/fonts/Telegraf-SemiBold.woff
-          weight: 600
-          style: normal
-        - asset: assets/fonts/Telegraf-UltraLight.woff
-          weight: 200
-          style: normal
-        - asset: assets/fonts/Telegraf-Black.woff
-          weight: 900
-          style: normal
-        - asset: assets/fonts/Telegraf-UltraBold.woff
-          weight: 800
-          style: normal
-        - asset: assets/fonts/Telegraf-Regular.woff2
-          weight: 400
-          style: normal
-        - asset: assets/fonts/Telegraf-Bold.woff2
-          weight: 700
-          style: normal
-        - asset: assets/fonts/Telegraf-Light.woff2
-          weight: 300
-          style: normal
-        - asset: assets/fonts/Telegraf-Medium.woff2
-          weight: 500
-          style: normal
-        - asset: assets/fonts/Telegraf-SemiBold.woff2
-          weight: 600
-          style: normal
-        - asset: assets/fonts/Telegraf-UltraLight.woff2
-          weight: 200
-          style: normal
-        - asset: assets/fonts/Telegraf-Black.woff2
-          weight: 900
-          style: normal
-        - asset: assets/fonts/Telegraf-UltraBold.woff2
-          weight: 800
-          style: normal
+        - asset: assets/fonts/PPTelegraf-Regular.otf
+        - asset: assets/fonts/PPTelegraf-Ultrabold.otf
+        - asset: assets/fonts/PPTelegraf-Ultralight.otf
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

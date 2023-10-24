@@ -246,7 +246,6 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
               SafeArea(
             minimum: EdgeInsets.only(
               bottom: MediaQuery.of(context).size.height * 0.035,
-              top: MediaQuery.of(context).size.height * 0.075,
             ),
             child: Stack(
               children: [

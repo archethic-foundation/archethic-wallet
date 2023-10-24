@@ -33,8 +33,8 @@ class TransactionOuput extends ConsumerWidget {
 
     return TransactionTemplate(
       transaction: transaction,
-      borderColor: ArchethicTheme.backgroundRecentTxListCardTokenCreation,
-      backgroundColor: ArchethicTheme.backgroundRecentTxListCardTokenCreation,
+      borderColor: ArchethicTheme.backgroundRecentTxListCardTransferOutput,
+      backgroundColor: ArchethicTheme.backgroundRecentTxListCardTransferOutput,
       onLongPress: () {
         if (transaction.contactInformation == null &&
             transaction.recipient != null) {

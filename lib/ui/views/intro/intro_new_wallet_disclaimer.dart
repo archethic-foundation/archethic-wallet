@@ -47,7 +47,6 @@ class IntroNewWalletDisclaimer extends ConsumerWidget {
               SafeArea(
             minimum: EdgeInsets.only(
               bottom: MediaQuery.of(context).size.height * 0.035,
-              top: MediaQuery.of(context).size.height * 0.075,
             ),
             child: Stack(
               children: [

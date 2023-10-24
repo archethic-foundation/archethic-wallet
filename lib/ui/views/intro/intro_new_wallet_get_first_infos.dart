@@ -78,7 +78,6 @@ class _IntroNewWalletDisclaimerState
               SafeArea(
             minimum: EdgeInsets.only(
               bottom: MediaQuery.of(context).size.height * 0.035,
-              top: MediaQuery.of(context).size.height * 0.075,
             ),
             child: Stack(
               children: [
@@ -89,6 +88,7 @@ class _IntroNewWalletDisclaimerState
                         child: Column(
                           children: <Widget>[
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Container(
                                   margin: EdgeInsetsDirectional.only(
@@ -103,6 +103,17 @@ class _IntroNewWalletDisclaimerState
                                       Navigator.pop(context);
                                     },
                                   ),
+                                ),
+                                NetworkChoiceInfos(
+                                  onTap: () {
+                                    NetworkDialog.getDialog(
+                                      context,
+                                      ref,
+                                      network,
+                                    );
+                                    FocusScope.of(context)
+                                        .requestFocus(nameFocusNode);
+                                  },
                                 ),
                               ],
                             ),
@@ -175,10 +186,7 @@ class _IntroNewWalletDisclaimerState
                                                       key: const Key(
                                                         'newAccountName',
                                                       ),
-                                                      style: TextStyle(
-                                                        fontFamily:
-                                                            ArchethicTheme
-                                                                .mainFont,
+                                                      style: const TextStyle(
                                                         fontSize: 14,
                                                       ),
                                                       autocorrect: false,
@@ -222,28 +230,6 @@ class _IntroNewWalletDisclaimerState
                                     style: ArchethicThemeStyles
                                         .textStyleSize12W100Primary,
                                     textAlign: TextAlign.justify,
-                                  ),
-                                  const SizedBox(
-                                    height: 30,
-                                  ),
-                                  Divider(
-                                    height: 5,
-                                    color: ArchethicTheme.text15,
-                                  ),
-                                  NetworkChoiceInfos(
-                                    onTap: () {
-                                      NetworkDialog.getDialog(
-                                        context,
-                                        ref,
-                                        network,
-                                      );
-                                      FocusScope.of(context)
-                                          .requestFocus(nameFocusNode);
-                                    },
-                                  ),
-                                  Divider(
-                                    height: 5,
-                                    color: ArchethicTheme.text15,
                                   ),
                                 ],
                               )
