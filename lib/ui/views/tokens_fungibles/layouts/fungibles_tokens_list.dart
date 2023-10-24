@@ -130,12 +130,12 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
         Card(
           shape: RoundedRectangleBorder(
             side: BorderSide(
-              color: ArchethicTheme.backgroundFungiblesTokensListCard,
+              color: ArchethicTheme.backgroundRecentTxListCardTokenCreation,
             ),
             borderRadius: BorderRadius.circular(10),
           ),
           elevation: 0,
-          color: ArchethicTheme.backgroundFungiblesTokensListCard,
+          color: ArchethicTheme.backgroundRecentTxListCardTokenCreation,
           child: Container(
             padding: const EdgeInsets.all(9.5),
             width: MediaQuery.of(context).size.width,

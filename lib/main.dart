@@ -158,7 +158,8 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
   Future didChangeAppLifecycleStateAsync(AppLifecycleState state) async {
     dev.log('Lifecycle State : $state');
     var isDeviceSecured = false;
-
+    ref.invalidate(ArchethicOracleUCOProviders.archethicOracleUCO);
+    ref.read(ArchethicOracleUCOProviders.archethicOracleUCO.notifier).init();
     // Account for user changing locale when leaving the app
     switch (state) {
       case AppLifecycleState.paused:
@@ -223,12 +224,12 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
           title: 'Archethic Wallet',
           theme: ThemeData(
             brightness: Brightness.dark,
-            fontFamily: 'Telegraf',
+            fontFamily: 'PPTelegraf',
             useMaterial3: true,
           ),
           darkTheme: ThemeData(
             brightness: Brightness.dark,
-            fontFamily: 'Telegraf',
+            fontFamily: 'PPTelegraf',
             useMaterial3: true,
           ),
           localizationsDelegates: const [

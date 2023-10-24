@@ -1,10 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/ui/themes/styles.dart';
-import 'package:auto_size_text/auto_size_text.dart';
+import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/localizations.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
@@ -15,51 +14,56 @@ class NetworkChoiceInfos extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-
     final settings = ref.watch(SettingsProviders.settings);
     final network = settings.network;
-    return InkWell(
-      onTap: onTap,
-      child: Column(
+    return Container(
+      padding: const EdgeInsets.only(right: 10),
+      width: 230,
+      child: Row(
         children: [
-          Row(
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(
-                  right: 15,
+          Expanded(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(
+                  10,
                 ),
-                child: Icon(
-                  Symbols.info,
-                  size: 15,
-                  weight: IconSize.weightM,
-                  opticalSize: IconSize.opticalSizeM,
-                  grade: IconSize.gradeM,
+                border: Border.all(
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  width: 0.5,
+                ),
+                gradient: ArchethicThemeBase.gradientInputFormBackground,
+              ),
+              child: InkWell(
+                onTap: onTap,
+                child: Container(
+                  padding: const EdgeInsets.only(left: 10),
+                  height: 30,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            network.getDisplayName(context),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(width: 5),
+                          const Icon(Symbols.arrow_drop_down)
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ),
-              Expanded(
-                child: AutoSizeText(
-                  localizations.introNewWalletGetFirstInfosNetworkHeader,
-                  style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                  textAlign: TextAlign.justify,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Text(
-            '${localizations.introNewWalletGetFirstInfosNetworkChoice} ${network.getDisplayName(context)}',
-            style: ArchethicThemeStyles.textStyleSize12W400Primary,
-          ),
-          if (network.networkDevEndpoint.isNotEmpty)
-            Text(
-              network.networkDevEndpoint,
-              style: ArchethicThemeStyles.textStyleSize12W400Primary,
             ),
+          ),
         ],
       ),
-    );
+    )
+        .animate()
+        .fade(duration: const Duration(milliseconds: 200))
+        .scale(duration: const Duration(milliseconds: 200));
   }
 }

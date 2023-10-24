@@ -68,11 +68,8 @@ class AppDialogs {
                 const SizedBox(
                   height: 20,
                 ),
-                Container(
+                SizedBox(
                   width: double.infinity,
-                  padding: const EdgeInsets.only(
-                    bottom: 20,
-                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

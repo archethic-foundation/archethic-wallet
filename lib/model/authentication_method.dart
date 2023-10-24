@@ -66,7 +66,7 @@ class AuthenticationMethod extends SettingSelectionItem {
       case AuthMethod.pin:
         return 'assets/icons/pin-code.png';
       case AuthMethod.yubikeyWithYubicloud:
-        return 'assets/icons/digital-key.png';
+        return 'assets/icons/yubikey.png';
       case AuthMethod.password:
         return 'assets/icons/password.png';
       case AuthMethod.ledger:

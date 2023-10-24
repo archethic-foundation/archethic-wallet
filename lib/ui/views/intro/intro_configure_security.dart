@@ -80,13 +80,14 @@ class _IntroConfigureSecurityState
           builder: (BuildContext context, BoxConstraints constraints) =>
               SafeArea(
             minimum: EdgeInsets.only(
-              top: MediaQuery.of(context).size.height * 0.075,
+              bottom: MediaQuery.of(context).size.height * 0.035,
             ),
             child: Stack(
               children: [
                 Column(
                   children: <Widget>[
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Container(
                           margin: const EdgeInsetsDirectional.only(start: 15),
@@ -98,6 +99,26 @@ class _IntroConfigureSecurityState
                             onPressed: () {
                               Navigator.pop(context, false);
                             },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 15),
+                          child: InkWell(
+                            onTap: () async {
+                              sl.get<HapticUtil>().feedback(
+                                    FeedbackType.light,
+                                    preferences.activeVibrations,
+                                  );
+                              return AuthentificationMethodDialogHelp.getDialog(
+                                context,
+                                ref,
+                              );
+                            },
+                            child: Icon(
+                              Symbols.help,
+                              color: ArchethicTheme.text,
+                              size: 24,
+                            ),
                           ),
                         ),
                       ],
@@ -234,30 +255,6 @@ class _IntroConfigureSecurityState
                                   },
                                 ),
                               ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8),
-                              child: InkWell(
-                                onTap: () async {
-                                  sl.get<HapticUtil>().feedback(
-                                        FeedbackType.light,
-                                        preferences.activeVibrations,
-                                      );
-                                  return AuthentificationMethodDialogHelp
-                                      .getDialog(
-                                    context,
-                                    ref,
-                                  );
-                                },
-                                child: Icon(
-                                  Symbols.help,
-                                  color: ArchethicTheme.text,
-                                  size: 18,
-                                ),
-                              ),
-                            ),
                           ],
                         ),
                       ),

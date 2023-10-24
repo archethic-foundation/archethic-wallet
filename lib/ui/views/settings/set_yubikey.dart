@@ -1,19 +1,18 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -90,7 +89,6 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
                 SafeArea(
               minimum: EdgeInsets.only(
                 bottom: MediaQuery.of(context).size.height * 0.035,
-                top: MediaQuery.of(context).size.height * 0.075,
               ),
               child: Column(
                 children: <Widget>[
@@ -160,6 +158,11 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
                                     ),
                                   ),
                                 Container(
+                                  padding: const EdgeInsets.only(
+                                    top: 20,
+                                    left: 20,
+                                    right: 20,
+                                  ),
                                   child: getClientIDContainer(),
                                 ),
                                 Container(
@@ -172,6 +175,10 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
                                   ),
                                 ),
                                 Container(
+                                  padding: const EdgeInsets.only(
+                                    left: 20,
+                                    right: 20,
+                                  ),
                                   child: getClientAPIKeyContainer(),
                                 ),
                                 Container(
@@ -200,7 +207,6 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          // Next Button
                           AppButtonTiny(
                             AppButtonTinyType.primary,
                             localizations.confirm,
@@ -223,66 +229,160 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
     );
   }
 
-  Column getClientIDContainer() {
+  Widget getClientIDContainer() {
     return Column(
-      children: <Widget>[
-        AppTextField(
-          topMargin: 30,
-          focusNode: _clientIDFocusNode,
-          controller: _clientIDController,
-          cursorColor: ArchethicTheme.text,
-          style: ArchethicThemeStyles.textStyleSize16W700Primary,
-          inputFormatters: <LengthLimitingTextInputFormatter>[
-            LengthLimitingTextInputFormatter(10),
-          ],
-          onChanged: (String text) {
-            setState(() {
-              _clientIDValidationText = '';
-            });
-          },
-          textInputAction: TextInputAction.next,
-          maxLines: null,
-          autocorrect: false,
-          labelText: AppLocalizations.of(context)!.enterYubikeyClientID,
-          keyboardType: TextInputType.number,
-          textAlign: TextAlign.left,
-          onSubmitted: (String text) {
-            FocusScope.of(context).unfocus();
-          },
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 5),
+          child: Text(
+            AppLocalizations.of(context)!.enterYubikeyClientID,
+          ),
+        ),
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.9,
+          child: Row(
+            children: [
+              Expanded(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              10,
+                            ),
+                            border: Border.all(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer,
+                              width: 0.5,
+                            ),
+                            gradient:
+                                ArchethicThemeBase.gradientInputFormBackground,
+                          ),
+                          child: TextField(
+                            style: const TextStyle(
+                              fontSize: 14,
+                            ),
+                            autocorrect: false,
+                            controller: _clientIDController,
+                            textInputAction: TextInputAction.next,
+                            autofocus: true,
+                            onSubmitted: (value) async {
+                              FocusScope.of(context).unfocus();
+                            },
+                            onChanged: (value) async {
+                              setState(() {
+                                _clientIDValidationText = '';
+                              });
+                            },
+                            focusNode: _clientIDFocusNode,
+                            keyboardType: TextInputType.text,
+                            inputFormatters: <TextInputFormatter>[
+                              LengthLimitingTextInputFormatter(10),
+                            ],
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.only(left: 10),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ],
-    );
+    )
+        .animate()
+        .fade(duration: const Duration(milliseconds: 200))
+        .scale(duration: const Duration(milliseconds: 200));
   }
 
-  Column getClientAPIKeyContainer() {
+  Widget getClientAPIKeyContainer() {
     return Column(
-      children: <Widget>[
-        AppTextField(
-          topMargin: 10,
-          focusNode: _clientAPIKeyFocusNode,
-          controller: _clientAPIKeyController,
-          cursorColor: ArchethicTheme.text,
-          style: ArchethicThemeStyles.textStyleSize16W700Primary,
-          inputFormatters: <LengthLimitingTextInputFormatter>[
-            LengthLimitingTextInputFormatter(40),
-          ],
-          onChanged: (String text) {
-            setState(() {
-              _clientAPIKeyValidationText = '';
-            });
-          },
-          textInputAction: TextInputAction.next,
-          maxLines: null,
-          autocorrect: false,
-          labelText: AppLocalizations.of(context)!.enterYubikeyClientAPIKey,
-          keyboardType: TextInputType.text,
-          textAlign: TextAlign.left,
-          onSubmitted: (String text) {
-            FocusScope.of(context).unfocus();
-          },
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 5),
+          child: Text(
+            AppLocalizations.of(context)!.enterYubikeyClientAPIKey,
+          ),
+        ),
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.9,
+          child: Row(
+            children: [
+              Expanded(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              10,
+                            ),
+                            border: Border.all(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer,
+                              width: 0.5,
+                            ),
+                            gradient:
+                                ArchethicThemeBase.gradientInputFormBackground,
+                          ),
+                          child: TextField(
+                            style: const TextStyle(
+                              fontSize: 14,
+                            ),
+                            autocorrect: false,
+                            controller: _clientAPIKeyController,
+                            textInputAction: TextInputAction.next,
+                            autofocus: true,
+                            onSubmitted: (value) async {
+                              FocusScope.of(context).unfocus();
+                            },
+                            onChanged: (value) async {
+                              setState(() {
+                                _clientAPIKeyValidationText = '';
+                              });
+                            },
+                            focusNode: _clientAPIKeyFocusNode,
+                            keyboardType: TextInputType.text,
+                            inputFormatters: <TextInputFormatter>[
+                              LengthLimitingTextInputFormatter(40),
+                            ],
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.only(left: 10),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ],
-    );
+    )
+        .animate()
+        .fade(duration: const Duration(milliseconds: 200))
+        .scale(duration: const Duration(milliseconds: 200));
   }
 
   Future<void> validate() async {
@@ -316,8 +416,6 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
           activeVibrations: preferences.activeVibrations,
         );
         if (auth) {
-          await ref.ensuresAutolockMaskHidden();
-
           Navigator.of(context).pop(true);
         }
       }

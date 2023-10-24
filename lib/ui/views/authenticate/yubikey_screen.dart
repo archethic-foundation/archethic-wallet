@@ -8,9 +8,9 @@ import 'package:aewallet/bus/otp_event.dart';
 import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/paste_icon.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -19,6 +19,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
@@ -316,8 +317,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
                     ),
                     child: AutoSizeText(
                       localizations.yubikeyConnectInvite,
-                      style: ArchethicThemeStyles.textStyleSize16W200Primary,
-                      textAlign: TextAlign.center,
+                      style: ArchethicThemeStyles.textStyleSize14W600Primary,
                       maxLines: 1,
                       stepGranularity: 0.1,
                     ),
@@ -327,42 +327,90 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
                     width: MediaQuery.of(context).size.width,
                   )
                 else
-                  AppTextField(
-                    topMargin: 30,
-                    maxLines: 3,
-                    padding: const EdgeInsetsDirectional.only(
-                      start: 16,
-                      end: 16,
-                    ),
-                    focusNode: enterOTPFocusNode,
-                    controller: enterOTPController,
-                    textInputAction: TextInputAction.go,
-                    autofocus: true,
-                    onSubmitted: (value) async {
-                      FocusScope.of(context).unfocus();
-                    },
-                    onChanged: (String value) async {
-                      if (value.trim().length == 44) {
-                        EventTaxiImpl.singleton()
-                            .fire(OTPReceiveEvent(otp: value));
-                      }
-                    },
-                    inputFormatters: <LengthLimitingTextInputFormatter>[
-                      LengthLimitingTextInputFormatter(45),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: DecoratedBox(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            10,
+                                          ),
+                                          border: Border.all(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primaryContainer,
+                                            width: 0.5,
+                                          ),
+                                          gradient: ArchethicThemeBase
+                                              .gradientInputFormBackground,
+                                        ),
+                                        child: TextField(
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                          autocorrect: false,
+                                          controller: enterOTPController,
+                                          textInputAction: TextInputAction.go,
+                                          autofocus: true,
+                                          onSubmitted: (value) async {
+                                            FocusScope.of(context).unfocus();
+                                          },
+                                          onChanged: (value) async {
+                                            if (value.trim().length == 44) {
+                                              EventTaxiImpl.singleton().fire(
+                                                OTPReceiveEvent(otp: value),
+                                              );
+                                            }
+                                          },
+                                          focusNode: enterOTPFocusNode,
+                                          keyboardType: TextInputType.text,
+                                          inputFormatters: <TextInputFormatter>[
+                                            LengthLimitingTextInputFormatter(
+                                              45,
+                                            ),
+                                          ],
+                                          decoration: const InputDecoration(
+                                            border: InputBorder.none,
+                                            contentPadding:
+                                                EdgeInsets.only(left: 10),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            PasteIcon(
+                              onPaste: (String value) {
+                                enterOTPController!.text = value;
+                                EventTaxiImpl.singleton().fire(
+                                  OTPReceiveEvent(
+                                    otp: enterOTPController!.text,
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
-                    keyboardType: TextInputType.text,
-                    style: ArchethicThemeStyles.textStyleSize16W600Primary,
-                    suffixButton: PasteIcon(
-                      onPaste: (String value) {
-                        enterOTPController!.text = value;
-                        EventTaxiImpl.singleton().fire(
-                          OTPReceiveEvent(
-                            otp: enterOTPController!.text,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                  )
+                      .animate()
+                      .fade(duration: const Duration(milliseconds: 200))
+                      .scale(duration: const Duration(milliseconds: 200)),
               ],
             ),
           ),

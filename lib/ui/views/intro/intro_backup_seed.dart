@@ -78,7 +78,6 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
               SafeArea(
             minimum: EdgeInsets.only(
               bottom: MediaQuery.of(context).size.height * 0.035,
-              top: MediaQuery.of(context).size.height * 0.075,
             ),
             child: Stack(
               children: [
@@ -107,10 +106,7 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                                   ConnectivityStatus.isConnected)
                                 Row(
                                   children: [
-                                    Container(
-                                      margin: const EdgeInsetsDirectional.only(
-                                        start: 15,
-                                      ),
+                                    SizedBox(
                                       height: 50,
                                       width: 50,
                                       child: TextButton(
@@ -143,10 +139,7 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                                               ),
                                       ),
                                     ),
-                                    Container(
-                                      margin: const EdgeInsetsDirectional.only(
-                                        start: 15,
-                                      ),
+                                    SizedBox(
                                       height: 50,
                                       width: 50,
                                       child: TextButton(

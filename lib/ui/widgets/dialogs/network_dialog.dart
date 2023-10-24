@@ -255,7 +255,7 @@ class _NetworkDevnetHeader extends ConsumerWidget {
         ),
         Text(
           localizations.enterEndpointHeader,
-          style: ArchethicThemeStyles.textStyleSize16W400Primary,
+          style: ArchethicThemeStyles.textStyleSize12W400Primary,
         ),
       ],
     );

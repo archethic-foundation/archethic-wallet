@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 
 class ArchethicTheme {
   // Fonts
-  static String mainFont = 'Telegraf';
   static String addressFont = 'Roboto';
 
   // Main Buttons
@@ -67,7 +66,7 @@ class ArchethicTheme {
   static Color backgroundAccountsListCardSelected =
       ArchethicThemeBase.neutral0.withOpacity(0.1);
   static Color backgroundRecentTxListCardTransferOutput =
-      ArchethicThemeBase.neutral0.withOpacity(0.2);
+      ArchethicThemeBase.purple200.withOpacity(0.2);
   static Color backgroundRecentTxListCardTokenCreation =
       ArchethicThemeBase.blue800.withOpacity(0.4);
   static Color backgroundRecentTxListCardTransferInput =
