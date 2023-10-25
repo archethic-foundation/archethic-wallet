@@ -5,8 +5,8 @@ import 'package:aewallet/ui/views/nft_creation/layouts/components/public_key_lin
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class GetPublicKeys extends ConsumerWidget {
-  const GetPublicKeys({
+class GetAddresses extends ConsumerWidget {
+  const GetAddresses({
     super.key,
     required this.propertyName,
     required this.propertyValue,
@@ -46,13 +46,13 @@ class GetPublicKeys extends ConsumerWidget {
           child: Wrap(
             // TODO(Chralu): create dynamic loading (3)
             children: List.generate(
-              propertySelected.publicKeys.length,
+              propertySelected.addresses.length,
               (index) {
                 return Padding(
                   padding: const EdgeInsets.all(5),
                   child: PublicKeyLine(
                     propertyName: propertyName,
-                    propertyAccessRecipient: propertySelected.publicKeys[index],
+                    propertyAccessRecipient: propertySelected.addresses[index],
                     readOnly: readOnly,
                   ),
                 );

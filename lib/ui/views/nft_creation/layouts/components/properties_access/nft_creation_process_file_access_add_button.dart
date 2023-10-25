@@ -3,7 +3,7 @@
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
-import 'package:aewallet/ui/views/nft_creation/layouts/add_public_key.dart';
+import 'package:aewallet/ui/views/nft_creation/layouts/add_address.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -62,7 +62,7 @@ class NFTCreationProcessFileAccessAddButton extends ConsumerWidget {
                   ),
                 ),
               ],
-              widget: AddPublicKey(
+              widget: AddAddress(
                 propertyName: propertyName,
                 propertyValue: propertyValue,
                 readOnly: readOnly,

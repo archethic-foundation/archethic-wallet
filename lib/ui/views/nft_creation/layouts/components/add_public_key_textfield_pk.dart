@@ -1,5 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-part of '../add_public_key.dart';
+part of '../add_address.dart';
 
 class AddPublicKeyTextFieldPk extends ConsumerStatefulWidget {
   const AddPublicKeyTextFieldPk({
@@ -60,7 +60,7 @@ class _AddPublicKeyTextFieldPkState
         )
         .propertyAccessRecipient;
     publicKeyController.text = propertyAccessRecipient.when(
-      publicKey: (publicKey) => publicKey.publicKey,
+      address: (address) => address.address!,
       contact: (contact) => contact.format,
       unknownContact: (name) => name,
     );
@@ -88,7 +88,7 @@ class _AddPublicKeyTextFieldPkState
         ),
       ),
       (_, nftCreation) {
-        if (nftCreation.propertyAccessRecipient.publicKey!.publicKey.isEmpty) {
+        if (nftCreation.propertyAccessRecipient.address!.address!.isEmpty) {
           publicKeyController.text = '';
         }
       },
@@ -99,7 +99,7 @@ class _AddPublicKeyTextFieldPkState
         Padding(
           padding: const EdgeInsets.only(bottom: 5),
           child: Text(
-            AppLocalizations.of(context)!.enterPublicKey,
+            AppLocalizations.of(context)!.enterAddress,
           ),
         ),
         SizedBox(
@@ -131,8 +131,8 @@ class _AddPublicKeyTextFieldPkState
                                     .gradientInputFormBackground,
                               ),
                               child: Opacity(
-                                opacity: nftCreation.propertyAccessRecipient
-                                        .isPublicKeyValid
+                                opacity: nftCreation
+                                        .propertyAccessRecipient.isAddressValid
                                     ? 1.0
                                     : 0.6,
                                 child: Padding(
@@ -161,7 +161,7 @@ class _AddPublicKeyTextFieldPkState
                                       LengthLimitingTextInputFormatter(
                                         nftCreation.propertyAccessRecipient
                                             .maybeWhen(
-                                          publicKey: (_) => 68,
+                                          address: (_) => 68,
                                           orElse: () => 20,
                                         ),
                                       ),
@@ -210,10 +210,10 @@ class _AddPublicKeyTextFieldPkState
                           );
                           return;
                         } else {
-                          final publicKey = PublicKey(scanResult);
-                          await nftCreationNotifier.setContactPublicKey(
+                          final address = Address(address: scanResult);
+                          await nftCreationNotifier.setContactAddress(
                             context: context,
-                            publicKey: publicKey,
+                            address: address,
                           );
                           _updatePublicKeyTextController();
                         }
@@ -252,6 +252,13 @@ class _AddPublicKeyTextFieldPkState
                 ],
               ),
             ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 5),
+          child: Text(
+            AppLocalizations.of(context)!.enterAddressHelp,
+            style: ArchethicThemeStyles.textStyleSize10W100Primary,
           ),
         ),
       ],

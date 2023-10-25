@@ -57,167 +57,128 @@ class ContactDetail extends ConsumerWidget {
     }
 
     return SafeArea(
-      child: DefaultTabController(
-        length: 2,
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 25, bottom: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        const Expanded(
-                          flex: 2,
-                          child: SizedBox(),
-                        ),
-                        Flexible(
-                          flex: 2,
-                          child: AutoSizeText(
-                            contact.format,
-                            style:
-                                ArchethicThemeStyles.textStyleSize24W700Primary,
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                            stepGranularity: 0.1,
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: SingleContactBalance(
-                            contact: contact,
-                            accountBalance: asyncAccountBalance,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  _ContactDetailActions(contact: contact, readOnly: readOnly),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: SizedBox(
-                height: 40,
-                child: TabBar(
-                  labelColor: ArchethicTheme.text,
-                  indicatorColor: ArchethicTheme.text,
-                  tabs: [
-                    Text(
-                      localizations.contactAddressTabHeader,
-                      style: ArchethicThemeStyles.textStyleSize14W600Primary,
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      localizations.contactPublicKeyTabHeader,
-                      style: ArchethicThemeStyles.textStyleSize14W600Primary,
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              child: TabBarView(
-                children: [
-                  ContactDetailTab(
-                    infoQRCode: contact.address.toUpperCase(),
-                    description:
-                        contact.type == ContactType.keychainService.name
-                            ? localizations.contactAddressInfoKeychainService
-                            : localizations.contactAddressInfoExternalContact,
-                    messageCopied: localizations.addressCopied,
-                  ),
-                  ContactDetailTab(
-                    infoQRCode: contact.publicKey.toUpperCase(),
-                    description:
-                        contact.type == ContactType.keychainService.name
-                            ? localizations.contactPublicKeyInfoKeychainService
-                            : localizations.contactPublicKeyInfoExternalContact,
-                    warning: localizations.contactPublicKeyInfoWarning,
-                    messageCopied: localizations.publicKeyCopied,
-                  ),
-                ],
-              ),
-            ),
-            Visibility(
-              visible: contact.type != ContactType.keychainService.name &&
-                  readOnly == false,
-              child: Column(
-                children: [
-                  TextButton(
-                    key: const Key('removeContact'),
-                    onPressed: () {
-                      sl.get<HapticUtil>().feedback(
-                            FeedbackType.light,
-                            preferences.activeVibrations,
-                          );
-                      AppDialogs.showConfirmDialog(
-                        context,
-                        ref,
-                        localizations.removeContact,
-                        localizations.removeContactConfirmation.replaceAll(
-                          '%1',
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 25, bottom: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      const Expanded(
+                        flex: 2,
+                        child: SizedBox(),
+                      ),
+                      Flexible(
+                        flex: 2,
+                        child: AutoSizeText(
                           contact.format,
+                          style:
+                              ArchethicThemeStyles.textStyleSize24W700Primary,
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          stepGranularity: 0.1,
                         ),
-                        localizations.yes,
-                        () {
-                          ref.read(
-                            ContactProviders.deleteContact(
-                              contact: contact,
-                            ),
-                          );
-
-                          ref
-                              .read(
-                                AccountProviders.selectedAccount.notifier,
-                              )
-                              .refreshRecentTransactions();
-                          UIUtil.showSnackbar(
-                            localizations.contactRemoved.replaceAll(
-                              '%1',
-                              contact.format,
-                            ),
-                            context,
-                            ref,
-                            ArchethicTheme.text,
-                            ArchethicTheme.snackBarShadow,
-                            icon: Symbols.info,
-                          );
-                          Navigator.of(context).pop();
-                        },
-                        cancelText: localizations.no,
-                      );
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Symbols.delete,
-                          color: ArchethicThemeStyles
-                              .textStyleSize14W600PrimaryRed.color,
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: SingleContactBalance(
+                          contact: contact,
+                          accountBalance: asyncAccountBalance,
                         ),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        Text(
-                          localizations.deleteContact,
-                          style: ArchethicThemeStyles
-                              .textStyleSize14W600PrimaryRed,
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                _ContactDetailActions(contact: contact, readOnly: readOnly),
+              ],
             ),
-          ],
-        ),
+          ),
+          Expanded(
+            child: ContactDetailTab(
+              infoQRCode: contact.address.toUpperCase(),
+              description: contact.type == ContactType.keychainService.name
+                  ? localizations.contactAddressInfoKeychainService
+                  : localizations.contactAddressInfoExternalContact,
+              messageCopied: localizations.addressCopied,
+            ),
+          ),
+          Visibility(
+            visible: contact.type != ContactType.keychainService.name &&
+                readOnly == false,
+            child: Column(
+              children: [
+                TextButton(
+                  key: const Key('removeContact'),
+                  onPressed: () {
+                    sl.get<HapticUtil>().feedback(
+                          FeedbackType.light,
+                          preferences.activeVibrations,
+                        );
+                    AppDialogs.showConfirmDialog(
+                      context,
+                      ref,
+                      localizations.removeContact,
+                      localizations.removeContactConfirmation.replaceAll(
+                        '%1',
+                        contact.format,
+                      ),
+                      localizations.yes,
+                      () {
+                        ref.read(
+                          ContactProviders.deleteContact(
+                            contact: contact,
+                          ),
+                        );
+
+                        ref
+                            .read(
+                              AccountProviders.selectedAccount.notifier,
+                            )
+                            .refreshRecentTransactions();
+                        UIUtil.showSnackbar(
+                          localizations.contactRemoved.replaceAll(
+                            '%1',
+                            contact.format,
+                          ),
+                          context,
+                          ref,
+                          ArchethicTheme.text,
+                          ArchethicTheme.snackBarShadow,
+                          icon: Symbols.info,
+                        );
+                        Navigator.of(context).pop();
+                      },
+                      cancelText: localizations.no,
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Symbols.delete,
+                        color: ArchethicThemeStyles
+                            .textStyleSize14W600PrimaryRed.color,
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        localizations.deleteContact,
+                        style:
+                            ArchethicThemeStyles.textStyleSize14W600PrimaryRed,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -58,7 +58,7 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
       padding: const EdgeInsets.only(bottom: 8),
       child: Card(
         shape: RoundedRectangleBorder(
-          side: fileProperty[0].publicKeys.isNotEmpty
+          side: fileProperty[0].addresses.isNotEmpty
               ? const BorderSide(
                   color: Colors.redAccent,
                   width: 2,
@@ -112,7 +112,7 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
                   Row(
                     children: [
                       if (readOnly == false ||
-                          fileProperty[0].publicKeys.isNotEmpty)
+                          fileProperty[0].addresses.isNotEmpty)
                         NFTCreationProcessFileAccessAddButton(
                           propertyName: propertyName,
                           propertyValue: propertyValue,
@@ -146,7 +146,7 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: NFTCreationProcessAccessLabel(
-                    publicKeysLength: fileProperty[0].publicKeys.length,
+                    publicKeysLength: fileProperty[0].addresses.length,
                   ),
                 ),
               ),

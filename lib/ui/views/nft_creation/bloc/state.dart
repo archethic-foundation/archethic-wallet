@@ -2,11 +2,8 @@
 
 import 'dart:typed_data';
 
-import 'package:aewallet/domain/models/token_property.dart';
-import 'package:aewallet/domain/models/token_property_access.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/contact.dart';
-import 'package:aewallet/model/public_key.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
@@ -78,7 +75,7 @@ class NftCreationFormState with _$NftCreationFormState {
       propertyName.isNotEmpty && propertyValue.isNotEmpty;
 
   bool get canAddAccess => propertyAccessRecipient.when(
-        publicKey: (publicKey) => publicKey.publicKey.isNotEmpty,
+        address: (address) => address.address!.isNotEmpty,
         contact: (contact) => contact.format.isNotEmpty,
         unknownContact: (name) => false,
       );
@@ -86,28 +83,6 @@ class NftCreationFormState with _$NftCreationFormState {
   bool get canConfirmNFTCreation => checkPreventUserPublicInfo;
 
   String symbolFees(BuildContext context) => AccountBalance.cryptoCurrencyLabel;
-
-  List<TokenProperty> get propertiesConverted {
-    final tokenProperties = <TokenProperty>[];
-    for (final property in properties) {
-      final tokenPropertyAccessList = <TokenPropertyAccess>[];
-      for (final tokenPropertyAccess in property.publicKeys) {
-        tokenPropertyAccessList.add(
-          TokenPropertyAccess(
-            publicKey: tokenPropertyAccess.publicKey!.publicKey,
-          ),
-        );
-      }
-
-      final tokenProperty = TokenProperty(
-        propertyName: property.propertyName,
-        propertyValue: property.propertyValue,
-        publicKeys: tokenPropertyAccessList,
-      );
-      tokenProperties.add(tokenProperty);
-    }
-    return tokenProperties;
-  }
 }
 
 @freezed
@@ -115,7 +90,7 @@ class NftCreationFormStateProperty with _$NftCreationFormStateProperty {
   const factory NftCreationFormStateProperty({
     @Default('') String propertyName,
     dynamic propertyValue,
-    @Default([]) List<PropertyAccessRecipient> publicKeys,
+    @Default([]) List<PropertyAccessRecipient> addresses,
   }) = _NftCreationFormStateProperty;
   const NftCreationFormStateProperty._();
 }
@@ -123,9 +98,9 @@ class NftCreationFormStateProperty with _$NftCreationFormStateProperty {
 @freezed
 class PropertyAccessRecipient with _$PropertyAccessRecipient {
   const PropertyAccessRecipient._();
-  const factory PropertyAccessRecipient.publicKey({
-    required PublicKey publicKey,
-  }) = _PropertyAccessPublicKey;
+  const factory PropertyAccessRecipient.address({
+    required Address address,
+  }) = _PropertyAccessAddress;
   const factory PropertyAccessRecipient.contact({
     required Contact contact,
   }) = _PropertyAccessContact;
@@ -133,11 +108,11 @@ class PropertyAccessRecipient with _$PropertyAccessRecipient {
     required String name,
   }) = _PropertyAccessUnknownContact;
 
-  PublicKey? get publicKey => when(
-        publicKey: (publicKey) => publicKey,
-        contact: (contact) => PublicKey(contact.publicKey),
+  Address? get address => when(
+        address: (address) => address,
+        contact: (contact) => Address(address: contact.address),
         unknownContact: (_) => null,
       );
 
-  bool get isPublicKeyValid => (publicKey ?? const PublicKey('')).isValid;
+  bool get isAddressValid => (address ?? const Address(address: '')).isValid();
 }

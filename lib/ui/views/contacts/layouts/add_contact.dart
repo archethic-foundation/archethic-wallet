@@ -1,20 +1,16 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/archethic_theme_base.dart';
-import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/bloc/provider.dart';
 import 'package:aewallet/ui/views/contacts/bloc/state.dart';
-import 'package:aewallet/ui/views/contacts/layouts/components/add_contact_public_key_recovered.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/paste_icon.dart';
@@ -34,7 +30,6 @@ import 'package:material_symbols_icons/symbols.dart';
 
 part 'components/add_contact_textfield_address.dart';
 part 'components/add_contact_textfield_name.dart';
-part 'components/add_contact_textfield_public_key.dart';
 
 class AddContactSheet extends ConsumerWidget {
   const AddContactSheet({super.key, this.address});
@@ -103,45 +98,19 @@ class AddContactSheetBody extends ConsumerWidget {
               title: localizations.addContact,
             ),
             const SizedBox(height: 30),
-            Expanded(
+            const Expanded(
               child: ArchethicScrollbar(
                 child: Padding(
-                  padding:
-                      const EdgeInsets.only(left: 10, right: 10, bottom: 30),
+                  padding: EdgeInsets.only(left: 10, right: 10, bottom: 30),
                   child: Column(
                     children: <Widget>[
-                      const AddContactTextFieldName(),
-                      const SizedBox(
+                      AddContactTextFieldName(),
+                      SizedBox(
                         height: 20,
                       ),
-                      const AddContactTextFieldAddress(),
-                      const SizedBox(
+                      AddContactTextFieldAddress(),
+                      SizedBox(
                         height: 20,
-                      ),
-                      if (contactCreation.publicKeyRecovered.isEmpty)
-                        const AddContactTextFieldPublicKey()
-                      else
-                        const AddContactPublicKeyRecovered(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Icon(
-                          Symbols.info,
-                          color: ArchethicTheme.text,
-                          size: 20,
-                          weight: IconSize.weightM,
-                          opticalSize: IconSize.opticalSizeM,
-                          grade: IconSize.gradeM,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        localizations.addContactDescription,
-                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
                       ),
                     ],
                   ),
@@ -169,17 +138,8 @@ class AddContactSheetBody extends ConsumerWidget {
                         );
 
                         if (isNameOk && isAddressOk) {
-                          final newContact = Contact(
-                            name: '@${Uri.encodeFull(contactCreation.name)}',
-                            address: contactCreation.address,
-                            type: ContactType.externalContact.name,
-                            publicKey:
-                                contactCreation.publicKeyToStore.toUpperCase(),
-                            favorite: false,
-                          );
-                          ref.read(
-                            ContactProviders.saveContact(contact: newContact),
-                          );
+                          final newContact =
+                              await contactCreationNotifier.addContact();
 
                           ref
                               .read(AccountProviders.selectedAccount.notifier)

@@ -39,14 +39,14 @@ class QRCodeWithOptions extends ConsumerWidget {
     if (infoQRCode.isEmpty) {
       return Container(
         width: 150,
-        height: 185,
+        height: 225,
         alignment: Alignment.center,
         child: const Text('No data'),
       );
     }
     return Container(
-      width: size,
-      height: size + 20,
+      width: size + 100,
+      height: size + 70,
       alignment: Alignment.center,
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
@@ -62,7 +62,7 @@ class QRCodeWithOptions extends ConsumerWidget {
             gapless: false,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 15, right: 15),
+            padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -86,12 +86,12 @@ class QRCodeWithOptions extends ConsumerWidget {
                         child: Padding(
                           padding: const EdgeInsets.only(right: 1),
                           child: SizedBox(
-                            width: 20,
-                            height: 20,
+                            width: 40,
+                            height: 40,
                             child: Icon(
                               Symbols.share,
                               color: ArchethicTheme.background,
-                              size: 16,
+                              size: 24,
                             ),
                           ),
                         ),
@@ -116,14 +116,14 @@ class QRCodeWithOptions extends ConsumerWidget {
                           );
                         },
                         child: SizedBox(
-                          width: 20,
-                          height: 20,
+                          width: 40,
+                          height: 40,
                           child: Padding(
                             padding: const EdgeInsets.only(left: 1),
                             child: Icon(
                               Symbols.visibility,
                               color: ArchethicTheme.background,
-                              size: 16,
+                              size: 24,
                             ),
                           ),
                         ),
@@ -153,12 +153,12 @@ class QRCodeWithOptions extends ConsumerWidget {
                           );
                         },
                         child: SizedBox(
-                          width: 20,
-                          height: 20,
+                          width: 40,
+                          height: 40,
                           child: Icon(
                             Symbols.content_paste,
                             color: ArchethicTheme.background,
-                            size: 14,
+                            size: 24,
                           ),
                         ),
                       ),

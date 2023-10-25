@@ -4,10 +4,13 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/token.dart';
+import 'package:aewallet/domain/models/token_property.dart';
+import 'package:aewallet/domain/models/token_property_access.dart';
 import 'package:aewallet/domain/models/transaction.dart';
 import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
@@ -15,7 +18,6 @@ import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/appdb.dart';
-import 'package:aewallet/model/public_key.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -66,8 +68,8 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
   NftCreationFormState build(NftCreationFormNotifierParams arg) {
     return NftCreationFormState(
       feeEstimation: const AsyncValue.data(0),
-      propertyAccessRecipient: const PropertyAccessRecipient.publicKey(
-        publicKey: PublicKey(''),
+      propertyAccessRecipient: const PropertyAccessRecipient.address(
+        address: archethic.Address(address: ''),
       ),
       accountBalance: arg.selectedAccount.balance!,
       currentNftCategoryIndex: arg.currentNftCategoryIndex,
@@ -147,7 +149,7 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
         transactionLastAddress: selectedAccount.lastAddress!,
         type: 'non-fungible',
         aeip: [2, 9],
-        properties: formState.propertiesConverted,
+        properties: await _getPropertiesConverted(),
       ),
     );
 
@@ -191,35 +193,53 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
     return;
   }
 
-  void addPublicKey(
+  Future<void> addAddress(
     String propertyName,
-    PropertyAccessRecipient publicKey,
+    PropertyAccessRecipient address,
     BuildContext context,
-  ) {
-    if (publicKey.isPublicKeyValid == false) {
+  ) async {
+    if (address.isAddressValid == false) {
       state = state.copyWith(
-        error: AppLocalizations.of(context)!.publicKeyInvalid,
+        error: AppLocalizations.of(context)!.addressInvalid,
+      );
+      return;
+    }
+
+    final genesisAddress = await sl
+        .get<archethic.ApiService>()
+        .getGenesisAddress(address.address!.address!);
+    if (genesisAddress.address != null &&
+        genesisAddress.address == address.address!.address!) {
+      state = state.copyWith(
+        error:
+            AppLocalizations.of(context)!.addressInvalidBecauseGenesisAddress,
       );
       return;
     }
 
     var exist = false;
-    final updatedNftCreationProperties = state.properties.map(
-      (property) {
-        if (property.propertyName != propertyName) return property;
+    final updatedNftCreationProperties = await Future.wait(
+      state.properties.map(
+        (property) async {
+          if (property.propertyName != propertyName) return property;
 
-        for (final otherPublicKey in property.publicKeys) {
-          if (otherPublicKey.publicKey!.publicKey ==
-              publicKey.publicKey!.publicKey) {
-            exist = true;
+          for (final otherAddress in property.addresses) {
+            final _genesisAddress = await sl
+                .get<archethic.ApiService>()
+                .getGenesisAddress(otherAddress.address!.address!);
+
+            if (otherAddress.address!.address == address.address!.address ||
+                _genesisAddress == genesisAddress) {
+              exist = true;
+            }
           }
-        }
 
-        return property.copyWith(
-          publicKeys: [...property.publicKeys, publicKey],
-        );
-      },
-    ).toList();
+          return property.copyWith(
+            addresses: [...property.addresses, address],
+          );
+        },
+      ).toList(),
+    );
 
     if (exist) {
       state = state.copyWith(
@@ -231,19 +251,20 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
     state = state.copyWith(
       error: '',
       properties: updatedNftCreationProperties,
-      propertyAccessRecipient:
-          const PropertyAccessRecipient.publicKey(publicKey: PublicKey('')),
+      propertyAccessRecipient: const PropertyAccessRecipient.address(
+        address: archethic.Address(address: ''),
+      ),
     );
   }
 
-  void removePublicKey(String propertyName, String publicKey) {
+  void removeAddress(String propertyName, String address) {
     final updatedNftCreationProperties = state.properties.map(
       (property) {
         if (property.propertyName != propertyName) return property;
 
         return property.copyWith(
-          publicKeys: [...property.publicKeys]..removeWhere(
-              (element) => element.publicKey!.publicKey == publicKey,
+          addresses: [...property.addresses]..removeWhere(
+              (element) => element.address!.address == address,
             ),
         );
       },
@@ -278,8 +299,9 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
         );
       } catch (_) {
         _setPropertyAccessRecipient(
-          recipient:
-              PropertyAccessRecipient.publicKey(publicKey: PublicKey(text)),
+          recipient: PropertyAccessRecipient.address(
+            address: archethic.Address(address: text),
+          ),
         );
       }
 
@@ -311,22 +333,22 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
     );
   }
 
-  Future<void> setContactPublicKey({
+  Future<void> setContactAddress({
     required BuildContext context,
-    required PublicKey publicKey,
+    required archethic.Address address,
   }) async {
     try {
-      final contact = await sl.get<DBHelper>().getContactWithPublicKey(
-            publicKey.publicKey,
+      final contact = await sl.get<DBHelper>().getContactWithAddress(
+            address.address!,
           );
 
       _setPropertyAccessRecipient(
-        recipient: PropertyAccessRecipient.contact(contact: contact),
+        recipient: PropertyAccessRecipient.contact(contact: contact!),
       );
     } catch (_) {
       _setPropertyAccessRecipient(
-        recipient: PropertyAccessRecipient.publicKey(
-          publicKey: publicKey,
+        recipient: PropertyAccessRecipient.address(
+          address: address,
         ),
       );
     }
@@ -685,6 +707,52 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
     return true;
   }
 
+  Future<String> _getGenesisPublicKey(String address) async {
+    final connectivityStatusProvider = ref.read(connectivityStatusProviders);
+    if (connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
+      return '';
+    }
+
+    final publicKeyMap =
+        await sl.get<archethic.ApiService>().getTransactionChain(
+      {address: ''},
+      request: 'previousPublicKey',
+    );
+    var publicKey = '';
+    if (publicKeyMap.isNotEmpty &&
+        publicKeyMap[address] != null &&
+        publicKeyMap[address]!.isNotEmpty) {
+      publicKey = publicKeyMap[address]![0].previousPublicKey!;
+    }
+
+    return publicKey;
+  }
+
+  Future<List<TokenProperty>> _getPropertiesConverted() async {
+    final tokenProperties = <TokenProperty>[];
+    for (final property in state.properties) {
+      final tokenPropertyAccessList = <TokenPropertyAccess>[];
+      for (final tokenPropertyAccess in property.addresses) {
+        final publicKey =
+            await _getGenesisPublicKey(tokenPropertyAccess.address!.address!);
+
+        tokenPropertyAccessList.add(
+          TokenPropertyAccess(
+            publicKey: publicKey,
+          ),
+        );
+      }
+
+      final tokenProperty = TokenProperty(
+        propertyName: property.propertyName,
+        propertyValue: property.propertyValue,
+        publicKeys: tokenPropertyAccessList,
+      );
+      tokenProperties.add(tokenProperty);
+    }
+    return tokenProperties;
+  }
+
   Future<void> send(BuildContext context) async {
     final transactionRepository = ref.read(NftCreationFormProvider._repository);
 
@@ -712,7 +780,7 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
         transactionLastAddress: selectedAccount.lastAddress!,
         type: 'non-fungible',
         aeip: [2, 9],
-        properties: state.propertiesConverted,
+        properties: await _getPropertiesConverted(),
       ),
     );
 

@@ -4,7 +4,7 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 
 extension PropertyAccessRecipientFormatters on PropertyAccessRecipient {
   String format(AppLocalizations localizations) => when(
-        publicKey: (publicKey) => publicKey.publicKey,
+        address: (address) => address.address!,
         contact: (contact) => contact.format,
         unknownContact: (name) => name.replaceFirst('@', ''),
       );

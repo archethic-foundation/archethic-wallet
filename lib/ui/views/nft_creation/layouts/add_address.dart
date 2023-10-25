@@ -4,7 +4,6 @@ import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
-import 'package:aewallet/model/public_key.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -14,7 +13,7 @@ import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
-import 'package:aewallet/ui/views/nft_creation/layouts/get_public_key.dart';
+import 'package:aewallet/ui/views/nft_creation/layouts/get_addresses.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/paste_icon.dart';
@@ -25,6 +24,7 @@ import 'package:aewallet/ui/widgets/dialogs/contacts_dialog.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/user_data_util.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -35,8 +35,8 @@ import 'package:material_symbols_icons/symbols.dart';
 
 part 'components/add_public_key_textfield_pk.dart';
 
-class AddPublicKey extends ConsumerStatefulWidget {
-  const AddPublicKey({
+class AddAddress extends ConsumerStatefulWidget {
+  const AddAddress({
     super.key,
     required this.propertyName,
     required this.propertyValue,
@@ -48,10 +48,10 @@ class AddPublicKey extends ConsumerStatefulWidget {
   final bool readOnly;
 
   @override
-  ConsumerState<AddPublicKey> createState() => _AddPublicKeyState();
+  ConsumerState<AddAddress> createState() => _AddAddressState();
 }
 
-class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
+class _AddAddressState extends ConsumerState<AddAddress> {
   late ScrollController scrollController;
 
   @override
@@ -135,7 +135,7 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
                               AppButtonTinyType.primary,
                               localizations.propertyAccessAddAccess,
                               Dimens.buttonBottomDimens,
-                              key: const Key('addPublicKey'),
+                              key: const Key('addAddress'),
                               onPressed: () async {
                                 sl.get<HapticUtil>().feedback(
                                       FeedbackType.light,
@@ -151,7 +151,7 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
                                         ),
                                       ).notifier,
                                     )
-                                    .addPublicKey(
+                                    .addAddress(
                                       widget.propertyName,
                                       nftCreation.propertyAccessRecipient,
                                       context,
@@ -161,7 +161,7 @@ class _AddPublicKeyState extends ConsumerState<AddPublicKey> {
                             ),
                           ],
                         ),
-                      GetPublicKeys(
+                      GetAddresses(
                         propertyName: widget.propertyName,
                         propertyValue: widget.propertyValue,
                         readOnly: widget.readOnly,
