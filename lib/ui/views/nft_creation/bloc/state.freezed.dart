@@ -716,7 +716,7 @@ abstract class _NftCreationFormState extends NftCreationFormState {
 mixin _$NftCreationFormStateProperty {
   String get propertyName => throw _privateConstructorUsedError;
   dynamic get propertyValue => throw _privateConstructorUsedError;
-  List<PropertyAccessRecipient> get publicKeys =>
+  List<PropertyAccessRecipient> get addresses =>
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -735,7 +735,7 @@ abstract class $NftCreationFormStatePropertyCopyWith<$Res> {
   $Res call(
       {String propertyName,
       dynamic propertyValue,
-      List<PropertyAccessRecipient> publicKeys});
+      List<PropertyAccessRecipient> addresses});
 }
 
 /// @nodoc
@@ -754,7 +754,7 @@ class _$NftCreationFormStatePropertyCopyWithImpl<$Res,
   $Res call({
     Object? propertyName = null,
     Object? propertyValue = freezed,
-    Object? publicKeys = null,
+    Object? addresses = null,
   }) {
     return _then(_value.copyWith(
       propertyName: null == propertyName
@@ -765,9 +765,9 @@ class _$NftCreationFormStatePropertyCopyWithImpl<$Res,
           ? _value.propertyValue
           : propertyValue // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      publicKeys: null == publicKeys
-          ? _value.publicKeys
-          : publicKeys // ignore: cast_nullable_to_non_nullable
+      addresses: null == addresses
+          ? _value.addresses
+          : addresses // ignore: cast_nullable_to_non_nullable
               as List<PropertyAccessRecipient>,
     ) as $Val);
   }
@@ -785,7 +785,7 @@ abstract class _$$NftCreationFormStatePropertyImplCopyWith<$Res>
   $Res call(
       {String propertyName,
       dynamic propertyValue,
-      List<PropertyAccessRecipient> publicKeys});
+      List<PropertyAccessRecipient> addresses});
 }
 
 /// @nodoc
@@ -803,7 +803,7 @@ class __$$NftCreationFormStatePropertyImplCopyWithImpl<$Res>
   $Res call({
     Object? propertyName = null,
     Object? propertyValue = freezed,
-    Object? publicKeys = null,
+    Object? addresses = null,
   }) {
     return _then(_$NftCreationFormStatePropertyImpl(
       propertyName: null == propertyName
@@ -814,9 +814,9 @@ class __$$NftCreationFormStatePropertyImplCopyWithImpl<$Res>
           ? _value.propertyValue
           : propertyValue // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      publicKeys: null == publicKeys
-          ? _value._publicKeys
-          : publicKeys // ignore: cast_nullable_to_non_nullable
+      addresses: null == addresses
+          ? _value._addresses
+          : addresses // ignore: cast_nullable_to_non_nullable
               as List<PropertyAccessRecipient>,
     ));
   }
@@ -828,8 +828,8 @@ class _$NftCreationFormStatePropertyImpl extends _NftCreationFormStateProperty {
   const _$NftCreationFormStatePropertyImpl(
       {this.propertyName = '',
       this.propertyValue,
-      final List<PropertyAccessRecipient> publicKeys = const []})
-      : _publicKeys = publicKeys,
+      final List<PropertyAccessRecipient> addresses = const []})
+      : _addresses = addresses,
         super._();
 
   @override
@@ -837,18 +837,18 @@ class _$NftCreationFormStatePropertyImpl extends _NftCreationFormStateProperty {
   final String propertyName;
   @override
   final dynamic propertyValue;
-  final List<PropertyAccessRecipient> _publicKeys;
+  final List<PropertyAccessRecipient> _addresses;
   @override
   @JsonKey()
-  List<PropertyAccessRecipient> get publicKeys {
-    if (_publicKeys is EqualUnmodifiableListView) return _publicKeys;
+  List<PropertyAccessRecipient> get addresses {
+    if (_addresses is EqualUnmodifiableListView) return _addresses;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_publicKeys);
+    return EqualUnmodifiableListView(_addresses);
   }
 
   @override
   String toString() {
-    return 'NftCreationFormStateProperty(propertyName: $propertyName, propertyValue: $propertyValue, publicKeys: $publicKeys)';
+    return 'NftCreationFormStateProperty(propertyName: $propertyName, propertyValue: $propertyValue, addresses: $addresses)';
   }
 
   @override
@@ -861,7 +861,7 @@ class _$NftCreationFormStatePropertyImpl extends _NftCreationFormStateProperty {
             const DeepCollectionEquality()
                 .equals(other.propertyValue, propertyValue) &&
             const DeepCollectionEquality()
-                .equals(other._publicKeys, _publicKeys));
+                .equals(other._addresses, _addresses));
   }
 
   @override
@@ -869,7 +869,7 @@ class _$NftCreationFormStatePropertyImpl extends _NftCreationFormStateProperty {
       runtimeType,
       propertyName,
       const DeepCollectionEquality().hash(propertyValue),
-      const DeepCollectionEquality().hash(_publicKeys));
+      const DeepCollectionEquality().hash(_addresses));
 
   @JsonKey(ignore: true)
   @override
@@ -885,7 +885,7 @@ abstract class _NftCreationFormStateProperty
   const factory _NftCreationFormStateProperty(
           {final String propertyName,
           final dynamic propertyValue,
-          final List<PropertyAccessRecipient> publicKeys}) =
+          final List<PropertyAccessRecipient> addresses}) =
       _$NftCreationFormStatePropertyImpl;
   const _NftCreationFormStateProperty._() : super._();
 
@@ -894,7 +894,7 @@ abstract class _NftCreationFormStateProperty
   @override
   dynamic get propertyValue;
   @override
-  List<PropertyAccessRecipient> get publicKeys;
+  List<PropertyAccessRecipient> get addresses;
   @override
   @JsonKey(ignore: true)
   _$$NftCreationFormStatePropertyImplCopyWith<
@@ -906,21 +906,21 @@ abstract class _NftCreationFormStateProperty
 mixin _$PropertyAccessRecipient {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(PublicKey publicKey) publicKey,
+    required TResult Function(Address address) address,
     required TResult Function(Contact contact) contact,
     required TResult Function(String name) unknownContact,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(PublicKey publicKey)? publicKey,
+    TResult? Function(Address address)? address,
     TResult? Function(Contact contact)? contact,
     TResult? Function(String name)? unknownContact,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(PublicKey publicKey)? publicKey,
+    TResult Function(Address address)? address,
     TResult Function(Contact contact)? contact,
     TResult Function(String name)? unknownContact,
     required TResult orElse(),
@@ -928,7 +928,7 @@ mixin _$PropertyAccessRecipient {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_PropertyAccessPublicKey value) publicKey,
+    required TResult Function(_PropertyAccessAddress value) address,
     required TResult Function(_PropertyAccessContact value) contact,
     required TResult Function(_PropertyAccessUnknownContact value)
         unknownContact,
@@ -936,14 +936,14 @@ mixin _$PropertyAccessRecipient {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_PropertyAccessPublicKey value)? publicKey,
+    TResult? Function(_PropertyAccessAddress value)? address,
     TResult? Function(_PropertyAccessContact value)? contact,
     TResult? Function(_PropertyAccessUnknownContact value)? unknownContact,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_PropertyAccessPublicKey value)? publicKey,
+    TResult Function(_PropertyAccessAddress value)? address,
     TResult Function(_PropertyAccessContact value)? contact,
     TResult Function(_PropertyAccessUnknownContact value)? unknownContact,
     required TResult orElse(),
@@ -971,101 +971,109 @@ class _$PropertyAccessRecipientCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$PropertyAccessPublicKeyImplCopyWith<$Res> {
-  factory _$$PropertyAccessPublicKeyImplCopyWith(
-          _$PropertyAccessPublicKeyImpl value,
-          $Res Function(_$PropertyAccessPublicKeyImpl) then) =
-      __$$PropertyAccessPublicKeyImplCopyWithImpl<$Res>;
+abstract class _$$PropertyAccessAddressImplCopyWith<$Res> {
+  factory _$$PropertyAccessAddressImplCopyWith(
+          _$PropertyAccessAddressImpl value,
+          $Res Function(_$PropertyAccessAddressImpl) then) =
+      __$$PropertyAccessAddressImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({PublicKey publicKey});
+  $Res call({Address address});
+
+  $AddressCopyWith<$Res> get address;
 }
 
 /// @nodoc
-class __$$PropertyAccessPublicKeyImplCopyWithImpl<$Res>
+class __$$PropertyAccessAddressImplCopyWithImpl<$Res>
     extends _$PropertyAccessRecipientCopyWithImpl<$Res,
-        _$PropertyAccessPublicKeyImpl>
-    implements _$$PropertyAccessPublicKeyImplCopyWith<$Res> {
-  __$$PropertyAccessPublicKeyImplCopyWithImpl(
-      _$PropertyAccessPublicKeyImpl _value,
-      $Res Function(_$PropertyAccessPublicKeyImpl) _then)
+        _$PropertyAccessAddressImpl>
+    implements _$$PropertyAccessAddressImplCopyWith<$Res> {
+  __$$PropertyAccessAddressImplCopyWithImpl(_$PropertyAccessAddressImpl _value,
+      $Res Function(_$PropertyAccessAddressImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? publicKey = null,
+    Object? address = null,
   }) {
-    return _then(_$PropertyAccessPublicKeyImpl(
-      publicKey: null == publicKey
-          ? _value.publicKey
-          : publicKey // ignore: cast_nullable_to_non_nullable
-              as PublicKey,
+    return _then(_$PropertyAccessAddressImpl(
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as Address,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AddressCopyWith<$Res> get address {
+    return $AddressCopyWith<$Res>(_value.address, (value) {
+      return _then(_value.copyWith(address: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$PropertyAccessPublicKeyImpl extends _PropertyAccessPublicKey {
-  const _$PropertyAccessPublicKeyImpl({required this.publicKey}) : super._();
+class _$PropertyAccessAddressImpl extends _PropertyAccessAddress {
+  const _$PropertyAccessAddressImpl({required this.address}) : super._();
 
   @override
-  final PublicKey publicKey;
+  final Address address;
 
   @override
   String toString() {
-    return 'PropertyAccessRecipient.publicKey(publicKey: $publicKey)';
+    return 'PropertyAccessRecipient.address(address: $address)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PropertyAccessPublicKeyImpl &&
-            (identical(other.publicKey, publicKey) ||
-                other.publicKey == publicKey));
+            other is _$PropertyAccessAddressImpl &&
+            (identical(other.address, address) || other.address == address));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, publicKey);
+  int get hashCode => Object.hash(runtimeType, address);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$PropertyAccessPublicKeyImplCopyWith<_$PropertyAccessPublicKeyImpl>
-      get copyWith => __$$PropertyAccessPublicKeyImplCopyWithImpl<
-          _$PropertyAccessPublicKeyImpl>(this, _$identity);
+  _$$PropertyAccessAddressImplCopyWith<_$PropertyAccessAddressImpl>
+      get copyWith => __$$PropertyAccessAddressImplCopyWithImpl<
+          _$PropertyAccessAddressImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(PublicKey publicKey) publicKey,
+    required TResult Function(Address address) address,
     required TResult Function(Contact contact) contact,
     required TResult Function(String name) unknownContact,
   }) {
-    return publicKey(this.publicKey);
+    return address(this.address);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(PublicKey publicKey)? publicKey,
+    TResult? Function(Address address)? address,
     TResult? Function(Contact contact)? contact,
     TResult? Function(String name)? unknownContact,
   }) {
-    return publicKey?.call(this.publicKey);
+    return address?.call(this.address);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(PublicKey publicKey)? publicKey,
+    TResult Function(Address address)? address,
     TResult Function(Contact contact)? contact,
     TResult Function(String name)? unknownContact,
     required TResult orElse(),
   }) {
-    if (publicKey != null) {
-      return publicKey(this.publicKey);
+    if (address != null) {
+      return address(this.address);
     }
     return orElse();
   }
@@ -1073,47 +1081,47 @@ class _$PropertyAccessPublicKeyImpl extends _PropertyAccessPublicKey {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_PropertyAccessPublicKey value) publicKey,
+    required TResult Function(_PropertyAccessAddress value) address,
     required TResult Function(_PropertyAccessContact value) contact,
     required TResult Function(_PropertyAccessUnknownContact value)
         unknownContact,
   }) {
-    return publicKey(this);
+    return address(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_PropertyAccessPublicKey value)? publicKey,
+    TResult? Function(_PropertyAccessAddress value)? address,
     TResult? Function(_PropertyAccessContact value)? contact,
     TResult? Function(_PropertyAccessUnknownContact value)? unknownContact,
   }) {
-    return publicKey?.call(this);
+    return address?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_PropertyAccessPublicKey value)? publicKey,
+    TResult Function(_PropertyAccessAddress value)? address,
     TResult Function(_PropertyAccessContact value)? contact,
     TResult Function(_PropertyAccessUnknownContact value)? unknownContact,
     required TResult orElse(),
   }) {
-    if (publicKey != null) {
-      return publicKey(this);
+    if (address != null) {
+      return address(this);
     }
     return orElse();
   }
 }
 
-abstract class _PropertyAccessPublicKey extends PropertyAccessRecipient {
-  const factory _PropertyAccessPublicKey({required final PublicKey publicKey}) =
-      _$PropertyAccessPublicKeyImpl;
-  const _PropertyAccessPublicKey._() : super._();
+abstract class _PropertyAccessAddress extends PropertyAccessRecipient {
+  const factory _PropertyAccessAddress({required final Address address}) =
+      _$PropertyAccessAddressImpl;
+  const _PropertyAccessAddress._() : super._();
 
-  PublicKey get publicKey;
+  Address get address;
   @JsonKey(ignore: true)
-  _$$PropertyAccessPublicKeyImplCopyWith<_$PropertyAccessPublicKeyImpl>
+  _$$PropertyAccessAddressImplCopyWith<_$PropertyAccessAddressImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -1184,7 +1192,7 @@ class _$PropertyAccessContactImpl extends _PropertyAccessContact {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(PublicKey publicKey) publicKey,
+    required TResult Function(Address address) address,
     required TResult Function(Contact contact) contact,
     required TResult Function(String name) unknownContact,
   }) {
@@ -1194,7 +1202,7 @@ class _$PropertyAccessContactImpl extends _PropertyAccessContact {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(PublicKey publicKey)? publicKey,
+    TResult? Function(Address address)? address,
     TResult? Function(Contact contact)? contact,
     TResult? Function(String name)? unknownContact,
   }) {
@@ -1204,7 +1212,7 @@ class _$PropertyAccessContactImpl extends _PropertyAccessContact {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(PublicKey publicKey)? publicKey,
+    TResult Function(Address address)? address,
     TResult Function(Contact contact)? contact,
     TResult Function(String name)? unknownContact,
     required TResult orElse(),
@@ -1218,7 +1226,7 @@ class _$PropertyAccessContactImpl extends _PropertyAccessContact {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_PropertyAccessPublicKey value) publicKey,
+    required TResult Function(_PropertyAccessAddress value) address,
     required TResult Function(_PropertyAccessContact value) contact,
     required TResult Function(_PropertyAccessUnknownContact value)
         unknownContact,
@@ -1229,7 +1237,7 @@ class _$PropertyAccessContactImpl extends _PropertyAccessContact {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_PropertyAccessPublicKey value)? publicKey,
+    TResult? Function(_PropertyAccessAddress value)? address,
     TResult? Function(_PropertyAccessContact value)? contact,
     TResult? Function(_PropertyAccessUnknownContact value)? unknownContact,
   }) {
@@ -1239,7 +1247,7 @@ class _$PropertyAccessContactImpl extends _PropertyAccessContact {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_PropertyAccessPublicKey value)? publicKey,
+    TResult Function(_PropertyAccessAddress value)? address,
     TResult Function(_PropertyAccessContact value)? contact,
     TResult Function(_PropertyAccessUnknownContact value)? unknownContact,
     required TResult orElse(),
@@ -1331,7 +1339,7 @@ class _$PropertyAccessUnknownContactImpl extends _PropertyAccessUnknownContact {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(PublicKey publicKey) publicKey,
+    required TResult Function(Address address) address,
     required TResult Function(Contact contact) contact,
     required TResult Function(String name) unknownContact,
   }) {
@@ -1341,7 +1349,7 @@ class _$PropertyAccessUnknownContactImpl extends _PropertyAccessUnknownContact {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(PublicKey publicKey)? publicKey,
+    TResult? Function(Address address)? address,
     TResult? Function(Contact contact)? contact,
     TResult? Function(String name)? unknownContact,
   }) {
@@ -1351,7 +1359,7 @@ class _$PropertyAccessUnknownContactImpl extends _PropertyAccessUnknownContact {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(PublicKey publicKey)? publicKey,
+    TResult Function(Address address)? address,
     TResult Function(Contact contact)? contact,
     TResult Function(String name)? unknownContact,
     required TResult orElse(),
@@ -1365,7 +1373,7 @@ class _$PropertyAccessUnknownContactImpl extends _PropertyAccessUnknownContact {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_PropertyAccessPublicKey value) publicKey,
+    required TResult Function(_PropertyAccessAddress value) address,
     required TResult Function(_PropertyAccessContact value) contact,
     required TResult Function(_PropertyAccessUnknownContact value)
         unknownContact,
@@ -1376,7 +1384,7 @@ class _$PropertyAccessUnknownContactImpl extends _PropertyAccessUnknownContact {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_PropertyAccessPublicKey value)? publicKey,
+    TResult? Function(_PropertyAccessAddress value)? address,
     TResult? Function(_PropertyAccessContact value)? contact,
     TResult? Function(_PropertyAccessUnknownContact value)? unknownContact,
   }) {
@@ -1386,7 +1394,7 @@ class _$PropertyAccessUnknownContactImpl extends _PropertyAccessUnknownContact {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_PropertyAccessPublicKey value)? publicKey,
+    TResult Function(_PropertyAccessAddress value)? address,
     TResult Function(_PropertyAccessContact value)? contact,
     TResult Function(_PropertyAccessUnknownContact value)? unknownContact,
     required TResult orElse(),

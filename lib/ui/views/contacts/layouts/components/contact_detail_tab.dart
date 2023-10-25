@@ -75,7 +75,7 @@ class ContactDetailTab extends ConsumerWidget {
                     },
                     child: QRCodeWithOptions(
                       infoQRCode: infoQRCode,
-                      size: 150,
+                      size: 200,
                       messageCopied: messageCopied,
                     ),
                   ),
@@ -90,20 +90,6 @@ class ContactDetailTab extends ConsumerWidget {
                     ),
                   const SizedBox(
                     height: 10,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Icon(
-                      Symbols.info,
-                      color: ArchethicTheme.text,
-                      size: 20,
-                      weight: IconSize.weightM,
-                      opticalSize: IconSize.opticalSizeM,
-                      grade: IconSize.gradeM,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
                   ),
                   AutoSizeText(
                     description,

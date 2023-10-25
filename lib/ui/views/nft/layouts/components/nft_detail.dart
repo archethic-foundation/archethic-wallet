@@ -3,6 +3,7 @@ import 'package:aewallet/application/nft/nft.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_token.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -99,6 +100,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
+                          backgroundColor: ArchethicTheme.backgroundPopupColor,
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(32)),
                           ),

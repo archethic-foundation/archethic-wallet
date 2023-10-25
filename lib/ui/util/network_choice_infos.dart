@@ -50,7 +50,7 @@ class NetworkChoiceInfos extends ConsumerWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                           const SizedBox(width: 5),
-                          const Icon(Symbols.arrow_drop_down)
+                          const Icon(Symbols.arrow_drop_down),
                         ],
                       ),
                     ),

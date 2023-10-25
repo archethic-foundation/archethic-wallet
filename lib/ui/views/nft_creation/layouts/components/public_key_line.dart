@@ -79,9 +79,9 @@ class PublicKeyLine extends ConsumerWidget {
                             ),
                           ).notifier,
                         )
-                        .removePublicKey(
+                        .removeAddress(
                           propertyName,
-                          propertyAccessRecipient.publicKey!.publicKey,
+                          propertyAccessRecipient.address!.address!,
                         );
                   });
                 },

@@ -228,6 +228,13 @@ class _TransferTextFieldAddressState
             ],
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.only(top: 5),
+          child: Text(
+            AppLocalizations.of(context)!.enterAddressHelp,
+            style: ArchethicThemeStyles.textStyleSize10W100Primary,
+          ),
+        ),
       ],
     )
         .animate()

@@ -78,7 +78,7 @@ class _AddContactTextFieldNameState
                             ),
                             autocorrect: false,
                             controller: nameController,
-                            onChanged: (text) async {
+                            onChanged: (text) {
                               contactCreationNotifier.setName(text, context);
                             },
                             focusNode: nameFocusNode,

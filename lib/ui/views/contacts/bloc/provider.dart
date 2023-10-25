@@ -1,5 +1,6 @@
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
+import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/views/contacts/bloc/state.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -38,39 +39,10 @@ class ContactCreationFormNotifier
 
   Future<void> setName(String name, BuildContext context) async {
     state = state.copyWith(name: name, error: '');
-
-    if ((state.publicKey.isEmpty && state.publicKeyRecovered.isEmpty) &&
-        Address(address: state.address).isValid()) {
-      final publicKey = await _getGenesisPublicKey(state.address);
-      if (publicKey.isNotEmpty) {
-        state = state.copyWith(publicKeyRecovered: publicKey);
-      } else {
-        state = state.copyWith(
-          publicKeyRecovered: '',
-          error: AppLocalizations.of(context)!.contactPublicKeyNotFound,
-        );
-      }
-    }
   }
 
   Future<void> setAddress(String address, BuildContext context) async {
     state = state.copyWith(address: address, error: '');
-
-    if (Address(address: address).isValid()) {
-      final publicKey = await _getGenesisPublicKey(state.address);
-      if (publicKey.isNotEmpty) {
-        state = state.copyWith(publicKeyRecovered: publicKey);
-      } else {
-        state = state.copyWith(
-          publicKeyRecovered: '',
-          error: AppLocalizations.of(context)!.contactPublicKeyNotFound,
-        );
-      }
-    } else {
-      state = state.copyWith(
-        publicKeyRecovered: '',
-      );
-    }
   }
 
   Future<String> _getGenesisPublicKey(String address) async {
@@ -91,10 +63,6 @@ class ContactCreationFormNotifier
     }
 
     return publicKey;
-  }
-
-  void setPublicKey(String publicKey) {
-    state = state.copyWith(publicKey: publicKey, error: '');
   }
 
   void setFavorite(bool favorite) {
@@ -158,6 +126,21 @@ class ContactCreationFormNotifier
     }
     state = state.copyWith(error: '');
     return true;
+  }
+
+  Future<Contact> addContact() async {
+    final publicKey = await _getGenesisPublicKey(state.address);
+    final newContact = Contact(
+      name: '@${Uri.encodeFull(state.name)}',
+      address: state.address,
+      type: ContactType.externalContact.name,
+      publicKey: publicKey.toUpperCase(),
+      favorite: false,
+    );
+    ref.read(
+      ContactProviders.saveContact(contact: newContact),
+    );
+    return newContact;
   }
 }
 
