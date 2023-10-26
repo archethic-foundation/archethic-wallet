@@ -3,7 +3,7 @@ description: Fully decentralized and cryptocurrency non-custodial hot wallet tha
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 2.2.3+458
+version: 2.2.3+459
 
 environment:
   sdk: ">=3.0.5 <4.0.0"
@@ -308,9 +308,22 @@ flutter:
         - asset: assets/fonts/ui_icons.ttf
     - family: PPTelegraf
       fonts:
-        - asset: assets/fonts/PPTelegraf-Regular.otf
-        - asset: assets/fonts/PPTelegraf-Ultrabold.otf
         - asset: assets/fonts/PPTelegraf-Ultralight.otf
+          weight: 200
+        - asset: assets/fonts/PPTelegraf-Light.otf
+          weight: 300
+        - asset: assets/fonts/PPTelegraf-Regular.otf
+          weight: 400
+        - asset: assets/fonts/PPTelegraf-Medium.otf
+          weight: 500
+        - asset: assets/fonts/PPTelegraf-Semibold.otf
+          weight: 600
+        - asset: assets/fonts/PPTelegraf-Bold.otf
+          weight: 700
+        - asset: assets/fonts/PPTelegraf-Ultrabold.otf
+          weight: 800
+        - asset: assets/fonts/PPTelegraf-Black.otf
+          weight: 900
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
