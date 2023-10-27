@@ -6,7 +6,6 @@ import 'dart:developer';
 import 'package:aewallet/application/oracle/state.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'provider.g.dart';
@@ -18,7 +17,7 @@ class _ArchethicOracleUCONotifier extends Notifier<ArchethicOracleUCO> {
   @override
   ArchethicOracleUCO build() {
     ref.onDispose(() {
-      debugPrint('dispose ArchethicOracleUCONotifier');
+      log('dispose ArchethicOracleUCONotifier');
       if (archethicOracle != null) {
         sl
             .get<OracleService>()
