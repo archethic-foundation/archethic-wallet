@@ -30,6 +30,17 @@ extension AvailableLanguageExt on AvailableLanguage {
         return 'DEFAULT';
     }
   }
+
+  String getLocaleStringWithoutDefault() {
+    switch (this) {
+      case AvailableLanguage.english:
+        return 'en';
+      case AvailableLanguage.french:
+        return 'fr';
+      case AvailableLanguage.systemDefault:
+        return 'en';
+    }
+  }
 }
 
 /// Represent the available languages our app supports

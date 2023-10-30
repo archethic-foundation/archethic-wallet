@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:aewallet/model/data/appdb.dart';
+import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/util/number_util.dart';
 import 'package:hive/hive.dart';
 
@@ -33,14 +34,14 @@ class AccountBalance extends HiveObject {
   @HiveField(6, defaultValue: 0)
   int nftNb;
 
-  String nativeTokenValueToString({int? digits}) {
+  String nativeTokenValueToString(String locale, {int? digits}) {
     if (nativeTokenValue > 1000000) {
       return NumberUtil.formatThousands(nativeTokenValue.round());
     } else {
       if (digits == null || nativeTokenValue == 0) {
         return NumberUtil.formatThousands(nativeTokenValue);
       }
-      return nativeTokenValue.toStringAsFixed(digits);
+      return nativeTokenValue.formatNumber(locale, precision: digits);
     }
   }
 

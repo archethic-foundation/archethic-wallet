@@ -1,7 +1,9 @@
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/market_price.dart';
+import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/model/available_language.dart';
 
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/contact.dart';
@@ -29,7 +31,9 @@ class SingleContactBalance extends ConsumerWidget {
         ContactProviders.saveContact(
           contact: contact,
         );
-
+        final language = ref.watch(
+          LanguageProviders.selectedLanguage,
+        );
         final settings = ref.watch(SettingsProviders.settings);
         final primaryCurrency =
             ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
@@ -54,7 +58,7 @@ class SingleContactBalance extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     AutoSizeText(
-                      '${accountBalance.nativeTokenValueToString(digits: 2)} ${accountBalance.nativeTokenName}',
+                      '${accountBalance.nativeTokenValueToString(language.getLocaleStringWithoutDefault(), digits: 2)} ${accountBalance.nativeTokenName}',
                       style: ArchethicThemeStyles.textStyleSize12W400Primary,
                       textAlign: TextAlign.end,
                     ),
@@ -74,7 +78,7 @@ class SingleContactBalance extends ConsumerWidget {
                       style: ArchethicThemeStyles.textStyleSize12W400Primary,
                     ),
                     AutoSizeText(
-                      '${accountBalance.nativeTokenValueToString(digits: 2)} ${accountBalance.nativeTokenName}',
+                      '${accountBalance.nativeTokenValueToString(language.getLocaleStringWithoutDefault(), digits: 2)} ${accountBalance.nativeTokenName}',
                       style: ArchethicThemeStyles.textStyleSize12W400Primary,
                       textAlign: TextAlign.end,
                     ),

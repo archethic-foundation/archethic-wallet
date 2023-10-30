@@ -4,8 +4,8 @@ import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
 import 'package:aewallet/domain/rpc/commands/failure.dart';
 import 'package:aewallet/domain/rpc/commands/sign_transactions.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/sign_transactions/layouts/sign_transactions_confirmation_form.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:flutter/material.dart';
@@ -56,13 +56,19 @@ class SignTransactionsCommandHandler extends CommandHandler {
 
             var index = indexMap[addressGenesis] ?? 0;
 
-            final confirmation = await Sheets.showAppHeightNineSheet<bool>(
+            final confirmation = await showDialog<bool>(
+              useSafeArea: false,
               context: context,
-              ref: ref,
-              widget: SignTransactionsConfirmationForm(
-                command,
+              builder: (context) => Dialog.fullscreen(
+                child: DecoratedBox(
+                  decoration: ArchethicTheme.getDecorationSheet(),
+                  child: SignTransactionsConfirmationForm(
+                    command,
+                  ),
+                ),
               ),
             );
+
             if (confirmation == null || confirmation == false) {
               return Result.failure(
                 RPCFailure.userRejected(),

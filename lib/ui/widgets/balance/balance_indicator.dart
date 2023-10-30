@@ -2,8 +2,10 @@
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/market_price.dart';
+import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -22,10 +24,12 @@ class BalanceIndicatorWidget extends ConsumerWidget {
     super.key,
     this.displaySwitchButton = true,
     this.allDigits = true,
+    this.displayLabel = true,
   });
 
   final bool displaySwitchButton;
   final bool allDigits;
+  final bool displayLabel;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,7 +44,7 @@ class BalanceIndicatorWidget extends ConsumerWidget {
             children: [
               Row(
                 children: [
-                  Text('${localizations.balance}: '),
+                  if (displayLabel) Text('${localizations.balance}: '),
                   if (displaySwitchButton == true)
                     const _BalanceIndicatorButton(),
                 ],
@@ -167,20 +171,27 @@ class _BalanceIndicatorNative extends ConsumerWidget {
       AccountProviders.selectedAccount
           .select((value) => value.valueOrNull?.balance),
     );
-
+    final language = ref.watch(
+      LanguageProviders.selectedLanguage,
+    );
     if (accountSelectedBalance == null) return const SizedBox();
 
     if (allDigits == true) {
       return Text(
         '${NumberUtil.formatThousandsStr(
-          accountSelectedBalance.nativeTokenValueToString(),
+          accountSelectedBalance.nativeTokenValueToString(
+            language.getLocaleStringWithoutDefault(),
+          ),
         )} ${accountSelectedBalance.nativeTokenName}',
         style: ArchethicThemeStyles.textStyleSize14W100Primary,
       );
     } else {
       return Text(
         '${NumberUtil.formatThousandsStr(
-          accountSelectedBalance.nativeTokenValueToString(digits: 2),
+          accountSelectedBalance.nativeTokenValueToString(
+            language.getLocaleStringWithoutDefault(),
+            digits: 2,
+          ),
         )} ${accountSelectedBalance.nativeTokenName}',
         style: ArchethicThemeStyles.textStyleSize14W100Primary,
       );

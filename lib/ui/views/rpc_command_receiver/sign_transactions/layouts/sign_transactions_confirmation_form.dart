@@ -6,8 +6,6 @@ import 'package:aewallet/ui/views/rpc_command_receiver/sign_transactions/bloc/pr
 import 'package:aewallet/ui/views/rpc_command_receiver/sign_transactions/layouts/transaction_raw.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
-import 'package:aewallet/ui/widgets/components/sheet_header.dart';
-import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,104 +32,102 @@ class SignTransactionsConfirmationForm extends ConsumerWidget {
           const SizedBox(), // TODO(reddwarf): should we display an error/loading screen ?
       loading: (loading) => const SizedBox(),
       data: (formData) {
-        return TapOutsideUnfocus(
-          child: SafeArea(
-            minimum: EdgeInsets.only(
-              bottom: MediaQuery.of(context).size.height * 0.035,
-            ),
-            child: Column(
-              children: <Widget>[
-                SheetHeader(
-                  title: localizations.transactionConfirmationFormHeader,
-                ),
-                Expanded(
-                  child: ArchethicScrollbar(
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        top: 20,
-                        left: 15,
-                        right: 15,
-                        bottom: bottom + 80,
-                      ),
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            command.data.rpcSignTransactionCommandData.length ==
-                                    1
-                                ? localizations
-                                    .sign1TransactionCommandReceivedNotification
-                                    .replaceAll(
-                                      '%1',
-                                      formData.value.signTransactionCommand
-                                          .origin.name,
-                                    )
-                                    .replaceAll(
-                                      '%2',
-                                      _getShortName(
-                                        formData.value.signTransactionCommand
-                                            .data.serviceName,
-                                      ),
-                                    )
-                                : localizations
-                                    .signXTransactionsCommandReceivedNotification
-                                    .replaceAll(
-                                      '%1',
-                                      formData.value.signTransactionCommand
-                                          .origin.name,
-                                    )
-                                    .replaceAll(
-                                      '%2',
-                                      command.data.rpcSignTransactionCommandData
-                                          .length
-                                          .toString(),
-                                    )
-                                    .replaceAll(
-                                      '%3',
-                                      _getShortName(
-                                        formData.value.signTransactionCommand
-                                            .data.serviceName,
-                                      ),
+        return SafeArea(
+          minimum: EdgeInsets.only(
+            top: MediaQuery.of(context).size.height * 0.035,
+            bottom: MediaQuery.of(context).size.height * 0.035,
+          ),
+          child: Column(
+            children: <Widget>[
+              Text(
+                localizations.transactionConfirmationFormHeader,
+              ),
+              Expanded(
+                child: ArchethicScrollbar(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: 20,
+                      left: 15,
+                      right: 15,
+                      bottom: bottom + 80,
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        Text(
+                          command.data.rpcSignTransactionCommandData.length == 1
+                              ? localizations
+                                  .sign1TransactionCommandReceivedNotification
+                                  .replaceAll(
+                                    '%1',
+                                    formData.value.signTransactionCommand.origin
+                                        .name,
+                                  )
+                                  .replaceAll(
+                                    '%2',
+                                    _getShortName(
+                                      formData.value.signTransactionCommand.data
+                                          .serviceName,
                                     ),
-                            style:
-                                ArchethicThemeStyles.textStyleSize12W400Primary,
-                          ),
-                          Column(
-                            children: command.data.rpcSignTransactionCommandData
-                                .asMap()
-                                .entries
-                                .map((rpcSignTransactionCommandData) {
-                              return TransactionRaw(
-                                rpcSignTransactionCommandData,
-                              );
-                            }).toList(),
-                          ),
-                        ],
-                      ),
+                                  )
+                              : localizations
+                                  .signXTransactionsCommandReceivedNotification
+                                  .replaceAll(
+                                    '%1',
+                                    formData.value.signTransactionCommand.origin
+                                        .name,
+                                  )
+                                  .replaceAll(
+                                    '%2',
+                                    command.data.rpcSignTransactionCommandData
+                                        .length
+                                        .toString(),
+                                  )
+                                  .replaceAll(
+                                    '%3',
+                                    _getShortName(
+                                      formData.value.signTransactionCommand.data
+                                          .serviceName,
+                                    ),
+                                  ),
+                          style:
+                              ArchethicThemeStyles.textStyleSize12W400Primary,
+                        ),
+                        Column(
+                          children: command.data.rpcSignTransactionCommandData
+                              .asMap()
+                              .entries
+                              .map((rpcSignTransactionCommandData) {
+                            return TransactionRaw(
+                              rpcSignTransactionCommandData,
+                            );
+                          }).toList(),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-                Row(
-                  children: <Widget>[
-                    AppButtonTiny(
-                      AppButtonTinyType.primary,
-                      localizations.cancel,
-                      Dimens.buttonBottomDimens,
-                      onPressed: () {
-                        Navigator.of(context).pop(false);
-                      },
-                    ),
-                    AppButtonTiny(
-                      AppButtonTinyType.primary,
-                      localizations.confirm,
-                      Dimens.buttonBottomDimens,
-                      onPressed: () async {
-                        Navigator.of(context).pop(true);
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ),
+              ),
+              Row(
+                children: <Widget>[
+                  AppButtonTiny(
+                    AppButtonTinyType.primary,
+                    localizations.cancel,
+                    Dimens.buttonBottomDimens,
+                    onPressed: () {
+                      Navigator.of(context).pop(false);
+                    },
+                  ),
+                  AppButtonTiny(
+                    AppButtonTinyType.primary,
+                    localizations.confirm,
+                    Dimens.buttonBottomDimens,
+                    onPressed: () async {
+                      Navigator.of(context).pop(true);
+                    },
+                  ),
+                ],
+              ),
+            ],
           ),
         );
       },

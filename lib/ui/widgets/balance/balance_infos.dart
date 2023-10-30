@@ -3,9 +3,11 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/price_history/providers.dart';
+import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/market_price_history.dart';
+import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -121,6 +123,9 @@ class _BalanceInfosNativeShowed extends ConsumerWidget {
     final currency = ref.watch(
       SettingsProviders.settings.select((settings) => settings.currency),
     );
+    final language = ref.watch(
+      LanguageProviders.selectedLanguage,
+    );
     final fiatValue = ref
         .watch(
           MarketPriceProviders.convertedToSelectedCurrency(
@@ -136,7 +141,9 @@ class _BalanceInfosNativeShowed extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         AutoSizeText(
-          accountSelectedBalance.nativeTokenValueToString(digits: 2),
+          accountSelectedBalance.nativeTokenValueToString(
+              language.getLocaleStringWithoutDefault(),
+              digits: 2),
           style: ArchethicThemeStyles.textStyleSize25W900Primary,
         ),
         AutoSizeText(
@@ -163,6 +170,9 @@ class _BalanceInfosFiatShowed extends ConsumerWidget {
     final currency = ref.watch(
       SettingsProviders.settings.select((settings) => settings.currency),
     );
+    final language = ref.watch(
+      LanguageProviders.selectedLanguage,
+    );
     final fiatValue = ref
         .watch(
           MarketPriceProviders.convertedToSelectedCurrency(
@@ -187,7 +197,7 @@ class _BalanceInfosFiatShowed extends ConsumerWidget {
           style: ArchethicThemeStyles.textStyleSize25W900Primary,
         ),
         AutoSizeText(
-          '${accountSelectedBalance.nativeTokenValueToString(digits: 2)} ${accountSelectedBalance.nativeTokenName}',
+          '${accountSelectedBalance.nativeTokenValueToString(language.getLocaleStringWithoutDefault(), digits: 2)} ${accountSelectedBalance.nativeTokenName}',
           style: ArchethicThemeStyles.textStyleSize12W600Primary,
         ),
       ],

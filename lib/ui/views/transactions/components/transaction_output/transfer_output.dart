@@ -1,8 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'package:aewallet/application/settings/language.dart';
+import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/views/transactions/components/transaction_output/transaction_output_icon.dart';
 import 'package:aewallet/ui/widgets/tokens/verified_token_icon.dart';
 import 'package:aewallet/util/number_util.dart';
@@ -24,13 +27,12 @@ class TransferOutput extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final hasTransactionInfo = transaction.tokenInformation != null;
 
+    final language = ref.watch(
+      LanguageProviders.selectedLanguage,
+    );
     final amountFormatted = NumberUtil.formatThousandsStr(
-      transaction.amount!.toStringAsFixed(
-        hasTransactionInfo &&
-                transaction.tokenInformation!.type == 'non-fungible'
-            ? 0
-            : 2,
-      ),
+      transaction.amount!
+          .formatNumber(language.getLocaleStringWithoutDefault()),
     );
 
     return Row(

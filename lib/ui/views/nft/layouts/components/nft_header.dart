@@ -62,6 +62,7 @@ class NFTHeader extends ConsumerWidget {
         const BalanceIndicatorWidget(
           displaySwitchButton: false,
           allDigits: false,
+          displayLabel: false,
         ),
         if (connectivityStatusProvider == ConnectivityStatus.isDisconnected)
           const IconNetworkWarning()

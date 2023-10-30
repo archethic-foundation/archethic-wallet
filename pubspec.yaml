@@ -3,7 +3,7 @@ description: Fully decentralized and cryptocurrency non-custodial hot wallet tha
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 2.2.3+459
+version: 2.2.3+471
 
 environment:
   sdk: ">=3.0.5 <4.0.0"
@@ -17,14 +17,14 @@ dependencies:
   app_version_update: ^4.0.1
 
   # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
-  archethic_lib_dart: ^3.3.1
+  archethic_lib_dart: ^3.3.2
   #archethic_lib_dart:
   #  git:
   #    url: https://github.com/archethic-foundation/libdart.git
   #    ref: dev
 
   # Archethic Messaging Dart SDK
-  archethic_messaging_lib_dart: ^0.0.9
+  archethic_messaging_lib_dart: ^0.0.10
   #archethic_messaging_lib_dart:
   #  git:
   #    url: https://github.com/archethic-foundation/messaging_dart_sdk.git
@@ -171,6 +171,8 @@ dependencies:
 
   # Ledger dart library for Flutter. This library aims to provide a easy way to communicate with Ledger devices.
   ledger_dart_lib: ^0.1.2
+
+  lit_starfield: ^0.1.1
 
   # Loading animation or loading spiner or loader. It's used to show loading animation when the app is in loading state or something is processing for uncertain time.
   loading_animation_widget: ^1.2.0+4

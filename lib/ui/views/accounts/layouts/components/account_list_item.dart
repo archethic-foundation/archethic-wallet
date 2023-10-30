@@ -148,6 +148,9 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
     final settings = ref.watch(SettingsProviders.settings);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
+    final language = ref.watch(
+      LanguageProviders.selectedLanguage,
+    );
 
     AsyncValue<Contact?>? contact;
     if (widget.account.serviceType == 'archethicWallet') {
@@ -436,7 +439,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
                               SizedBox(
                                 height: 17,
                                 child: AutoSizeText(
-                                  '${widget.account.balance!.nativeTokenValueToString(digits: 2)} ${widget.account.balance!.nativeTokenName}',
+                                  '${widget.account.balance!.nativeTokenValueToString(language.getLocaleStringWithoutDefault(), digits: 2)} ${widget.account.balance!.nativeTokenName}',
                                   style: ArchethicThemeStyles
                                       .textStyleSize12W400Primary,
                                   textAlign: TextAlign.end,
@@ -468,7 +471,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
                                     .textStyleSize12W400Primary,
                               ),
                               AutoSizeText(
-                                '${widget.account.balance!.nativeTokenValueToString(digits: 2)} ${widget.account.balance!.nativeTokenName}',
+                                '${widget.account.balance!.nativeTokenValueToString(language.getLocaleStringWithoutDefault(), digits: 2)} ${widget.account.balance!.nativeTokenName}',
                                 style: ArchethicThemeStyles
                                     .textStyleSize12W400Primary,
                                 textAlign: TextAlign.end,

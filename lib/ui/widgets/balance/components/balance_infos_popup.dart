@@ -1,7 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:aewallet/application/market_price.dart';
+import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
+import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -22,7 +24,9 @@ class BalanceInfosPopup {
   ) async {
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
-
+    final language = ref.watch(
+      LanguageProviders.selectedLanguage,
+    );
     final fiatBalance = ref
         .watch(
           MarketPriceProviders.convertedToSelectedCurrency(
@@ -56,7 +60,9 @@ class BalanceInfosPopup {
                     context,
                     ref,
                     '1',
-                    accountSelectedBalance.nativeTokenValueToString(),
+                    accountSelectedBalance.nativeTokenValueToString(
+                      language.getLocaleStringWithoutDefault(),
+                    ),
                   ),
                   _popupMenuItem(
                     accountSelectedBalance,
@@ -79,7 +85,9 @@ class BalanceInfosPopup {
                     context,
                     ref,
                     '1',
-                    accountSelectedBalance.nativeTokenValueToString(),
+                    accountSelectedBalance.nativeTokenValueToString(
+                      language.getLocaleStringWithoutDefault(),
+                    ),
                   ),
                 ],
     );

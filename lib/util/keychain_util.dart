@@ -30,11 +30,16 @@ class KeychainUtil with KeychainServiceMixin {
     String originPrivateKey,
     Keychain keychain,
   ) async {
+    final blockchainTxVersion = int.parse(
+      (await sl.get<ApiService>().getBlockchainVersion()).version.transaction,
+    );
+
     /// Create Keychain Access for wallet
     final accessKeychainTx = sl.get<ApiService>().newAccessKeychainTransaction(
           seed!,
           hexToUint8List(keychainAddress),
           hexToUint8List(originPrivateKey),
+          blockchainTxVersion,
         );
 
     final TransactionSenderInterface transactionSender =
@@ -100,11 +105,16 @@ class KeychainUtil with KeychainServiceMixin {
     final keychain = Keychain(seed: hexToUint8List(keychainSeed))
         .copyWithService(kServiceName, kDerivationPath);
 
+    final blockchainTxVersion = int.parse(
+      (await sl.get<ApiService>().getBlockchainVersion()).version.transaction,
+    );
+
     /// Create Keychain from keyChain seed and wallet public key to encrypt secret
     final keychainTransaction = sl.get<ApiService>().newKeychainTransaction(
           keychainSeed,
           <String>[uint8ListToHex(walletKeyPair.publicKey!)],
           hexToUint8List(originPrivateKey),
+          blockchainTxVersion,
           serviceName: kServiceName,
           derivationPath: kDerivationPath,
         );
