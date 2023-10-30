@@ -2,7 +2,6 @@
 
 import 'package:aewallet/model/setting_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/localizations.dart';
 
 enum AvailableLanguage { systemDefault, english, french }
 
@@ -14,7 +13,7 @@ extension AvailableLanguageExt on AvailableLanguage {
       case AvailableLanguage.french:
         return const Locale('fr', 'FR');
       case AvailableLanguage.systemDefault:
-        return null;
+        return const Locale('en', 'US');
     }
   }
 
@@ -24,10 +23,8 @@ extension AvailableLanguageExt on AvailableLanguage {
         return 'en';
       case AvailableLanguage.french:
         return 'fr';
-      //case AvailableLanguage.ARABIC:
-      //  return 'ar';
       case AvailableLanguage.systemDefault:
-        return 'DEFAULT';
+        return 'en';
     }
   }
 
@@ -57,10 +54,8 @@ class LanguageSetting extends SettingSelectionItem {
         return 'English (en)';
       case AvailableLanguage.french:
         return 'Français (fr)';
-      //case AvailableLanguage.ARABIC:
-      //  return 'Arabic (ar)';
       case AvailableLanguage.systemDefault:
-        return AppLocalizations.of(context)!.systemDefault;
+        return 'English (en)';
     }
   }
 

@@ -101,7 +101,7 @@ class HivePreferencesDatasource {
   LanguageSetting getLanguage() => LanguageSetting(
         AvailableLanguage.values[_getValue(
           curLanguage,
-          defaultValue: AvailableLanguage.systemDefault.index,
+          defaultValue: AvailableLanguage.english.index,
         )],
       );
 

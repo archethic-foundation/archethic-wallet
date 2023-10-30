@@ -100,7 +100,6 @@
   "invalidSeedPaste": "Pasted seed is not valid.",
   "fingerprintSeedBackup": "Authenticate to backup seed.",
   "pinSecretPhraseBackup": "Enter PIN to Backup Secret Phrase",
-  "systemDefault": "System Default",
   "unlockPin": "Enter PIN to Unlock",
   "unlockBiometrics": "Authenticate to Unlock",
   "confirmBiometrics": "Authenticate to Confirm",

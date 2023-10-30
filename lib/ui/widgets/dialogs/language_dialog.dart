@@ -17,6 +17,7 @@ class LanguageDialog {
   ) async {
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final value in AvailableLanguage.values) {
+      if (value == AvailableLanguage.systemDefault) continue;
       pickerItemsList.add(
         PickerItem(
           LanguageSetting(value).getDisplayName(context),
@@ -49,7 +50,7 @@ class LanguageDialog {
           ),
           content: PickerWidget(
             pickerItems: pickerItemsList,
-            selectedIndexes: [selectedLanguage.index],
+            selectedIndexes: [selectedLanguage.index - 1],
             onSelected: (value) {
               ref
                   .read(SettingsProviders.settings.notifier)

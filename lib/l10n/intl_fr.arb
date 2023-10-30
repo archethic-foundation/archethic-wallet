@@ -100,7 +100,6 @@
 	"invalidSeedPaste": "La phrase secrète que vous souhaitez coller n'est pas valide.",
 	"fingerprintSeedBackup": "S'authentifier pour sauvegarder la phrase secrète.",
 	"pinSecretPhraseBackup": "Entrer le code PIN pour sauvegarder la phrase secrète",
-	"systemDefault": "Système par défaut",
 	"unlockPin": "Entrer le code PIN pour déverrouiller",
 	"unlockBiometrics": "Authentifier pour déverrouiller",
 	"confirmBiometrics": "Authentifier pour confirmer",
