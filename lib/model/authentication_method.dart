@@ -62,7 +62,7 @@ class AuthenticationMethod extends SettingSelectionItem {
       case AuthMethod.biometrics:
         return 'assets/icons/biometrics.png';
       case AuthMethod.biometricsUniris:
-        return 'assets/icons/biometrics-uniris.png';
+        return 'assets/icons/biometrics-archethic.png';
       case AuthMethod.pin:
         return 'assets/icons/pin-code.png';
       case AuthMethod.yubikeyWithYubicloud:

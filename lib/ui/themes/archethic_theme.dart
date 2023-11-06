@@ -108,8 +108,6 @@ class ArchethicTheme {
   static BoxShadow boxShadow = const BoxShadow(color: Colors.transparent);
   static BoxShadow boxShadowButton = const BoxShadow(color: Colors.transparent);
   static String assetsFolder = 'assets/themes/archethic/';
-  static String logo = 'logo';
-  static String logoAlone = 'logo_alone';
   static Gradient gradient = ArchethicThemeBase.gradientPinkPurple500;
 
   static Decoration getDecorationSheet() {

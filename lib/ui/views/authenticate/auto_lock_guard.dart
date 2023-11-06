@@ -7,6 +7,7 @@ import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lit_starfield/lit_starfield.dart';
 import 'package:synchronized/synchronized.dart';
 
 /// Handles navigation to the lock screen
@@ -149,17 +150,33 @@ class _LockMask extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return WillPopScope(
       onWillPop: () async => false,
-      child: SizedBox.expand(
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                ArchethicTheme.backgroundSmall,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          SizedBox.expand(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                    ArchethicTheme.backgroundWelcome,
+                  ),
+                  fit: MediaQuery.of(context).size.width >= 400
+                      ? BoxFit.fitWidth
+                      : BoxFit.fitHeight,
+                ),
               ),
-              fit: BoxFit.cover,
             ),
           ),
-        ),
+          const LitStarfieldContainer(
+            backgroundDecoration: BoxDecoration(
+              color: Colors.transparent,
+            ),
+          ),
+          Image.asset(
+            '${ArchethicTheme.assetsFolder}logo_crystal.png',
+            width: 200,
+          ),
+        ],
       ),
     );
   }

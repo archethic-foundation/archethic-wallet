@@ -44,7 +44,7 @@ class NetworkDialog with UrlUtil {
         PickerItem(
           networkSetting.getDisplayName(context),
           networkSetting.getLink(),
-          '${ArchethicTheme.assetsFolder}${ArchethicTheme.logoAlone}.png',
+          '${ArchethicTheme.assetsFolder}logo_white.png',
           null,
           networkSetting,
           true,
@@ -242,7 +242,7 @@ class _NetworkDevnetHeader extends ConsumerWidget {
     return Column(
       children: [
         SvgPicture.asset(
-          '${ArchethicTheme.assetsFolder}${ArchethicTheme.logoAlone}.svg',
+          '${ArchethicTheme.assetsFolder}logo_white.png',
           height: 30,
         ),
         Text(

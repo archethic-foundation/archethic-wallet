@@ -9,6 +9,7 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
     this.onPressed,
     this.icon,
     this.displayChevron = true,
+    this.background,
   });
 
   final String heading;
@@ -17,11 +18,31 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
   final Function? onPressed;
   final IconData? icon;
   final bool? displayChevron;
+  final String? background;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final preferences = ref.watch(SettingsProviders.settings);
+    if (background != null) {
+      return DecoratedBox(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              background!,
+            ),
+            fit: BoxFit.fitWidth,
+            alignment: Alignment.centerRight,
+            opacity: 0.5,
+          ),
+        ),
+        child: _detail(context, ref),
+      );
+    } else {
+      return _detail(context, ref);
+    }
+  }
 
+  Widget _detail(BuildContext context, WidgetRef ref) {
+    final preferences = ref.watch(SettingsProviders.settings);
     return TextButton(
       style: ButtonStyle(
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(

@@ -2,6 +2,7 @@
 
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -9,8 +10,8 @@ import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:lit_starfield/lit_starfield.dart';
 
 class AppDialogs {
   static Future showConfirmDialog(
@@ -225,11 +226,78 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
   ) {
     return Material(
       type: MaterialType.transparency,
-      child: SafeArea(
-        child: _AnimationLoadingOverlayContent(
-          type: type,
-          title: title,
-        ),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          SizedBox.expand(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                    ArchethicTheme.backgroundWelcome,
+                  ),
+                  fit: MediaQuery.of(context).size.width >= 400
+                      ? BoxFit.fitWidth
+                      : BoxFit.fitHeight,
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 30),
+            child: SizedBox(
+              width: 180,
+              height: 180,
+              child: CircularProgressIndicator(
+                color: ArchethicTheme.text30,
+                strokeWidth: 1,
+              ),
+            ),
+          ),
+          Opacity(
+            opacity: 0.8,
+            child: LitStarfieldContainer(
+              velocity: 0.2,
+              number: 600,
+              starColor: ArchethicThemeBase.neutral0,
+              scale: 3,
+              backgroundDecoration: const BoxDecoration(
+                color: Colors.transparent,
+              ),
+            ),
+          ),
+          Opacity(
+            opacity: 0.3,
+            child: LitStarfieldContainer(
+              velocity: 0.5,
+              number: 300,
+              scale: 6,
+              starColor: ArchethicThemeBase.blue500,
+              backgroundDecoration: const BoxDecoration(
+                color: Colors.transparent,
+              ),
+            ),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                '${ArchethicTheme.assetsFolder}logo_crystal.png',
+                width: 200,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                title != null
+                    ? title!
+                    : AppLocalizations.of(context)!.pleaseWait,
+                textAlign: TextAlign.center,
+                style: ArchethicThemeStyles.textStyleSize16W600Primary,
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -242,138 +310,5 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
     Widget child,
   ) {
     return child;
-  }
-}
-
-class PulsatingCircleLogo extends ConsumerStatefulWidget {
-  const PulsatingCircleLogo({super.key, this.title});
-  final String? title;
-
-  @override
-  ConsumerState<PulsatingCircleLogo> createState() =>
-      PulsatingCircleLogoState();
-}
-
-class PulsatingCircleLogoState extends ConsumerState<PulsatingCircleLogo>
-    with SingleTickerProviderStateMixin {
-  AnimationController? _animationController;
-  late Animation<double> _animation;
-
-  @override
-  void initState() {
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 1),
-    );
-    _animation = Tween<double>(begin: 0, end: 12).animate(
-      CurvedAnimation(
-        parent: _animationController!,
-        curve: Curves.easeOut,
-      ),
-    );
-    _animationController!.repeat(reverse: true);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    if (_animationController != null) {
-      _animationController!.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = [
-      ArchethicTheme.iconDrawer.withOpacity(0.3),
-      ArchethicTheme.iconDrawer.withOpacity(0.15),
-      ArchethicTheme.iconDrawer.withOpacity(0.05),
-    ];
-
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        AnimatedBuilder(
-          animation: _animation,
-          builder: (context, _) {
-            return Ink(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: ArchethicTheme.iconDrawer,
-                shape: BoxShape.circle,
-                boxShadow: [
-                  for (int i = 0; i < colors.length; i++)
-                    BoxShadow(
-                      color: colors[i],
-                      spreadRadius: _animation.value * (i + 1),
-                    ),
-                ],
-              ),
-              child: SvgPicture.asset(
-                '${ArchethicTheme.assetsFolder}${ArchethicTheme.logoAlone}.svg',
-                height: 30,
-              ),
-            );
-          },
-        ),
-        const SizedBox(
-          height: 40,
-        ),
-        Text(
-          widget.title != null
-              ? widget.title!
-              : AppLocalizations.of(context)!.pleaseWait,
-          textAlign: TextAlign.center,
-          style: ArchethicThemeStyles.textStyleSize16W600Primary,
-        ),
-      ],
-    );
-  }
-}
-
-class _AnimationLoadingOverlayGetAnimation extends StatelessWidget {
-  const _AnimationLoadingOverlayGetAnimation({
-    required this.type,
-    this.title,
-  });
-
-  final AnimationType type;
-  final String? title;
-
-  @override
-  Widget build(BuildContext context) {
-    switch (type) {
-      case AnimationType.send:
-        return PulsatingCircleLogo(
-          title: title,
-        );
-    }
-  }
-}
-
-class _AnimationLoadingOverlayContent extends StatelessWidget {
-  const _AnimationLoadingOverlayContent({
-    required this.type,
-    this.title,
-  });
-
-  final AnimationType type;
-  final String? title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints.expand(),
-      margin: type == AnimationType.send
-          ? const EdgeInsets.only(bottom: 10, left: 90, right: 90)
-          : EdgeInsets.zero,
-      child: Center(
-        child: _AnimationLoadingOverlayGetAnimation(
-          type: type,
-          title: title,
-        ),
-      ),
-    );
   }
 }

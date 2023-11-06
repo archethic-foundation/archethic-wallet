@@ -52,7 +52,6 @@ class _SettingsSheetWalletMobileState extends ConsumerState<SettingsSheetWallet>
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: ArchethicTheme.background,
         title: AutoSizeText(
           localizations.settings,
           style: ArchethicThemeStyles.textStyleSize24W700Primary,

@@ -118,7 +118,8 @@ class BuySheet extends ConsumerWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Divider(
                           height: 1,
-                          color: ArchethicTheme.backgroundDarkest.withOpacity(0.1),
+                          color:
+                              ArchethicTheme.backgroundDarkest.withOpacity(0.1),
                         ),
                       ),
                       const SizedBox(
@@ -144,20 +145,6 @@ class BuySheet extends ConsumerWidget {
                             ),
                             const SizedBox(
                               height: 50,
-                            ),
-                            InkWell(
-                              onTap: () async {
-                                UIUtil.showWebview(
-                                  context,
-                                  'https://www.bitglobal.com/en-us',
-                                  'Bithumb',
-                                );
-                              },
-                              child: Image.asset(
-                                'assets/buy/Bithumb.png',
-                                color: ArchethicTheme.text,
-                                height: 40,
-                              ),
                             ),
                           ],
                         ),

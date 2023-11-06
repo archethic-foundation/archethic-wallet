@@ -1,7 +1,7 @@
 {
 	"@@last_modified": "2021-11-07T17:33:43.139040",
 	"noConnectionBanner": "Pas de connexion",
-	"welcomeText": "Digital Sovereignty at your fingertips",
+	"welcomeText": "Digital sovereignty at your fingertips",
 	"welcomeText2": "Archethic redonne à l'humanité la maîtrise de la technologie et à chaque individu la maîtrise de son identité.",
 	"cancel": "Annuler",
 	"noData": "Pas de données",
@@ -279,7 +279,7 @@
 	"seYubicloudHeader": "Svp, précisez votre identité client et la clé API client.",
 	"seYubicloudDescription": "Pour utiliser le service d'OTP de Yubico avec votre Yubikey, vous devez obtenir une clé API sur https://upgrade.yubico.com/getapikey. C'est rapide et gratuit.\n\nAprès cela, vous pouvez préciser l'identité client donnée et la clé API client",
 	"passwordMethod": "Mot de passe",
-	"biometricsUnirisMethod": "Biométrie d'Uniris (Prochainement...)",
+	"biometricsUnirisMethod": "Biométrie d'Archethic (Prochainement...)",
 	"configureSecurityIntro": "C'est important de protéger l'accès à votre portefeuille !",
 	"configureSecurityExplanation": "Pour accéder à cette application ou pour valider des manipulations importantes, nous vous proposons plusieurs moyens de vous protéger.",
 	"configureSecurityExplanationPIN": "Un numéro d'identification personnel (Code PIN) est un mot de passe numérique utilisé dans le processus d'authentification d'un utilisateur accédant à un système.",

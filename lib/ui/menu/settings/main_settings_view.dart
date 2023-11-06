@@ -25,13 +25,12 @@ class MainMenuView extends ConsumerWidget {
 
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: ArchethicTheme.drawerBackground,
         gradient: LinearGradient(
           colors: <Color>[
-            ArchethicTheme.drawerBackground,
-            ArchethicTheme.backgroundDark00,
+            ArchethicThemeBase.purple800,
+            ArchethicThemeBase.purple500,
           ],
-          begin: Alignment.center,
+          begin: Alignment.topLeft,
           end: const Alignment(5, 0),
         ),
       ),
@@ -91,6 +90,7 @@ class MainMenuView extends ConsumerWidget {
                               localizations.aeWebsiteLinkHeader,
                             );
                           },
+                          background: ArchethicTheme.backgroundWelcome,
                         ),
                       if (connectivityStatusProvider ==
                           ConnectivityStatus.isConnected)

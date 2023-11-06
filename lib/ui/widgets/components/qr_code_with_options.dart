@@ -59,7 +59,6 @@ class QRCodeWithOptions extends ConsumerWidget {
             dataModuleStyle: QrDataModuleStyle(color: ArchethicTheme.text),
             data: infoQRCode,
             size: size,
-            gapless: false,
           ),
           Padding(
             padding: const EdgeInsets.only(left: 15, right: 15, top: 20),

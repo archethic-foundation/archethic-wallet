@@ -7,6 +7,7 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/version.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -18,6 +19,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lit_starfield/lit_starfield.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class IntroWelcome extends ConsumerStatefulWidget {
@@ -44,36 +47,66 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
             image: AssetImage(
               ArchethicTheme.backgroundWelcome,
             ),
-            fit: BoxFit.fitHeight,
-            opacity: 0.4,
+            fit: MediaQuery.of(context).size.width >= 400
+                ? BoxFit.fitWidth
+                : BoxFit.fitHeight,
+            alignment: Alignment.centerRight,
           ),
         ),
-        child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) =>
-              SafeArea(
-            minimum: EdgeInsets.only(
-              bottom: MediaQuery.of(context).size.height * 0.035,
+        child: Stack(
+          children: [
+            Opacity(
+              opacity: 0.8,
+              child: LitStarfieldContainer(
+                velocity: 0.2,
+                number: 600,
+                starColor: ArchethicThemeBase.neutral0,
+                scale: 3,
+                backgroundDecoration: const BoxDecoration(
+                  color: Colors.transparent,
+                ),
+              ),
             ),
-            child: Stack(
-              children: [
-                Column(
-                  children: <Widget>[
-                    const _Main(),
-                    _Footer(
-                      isConnectivityAvailable: connectivityStatusProvider ==
-                          ConnectivityStatus.isConnected,
-                      cguChecked: cguChecked,
-                      onToggleCGU: (newValue) {
-                        setState(() {
-                          cguChecked = newValue!;
-                        });
-                      },
+            Opacity(
+              opacity: 0.3,
+              child: LitStarfieldContainer(
+                velocity: 0.5,
+                number: 300,
+                scale: 6,
+                starColor: ArchethicThemeBase.blue500,
+                backgroundDecoration: const BoxDecoration(
+                  color: Colors.transparent,
+                ),
+              ),
+            ),
+            LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) =>
+                  SafeArea(
+                minimum: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.035,
+                ),
+                child: Stack(
+                  children: [
+                    Column(
+                      children: <Widget>[
+                        const _Main(),
+                        _Footer(
+                          isConnectivityAvailable: connectivityStatusProvider ==
+                              ConnectivityStatus.isConnected,
+                          cguChecked: cguChecked,
+                          onToggleCGU: (newValue) {
+                            setState(() {
+                              cguChecked = newValue!;
+                            });
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
@@ -170,9 +203,10 @@ class _LogoArchethic extends ConsumerWidget {
           height: 200,
           child: AspectRatio(
             aspectRatio: 3 / 1,
-            child: Image.asset(
-              '${ArchethicTheme.assetsFolder}${ArchethicTheme.logo}.png',
-              height: 200,
+            child: SvgPicture.asset(
+              '${ArchethicTheme.assetsFolder}Archethic - Logo.svg',
+              colorFilter:
+                  ColorFilter.mode(ArchethicTheme.text, BlendMode.srcIn),
             ),
           ),
         ),

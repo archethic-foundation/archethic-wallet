@@ -7,6 +7,7 @@ import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/views/blog/last_articles_list.dart';
 import 'package:aewallet/ui/views/main/components/app_update_button.dart';
 import 'package:aewallet/ui/views/main/components/menu_widget_wallet.dart';
@@ -23,6 +24,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:lit_starfield/lit_starfield.dart';
 
 class AccountTab extends ConsumerWidget {
   const AccountTab({super.key});
@@ -42,98 +44,126 @@ class AccountTab extends ConsumerWidget {
           opacity: 0.7,
         ),
       ),
-      child: ArchethicRefreshIndicator(
-        onRefresh: () => Future<void>.sync(() async {
-          sl.get<HapticUtil>().feedback(
-                FeedbackType.light,
-                preferences.activeVibrations,
-              );
-
-          final _connectivityStatusProvider =
-              ref.read(connectivityStatusProviders);
-          if (_connectivityStatusProvider ==
-              ConnectivityStatus.isDisconnected) {
-            return;
-          }
-
-          await ref
-              .read(AccountProviders.selectedAccount.notifier)
-              .refreshRecentTransactions();
-          ref
-            ..invalidate(BlogProviders.fetchArticles)
-            ..invalidate(ContactProviders.fetchContacts)
-            ..invalidate(MarketPriceProviders.currencyMarketPrice);
-        }),
-        child: ScrollConfiguration(
-          behavior: ScrollConfiguration.of(context).copyWith(
-            dragDevices: {
-              PointerDeviceKind.touch,
-              PointerDeviceKind.mouse,
-              PointerDeviceKind.trackpad,
-            },
-          ),
-          child: SingleChildScrollView(
-            child: Stack(
-              children: [
-                Column(
-                  children: <Widget>[
-                    /// BACKGROUND IMAGE
-                    ArchethicScrollbar(
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).padding.top + 10,
-                          bottom: 80,
-                        ),
-                        child: Column(
-                          children: <Widget>[
-                            /// BALANCE
-                            const BalanceInfos(),
-                            const SizedBox(
-                              height: 10,
-                            ),
-
-                            /// PRICE CHART
-                            if (preferences.showPriceChart &&
-                                connectivityStatusProvider ==
-                                    ConnectivityStatus.isConnected)
-                              const BalanceInfosChart(),
-
-                            /// KPI
-                            if (preferences.showPriceChart &&
-                                connectivityStatusProvider ==
-                                    ConnectivityStatus.isConnected)
-                              const BalanceInfosKpi(),
-
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            const MenuWidgetWallet(),
-                            const ExpandablePageView(
-                              children: [
-                                TxList(),
-                                FungiblesTokensListWidget(),
-                              ],
-                            ),
-
-                            /// BLOG
-                            if (connectivityStatusProvider ==
-                                ConnectivityStatus.isConnected)
-                              const LastArticles(),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                if (!kIsWeb && (Platform.isAndroid || Platform.isIOS))
-                  const AppUpdateButton(),
-              ],
+      child: Stack(
+        children: [
+          Opacity(
+            opacity: 0.3,
+            child: LitStarfieldContainer(
+              velocity: 0.2,
+              number: MediaQuery.of(context).size.width >= 580 ? 600 : 300,
+              starColor: ArchethicThemeBase.neutral0,
+              scale: 3,
+              backgroundDecoration: const BoxDecoration(
+                color: Colors.transparent,
+              ),
             ),
           ),
-        ),
+          Opacity(
+            opacity: 0.3,
+            child: LitStarfieldContainer(
+              velocity: 0.2,
+              number: MediaQuery.of(context).size.width >= 580 ? 300 : 100,
+              scale: 6,
+              starColor: ArchethicThemeBase.blue500,
+              backgroundDecoration: const BoxDecoration(
+                color: Colors.transparent,
+              ),
+            ),
+          ),
+          ArchethicRefreshIndicator(
+            onRefresh: () => Future<void>.sync(() async {
+              sl.get<HapticUtil>().feedback(
+                    FeedbackType.light,
+                    preferences.activeVibrations,
+                  );
+
+              final _connectivityStatusProvider =
+                  ref.read(connectivityStatusProviders);
+              if (_connectivityStatusProvider ==
+                  ConnectivityStatus.isDisconnected) {
+                return;
+              }
+
+              await ref
+                  .read(AccountProviders.selectedAccount.notifier)
+                  .refreshRecentTransactions();
+              ref
+                ..invalidate(BlogProviders.fetchArticles)
+                ..invalidate(ContactProviders.fetchContacts)
+                ..invalidate(MarketPriceProviders.currencyMarketPrice);
+            }),
+            child: ScrollConfiguration(
+              behavior: ScrollConfiguration.of(context).copyWith(
+                dragDevices: {
+                  PointerDeviceKind.touch,
+                  PointerDeviceKind.mouse,
+                  PointerDeviceKind.trackpad,
+                },
+              ),
+              child: SingleChildScrollView(
+                child: Stack(
+                  children: [
+                    Column(
+                      children: <Widget>[
+                        /// BACKGROUND IMAGE
+                        ArchethicScrollbar(
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).padding.top + 10,
+                              bottom: 80,
+                            ),
+                            child: Column(
+                              children: <Widget>[
+                                /// BALANCE
+                                const BalanceInfos(),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+
+                                /// PRICE CHART
+                                if (preferences.showPriceChart &&
+                                    connectivityStatusProvider ==
+                                        ConnectivityStatus.isConnected)
+                                  const BalanceInfosChart(),
+
+                                /// KPI
+                                if (preferences.showPriceChart &&
+                                    connectivityStatusProvider ==
+                                        ConnectivityStatus.isConnected)
+                                  const BalanceInfosKpi(),
+
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                const MenuWidgetWallet(),
+                                const ExpandablePageView(
+                                  children: [
+                                    TxList(),
+                                    FungiblesTokensListWidget(),
+                                  ],
+                                ),
+
+                                /// BLOG
+                                if (connectivityStatusProvider ==
+                                    ConnectivityStatus.isConnected)
+                                  const LastArticles(),
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    if (!kIsWeb && (Platform.isAndroid || Platform.isIOS))
+                      const AppUpdateButton(),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

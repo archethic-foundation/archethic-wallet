@@ -142,8 +142,9 @@ class _BalanceInfosNativeShowed extends ConsumerWidget {
       children: [
         AutoSizeText(
           accountSelectedBalance.nativeTokenValueToString(
-              language.getLocaleStringWithoutDefault(),
-              digits: 2),
+            language.getLocaleStringWithoutDefault(),
+            digits: 2,
+          ),
           style: ArchethicThemeStyles.textStyleSize25W900Primary,
         ),
         AutoSizeText(

@@ -16,103 +16,111 @@ class SecurityMenuView extends ConsumerWidget {
       ),
     );
     return Scaffold(
-      backgroundColor: ArchethicTheme.background,
       appBar: AppBar(
-        backgroundColor: ArchethicTheme.background,
         title: AutoSizeText(
           localizations.securityHeader,
           style: ArchethicThemeStyles.textStyleSize24W700Primary,
         ),
       ),
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: Stack(
-                children: <Widget>[
-                  ListView(
-                    padding: const EdgeInsets.only(top: 15),
-                    children: <Widget>[
-                      // Authentication Method
-                      const _SettingsListItem.spacer(),
-                      const _AuthMethodSettingsListItem(),
-                      // Authenticate on Launch
-                      const _SettingsListItem.spacer(),
-                      const _LockSettingsListItem(),
-                      // Authentication Timer
-                      const _SettingsListItem.spacer(),
-                      const _AutoLockSettingsListItem(),
-                      const _SettingsListItem.spacer(),
-                      const _BackupSecretPhraseListItem(),
-                      const _SettingsListItem.spacer(),
-                      if (ArchethicWebsocketRPCServer.isPlatformCompatible)
-                        const _ActiveServerRPCSettingsListItem(),
-                      if (ArchethicWebsocketRPCServer.isPlatformCompatible)
+      body: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: <Color>[
+              ArchethicThemeBase.purple800,
+              ArchethicThemeBase.purple500,
+            ],
+            begin: Alignment.topLeft,
+            end: const Alignment(5, 0),
+          ),
+        ),
+        child: SafeArea(
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: Stack(
+                  children: <Widget>[
+                    ListView(
+                      children: <Widget>[
+                        // Authentication Method
+                        const _AuthMethodSettingsListItem(),
+                        // Authenticate on Launch
                         const _SettingsListItem.spacer(),
-                      if (authenticationMethod == AuthMethod.pin)
-                        const _PinPadShuffleSettingsListItem(),
-                      if (authenticationMethod == AuthMethod.pin)
+                        const _LockSettingsListItem(),
+                        // Authentication Timer
                         const _SettingsListItem.spacer(),
-                      if (connectivityStatusProvider ==
-                          ConnectivityStatus.isConnected)
-                        const _SyncBlockchainSettingsListItem(),
-                      if (connectivityStatusProvider ==
-                          ConnectivityStatus.isConnected)
+                        const _AutoLockSettingsListItem(),
                         const _SettingsListItem.spacer(),
-                      _SettingsListItem.singleLineWithInfos(
-                        heading: localizations.removeWallet,
-                        info: localizations.removeWalletDescription,
-                        headingStyle:
-                            ArchethicThemeStyles.textStyleSize16W600Red,
-                        icon: Symbols.delete,
-                        onPressed: () {
-                          final language = ref.read(
-                            LanguageProviders.selectedLanguage,
-                          );
-
-                          AppDialogs.showConfirmDialog(
-                              context,
-                              ref,
-                              CaseChange.toUpperCase(
-                                localizations.warning,
-                                language.getLocaleString(),
-                              ),
-                              localizations.removeWalletDetail,
-                              localizations.removeWalletAction, () {
-                            // Show another confirm dialog
-                            AppDialogs.showConfirmDialog(
-                              context,
-                              ref,
-                              localizations.areYouSure,
-                              localizations.removeWalletReassurance,
-                              localizations.yes,
-                              () async {
-                                final auth = await AuthFactory.authenticate(
-                                  context,
-                                  ref,
-                                  activeVibrations: ref
-                                      .read(SettingsProviders.settings)
-                                      .activeVibrations,
-                                );
-                                if (auth) {
-                                  await ref
-                                      .read(SessionProviders.session.notifier)
-                                      .logout();
-                                  await Navigator.of(context)
-                                      .pushReplacementNamed('/');
-                                }
-                              },
+                        const _BackupSecretPhraseListItem(),
+                        const _SettingsListItem.spacer(),
+                        if (ArchethicWebsocketRPCServer.isPlatformCompatible)
+                          const _ActiveServerRPCSettingsListItem(),
+                        if (ArchethicWebsocketRPCServer.isPlatformCompatible)
+                          const _SettingsListItem.spacer(),
+                        if (authenticationMethod == AuthMethod.pin)
+                          const _PinPadShuffleSettingsListItem(),
+                        if (authenticationMethod == AuthMethod.pin)
+                          const _SettingsListItem.spacer(),
+                        if (connectivityStatusProvider ==
+                            ConnectivityStatus.isConnected)
+                          const _SyncBlockchainSettingsListItem(),
+                        if (connectivityStatusProvider ==
+                            ConnectivityStatus.isConnected)
+                          const _SettingsListItem.spacer(),
+                        _SettingsListItem.singleLineWithInfos(
+                          heading: localizations.removeWallet,
+                          info: localizations.removeWalletDescription,
+                          headingStyle:
+                              ArchethicThemeStyles.textStyleSize16W600Red,
+                          icon: Symbols.delete,
+                          onPressed: () {
+                            final language = ref.read(
+                              LanguageProviders.selectedLanguage,
                             );
-                          });
-                        },
-                      ),
-                      const _SettingsListItem.spacer(),
-                    ],
-                  ),
-                ],
+
+                            AppDialogs.showConfirmDialog(
+                                context,
+                                ref,
+                                CaseChange.toUpperCase(
+                                  localizations.warning,
+                                  language.getLocaleString(),
+                                ),
+                                localizations.removeWalletDetail,
+                                localizations.removeWalletAction, () {
+                              // Show another confirm dialog
+                              AppDialogs.showConfirmDialog(
+                                context,
+                                ref,
+                                localizations.areYouSure,
+                                localizations.removeWalletReassurance,
+                                localizations.yes,
+                                () async {
+                                  final auth = await AuthFactory.authenticate(
+                                    context,
+                                    ref,
+                                    activeVibrations: ref
+                                        .read(SettingsProviders.settings)
+                                        .activeVibrations,
+                                  );
+                                  if (auth) {
+                                    await ref
+                                        .read(SessionProviders.session.notifier)
+                                        .logout();
+                                    await Navigator.of(context)
+                                        .pushReplacementNamed('/');
+                                  }
+                                },
+                              );
+                            });
+                          },
+                        ),
+                        const _SettingsListItem.spacer(),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -15,64 +15,72 @@ class CustomizationMenuView extends ConsumerWidget {
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     return Scaffold(
-      backgroundColor: ArchethicTheme.background,
       appBar: AppBar(
-        backgroundColor: ArchethicTheme.background,
         title: AutoSizeText(
           localizations.customHeader,
           style: ArchethicThemeStyles.textStyleSize24W700Primary,
         ),
       ),
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: Stack(
-                children: <Widget>[
-                  ListView(
-                    padding: const EdgeInsets.only(top: 15),
-                    children: <Widget>[
-                      const _SettingsListItem.spacer(),
-                      const _CurrencySettingsListItem(),
-                      const _SettingsListItem.spacer(),
-                      _SettingsListItem.withDefaultValue(
-                        heading: localizations.primaryCurrency,
-                        defaultMethod: primaryCurrency,
-                        icon: Symbols.currency_exchange,
-                        onPressed: () =>
-                            PrimaryCurrencyDialog.getDialog(context, ref),
-                      ),
-                      const _SettingsListItem.spacer(),
-                      const _LanguageSettingsListItem(),
-                      const _SettingsListItem.spacer(),
-                      const _ShowBalancesSettingsListItem(),
-                      const _SettingsListItem.spacer(),
-                      if (connectivityStatusProvider ==
-                          ConnectivityStatus.isConnected)
-                        const _ShowBlogSettingsListItem(),
-                      if (connectivityStatusProvider ==
-                          ConnectivityStatus.isConnected)
+      body: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: <Color>[
+              ArchethicThemeBase.purple800,
+              ArchethicThemeBase.purple500,
+            ],
+            begin: Alignment.topLeft,
+            end: const Alignment(5, 0),
+          ),
+        ),
+        child: SafeArea(
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: Stack(
+                  children: <Widget>[
+                    ListView(
+                      children: <Widget>[
+                        const _CurrencySettingsListItem(),
                         const _SettingsListItem.spacer(),
-                      const _ShowPriceChartSettingsListItem(),
-                      if (hasNotifications &&
-                          connectivityStatusProvider ==
-                              ConnectivityStatus.isConnected)
+                        _SettingsListItem.withDefaultValue(
+                          heading: localizations.primaryCurrency,
+                          defaultMethod: primaryCurrency,
+                          icon: Symbols.currency_exchange,
+                          onPressed: () =>
+                              PrimaryCurrencyDialog.getDialog(context, ref),
+                        ),
                         const _SettingsListItem.spacer(),
-                      if (hasNotifications &&
-                          connectivityStatusProvider ==
-                              ConnectivityStatus.isConnected)
-                        const _ActiveNotificationsSettingsListItem(),
-                      if (!kIsWeb && (Platform.isAndroid || Platform.isIOS))
+                        const _LanguageSettingsListItem(),
                         const _SettingsListItem.spacer(),
-                      if (!kIsWeb && (Platform.isAndroid || Platform.isIOS))
-                        const _ActiveVibrationsSettingsListItem(),
-                      const _SettingsListItem.spacer(),
-                    ],
-                  ),
-                ],
+                        const _ShowBalancesSettingsListItem(),
+                        const _SettingsListItem.spacer(),
+                        if (connectivityStatusProvider ==
+                            ConnectivityStatus.isConnected)
+                          const _ShowBlogSettingsListItem(),
+                        if (connectivityStatusProvider ==
+                            ConnectivityStatus.isConnected)
+                          const _SettingsListItem.spacer(),
+                        const _ShowPriceChartSettingsListItem(),
+                        if (hasNotifications &&
+                            connectivityStatusProvider ==
+                                ConnectivityStatus.isConnected)
+                          const _SettingsListItem.spacer(),
+                        if (hasNotifications &&
+                            connectivityStatusProvider ==
+                                ConnectivityStatus.isConnected)
+                          const _ActiveNotificationsSettingsListItem(),
+                        if (!kIsWeb && (Platform.isAndroid || Platform.isIOS))
+                          const _SettingsListItem.spacer(),
+                        if (!kIsWeb && (Platform.isAndroid || Platform.isIOS))
+                          const _ActiveVibrationsSettingsListItem(),
+                        const _SettingsListItem.spacer(),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

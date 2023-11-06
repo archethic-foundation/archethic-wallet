@@ -1,7 +1,7 @@
 {
   "@@last_modified": "2021-12-07T12:33:16.270871",
   "noConnectionBanner": "No connection",
-  "welcomeText": "Digital Sovereignty at your fingertips",
+  "welcomeText": "Digital sovereignty at your fingertips",
   "welcomeText2": "Archethic gives back to humanity control over technology, and to each individual, control over their identity.",
   "noData": "No data",
   "cancel": "Cancel",
@@ -291,7 +291,7 @@
   "seYubicloudHeader": "Please, precise your client identity and client API key.",
   "seYubicloudDescription": "To use the Yubico OTP with your Yubikey, you need to get an API key from https://upgrade.yubico.com/getapikey. It's quick and free.\n\nAfter that, you can precise the given client identity and the client API key",
   "passwordMethod": "Password",
-  "biometricsUnirisMethod": "Uniris Biometrics (Soon...)",
+  "biometricsUnirisMethod": "Archethic Biometrics (Soon...)",
   "configureSecurityIntro": "It's important to protect the access to your wallet!",
   "configureSecurityExplanation": "To access to this application or to validate important manipulations, we offer several ways to protect yourself.",
   "configureSecurityExplanationPIN": "A personal identification number (PIN) is a numeric passcode used in the process of authenticating a user accessing a system.",

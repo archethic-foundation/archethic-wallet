@@ -146,7 +146,7 @@ class AppService {
       if (transactionInput.from!.toUpperCase() !=
               notificationRecipientAddress.toUpperCase() &&
           transactionInput.timestamp! > mostRecentTimestamp &&
-          transactionInput.timestamp! >= transactionTimestamp) {
+          transactionInput.timestamp! > transactionTimestamp) {
         final recentTransaction = RecentTransaction()
           ..address = transactionInput.from
           ..amount = fromBigInt(transactionInput.amount).toDouble()
@@ -240,19 +240,32 @@ class AppService {
     int mostRecentTimestamp,
   ) async {
     var newRecentTransactionList = recentTransactionList;
-
+    dev.log(
+      '>> START getTransaction : ${DateTime.now()}',
+      name: 'recentTx',
+    );
     final transaction = await sl.get<ApiService>().getTransaction(
       [address],
       request:
           'address, type, chainLength, validationStamp { timestamp, ledgerOperations { fee } }, data { ledger { uco { transfers { amount, to } } token {transfers {amount, to, tokenAddress, tokenId } } } }',
     );
-
+    dev.log(
+      '>> END getTransaction : ${DateTime.now()}',
+      name: 'recentTx',
+    );
+    dev.log(
+      '>> START getTransactionInputs : ${DateTime.now()}',
+      name: 'recentTx',
+    );
     final transactionInputs = await sl.get<ApiService>().getTransactionInputs(
       [address],
       request: 'from, spent, tokenAddress, tokenId, amount, timestamp',
       limit: 10,
     );
-
+    dev.log(
+      '>> END getTransactionInputs : ${DateTime.now()}',
+      name: 'recentTx',
+    );
     if (transaction[address] != null) {
       final transactionTimeStamp =
           transaction[address]!.validationStamp!.timestamp!;
@@ -294,6 +307,7 @@ class AppService {
   ) async {
     dev.log(
       '>> START getRecentTransactions : ${DateTime.now()}',
+      name: 'recentTx',
     );
 
     // get the most recent movement in cache
@@ -319,19 +333,28 @@ class AppService {
     recentTransactions.addAll(localRecentTransactionList);
 
     while (nbRecentTransactions < 10 && index > 0) {
+      dev.log('>> START deriveAddress : ${DateTime.now()}', name: 'recentTx');
       addressToSearch = uint8ListToHex(
         keychain.deriveAddress(
           name,
           index: index,
         ),
       );
+      dev.log('>> END deriveAddress : ${DateTime.now()}', name: 'recentTx');
 
+      dev.log(
+        '>> START buildRecentTxFromTx : ${DateTime.now()}',
+        name: 'recentTx',
+      );
       recentTransactions = await _buildRecentTransactionFromTransaction(
         recentTransactions,
         addressToSearch,
         mostRecentTimestamp,
       );
-
+      dev.log(
+        '>> END buildRecentTxFromTx : ${DateTime.now()}',
+        name: 'recentTx',
+      );
       index--;
       nbRecentTransactions = recentTransactions.length;
     }
@@ -558,6 +581,7 @@ class AppService {
 
     dev.log(
       '>> END getRecentTransactions : ${DateTime.now()}',
+      name: 'recentTx',
     );
 
     return recentTransactions;
