@@ -7,7 +7,7 @@ part of 'authentication.dart';
 // **************************************************************************
 
 String _$startupAuthentNotifierHash() =>
-    r'd381d95824b0be7ef3c697fc3c6a91ebbd26c467';
+    r'03bcf26cc75334eb37193036923b8c7d7f48c6d3';
 
 /// See also [StartupAuthentNotifier].
 @ProviderFor(StartupAuthentNotifier)
