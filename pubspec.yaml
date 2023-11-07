@@ -265,7 +265,7 @@ dev_dependencies:
   # Automatically generate code for converting to and from JSON by annotating Dart classes.
   json_serializable: ^6.7.0
   # A command-line tool that create Msix installer from your flutter windows-build files.
-  msix: ^3.16.1
+  msix: ^3.16.6
   # Simple yet powerful Flutter-native UI testing framework eliminating limitations of flutter_test, integration_test, and flutter_driver.
   patrol: ^2.2.3
   # A code generator for Riverpod. This both simplifies the syntax empowers it, such as allowing stateful hot-reload.
