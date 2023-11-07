@@ -39,7 +39,7 @@ Archethic Wallet has implemented the following features:
 - Access latest Archethic blog articles
 
 ## Application Initial Screen
-<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png?v=20221202" width="300"/>
+<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png?v=20231107" width="300"/>
 
 ## Information
 All news about wallet are available on the [Archethic Youtube Channel](https://www.youtube.com/playlist?list=PL6GQEJjcIwHChTok4CJyw3lsmlvoJLnZK)
