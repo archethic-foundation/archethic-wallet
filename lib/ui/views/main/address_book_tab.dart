@@ -1,6 +1,5 @@
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
@@ -13,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lit_starfield/view.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class AddressBookTab extends ConsumerStatefulWidget {
@@ -59,30 +57,6 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
       ),
       child: Stack(
         children: [
-          Opacity(
-            opacity: 0.3,
-            child: LitStarfieldContainer(
-              velocity: 0.2,
-              number: MediaQuery.of(context).size.width >= 580 ? 600 : 300,
-              starColor: ArchethicThemeBase.neutral0,
-              scale: 3,
-              backgroundDecoration: const BoxDecoration(
-                color: Colors.transparent,
-              ),
-            ),
-          ),
-          Opacity(
-            opacity: 0.3,
-            child: LitStarfieldContainer(
-              velocity: 0.2,
-              number: MediaQuery.of(context).size.width >= 580 ? 300 : 100,
-              scale: 6,
-              starColor: ArchethicThemeBase.blue500,
-              backgroundDecoration: const BoxDecoration(
-                color: Colors.transparent,
-              ),
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.only(left: 15, right: 15),
             child: ScrollConfiguration(
