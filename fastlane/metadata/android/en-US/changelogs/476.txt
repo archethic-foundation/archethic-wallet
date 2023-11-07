@@ -1,0 +1,4 @@
+Archethic Wallet - Version 2.3.1 Build 475
+
+- Update privacy policy link
+
