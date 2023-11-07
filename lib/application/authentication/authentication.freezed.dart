@@ -351,6 +351,18 @@ abstract class _PinAuthenticationState extends PinAuthenticationState {
 
 /// @nodoc
 mixin _$StartupAuthentState {
+  /// [false] when lock has not been unscheduled on purpose
+  /// [true] otherwise.
+  ///
+  /// When application is killed by OS or user,
+  /// [lockDate] might be not set.
+  /// In that case, we want to force show the lockscreen.
+  ///
+  /// [lockUnscheduled] is useful to discrimate case where
+  ///  - lock has been unscheduled on user action
+  ///  - lock is just not scheduled because of application savage kill
+  bool get lockUnscheduled => throw _privateConstructorUsedError;
+
   /// After that date, application should lock when displayed
   DateTime? get lockDate => throw _privateConstructorUsedError;
 
@@ -365,7 +377,7 @@ abstract class $StartupAuthentStateCopyWith<$Res> {
           StartupAuthentState value, $Res Function(StartupAuthentState) then) =
       _$StartupAuthentStateCopyWithImpl<$Res, StartupAuthentState>;
   @useResult
-  $Res call({DateTime? lockDate});
+  $Res call({bool lockUnscheduled, DateTime? lockDate});
 }
 
 /// @nodoc
@@ -381,9 +393,14 @@ class _$StartupAuthentStateCopyWithImpl<$Res, $Val extends StartupAuthentState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? lockUnscheduled = null,
     Object? lockDate = freezed,
   }) {
     return _then(_value.copyWith(
+      lockUnscheduled: null == lockUnscheduled
+          ? _value.lockUnscheduled
+          : lockUnscheduled // ignore: cast_nullable_to_non_nullable
+              as bool,
       lockDate: freezed == lockDate
           ? _value.lockDate
           : lockDate // ignore: cast_nullable_to_non_nullable
@@ -400,7 +417,7 @@ abstract class _$$StartupAuthentStateImplCopyWith<$Res>
       __$$StartupAuthentStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({DateTime? lockDate});
+  $Res call({bool lockUnscheduled, DateTime? lockDate});
 }
 
 /// @nodoc
@@ -414,9 +431,14 @@ class __$$StartupAuthentStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? lockUnscheduled = null,
     Object? lockDate = freezed,
   }) {
     return _then(_$StartupAuthentStateImpl(
+      lockUnscheduled: null == lockUnscheduled
+          ? _value.lockUnscheduled
+          : lockUnscheduled // ignore: cast_nullable_to_non_nullable
+              as bool,
       lockDate: freezed == lockDate
           ? _value.lockDate
           : lockDate // ignore: cast_nullable_to_non_nullable
@@ -428,7 +450,22 @@ class __$$StartupAuthentStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$StartupAuthentStateImpl extends _StartupAuthentState {
-  const _$StartupAuthentStateImpl({this.lockDate}) : super._();
+  const _$StartupAuthentStateImpl(
+      {required this.lockUnscheduled, this.lockDate})
+      : super._();
+
+  /// [false] when lock has not been unscheduled on purpose
+  /// [true] otherwise.
+  ///
+  /// When application is killed by OS or user,
+  /// [lockDate] might be not set.
+  /// In that case, we want to force show the lockscreen.
+  ///
+  /// [lockUnscheduled] is useful to discrimate case where
+  ///  - lock has been unscheduled on user action
+  ///  - lock is just not scheduled because of application savage kill
+  @override
+  final bool lockUnscheduled;
 
   /// After that date, application should lock when displayed
   @override
@@ -436,7 +473,7 @@ class _$StartupAuthentStateImpl extends _StartupAuthentState {
 
   @override
   String toString() {
-    return 'StartupAuthentState(lockDate: $lockDate)';
+    return 'StartupAuthentState(lockUnscheduled: $lockUnscheduled, lockDate: $lockDate)';
   }
 
   @override
@@ -444,12 +481,14 @@ class _$StartupAuthentStateImpl extends _StartupAuthentState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$StartupAuthentStateImpl &&
+            (identical(other.lockUnscheduled, lockUnscheduled) ||
+                other.lockUnscheduled == lockUnscheduled) &&
             (identical(other.lockDate, lockDate) ||
                 other.lockDate == lockDate));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, lockDate);
+  int get hashCode => Object.hash(runtimeType, lockUnscheduled, lockDate);
 
   @JsonKey(ignore: true)
   @override
@@ -460,10 +499,24 @@ class _$StartupAuthentStateImpl extends _StartupAuthentState {
 }
 
 abstract class _StartupAuthentState extends StartupAuthentState {
-  const factory _StartupAuthentState({final DateTime? lockDate}) =
-      _$StartupAuthentStateImpl;
+  const factory _StartupAuthentState(
+      {required final bool lockUnscheduled,
+      final DateTime? lockDate}) = _$StartupAuthentStateImpl;
   const _StartupAuthentState._() : super._();
 
+  @override
+
+  /// [false] when lock has not been unscheduled on purpose
+  /// [true] otherwise.
+  ///
+  /// When application is killed by OS or user,
+  /// [lockDate] might be not set.
+  /// In that case, we want to force show the lockscreen.
+  ///
+  /// [lockUnscheduled] is useful to discrimate case where
+  ///  - lock has been unscheduled on user action
+  ///  - lock is just not scheduled because of application savage kill
+  bool get lockUnscheduled;
   @override
 
   /// After that date, application should lock when displayed

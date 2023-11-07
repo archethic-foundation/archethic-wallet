@@ -82,15 +82,10 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
       case AppLifecycleState.inactive:
         if (ref.read(AuthenticationProviders.startupMaskVisibility) ==
             StartupMaskVisibility.visible) return;
-        _LockMask.show(context);
-        ref.read(AuthenticationProviders.startupMaskVisibility.notifier).state =
-            StartupMaskVisibility.visible;
+        _showLockMask();
 
         break;
       case AppLifecycleState.paused:
-        ref
-            .read(AuthenticationProviders.startupAuthentication.notifier)
-            .scheduleAutolock();
         break;
       case AppLifecycleState.detached:
         break;
@@ -101,6 +96,12 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
         break;
     }
     super.didChangeAppLifecycleState(state);
+  }
+
+  void _showLockMask() {
+    _LockMask.show(context);
+    ref.read(AuthenticationProviders.startupMaskVisibility.notifier).state =
+        StartupMaskVisibility.visible;
   }
 
   @override
@@ -120,6 +121,7 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
       );
 
       if (shouldLockOnStartup) {
+        _showLockMask();
         await AuthFactory.forceAuthenticate(
           context,
           ref,
