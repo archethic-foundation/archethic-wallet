@@ -71,7 +71,7 @@ class AboutMenuView extends ConsumerWidget {
                             onPressed: () async {
                               UIUtil.showWebview(
                                 context,
-                                'https://archethic.net/aewallet-privacy.html',
+                                'https://www.archethic.net/privacy-policy-wallet/',
                                 localizations.aboutPrivacyPolicy,
                               );
                             },
