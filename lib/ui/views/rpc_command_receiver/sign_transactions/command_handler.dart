@@ -11,6 +11,8 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+const slippage = 1.01;
+
 class SignTransactionsCommandHandler extends CommandHandler {
   SignTransactionsCommandHandler({
     required BuildContext context,
@@ -56,6 +58,32 @@ class SignTransactionsCommandHandler extends CommandHandler {
 
             var index = indexMap[addressGenesis] ?? 0;
 
+            var globalFees = 0.0;
+            for (final rpcSignTransactionCommandData
+                in command.data.rpcSignTransactionCommandData) {
+              final transaction = archethic.Transaction(
+                type: rpcSignTransactionCommandData.type,
+                data: rpcSignTransactionCommandData.data,
+                version: rpcSignTransactionCommandData.version,
+              );
+
+              final signedTransaction = keychain
+                  .buildTransaction(
+                    transaction,
+                    serviceName,
+                    index,
+                    pathSuffix: pathSuffix,
+                  )
+                  .transaction
+                  .originSign(originPrivateKey);
+
+              final transactionFee = await sl
+                  .get<archethic.ApiService>()
+                  .getTransactionFee(signedTransaction);
+              final fees = archethic.fromBigInt(transactionFee.fee) * slippage;
+              globalFees = globalFees + fees;
+            }
+
             final confirmation = await showDialog<bool>(
               useSafeArea: false,
               context: context,
@@ -64,6 +92,7 @@ class SignTransactionsCommandHandler extends CommandHandler {
                   decoration: ArchethicTheme.getDecorationSheet(),
                   child: SignTransactionsConfirmationForm(
                     command,
+                    globalFees,
                   ),
                 ),
               ),

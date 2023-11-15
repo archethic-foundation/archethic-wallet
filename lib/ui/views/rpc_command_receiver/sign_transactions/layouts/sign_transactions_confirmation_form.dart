@@ -1,7 +1,10 @@
+import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
 import 'package:aewallet/domain/rpc/commands/sign_transactions.dart';
+import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/sign_transactions/bloc/provider.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/sign_transactions/layouts/transaction_raw.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
@@ -12,11 +15,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SignTransactionsConfirmationForm extends ConsumerWidget {
   const SignTransactionsConfirmationForm(
-    this.command, {
+    this.command,
+    this.estimatedFees, {
     super.key,
   });
 
   final RPCCommand<RPCSignTransactionsCommandData> command;
+  final double estimatedFees;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,6 +30,9 @@ class SignTransactionsConfirmationForm extends ConsumerWidget {
 
     final formState = ref.watch(
       SignTransactionsConfirmationProviders.form(command),
+    );
+    final language = ref.watch(
+      LanguageProviders.selectedLanguage,
     );
 
     return formState.map(
@@ -69,6 +77,12 @@ class SignTransactionsConfirmationForm extends ConsumerWidget {
                                           .serviceName,
                                     ),
                                   )
+                                  .replaceAll(
+                                    '%3',
+                                    estimatedFees.formatNumber(
+                                      language.getLocaleStringWithoutDefault(),
+                                    ),
+                                  )
                               : localizations
                                   .signXTransactionsCommandReceivedNotification
                                   .replaceAll(
@@ -87,6 +101,12 @@ class SignTransactionsConfirmationForm extends ConsumerWidget {
                                     _getShortName(
                                       formData.value.signTransactionCommand.data
                                           .serviceName,
+                                    ),
+                                  )
+                                  .replaceAll(
+                                    '%4',
+                                    estimatedFees.formatNumber(
+                                      language.getLocaleStringWithoutDefault(),
                                     ),
                                   ),
                           style:
