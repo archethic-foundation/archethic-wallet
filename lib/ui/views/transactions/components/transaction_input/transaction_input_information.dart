@@ -21,7 +21,9 @@ class TransactionInputInformation extends ConsumerWidget {
       isEmpty: transaction.from == null,
       message: '${localizations.txListFrom} ${AddressFormatters(
         transaction.contactInformation == null
-            ? transaction.from!
+            ? transaction.from == null
+                ? ''
+                : transaction.from!
             : transaction.contactInformation!.format,
       ).getShortString4()}',
     );

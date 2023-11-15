@@ -1,5 +1,6 @@
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TransactionInformation extends ConsumerWidget {
@@ -17,7 +18,10 @@ class TransactionInformation extends ConsumerWidget {
     return Row(
       children: <Widget>[
         if (isEmpty)
-          const Text('')
+          Text(
+            AppLocalizations.of(context)!.executionSC,
+            style: ArchethicThemeStyles.textStyleSize12W400Primary,
+          )
         else
           Text(
             message,
