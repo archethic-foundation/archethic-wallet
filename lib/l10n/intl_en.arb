@@ -608,5 +608,6 @@
   "removeKeychainAction": "Remove",
   "removeKeychainLater": "You will be able to find your account if you recreate it later with the same name.",
   "removeKeychainAtLeast1": "You must keep at least one account in your keychain.",
-  "balance": "Balance"
+  "balance": "Balance",
+  "executionSC": "Smart-contract execution"
 }

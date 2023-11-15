@@ -167,6 +167,7 @@ class AppService {
   ) {
     final recentTransactions = <RecentTransaction>[];
     for (final transaction in transactionChain) {
+      dev.log('type ${transaction.type!} ${transaction.toJson()}');
       if (transaction.type! == 'token') {
         final recentTransaction = RecentTransaction()
           ..address = transaction.address!.address
@@ -190,6 +191,7 @@ class AppService {
       }
 
       if (transaction.type! == 'transfer') {
+        var nbTrf = 0;
         var indexInLedger = 0;
         for (final transfer in transaction.data!.ledger!.uco!.transfers) {
           final recentTransaction = RecentTransaction()
@@ -208,6 +210,7 @@ class AppService {
             ..indexInLedger = indexInLedger;
           recentTransactions.add(recentTransaction);
           indexInLedger++;
+          nbTrf++;
         }
         indexInLedger = 0;
         for (final transfer in transaction.data!.ledger!.token!.transfers) {
@@ -228,6 +231,21 @@ class AppService {
             ..indexInLedger = indexInLedger;
           recentTransactions.add(recentTransaction);
           indexInLedger++;
+          nbTrf++;
+        }
+        if (nbTrf == 0) {}
+        for (final contractRecipient in transaction.data!.actionRecipients) {
+          final recentTransaction = RecentTransaction()
+            ..address = transaction.address!.address
+            ..typeTx = RecentTransaction.transferOutput
+            ..fee =
+                fromBigInt(transaction.validationStamp!.ledgerOperations!.fee)
+                    .toDouble()
+            ..timestamp = transaction.validationStamp!.timestamp
+            ..from = contractRecipient.address
+            ..ownerships = transaction.data!.ownerships
+            ..indexInLedger = 0;
+          recentTransactions.add(recentTransaction);
         }
       }
     }
@@ -247,8 +265,9 @@ class AppService {
     final transaction = await sl.get<ApiService>().getTransaction(
       [address],
       request:
-          'address, type, chainLength, validationStamp { timestamp, ledgerOperations { fee } }, data { ledger { uco { transfers { amount, to } } token {transfers {amount, to, tokenAddress, tokenId } } } }',
+          'address, type, chainLength, validationStamp { timestamp, ledgerOperations { fee } }, data { actionRecipients { action, address, args } ledger { uco { transfers { amount, to } } token {transfers {amount, to, tokenAddress, tokenId } } } }',
     );
+    dev.log('$transaction');
     dev.log(
       '>> END getTransaction : ${DateTime.now()}',
       name: 'recentTx',
@@ -281,6 +300,9 @@ class AppService {
         );
       }
 
+      dev.log('1) $transactionInputs');
+      dev.log(
+          'transactionTimeStamp $transactionTimeStamp > mostRecentTimestamp $mostRecentTimestamp)');
       if (transactionTimeStamp > mostRecentTimestamp) {
         newRecentTransactionList.addAll(
           _populateRecentTransactionsFromTransactionChain(
@@ -288,6 +310,7 @@ class AppService {
           ),
         );
       }
+
       // Remove doublons (on type / token address / from / timestamp)
       if (newRecentTransactionList.isNotEmpty) {
         newRecentTransactionList =
@@ -326,7 +349,7 @@ class AppService {
     final lastIndex = await sl.get<ApiService>().getTransactionIndex(
       [lastAddress],
     );
-
+    dev.log('lastAddress : $lastAddress -> lastIndex: $lastIndex');
     var index = lastIndex[lastAddress] ?? 0;
     String addressToSearch;
     var nbRecentTransactions = 0;
@@ -340,6 +363,7 @@ class AppService {
           index: index,
         ),
       );
+      dev.log('addressToSearch : $addressToSearch');
       dev.log('>> END deriveAddress : ${DateTime.now()}', name: 'recentTx');
 
       dev.log(
