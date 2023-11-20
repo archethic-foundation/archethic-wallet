@@ -51,7 +51,7 @@ class RecoveryPhraseBanner extends ConsumerWidget {
                       Sheets.showAppHeightNineSheet(
                         context: context,
                         ref: ref,
-                        widget: AppSeedBackupSheet(mnemonic),
+                        widget: AppSeedBackupSheet(mnemonic, seed),
                       );
                     }
                   },
