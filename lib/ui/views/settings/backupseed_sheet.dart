@@ -20,9 +20,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class AppSeedBackupSheet extends ConsumerWidget {
-  const AppSeedBackupSheet(this.mnemonic, {super.key});
+  const AppSeedBackupSheet(this.mnemonic, this.seed, {super.key});
 
   final List<String>? mnemonic;
+  final String seed;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -57,6 +58,7 @@ class AppSeedBackupSheet extends ConsumerWidget {
                                   right: 10,
                                 ),
                                 child: MnemonicDisplay(
+                                  seed: seed,
                                   wordList: mnemonic!,
                                   obscureSeed: true,
                                   explanation: Column(

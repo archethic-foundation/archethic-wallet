@@ -586,5 +586,6 @@
 	"removeKeychainLater": "Vous pourrez retrouver votre compte si vous le récréez plus tard avec le même nom.",
 	"removeKeychainAtLeast1": "Vous devez conserver au moins un service dans votre porte-clés.",
 	"balance": "Balance",
-	"executionSC": "Execution Smart-contract"
+	"executionSC": "Execution Smart-contract",
+	"seedHex": "Phrase en hexadécimal"
 }

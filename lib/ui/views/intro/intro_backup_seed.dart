@@ -201,6 +201,7 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                                     bottom: 20,
                                   ),
                                   child: MnemonicDisplay(
+                                    seed: seed!,
                                     wordList: mnemonic!,
                                     explanation: Align(
                                       alignment: Alignment.topLeft,
