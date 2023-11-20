@@ -17,6 +17,7 @@ class MnemonicDisplay extends ConsumerStatefulWidget {
   const MnemonicDisplay({
     super.key,
     required this.wordList,
+    required this.seed,
     this.obscureSeed = false,
     required this.explanation,
   });
@@ -24,6 +25,7 @@ class MnemonicDisplay extends ConsumerStatefulWidget {
   final List<String> wordList;
   final bool obscureSeed;
   final Widget explanation;
+  final String seed;
 
   @override
   ConsumerState<MnemonicDisplay> createState() => _MnemonicDisplayState();
@@ -32,6 +34,7 @@ class MnemonicDisplay extends ConsumerStatefulWidget {
 class _MnemonicDisplayState extends ConsumerState<MnemonicDisplay> {
   late bool _seedObscured;
   int curWord = 0;
+  bool _isExpanded = false;
 
   @override
   void initState() {
@@ -100,6 +103,41 @@ class _MnemonicDisplayState extends ConsumerState<MnemonicDisplay> {
                               ArchethicThemeStyles.textStyleSize14W600Primary,
                         ),
                 ),
+              const SizedBox(
+                height: 30,
+              ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: ExpansionPanelList(
+                  expansionCallback: (int index, bool isExpanded) {
+                    setState(() {
+                      _isExpanded = isExpanded;
+                    });
+                  },
+                    children: [
+                      ExpansionPanel(
+                        backgroundColor: theme.numMnemonicBackground,
+                        canTapOnHeader: true,
+                        headerBuilder: (BuildContext context, bool isExpanded) {
+                          return ListTile(
+                            title: Text(
+                              AppLocalizations.of(context)!.seedHex,
+                              style: theme.textStyleSize12W600Primary,
+                            ),
+                          );
+                        },
+                        body: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: SelectableText(
+                            widget.seed,
+                            style: theme.textStyleSize14W600Primary,
+                          ),
+                        ),
+                        isExpanded: _isExpanded,
+                      ),
+                    ],
+                ),
+              ),
               const SizedBox(
                 height: 30,
               ),
