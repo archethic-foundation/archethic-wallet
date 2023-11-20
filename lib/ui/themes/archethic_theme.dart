@@ -98,7 +98,7 @@ class ArchethicTheme {
   static Color animationOverlayStrong =
       const Color(0xFF000000).withOpacity(0.85);
   static Color overlay30 = const Color(0xFF000000).withOpacity(0.3);
-  static Color numMnemonicBackground = Colors.grey.shade800;
+  static Color seedInfoBackground = Colors.grey.shade800.withOpacity(0.5);
   static Color activeTrackColorSwitch = const Color(0xFFFFFFFF);
   static Color inactiveTrackColorSwitch = const Color(0xFFFFFFFF);
   static Color activeColorSwitch = Colors.green;

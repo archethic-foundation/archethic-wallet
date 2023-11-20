@@ -70,7 +70,7 @@ class _MnemonicDisplayState extends ConsumerState<MnemonicDisplay> {
                     padding: const EdgeInsets.all(5),
                     child: Chip(
                       avatar: CircleAvatar(
-                        backgroundColor: ArchethicTheme.numMnemonicBackground,
+                        backgroundColor: ArchethicTheme.seedInfoBackground,
                         child: Text(
                           (entry.key + 1).toString(),
                           style:
@@ -106,38 +106,41 @@ class _MnemonicDisplayState extends ConsumerState<MnemonicDisplay> {
               const SizedBox(
                 height: 30,
               ),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: ExpansionPanelList(
-                  expansionCallback: (int index, bool isExpanded) {
-                    setState(() {
-                      _isExpanded = isExpanded;
-                    });
-                  },
-                  children: [
-                    ExpansionPanel(
-                      backgroundColor: ArchethicTheme.numMnemonicBackground,
-                      canTapOnHeader: true,
-                      headerBuilder: (BuildContext context, bool isExpanded) {
-                        return ListTile(
-                          title: Text(
-                            AppLocalizations.of(context)!.seedHex,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: ExpansionPanelList(
+                    expansionCallback: (int index, bool isExpanded) {
+                      setState(() {
+                        _isExpanded = isExpanded;
+                      });
+                    },
+                    children: [
+                      ExpansionPanel(
+                        backgroundColor: ArchethicTheme.seedInfoBackground,
+                        canTapOnHeader: true,
+                        headerBuilder: (BuildContext context, bool isExpanded) {
+                          return ListTile(
+                            title: Text(
+                              AppLocalizations.of(context)!.seedHex,
+                              style: ArchethicThemeStyles
+                                  .textStyleSize12W400Primary,
+                            ),
+                          );
+                        },
+                        body: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: SelectableText(
+                            widget.seed,
                             style:
-                                ArchethicThemeStyles.textStyleSize12W600Primary,
+                                ArchethicThemeStyles.textStyleSize12W400Primary,
                           ),
-                        );
-                      },
-                      body: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: SelectableText(
-                          widget.seed,
-                          style:
-                              ArchethicThemeStyles.textStyleSize14W600Primary,
                         ),
+                        isExpanded: _isExpanded,
                       ),
-                      isExpanded: _isExpanded,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(
