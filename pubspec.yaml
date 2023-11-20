@@ -17,14 +17,14 @@ dependencies:
   app_version_update: ^4.0.1
 
   # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
-  archethic_lib_dart: ^3.3.3
+  archethic_lib_dart: ^3.3.0
   #archethic_lib_dart:
   #  git:
   #    url: https://github.com/archethic-foundation/libdart.git
   #    ref: dev
 
   # Archethic Messaging Dart SDK
-  archethic_messaging_lib_dart: ^0.0.11
+  archethic_messaging_lib_dart: ^0.0.0
   #archethic_messaging_lib_dart:
   #  git:
   #    url: https://github.com/archethic-foundation/messaging_dart_sdk.git
