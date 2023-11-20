@@ -114,28 +114,30 @@ class _MnemonicDisplayState extends ConsumerState<MnemonicDisplay> {
                       _isExpanded = isExpanded;
                     });
                   },
-                    children: [
-                      ExpansionPanel(
-                        backgroundColor: theme.numMnemonicBackground,
-                        canTapOnHeader: true,
-                        headerBuilder: (BuildContext context, bool isExpanded) {
-                          return ListTile(
-                            title: Text(
-                              AppLocalizations.of(context)!.seedHex,
-                              style: theme.textStyleSize12W600Primary,
-                            ),
-                          );
-                        },
-                        body: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: SelectableText(
-                            widget.seed,
-                            style: theme.textStyleSize14W600Primary,
+                  children: [
+                    ExpansionPanel(
+                      backgroundColor: ArchethicTheme.numMnemonicBackground,
+                      canTapOnHeader: true,
+                      headerBuilder: (BuildContext context, bool isExpanded) {
+                        return ListTile(
+                          title: Text(
+                            AppLocalizations.of(context)!.seedHex,
+                            style:
+                                ArchethicThemeStyles.textStyleSize12W600Primary,
                           ),
+                        );
+                      },
+                      body: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: SelectableText(
+                          widget.seed,
+                          style:
+                              ArchethicThemeStyles.textStyleSize14W600Primary,
                         ),
-                        isExpanded: _isExpanded,
                       ),
-                    ],
+                      isExpanded: _isExpanded,
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(
