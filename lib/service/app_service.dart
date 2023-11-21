@@ -290,25 +290,29 @@ class AppService {
           transaction[address]!.validationStamp!.timestamp!;
 
       if (transactionInputs[address] != null) {
-        newRecentTransactionList.addAll(
-          _populateRecentTransactionsFromTransactionInputs(
-            transactionInputs[address]!,
-            address,
-            mostRecentTimestamp,
-            transaction[address]!.validationStamp!.timestamp!,
-          ),
-        );
+        newRecentTransactionList
+          ..addAll(
+            _populateRecentTransactionsFromTransactionInputs(
+              transactionInputs[address]!,
+              address,
+              mostRecentTimestamp,
+              transaction[address]!.validationStamp!.timestamp!,
+            ),
+          )
+          ..sort((tx1, tx2) => tx1.timestamp!.compareTo(tx2.timestamp!));
       }
 
       dev.log('1) $transactionInputs');
       dev.log(
           'transactionTimeStamp $transactionTimeStamp > mostRecentTimestamp $mostRecentTimestamp)');
       if (transactionTimeStamp > mostRecentTimestamp) {
-        newRecentTransactionList.addAll(
-          _populateRecentTransactionsFromTransactionChain(
-            [transaction[address]!],
-          ),
-        );
+        newRecentTransactionList
+          ..addAll(
+            _populateRecentTransactionsFromTransactionChain(
+              [transaction[address]!],
+            ),
+          )
+          ..sort((tx1, tx2) => tx1.timestamp!.compareTo(tx2.timestamp!));
       }
 
       // Remove doublons (on type / token address / from / timestamp)
