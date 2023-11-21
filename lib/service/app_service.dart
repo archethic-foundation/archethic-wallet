@@ -305,7 +305,8 @@ class AppService {
 
       dev.log('1) $transactionInputs');
       dev.log(
-          'transactionTimeStamp $transactionTimeStamp > mostRecentTimestamp $mostRecentTimestamp)');
+        'transactionTimeStamp $transactionTimeStamp > mostRecentTimestamp $mostRecentTimestamp)',
+      );
       if (transactionTimeStamp > mostRecentTimestamp) {
         newRecentTransactionList
           ..addAll(
@@ -367,9 +368,18 @@ class AppService {
         ),
       );
       dev.log('addressToSearch : $addressToSearch');
-      if (localRecentTransactionList.any((element) =>
-          element.address!.toUpperCase() == addressToSearch.toUpperCase())) {
+      if (localRecentTransactionList.any(
+        (element) =>
+            element.address!.toUpperCase() == addressToSearch.toUpperCase(),
+      )) {
         dev.log('addressToSearch exists in local -> break');
+        if (addressToSearch.toUpperCase() == lastAddress.toUpperCase()) {
+          recentTransactions = await _buildRecentTransactionFromTransaction(
+            recentTransactions,
+            addressToSearch,
+            mostRecentTimestamp,
+          );
+        }
         break;
       }
 
