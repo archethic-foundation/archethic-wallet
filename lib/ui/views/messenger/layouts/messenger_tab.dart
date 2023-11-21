@@ -5,6 +5,7 @@ import 'package:aewallet/ui/views/messenger/layouts/components/discussion_search
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class MessengerTab extends ConsumerWidget {
   const MessengerTab({
@@ -58,9 +59,9 @@ class MessengerBody extends ConsumerWidget {
                       final discussion = discussions.value[index];
                       return DiscussionListItem.loaded(
                         key: Key(discussion.address),
-                        onTap: () => Navigator.of(context).pushNamed(
+                        onTap: () => context.go(
                           '/messenger_discussion',
-                          arguments: discussion.address,
+                          extra: discussion.address,
                         ),
                         discussion: discussion,
                       )

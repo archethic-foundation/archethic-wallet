@@ -18,6 +18,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class IntroNewWalletGetFirstInfos extends ConsumerStatefulWidget {
   const IntroNewWalletGetFirstInfos({super.key});
@@ -271,9 +272,9 @@ class _IntroNewWalletDisclaimerState
                                     .replaceAll('%1', nameController.text),
                                 localizations.yes,
                                 () async {
-                                  Navigator.of(context).pushNamed(
+                                  context.go(
                                     '/intro_backup_safety',
-                                    arguments: nameController.text,
+                                    extra: nameController.text,
                                   );
                                 },
                                 cancelText: localizations.no,

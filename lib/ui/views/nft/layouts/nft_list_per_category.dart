@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class NFTListPerCategory extends ConsumerWidget {
@@ -82,9 +83,9 @@ class NFTListPerCategory extends ConsumerWidget {
                               FeedbackType.light,
                               preferences.activeVibrations,
                             );
-                        Navigator.of(context).pushNamed(
+                        context.go(
                           '/nft_creation',
-                          arguments: {
+                          extra: {
                             'seed': ref
                                 .read(SessionProviders.session)
                                 .loggedIn!

@@ -105,11 +105,8 @@ class SecurityMenuView extends ConsumerWidget {
                                     await ref
                                         .read(SessionProviders.session.notifier)
                                         .logout();
-                                    Navigator.of(context)
-                                      ..popUntil(
-                                        (route) => route.isFirst,
-                                      )
-                                      ..pushReplacementNamed('/');
+                                    await Navigator.of(context)
+                                        .pushReplacementNamed('/');
                                   }
                                 },
                               );

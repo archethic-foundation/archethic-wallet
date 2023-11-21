@@ -15,6 +15,7 @@ mixin SecurityConfigurationMixin {
     String seed,
   ) async {
     final biometricsAvalaible = await sl.get<BiometricUtil>().hasBiometrics();
+
     var accessModes = <PickerItem>[];
     if (kIsWeb) {
       accessModes = <PickerItem>[
