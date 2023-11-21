@@ -233,19 +233,20 @@ class AppService {
           indexInLedger++;
           nbTrf++;
         }
-        if (nbTrf == 0) {}
-        for (final contractRecipient in transaction.data!.actionRecipients) {
-          final recentTransaction = RecentTransaction()
-            ..address = transaction.address!.address
-            ..typeTx = RecentTransaction.transferOutput
-            ..fee =
-                fromBigInt(transaction.validationStamp!.ledgerOperations!.fee)
-                    .toDouble()
-            ..timestamp = transaction.validationStamp!.timestamp
-            ..from = contractRecipient.address
-            ..ownerships = transaction.data!.ownerships
-            ..indexInLedger = 0;
-          recentTransactions.add(recentTransaction);
+        if (nbTrf == 0) {
+          for (final contractRecipient in transaction.data!.actionRecipients) {
+            final recentTransaction = RecentTransaction()
+              ..address = transaction.address!.address
+              ..typeTx = RecentTransaction.transferOutput
+              ..fee =
+                  fromBigInt(transaction.validationStamp!.ledgerOperations!.fee)
+                      .toDouble()
+              ..timestamp = transaction.validationStamp!.timestamp
+              ..from = contractRecipient.address
+              ..ownerships = transaction.data!.ownerships
+              ..indexInLedger = 0;
+            recentTransactions.add(recentTransaction);
+          }
         }
       }
     }
