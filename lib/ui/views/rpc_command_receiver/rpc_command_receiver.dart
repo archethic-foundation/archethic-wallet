@@ -78,12 +78,6 @@ class _RPCCommandReceiverState extends ConsumerState<RPCCommandReceiver> {
   }
 
   @override
-  void dispose() {
-    sl.get<CommandDispatcher>().clear();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return widget.child;
   }
