@@ -40,7 +40,6 @@ import 'package:aewallet/ui/views/nft/layouts/nft_list_per_category.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/rpc_command_receiver.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/navigation.dart';
 import 'package:aewallet/util/security_manager.dart';
 import 'package:aewallet/util/service_locator.dart';
 import 'package:flutter/foundation.dart';
@@ -241,6 +240,9 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
           locale: language.getLocale(),
           supportedLocales: ref.read(LanguageProviders.availableLocales),
           initialRoute: '/',
+          builder: (context, child) => RPCCommandReceiver(
+            child: child!,
+          ),
           onGenerateRoute: (RouteSettings settings) {
             if (deeplinkRpcReceiver.canHandle(settings.name)) {
               deeplinkRpcReceiver.handle(settings.name);
@@ -340,14 +342,7 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
               ),
             };
 
-            /// Wraps all routes with [RPCCommandReceiver]
-            /// That way, RPCCommandReceiver should never been disposed.
-            final route = routes[settings.name];
-            return route?.copyWith(
-              builder: (context) => RPCCommandReceiver(
-                child: route.builder(context),
-              ),
-            );
+            return routes[settings.name];
           },
         ),
       ),
