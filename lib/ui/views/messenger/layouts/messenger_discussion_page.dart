@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:material_symbols_icons/symbols.dart';
@@ -65,9 +66,9 @@ class MessengerDiscussionPage extends ConsumerWidget {
                 grade: IconSize.gradeM,
               ),
               onPressed: () async {
-                Navigator.of(context).pushNamed(
+                context.go(
                   '/discussion_details',
-                  arguments: discussionAddress,
+                  extra: discussionAddress,
                 );
               },
             ),

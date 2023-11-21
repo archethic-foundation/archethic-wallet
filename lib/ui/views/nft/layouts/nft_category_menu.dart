@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:go_router/go_router.dart';
 
 class NftCategoryMenu extends ConsumerWidget {
   const NftCategoryMenu({super.key});
@@ -66,9 +67,9 @@ class NftCategoryMenu extends ConsumerWidget {
                   FeedbackType.light,
                   preferences.activeVibrations,
                 );
-            Navigator.of(context).pushNamed(
+            context.go(
               '/nft_list_per_category',
-              arguments: nftCategories[index].id,
+              extra: nftCategories[index].id,
             );
           },
           child: Column(

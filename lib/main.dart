@@ -14,33 +14,14 @@ import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/domain/repositories/settings.dart';
 import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
-import 'package:aewallet/infrastructure/rpc/deeplink_server.dart';
 import 'package:aewallet/infrastructure/rpc/websocket_server.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/appdb.dart';
-import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/providers_observer.dart';
-import 'package:aewallet/ui/menu/settings/settings_sheet.dart';
+import 'package:aewallet/router.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/ui/util/routes.dart';
-import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
-import 'package:aewallet/ui/views/authenticate/lock_screen.dart';
-import 'package:aewallet/ui/views/intro/intro_backup_confirm.dart';
-import 'package:aewallet/ui/views/intro/intro_backup_seed.dart';
-import 'package:aewallet/ui/views/intro/intro_import_seed.dart';
-import 'package:aewallet/ui/views/intro/intro_new_wallet_disclaimer.dart';
-import 'package:aewallet/ui/views/intro/intro_new_wallet_get_first_infos.dart';
-import 'package:aewallet/ui/views/intro/intro_welcome.dart';
-import 'package:aewallet/ui/views/main/home_page.dart';
-import 'package:aewallet/ui/views/messenger/layouts/discussion_details_page.dart';
-import 'package:aewallet/ui/views/messenger/layouts/messenger_discussion_page.dart';
-import 'package:aewallet/ui/views/messenger/layouts/update_discussion_page.dart';
-import 'package:aewallet/ui/views/nft/layouts/nft_list_per_category.dart';
-import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
-import 'package:aewallet/ui/views/rpc_command_receiver/rpc_command_receiver.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/navigation.dart';
 import 'package:aewallet/util/security_manager.dart';
 import 'package:aewallet/util/service_locator.dart';
 import 'package:flutter/foundation.dart';
@@ -200,8 +181,6 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
   // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {
-    final deeplinkRpcReceiver = sl.get<ArchethicDeeplinkRPCServer>();
-
     final language = ref.watch(LanguageProviders.selectedLanguage);
     if (FeatureFlags.messagingActive) {
       NotificationProviders.keepPushSettingsUpToDateWorker(ref);
@@ -210,6 +189,9 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
     SystemChrome.setSystemUIOverlayStyle(
       ArchethicTheme.statusBar,
     );
+
+    final router = RoutesPath().createRouter(ref);
+
     return GestureDetector(
       onTap: () {
         // Hide soft input keyboard after tapping outside anywhere on screen
@@ -218,8 +200,10 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
       child: OKToast(
         textStyle: ArchethicThemeStyles.textStyleSize14W700Background,
         backgroundColor: ArchethicTheme.background,
-        child: MaterialApp(
-          navigatorKey: rootNavigatorKey,
+        child: MaterialApp.router(
+          routerDelegate: router.routerDelegate,
+          routeInformationParser: router.routeInformationParser,
+          key: rootNavigatorKey,
           debugShowCheckedModeBanner: false,
           title: 'Archethic Wallet',
           theme: ThemeData(
@@ -240,115 +224,6 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
           ],
           locale: language.getLocale(),
           supportedLocales: ref.read(LanguageProviders.availableLocales),
-          initialRoute: '/',
-          onGenerateRoute: (RouteSettings settings) {
-            if (deeplinkRpcReceiver.canHandle(settings.name)) {
-              deeplinkRpcReceiver.handle(settings.name);
-              return null;
-            }
-
-            final routes = <String, MaterialPageRoute>{
-              '/': NoTransitionRoute<Splash>(
-                builder: (_) => const Splash(),
-                settings: settings,
-              ),
-              '/home': NoTransitionRoute<HomePage>(
-                builder: (_) => const AutoLockGuard(child: HomePage()),
-                settings: settings,
-              ),
-              '/intro_welcome': NoTransitionRoute<IntroWelcome>(
-                builder: (_) => const IntroWelcome(),
-                settings: settings,
-              ),
-              '/intro_welcome_get_first_infos':
-                  MaterialPageRoute<IntroNewWalletGetFirstInfos>(
-                builder: (_) => const IntroNewWalletGetFirstInfos(),
-                settings: settings,
-              ),
-              '/intro_backup': MaterialPageRoute<IntroBackupSeedPage>(
-                builder: (_) => IntroBackupSeedPage(
-                  name: settings.arguments as String?,
-                ),
-                settings: settings,
-              ),
-              '/intro_backup_safety':
-                  MaterialPageRoute<IntroNewWalletDisclaimer>(
-                builder: (_) => IntroNewWalletDisclaimer(
-                  name: settings.arguments as String?,
-                ),
-                settings: settings,
-              ),
-              '/intro_import': MaterialPageRoute<IntroImportSeedPage>(
-                builder: (_) => const IntroImportSeedPage(),
-                settings: settings,
-              ),
-              '/intro_backup_confirm': MaterialPageRoute<IntroBackupConfirm>(
-                builder: (_) {
-                  final args =
-                      settings.arguments as Map<String, dynamic>? ?? {};
-                  return IntroBackupConfirm(
-                    name: args['name'] == null ? null : args['name'] as String,
-                    seed: args['seed'] == null ? null : args['seed'] as String,
-                  );
-                },
-                settings: settings,
-              ),
-              '/security_menu_view': MaterialPageRoute<AppLockScreen>(
-                builder: (_) => const SecurityMenuView(),
-              ),
-              '/customization_menu_view': MaterialPageRoute<AppLockScreen>(
-                builder: (_) => const CustomizationMenuView(),
-              ),
-              '/about_menu_view': MaterialPageRoute<AppLockScreen>(
-                builder: (_) => const AboutMenuView(),
-              ),
-              '/lock_screen_transition': MaterialPageRoute<AppLockScreen>(
-                builder: (_) => const AppLockScreen(),
-                settings: settings,
-              ),
-              '/nft_list_per_category': MaterialPageRoute<NFTListPerCategory>(
-                builder: (_) => NFTListPerCategory(
-                  currentNftCategoryIndex: settings.arguments as int?,
-                ),
-                settings: settings,
-              ),
-              '/nft_creation': MaterialPageRoute(
-                builder: (_) {
-                  final args =
-                      settings.arguments as Map<String, dynamic>? ?? {};
-                  return NftCreationProcessSheet(
-                    currentNftCategoryIndex:
-                        args['currentNftCategoryIndex'] as int,
-                  );
-                },
-                settings: settings,
-              ),
-              '/messenger_discussion': MaterialPageRoute(
-                builder: (_) => MessengerDiscussionPage(
-                  discussionAddress: settings.arguments! as String,
-                ),
-              ),
-              '/discussion_details': MaterialPageRoute(
-                builder: (_) => DiscussionDetailsPage(
-                  discussionAddress: settings.arguments! as String,
-                ),
-              ),
-              '/update_discussion': MaterialPageRoute(
-                builder: (_) => UpdateDiscussionPage(
-                  discussion: settings.arguments! as Discussion,
-                ),
-              ),
-            };
-
-            /// Wraps all routes with [RPCCommandReceiver]
-            /// That way, RPCCommandReceiver should never been disposed.
-            final route = routes[settings.name];
-            return route?.copyWith(
-              builder: (context) => RPCCommandReceiver(
-                child: route.builder(context),
-              ),
-            );
-          },
         ),
       ),
     );

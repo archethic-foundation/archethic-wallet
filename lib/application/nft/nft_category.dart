@@ -58,19 +58,19 @@ int _getNbNFTInCategory(
   required Account account,
   required int categoryNftIndex,
 }) {
-  return _filterNFTInCategory(
+  return _filterNTFInCategory(
         account,
         account.accountNFT,
         categoryNftIndex,
       ).length +
-      _filterNFTInCategory(
+      _filterNTFInCategory(
         account,
         account.accountNFTCollections,
         categoryNftIndex,
       ).length;
 }
 
-List<NftInfosOffChain> _filterNFTInCategory(
+List<NftInfosOffChain> _filterNTFInCategory(
   Account account,
   List<AccountToken>? accountTokens,
   int categoryNftIndex,

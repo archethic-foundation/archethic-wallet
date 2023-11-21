@@ -224,8 +224,6 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                                     ],
                                   ),
                                   Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
                                     children: [
                                       AutoSizeText(
                                         AddressFormatters(

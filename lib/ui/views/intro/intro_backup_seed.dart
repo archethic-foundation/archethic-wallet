@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:go_router/go_router.dart';
 
 class IntroBackupSeedPage extends ConsumerStatefulWidget {
   const IntroBackupSeedPage({super.key, this.name});
@@ -230,9 +231,9 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                           Dimens.buttonBottomDimens,
                           key: const Key('iveBackedItUp'),
                           onPressed: () async {
-                            Navigator.of(context).pushNamed(
+                            context.go(
                               '/intro_backup_confirm',
-                              arguments: {'name': widget.name, 'seed': seed},
+                              extra: {'name': widget.name, 'seed': seed},
                             );
                           },
                           disabled: isPressed == true,

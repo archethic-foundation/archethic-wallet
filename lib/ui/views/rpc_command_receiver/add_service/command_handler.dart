@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -87,7 +86,6 @@ class AddServiceHandler extends CommandHandler {
                 (Platform.isLinux || Platform.isMacOS || Platform.isWindows)) {
               await windowManager.show();
             }
-
             final result = await Sheets.showAppHeightNineSheet<
                 Result<TransactionConfirmation, TransactionError>>(
               context: context,

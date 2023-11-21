@@ -20,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lit_starfield/lit_starfield.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
@@ -405,7 +406,7 @@ class _ButtonNewWallet extends ConsumerWidget {
                       networkDevEndpoint: '',
                     ),
                   );
-              Navigator.of(context).pushNamed(
+              context.go(
                 '/intro_welcome_get_first_infos',
               );
             }
@@ -443,7 +444,7 @@ class _ButtonImportWallet extends ConsumerWidget {
                   ),
                 ),
               );
-              Navigator.of(context).pushNamed('/intro_import');
+              context.go('/intro_import');
             }
           },
           disabled: !cguChecked,

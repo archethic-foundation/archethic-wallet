@@ -7,6 +7,7 @@ import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lit_starfield/lit_starfield.dart';
 import 'package:synchronized/synchronized.dart';
 
@@ -24,7 +25,7 @@ mixin LockGuardMixin {
       AuthenticationProviders.isLockCountdownRunning.future,
     );
     if (shouldLock) {
-      await Navigator.of(context).pushNamed(
+      context.go(
         '/lock_screen_transition',
       );
     }

@@ -141,6 +141,9 @@ dependencies:
   # Ghost CMS API client that closely follows the official implementation
   ghost: ^2.0.3
 
+  # A declarative router for Flutter based on Navigation 2 supporting deep linking, data-driven routes and more
+  go_router: ^12.1.0
+
   # Gradient borders for inputs and containers. Borders package integrated with a basic flutter widgets as a container and input decorations. Easy in use, platform independent.
   gradient_borders: ^1.0.0
 
