@@ -1,0 +1,7 @@
+Archethic Wallet - Version 2.3.2 Build 480
+
+- Add estimate fees in transaction's signature screen
+- Add seed in hexadecimal
+- Display smart contract execution in recent transactions list
+- Fix recent transactions refresh process
+
