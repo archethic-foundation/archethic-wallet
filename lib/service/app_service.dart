@@ -346,7 +346,6 @@ class AppService {
       );
       mostRecentTimestamp = localRecentTransactionList.first.timestamp ?? 0;
     }
-
     var recentTransactions = <RecentTransaction>[];
 
     final keychain = keychainSecuredInfos.toKeychain();
@@ -357,11 +356,10 @@ class AppService {
     dev.log('lastAddress : $lastAddress -> lastIndex: $lastIndex');
     var index = lastIndex[lastAddress] ?? 0;
     String addressToSearch;
-    var nbRecentTransactions = 0;
+    var iterMax = 10;
     recentTransactions.addAll(localRecentTransactionList);
 
-    while (nbRecentTransactions < 10 && index > 0) {
-      dev.log('>> START deriveAddress : ${DateTime.now()}', name: 'recentTx');
+    while (index > 0 && iterMax > 0) {
       addressToSearch = uint8ListToHex(
         keychain.deriveAddress(
           name,
@@ -369,31 +367,27 @@ class AppService {
         ),
       );
       dev.log('addressToSearch : $addressToSearch');
-      dev.log('>> END deriveAddress : ${DateTime.now()}', name: 'recentTx');
+      if (localRecentTransactionList.any((element) =>
+          element.address!.toUpperCase() == addressToSearch.toUpperCase())) {
+        dev.log('addressToSearch exists in local -> break');
+        break;
+      }
 
-      dev.log(
-        '>> START buildRecentTxFromTx : ${DateTime.now()}',
-        name: 'recentTx',
-      );
       recentTransactions = await _buildRecentTransactionFromTransaction(
         recentTransactions,
         addressToSearch,
         mostRecentTimestamp,
       );
-      dev.log(
-        '>> END buildRecentTxFromTx : ${DateTime.now()}',
-        name: 'recentTx',
-      );
       index--;
-      nbRecentTransactions = recentTransactions.length;
+      iterMax--;
     }
 
-    if (nbRecentTransactions < 10) {
+    if (recentTransactions.length < 10) {
       // Get transaction inputs from genesis address if filtered list is < 10
       final genesisTransactionInputsMap = await getTransactionInputs(
         [genesisAddress],
         'from, type, spent, tokenAddress, amount, timestamp',
-        limit: 10 - nbRecentTransactions,
+        limit: 10 - recentTransactions.length,
       );
 
       if (genesisTransactionInputsMap[genesisAddress] != null) {
