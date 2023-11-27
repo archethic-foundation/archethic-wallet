@@ -8,6 +8,7 @@ import 'package:aewallet/ui/views/rpc_command_receiver/get_endpoint/command_hand
 import 'package:aewallet/ui/views/rpc_command_receiver/get_services_from_keychain/command_handler.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/keychain_derive_address/command_handler.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/keychain_derive_keypair/command_handler.dart';
+import 'package:aewallet/ui/views/rpc_command_receiver/refresh_current_account/command_handler.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/send_transaction/command_handler.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/sign_transactions/command_handler.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/sub_account/command_handler.dart';
@@ -45,6 +46,9 @@ class _RPCCommandReceiverState extends ConsumerState<RPCCommandReceiver> {
       )
       ..addHandler(
         GetEndpointHandler(),
+      )
+      ..addHandler(
+        RefreshCurrentAccountHandler(ref: ref),
       )
       ..addHandler(
         GetCurrentAccountCommandHandler(ref: ref),
