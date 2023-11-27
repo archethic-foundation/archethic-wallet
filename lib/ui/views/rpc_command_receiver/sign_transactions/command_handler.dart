@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
@@ -8,8 +10,10 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/sign_transactions/layouts/sign_transactions_confirmation_form.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:window_manager/window_manager.dart';
 
 const slippage = 1.01;
 
@@ -82,6 +86,11 @@ class SignTransactionsCommandHandler extends CommandHandler {
                   .getTransactionFee(signedTransaction);
               final fees = archethic.fromBigInt(transactionFee.fee) * slippage;
               globalFees = globalFees + fees;
+            }
+
+            if (!kIsWeb &&
+                (Platform.isLinux || Platform.isMacOS || Platform.isWindows)) {
+              await windowManager.show();
             }
 
             final confirmation = await showDialog<bool>(
