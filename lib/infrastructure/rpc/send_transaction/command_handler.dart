@@ -16,6 +16,7 @@ class RPCSendTransactionCommandHandler extends RPCCommandHandler<
           data: archethic.Data.fromJson(dto.payload['data']),
           type: dto.payload['type'],
           version: dto.version,
+          generateEncryptedSeedSC: dto.payload['generateEncryptedSeedSC'],
         ),
       );
 
