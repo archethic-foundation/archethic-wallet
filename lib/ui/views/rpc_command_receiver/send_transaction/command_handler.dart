@@ -5,6 +5,7 @@ import 'package:aewallet/domain/rpc/commands/failure.dart';
 import 'package:aewallet/domain/rpc/commands/send_transaction.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/send_transaction/layouts/send_transaction_confirmation_form.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
+import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/notifications_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,43 @@ class SendTransactionHandler extends CommandHandler {
               command is RPCCommand<RPCSendTransactionCommandData>,
           handle: (command) async {
             command as RPCCommand<RPCSendTransactionCommandData>;
+
+            if (command.data.generateEncryptedSeedSC != null &&
+                command.data.generateEncryptedSeedSC == true) {
+              if (command.data.data.code == null ||
+                  command.data.data.code!.trim().isEmpty) {
+                return Result.failure(
+                  RPCFailure.invalidTransaction(),
+                );
+              }
+
+              final apiService = sl.get<ApiService>();
+              final storageNoncePublicKey =
+                  await apiService.getStorageNoncePublicKey();
+              final seedSC = generateRandomSeed();
+
+              /// AESKey (32-byte (256-bit) random key) manages SC secrets
+              final aesKey = generateRandomAESKey();
+
+              final scAuthorizedKeys = [
+                AuthorizedKey(
+                  publicKey: storageNoncePublicKey,
+                  encryptedSecretKey:
+                      uint8ListToHex(ecEncrypt(aesKey, storageNoncePublicKey)),
+                ),
+              ];
+
+              command.data.data.ownerships.insert(
+                0,
+                Ownership(
+                  secret: uint8ListToHex(
+                    aesEncrypt(seedSC, aesKey),
+                  ),
+                  authorizedPublicKeys: scAuthorizedKeys,
+                ),
+              );
+            }
+
             _showNotification(
               context: context,
               ref: ref,

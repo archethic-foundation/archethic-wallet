@@ -25,6 +25,9 @@ mixin _$RPCSendTransactionCommandData {
   /// - Version: version of the transaction (used for backward compatiblity)
   int get version => throw _privateConstructorUsedError;
 
+  /// - Flag to generate and add the encrypted smart contract's seed in a secret
+  bool? get generateEncryptedSeedSC => throw _privateConstructorUsedError;
+
   @JsonKey(ignore: true)
   $RPCSendTransactionCommandDataCopyWith<RPCSendTransactionCommandData>
       get copyWith => throw _privateConstructorUsedError;
@@ -38,7 +41,8 @@ abstract class $RPCSendTransactionCommandDataCopyWith<$Res> {
       _$RPCSendTransactionCommandDataCopyWithImpl<$Res,
           RPCSendTransactionCommandData>;
   @useResult
-  $Res call({Data data, String type, int version});
+  $Res call(
+      {Data data, String type, int version, bool? generateEncryptedSeedSC});
 
   $DataCopyWith<$Res> get data;
 }
@@ -60,6 +64,7 @@ class _$RPCSendTransactionCommandDataCopyWithImpl<$Res,
     Object? data = null,
     Object? type = null,
     Object? version = null,
+    Object? generateEncryptedSeedSC = freezed,
   }) {
     return _then(_value.copyWith(
       data: null == data
@@ -74,6 +79,10 @@ class _$RPCSendTransactionCommandDataCopyWithImpl<$Res,
           ? _value.version
           : version // ignore: cast_nullable_to_non_nullable
               as int,
+      generateEncryptedSeedSC: freezed == generateEncryptedSeedSC
+          ? _value.generateEncryptedSeedSC
+          : generateEncryptedSeedSC // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 
@@ -95,7 +104,8 @@ abstract class _$$RPCSendTransactionCommandDataImplCopyWith<$Res>
       __$$RPCSendTransactionCommandDataImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Data data, String type, int version});
+  $Res call(
+      {Data data, String type, int version, bool? generateEncryptedSeedSC});
 
   @override
   $DataCopyWith<$Res> get data;
@@ -117,6 +127,7 @@ class __$$RPCSendTransactionCommandDataImplCopyWithImpl<$Res>
     Object? data = null,
     Object? type = null,
     Object? version = null,
+    Object? generateEncryptedSeedSC = freezed,
   }) {
     return _then(_$RPCSendTransactionCommandDataImpl(
       data: null == data
@@ -131,6 +142,10 @@ class __$$RPCSendTransactionCommandDataImplCopyWithImpl<$Res>
           ? _value.version
           : version // ignore: cast_nullable_to_non_nullable
               as int,
+      generateEncryptedSeedSC: freezed == generateEncryptedSeedSC
+          ? _value.generateEncryptedSeedSC
+          : generateEncryptedSeedSC // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -140,7 +155,10 @@ class __$$RPCSendTransactionCommandDataImplCopyWithImpl<$Res>
 class _$RPCSendTransactionCommandDataImpl
     extends _RPCSendTransactionCommandData {
   const _$RPCSendTransactionCommandDataImpl(
-      {required this.data, required this.type, required this.version})
+      {required this.data,
+      required this.type,
+      required this.version,
+      this.generateEncryptedSeedSC})
       : super._();
 
   /// - [Data]: transaction data zone (identity, keychain, smart contract, etc.)
@@ -155,9 +173,13 @@ class _$RPCSendTransactionCommandDataImpl
   @override
   final int version;
 
+  /// - Flag to generate and add the encrypted smart contract's seed in a secret
+  @override
+  final bool? generateEncryptedSeedSC;
+
   @override
   String toString() {
-    return 'RPCSendTransactionCommandData(data: $data, type: $type, version: $version)';
+    return 'RPCSendTransactionCommandData(data: $data, type: $type, version: $version, generateEncryptedSeedSC: $generateEncryptedSeedSC)';
   }
 
   @override
@@ -167,11 +189,15 @@ class _$RPCSendTransactionCommandDataImpl
             other is _$RPCSendTransactionCommandDataImpl &&
             (identical(other.data, data) || other.data == data) &&
             (identical(other.type, type) || other.type == type) &&
-            (identical(other.version, version) || other.version == version));
+            (identical(other.version, version) || other.version == version) &&
+            (identical(
+                    other.generateEncryptedSeedSC, generateEncryptedSeedSC) ||
+                other.generateEncryptedSeedSC == generateEncryptedSeedSC));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, data, type, version);
+  int get hashCode =>
+      Object.hash(runtimeType, data, type, version, generateEncryptedSeedSC);
 
   @JsonKey(ignore: true)
   @override
@@ -185,9 +211,11 @@ class _$RPCSendTransactionCommandDataImpl
 abstract class _RPCSendTransactionCommandData
     extends RPCSendTransactionCommandData {
   const factory _RPCSendTransactionCommandData(
-      {required final Data data,
-      required final String type,
-      required final int version}) = _$RPCSendTransactionCommandDataImpl;
+          {required final Data data,
+          required final String type,
+          required final int version,
+          final bool? generateEncryptedSeedSC}) =
+      _$RPCSendTransactionCommandDataImpl;
   const _RPCSendTransactionCommandData._() : super._();
 
   @override
@@ -202,6 +230,10 @@ abstract class _RPCSendTransactionCommandData
 
   /// - Version: version of the transaction (used for backward compatiblity)
   int get version;
+  @override
+
+  /// - Flag to generate and add the encrypted smart contract's seed in a secret
+  bool? get generateEncryptedSeedSC;
   @override
   @JsonKey(ignore: true)
   _$$RPCSendTransactionCommandDataImplCopyWith<
