@@ -216,7 +216,7 @@ class HivePreferencesDatasource {
 
   LockTimeoutOption getLockTimeout() => LockTimeoutOption.values[_getValue(
         lockTimeout,
-        defaultValue: LockTimeoutOption.one.index,
+        defaultValue: LockTimeoutOption.oneMin.index,
       )];
 
   int getLockAttempts() => _getValue(pinAttempts, defaultValue: 0);

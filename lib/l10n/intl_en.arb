@@ -118,6 +118,8 @@
   "autoLockHeader": "Auto Lock",
   "xMinutes": "After %1 minutes",
   "xMinute": "After %1 minute",
+  "xSecondes": "After %1 secondes",
+  "xSeconde": "After %1 seconde",
   "instantly": "Instantly",
   "defaultAccountName": "Main Account",
   "tapToReveal": "Tap to reveal",
