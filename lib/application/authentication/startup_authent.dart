@@ -49,12 +49,19 @@ class LastInteractionDateNotifier
     );
   }
 
-  Future<void> clearStorage() async {
+  Future<void> clear() async {
     log('clear storage', name: _logName);
 
     await ref
         .read(AuthenticationProviders._authenticationRepository)
         .removeLastInteractionDate();
+
+    state = const AsyncValue.data(
+      (
+        date: null,
+        isStartupValue: false,
+      ),
+    );
   }
 }
 
@@ -176,9 +183,7 @@ class AuthenticationGuardNotifier
       'Unschedule Autolock',
       name: logName,
     );
-    await ref
-        .read(_lastInteractionDateNotifierProvider.notifier)
-        .clearStorage();
+    await ref.read(_lastInteractionDateNotifierProvider.notifier).clear();
   }
 }
 
