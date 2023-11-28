@@ -118,6 +118,8 @@
 	"autoLockHeader": "Verrouillage automatique",
 	"xMinutes": "Après %1 minutes",
 	"xMinute": "Après %1 minute",
+	"xSecondes": "Après %1 secondes",
+	"xSeconde": "Après %1 seconde",
 	"instantly": "Immédiatement",
 	"defaultAccountName": "Compte principal",
 	"tapToReveal": "Tapez pour révéler",

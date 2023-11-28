@@ -8,7 +8,7 @@ class AuthenticationSettingsNotifier
             authenticationMethod: AuthMethod.pin,
             pinPadShuffle: false,
             lock: UnlockOption.yes,
-            lockTimeout: LockTimeoutOption.one,
+            lockTimeout: LockTimeoutOption.oneMin,
           ),
         );
 
@@ -24,7 +24,7 @@ class AuthenticationSettingsNotifier
         state.copyWith(
           lock: UnlockOption.yes,
           pinPadShuffle: false,
-          lockTimeout: LockTimeoutOption.one,
+          lockTimeout: LockTimeoutOption.oneMin,
         ),
       );
 
