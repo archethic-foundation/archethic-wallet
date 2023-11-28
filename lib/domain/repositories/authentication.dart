@@ -17,7 +17,7 @@ abstract class AuthenticationRepositoryInterface {
   Future<AuthenticationSettings> getSettings();
   Future<void> setSettings(AuthenticationSettings settings);
 
-  Future<DateTime?> getAutoLockTriggerDate();
-  Future<void> setAutoLockTriggerDate(DateTime newAutoLockDate);
-  Future<void> removeAutoLockTriggerDate();
+  Future<DateTime?> getLastInteractionDate();
+  Future<void> setLastInteractionDate(DateTime lastInteractionDate);
+  Future<void> removeLastInteractionDate();
 }

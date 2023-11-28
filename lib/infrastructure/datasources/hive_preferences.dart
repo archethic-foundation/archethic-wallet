@@ -29,7 +29,8 @@ class HivePreferencesDatasource {
   static const String curTheme = 'archethic_wallet_cur_theme';
   static const String lock = 'archethic_wallet_lock';
   static const String lockTimeout = 'archethic_wallet_lock_timeout';
-  static const String autoLockDate = 'archethic_wallet_autolock_date';
+  static const String lastInteractionDate =
+      'archethic_wallet_last_interaction_date';
   static const String hasShownRootWarning =
       'archethic_wallet_has_shown_root_warning';
   static const String pinAttempts = 'archethic_wallet_pin_attempts';
@@ -253,15 +254,15 @@ class HivePreferencesDatasource {
     await _box.clear();
   }
 
-  Future<DateTime?> getAutoLockTriggerDate() async {
-    return _getValue(autoLockDate, defaultValue: null);
+  Future<DateTime?> getLastInteractionDate() async {
+    return _getValue(lastInteractionDate, defaultValue: null);
   }
 
-  Future<void> setAutoLockTriggerDate(DateTime date) async {
-    return _setValue(autoLockDate, date);
+  Future<void> setLastInteractionDate(DateTime date) async {
+    return _setValue(lastInteractionDate, date);
   }
 
-  Future<void> clearAutoLockTriggerDate() async {
-    await _removeValue(autoLockDate);
+  Future<void> clearLastInteractionDate() async {
+    await _removeValue(lastInteractionDate);
   }
 }

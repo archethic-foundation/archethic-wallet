@@ -9,9 +9,9 @@ import 'package:aewallet/infrastructure/repositories/authentication.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/model/device_unlock_option.dart';
+import 'package:async/async.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'authentication.freezed.dart';
@@ -63,23 +63,10 @@ abstract class AuthenticationProviders {
     },
   );
 
-  /// Should request the user authentication when
-  /// application is displayed.
-  static final shouldAuthentOnStartup = FutureProvider<bool>(
-    (ref) async {
-      final autolockState = await ref.watch(
-        AuthenticationProviders.startupAuthentication.future,
-      );
-      final isLockCountdownRunning = await ref
-          .watch(AuthenticationProviders.isLockCountdownRunning.future);
-
-      return isLockCountdownRunning || autolockState.shouldLock;
-    },
-  );
-
-  static final startupAuthentication =
-      AsyncNotifierProvider<StartupAuthentNotifier, StartupAuthentState>(
-    StartupAuthentNotifier.new,
+  static final authenticationGuard = AsyncNotifierProvider<
+      AuthenticationGuardNotifier, AuthenticationGuardState>(
+    AuthenticationGuardNotifier.new,
+    name: AuthenticationGuardNotifier.logName,
   );
 
   static final startupMaskVisibility = StartupMaskVisibilityProvider(
@@ -109,7 +96,7 @@ abstract class AuthenticationProviders {
 
   static Future<void> reset(Ref ref) async {
     await ref.read(AuthenticationProviders.settings.notifier).reset();
-    await ref.read(startupAuthentication.notifier).unscheduleAutolock();
+    await ref.read(authenticationGuard.notifier).unscheduleAutolock();
     ref.read(_authenticationRepository)
       ..resetFailedAttempts()
       ..resetLock();

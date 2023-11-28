@@ -65,18 +65,18 @@ class AuthenticationRepository implements AuthenticationRepositoryInterface {
   }
 
   @override
-  Future<DateTime?> getAutoLockTriggerDate() async {
-    return (await preferences).getAutoLockTriggerDate();
+  Future<DateTime?> getLastInteractionDate() async {
+    return (await preferences).getLastInteractionDate();
   }
 
   @override
-  Future<void> setAutoLockTriggerDate(DateTime newAutoLockDate) async {
-    return (await preferences).setAutoLockTriggerDate(newAutoLockDate);
+  Future<void> setLastInteractionDate(DateTime newAutoLockDate) async {
+    return (await preferences).setLastInteractionDate(newAutoLockDate);
   }
 
   @override
-  Future<void> removeAutoLockTriggerDate() async {
-    return (await preferences).clearAutoLockTriggerDate();
+  Future<void> removeLastInteractionDate() async {
+    return (await preferences).clearLastInteractionDate();
   }
 
   @override

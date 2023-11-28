@@ -350,40 +350,34 @@ abstract class _PinAuthenticationState extends PinAuthenticationState {
 }
 
 /// @nodoc
-mixin _$StartupAuthentState {
-  /// [false] when lock has not been unscheduled on purpose
-  /// [true] otherwise.
-  ///
-  /// When application is killed by OS or user,
-  /// [lockDate] might be not set.
-  /// In that case, we want to force show the lockscreen.
-  ///
-  /// [lockUnscheduled] is useful to discrimate case where
-  ///  - lock has been unscheduled on user action
-  ///  - lock is just not scheduled because of application savage kill
-  bool get lockUnscheduled => throw _privateConstructorUsedError;
-
-  /// After that date, application should lock when displayed
+mixin _$AuthenticationGuardState {
+  /// Date at which the application should be locked
+  /// [null] when application should not be locked
   DateTime? get lockDate => throw _privateConstructorUsedError;
 
+  /// [true] when a timer should be set to
+  /// lock application during use.
+  bool get timerEnabled => throw _privateConstructorUsedError;
+
   @JsonKey(ignore: true)
-  $StartupAuthentStateCopyWith<StartupAuthentState> get copyWith =>
+  $AuthenticationGuardStateCopyWith<AuthenticationGuardState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $StartupAuthentStateCopyWith<$Res> {
-  factory $StartupAuthentStateCopyWith(
-          StartupAuthentState value, $Res Function(StartupAuthentState) then) =
-      _$StartupAuthentStateCopyWithImpl<$Res, StartupAuthentState>;
+abstract class $AuthenticationGuardStateCopyWith<$Res> {
+  factory $AuthenticationGuardStateCopyWith(AuthenticationGuardState value,
+          $Res Function(AuthenticationGuardState) then) =
+      _$AuthenticationGuardStateCopyWithImpl<$Res, AuthenticationGuardState>;
   @useResult
-  $Res call({bool lockUnscheduled, DateTime? lockDate});
+  $Res call({DateTime? lockDate, bool timerEnabled});
 }
 
 /// @nodoc
-class _$StartupAuthentStateCopyWithImpl<$Res, $Val extends StartupAuthentState>
-    implements $StartupAuthentStateCopyWith<$Res> {
-  _$StartupAuthentStateCopyWithImpl(this._value, this._then);
+class _$AuthenticationGuardStateCopyWithImpl<$Res,
+        $Val extends AuthenticationGuardState>
+    implements $AuthenticationGuardStateCopyWith<$Res> {
+  _$AuthenticationGuardStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -393,138 +387,127 @@ class _$StartupAuthentStateCopyWithImpl<$Res, $Val extends StartupAuthentState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? lockUnscheduled = null,
     Object? lockDate = freezed,
+    Object? timerEnabled = null,
   }) {
     return _then(_value.copyWith(
-      lockUnscheduled: null == lockUnscheduled
-          ? _value.lockUnscheduled
-          : lockUnscheduled // ignore: cast_nullable_to_non_nullable
-              as bool,
       lockDate: freezed == lockDate
           ? _value.lockDate
           : lockDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      timerEnabled: null == timerEnabled
+          ? _value.timerEnabled
+          : timerEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$StartupAuthentStateImplCopyWith<$Res>
-    implements $StartupAuthentStateCopyWith<$Res> {
-  factory _$$StartupAuthentStateImplCopyWith(_$StartupAuthentStateImpl value,
-          $Res Function(_$StartupAuthentStateImpl) then) =
-      __$$StartupAuthentStateImplCopyWithImpl<$Res>;
+abstract class _$$AuthenticationGuardStateImplCopyWith<$Res>
+    implements $AuthenticationGuardStateCopyWith<$Res> {
+  factory _$$AuthenticationGuardStateImplCopyWith(
+          _$AuthenticationGuardStateImpl value,
+          $Res Function(_$AuthenticationGuardStateImpl) then) =
+      __$$AuthenticationGuardStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool lockUnscheduled, DateTime? lockDate});
+  $Res call({DateTime? lockDate, bool timerEnabled});
 }
 
 /// @nodoc
-class __$$StartupAuthentStateImplCopyWithImpl<$Res>
-    extends _$StartupAuthentStateCopyWithImpl<$Res, _$StartupAuthentStateImpl>
-    implements _$$StartupAuthentStateImplCopyWith<$Res> {
-  __$$StartupAuthentStateImplCopyWithImpl(_$StartupAuthentStateImpl _value,
-      $Res Function(_$StartupAuthentStateImpl) _then)
+class __$$AuthenticationGuardStateImplCopyWithImpl<$Res>
+    extends _$AuthenticationGuardStateCopyWithImpl<$Res,
+        _$AuthenticationGuardStateImpl>
+    implements _$$AuthenticationGuardStateImplCopyWith<$Res> {
+  __$$AuthenticationGuardStateImplCopyWithImpl(
+      _$AuthenticationGuardStateImpl _value,
+      $Res Function(_$AuthenticationGuardStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? lockUnscheduled = null,
     Object? lockDate = freezed,
+    Object? timerEnabled = null,
   }) {
-    return _then(_$StartupAuthentStateImpl(
-      lockUnscheduled: null == lockUnscheduled
-          ? _value.lockUnscheduled
-          : lockUnscheduled // ignore: cast_nullable_to_non_nullable
-              as bool,
+    return _then(_$AuthenticationGuardStateImpl(
       lockDate: freezed == lockDate
           ? _value.lockDate
           : lockDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      timerEnabled: null == timerEnabled
+          ? _value.timerEnabled
+          : timerEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
 
 /// @nodoc
 
-class _$StartupAuthentStateImpl extends _StartupAuthentState {
-  const _$StartupAuthentStateImpl(
-      {required this.lockUnscheduled, this.lockDate})
+class _$AuthenticationGuardStateImpl extends _AuthenticationGuardState {
+  const _$AuthenticationGuardStateImpl(
+      {required this.lockDate, required this.timerEnabled})
       : super._();
 
-  /// [false] when lock has not been unscheduled on purpose
-  /// [true] otherwise.
-  ///
-  /// When application is killed by OS or user,
-  /// [lockDate] might be not set.
-  /// In that case, we want to force show the lockscreen.
-  ///
-  /// [lockUnscheduled] is useful to discrimate case where
-  ///  - lock has been unscheduled on user action
-  ///  - lock is just not scheduled because of application savage kill
-  @override
-  final bool lockUnscheduled;
-
-  /// After that date, application should lock when displayed
+  /// Date at which the application should be locked
+  /// [null] when application should not be locked
   @override
   final DateTime? lockDate;
 
+  /// [true] when a timer should be set to
+  /// lock application during use.
+  @override
+  final bool timerEnabled;
+
   @override
   String toString() {
-    return 'StartupAuthentState(lockUnscheduled: $lockUnscheduled, lockDate: $lockDate)';
+    return 'AuthenticationGuardState(lockDate: $lockDate, timerEnabled: $timerEnabled)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$StartupAuthentStateImpl &&
-            (identical(other.lockUnscheduled, lockUnscheduled) ||
-                other.lockUnscheduled == lockUnscheduled) &&
+            other is _$AuthenticationGuardStateImpl &&
             (identical(other.lockDate, lockDate) ||
-                other.lockDate == lockDate));
+                other.lockDate == lockDate) &&
+            (identical(other.timerEnabled, timerEnabled) ||
+                other.timerEnabled == timerEnabled));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, lockUnscheduled, lockDate);
+  int get hashCode => Object.hash(runtimeType, lockDate, timerEnabled);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$StartupAuthentStateImplCopyWith<_$StartupAuthentStateImpl> get copyWith =>
-      __$$StartupAuthentStateImplCopyWithImpl<_$StartupAuthentStateImpl>(
-          this, _$identity);
+  _$$AuthenticationGuardStateImplCopyWith<_$AuthenticationGuardStateImpl>
+      get copyWith => __$$AuthenticationGuardStateImplCopyWithImpl<
+          _$AuthenticationGuardStateImpl>(this, _$identity);
 }
 
-abstract class _StartupAuthentState extends StartupAuthentState {
-  const factory _StartupAuthentState(
-      {required final bool lockUnscheduled,
-      final DateTime? lockDate}) = _$StartupAuthentStateImpl;
-  const _StartupAuthentState._() : super._();
+abstract class _AuthenticationGuardState extends AuthenticationGuardState {
+  const factory _AuthenticationGuardState(
+      {required final DateTime? lockDate,
+      required final bool timerEnabled}) = _$AuthenticationGuardStateImpl;
+  const _AuthenticationGuardState._() : super._();
 
   @override
 
-  /// [false] when lock has not been unscheduled on purpose
-  /// [true] otherwise.
-  ///
-  /// When application is killed by OS or user,
-  /// [lockDate] might be not set.
-  /// In that case, we want to force show the lockscreen.
-  ///
-  /// [lockUnscheduled] is useful to discrimate case where
-  ///  - lock has been unscheduled on user action
-  ///  - lock is just not scheduled because of application savage kill
-  bool get lockUnscheduled;
-  @override
-
-  /// After that date, application should lock when displayed
+  /// Date at which the application should be locked
+  /// [null] when application should not be locked
   DateTime? get lockDate;
   @override
+
+  /// [true] when a timer should be set to
+  /// lock application during use.
+  bool get timerEnabled;
+  @override
   @JsonKey(ignore: true)
-  _$$StartupAuthentStateImplCopyWith<_$StartupAuthentStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$AuthenticationGuardStateImplCopyWith<_$AuthenticationGuardStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
