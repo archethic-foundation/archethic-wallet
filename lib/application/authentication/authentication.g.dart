@@ -6,22 +6,22 @@ part of 'authentication.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$startupAuthentNotifierHash() =>
-    r'03bcf26cc75334eb37193036923b8c7d7f48c6d3';
+String _$authenticationGuardNotifierHash() =>
+    r'da6be2f5eeed5e0e471db856cb75d0d53b745b90';
 
-/// See also [StartupAuthentNotifier].
-@ProviderFor(StartupAuthentNotifier)
-final startupAuthentNotifierProvider =
-    AsyncNotifierProvider<StartupAuthentNotifier, StartupAuthentState>.internal(
-  StartupAuthentNotifier.new,
-  name: r'startupAuthentNotifierProvider',
+/// See also [AuthenticationGuardNotifier].
+@ProviderFor(AuthenticationGuardNotifier)
+final authenticationGuardNotifierProvider = AsyncNotifierProvider<
+    AuthenticationGuardNotifier, AuthenticationGuardState>.internal(
+  AuthenticationGuardNotifier.new,
+  name: r'authenticationGuardNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$startupAuthentNotifierHash,
+      : _$authenticationGuardNotifierHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$StartupAuthentNotifier = AsyncNotifier<StartupAuthentState>;
+typedef _$AuthenticationGuardNotifier = AsyncNotifier<AuthenticationGuardState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

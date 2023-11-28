@@ -1,9 +1,8 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/model/authentication_method.dart';
-import 'package:aewallet/model/device_lock_timeout.dart';
-import 'package:aewallet/model/device_unlock_option.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/authenticate/lock_screen.dart';
@@ -60,21 +59,18 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
   static final _forceAuthenticationLock = Lock();
   RestartableTimer? timer;
 
+  static const _logName = 'AuthenticationGuard-Widget';
+
   @override
   void initState() {
+    log(
+      'Init state',
+      name: _logName,
+    );
+
     WidgetsBinding.instance.addObserver(this);
-
-    final authentication = ref.read(AuthenticationProviders.settings);
-    if (authentication.lock == UnlockOption.yes &&
-        authentication.lockTimeout != LockTimeoutOption.zero) {
-      timer = RestartableTimer(
-        authentication.lockTimeout.duration,
-        onInactivityTimeout,
-      );
-    }
-
     SchedulerBinding.instance.addPostFrameCallback(
-      (_) => _forceAuthentIfNeeded(context, ref),
+      (_) => _forceAuthentIfNeeded(),
     );
 
     super.initState();
@@ -89,143 +85,201 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    log(
+      'AppLifecycleState : $state',
+      name: _logName,
+    );
     switch (state) {
       case AppLifecycleState.resumed:
-        _forceAuthentIfNeeded(context, ref);
+        _forceAuthentIfNeeded();
+
         break;
       case AppLifecycleState.inactive:
-        if (ref.read(AuthenticationProviders.startupMaskVisibility) ==
-            StartupMaskVisibility.visible) return;
         _showLockMask();
-
+        ref
+            .read(AuthenticationProviders.authenticationGuard.notifier)
+            .scheduleNextStartupAutolock();
         break;
       case AppLifecycleState.paused:
         break;
       case AppLifecycleState.detached:
         break;
       case AppLifecycleState.hidden:
-        ref
-            .read(AuthenticationProviders.startupAuthentication.notifier)
-            .scheduleAutolock();
         break;
     }
     super.didChangeAppLifecycleState(state);
   }
 
+  void _unscheduleLock() {
+    log('Unschedule lock', name: _logName);
+
+    timer?.cancel();
+    timer = null;
+  }
+
+  void _scheduleLock(Duration durationBeforeLock) {
+    log('Schedule lock in $durationBeforeLock', name: _logName);
+    timer?.cancel();
+    timer = RestartableTimer(
+      durationBeforeLock,
+      _forceAuthent,
+    );
+  }
+
   void _showLockMask() {
-    _LockMask.show(context, () => _forceAuthentIfNeeded(context, ref));
+    log(
+      'Show lock mask',
+      name: _logName,
+    );
+    if (ref.read(AuthenticationProviders.startupMaskVisibility) ==
+        StartupMaskVisibility.visible) return;
+    _LockMask.show(context);
     ref.read(AuthenticationProviders.startupMaskVisibility.notifier).state =
         StartupMaskVisibility.visible;
   }
 
+  void _hideLockMask() {
+    log(
+      'Hide lock mask',
+      name: _logName,
+    );
+    _LockMask.hide(context);
+    ref.read(AuthenticationProviders.startupMaskVisibility.notifier).state =
+        StartupMaskVisibility.hidden;
+  }
+
+  void _updateLockTimer() {
+    final value = ref
+        .watch(
+          AuthenticationProviders.authenticationGuard,
+        )
+        .valueOrNull;
+    final lockDate = value?.lockDate;
+
+    if (value == null || lockDate == null) {
+      _unscheduleLock();
+      return;
+    }
+
+    final durationBeforeLock = lockDate.difference(DateTime.now());
+    if (value.timerEnabled && durationBeforeLock > Duration.zero) {
+      _scheduleLock(durationBeforeLock);
+      return;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    _updateLockTimer();
+
     return Listener(
       onPointerDown: (details) {
-        _forceAuthentIfNeeded(context, ref);
-        if (timer != null) timer!.reset();
+        ref
+            .read(
+              AuthenticationProviders.authenticationGuard.notifier,
+            )
+            .scheduleAutolock();
       },
       child: widget.child,
     );
   }
 
-  Future<void> onInactivityTimeout() async {
-    if (ref.read(AuthenticationProviders.startupMaskVisibility) ==
-        StartupMaskVisibility.visible) return;
-    _showLockMask();
+  Future<void> _forceAuthentIfNeeded() async {
+    final value = await ref.read(
+      AuthenticationProviders.authenticationGuard.future,
+    );
+
+    final lockDate = value.lockDate;
+
+    if (lockDate == null) {
+      _hideLockMask();
+      return;
+    }
+
+    final durationBeforeLock = lockDate.difference(DateTime.now());
+    log(
+      'duration before lock : $durationBeforeLock',
+      name: _logName,
+    );
+    if (durationBeforeLock <= Duration.zero) {
+      await _forceAuthent();
+      return;
+    }
+    _hideLockMask();
   }
 
-  Future<void> _forceAuthentIfNeeded(
-    BuildContext context,
-    WidgetRef ref,
-  ) async {
+  Future<void> _forceAuthent() async {
     if (_forceAuthenticationLock.inLock) {
       return;
     }
 
     await _forceAuthenticationLock.synchronized(() async {
-      final shouldLockOnStartup = await ref.read(
-        AuthenticationProviders.shouldAuthentOnStartup.future,
-      );
-
-      if (shouldLockOnStartup) {
-        _showLockMask();
-        await AuthFactory.forceAuthenticate(
-          context,
-          ref,
-          authMethod: ref.read(
-            AuthenticationProviders.settings.select(
-              (authSettings) => AuthenticationMethod(
-                authSettings.authenticationMethod,
-              ),
+      _showLockMask();
+      await AuthFactory.forceAuthenticate(
+        context,
+        ref,
+        authMethod: ref.read(
+          AuthenticationProviders.settings.select(
+            (authSettings) => AuthenticationMethod(
+              authSettings.authenticationMethod,
             ),
           ),
-          canCancel: false,
-        );
-      }
-      await ref
-          .read(AuthenticationProviders.startupAuthentication.notifier)
-          .unscheduleAutolock();
+        ),
+        canCancel: false,
+      );
 
-      _LockMask.hide(context);
-      ref.read(AuthenticationProviders.startupMaskVisibility.notifier).state =
-          StartupMaskVisibility.hidden;
-      if (timer != null) timer!.reset();
+      await ref
+          .read(AuthenticationProviders.authenticationGuard.notifier)
+          .scheduleAutolock();
+      _hideLockMask();
     });
   }
 }
 
 class _LockMask extends ConsumerWidget {
-  const _LockMask({required this.onMaskTapCallback});
-  final Future<void> Function() onMaskTapCallback;
+  const _LockMask();
   static const routeName = 'LockMask';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return GestureDetector(
-      onTap: () async {
-        await onMaskTapCallback();
-      },
-      child: WillPopScope(
-        onWillPop: () async => false,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            SizedBox.expand(
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(
-                      ArchethicTheme.backgroundWelcome,
-                    ),
-                    fit: MediaQuery.of(context).size.width >= 400
-                        ? BoxFit.fitWidth
-                        : BoxFit.fitHeight,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          SizedBox.expand(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                    ArchethicTheme.backgroundWelcome,
                   ),
+                  fit: MediaQuery.of(context).size.width >= 400
+                      ? BoxFit.fitWidth
+                      : BoxFit.fitHeight,
                 ),
               ),
             ),
-            const LitStarfieldContainer(
-              backgroundDecoration: BoxDecoration(
-                color: Colors.transparent,
-              ),
+          ),
+          const LitStarfieldContainer(
+            backgroundDecoration: BoxDecoration(
+              color: Colors.transparent,
             ),
-            Image.asset(
-              '${ArchethicTheme.assetsFolder}logo_crystal.png',
-              width: 200,
-            ),
-          ],
-        ),
+          ),
+          Image.asset(
+            '${ArchethicTheme.assetsFolder}logo_crystal.png',
+            width: 200,
+          ),
+        ],
       ),
     );
   }
 
-  static void show(
-      BuildContext context, Future<void> Function() onMaskTapCallback) {
+  static void show(BuildContext context) {
     log('Show', name: routeName);
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => _LockMask(onMaskTapCallback: onMaskTapCallback),
+        builder: (context) => const _LockMask(),
         settings: const RouteSettings(name: routeName),
       ),
     );
