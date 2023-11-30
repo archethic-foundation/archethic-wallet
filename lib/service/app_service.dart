@@ -145,8 +145,8 @@ class AppService {
     for (final transactionInput in transactionInputs) {
       if (transactionInput.from!.toUpperCase() !=
               notificationRecipientAddress.toUpperCase() &&
-          transactionInput.timestamp! > mostRecentTimestamp &&
-          transactionInput.timestamp! > transactionTimestamp) {
+          transactionInput.timestamp! >= mostRecentTimestamp &&
+          transactionInput.timestamp! >= transactionTimestamp) {
         final recentTransaction = RecentTransaction()
           ..address = transactionInput.from
           ..amount = fromBigInt(transactionInput.amount).toDouble()
