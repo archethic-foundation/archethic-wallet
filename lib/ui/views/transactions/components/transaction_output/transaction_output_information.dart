@@ -17,15 +17,22 @@ class TransactionOutputInformation extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
-    return TransactionInformation(
-      isEmpty: transaction.recipient == null,
-      message: '${localizations.txListTo} ${AddressFormatters(
-        transaction.contactInformation == null
-            ? transaction.recipient == null
-                ? ''
-                : transaction.recipient!
-            : transaction.contactInformation!.format,
-      ).getShortString4()}',
-    );
+    return transaction.recipient ==
+            '00000000000000000000000000000000000000000000000000000000000000000000'
+        ? TransactionInformation(
+            isEmpty: transaction.recipient == null,
+            message:
+                '${localizations.txListTo} ${localizations.burnAddressLbl}',
+          )
+        : TransactionInformation(
+            isEmpty: transaction.recipient == null,
+            message: '${localizations.txListTo} ${AddressFormatters(
+              transaction.contactInformation == null
+                  ? transaction.recipient == null
+                      ? ''
+                      : transaction.recipient!
+                  : transaction.contactInformation!.format,
+            ).getShortString4()}',
+          );
   }
 }

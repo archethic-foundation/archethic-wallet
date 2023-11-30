@@ -610,5 +610,6 @@
   "removeKeychainAtLeast1": "You must keep at least one account in your keychain.",
   "balance": "Balance",
   "executionSC": "Smart-contract execution",
-  "seedHex": "View in Hexadecimal"
+  "seedHex": "View in Hexadecimal",
+  "burnAddressLbl": "Burn address"
 }
