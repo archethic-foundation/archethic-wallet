@@ -587,5 +587,6 @@
 	"removeKeychainAtLeast1": "Vous devez conserver au moins un service dans votre porte-clés.",
 	"balance": "Balance",
 	"executionSC": "Execution Smart-contract",
-	"seedHex": "Voir en hexadécimal"
+	"seedHex": "Voir en hexadécimal",
+	"burnAddressLbl": "Burn address"
 }

@@ -59,7 +59,7 @@ class TransferOutput extends ConsumerWidget {
         const SizedBox(
           width: 2,
         ),
-        const TransactionOutputIcon(),
+        TransactionOutputIcon(transaction.recipient!),
       ],
     );
   }

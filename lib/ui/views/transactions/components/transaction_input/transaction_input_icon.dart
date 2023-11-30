@@ -9,19 +9,12 @@ class TransactionInputIcon extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const DecoratedBox(
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: Colors.green),
-        ),
-      ),
-      child: Padding(
-        padding: EdgeInsets.only(bottom: 1),
-        child: Icon(
-          Symbols.call_received,
-          size: 12,
-          color: Colors.green,
-        ),
+    return const Padding(
+      padding: EdgeInsets.only(top: 1),
+      child: Icon(
+        Symbols.call_received,
+        size: 12,
+        color: Colors.green,
       ),
     );
   }
