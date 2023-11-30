@@ -2,6 +2,7 @@
 
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme_base.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,7 +17,7 @@ class NetworkChoiceInfos extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(SettingsProviders.settings);
     final network = settings.network;
-    return Container(
+    Widget content = Container(
       padding: const EdgeInsets.only(right: 10),
       width: 230,
       child: Row(
@@ -61,9 +62,14 @@ class NetworkChoiceInfos extends ConsumerWidget {
           ),
         ],
       ),
-    )
-        .animate()
-        .fade(duration: const Duration(milliseconds: 200))
-        .scale(duration: const Duration(milliseconds: 200));
+    );
+
+    if (!kIsWeb) {
+      content = content
+          .animate()
+          .fade(duration: const Duration(milliseconds: 200))
+          .scale(duration: const Duration(milliseconds: 200));
+    }
+    return content;
   }
 }

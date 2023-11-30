@@ -1,10 +1,16 @@
 {
     "name": "Archethic Wallet",
     "description": "Archethic Wallet",
-    "version": "0.2.25.1",
+    "version": "2.3.3.482",
     "content_security_policy": {
         "extension_pages": "script-src 'self' ; object-src 'self'"
     },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "permissions": [
+        "activeTab"
+    ],
     "action": {
         "default_popup": "index.html",
         "default_icon": "icons/Icon-192.png"
