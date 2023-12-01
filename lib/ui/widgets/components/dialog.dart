@@ -49,9 +49,10 @@ class AppDialogs {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                RichText(
-                  text: TextSpan(
+                Text.rich(
+                  TextSpan(
                     text: '',
+                    style: ArchethicThemeStyles.textStyleSize12W100Primary,
                     children: <InlineSpan>[
                       TextSpan(
                         text: content,

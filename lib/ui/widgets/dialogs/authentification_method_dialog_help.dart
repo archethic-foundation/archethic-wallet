@@ -6,6 +6,7 @@ import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,85 +33,105 @@ class AuthentificationMethodDialogHelp {
               Radius.circular(16),
             ),
           ),
-          content: ArchethicScrollbar(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  const AuthenticationMethod(
-                    AuthMethod.pin,
-                  ).getDisplayName(context),
-                  style: ArchethicThemeStyles.textStyleSize12W400Primary,
+          content: kIsWeb
+              ? ArchethicScrollbar(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        const AuthenticationMethod(
+                          AuthMethod.password,
+                        ).getDisplayName(context),
+                        style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                      ),
+                      Text(
+                        const AuthenticationMethod(
+                          AuthMethod.password,
+                        ).getDescription(context),
+                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                      ),
+                    ],
+                  ),
+                )
+              : ArchethicScrollbar(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        const AuthenticationMethod(
+                          AuthMethod.pin,
+                        ).getDisplayName(context),
+                        style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                      ),
+                      Text(
+                        const AuthenticationMethod(
+                          AuthMethod.pin,
+                        ).getDescription(context),
+                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        const AuthenticationMethod(
+                          AuthMethod.password,
+                        ).getDisplayName(context),
+                        style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                      ),
+                      Text(
+                        const AuthenticationMethod(
+                          AuthMethod.password,
+                        ).getDescription(context),
+                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        const AuthenticationMethod(
+                          AuthMethod.biometrics,
+                        ).getDisplayName(context),
+                        style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                      ),
+                      Text(
+                        const AuthenticationMethod(
+                          AuthMethod.biometrics,
+                        ).getDescription(context),
+                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        const AuthenticationMethod(
+                          AuthMethod.biometricsUniris,
+                        ).getDisplayName(context),
+                        style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                      ),
+                      Text(
+                        const AuthenticationMethod(
+                          AuthMethod.biometricsUniris,
+                        ).getDescription(context),
+                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        const AuthenticationMethod(
+                          AuthMethod.yubikeyWithYubicloud,
+                        ).getDisplayName(context),
+                        style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                      ),
+                      Text(
+                        const AuthenticationMethod(
+                          AuthMethod.yubikeyWithYubicloud,
+                        ).getDescription(context),
+                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                      ),
+                    ],
+                  ),
                 ),
-                Text(
-                  const AuthenticationMethod(
-                    AuthMethod.pin,
-                  ).getDescription(context),
-                  style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  const AuthenticationMethod(
-                    AuthMethod.password,
-                  ).getDisplayName(context),
-                  style: ArchethicThemeStyles.textStyleSize12W400Primary,
-                ),
-                Text(
-                  const AuthenticationMethod(
-                    AuthMethod.password,
-                  ).getDescription(context),
-                  style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  const AuthenticationMethod(
-                    AuthMethod.biometrics,
-                  ).getDisplayName(context),
-                  style: ArchethicThemeStyles.textStyleSize12W400Primary,
-                ),
-                Text(
-                  const AuthenticationMethod(
-                    AuthMethod.biometrics,
-                  ).getDescription(context),
-                  style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  const AuthenticationMethod(
-                    AuthMethod.biometricsUniris,
-                  ).getDisplayName(context),
-                  style: ArchethicThemeStyles.textStyleSize12W400Primary,
-                ),
-                Text(
-                  const AuthenticationMethod(
-                    AuthMethod.biometricsUniris,
-                  ).getDescription(context),
-                  style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  const AuthenticationMethod(
-                    AuthMethod.yubikeyWithYubicloud,
-                  ).getDisplayName(context),
-                  style: ArchethicThemeStyles.textStyleSize12W400Primary,
-                ),
-                Text(
-                  const AuthenticationMethod(
-                    AuthMethod.yubikeyWithYubicloud,
-                  ).getDescription(context),
-                  style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                ),
-              ],
-            ),
-          ),
           actions: <Widget>[
             AppButton(
               key: const Key('closeButton'),

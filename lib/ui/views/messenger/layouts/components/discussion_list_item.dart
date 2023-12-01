@@ -163,10 +163,10 @@ class _LastMessagePreview extends ConsumerWidget {
           data: (contact) => contact.value?.format,
         );
 
-    return RichText(
+    return Text.rich(
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
-      text: TextSpan(
+      TextSpan(
         children: <TextSpan>[
           TextSpan(
             text: (contactName?.startsWith('@') ?? false)

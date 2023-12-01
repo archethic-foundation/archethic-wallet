@@ -132,7 +132,7 @@ class ArchethicThemeStyles {
     );
   }
 
-  static TextStyle get textStyleSize14W200Bakckground {
+  static TextStyle get textStyleSize14W200Background {
     return TextStyle(
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w400,

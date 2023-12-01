@@ -60,9 +60,9 @@ class UIUtil {
       case ThreeLineAddressTextType.primary60:
         return Column(
           children: <Widget>[
-            RichText(
+            Text.rich(
               textAlign: TextAlign.center,
-              text: TextSpan(
+              TextSpan(
                 text: '',
                 children: <InlineSpan>[
                   TextSpan(
@@ -76,9 +76,9 @@ class UIUtil {
                 ],
               ),
             ),
-            RichText(
+            Text.rich(
               textAlign: TextAlign.center,
-              text: TextSpan(
+              TextSpan(
                 text: '',
                 children: <InlineSpan>[
                   TextSpan(
@@ -88,9 +88,9 @@ class UIUtil {
                 ],
               ),
             ),
-            RichText(
+            Text.rich(
               textAlign: TextAlign.center,
-              text: TextSpan(
+              TextSpan(
                 text: '',
                 children: <InlineSpan>[
                   TextSpan(
@@ -107,10 +107,10 @@ class UIUtil {
           ],
         );
       case ThreeLineAddressTextType.primary:
-        final Widget contactWidget = contactName != null
-            ? RichText(
+        final contactWidget = contactName != null
+            ? Text.rich(
                 textAlign: TextAlign.center,
-                text: TextSpan(
+                TextSpan(
                   text: contactName,
                   style: ArchethicThemeStyles.textStyleSize14W100Primary,
                 ),
@@ -119,9 +119,9 @@ class UIUtil {
         return Column(
           children: <Widget>[
             contactWidget,
-            RichText(
+            Text.rich(
               textAlign: TextAlign.center,
-              text: TextSpan(
+              TextSpan(
                 text: '',
                 children: <InlineSpan>[
                   TextSpan(
@@ -135,9 +135,9 @@ class UIUtil {
                 ],
               ),
             ),
-            RichText(
+            Text.rich(
               textAlign: TextAlign.center,
-              text: TextSpan(
+              TextSpan(
                 text: '',
                 children: <InlineSpan>[
                   TextSpan(
@@ -147,9 +147,9 @@ class UIUtil {
                 ],
               ),
             ),
-            RichText(
+            Text.rich(
               textAlign: TextAlign.center,
-              text: TextSpan(
+              TextSpan(
                 text: '',
                 children: <InlineSpan>[
                   TextSpan(
@@ -241,7 +241,7 @@ class UIUtil {
               Expanded(
                 child: Text(
                   content,
-                  style: ArchethicThemeStyles.textStyleSize14W200Bakckground,
+                  style: ArchethicThemeStyles.textStyleSize14W200Background,
                   textAlign: TextAlign.start,
                 ),
               ),

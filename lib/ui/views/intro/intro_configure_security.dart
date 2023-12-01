@@ -130,7 +130,7 @@ class _IntroConfigureSecurityState
                             AutoSizeText(
                               localizations.securityHeader,
                               style: ArchethicThemeStyles
-                                  .textStyleSize20W700Primary,
+                                  .textStyleSize24W700Primary,
                               textAlign: TextAlign.justify,
                               maxLines: 6,
                               stepGranularity: 0.5,

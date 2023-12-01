@@ -404,8 +404,6 @@ class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
   }
 
   void setName(BuildContext context, String name) {
-    state = state.copyWith(error: '');
-
     if (name.isEmpty) {
       state = state.copyWith(
         name: name,

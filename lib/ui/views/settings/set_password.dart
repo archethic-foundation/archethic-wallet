@@ -62,7 +62,7 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
     final localizations = AppLocalizations.of(context)!;
 
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -86,7 +86,6 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
                 SafeArea(
               minimum: EdgeInsets.only(
                 bottom: MediaQuery.of(context).size.height * 0.035,
-                top: MediaQuery.of(context).size.height * 0.075,
               ),
               child: Column(
                 children: <Widget>[
@@ -126,7 +125,7 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
                                     child: AutoSizeText(
                                       widget.header!,
                                       style: ArchethicThemeStyles
-                                          .textStyleSize14W600Primary,
+                                          .textStyleSize24W700Primary,
                                     ),
                                   ),
 
@@ -217,20 +216,23 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
                                       right: MediaQuery.of(context).size.width *
                                           0.105,
                                     ),
-                                    width: 150,
                                     child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        LinearProgressIndicator(
-                                          value: passwordStrength,
-                                          backgroundColor: Colors.grey[300],
-                                          color: passwordStrength <= 0.25
-                                              ? Colors.red
-                                              : passwordStrength <= 0.6
-                                                  ? Colors.orange
-                                                  : passwordStrength <= 0.8
-                                                      ? Colors.yellow
-                                                      : Colors.green,
-                                          minHeight: 5,
+                                        SizedBox(
+                                          width: 150,
+                                          child: LinearProgressIndicator(
+                                            value: passwordStrength,
+                                            backgroundColor: Colors.grey[300],
+                                            color: passwordStrength <= 0.25
+                                                ? Colors.red
+                                                : passwordStrength <= 0.6
+                                                    ? Colors.orange
+                                                    : passwordStrength <= 0.8
+                                                        ? Colors.yellow
+                                                        : Colors.green,
+                                            minHeight: 5,
+                                          ),
                                         ),
                                         if (passwordStrength <= 0.25)
                                           Text(

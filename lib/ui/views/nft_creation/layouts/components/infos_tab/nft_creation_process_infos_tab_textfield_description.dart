@@ -108,9 +108,7 @@ class _NFTCreationProcessInfosTabTextFieldDescriptionState
                               maxLines: 6,
                               autocorrect: false,
                               controller: nftDescriptionController,
-                              onChanged: (text) async {
-                                nftCreationNotifier.setDescription(text);
-                              },
+                              onChanged: nftCreationNotifier.setDescription,
                               focusNode: nftDescriptionFocusNode,
                               textInputAction: TextInputAction.newline,
                               keyboardType: TextInputType.multiline,

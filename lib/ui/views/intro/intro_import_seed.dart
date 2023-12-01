@@ -119,7 +119,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
     }
 
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(

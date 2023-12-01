@@ -108,11 +108,7 @@ class _NFTCreationProcessInfosTabTextFieldSymbolState
                                 ),
                                 autocorrect: false,
                                 controller: nftSymbolController,
-                                onChanged: (text) async {
-                                  nftCreationNotifier.setSymbol(
-                                    text,
-                                  );
-                                },
+                                onChanged: nftCreationNotifier.setSymbol,
                                 focusNode: nftSymbolFocusNode,
                                 textInputAction: TextInputAction.done,
                                 keyboardType: TextInputType.text,

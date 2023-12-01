@@ -65,7 +65,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
     final localizations = AppLocalizations.of(context)!;
 
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -126,7 +126,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
                                     child: AutoSizeText(
                                       widget.header!,
                                       style: ArchethicThemeStyles
-                                          .textStyleSize14W600Primary,
+                                          .textStyleSize24W700Primary,
                                     ),
                                   ),
                                 if (widget.description != null)

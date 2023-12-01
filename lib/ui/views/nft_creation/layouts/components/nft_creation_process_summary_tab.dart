@@ -40,6 +40,8 @@ class _NFTCreationProcessSummaryTabState
                 Padding(
                   padding: const EdgeInsets.only(
                     top: 20,
+                    left: 10,
+                    right: 10,
                   ),
                   child: FeeInfos(
                     asyncFeeEstimation: nftCreation.feeEstimation,

@@ -106,7 +106,7 @@ class _NFTCreationProcessInfosTabTextFieldNameState
                             ),
                             autocorrect: false,
                             controller: nftNameController,
-                            onChanged: (text) async {
+                            onChanged: (text) {
                               nftCreationNotifier.setName(context, text);
                             },
                             focusNode: nftNameFocusNode,
