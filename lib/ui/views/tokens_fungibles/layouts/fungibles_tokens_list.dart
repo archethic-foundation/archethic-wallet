@@ -15,6 +15,7 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/number_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -202,12 +203,16 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        accountFungibleToken
-                                            .tokenInformation!.name!,
-                                        style: ArchethicThemeStyles
-                                            .textStyleSize12W600Primary,
+                                      Expanded(
+                                        child: AutoSizeText(
+                                          accountFungibleToken
+                                              .tokenInformation!.name!,
+                                          style: ArchethicThemeStyles
+                                              .textStyleSize12W600Primary,
+                                        ),
                                       ),
                                       const SizedBox(
                                         width: 5,
@@ -219,8 +224,10 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                                     ],
                                   ),
                                   Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
-                                      Text(
+                                      AutoSizeText(
                                         AddressFormatters(
                                           accountFungibleToken
                                               .tokenInformation!.address!,
