@@ -75,9 +75,13 @@ class AccountsListWidget extends ConsumerWidget {
                     .animate(delay: (100 * index).ms)
                     .fadeIn(duration: 900.ms, delay: 200.ms)
                     .shimmer(
-                        blendMode: BlendMode.srcOver, color: Colors.white12)
+                      blendMode: BlendMode.srcOver,
+                      color: Colors.white12,
+                    )
                     .move(
-                        begin: const Offset(-16, 0), curve: Curves.easeOutQuad);
+                      begin: const Offset(-16, 0),
+                      curve: Curves.easeOutQuad,
+                    );
               }
               return item;
             },
