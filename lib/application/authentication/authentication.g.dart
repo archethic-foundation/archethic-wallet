@@ -7,7 +7,7 @@ part of 'authentication.dart';
 // **************************************************************************
 
 String _$authenticationGuardNotifierHash() =>
-    r'da6be2f5eeed5e0e471db856cb75d0d53b745b90';
+    r'982e3206bb0b5df384891a2ef28d0eee66e7644c';
 
 /// See also [AuthenticationGuardNotifier].
 @ProviderFor(AuthenticationGuardNotifier)
