@@ -172,8 +172,8 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
   Widget build(BuildContext context) {
     _updateLockTimer();
 
-    return Listener(
-      onPointerDown: (details) {
+    return InputListener(
+      onInput: () {
         ref
             .read(
               AuthenticationProviders.authenticationGuard.notifier,
@@ -234,6 +234,28 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
       _hideLockMask();
     });
   }
+}
+
+class InputListener extends StatelessWidget {
+  const InputListener({
+    super.key,
+    required this.onInput,
+    required this.child,
+  });
+
+  final VoidCallback onInput;
+  final Widget child;
+  @override
+  Widget build(BuildContext context) => Focus(
+        onKey: (_, __) {
+          onInput();
+          return KeyEventResult.ignored;
+        },
+        child: Listener(
+          onPointerDown: (_) => onInput(),
+          child: child,
+        ),
+      );
 }
 
 class _LockMask extends ConsumerWidget {
