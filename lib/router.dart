@@ -23,10 +23,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class RoutesPath {
-  GoRouter createRouter(WidgetRef ref) {
+  GoRouter createRouter(
+    WidgetRef ref,
+    GlobalKey<NavigatorState> rootNavigatorKey,
+  ) {
     final deeplinkRpcReceiver = sl.get<ArchethicDeeplinkRPCServer>();
 
     return GoRouter(
+      navigatorKey: rootNavigatorKey,
       initialLocation: '/',
       routes: <GoRoute>[
         GoRoute(
