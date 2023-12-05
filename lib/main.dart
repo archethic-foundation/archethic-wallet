@@ -31,6 +31,7 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -190,7 +191,7 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
       ArchethicTheme.statusBar,
     );
 
-    final router = RoutesPath().createRouter(ref);
+    final router = RoutesPath().createRouter(ref, rootNavigatorKey);
 
     return GestureDetector(
       onTap: () {
@@ -201,9 +202,7 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
         textStyle: ArchethicThemeStyles.textStyleSize14W700Background,
         backgroundColor: ArchethicTheme.background,
         child: MaterialApp.router(
-          routerDelegate: router.routerDelegate,
-          routeInformationParser: router.routeInformationParser,
-          key: rootNavigatorKey,
+          routerConfig: router,
           debugShowCheckedModeBanner: false,
           title: 'Archethic Wallet',
           theme: ThemeData(
@@ -290,7 +289,7 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
   }
 
   void _goToIntroScreen() {
-    Navigator.of(context).pushReplacementNamed('/intro_welcome');
+    context.go('/intro_welcome');
   }
 
   @override
