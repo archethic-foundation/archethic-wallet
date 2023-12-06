@@ -3,10 +3,10 @@
 import 'dart:async';
 
 // Project imports:
+import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/bus/otp_event.dart';
-import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
-import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
+import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -23,8 +23,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:material_symbols_icons/symbols.dart';
-import 'package:yubidart/yubidart.dart';
+import 'package:go_router/go_router.dart';
 
 class YubikeyScreen extends ConsumerStatefulWidget {
   const YubikeyScreen({
@@ -84,17 +83,24 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
   }
 
   Future<void> _verifyOTP(String otp) async {
+    final result = await ref
+        .read(
+          AuthenticationProviders.yubikeyAuthentication.notifier,
+        )
+        .authenticateWithYubikey(
+          YubikeyCredentials(
+            otp: otp,
+          ),
+        );
+
     final localizations = AppLocalizations.of(context)!;
 
-    // TODO(chralu): utilisation provider ? (1)
-    final preferences = await HivePreferencesDatasource.getInstance();
-    final vault = await HiveVaultDatasource.getInstance();
-    final yubikeyClientAPIKey = vault.getYubikeyClientAPIKey();
-    final yubikeyClientID = vault.getYubikeyClientID();
-    final verificationResponse =
-        await Yubidart().otp.verify(otp, yubikeyClientAPIKey, yubikeyClientID);
-    switch (verificationResponse.status) {
-      case 'BAD_OTP':
+    await result.maybeMap(
+      success: (_) {
+        context.pop();
+        return;
+      },
+      orElse: () async {
         UIUtil.showSnackbar(
           localizations.yubikeyError_BAD_OTP,
           context,
@@ -102,121 +108,10 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
           ArchethicTheme.text,
           ArchethicTheme.snackBarShadow,
         );
-        Navigator.of(context).pop(false);
-        break;
-      case 'BACKEND_ERROR':
-        UIUtil.showSnackbar(
-          localizations.yubikeyError_BACKEND_ERROR,
-          context,
-          ref,
-          ArchethicTheme.text,
-          ArchethicTheme.snackBarShadow,
-        );
-        Navigator.of(context).pop(false);
-        break;
-      case 'BAD_SIGNATURE':
-        UIUtil.showSnackbar(
-          localizations.yubikeyError_BAD_SIGNATURE,
-          context,
-          ref,
-          ArchethicTheme.text,
-          ArchethicTheme.snackBarShadow,
-        );
-        Navigator.of(context).pop(false);
-        break;
-      case 'MISSING_PARAMETER':
-        UIUtil.showSnackbar(
-          localizations.yubikeyError_MISSING_PARAMETER,
-          context,
-          ref,
-          ArchethicTheme.text,
-          ArchethicTheme.snackBarShadow,
-        );
-        Navigator.of(context).pop(false);
-        break;
-      case 'NOT_ENOUGH_ANSWERS':
-        UIUtil.showSnackbar(
-          localizations.yubikeyError_NOT_ENOUGH_ANSWERS,
-          context,
-          ref,
-          ArchethicTheme.text,
-          ArchethicTheme.snackBarShadow,
-        );
-        Navigator.of(context).pop(false);
-        break;
-      case 'NO_SUCH_CLIENT':
-        UIUtil.showSnackbar(
-          localizations.yubikeyError_NO_SUCH_CLIENT,
-          context,
-          ref,
-          ArchethicTheme.text,
-          ArchethicTheme.snackBarShadow,
-        );
-        Navigator.of(context).pop(false);
-        break;
-      case 'OPERATION_NOT_ALLOWED':
-        UIUtil.showSnackbar(
-          localizations.yubikeyError_OPERATION_NOT_ALLOWED,
-          context,
-          ref,
-          ArchethicTheme.text,
-          ArchethicTheme.snackBarShadow,
-        );
-        Navigator.of(context).pop(false);
-        break;
-      case 'REPLAYED_OTP':
-        UIUtil.showSnackbar(
-          localizations.yubikeyError_REPLAYED_OTP,
-          context,
-          ref,
-          ArchethicTheme.text,
-          ArchethicTheme.snackBarShadow,
-        );
-        Navigator.of(context).pop(false);
-        break;
-      case 'REPLAYED_REQUEST':
-        UIUtil.showSnackbar(
-          localizations.yubikeyError_REPLAYED_REQUEST,
-          context,
-          ref,
-          ArchethicTheme.text,
-          ArchethicTheme.snackBarShadow,
-        );
-        Navigator.of(context).pop(false);
-        break;
-      case 'RESPONSE_KO':
-        UIUtil.showSnackbar(
-          localizations.yubikeyError_RESPONSE_KO,
-          context,
-          ref,
-          ArchethicTheme.text,
-          ArchethicTheme.snackBarShadow,
-        );
-        Navigator.of(context).pop(false);
-        break;
-      case 'OK':
-        UIUtil.showSnackbar(
-          verificationResponse.status,
-          context,
-          ref,
-          ArchethicTheme.text,
-          ArchethicTheme.snackBarShadow,
-          icon: Symbols.info,
-        );
-        preferences.resetLockAttempts();
-        Navigator.of(context).pop(true);
-        break;
-      default:
-        UIUtil.showSnackbar(
-          verificationResponse.status,
-          context,
-          ref,
-          ArchethicTheme.text,
-          ArchethicTheme.snackBarShadow,
-        );
-        Navigator.of(context).pop(false);
-        break;
-    }
+        context.pop();
+      },
+    );
+
     setState(() {});
   }
 

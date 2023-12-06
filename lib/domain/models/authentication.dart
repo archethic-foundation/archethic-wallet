@@ -16,6 +16,10 @@ class Credentials with _$Credentials {
     required String password,
     required String seed,
   }) = PasswordCredentials;
+
+  const factory Credentials.yubikey({
+    required String otp,
+  }) = YubikeyCredentials;
 }
 
 @freezed

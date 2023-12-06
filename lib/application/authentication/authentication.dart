@@ -16,6 +16,7 @@ part 'authentication.freezed.dart';
 part 'authentication.g.dart';
 part 'password.dart';
 part 'pin.dart';
+part 'yubikey.dart';
 part 'settings.dart';
 part 'startup_authent.dart';
 
@@ -92,6 +93,11 @@ abstract class AuthenticationProviders {
   static final pinAuthentication =
       StateNotifierProvider<PinAuthenticationNotifier, PinAuthenticationState>(
     PinAuthenticationNotifier.new,
+  );
+
+  static final yubikeyAuthentication = StateNotifierProvider<
+      YubikeyAuthenticationNotifier, YubikeyAuthenticationState>(
+    YubikeyAuthenticationNotifier.new,
   );
 
   static final settings = StateNotifierProvider<AuthenticationSettingsNotifier,
