@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$PasswordAuthenticationState {
   int get failedAttemptsCount => throw _privateConstructorUsedError;
   int get maxAttemptsCount => throw _privateConstructorUsedError;
+  bool get isAuthent => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $PasswordAuthenticationStateCopyWith<PasswordAuthenticationState>
@@ -32,7 +33,7 @@ abstract class $PasswordAuthenticationStateCopyWith<$Res> {
       _$PasswordAuthenticationStateCopyWithImpl<$Res,
           PasswordAuthenticationState>;
   @useResult
-  $Res call({int failedAttemptsCount, int maxAttemptsCount});
+  $Res call({int failedAttemptsCount, int maxAttemptsCount, bool isAuthent});
 }
 
 /// @nodoc
@@ -51,6 +52,7 @@ class _$PasswordAuthenticationStateCopyWithImpl<$Res,
   $Res call({
     Object? failedAttemptsCount = null,
     Object? maxAttemptsCount = null,
+    Object? isAuthent = null,
   }) {
     return _then(_value.copyWith(
       failedAttemptsCount: null == failedAttemptsCount
@@ -61,6 +63,10 @@ class _$PasswordAuthenticationStateCopyWithImpl<$Res,
           ? _value.maxAttemptsCount
           : maxAttemptsCount // ignore: cast_nullable_to_non_nullable
               as int,
+      isAuthent: null == isAuthent
+          ? _value.isAuthent
+          : isAuthent // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -74,7 +80,7 @@ abstract class _$$PasswordAuthenticationStateImplCopyWith<$Res>
       __$$PasswordAuthenticationStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int failedAttemptsCount, int maxAttemptsCount});
+  $Res call({int failedAttemptsCount, int maxAttemptsCount, bool isAuthent});
 }
 
 /// @nodoc
@@ -92,6 +98,7 @@ class __$$PasswordAuthenticationStateImplCopyWithImpl<$Res>
   $Res call({
     Object? failedAttemptsCount = null,
     Object? maxAttemptsCount = null,
+    Object? isAuthent = null,
   }) {
     return _then(_$PasswordAuthenticationStateImpl(
       failedAttemptsCount: null == failedAttemptsCount
@@ -102,6 +109,10 @@ class __$$PasswordAuthenticationStateImplCopyWithImpl<$Res>
           ? _value.maxAttemptsCount
           : maxAttemptsCount // ignore: cast_nullable_to_non_nullable
               as int,
+      isAuthent: null == isAuthent
+          ? _value.isAuthent
+          : isAuthent // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -110,17 +121,21 @@ class __$$PasswordAuthenticationStateImplCopyWithImpl<$Res>
 
 class _$PasswordAuthenticationStateImpl extends _PasswordAuthenticationState {
   const _$PasswordAuthenticationStateImpl(
-      {required this.failedAttemptsCount, required this.maxAttemptsCount})
+      {required this.failedAttemptsCount,
+      required this.maxAttemptsCount,
+      required this.isAuthent})
       : super._();
 
   @override
   final int failedAttemptsCount;
   @override
   final int maxAttemptsCount;
+  @override
+  final bool isAuthent;
 
   @override
   String toString() {
-    return 'PasswordAuthenticationState(failedAttemptsCount: $failedAttemptsCount, maxAttemptsCount: $maxAttemptsCount)';
+    return 'PasswordAuthenticationState(failedAttemptsCount: $failedAttemptsCount, maxAttemptsCount: $maxAttemptsCount, isAuthent: $isAuthent)';
   }
 
   @override
@@ -131,12 +146,14 @@ class _$PasswordAuthenticationStateImpl extends _PasswordAuthenticationState {
             (identical(other.failedAttemptsCount, failedAttemptsCount) ||
                 other.failedAttemptsCount == failedAttemptsCount) &&
             (identical(other.maxAttemptsCount, maxAttemptsCount) ||
-                other.maxAttemptsCount == maxAttemptsCount));
+                other.maxAttemptsCount == maxAttemptsCount) &&
+            (identical(other.isAuthent, isAuthent) ||
+                other.isAuthent == isAuthent));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, failedAttemptsCount, maxAttemptsCount);
+  int get hashCode => Object.hash(
+      runtimeType, failedAttemptsCount, maxAttemptsCount, isAuthent);
 
   @JsonKey(ignore: true)
   @override
@@ -150,13 +167,16 @@ abstract class _PasswordAuthenticationState
     extends PasswordAuthenticationState {
   const factory _PasswordAuthenticationState(
       {required final int failedAttemptsCount,
-      required final int maxAttemptsCount}) = _$PasswordAuthenticationStateImpl;
+      required final int maxAttemptsCount,
+      required final bool isAuthent}) = _$PasswordAuthenticationStateImpl;
   const _PasswordAuthenticationState._() : super._();
 
   @override
   int get failedAttemptsCount;
   @override
   int get maxAttemptsCount;
+  @override
+  bool get isAuthent;
   @override
   @JsonKey(ignore: true)
   _$$PasswordAuthenticationStateImplCopyWith<_$PasswordAuthenticationStateImpl>
@@ -167,6 +187,7 @@ abstract class _PasswordAuthenticationState
 mixin _$PinAuthenticationState {
   int get failedAttemptsCount => throw _privateConstructorUsedError;
   int get maxAttemptsCount => throw _privateConstructorUsedError;
+  bool get isAuthent => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $PinAuthenticationStateCopyWith<PinAuthenticationState> get copyWith =>
@@ -179,7 +200,7 @@ abstract class $PinAuthenticationStateCopyWith<$Res> {
           $Res Function(PinAuthenticationState) then) =
       _$PinAuthenticationStateCopyWithImpl<$Res, PinAuthenticationState>;
   @useResult
-  $Res call({int failedAttemptsCount, int maxAttemptsCount});
+  $Res call({int failedAttemptsCount, int maxAttemptsCount, bool isAuthent});
 }
 
 /// @nodoc
@@ -198,6 +219,7 @@ class _$PinAuthenticationStateCopyWithImpl<$Res,
   $Res call({
     Object? failedAttemptsCount = null,
     Object? maxAttemptsCount = null,
+    Object? isAuthent = null,
   }) {
     return _then(_value.copyWith(
       failedAttemptsCount: null == failedAttemptsCount
@@ -208,6 +230,10 @@ class _$PinAuthenticationStateCopyWithImpl<$Res,
           ? _value.maxAttemptsCount
           : maxAttemptsCount // ignore: cast_nullable_to_non_nullable
               as int,
+      isAuthent: null == isAuthent
+          ? _value.isAuthent
+          : isAuthent // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -221,7 +247,7 @@ abstract class _$$PinAuthenticationStateImplCopyWith<$Res>
       __$$PinAuthenticationStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int failedAttemptsCount, int maxAttemptsCount});
+  $Res call({int failedAttemptsCount, int maxAttemptsCount, bool isAuthent});
 }
 
 /// @nodoc
@@ -239,6 +265,7 @@ class __$$PinAuthenticationStateImplCopyWithImpl<$Res>
   $Res call({
     Object? failedAttemptsCount = null,
     Object? maxAttemptsCount = null,
+    Object? isAuthent = null,
   }) {
     return _then(_$PinAuthenticationStateImpl(
       failedAttemptsCount: null == failedAttemptsCount
@@ -249,6 +276,10 @@ class __$$PinAuthenticationStateImplCopyWithImpl<$Res>
           ? _value.maxAttemptsCount
           : maxAttemptsCount // ignore: cast_nullable_to_non_nullable
               as int,
+      isAuthent: null == isAuthent
+          ? _value.isAuthent
+          : isAuthent // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -257,17 +288,21 @@ class __$$PinAuthenticationStateImplCopyWithImpl<$Res>
 
 class _$PinAuthenticationStateImpl extends _PinAuthenticationState {
   const _$PinAuthenticationStateImpl(
-      {required this.failedAttemptsCount, required this.maxAttemptsCount})
+      {required this.failedAttemptsCount,
+      required this.maxAttemptsCount,
+      required this.isAuthent})
       : super._();
 
   @override
   final int failedAttemptsCount;
   @override
   final int maxAttemptsCount;
+  @override
+  final bool isAuthent;
 
   @override
   String toString() {
-    return 'PinAuthenticationState(failedAttemptsCount: $failedAttemptsCount, maxAttemptsCount: $maxAttemptsCount)';
+    return 'PinAuthenticationState(failedAttemptsCount: $failedAttemptsCount, maxAttemptsCount: $maxAttemptsCount, isAuthent: $isAuthent)';
   }
 
   @override
@@ -278,12 +313,14 @@ class _$PinAuthenticationStateImpl extends _PinAuthenticationState {
             (identical(other.failedAttemptsCount, failedAttemptsCount) ||
                 other.failedAttemptsCount == failedAttemptsCount) &&
             (identical(other.maxAttemptsCount, maxAttemptsCount) ||
-                other.maxAttemptsCount == maxAttemptsCount));
+                other.maxAttemptsCount == maxAttemptsCount) &&
+            (identical(other.isAuthent, isAuthent) ||
+                other.isAuthent == isAuthent));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, failedAttemptsCount, maxAttemptsCount);
+  int get hashCode => Object.hash(
+      runtimeType, failedAttemptsCount, maxAttemptsCount, isAuthent);
 
   @JsonKey(ignore: true)
   @override
@@ -296,7 +333,8 @@ class _$PinAuthenticationStateImpl extends _PinAuthenticationState {
 abstract class _PinAuthenticationState extends PinAuthenticationState {
   const factory _PinAuthenticationState(
       {required final int failedAttemptsCount,
-      required final int maxAttemptsCount}) = _$PinAuthenticationStateImpl;
+      required final int maxAttemptsCount,
+      required final bool isAuthent}) = _$PinAuthenticationStateImpl;
   const _PinAuthenticationState._() : super._();
 
   @override
@@ -304,8 +342,177 @@ abstract class _PinAuthenticationState extends PinAuthenticationState {
   @override
   int get maxAttemptsCount;
   @override
+  bool get isAuthent;
+  @override
   @JsonKey(ignore: true)
   _$$PinAuthenticationStateImplCopyWith<_$PinAuthenticationStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$YubikeyAuthenticationState {
+  int get failedAttemptsCount => throw _privateConstructorUsedError;
+  int get maxAttemptsCount => throw _privateConstructorUsedError;
+  bool get isAuthent => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $YubikeyAuthenticationStateCopyWith<YubikeyAuthenticationState>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $YubikeyAuthenticationStateCopyWith<$Res> {
+  factory $YubikeyAuthenticationStateCopyWith(YubikeyAuthenticationState value,
+          $Res Function(YubikeyAuthenticationState) then) =
+      _$YubikeyAuthenticationStateCopyWithImpl<$Res,
+          YubikeyAuthenticationState>;
+  @useResult
+  $Res call({int failedAttemptsCount, int maxAttemptsCount, bool isAuthent});
+}
+
+/// @nodoc
+class _$YubikeyAuthenticationStateCopyWithImpl<$Res,
+        $Val extends YubikeyAuthenticationState>
+    implements $YubikeyAuthenticationStateCopyWith<$Res> {
+  _$YubikeyAuthenticationStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? failedAttemptsCount = null,
+    Object? maxAttemptsCount = null,
+    Object? isAuthent = null,
+  }) {
+    return _then(_value.copyWith(
+      failedAttemptsCount: null == failedAttemptsCount
+          ? _value.failedAttemptsCount
+          : failedAttemptsCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      maxAttemptsCount: null == maxAttemptsCount
+          ? _value.maxAttemptsCount
+          : maxAttemptsCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      isAuthent: null == isAuthent
+          ? _value.isAuthent
+          : isAuthent // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$YubikeyAuthenticationStateImplCopyWith<$Res>
+    implements $YubikeyAuthenticationStateCopyWith<$Res> {
+  factory _$$YubikeyAuthenticationStateImplCopyWith(
+          _$YubikeyAuthenticationStateImpl value,
+          $Res Function(_$YubikeyAuthenticationStateImpl) then) =
+      __$$YubikeyAuthenticationStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int failedAttemptsCount, int maxAttemptsCount, bool isAuthent});
+}
+
+/// @nodoc
+class __$$YubikeyAuthenticationStateImplCopyWithImpl<$Res>
+    extends _$YubikeyAuthenticationStateCopyWithImpl<$Res,
+        _$YubikeyAuthenticationStateImpl>
+    implements _$$YubikeyAuthenticationStateImplCopyWith<$Res> {
+  __$$YubikeyAuthenticationStateImplCopyWithImpl(
+      _$YubikeyAuthenticationStateImpl _value,
+      $Res Function(_$YubikeyAuthenticationStateImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? failedAttemptsCount = null,
+    Object? maxAttemptsCount = null,
+    Object? isAuthent = null,
+  }) {
+    return _then(_$YubikeyAuthenticationStateImpl(
+      failedAttemptsCount: null == failedAttemptsCount
+          ? _value.failedAttemptsCount
+          : failedAttemptsCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      maxAttemptsCount: null == maxAttemptsCount
+          ? _value.maxAttemptsCount
+          : maxAttemptsCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      isAuthent: null == isAuthent
+          ? _value.isAuthent
+          : isAuthent // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$YubikeyAuthenticationStateImpl extends _YubikeyAuthenticationState {
+  const _$YubikeyAuthenticationStateImpl(
+      {required this.failedAttemptsCount,
+      required this.maxAttemptsCount,
+      required this.isAuthent})
+      : super._();
+
+  @override
+  final int failedAttemptsCount;
+  @override
+  final int maxAttemptsCount;
+  @override
+  final bool isAuthent;
+
+  @override
+  String toString() {
+    return 'YubikeyAuthenticationState(failedAttemptsCount: $failedAttemptsCount, maxAttemptsCount: $maxAttemptsCount, isAuthent: $isAuthent)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$YubikeyAuthenticationStateImpl &&
+            (identical(other.failedAttemptsCount, failedAttemptsCount) ||
+                other.failedAttemptsCount == failedAttemptsCount) &&
+            (identical(other.maxAttemptsCount, maxAttemptsCount) ||
+                other.maxAttemptsCount == maxAttemptsCount) &&
+            (identical(other.isAuthent, isAuthent) ||
+                other.isAuthent == isAuthent));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, failedAttemptsCount, maxAttemptsCount, isAuthent);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$YubikeyAuthenticationStateImplCopyWith<_$YubikeyAuthenticationStateImpl>
+      get copyWith => __$$YubikeyAuthenticationStateImplCopyWithImpl<
+          _$YubikeyAuthenticationStateImpl>(this, _$identity);
+}
+
+abstract class _YubikeyAuthenticationState extends YubikeyAuthenticationState {
+  const factory _YubikeyAuthenticationState(
+      {required final int failedAttemptsCount,
+      required final int maxAttemptsCount,
+      required final bool isAuthent}) = _$YubikeyAuthenticationStateImpl;
+  const _YubikeyAuthenticationState._() : super._();
+
+  @override
+  int get failedAttemptsCount;
+  @override
+  int get maxAttemptsCount;
+  @override
+  bool get isAuthent;
+  @override
+  @JsonKey(ignore: true)
+  _$$YubikeyAuthenticationStateImplCopyWith<_$YubikeyAuthenticationStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
