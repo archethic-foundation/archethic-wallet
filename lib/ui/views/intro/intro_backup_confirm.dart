@@ -15,6 +15,7 @@ import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/security_configuration.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
@@ -42,6 +43,9 @@ class IntroBackupConfirm extends ConsumerStatefulWidget {
   final String? name;
   final String? seed;
   final bool welcomeProcess;
+
+  static const routerPage = '/intro_backup_confirm';
+
   @override
   ConsumerState<IntroBackupConfirm> createState() => _IntroBackupConfirmState();
 }
@@ -90,7 +94,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
           ArchethicTheme.text,
           ArchethicTheme.snackBarShadow,
         );
-        Navigator.of(context).pop();
+        context.pop();
         return;
       }
 
@@ -168,11 +172,9 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
             );
           }
           if (error == false) {
-            context.go(
-              '/home',
-            );
+            context.go(HomePage.routerPage);
           } else {
-            Navigator.of(context).pop();
+            context.pop();
           }
           break;
         case TransactionSendEventType.transfer:
@@ -437,6 +439,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                                       context,
                                       ref,
                                       widget.seed!,
+                                      IntroBackupConfirm.routerPage,
                                     );
                                   } else {
                                     UIUtil.showSnackbar(
@@ -480,6 +483,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                                         context,
                                         ref,
                                         widget.seed!,
+                                        IntroBackupConfirm.routerPage,
                                       );
                                     },
                                     titleStyle: ArchethicThemeStyles
@@ -550,7 +554,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
 
     if (error == false) {
     } else {
-      Navigator.of(context).pop();
+      context.pop();
     }
   }
 }

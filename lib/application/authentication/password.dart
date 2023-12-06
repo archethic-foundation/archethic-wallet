@@ -5,6 +5,7 @@ class PasswordAuthenticationState with _$PasswordAuthenticationState {
   const factory PasswordAuthenticationState({
     required int failedAttemptsCount,
     required int maxAttemptsCount,
+    required bool isAuthent,
   }) = _PasswordAuthenticationState;
   const PasswordAuthenticationState._();
 }
@@ -15,7 +16,8 @@ class PasswordAuthenticationNotifier
       : super(
           PasswordAuthenticationState(
             failedAttemptsCount: 0,
-            maxAttemptsCount: AuthenticateWithPin.maxFailedAttempts,
+            maxAttemptsCount: AuthenticateWithPassword.maxFailedAttempts,
+            isAuthent: false,
           ),
         ) {
     _loadInitialState();
@@ -37,6 +39,7 @@ class PasswordAuthenticationNotifier
   Future<AuthenticationResult> authenticateWithPassword(
     PasswordCredentials password,
   ) async {
+    state = state.copyWith(isAuthent: false);
     final authenticationRepository = ref.read(
       AuthenticationProviders._authenticationRepository,
     );
@@ -45,6 +48,9 @@ class PasswordAuthenticationNotifier
     ).run(password);
 
     authenticationResult.maybeMap(
+      success: (success) {
+        state = state.copyWith(isAuthent: true);
+      },
       tooMuchAttempts: (value) {
         ref.invalidate(AuthenticationProviders.lockCountdown);
       },

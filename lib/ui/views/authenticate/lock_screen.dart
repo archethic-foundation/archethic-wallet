@@ -34,6 +34,8 @@ abstract class AppLockScreenProviders {
 class AppLockScreen extends ConsumerWidget {
   const AppLockScreen({super.key});
 
+  static const routerPage = '/lock_screen_transition';
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;

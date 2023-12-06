@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lit_starfield/lit_starfield.dart';
 
 class AppDialogs {
@@ -86,7 +87,7 @@ class AppDialogs {
                                 FeedbackType.light,
                                 preferences.activeVibrations,
                               );
-                          Navigator.of(context).pop();
+                          context.pop();
                           if (cancelAction != null) {
                             cancelAction();
                           }
@@ -103,7 +104,7 @@ class AppDialogs {
                                 FeedbackType.light,
                                 preferences.activeVibrations,
                               );
-                          Navigator.of(context).pop();
+                          context.pop();
                           onPressed();
                         },
                       ),
@@ -164,7 +165,7 @@ class AppDialogs {
                       FeedbackType.light,
                       preferences.activeVibrations,
                     );
-                Navigator.of(context).pop();
+                context.pop();
               },
             ),
           ],

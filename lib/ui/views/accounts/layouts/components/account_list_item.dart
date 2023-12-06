@@ -16,12 +16,12 @@ import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/service_type_formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/accounts/layouts/components/account_list_item_token_info.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/views/main/bloc/providers.dart';
+import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
@@ -37,6 +37,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class AccountListItem extends ConsumerStatefulWidget {
@@ -81,7 +82,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
       ArchethicTheme.snackBarShadow,
       icon: Symbols.info,
     );
-    Navigator.of(context).pop();
+    context.pop();
   }
 
   Future<void> _showSendSucceed(
@@ -110,7 +111,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
         .refreshRecentTransactions();
 
     if (mounted) {
-      Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
+      context.go(HomePage.routerPage);
     }
   }
 
@@ -125,7 +126,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
       ArchethicTheme.snackBarShadow,
       duration: const Duration(seconds: 5),
     );
-    Navigator.of(context).pop();
+    context.pop();
   }
 
   @override
@@ -207,7 +208,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
             await ref
                 .read(SettingsProviders.settings.notifier)
                 .resetMainScreenCurrentPage();
-            Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
+            context.go(HomePage.routerPage);
             ref.read(mainTabControllerProvider)!.animateTo(
                   ref.read(SettingsProviders.settings).mainScreenCurrentPage,
                   duration: Duration.zero,

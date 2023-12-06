@@ -5,6 +5,7 @@ import 'package:aewallet/application/nft/nft_category.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/responsive.dart';
+import 'package:aewallet/ui/views/nft/layouts/nft_list_per_category.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/card_category.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -68,7 +69,7 @@ class NftCategoryMenu extends ConsumerWidget {
                   preferences.activeVibrations,
                 );
             context.go(
-              '/nft_list_per_category',
+              NFTListPerCategory.routerPage,
               extra: nftCategories[index].id,
             );
           },

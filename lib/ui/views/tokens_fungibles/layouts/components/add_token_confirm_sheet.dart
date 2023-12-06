@@ -7,8 +7,8 @@ import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/provider.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/state.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/layouts/components/add_token_detail.dart';
@@ -19,6 +19,7 @@ import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class AddTokenConfirmSheet extends ConsumerStatefulWidget {
@@ -62,7 +63,7 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
       ArchethicTheme.text,
       ArchethicTheme.snackBarShadow,
     );
-    Navigator.of(context).pop();
+    context.pop();
   }
 
   Future<void> _showSendSucceed(
@@ -90,7 +91,7 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
         .read(AccountProviders.selectedAccount.notifier)
         .refreshRecentTransactions();
     ref.read(AccountProviders.selectedAccount.notifier).refreshFungibleTokens();
-    Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
+    context.go(HomePage.routerPage);
   }
 
   void _showSendFailed(
@@ -98,7 +99,7 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
   ) {
     // Send failed
     if (animationOpen!) {
-      Navigator.of(context).pop();
+      context.pop();
     }
     UIUtil.showSnackbar(
       event.response!,
@@ -108,7 +109,7 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
       ArchethicTheme.snackBarShadow,
       duration: const Duration(seconds: 5),
     );
-    Navigator.of(context).pop();
+    context.pop();
   }
 
   @override

@@ -8,11 +8,11 @@ import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/add_account/bloc/provider.dart';
 import 'package:aewallet/ui/views/add_account/bloc/state.dart';
 import 'package:aewallet/ui/views/add_account/layouts/components/add_account_detail.dart';
+import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
@@ -20,6 +20,7 @@ import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class AddAccountConfirmSheet extends ConsumerStatefulWidget {
@@ -65,7 +66,7 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
       ArchethicTheme.snackBarShadow,
       icon: Symbols.info,
     );
-    Navigator.of(context).pop();
+    context.pop();
   }
 
   Future<void> _showSendSucceed(
@@ -94,7 +95,7 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
         .refreshRecentTransactions();
 
     if (mounted) {
-      Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
+      context.go(HomePage.routerPage);
     }
   }
 
@@ -103,7 +104,7 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
   ) {
     // Send failed
     if (animationOpen!) {
-      Navigator.of(context).pop();
+      context.pop();
     }
     UIUtil.showSnackbar(
       event.response!,
@@ -113,7 +114,7 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
       ArchethicTheme.snackBarShadow,
       duration: const Duration(seconds: 5),
     );
-    Navigator.of(context).pop();
+    context.pop();
   }
 
   @override

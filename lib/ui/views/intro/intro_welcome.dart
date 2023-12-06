@@ -11,6 +11,8 @@ import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/intro/intro_import_seed.dart';
+import 'package:aewallet/ui/views/intro/intro_new_wallet_get_first_infos.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/dialogs/language_dialog.dart';
@@ -27,6 +29,7 @@ import 'package:material_symbols_icons/symbols.dart';
 class IntroWelcome extends ConsumerStatefulWidget {
   const IntroWelcome({super.key});
 
+  static const routerPage = '/intro_welcome';
   @override
   ConsumerState<IntroWelcome> createState() => _IntroWelcomeState();
 }
@@ -407,7 +410,7 @@ class _ButtonNewWallet extends ConsumerWidget {
                     ),
                   );
               context.go(
-                '/intro_welcome_get_first_infos',
+                IntroNewWalletGetFirstInfos.routerPage,
               );
             }
           },
@@ -444,7 +447,7 @@ class _ButtonImportWallet extends ConsumerWidget {
                   ),
                 ),
               );
-              context.go('/intro_import');
+              context.go(IntroImportSeedPage.routerPage);
             }
           },
           disabled: !cguChecked,

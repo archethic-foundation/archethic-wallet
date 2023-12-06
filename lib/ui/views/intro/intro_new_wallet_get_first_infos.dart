@@ -8,6 +8,8 @@ import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/network_choice_infos.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/intro/intro_new_wallet_disclaimer.dart';
+import 'package:aewallet/ui/views/intro/intro_welcome.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
@@ -22,6 +24,8 @@ import 'package:go_router/go_router.dart';
 
 class IntroNewWalletGetFirstInfos extends ConsumerStatefulWidget {
   const IntroNewWalletGetFirstInfos({super.key});
+
+  static const routerPage = '/intro_welcome_get_first_infos';
 
   @override
   ConsumerState<IntroNewWalletGetFirstInfos> createState() =>
@@ -101,7 +105,7 @@ class _IntroNewWalletDisclaimerState
                                     key: const Key('back'),
                                     color: ArchethicTheme.text,
                                     onPressed: () {
-                                      Navigator.pop(context);
+                                      context.go(IntroWelcome.routerPage);
                                     },
                                   ),
                                 ),
@@ -273,7 +277,7 @@ class _IntroNewWalletDisclaimerState
                                 localizations.yes,
                                 () async {
                                   context.go(
-                                    '/intro_backup_safety',
+                                    IntroNewWalletDisclaimer.routerPage,
                                     extra: nameController.text,
                                   );
                                 },

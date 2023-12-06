@@ -12,6 +12,7 @@ import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class UpdateDiscussionAddMembers extends ConsumerStatefulWidget {
   const UpdateDiscussionAddMembers({super.key, required this.listMembers});
@@ -153,7 +154,7 @@ class UpdateDiscussionAddMembersState
                                           key: const Key('addMembers'),
                                           onPressed: () {
                                             formNotifier.addAllMembersToAdd();
-                                            Navigator.of(context).pop();
+                                            context.pop();
                                           },
                                           disabled:
                                               formState.canAddMembers == false,

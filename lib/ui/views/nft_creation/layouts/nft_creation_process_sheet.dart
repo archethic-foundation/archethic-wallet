@@ -67,6 +67,7 @@ class NftCreationProcessSheet extends ConsumerWidget {
   });
 
   final int currentNftCategoryIndex;
+  static const routerPage = '/nft_creation';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

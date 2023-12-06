@@ -12,6 +12,7 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/version.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/infrastructure/rpc/websocket_server.dart';
+import 'package:aewallet/main.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/available_language.dart';

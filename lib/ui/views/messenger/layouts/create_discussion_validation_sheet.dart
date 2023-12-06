@@ -14,6 +14,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 // ignore: must_be_immutable
@@ -185,7 +186,7 @@ class _CreateDiscussionValidationSheetState
                           );
 
                           final result = await formNotifier.createDiscussion();
-                          Navigator.of(context).pop(); // wait popup
+                          context.pop(); // wait popup
 
                           result.map(
                             success: (success) {

@@ -4,6 +4,7 @@ import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
+import 'package:aewallet/ui/views/authenticate/lock_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,7 +27,7 @@ mixin LockGuardMixin {
     );
     if (shouldLock) {
       context.go(
-        '/lock_screen_transition',
+        AppLockScreen.routerPage,
       );
     }
   }

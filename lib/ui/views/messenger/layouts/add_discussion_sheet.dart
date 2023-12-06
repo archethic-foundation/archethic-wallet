@@ -22,6 +22,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class AddDiscussionSheet extends ConsumerWidget {
@@ -159,7 +160,7 @@ class AddDiscussionSheet extends ConsumerWidget {
                               .discussionSearchBar.notifier,
                         )
                         .reset();
-                    Navigator.of(context).pop();
+                    context.pop();
                   },
                 ),
               ],

@@ -32,7 +32,7 @@ class YubikeyScreen extends ConsumerStatefulWidget {
   });
 
   static const name = 'YubikeyScreen';
-
+  static const routerPage = '/yubikey';
   final bool canNavigateBack;
 
   @override

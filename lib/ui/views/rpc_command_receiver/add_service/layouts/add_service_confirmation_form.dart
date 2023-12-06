@@ -21,6 +21,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class AddServiceConfirmationForm extends ConsumerWidget {
@@ -141,7 +142,7 @@ class AddServiceConfirmationForm extends ConsumerWidget {
                           },
                         );
 
-                        Navigator.of(context).pop(); // Hide SendingAnimation
+                        context.pop(); // Hide SendingAnimation
                         Navigator.of(context).pop(result);
                       },
                     ),

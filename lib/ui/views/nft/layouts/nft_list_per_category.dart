@@ -7,6 +7,7 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_header.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_list.dart';
+import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -20,6 +21,8 @@ import 'package:material_symbols_icons/symbols.dart';
 class NFTListPerCategory extends ConsumerWidget {
   const NFTListPerCategory({super.key, this.currentNftCategoryIndex});
   final int? currentNftCategoryIndex;
+
+  static const routerPage = '/nft_list_per_category';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -84,7 +87,7 @@ class NFTListPerCategory extends ConsumerWidget {
                               preferences.activeVibrations,
                             );
                         context.go(
-                          '/nft_creation',
+                          NftCreationProcessSheet.routerPage,
                           extra: {
                             'seed': ref
                                 .read(SessionProviders.session)

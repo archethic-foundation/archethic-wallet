@@ -13,6 +13,7 @@ mixin SecurityConfigurationMixin {
     BuildContext context,
     WidgetRef ref,
     String seed,
+    String fromPage,
   ) async {
     final biometricsAvalaible = await sl.get<BiometricUtil>().hasBiometrics();
 
@@ -90,12 +91,14 @@ mixin SecurityConfigurationMixin {
         );
     }
 
+    // TODO(reddwarf03): GoRouter
     final bool securityConfiguration = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) {
           return IntroConfigureSecurity(
             accessModes: accessModes,
             seed: seed,
+            fromPage: fromPage,
           );
         },
       ),

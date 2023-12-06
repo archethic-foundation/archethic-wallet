@@ -12,6 +12,7 @@ import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/views/messenger/layouts/components/public_key_line.dart';
 import 'package:aewallet/ui/views/messenger/layouts/components/section_title.dart';
+import 'package:aewallet/ui/views/messenger/layouts/update_discussion_page.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_util.dart';
@@ -102,7 +103,7 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage> {
                     ))
                   TextButton(
                     onPressed: () => context.go(
-                      '/update_discussion',
+                      UpdateDiscussionPage.routerPage,
                       extra: data.value,
                     ),
                     child: Text(
@@ -264,7 +265,7 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage> {
                                 final result =
                                     await formNotifier.leaveDiscussion();
 
-                                Navigator.of(context).pop(); // wait popup
+                                context.pop(); // wait popup
 
                                 result.map(
                                   success: (_) {

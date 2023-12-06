@@ -24,6 +24,7 @@ class PasswordScreen extends ConsumerStatefulWidget {
   });
 
   static const name = 'PasswordScreen';
+  static const routerPage = '/password';
 
   final bool canNavigateBack;
 

@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 enum PinOverlayType { newPin, enterPin }
@@ -32,7 +33,8 @@ class ShakeCurve extends Curve {
 
 class PinScreen extends ConsumerStatefulWidget {
   const PinScreen(
-    this.type, {
+    this.type,
+    this.fromPage, {
     this.description = '',
     this.pinScreenBackgroundColor,
     this.canNavigateBack = true,
@@ -40,11 +42,13 @@ class PinScreen extends ConsumerStatefulWidget {
   });
 
   static const name = 'PinScreen';
+  static const routerPage = '/pin';
 
   final bool canNavigateBack;
   final PinOverlayType type;
   final String description;
   final Color? pinScreenBackgroundColor;
+  final String fromPage;
 
   @override
   ConsumerState<PinScreen> createState() => _PinScreenState();
@@ -249,7 +253,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
         });
       },
       success: (value) {
-        Navigator.of(context).pop(true);
+        context.go(widget.fromPage);
       },
     );
   }
@@ -265,7 +269,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
 
     result.maybeMap(
       success: (_) {
-        Navigator.of(context).pop(true);
+        context.go(widget.fromPage);
         return;
       },
       orElse: () {

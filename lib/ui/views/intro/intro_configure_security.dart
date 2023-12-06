@@ -31,9 +31,11 @@ class IntroConfigureSecurity extends ConsumerStatefulWidget {
     super.key,
     this.accessModes,
     required this.seed,
+    required this.fromPage,
   });
   final List<PickerItem>? accessModes;
   final String? seed;
+  final String fromPage;
 
   @override
   ConsumerState<IntroConfigureSecurity> createState() =>
@@ -215,8 +217,9 @@ class _IntroConfigureSecurityState
                                             await Navigator.of(context).push(
                                           MaterialPageRoute(
                                             builder: (BuildContext context) {
-                                              return const PinScreen(
+                                              return PinScreen(
                                                 PinOverlayType.newPin,
+                                                widget.fromPage,
                                               );
                                             },
                                           ),

@@ -5,6 +5,7 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/views/intro/intro_backup_confirm.dart';
 import 'package:aewallet/ui/views/settings/mnemonic_display.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
@@ -23,6 +24,8 @@ import 'package:go_router/go_router.dart';
 class IntroBackupSeedPage extends ConsumerStatefulWidget {
   const IntroBackupSeedPage({super.key, this.name});
   final String? name;
+
+  static const routerPage = '/intro_backup';
 
   @override
   ConsumerState<IntroBackupSeedPage> createState() => _IntroBackupSeedState();
@@ -232,7 +235,7 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                           key: const Key('iveBackedItUp'),
                           onPressed: () async {
                             context.go(
-                              '/intro_backup_confirm',
+                              IntroBackupConfirm.routerPage,
                               extra: {'name': widget.name, 'seed': seed},
                             );
                           },
