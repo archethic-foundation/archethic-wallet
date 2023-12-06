@@ -4,6 +4,7 @@ import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/views/intro/intro_backup_seed.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
@@ -17,6 +18,8 @@ import 'package:material_symbols_icons/symbols.dart';
 class IntroNewWalletDisclaimer extends ConsumerWidget {
   const IntroNewWalletDisclaimer({super.key, this.name});
   final String? name;
+
+  static const routerPage = '/intro_backup_safety';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -182,7 +185,7 @@ class IntroNewWalletDisclaimer extends ConsumerWidget {
                           key: const Key('understandButton'),
                           onPressed: () {
                             context.go(
-                              '/intro_backup',
+                              IntroBackupSeedPage.routerPage,
                               extra: name,
                             );
                           },

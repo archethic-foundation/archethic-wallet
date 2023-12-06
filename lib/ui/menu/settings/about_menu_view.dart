@@ -5,6 +5,8 @@ class AboutMenuView extends ConsumerWidget {
     super.key,
   });
 
+  static const routerPage = '/about_menu_view';
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;

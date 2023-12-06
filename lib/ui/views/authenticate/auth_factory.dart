@@ -1,9 +1,6 @@
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/model/authentication_method.dart';
-import 'package:aewallet/ui/util/routes.dart';
-import 'package:aewallet/ui/views/authenticate/password_screen.dart';
 import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
-import 'package:aewallet/ui/views/authenticate/yubikey_screen.dart';
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -12,6 +9,7 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:go_router/go_router.dart';
 
 class AuthFactory {
   static Future<void> forceAuthenticate(
@@ -59,14 +57,14 @@ class AuthFactory {
       case AuthMethod.yubikeyWithYubicloud:
         auth = await _authenticateWithYubikey(
           context,
-          transitions: transitions,
+          ref,
           canCancel: canCancel,
         );
         break;
       case AuthMethod.password:
         auth = await _authenticateWithPassword(
           context,
-          transitions: transitions,
+          ref,
           canCancel: canCancel,
         );
         break;
@@ -74,7 +72,6 @@ class AuthFactory {
         auth = await _authenticateWithPin(
           context,
           ref,
-          transitions: transitions,
           canCancel: canCancel,
         );
         break;
@@ -98,99 +95,43 @@ class AuthFactory {
   }
 
   static Future<bool> _authenticateWithYubikey(
-    BuildContext context, {
-    bool transitions = false,
+    BuildContext context,
+    WidgetRef ref, {
     required canCancel,
   }) async {
-    var auth = false;
-    if (transitions) {
-      auth = await Navigator.of(context).pushOnce(
-        MaterialPageRoute(
-          settings: const RouteSettings(name: YubikeyScreen.name),
-          builder: (BuildContext context) {
-            return YubikeyScreen(
-              canNavigateBack: canCancel,
-            );
-          },
-        ),
-      ) as bool;
-    } else {
-      auth = await Navigator.of(context).pushOnce(
-        NoTransitionRoute(
-          settings: const RouteSettings(name: YubikeyScreen.name),
-          builder: (BuildContext context) {
-            return YubikeyScreen(
-              canNavigateBack: canCancel,
-            );
-          },
-        ),
-      ) as bool;
-    }
+    context.go(
+      '/yubikey',
+      extra: {'canNavigateBack': canCancel},
+    );
     await Future<void>.delayed(const Duration(milliseconds: 200));
-    return auth;
+    return ref.read(AuthenticationProviders.passwordAuthentication).isAuthent;
   }
 
   static Future<bool> _authenticateWithPassword(
-    BuildContext context, {
-    bool transitions = false,
+    BuildContext context,
+    WidgetRef ref, {
     required bool canCancel,
   }) async {
-    var auth = false;
-    if (transitions) {
-      auth = await Navigator.of(context).pushOnce(
-        MaterialPageRoute(
-          settings: const RouteSettings(name: PasswordScreen.name),
-          builder: (BuildContext context) => PasswordScreen(
-            canNavigateBack: canCancel,
-          ),
-        ),
-      ) as bool;
-    } else {
-      auth = await Navigator.of(context).pushOnce(
-        NoTransitionRoute(
-          settings: const RouteSettings(name: PasswordScreen.name),
-          builder: (BuildContext context) => PasswordScreen(
-            canNavigateBack: canCancel,
-          ),
-        ),
-      ) as bool;
-    }
+    context.go(
+      '/password',
+      extra: {'canNavigateBack': canCancel},
+    );
     await Future<void>.delayed(const Duration(milliseconds: 200));
-    return auth;
+    return ref.read(AuthenticationProviders.passwordAuthentication).isAuthent;
   }
 
   static Future<bool> _authenticateWithPin(
     BuildContext context,
     WidgetRef ref, {
-    bool transitions = false,
     required bool canCancel,
   }) async {
-    var auth = false;
-    if (transitions) {
-      auth = await Navigator.of(context).pushOnce(
-        MaterialPageRoute(
-          settings: const RouteSettings(name: PinScreen.name),
-          builder: (BuildContext context) => PinScreen(
-            PinOverlayType.enterPin,
-            canNavigateBack: canCancel,
-          ),
-        ),
-      ) as bool;
-    } else {
-      auth = await Navigator.of(context).pushOnce(
-        NoTransitionRoute(
-          settings: const RouteSettings(name: PinScreen.name),
-          builder: (BuildContext context) {
-            return PinScreen(
-              PinOverlayType.enterPin,
-              canNavigateBack: canCancel,
-            );
-          },
-        ),
-      ) as bool;
-    }
+    context.go(
+      '/pin',
+      extra: {'type': PinOverlayType.enterPin, 'canNavigateBack': canCancel},
+    );
+
     await Future<void>.delayed(const Duration(milliseconds: 200));
-    return auth;
+    return ref.read(AuthenticationProviders.pinAuthentication).isAuthent;
   }
 
   static Future<bool> _authenticateWithBiometrics(BuildContext context) async {

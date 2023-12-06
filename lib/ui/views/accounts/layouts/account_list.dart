@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:go_router/go_router.dart';
 
 class AccountsListWidget extends ConsumerWidget {
   const AccountsListWidget({
@@ -48,7 +49,7 @@ class AccountsListWidget extends ConsumerWidget {
               .read(AccountProviders.selectedAccount.notifier)
               .refreshRecentTransactions();
 
-          Navigator.of(context).pop();
+          context.pop();
         }),
         child: ScrollConfiguration(
           behavior: ScrollConfiguration.of(context).copyWith(

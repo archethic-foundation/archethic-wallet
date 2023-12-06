@@ -4,6 +4,9 @@ import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/ui/menu/settings/settings_sheet.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/ui/views/authenticate/lock_screen.dart';
+import 'package:aewallet/ui/views/authenticate/password_screen.dart';
+import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
+import 'package:aewallet/ui/views/authenticate/yubikey_screen.dart';
 import 'package:aewallet/ui/views/intro/intro_backup_confirm.dart';
 import 'package:aewallet/ui/views/intro/intro_backup_seed.dart';
 import 'package:aewallet/ui/views/intro/intro_import_seed.dart';
@@ -19,12 +22,10 @@ import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_shee
 import 'package:aewallet/ui/views/rpc_command_receiver/rpc_command_receiver.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class RoutesPath {
   GoRouter createRouter(
-    WidgetRef ref,
     GlobalKey<NavigatorState> rootNavigatorKey,
   ) {
     final deeplinkRpcReceiver = sl.get<ArchethicDeeplinkRPCServer>();
@@ -32,6 +33,7 @@ class RoutesPath {
     return GoRouter(
       navigatorKey: rootNavigatorKey,
       initialLocation: '/',
+      debugLogDiagnostics: true,
       routes: <GoRoute>[
         GoRoute(
           path: '/',
@@ -39,21 +41,21 @@ class RoutesPath {
               _wrapWithRPCCommandReceiver(const Splash()),
         ),
         GoRoute(
-          path: '/home',
+          path: HomePage.routerPage,
           builder: (context, state) => _wrapWithRPCCommandReceiver(
             const AutoLockGuard(child: HomePage()),
           ),
         ),
         GoRoute(
-          path: '/intro_welcome',
+          path: IntroWelcome.routerPage,
           builder: (context, state) => const IntroWelcome(),
         ),
         GoRoute(
-          path: '/intro_welcome_get_first_infos',
+          path: IntroNewWalletGetFirstInfos.routerPage,
           builder: (context, state) => const IntroNewWalletGetFirstInfos(),
         ),
         GoRoute(
-          path: '/intro_backup',
+          path: IntroBackupSeedPage.routerPage,
           builder: (context, state) {
             final args = state.extra! as String;
             return IntroBackupSeedPage(
@@ -62,7 +64,7 @@ class RoutesPath {
           },
         ),
         GoRoute(
-          path: '/intro_backup_safety',
+          path: IntroNewWalletDisclaimer.routerPage,
           builder: (context, state) {
             final args = state.extra! as String;
             return IntroNewWalletDisclaimer(
@@ -71,11 +73,11 @@ class RoutesPath {
           },
         ),
         GoRoute(
-          path: '/intro_import',
+          path: IntroImportSeedPage.routerPage,
           builder: (context, state) => const IntroImportSeedPage(),
         ),
         GoRoute(
-          path: '/intro_backup_confirm',
+          path: IntroBackupConfirm.routerPage,
           builder: (context, state) {
             final args = state.extra! as Map<String, Object?>;
             return IntroBackupConfirm(
@@ -85,31 +87,60 @@ class RoutesPath {
           },
         ),
         GoRoute(
-          path: '/security_menu_view',
+          path: PasswordScreen.routerPage,
+          builder: (context, state) {
+            final args = state.extra! as Map<String, Object?>;
+            return PasswordScreen(
+              canNavigateBack: args['canNavigateBack']! as bool,
+            );
+          },
+        ),
+        GoRoute(
+          path: PinScreen.name,
+          builder: (context, state) {
+            final args = state.extra! as Map<String, Object?>;
+            return PinScreen(
+              args['type']! as PinOverlayType,
+              args['fromPage']! as String,
+              canNavigateBack: args['canNavigateBack']! as bool,
+            );
+          },
+        ),
+        GoRoute(
+          path: YubikeyScreen.routerPage,
+          builder: (context, state) {
+            final args = state.extra! as Map<String, Object?>;
+            return YubikeyScreen(
+              canNavigateBack: args['canNavigateBack']! as bool,
+            );
+          },
+        ),
+        GoRoute(
+          path: SecurityMenuView.routerPage,
           builder: (context, state) => _wrapWithRPCCommandReceiver(
             const SecurityMenuView(),
           ),
         ),
         GoRoute(
-          path: '/customization_menu_view',
+          path: CustomizationMenuView.routerPage,
           builder: (context, state) => _wrapWithRPCCommandReceiver(
             const CustomizationMenuView(),
           ),
         ),
         GoRoute(
-          path: '/about_menu_view',
+          path: AboutMenuView.routerPage,
           builder: (context, state) => _wrapWithRPCCommandReceiver(
             const AboutMenuView(),
           ),
         ),
         GoRoute(
-          path: '/lock_screen_transition',
+          path: AppLockScreen.routerPage,
           builder: (context, state) => _wrapWithRPCCommandReceiver(
             const AppLockScreen(),
           ),
         ),
         GoRoute(
-          path: '/nft_list_per_category',
+          path: NFTListPerCategory.routerPage,
           builder: (context, state) {
             final args = state.extra! as Map<String, Object?>;
             final currentNftCategoryIndex =
@@ -124,7 +155,7 @@ class RoutesPath {
           },
         ),
         GoRoute(
-          path: '/nft_creation',
+          path: NftCreationProcessSheet.routerPage,
           builder: (context, state) {
             final args = state.extra! as Map<String, Object?>;
             return _wrapWithRPCCommandReceiver(
@@ -158,7 +189,7 @@ class RoutesPath {
           },
         ),
         GoRoute(
-          path: '/update_discussion',
+          path: UpdateDiscussionPage.routerPage,
           builder: (context, state) {
             final args = state.extra as Discussion?;
             return _wrapWithRPCCommandReceiver(

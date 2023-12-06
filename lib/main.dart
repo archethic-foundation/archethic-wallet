@@ -21,6 +21,8 @@ import 'package:aewallet/providers_observer.dart';
 import 'package:aewallet/router.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/ui/views/intro/intro_welcome.dart';
+import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/security_manager.dart';
 import 'package:aewallet/util/service_locator.dart';
@@ -119,6 +121,7 @@ class App extends ConsumerStatefulWidget {
 class AppState extends ConsumerState<App> with WidgetsBindingObserver {
   static final GlobalKey<NavigatorState> rootNavigatorKey =
       GlobalKey<NavigatorState>();
+  final router = RoutesPath().createRouter(rootNavigatorKey);
 
   @override
   void initState() {
@@ -191,8 +194,6 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
       ArchethicTheme.statusBar,
     );
 
-    final router = RoutesPath().createRouter(ref, rootNavigatorKey);
-
     return GestureDetector(
       onTap: () {
         // Hide soft input keyboard after tapping outside anywhere on screen
@@ -235,6 +236,8 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
 class Splash extends ConsumerStatefulWidget {
   const Splash({super.key});
 
+  static const routerPage = '/';
+
   @override
   ConsumerState<Splash> createState() => SplashState();
 }
@@ -266,7 +269,7 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
       if (FeatureFlags.forceLogout) {
         await (await HiveVaultDatasource.getInstance()).clearAll();
         await sl.get<DBHelper>().clearAppWallet();
-        _goToIntroScreen();
+        context.go(IntroWelcome.routerPage);
         return;
       }
 
@@ -276,20 +279,16 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
       FlutterNativeSplash.remove();
 
       if (session.isLoggedOut) {
-        _goToIntroScreen();
+        context.go(IntroWelcome.routerPage);
         return;
       }
       ref.read(ArchethicOracleUCOProviders.archethicOracleUCO.notifier).init();
-      Navigator.of(context).pushReplacementNamed('/home');
+      context.go(HomePage.routerPage);
     } catch (e, stack) {
       dev.log(e.toString(), error: e, stackTrace: stack);
       FlutterNativeSplash.remove();
-      _goToIntroScreen();
+      context.go(IntroWelcome.routerPage);
     }
-  }
-
-  void _goToIntroScreen() {
-    context.go('/intro_welcome');
   }
 
   @override

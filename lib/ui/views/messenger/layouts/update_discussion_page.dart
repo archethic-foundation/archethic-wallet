@@ -22,12 +22,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class UpdateDiscussionPage extends ConsumerStatefulWidget {
   const UpdateDiscussionPage({required this.discussion, super.key});
 
   final Discussion discussion;
+  static const routerPage = '/update_discussion';
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -370,7 +372,7 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                         final result =
                             await formNotifier.updateDiscussion(ref, context);
 
-                        Navigator.of(context).pop(); // wait popup
+                        context.pop(); // wait popup
 
                         result.map(
                           success: (errorMessage) {

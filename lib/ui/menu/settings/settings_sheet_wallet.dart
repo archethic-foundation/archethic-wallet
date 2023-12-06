@@ -35,15 +35,15 @@ class _SettingsSheetWalletMobileState extends ConsumerState<SettingsSheetWallet>
   }
 
   void showSecurity() {
-    context.go('/security_menu_view');
+    context.go(SecurityMenuView.routerPage);
   }
 
   void showCustom() {
-    context.go('/customization_menu_view');
+    context.go(CustomizationMenuView.routerPage);
   }
 
   void showAbout() {
-    context.go('/about_menu_view');
+    context.go(AboutMenuView.routerPage);
   }
 
   @override

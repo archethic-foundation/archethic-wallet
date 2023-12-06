@@ -7,6 +7,7 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class Sheets {
   //App Ninty Height Sheet
@@ -188,7 +189,7 @@ class _AppHeightNineModalRoute<T> extends PopupRoute<T> {
         onTap: () {
           if (closeOnTap!) {
             // Close when tapped anywhere
-            Navigator.of(context).pop();
+            context.pop();
           }
         },
         child: Theme(

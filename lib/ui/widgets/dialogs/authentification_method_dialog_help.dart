@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:go_router/go_router.dart';
 
 class AuthentificationMethodDialogHelp {
   static Future<void> getDialog(
@@ -144,7 +145,7 @@ class AuthentificationMethodDialogHelp {
                       FeedbackType.light,
                       preferences.activeVibrations,
                     );
-                Navigator.of(context).pop();
+                context.pop();
               },
             ),
           ],

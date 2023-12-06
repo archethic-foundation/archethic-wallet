@@ -7,6 +7,7 @@ import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
+import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/settings/set_password.dart';
 import 'package:aewallet/ui/views/settings/set_yubikey.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
@@ -27,6 +28,7 @@ class AuthentificationMethodDialog {
     WidgetRef ref,
     bool hasBiometrics,
     AuthenticationMethod curAuthMethod,
+    String fromPage,
   ) async {
     final settingsNotifier = ref.read(
       AuthenticationProviders.settings.notifier,
@@ -88,9 +90,7 @@ class AuthentificationMethodDialog {
                           settingsNotifier.setAuthMethod(
                             AuthMethod.biometrics,
                           );
-                          context.go(
-                            '/home',
-                          );
+                          context.go(HomePage.routerPage);
                         } else {
                           Navigator.pop(context, value.value);
                           await getDialog(
@@ -98,6 +98,7 @@ class AuthentificationMethodDialog {
                             ref,
                             hasBiometrics,
                             curAuthMethod,
+                            fromPage,
                           );
                         }
                         break;
@@ -106,8 +107,9 @@ class AuthentificationMethodDialog {
                             await Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (BuildContext context) {
-                              return const PinScreen(
+                              return PinScreen(
                                 PinOverlayType.newPin,
+                                fromPage,
                               );
                             },
                           ),
@@ -119,14 +121,13 @@ class AuthentificationMethodDialog {
                             ref,
                             hasBiometrics,
                             curAuthMethod,
+                            fromPage,
                           );
                         } else {
                           settingsNotifier.setAuthMethod(
                             AuthMethod.pin,
                           );
-                          context.go(
-                            '/home',
-                          );
+                          context.go(HomePage.routerPage);
                         }
                         break;
                       case AuthMethod.password:
@@ -157,14 +158,13 @@ class AuthentificationMethodDialog {
                             ref,
                             hasBiometrics,
                             curAuthMethod,
+                            fromPage,
                           );
                         } else {
                           settingsNotifier.setAuthMethod(
                             AuthMethod.password,
                           );
-                          context.go(
-                            '/home',
-                          );
+                          context.go(HomePage.routerPage);
                         }
                         break;
                       case AuthMethod.yubikeyWithYubicloud:
@@ -187,14 +187,13 @@ class AuthentificationMethodDialog {
                             ref,
                             hasBiometrics,
                             curAuthMethod,
+                            fromPage,
                           );
                         } else {
                           settingsNotifier.setAuthMethod(
                             AuthMethod.yubikeyWithYubicloud,
                           );
-                          context.go(
-                            '/home',
-                          );
+                          context.go(HomePage.routerPage);
                         }
                         break;
                       default:

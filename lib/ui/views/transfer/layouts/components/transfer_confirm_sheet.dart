@@ -8,8 +8,8 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/routes.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/transfer/bloc/provider.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/components/token_transfer_detail.dart';
@@ -23,6 +23,7 @@ import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class TransferConfirmSheet extends ConsumerStatefulWidget {
@@ -72,7 +73,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
       ArchethicTheme.text,
       ArchethicTheme.snackBarShadow,
     );
-    Navigator.of(context).pop();
+    context.pop();
   }
 
   Future<void> _showSendSucceed(
@@ -127,7 +128,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
           .refreshFungibleTokens();
     }
 
-    Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
+    context.go(HomePage.routerPage);
   }
 
   void _showSendFailed(
@@ -135,7 +136,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
   ) {
     // Send failed
     if (animationOpen!) {
-      Navigator.of(context).pop();
+      context.pop();
     }
     UIUtil.showSnackbar(
       event.response!,
@@ -145,7 +146,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
       ArchethicTheme.snackBarShadow,
       duration: const Duration(seconds: 5),
     );
-    Navigator.of(context).pop();
+    context.pop();
   }
 
   @override

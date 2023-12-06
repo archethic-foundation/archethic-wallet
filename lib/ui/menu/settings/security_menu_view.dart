@@ -6,6 +6,8 @@ class SecurityMenuView extends ConsumerWidget {
     super.key,
   });
 
+  static const routerPage = '/security_menu_view';
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
@@ -105,8 +107,7 @@ class SecurityMenuView extends ConsumerWidget {
                                     await ref
                                         .read(SessionProviders.session.notifier)
                                         .logout();
-                                    await Navigator.of(context)
-                                        .pushReplacementNamed('/');
+                                    context.go(Splash.routerPage);
                                   }
                                 },
                               );
@@ -159,6 +160,7 @@ class _AuthMethodSettingsListItem extends ConsumerWidget {
               ref,
               hasBiometrics,
               AuthenticationMethod(authenticationMethod),
+              SecurityMenuView.routerPage,
             );
           }
         },

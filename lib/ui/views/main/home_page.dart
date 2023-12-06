@@ -41,6 +41,8 @@ import 'package:material_symbols_icons/symbols.dart';
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
+  static const routerPage = '/home';
+
   @override
   ConsumerState<HomePage> createState() => _HomePageState();
 }

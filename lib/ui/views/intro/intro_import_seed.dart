@@ -16,6 +16,8 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/security_configuration.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/intro/intro_welcome.dart';
+import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
@@ -37,6 +39,8 @@ import 'package:unorm_dart/unorm_dart.dart' as unorm;
 
 class IntroImportSeedPage extends ConsumerStatefulWidget {
   const IntroImportSeedPage({super.key});
+
+  static const routerPage = '/intro_import';
 
   @override
   ConsumerState<IntroImportSeedPage> createState() => _IntroImportSeedState();
@@ -70,9 +74,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
     _authSub = EventTaxiImpl.singleton()
         .registerTo<AuthenticatedEvent>()
         .listen((AuthenticatedEvent event) async {
-      context.go(
-        '/home',
-      );
+      context.go(HomePage.routerPage);
     });
   }
 
@@ -160,7 +162,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                             key: const Key('back'),
                             color: ArchethicTheme.text,
                             onPressed: () {
-                              Navigator.pop(context);
+                              context.go(IntroWelcome.routerPage);
                             },
                           ),
                         ),
@@ -530,7 +532,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                                 ArchethicTheme.text,
                                 ArchethicTheme.snackBarShadow,
                               );
-                              Navigator.of(context).pop();
+                              context.pop();
                               return;
                             }
 
@@ -561,6 +563,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                               context,
                               ref,
                               newSession.wallet.seed,
+                              IntroImportSeedPage.routerPage,
                             );
                             setState(() {
                               isPressed = false;
