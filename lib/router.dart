@@ -9,6 +9,7 @@ import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
 import 'package:aewallet/ui/views/authenticate/yubikey_screen.dart';
 import 'package:aewallet/ui/views/intro/intro_backup_confirm.dart';
 import 'package:aewallet/ui/views/intro/intro_backup_seed.dart';
+import 'package:aewallet/ui/views/intro/intro_configure_security.dart';
 import 'package:aewallet/ui/views/intro/intro_import_seed.dart';
 import 'package:aewallet/ui/views/intro/intro_new_wallet_disclaimer.dart';
 import 'package:aewallet/ui/views/intro/intro_new_wallet_get_first_infos.dart';
@@ -20,6 +21,7 @@ import 'package:aewallet/ui/views/messenger/layouts/update_discussion_page.dart'
 import 'package:aewallet/ui/views/nft/layouts/nft_list_per_category.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/rpc_command_receiver.dart';
+import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -96,13 +98,39 @@ class RoutesPath {
           },
         ),
         GoRoute(
-          path: PinScreen.name,
+          path: PinScreen.routerPage,
           builder: (context, state) {
             final args = state.extra! as Map<String, Object?>;
             return PinScreen(
               args['type']! as PinOverlayType,
               args['fromPage']! as String,
-              canNavigateBack: args['canNavigateBack']! as bool,
+              args['toPage']! as String,
+              extraFromPage:
+                  args['extraFromPage'] == null ? null : args['extraFromPage']!,
+              extraToPage:
+                  args['extraToPage'] == null ? null : args['extraToPage']!,
+              canNavigateBack: args['canNavigateBack'] == null ||
+                  args['canNavigateBack']! as bool,
+              description: args['description'] == null
+                  ? ''
+                  : args['description']! as String,
+              pinScreenBackgroundColor: args['pinScreenBackgroundColor'] == null
+                  ? null
+                  : args['pinScreenBackgroundColor']! as Color?,
+            );
+          },
+        ),
+        GoRoute(
+          path: IntroConfigureSecurity.routerPage,
+          builder: (context, state) {
+            final args = state.extra! as Map<String, Object?>;
+            return IntroConfigureSecurity(
+              accessModes: args['accessModes'] == null
+                  ? null
+                  : args['accessModes']! as List<PickerItem>?,
+              seed: args['seed']! as String,
+              fromPage: args['fromPage']! as String,
+              extra: args['extra'] == null ? null : args['extra']!,
             );
           },
         ),

@@ -6,6 +6,7 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/intro/intro_backup_confirm.dart';
+import 'package:aewallet/ui/views/intro/intro_new_wallet_disclaimer.dart';
 import 'package:aewallet/ui/views/settings/mnemonic_display.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
@@ -102,7 +103,10 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
                                   key: const Key('back'),
                                   color: ArchethicTheme.text,
                                   onPressed: () {
-                                    Navigator.pop(context);
+                                    context.go(
+                                      IntroNewWalletDisclaimer.routerPage,
+                                      extra: widget.name,
+                                    );
                                   },
                                 ),
                               ),

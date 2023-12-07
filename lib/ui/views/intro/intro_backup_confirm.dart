@@ -15,6 +15,7 @@ import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/security_configuration.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/intro/intro_backup_seed.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
@@ -263,7 +264,10 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                             key: const Key('back'),
                             color: ArchethicTheme.text,
                             onPressed: () {
-                              Navigator.pop(context);
+                              context.go(
+                                IntroBackupSeedPage.routerPage,
+                                extra: widget.name,
+                              );
                             },
                           ),
                         ),
@@ -440,6 +444,10 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                                       ref,
                                       widget.seed!,
                                       IntroBackupConfirm.routerPage,
+                                      {
+                                        'name': widget.name,
+                                        'seed': widget.seed,
+                                      },
                                     );
                                   } else {
                                     UIUtil.showSnackbar(
@@ -484,6 +492,10 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                                         ref,
                                         widget.seed!,
                                         IntroBackupConfirm.routerPage,
+                                        {
+                                          'name': widget.name,
+                                          'seed': widget.seed,
+                                        },
                                       );
                                     },
                                     titleStyle: ArchethicThemeStyles
