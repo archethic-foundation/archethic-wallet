@@ -2,11 +2,11 @@
 
 import 'dart:async';
 
+import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/recovery_phrase_saved.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
-import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
 import 'package:aewallet/model/data/appdb.dart';
@@ -58,18 +58,11 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
   List<String> wordListToSelect = List<String>.empty(growable: true);
   List<String> originalWordsList = List<String>.empty(growable: true);
 
-  StreamSubscription<AuthenticatedEvent>? _authSub;
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
   bool keychainAccessRequested = false;
   bool newWalletRequested = false;
 
   void _registerBus() {
-    _authSub = EventTaxiImpl.singleton()
-        .registerTo<AuthenticatedEvent>()
-        .listen((AuthenticatedEvent event) async {
-      await createKeychain();
-    });
-
     _sendTxSub = EventTaxiImpl.singleton()
         .registerTo<TransactionSendEvent>()
         .listen((TransactionSendEvent event) async {
@@ -187,7 +180,6 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
   }
 
   void _destroyBus() {
-    _authSub?.cancel();
     _sendTxSub?.cancel();
   }
 
@@ -223,6 +215,12 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
     final localizations = AppLocalizations.of(context)!;
 
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
+
+    final isAuthent =
+        ref.watch(AuthenticationProviders.pinAuthentication).isAuthent;
+    if (isAuthent) {
+      Future.delayed(Duration.zero, createKeychain);
+    }
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

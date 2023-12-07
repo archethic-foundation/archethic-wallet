@@ -1,14 +1,11 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
-
-import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
+import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/settings/set_password.dart';
 import 'package:aewallet/ui/views/settings/set_yubikey.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
@@ -19,11 +16,11 @@ import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class IntroConfigureSecurity extends ConsumerStatefulWidget {
@@ -32,10 +29,14 @@ class IntroConfigureSecurity extends ConsumerStatefulWidget {
     this.accessModes,
     required this.seed,
     required this.fromPage,
+    this.extra,
   });
   final List<PickerItem>? accessModes;
   final String? seed;
   final String fromPage;
+  final Object? extra;
+
+  static const routerPage = '/intro_configure_security';
 
   @override
   ConsumerState<IntroConfigureSecurity> createState() =>
@@ -213,16 +214,15 @@ class _IntroConfigureSecurityState
                                         );
                                         break;
                                       case AuthMethod.pin:
-                                        authenticated =
-                                            await Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (BuildContext context) {
-                                              return PinScreen(
-                                                PinOverlayType.newPin,
-                                                widget.fromPage,
-                                              );
-                                            },
-                                          ),
+                                        context.go(
+                                          PinScreen.routerPage,
+                                          extra: {
+                                            'type': PinOverlayType.newPin,
+                                            'fromPage': widget.fromPage,
+                                            'toPage': HomePage.routerPage,
+                                            'extraFromPage': widget.extra,
+                                            'extraToPage': null,
+                                          },
                                         );
                                         break;
                                       case AuthMethod.yubikeyWithYubicloud:
@@ -244,16 +244,6 @@ class _IntroConfigureSecurityState
                                         break;
                                       case AuthMethod.ledger:
                                         break;
-                                    }
-                                    if (authenticated) {
-                                      await ref
-                                          .read(
-                                            AuthenticationProviders
-                                                .settings.notifier,
-                                          )
-                                          .setAuthMethod(authMethod);
-                                      EventTaxiImpl.singleton()
-                                          .fire(AuthenticatedEvent());
                                     }
                                   },
                                 ),
