@@ -5,9 +5,9 @@ import 'dart:math';
 // Project imports:
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/settings.dart';
-
 import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/domain/models/settings.dart';
+import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
@@ -34,7 +34,10 @@ class ShakeCurve extends Curve {
 class PinScreen extends ConsumerStatefulWidget {
   const PinScreen(
     this.type,
-    this.fromPage, {
+    this.fromPage,
+    this.toPage, {
+    this.extraFromPage,
+    this.extraToPage,
     this.description = '',
     this.pinScreenBackgroundColor,
     this.canNavigateBack = true,
@@ -49,6 +52,9 @@ class PinScreen extends ConsumerStatefulWidget {
   final String description;
   final Color? pinScreenBackgroundColor;
   final String fromPage;
+  final String toPage;
+  final Object? extraFromPage;
+  final Object? extraToPage;
 
   @override
   ConsumerState<PinScreen> createState() => _PinScreenState();
@@ -236,7 +242,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
           pinConfirmation: _pinConfirmed,
         );
 
-    updatePinResult.map(
+    await updatePinResult.map(
       pinsDoNotMatch: (value) {
         sl.get<HapticUtil>().feedback(
               FeedbackType.error,
@@ -252,8 +258,13 @@ class _PinScreenState extends ConsumerState<PinScreen>
           });
         });
       },
-      success: (value) {
-        context.go(widget.fromPage);
+      success: (value) async {
+        await ref
+            .read(
+              AuthenticationProviders.settings.notifier,
+            )
+            .setAuthMethod(AuthMethod.pin);
+        context.go(widget.toPage, extra: widget.extraToPage);
       },
     );
   }
@@ -268,8 +279,8 @@ class _PinScreenState extends ConsumerState<PinScreen>
         );
 
     result.maybeMap(
-      success: (_) {
-        context.go(widget.fromPage);
+      success: (_) async {
+        context.go(widget.fromPage, extra: widget.extraFromPage);
         return;
       },
       orElse: () {
@@ -368,7 +379,10 @@ class _PinScreenState extends ConsumerState<PinScreen>
                                   key: const Key('back'),
                                   color: ArchethicTheme.text,
                                   onPressed: () {
-                                    Navigator.pop(context, false);
+                                    context.go(
+                                      widget.fromPage,
+                                      extra: widget.extraFromPage,
+                                    );
                                   },
                                 )
                               : const SizedBox(),

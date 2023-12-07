@@ -7,13 +7,15 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 mixin SecurityConfigurationMixin {
-  Future<bool> launchSecurityConfiguration(
+  Future<void> launchSecurityConfiguration(
     BuildContext context,
     WidgetRef ref,
     String seed,
     String fromPage,
+    Object? extra,
   ) async {
     final biometricsAvalaible = await sl.get<BiometricUtil>().hasBiometrics();
 
@@ -91,19 +93,14 @@ mixin SecurityConfigurationMixin {
         );
     }
 
-    // TODO(reddwarf03): GoRouter
-    final bool securityConfiguration = await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (BuildContext context) {
-          return IntroConfigureSecurity(
-            accessModes: accessModes,
-            seed: seed,
-            fromPage: fromPage,
-          );
-        },
-      ),
+    context.go(
+      IntroConfigureSecurity.routerPage,
+      extra: {
+        'accessModes': accessModes,
+        'seed': seed,
+        'fromPage': fromPage,
+        'extra': extra,
+      },
     );
-
-    return securityConfiguration;
   }
 }
