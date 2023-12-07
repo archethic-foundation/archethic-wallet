@@ -5,6 +5,7 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/intro/intro_backup_seed.dart';
+import 'package:aewallet/ui/views/intro/intro_new_wallet_get_first_infos.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
@@ -68,7 +69,8 @@ class IntroNewWalletDisclaimer extends ConsumerWidget {
                             key: const Key('back'),
                             color: ArchethicTheme.text,
                             onPressed: () {
-                              Navigator.pop(context);
+                              context
+                                  .go(IntroNewWalletGetFirstInfos.routerPage);
                             },
                           ),
                         ),

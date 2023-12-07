@@ -29,6 +29,9 @@ class AuthentificationMethodDialog {
     bool hasBiometrics,
     AuthenticationMethod curAuthMethod,
     String fromPage,
+    String toPage,
+    Object? extraFromPage,
+    Object? extraToPage,
   ) async {
     final settingsNotifier = ref.read(
       AuthenticationProviders.settings.notifier,
@@ -99,6 +102,9 @@ class AuthentificationMethodDialog {
                             hasBiometrics,
                             curAuthMethod,
                             fromPage,
+                            toPage,
+                            extraFromPage,
+                            extraToPage,
                           );
                         }
                         break;
@@ -110,6 +116,9 @@ class AuthentificationMethodDialog {
                               return PinScreen(
                                 PinOverlayType.newPin,
                                 fromPage,
+                                toPage,
+                                extraFromPage: extraFromPage,
+                                extraToPage: extraToPage,
                               );
                             },
                           ),
@@ -122,6 +131,9 @@ class AuthentificationMethodDialog {
                             hasBiometrics,
                             curAuthMethod,
                             fromPage,
+                            toPage,
+                            extraFromPage,
+                            extraToPage,
                           );
                         } else {
                           settingsNotifier.setAuthMethod(
@@ -159,6 +171,9 @@ class AuthentificationMethodDialog {
                             hasBiometrics,
                             curAuthMethod,
                             fromPage,
+                            toPage,
+                            extraFromPage,
+                            extraToPage,
                           );
                         } else {
                           settingsNotifier.setAuthMethod(
@@ -188,6 +203,9 @@ class AuthentificationMethodDialog {
                             hasBiometrics,
                             curAuthMethod,
                             fromPage,
+                            toPage,
+                            extraFromPage,
+                            extraToPage,
                           );
                         } else {
                           settingsNotifier.setAuthMethod(
