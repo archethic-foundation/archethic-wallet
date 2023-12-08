@@ -5,7 +5,7 @@ class AuthenticationSettingsNotifier
   AuthenticationSettingsNotifier(this.ref)
       : super(
           const AuthenticationSettings(
-            authenticationMethod: AuthMethod.pin,
+            authenticationMethod: AuthMethod.none,
             pinPadShuffle: false,
             lock: UnlockOption.yes,
             lockTimeout: LockTimeoutOption.one,
@@ -25,6 +25,7 @@ class AuthenticationSettingsNotifier
           lock: UnlockOption.yes,
           pinPadShuffle: false,
           lockTimeout: LockTimeoutOption.one,
+          authenticationMethod: AuthMethod.none,
         ),
       );
 

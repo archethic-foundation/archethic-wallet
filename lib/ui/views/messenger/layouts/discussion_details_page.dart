@@ -269,7 +269,7 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage> {
 
                                 result.map(
                                   success: (_) {
-                                    Navigator.of(context)
+                                    context
                                         .pop(); // Going back to discussion page
                                   },
                                   failure: (failure) {

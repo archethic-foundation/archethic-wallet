@@ -14,6 +14,7 @@ mixin SecurityConfigurationMixin {
     BuildContext context,
     WidgetRef ref,
     String seed,
+    String name,
     String fromPage,
     Object? extra,
   ) async {
@@ -98,6 +99,7 @@ mixin SecurityConfigurationMixin {
       extra: {
         'accessModes': accessModes,
         'seed': seed,
+        'name': name,
         'fromPage': fromPage,
         'extra': extra,
       },

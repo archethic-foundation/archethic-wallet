@@ -14,6 +14,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:password_strength/password_strength.dart';
 
@@ -24,9 +25,13 @@ class SetPassword extends ConsumerStatefulWidget {
     this.description,
     this.seed,
   });
+
   final String? header;
   final String? description;
   final String? seed;
+
+  static const routerPage = '/set_password';
+
   @override
   ConsumerState<SetPassword> createState() => _SetPasswordState();
 }
@@ -104,7 +109,7 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
                                 key: const Key('back'),
                                 color: ArchethicTheme.text,
                                 onPressed: () {
-                                  Navigator.pop(context, false);
+                                  context.pop(false);
                                 },
                               ),
                             ),
@@ -409,7 +414,7 @@ class _SetPasswordState extends ConsumerState<SetPassword> {
       vault.setPassword(
         stringEncryptBase64(setPasswordController!.text, widget.seed),
       );
-      Navigator.of(context).pop(true);
+      context.pop(true);
     }
   }
 }

@@ -201,7 +201,7 @@ class _AppHeightNineModalRoute<T> extends PopupRoute<T> {
               delegate: _AppHeightNineSheetLayout(appSheetAnimation!.value),
               child: BottomSheet(
                 animationController: _animationController,
-                onClosing: () => Navigator.pop(context),
+                onClosing: () => context.pop(),
                 builder: (BuildContext context) => BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
                   child: DecoratedBox(

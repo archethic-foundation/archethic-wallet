@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/authentication.dart';
+import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -15,6 +16,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class PasswordScreen extends ConsumerStatefulWidget {
@@ -62,8 +64,13 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
         );
 
     await result.maybeMap(
-      success: (_) {
-        Navigator.of(context).pop(true);
+      success: (_) async {
+        await ref
+            .read(
+              AuthenticationProviders.settings.notifier,
+            )
+            .setAuthMethod(AuthMethod.password);
+        context.pop(true);
         return;
       },
       orElse: () async {
@@ -124,7 +131,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
                                     key: const Key('back'),
                                     color: ArchethicTheme.text,
                                     onPressed: () {
-                                      Navigator.pop(context, false);
+                                      context.pop(false);
                                     },
                                   )
                                 : const SizedBox(),

@@ -12,6 +12,7 @@ import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class SignTransactionsConfirmationForm extends ConsumerWidget {
   const SignTransactionsConfirmationForm(
@@ -134,7 +135,7 @@ class SignTransactionsConfirmationForm extends ConsumerWidget {
                     localizations.cancel,
                     Dimens.buttonBottomDimens,
                     onPressed: () {
-                      Navigator.of(context).pop(false);
+                      context.pop(false);
                     },
                   ),
                   AppButtonTiny(
@@ -142,7 +143,7 @@ class SignTransactionsConfirmationForm extends ConsumerWidget {
                     localizations.confirm,
                     Dimens.buttonBottomDimens,
                     onPressed: () async {
-                      Navigator.of(context).pop(true);
+                      context.pop(true);
                     },
                   ),
                 ],

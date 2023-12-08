@@ -247,9 +247,7 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                                                         onPressed: () {
                                                           formNotifier
                                                               .addAdmin(pubKey);
-                                                          Navigator.pop(
-                                                            context,
-                                                          );
+                                                          context.pop();
                                                         },
                                                       )
                                                     else
@@ -276,9 +274,7 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                                                               .removeAdmin(
                                                             pubKey,
                                                           );
-                                                          Navigator.pop(
-                                                            context,
-                                                          );
+                                                          context.pop();
                                                         },
                                                       ),
                                                     IconButton(
@@ -304,7 +300,7 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                                                             .removeMember(
                                                           pubKey,
                                                         );
-                                                        Navigator.pop(context);
+                                                        context.pop();
                                                       },
                                                     ),
                                                   ],
@@ -387,8 +383,7 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                               return;
                             }
 
-                            Navigator.of(context)
-                                .pop(); // Going back to discussion details
+                            context.pop(); // Going back to discussion details
                           },
                           failure: (failure) {
                             UIUtil.showSnackbar(

@@ -87,7 +87,7 @@ class _CreateDiscussionValidationSheetState
                     key: const Key('back'),
                     color: ArchethicTheme.text,
                     onPressed: () {
-                      Navigator.pop(context);
+                      context.pop();
                     },
                   ),
                   AutoSizeText(
@@ -190,10 +190,9 @@ class _CreateDiscussionValidationSheetState
 
                           result.map(
                             success: (success) {
-                              Navigator.of(context)
-                                  .pop(); // create discussion validation sheet
-                              Navigator.of(context)
-                                  .pop(); // create discussion sheet
+                              context
+                                ..pop() // create discussion validation sheet
+                                ..pop(); // create discussion sheet
                               widget.discussionCreationSuccess?.call();
                             },
                             failure: (failure) {

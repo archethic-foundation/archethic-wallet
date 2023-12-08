@@ -66,7 +66,7 @@ class NFTListPerCategory extends ConsumerWidget {
                   currentNftCategoryIndex: currentNftCategoryIndex ?? 0,
                   displayCategoryName: true,
                   onPressBack: () {
-                    Navigator.pop(context);
+                    context.pop();
                   },
                 ),
                 Expanded(

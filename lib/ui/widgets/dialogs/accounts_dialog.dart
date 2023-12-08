@@ -7,6 +7,7 @@ import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class AccountsDialog {
   static Future<Account?> getDialog(
@@ -73,7 +74,7 @@ class AccountsDialog {
               pickerItems: pickerItemsList,
               selectedIndexes: [selectedIndex],
               onSelected: (value) {
-                Navigator.pop(context, value.value);
+                context.pop(value.value);
               },
             ),
           ),
