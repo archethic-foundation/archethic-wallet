@@ -1,33 +1,18 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-
-import 'dart:async';
-
-import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/recovery_phrase_saved.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/wallet/wallet.dart';
-import 'package:aewallet/bus/transaction_send_event.dart';
-import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
-import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/security_configuration.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/intro/intro_backup_seed.dart';
-import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
-import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/mnemonics.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -58,141 +43,9 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
   List<String> wordListToSelect = List<String>.empty(growable: true);
   List<String> originalWordsList = List<String>.empty(growable: true);
 
-  StreamSubscription<TransactionSendEvent>? _sendTxSub;
-  bool keychainAccessRequested = false;
-  bool newWalletRequested = false;
-
-  void _registerBus() {
-    _sendTxSub = EventTaxiImpl.singleton()
-        .registerTo<TransactionSendEvent>()
-        .listen((TransactionSendEvent event) async {
-      final localizations = AppLocalizations.of(context)!;
-
-      if (event.response != 'ok' && event.nbConfirmations == 0) {
-        UIUtil.showSnackbar(
-          '${localizations.sendError} (${event.response!})',
-          context,
-          ref,
-          ArchethicTheme.text,
-          ArchethicTheme.snackBarShadow,
-        );
-        Navigator.of(context).pop(false);
-        return;
-      }
-
-      if (event.response != 'ok') {
-        UIUtil.showSnackbar(
-          localizations.notEnoughConfirmations,
-          context,
-          ref,
-          ArchethicTheme.text,
-          ArchethicTheme.snackBarShadow,
-        );
-        context.pop();
-        return;
-      }
-
-      switch (event.transactionType!) {
-        case TransactionSendEventType.keychain:
-          UIUtil.showSnackbar(
-            event.nbConfirmations == 1
-                ? localizations.keychainCreationTransactionConfirmed1
-                    .replaceAll('%1', event.nbConfirmations.toString())
-                    .replaceAll('%2', event.maxConfirmations.toString())
-                : localizations.keychainCreationTransactionConfirmed
-                    .replaceAll('%1', event.nbConfirmations.toString())
-                    .replaceAll('%2', event.maxConfirmations.toString()),
-            context,
-            ref,
-            ArchethicTheme.text,
-            ArchethicTheme.snackBarShadow,
-            duration: const Duration(milliseconds: 5000),
-            icon: Symbols.info,
-          );
-
-          if (keychainAccessRequested) break;
-
-          setState(() {
-            keychainAccessRequested = true;
-          });
-          await KeychainUtil().createKeyChainAccess(
-            ref.read(SettingsProviders.settings).network,
-            widget.seed,
-            event.params!['keychainAddress']! as String,
-            event.params!['originPrivateKey']! as String,
-            event.params!['keychain']! as Keychain,
-          );
-          break;
-        case TransactionSendEventType.keychainAccess:
-          UIUtil.showSnackbar(
-            event.nbConfirmations == 1
-                ? localizations.keychainAccessCreationTransactionConfirmed1
-                    .replaceAll('%1', event.nbConfirmations.toString())
-                    .replaceAll('%2', event.maxConfirmations.toString())
-                : localizations.keychainAccessCreationTransactionConfirmed
-                    .replaceAll('%1', event.nbConfirmations.toString())
-                    .replaceAll('%2', event.maxConfirmations.toString()),
-            context,
-            ref,
-            ArchethicTheme.text,
-            ArchethicTheme.snackBarShadow,
-            duration: const Duration(milliseconds: 5000),
-            icon: Symbols.info,
-          );
-
-          if (newWalletRequested) break;
-
-          setState(() {
-            newWalletRequested = true;
-          });
-          var error = false;
-          try {
-            await ref
-                .read(SessionProviders.session.notifier)
-                .createNewAppWallet(
-                  seed: widget.seed!,
-                  keychainAddress: event.params!['keychainAddress']! as String,
-                  keychain: event.params!['keychain']! as Keychain,
-                  name: widget.name,
-                );
-          } catch (e) {
-            error = true;
-            UIUtil.showSnackbar(
-              '${localizations.sendError} ($e)',
-              context,
-              ref,
-              ArchethicTheme.text,
-              ArchethicTheme.snackBarShadow,
-            );
-          }
-          if (error == false) {
-            context.go(HomePage.routerPage);
-          } else {
-            context.pop();
-          }
-          break;
-        case TransactionSendEventType.transfer:
-          break;
-        case TransactionSendEventType.token:
-          break;
-      }
-    });
-  }
-
-  void _destroyBus() {
-    _sendTxSub?.cancel();
-  }
-
-  @override
-  void dispose() {
-    _destroyBus();
-    super.dispose();
-  }
-
   @override
   void initState() {
     super.initState();
-    _registerBus();
     // TODO(reddwarf03): LanguageSeed seems to be local to "import wallet" and "create wallet" screens. Maybe it should not be stored in preferences ? (3)
     final languageSeed = ref.read(
       SettingsProviders.settings.select((settings) => settings.languageSeed),
@@ -215,12 +68,6 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
     final localizations = AppLocalizations.of(context)!;
 
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-
-    final isAuthent =
-        ref.watch(AuthenticationProviders.pinAuthentication).isAuthent;
-    if (isAuthent) {
-      Future.delayed(Duration.zero, createKeychain);
-    }
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -441,6 +288,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                                       context,
                                       ref,
                                       widget.seed!,
+                                      widget.name!,
                                       IntroBackupConfirm.routerPage,
                                       {
                                         'name': widget.name,
@@ -456,7 +304,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                                       ArchethicTheme.snackBarShadow,
                                       icon: Symbols.info,
                                     );
-                                    Navigator.pop(context);
+                                    context.pop();
                                   }
                                 }
                               },
@@ -489,6 +337,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                                         context,
                                         ref,
                                         widget.seed!,
+                                        widget.name!,
                                         IntroBackupConfirm.routerPage,
                                         {
                                           'name': widget.name,
@@ -524,47 +373,5 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
         ),
       ),
     );
-  }
-
-  Future<void> createKeychain() async {
-    final localizations = AppLocalizations.of(context)!;
-
-    ShowSendingAnimation.build(
-      context,
-      title: localizations.appWalletInitInProgress,
-    );
-
-    var error = false;
-
-    try {
-      await sl.get<DBHelper>().clearAppWallet();
-      final vault = await HiveVaultDatasource.getInstance();
-      await vault.setSeed(widget.seed!);
-
-      final originPrivateKey = sl.get<ApiService>().getOriginKey();
-
-      await KeychainUtil().createKeyChain(
-        ref.read(SettingsProviders.settings).network,
-        widget.seed,
-        widget.name,
-        originPrivateKey,
-      );
-    } catch (e) {
-      error = true;
-      final localizations = AppLocalizations.of(context)!;
-
-      UIUtil.showSnackbar(
-        '${localizations.sendError} ($e)',
-        context,
-        ref,
-        ArchethicTheme.text,
-        ArchethicTheme.snackBarShadow,
-      );
-    }
-
-    if (error == false) {
-    } else {
-      context.pop();
-    }
   }
 }

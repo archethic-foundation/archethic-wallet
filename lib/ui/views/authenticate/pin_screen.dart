@@ -33,11 +33,7 @@ class ShakeCurve extends Curve {
 
 class PinScreen extends ConsumerStatefulWidget {
   const PinScreen(
-    this.type,
-    this.fromPage,
-    this.toPage, {
-    this.extraFromPage,
-    this.extraToPage,
+    this.type, {
     this.description = '',
     this.pinScreenBackgroundColor,
     this.canNavigateBack = true,
@@ -51,10 +47,6 @@ class PinScreen extends ConsumerStatefulWidget {
   final PinOverlayType type;
   final String description;
   final Color? pinScreenBackgroundColor;
-  final String fromPage;
-  final String toPage;
-  final Object? extraFromPage;
-  final Object? extraToPage;
 
   @override
   ConsumerState<PinScreen> createState() => _PinScreenState();
@@ -264,7 +256,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
               AuthenticationProviders.settings.notifier,
             )
             .setAuthMethod(AuthMethod.pin);
-        context.go(widget.toPage, extra: widget.extraToPage);
+        context.pop(true);
       },
     );
   }
@@ -280,7 +272,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
 
     result.maybeMap(
       success: (_) async {
-        context.go(widget.fromPage, extra: widget.extraFromPage);
+        context.pop(true);
         return;
       },
       orElse: () {
@@ -379,10 +371,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
                                   key: const Key('back'),
                                   color: ArchethicTheme.text,
                                   onPressed: () {
-                                    context.go(
-                                      widget.fromPage,
-                                      extra: widget.extraFromPage,
-                                    );
+                                    context.pop(false);
                                   },
                                 )
                               : const SizedBox(),

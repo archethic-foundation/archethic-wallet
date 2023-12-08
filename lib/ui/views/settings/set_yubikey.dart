@@ -16,6 +16,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SetYubikey extends ConsumerStatefulWidget {
@@ -30,6 +31,8 @@ class SetYubikey extends ConsumerStatefulWidget {
   final String? description;
   final String? apiKey;
   final String? clientID;
+
+  static const routerPage = '/set_yubikey';
 
   @override
   ConsumerState<SetYubikey> createState() => _SetYubikeyState();
@@ -104,7 +107,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
                               width: 50,
                               child: BackButton(
                                 onPressed: () {
-                                  Navigator.pop(context, false);
+                                  context.pop(false);
                                 },
                               ),
                             ),
@@ -416,7 +419,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
           activeVibrations: preferences.activeVibrations,
         );
         if (auth) {
-          Navigator.of(context).pop(true);
+          context.pop(true);
         }
       }
     }

@@ -10,7 +10,8 @@ enum AuthMethod {
   biometricsUniris,
   yubikeyWithYubicloud,
   ledger,
-  password
+  password,
+  none,
 }
 
 /// Represent the available authentication methods our app supports
@@ -36,6 +37,8 @@ class AuthenticationMethod extends SettingSelectionItem {
         return localizations.ledgerMethod;
       case AuthMethod.password:
         return localizations.passwordMethod;
+      case AuthMethod.none:
+        return '';
     }
   }
 
@@ -54,6 +57,8 @@ class AuthenticationMethod extends SettingSelectionItem {
         return '';
       case AuthMethod.password:
         return localizations.configureSecurityExplanationPassword;
+      case AuthMethod.none:
+        return '';
     }
   }
 
@@ -71,6 +76,8 @@ class AuthenticationMethod extends SettingSelectionItem {
         return 'assets/icons/password.png';
       case AuthMethod.ledger:
         return 'assets/icons/password.png';
+      case AuthMethod.none:
+        return '';
     }
   }
 

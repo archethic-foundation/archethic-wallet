@@ -17,7 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 class NetworkDialog with UrlUtil {
   static Future<NetworksSetting?> getDialog(
@@ -130,7 +130,7 @@ class NetworkDialog with UrlUtil {
                                   ),
                                 );
 
-                            Navigator.pop(context);
+                            context.pop();
                           },
                         );
                       },
@@ -140,7 +140,7 @@ class NetworkDialog with UrlUtil {
               }
               await updateServiceLocatorNetworkDependencies();
 
-              Navigator.pop(context, selectedNetworkSettings);
+              context.pop(selectedNetworkSettings);
             },
           ),
         );
@@ -241,7 +241,7 @@ class _NetworkDevnetHeader extends ConsumerWidget {
 
     return Column(
       children: [
-        SvgPicture.asset(
+        Image.asset(
           '${ArchethicTheme.assetsFolder}logo_white.png',
           height: 30,
         ),

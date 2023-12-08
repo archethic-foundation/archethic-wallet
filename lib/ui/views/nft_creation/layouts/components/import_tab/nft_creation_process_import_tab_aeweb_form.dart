@@ -7,6 +7,7 @@ import 'package:aewallet/util/url_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class NFTCreationProcessImportTabAEWebForm extends ConsumerWidget with UrlUtil {
   const NFTCreationProcessImportTabAEWebForm({
@@ -52,7 +53,7 @@ class NFTCreationProcessImportTabAEWebForm extends ConsumerWidget with UrlUtil {
         onConfirm(
           valueCleaned,
         );
-        Navigator.of(contextForm).pop();
+        contextForm.pop();
       },
     );
   }

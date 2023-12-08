@@ -1,13 +1,14 @@
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/model/authentication_method.dart';
+import 'package:aewallet/ui/views/authenticate/password_screen.dart';
 import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
+import 'package:aewallet/ui/views/authenticate/yubikey_screen.dart';
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 
@@ -85,6 +86,8 @@ class AuthFactory {
         break;
       case AuthMethod.ledger:
         break;
+      case AuthMethod.none:
+        break;
     }
     if (auth) {
       sl.get<HapticUtil>().feedback(FeedbackType.success, activeVibrations);
@@ -99,12 +102,12 @@ class AuthFactory {
     WidgetRef ref, {
     required canCancel,
   }) async {
-    context.go(
-      '/yubikey',
+    final auth = (await context.push(
+      YubikeyScreen.routerPage,
       extra: {'canNavigateBack': canCancel},
-    );
-    await Future<void>.delayed(const Duration(milliseconds: 200));
-    return ref.read(AuthenticationProviders.passwordAuthentication).isAuthent;
+    ))! as bool;
+
+    return auth;
   }
 
   static Future<bool> _authenticateWithPassword(
@@ -112,12 +115,12 @@ class AuthFactory {
     WidgetRef ref, {
     required bool canCancel,
   }) async {
-    context.go(
-      '/password',
+    final auth = (await context.push(
+      PasswordScreen.routerPage,
       extra: {'canNavigateBack': canCancel},
-    );
-    await Future<void>.delayed(const Duration(milliseconds: 200));
-    return ref.read(AuthenticationProviders.passwordAuthentication).isAuthent;
+    ))! as bool;
+
+    return auth;
   }
 
   static Future<bool> _authenticateWithPin(
@@ -125,13 +128,15 @@ class AuthFactory {
     WidgetRef ref, {
     required bool canCancel,
   }) async {
-    context.go(
-      '/pin',
-      extra: {'type': PinOverlayType.enterPin, 'canNavigateBack': canCancel},
-    );
+    final auth = (await context.push(
+      PinScreen.routerPage,
+      extra: {
+        'type': PinOverlayType.enterPin,
+        'canNavigateBack': canCancel,
+      },
+    ))! as bool;
 
-    await Future<void>.delayed(const Duration(milliseconds: 200));
-    return ref.read(AuthenticationProviders.pinAuthentication).isAuthent;
+    return auth;
   }
 
   static Future<bool> _authenticateWithBiometrics(BuildContext context) async {

@@ -21,7 +21,10 @@ import 'package:aewallet/ui/views/messenger/layouts/update_discussion_page.dart'
 import 'package:aewallet/ui/views/nft/layouts/nft_list_per_category.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/rpc_command_receiver.dart';
+import 'package:aewallet/ui/views/settings/set_password.dart';
+import 'package:aewallet/ui/views/settings/set_yubikey.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
+import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -47,6 +50,16 @@ class RoutesPath {
           builder: (context, state) => _wrapWithRPCCommandReceiver(
             const AutoLockGuard(child: HomePage()),
           ),
+        ),
+        GoRoute(
+          path: ShowSendingAnimation.routerPage,
+          builder: (context, state) {
+            final args = state.extra! as String;
+
+            return AnimationLoadingPage(
+              title: args,
+            );
+          },
         ),
         GoRoute(
           path: IntroWelcome.routerPage,
@@ -89,6 +102,31 @@ class RoutesPath {
           },
         ),
         GoRoute(
+          path: SetPassword.routerPage,
+          builder: (context, state) {
+            final args = state.extra! as Map<String, Object?>;
+            return SetPassword(
+              header: args['header'] == null ? null : args['header']! as String,
+              description: args['description'] == null
+                  ? null
+                  : args['description']! as String,
+              seed: args['seed'] == null ? null : args['seed']! as String,
+            );
+          },
+        ),
+        GoRoute(
+          path: SetYubikey.routerPage,
+          builder: (context, state) {
+            final args = state.extra! as Map<String, Object?>;
+            return SetYubikey(
+              header: args['header'] == null ? null : args['header']! as String,
+              description: args['description'] == null
+                  ? null
+                  : args['description']! as String,
+            );
+          },
+        ),
+        GoRoute(
           path: PasswordScreen.routerPage,
           builder: (context, state) {
             final args = state.extra! as Map<String, Object?>;
@@ -103,12 +141,6 @@ class RoutesPath {
             final args = state.extra! as Map<String, Object?>;
             return PinScreen(
               args['type']! as PinOverlayType,
-              args['fromPage']! as String,
-              args['toPage']! as String,
-              extraFromPage:
-                  args['extraFromPage'] == null ? null : args['extraFromPage']!,
-              extraToPage:
-                  args['extraToPage'] == null ? null : args['extraToPage']!,
               canNavigateBack: args['canNavigateBack'] == null ||
                   args['canNavigateBack']! as bool,
               description: args['description'] == null
@@ -129,6 +161,7 @@ class RoutesPath {
                   ? null
                   : args['accessModes']! as List<PickerItem>?,
               seed: args['seed']! as String,
+              name: args['name']! as String,
               fromPage: args['fromPage']! as String,
               extra: args['extra'] == null ? null : args['extra']!,
             );

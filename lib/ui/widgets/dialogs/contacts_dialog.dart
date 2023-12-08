@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class ContactsDialog {
   static Future<Contact?> getDialog(
@@ -123,7 +124,7 @@ class ContactsDialog {
                 child: PickerWidget(
                   pickerItems: pickerItemsList,
                   onSelected: (value) {
-                    Navigator.pop(context, value.value);
+                    context.pop(value.value);
                   },
                 ),
               ),

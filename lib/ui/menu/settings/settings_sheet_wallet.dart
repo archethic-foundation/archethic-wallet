@@ -59,7 +59,7 @@ class _SettingsSheetWalletMobileState extends ConsumerState<SettingsSheetWallet>
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.close),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => context.pop(),
         ),
       ),
       body: ClipRect(

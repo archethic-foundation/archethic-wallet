@@ -7,6 +7,7 @@ import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/bus/otp_event.dart';
 import 'package:aewallet/domain/models/authentication.dart';
+import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -96,8 +97,13 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
     final localizations = AppLocalizations.of(context)!;
 
     await result.maybeMap(
-      success: (_) {
-        context.pop();
+      success: (_) async {
+        await ref
+            .read(
+              AuthenticationProviders.settings.notifier,
+            )
+            .setAuthMethod(AuthMethod.yubikeyWithYubicloud);
+        context.pop(true);
         return;
       },
       orElse: () async {
@@ -108,7 +114,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
           ArchethicTheme.text,
           ArchethicTheme.snackBarShadow,
         );
-        context.pop();
+        context.pop(false);
       },
     );
 
@@ -163,7 +169,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
                                     key: const Key('back'),
                                     color: ArchethicTheme.text,
                                     onPressed: () {
-                                      Navigator.pop(context, false);
+                                      context.pop(false);
                                     },
                                   )
                                 : const SizedBox(),

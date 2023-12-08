@@ -95,7 +95,7 @@ class AuthentificationMethodDialog {
                           );
                           context.go(HomePage.routerPage);
                         } else {
-                          Navigator.pop(context, value.value);
+                          context.pop(value.value);
                           await getDialog(
                             context,
                             ref,
@@ -113,18 +113,15 @@ class AuthentificationMethodDialog {
                             await Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (BuildContext context) {
-                              return PinScreen(
+                              return const PinScreen(
                                 PinOverlayType.newPin,
-                                fromPage,
-                                toPage,
-                                extraFromPage: extraFromPage,
-                                extraToPage: extraToPage,
                               );
                             },
                           ),
                         );
+
                         if (authenticated == false) {
-                          Navigator.pop(context, value.value);
+                          context.pop(value.value);
                           await getDialog(
                             context,
                             ref,
@@ -164,7 +161,7 @@ class AuthentificationMethodDialog {
                         );
 
                         if (authenticated == false) {
-                          Navigator.pop(context, value.value);
+                          context.pop(value.value);
                           await getDialog(
                             context,
                             ref,
@@ -196,7 +193,7 @@ class AuthentificationMethodDialog {
                           ),
                         );
                         if (authenticated == false) {
-                          Navigator.pop(context, value.value);
+                          context.pop(value.value);
                           await getDialog(
                             context,
                             ref,
@@ -215,7 +212,7 @@ class AuthentificationMethodDialog {
                         }
                         break;
                       default:
-                        Navigator.pop(context, value.value);
+                        context.pop(value.value);
                         break;
                     }
                   },

@@ -162,7 +162,7 @@ class SendTransactionConfirmationForm extends ConsumerWidget {
                       localizations.cancel,
                       Dimens.buttonBottomDimens,
                       onPressed: () {
-                        Navigator.of(context).pop(
+                        context.pop(
                           const Result<TransactionConfirmation,
                               TransactionError>.failure(
                             TransactionError.userRejected(),
@@ -200,8 +200,9 @@ class SendTransactionConfirmationForm extends ConsumerWidget {
                           },
                         );
 
-                        context.pop(); // Hide SendingAnimation
-                        Navigator.of(context).pop(result);
+                        context
+                          ..pop() // Hide SendingAnimation
+                          ..pop(result);
                       },
                     ),
                   ],

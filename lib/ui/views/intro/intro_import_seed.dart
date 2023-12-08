@@ -539,6 +539,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                               context,
                               ref,
                               newSession.wallet.seed,
+                              accountSelected.name,
                               IntroImportSeedPage.routerPage,
                               null,
                             );
@@ -629,7 +630,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
               pickerItems: pickerItemsList,
               selectedIndexes: const [0],
               onSelected: (value) {
-                Navigator.pop(context, value.value);
+                context.pop(value.value);
               },
             ),
           ),
