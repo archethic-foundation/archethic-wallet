@@ -54,7 +54,7 @@ class RoutesPath {
         GoRoute(
           path: ShowSendingAnimation.routerPage,
           builder: (context, state) {
-            final args = state.extra! as String;
+            final args = state.extra as String?;
 
             return AnimationLoadingPage(
               title: args,

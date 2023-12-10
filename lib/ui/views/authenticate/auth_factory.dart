@@ -86,8 +86,6 @@ class AuthFactory {
         break;
       case AuthMethod.ledger:
         break;
-      case AuthMethod.none:
-        break;
     }
     if (auth) {
       sl.get<HapticUtil>().feedback(FeedbackType.success, activeVibrations);

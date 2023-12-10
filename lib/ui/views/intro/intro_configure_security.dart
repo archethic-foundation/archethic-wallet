@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:developer';
+
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
+import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
 import 'package:aewallet/model/authentication_method.dart';
@@ -62,10 +64,17 @@ class _IntroConfigureSecurityState
   bool? animationOpen;
 
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
+  StreamSubscription<AuthenticatedEvent>? _authSub;
   bool keychainAccessRequested = false;
   bool newWalletRequested = false;
 
   void _registerBus() {
+    _authSub = EventTaxiImpl.singleton()
+        .registerTo<AuthenticatedEvent>()
+        .listen((AuthenticatedEvent event) async {
+      await createKeychain();
+    });
+
     _sendTxSub = EventTaxiImpl.singleton()
         .registerTo<TransactionSendEvent>()
         .listen((TransactionSendEvent event) async {
@@ -167,7 +176,7 @@ class _IntroConfigureSecurityState
               ArchethicTheme.snackBarShadow,
             );
           }
-          if (error == true) {
+          if (error == false) {
             context.go(HomePage.routerPage);
           }
           break;
@@ -181,6 +190,7 @@ class _IntroConfigureSecurityState
 
   void _destroyBus() {
     _sendTxSub?.cancel();
+    _authSub?.cancel();
   }
 
   @override
@@ -194,15 +204,6 @@ class _IntroConfigureSecurityState
     log('initstate');
     _registerBus();
     animationOpen = false;
-    final authenticationMethod = ref
-        .read(
-          AuthenticationProviders.settings,
-        )
-        .authenticationMethod;
-
-    if (authenticationMethod != AuthMethod.none) {
-      Future.delayed(Duration.zero, createKeychain);
-    }
     super.initState();
   }
 
@@ -336,10 +337,10 @@ class _IntroConfigureSecurityState
                                     if (_accessModesSelected == null) return;
                                     final authMethod = _accessModesSelected!
                                         .value as AuthMethod;
-
+                                    var authenticated = false;
                                     switch (authMethod) {
                                       case AuthMethod.biometrics:
-                                        await sl
+                                        authenticated = await sl
                                             .get<BiometricUtil>()
                                             .authenticateWithBiometrics(
                                               context,
@@ -347,7 +348,7 @@ class _IntroConfigureSecurityState
                                             );
                                         break;
                                       case AuthMethod.password:
-                                        await context.push(
+                                        authenticated = (await context.push(
                                           SetPassword.routerPage,
                                           extra: {
                                             'header':
@@ -358,18 +359,18 @@ class _IntroConfigureSecurityState
                                                 .configureSecurityExplanationPassword,
                                             'seed': widget.seed,
                                           },
-                                        );
+                                        ))! as bool;
                                         break;
                                       case AuthMethod.pin:
-                                        await context.push(
+                                        authenticated = (await context.push(
                                           PinScreen.routerPage,
                                           extra: {
                                             'type': PinOverlayType.newPin,
                                           },
-                                        );
+                                        ))! as bool;
                                         break;
                                       case AuthMethod.yubikeyWithYubicloud:
-                                        await context.push(
+                                        authenticated = (await context.push(
                                           SetYubikey.routerPage,
                                           extra: {
                                             'header':
@@ -377,15 +378,23 @@ class _IntroConfigureSecurityState
                                             'description': localizations
                                                 .seYubicloudDescription,
                                           },
-                                        );
+                                        ))! as bool;
 
                                         break;
                                       case AuthMethod.biometricsUniris:
                                         break;
                                       case AuthMethod.ledger:
                                         break;
-                                      case AuthMethod.none:
-                                        break;
+                                    }
+                                    if (authenticated) {
+                                      await ref
+                                          .read(
+                                            AuthenticationProviders
+                                                .settings.notifier,
+                                          )
+                                          .setAuthMethod(authMethod);
+                                      EventTaxiImpl.singleton()
+                                          .fire(AuthenticatedEvent());
                                     }
                                   },
                                 ),
