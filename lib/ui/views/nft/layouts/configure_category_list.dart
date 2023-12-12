@@ -7,7 +7,6 @@ import 'package:aewallet/model/nft_category.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -26,12 +25,6 @@ class ConfigureCategoryList extends ConsumerStatefulWidget {
 }
 
 class _ConfigureCategoryListState extends ConsumerState<ConfigureCategoryList> {
-  @override
-  void dispose() {
-    if (mounted) ref.invalidate(NftCategoryProviders.fetchNftCategories);
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
@@ -70,7 +63,8 @@ class _ConfigureCategoryListState extends ConsumerState<ConfigureCategoryList> {
           key: const Key('back'),
           color: ArchethicTheme.text,
           onPressed: () {
-            context.go(HomePage.routerPage);
+            ref.invalidate(NftCategoryProviders.fetchNftCategories);
+            context.pop();
           },
         ),
       ),
