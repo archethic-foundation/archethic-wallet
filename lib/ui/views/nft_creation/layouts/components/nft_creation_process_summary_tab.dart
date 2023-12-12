@@ -79,7 +79,7 @@ class _NFTCreationProcessSummaryTabState
                   ),
                 ),
                 const NFTCreationProcessFilePreview(),
-                NFTCreationProcessPropertiesList(
+                const NFTCreationProcessPropertiesList(
                   readOnly: true,
                 ),
               ],

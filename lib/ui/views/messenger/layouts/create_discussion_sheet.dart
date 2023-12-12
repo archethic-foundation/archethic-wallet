@@ -175,7 +175,8 @@ class CreateDiscussionSheetState extends ConsumerState<CreateDiscussionSheet> {
                                         pickerItems: pickerItemsList,
                                         onSelected: (member) {
                                           formNotifier.addMember(
-                                              member.value as Contact);
+                                            member.value as Contact,
+                                          );
                                         },
                                         onUnselected: (member) {
                                           formNotifier.removeMember(
@@ -198,7 +199,8 @@ class CreateDiscussionSheetState extends ConsumerState<CreateDiscussionSheet> {
                                             localizations.next,
                                             const [0, 0, 0, 0],
                                             key: const Key(
-                                                'discussionNextButton'),
+                                              'discussionNextButton',
+                                            ),
                                             onPressed: () {
                                               context.go(
                                                 CreateDiscussionValidationSheet

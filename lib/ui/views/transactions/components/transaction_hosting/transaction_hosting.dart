@@ -28,8 +28,10 @@ class TransactionHosting extends ConsumerWidget {
       onLongPress: () {
         if (transaction.contactInformation == null &&
             transaction.recipient != null) {
-          context.push(AddContactSheet.routerPage,
-              extra: transaction.recipient);
+          context.push(
+            AddContactSheet.routerPage,
+            extra: transaction.recipient,
+          );
         }
       },
       right: const SizedBox(),
