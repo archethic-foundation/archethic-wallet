@@ -53,7 +53,7 @@ class NFTCreationProcessFileAccessAddButton extends ConsumerWidget {
                   preferences.activeVibrations,
                 );
 
-            context.go(
+            context.push(
               AddAddress.routerPage,
               extra: {
                 'propertyName': propertyName,
