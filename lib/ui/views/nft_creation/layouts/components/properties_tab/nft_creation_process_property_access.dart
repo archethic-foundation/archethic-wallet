@@ -54,6 +54,10 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
         .where((element) => element.propertyName == propertyName)
         .toList();
 
+    if (fileProperty.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Card(
