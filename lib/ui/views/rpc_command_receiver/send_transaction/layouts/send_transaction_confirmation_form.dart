@@ -34,6 +34,8 @@ class SendTransactionConfirmationForm extends ConsumerWidget {
 
   final RPCCommand<RPCSendTransactionCommandData> command;
 
+  static const String routerPage = '/send_transaction_confirmation';
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;

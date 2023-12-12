@@ -23,7 +23,6 @@ import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/views/main/bloc/providers.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/case_converter.dart';
 import 'package:aewallet/util/currency_util.dart';
@@ -223,13 +222,11 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
                       FeedbackType.light,
                       settings.activeVibrations,
                     );
-
-                Sheets.showAppHeightNineSheet(
-                  context: context,
-                  ref: ref,
-                  widget: ContactDetail(
-                    contact: data.value!,
-                  ),
+                context.push(
+                  ContactDetail.routerPage,
+                  extra: {
+                    'contact': data.value,
+                  },
                 );
               },
               error: (_) {},

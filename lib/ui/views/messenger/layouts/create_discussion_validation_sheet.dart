@@ -4,13 +4,11 @@ import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
+import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
-import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,9 +20,13 @@ class CreateDiscussionValidationSheet extends ConsumerStatefulWidget {
   CreateDiscussionValidationSheet({
     super.key,
     this.discussionCreationSuccess,
+    this.onDispose,
   });
 
   Function? discussionCreationSuccess;
+  Function? onDispose;
+
+  static const String routerPage = '/create_discussion_validation';
 
   @override
   ConsumerState<CreateDiscussionValidationSheet> createState() =>
@@ -34,6 +36,12 @@ class CreateDiscussionValidationSheet extends ConsumerStatefulWidget {
 class _CreateDiscussionValidationSheetState
     extends ConsumerState<CreateDiscussionValidationSheet> {
   TextEditingController nameController = TextEditingController();
+
+  @override
+  void dispose() {
+    if (widget.onDispose != null) widget.onDispose!;
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -61,44 +69,42 @@ class _CreateDiscussionValidationSheetState
         ref.watch(MessengerProviders.createDiscussionForm.notifier);
     final formState = ref.watch(MessengerProviders.createDiscussionForm);
 
-    return TapOutsideUnfocus(
-      child: SafeArea(
-        minimum:
-            EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
+    return Scaffold(
+      drawerEdgeDragWidth: 0,
+      resizeToAvoidBottomInset: false,
+      extendBodyBehindAppBar: true,
+      backgroundColor: ArchethicTheme.background,
+      appBar: SheetAppBar(
+        title: localizations.newDiscussion,
+        widgetLeft: BackButton(
+          key: const Key('back'),
+          color: ArchethicTheme.text,
+          onPressed: () {
+            context.pop();
+          },
+        ),
+      ),
+      body: Container(
+        padding: const EdgeInsets.only(
+          bottom: 20,
+        ),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              ArchethicTheme.backgroundSmall,
+            ),
+            fit: BoxFit.fitHeight,
+            opacity: 0.7,
+          ),
+        ),
         child: Padding(
           padding: const EdgeInsets.only(
+            top: 70,
             left: 15,
             right: 15,
           ),
           child: Column(
             children: <Widget>[
-              Container(
-                margin: const EdgeInsets.only(top: 10, bottom: 15),
-                height: 5,
-                width: MediaQuery.of(context).size.width * 0.15,
-                decoration: BoxDecoration(
-                  color: ArchethicTheme.text60,
-                  borderRadius: BorderRadius.circular(100),
-                ),
-              ),
-              Row(
-                children: [
-                  BackButton(
-                    key: const Key('back'),
-                    color: ArchethicTheme.text,
-                    onPressed: () {
-                      context.pop();
-                    },
-                  ),
-                  AutoSizeText(
-                    localizations.newDiscussion,
-                    style: ArchethicThemeStyles.textStyleSize24W700Primary,
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                    stepGranularity: 0.1,
-                  ),
-                ],
-              ),
               Visibility(
                 visible: formState.membersList.length > 1,
                 child: AppTextField(
@@ -135,13 +141,12 @@ class _CreateDiscussionValidationSheetState
                         const Expanded(child: SizedBox()),
                         IconButton(
                           onPressed: () {
-                            Sheets.showAppHeightNineSheet(
-                              context: context,
-                              ref: ref,
-                              widget: ContactDetail(
-                                contact: formState.membersList[index],
-                                readOnly: true,
-                              ),
+                            context.push(
+                              ContactDetail.routerPage,
+                              extra: {
+                                'contact': formState.membersList[index],
+                                'readOnly': true,
+                              },
                             );
                           },
                           icon: const Icon(

@@ -12,9 +12,9 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/add_account/bloc/provider.dart';
 import 'package:aewallet/ui/views/add_account/bloc/state.dart';
 import 'package:aewallet/ui/views/add_account/layouts/components/add_account_detail.dart';
+import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
@@ -94,9 +94,7 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
         .read(AccountProviders.selectedAccount.notifier)
         .refreshRecentTransactions();
 
-    if (mounted) {
-      context.go(HomePage.routerPage);
-    }
+    context.go(HomePage.routerPage);
   }
 
   void _showSendFailed(
@@ -137,85 +135,112 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
     final addAccountNotifier =
         ref.watch(AddAccountFormProvider.addAccountForm.notifier);
 
-    return SafeArea(
-      minimum:
-          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
-      child: Column(
-        children: <Widget>[
-          SheetHeader(
-            title: localizations.addAccount,
-          ),
-          Expanded(
-            child: Column(
-              children: <Widget>[
-                const SizedBox(height: 30),
-                Padding(
-                  padding: const EdgeInsets.only(left: 30, right: 30),
-                  child: Text(
-                    localizations.addAccountConfirmationMessage,
-                    style: ArchethicThemeStyles.textStyleSize14W600Primary,
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const AddAccountDetail(),
-              ],
+    return Scaffold(
+      drawerEdgeDragWidth: 0,
+      resizeToAvoidBottomInset: false,
+      backgroundColor: ArchethicTheme.background,
+      appBar: SheetAppBar(
+        title: localizations.addAccount,
+        widgetLeft: BackButton(
+          key: const Key('back'),
+          color: ArchethicTheme.text,
+          onPressed: () {
+            addAccountNotifier.setAddAccountProcessStep(
+              AddAccountProcessStep.form,
+            );
+          },
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.only(
+          bottom: 20,
+        ),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                ArchethicTheme.backgroundSmall,
+              ),
+              fit: BoxFit.fitHeight,
+              opacity: 0.7,
             ),
           ),
-          Container(
-            margin: const EdgeInsets.only(top: 10),
-            child: Column(
-              children: <Widget>[
-                Row(
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: Column(
                   children: <Widget>[
-                    AppButtonTiny(
-                      AppButtonTinyType.primary,
-                      localizations.confirm,
-                      Dimens.buttonTopDimens,
-                      key: const Key('confirm'),
-                      icon: Icon(
-                        Symbols.check,
-                        color: ArchethicTheme.mainButtonLabel,
-                        size: 14,
+                    const SizedBox(height: 30),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 30, right: 30),
+                      child: Text(
+                        localizations.addAccountConfirmationMessage,
+                        style: ArchethicThemeStyles.textStyleSize14W600Primary,
                       ),
-                      onPressed: () async {
-                        ShowSendingAnimation.build(
-                          context,
-                        );
-                        await ref
-                            .read(
-                              AddAccountFormProvider.addAccountForm.notifier,
-                            )
-                            .send(context);
-                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const AddAccountDetail(),
+                  ],
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 10),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        AppButtonTiny(
+                          AppButtonTinyType.primary,
+                          localizations.confirm,
+                          Dimens.buttonTopDimens,
+                          key: const Key('confirm'),
+                          icon: Icon(
+                            Symbols.check,
+                            color: ArchethicTheme.mainButtonLabel,
+                            size: 14,
+                          ),
+                          onPressed: () async {
+                            ShowSendingAnimation.build(
+                              context,
+                            );
+                            await ref
+                                .read(
+                                  AddAccountFormProvider
+                                      .addAccountForm.notifier,
+                                )
+                                .send(context);
+                          },
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: <Widget>[
+                        AppButtonTiny(
+                          AppButtonTinyType.primary,
+                          localizations.cancel,
+                          Dimens.buttonBottomDimens,
+                          key: const Key('cancel'),
+                          icon: Icon(
+                            Symbols.arrow_back_ios,
+                            color: ArchethicTheme.mainButtonLabel,
+                            size: 14,
+                          ),
+                          onPressed: () {
+                            addAccountNotifier.setAddAccountProcessStep(
+                              AddAccountProcessStep.form,
+                            );
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 ),
-                Row(
-                  children: <Widget>[
-                    AppButtonTiny(
-                      AppButtonTinyType.primary,
-                      localizations.cancel,
-                      Dimens.buttonBottomDimens,
-                      key: const Key('cancel'),
-                      icon: Icon(
-                        Symbols.arrow_back_ios,
-                        color: ArchethicTheme.mainButtonLabel,
-                        size: 14,
-                      ),
-                      onPressed: () {
-                        addAccountNotifier.setAddAccountProcessStep(
-                          AddAccountProcessStep.form,
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

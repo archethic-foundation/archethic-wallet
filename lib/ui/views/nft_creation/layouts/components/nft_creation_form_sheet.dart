@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_header.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
@@ -10,6 +11,7 @@ import 'package:aewallet/ui/widgets/tab_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class NftCreationFormSheet extends ConsumerStatefulWidget {
@@ -164,15 +166,7 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet>
                           .exitNFTCreationProcessSubtitle,
                       AppLocalizations.of(context)!.yes,
                       () {
-                        /**
-                   * Go back 2 times:
-                   * - Popup
-                   * - Nft form creation
-                   */
-                        var count = 0;
-                        Navigator.popUntil(context, (route) {
-                          return count++ == 2;
-                        });
+                        context.go(HomePage.routerPage);
                       },
                       cancelText: AppLocalizations.of(context)!.no,
                     );

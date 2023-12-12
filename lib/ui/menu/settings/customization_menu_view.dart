@@ -17,10 +17,14 @@ class CustomizationMenuView extends ConsumerWidget {
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     return Scaffold(
-      appBar: AppBar(
-        title: AutoSizeText(
-          localizations.customHeader,
-          style: ArchethicThemeStyles.textStyleSize24W700Primary,
+      appBar: SheetAppBar(
+        title: localizations.customHeader,
+        widgetLeft: BackButton(
+          key: const Key('back'),
+          color: ArchethicTheme.text,
+          onPressed: () {
+            context.go(SettingsSheetWallet.routerPage);
+          },
         ),
       ),
       body: DecoratedBox(

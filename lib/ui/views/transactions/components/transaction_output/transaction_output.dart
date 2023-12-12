@@ -12,9 +12,9 @@ import 'package:aewallet/ui/views/transactions/components/template/transaction_t
 import 'package:aewallet/ui/views/transactions/components/template/transfer_balance.dart';
 import 'package:aewallet/ui/views/transactions/components/transaction_output/transaction_output_information.dart';
 import 'package:aewallet/ui/views/transactions/components/transaction_output/transfer_output.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class TransactionOuput extends ConsumerWidget {
   const TransactionOuput({
@@ -38,11 +38,8 @@ class TransactionOuput extends ConsumerWidget {
       onLongPress: () {
         if (transaction.contactInformation == null &&
             transaction.recipient != null) {
-          Sheets.showAppHeightNineSheet(
-            context: context,
-            ref: ref,
-            widget: AddContactSheet(address: transaction.recipient),
-          );
+          context.push(AddContactSheet.routerPage,
+              extra: transaction.recipient);
         }
       },
       right: Column(

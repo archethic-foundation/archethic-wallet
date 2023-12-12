@@ -14,14 +14,16 @@ import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
+import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
-import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
@@ -29,6 +31,8 @@ class TransactionInfosSheet extends ConsumerStatefulWidget {
   const TransactionInfosSheet(this.notificationRecipientAddress, {super.key});
 
   final String notificationRecipientAddress;
+
+  static const routerPage = '/transaction_info';
 
   @override
   ConsumerState<TransactionInfosSheet> createState() =>
@@ -59,54 +63,66 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
 
     if (selectedAccount == null) return const SizedBox();
 
-    return SafeArea(
-      minimum:
-          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
-      child: FutureBuilder<List<TransactionInfos>>(
-        future: sl.get<AppService>().getTransactionAllInfos(
-              widget.notificationRecipientAddress,
-              DateFormat.yMEd(Localizations.localeOf(context).languageCode),
-              AccountBalance.cryptoCurrencyLabel,
-              context,
-              session.wallet.keychainSecuredInfos
-                  .services[selectedAccount.name]!.keyPair!,
+    return Scaffold(
+      drawerEdgeDragWidth: 0,
+      resizeToAvoidBottomInset: false,
+      extendBodyBehindAppBar: true,
+      backgroundColor: ArchethicTheme.background,
+      appBar: SheetAppBar(
+        title: localizations.transactionInfosHeader,
+        widgetLeft: BackButton(
+          key: const Key('back'),
+          color: ArchethicTheme.text,
+          onPressed: () {
+            context.go(HomePage.routerPage);
+          },
+        ),
+      ),
+      body: Container(
+        padding: const EdgeInsets.only(
+          bottom: 20,
+        ),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              ArchethicTheme.backgroundSmall,
             ),
-        builder: (
-          BuildContext context,
-          AsyncSnapshot<List<TransactionInfos>> list,
-        ) {
-          return Column(
-            children: <Widget>[
-              SheetHeader(
-                title: localizations.transactionInfosHeader,
-              ),
-              Expanded(
-                child: Center(
-                  child: Stack(
-                    children: <Widget>[
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.8,
-                        child: SafeArea(
-                          minimum: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).size.height * 0.035,
-                          ),
-                          child: list.hasData
-                              ? _TransactionInfos(
-                                  list: list,
-                                  scrollController: scrollController,
-                                  notificationRecipientAddress:
-                                      widget.notificationRecipientAddress,
-                                )
-                              : _TransactionLoading(),
-                        ),
-                      ),
-                    ],
-                  ),
+            fit: BoxFit.fitHeight,
+            opacity: 0.7,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 70),
+          child: FutureBuilder<List<TransactionInfos>>(
+            future: sl.get<AppService>().getTransactionAllInfos(
+                  widget.notificationRecipientAddress,
+                  DateFormat.yMEd(Localizations.localeOf(context).languageCode),
+                  AccountBalance.cryptoCurrencyLabel,
+                  context,
+                  session.wallet.keychainSecuredInfos
+                      .services[selectedAccount.name]!.keyPair!,
                 ),
-              ),
-            ],
-          );
-        },
+            builder: (
+              BuildContext context,
+              AsyncSnapshot<List<TransactionInfos>> list,
+            ) {
+              return Column(
+                children: <Widget>[
+                  Expanded(
+                    child: list.hasData
+                        ? _TransactionInfos(
+                            list: list,
+                            scrollController: scrollController,
+                            notificationRecipientAddress:
+                                widget.notificationRecipientAddress,
+                          )
+                        : _TransactionLoading(),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
       ),
     );
   }

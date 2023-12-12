@@ -28,7 +28,6 @@ import 'package:aewallet/ui/views/messenger/layouts/messenger_tab.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/layouts/add_token_sheet.dart';
 import 'package:aewallet/ui/views/transactions/incoming_transactions_notifier.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/widgets/tab_item.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/notifications_util.dart';
@@ -36,6 +35,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -465,11 +465,7 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
                     icon: Symbols.add,
                     key: const Key('createTokenFungible'),
                     onPressed: () {
-                      Sheets.showAppHeightNineSheet(
-                        context: context,
-                        ref: ref,
-                        widget: const AddTokenSheet(),
-                      );
+                      context.go(AddTokenSheet.routerPage);
                     },
                     disabled:
                         !accountSelected!.balance!.isNativeTokenValuePositive(),

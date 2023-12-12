@@ -11,7 +11,6 @@ import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -30,6 +29,8 @@ class AddDiscussionSheet extends ConsumerWidget {
     required this.discussion,
     super.key,
   });
+
+  static const String routerPage = '/add_discussion';
 
   final Discussion discussion;
 
@@ -107,13 +108,11 @@ class AddDiscussionSheet extends ConsumerWidget {
                                     FeedbackType.light,
                                     settings.activeVibrations,
                                   );
-
-                              Sheets.showAppHeightNineSheet(
-                                context: context,
-                                ref: ref,
-                                widget: ContactDetail(
-                                  contact: contact.contact,
-                                ),
+                              context.push(
+                                ContactDetail.routerPage,
+                                extra: {
+                                  'contact': contact.contact,
+                                },
                               );
                             },
                             publicKey: (_) => null,

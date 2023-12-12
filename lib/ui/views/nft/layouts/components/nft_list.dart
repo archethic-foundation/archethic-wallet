@@ -4,7 +4,6 @@ import 'dart:ui';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/nft/nft_category.dart';
-import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/responsive.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_list_detail.dart';
@@ -12,7 +11,6 @@ import 'package:aewallet/ui/widgets/components/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:material_symbols_icons/symbols.dart';
 
 class NFTList extends ConsumerWidget {
   const NFTList({super.key, required this.currentNftCategoryIndex});
@@ -65,20 +63,6 @@ class NFTList extends ConsumerWidget {
               ),
               const SizedBox(
                 height: 20,
-              ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Icon(
-                  Symbols.info,
-                  color: ArchethicTheme.text,
-                  size: 20,
-                  weight: IconSize.weightM,
-                  opticalSize: IconSize.opticalSizeM,
-                  grade: IconSize.gradeM,
-                ),
-              ),
-              const SizedBox(
-                height: 5,
               ),
               Text(
                 localizations.nftListEmptyExplanation,

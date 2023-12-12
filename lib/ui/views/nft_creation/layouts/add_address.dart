@@ -11,15 +11,15 @@ import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/get_addresses.dart';
+import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/paste_icon.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
-import 'package:aewallet/ui/widgets/components/sheet_header.dart';
-import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aewallet/ui/widgets/dialogs/contacts_dialog.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -47,6 +47,8 @@ class AddAddress extends ConsumerStatefulWidget {
   final String propertyName;
   final String propertyValue;
   final bool readOnly;
+
+  static const String routerPage = '/add_address';
 
   @override
   ConsumerState<AddAddress> createState() => _AddAddressState();
@@ -79,113 +81,142 @@ class _AddAddressState extends ConsumerState<AddAddress> {
         ),
       ),
     );
-    return TapOutsideUnfocus(
-      child: SafeArea(
-        minimum:
-            EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
-        child: Column(
-          children: <Widget>[
-            SheetHeader(
-              title: widget.readOnly
-                  ? localizations.getPublicKeyHeader
-                  : localizations.addPublicKeyHeader,
+    return Scaffold(
+      drawerEdgeDragWidth: 0,
+      resizeToAvoidBottomInset: false,
+      extendBodyBehindAppBar: true,
+      backgroundColor: ArchethicTheme.background,
+      appBar: SheetAppBar(
+        title: widget.readOnly
+            ? localizations.getPublicKeyHeader
+            : localizations.addPublicKeyHeader,
+        widgetLeft: BackButton(
+          key: const Key('back'),
+          color: ArchethicTheme.text,
+          onPressed: () {
+            context.go(
+              NftCreationProcessSheet.routerPage,
+              extra: {
+                'currentNftCategoryIndex': nftCreation.currentNftCategoryIndex,
+              },
+            );
+          },
+        ),
+      ),
+      body: Container(
+        padding: const EdgeInsets.only(
+          bottom: 20,
+        ),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              ArchethicTheme.backgroundSmall,
             ),
-            Expanded(
-              child: Container(
-                margin: const EdgeInsets.only(bottom: 10),
-                child: ArchethicScrollbar(
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        widget.propertyName,
-                      ),
-                      if (widget.propertyValue.isNotEmpty)
+            fit: BoxFit.fitHeight,
+            opacity: 0.7,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 70),
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  child: ArchethicScrollbar(
+                    child: Column(
+                      children: <Widget>[
                         Text(
-                          widget.propertyValue,
+                          widget.propertyName,
                         ),
-                      if (widget.readOnly == false)
-                        Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Text(
-                            localizations.propertyAccessDescription,
-                            style:
-                                ArchethicThemeStyles.textStyleSize12W100Primary,
-                            textAlign: TextAlign.justify,
+                        if (widget.propertyValue.isNotEmpty)
+                          Text(
+                            widget.propertyValue,
                           ),
-                        )
-                      else
-                        Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Text(
-                            localizations.propertyAccessDescriptionReadOnly,
-                            style:
-                                ArchethicThemeStyles.textStyleSize12W100Primary,
-                            textAlign: TextAlign.justify,
-                          ),
-                        ),
-                      if (widget.readOnly == false)
-                        const AddPublicKeyTextFieldPk(),
-                      if (widget.readOnly == false)
-                        const SizedBox(
-                          height: 20,
-                        ),
-                      if (widget.readOnly == false)
-                        Row(
-                          children: <Widget>[
-                            AppButtonTiny(
-                              AppButtonTinyType.primary,
-                              localizations.propertyAccessAddAccess,
-                              Dimens.buttonBottomDimens,
-                              key: const Key('addAddress'),
-                              onPressed: () async {
-                                sl.get<HapticUtil>().feedback(
-                                      FeedbackType.light,
-                                      preferences.activeVibrations,
-                                    );
-
-                                ref
-                                    .read(
-                                      NftCreationFormProvider.nftCreationForm(
-                                        ref.read(
-                                          NftCreationFormProvider
-                                              .nftCreationFormArgs,
-                                        ),
-                                      ).notifier,
-                                    )
-                                    .addAddress(
-                                      widget.propertyName,
-                                      nftCreation.propertyAccessRecipient,
-                                      context,
-                                    );
-                              },
-                              disabled: !nftCreation.canAddAccess,
+                        if (widget.readOnly == false)
+                          Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Text(
+                              localizations.propertyAccessDescription,
+                              style: ArchethicThemeStyles
+                                  .textStyleSize12W100Primary,
+                              textAlign: TextAlign.justify,
                             ),
-                          ],
+                          )
+                        else
+                          Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Text(
+                              localizations.propertyAccessDescriptionReadOnly,
+                              style: ArchethicThemeStyles
+                                  .textStyleSize12W100Primary,
+                              textAlign: TextAlign.justify,
+                            ),
+                          ),
+                        if (widget.readOnly == false)
+                          const AddPublicKeyTextFieldPk(),
+                        if (widget.readOnly == false)
+                          const SizedBox(
+                            height: 20,
+                          ),
+                        if (widget.readOnly == false)
+                          Row(
+                            children: <Widget>[
+                              AppButtonTiny(
+                                AppButtonTinyType.primary,
+                                localizations.propertyAccessAddAccess,
+                                Dimens.buttonBottomDimens,
+                                key: const Key('addAddress'),
+                                onPressed: () async {
+                                  sl.get<HapticUtil>().feedback(
+                                        FeedbackType.light,
+                                        preferences.activeVibrations,
+                                      );
+
+                                  ref
+                                      .read(
+                                        NftCreationFormProvider.nftCreationForm(
+                                          ref.read(
+                                            NftCreationFormProvider
+                                                .nftCreationFormArgs,
+                                          ),
+                                        ).notifier,
+                                      )
+                                      .addAddress(
+                                        widget.propertyName,
+                                        nftCreation.propertyAccessRecipient,
+                                        context,
+                                      );
+                                },
+                                disabled: !nftCreation.canAddAccess,
+                              ),
+                            ],
+                          ),
+                        GetAddresses(
+                          propertyName: widget.propertyName,
+                          propertyValue: widget.propertyValue,
+                          readOnly: widget.readOnly,
                         ),
-                      GetAddresses(
-                        propertyName: widget.propertyName,
-                        propertyValue: widget.propertyValue,
-                        readOnly: widget.readOnly,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            Row(
-              children: <Widget>[
-                AppButtonTiny(
-                  AppButtonTinyType.primary,
-                  localizations.close,
-                  Dimens.buttonTopDimens,
-                  key: const Key('close'),
-                  onPressed: () {
-                    context.pop();
-                  },
-                ),
-              ],
-            ),
-          ],
+              Row(
+                children: <Widget>[
+                  AppButtonTiny(
+                    AppButtonTinyType.primary,
+                    localizations.close,
+                    Dimens.buttonTopDimens,
+                    key: const Key('close'),
+                    onPressed: () {
+                      context.pop();
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

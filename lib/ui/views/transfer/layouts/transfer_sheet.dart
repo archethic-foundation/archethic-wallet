@@ -21,7 +21,6 @@ import 'package:aewallet/ui/views/transfer/layouts/components/transfer_confirm_s
 import 'package:aewallet/ui/views/transfer/layouts/components/transfer_form_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/paste_icon.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/widgets/dialogs/contacts_dialog.dart';
 import 'package:aewallet/ui/widgets/tokens/verified_token_icon.dart';
 import 'package:aewallet/util/currency_util.dart';
@@ -37,6 +36,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
@@ -54,6 +54,8 @@ class TransferSheet extends ConsumerWidget {
     super.key,
   });
 
+  static const String routerPage = '/transfer';
+
   final TransferRecipient recipient;
   final String? actionButtonTitle;
   final AccountToken? accountToken;
@@ -65,10 +67,15 @@ class TransferSheet extends ConsumerWidget {
     required WidgetRef ref,
   }) async {
     ref.invalidate(MarketPriceProviders.currencyMarketPrice);
-    return Sheets.showAppHeightNineSheet(
-      context: context,
-      ref: ref,
-      widget: this,
+    context.go(
+      routerPage,
+      extra: {
+        'transferType': transferType,
+        'recipient': recipient,
+        'actionButtonTitle': actionButtonTitle,
+        'accountToken': accountToken,
+        'tokenId': tokenId,
+      },
     );
   }
 

@@ -4,6 +4,8 @@ part of 'settings_sheet.dart';
 class SettingsSheetWallet extends ConsumerStatefulWidget {
   const SettingsSheetWallet({super.key});
 
+  static const String routerPage = '/settings';
+
   @override
   ConsumerState<SettingsSheetWallet> createState() =>
       _SettingsSheetWalletMobileState();
@@ -59,7 +61,7 @@ class _SettingsSheetWalletMobileState extends ConsumerState<SettingsSheetWallet>
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.close),
-          onPressed: () => context.pop(),
+          onPressed: () => context.go(HomePage.routerPage),
         ),
       ),
       body: ClipRect(

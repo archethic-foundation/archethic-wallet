@@ -17,6 +17,8 @@ import 'package:material_symbols_icons/symbols.dart';
 class ConnectivityWarning extends ConsumerWidget {
   const ConnectivityWarning({super.key});
 
+  static const routerPage = '/connectivity_warning';
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final preferences = ref.watch(SettingsProviders.settings);

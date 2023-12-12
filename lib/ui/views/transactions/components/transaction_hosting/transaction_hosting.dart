@@ -5,9 +5,9 @@ import 'package:aewallet/ui/views/contacts/layouts/add_contact.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transaction_fees.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transaction_template.dart';
 import 'package:aewallet/ui/views/transactions/components/transaction_hosting/transaction_hosting_information.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class TransactionHosting extends ConsumerWidget {
   const TransactionHosting({
@@ -28,11 +28,8 @@ class TransactionHosting extends ConsumerWidget {
       onLongPress: () {
         if (transaction.contactInformation == null &&
             transaction.recipient != null) {
-          Sheets.showAppHeightNineSheet(
-            context: context,
-            ref: ref,
-            widget: AddContactSheet(address: transaction.recipient),
-          );
+          context.push(AddContactSheet.routerPage,
+              extra: transaction.recipient);
         }
       },
       right: const SizedBox(),

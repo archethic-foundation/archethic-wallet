@@ -18,10 +18,14 @@ class SecurityMenuView extends ConsumerWidget {
       ),
     );
     return Scaffold(
-      appBar: AppBar(
-        title: AutoSizeText(
-          localizations.securityHeader,
-          style: ArchethicThemeStyles.textStyleSize24W700Primary,
+      appBar: SheetAppBar(
+        title: localizations.securityHeader,
+        widgetLeft: BackButton(
+          key: const Key('back'),
+          color: ArchethicTheme.text,
+          onPressed: () {
+            context.go(SettingsSheetWallet.routerPage);
+          },
         ),
       ),
       body: DecoratedBox(
@@ -300,10 +304,9 @@ class _BackupSecretPhraseListItem extends ConsumerWidget {
             languageCode: preferences.languageSeed,
           );
 
-          Sheets.showAppHeightNineSheet(
-            context: context,
-            ref: ref,
-            widget: AppSeedBackupSheet(mnemonic, seed),
+          context.go(
+            AppSeedBackupSheet.routerPage,
+            extra: {'mnemonic': mnemonic, 'seed': seed},
           );
         }
       },

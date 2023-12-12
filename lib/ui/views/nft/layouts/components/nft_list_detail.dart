@@ -9,13 +9,13 @@ import 'package:aewallet/ui/views/nft/layouts/components/nft_detail.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_list_detail_popup.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail_collection/nft_thumbnail_collection.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class NFTListDetail extends ConsumerWidget {
@@ -75,18 +75,18 @@ class NFTListDetail extends ConsumerWidget {
                     FeedbackType.light,
                     preferences.activeVibrations,
                   );
-              Sheets.showAppHeightNineSheet(
-                context: context,
-                ref: ref,
-                widget: NFTDetail(
-                  address: address,
-                  name: name,
-                  properties: properties,
-                  collection: collection,
-                  symbol: symbol,
-                  tokenId: tokenId,
-                  detailCollection: collection.isNotEmpty,
-                ),
+
+              context.push(
+                NFTDetail.routerPage,
+                extra: {
+                  'address': address,
+                  'name': name,
+                  'properties': properties,
+                  'collection': collection,
+                  'symbol': symbol,
+                  'tokenId': tokenId,
+                  'detailCollection': collection.isNotEmpty,
+                },
               );
             },
             onLongPressEnd: (details) {

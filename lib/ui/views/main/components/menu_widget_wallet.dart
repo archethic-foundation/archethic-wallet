@@ -10,7 +10,6 @@ import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -19,6 +18,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class MenuWidgetWallet extends ConsumerWidget {
@@ -64,6 +64,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                             FeedbackType.light,
                             preferences.activeVibrations,
                           );
+
                       await const TransferSheet(
                         transferType: TransferType.uco,
                         recipient: TransferRecipient.address(
@@ -97,13 +98,9 @@ class MenuWidgetWallet extends ConsumerWidget {
                             FeedbackType.light,
                             preferences.activeVibrations,
                           );
-
-                      return Sheets.showAppHeightNineSheet(
-                        context: context,
-                        ref: ref,
-                        widget: ContactDetail(
-                          contact: contact,
-                        ),
+                      context.push(
+                        ContactDetail.routerPage,
+                        extra: {'contact': contact},
                       );
                     },
                   )
@@ -129,11 +126,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                             FeedbackType.light,
                             preferences.activeVibrations,
                           );
-                      Sheets.showAppHeightNineSheet(
-                        context: context,
-                        ref: ref,
-                        widget: const BuySheet(),
-                      );
+                      context.go(BuySheet.routerPage);
                     },
                   )
                       .animate()

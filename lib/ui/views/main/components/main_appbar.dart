@@ -5,9 +5,7 @@ import 'dart:ui';
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/device_abilities.dart';
-import 'package:aewallet/application/nft/nft_category.dart';
 import 'package:aewallet/application/settings/settings.dart';
-
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/ui/menu/settings/settings_sheet.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -16,7 +14,6 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/messenger/layouts/create_discussion_sheet.dart';
 import 'package:aewallet/ui/views/nft/layouts/configure_category_list.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -26,6 +23,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
@@ -74,13 +72,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
           grade: IconSize.gradeM,
         ),
         onPressed: () {
-          showDialog<void>(
-            useSafeArea: false,
-            context: context,
-            builder: (context) => const Dialog.fullscreen(
-              child: SettingsSheetWallet(),
-            ),
-          );
+          context.go(SettingsSheetWallet.routerPage);
         },
       ),
       actions: [
@@ -97,13 +89,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                     FeedbackType.light,
                     preferences.activeVibrations,
                   );
-              Sheets.showAppHeightNineSheet(
-                context: context,
-                ref: ref,
-                widget: const ConfigureCategoryList(),
-                onDisposed: () =>
-                    ref.invalidate(NftCategoryProviders.fetchNftCategories),
-              );
+              context.go(ConfigureCategoryList.routerPage);
             },
           ),
         if (preferences.mainScreenCurrentPage == 4)
@@ -119,11 +105,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                     FeedbackType.light,
                     preferences.activeVibrations,
                   );
-              Sheets.showAppHeightNineSheet(
-                context: context,
-                ref: ref,
-                widget: const CreateDiscussionSheet(),
-              );
+              context.go(CreateDiscussionSheet.routerPage);
             },
           )
         else if (preferences.mainScreenCurrentPage == 0 ||

@@ -8,7 +8,6 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/messenger/bloc/discussion_search_bar_provider.dart';
 import 'package:aewallet/ui/views/messenger/bloc/discussion_search_bar_state.dart';
 import 'package:aewallet/ui/views/messenger/layouts/add_discussion_sheet.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/user_data_util.dart';
@@ -18,6 +17,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class DiscussionSearchBar extends ConsumerStatefulWidget {
@@ -69,16 +69,11 @@ class _DiscussionSearchBarState extends ConsumerState<DiscussionSearchBar> {
             discussionSearchBar.searchCriteria) {
           _updateAdressTextController();
         }
-
         if (discussionSearchBar.isControlsOk) {
-          Sheets.showAppHeightNineSheet(
-            context: context,
-            ref: ref,
-            widget: AddDiscussionSheet(
-              discussion: discussionSearchBar.discussion!,
-            ),
+          context.go(
+            AddDiscussionSheet.routerPage,
+            extra: discussionSearchBar.discussion,
           );
-
           discussionSearchBarNotifier.reset();
           return;
         }

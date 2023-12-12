@@ -2,6 +2,7 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/views/messenger/layouts/components/discussion_list_item.dart';
 import 'package:aewallet/ui/views/messenger/layouts/components/discussion_search_bar.dart';
+import 'package:aewallet/ui/views/messenger/layouts/messenger_discussion_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -60,7 +61,7 @@ class MessengerBody extends ConsumerWidget {
                       return DiscussionListItem.loaded(
                         key: Key(discussion.address),
                         onTap: () => context.go(
-                          '/messenger_discussion',
+                          MessengerDiscussionPage.routerPage,
                           extra: discussion.address,
                         ),
                         discussion: discussion,

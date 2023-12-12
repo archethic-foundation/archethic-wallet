@@ -6,12 +6,12 @@ import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/views/contacts/layouts/add_contact.dart';
 import 'package:aewallet/ui/views/contacts/layouts/components/contact_list.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class AddressBookTab extends ConsumerStatefulWidget {
@@ -152,11 +152,7 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
                     key: const Key('addContact'),
                     icon: Symbols.add,
                     onPressed: () {
-                      Sheets.showAppHeightNineSheet(
-                        context: context,
-                        ref: ref,
-                        widget: const AddContactSheet(),
-                      );
+                      context.push(AddContactSheet.routerPage);
                     },
                   ),
                 ],

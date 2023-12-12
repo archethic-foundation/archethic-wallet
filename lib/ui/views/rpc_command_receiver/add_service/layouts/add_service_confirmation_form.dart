@@ -34,6 +34,8 @@ class AddServiceConfirmationForm extends ConsumerWidget {
   final RPCCommand<RPCSendTransactionCommandData> command;
   final String serviceName;
 
+  static const String routerPage = '/add_service_confirmation';
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;

@@ -17,17 +17,14 @@ class NFTCreationProcessImportTabIPFS extends ConsumerWidget {
 
     return InkWell(
       onTap: () async {
-        Sheets.showAppHeightNineSheet(
-          context: context,
-          ref: ref,
-          widget: NFTCreationProcessImportTabIPFSForm(
-            onConfirm: (uri) {
-              nftCreationNotifier.setContentIPFSProperties(
-                context,
-                uri,
-              );
-            },
-          ),
+        context.go(
+          NFTCreationProcessImportTabIPFSForm.routerPage,
+          extra: (uri) {
+            nftCreationNotifier.setContentIPFSProperties(
+              context,
+              uri,
+            );
+          },
         );
       },
       child: SizedBox(
