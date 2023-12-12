@@ -12,7 +12,6 @@ import 'package:aewallet/ui/views/main/bloc/nft_search_bar_state.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_detail.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/paste_icon.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/user_data_util.dart';
@@ -22,6 +21,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class NFTSearchBar extends ConsumerStatefulWidget {
@@ -73,18 +73,19 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
       NftSearchBarProvider.nftSearchBar,
       (_, nftSearchBar) {
         if (nftSearchBar.isControlsOk) {
-          Sheets.showAppHeightNineSheet(
-            context: context,
-            ref: ref,
-            widget: NFTDetail(
-              address: nftSearchBar.tokenInformation!.address ?? '',
-              name: nftSearchBar.tokenInformation!.name ?? '',
-              properties: nftSearchBar.tokenInformation!.tokenProperties ?? {},
-              symbol: nftSearchBar.tokenInformation!.symbol ?? '',
-              tokenId: nftSearchBar.tokenInformation!.id ?? '',
-              collection: nftSearchBar.tokenInformation!.tokenCollection ?? [],
-              detailCollection: false,
-            ),
+          context.push(
+            NFTDetail.routerPage,
+            extra: {
+              'address': nftSearchBar.tokenInformation!.address ?? '',
+              'name': nftSearchBar.tokenInformation!.name ?? '',
+              'properties':
+                  nftSearchBar.tokenInformation!.tokenProperties ?? {},
+              'collection':
+                  nftSearchBar.tokenInformation!.tokenCollection ?? [],
+              'symbol': nftSearchBar.tokenInformation!.symbol ?? '',
+              'tokenId': nftSearchBar.tokenInformation!.id ?? '',
+              'detailCollection': false,
+            },
           );
 
           nftSearchBarNotifier.reset();

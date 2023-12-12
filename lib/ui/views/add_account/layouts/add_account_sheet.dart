@@ -18,6 +18,7 @@ class AddAccountSheet extends ConsumerWidget {
   });
 
   final String seed;
+  static const String routerPage = '/add_account';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -75,11 +76,8 @@ class AddAccountSheetBody extends ConsumerWidget {
             );
       },
     );
-
-    if (addAccount.addAccountProcessStep == AddAccountProcessStep.form) {
-      return const AddAccountFormSheet();
-    } else {
-      return const AddAccountConfirmSheet();
-    }
+    return addAccount.addAccountProcessStep == AddAccountProcessStep.form
+        ? const AddAccountFormSheet()
+        : const AddAccountConfirmSheet();
   }
 }

@@ -13,11 +13,14 @@ class AboutMenuView extends ConsumerWidget {
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     return Scaffold(
       backgroundColor: ArchethicTheme.background,
-      appBar: AppBar(
-        backgroundColor: ArchethicTheme.background,
-        title: AutoSizeText(
-          localizations.aboutHeader,
-          style: ArchethicThemeStyles.textStyleSize24W700Primary,
+      appBar: SheetAppBar(
+        title: localizations.aboutHeader,
+        widgetLeft: BackButton(
+          key: const Key('back'),
+          color: ArchethicTheme.text,
+          onPressed: () {
+            context.go(SettingsSheetWallet.routerPage);
+          },
         ),
       ),
       body: DecoratedBox(

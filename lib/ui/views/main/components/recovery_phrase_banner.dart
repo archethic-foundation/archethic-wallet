@@ -7,11 +7,11 @@ import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/ui/util/info_banner.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/settings/backupseed_sheet.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/mnemonics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class RecoveryPhraseBanner extends ConsumerWidget {
   const RecoveryPhraseBanner({super.key});
@@ -47,11 +47,9 @@ class RecoveryPhraseBanner extends ConsumerWidget {
                         seed!,
                         languageCode: preferences.languageSeed,
                       );
-
-                      Sheets.showAppHeightNineSheet(
-                        context: context,
-                        ref: ref,
-                        widget: AppSeedBackupSheet(mnemonic, seed),
+                      context.go(
+                        AppSeedBackupSheet.routerPage,
+                        extra: {'mnemonic': mnemonic, 'seed': seed},
                       );
                     }
                   },

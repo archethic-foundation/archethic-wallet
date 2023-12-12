@@ -1,14 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
 import 'package:aewallet/application/price_history/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
-
 import 'package:aewallet/domain/models/market_price_history.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
+import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/widgets/balance/balance_infos.dart';
 import 'package:aewallet/ui/widgets/components/history_chart.dart';
-import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:animate_do/animate_do.dart';
@@ -17,12 +16,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class ChartSheet extends ConsumerWidget {
   const ChartSheet({
     super.key,
   });
+
+  static const String routerPage = '/chart';
 
   static const List<MarketPriceHistoryInterval> _chartIntervalOptions = [
     MarketPriceHistoryInterval.hour,
@@ -51,95 +53,126 @@ class ChartSheet extends ConsumerWidget {
       ),
     );
 
-    return Column(
-      children: <Widget>[
-        SheetHeader(
-          title: AppLocalizations.of(context)!.chart,
+    return Scaffold(
+      drawerEdgeDragWidth: 0,
+      resizeToAvoidBottomInset: false,
+      extendBodyBehindAppBar: true,
+      backgroundColor: ArchethicTheme.background,
+      appBar: SheetAppBar(
+        title: AppLocalizations.of(context)!.chart,
+        widgetLeft: BackButton(
+          key: const Key('back'),
+          color: ArchethicTheme.text,
+          onPressed: () {
+            context.go(HomePage.routerPage);
+          },
         ),
-        FadeIn(
-          duration: const Duration(milliseconds: 1000),
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.45,
-            padding: const EdgeInsets.only(top: 20),
-            child: Padding(
-              padding: const EdgeInsets.only(right: 5, left: 5),
-              child: asyncChartInfos.when(
-                data: (chartInfos) => HistoryChart(
-                  intervals: chartInfos,
-                  gradientColors: LinearGradient(
-                    colors: <Color>[
-                      ArchethicTheme.text20,
-                      ArchethicTheme.text,
-                    ],
-                  ),
-                  gradientColorsBar: LinearGradient(
-                    colors: <Color>[
-                      ArchethicTheme.text.withOpacity(0.9),
-                      ArchethicTheme.text.withOpacity(0),
-                    ],
-                    begin: Alignment.center,
-                    end: Alignment.bottomCenter,
-                  ),
-                  tooltipBg: ArchethicTheme.backgroundDark,
-                  tooltipText: ArchethicThemeStyles.textStyleSize12W100Primary,
-                  axisTextStyle:
-                      ArchethicThemeStyles.textStyleSize12W100Primary,
-                  optionChartSelected: selectedInterval,
-                  currency: currency.name,
-                  completeChart: true,
-                ),
-                error: (_, __) {
-                  if (asyncChartInfos.isLoading) {
-                    return const _ChartLoading();
-                  }
-                  return const _ChartLoadFailed();
-                },
-                loading: () => const _ChartLoading(),
-              ),
+      ),
+      body: DecoratedBox(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              ArchethicTheme.backgroundSmall,
             ),
+            fit: BoxFit.fitHeight,
+            opacity: 0.7,
           ),
         ),
-        const SizedBox(
-          height: 30,
-        ),
-        Wrap(
-          children: [
-            BottomBar(
-              selectedIndex: _intervalOptionIndex(selectedInterval),
-              curve: Curves.easeIn,
-              duration: const Duration(milliseconds: 500),
-              itemPadding: const EdgeInsets.all(10),
-              padding: const EdgeInsets.only(right: 10, left: 10),
-              onTap: (int index) async {
-                final settings = ref.read(SettingsProviders.settings);
-
-                sl.get<HapticUtil>().feedback(
-                      FeedbackType.light,
-                      settings.activeVibrations,
-                    );
-                await ref
-                    .read(SettingsProviders.settings.notifier)
-                    .setPriceChartInterval(_chartIntervalOptions[index]);
-              },
-              items: _chartIntervalOptions.map((optionChart) {
-                return BottomBarItem(
-                  icon: Text(
-                    optionChart.getChartOptionLabel(context),
-                    style: ArchethicThemeStyles.textStyleSize12W100Primary,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 70),
+          child: Column(
+            children: <Widget>[
+              FadeIn(
+                duration: const Duration(milliseconds: 1000),
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.45,
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 5, left: 5),
+                    child: asyncChartInfos.when(
+                      data: (chartInfos) => HistoryChart(
+                        intervals: chartInfos,
+                        gradientColors: LinearGradient(
+                          colors: <Color>[
+                            ArchethicTheme.text20,
+                            ArchethicTheme.text,
+                          ],
+                        ),
+                        gradientColorsBar: LinearGradient(
+                          colors: <Color>[
+                            ArchethicTheme.text.withOpacity(0.9),
+                            ArchethicTheme.text.withOpacity(0),
+                          ],
+                          begin: Alignment.center,
+                          end: Alignment.bottomCenter,
+                        ),
+                        tooltipBg: ArchethicTheme.backgroundDark,
+                        tooltipText:
+                            ArchethicThemeStyles.textStyleSize12W100Primary,
+                        axisTextStyle:
+                            ArchethicThemeStyles.textStyleSize12W100Primary,
+                        optionChartSelected: selectedInterval,
+                        currency: currency.name,
+                        completeChart: true,
+                      ),
+                      error: (_, __) {
+                        if (asyncChartInfos.isLoading) {
+                          return const _ChartLoading();
+                        }
+                        return const _ChartLoadFailed();
+                      },
+                      loading: () => const _ChartLoading(),
+                    ),
                   ),
-                  backgroundColorOpacity:
-                      ArchethicTheme.bottomBarBackgroundColorOpacity,
-                  activeIconColor: ArchethicTheme.bottomBarActiveIconColor,
-                  activeTitleColor: ArchethicTheme.bottomBarActiveTitleColor,
-                  activeColor: ArchethicTheme.bottomBarActiveColor,
-                  inactiveColor: ArchethicTheme.bottomBarInactiveIcon,
-                );
-              }).toList(),
-            ),
-          ],
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Wrap(
+                children: [
+                  BottomBar(
+                    selectedIndex: _intervalOptionIndex(selectedInterval),
+                    curve: Curves.easeIn,
+                    duration: const Duration(milliseconds: 500),
+                    itemPadding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.only(right: 10, left: 10),
+                    onTap: (int index) async {
+                      final settings = ref.read(SettingsProviders.settings);
+
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.light,
+                            settings.activeVibrations,
+                          );
+                      await ref
+                          .read(SettingsProviders.settings.notifier)
+                          .setPriceChartInterval(_chartIntervalOptions[index]);
+                    },
+                    items: _chartIntervalOptions.map((optionChart) {
+                      return BottomBarItem(
+                        icon: Text(
+                          optionChart.getChartOptionLabel(context),
+                          style:
+                              ArchethicThemeStyles.textStyleSize12W100Primary,
+                        ),
+                        backgroundColorOpacity:
+                            ArchethicTheme.bottomBarBackgroundColorOpacity,
+                        activeIconColor:
+                            ArchethicTheme.bottomBarActiveIconColor,
+                        activeTitleColor:
+                            ArchethicTheme.bottomBarActiveTitleColor,
+                        activeColor: ArchethicTheme.bottomBarActiveColor,
+                        inactiveColor: ArchethicTheme.bottomBarInactiveIcon,
+                      );
+                    }).toList(),
+                  ),
+                ],
+              ),
+              if (asyncChartInfos.valueOrNull != null) const BalanceInfosKpi(),
+            ],
+          ),
         ),
-        if (asyncChartInfos.valueOrNull != null) const BalanceInfosKpi(),
-      ],
+      ),
     );
   }
 }

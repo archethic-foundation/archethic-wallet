@@ -7,12 +7,12 @@ import 'package:aewallet/ui/views/nft/layouts/components/nft_detail.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail.dart';
 import 'package:aewallet/ui/widgets/components/dynamic_height_grid_view.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:go_router/go_router.dart';
 
 class NFTDetailCollection extends ConsumerWidget {
   const NFTDetailCollection({
@@ -75,19 +75,19 @@ class NFTDetailCollection extends ConsumerWidget {
                             FeedbackType.light,
                             preferences.activeVibrations,
                           );
-                      Sheets.showAppHeightNineSheet(
-                        context: context,
-                        ref: ref,
-                        widget: NFTDetail(
-                          address: address,
-                          name: name,
-                          nameInCollection: tokenInformation['name'],
-                          properties: tokenInformation,
-                          collection: const [],
-                          symbol: symbol,
-                          tokenId: tokenInformation['id'] ?? index.toString(),
-                          detailCollection: true,
-                        ),
+
+                      context.push(
+                        NFTDetail.routerPage,
+                        extra: {
+                          'address': address,
+                          'name': name,
+                          'nameInCollection': tokenInformation['name'],
+                          'properties': tokenInformation,
+                          'collection': const [],
+                          'symbol': symbol,
+                          'tokenId': tokenInformation['id'] ?? index.toString(),
+                          'detailCollection': true,
+                        },
                       );
                     },
                     child: NFTThumbnail(

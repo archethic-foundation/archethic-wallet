@@ -2,10 +2,10 @@ import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/add_account/layouts/add_account_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class AddAccountButton extends ConsumerStatefulWidget {
@@ -30,13 +30,7 @@ class _AddAccountButtonState extends ConsumerState<AddAccountButton> {
       key: const Key('addAccount'),
       icon: Symbols.add,
       onPressed: () async {
-        Sheets.showAppHeightNineSheet(
-          context: context,
-          ref: ref,
-          widget: AddAccountSheet(
-            seed: session!.wallet.seed,
-          ),
-        );
+        context.go(AddAccountSheet.routerPage, extra: session!.wallet.seed);
       },
     );
   }

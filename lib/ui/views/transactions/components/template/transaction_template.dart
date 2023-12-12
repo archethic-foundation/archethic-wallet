@@ -6,13 +6,13 @@ import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transaction_date.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transaction_warning.dart';
 import 'package:aewallet/ui/views/transactions/transaction_infos_sheet.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:go_router/go_router.dart';
 
 class TransactionTemplate extends ConsumerWidget {
   const TransactionTemplate({
@@ -53,10 +53,9 @@ class TransactionTemplate extends ConsumerWidget {
               FeedbackType.light,
               settings.activeVibrations,
             );
-        Sheets.showAppHeightNineSheet(
-          context: context,
-          ref: ref,
-          widget: TransactionInfosSheet(transaction.address!),
+        context.go(
+          TransactionInfosSheet.routerPage,
+          extra: transaction.address,
         );
       },
       onLongPress: onLongPress,

@@ -17,17 +17,14 @@ class NFTCreationProcessImportTabAEWeb extends ConsumerWidget {
 
     return InkWell(
       onTap: () async {
-        Sheets.showAppHeightNineSheet(
-          context: context,
-          ref: ref,
-          widget: NFTCreationProcessImportTabAEWebForm(
-            onConfirm: (uri) {
-              nftCreationNotifier.setContentAEWebProperties(
-                context,
-                uri,
-              );
-            },
-          ),
+        context.go(
+          NFTCreationProcessImportTabAEWebForm.routerPage,
+          extra: (uri) {
+            nftCreationNotifier.setContentAEWebProperties(
+              context,
+              uri,
+            );
+          },
         );
       },
       child: SizedBox(

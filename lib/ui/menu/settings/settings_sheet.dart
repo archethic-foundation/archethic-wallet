@@ -27,10 +27,11 @@ import 'package:aewallet/ui/util/responsive.dart';
 
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
+import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
+import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/settings/backupseed_sheet.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:aewallet/ui/widgets/dialogs/authentification_method_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/currency_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/language_dialog.dart';

@@ -2,9 +2,9 @@
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_header.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_list.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
@@ -36,76 +36,62 @@ class NFTListPerCategory extends ConsumerWidget {
 
     if (accountSelected == null) return const SizedBox();
     return Scaffold(
+      drawerEdgeDragWidth: 0,
       resizeToAvoidBottomInset: false,
-      body: DecoratedBox(
+      extendBodyBehindAppBar: true,
+      backgroundColor: ArchethicTheme.background,
+      body: Container(
+        padding: const EdgeInsets.only(
+          bottom: 20,
+        ),
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
               ArchethicTheme.backgroundSmall,
             ),
             fit: BoxFit.fitHeight,
-          ),
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: <Color>[
-              ArchethicTheme.backgroundDark,
-              ArchethicTheme.background,
-            ],
+            opacity: 0.7,
           ),
         ),
-        child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) =>
-              SafeArea(
-            minimum: EdgeInsets.only(
-              bottom: MediaQuery.of(context).size.height * 0.035,
+        child: Column(
+          children: <Widget>[
+            NFTHeader(
+              currentNftCategoryIndex: currentNftCategoryIndex ?? 0,
+              displayCategoryName: true,
+              onPressBack: () {
+                context.go(HomePage.routerPage);
+              },
             ),
-            child: Column(
+            Expanded(
+              child: NFTList(
+                currentNftCategoryIndex: currentNftCategoryIndex ?? 0,
+              ),
+            ),
+            Row(
               children: <Widget>[
-                NFTHeader(
-                  currentNftCategoryIndex: currentNftCategoryIndex ?? 0,
-                  displayCategoryName: true,
-                  onPressBack: () {
-                    context.pop();
-                  },
-                ),
-                Expanded(
-                  child: NFTList(
-                    currentNftCategoryIndex: currentNftCategoryIndex ?? 0,
-                  ),
-                ),
-                Row(
-                  children: <Widget>[
-                    AppButtonTinyConnectivity(
-                      localizations.createNFT,
-                      Dimens.buttonBottomDimens,
-                      key: const Key('createNFT'),
-                      icon: Symbols.diamond,
-                      onPressed: () async {
-                        sl.get<HapticUtil>().feedback(
-                              FeedbackType.light,
-                              preferences.activeVibrations,
-                            );
-                        context.go(
-                          NftCreationProcessSheet.routerPage,
-                          extra: {
-                            'seed': ref
-                                .read(SessionProviders.session)
-                                .loggedIn!
-                                .wallet
-                                .seed,
-                            'currentNftCategoryIndex': currentNftCategoryIndex,
-                          },
+                AppButtonTinyConnectivity(
+                  localizations.createNFT,
+                  Dimens.buttonBottomDimens,
+                  key: const Key('createNFT'),
+                  icon: Symbols.diamond,
+                  onPressed: () async {
+                    sl.get<HapticUtil>().feedback(
+                          FeedbackType.light,
+                          preferences.activeVibrations,
                         );
+                    context.go(
+                      NftCreationProcessSheet.routerPage,
+                      extra: {
+                        'currentNftCategoryIndex': currentNftCategoryIndex,
                       },
-                      disabled: !accountSelected.balance!
-                          .isNativeTokenValuePositive(),
-                    ),
-                  ],
+                    );
+                  },
+                  disabled:
+                      !accountSelected.balance!.isNativeTokenValuePositive(),
                 ),
               ],
             ),
-          ),
+          ],
         ),
       ),
     );

@@ -11,12 +11,11 @@ import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/bloc/provider.dart';
 import 'package:aewallet/ui/views/contacts/bloc/state.dart';
+import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/paste_icon.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
-import 'package:aewallet/ui/widgets/components/sheet_header.dart';
-import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/user_data_util.dart';
@@ -36,6 +35,7 @@ class AddContactSheet extends ConsumerWidget {
   const AddContactSheet({super.key, this.address});
 
   final String? address;
+  static const String routerPage = '/add_contact';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -89,81 +89,105 @@ class AddContactSheetBody extends ConsumerWidget {
       },
     );
 
-    return TapOutsideUnfocus(
-      child: SafeArea(
-        minimum:
-            EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
-        child: Column(
-          children: <Widget>[
-            SheetHeader(
-              title: localizations.addContact,
+    return Scaffold(
+      drawerEdgeDragWidth: 0,
+      resizeToAvoidBottomInset: false,
+      extendBodyBehindAppBar: true,
+      backgroundColor: ArchethicTheme.background,
+      appBar: SheetAppBar(
+        title: localizations.addContact,
+        widgetLeft: BackButton(
+          key: const Key('back'),
+          color: ArchethicTheme.text,
+          onPressed: () {
+            context.pop();
+          },
+        ),
+      ),
+      body: Container(
+        padding: const EdgeInsets.only(
+          bottom: 20,
+        ),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              ArchethicTheme.backgroundSmall,
             ),
-            const SizedBox(height: 30),
-            const Expanded(
-              child: ArchethicScrollbar(
-                child: Padding(
-                  padding: EdgeInsets.only(left: 10, right: 10, bottom: 30),
-                  child: Column(
-                    children: <Widget>[
-                      AddContactTextFieldName(),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      AddContactTextFieldAddress(),
-                      SizedBox(
-                        height: 20,
-                      ),
-                    ],
+            fit: BoxFit.fitHeight,
+            opacity: 0.7,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 70),
+          child: Column(
+            children: <Widget>[
+              const SizedBox(height: 30),
+              const Expanded(
+                child: ArchethicScrollbar(
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10, bottom: 30),
+                    child: Column(
+                      children: <Widget>[
+                        AddContactTextFieldName(),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        AddContactTextFieldAddress(),
+                        SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    AppButtonTinyConnectivity(
-                      localizations.addContact,
-                      Dimens.buttonBottomDimens,
-                      key: const Key('addContact'),
-                      icon: Symbols.add,
-                      onPressed: () async {
-                        final isNameOk =
-                            await contactCreationNotifier.controlName(
-                          context,
-                        );
-
-                        final isAddressOk =
-                            await contactCreationNotifier.controlAddress(
-                          context,
-                        );
-
-                        if (isNameOk && isAddressOk) {
-                          final newContact =
-                              await contactCreationNotifier.addContact();
-
-                          ref
-                              .read(AccountProviders.selectedAccount.notifier)
-                              .refreshRecentTransactions();
-                          UIUtil.showSnackbar(
-                            localizations.contactAdded
-                                .replaceAll('%1', newContact.format),
+              Column(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      AppButtonTinyConnectivity(
+                        localizations.addContact,
+                        Dimens.buttonBottomDimens,
+                        key: const Key('addContact'),
+                        icon: Symbols.add,
+                        onPressed: () async {
+                          final isNameOk =
+                              await contactCreationNotifier.controlName(
                             context,
-                            ref,
-                            ArchethicTheme.text,
-                            ArchethicTheme.snackBarShadow,
-                            icon: Symbols.info,
                           );
-                          context.pop();
-                        }
-                      },
-                      disabled: !contactCreation.canCreateContact,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
+
+                          final isAddressOk =
+                              await contactCreationNotifier.controlAddress(
+                            context,
+                          );
+
+                          if (isNameOk && isAddressOk) {
+                            final newContact =
+                                await contactCreationNotifier.addContact();
+
+                            ref
+                                .read(AccountProviders.selectedAccount.notifier)
+                                .refreshRecentTransactions();
+                            UIUtil.showSnackbar(
+                              localizations.contactAdded
+                                  .replaceAll('%1', newContact.format),
+                              context,
+                              ref,
+                              ArchethicTheme.text,
+                              ArchethicTheme.snackBarShadow,
+                              icon: Symbols.info,
+                            );
+                            context.pop();
+                          }
+                        },
+                        disabled: !contactCreation.canCreateContact,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

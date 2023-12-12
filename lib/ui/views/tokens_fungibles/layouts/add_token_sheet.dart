@@ -16,6 +16,8 @@ class AddTokenSheet extends ConsumerWidget {
     super.key,
   });
 
+  static const String routerPage = '/add_token';
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedAccount = ref

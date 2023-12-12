@@ -9,6 +9,7 @@ import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
+import 'package:aewallet/ui/views/messenger/layouts/discussion_details_page.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/date_util.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,8 @@ class MessengerDiscussionPage extends ConsumerWidget {
     super.key,
     required this.discussionAddress,
   });
+
+  static const routerPage = '/messenger_discussion';
 
   final String discussionAddress;
 
@@ -66,8 +69,8 @@ class MessengerDiscussionPage extends ConsumerWidget {
                 grade: IconSize.gradeM,
               ),
               onPressed: () async {
-                context.go(
-                  '/discussion_details',
+                context.push(
+                  DiscussionDetailsPage.routerPage,
                   extra: discussionAddress,
                 );
               },

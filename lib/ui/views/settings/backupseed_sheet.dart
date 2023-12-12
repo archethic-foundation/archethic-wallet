@@ -6,17 +6,17 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/intro/intro_backup_confirm.dart';
+import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
+import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/settings/mnemonic_display.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
-import 'package:aewallet/ui/widgets/components/sheet_header.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
-import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aewallet/util/mnemonics.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class AppSeedBackupSheet extends ConsumerWidget {
@@ -25,6 +25,8 @@ class AppSeedBackupSheet extends ConsumerWidget {
   final List<String>? mnemonic;
   final String seed;
 
+  static const routerPage = '/app_seed_backup';
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
@@ -32,17 +34,38 @@ class AppSeedBackupSheet extends ConsumerWidget {
     final recoveryPhraseSavedAsync =
         ref.watch(RecoveryPhraseSavedProvider.isRecoveryPhraseSaved);
 
-    return TapOutsideUnfocus(
-      child: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) => SafeArea(
-          minimum: EdgeInsets.only(
-            bottom: MediaQuery.of(context).size.height * 0.035,
+    return Scaffold(
+      drawerEdgeDragWidth: 0,
+      resizeToAvoidBottomInset: false,
+      extendBodyBehindAppBar: true,
+      backgroundColor: ArchethicTheme.background,
+      appBar: SheetAppBar(
+        title: localizations.recoveryPhrase,
+        widgetLeft: BackButton(
+          key: const Key('back'),
+          color: ArchethicTheme.text,
+          onPressed: () {
+            context.go(HomePage.routerPage);
+          },
+        ),
+      ),
+      body: Container(
+        padding: const EdgeInsets.only(
+          bottom: 20,
+        ),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              ArchethicTheme.backgroundSmall,
+            ),
+            fit: BoxFit.fitHeight,
+            opacity: 0.7,
           ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 70),
           child: Column(
             children: <Widget>[
-              SheetHeader(
-                title: localizations.recoveryPhrase,
-              ),
               Expanded(
                 child: Column(
                   children: <Widget>[
@@ -153,14 +176,13 @@ class AppSeedBackupSheet extends ConsumerWidget {
                                       mnemonic!,
                                       languageCode: languageSeed,
                                     );
-                                    Sheets.showAppHeightNineSheet(
-                                      context: context,
-                                      ref: ref,
-                                      widget: IntroBackupConfirm(
-                                        name: null,
-                                        seed: seed,
-                                        welcomeProcess: false,
-                                      ),
+                                    context.go(
+                                      IntroBackupConfirm.routerPage,
+                                      extra: {
+                                        'name': null,
+                                        'seed': seed,
+                                        'welcomeProcess': false,
+                                      },
                                     );
                                   },
                                 ),

@@ -9,13 +9,13 @@ import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/transfer/bloc/provider.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/components/token_transfer_detail.dart';
 import 'package:aewallet/ui/views/transfer/layouts/components/uco_transfer_detail.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -169,81 +169,109 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
     final transferNotifier =
         ref.watch(TransferFormProvider.transferForm.notifier);
 
-    return SafeArea(
-      minimum:
-          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
-      child: Column(
-        children: <Widget>[
-          SheetHeader(
-            title: widget.title ?? localizations.transfering,
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  SizedBox(
-                    child: transfer.transferType == TransferType.uco
-                        ? const UCOTransferDetail()
-                        : transfer.transferType == TransferType.token ||
-                                transfer.transferType == TransferType.nft
-                            ? TokenTransferDetail(
-                                tokenId: widget.tokenId,
-                              )
-                            : const SizedBox(),
-                  ),
-                ],
-              ),
+    return Scaffold(
+      drawerEdgeDragWidth: 0,
+      resizeToAvoidBottomInset: false,
+      extendBodyBehindAppBar: true,
+      backgroundColor: ArchethicTheme.background,
+      appBar: SheetAppBar(
+        title: widget.title ?? localizations.transfering,
+        widgetLeft: BackButton(
+          key: const Key('back'),
+          color: ArchethicTheme.text,
+          onPressed: () {
+            context.go(HomePage.routerPage);
+          },
+        ),
+      ),
+      body: Container(
+        padding: const EdgeInsets.only(
+          bottom: 20,
+        ),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              ArchethicTheme.backgroundSmall,
             ),
+            fit: BoxFit.fitHeight,
+            opacity: 0.7,
           ),
-          Container(
-            margin: const EdgeInsets.only(top: 10),
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    AppButtonTinyConnectivity(
-                      localizations.confirm,
-                      Dimens.buttonTopDimens,
-                      key: const Key('confirm'),
-                      icon: Symbols.check,
-                      onPressed: () async {
-                        ShowSendingAnimation.build(
-                          context,
-                        );
-                        await ref
-                            .read(TransferFormProvider.transferForm.notifier)
-                            .send(context);
-                      },
-                    ),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    AppButtonTiny(
-                      AppButtonTinyType.primary,
-                      localizations.back,
-                      Dimens.buttonBottomDimens,
-                      key: const Key('back'),
-                      icon: Icon(
-                        Symbols.arrow_back_ios,
-                        color: ArchethicTheme.mainButtonLabel,
-                        size: 14,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 70),
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      const SizedBox(
+                        height: 20,
                       ),
-                      onPressed: () {
-                        transferNotifier.setTransferProcessStep(
-                          TransferProcessStep.form,
-                        );
-                      },
+                      SizedBox(
+                        child: transfer.transferType == TransferType.uco
+                            ? const UCOTransferDetail()
+                            : transfer.transferType == TransferType.token ||
+                                    transfer.transferType == TransferType.nft
+                                ? TokenTransferDetail(
+                                    tokenId: widget.tokenId,
+                                  )
+                                : const SizedBox(),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 10),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        AppButtonTinyConnectivity(
+                          localizations.confirm,
+                          Dimens.buttonTopDimens,
+                          key: const Key('confirm'),
+                          icon: Symbols.check,
+                          onPressed: () async {
+                            ShowSendingAnimation.build(
+                              context,
+                            );
+                            await ref
+                                .read(
+                                  TransferFormProvider.transferForm.notifier,
+                                )
+                                .send(context);
+                          },
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: <Widget>[
+                        AppButtonTiny(
+                          AppButtonTinyType.primary,
+                          localizations.back,
+                          Dimens.buttonBottomDimens,
+                          key: const Key('back'),
+                          icon: Icon(
+                            Symbols.arrow_back_ios,
+                            color: ArchethicTheme.mainButtonLabel,
+                            size: 14,
+                          ),
+                          onPressed: () {
+                            transferNotifier.setTransferProcessStep(
+                              TransferProcessStep.form,
+                            );
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

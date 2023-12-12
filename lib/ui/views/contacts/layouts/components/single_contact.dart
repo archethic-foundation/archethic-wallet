@@ -5,9 +5,9 @@ import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/views/contacts/layouts/components/single_contact_balance.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class SingleContact extends ConsumerWidget {
@@ -29,12 +29,9 @@ class SingleContact extends ConsumerWidget {
         ),
       ),
       onPressed: () {
-        Sheets.showAppHeightNineSheet(
-          context: context,
-          ref: ref,
-          widget: ContactDetail(
-            contact: contact,
-          ),
+        context.push(
+          ContactDetail.routerPage,
+          extra: {'contact': contact},
         );
       },
       child: SizedBox(

@@ -25,12 +25,7 @@ class BalanceInfosChart extends ConsumerWidget {
               FeedbackType.light,
               settings.activeVibrations,
             );
-
-        Sheets.showAppHeightNineSheet(
-          context: context,
-          ref: ref,
-          widget: const ChartSheet(),
-        );
+        context.go(ChartSheet.routerPage);
       },
       child: Ink(
         child: SizedBox(

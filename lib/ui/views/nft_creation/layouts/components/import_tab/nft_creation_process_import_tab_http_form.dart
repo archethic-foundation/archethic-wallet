@@ -17,6 +17,8 @@ class NFTCreationProcessImportTabHTTPForm extends ConsumerWidget with UrlUtil {
 
   final void Function(String uri) onConfirm;
 
+  static const routerPage = '/nft_creation_process_import_tab_http';
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;

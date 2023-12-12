@@ -210,8 +210,8 @@ class UIUtil {
       Align(
         alignment: Alignment.topCenter,
         child: Container(
-          margin: EdgeInsets.symmetric(
-            vertical: MediaQuery.of(context).size.height * 0.05,
+          margin: const EdgeInsets.symmetric(
+            vertical: 20,
             horizontal: 14,
           ),
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),

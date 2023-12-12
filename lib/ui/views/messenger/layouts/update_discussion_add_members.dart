@@ -15,9 +15,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class UpdateDiscussionAddMembers extends ConsumerStatefulWidget {
-  const UpdateDiscussionAddMembers({super.key, required this.listMembers});
+  const UpdateDiscussionAddMembers({
+    super.key,
+    required this.listMembers,
+    this.onDisposed,
+  });
 
   final List<String> listMembers;
+  final Function? onDisposed;
+
+  static const String routerPage = '/update_discussion_add_members';
 
   Future<bool> canAddNewMembers(WidgetRef ref) async {
     final contactsList = await ref.read(
@@ -43,6 +50,12 @@ class UpdateDiscussionAddMembers extends ConsumerStatefulWidget {
 class UpdateDiscussionAddMembersState
     extends ConsumerState<UpdateDiscussionAddMembers> {
   final pickerItemsList = List<PickerItem>.empty(growable: true);
+
+  @override
+  void dispose() {
+    if (widget.onDisposed != null) widget.onDisposed!;
+    super.dispose();
+  }
 
   @override
   void initState() {
