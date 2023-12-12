@@ -89,7 +89,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                     FeedbackType.light,
                     preferences.activeVibrations,
                   );
-              context.go(ConfigureCategoryList.routerPage);
+              context.push(ConfigureCategoryList.routerPage);
             },
           ),
         if (preferences.mainScreenCurrentPage == 4)
