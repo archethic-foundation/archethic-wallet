@@ -15,7 +15,6 @@ import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/get_addresses.dart';
-import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/paste_icon.dart';
@@ -94,12 +93,7 @@ class _AddAddressState extends ConsumerState<AddAddress> {
           key: const Key('back'),
           color: ArchethicTheme.text,
           onPressed: () {
-            context.go(
-              NftCreationProcessSheet.routerPage,
-              extra: {
-                'currentNftCategoryIndex': nftCreation.currentNftCategoryIndex,
-              },
-            );
+            context.pop();
           },
         ),
       ),
