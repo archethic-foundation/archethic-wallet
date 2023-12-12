@@ -37,8 +37,10 @@ class TransactionInput extends ConsumerWidget {
       onLongPress: () {
         if (transaction.contactInformation == null &&
             transaction.from != null) {
-          context.push(AddContactSheet.routerPage,
-              extra: transaction.recipient);
+          context.push(
+            AddContactSheet.routerPage,
+            extra: transaction.recipient,
+          );
         }
       },
       right: Column(
