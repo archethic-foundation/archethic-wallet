@@ -19,7 +19,9 @@ import 'package:aewallet/infrastructure/rpc/sign_transactions/command_handler.da
 import 'package:aewallet/infrastructure/rpc/sub_account/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/sub_current_account/command_handler.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:json_rpc_2/json_rpc_2.dart';
+import 'package:nsd/nsd.dart';
 import 'package:web_socket_channel/io.dart';
 
 /// A [Peer] composition which handles subscription requests
@@ -101,8 +103,11 @@ class ArchethicWebsocketRPCServer {
   ArchethicWebsocketRPCServer();
 
   static const logName = 'RPC Server';
-  static const host = '127.0.0.1';
+  static const name = 'archethic_wallet';
+  static const host = 'localhost';
   static const port = 12345;
+
+  Registration? mDnsRegistration;
 
   static bool get isPlatformCompatible {
     return !kIsWeb &&
@@ -114,6 +119,34 @@ class ArchethicWebsocketRPCServer {
 
   bool get isRunning => _openedSockets.isNotEmpty || _runningHttpServer != null;
 
+  Future<List<int>> _loadBundleIntList(String asset) async {
+    final byteData = await rootBundle.load(asset);
+    return byteData.buffer.asInt8List();
+  }
+
+  Future<SecurityContext> _setupServerContext() async {
+    final serverContext = SecurityContext()
+      ..useCertificateChainBytes(
+        await _loadBundleIntList('assets/ssl/server.crt'),
+      )
+      ..usePrivateKeyBytes(
+        await _loadBundleIntList('assets/ssl/private_key.pem'),
+      );
+    return serverContext;
+  }
+
+  Future<void> mDnsRegister() async {
+    mDnsRegistration = await register(
+      const Service(name: name, type: '_http._tcp', port: port),
+    );
+  }
+
+  Future<void> mDnsUnRegister() async {
+    if (mDnsRegistration == null) return;
+    await unregister(mDnsRegistration!);
+    mDnsRegistration = null;
+  }
+
   Future<void> run() async {
     runZonedGuarded(
       () async {
@@ -122,89 +155,109 @@ class ArchethicWebsocketRPCServer {
           return;
         }
 
-        log('Starting at ws://$host:$port', name: logName);
-        final httpServer = await HttpServer.bind(
-          host,
-          port,
-          shared: true,
-        );
+        log('Starting at wss://$host:$port', name: logName);
 
-        httpServer.listen((HttpRequest request) async {
-          log('Received request', name: logName);
+        try {
+          final httpServer = await HttpServer.bindSecure(
+            host,
+            port,
+            await _setupServerContext(),
+            shared: true,
+          );
+          // final httpServer = await HttpServer.bind(
+          //   host,
+          //   port,
+          //   shared: true,
+          // );
+          httpServer.listen((HttpRequest request) async {
+            log('Received request', name: logName);
 
-          final socket = await WebSocketTransformer.upgrade(request);
-          final channel = IOWebSocketChannel(socket);
+            final socket = await WebSocketTransformer.upgrade(request);
+            final channel = IOWebSocketChannel(socket);
 
-          final peerServer = _SubscribablePeer(Peer(channel.cast<String>()))
-            ..registerMethod(
-              'sendTransaction',
-              (params) => _handle(RPCSendTransactionCommandHandler(), params),
-            )
-            ..registerMethod(
-              'getEndpoint',
-              (params) => _handle(RPCGetEndpointCommandHandler(), params),
-            )
-            ..registerMethod(
-              'refreshCurrentAccount',
-              (params) =>
-                  _handle(RPCRefreshCurrentAccountCommandHandler(), params),
-            )
-            ..registerMethod(
-              'getCurrentAccount',
-              (params) => _handle(RPCGetCurrentAccountCommandHandler(), params),
-            )
-            ..registerMethod(
-              'getAccounts',
-              (params) => _handle(RPCGetAccountsCommandHandler(), params),
-            )
-            ..registerSubscriptionMethod(
-              'subscribeAccount',
-              (params) => _handleSubscription(
-                RPCSubscribeAccountCommandHandler(),
-                params,
-              ),
-            )
-            ..registerUnsubscriptionMethod(
-              'unsubscribeAccount',
-            )
-            ..registerSubscriptionMethod(
-              'subscribeCurrentAccount',
-              (params) => _handleSubscription(
-                RPCSubscribeCurrentAccountCommandHandler(),
-                params,
-              ),
-            )
-            ..registerUnsubscriptionMethod(
-              'unsubscribeCurrentAccount',
-            )
-            ..registerMethod(
-              'addService',
-              (params) => _handle(RPCAddServiceCommandHandler(), params),
-            )
-            ..registerMethod(
-              'getServicesFromKeychain',
-              (params) =>
-                  _handle(RPCGetServicesFromKeychainCommandHandler(), params),
-            )
-            ..registerMethod(
-              'keychainDeriveKeypair',
-              (params) =>
-                  _handle(RPCKeychainDeriveKeypairCommandHandler(), params),
-            )
-            ..registerMethod(
-              'keychainDeriveAddress',
-              (params) =>
-                  _handle(RPCKeychainDeriveAddressCommandHandler(), params),
-            )
-            ..registerMethod(
-              'signTransactions',
-              (params) => _handle(RPCSignTransactionsCommandHandler(), params),
-            );
+            final peerServer = _SubscribablePeer(Peer(channel.cast<String>()))
+              ..registerMethod(
+                'sendTransaction',
+                (params) => _handle(RPCSendTransactionCommandHandler(), params),
+              )
+              ..registerMethod(
+                'getEndpoint',
+                (params) => _handle(RPCGetEndpointCommandHandler(), params),
+              )
+              ..registerMethod(
+                'refreshCurrentAccount',
+                (params) =>
+                    _handle(RPCRefreshCurrentAccountCommandHandler(), params),
+              )
+              ..registerMethod(
+                'getCurrentAccount',
+                (params) =>
+                    _handle(RPCGetCurrentAccountCommandHandler(), params),
+              )
+              ..registerMethod(
+                'getAccounts',
+                (params) => _handle(RPCGetAccountsCommandHandler(), params),
+              )
+              ..registerSubscriptionMethod(
+                'subscribeAccount',
+                (params) => _handleSubscription(
+                  RPCSubscribeAccountCommandHandler(),
+                  params,
+                ),
+              )
+              ..registerUnsubscriptionMethod(
+                'unsubscribeAccount',
+              )
+              ..registerSubscriptionMethod(
+                'subscribeCurrentAccount',
+                (params) => _handleSubscription(
+                  RPCSubscribeCurrentAccountCommandHandler(),
+                  params,
+                ),
+              )
+              ..registerUnsubscriptionMethod(
+                'unsubscribeCurrentAccount',
+              )
+              ..registerMethod(
+                'addService',
+                (params) => _handle(RPCAddServiceCommandHandler(), params),
+              )
+              ..registerMethod(
+                'getServicesFromKeychain',
+                (params) =>
+                    _handle(RPCGetServicesFromKeychainCommandHandler(), params),
+              )
+              ..registerMethod(
+                'keychainDeriveKeypair',
+                (params) =>
+                    _handle(RPCKeychainDeriveKeypairCommandHandler(), params),
+              )
+              ..registerMethod(
+                'keychainDeriveAddress',
+                (params) =>
+                    _handle(RPCKeychainDeriveAddressCommandHandler(), params),
+              )
+              ..registerMethod(
+                'signTransactions',
+                (params) =>
+                    _handle(RPCSignTransactionsCommandHandler(), params),
+              );
 
-          _openedSockets.add(peerServer);
-          await peerServer.listen();
-        });
-        _runningHttpServer = httpServer;
+            _openedSockets.add(peerServer);
+            await peerServer.listen();
+          });
+          _runningHttpServer = httpServer;
+        } catch (error, stack) {
+          log(
+            'WebSocket server failed',
+            error: error,
+            stackTrace: stack,
+            name: logName,
+          );
+        }
+
+        log('mDns registration', name: logName);
+        await mDnsRegister();
       },
       (error, stack) {
         log(
@@ -235,6 +288,9 @@ class ArchethicWebsocketRPCServer {
         await _runningHttpServer?.close();
         _runningHttpServer = null;
         log('Server stopped at ws://$host:$port', name: logName);
+
+        log('mDns unregistration', name: logName);
+        await mDnsUnRegister();
       },
       (error, stack) {
         log(
