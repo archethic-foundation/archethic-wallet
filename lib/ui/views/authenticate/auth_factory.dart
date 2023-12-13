@@ -129,7 +129,7 @@ class AuthFactory {
     final auth = (await context.push(
       PinScreen.routerPage,
       extra: {
-        'type': PinOverlayType.enterPin,
+        'type': PinOverlayType.enterPin.name,
         'canNavigateBack': canCancel,
       },
     ))! as bool;

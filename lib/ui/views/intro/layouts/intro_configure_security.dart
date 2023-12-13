@@ -14,6 +14,7 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
+import 'package:aewallet/ui/views/intro/bloc/provider.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/settings/set_password.dart';
 import 'package:aewallet/ui/views/settings/set_yubikey.dart';
@@ -39,13 +40,11 @@ import 'package:material_symbols_icons/symbols.dart';
 class IntroConfigureSecurity extends ConsumerStatefulWidget {
   const IntroConfigureSecurity({
     super.key,
-    this.accessModes,
     required this.seed,
     required this.name,
     required this.fromPage,
     this.extra,
   });
-  final List<PickerItem>? accessModes;
   final String? seed;
   final String? name;
   final String fromPage;
@@ -212,6 +211,8 @@ class _IntroConfigureSecurityState
     final localizations = AppLocalizations.of(context)!;
     final preferences = ref.watch(SettingsProviders.settings);
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
+    final accessModes =
+        ref.watch(IntroProviders.accessModesProvider).valueOrNull;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -322,14 +323,19 @@ class _IntroConfigureSecurityState
                             const SizedBox(
                               height: 20,
                             ),
-                            if (widget.accessModes != null)
+                            if (accessModes != null)
                               Container(
                                 margin: const EdgeInsets.only(
                                   left: 20,
                                   right: 20,
                                 ),
                                 child: PickerWidget(
-                                  pickerItems: widget.accessModes,
+                                  pickerItems: accessModes
+                                      .map(
+                                        (accessMode) =>
+                                            accessMode.pickerItem(context),
+                                      )
+                                      .toList(),
                                   onSelected: (value) async {
                                     setState(() {
                                       _accessModesSelected = value;
@@ -365,7 +371,7 @@ class _IntroConfigureSecurityState
                                         authenticated = (await context.push(
                                           PinScreen.routerPage,
                                           extra: {
-                                            'type': PinOverlayType.newPin,
+                                            'type': PinOverlayType.newPin.name,
                                           },
                                         ))! as bool;
                                         break;
@@ -451,4 +457,16 @@ class _IntroConfigureSecurityState
       );
     }
   }
+}
+
+extension AuthMethodPickerItemX on AuthMethod {
+  PickerItem pickerItem(BuildContext context) => PickerItem(
+        AuthenticationMethod(this).getDisplayName(context),
+        null,
+        AuthenticationMethod.getIcon(this),
+        ArchethicTheme.pickerItemIconEnabled,
+        this,
+        true,
+        key: Key(name),
+      );
 }

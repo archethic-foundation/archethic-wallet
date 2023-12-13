@@ -21,7 +21,7 @@ import 'package:aewallet/providers_observer.dart';
 import 'package:aewallet/router.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/ui/views/intro/intro_welcome.dart';
+import 'package:aewallet/ui/views/intro/layouts/intro_welcome.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/security_manager.dart';

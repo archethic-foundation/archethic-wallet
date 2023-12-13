@@ -5,7 +5,7 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/views/intro/intro_backup_confirm.dart';
+import 'package:aewallet/ui/views/intro/layouts/intro_backup_confirm.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/settings/mnemonic_display.dart';
