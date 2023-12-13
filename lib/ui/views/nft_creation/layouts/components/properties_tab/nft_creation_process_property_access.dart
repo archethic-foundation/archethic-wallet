@@ -40,15 +40,9 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
 
     final preferences = ref.watch(SettingsProviders.settings);
-    final nftCreationArgs = ref.watch(
-      NftCreationFormProvider.nftCreationFormArgs,
-    );
-    final nftCreation =
-        ref.watch(NftCreationFormProvider.nftCreationForm(nftCreationArgs));
+    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
     final nftCreationNotifier = ref.watch(
-      NftCreationFormProvider.nftCreationForm(
-        nftCreationArgs,
-      ).notifier,
+      NftCreationFormProvider.nftCreationForm.notifier,
     );
     final fileProperty = nftCreation.properties
         .where((element) => element.propertyName == propertyName)

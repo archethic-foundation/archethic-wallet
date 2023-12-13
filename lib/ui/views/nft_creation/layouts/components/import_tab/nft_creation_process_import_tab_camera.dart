@@ -13,11 +13,8 @@ class NFTCreationProcessImportTabCamera extends ConsumerWidget {
 
     final localizations = AppLocalizations.of(context)!;
 
-    final nftCreationArgs = ref.read(
-      NftCreationFormProvider.nftCreationFormArgs,
-    );
     final nftCreationNotifier = ref.watch(
-      NftCreationFormProvider.nftCreationForm(nftCreationArgs).notifier,
+      NftCreationFormProvider.nftCreationForm.notifier,
     );
 
     return InkWell(

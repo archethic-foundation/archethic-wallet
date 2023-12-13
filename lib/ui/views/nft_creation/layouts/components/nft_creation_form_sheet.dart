@@ -44,20 +44,11 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet>
   void _handleTabChange() {
     final selectedIndex = _tabController!.index;
     final nftCreation = ref.watch(
-      NftCreationFormProvider.nftCreationForm(
-        ref.read(
-          NftCreationFormProvider.nftCreationFormArgs,
-        ),
-      ),
-    );
-    final nftCreationArgs = ref.read(
-      NftCreationFormProvider.nftCreationFormArgs,
+      NftCreationFormProvider.nftCreationForm,
     );
     ref
         .read(
-          NftCreationFormProvider.nftCreationForm(
-            nftCreationArgs,
-          ).notifier,
+          NftCreationFormProvider.nftCreationForm.notifier,
         )
         .setIndexTab(selectedIndex);
     if (selectedIndex == NftCreationTab.summary.index) {
@@ -66,9 +57,7 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet>
               nftCreation.isFileImportFile())) {
         ref
             .read(
-              NftCreationFormProvider.nftCreationForm(
-                nftCreationArgs,
-              ).notifier,
+              NftCreationFormProvider.nftCreationForm.notifier,
             )
             .controlFile(context);
       }
@@ -77,17 +66,13 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet>
               nftCreation.isFileImportUrl())) {
         ref
             .read(
-              NftCreationFormProvider.nftCreationForm(
-                nftCreationArgs,
-              ).notifier,
+              NftCreationFormProvider.nftCreationForm.notifier,
             )
             .controlURL(context);
       }
       ref
           .read(
-            NftCreationFormProvider.nftCreationForm(
-              nftCreationArgs,
-            ).notifier,
+            NftCreationFormProvider.nftCreationForm.notifier,
           )
           .setFees(
             context,
@@ -98,11 +83,7 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet>
   @override
   Widget build(BuildContext context) {
     final nftCreation = ref.watch(
-      NftCreationFormProvider.nftCreationForm(
-        ref.read(
-          NftCreationFormProvider.nftCreationFormArgs,
-        ),
-      ),
+      NftCreationFormProvider.nftCreationForm,
     );
 
     final myTabs = <TabItem>[

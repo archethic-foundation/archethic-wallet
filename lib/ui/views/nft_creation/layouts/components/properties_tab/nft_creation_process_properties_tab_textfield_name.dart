@@ -21,11 +21,7 @@ class _NFTCreationProcessPropertiesTabTextfieldNameState
   void initState() {
     super.initState();
     final nftCreation = ref.read(
-      NftCreationFormProvider.nftCreationForm(
-        ref.read(
-          NftCreationFormProvider.nftCreationFormArgs,
-        ),
-      ),
+      NftCreationFormProvider.nftCreationForm,
     );
     nftPropertyNameFocusNode = FocusNode();
     nftPropertyNameController =
@@ -46,19 +42,11 @@ class _NFTCreationProcessPropertiesTabTextfieldNameState
     final preferences = ref.watch(SettingsProviders.settings);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
     final nftCreationNotifier = ref.watch(
-      NftCreationFormProvider.nftCreationForm(
-        ref.read(
-          NftCreationFormProvider.nftCreationFormArgs,
-        ),
-      ).notifier,
+      NftCreationFormProvider.nftCreationForm.notifier,
     );
 
     ref.listen<NftCreationFormState>(
-      NftCreationFormProvider.nftCreationForm(
-        ref.read(
-          NftCreationFormProvider.nftCreationFormArgs,
-        ),
-      ),
+      NftCreationFormProvider.nftCreationForm,
       (_, nftCreation) {
         if (nftCreation.propertyName != nftPropertyNameController.text) {
           nftPropertyNameController.text = nftCreation.propertyName;

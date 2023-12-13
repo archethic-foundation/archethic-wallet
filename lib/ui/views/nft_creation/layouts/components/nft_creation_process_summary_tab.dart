@@ -19,13 +19,9 @@ class _NFTCreationProcessSummaryTabState
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     final accountSelected =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
-    final nftCreationArgs = ref.read(
-      NftCreationFormProvider.nftCreationFormArgs,
-    );
-    final nftCreation =
-        ref.watch(NftCreationFormProvider.nftCreationForm(nftCreationArgs));
+    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
     final nftCreationNotifier = ref.watch(
-      NftCreationFormProvider.nftCreationForm(nftCreationArgs).notifier,
+      NftCreationFormProvider.nftCreationForm.notifier,
     );
 
     if (accountSelected == null) return const SizedBox();

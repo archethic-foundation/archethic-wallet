@@ -17,11 +17,7 @@ class _NFTCreationProcessImportTabState
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
     final nftCreation = ref.watch(
-      NftCreationFormProvider.nftCreationForm(
-        ref.read(
-          NftCreationFormProvider.nftCreationFormArgs,
-        ),
-      ),
+      NftCreationFormProvider.nftCreationForm,
     );
     final bottom = MediaQuery.of(context).viewInsets.bottom;
 

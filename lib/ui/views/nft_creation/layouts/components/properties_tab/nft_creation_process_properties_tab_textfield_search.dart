@@ -30,11 +30,7 @@ class _NFTCreationProcessPropertiesTabTextfieldSearchState
   @override
   Widget build(BuildContext context) {
     final nftCreationNotifier = ref.watch(
-      NftCreationFormProvider.nftCreationForm(
-        ref.read(
-          NftCreationFormProvider.nftCreationFormArgs,
-        ),
-      ).notifier,
+      NftCreationFormProvider.nftCreationForm.notifier,
     );
 
     return Container(

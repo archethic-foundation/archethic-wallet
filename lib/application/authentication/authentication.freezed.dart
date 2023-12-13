@@ -350,6 +350,131 @@ abstract class _PinAuthenticationState extends PinAuthenticationState {
 }
 
 /// @nodoc
+mixin _$StartupAuthentState {
+  /// After that date, application should lock when displayed
+  DateTime? get lockDate => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $StartupAuthentStateCopyWith<StartupAuthentState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $StartupAuthentStateCopyWith<$Res> {
+  factory $StartupAuthentStateCopyWith(
+          StartupAuthentState value, $Res Function(StartupAuthentState) then) =
+      _$StartupAuthentStateCopyWithImpl<$Res, StartupAuthentState>;
+  @useResult
+  $Res call({DateTime? lockDate});
+}
+
+/// @nodoc
+class _$StartupAuthentStateCopyWithImpl<$Res, $Val extends StartupAuthentState>
+    implements $StartupAuthentStateCopyWith<$Res> {
+  _$StartupAuthentStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? lockDate = freezed,
+  }) {
+    return _then(_value.copyWith(
+      lockDate: freezed == lockDate
+          ? _value.lockDate
+          : lockDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$StartupAuthentStateImplCopyWith<$Res>
+    implements $StartupAuthentStateCopyWith<$Res> {
+  factory _$$StartupAuthentStateImplCopyWith(_$StartupAuthentStateImpl value,
+          $Res Function(_$StartupAuthentStateImpl) then) =
+      __$$StartupAuthentStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({DateTime? lockDate});
+}
+
+/// @nodoc
+class __$$StartupAuthentStateImplCopyWithImpl<$Res>
+    extends _$StartupAuthentStateCopyWithImpl<$Res, _$StartupAuthentStateImpl>
+    implements _$$StartupAuthentStateImplCopyWith<$Res> {
+  __$$StartupAuthentStateImplCopyWithImpl(_$StartupAuthentStateImpl _value,
+      $Res Function(_$StartupAuthentStateImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? lockDate = freezed,
+  }) {
+    return _then(_$StartupAuthentStateImpl(
+      lockDate: freezed == lockDate
+          ? _value.lockDate
+          : lockDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$StartupAuthentStateImpl extends _StartupAuthentState {
+  const _$StartupAuthentStateImpl({this.lockDate}) : super._();
+
+  /// After that date, application should lock when displayed
+  @override
+  final DateTime? lockDate;
+
+  @override
+  String toString() {
+    return 'StartupAuthentState(lockDate: $lockDate)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$StartupAuthentStateImpl &&
+            (identical(other.lockDate, lockDate) ||
+                other.lockDate == lockDate));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, lockDate);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$StartupAuthentStateImplCopyWith<_$StartupAuthentStateImpl> get copyWith =>
+      __$$StartupAuthentStateImplCopyWithImpl<_$StartupAuthentStateImpl>(
+          this, _$identity);
+}
+
+abstract class _StartupAuthentState extends StartupAuthentState {
+  const factory _StartupAuthentState({final DateTime? lockDate}) =
+      _$StartupAuthentStateImpl;
+  const _StartupAuthentState._() : super._();
+
+  @override
+
+  /// After that date, application should lock when displayed
+  DateTime? get lockDate;
+  @override
+  @JsonKey(ignore: true)
+  _$$StartupAuthentStateImplCopyWith<_$StartupAuthentStateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$YubikeyAuthenticationState {
   int get failedAttemptsCount => throw _privateConstructorUsedError;
   int get maxAttemptsCount => throw _privateConstructorUsedError;
@@ -514,129 +639,4 @@ abstract class _YubikeyAuthenticationState extends YubikeyAuthenticationState {
   @JsonKey(ignore: true)
   _$$YubikeyAuthenticationStateImplCopyWith<_$YubikeyAuthenticationStateImpl>
       get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-mixin _$StartupAuthentState {
-  /// After that date, application should lock when displayed
-  DateTime? get lockDate => throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $StartupAuthentStateCopyWith<StartupAuthentState> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $StartupAuthentStateCopyWith<$Res> {
-  factory $StartupAuthentStateCopyWith(
-          StartupAuthentState value, $Res Function(StartupAuthentState) then) =
-      _$StartupAuthentStateCopyWithImpl<$Res, StartupAuthentState>;
-  @useResult
-  $Res call({DateTime? lockDate});
-}
-
-/// @nodoc
-class _$StartupAuthentStateCopyWithImpl<$Res, $Val extends StartupAuthentState>
-    implements $StartupAuthentStateCopyWith<$Res> {
-  _$StartupAuthentStateCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? lockDate = freezed,
-  }) {
-    return _then(_value.copyWith(
-      lockDate: freezed == lockDate
-          ? _value.lockDate
-          : lockDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$StartupAuthentStateImplCopyWith<$Res>
-    implements $StartupAuthentStateCopyWith<$Res> {
-  factory _$$StartupAuthentStateImplCopyWith(_$StartupAuthentStateImpl value,
-          $Res Function(_$StartupAuthentStateImpl) then) =
-      __$$StartupAuthentStateImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({DateTime? lockDate});
-}
-
-/// @nodoc
-class __$$StartupAuthentStateImplCopyWithImpl<$Res>
-    extends _$StartupAuthentStateCopyWithImpl<$Res, _$StartupAuthentStateImpl>
-    implements _$$StartupAuthentStateImplCopyWith<$Res> {
-  __$$StartupAuthentStateImplCopyWithImpl(_$StartupAuthentStateImpl _value,
-      $Res Function(_$StartupAuthentStateImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? lockDate = freezed,
-  }) {
-    return _then(_$StartupAuthentStateImpl(
-      lockDate: freezed == lockDate
-          ? _value.lockDate
-          : lockDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$StartupAuthentStateImpl extends _StartupAuthentState {
-  const _$StartupAuthentStateImpl({this.lockDate}) : super._();
-
-  /// After that date, application should lock when displayed
-  @override
-  final DateTime? lockDate;
-
-  @override
-  String toString() {
-    return 'StartupAuthentState(lockDate: $lockDate)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$StartupAuthentStateImpl &&
-            (identical(other.lockDate, lockDate) ||
-                other.lockDate == lockDate));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, lockDate);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$StartupAuthentStateImplCopyWith<_$StartupAuthentStateImpl> get copyWith =>
-      __$$StartupAuthentStateImplCopyWithImpl<_$StartupAuthentStateImpl>(
-          this, _$identity);
-}
-
-abstract class _StartupAuthentState extends StartupAuthentState {
-  const factory _StartupAuthentState({final DateTime? lockDate}) =
-      _$StartupAuthentStateImpl;
-  const _StartupAuthentState._() : super._();
-
-  @override
-
-  /// After that date, application should lock when displayed
-  DateTime? get lockDate;
-  @override
-  @JsonKey(ignore: true)
-  _$$StartupAuthentStateImplCopyWith<_$StartupAuthentStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }

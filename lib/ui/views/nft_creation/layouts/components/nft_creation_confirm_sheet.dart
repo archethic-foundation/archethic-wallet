@@ -51,11 +51,7 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
 
       if (event.response == 'ok') {
         final nftCreation = ref.read(
-          NftCreationFormProvider.nftCreationForm(
-            ref.read(
-              NftCreationFormProvider.nftCreationFormArgs,
-            ),
-          ),
+          NftCreationFormProvider.nftCreationForm,
         );
 
         final selectedAccount =
@@ -146,18 +142,10 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
     final localizations = AppLocalizations.of(context)!;
 
     final nftCreation = ref.watch(
-      NftCreationFormProvider.nftCreationForm(
-        ref.read(
-          NftCreationFormProvider.nftCreationFormArgs,
-        ),
-      ),
+      NftCreationFormProvider.nftCreationForm,
     );
     final nftCreationNotifier = ref.watch(
-      NftCreationFormProvider.nftCreationForm(
-        ref.read(
-          NftCreationFormProvider.nftCreationFormArgs,
-        ),
-      ).notifier,
+      NftCreationFormProvider.nftCreationForm.notifier,
     );
 
     return Scaffold(
@@ -227,12 +215,8 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
 
                               await ref
                                   .read(
-                                    NftCreationFormProvider.nftCreationForm(
-                                      ref.read(
-                                        NftCreationFormProvider
-                                            .nftCreationFormArgs,
-                                      ),
-                                    ).notifier,
+                                    NftCreationFormProvider
+                                        .nftCreationForm.notifier,
                                   )
                                   .send(context);
                             },

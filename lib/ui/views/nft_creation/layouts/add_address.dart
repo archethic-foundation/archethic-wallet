@@ -30,10 +30,26 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+part 'add_address.freezed.dart';
+part 'add_address.g.dart';
 part 'components/add_public_key_textfield_pk.dart';
+
+@freezed
+class AddAddressParams with _$AddAddressParams {
+  const factory AddAddressParams({
+    required String propertyName,
+    required String propertyValue,
+    required bool readOnly,
+  }) = _AddAddressParams;
+  const AddAddressParams._();
+
+  factory AddAddressParams.fromJson(Map<String, dynamic> json) =>
+      _$AddAddressParamsFromJson(json);
+}
 
 class AddAddress extends ConsumerStatefulWidget {
   const AddAddress({
@@ -47,7 +63,7 @@ class AddAddress extends ConsumerStatefulWidget {
   final String propertyValue;
   final bool readOnly;
 
-  static const String routerPage = '/add_address';
+  static const String routerPage = 'add_address';
 
   @override
   ConsumerState<AddAddress> createState() => _AddAddressState();
@@ -74,11 +90,7 @@ class _AddAddressState extends ConsumerState<AddAddress> {
 
     final preferences = ref.watch(SettingsProviders.settings);
     final nftCreation = ref.watch(
-      NftCreationFormProvider.nftCreationForm(
-        ref.read(
-          NftCreationFormProvider.nftCreationFormArgs,
-        ),
-      ),
+      NftCreationFormProvider.nftCreationForm,
     );
     return Scaffold(
       drawerEdgeDragWidth: 0,
@@ -169,12 +181,8 @@ class _AddAddressState extends ConsumerState<AddAddress> {
 
                                   ref
                                       .read(
-                                        NftCreationFormProvider.nftCreationForm(
-                                          ref.read(
-                                            NftCreationFormProvider
-                                                .nftCreationFormArgs,
-                                          ),
-                                        ).notifier,
+                                        NftCreationFormProvider
+                                            .nftCreationForm.notifier,
                                       )
                                       .addAddress(
                                         widget.propertyName,
