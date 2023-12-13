@@ -121,7 +121,7 @@ class App extends ConsumerStatefulWidget {
 class AppState extends ConsumerState<App> with WidgetsBindingObserver {
   static final GlobalKey<NavigatorState> rootNavigatorKey =
       GlobalKey<NavigatorState>();
-  final router = RoutesPath().createRouter(rootNavigatorKey);
+  final router = RoutesPath(rootNavigatorKey).createRouter();
 
   @override
   void initState() {
