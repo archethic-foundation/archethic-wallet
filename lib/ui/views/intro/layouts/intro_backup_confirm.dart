@@ -4,9 +4,9 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/security_configuration.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_backup_seed.dart';
+import 'package:aewallet/ui/views/intro/layouts/intro_configure_security.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
@@ -36,8 +36,7 @@ class IntroBackupConfirm extends ConsumerStatefulWidget {
   ConsumerState<IntroBackupConfirm> createState() => _IntroBackupConfirmState();
 }
 
-class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
-    with SecurityConfigurationMixin {
+class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   List<String> wordListSelected = List<String>.empty(growable: true);
   List<String> wordListToSelect = List<String>.empty(growable: true);
@@ -284,15 +283,11 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                                   );
 
                                   if (widget.welcomeProcess) {
-                                    await launchSecurityConfiguration(
-                                      context,
-                                      ref,
-                                      widget.seed!,
-                                      widget.name!,
-                                      IntroBackupConfirm.routerPage,
-                                      {
-                                        'name': widget.name,
+                                    await context.push(
+                                      IntroConfigureSecurity.routerPage,
+                                      extra: {
                                         'seed': widget.seed,
+                                        'name': widget.name,
                                       },
                                     );
                                   } else {
@@ -333,15 +328,11 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                                         RecoveryPhraseSavedProvider
                                             .setRecoveryPhraseSaved(false),
                                       );
-                                      await launchSecurityConfiguration(
-                                        context,
-                                        ref,
-                                        widget.seed!,
-                                        widget.name!,
-                                        IntroBackupConfirm.routerPage,
-                                        {
-                                          'name': widget.name,
+                                      await context.push(
+                                        IntroConfigureSecurity.routerPage,
+                                        extra: {
                                           'seed': widget.seed,
+                                          'name': widget.name,
                                         },
                                       );
                                     },
