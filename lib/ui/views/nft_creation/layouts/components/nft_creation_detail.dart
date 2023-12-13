@@ -21,18 +21,10 @@ class NftCreationDetail extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
 
     final nftCreation = ref.watch(
-      NftCreationFormProvider.nftCreationForm(
-        ref.read(
-          NftCreationFormProvider.nftCreationFormArgs,
-        ),
-      ),
+      NftCreationFormProvider.nftCreationForm,
     );
     final nftCreationNotifier = ref.watch(
-      NftCreationFormProvider.nftCreationForm(
-        ref.read(
-          NftCreationFormProvider.nftCreationFormArgs,
-        ),
-      ).notifier,
+      NftCreationFormProvider.nftCreationForm.notifier,
     );
 
     return Container(

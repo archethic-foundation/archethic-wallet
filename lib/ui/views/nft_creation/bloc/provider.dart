@@ -16,7 +16,6 @@ import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
-import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
@@ -29,20 +28,18 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pdfx/pdfx.dart';
 
-final _nftCreationFormProviderArgs = Provider<NftCreationFormNotifierParams>(
-  (ref) {
-    throw UnimplementedError();
-  },
+final _nftCreationFormProviderArgs =
+    StateProvider<NftCreationFormNotifierParams?>(
+  (ref) => null,
 );
 
-final _nftCreationFormProvider = NotifierProvider.family<
-    NftCreationFormNotifier,
-    NftCreationFormState,
-    NftCreationFormNotifierParams>(
+final _nftCreationFormProvider =
+    AutoDisposeNotifierProvider<NftCreationFormNotifier, NftCreationFormState>(
   () {
     return NftCreationFormNotifier();
   },
   dependencies: [
+    _nftCreationFormProviderArgs,
     AccountProviders.selectedAccount,
     NftCreationFormProvider._repository,
     SessionProviders.session,
@@ -51,27 +48,32 @@ final _nftCreationFormProvider = NotifierProvider.family<
 
 class NftCreationFormNotifierParams {
   const NftCreationFormNotifierParams({
-    required this.selectedAccount,
     required this.currentNftCategoryIndex,
   });
-  final Account selectedAccount;
   final int currentNftCategoryIndex;
 }
 
-class NftCreationFormNotifier extends FamilyNotifier<NftCreationFormState,
-    NftCreationFormNotifierParams> {
+class NftCreationFormNotifier
+    extends AutoDisposeNotifier<NftCreationFormState> {
   NftCreationFormNotifier();
 
   CancelableTask<double?>? _calculateFeesTask;
 
   @override
-  NftCreationFormState build(NftCreationFormNotifierParams arg) {
+  NftCreationFormState build() {
+    final arg = ref.watch(_nftCreationFormProviderArgs)!;
+    final selectedAccount = ref
+        .watch(
+          AccountProviders.selectedAccount,
+        )
+        .valueOrNull!;
+
     return NftCreationFormState(
       feeEstimation: const AsyncValue.data(0),
       propertyAccessRecipient: const PropertyAccessRecipient.address(
         address: archethic.Address(address: ''),
       ),
-      accountBalance: arg.selectedAccount.balance!,
+      accountBalance: selectedAccount.balance!,
       currentNftCategoryIndex: arg.currentNftCategoryIndex,
     );
   }

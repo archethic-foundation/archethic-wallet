@@ -8,11 +8,8 @@ class NFTCreationProcessImportTabAEWeb extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
-    final nftCreationArgs = ref.watch(
-      NftCreationFormProvider.nftCreationFormArgs,
-    );
     final nftCreationNotifier = ref.watch(
-      NftCreationFormProvider.nftCreationForm(nftCreationArgs).notifier,
+      NftCreationFormProvider.nftCreationForm.notifier,
     );
 
     return InkWell(

@@ -7,6 +7,7 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_header.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_list.dart';
+import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -19,8 +20,11 @@ import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class NFTListPerCategory extends ConsumerWidget {
-  const NFTListPerCategory({super.key, this.currentNftCategoryIndex});
-  final int? currentNftCategoryIndex;
+  const NFTListPerCategory({
+    super.key,
+    required this.currentNftCategoryIndex,
+  });
+  final int currentNftCategoryIndex;
 
   static const routerPage = '/nft_list_per_category';
 
@@ -56,7 +60,7 @@ class NFTListPerCategory extends ConsumerWidget {
         child: Column(
           children: <Widget>[
             NFTHeader(
-              currentNftCategoryIndex: currentNftCategoryIndex ?? 0,
+              currentNftCategoryIndex: currentNftCategoryIndex,
               displayCategoryName: true,
               onPressBack: () {
                 context.go(HomePage.routerPage);
@@ -64,7 +68,7 @@ class NFTListPerCategory extends ConsumerWidget {
             ),
             Expanded(
               child: NFTList(
-                currentNftCategoryIndex: currentNftCategoryIndex ?? 0,
+                currentNftCategoryIndex: currentNftCategoryIndex,
               ),
             ),
             Row(
@@ -79,11 +83,16 @@ class NFTListPerCategory extends ConsumerWidget {
                           FeedbackType.light,
                           preferences.activeVibrations,
                         );
+
+                    ref
+                        .read(
+                          NftCreationFormProvider.nftCreationFormArgs.notifier,
+                        )
+                        .state = NftCreationFormNotifierParams(
+                      currentNftCategoryIndex: currentNftCategoryIndex,
+                    );
                     context.go(
                       NftCreationProcessSheet.routerPage,
-                      extra: {
-                        'currentNftCategoryIndex': currentNftCategoryIndex,
-                      },
                     );
                   },
                   disabled:

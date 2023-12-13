@@ -12,11 +12,7 @@ class NFTCreationProcessPropertiesList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final nftCreation = ref.watch(
-      NftCreationFormProvider.nftCreationForm(
-        ref.read(
-          NftCreationFormProvider.nftCreationFormArgs,
-        ),
-      ),
+      NftCreationFormProvider.nftCreationForm,
     );
 
     var propertiesFiltered = [];

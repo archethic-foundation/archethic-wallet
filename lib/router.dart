@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:aewallet/domain/rpc/commands/command.dart';
 import 'package:aewallet/domain/rpc/commands/send_transaction.dart';
 import 'package:aewallet/infrastructure/rpc/deeplink_server.dart';
@@ -53,7 +55,6 @@ import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class RoutesPath {
@@ -70,6 +71,7 @@ class RoutesPath {
       navigatorKey: rootNavigatorKey,
       initialLocation: '/',
       debugLogDiagnostics: true,
+      extraCodec: const JsonCodec(),
       routes: [
         GoRoute(path: '/', builder: (context, state) => const Splash()),
         ..._authenticationRoutes,
@@ -119,9 +121,13 @@ class RoutesPath {
           },
         ),
         ShellRoute(
-          builder: (context, state, child) => AutoLockGuard(
-            child: RPCCommandReceiver(child: child),
-          ),
+          builder: (context, state, child) {
+            return AutoLockGuard(
+              child: RPCCommandReceiver(
+                child: child,
+              ),
+            );
+          },
           routes: _authenticatedRoutes,
         ),
       ],
@@ -253,12 +259,23 @@ class RoutesPath {
     ),
     GoRoute(
       path: NftCreationProcessSheet.routerPage,
-      builder: (context, state) {
-        final args = state.extra! as Map<String, dynamic>;
-        return NftCreationProcessSheet(
-          currentNftCategoryIndex: args['currentNftCategoryIndex']! as int,
-        );
-      },
+      builder: (context, state) => const NftCreationProcessSheet(),
+      routes: [
+        GoRoute(
+          name: AddAddress.routerPage,
+          path: AddAddress.routerPage,
+          builder: (context, state) {
+            final params = AddAddressParams.fromJson(
+              state.extra! as Map<String, dynamic>,
+            );
+            return AddAddress(
+              propertyName: params.propertyName,
+              propertyValue: params.propertyValue,
+              readOnly: params.readOnly,
+            );
+          },
+        ),
+      ],
     ),
     GoRoute(
       path: MessengerDiscussionPage.routerPage,
@@ -445,20 +462,6 @@ class RoutesPath {
         final args = state.extra! as Discussion;
         return AddDiscussionSheet(
           discussion: args,
-        );
-      },
-    ),
-    GoRoute(
-      path: AddAddress.routerPage,
-      builder: (context, state) {
-        final args = state.extra! as Map<String, dynamic>;
-        return ProviderScope(
-          overrides: args['overrides']! as List<Override>,
-          child: AddAddress(
-            propertyName: args['propertyName']! as String,
-            propertyValue: args['propertyValue']! as String,
-            readOnly: args['readOnly']! as bool,
-          ),
         );
       },
     ),

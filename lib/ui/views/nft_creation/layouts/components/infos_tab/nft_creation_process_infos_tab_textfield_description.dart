@@ -22,11 +22,7 @@ class _NFTCreationProcessInfosTabTextFieldDescriptionState
     super.initState();
     nftDescriptionFocusNode = FocusNode();
     final nftCreation = ref.read(
-      NftCreationFormProvider.nftCreationForm(
-        ref.read(
-          NftCreationFormProvider.nftCreationFormArgs,
-        ),
-      ),
+      NftCreationFormProvider.nftCreationForm,
     );
     nftDescriptionController =
         TextEditingController(text: nftCreation.description);
@@ -44,19 +40,11 @@ class _NFTCreationProcessInfosTabTextFieldDescriptionState
     BuildContext context,
   ) {
     final nftCreationNotifier = ref.watch(
-      NftCreationFormProvider.nftCreationForm(
-        ref.read(
-          NftCreationFormProvider.nftCreationFormArgs,
-        ),
-      ).notifier,
+      NftCreationFormProvider.nftCreationForm.notifier,
     );
 
     ref.listen<NftCreationFormState>(
-      NftCreationFormProvider.nftCreationForm(
-        ref.read(
-          NftCreationFormProvider.nftCreationFormArgs,
-        ),
-      ),
+      NftCreationFormProvider.nftCreationForm,
       (_, nftCreation) {
         if (nftCreation.description != nftDescriptionController.text) {
           nftDescriptionController.text = nftCreation.description;

@@ -21,11 +21,7 @@ class _NFTCreationProcessInfosTabTextFieldSymbolState
     super.initState();
     nftSymbolFocusNode = FocusNode();
     final nftCreation = ref.read(
-      NftCreationFormProvider.nftCreationForm(
-        ref.read(
-          NftCreationFormProvider.nftCreationFormArgs,
-        ),
-      ),
+      NftCreationFormProvider.nftCreationForm,
     );
     nftSymbolController = TextEditingController(text: nftCreation.symbol);
   }
@@ -44,19 +40,11 @@ class _NFTCreationProcessInfosTabTextFieldSymbolState
     final localizations = AppLocalizations.of(context)!;
 
     final nftCreationNotifier = ref.watch(
-      NftCreationFormProvider.nftCreationForm(
-        ref.read(
-          NftCreationFormProvider.nftCreationFormArgs,
-        ),
-      ).notifier,
+      NftCreationFormProvider.nftCreationForm.notifier,
     );
 
     ref.listen<NftCreationFormState>(
-      NftCreationFormProvider.nftCreationForm(
-        ref.read(
-          NftCreationFormProvider.nftCreationFormArgs,
-        ),
-      ),
+      NftCreationFormProvider.nftCreationForm,
       (_, nftCreation) {
         if (nftCreation.symbol != nftSymbolController.text) {
           nftSymbolController.text = nftCreation.symbol;

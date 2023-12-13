@@ -73,11 +73,7 @@ class PublicKeyLine extends ConsumerWidget {
                         );
                     ref
                         .read(
-                          NftCreationFormProvider.nftCreationForm(
-                            ref.read(
-                              NftCreationFormProvider.nftCreationFormArgs,
-                            ),
-                          ).notifier,
+                          NftCreationFormProvider.nftCreationForm.notifier,
                         )
                         .removeAddress(
                           propertyName,

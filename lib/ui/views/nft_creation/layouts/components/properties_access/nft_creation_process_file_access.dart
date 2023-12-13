@@ -26,20 +26,12 @@ class NFTCreationProcessFileAccess extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final nftCreationArgs = ref.read(
-      NftCreationFormProvider.nftCreationFormArgs,
-    );
-    final nftCreation =
-        ref.watch(NftCreationFormProvider.nftCreationForm(nftCreationArgs));
+    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
     if (nftCreation.file == null) {
       return const SizedBox();
     }
     final nftCreationNotifier = ref.read(
-      NftCreationFormProvider.nftCreationForm(
-        ref.read(
-          NftCreationFormProvider.nftCreationFormArgs,
-        ),
-      ).notifier,
+      NftCreationFormProvider.nftCreationForm.notifier,
     );
 
     final preferences = ref.watch(SettingsProviders.settings);

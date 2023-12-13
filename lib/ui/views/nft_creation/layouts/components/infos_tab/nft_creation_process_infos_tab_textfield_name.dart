@@ -21,11 +21,7 @@ class _NFTCreationProcessInfosTabTextFieldNameState
     super.initState();
     nftNameFocusNode = FocusNode();
     final nftCreation = ref.read(
-      NftCreationFormProvider.nftCreationForm(
-        ref.read(
-          NftCreationFormProvider.nftCreationFormArgs,
-        ),
-      ),
+      NftCreationFormProvider.nftCreationForm,
     );
     nftNameController = TextEditingController(text: nftCreation.name);
   }
@@ -44,20 +40,12 @@ class _NFTCreationProcessInfosTabTextFieldNameState
     final preferences = ref.watch(SettingsProviders.settings);
 
     final nftCreationNotifier = ref.watch(
-      NftCreationFormProvider.nftCreationForm(
-        ref.read(
-          NftCreationFormProvider.nftCreationFormArgs,
-        ),
-      ).notifier,
+      NftCreationFormProvider.nftCreationForm.notifier,
     );
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
 
     ref.listen<NftCreationFormState>(
-      NftCreationFormProvider.nftCreationForm(
-        ref.read(
-          NftCreationFormProvider.nftCreationFormArgs,
-        ),
-      ),
+      NftCreationFormProvider.nftCreationForm,
       (_, nftCreation) {
         if (nftCreation.name != nftNameController.text) {
           nftNameController.text = nftCreation.name;

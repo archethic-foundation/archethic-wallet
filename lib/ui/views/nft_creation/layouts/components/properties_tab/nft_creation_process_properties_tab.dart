@@ -11,13 +11,9 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
 
     final bottom = MediaQuery.of(context).viewInsets.bottom;
-    final nftCreationArgs = ref.read(
-      NftCreationFormProvider.nftCreationFormArgs,
-    );
-    final nftCreation =
-        ref.watch(NftCreationFormProvider.nftCreationForm(nftCreationArgs));
+    final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
     final nftCreationNotifier = ref.watch(
-      NftCreationFormProvider.nftCreationForm(nftCreationArgs).notifier,
+      NftCreationFormProvider.nftCreationForm.notifier,
     );
 
     return ArchethicScrollbar(

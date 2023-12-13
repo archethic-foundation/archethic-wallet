@@ -36,6 +36,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:material_symbols_icons/symbols.dart';
@@ -59,37 +60,30 @@ part 'components/properties_tab/nft_creation_process_properties_tab.dart';
 part 'components/properties_tab/nft_creation_process_properties_tab_textfield_name.dart';
 part 'components/properties_tab/nft_creation_process_properties_tab_textfield_search.dart';
 part 'components/properties_tab/nft_creation_process_properties_tab_textfield_value.dart';
+part 'nft_creation_process_sheet.freezed.dart';
+part 'nft_creation_process_sheet.g.dart';
+
+@freezed
+class NftCreationSheetParams with _$NftCreationSheetParams {
+  const factory NftCreationSheetParams({
+    required int currentNftCategoryIndex,
+  }) = _NftCreationSheetParams;
+  const NftCreationSheetParams._();
+
+  factory NftCreationSheetParams.fromJson(Map<String, dynamic> json) =>
+      _$NftCreationSheetParamsFromJson(json);
+}
 
 class NftCreationProcessSheet extends ConsumerWidget {
   const NftCreationProcessSheet({
-    required this.currentNftCategoryIndex,
     super.key,
   });
 
-  final int currentNftCategoryIndex;
   static const routerPage = '/nft_creation';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedAccount = ref
-        .watch(
-          AccountProviders.selectedAccount,
-        )
-        .valueOrNull;
-
-    if (selectedAccount == null) return const SizedBox();
-
-    return ProviderScope(
-      overrides: [
-        NftCreationFormProvider.nftCreationFormArgs.overrideWithValue(
-          NftCreationFormNotifierParams(
-            currentNftCategoryIndex: currentNftCategoryIndex,
-            selectedAccount: selectedAccount,
-          ),
-        ),
-      ],
-      child: const NftCreationSheetBody(),
-    );
+    return const NftCreationSheetBody();
   }
 }
 
@@ -100,11 +94,7 @@ class NftCreationSheetBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final nftCreationProvider = NftCreationFormProvider.nftCreationForm(
-      ref.read(
-        NftCreationFormProvider.nftCreationFormArgs,
-      ),
-    );
+    final nftCreationProvider = NftCreationFormProvider.nftCreationForm;
     final nftCreation = ref.watch(
       nftCreationProvider,
     );
