@@ -100,7 +100,9 @@ class MenuWidgetWallet extends ConsumerWidget {
                           );
                       context.push(
                         ContactDetail.routerPage,
-                        extra: {'contact': contact},
+                        extra: ContactDetailsRouteParams(
+                          contactAddress: contact.address,
+                        ).toJson(),
                       );
                     },
                   )

@@ -143,10 +143,11 @@ class _CreateDiscussionValidationSheetState
                           onPressed: () {
                             context.push(
                               ContactDetail.routerPage,
-                              extra: {
-                                'contact': formState.membersList[index],
-                                'readOnly': true,
-                              },
+                              extra: ContactDetailsRouteParams(
+                                contactAddress:
+                                    formState.membersList[index].address,
+                                readOnly: true,
+                              ).toJson(),
                             );
                           },
                           icon: const Icon(

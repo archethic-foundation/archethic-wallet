@@ -1,7 +1,6 @@
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/settings.dart';
-
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -205,9 +204,10 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage> {
                                           );
                                       context.push(
                                         ContactDetail.routerPage,
-                                        extra: {
-                                          'contact': contact.contact,
-                                        },
+                                        extra: ContactDetailsRouteParams(
+                                          contactAddress:
+                                              contact.contact.address,
+                                        ).toJson(),
                                       );
                                     },
                                     publicKey: (_) => null,

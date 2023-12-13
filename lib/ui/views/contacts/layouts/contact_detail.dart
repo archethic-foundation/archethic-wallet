@@ -23,39 +23,41 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+part 'contact_detail.freezed.dart';
+part 'contact_detail.g.dart';
+
+@freezed
+class ContactDetailsRouteParams with _$ContactDetailsRouteParams {
+  const factory ContactDetailsRouteParams({
+    required String contactAddress,
+    bool? readOnly,
+  }) = _ContactDetailsRouteParams;
+  const ContactDetailsRouteParams._();
+
+  factory ContactDetailsRouteParams.fromJson(Map<String, dynamic> json) =>
+      _$ContactDetailsRouteParamsFromJson(json);
+}
+
 class ContactDetail extends ConsumerWidget {
   const ContactDetail({
-    required this.contact,
+    required this.contactAddress,
     this.readOnly = false,
     super.key,
   });
 
-  final Contact contact;
+  final String contactAddress;
   final bool readOnly;
   static const String routerPage = '/contact_detail';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-
-    final preferences = ref.watch(SettingsProviders.settings);
-
-    final accounts = ref.watch(AccountProviders.accounts).valueOrNull;
-    final account = accounts
-        ?.where(
-          (element) => element.lastAddress == contact.address,
-        )
-        .firstOrNull;
-    AsyncValue<AccountBalance> asyncAccountBalance;
-    if (contact.type == ContactType.keychainService.name && account != null) {
-      asyncAccountBalance = AsyncValue.data(account.balance!);
-    } else {
-      asyncAccountBalance =
-          ref.watch(ContactProviders.getBalance(address: contact.address));
-    }
+    final contact = ref
+        .watch(ContactProviders.getContactWithAddress(contactAddress))
+        .valueOrNull;
 
     return Scaffold(
       drawerEdgeDragWidth: 0,
@@ -63,13 +65,10 @@ class ContactDetail extends ConsumerWidget {
       extendBodyBehindAppBar: true,
       backgroundColor: ArchethicTheme.background,
       appBar: SheetAppBar(
-        title: contact.format,
+        title: contact?.format ?? '...',
         widgetRight: Padding(
           padding: const EdgeInsets.only(right: 10, top: 10),
-          child: SingleContactBalance(
-            contact: contact,
-            accountBalance: asyncAccountBalance,
-          ),
+          child: _ContactDetailBalance(contactAddress: contactAddress),
         ),
         widgetLeft: BackButton(
           key: const Key('back'),
@@ -89,94 +88,153 @@ class ContactDetail extends ConsumerWidget {
             opacity: 0.7,
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 70),
-          child: Column(
-            children: <Widget>[
-              _ContactDetailActions(contact: contact, readOnly: readOnly),
-              Expanded(
-                child: ContactDetailTab(
-                  infoQRCode: contact.address.toUpperCase(),
-                  description: contact.type == ContactType.keychainService.name
-                      ? localizations.contactAddressInfoKeychainService
-                      : localizations.contactAddressInfoExternalContact,
-                  messageCopied: localizations.addressCopied,
-                ),
+        child: contact == null
+            ? const Center(child: CircularProgressIndicator())
+            : _ContactDetailBody(
+                contact: contact,
+                readOnly: readOnly,
               ),
-              Visibility(
-                visible: contact.type != ContactType.keychainService.name &&
-                    readOnly == false,
-                child: Column(
-                  children: [
-                    TextButton(
-                      key: const Key('removeContact'),
-                      onPressed: () {
-                        sl.get<HapticUtil>().feedback(
-                              FeedbackType.light,
-                              preferences.activeVibrations,
-                            );
-                        AppDialogs.showConfirmDialog(
-                          context,
-                          ref,
-                          localizations.removeContact,
-                          localizations.removeContactConfirmation.replaceAll(
+      ),
+    );
+  }
+}
+
+class _ContactDetailBalance extends ConsumerWidget {
+  const _ContactDetailBalance({
+    required this.contactAddress,
+  });
+
+  final String contactAddress;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final contact = ref
+        .watch(ContactProviders.getContactWithAddress(contactAddress))
+        .valueOrNull;
+
+    if (contact == null) return const SizedBox();
+
+    final accounts = ref.watch(AccountProviders.accounts).valueOrNull;
+    final account = accounts
+        ?.where(
+          (element) => element.lastAddress == contactAddress,
+        )
+        .firstOrNull;
+    AsyncValue<AccountBalance> asyncAccountBalance;
+    if (contact.type == ContactType.keychainService.name && account != null) {
+      asyncAccountBalance = AsyncValue.data(account.balance!);
+    } else {
+      asyncAccountBalance =
+          ref.watch(ContactProviders.getBalance(address: contactAddress));
+    }
+    return SingleContactBalance(
+      contact: contact,
+      accountBalance: asyncAccountBalance,
+    );
+  }
+}
+
+class _ContactDetailBody extends ConsumerWidget {
+  const _ContactDetailBody({
+    required this.contact,
+    required this.readOnly,
+  });
+
+  final Contact contact;
+  final bool readOnly;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+
+    final preferences = ref.watch(SettingsProviders.settings);
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 70),
+      child: Column(
+        children: <Widget>[
+          _ContactDetailActions(contact: contact, readOnly: readOnly),
+          Expanded(
+            child: ContactDetailTab(
+              infoQRCode: contact.address.toUpperCase(),
+              description: contact.type == ContactType.keychainService.name
+                  ? localizations.contactAddressInfoKeychainService
+                  : localizations.contactAddressInfoExternalContact,
+              messageCopied: localizations.addressCopied,
+            ),
+          ),
+          Visibility(
+            visible: contact.type != ContactType.keychainService.name &&
+                readOnly == false,
+            child: Column(
+              children: [
+                TextButton(
+                  key: const Key('removeContact'),
+                  onPressed: () {
+                    sl.get<HapticUtil>().feedback(
+                          FeedbackType.light,
+                          preferences.activeVibrations,
+                        );
+                    AppDialogs.showConfirmDialog(
+                      context,
+                      ref,
+                      localizations.removeContact,
+                      localizations.removeContactConfirmation.replaceAll(
+                        '%1',
+                        contact.format,
+                      ),
+                      localizations.yes,
+                      () {
+                        ref.read(
+                          ContactProviders.deleteContact(
+                            contact: contact,
+                          ),
+                        );
+
+                        ref
+                            .read(
+                              AccountProviders.selectedAccount.notifier,
+                            )
+                            .refreshRecentTransactions();
+                        UIUtil.showSnackbar(
+                          localizations.contactRemoved.replaceAll(
                             '%1',
                             contact.format,
                           ),
-                          localizations.yes,
-                          () {
-                            ref.read(
-                              ContactProviders.deleteContact(
-                                contact: contact,
-                              ),
-                            );
-
-                            ref
-                                .read(
-                                  AccountProviders.selectedAccount.notifier,
-                                )
-                                .refreshRecentTransactions();
-                            UIUtil.showSnackbar(
-                              localizations.contactRemoved.replaceAll(
-                                '%1',
-                                contact.format,
-                              ),
-                              context,
-                              ref,
-                              ArchethicTheme.text,
-                              ArchethicTheme.snackBarShadow,
-                              icon: Symbols.info,
-                            );
-                            context.pop();
-                          },
-                          cancelText: localizations.no,
+                          context,
+                          ref,
+                          ArchethicTheme.text,
+                          ArchethicTheme.snackBarShadow,
+                          icon: Symbols.info,
                         );
+                        context.pop();
                       },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Symbols.delete,
-                            color: ArchethicThemeStyles
-                                .textStyleSize14W600PrimaryRed.color,
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Text(
-                            localizations.deleteContact,
-                            style: ArchethicThemeStyles
-                                .textStyleSize14W600PrimaryRed,
-                          ),
-                        ],
+                      cancelText: localizations.no,
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Symbols.delete,
+                        color: ArchethicThemeStyles
+                            .textStyleSize14W600PrimaryRed.color,
                       ),
-                    ),
-                  ],
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        localizations.deleteContact,
+                        style:
+                            ArchethicThemeStyles.textStyleSize14W600PrimaryRed,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

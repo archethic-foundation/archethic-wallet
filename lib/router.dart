@@ -5,7 +5,6 @@ import 'package:aewallet/domain/rpc/commands/send_transaction.dart';
 import 'package:aewallet/infrastructure/rpc/deeplink_server.dart';
 import 'package:aewallet/main.dart';
 import 'package:aewallet/model/data/account_token.dart';
-import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/ui/menu/settings/settings_sheet.dart';
 import 'package:aewallet/ui/views/add_account/layouts/add_account_sheet.dart';
@@ -325,10 +324,12 @@ class RoutesPath {
     GoRoute(
       path: ContactDetail.routerPage,
       builder: (context, state) {
-        final args = state.extra! as Map<String, dynamic>;
+        final params = ContactDetailsRouteParams.fromJson(
+          state.extra! as Map<String, dynamic>,
+        );
         return ContactDetail(
-          contact: args['contact']! as Contact,
-          readOnly: args['readOnly'] == null || args['readOnly']! as bool,
+          contactAddress: params.contactAddress,
+          readOnly: params.readOnly ?? false,
         );
       },
     ),

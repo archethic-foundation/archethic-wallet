@@ -224,9 +224,9 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
                     );
                 context.push(
                   ContactDetail.routerPage,
-                  extra: {
-                    'contact': data.value,
-                  },
+                  extra: ContactDetailsRouteParams(
+                    contactAddress: data.value!.address,
+                  ).toJson(),
                 );
               },
               error: (_) {},

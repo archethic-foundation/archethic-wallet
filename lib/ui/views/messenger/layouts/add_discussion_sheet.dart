@@ -110,9 +110,9 @@ class AddDiscussionSheet extends ConsumerWidget {
                                   );
                               context.push(
                                 ContactDetail.routerPage,
-                                extra: {
-                                  'contact': contact.contact,
-                                },
+                                extra: ContactDetailsRouteParams(
+                                  contactAddress: contact.contact.address,
+                                ).toJson(),
                               );
                             },
                             publicKey: (_) => null,

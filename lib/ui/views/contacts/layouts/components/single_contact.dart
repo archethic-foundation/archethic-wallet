@@ -31,7 +31,9 @@ class SingleContact extends ConsumerWidget {
       onPressed: () {
         context.push(
           ContactDetail.routerPage,
-          extra: {'contact': contact},
+          extra: ContactDetailsRouteParams(
+            contactAddress: contact.address,
+          ).toJson(),
         );
       },
       child: SizedBox(
