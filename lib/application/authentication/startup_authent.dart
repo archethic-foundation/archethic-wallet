@@ -164,7 +164,7 @@ class AuthenticationGuardNotifier
     await lastInteractionDateNotifier.persist();
   }
 
-  Future<void> scheduleAutolock() async {
+  void scheduleAutolock() {
     log(
       'Schedule Autolock',
       name: logName,

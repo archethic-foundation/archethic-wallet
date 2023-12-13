@@ -228,7 +228,7 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
         canCancel: false,
       );
 
-      await ref
+      ref
           .read(AuthenticationProviders.authenticationGuard.notifier)
           .scheduleAutolock();
       _hideLockMask();
