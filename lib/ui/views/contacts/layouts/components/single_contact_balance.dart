@@ -4,7 +4,6 @@ import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/available_language.dart';
-
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/primary_currency.dart';
@@ -29,6 +28,7 @@ class SingleContactBalance extends ConsumerWidget {
     return accountBalance.when(
       data: (accountBalance) {
         ContactProviders.saveContact(
+          // TODO(reddwarf03): This should probably not be done here
           contact: contact,
         );
         final language = ref.watch(
