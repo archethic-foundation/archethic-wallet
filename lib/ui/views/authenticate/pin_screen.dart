@@ -35,7 +35,6 @@ class PinScreen extends ConsumerStatefulWidget {
   const PinScreen(
     this.type, {
     this.description = '',
-    this.pinScreenBackgroundColor,
     this.canNavigateBack = true,
     super.key,
   });
@@ -46,7 +45,6 @@ class PinScreen extends ConsumerStatefulWidget {
   final bool canNavigateBack;
   final PinOverlayType type;
   final String description;
-  final Color? pinScreenBackgroundColor;
 
   @override
   ConsumerState<PinScreen> createState() => _PinScreenState();

@@ -14,13 +14,13 @@ import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
 import 'package:aewallet/ui/views/authenticate/yubikey_screen.dart';
 import 'package:aewallet/ui/views/contacts/layouts/add_contact.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
-import 'package:aewallet/ui/views/intro/intro_backup_confirm.dart';
-import 'package:aewallet/ui/views/intro/intro_backup_seed.dart';
-import 'package:aewallet/ui/views/intro/intro_configure_security.dart';
-import 'package:aewallet/ui/views/intro/intro_import_seed.dart';
-import 'package:aewallet/ui/views/intro/intro_new_wallet_disclaimer.dart';
-import 'package:aewallet/ui/views/intro/intro_new_wallet_get_first_infos.dart';
-import 'package:aewallet/ui/views/intro/intro_welcome.dart';
+import 'package:aewallet/ui/views/intro/layouts/intro_backup_confirm.dart';
+import 'package:aewallet/ui/views/intro/layouts/intro_backup_seed.dart';
+import 'package:aewallet/ui/views/intro/layouts/intro_configure_security.dart';
+import 'package:aewallet/ui/views/intro/layouts/intro_import_seed.dart';
+import 'package:aewallet/ui/views/intro/layouts/intro_new_wallet_disclaimer.dart';
+import 'package:aewallet/ui/views/intro/layouts/intro_new_wallet_get_first_infos.dart';
+import 'package:aewallet/ui/views/intro/layouts/intro_welcome.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/messenger/layouts/add_discussion_sheet.dart';
 import 'package:aewallet/ui/views/messenger/layouts/create_discussion_sheet.dart';
@@ -50,7 +50,6 @@ import 'package:aewallet/ui/views/tokens_fungibles/layouts/add_token_sheet.dart'
 import 'package:aewallet/ui/views/transactions/transaction_infos_sheet.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
-import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:flutter/material.dart';
@@ -74,6 +73,7 @@ class RoutesPath {
       routes: [
         GoRoute(path: '/', builder: (context, state) => const Splash()),
         ..._authenticationRoutes,
+        ..._introductionRoutes,
         GoRoute(
           path: ShowSendingAnimation.routerPage,
           builder: (context, state) {
@@ -85,51 +85,9 @@ class RoutesPath {
           },
         ),
         GoRoute(
-          path: IntroWelcome.routerPage,
-          builder: (context, state) => const IntroWelcome(),
-        ),
-        GoRoute(
-          path: IntroNewWalletGetFirstInfos.routerPage,
-          builder: (context, state) => const IntroNewWalletGetFirstInfos(),
-        ),
-        GoRoute(
-          path: IntroBackupSeedPage.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as String;
-            return IntroBackupSeedPage(
-              name: args,
-            );
-          },
-        ),
-        GoRoute(
-          path: IntroNewWalletDisclaimer.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as String;
-            return IntroNewWalletDisclaimer(
-              name: args,
-            );
-          },
-        ),
-        GoRoute(
-          path: IntroImportSeedPage.routerPage,
-          builder: (context, state) => const IntroImportSeedPage(),
-        ),
-        GoRoute(
-          path: IntroBackupConfirm.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as Map<String, Object?>;
-            return IntroBackupConfirm(
-              name: args['name'] == null ? null : args['name']! as String,
-              seed: args['seed'] == null ? null : args['seed']! as String,
-              welcomeProcess: args['welcomeProcess'] == null ||
-                  args['welcomeProcess']! as bool,
-            );
-          },
-        ),
-        GoRoute(
           path: SetPassword.routerPage,
           builder: (context, state) {
-            final args = state.extra! as Map<String, Object?>;
+            final args = state.extra! as Map<String, dynamic>;
             return SetPassword(
               header: args['header'] == null ? null : args['header']! as String,
               description: args['description'] == null
@@ -142,7 +100,7 @@ class RoutesPath {
         GoRoute(
           path: SetYubikey.routerPage,
           builder: (context, state) {
-            final args = state.extra! as Map<String, Object?>;
+            final args = state.extra! as Map<String, dynamic>;
             return SetYubikey(
               header: args['header'] == null ? null : args['header']! as String,
               description: args['description'] == null
@@ -152,22 +110,9 @@ class RoutesPath {
           },
         ),
         GoRoute(
-          path: IntroConfigureSecurity.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as Map<String, Object?>;
-            return IntroConfigureSecurity(
-              accessModes: args['accessModes'] as List<PickerItem>?,
-              seed: args['seed']! as String,
-              name: args['name']! as String,
-              fromPage: args['fromPage']! as String,
-              extra: args['extra'] == null ? null : args['extra']!,
-            );
-          },
-        ),
-        GoRoute(
           path: YubikeyScreen.routerPage,
           builder: (context, state) {
-            final args = state.extra! as Map<String, Object?>;
+            final args = state.extra! as Map<String, dynamic>;
             return YubikeyScreen(
               canNavigateBack: args['canNavigateBack']! as bool,
             );
@@ -194,34 +139,87 @@ class RoutesPath {
     );
   }
 
-  List<GoRoute> get _authenticationRoutes => [
-        GoRoute(
-          path: PasswordScreen.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as Map<String, Object?>;
-            return PasswordScreen(
-              canNavigateBack: args['canNavigateBack']! as bool,
-            );
-          },
-        ),
-        GoRoute(
-          path: PinScreen.routerPage,
-          parentNavigatorKey: rootNavigatorKey,
-          builder: (context, state) {
-            final args = state.extra! as Map<String, Object?>;
-            return PinScreen(
-              args['type']! as PinOverlayType,
-              canNavigateBack: args['canNavigateBack'] == null ||
-                  args['canNavigateBack']! as bool,
-              description: args['description'] == null
-                  ? ''
-                  : args['description']! as String,
-              pinScreenBackgroundColor:
-                  args['pinScreenBackgroundColor'] as Color?,
-            );
-          },
-        ),
-      ];
+  final _authenticationRoutes = [
+    GoRoute(
+      path: PasswordScreen.routerPage,
+      builder: (context, state) {
+        final args = state.extra! as Map<String, dynamic>;
+        return PasswordScreen(
+          canNavigateBack: args['canNavigateBack']! as bool,
+        );
+      },
+    ),
+    GoRoute(
+      path: PinScreen.routerPage,
+      builder: (context, state) {
+        final args = state.extra! as Map<String, dynamic>;
+        return PinScreen(
+          PinOverlayType.values.byName(args['type']! as String),
+          canNavigateBack: args['canNavigateBack'] == null ||
+              args['canNavigateBack']! as bool,
+          description:
+              args['description'] == null ? '' : args['description']! as String,
+        );
+      },
+    ),
+  ];
+
+  final _introductionRoutes = [
+    GoRoute(
+      path: IntroConfigureSecurity.routerPage,
+      builder: (context, state) {
+        final args = state.extra! as Map<String, dynamic>;
+        return IntroConfigureSecurity(
+          seed: args['seed']! as String,
+          name: args['name']! as String,
+          fromPage: args['fromPage']! as String,
+          extra: args['extra'] == null ? null : args['extra']!,
+        );
+      },
+    ),
+    GoRoute(
+      path: IntroWelcome.routerPage,
+      builder: (context, state) => const IntroWelcome(),
+    ),
+    GoRoute(
+      path: IntroNewWalletGetFirstInfos.routerPage,
+      builder: (context, state) => const IntroNewWalletGetFirstInfos(),
+    ),
+    GoRoute(
+      path: IntroBackupSeedPage.routerPage,
+      builder: (context, state) {
+        final args = state.extra! as String;
+        return IntroBackupSeedPage(
+          name: args,
+        );
+      },
+    ),
+    GoRoute(
+      path: IntroNewWalletDisclaimer.routerPage,
+      builder: (context, state) {
+        final args = state.extra! as String;
+        return IntroNewWalletDisclaimer(
+          name: args,
+        );
+      },
+    ),
+    GoRoute(
+      path: IntroImportSeedPage.routerPage,
+      builder: (context, state) => const IntroImportSeedPage(),
+    ),
+    GoRoute(
+      path: IntroBackupConfirm.routerPage,
+      builder: (context, state) {
+        final args = state.extra! as Map<String, dynamic>;
+        return IntroBackupConfirm(
+          name: args['name'] == null ? null : args['name']! as String,
+          seed: args['seed'] == null ? null : args['seed']! as String,
+          welcomeProcess:
+              args['welcomeProcess'] == null || args['welcomeProcess']! as bool,
+        );
+      },
+    ),
+  ];
 
   final _authenticatedRoutes = [
     GoRoute(
@@ -256,7 +254,7 @@ class RoutesPath {
     GoRoute(
       path: NftCreationProcessSheet.routerPage,
       builder: (context, state) {
-        final args = state.extra! as Map<String, Object?>;
+        final args = state.extra! as Map<String, dynamic>;
         return NftCreationProcessSheet(
           currentNftCategoryIndex: args['currentNftCategoryIndex']! as int,
         );
@@ -310,7 +308,7 @@ class RoutesPath {
     GoRoute(
       path: ContactDetail.routerPage,
       builder: (context, state) {
-        final args = state.extra! as Map<String, Object?>;
+        final args = state.extra! as Map<String, dynamic>;
         return ContactDetail(
           contact: args['contact']! as Contact,
           readOnly: args['readOnly'] == null || args['readOnly']! as bool,
@@ -338,7 +336,7 @@ class RoutesPath {
     GoRoute(
       path: AppSeedBackupSheet.routerPage,
       builder: (context, state) {
-        final args = state.extra! as Map<String, Object?>;
+        final args = state.extra! as Map<String, dynamic>;
         return AppSeedBackupSheet(
           args['mnemonic'] == null
               ? <String>[]
@@ -359,7 +357,7 @@ class RoutesPath {
     GoRoute(
       path: TransferSheet.routerPage,
       builder: (context, state) {
-        final args = state.extra! as Map<String, Object?>;
+        final args = state.extra! as Map<String, dynamic>;
         return TransferSheet(
           transferType: args['transferType']! as TransferType,
           recipient: args['recipient']! as TransferRecipient,
@@ -372,7 +370,7 @@ class RoutesPath {
     GoRoute(
       path: NFTCreationProcessImportTabAEWebForm.routerPage,
       builder: (context, state) {
-        final args = state.extra! as Map<String, Object?>;
+        final args = state.extra! as Map<String, dynamic>;
         return NFTCreationProcessImportTabAEWebForm(
           onConfirm: args['onConfirm']! as void Function(String uri),
         );
@@ -381,7 +379,7 @@ class RoutesPath {
     GoRoute(
       path: NFTCreationProcessImportTabHTTPForm.routerPage,
       builder: (context, state) {
-        final args = state.extra! as Map<String, Object?>;
+        final args = state.extra! as Map<String, dynamic>;
         return NFTCreationProcessImportTabHTTPForm(
           onConfirm: args['onConfirm']! as void Function(String uri),
         );
@@ -390,7 +388,7 @@ class RoutesPath {
     GoRoute(
       path: NFTCreationProcessImportTabIPFSForm.routerPage,
       builder: (context, state) {
-        final args = state.extra! as Map<String, Object?>;
+        final args = state.extra! as Map<String, dynamic>;
         return NFTCreationProcessImportTabIPFSForm(
           onConfirm: args['onConfirm']! as void Function(String uri),
         );
@@ -399,7 +397,7 @@ class RoutesPath {
     GoRoute(
       path: NFTDetail.routerPage,
       builder: (context, state) {
-        final args = state.extra! as Map<String, Object?>;
+        final args = state.extra! as Map<String, dynamic>;
         return NFTDetail(
           name: args['name']! as String,
           address: args['address']! as String,
@@ -433,7 +431,7 @@ class RoutesPath {
     GoRoute(
       path: CreateDiscussionValidationSheet.routerPage,
       builder: (context, state) {
-        final args = state.extra! as Map<String, Object?>;
+        final args = state.extra! as Map<String, dynamic>;
         return CreateDiscussionValidationSheet(
           discussionCreationSuccess:
               args['discussionCreationSuccess'] as Function?,
@@ -453,7 +451,7 @@ class RoutesPath {
     GoRoute(
       path: AddAddress.routerPage,
       builder: (context, state) {
-        final args = state.extra! as Map<String, Object?>;
+        final args = state.extra! as Map<String, dynamic>;
         return ProviderScope(
           overrides: args['overrides']! as List<Override>,
           child: AddAddress(
@@ -467,7 +465,7 @@ class RoutesPath {
     GoRoute(
       path: AddServiceConfirmationForm.routerPage,
       builder: (context, state) {
-        final args = state.extra! as Map<String, Object?>;
+        final args = state.extra! as Map<String, dynamic>;
         return AddServiceConfirmationForm(
           args['serviceName']! as String,
           args['command']! as RPCCommand<RPCSendTransactionCommandData>,
@@ -477,7 +475,7 @@ class RoutesPath {
     GoRoute(
       path: SendTransactionConfirmationForm.routerPage,
       builder: (context, state) {
-        final args = state.extra! as Map<String, Object?>;
+        final args = state.extra! as Map<String, dynamic>;
         return SendTransactionConfirmationForm(
           args['command']! as RPCCommand<RPCSendTransactionCommandData>,
         );
@@ -486,7 +484,7 @@ class RoutesPath {
     GoRoute(
       path: UpdateDiscussionAddMembers.routerPage,
       builder: (context, state) {
-        final args = state.extra! as Map<String, Object?>;
+        final args = state.extra! as Map<String, dynamic>;
         return UpdateDiscussionAddMembers(
           listMembers: args['listMembers']! as List<String>,
           onDisposed: args['onDisposed'] as Function?,

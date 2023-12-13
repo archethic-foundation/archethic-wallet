@@ -1,5 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'dart:async';
+
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -10,7 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-class PickerItem<T extends Object> {
+class PickerItem<T> {
   PickerItem(
     this.label,
     this.description,
@@ -36,10 +38,10 @@ class PickerItem<T extends Object> {
 }
 
 // TODO(reddwarf03): specify [PickerItem.value] types (thanks to Generics) (3)
-class PickerWidget<T extends Object> extends ConsumerStatefulWidget {
+class PickerWidget<T> extends ConsumerStatefulWidget {
   PickerWidget({
     super.key,
-    this.pickerItems,
+    required this.pickerItems,
     this.onSelected,
     this.onUnselected,
     List<int>? selectedIndexes,
@@ -50,9 +52,9 @@ class PickerWidget<T extends Object> extends ConsumerStatefulWidget {
     this.selectedIndexes = selectedIndexes ?? [];
   }
 
-  final ValueChanged<PickerItem<T>>? onSelected;
-  final ValueChanged<PickerItem<T>>? onUnselected;
-  final List<PickerItem<T>>? pickerItems;
+  final FutureOr<void> Function(PickerItem<T>)? onSelected;
+  final FutureOr<void> Function(PickerItem<T>)? onUnselected;
+  final List<PickerItem<T>> pickerItems;
   late final List<int> selectedIndexes;
   final bool multipleSelectionsAllowed;
   final double? height;
@@ -82,12 +84,12 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
         physics:
             widget.scrollable ? null : const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
-          final pickerItem = widget.pickerItems![index];
+          final pickerItem = widget.pickerItems[index];
           final isItemSelected = selectedIndexes.contains(index);
-          if (widget.pickerItems![index].displayed) {
+          if (widget.pickerItems[index].displayed) {
             return InkWell(
               onTap: () {
-                if (widget.pickerItems![index].enabled) {
+                if (widget.pickerItems[index].enabled) {
                   sl.get<HapticUtil>().feedback(
                         FeedbackType.light,
                         preferences.activeVibrations,
@@ -98,10 +100,10 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
                   // If the user taps again on a previous selection, we will unselect it to him
                   if (selectedIndexes.contains(index)) {
                     selectedIndexes.remove(index);
-                    widget.onUnselected?.call(widget.pickerItems![index]);
+                    widget.onUnselected?.call(widget.pickerItems[index]);
                   } else {
                     selectedIndexes.add(index);
-                    widget.onSelected?.call(widget.pickerItems![index]);
+                    widget.onSelected?.call(widget.pickerItems[index]);
                   }
                   setState(() {});
                 }
@@ -133,13 +135,12 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
                           else
                             SizedBox(
                               height: 24,
-                              child: widget.pickerItems![index].iconColor ==
-                                      null
+                              child: widget.pickerItems[index].iconColor == null
                                   ? Image.asset(pickerItem.icon!)
                                   : Image.asset(
                                       pickerItem.icon!,
-                                      color: widget.pickerItems![index].enabled
-                                          ? widget.pickerItems![index].iconColor
+                                      color: widget.pickerItems[index].enabled
+                                          ? widget.pickerItems[index].iconColor
                                           : ArchethicTheme
                                               .pickerItemIconDisabled,
                                     ),
@@ -152,19 +153,19 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
                                   alignment: Alignment.centerLeft,
                                   child: Text(
                                     pickerItem.label,
-                                    style: widget.pickerItems![index].enabled
+                                    style: widget.pickerItems[index].enabled
                                         ? ArchethicThemeStyles
                                             .textStyleSize14W600Primary
                                         : ArchethicThemeStyles
                                             .textStyleSize14W600PrimaryDisabled,
                                   ),
                                 ),
-                                if (widget.pickerItems![index].subLabel != null)
+                                if (widget.pickerItems[index].subLabel != null)
                                   Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      widget.pickerItems![index].subLabel!,
-                                      style: widget.pickerItems![index].enabled
+                                      widget.pickerItems[index].subLabel!,
+                                      style: widget.pickerItems[index].enabled
                                           ? ArchethicThemeStyles
                                               .textStyleSize14W600Primary
                                           : ArchethicThemeStyles
@@ -204,7 +205,7 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
             return const SizedBox();
           }
         },
-        itemCount: widget.pickerItems!.length,
+        itemCount: widget.pickerItems.length,
       ),
     );
   }
