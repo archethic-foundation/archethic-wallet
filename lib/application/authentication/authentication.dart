@@ -16,9 +16,9 @@ part 'authentication.freezed.dart';
 part 'authentication.g.dart';
 part 'password.dart';
 part 'pin.dart';
-part 'yubikey.dart';
 part 'settings.dart';
 part 'startup_authent.dart';
+part 'yubikey.dart';
 
 abstract class AuthenticationProviders {
   static final _authenticationRepository =
@@ -81,7 +81,7 @@ abstract class AuthenticationProviders {
   );
 
   static final startupMaskVisibility = StartupMaskVisibilityProvider(
-    (ref) => StartupMaskVisibility.visible,
+    (ref) => StartupMaskVisibility.hidden,
     name: 'StartupMaskVisibilityProvider',
   );
 

@@ -58,27 +58,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class RoutesPath {
-  GoRouter createRouter(
-    GlobalKey<NavigatorState> rootNavigatorKey,
-  ) {
+  RoutesPath(
+    this.rootNavigatorKey,
+  );
+
+  final GlobalKey<NavigatorState> rootNavigatorKey;
+
+  GoRouter createRouter() {
     final deeplinkRpcReceiver = sl.get<ArchethicDeeplinkRPCServer>();
 
     return GoRouter(
       navigatorKey: rootNavigatorKey,
       initialLocation: '/',
       debugLogDiagnostics: true,
-      routes: <GoRoute>[
-        GoRoute(
-          path: '/',
-          builder: (context, state) =>
-              _wrapWithRPCCommandReceiver(const Splash()),
-        ),
-        GoRoute(
-          path: HomePage.routerPage,
-          builder: (context, state) => _wrapWithRPCCommandReceiver(
-            const AutoLockGuard(child: HomePage()),
-          ),
-        ),
+      routes: [
+        GoRoute(path: '/', builder: (context, state) => const Splash()),
+        ..._authenticationRoutes,
         GoRoute(
           path: ShowSendingAnimation.routerPage,
           builder: (context, state) {
@@ -157,31 +152,6 @@ class RoutesPath {
           },
         ),
         GoRoute(
-          path: PasswordScreen.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as Map<String, Object?>;
-            return PasswordScreen(
-              canNavigateBack: args['canNavigateBack']! as bool,
-            );
-          },
-        ),
-        GoRoute(
-          path: PinScreen.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as Map<String, Object?>;
-            return PinScreen(
-              args['type']! as PinOverlayType,
-              canNavigateBack: args['canNavigateBack'] == null ||
-                  args['canNavigateBack']! as bool,
-              description: args['description'] == null
-                  ? ''
-                  : args['description']! as String,
-              pinScreenBackgroundColor:
-                  args['pinScreenBackgroundColor'] as Color?,
-            );
-          },
-        ),
-        GoRoute(
           path: IntroConfigureSecurity.routerPage,
           builder: (context, state) {
             final args = state.extra! as Map<String, Object?>;
@@ -203,335 +173,11 @@ class RoutesPath {
             );
           },
         ),
-        GoRoute(
-          path: SecurityMenuView.routerPage,
-          builder: (context, state) => _wrapWithRPCCommandReceiver(
-            const SecurityMenuView(),
+        ShellRoute(
+          builder: (context, state, child) => AutoLockGuard(
+            child: RPCCommandReceiver(child: child),
           ),
-        ),
-        GoRoute(
-          path: CustomizationMenuView.routerPage,
-          builder: (context, state) => _wrapWithRPCCommandReceiver(
-            const CustomizationMenuView(),
-          ),
-        ),
-        GoRoute(
-          path: AboutMenuView.routerPage,
-          builder: (context, state) => _wrapWithRPCCommandReceiver(
-            const AboutMenuView(),
-          ),
-        ),
-        GoRoute(
-          path: AppLockScreen.routerPage,
-          builder: (context, state) => _wrapWithRPCCommandReceiver(
-            const AppLockScreen(),
-          ),
-        ),
-        GoRoute(
-          path: NFTListPerCategory.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as int;
-            return _wrapWithRPCCommandReceiver(
-              NFTListPerCategory(
-                currentNftCategoryIndex: args,
-              ),
-            );
-          },
-        ),
-        GoRoute(
-          path: NftCreationProcessSheet.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as Map<String, Object?>;
-            return _wrapWithRPCCommandReceiver(
-              NftCreationProcessSheet(
-                currentNftCategoryIndex:
-                    args['currentNftCategoryIndex']! as int,
-              ),
-            );
-          },
-        ),
-        GoRoute(
-          path: MessengerDiscussionPage.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as String;
-            return _wrapWithRPCCommandReceiver(
-              MessengerDiscussionPage(
-                discussionAddress: args,
-              ),
-            );
-          },
-        ),
-        GoRoute(
-          path: DiscussionDetailsPage.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as String;
-            return _wrapWithRPCCommandReceiver(
-              DiscussionDetailsPage(
-                discussionAddress: args,
-              ),
-            );
-          },
-        ),
-        GoRoute(
-          path: UpdateDiscussionPage.routerPage,
-          builder: (context, state) {
-            final args = state.extra as Discussion?;
-            return _wrapWithRPCCommandReceiver(
-              UpdateDiscussionPage(discussion: args!),
-            );
-          },
-        ),
-        GoRoute(
-          path: AddAccountSheet.routerPage,
-          builder: (context, state) {
-            final args = state.extra as String?;
-            return _wrapWithRPCCommandReceiver(
-              AddAccountSheet(seed: args!),
-            );
-          },
-        ),
-        GoRoute(
-          path: AddContactSheet.routerPage,
-          builder: (context, state) {
-            final args = state.extra as String?;
-            return _wrapWithRPCCommandReceiver(
-              AddContactSheet(address: args),
-            );
-          },
-        ),
-        GoRoute(
-          path: BuySheet.routerPage,
-          builder: (context, state) {
-            return _wrapWithRPCCommandReceiver(
-              const BuySheet(),
-            );
-          },
-        ),
-        GoRoute(
-          path: ContactDetail.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as Map<String, Object?>;
-            return _wrapWithRPCCommandReceiver(
-              ContactDetail(
-                contact: args['contact']! as Contact,
-                readOnly: args['readOnly'] == null || args['readOnly']! as bool,
-              ),
-            );
-          },
-        ),
-        GoRoute(
-          path: ConnectivityWarning.routerPage,
-          builder: (context, state) {
-            return _wrapWithRPCCommandReceiver(
-              const ConnectivityWarning(),
-            );
-          },
-        ),
-        GoRoute(
-          path: AddTokenSheet.routerPage,
-          builder: (context, state) {
-            return _wrapWithRPCCommandReceiver(
-              const AddTokenSheet(),
-            );
-          },
-        ),
-        GoRoute(
-          path: ChartSheet.routerPage,
-          builder: (context, state) {
-            return _wrapWithRPCCommandReceiver(
-              const ChartSheet(),
-            );
-          },
-        ),
-        GoRoute(
-          path: AppSeedBackupSheet.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as Map<String, Object?>;
-            return _wrapWithRPCCommandReceiver(
-              AppSeedBackupSheet(
-                args['mnemonic'] == null
-                    ? <String>[]
-                    : args['mnemonic']! as List<String>,
-                args['seed'] == null ? '' : args['seed']! as String,
-              ),
-            );
-          },
-        ),
-        GoRoute(
-          path: TransactionInfosSheet.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as String;
-            return _wrapWithRPCCommandReceiver(
-              TransactionInfosSheet(
-                args,
-              ),
-            );
-          },
-        ),
-        GoRoute(
-          path: TransferSheet.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as Map<String, Object?>;
-            return _wrapWithRPCCommandReceiver(
-              TransferSheet(
-                transferType: args['transferType']! as TransferType,
-                recipient: args['recipient']! as TransferRecipient,
-                actionButtonTitle: args['actionButtonTitle'] as String?,
-                accountToken: args['accountToken'] as AccountToken?,
-                tokenId: args['tokenId'] as String?,
-              ),
-            );
-          },
-        ),
-        GoRoute(
-          path: NFTCreationProcessImportTabAEWebForm.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as Map<String, Object?>;
-            return _wrapWithRPCCommandReceiver(
-              NFTCreationProcessImportTabAEWebForm(
-                onConfirm: args['onConfirm']! as void Function(String uri),
-              ),
-            );
-          },
-        ),
-        GoRoute(
-          path: NFTCreationProcessImportTabHTTPForm.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as Map<String, Object?>;
-            return _wrapWithRPCCommandReceiver(
-              NFTCreationProcessImportTabHTTPForm(
-                onConfirm: args['onConfirm']! as void Function(String uri),
-              ),
-            );
-          },
-        ),
-        GoRoute(
-          path: NFTCreationProcessImportTabIPFSForm.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as Map<String, Object?>;
-            return _wrapWithRPCCommandReceiver(
-              NFTCreationProcessImportTabIPFSForm(
-                onConfirm: args['onConfirm']! as void Function(String uri),
-              ),
-            );
-          },
-        ),
-        GoRoute(
-          path: NFTDetail.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as Map<String, Object?>;
-            return _wrapWithRPCCommandReceiver(
-              NFTDetail(
-                name: args['name']! as String,
-                address: args['address']! as String,
-                symbol: args['symbol']! as String,
-                properties: args['properties']! as Map<String, dynamic>,
-                collection: args['collection']! as List<Map<String, dynamic>>,
-                tokenId: args['tokenId']! as String,
-                detailCollection: args['detailCollection']! as bool,
-                nameInCollection: args['nameInCollection'] as String?,
-              ),
-            );
-          },
-        ),
-        GoRoute(
-          path: ConfigureCategoryList.routerPage,
-          builder: (context, state) {
-            return _wrapWithRPCCommandReceiver(
-              const ConfigureCategoryList(),
-            );
-          },
-        ),
-        GoRoute(
-          path: CreateDiscussionSheet.routerPage,
-          builder: (context, state) {
-            return _wrapWithRPCCommandReceiver(
-              const CreateDiscussionSheet(),
-            );
-          },
-        ),
-        GoRoute(
-          path: SettingsSheetWallet.routerPage,
-          builder: (context, state) {
-            return _wrapWithRPCCommandReceiver(
-              const SettingsSheetWallet(),
-            );
-          },
-        ),
-        GoRoute(
-          path: CreateDiscussionValidationSheet.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as Map<String, Object?>;
-            return _wrapWithRPCCommandReceiver(
-              CreateDiscussionValidationSheet(
-                discussionCreationSuccess:
-                    args['discussionCreationSuccess'] as Function?,
-                onDispose: args['onDispose'] as Function?,
-              ),
-            );
-          },
-        ),
-        GoRoute(
-          path: AddDiscussionSheet.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as Discussion;
-            return _wrapWithRPCCommandReceiver(
-              AddDiscussionSheet(
-                discussion: args,
-              ),
-            );
-          },
-        ),
-        GoRoute(
-          path: AddAddress.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as Map<String, Object?>;
-            return _wrapWithRPCCommandReceiver(
-              ProviderScope(
-                overrides: args['overrides']! as List<Override>,
-                child: AddAddress(
-                  propertyName: args['propertyName']! as String,
-                  propertyValue: args['propertyValue']! as String,
-                  readOnly: args['readOnly']! as bool,
-                ),
-              ),
-            );
-          },
-        ),
-        GoRoute(
-          path: AddServiceConfirmationForm.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as Map<String, Object?>;
-            return _wrapWithRPCCommandReceiver(
-              AddServiceConfirmationForm(
-                args['serviceName']! as String,
-                args['command']! as RPCCommand<RPCSendTransactionCommandData>,
-              ),
-            );
-          },
-        ),
-        GoRoute(
-          path: SendTransactionConfirmationForm.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as Map<String, Object?>;
-            return _wrapWithRPCCommandReceiver(
-              SendTransactionConfirmationForm(
-                args['command']! as RPCCommand<RPCSendTransactionCommandData>,
-              ),
-            );
-          },
-        ),
-        GoRoute(
-          path: UpdateDiscussionAddMembers.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as Map<String, Object?>;
-            return _wrapWithRPCCommandReceiver(
-              UpdateDiscussionAddMembers(
-                listMembers: args['listMembers']! as List<String>,
-                onDisposed: args['onDisposed'] as Function?,
-              ),
-            );
-          },
+          routes: _authenticatedRoutes,
         ),
       ],
       redirect: (context, state) {
@@ -547,8 +193,305 @@ class RoutesPath {
       ),
     );
   }
-}
 
-Widget _wrapWithRPCCommandReceiver(Widget child) {
-  return RPCCommandReceiver(child: child);
+  List<GoRoute> get _authenticationRoutes => [
+        GoRoute(
+          path: PasswordScreen.routerPage,
+          builder: (context, state) {
+            final args = state.extra! as Map<String, Object?>;
+            return PasswordScreen(
+              canNavigateBack: args['canNavigateBack']! as bool,
+            );
+          },
+        ),
+        GoRoute(
+          path: PinScreen.routerPage,
+          parentNavigatorKey: rootNavigatorKey,
+          builder: (context, state) {
+            final args = state.extra! as Map<String, Object?>;
+            return PinScreen(
+              args['type']! as PinOverlayType,
+              canNavigateBack: args['canNavigateBack'] == null ||
+                  args['canNavigateBack']! as bool,
+              description: args['description'] == null
+                  ? ''
+                  : args['description']! as String,
+              pinScreenBackgroundColor:
+                  args['pinScreenBackgroundColor'] as Color?,
+            );
+          },
+        ),
+      ];
+
+  final _authenticatedRoutes = [
+    GoRoute(
+      path: HomePage.routerPage,
+      builder: (context, state) => const HomePage(),
+    ),
+    GoRoute(
+      path: SecurityMenuView.routerPage,
+      builder: (context, state) => const SecurityMenuView(),
+    ),
+    GoRoute(
+      path: CustomizationMenuView.routerPage,
+      builder: (context, state) => const CustomizationMenuView(),
+    ),
+    GoRoute(
+      path: AboutMenuView.routerPage,
+      builder: (context, state) => const AboutMenuView(),
+    ),
+    GoRoute(
+      path: AppLockScreen.routerPage,
+      builder: (context, state) => const AppLockScreen(),
+    ),
+    GoRoute(
+      path: NFTListPerCategory.routerPage,
+      builder: (context, state) {
+        final args = state.extra! as int;
+        return NFTListPerCategory(
+          currentNftCategoryIndex: args,
+        );
+      },
+    ),
+    GoRoute(
+      path: NftCreationProcessSheet.routerPage,
+      builder: (context, state) {
+        final args = state.extra! as Map<String, Object?>;
+        return NftCreationProcessSheet(
+          currentNftCategoryIndex: args['currentNftCategoryIndex']! as int,
+        );
+      },
+    ),
+    GoRoute(
+      path: MessengerDiscussionPage.routerPage,
+      builder: (context, state) {
+        final args = state.extra! as String;
+        return MessengerDiscussionPage(
+          discussionAddress: args,
+        );
+      },
+    ),
+    GoRoute(
+      path: DiscussionDetailsPage.routerPage,
+      builder: (context, state) {
+        final args = state.extra! as String;
+        return DiscussionDetailsPage(
+          discussionAddress: args,
+        );
+      },
+    ),
+    GoRoute(
+      path: UpdateDiscussionPage.routerPage,
+      builder: (context, state) {
+        final args = state.extra as Discussion?;
+        return UpdateDiscussionPage(discussion: args!);
+      },
+    ),
+    GoRoute(
+      path: AddAccountSheet.routerPage,
+      builder: (context, state) {
+        final args = state.extra as String?;
+        return AddAccountSheet(seed: args!);
+      },
+    ),
+    GoRoute(
+      path: AddContactSheet.routerPage,
+      builder: (context, state) {
+        final args = state.extra as String?;
+        return AddContactSheet(address: args);
+      },
+    ),
+    GoRoute(
+      path: BuySheet.routerPage,
+      builder: (context, state) {
+        return const BuySheet();
+      },
+    ),
+    GoRoute(
+      path: ContactDetail.routerPage,
+      builder: (context, state) {
+        final args = state.extra! as Map<String, Object?>;
+        return ContactDetail(
+          contact: args['contact']! as Contact,
+          readOnly: args['readOnly'] == null || args['readOnly']! as bool,
+        );
+      },
+    ),
+    GoRoute(
+      path: ConnectivityWarning.routerPage,
+      builder: (context, state) {
+        return const ConnectivityWarning();
+      },
+    ),
+    GoRoute(
+      path: AddTokenSheet.routerPage,
+      builder: (context, state) {
+        return const AddTokenSheet();
+      },
+    ),
+    GoRoute(
+      path: ChartSheet.routerPage,
+      builder: (context, state) {
+        return const ChartSheet();
+      },
+    ),
+    GoRoute(
+      path: AppSeedBackupSheet.routerPage,
+      builder: (context, state) {
+        final args = state.extra! as Map<String, Object?>;
+        return AppSeedBackupSheet(
+          args['mnemonic'] == null
+              ? <String>[]
+              : args['mnemonic']! as List<String>,
+          args['seed'] == null ? '' : args['seed']! as String,
+        );
+      },
+    ),
+    GoRoute(
+      path: TransactionInfosSheet.routerPage,
+      builder: (context, state) {
+        final args = state.extra! as String;
+        return TransactionInfosSheet(
+          args,
+        );
+      },
+    ),
+    GoRoute(
+      path: TransferSheet.routerPage,
+      builder: (context, state) {
+        final args = state.extra! as Map<String, Object?>;
+        return TransferSheet(
+          transferType: args['transferType']! as TransferType,
+          recipient: args['recipient']! as TransferRecipient,
+          actionButtonTitle: args['actionButtonTitle'] as String?,
+          accountToken: args['accountToken'] as AccountToken?,
+          tokenId: args['tokenId'] as String?,
+        );
+      },
+    ),
+    GoRoute(
+      path: NFTCreationProcessImportTabAEWebForm.routerPage,
+      builder: (context, state) {
+        final args = state.extra! as Map<String, Object?>;
+        return NFTCreationProcessImportTabAEWebForm(
+          onConfirm: args['onConfirm']! as void Function(String uri),
+        );
+      },
+    ),
+    GoRoute(
+      path: NFTCreationProcessImportTabHTTPForm.routerPage,
+      builder: (context, state) {
+        final args = state.extra! as Map<String, Object?>;
+        return NFTCreationProcessImportTabHTTPForm(
+          onConfirm: args['onConfirm']! as void Function(String uri),
+        );
+      },
+    ),
+    GoRoute(
+      path: NFTCreationProcessImportTabIPFSForm.routerPage,
+      builder: (context, state) {
+        final args = state.extra! as Map<String, Object?>;
+        return NFTCreationProcessImportTabIPFSForm(
+          onConfirm: args['onConfirm']! as void Function(String uri),
+        );
+      },
+    ),
+    GoRoute(
+      path: NFTDetail.routerPage,
+      builder: (context, state) {
+        final args = state.extra! as Map<String, Object?>;
+        return NFTDetail(
+          name: args['name']! as String,
+          address: args['address']! as String,
+          symbol: args['symbol']! as String,
+          properties: args['properties']! as Map<String, dynamic>,
+          collection: args['collection']! as List<Map<String, dynamic>>,
+          tokenId: args['tokenId']! as String,
+          detailCollection: args['detailCollection']! as bool,
+          nameInCollection: args['nameInCollection'] as String?,
+        );
+      },
+    ),
+    GoRoute(
+      path: ConfigureCategoryList.routerPage,
+      builder: (context, state) {
+        return const ConfigureCategoryList();
+      },
+    ),
+    GoRoute(
+      path: CreateDiscussionSheet.routerPage,
+      builder: (context, state) {
+        return const CreateDiscussionSheet();
+      },
+    ),
+    GoRoute(
+      path: SettingsSheetWallet.routerPage,
+      builder: (context, state) {
+        return const SettingsSheetWallet();
+      },
+    ),
+    GoRoute(
+      path: CreateDiscussionValidationSheet.routerPage,
+      builder: (context, state) {
+        final args = state.extra! as Map<String, Object?>;
+        return CreateDiscussionValidationSheet(
+          discussionCreationSuccess:
+              args['discussionCreationSuccess'] as Function?,
+          onDispose: args['onDispose'] as Function?,
+        );
+      },
+    ),
+    GoRoute(
+      path: AddDiscussionSheet.routerPage,
+      builder: (context, state) {
+        final args = state.extra! as Discussion;
+        return AddDiscussionSheet(
+          discussion: args,
+        );
+      },
+    ),
+    GoRoute(
+      path: AddAddress.routerPage,
+      builder: (context, state) {
+        final args = state.extra! as Map<String, Object?>;
+        return ProviderScope(
+          overrides: args['overrides']! as List<Override>,
+          child: AddAddress(
+            propertyName: args['propertyName']! as String,
+            propertyValue: args['propertyValue']! as String,
+            readOnly: args['readOnly']! as bool,
+          ),
+        );
+      },
+    ),
+    GoRoute(
+      path: AddServiceConfirmationForm.routerPage,
+      builder: (context, state) {
+        final args = state.extra! as Map<String, Object?>;
+        return AddServiceConfirmationForm(
+          args['serviceName']! as String,
+          args['command']! as RPCCommand<RPCSendTransactionCommandData>,
+        );
+      },
+    ),
+    GoRoute(
+      path: SendTransactionConfirmationForm.routerPage,
+      builder: (context, state) {
+        final args = state.extra! as Map<String, Object?>;
+        return SendTransactionConfirmationForm(
+          args['command']! as RPCCommand<RPCSendTransactionCommandData>,
+        );
+      },
+    ),
+    GoRoute(
+      path: UpdateDiscussionAddMembers.routerPage,
+      builder: (context, state) {
+        final args = state.extra! as Map<String, Object?>;
+        return UpdateDiscussionAddMembers(
+          listMembers: args['listMembers']! as List<String>,
+          onDisposed: args['onDisposed'] as Function?,
+        );
+      },
+    ),
+  ];
 }
