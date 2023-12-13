@@ -13,8 +13,8 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
-import 'package:aewallet/ui/util/security_configuration.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/intro/layouts/intro_configure_security.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_welcome.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
@@ -43,8 +43,7 @@ class IntroImportSeedPage extends ConsumerStatefulWidget {
   ConsumerState<IntroImportSeedPage> createState() => _IntroImportSeedState();
 }
 
-class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
-    with SecurityConfigurationMixin {
+class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
   bool _mnemonicIsValid = false;
   String _mnemonicError = '';
   bool? isPressed;
@@ -534,14 +533,12 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                               RecoveryPhraseSavedProvider
                                   .setRecoveryPhraseSaved(true),
                             );
-
-                            await launchSecurityConfiguration(
-                              context,
-                              ref,
-                              newSession.wallet.seed,
-                              accountSelected.name,
-                              IntroImportSeedPage.routerPage,
-                              null,
+                            await context.push(
+                              IntroConfigureSecurity.routerPage,
+                              extra: {
+                                'seed': newSession.wallet.seed,
+                                'name': accountSelected.name,
+                              },
                             );
                             setState(() {
                               isPressed = false;

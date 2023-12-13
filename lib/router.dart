@@ -180,8 +180,6 @@ class RoutesPath {
         return IntroConfigureSecurity(
           seed: args['seed']! as String,
           name: args['name']! as String,
-          fromPage: args['fromPage']! as String,
-          extra: args['extra'] == null ? null : args['extra']!,
         );
       },
     ),

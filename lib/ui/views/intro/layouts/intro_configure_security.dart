@@ -42,13 +42,9 @@ class IntroConfigureSecurity extends ConsumerStatefulWidget {
     super.key,
     required this.seed,
     required this.name,
-    required this.fromPage,
-    this.extra,
   });
   final String? seed;
   final String? name;
-  final String fromPage;
-  final Object? extra;
 
   static const routerPage = '/intro_configure_security';
 
@@ -254,7 +250,7 @@ class _IntroConfigureSecurityState
                             key: const Key('back'),
                             color: ArchethicTheme.text,
                             onPressed: () {
-                              context.go(widget.fromPage, extra: widget.extra);
+                              context.pop();
                             },
                           ),
                         ),
