@@ -8,6 +8,7 @@ import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/recovery_phrase_saved.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
+import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -16,6 +17,7 @@ import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_configure_security.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_welcome.dart';
+import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
@@ -25,6 +27,7 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/mnemonics.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -56,11 +59,32 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
         (textController) => textController?.text ?? '',
       );
 
+  StreamSubscription<AuthenticatedEvent>? _authSub;
+
   @override
   void initState() {
     isPressed = false;
+    _registerBus();
     ref.read(SettingsProviders.settings.notifier).setLanguageSeed('en');
     super.initState();
+  }
+
+  void _registerBus() {
+    _authSub = EventTaxiImpl.singleton()
+        .registerTo<AuthenticatedEvent>()
+        .listen((AuthenticatedEvent event) async {
+      context.go(HomePage.routerPage);
+    });
+  }
+
+  void _destroyBus() {
+    _authSub?.cancel();
+  }
+
+  @override
+  void dispose() {
+    _destroyBus();
+    super.dispose();
   }
 
   @override
@@ -485,9 +509,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                               });
                               return;
                             }
-                            ShowSendingAnimation.build(
-                              context,
-                            );
+                            context.push(ShowSendingAnimation.routerPage);
                             final newSession = await ref
                                 .read(SessionProviders.session.notifier)
                                 .restoreFromMnemonics(
