@@ -509,7 +509,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                               });
                               return;
                             }
-                            context.push(ShowSendingAnimation.routerPage);
+                            ShowSendingAnimation.build(context);
                             final newSession = await ref
                                 .read(SessionProviders.session.notifier)
                                 .restoreFromMnemonics(
@@ -555,7 +555,8 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                               RecoveryPhraseSavedProvider
                                   .setRecoveryPhraseSaved(true),
                             );
-                            await context.push(
+
+                            context.pushReplacement(
                               IntroConfigureSecurity.routerPage,
                               extra: {
                                 'seed': newSession.wallet.seed,
