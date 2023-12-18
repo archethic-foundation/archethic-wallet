@@ -71,9 +71,11 @@ class TransferSheet extends ConsumerWidget {
       routerPage,
       extra: {
         'transferType': transferType.name,
-        'recipient': recipient,
+        'recipient': recipient.toJson(),
         'actionButtonTitle': actionButtonTitle,
-        'accountToken': accountToken,
+        'accountToken': accountToken == null
+            ? null
+            : const AccountTokenConverter().toJson(accountToken!),
         'tokenId': tokenId,
       },
     );

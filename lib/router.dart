@@ -380,9 +380,11 @@ class RoutesPath {
         return TransferSheet(
           transferType:
               TransferType.values.byName(args['transferType']! as String),
-          recipient: args['recipient']! as TransferRecipient,
+          recipient: TransferRecipient.fromJson(args['recipient']),
           actionButtonTitle: args['actionButtonTitle'] as String?,
-          accountToken: args['accountToken'] as AccountToken?,
+          accountToken: args['accountToken'] == null
+              ? null
+              : const AccountTokenConverter().fromJson(args['accountToken']),
           tokenId: args['tokenId'] as String?,
         );
       },

@@ -3,9 +3,35 @@
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/util/number_util.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 
 part 'account_balance.g.dart';
+
+class AccountBalanceConverter
+    implements JsonConverter<AccountBalance, Map<String, dynamic>> {
+  const AccountBalanceConverter();
+
+  @override
+  AccountBalance fromJson(Map<String, dynamic> json) {
+    return AccountBalance(
+      nativeTokenValue: json['nativeTokenValue'] as double,
+      nativeTokenName: json['nativeTokenName'] as String,
+      tokensFungiblesNb: json['tokensFungiblesNb'] as int,
+      nftNb: json['nftNb'] as int,
+    );
+  }
+
+  @override
+  Map<String, dynamic> toJson(AccountBalance accountBalance) {
+    return {
+      'nativeTokenValue': accountBalance.nativeTokenValue,
+      'nativeTokenName': accountBalance.nativeTokenName,
+      'tokensFungiblesNb': accountBalance.tokensFungiblesNb,
+      'nftNb': accountBalance.nftNb,
+    };
+  }
+}
 
 /// Next field available : 7
 @HiveType(typeId: HiveTypeIds.accountBalance)
@@ -16,6 +42,7 @@ class AccountBalance extends HiveObject {
     this.tokensFungiblesNb = 0,
     this.nftNb = 0,
   });
+
   static const String cryptoCurrencyLabel = 'UCO';
 
   /// Native Token - Value
