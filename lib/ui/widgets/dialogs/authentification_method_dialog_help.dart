@@ -105,21 +105,6 @@ class AuthentificationMethodDialogHelp {
                       ),
                       Text(
                         const AuthenticationMethod(
-                          AuthMethod.biometricsUniris,
-                        ).getDisplayName(context),
-                        style: ArchethicThemeStyles.textStyleSize12W400Primary,
-                      ),
-                      Text(
-                        const AuthenticationMethod(
-                          AuthMethod.biometricsUniris,
-                        ).getDescription(context),
-                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        const AuthenticationMethod(
                           AuthMethod.yubikeyWithYubicloud,
                         ).getDisplayName(context),
                         style: ArchethicThemeStyles.textStyleSize12W400Primary,

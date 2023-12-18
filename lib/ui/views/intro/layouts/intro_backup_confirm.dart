@@ -120,11 +120,12 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
             keychainAccessRequested = true;
           });
           await KeychainUtil().createKeyChainAccess(
-              ref.read(SettingsProviders.settings).network,
-              widget.seed,
-              event.params!['keychainAddress']! as String,
-              event.params!['originPrivateKey']! as String,
-              event.params!['keychain']! as Keychain);
+            ref.read(SettingsProviders.settings).network,
+            widget.seed,
+            event.params!['keychainAddress']! as String,
+            event.params!['originPrivateKey']! as String,
+            event.params!['keychain']! as Keychain,
+          );
           break;
         case TransactionSendEventType.keychainAccess:
           UIUtil.showSnackbar(

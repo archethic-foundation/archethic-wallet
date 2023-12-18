@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class IntroProviders {
   static final accessModesProvider = FutureProvider<List<AuthMethod>>(
     (ref) async {
-      final biometricsAvalaible = await sl.get<BiometricUtil>().hasBiometrics();
+      final biometricsAvailable = await sl.get<BiometricUtil>().hasBiometrics();
 
       var accessModes = <AuthMethod>[];
       if (kIsWeb) {
@@ -19,12 +19,10 @@ class IntroProviders {
           AuthMethod.pin,
           AuthMethod.password,
         ];
-        if (biometricsAvalaible) {
+        if (biometricsAvailable) {
           accessModes.add(AuthMethod.biometrics);
         }
-        accessModes
-          ..add(AuthMethod.biometricsUniris)
-          ..add(AuthMethod.yubikeyWithYubicloud);
+        accessModes.add(AuthMethod.yubikeyWithYubicloud);
       }
       return accessModes;
     },

@@ -7,7 +7,6 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 enum AuthMethod {
   pin,
   biometrics,
-  biometricsUniris,
   yubikeyWithYubicloud,
   ledger,
   password,
@@ -26,8 +25,6 @@ class AuthenticationMethod extends SettingSelectionItem {
     switch (method) {
       case AuthMethod.biometrics:
         return localizations.biometricsMethod;
-      case AuthMethod.biometricsUniris:
-        return localizations.biometricsUnirisMethod;
       case AuthMethod.pin:
         return localizations.pinMethod;
       case AuthMethod.yubikeyWithYubicloud:
@@ -44,8 +41,6 @@ class AuthenticationMethod extends SettingSelectionItem {
     switch (method) {
       case AuthMethod.biometrics:
         return localizations.configureSecurityExplanationBiometrics;
-      case AuthMethod.biometricsUniris:
-        return localizations.configureSecurityExplanationUnirisBiometrics;
       case AuthMethod.pin:
         return localizations.configureSecurityExplanationPIN;
       case AuthMethod.yubikeyWithYubicloud:
@@ -61,8 +56,6 @@ class AuthenticationMethod extends SettingSelectionItem {
     switch (method) {
       case AuthMethod.biometrics:
         return 'assets/icons/biometrics.png';
-      case AuthMethod.biometricsUniris:
-        return 'assets/icons/biometrics-archethic.png';
       case AuthMethod.pin:
         return 'assets/icons/pin-code.png';
       case AuthMethod.yubikeyWithYubicloud:

@@ -7,9 +7,8 @@ import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
+import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -68,7 +67,33 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
     final localizations = AppLocalizations.of(context)!;
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      drawerEdgeDragWidth: 0,
+      extendBodyBehindAppBar: true,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Row(
+        children: <Widget>[
+          AppButtonTiny(
+            AppButtonTinyType.primary,
+            localizations.confirm,
+            Dimens.buttonTopDimens,
+            key: const Key('confirm'),
+            onPressed: () async {
+              await validate();
+            },
+          ),
+        ],
+      ),
+      backgroundColor: ArchethicTheme.background,
+      appBar: SheetAppBar(
+        title: widget.header == null ? '' : widget.header!,
+        widgetLeft: BackButton(
+          key: const Key('back'),
+          color: ArchethicTheme.text,
+          onPressed: () {
+            context.pop(false);
+          },
+        ),
+      ),
       body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -76,156 +101,93 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
               ArchethicTheme.backgroundSmall,
             ),
             fit: BoxFit.fitHeight,
-          ),
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: <Color>[
-              ArchethicTheme.backgroundDark,
-              ArchethicTheme.background,
-            ],
+            opacity: 0.7,
           ),
         ),
-        child: TapOutsideUnfocus(
-          child: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) =>
-                SafeArea(
-              minimum: EdgeInsets.only(
-                bottom: MediaQuery.of(context).size.height * 0.035,
-              ),
-              child: Column(
-                children: <Widget>[
-                  Expanded(
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Container(
-                              margin:
-                                  const EdgeInsetsDirectional.only(start: 15),
-                              height: 50,
-                              width: 50,
-                              child: BackButton(
-                                onPressed: () {
-                                  context.pop(false);
-                                },
+        child: Padding(
+          padding: const EdgeInsets.only(top: 120),
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (widget.description != null)
+                              Container(
+                                margin: const EdgeInsetsDirectional.only(
+                                  start: 20,
+                                  end: 20,
+                                  top: 15,
+                                ),
+                                child: Linkify(
+                                  text: widget.description!,
+                                  style: ArchethicThemeStyles
+                                      .textStyleSize12W100Primary,
+                                  textAlign: TextAlign.left,
+                                  options: const LinkifyOptions(
+                                    humanize: false,
+                                  ),
+                                  linkStyle: ArchethicThemeStyles
+                                      .textStyleSize12W100Primary
+                                      .copyWith(
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                  onOpen: (link) async {
+                                    final uri = Uri.parse(link.url);
+                                    if (!await canLaunchUrl(uri)) return;
+
+                                    await launchUrl(uri);
+                                  },
+                                ),
                               ),
+                            Container(
+                              padding: const EdgeInsets.only(
+                                top: 20,
+                                left: 20,
+                                right: 20,
+                              ),
+                              child: getClientIDContainer(),
+                            ),
+                            Container(
+                              alignment: AlignmentDirectional.center,
+                              margin: const EdgeInsets.only(top: 3),
+                              child: Text(
+                                _clientIDValidationText,
+                                style: ArchethicThemeStyles
+                                    .textStyleSize14W600Primary,
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.only(
+                                left: 20,
+                                right: 20,
+                              ),
+                              child: getClientAPIKeyContainer(),
+                            ),
+                            Container(
+                              alignment: AlignmentDirectional.center,
+                              margin: const EdgeInsets.only(top: 3),
+                              child: Text(
+                                _clientAPIKeyValidationText,
+                                style: ArchethicThemeStyles
+                                    .textStyleSize14W600Primary,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
                             ),
                           ],
                         ),
-                        Expanded(
-                          child: SingleChildScrollView(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                if (widget.header != null)
-                                  Container(
-                                    margin: const EdgeInsetsDirectional.only(
-                                      start: 20,
-                                      end: 20,
-                                      top: 10,
-                                    ),
-                                    alignment: AlignmentDirectional.centerStart,
-                                    child: AutoSizeText(
-                                      widget.header!,
-                                      style: ArchethicThemeStyles
-                                          .textStyleSize24W700Primary,
-                                    ),
-                                  ),
-                                if (widget.description != null)
-                                  Container(
-                                    margin: const EdgeInsetsDirectional.only(
-                                      start: 20,
-                                      end: 20,
-                                      top: 15,
-                                    ),
-                                    child: Linkify(
-                                      text: widget.description!,
-                                      style: ArchethicThemeStyles
-                                          .textStyleSize12W100Primary,
-                                      textAlign: TextAlign.left,
-                                      options: const LinkifyOptions(
-                                        humanize: false,
-                                      ),
-                                      linkStyle: ArchethicThemeStyles
-                                          .textStyleSize12W100Primary
-                                          .copyWith(
-                                        decoration: TextDecoration.underline,
-                                      ),
-                                      onOpen: (link) async {
-                                        final uri = Uri.parse(link.url);
-                                        if (!await canLaunchUrl(uri)) return;
-
-                                        await launchUrl(uri);
-                                      },
-                                    ),
-                                  ),
-                                Container(
-                                  padding: const EdgeInsets.only(
-                                    top: 20,
-                                    left: 20,
-                                    right: 20,
-                                  ),
-                                  child: getClientIDContainer(),
-                                ),
-                                Container(
-                                  alignment: AlignmentDirectional.center,
-                                  margin: const EdgeInsets.only(top: 3),
-                                  child: Text(
-                                    _clientIDValidationText,
-                                    style: ArchethicThemeStyles
-                                        .textStyleSize14W600Primary,
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.only(
-                                    left: 20,
-                                    right: 20,
-                                  ),
-                                  child: getClientAPIKeyContainer(),
-                                ),
-                                Container(
-                                  alignment: AlignmentDirectional.center,
-                                  margin: const EdgeInsets.only(top: 3),
-                                  child: Text(
-                                    _clientAPIKeyValidationText,
-                                    style: ArchethicThemeStyles
-                                        .textStyleSize14W600Primary,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          AppButtonTiny(
-                            AppButtonTinyType.primary,
-                            localizations.confirm,
-                            Dimens.buttonTopDimens,
-                            key: const Key('confirm'),
-                            onPressed: () async {
-                              await validate();
-                            },
-                          ),
-                        ],
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ),
