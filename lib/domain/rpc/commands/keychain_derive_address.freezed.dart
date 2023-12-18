@@ -149,7 +149,7 @@ class _$RPCKeychainDeriveAddressCommandDataImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RPCKeychainDeriveAddressCommandDataImpl &&
@@ -297,7 +297,7 @@ class _$RPCKeychainDeriveAddressResultDataImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RPCKeychainDeriveAddressResultDataImpl &&

@@ -167,7 +167,7 @@ class _$RPCSignTransactionsCommandDataImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RPCSignTransactionsCommandDataImpl &&
@@ -327,7 +327,7 @@ class _$RPCSignTransactionsResultDataImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RPCSignTransactionsResultDataImpl &&
@@ -511,7 +511,7 @@ class _$RPCSignTransactionCommandDataImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RPCSignTransactionCommandDataImpl &&
@@ -722,7 +722,7 @@ class _$RPCSignTransactionResultDetailDataImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RPCSignTransactionResultDetailDataImpl &&

@@ -117,7 +117,7 @@ class _$RPCSubscriptionImpl<R> extends _RPCSubscription<R> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RPCSubscriptionImpl<R> &&

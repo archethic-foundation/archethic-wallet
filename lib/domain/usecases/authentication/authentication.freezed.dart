@@ -115,7 +115,7 @@ class _$AuthenticationResultImpl extends _AuthenticationResult {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AuthenticationResultImpl);
@@ -234,7 +234,7 @@ class _$AuthenticationFailureImpl extends _AuthenticationFailure {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AuthenticationFailureImpl);
@@ -354,7 +354,7 @@ class _$AuthenticationNotSetupImpl extends _AuthenticationNotSetup {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AuthenticationNotSetupImpl);
@@ -475,7 +475,7 @@ class _$AuthenticationTooMuchAttemptsImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AuthenticationTooMuchAttemptsImpl);
@@ -653,7 +653,7 @@ class _$UpdatePinSuccessImpl extends _UpdatePinSuccess {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$UpdatePinSuccessImpl);
   }
@@ -756,7 +756,7 @@ class _$UpdatePinsDoNotMatchImpl extends _UpdatePinsDoNotMatch {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UpdatePinsDoNotMatchImpl);

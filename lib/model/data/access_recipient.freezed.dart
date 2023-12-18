@@ -124,7 +124,7 @@ class _$AccessPublicKeyImpl extends _AccessPublicKey {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AccessPublicKeyImpl &&
@@ -266,7 +266,7 @@ class _$AccessContactImpl extends _AccessContact {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AccessContactImpl &&

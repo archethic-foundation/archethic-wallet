@@ -149,7 +149,7 @@ class _$RPCKeychainDeriveKeypairCommandDataImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RPCKeychainDeriveKeypairCommandDataImpl &&
@@ -297,7 +297,7 @@ class _$RPCKeychainDeriveKeypairResultDataImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RPCKeychainDeriveKeypairResultDataImpl &&

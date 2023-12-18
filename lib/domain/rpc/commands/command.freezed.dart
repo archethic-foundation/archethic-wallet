@@ -130,7 +130,7 @@ class _$RPCCommandOriginImpl extends _RPCCommandOrigin {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RPCCommandOriginImpl &&
@@ -285,7 +285,7 @@ class _$RPCCommandImpl<T> extends _RPCCommand<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RPCCommandImpl<T> &&

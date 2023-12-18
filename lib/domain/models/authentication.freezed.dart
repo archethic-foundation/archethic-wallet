@@ -125,7 +125,7 @@ class _$PinCredentialsImpl extends PinCredentials {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PinCredentialsImpl &&
@@ -275,7 +275,7 @@ class _$PasswordCredentialsImpl extends PasswordCredentials {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PasswordCredentialsImpl &&
@@ -421,7 +421,7 @@ class _$YubikeyCredentialsImpl extends YubikeyCredentials {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$YubikeyCredentialsImpl &&
@@ -663,7 +663,7 @@ class _$AuthenticationSettingsImpl extends _AuthenticationSettings {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AuthenticationSettingsImpl &&

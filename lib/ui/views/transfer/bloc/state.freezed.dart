@@ -346,7 +346,7 @@ class _$TransferFormStateImpl extends _TransferFormState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TransferFormStateImpl &&
@@ -459,26 +459,41 @@ abstract class _TransferFormState extends TransferFormState {
       throw _privateConstructorUsedError;
 }
 
+TransferRecipient _$TransferRecipientFromJson(Map<String, dynamic> json) {
+  switch (json['runtimeType']) {
+    case 'address':
+      return _TransferDestinationAddress.fromJson(json);
+    case 'contact':
+      return _TransferDestinationContact.fromJson(json);
+    case 'unknownContact':
+      return _TransferDestinationUnknownContact.fromJson(json);
+
+    default:
+      throw CheckedFromJsonException(json, 'runtimeType', 'TransferRecipient',
+          'Invalid union type "${json['runtimeType']}"!');
+  }
+}
+
 /// @nodoc
 mixin _$TransferRecipient {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Address address) address,
-    required TResult Function(Contact contact) contact,
+    required TResult Function(@AddressJsonConverter() Address address) address,
+    required TResult Function(@ContactConverter() Contact contact) contact,
     required TResult Function(String name) unknownContact,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Address address)? address,
-    TResult? Function(Contact contact)? contact,
+    TResult? Function(@AddressJsonConverter() Address address)? address,
+    TResult? Function(@ContactConverter() Contact contact)? contact,
     TResult? Function(String name)? unknownContact,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Address address)? address,
-    TResult Function(Contact contact)? contact,
+    TResult Function(@AddressJsonConverter() Address address)? address,
+    TResult Function(@ContactConverter() Contact contact)? contact,
     TResult Function(String name)? unknownContact,
     required TResult orElse(),
   }) =>
@@ -506,6 +521,7 @@ mixin _$TransferRecipient {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -533,7 +549,7 @@ abstract class _$$TransferDestinationAddressImplCopyWith<$Res> {
           $Res Function(_$TransferDestinationAddressImpl) then) =
       __$$TransferDestinationAddressImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({Address address});
+  $Res call({@AddressJsonConverter() Address address});
 
   $AddressCopyWith<$Res> get address;
 }
@@ -571,12 +587,23 @@ class __$$TransferDestinationAddressImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$TransferDestinationAddressImpl extends _TransferDestinationAddress {
-  const _$TransferDestinationAddressImpl({required this.address}) : super._();
+  const _$TransferDestinationAddressImpl(
+      {@AddressJsonConverter() required this.address, final String? $type})
+      : $type = $type ?? 'address',
+        super._();
+
+  factory _$TransferDestinationAddressImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$TransferDestinationAddressImplFromJson(json);
 
   @override
+  @AddressJsonConverter()
   final Address address;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
 
   @override
   String toString() {
@@ -584,13 +611,14 @@ class _$TransferDestinationAddressImpl extends _TransferDestinationAddress {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TransferDestinationAddressImpl &&
             (identical(other.address, address) || other.address == address));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, address);
 
@@ -604,8 +632,8 @@ class _$TransferDestinationAddressImpl extends _TransferDestinationAddress {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Address address) address,
-    required TResult Function(Contact contact) contact,
+    required TResult Function(@AddressJsonConverter() Address address) address,
+    required TResult Function(@ContactConverter() Contact contact) contact,
     required TResult Function(String name) unknownContact,
   }) {
     return address(this.address);
@@ -614,8 +642,8 @@ class _$TransferDestinationAddressImpl extends _TransferDestinationAddress {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Address address)? address,
-    TResult? Function(Contact contact)? contact,
+    TResult? Function(@AddressJsonConverter() Address address)? address,
+    TResult? Function(@ContactConverter() Contact contact)? contact,
     TResult? Function(String name)? unknownContact,
   }) {
     return address?.call(this.address);
@@ -624,8 +652,8 @@ class _$TransferDestinationAddressImpl extends _TransferDestinationAddress {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Address address)? address,
-    TResult Function(Contact contact)? contact,
+    TResult Function(@AddressJsonConverter() Address address)? address,
+    TResult Function(@ContactConverter() Contact contact)? contact,
     TResult Function(String name)? unknownContact,
     required TResult orElse(),
   }) {
@@ -669,13 +697,25 @@ class _$TransferDestinationAddressImpl extends _TransferDestinationAddress {
     }
     return orElse();
   }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$TransferDestinationAddressImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _TransferDestinationAddress extends TransferRecipient {
-  const factory _TransferDestinationAddress({required final Address address}) =
+  const factory _TransferDestinationAddress(
+          {@AddressJsonConverter() required final Address address}) =
       _$TransferDestinationAddressImpl;
   const _TransferDestinationAddress._() : super._();
 
+  factory _TransferDestinationAddress.fromJson(Map<String, dynamic> json) =
+      _$TransferDestinationAddressImpl.fromJson;
+
+  @AddressJsonConverter()
   Address get address;
   @JsonKey(ignore: true)
   _$$TransferDestinationAddressImplCopyWith<_$TransferDestinationAddressImpl>
@@ -689,7 +729,7 @@ abstract class _$$TransferDestinationContactImplCopyWith<$Res> {
           $Res Function(_$TransferDestinationContactImpl) then) =
       __$$TransferDestinationContactImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({Contact contact});
+  $Res call({@ContactConverter() Contact contact});
 }
 
 /// @nodoc
@@ -717,12 +757,23 @@ class __$$TransferDestinationContactImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$TransferDestinationContactImpl extends _TransferDestinationContact {
-  const _$TransferDestinationContactImpl({required this.contact}) : super._();
+  const _$TransferDestinationContactImpl(
+      {@ContactConverter() required this.contact, final String? $type})
+      : $type = $type ?? 'contact',
+        super._();
+
+  factory _$TransferDestinationContactImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$TransferDestinationContactImplFromJson(json);
 
   @override
+  @ContactConverter()
   final Contact contact;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
 
   @override
   String toString() {
@@ -730,13 +781,14 @@ class _$TransferDestinationContactImpl extends _TransferDestinationContact {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TransferDestinationContactImpl &&
             (identical(other.contact, contact) || other.contact == contact));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, contact);
 
@@ -750,8 +802,8 @@ class _$TransferDestinationContactImpl extends _TransferDestinationContact {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Address address) address,
-    required TResult Function(Contact contact) contact,
+    required TResult Function(@AddressJsonConverter() Address address) address,
+    required TResult Function(@ContactConverter() Contact contact) contact,
     required TResult Function(String name) unknownContact,
   }) {
     return contact(this.contact);
@@ -760,8 +812,8 @@ class _$TransferDestinationContactImpl extends _TransferDestinationContact {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Address address)? address,
-    TResult? Function(Contact contact)? contact,
+    TResult? Function(@AddressJsonConverter() Address address)? address,
+    TResult? Function(@ContactConverter() Contact contact)? contact,
     TResult? Function(String name)? unknownContact,
   }) {
     return contact?.call(this.contact);
@@ -770,8 +822,8 @@ class _$TransferDestinationContactImpl extends _TransferDestinationContact {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Address address)? address,
-    TResult Function(Contact contact)? contact,
+    TResult Function(@AddressJsonConverter() Address address)? address,
+    TResult Function(@ContactConverter() Contact contact)? contact,
     TResult Function(String name)? unknownContact,
     required TResult orElse(),
   }) {
@@ -815,13 +867,25 @@ class _$TransferDestinationContactImpl extends _TransferDestinationContact {
     }
     return orElse();
   }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$TransferDestinationContactImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _TransferDestinationContact extends TransferRecipient {
-  const factory _TransferDestinationContact({required final Contact contact}) =
+  const factory _TransferDestinationContact(
+          {@ContactConverter() required final Contact contact}) =
       _$TransferDestinationContactImpl;
   const _TransferDestinationContact._() : super._();
 
+  factory _TransferDestinationContact.fromJson(Map<String, dynamic> json) =
+      _$TransferDestinationContactImpl.fromJson;
+
+  @ContactConverter()
   Contact get contact;
   @JsonKey(ignore: true)
   _$$TransferDestinationContactImplCopyWith<_$TransferDestinationContactImpl>
@@ -863,14 +927,23 @@ class __$$TransferDestinationUnknownContactImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$TransferDestinationUnknownContactImpl
     extends _TransferDestinationUnknownContact {
-  const _$TransferDestinationUnknownContactImpl({required this.name})
-      : super._();
+  const _$TransferDestinationUnknownContactImpl(
+      {required this.name, final String? $type})
+      : $type = $type ?? 'unknownContact',
+        super._();
+
+  factory _$TransferDestinationUnknownContactImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$TransferDestinationUnknownContactImplFromJson(json);
 
   @override
   final String name;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
 
   @override
   String toString() {
@@ -878,13 +951,14 @@ class _$TransferDestinationUnknownContactImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TransferDestinationUnknownContactImpl &&
             (identical(other.name, name) || other.name == name));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, name);
 
@@ -899,8 +973,8 @@ class _$TransferDestinationUnknownContactImpl
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Address address) address,
-    required TResult Function(Contact contact) contact,
+    required TResult Function(@AddressJsonConverter() Address address) address,
+    required TResult Function(@ContactConverter() Contact contact) contact,
     required TResult Function(String name) unknownContact,
   }) {
     return unknownContact(name);
@@ -909,8 +983,8 @@ class _$TransferDestinationUnknownContactImpl
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Address address)? address,
-    TResult? Function(Contact contact)? contact,
+    TResult? Function(@AddressJsonConverter() Address address)? address,
+    TResult? Function(@ContactConverter() Contact contact)? contact,
     TResult? Function(String name)? unknownContact,
   }) {
     return unknownContact?.call(name);
@@ -919,8 +993,8 @@ class _$TransferDestinationUnknownContactImpl
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Address address)? address,
-    TResult Function(Contact contact)? contact,
+    TResult Function(@AddressJsonConverter() Address address)? address,
+    TResult Function(@ContactConverter() Contact contact)? contact,
     TResult Function(String name)? unknownContact,
     required TResult orElse(),
   }) {
@@ -964,12 +1038,23 @@ class _$TransferDestinationUnknownContactImpl
     }
     return orElse();
   }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$TransferDestinationUnknownContactImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _TransferDestinationUnknownContact extends TransferRecipient {
   const factory _TransferDestinationUnknownContact(
       {required final String name}) = _$TransferDestinationUnknownContactImpl;
   const _TransferDestinationUnknownContact._() : super._();
+
+  factory _TransferDestinationUnknownContact.fromJson(
+          Map<String, dynamic> json) =
+      _$TransferDestinationUnknownContactImpl.fromJson;
 
   String get name;
   @JsonKey(ignore: true)

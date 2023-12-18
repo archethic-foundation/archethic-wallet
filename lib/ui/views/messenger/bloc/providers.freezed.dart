@@ -153,7 +153,7 @@ class _$CreateDiscussionFormStateImpl extends _CreateDiscussionFormState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CreateDiscussionFormStateImpl &&
@@ -359,7 +359,7 @@ class _$DiscussionDetailsFormStateImpl extends _DiscussionDetailsFormState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DiscussionDetailsFormStateImpl &&
@@ -542,7 +542,7 @@ class _$MessageCreationFormStateImpl extends _MessageCreationFormState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MessageCreationFormStateImpl &&
@@ -817,7 +817,7 @@ class _$UpdateDiscussionFormStateImpl extends _UpdateDiscussionFormState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UpdateDiscussionFormStateImpl &&

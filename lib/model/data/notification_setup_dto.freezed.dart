@@ -137,7 +137,7 @@ class _$NotificationsSetupImpl extends _NotificationsSetup {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$NotificationsSetupImpl &&

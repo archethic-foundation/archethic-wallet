@@ -168,7 +168,7 @@ class _$AppVersionInfoImpl extends _AppVersionInfo
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AppVersionInfoImpl &&

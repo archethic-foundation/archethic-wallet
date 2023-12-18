@@ -68,7 +68,7 @@ class _$RPCGetAccountsCommandDataImpl extends _RPCGetAccountsCommandData {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RPCGetAccountsCommandDataImpl);
@@ -189,7 +189,7 @@ class _$RPCGetServicesFromKeychainResultDataImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RPCGetServicesFromKeychainResultDataImpl &&

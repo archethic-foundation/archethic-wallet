@@ -139,7 +139,7 @@ class _$PasswordAuthenticationStateImpl extends _PasswordAuthenticationState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PasswordAuthenticationStateImpl &&
@@ -306,7 +306,7 @@ class _$PinAuthenticationStateImpl extends _PinAuthenticationState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PinAuthenticationStateImpl &&
@@ -467,7 +467,7 @@ class _$AuthenticationGuardStateImpl extends _AuthenticationGuardState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AuthenticationGuardStateImpl &&
@@ -634,7 +634,7 @@ class _$YubikeyAuthenticationStateImpl extends _YubikeyAuthenticationState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$YubikeyAuthenticationStateImpl &&

@@ -135,7 +135,7 @@ class _$TransactionTransferImpl extends _TransactionTransfer {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TransactionTransferImpl &&
@@ -288,7 +288,7 @@ class _$TransactionTokenImpl extends _TransactionToken {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TransactionTokenImpl &&
@@ -438,7 +438,7 @@ class _$TransactionKeychainImpl extends _TransactionKeychain {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TransactionKeychainImpl &&
