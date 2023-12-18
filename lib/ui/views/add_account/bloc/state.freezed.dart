@@ -159,7 +159,7 @@ class _$AddAccountFormStateImpl extends _AddAccountFormState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AddAccountFormStateImpl &&

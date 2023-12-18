@@ -158,7 +158,7 @@ class _$NftSearchBarStateImpl extends _NftSearchBarState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$NftSearchBarStateImpl &&

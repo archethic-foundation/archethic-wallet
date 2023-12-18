@@ -66,7 +66,7 @@ class _$RPCGetEndpointCommandDataImpl extends _RPCGetEndpointCommandData {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RPCGetEndpointCommandDataImpl);
@@ -174,7 +174,7 @@ class _$RPCGetEndpointResultDataImpl extends _RPCGetEndpointResultData {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RPCGetEndpointResultDataImpl &&

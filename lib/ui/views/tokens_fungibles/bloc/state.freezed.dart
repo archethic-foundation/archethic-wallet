@@ -260,7 +260,7 @@ class _$AddTokenFormStateImpl extends _AddTokenFormState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AddTokenFormStateImpl &&

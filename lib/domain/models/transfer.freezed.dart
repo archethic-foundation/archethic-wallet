@@ -308,7 +308,7 @@ class _$TransferUcoImpl extends _TransferUco {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TransferUcoImpl &&
@@ -650,7 +650,7 @@ class _$TransferTokenImpl extends _TransferToken {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TransferTokenImpl &&

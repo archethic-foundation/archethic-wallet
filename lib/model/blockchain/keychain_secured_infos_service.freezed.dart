@@ -204,7 +204,7 @@ class _$KeychainSecuredInfosServiceImpl extends _KeychainSecuredInfosService {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$KeychainSecuredInfosServiceImpl &&

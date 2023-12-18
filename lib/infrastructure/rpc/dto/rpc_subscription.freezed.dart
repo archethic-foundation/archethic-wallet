@@ -117,7 +117,7 @@ class _$RPCUnsubscribeCommandDTOImpl extends _RPCUnsubscribeCommandDTO {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RPCUnsubscribeCommandDTOImpl &&
@@ -264,7 +264,7 @@ class _$RPCSubscriptionDTOImpl extends _RPCSubscriptionDTO {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RPCSubscriptionDTOImpl &&
@@ -423,7 +423,7 @@ class _$RPCSubscriptionUpdateDTOImpl extends _RPCSubscriptionUpdateDTO {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RPCSubscriptionUpdateDTOImpl &&

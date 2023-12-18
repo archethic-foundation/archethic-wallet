@@ -539,7 +539,7 @@ class _$NftCreationFormStateImpl extends _NftCreationFormState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$NftCreationFormStateImpl &&
@@ -852,7 +852,7 @@ class _$NftCreationFormStatePropertyImpl extends _NftCreationFormStateProperty {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$NftCreationFormStatePropertyImpl &&
@@ -1027,7 +1027,7 @@ class _$PropertyAccessAddressImpl extends _PropertyAccessAddress {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PropertyAccessAddressImpl &&
@@ -1172,7 +1172,7 @@ class _$PropertyAccessContactImpl extends _PropertyAccessContact {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PropertyAccessContactImpl &&
@@ -1318,7 +1318,7 @@ class _$PropertyAccessUnknownContactImpl extends _PropertyAccessUnknownContact {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PropertyAccessUnknownContactImpl &&
