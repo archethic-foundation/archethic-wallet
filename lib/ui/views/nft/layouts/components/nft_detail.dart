@@ -134,7 +134,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
       ),
       body: Container(
         padding: const EdgeInsets.only(
-          bottom: 20,
+          bottom: 40,
         ),
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -146,7 +146,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: 70),
+          padding: const EdgeInsets.only(top: 120),
           child: Column(
             children: <Widget>[
               if (widget.symbol.isNotEmpty)

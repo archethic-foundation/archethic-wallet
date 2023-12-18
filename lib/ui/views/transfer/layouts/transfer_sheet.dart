@@ -70,7 +70,7 @@ class TransferSheet extends ConsumerWidget {
     context.go(
       routerPage,
       extra: {
-        'transferType': transferType,
+        'transferType': transferType.name,
         'recipient': recipient,
         'actionButtonTitle': actionButtonTitle,
         'accountToken': accountToken,

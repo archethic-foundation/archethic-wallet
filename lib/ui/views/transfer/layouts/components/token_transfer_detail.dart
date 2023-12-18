@@ -66,7 +66,7 @@ class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
 
     return Container(
       width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.only(left: 10, right: 10),
+      padding: const EdgeInsets.only(left: 20, right: 20),
       child: Column(
         children: [
           Padding(

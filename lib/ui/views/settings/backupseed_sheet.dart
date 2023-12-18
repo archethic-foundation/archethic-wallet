@@ -36,8 +36,43 @@ class AppSeedBackupSheet extends ConsumerWidget {
 
     return Scaffold(
       drawerEdgeDragWidth: 0,
-      resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: recoveryPhraseSavedAsync.map(
+        data: (data) => data.value == false
+            ? Row(
+                children: <Widget>[
+                  AppButtonTinyConnectivity(
+                    localizations.recoveryPhraseSave,
+                    icon: Symbols.note_add,
+                    Dimens.buttonBottomDimens,
+                    key: const Key('saveRecoveryPhrase'),
+                    onPressed: () async {
+                      final languageSeed = ref.read(
+                        SettingsProviders.settings.select(
+                          (settings) => settings.languageSeed,
+                        ),
+                      );
+                      final seed = AppMnemomics.mnemonicListToSeed(
+                        mnemonic!,
+                        languageCode: languageSeed,
+                      );
+                      context.go(
+                        IntroBackupConfirm.routerPage,
+                        extra: {
+                          'name': null,
+                          'seed': seed,
+                          'welcomeProcess': false,
+                        },
+                      );
+                    },
+                  ),
+                ],
+              )
+            : const SizedBox(),
+        error: (error) => const SizedBox(),
+        loading: (loading) => const SizedBox(),
+      ),
       backgroundColor: ArchethicTheme.background,
       appBar: SheetAppBar(
         title: localizations.recoveryPhrase,
@@ -49,10 +84,7 @@ class AppSeedBackupSheet extends ConsumerWidget {
           },
         ),
       ),
-      body: Container(
-        padding: const EdgeInsets.only(
-          bottom: 20,
-        ),
+      body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
@@ -63,7 +95,7 @@ class AppSeedBackupSheet extends ConsumerWidget {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: 70),
+          padding: const EdgeInsets.only(top: 120, bottom: 100),
           child: Column(
             children: <Widget>[
               Expanded(
@@ -155,42 +187,6 @@ class AppSeedBackupSheet extends ConsumerWidget {
                           ],
                         ),
                       ),
-                    ),
-                    recoveryPhraseSavedAsync.map(
-                      data: (data) => data.value == false
-                          ? Row(
-                              children: <Widget>[
-                                AppButtonTinyConnectivity(
-                                  localizations.recoveryPhraseSave,
-                                  icon: Symbols.note_add,
-                                  Dimens.buttonBottomDimens,
-                                  key: const Key('saveRecoveryPhrase'),
-                                  onPressed: () async {
-                                    final languageSeed = ref.read(
-                                      SettingsProviders.settings.select(
-                                        (settings) => settings.languageSeed,
-                                      ),
-                                    );
-                                    final seed =
-                                        AppMnemomics.mnemonicListToSeed(
-                                      mnemonic!,
-                                      languageCode: languageSeed,
-                                    );
-                                    context.go(
-                                      IntroBackupConfirm.routerPage,
-                                      extra: {
-                                        'name': null,
-                                        'seed': seed,
-                                        'welcomeProcess': false,
-                                      },
-                                    );
-                                  },
-                                ),
-                              ],
-                            )
-                          : const SizedBox(),
-                      error: (error) => const SizedBox(),
-                      loading: (loading) => const SizedBox(),
                     ),
                   ],
                 ),

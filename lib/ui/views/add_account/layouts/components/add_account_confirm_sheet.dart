@@ -137,7 +137,34 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
 
     return Scaffold(
       drawerEdgeDragWidth: 0,
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Row(
+        children: <Widget>[
+          AppButtonTiny(
+            AppButtonTinyType.primary,
+            localizations.confirm,
+            Dimens.buttonTopDimens,
+            key: const Key('confirm'),
+            icon: Icon(
+              Symbols.check,
+              color: ArchethicTheme.mainButtonLabel,
+              size: 14,
+            ),
+            onPressed: () async {
+              ShowSendingAnimation.build(
+                context,
+              );
+              await ref
+                  .read(
+                    AddAccountFormProvider.addAccountForm.notifier,
+                  )
+                  .send(context);
+            },
+          ),
+        ],
+      ),
+      extendBodyBehindAppBar: true,
       backgroundColor: ArchethicTheme.background,
       appBar: SheetAppBar(
         title: localizations.addAccount,
@@ -151,20 +178,18 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
           },
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(
-          bottom: 20,
-        ),
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                ArchethicTheme.backgroundSmall,
-              ),
-              fit: BoxFit.fitHeight,
-              opacity: 0.7,
+      body: DecoratedBox(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              ArchethicTheme.backgroundSmall,
             ),
+            fit: BoxFit.fitHeight,
+            opacity: 0.7,
           ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 120),
           child: Column(
             children: <Widget>[
               Expanded(
@@ -182,59 +207,6 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
                       height: 20,
                     ),
                     const AddAccountDetail(),
-                  ],
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 10),
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        AppButtonTiny(
-                          AppButtonTinyType.primary,
-                          localizations.confirm,
-                          Dimens.buttonTopDimens,
-                          key: const Key('confirm'),
-                          icon: Icon(
-                            Symbols.check,
-                            color: ArchethicTheme.mainButtonLabel,
-                            size: 14,
-                          ),
-                          onPressed: () async {
-                            ShowSendingAnimation.build(
-                              context,
-                            );
-                            await ref
-                                .read(
-                                  AddAccountFormProvider
-                                      .addAccountForm.notifier,
-                                )
-                                .send(context);
-                          },
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: <Widget>[
-                        AppButtonTiny(
-                          AppButtonTinyType.primary,
-                          localizations.cancel,
-                          Dimens.buttonBottomDimens,
-                          key: const Key('cancel'),
-                          icon: Icon(
-                            Symbols.arrow_back_ios,
-                            color: ArchethicTheme.mainButtonLabel,
-                            size: 14,
-                          ),
-                          onPressed: () {
-                            addAccountNotifier.setAddAccountProcessStep(
-                              AddAccountProcessStep.form,
-                            );
-                          },
-                        ),
-                      ],
-                    ),
                   ],
                 ),
               ),

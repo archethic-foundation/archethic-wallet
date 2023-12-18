@@ -99,7 +99,7 @@ class CreateDiscussionSheetState extends ConsumerState<CreateDiscussionSheet> {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: 70),
+          padding: const EdgeInsets.only(top: 120),
           child: Column(
             children: <Widget>[
               Expanded(

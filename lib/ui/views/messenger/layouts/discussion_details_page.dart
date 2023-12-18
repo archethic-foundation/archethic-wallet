@@ -116,7 +116,7 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage> {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.only(top: 70),
+              padding: const EdgeInsets.only(top: 120),
               child: Column(
                 children: [
                   const SizedBox(

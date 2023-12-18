@@ -40,8 +40,38 @@ class TransferFormSheet extends ConsumerWidget {
 
     return Scaffold(
       drawerEdgeDragWidth: 0,
-      resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Row(
+        children: <Widget>[
+          AppButtonTinyConnectivity(
+            actionButtonTitle ?? localizations.send,
+            Dimens.buttonTopDimens,
+            key: const Key('send'),
+            icon: Symbols.call_made,
+            onPressed: () async {
+              final transferNotifier =
+                  ref.read(TransferFormProvider.transferForm.notifier);
+
+              final isAddressOk = await transferNotifier.controlAddress(
+                context,
+                accountSelected,
+              );
+              final isAmountOk = transferNotifier.controlAmount(
+                context,
+                accountSelected,
+              );
+
+              if (isAddressOk && isAmountOk) {
+                transferNotifier.setTransferProcessStep(
+                  TransferProcessStep.confirmation,
+                );
+              }
+            },
+            disabled: !transfer.canTransfer,
+          ),
+        ],
+      ),
       backgroundColor: ArchethicTheme.background,
       appBar: SheetAppBar(
         title: title,
@@ -54,10 +84,7 @@ class TransferFormSheet extends ConsumerWidget {
         ),
         widgetBeforeTitle: const NetworkIndicator(),
       ),
-      body: Container(
-        padding: const EdgeInsets.only(
-          bottom: 20,
-        ),
+      body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
@@ -68,13 +95,12 @@ class TransferFormSheet extends ConsumerWidget {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: 70),
+          padding: const EdgeInsets.only(top: 120),
           child: Column(
             children: <Widget>[
               Expanded(
                 child: Container(
-                  margin:
-                      const EdgeInsets.only(bottom: 10, left: 20, right: 20),
+                  margin: const EdgeInsets.only(left: 20, right: 20),
                   child: ArchethicScrollbar(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,41 +130,6 @@ class TransferFormSheet extends ConsumerWidget {
                     ),
                   ),
                 ),
-              ),
-              Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      AppButtonTinyConnectivity(
-                        actionButtonTitle ?? localizations.send,
-                        Dimens.buttonTopDimens,
-                        key: const Key('send'),
-                        icon: Symbols.call_made,
-                        onPressed: () async {
-                          final transferNotifier = ref
-                              .read(TransferFormProvider.transferForm.notifier);
-
-                          final isAddressOk =
-                              await transferNotifier.controlAddress(
-                            context,
-                            accountSelected,
-                          );
-                          final isAmountOk = transferNotifier.controlAmount(
-                            context,
-                            accountSelected,
-                          );
-
-                          if (isAddressOk && isAmountOk) {
-                            transferNotifier.setTransferProcessStep(
-                              TransferProcessStep.confirmation,
-                            );
-                          }
-                        },
-                        disabled: !transfer.canTransfer,
-                      ),
-                    ],
-                  ),
-                ],
               ),
             ],
           ),

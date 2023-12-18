@@ -79,7 +79,7 @@ class ChartSheet extends ConsumerWidget {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: 70),
+          padding: const EdgeInsets.only(top: 120),
           child: Column(
             children: <Widget>[
               FadeIn(

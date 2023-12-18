@@ -8,12 +8,12 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/provider.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/state.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/layouts/components/add_token_detail.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
@@ -132,78 +132,76 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
     final addTokenNotifier =
         ref.watch(AddTokenFormProvider.addTokenForm.notifier);
 
-    return SafeArea(
-      minimum:
-          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.035),
-      child: Column(
+    return Scaffold(
+      drawerEdgeDragWidth: 0,
+      extendBodyBehindAppBar: true,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Row(
         children: <Widget>[
-          SheetHeader(
-            title: localizations.createToken,
-          ),
-          Expanded(
-            child: Column(
-              children: <Widget>[
-                const SizedBox(height: 30),
-                Padding(
-                  padding: const EdgeInsets.only(left: 30, right: 30),
-                  child: Text(
-                    localizations.addTokenConfirmationMessage,
-                    style: ArchethicThemeStyles.textStyleSize14W600Primary,
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const AddTokenDetail(),
-              ],
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 10),
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    AppButtonTinyConnectivity(
-                      localizations.confirm,
-                      Dimens.buttonTopDimens,
-                      key: const Key('confirm'),
-                      icon: Symbols.check,
-                      onPressed: () async {
-                        ShowSendingAnimation.build(
-                          context,
-                        );
-                        await ref
-                            .read(AddTokenFormProvider.addTokenForm.notifier)
-                            .send(context);
-                      },
-                    ),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    AppButtonTiny(
-                      AppButtonTinyType.primary,
-                      localizations.cancel,
-                      Dimens.buttonBottomDimens,
-                      key: const Key('cancel'),
-                      icon: Icon(
-                        Symbols.arrow_back_ios,
-                        color: ArchethicTheme.mainButtonLabel,
-                        size: 14,
-                      ),
-                      onPressed: () {
-                        addTokenNotifier.setAddTokenProcessStep(
-                          AddTokenProcessStep.form,
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ),
+          AppButtonTinyConnectivity(
+            localizations.confirm,
+            Dimens.buttonTopDimens,
+            key: const Key('confirm'),
+            icon: Symbols.check,
+            onPressed: () async {
+              ShowSendingAnimation.build(
+                context,
+              );
+              await ref
+                  .read(AddTokenFormProvider.addTokenForm.notifier)
+                  .send(context);
+            },
           ),
         ],
+      ),
+      backgroundColor: ArchethicTheme.background,
+      appBar: SheetAppBar(
+        title: localizations.createToken,
+        widgetLeft: BackButton(
+          key: const Key('back'),
+          color: ArchethicTheme.text,
+          onPressed: () {
+            addTokenNotifier.setAddTokenProcessStep(
+              AddTokenProcessStep.form,
+            );
+          },
+        ),
+      ),
+      body: DecoratedBox(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              ArchethicTheme.backgroundSmall,
+            ),
+            fit: BoxFit.fitHeight,
+            opacity: 0.7,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 120),
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: Column(
+                  children: <Widget>[
+                    const SizedBox(height: 30),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20, right: 20),
+                      child: Text(
+                        localizations.addTokenConfirmationMessage,
+                        style: ArchethicThemeStyles.textStyleSize14W600Primary,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const AddTokenDetail(),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
