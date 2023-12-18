@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'state.freezed.dart';
+part 'state.g.dart';
 
 enum TransferType { uco, token, nft }
 
@@ -73,12 +74,14 @@ class TransferFormState with _$TransferFormState {
 
 @freezed
 class TransferRecipient with _$TransferRecipient {
+  factory TransferRecipient.fromJson(Map<String, dynamic> json) =>
+      _$TransferRecipientFromJson(json);
   const TransferRecipient._();
   const factory TransferRecipient.address({
-    required Address address,
+    @AddressJsonConverter() required Address address,
   }) = _TransferDestinationAddress;
   const factory TransferRecipient.contact({
-    required Contact contact,
+    @ContactConverter() required Contact contact,
   }) = _TransferDestinationContact;
   const factory TransferRecipient.unknownContact({
     required String name,

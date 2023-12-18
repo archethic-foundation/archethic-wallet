@@ -1,16 +1,48 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:aewallet/model/data/account_balance.dart';
-// Package imports:
 import 'package:aewallet/model/data/appdb.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 
 part 'contact.g.dart';
+
+class ContactConverter implements JsonConverter<Contact, Map<String, dynamic>> {
+  const ContactConverter();
+
+  @override
+  Contact fromJson(Map<String, dynamic> json) {
+    return Contact(
+      name: json['name'] as String,
+      address: json['address'] as String,
+      type: json['type'] as String,
+      publicKey: json['publicKey'] as String,
+      favorite: json['favorite'] == null ? null : json['favorite'] as bool,
+      balance: json['balance'] == null
+          ? null
+          : const AccountBalanceConverter()
+              .fromJson(json['balance'] as Map<String, dynamic>),
+    );
+  }
+
+  @override
+  Map<String, dynamic> toJson(Contact contact) {
+    return {
+      'name': contact.name,
+      'address': contact.address,
+      'type': contact.type,
+      'publicKey': contact.publicKey,
+      'favorite': contact.favorite,
+      'balance': const AccountBalanceConverter().toJson(contact.balance!),
+    };
+  }
+}
 
 enum ContactType { keychainService, externalContact }
 
 /// Next field available : 8
 @HiveType(typeId: HiveTypeIds.contact)
+@AccountBalanceConverter()
 class Contact extends HiveObject {
   Contact({
     required this.name,
