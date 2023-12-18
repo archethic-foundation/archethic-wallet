@@ -95,7 +95,7 @@ class AddTokenFormSheet extends ConsumerWidget {
                   margin: const EdgeInsets.only(left: 20, right: 20),
                   child: ArchethicScrollbar(
                     child: Padding(
-                      padding: EdgeInsets.only(bottom: bottom + 80),
+                      padding: EdgeInsets.only(bottom: bottom / 2),
                       child: Column(
                         children: <Widget>[
                           const Padding(

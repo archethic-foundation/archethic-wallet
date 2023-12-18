@@ -32,6 +32,7 @@ class TransferFormSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
+    final bottom = MediaQuery.of(context).viewInsets.bottom;
     final accountSelected =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
     final transfer = ref.watch(TransferFormProvider.transferForm);
@@ -102,31 +103,34 @@ class TransferFormSheet extends ConsumerWidget {
                 child: Container(
                   margin: const EdgeInsets.only(left: 20, right: 20),
                   child: ArchethicScrollbar(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        const SizedBox(height: 25),
-                        const TransferTextFieldAddress(),
-                        if (transfer.transferType != TransferType.nft)
-                          Container(
-                            padding: const EdgeInsets.only(
-                              top: 20,
-                              bottom: 20,
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: bottom / 2),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          const SizedBox(height: 25),
+                          const TransferTextFieldAddress(),
+                          if (transfer.transferType != TransferType.nft)
+                            Container(
+                              padding: const EdgeInsets.only(
+                                top: 20,
+                                bottom: 20,
+                              ),
+                              alignment: Alignment.topCenter,
+                              child: const TransferTextFieldAmount(),
                             ),
-                            alignment: Alignment.topCenter,
-                            child: const TransferTextFieldAmount(),
+                          const BalanceIndicatorWidget(allDigits: false),
+                          FeeInfos(
+                            asyncFeeEstimation: transfer.feeEstimation,
+                            estimatedFeesNote:
+                                transfer.transferType == TransferType.nft
+                                    ? localizations.estimatedFeesNoteNFT
+                                    : localizations.estimatedFeesNote,
                           ),
-                        const BalanceIndicatorWidget(allDigits: false),
-                        FeeInfos(
-                          asyncFeeEstimation: transfer.feeEstimation,
-                          estimatedFeesNote:
-                              transfer.transferType == TransferType.nft
-                                  ? localizations.estimatedFeesNoteNFT
-                                  : localizations.estimatedFeesNote,
-                        ),
-                        const SizedBox(height: 20),
-                        const TransferTextFieldMessage(),
-                      ],
+                          const SizedBox(height: 20),
+                          const TransferTextFieldMessage(),
+                        ],
+                      ),
                     ),
                   ),
                 ),

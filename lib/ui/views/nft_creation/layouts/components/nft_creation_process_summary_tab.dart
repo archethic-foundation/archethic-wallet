@@ -29,7 +29,7 @@ class _NFTCreationProcessSummaryTabState
     if (nftCreation.file != null || nftCreation.fileURL != null) {
       return ArchethicScrollbar(
         child: Padding(
-          padding: EdgeInsets.only(bottom: bottom + 80),
+          padding: EdgeInsets.only(bottom: bottom / 2),
           child: SizedBox(
             child: Column(
               children: [
