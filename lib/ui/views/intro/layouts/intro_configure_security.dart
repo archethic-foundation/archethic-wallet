@@ -225,15 +225,13 @@ class _IntroConfigureSecurityState
                                         authenticated = (await context.push(
                                           SetYubikey.routerPage,
                                           extra: {
-                                            'header':
-                                                localizations.seYubicloudHeader,
+                                            'header': localizations
+                                                .setYubicloudHeader,
                                             'description': localizations
-                                                .seYubicloudDescription,
+                                                .setYubicloudDescription,
                                           },
                                         ))! as bool;
 
-                                        break;
-                                      case AuthMethod.biometricsUniris:
                                         break;
                                       case AuthMethod.ledger:
                                         break;

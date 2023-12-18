@@ -110,15 +110,6 @@ class RoutesPath {
             );
           },
         ),
-        GoRoute(
-          path: YubikeyScreen.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as Map<String, dynamic>;
-            return YubikeyScreen(
-              canNavigateBack: args['canNavigateBack']! as bool,
-            );
-          },
-        ),
         ShellRoute(
           builder: (context, state, child) {
             return AutoLockGuard(
@@ -167,6 +158,15 @@ class RoutesPath {
               description: args['description'] == null
                   ? ''
                   : args['description']! as String,
+            );
+          },
+        ),
+        GoRoute(
+          path: YubikeyScreen.routerPage,
+          builder: (context, state) {
+            final args = state.extra! as Map<String, dynamic>;
+            return YubikeyScreen(
+              canNavigateBack: args['canNavigateBack']! as bool,
             );
           },
         ),

@@ -82,8 +82,6 @@ class AuthFactory {
           auth = await _authenticateWithBiometrics(context);
         }
         break;
-      case AuthMethod.biometricsUniris:
-        break;
       case AuthMethod.ledger:
         break;
     }

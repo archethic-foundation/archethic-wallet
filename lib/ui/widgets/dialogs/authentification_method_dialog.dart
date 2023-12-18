@@ -7,7 +7,6 @@ import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
-import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/settings/set_password.dart';
 import 'package:aewallet/ui/views/settings/set_yubikey.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
@@ -28,10 +27,6 @@ class AuthentificationMethodDialog {
     WidgetRef ref,
     bool hasBiometrics,
     AuthenticationMethod curAuthMethod,
-    String fromPage,
-    String toPage,
-    Object? extraFromPage,
-    Object? extraToPage,
   ) async {
     final settingsNotifier = ref.read(
       AuthenticationProviders.settings.notifier,
@@ -53,7 +48,7 @@ class AuthentificationMethodDialog {
           AuthenticationMethod.getIcon(value),
           ArchethicTheme.pickerItemIconEnabled,
           value,
-          value != AuthMethod.biometricsUniris,
+          true,
           displayed: displayed,
         ),
       );
@@ -81,6 +76,7 @@ class AuthentificationMethodDialog {
                   pickerItems: pickerItemsList,
                   selectedIndexes: [curAuthMethod.method.index],
                   onSelected: (value) async {
+                    context.pop();
                     switch (value.value) {
                       case AuthMethod.biometrics:
                         final auth = await sl
@@ -93,7 +89,6 @@ class AuthentificationMethodDialog {
                           settingsNotifier.setAuthMethod(
                             AuthMethod.biometrics,
                           );
-                          context.go(HomePage.routerPage);
                         } else {
                           context.pop(value.value);
                           await getDialog(
@@ -101,114 +96,84 @@ class AuthentificationMethodDialog {
                             ref,
                             hasBiometrics,
                             curAuthMethod,
-                            fromPage,
-                            toPage,
-                            extraFromPage,
-                            extraToPage,
                           );
                         }
                         break;
                       case AuthMethod.pin:
-                        final bool authenticated =
-                            await Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (BuildContext context) {
-                              return const PinScreen(
-                                PinOverlayType.newPin,
-                              );
-                            },
-                          ),
-                        );
+                        final auth = (await context.push(
+                          PinScreen.routerPage,
+                          extra: {
+                            'type': PinOverlayType.newPin.name,
+                          },
+                        ))! as bool;
 
-                        if (authenticated == false) {
-                          context.pop(value.value);
-                          await getDialog(
-                            context,
-                            ref,
-                            hasBiometrics,
-                            curAuthMethod,
-                            fromPage,
-                            toPage,
-                            extraFromPage,
-                            extraToPage,
-                          );
-                        } else {
+                        if (auth) {
                           settingsNotifier.setAuthMethod(
                             AuthMethod.pin,
                           );
-                          context.go(HomePage.routerPage);
+                        } else {
+                          context.pop(value.value);
+                          await getDialog(
+                            context,
+                            ref,
+                            hasBiometrics,
+                            curAuthMethod,
+                          );
                         }
                         break;
                       case AuthMethod.password:
-                        final bool authenticated =
-                            await Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (BuildContext context) {
-                              return SetPassword(
-                                header: localizations.setPasswordHeader,
-                                description: AppLocalizations.of(
-                                  context,
-                                )!
-                                    .configureSecurityExplanationPassword,
-                                seed: ref
-                                    .read(SessionProviders.session)
-                                    .loggedIn
-                                    ?.wallet
-                                    .seed,
-                              );
-                            },
-                          ),
-                        );
+                        final auth = (await context.push(
+                          SetPassword.routerPage,
+                          extra: {
+                            'header': localizations.setPasswordHeader,
+                            'description': AppLocalizations.of(
+                              context,
+                            )!
+                                .configureSecurityExplanationPassword,
+                            'seed': ref
+                                .read(SessionProviders.session)
+                                .loggedIn
+                                ?.wallet
+                                .seed,
+                          },
+                        ))! as bool;
 
-                        if (authenticated == false) {
-                          context.pop(value.value);
-                          await getDialog(
-                            context,
-                            ref,
-                            hasBiometrics,
-                            curAuthMethod,
-                            fromPage,
-                            toPage,
-                            extraFromPage,
-                            extraToPage,
-                          );
-                        } else {
+                        if (auth) {
                           settingsNotifier.setAuthMethod(
                             AuthMethod.password,
                           );
-                          context.go(HomePage.routerPage);
-                        }
-                        break;
-                      case AuthMethod.yubikeyWithYubicloud:
-                        final bool authenticated =
-                            await Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (BuildContext context) {
-                              return SetYubikey(
-                                header: localizations.seYubicloudHeader,
-                                description:
-                                    localizations.seYubicloudDescription,
-                              );
-                            },
-                          ),
-                        );
-                        if (authenticated == false) {
+                        } else {
                           context.pop(value.value);
                           await getDialog(
                             context,
                             ref,
                             hasBiometrics,
                             curAuthMethod,
-                            fromPage,
-                            toPage,
-                            extraFromPage,
-                            extraToPage,
                           );
-                        } else {
+                        }
+                        break;
+                      case AuthMethod.yubikeyWithYubicloud:
+                        final auth = (await context.push(
+                          SetYubikey.routerPage,
+                          extra: {
+                            'header': localizations.setYubicloudHeader,
+                            'description':
+                                localizations.setYubicloudDescription,
+                          },
+                        ))! as bool;
+
+                        if (auth) {
                           settingsNotifier.setAuthMethod(
                             AuthMethod.yubikeyWithYubicloud,
                           );
-                          context.go(HomePage.routerPage);
+                        } else {
+                          context.pop(value.value);
+                          await getDialog(
+                            context,
+                            ref,
+                            hasBiometrics,
+                            curAuthMethod,
+                          );
                         }
                         break;
                       default:

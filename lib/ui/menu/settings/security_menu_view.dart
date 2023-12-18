@@ -164,10 +164,6 @@ class _AuthMethodSettingsListItem extends ConsumerWidget {
               ref,
               hasBiometrics,
               AuthenticationMethod(authenticationMethod),
-              SecurityMenuView.routerPage,
-              SecurityMenuView.routerPage,
-              null,
-              null,
             );
           }
         },
