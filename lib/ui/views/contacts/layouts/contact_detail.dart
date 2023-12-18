@@ -150,7 +150,7 @@ class _ContactDetailBody extends ConsumerWidget {
     final preferences = ref.watch(SettingsProviders.settings);
 
     return Padding(
-      padding: const EdgeInsets.only(top: 70),
+      padding: const EdgeInsets.only(top: 120),
       child: Column(
         children: <Widget>[
           _ContactDetailActions(contact: contact, readOnly: readOnly),

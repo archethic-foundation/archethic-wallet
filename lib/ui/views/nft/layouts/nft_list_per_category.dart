@@ -4,8 +4,8 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
-import 'package:aewallet/ui/views/nft/layouts/components/nft_header.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_list.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
@@ -41,13 +41,48 @@ class NFTListPerCategory extends ConsumerWidget {
     if (accountSelected == null) return const SizedBox();
     return Scaffold(
       drawerEdgeDragWidth: 0,
-      resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Row(
+        children: <Widget>[
+          AppButtonTinyConnectivity(
+            localizations.createNFT,
+            Dimens.buttonBottomDimens,
+            key: const Key('createNFT'),
+            icon: Symbols.diamond,
+            onPressed: () async {
+              sl.get<HapticUtil>().feedback(
+                    FeedbackType.light,
+                    preferences.activeVibrations,
+                  );
+
+              ref
+                  .read(
+                    NftCreationFormProvider.nftCreationFormArgs.notifier,
+                  )
+                  .state = NftCreationFormNotifierParams(
+                currentNftCategoryIndex: currentNftCategoryIndex,
+              );
+              context.go(
+                NftCreationProcessSheet.routerPage,
+              );
+            },
+            disabled: !accountSelected.balance!.isNativeTokenValuePositive(),
+          ),
+        ],
+      ),
       backgroundColor: ArchethicTheme.background,
-      body: Container(
-        padding: const EdgeInsets.only(
-          bottom: 20,
+      appBar: SheetAppBar(
+        title: localizations.createNFT,
+        widgetLeft: BackButton(
+          key: const Key('back'),
+          color: ArchethicTheme.text,
+          onPressed: () {
+            context.go(HomePage.routerPage);
+          },
         ),
+      ),
+      body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
@@ -59,46 +94,10 @@ class NFTListPerCategory extends ConsumerWidget {
         ),
         child: Column(
           children: <Widget>[
-            NFTHeader(
-              currentNftCategoryIndex: currentNftCategoryIndex,
-              displayCategoryName: true,
-              onPressBack: () {
-                context.go(HomePage.routerPage);
-              },
-            ),
             Expanded(
               child: NFTList(
                 currentNftCategoryIndex: currentNftCategoryIndex,
               ),
-            ),
-            Row(
-              children: <Widget>[
-                AppButtonTinyConnectivity(
-                  localizations.createNFT,
-                  Dimens.buttonBottomDimens,
-                  key: const Key('createNFT'),
-                  icon: Symbols.diamond,
-                  onPressed: () async {
-                    sl.get<HapticUtil>().feedback(
-                          FeedbackType.light,
-                          preferences.activeVibrations,
-                        );
-
-                    ref
-                        .read(
-                          NftCreationFormProvider.nftCreationFormArgs.notifier,
-                        )
-                        .state = NftCreationFormNotifierParams(
-                      currentNftCategoryIndex: currentNftCategoryIndex,
-                    );
-                    context.go(
-                      NftCreationProcessSheet.routerPage,
-                    );
-                  },
-                  disabled:
-                      !accountSelected.balance!.isNativeTokenValuePositive(),
-                ),
-              ],
             ),
           ],
         ),

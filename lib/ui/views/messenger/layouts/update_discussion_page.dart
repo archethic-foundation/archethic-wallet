@@ -93,7 +93,7 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: 70),
+          padding: const EdgeInsets.only(top: 120),
           child: Column(
             children: [
               AppTextField(

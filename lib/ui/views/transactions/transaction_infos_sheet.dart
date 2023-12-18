@@ -65,8 +65,25 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
 
     return Scaffold(
       drawerEdgeDragWidth: 0,
-      resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Row(
+        children: <Widget>[
+          AppButtonTinyConnectivity(
+            localizations.viewExplorer,
+            Dimens.buttonBottomDimens,
+            icon: Symbols.more_horiz,
+            key: const Key('viewExplorer'),
+            onPressed: () async {
+              UIUtil.showWebview(
+                context,
+                '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.notificationRecipientAddress}',
+                '',
+              );
+            },
+          ),
+        ],
+      ),
       backgroundColor: ArchethicTheme.background,
       appBar: SheetAppBar(
         title: localizations.transactionInfosHeader,
@@ -92,7 +109,7 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: 70),
+          padding: const EdgeInsets.only(top: 120),
           child: FutureBuilder<List<TransactionInfos>>(
             future: sl.get<AppService>().getTransactionAllInfos(
                   widget.notificationRecipientAddress,
@@ -153,8 +170,6 @@ class _TransactionInfos extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-
     return Column(
       children: <Widget>[
         Expanded(
@@ -188,26 +203,6 @@ class _TransactionInfos extends ConsumerWidget {
               ),
             ],
           ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Row(
-          children: <Widget>[
-            AppButtonTinyConnectivity(
-              localizations.viewExplorer,
-              Dimens.buttonBottomDimens,
-              icon: Symbols.more_horiz,
-              key: const Key('viewExplorer'),
-              onPressed: () async {
-                UIUtil.showWebview(
-                  context,
-                  '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/$notificationRecipientAddress',
-                  '',
-                );
-              },
-            ),
-          ],
         ),
       ],
     );

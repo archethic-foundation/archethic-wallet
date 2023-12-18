@@ -211,7 +211,7 @@ class UIUtil {
         alignment: Alignment.topCenter,
         child: Container(
           margin: const EdgeInsets.symmetric(
-            vertical: 20,
+            vertical: 60,
             horizontal: 14,
           ),
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),

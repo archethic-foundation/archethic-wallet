@@ -9,7 +9,7 @@ import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class NFTHeader extends ConsumerWidget {
+class NFTHeader extends ConsumerWidget implements PreferredSizeWidget {
   const NFTHeader({
     super.key,
     required this.currentNftCategoryIndex,
@@ -20,6 +20,9 @@ class NFTHeader extends ConsumerWidget {
   final int currentNftCategoryIndex;
   final bool displayCategoryName;
   final Function()? onPressBack;
+
+  @override
+  Size get preferredSize => AppBar().preferredSize;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

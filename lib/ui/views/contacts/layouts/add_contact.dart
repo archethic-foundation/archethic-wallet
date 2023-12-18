@@ -91,8 +91,46 @@ class AddContactSheetBody extends ConsumerWidget {
 
     return Scaffold(
       drawerEdgeDragWidth: 0,
-      resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Row(
+        children: <Widget>[
+          AppButtonTinyConnectivity(
+            localizations.addContact,
+            Dimens.buttonBottomDimens,
+            key: const Key('addContact'),
+            icon: Symbols.add,
+            onPressed: () async {
+              final isNameOk = await contactCreationNotifier.controlName(
+                context,
+              );
+
+              final isAddressOk = await contactCreationNotifier.controlAddress(
+                context,
+              );
+
+              if (isNameOk && isAddressOk) {
+                final newContact = await contactCreationNotifier.addContact();
+
+                ref
+                    .read(AccountProviders.selectedAccount.notifier)
+                    .refreshRecentTransactions();
+                UIUtil.showSnackbar(
+                  localizations.contactAdded
+                      .replaceAll('%1', newContact.format),
+                  context,
+                  ref,
+                  ArchethicTheme.text,
+                  ArchethicTheme.snackBarShadow,
+                  icon: Symbols.info,
+                );
+                context.pop();
+              }
+            },
+            disabled: !contactCreation.canCreateContact,
+          ),
+        ],
+      ),
       backgroundColor: ArchethicTheme.background,
       appBar: SheetAppBar(
         title: localizations.addContact,
@@ -117,12 +155,12 @@ class AddContactSheetBody extends ConsumerWidget {
             opacity: 0.7,
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 70),
+        child: const Padding(
+          padding: EdgeInsets.only(top: 120),
           child: Column(
             children: <Widget>[
-              const SizedBox(height: 30),
-              const Expanded(
+              SizedBox(height: 30),
+              Expanded(
                 child: ArchethicScrollbar(
                   child: Padding(
                     padding: EdgeInsets.only(left: 10, right: 10, bottom: 30),
@@ -140,51 +178,6 @@ class AddContactSheetBody extends ConsumerWidget {
                     ),
                   ),
                 ),
-              ),
-              Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      AppButtonTinyConnectivity(
-                        localizations.addContact,
-                        Dimens.buttonBottomDimens,
-                        key: const Key('addContact'),
-                        icon: Symbols.add,
-                        onPressed: () async {
-                          final isNameOk =
-                              await contactCreationNotifier.controlName(
-                            context,
-                          );
-
-                          final isAddressOk =
-                              await contactCreationNotifier.controlAddress(
-                            context,
-                          );
-
-                          if (isNameOk && isAddressOk) {
-                            final newContact =
-                                await contactCreationNotifier.addContact();
-
-                            ref
-                                .read(AccountProviders.selectedAccount.notifier)
-                                .refreshRecentTransactions();
-                            UIUtil.showSnackbar(
-                              localizations.contactAdded
-                                  .replaceAll('%1', newContact.format),
-                              context,
-                              ref,
-                              ArchethicTheme.text,
-                              ArchethicTheme.snackBarShadow,
-                              icon: Symbols.info,
-                            );
-                            context.pop();
-                          }
-                        },
-                        disabled: !contactCreation.canCreateContact,
-                      ),
-                    ],
-                  ),
-                ],
               ),
             ],
           ),

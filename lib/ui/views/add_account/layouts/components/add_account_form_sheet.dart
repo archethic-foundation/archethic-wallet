@@ -41,7 +41,28 @@ class AddAccountFormSheet extends ConsumerWidget {
 
     return Scaffold(
       drawerEdgeDragWidth: 0,
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Row(
+        children: <Widget>[
+          AppButtonTinyConnectivity(
+            localizations.addAccount,
+            icon: Symbols.add,
+            Dimens.buttonBottomDimens,
+            key: const Key('addAccount'),
+            onPressed: () async {
+              final isNameOk = addAccountNotifier.controlName(context);
+
+              if (isNameOk) {
+                addAccountNotifier.setAddAccountProcessStep(
+                  AddAccountProcessStep.confirmation,
+                );
+              }
+            },
+            disabled: !addAccount.canAddAccount,
+          ),
+        ],
+      ),
       extendBodyBehindAppBar: true,
       backgroundColor: ArchethicTheme.background,
       appBar: SheetAppBar(
@@ -54,10 +75,7 @@ class AddAccountFormSheet extends ConsumerWidget {
           },
         ),
       ),
-      body: Container(
-        padding: const EdgeInsets.only(
-          bottom: 20,
-        ),
+      body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
@@ -68,7 +86,7 @@ class AddAccountFormSheet extends ConsumerWidget {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: 70),
+          padding: const EdgeInsets.only(top: 120),
           child: Column(
             children: <Widget>[
               Expanded(
@@ -106,31 +124,6 @@ class AddAccountFormSheet extends ConsumerWidget {
                     ),
                   ),
                 ),
-              ),
-              Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      AppButtonTinyConnectivity(
-                        localizations.addAccount,
-                        icon: Symbols.add,
-                        Dimens.buttonBottomDimens,
-                        key: const Key('addAccount'),
-                        onPressed: () async {
-                          final isNameOk =
-                              addAccountNotifier.controlName(context);
-
-                          if (isNameOk) {
-                            addAccountNotifier.setAddAccountProcessStep(
-                              AddAccountProcessStep.confirmation,
-                            );
-                          }
-                        },
-                        disabled: !addAccount.canAddAccount,
-                      ),
-                    ],
-                  ),
-                ],
               ),
             ],
           ),

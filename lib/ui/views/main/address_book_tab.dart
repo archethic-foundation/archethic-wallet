@@ -142,7 +142,7 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).padding.bottom,
+                bottom: MediaQuery.of(context).padding.bottom + 10,
               ),
               child: Row(
                 children: [

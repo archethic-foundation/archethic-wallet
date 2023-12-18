@@ -94,8 +94,37 @@ class _AddAddressState extends ConsumerState<AddAddress> {
     );
     return Scaffold(
       drawerEdgeDragWidth: 0,
-      resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: widget.readOnly == false
+          ? Row(
+              children: <Widget>[
+                AppButtonTiny(
+                  AppButtonTinyType.primary,
+                  localizations.propertyAccessAddAccess,
+                  Dimens.buttonBottomDimens,
+                  key: const Key('addAddress'),
+                  onPressed: () async {
+                    sl.get<HapticUtil>().feedback(
+                          FeedbackType.light,
+                          preferences.activeVibrations,
+                        );
+
+                    ref
+                        .read(
+                          NftCreationFormProvider.nftCreationForm.notifier,
+                        )
+                        .addAddress(
+                          widget.propertyName,
+                          nftCreation.propertyAccessRecipient,
+                          context,
+                        );
+                  },
+                  disabled: !nftCreation.canAddAccess,
+                ),
+              ],
+            )
+          : const SizedBox.shrink(),
       backgroundColor: ArchethicTheme.background,
       appBar: SheetAppBar(
         title: widget.readOnly
@@ -109,10 +138,7 @@ class _AddAddressState extends ConsumerState<AddAddress> {
           },
         ),
       ),
-      body: Container(
-        padding: const EdgeInsets.only(
-          bottom: 20,
-        ),
+      body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
@@ -123,99 +149,54 @@ class _AddAddressState extends ConsumerState<AddAddress> {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: 70),
+          padding: const EdgeInsets.only(top: 120, bottom: 100),
           child: Column(
             children: <Widget>[
               Expanded(
-                child: Container(
-                  margin: const EdgeInsets.only(bottom: 10),
-                  child: ArchethicScrollbar(
-                    child: Column(
-                      children: <Widget>[
+                child: ArchethicScrollbar(
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        widget.propertyName,
+                      ),
+                      if (widget.propertyValue.isNotEmpty)
                         Text(
-                          widget.propertyName,
+                          widget.propertyValue,
                         ),
-                        if (widget.propertyValue.isNotEmpty)
-                          Text(
-                            widget.propertyValue,
+                      if (widget.readOnly == false)
+                        Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Text(
+                            localizations.propertyAccessDescription,
+                            style:
+                                ArchethicThemeStyles.textStyleSize12W100Primary,
+                            textAlign: TextAlign.justify,
                           ),
-                        if (widget.readOnly == false)
-                          Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Text(
-                              localizations.propertyAccessDescription,
-                              style: ArchethicThemeStyles
-                                  .textStyleSize12W100Primary,
-                              textAlign: TextAlign.justify,
-                            ),
-                          )
-                        else
-                          Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Text(
-                              localizations.propertyAccessDescriptionReadOnly,
-                              style: ArchethicThemeStyles
-                                  .textStyleSize12W100Primary,
-                              textAlign: TextAlign.justify,
-                            ),
+                        )
+                      else
+                        Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Text(
+                            localizations.propertyAccessDescriptionReadOnly,
+                            style:
+                                ArchethicThemeStyles.textStyleSize12W100Primary,
+                            textAlign: TextAlign.justify,
                           ),
-                        if (widget.readOnly == false)
-                          const AddPublicKeyTextFieldPk(),
-                        if (widget.readOnly == false)
-                          const SizedBox(
-                            height: 20,
-                          ),
-                        if (widget.readOnly == false)
-                          Row(
-                            children: <Widget>[
-                              AppButtonTiny(
-                                AppButtonTinyType.primary,
-                                localizations.propertyAccessAddAccess,
-                                Dimens.buttonBottomDimens,
-                                key: const Key('addAddress'),
-                                onPressed: () async {
-                                  sl.get<HapticUtil>().feedback(
-                                        FeedbackType.light,
-                                        preferences.activeVibrations,
-                                      );
-
-                                  ref
-                                      .read(
-                                        NftCreationFormProvider
-                                            .nftCreationForm.notifier,
-                                      )
-                                      .addAddress(
-                                        widget.propertyName,
-                                        nftCreation.propertyAccessRecipient,
-                                        context,
-                                      );
-                                },
-                                disabled: !nftCreation.canAddAccess,
-                              ),
-                            ],
-                          ),
-                        GetAddresses(
-                          propertyName: widget.propertyName,
-                          propertyValue: widget.propertyValue,
-                          readOnly: widget.readOnly,
                         ),
-                      ],
-                    ),
+                      if (widget.readOnly == false)
+                        const AddPublicKeyTextFieldPk(),
+                      if (widget.readOnly == false)
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      GetAddresses(
+                        propertyName: widget.propertyName,
+                        propertyValue: widget.propertyValue,
+                        readOnly: widget.readOnly,
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              Row(
-                children: <Widget>[
-                  AppButtonTiny(
-                    AppButtonTinyType.primary,
-                    localizations.close,
-                    Dimens.buttonTopDimens,
-                    key: const Key('close'),
-                    onPressed: () {
-                      context.pop();
-                    },
-                  ),
-                ],
               ),
             ],
           ),

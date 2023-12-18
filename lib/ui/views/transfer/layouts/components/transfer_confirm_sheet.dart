@@ -171,8 +171,28 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
 
     return Scaffold(
       drawerEdgeDragWidth: 0,
-      resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Row(
+        children: <Widget>[
+          AppButtonTinyConnectivity(
+            localizations.confirm,
+            Dimens.buttonTopDimens,
+            key: const Key('confirm'),
+            icon: Symbols.check,
+            onPressed: () async {
+              ShowSendingAnimation.build(
+                context,
+              );
+              await ref
+                  .read(
+                    TransferFormProvider.transferForm.notifier,
+                  )
+                  .send(context);
+            },
+          ),
+        ],
+      ),
       backgroundColor: ArchethicTheme.background,
       appBar: SheetAppBar(
         title: widget.title ?? localizations.transfering,
@@ -180,14 +200,13 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
           key: const Key('back'),
           color: ArchethicTheme.text,
           onPressed: () {
-            context.go(HomePage.routerPage);
+            transferNotifier.setTransferProcessStep(
+              TransferProcessStep.form,
+            );
           },
         ),
       ),
-      body: Container(
-        padding: const EdgeInsets.only(
-          bottom: 20,
-        ),
+      body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
@@ -198,7 +217,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: 70),
+          padding: const EdgeInsets.only(top: 120, bottom: 100),
           child: Column(
             children: <Widget>[
               Expanded(
@@ -220,53 +239,6 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
                       ),
                     ],
                   ),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 10),
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        AppButtonTinyConnectivity(
-                          localizations.confirm,
-                          Dimens.buttonTopDimens,
-                          key: const Key('confirm'),
-                          icon: Symbols.check,
-                          onPressed: () async {
-                            ShowSendingAnimation.build(
-                              context,
-                            );
-                            await ref
-                                .read(
-                                  TransferFormProvider.transferForm.notifier,
-                                )
-                                .send(context);
-                          },
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: <Widget>[
-                        AppButtonTiny(
-                          AppButtonTinyType.primary,
-                          localizations.back,
-                          Dimens.buttonBottomDimens,
-                          key: const Key('back'),
-                          icon: Icon(
-                            Symbols.arrow_back_ios,
-                            color: ArchethicTheme.mainButtonLabel,
-                            size: 14,
-                          ),
-                          onPressed: () {
-                            transferNotifier.setTransferProcessStep(
-                              TransferProcessStep.form,
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
                 ),
               ),
             ],

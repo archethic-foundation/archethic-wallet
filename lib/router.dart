@@ -378,7 +378,8 @@ class RoutesPath {
       builder: (context, state) {
         final args = state.extra! as Map<String, dynamic>;
         return TransferSheet(
-          transferType: args['transferType']! as TransferType,
+          transferType:
+              TransferType.values.byName(args['transferType']! as String),
           recipient: args['recipient']! as TransferRecipient,
           actionButtonTitle: args['actionButtonTitle'] as String?,
           accountToken: args['accountToken'] as AccountToken?,
