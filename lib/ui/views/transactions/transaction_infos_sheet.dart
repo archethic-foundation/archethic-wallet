@@ -25,7 +25,6 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:material_symbols_icons/symbols.dart';
 
 class TransactionInfosSheet extends ConsumerStatefulWidget {
   const TransactionInfosSheet(this.notificationRecipientAddress, {super.key});
@@ -72,7 +71,6 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
           AppButtonTinyConnectivity(
             localizations.viewExplorer,
             Dimens.buttonBottomDimens,
-            icon: Symbols.more_horiz,
             key: const Key('viewExplorer'),
             onPressed: () async {
               UIUtil.showWebview(

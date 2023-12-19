@@ -179,7 +179,6 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
             localizations.confirm,
             Dimens.buttonTopDimens,
             key: const Key('confirm'),
-            icon: Symbols.check,
             onPressed: () async {
               ShowSendingAnimation.build(
                 context,

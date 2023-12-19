@@ -75,58 +75,61 @@ class AccountTab extends ConsumerWidget {
           child: SingleChildScrollView(
             child: Stack(
               children: [
-                Column(
-                  children: <Widget>[
-                    /// BACKGROUND IMAGE
-                    ArchethicScrollbar(
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).padding.top + 10,
-                          bottom: 80,
-                        ),
-                        child: Column(
-                          children: <Widget>[
-                            /// BALANCE
-                            const BalanceInfos(),
-                            const SizedBox(
-                              height: 10,
-                            ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    children: <Widget>[
+                      /// BACKGROUND IMAGE
+                      ArchethicScrollbar(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).padding.top + 10,
+                            bottom: 80,
+                          ),
+                          child: Column(
+                            children: <Widget>[
+                              /// BALANCE
+                              const BalanceInfos(),
+                              const SizedBox(
+                                height: 10,
+                              ),
 
-                            /// PRICE CHART
-                            if (preferences.showPriceChart &&
-                                connectivityStatusProvider ==
-                                    ConnectivityStatus.isConnected)
-                              const BalanceInfosChart(),
+                              /// PRICE CHART
+                              if (preferences.showPriceChart &&
+                                  connectivityStatusProvider ==
+                                      ConnectivityStatus.isConnected)
+                                const BalanceInfosChart(),
 
-                            /// KPI
-                            if (preferences.showPriceChart &&
-                                connectivityStatusProvider ==
-                                    ConnectivityStatus.isConnected)
-                              const BalanceInfosKpi(),
+                              /// KPI
+                              if (preferences.showPriceChart &&
+                                  connectivityStatusProvider ==
+                                      ConnectivityStatus.isConnected)
+                                const BalanceInfosKpi(),
 
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            const MenuWidgetWallet(),
-                            const ExpandablePageView(
-                              children: [
-                                TxList(),
-                                FungiblesTokensListWidget(),
-                              ],
-                            ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              const MenuWidgetWallet(),
+                              const ExpandablePageView(
+                                children: [
+                                  TxList(),
+                                  FungiblesTokensListWidget(),
+                                ],
+                              ),
 
-                            /// BLOG
-                            if (connectivityStatusProvider ==
-                                ConnectivityStatus.isConnected)
-                              const LastArticles(),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                          ],
+                              /// BLOG
+                              if (connectivityStatusProvider ==
+                                  ConnectivityStatus.isConnected)
+                                const LastArticles(),
+                              const SizedBox(
+                                height: 80,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 if (!kIsWeb && (Platform.isAndroid || Platform.isIOS))
                   const AppUpdateButton(),

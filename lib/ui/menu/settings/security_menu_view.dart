@@ -18,6 +18,11 @@ class SecurityMenuView extends ConsumerWidget {
       ),
     );
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      extendBody: true,
+      drawerEdgeDragWidth: 0,
+      resizeToAvoidBottomInset: false,
+      backgroundColor: ArchethicTheme.background,
       appBar: SheetAppBar(
         title: localizations.securityHeader,
         widgetLeft: BackButton(
@@ -32,8 +37,8 @@ class SecurityMenuView extends ConsumerWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: <Color>[
-              ArchethicThemeBase.purple800,
-              ArchethicThemeBase.purple500,
+              ArchethicThemeBase.blue800.withOpacity(0.4),
+              ArchethicThemeBase.blue800.withOpacity(1),
             ],
             begin: Alignment.topLeft,
             end: const Alignment(5, 0),

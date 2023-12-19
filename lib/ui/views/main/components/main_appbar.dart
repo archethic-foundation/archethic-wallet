@@ -64,16 +64,19 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
           ? SystemUiOverlayStyle.dark
           : SystemUiOverlayStyle.light,
       automaticallyImplyLeading: false,
-      leading: IconButton(
-        icon: const Icon(
-          Symbols.settings,
-          weight: IconSize.weightM,
-          opticalSize: IconSize.opticalSizeM,
-          grade: IconSize.gradeM,
+      leading: Padding(
+        padding: const EdgeInsets.only(left: 3),
+        child: IconButton(
+          icon: const Icon(
+            Symbols.settings,
+            weight: IconSize.weightM,
+            opticalSize: IconSize.opticalSizeM,
+            grade: IconSize.gradeM,
+          ),
+          onPressed: () {
+            context.go(SettingsSheetWallet.routerPage);
+          },
         ),
-        onPressed: () {
-          context.go(SettingsSheetWallet.routerPage);
-        },
       ),
       actions: [
         if (preferences.mainScreenCurrentPage == 3)
@@ -93,20 +96,23 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
             },
           ),
         if (preferences.mainScreenCurrentPage == 4)
-          IconButton(
-            icon: const Icon(
-              Symbols.edit_square,
-              weight: IconSize.weightM,
-              opticalSize: IconSize.opticalSizeM,
-              grade: IconSize.gradeM,
+          Padding(
+            padding: const EdgeInsets.only(right: 3),
+            child: IconButton(
+              icon: const Icon(
+                Symbols.edit_square,
+                weight: IconSize.weightM,
+                opticalSize: IconSize.opticalSizeM,
+                grade: IconSize.gradeM,
+              ),
+              onPressed: () async {
+                sl.get<HapticUtil>().feedback(
+                      FeedbackType.light,
+                      preferences.activeVibrations,
+                    );
+                context.go(CreateDiscussionSheet.routerPage);
+              },
             ),
-            onPressed: () async {
-              sl.get<HapticUtil>().feedback(
-                    FeedbackType.light,
-                    preferences.activeVibrations,
-                  );
-              context.go(CreateDiscussionSheet.routerPage);
-            },
           )
         else if (preferences.mainScreenCurrentPage == 0 ||
             preferences.mainScreenCurrentPage == 1 ||
@@ -118,8 +124,14 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
           const IconNetworkWarning()
         else if (hasNotifications)
           preferences.activeNotifications
-              ? const MainAppBarIconNotificationEnabled()
-              : const MainAppBarIconNotificationDisabled(),
+              ? const Padding(
+                  padding: EdgeInsets.only(right: 3),
+                  child: MainAppBarIconNotificationEnabled(),
+                )
+              : const Padding(
+                  padding: EdgeInsets.only(right: 3),
+                  child: MainAppBarIconNotificationDisabled(),
+                ),
       ],
       title: preferences.mainScreenCurrentPage == 1
           ? InkWell(

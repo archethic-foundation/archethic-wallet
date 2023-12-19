@@ -76,9 +76,9 @@ class ArchethicThemeStyles {
     );
   }
 
-  static TextStyle get textStyleSize12W400MainButtonLabelDisabled {
+  static TextStyle get textStyleSize16W400MainButtonLabelDisabled {
     return TextStyle(
-      fontSize: AppFontSizes.size12,
+      fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w400,
       color: ArchethicTheme.mainButtonLabel.withOpacity(0.3),
     );
@@ -334,10 +334,10 @@ class ArchethicThemeStyles {
     );
   }
 
-  static TextStyle get textStyleSize12W400MainButtonLabel {
+  static TextStyle get textStyleSize16W400MainButtonLabel {
     return TextStyle(
-      fontSize: AppFontSizes.size12,
-      fontWeight: FontWeight.w400,
+      fontSize: AppFontSizes.size16,
+      fontWeight: FontWeight.w600,
       color: ArchethicTheme.mainButtonLabel,
     );
   }

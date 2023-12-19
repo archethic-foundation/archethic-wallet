@@ -54,7 +54,6 @@ class _NFTCreationProcessSummaryTabState
                             AppLocalizations.of(context)!.createTheNFT,
                             Dimens.buttonTopDimens,
                             key: const Key('createTheNFT'),
-                            icon: Symbols.diamond,
                             onPressed: () async {
                               final isFileOk =
                                   nftCreationNotifier.controlFile(context);

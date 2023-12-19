@@ -412,7 +412,7 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
       child: Column(
         children: [
           Container(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.only(top: 8, bottom: 8),
             color: Colors.transparent,
             width: MediaQuery.of(context).size.width,
             height: 80,
@@ -462,7 +462,6 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
                   AppButtonTinyConnectivity(
                     localizations.createFungibleToken,
                     Dimens.buttonBottomDimens,
-                    icon: Symbols.add,
                     key: const Key('createTokenFungible'),
                     onPressed: () {
                       context.go(AddTokenSheet.routerPage);

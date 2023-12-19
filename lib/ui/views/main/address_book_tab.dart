@@ -120,7 +120,7 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
                   hintText: localizations.searchField,
                 ),
                 style: ArchethicThemeStyles.textStyleSize12W400Primary,
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.left,
                 controller: searchNameController,
                 autocorrect: false,
                 cursorColor: ArchethicTheme.text,
@@ -150,7 +150,6 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
                     localizations.addContact,
                     Dimens.buttonBottomDimens,
                     key: const Key('addContact'),
-                    icon: Symbols.add,
                     onPressed: () {
                       context.push(AddContactSheet.routerPage);
                     },

@@ -227,7 +227,6 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                               localizations.send,
                               Dimens.buttonTopDimens,
                               key: const Key('sendNFT'),
-                              icon: Symbols.call_made,
                               onPressed: () async {
                                 sl.get<HapticUtil>().feedback(
                                       FeedbackType.light,
@@ -291,7 +290,6 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
                   AppButtonTinyConnectivity(
                     localizations.viewExplorer,
                     Dimens.buttonBottomDimens,
-                    icon: Symbols.more_horiz,
                     key: const Key('viewExplorer'),
                     onPressed: () async {
                       UIUtil.showWebview(

@@ -157,11 +157,6 @@ class _NFTCreationProcessImportTabFormUrlState
                       AppButtonTiny(
                         AppButtonTinyType.primary,
                         localizations.confirm,
-                        icon: Icon(
-                          Symbols.check,
-                          color: ArchethicTheme.mainButtonLabel,
-                          size: 14,
-                        ),
                         Dimens.buttonBottomDimens,
                         key: const Key('confirm'),
                         onPressed: () {
@@ -174,12 +169,6 @@ class _NFTCreationProcessImportTabFormUrlState
                         localizations.confirm,
                         Dimens.buttonBottomDimens,
                         key: const Key('confirm'),
-                        icon: Icon(
-                          Symbols.check,
-                          color:
-                              ArchethicTheme.mainButtonLabel.withOpacity(0.3),
-                          size: 14,
-                        ),
                         onPressed: () {},
                       ),
                   ],

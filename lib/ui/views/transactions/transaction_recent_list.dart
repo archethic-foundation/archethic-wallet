@@ -76,7 +76,7 @@ class TxListLine extends ConsumerWidget {
         color: Colors.transparent,
         width: MediaQuery.of(context).size.width,
         child: Padding(
-          padding: const EdgeInsets.only(left: 5, right: 5, top: 6),
+          padding: const EdgeInsets.only(top: 6),
           child: TransactionDetail(
             transaction: recentTransaction,
           ),
@@ -93,38 +93,36 @@ class _TransactionsEmpty extends ConsumerWidget {
       alignment: Alignment.center,
       color: Colors.transparent,
       width: MediaQuery.of(context).size.width,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 5, right: 5, top: 6),
-        child: Card(
-          shape: RoundedRectangleBorder(
-            side: BorderSide(
-              color: ArchethicTheme.backgroundFungiblesTokensListCard,
-            ),
-            borderRadius: BorderRadius.circular(10),
+      padding: const EdgeInsets.only(top: 6),
+      child: Card(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: ArchethicTheme.backgroundFungiblesTokensListCard,
           ),
-          elevation: 0,
-          color: ArchethicTheme.backgroundFungiblesTokensListCard,
-          child: Container(
-            padding: const EdgeInsets.all(9.5),
-            width: MediaQuery.of(context).size.width,
-            alignment: Alignment.center,
-            child: Row(
-              children: [
-                const Icon(
-                  Symbols.info,
-                  size: 18,
-                  weight: IconSize.weightM,
-                  opticalSize: IconSize.opticalSizeM,
-                  grade: IconSize.gradeM,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  AppLocalizations.of(context)!
-                      .recentTransactionsNoTransactionYet,
-                  style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                ),
-              ],
-            ),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        elevation: 0,
+        color: ArchethicTheme.backgroundFungiblesTokensListCard,
+        child: Container(
+          padding: const EdgeInsets.all(9.5),
+          width: MediaQuery.of(context).size.width,
+          alignment: Alignment.center,
+          child: Row(
+            children: [
+              const Icon(
+                Symbols.info,
+                size: 18,
+                weight: IconSize.weightM,
+                opticalSize: IconSize.opticalSizeM,
+                grade: IconSize.gradeM,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                AppLocalizations.of(context)!
+                    .recentTransactionsNoTransactionYet,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
+              ),
+            ],
           ),
         ),
       ),

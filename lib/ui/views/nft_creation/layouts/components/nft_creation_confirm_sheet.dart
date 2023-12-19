@@ -158,7 +158,6 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
             localizations.confirm,
             Dimens.buttonTopDimens,
             key: const Key('confirm'),
-            icon: Symbols.check,
             onPressed: () async {
               ShowSendingAnimation.build(
                 context,

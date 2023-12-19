@@ -53,7 +53,17 @@ class _SettingsSheetWalletMobileState extends ConsumerState<SettingsSheetWallet>
     final localizations = AppLocalizations.of(context)!;
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      extendBody: true,
+      drawerEdgeDragWidth: 0,
+      resizeToAvoidBottomInset: false,
+      backgroundColor: ArchethicTheme.background,
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        systemOverlayStyle: ArchethicTheme.brightness == Brightness.light
+            ? SystemUiOverlayStyle.dark
+            : SystemUiOverlayStyle.light,
         title: AutoSizeText(
           localizations.settings,
           style: ArchethicThemeStyles.textStyleSize24W700Primary,

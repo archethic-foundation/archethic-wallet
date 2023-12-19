@@ -17,7 +17,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:material_symbols_icons/symbols.dart';
 
 class AppSeedBackupSheet extends ConsumerWidget {
   const AppSeedBackupSheet(this.mnemonic, this.seed, {super.key});
@@ -44,7 +43,6 @@ class AppSeedBackupSheet extends ConsumerWidget {
                 children: <Widget>[
                   AppButtonTinyConnectivity(
                     localizations.recoveryPhraseSave,
-                    icon: Symbols.note_add,
                     Dimens.buttonBottomDimens,
                     key: const Key('saveRecoveryPhrase'),
                     onPressed: () async {

@@ -5,6 +5,7 @@ import 'dart:math' as math;
 import 'package:aewallet/application/blog.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
@@ -56,34 +57,33 @@ class LastArticlesState extends ConsumerState<LastArticles> {
       children: [
         SizedBox(
           height: 50,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  AppLocalizations.of(context)!.blogHeader,
-                  style: ArchethicThemeStyles.textStyleSize14W600Primary,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                AppLocalizations.of(context)!.blogHeader,
+                style: ArchethicThemeStyles.textStyleSize14W600Primary,
+              ),
+              InkWell(
+                onTap: () {
+                  UIUtil.showWebview(context, blogUrl, '');
+                },
+                child: const IconDataWidget(
+                  icon: Symbols.open_in_new,
+                  width: AppFontSizes.size20,
+                  height: AppFontSizes.size20,
                 ),
-                InkWell(
-                  onTap: () {
-                    UIUtil.showWebview(context, blogUrl, '');
-                  },
-                  child: const IconDataWidget(
-                    icon: Symbols.open_in_new,
-                    width: AppFontSizes.size20,
-                    height: AppFontSizes.size20,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
         asyncArticlesList.map(
           data: (data) {
             return SizedBox(
-              height: 280,
+              width: MediaQuery.of(context).size.width,
+              height: 250,
               child: PageView.builder(
+                padEnds: false,
                 controller: pageController,
                 itemCount: data.value.length,
                 itemBuilder: (context, index) {
@@ -95,18 +95,17 @@ class LastArticlesState extends ConsumerState<LastArticles> {
                         '',
                       );
                     },
-                    child: Center(
-                      child: SlidingCard(
-                        name: data.value[index].title,
-                        date: DateFormat.yMMMEd(
-                          Localizations.localeOf(context).languageCode,
-                        ).format(
-                          data.value[index].publishedAt!.toLocal(),
-                        ),
-                        author: data.value[index].authors![0].name,
-                        assetName: data.value[index].featureImage,
-                        offset: pageOffset - index,
+                    child: SlidingCard(
+                      index: index,
+                      name: data.value[index].title,
+                      date: DateFormat.yMMMEd(
+                        Localizations.localeOf(context).languageCode,
+                      ).format(
+                        data.value[index].publishedAt!.toLocal(),
                       ),
+                      author: data.value[index].authors![0].name,
+                      assetName: data.value[index].featureImage,
+                      offset: pageOffset - index,
                     ),
                   );
                 },
@@ -163,12 +162,14 @@ class _LastArticlesNotShowed extends StatelessWidget {
 class SlidingCard extends ConsumerWidget {
   const SlidingCard({
     super.key,
+    @required this.index,
     @required this.name,
     @required this.date,
     @required this.assetName,
     @required this.offset,
     @required this.author,
   });
+  final int? index;
   final String? name;
   final String? date;
   final String? assetName;
@@ -183,8 +184,10 @@ class SlidingCard extends ConsumerWidget {
       child: Card(
         elevation: 5,
         shadowColor: Colors.black,
-        margin: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
-        color: ArchethicTheme.backgroundDark,
+        margin: index == 0
+            ? const EdgeInsets.only(right: 8, bottom: 8)
+            : const EdgeInsets.only(left: 8, right: 8, bottom: 8),
+        color: ArchethicThemeBase.purple800,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
           side: const BorderSide(color: Colors.white10),
@@ -259,7 +262,7 @@ class CardContent extends ConsumerWidget {
           Transform.translate(
             offset: Offset(8 * offset!, 0),
             child: Text(
-              name!,
+              name!.replaceAll(RegExp(r'\s+'), ' '),
               style: ArchethicThemeStyles.textStyleSize14W600Primary,
             ),
           ),

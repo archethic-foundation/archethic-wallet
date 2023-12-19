@@ -17,7 +17,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:material_symbols_icons/symbols.dart';
 
 class TransferFormSheet extends ConsumerWidget {
   const TransferFormSheet({
@@ -49,7 +48,6 @@ class TransferFormSheet extends ConsumerWidget {
             actionButtonTitle ?? localizations.send,
             Dimens.buttonTopDimens,
             key: const Key('send'),
-            icon: Symbols.call_made,
             onPressed: () async {
               final transferNotifier =
                   ref.read(TransferFormProvider.transferForm.notifier);

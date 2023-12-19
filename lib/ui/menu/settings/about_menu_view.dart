@@ -12,6 +12,10 @@ class AboutMenuView extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      extendBody: true,
+      drawerEdgeDragWidth: 0,
+      resizeToAvoidBottomInset: false,
       backgroundColor: ArchethicTheme.background,
       appBar: SheetAppBar(
         title: localizations.aboutHeader,
@@ -27,8 +31,8 @@ class AboutMenuView extends ConsumerWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: <Color>[
-              ArchethicThemeBase.purple800,
-              ArchethicThemeBase.purple500,
+              ArchethicThemeBase.blue800.withOpacity(0.4),
+              ArchethicThemeBase.blue800.withOpacity(1),
             ],
             begin: Alignment.topLeft,
             end: const Alignment(5, 0),

@@ -15,7 +15,8 @@ class ArchethicRefreshIndicator extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return RefreshIndicator(
       backgroundColor: ArchethicTheme.backgroundDark,
-      edgeOffset: 35,
+      strokeWidth: 1,
+      edgeOffset: 70,
       onRefresh: onRefresh,
       child: child,
     );

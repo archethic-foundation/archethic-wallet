@@ -142,7 +142,6 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet> {
             localizations.confirm,
             Dimens.buttonTopDimens,
             key: const Key('confirm'),
-            icon: Symbols.check,
             onPressed: () async {
               ShowSendingAnimation.build(
                 context,

@@ -83,9 +83,8 @@ class AppButtonState extends State<AppButton> {
         shadows: [
           BoxShadow(
             color: Colors.black.withOpacity(0.5),
-            blurRadius: 7,
-            spreadRadius: 1,
-            offset: const Offset(0, 5),
+            blurRadius: 5,
+            offset: const Offset(0, 2),
           ),
         ],
       ),

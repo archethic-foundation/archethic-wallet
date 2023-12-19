@@ -173,18 +173,6 @@ class _CreateDiscussionValidationSheetState
                         localizations.createDiscussion,
                         Dimens.none,
                         key: const Key('addMessengerDiscussion'),
-                        icon: Icon(
-                          Symbols.add,
-                          weight: IconSize.weightM,
-                          opticalSize: IconSize.opticalSizeM,
-                          grade: IconSize.gradeM,
-                          color: formState.canSubmit
-                              ? ArchethicTheme.mainButtonLabel
-                              : ArchethicThemeStyles
-                                  .textStyleSize18W600MainButtonLabelDisabled
-                                  .color,
-                          size: 14,
-                        ),
                         disabled: formState.canSubmit == false,
                         onPressed: () async {
                           ShowSendingAnimation.build(

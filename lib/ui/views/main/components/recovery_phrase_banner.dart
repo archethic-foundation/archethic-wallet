@@ -25,7 +25,7 @@ class RecoveryPhraseBanner extends ConsumerWidget {
       data: (data) => data.value == false
           ? SafeArea(
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 10),
+                padding: const EdgeInsets.only(left: 15, right: 15, bottom: 10),
                 child: InkWell(
                   onTap: () async {
                     final preferences = ref.read(SettingsProviders.settings);

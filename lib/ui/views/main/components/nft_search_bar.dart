@@ -184,7 +184,7 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
             hintText: localizations.searchNFTHint,
           ),
           style: ArchethicThemeStyles.textStyleSize12W400Primary,
-          textAlign: TextAlign.center,
+          textAlign: TextAlign.left,
           controller: searchController,
           autocorrect: false,
           maxLines: 2,
@@ -204,14 +204,6 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                   localizations.search,
                   Dimens.buttonTopDimens,
                   key: const Key('search'),
-                  icon: Icon(
-                    Symbols.search,
-                    color: ArchethicTheme.text30,
-                    size: 14,
-                    weight: IconSize.weightM,
-                    opticalSize: IconSize.opticalSizeM,
-                    grade: IconSize.gradeM,
-                  ),
                   showProgressIndicator: true,
                   onPressed: () {},
                 )
@@ -222,14 +214,6 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                       localizations.search,
                       Dimens.buttonTopDimens,
                       key: const Key('search'),
-                      icon: Icon(
-                        Symbols.search,
-                        color: ArchethicTheme.text,
-                        size: 14,
-                        weight: IconSize.weightM,
-                        opticalSize: IconSize.opticalSizeM,
-                        grade: IconSize.gradeM,
-                      ),
                       showProgressIndicator: nftSearchBar.loading,
                       onPressed: () async {
                         sl.get<HapticUtil>().feedback(
@@ -253,14 +237,6 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                       localizations.search,
                       Dimens.buttonTopDimens,
                       key: const Key('search'),
-                      icon: Icon(
-                        Symbols.search,
-                        color: ArchethicTheme.text30,
-                        size: 14,
-                        weight: IconSize.weightM,
-                        opticalSize: IconSize.opticalSizeM,
-                        grade: IconSize.gradeM,
-                      ),
                       onPressed: () {},
                     ),
         ),

@@ -45,7 +45,7 @@ class NFTList extends ConsumerWidget {
     if (accountTokenList.isEmpty) {
       return SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(top: 40, left: 10, right: 10),
+          padding: const EdgeInsets.only(top: 140, left: 10, right: 10),
           child: Column(
             children: [
               ClipRRect(

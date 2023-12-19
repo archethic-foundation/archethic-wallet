@@ -96,8 +96,8 @@ class _IntroNewWalletDisclaimerState
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Container(
-                                  margin: EdgeInsetsDirectional.only(
-                                    start: smallScreen(context) ? 15 : 20,
+                                  margin: const EdgeInsets.only(
+                                    left: 20,
                                   ),
                                   height: 50,
                                   width: 50,
@@ -123,9 +123,9 @@ class _IntroNewWalletDisclaimerState
                               ],
                             ),
                             Container(
-                              margin: const EdgeInsetsDirectional.only(
-                                start: 20,
-                                end: 20,
+                              margin: const EdgeInsets.only(
+                                left: 20,
+                                right: 20,
                               ),
                               alignment: Alignment.bottomLeft,
                               child: Column(
@@ -254,7 +254,7 @@ class _IntroNewWalletDisclaimerState
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         AppButtonTinyConnectivity(
-                          localizations.ok,
+                          localizations.next,
                           Dimens.buttonBottomDimens,
                           key: const Key('okButton'),
                           onPressed: () {

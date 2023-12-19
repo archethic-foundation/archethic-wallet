@@ -53,50 +53,39 @@ class BalanceInfos extends ConsumerWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.95,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: primaryCurrency.primaryCurrency ==
-                      AvailablePrimaryCurrencyEnum.native
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: AutoSizeText(
-                            AccountBalance.cryptoCurrencyLabel,
-                            style:
-                                ArchethicThemeStyles.textStyleSize35W900Primary,
-                          ),
-                        ),
-                        if (settings.showBalances)
-                          _BalanceInfosNativeShowed(
-                            accountSelectedBalance: accountSelectedBalance,
-                          )
-                        else
-                          const _BalanceInfosNotShowed(),
-                      ],
-                    )
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: AutoSizeText(
-                            settings.currency.name,
-                            style:
-                                ArchethicThemeStyles.textStyleSize35W900Primary,
-                          ),
-                        ),
-                        if (settings.showBalances)
-                          _BalanceInfosFiatShowed(
-                            accountSelectedBalance: accountSelectedBalance,
-                          )
-                        else
-                          const _BalanceInfosNotShowed(),
-                      ],
-                    ),
-            ),
+            width: MediaQuery.of(context).size.width,
+            child: primaryCurrency.primaryCurrency ==
+                    AvailablePrimaryCurrencyEnum.native
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      AutoSizeText(
+                        AccountBalance.cryptoCurrencyLabel,
+                        style: ArchethicThemeStyles.textStyleSize35W900Primary,
+                      ),
+                      if (settings.showBalances)
+                        _BalanceInfosNativeShowed(
+                          accountSelectedBalance: accountSelectedBalance,
+                        )
+                      else
+                        const _BalanceInfosNotShowed(),
+                    ],
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      AutoSizeText(
+                        settings.currency.name,
+                        style: ArchethicThemeStyles.textStyleSize35W900Primary,
+                      ),
+                      if (settings.showBalances)
+                        _BalanceInfosFiatShowed(
+                          accountSelectedBalance: accountSelectedBalance,
+                        )
+                      else
+                        const _BalanceInfosNotShowed(),
+                    ],
+                  ),
           ),
         ),
       ),

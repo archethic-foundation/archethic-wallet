@@ -20,7 +20,6 @@ class AppButtonTinyConnectivity extends ConsumerWidget {
     required this.onPressed,
     this.showProgressIndicator = false,
     this.disabled = false,
-    this.icon,
     this.width = 400,
     super.key,
   });
@@ -30,7 +29,6 @@ class AppButtonTinyConnectivity extends ConsumerWidget {
   final List<double> dimens;
   final Function onPressed;
   final bool disabled;
-  final IconData? icon;
   final double? width;
 
   @override
@@ -50,13 +48,6 @@ class AppButtonTinyConnectivity extends ConsumerWidget {
       buttonText,
       dimens,
       width: width,
-      icon: Icon(
-        icon,
-        color: (!disabled && isConnected)
-            ? ArchethicTheme.mainButtonLabel
-            : ArchethicTheme.mainButtonLabel.withOpacity(0.3),
-        size: 14,
-      ),
       key: key,
       onPressed: isConnected && !disabled ? onPressed : null,
       disabled: disabled,
@@ -73,7 +64,6 @@ class AppButtonTiny extends ConsumerWidget {
     this.onPressed,
     this.showProgressIndicator = false,
     this.disabled = false,
-    this.icon,
     this.width = 400,
     super.key,
   });
@@ -84,7 +74,6 @@ class AppButtonTiny extends ConsumerWidget {
   final List<double> dimens;
   final Function? onPressed;
   final bool disabled;
-  final Icon? icon;
   final double? width;
 
   @override
@@ -100,7 +89,6 @@ class AppButtonTiny extends ConsumerWidget {
         onPressed: onPressed,
         showProgressIndicator: showProgressIndicator,
         disabled: disabled,
-        icon: icon,
         width: width,
       ),
     );
@@ -115,7 +103,6 @@ class AppButtonTinyWithoutExpanded extends ConsumerWidget {
     this.onPressed,
     this.showProgressIndicator = false,
     this.disabled = false,
-    this.icon,
     this.width = 400,
     super.key,
   });
@@ -126,7 +113,6 @@ class AppButtonTinyWithoutExpanded extends ConsumerWidget {
   final List<double> dimens;
   final Function? onPressed;
   final bool disabled;
-  final Icon? icon;
   final double? width;
 
   @override
@@ -163,25 +149,18 @@ class AppButtonTinyWithoutExpanded extends ConsumerWidget {
               ),
             ],
           ),
-          height: 35,
+          height: 50,
           margin: EdgeInsetsDirectional.fromSTEB(
             dimens[0],
             dimens[1],
             dimens[2],
             dimens[3],
           ),
-          child: icon == null
-              ? _NoIconButton(
-                  showProgressIndicator: showProgressIndicator,
-                  buttonText: buttonText,
-                  onPressed: disabled == true ? null : handlePressed,
-                )
-              : _IconButton(
-                  buttonText: buttonText,
-                  onPressed: disabled == true ? null : handlePressed,
-                  icon: icon,
-                  showProgressIndicator: showProgressIndicator,
-                ),
+          child: _NoIconButton(
+            showProgressIndicator: showProgressIndicator,
+            buttonText: buttonText,
+            onPressed: disabled == true ? null : handlePressed,
+          ),
         );
       case AppButtonTinyType.primaryOutline:
         return Container(
@@ -190,24 +169,18 @@ class AppButtonTinyWithoutExpanded extends ConsumerWidget {
             gradient: ArchethicTheme.gradientMainButton,
             shape: const StadiumBorder(),
           ),
-          height: 35,
+          height: 50,
           margin: EdgeInsetsDirectional.fromSTEB(
             dimens[0],
             dimens[1],
             dimens[2],
             dimens[3],
           ),
-          child: icon == null
-              ? _NoIconButton(
-                  showProgressIndicator: showProgressIndicator,
-                  buttonText: buttonText,
-                  onPressed: disabled == true ? null : handlePressed,
-                )
-              : _IconButtonOutline(
-                  buttonText: buttonText,
-                  onPressed: disabled == true ? null : handlePressed,
-                  icon: icon,
-                ),
+          child: _NoIconButton(
+            showProgressIndicator: showProgressIndicator,
+            buttonText: buttonText,
+            onPressed: disabled == true ? null : handlePressed,
+          ),
         );
     }
   } //
@@ -244,8 +217,8 @@ class _NoIconButton extends ConsumerWidget {
             textAlign: TextAlign.center,
             style: onPressed == null
                 ? ArchethicThemeStyles
-                    .textStyleSize12W400MainButtonLabelDisabled
-                : ArchethicThemeStyles.textStyleSize12W400MainButtonLabel,
+                    .textStyleSize16W400MainButtonLabelDisabled
+                : ArchethicThemeStyles.textStyleSize16W400MainButtonLabel,
             maxLines: 1,
             stepGranularity: 0.5,
           ),
@@ -255,109 +228,12 @@ class _NoIconButton extends ConsumerWidget {
               dimension: 10,
               child: CircularProgressIndicator(
                 color: ArchethicThemeStyles
-                    .textStyleSize12W400MainButtonLabel.color,
+                    .textStyleSize16W400MainButtonLabel.color,
                 strokeWidth: 2,
               ),
             ),
         ],
       ),
-    );
-  }
-}
-
-class _IconButton extends ConsumerWidget {
-  const _IconButton({
-    required this.showProgressIndicator,
-    required this.buttonText,
-    required this.onPressed,
-    required this.icon,
-  });
-
-  final bool showProgressIndicator;
-  final String buttonText;
-  final Function()? onPressed;
-  final Widget? icon;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return TextButton(
-      key: key,
-      style: TextButton.styleFrom(
-        foregroundColor: ArchethicTheme.text,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-      onPressed: onPressed,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (showProgressIndicator)
-            Padding(
-              padding: const EdgeInsets.only(right: 5),
-              child: SizedBox.square(
-                dimension: 8,
-                child: CircularProgressIndicator(
-                  color: onPressed == null
-                      ? ArchethicThemeStyles
-                          .textStyleSize12W400MainButtonLabelDisabled.color
-                      : ArchethicThemeStyles
-                          .textStyleSize12W400MainButtonLabel.color,
-                  strokeWidth: 1,
-                ),
-              ),
-            )
-          else
-            onPressed == null ? Opacity(opacity: 0.3, child: icon) : icon!,
-          const SizedBox(
-            width: 5,
-          ),
-          AutoSizeText(
-            buttonText,
-            textAlign: TextAlign.center,
-            style: onPressed == null
-                ? ArchethicThemeStyles
-                    .textStyleSize12W400MainButtonLabelDisabled
-                : ArchethicThemeStyles.textStyleSize12W400MainButtonLabel,
-            maxLines: 1,
-            stepGranularity: 0.5,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _IconButtonOutline extends ConsumerWidget {
-  const _IconButtonOutline({
-    required this.buttonText,
-    required this.onPressed,
-    required this.icon,
-  });
-
-  final String buttonText;
-  final Function()? onPressed;
-  final Widget? icon;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return TextButton.icon(
-      key: key,
-      style: TextButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-      icon: icon!,
-      label: AutoSizeText(
-        buttonText,
-        textAlign: TextAlign.center,
-        style: ArchethicThemeStyles.textStyleSize12W400MainButtonLabelDisabled,
-        maxLines: 1,
-        stepGranularity: 0.5,
-      ),
-      onPressed: onPressed,
     );
   }
 }

@@ -17,7 +17,6 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
-import 'package:material_symbols_icons/symbols.dart';
 
 class NFTListPerCategory extends ConsumerWidget {
   const NFTListPerCategory({
@@ -49,7 +48,6 @@ class NFTListPerCategory extends ConsumerWidget {
             localizations.createNFT,
             Dimens.buttonBottomDimens,
             key: const Key('createNFT'),
-            icon: Symbols.diamond,
             onPressed: () async {
               sl.get<HapticUtil>().feedback(
                     FeedbackType.light,

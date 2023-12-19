@@ -18,7 +18,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:material_symbols_icons/symbols.dart';
 
 part 'add_account_textfield_name.dart';
 
@@ -47,7 +46,6 @@ class AddAccountFormSheet extends ConsumerWidget {
         children: <Widget>[
           AppButtonTinyConnectivity(
             localizations.addAccount,
-            icon: Symbols.add,
             Dimens.buttonBottomDimens,
             key: const Key('addAccount'),
             onPressed: () async {

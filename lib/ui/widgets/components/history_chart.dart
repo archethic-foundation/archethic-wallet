@@ -192,13 +192,10 @@ class HistoryChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: LineChart(
-        _chartData,
-        curve: Curves.decelerate,
-        duration: const Duration(milliseconds: 1000),
-      ),
+    return LineChart(
+      _chartData,
+      curve: Curves.decelerate,
+      duration: const Duration(milliseconds: 1000),
     );
   }
 }

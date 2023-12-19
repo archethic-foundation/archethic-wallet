@@ -466,7 +466,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         AppButtonTinyConnectivity(
-                          localizations.ok,
+                          localizations.next,
                           Dimens.buttonTopDimens,
                           key: const Key('seedWordsOKbutton'),
                           onPressed: () async {

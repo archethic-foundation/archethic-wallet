@@ -99,7 +99,6 @@ class AddContactSheetBody extends ConsumerWidget {
             localizations.addContact,
             Dimens.buttonBottomDimens,
             key: const Key('addContact'),
-            icon: Symbols.add,
             onPressed: () async {
               final isNameOk = await contactCreationNotifier.controlName(
                 context,

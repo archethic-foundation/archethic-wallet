@@ -49,54 +49,51 @@ class BalanceInfosKpi extends ConsumerWidget {
         height: 30,
         width: MediaQuery.of(context).size.width,
         alignment: Alignment.bottomLeft,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 10, top: 5),
-          child: Row(
-            children: <Widget>[
-              AutoSizeText(
-                '1 ${accountSelectedBalance.nativeTokenName} = ${CurrencyUtil.getAmountPlusSymbol(selectedCurrency.name, currencyMarketPrice.amount)}',
-                style: ArchethicThemeStyles.textStyleSize12W100Primary,
+        child: Row(
+          children: <Widget>[
+            AutoSizeText(
+              '1 ${accountSelectedBalance.nativeTokenName} = ${CurrencyUtil.getAmountPlusSymbol(selectedCurrency.name, currencyMarketPrice.amount)}',
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            const _PriceEvolutionIndicator(),
+            const SizedBox(
+              width: 10,
+            ),
+            AutoSizeText(
+              selectedPriceHistoryInterval.getChartOptionLabel(
+                context,
               ),
-              const SizedBox(
-                width: 10,
-              ),
-              const _PriceEvolutionIndicator(),
-              const SizedBox(
-                width: 10,
-              ),
-              AutoSizeText(
-                selectedPriceHistoryInterval.getChartOptionLabel(
-                  context,
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            if (currencyMarketPrice.useOracle)
+              InkWell(
+                onTap: () {
+                  sl.get<HapticUtil>().feedback(
+                        FeedbackType.light,
+                        preferences.activeVibrations,
+                      );
+                  AppDialogs.showInfoDialog(
+                    context,
+                    ref,
+                    localizations.information,
+                    localizations.currencyOracleInfo,
+                  );
+                },
+                child: Icon(
+                  Symbols.info,
+                  color: ArchethicTheme.text,
+                  size: 15,
                 ),
-                style: ArchethicThemeStyles.textStyleSize12W100Primary,
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              if (currencyMarketPrice.useOracle)
-                InkWell(
-                  onTap: () {
-                    sl.get<HapticUtil>().feedback(
-                          FeedbackType.light,
-                          preferences.activeVibrations,
-                        );
-                    AppDialogs.showInfoDialog(
-                      context,
-                      ref,
-                      localizations.information,
-                      localizations.currencyOracleInfo,
-                    );
-                  },
-                  child: Icon(
-                    Symbols.info,
-                    color: ArchethicTheme.text,
-                    size: 15,
-                  ),
-                )
-              else
-                const SizedBox(),
-            ],
-          ),
+              )
+            else
+              const SizedBox(),
+          ],
         ),
       ),
     );

@@ -146,11 +146,6 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
             localizations.confirm,
             Dimens.buttonTopDimens,
             key: const Key('confirm'),
-            icon: Icon(
-              Symbols.check,
-              color: ArchethicTheme.mainButtonLabel,
-              size: 14,
-            ),
             onPressed: () async {
               ShowSendingAnimation.build(
                 context,

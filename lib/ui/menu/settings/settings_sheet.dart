@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/authentication/authentication.dart';
@@ -46,6 +47,7 @@ import 'package:aewallet/util/mnemonics.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';

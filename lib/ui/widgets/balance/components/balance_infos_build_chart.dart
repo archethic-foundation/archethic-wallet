@@ -33,56 +33,49 @@ class BalanceInfosChart extends ConsumerWidget {
           height: MediaQuery.of(context).size.height * 0.08,
           child: Stack(
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left: 10, right: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      localizations.priceChartHeader,
-                      style: ArchethicThemeStyles.textStyleSize14W600Primary,
-                    ),
-                    const IconDataWidget(
-                      icon: Symbols.show_chart,
-                      width: AppFontSizes.size20,
-                      height: AppFontSizes.size20,
-                    ),
-                  ],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    localizations.priceChartHeader,
+                    style: ArchethicThemeStyles.textStyleSize14W600Primary,
+                  ),
+                  const IconDataWidget(
+                    icon: Symbols.show_chart,
+                    width: AppFontSizes.size20,
+                    height: AppFontSizes.size20,
+                  ),
+                ],
               ),
               FadeIn(
                 duration: const Duration(milliseconds: 1000),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
-                  child: chartInfos != null
-                      ? HistoryChart(
-                          intervals: chartInfos,
-                          gradientColors: LinearGradient(
-                            colors: <Color>[
-                              ArchethicTheme.text20,
-                              ArchethicTheme.text,
-                            ],
-                          ),
-                          gradientColorsBar: LinearGradient(
-                            colors: <Color>[
-                              ArchethicTheme.text.withOpacity(0.9),
-                              ArchethicTheme.text.withOpacity(0),
-                            ],
-                            begin: Alignment.center,
-                            end: Alignment.bottomCenter,
-                          ),
-                          tooltipBg: ArchethicTheme.backgroundDark,
-                          tooltipText:
-                              ArchethicThemeStyles.textStyleSize12W100Primary,
-                          axisTextStyle:
-                              ArchethicThemeStyles.textStyleSize12W100Primary,
-                          optionChartSelected:
-                              settings.priceChartIntervalOption,
-                          currency: settings.currency.name,
-                          completeChart: false,
-                        )
-                      : const SizedBox(),
-                ),
+                child: chartInfos != null
+                    ? HistoryChart(
+                        intervals: chartInfos,
+                        gradientColors: LinearGradient(
+                          colors: <Color>[
+                            ArchethicTheme.text20,
+                            ArchethicTheme.text,
+                          ],
+                        ),
+                        gradientColorsBar: LinearGradient(
+                          colors: <Color>[
+                            ArchethicTheme.text.withOpacity(0.9),
+                            ArchethicTheme.text.withOpacity(0),
+                          ],
+                          begin: Alignment.center,
+                          end: Alignment.bottomCenter,
+                        ),
+                        tooltipBg: ArchethicTheme.backgroundDark,
+                        tooltipText:
+                            ArchethicThemeStyles.textStyleSize12W100Primary,
+                        axisTextStyle:
+                            ArchethicThemeStyles.textStyleSize12W100Primary,
+                        optionChartSelected: settings.priceChartIntervalOption,
+                        currency: settings.currency.name,
+                        completeChart: false,
+                      )
+                    : const SizedBox(),
               ),
             ],
           ),

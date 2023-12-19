@@ -141,14 +141,6 @@ class AddDiscussionSheet extends ConsumerWidget {
                   localizations.addRemoteMessengerGroup,
                   Dimens.buttonBottomDimens,
                   key: const Key('addRemoteMessengerGroup'),
-                  icon: Icon(
-                    Symbols.add,
-                    color: ArchethicTheme.mainButtonLabel,
-                    size: 14,
-                    weight: IconSize.weightM,
-                    opticalSize: IconSize.opticalSizeM,
-                    grade: IconSize.gradeM,
-                  ),
                   onPressed: () async {
                     await ref
                         .read(MessengerProviders.discussions.notifier)

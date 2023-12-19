@@ -29,27 +29,24 @@ class InfoBanner extends ConsumerWidget {
       color: Colors.transparent,
       width: MediaQuery.of(context).size.width,
       height: height,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 5),
-        child: Card(
-          shape: RoundedRectangleBorder(
-            side: BorderSide(
-              color: ArchethicTheme.text.withOpacity(0.4),
-            ),
-            borderRadius: BorderRadius.circular(10),
+      child: Card(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: ArchethicTheme.backgroundFungiblesTokensListCard,
           ),
-          elevation: 0,
-          color: ArchethicTheme.background,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            width: MediaQuery.of(context).size.width,
-            alignment: Alignment.center,
-            child: Text(
-              message,
-              style: TextStyle(
-                color: ArchethicTheme.text,
-                fontSize: fontSize,
-              ),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        elevation: 0,
+        color: ArchethicTheme.background.withOpacity(1),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          width: MediaQuery.of(context).size.width,
+          alignment: Alignment.center,
+          child: Text(
+            message,
+            style: TextStyle(
+              color: ArchethicTheme.text,
+              fontSize: fontSize,
             ),
           ),
         ),
