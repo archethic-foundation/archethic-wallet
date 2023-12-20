@@ -100,6 +100,7 @@ class AuthentificationMethodDialog {
                         }
                         break;
                       case AuthMethod.pin:
+                        if (context.canPop()) context.pop();
                         final auth = (await context.push(
                           PinScreen.routerPage,
                           extra: {
@@ -122,6 +123,7 @@ class AuthentificationMethodDialog {
                         }
                         break;
                       case AuthMethod.password:
+                        if (context.canPop()) context.pop();
                         final auth = (await context.push(
                           SetPassword.routerPage,
                           extra: {
@@ -153,6 +155,7 @@ class AuthentificationMethodDialog {
                         }
                         break;
                       case AuthMethod.yubikeyWithYubicloud:
+                        if (context.canPop()) context.pop();
                         final auth = (await context.push(
                           SetYubikey.routerPage,
                           extra: {
