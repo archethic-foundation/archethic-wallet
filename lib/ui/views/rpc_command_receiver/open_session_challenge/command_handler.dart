@@ -1,12 +1,16 @@
+import 'dart:io';
+
 import 'package:aewallet/application/rpc_session/provider.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/command.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/open_session_challenge/layouts/validate_session_form.dart';
-import 'package:aewallet/ui/widgets/components/sheet_util.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:window_manager/window_manager.dart';
 
 class OpenSessionChallengeHandler extends CommandHandler<
     awc.OpenSessionChallengeRequest, awc.OpenSessionChallengeResponse> {
@@ -27,17 +31,27 @@ class OpenSessionChallengeHandler extends CommandHandler<
               return const Result.failure(awc.Failure.invalidSession);
             }
 
-            final didUserValidateChallenge =
-                await Sheets.showAppHeightNineSheet<bool>(
+            if (!kIsWeb &&
+                (Platform.isLinux || Platform.isMacOS || Platform.isWindows)) {
+              await windowManager.show();
+            }
+
+            final didUserValidateChallenge = await showDialog<bool>(
+              useSafeArea: false,
               context: context,
-              ref: ref,
-              widget: ValidateSessionForm(
-                origin: command.data.origin,
-                challenge: command.data.challenge,
+              builder: (context) => Dialog.fullscreen(
+                child: DecoratedBox(
+                  decoration: ArchethicTheme.getDecorationSheet(),
+                  child: ValidateSessionForm(
+                    origin: command.data.origin,
+                    challenge: command.data.challenge,
+                  ),
+                ),
               ),
             );
 
-            if (didUserValidateChallenge != true) {
+            if (didUserValidateChallenge == null ||
+                didUserValidateChallenge != true) {
               ref
                   .read(RPCSessionProviders.sessionsService)
                   .invalidateSession(sessionId: command.data.sessionId);
