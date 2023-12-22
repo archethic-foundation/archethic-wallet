@@ -78,7 +78,7 @@ class _TransferTextFieldAddressState
           ),
         ),
         SizedBox(
-          width: MediaQuery.of(context).size.width * 0.9,
+          width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
               Row(

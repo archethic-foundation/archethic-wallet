@@ -15,6 +15,8 @@ import 'package:aewallet/ui/views/add_account/layouts/components/add_account_det
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +35,8 @@ class AddAccountConfirmSheet extends ConsumerStatefulWidget {
       _AddAccountConfirmState();
 }
 
-class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
+class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet>
+    implements SheetSkeletonInterface {
   bool? animationOpen;
 
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
@@ -130,85 +133,76 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet> {
 
   @override
   Widget build(BuildContext context) {
+    return SheetSkeleton(
+      appBar: getAppBar(context, ref),
+      floatingActionButton: getFloatingActionButton(context, ref),
+      sheetContent: getSheetContent(context, ref),
+      thumbVisibility: false,
+    );
+  }
+
+  @override
+  Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-
-    final addAccountNotifier =
-        ref.watch(AddAccountFormProvider.addAccountForm.notifier);
-
-    return Scaffold(
-      drawerEdgeDragWidth: 0,
-      resizeToAvoidBottomInset: true,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Row(
-        children: <Widget>[
-          AppButtonTiny(
-            AppButtonTinyType.primary,
-            localizations.confirm,
-            Dimens.buttonTopDimens,
-            key: const Key('confirm'),
-            onPressed: () async {
-              ShowSendingAnimation.build(
-                context,
-              );
-              await ref
-                  .read(
-                    AddAccountFormProvider.addAccountForm.notifier,
-                  )
-                  .send(context);
-            },
-          ),
-        ],
-      ),
-      extendBodyBehindAppBar: true,
-      backgroundColor: ArchethicTheme.background,
-      appBar: SheetAppBar(
-        title: localizations.addAccount,
-        widgetLeft: BackButton(
-          key: const Key('back'),
-          color: ArchethicTheme.text,
-          onPressed: () {
-            addAccountNotifier.setAddAccountProcessStep(
-              AddAccountProcessStep.form,
+    return Row(
+      children: <Widget>[
+        AppButtonTiny(
+          AppButtonTinyType.primary,
+          localizations.confirm,
+          Dimens.buttonTopDimens,
+          key: const Key('confirm'),
+          onPressed: () async {
+            ShowSendingAnimation.build(
+              context,
             );
+            await ref
+                .read(
+                  AddAccountFormProvider.addAccountForm.notifier,
+                )
+                .send(context);
           },
         ),
+      ],
+    );
+  }
+
+  @override
+  PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    final addAccountNotifier =
+        ref.watch(AddAccountFormProvider.addAccountForm.notifier);
+    return SheetAppBar(
+      title: localizations.addAccount,
+      widgetLeft: BackButton(
+        key: const Key('back'),
+        color: ArchethicTheme.text,
+        onPressed: () {
+          addAccountNotifier.setAddAccountProcessStep(
+            AddAccountProcessStep.form,
+          );
+        },
       ),
-      body: DecoratedBox(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              ArchethicTheme.backgroundSmall,
-            ),
-            fit: BoxFit.fitHeight,
-            opacity: 0.7,
+    );
+  }
+
+  @override
+  Widget getSheetContent(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    return Column(
+      children: <Widget>[
+        const SizedBox(height: 30),
+        Padding(
+          padding: const EdgeInsets.only(left: 30, right: 30),
+          child: Text(
+            localizations.addAccountConfirmationMessage,
+            style: ArchethicThemeStyles.textStyleSize14W600Primary,
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 120),
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: Column(
-                  children: <Widget>[
-                    const SizedBox(height: 30),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 30, right: 30),
-                      child: Text(
-                        localizations.addAccountConfirmationMessage,
-                        style: ArchethicThemeStyles.textStyleSize14W600Primary,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const AddAccountDetail(),
-                  ],
-                ),
-              ),
-            ],
-          ),
+        const SizedBox(
+          height: 20,
         ),
-      ),
+        const AddAccountDetail(),
+      ],
     );
   }
 }

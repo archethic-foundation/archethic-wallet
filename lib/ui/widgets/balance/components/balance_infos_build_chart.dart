@@ -33,20 +33,6 @@ class BalanceInfosChart extends ConsumerWidget {
           height: MediaQuery.of(context).size.height * 0.08,
           child: Stack(
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    localizations.priceChartHeader,
-                    style: ArchethicThemeStyles.textStyleSize14W600Primary,
-                  ),
-                  const IconDataWidget(
-                    icon: Symbols.show_chart,
-                    width: AppFontSizes.size20,
-                    height: AppFontSizes.size20,
-                  ),
-                ],
-              ),
               FadeIn(
                 duration: const Duration(milliseconds: 1000),
                 child: chartInfos != null
@@ -76,6 +62,20 @@ class BalanceInfosChart extends ConsumerWidget {
                         completeChart: false,
                       )
                     : const SizedBox(),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    localizations.priceChartHeader,
+                    style: ArchethicThemeStyles.textStyleSize14W600Primary,
+                  ),
+                  const IconDataWidget(
+                    icon: Symbols.show_chart,
+                    width: AppFontSizes.size20,
+                    height: AppFontSizes.size20,
+                  ),
+                ],
               ),
             ],
           ),

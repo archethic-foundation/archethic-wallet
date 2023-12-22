@@ -10,6 +10,8 @@ import 'package:aewallet/ui/views/nft/layouts/components/nft_list.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +20,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 
-class NFTListPerCategory extends ConsumerWidget {
+class NFTListPerCategory extends ConsumerWidget
+    implements SheetSkeletonInterface {
   const NFTListPerCategory({
     super.key,
     required this.currentNftCategoryIndex,
@@ -29,6 +32,24 @@ class NFTListPerCategory extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final accountSelected = ref
+        .watch(
+          AccountProviders.selectedAccount,
+        )
+        .valueOrNull;
+
+    if (accountSelected == null) return const SizedBox();
+
+    return SheetSkeleton(
+      appBar: getAppBar(context, ref),
+      floatingActionButton: getFloatingActionButton(context, ref),
+      sheetContent: getSheetContent(context, ref),
+      thumbVisibility: false,
+    );
+  }
+
+  @override
+  Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final preferences = ref.watch(SettingsProviders.settings);
     final accountSelected = ref
@@ -37,69 +58,54 @@ class NFTListPerCategory extends ConsumerWidget {
         )
         .valueOrNull;
 
-    if (accountSelected == null) return const SizedBox();
-    return Scaffold(
-      drawerEdgeDragWidth: 0,
-      extendBodyBehindAppBar: true,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Row(
-        children: <Widget>[
-          AppButtonTinyConnectivity(
-            localizations.createNFT,
-            Dimens.buttonBottomDimens,
-            key: const Key('createNFT'),
-            onPressed: () async {
-              sl.get<HapticUtil>().feedback(
-                    FeedbackType.light,
-                    preferences.activeVibrations,
-                  );
+    return Row(
+      children: <Widget>[
+        AppButtonTinyConnectivity(
+          localizations.createNFT,
+          Dimens.buttonBottomDimens,
+          key: const Key('createNFT'),
+          onPressed: () async {
+            sl.get<HapticUtil>().feedback(
+                  FeedbackType.light,
+                  preferences.activeVibrations,
+                );
 
-              ref
-                  .read(
-                    NftCreationFormProvider.nftCreationFormArgs.notifier,
-                  )
-                  .state = NftCreationFormNotifierParams(
-                currentNftCategoryIndex: currentNftCategoryIndex,
-              );
-              context.go(
-                NftCreationProcessSheet.routerPage,
-              );
-            },
-            disabled: !accountSelected.balance!.isNativeTokenValuePositive(),
-          ),
-        ],
-      ),
-      backgroundColor: ArchethicTheme.background,
-      appBar: SheetAppBar(
-        title: localizations.createNFT,
-        widgetLeft: BackButton(
-          key: const Key('back'),
-          color: ArchethicTheme.text,
-          onPressed: () {
-            context.go(HomePage.routerPage);
+            ref
+                .read(
+                  NftCreationFormProvider.nftCreationFormArgs.notifier,
+                )
+                .state = NftCreationFormNotifierParams(
+              currentNftCategoryIndex: currentNftCategoryIndex,
+            );
+            context.go(
+              NftCreationProcessSheet.routerPage,
+            );
           },
+          disabled: !accountSelected!.balance!.isNativeTokenValuePositive(),
         ),
+      ],
+    );
+  }
+
+  @override
+  PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    return SheetAppBar(
+      title: localizations.createNFT,
+      widgetLeft: BackButton(
+        key: const Key('back'),
+        color: ArchethicTheme.text,
+        onPressed: () {
+          context.go(HomePage.routerPage);
+        },
       ),
-      body: DecoratedBox(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              ArchethicTheme.backgroundSmall,
-            ),
-            fit: BoxFit.fitHeight,
-            opacity: 0.7,
-          ),
-        ),
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: NFTList(
-                currentNftCategoryIndex: currentNftCategoryIndex,
-              ),
-            ),
-          ],
-        ),
-      ),
+    );
+  }
+
+  @override
+  Widget getSheetContent(BuildContext context, WidgetRef ref) {
+    return NFTList(
+      currentNftCategoryIndex: currentNftCategoryIndex,
     );
   }
 }

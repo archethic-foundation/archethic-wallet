@@ -103,6 +103,7 @@ abstract class AuthenticationProviders {
 
     ref
       ..invalidate(passwordAuthentication)
-      ..invalidate(pinAuthentication);
+      ..invalidate(pinAuthentication)
+      ..invalidate(yubikeyAuthentication);
   }
 }

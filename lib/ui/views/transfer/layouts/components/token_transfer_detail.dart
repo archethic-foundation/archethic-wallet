@@ -64,9 +64,8 @@ class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
 
     if (accountSelected == null) return const SizedBox();
 
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.only(left: 20, right: 20),
       child: Column(
         children: [
           Padding(

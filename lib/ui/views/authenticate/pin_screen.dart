@@ -260,6 +260,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
   }
 
   Future<void> _checkPin(BuildContext context, Settings preferences) async {
+    if (!mounted) return;
     final result = await ref
         .read(
           AuthenticationProviders.pinAuthentication.notifier,
@@ -339,7 +340,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
               image: AssetImage(
                 ArchethicTheme.backgroundSmall,
               ),
-              fit: BoxFit.fitHeight,
+              fit: BoxFit.cover,
             ),
             gradient: LinearGradient(
               begin: Alignment.topLeft,

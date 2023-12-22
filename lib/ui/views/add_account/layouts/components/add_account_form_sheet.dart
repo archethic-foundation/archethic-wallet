@@ -10,7 +10,8 @@ import 'package:aewallet/ui/views/add_account/bloc/state.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/scrollbar.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,112 +22,92 @@ import 'package:go_router/go_router.dart';
 
 part 'add_account_textfield_name.dart';
 
-class AddAccountFormSheet extends ConsumerWidget {
+class AddAccountFormSheet extends ConsumerWidget
+    implements SheetSkeletonInterface {
   const AddAccountFormSheet({
     super.key,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-    final bottom = MediaQuery.of(context).viewInsets.bottom;
     final accountSelected =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
-    final addAccount = ref.watch(AddAccountFormProvider.addAccountForm);
-    final addAccountNotifier =
-        ref.watch(AddAccountFormProvider.addAccountForm.notifier);
 
     if (accountSelected == null) return const SizedBox();
 
-    return Scaffold(
-      drawerEdgeDragWidth: 0,
-      resizeToAvoidBottomInset: true,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Row(
-        children: <Widget>[
-          AppButtonTinyConnectivity(
-            localizations.addAccount,
-            Dimens.buttonBottomDimens,
-            key: const Key('addAccount'),
-            onPressed: () async {
-              final isNameOk = addAccountNotifier.controlName(context);
+    return SheetSkeleton(
+      appBar: getAppBar(context, ref),
+      floatingActionButton: getFloatingActionButton(context, ref),
+      sheetContent: getSheetContent(context, ref),
+    );
+  }
 
-              if (isNameOk) {
-                addAccountNotifier.setAddAccountProcessStep(
-                  AddAccountProcessStep.confirmation,
-                );
-              }
-            },
-            disabled: !addAccount.canAddAccount,
-          ),
-        ],
-      ),
-      extendBodyBehindAppBar: true,
-      backgroundColor: ArchethicTheme.background,
-      appBar: SheetAppBar(
-        title: localizations.addAccount,
-        widgetLeft: BackButton(
-          key: const Key('back'),
-          color: ArchethicTheme.text,
-          onPressed: () {
-            context.go(HomePage.routerPage);
+  @override
+  Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    final addAccount = ref.watch(AddAccountFormProvider.addAccountForm);
+    final addAccountNotifier =
+        ref.watch(AddAccountFormProvider.addAccountForm.notifier);
+    return Row(
+      children: <Widget>[
+        AppButtonTinyConnectivity(
+          localizations.addAccount,
+          Dimens.buttonBottomDimens,
+          key: const Key('addAccount'),
+          onPressed: () async {
+            final isNameOk = addAccountNotifier.controlName(context);
+
+            if (isNameOk) {
+              addAccountNotifier.setAddAccountProcessStep(
+                AddAccountProcessStep.confirmation,
+              );
+            }
           },
+          disabled: !addAccount.canAddAccount,
         ),
+      ],
+    );
+  }
+
+  @override
+  PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    return SheetAppBar(
+      title: localizations.addAccount,
+      widgetLeft: BackButton(
+        key: const Key('back'),
+        color: ArchethicTheme.text,
+        onPressed: () {
+          context.go(HomePage.routerPage);
+        },
       ),
-      body: DecoratedBox(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              ArchethicTheme.backgroundSmall,
-            ),
-            fit: BoxFit.fitHeight,
-            opacity: 0.7,
-          ),
+    );
+  }
+
+  @override
+  Widget getSheetContent(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    return Column(
+      children: <Widget>[
+        Text(
+          localizations.introNewWalletGetFirstInfosNameRequest,
+          style: ArchethicThemeStyles.textStyleSize14W600Primary,
         ),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 120),
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: ArchethicScrollbar(
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      top: 20,
-                      left: 15,
-                      right: 15,
-                      bottom: bottom + 80,
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        Text(
-                          localizations.introNewWalletGetFirstInfosNameRequest,
-                          style:
-                              ArchethicThemeStyles.textStyleSize14W600Primary,
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: 20),
-                          child: AddAccountTextFieldName(),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        AutoSizeText(
-                          localizations.introNewWalletGetFirstInfosNameInfos,
-                          style:
-                              ArchethicThemeStyles.textStyleSize12W100Primary,
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+        const Padding(
+          padding: EdgeInsets.only(top: 20),
+          child: AddAccountTextFieldName(),
         ),
-      ),
+        const SizedBox(
+          height: 20,
+        ),
+        AutoSizeText(
+          localizations.introNewWalletGetFirstInfosNameInfos,
+          style: ArchethicThemeStyles.textStyleSize12W100Primary,
+        ),
+        const SizedBox(
+          height: 30,
+        ),
+      ],
     );
   }
 }

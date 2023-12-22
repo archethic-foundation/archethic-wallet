@@ -7,6 +7,8 @@ import 'package:aewallet/model/nft_category.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -24,10 +26,10 @@ class ConfigureCategoryList extends ConsumerStatefulWidget {
       _ConfigureCategoryListState();
 }
 
-class _ConfigureCategoryListState extends ConsumerState<ConfigureCategoryList> {
+class _ConfigureCategoryListState extends ConsumerState<ConfigureCategoryList>
+    implements SheetSkeletonInterface {
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
     final accountSelected = ref
         .watch(
           AccountProviders.selectedAccount,
@@ -46,55 +48,62 @@ class _ConfigureCategoryListState extends ConsumerState<ConfigureCategoryList> {
       return const SizedBox();
     }
 
+    return SheetSkeleton(
+      appBar: getAppBar(context, ref),
+      floatingActionButton: getFloatingActionButton(context, ref),
+      sheetContent: getSheetContent(context, ref),
+      thumbVisibility: false,
+    );
+  }
+
+  @override
+  Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
+    return const SizedBox.shrink();
+  }
+
+  @override
+  PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    return SheetAppBar(
+      title: localizations.customizeCategoryListHeader,
+      widgetLeft: BackButton(
+        key: const Key('back'),
+        color: ArchethicTheme.text,
+        onPressed: () {
+          ref.invalidate(NftCategoryProviders.fetchNftCategories);
+          context.pop();
+        },
+      ),
+    );
+  }
+
+  @override
+  Widget getSheetContent(BuildContext context, WidgetRef ref) {
+    final accountSelected = ref
+        .watch(
+          AccountProviders.selectedAccount,
+        )
+        .valueOrNull;
+
+    final listNftCategory = ref
+        .watch(
+          NftCategoryProviders.selectedAccountNftCategories(
+            context: context,
+          ),
+        )
+        .valueOrNull;
+
     final nftCategoryToHidden = ref.watch(
       NftCategoryProviders.listNFTCategoryHidden(
         context: context,
       ),
     );
-
-    return Scaffold(
-      drawerEdgeDragWidth: 0,
-      resizeToAvoidBottomInset: false,
-      extendBodyBehindAppBar: true,
-      backgroundColor: ArchethicTheme.background,
-      appBar: SheetAppBar(
-        title: localizations.customizeCategoryListHeader,
-        widgetLeft: BackButton(
-          key: const Key('back'),
-          color: ArchethicTheme.text,
-          onPressed: () {
-            ref.invalidate(NftCategoryProviders.fetchNftCategories);
-            context.pop();
-          },
-        ),
-      ),
-      body: Container(
-        padding: const EdgeInsets.only(
-          bottom: 20,
-        ),
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              ArchethicTheme.backgroundSmall,
-            ),
-            fit: BoxFit.fitHeight,
-            opacity: 0.7,
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 120),
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: ReorderableWidget(
-                  nftCategory: listNftCategory,
-                  nftCategoryToHidden: nftCategoryToHidden,
-                  accountSelected: accountSelected,
-                ),
-              ),
-            ],
-          ),
-        ),
+    return SizedBox(
+      height: MediaQuery.of(context).size.height - 200,
+      child: ReorderableWidget(
+        nftCategory: listNftCategory!,
+        nftCategoryToHidden: nftCategoryToHidden,
+        accountSelected: accountSelected!,
       ),
     );
   }

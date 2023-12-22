@@ -18,7 +18,8 @@ import 'package:aewallet/ui/views/nft_creation/layouts/get_addresses.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/paste_icon.dart';
-import 'package:aewallet/ui/widgets/components/scrollbar.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/dialogs/contacts_dialog.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -69,7 +70,8 @@ class AddAddress extends ConsumerStatefulWidget {
   ConsumerState<AddAddress> createState() => _AddAddressState();
 }
 
-class _AddAddressState extends ConsumerState<AddAddress> {
+class _AddAddressState extends ConsumerState<AddAddress>
+    implements SheetSkeletonInterface {
   late ScrollController scrollController;
 
   @override
@@ -86,122 +88,112 @@ class _AddAddressState extends ConsumerState<AddAddress> {
 
   @override
   Widget build(BuildContext context) {
+    return SheetSkeleton(
+      appBar: getAppBar(context, ref),
+      floatingActionButton: getFloatingActionButton(context, ref),
+      sheetContent: getSheetContent(context, ref),
+      thumbVisibility: false,
+    );
+  }
+
+  @override
+  Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
     final preferences = ref.watch(SettingsProviders.settings);
     final nftCreation = ref.watch(
       NftCreationFormProvider.nftCreationForm,
     );
-    return Scaffold(
-      drawerEdgeDragWidth: 0,
-      extendBodyBehindAppBar: true,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: widget.readOnly == false
-          ? Row(
-              children: <Widget>[
-                AppButtonTiny(
-                  AppButtonTinyType.primary,
-                  localizations.propertyAccessAddAccess,
-                  Dimens.buttonBottomDimens,
-                  key: const Key('addAddress'),
-                  onPressed: () async {
-                    sl.get<HapticUtil>().feedback(
-                          FeedbackType.light,
-                          preferences.activeVibrations,
-                        );
 
-                    ref
-                        .read(
-                          NftCreationFormProvider.nftCreationForm.notifier,
-                        )
-                        .addAddress(
-                          widget.propertyName,
-                          nftCreation.propertyAccessRecipient,
-                          context,
-                        );
-                  },
-                  disabled: !nftCreation.canAddAccess,
-                ),
-              ],
-            )
-          : const SizedBox.shrink(),
-      backgroundColor: ArchethicTheme.background,
-      appBar: SheetAppBar(
-        title: widget.readOnly
-            ? localizations.getPublicKeyHeader
-            : localizations.addPublicKeyHeader,
-        widgetLeft: BackButton(
-          key: const Key('back'),
-          color: ArchethicTheme.text,
-          onPressed: () {
-            context.pop();
-          },
-        ),
-      ),
-      body: DecoratedBox(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              ArchethicTheme.backgroundSmall,
-            ),
-            fit: BoxFit.fitHeight,
-            opacity: 0.7,
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 120, bottom: 100),
-          child: Column(
+    return widget.readOnly == false
+        ? Row(
             children: <Widget>[
-              Expanded(
-                child: ArchethicScrollbar(
-                  child: Column(
-                    children: <Widget>[
-                      Text(
+              AppButtonTiny(
+                AppButtonTinyType.primary,
+                localizations.propertyAccessAddAccess,
+                Dimens.buttonBottomDimens,
+                key: const Key('addAddress'),
+                onPressed: () async {
+                  sl.get<HapticUtil>().feedback(
+                        FeedbackType.light,
+                        preferences.activeVibrations,
+                      );
+
+                  ref
+                      .read(
+                        NftCreationFormProvider.nftCreationForm.notifier,
+                      )
+                      .addAddress(
                         widget.propertyName,
-                      ),
-                      if (widget.propertyValue.isNotEmpty)
-                        Text(
-                          widget.propertyValue,
-                        ),
-                      if (widget.readOnly == false)
-                        Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Text(
-                            localizations.propertyAccessDescription,
-                            style:
-                                ArchethicThemeStyles.textStyleSize12W100Primary,
-                            textAlign: TextAlign.justify,
-                          ),
-                        )
-                      else
-                        Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Text(
-                            localizations.propertyAccessDescriptionReadOnly,
-                            style:
-                                ArchethicThemeStyles.textStyleSize12W100Primary,
-                            textAlign: TextAlign.justify,
-                          ),
-                        ),
-                      if (widget.readOnly == false)
-                        const AddPublicKeyTextFieldPk(),
-                      if (widget.readOnly == false)
-                        const SizedBox(
-                          height: 20,
-                        ),
-                      GetAddresses(
-                        propertyName: widget.propertyName,
-                        propertyValue: widget.propertyValue,
-                        readOnly: widget.readOnly,
-                      ),
-                    ],
-                  ),
-                ),
+                        nftCreation.propertyAccessRecipient,
+                        context,
+                      );
+                },
+                disabled: !nftCreation.canAddAccess,
               ),
             ],
-          ),
-        ),
+          )
+        : const SizedBox.shrink();
+  }
+
+  @override
+  PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    return SheetAppBar(
+      title: widget.readOnly
+          ? localizations.getPublicKeyHeader
+          : localizations.addPublicKeyHeader,
+      widgetLeft: BackButton(
+        key: const Key('back'),
+        color: ArchethicTheme.text,
+        onPressed: () {
+          context.pop();
+        },
       ),
+    );
+  }
+
+  @override
+  Widget getSheetContent(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    return Column(
+      children: <Widget>[
+        Text(
+          widget.propertyName,
+        ),
+        if (widget.propertyValue.isNotEmpty)
+          Text(
+            widget.propertyValue,
+          ),
+        if (widget.readOnly == false)
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Text(
+              localizations.propertyAccessDescription,
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
+              textAlign: TextAlign.justify,
+            ),
+          )
+        else
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Text(
+              localizations.propertyAccessDescriptionReadOnly,
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
+              textAlign: TextAlign.justify,
+            ),
+          ),
+        if (widget.readOnly == false) const AddPublicKeyTextFieldPk(),
+        if (widget.readOnly == false)
+          const SizedBox(
+            height: 20,
+          ),
+        GetAddresses(
+          propertyName: widget.propertyName,
+          propertyValue: widget.propertyValue,
+          readOnly: widget.readOnly,
+        ),
+      ],
     );
   }
 }

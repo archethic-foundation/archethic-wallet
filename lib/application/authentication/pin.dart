@@ -25,13 +25,18 @@ class PinAuthenticationNotifier extends StateNotifier<PinAuthenticationState> {
   final Ref ref;
 
   Future<void> _loadInitialState() async {
+    if (!mounted) return;
     final authenticationRepository = ref.read(
       AuthenticationProviders._authenticationRepository,
     );
+
+    final maxAttemptsCount = state.maxAttemptsCount;
+    final failedPinAttempts =
+        await authenticationRepository.getFailedPinAttempts();
+
+    if (!mounted) return;
     state = state.copyWith(
-      failedAttemptsCount:
-          await authenticationRepository.getFailedPinAttempts() %
-              state.maxAttemptsCount,
+      failedAttemptsCount: failedPinAttempts % maxAttemptsCount,
     );
   }
 

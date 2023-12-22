@@ -5,10 +5,12 @@ class ArchethicScrollbar extends StatefulWidget {
     super.key,
     required this.child,
     this.scrollPhysics,
+    this.thumbVisibility = true,
   });
 
   final Widget child;
   final ScrollPhysics? scrollPhysics;
+  final bool thumbVisibility;
 
   @override
   State<ArchethicScrollbar> createState() => _ArchethicScrollbarState();
@@ -33,7 +35,7 @@ class _ArchethicScrollbarState extends State<ArchethicScrollbar> {
   Widget build(BuildContext context) {
     return Scrollbar(
       controller: scrollController,
-      thumbVisibility: true,
+      thumbVisibility: widget.thumbVisibility,
       child: SingleChildScrollView(
         physics: widget.scrollPhysics,
         controller: scrollController,

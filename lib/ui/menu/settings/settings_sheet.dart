@@ -32,6 +32,8 @@ import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/settings/backupseed_sheet.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/dialogs/authentification_method_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/currency_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/language_dialog.dart';

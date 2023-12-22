@@ -16,6 +16,8 @@ import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/qr_code_with_options.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -54,7 +56,8 @@ class NFTDetail extends ConsumerStatefulWidget {
   ConsumerState<NFTDetail> createState() => _NFTDetailState();
 }
 
-class _NFTDetailState extends ConsumerState<NFTDetail> {
+class _NFTDetailState extends ConsumerState<NFTDetail>
+    implements SheetSkeletonInterface {
   late ScrollController scrollController;
 
   @override
@@ -71,239 +74,235 @@ class _NFTDetailState extends ConsumerState<NFTDetail> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
-    final preferences = ref.watch(SettingsProviders.settings);
     final accountSelected =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
 
     if (accountSelected == null) return const SizedBox();
 
-    return Scaffold(
-      drawerEdgeDragWidth: 0,
-      resizeToAvoidBottomInset: false,
-      extendBodyBehindAppBar: true,
-      backgroundColor: ArchethicTheme.background,
-      appBar: SheetAppBar(
-        widgetLeft: BackButton(
-          key: const Key('back'),
-          color: ArchethicTheme.text,
-          onPressed: () {
-            context.pop();
+    return SheetSkeleton(
+      appBar: getAppBar(context, ref),
+      floatingActionButton: getFloatingActionButton(context, ref),
+      sheetContent: getSheetContent(context, ref),
+      thumbVisibility: false,
+    );
+  }
+
+  @override
+  Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
+    return const SizedBox.shrink();
+  }
+
+  @override
+  PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    return SheetAppBar(
+      widgetLeft: BackButton(
+        key: const Key('back'),
+        color: ArchethicTheme.text,
+        onPressed: () {
+          context.pop();
+        },
+      ),
+      title: widget.name,
+      widgetRight: Padding(
+        padding: const EdgeInsets.only(right: 10),
+        child: InkWell(
+          child: const Icon(
+            Symbols.qr_code_scanner,
+            size: 30,
+            weight: IconSize.weightM,
+            opticalSize: IconSize.opticalSizeM,
+            grade: IconSize.gradeM,
+          ),
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  backgroundColor: ArchethicTheme.backgroundPopupColor,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(32)),
+                  ),
+                  contentPadding: const EdgeInsets.only(top: 10),
+                  content: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      right: 20,
+                      top: 20,
+                      bottom: 40,
+                    ),
+                    child: QRCodeWithOptions(
+                      infoQRCode: widget.address.toUpperCase(),
+                      size: 150,
+                      messageCopied: localizations.addressCopied,
+                    ),
+                  ),
+                );
+              },
+            );
           },
         ),
-        title: widget.name,
-        widgetRight: Padding(
-          padding: const EdgeInsets.only(right: 10),
-          child: InkWell(
-            child: const Icon(
-              Symbols.qr_code_scanner,
-              size: 30,
-              weight: IconSize.weightM,
-              opticalSize: IconSize.opticalSizeM,
-              grade: IconSize.gradeM,
+      ),
+    );
+  }
+
+  @override
+  Widget getSheetContent(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    final preferences = ref.watch(SettingsProviders.settings);
+    final accountSelected =
+        ref.watch(AccountProviders.selectedAccount).valueOrNull;
+    return SizedBox(
+      height: MediaQuery.of(context).size.height - 100,
+      child: Column(
+        children: <Widget>[
+          if (widget.symbol.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Text(
+                '[${widget.symbol}]',
+                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+              ),
             ),
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    backgroundColor: ArchethicTheme.backgroundPopupColor,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(32)),
-                    ),
-                    contentPadding: const EdgeInsets.only(top: 10),
-                    content: Padding(
-                      padding: const EdgeInsets.only(
-                        left: 20,
-                        right: 20,
-                        top: 20,
-                        bottom: 40,
+          Expanded(
+            child: Center(
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                child: widget.collection.isEmpty
+                    ? ArchethicScrollbar(
+                        child: Column(
+                          children: <Widget>[
+                            NFTThumbnail(
+                              nameInCollection: widget.nameInCollection,
+                              address: widget.address,
+                              properties: widget.properties,
+                              withContentInfo: true,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            NFTDetailProperties(
+                              properties: widget.properties,
+                            ),
+                          ],
+                        ),
+                      )
+                    : Column(
+                        children: [
+                          NFTDetailProperties(
+                            properties: widget.properties,
+                          ),
+                          Expanded(
+                            child: NFTDetailCollection(
+                              address: widget.address,
+                              collection: widget.collection,
+                              tokenId: widget.tokenId,
+                              name: widget.name,
+                              symbol: widget.symbol,
+                            ),
+                          ),
+                        ],
                       ),
-                      child: QRCodeWithOptions(
-                        infoQRCode: widget.address.toUpperCase(),
-                        size: 150,
-                        messageCopied: localizations.addressCopied,
+              ),
+            ),
+          ),
+          if (widget.collection.isEmpty)
+            FutureBuilder(
+              future: ref.watch(
+                NFTProviders.isAccountOwner(
+                  accountSelected!.genesisAddress,
+                  widget.address,
+                  widget.tokenId,
+                ).future,
+              ),
+              builder: (
+                BuildContext context,
+                AsyncSnapshot<bool> snapshot,
+              ) {
+                if (snapshot.hasData) {
+                  if (snapshot.data == true) {
+                    return Row(
+                      children: <Widget>[
+                        AppButtonTinyConnectivity(
+                          localizations.send,
+                          Dimens.buttonTopDimens,
+                          key: const Key('sendNFT'),
+                          onPressed: () async {
+                            sl.get<HapticUtil>().feedback(
+                                  FeedbackType.light,
+                                  preferences.activeVibrations,
+                                );
+                            final accountToken =
+                                getAccountToken(accountSelected);
+
+                            await TransferSheet(
+                              transferType: TransferType.nft,
+                              accountToken: accountToken,
+                              recipient: const TransferRecipient.address(
+                                address: Address(address: ''),
+                              ),
+                              tokenId: widget.tokenId,
+                            ).show(
+                              context: context,
+                              ref: ref,
+                            );
+                          },
+                        ),
+                      ],
+                    );
+                  } else {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Symbols.info,
+                          size: 15,
+                          weight: IconSize.weightM,
+                          opticalSize: IconSize.opticalSizeM,
+                          grade: IconSize.gradeM,
+                        ),
+                        const SizedBox(width: 5),
+                        Text(
+                          AppLocalizations.of(context)!.nftNotOwnerInfo,
+                          style:
+                              ArchethicThemeStyles.textStyleSize12W100Primary,
+                        ),
+                      ],
+                    );
+                  }
+                } else {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 17),
+                    child: SizedBox.square(
+                      dimension: 16,
+                      child: CircularProgressIndicator(
+                        color: ArchethicThemeStyles
+                            .textStyleSize10W100Primary.color,
+                        strokeWidth: 1,
                       ),
                     ),
                   );
-                },
-              );
-            },
-          ),
-        ),
-      ),
-      body: Container(
-        padding: const EdgeInsets.only(
-          bottom: 40,
-        ),
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              ArchethicTheme.backgroundSmall,
+                }
+              },
             ),
-            fit: BoxFit.fitHeight,
-            opacity: 0.7,
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 120),
-          child: Column(
+          Row(
             children: <Widget>[
-              if (widget.symbol.isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Text(
-                    '[${widget.symbol}]',
-                    style: ArchethicThemeStyles.textStyleSize12W400Primary,
-                  ),
-                ),
-              Expanded(
-                child: Center(
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.8,
-                    child: SafeArea(
-                      minimum: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).size.height * 0.035,
-                        top: 20,
-                      ),
-                      child: widget.collection.isEmpty
-                          ? ArchethicScrollbar(
-                              child: Column(
-                                children: <Widget>[
-                                  NFTThumbnail(
-                                    nameInCollection: widget.nameInCollection,
-                                    address: widget.address,
-                                    properties: widget.properties,
-                                    withContentInfo: true,
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  NFTDetailProperties(
-                                    properties: widget.properties,
-                                  ),
-                                ],
-                              ),
-                            )
-                          : Column(
-                              children: [
-                                NFTDetailProperties(
-                                  properties: widget.properties,
-                                ),
-                                Expanded(
-                                  child: NFTDetailCollection(
-                                    address: widget.address,
-                                    collection: widget.collection,
-                                    tokenId: widget.tokenId,
-                                    name: widget.name,
-                                    symbol: widget.symbol,
-                                  ),
-                                ),
-                              ],
-                            ),
-                    ),
-                  ),
-                ),
-              ),
-              if (widget.collection.isEmpty)
-                FutureBuilder(
-                  future: ref.watch(
-                    NFTProviders.isAccountOwner(
-                      accountSelected.genesisAddress,
-                      widget.address,
-                      widget.tokenId,
-                    ).future,
-                  ),
-                  builder: (
-                    BuildContext context,
-                    AsyncSnapshot<bool> snapshot,
-                  ) {
-                    if (snapshot.hasData) {
-                      if (snapshot.data == true) {
-                        return Row(
-                          children: <Widget>[
-                            AppButtonTinyConnectivity(
-                              localizations.send,
-                              Dimens.buttonTopDimens,
-                              key: const Key('sendNFT'),
-                              onPressed: () async {
-                                sl.get<HapticUtil>().feedback(
-                                      FeedbackType.light,
-                                      preferences.activeVibrations,
-                                    );
-                                final accountToken =
-                                    getAccountToken(accountSelected);
-
-                                await TransferSheet(
-                                  transferType: TransferType.nft,
-                                  accountToken: accountToken,
-                                  recipient: const TransferRecipient.address(
-                                    address: Address(address: ''),
-                                  ),
-                                  tokenId: widget.tokenId,
-                                ).show(
-                                  context: context,
-                                  ref: ref,
-                                );
-                              },
-                            ),
-                          ],
-                        );
-                      } else {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Symbols.info,
-                              size: 15,
-                              weight: IconSize.weightM,
-                              opticalSize: IconSize.opticalSizeM,
-                              grade: IconSize.gradeM,
-                            ),
-                            const SizedBox(width: 5),
-                            Text(
-                              AppLocalizations.of(context)!.nftNotOwnerInfo,
-                              style: ArchethicThemeStyles
-                                  .textStyleSize12W100Primary,
-                            ),
-                          ],
-                        );
-                      }
-                    } else {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 17),
-                        child: SizedBox.square(
-                          dimension: 16,
-                          child: CircularProgressIndicator(
-                            color: ArchethicThemeStyles
-                                .textStyleSize10W100Primary.color,
-                            strokeWidth: 1,
-                          ),
-                        ),
-                      );
-                    }
-                  },
-                ),
-              Row(
-                children: <Widget>[
-                  AppButtonTinyConnectivity(
-                    localizations.viewExplorer,
-                    Dimens.buttonBottomDimens,
-                    key: const Key('viewExplorer'),
-                    onPressed: () async {
-                      UIUtil.showWebview(
-                        context,
-                        '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.address}',
-                        '',
-                      );
-                    },
-                  ),
-                ],
+              AppButtonTinyConnectivity(
+                localizations.viewExplorer,
+                Dimens.buttonBottomDimens,
+                key: const Key('viewExplorer'),
+                onPressed: () async {
+                  UIUtil.showWebview(
+                    context,
+                    '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.address}',
+                    '',
+                  );
+                },
               ),
             ],
           ),
-        ),
+        ],
       ),
     );
   }

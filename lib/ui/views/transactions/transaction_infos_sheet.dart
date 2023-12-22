@@ -18,6 +18,8 @@ import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -38,107 +40,85 @@ class TransactionInfosSheet extends ConsumerStatefulWidget {
       _TransactionInfosSheetState();
 }
 
-class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet> {
-  late ScrollController scrollController;
-
-  @override
-  void initState() {
-    scrollController = ScrollController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    scrollController.dispose();
-    super.dispose();
-  }
-
+class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet>
+    implements SheetSkeletonInterface {
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
-    final session = ref.watch(SessionProviders.session).loggedIn!;
     final selectedAccount =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
 
     if (selectedAccount == null) return const SizedBox();
 
-    return Scaffold(
-      drawerEdgeDragWidth: 0,
-      extendBodyBehindAppBar: true,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Row(
-        children: <Widget>[
-          AppButtonTinyConnectivity(
-            localizations.viewExplorer,
-            Dimens.buttonBottomDimens,
-            key: const Key('viewExplorer'),
-            onPressed: () async {
-              UIUtil.showWebview(
-                context,
-                '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.notificationRecipientAddress}',
-                '',
-              );
-            },
-          ),
-        ],
-      ),
-      backgroundColor: ArchethicTheme.background,
-      appBar: SheetAppBar(
-        title: localizations.transactionInfosHeader,
-        widgetLeft: BackButton(
-          key: const Key('back'),
-          color: ArchethicTheme.text,
-          onPressed: () {
-            context.go(HomePage.routerPage);
+    return SheetSkeleton(
+      appBar: getAppBar(context, ref),
+      floatingActionButton: getFloatingActionButton(context, ref),
+      sheetContent: getSheetContent(context, ref),
+      thumbVisibility: false,
+    );
+  }
+
+  @override
+  Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    return Row(
+      children: <Widget>[
+        AppButtonTinyConnectivity(
+          localizations.viewExplorer,
+          Dimens.buttonBottomDimens,
+          key: const Key('viewExplorer'),
+          onPressed: () async {
+            UIUtil.showWebview(
+              context,
+              '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.notificationRecipientAddress}',
+              '',
+            );
           },
         ),
+      ],
+    );
+  }
+
+  @override
+  PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    return SheetAppBar(
+      title: localizations.transactionInfosHeader,
+      widgetLeft: BackButton(
+        key: const Key('back'),
+        color: ArchethicTheme.text,
+        onPressed: () {
+          context.go(HomePage.routerPage);
+        },
       ),
-      body: Container(
-        padding: const EdgeInsets.only(
-          bottom: 20,
-        ),
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              ArchethicTheme.backgroundSmall,
-            ),
-            fit: BoxFit.fitHeight,
-            opacity: 0.7,
+    );
+  }
+
+  @override
+  Widget getSheetContent(BuildContext context, WidgetRef ref) {
+    final session = ref.watch(SessionProviders.session).loggedIn!;
+    final selectedAccount =
+        ref.watch(AccountProviders.selectedAccount).valueOrNull;
+    return FutureBuilder<List<TransactionInfos>>(
+      future: sl.get<AppService>().getTransactionAllInfos(
+            widget.notificationRecipientAddress,
+            DateFormat.yMEd(Localizations.localeOf(context).languageCode),
+            AccountBalance.cryptoCurrencyLabel,
+            context,
+            session.wallet.keychainSecuredInfos.services[selectedAccount!.name]!
+                .keyPair!,
           ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 120),
-          child: FutureBuilder<List<TransactionInfos>>(
-            future: sl.get<AppService>().getTransactionAllInfos(
-                  widget.notificationRecipientAddress,
-                  DateFormat.yMEd(Localizations.localeOf(context).languageCode),
-                  AccountBalance.cryptoCurrencyLabel,
-                  context,
-                  session.wallet.keychainSecuredInfos
-                      .services[selectedAccount.name]!.keyPair!,
-                ),
-            builder: (
-              BuildContext context,
-              AsyncSnapshot<List<TransactionInfos>> list,
-            ) {
-              return Column(
-                children: <Widget>[
-                  Expanded(
-                    child: list.hasData
-                        ? _TransactionInfos(
-                            list: list,
-                            scrollController: scrollController,
-                            notificationRecipientAddress:
-                                widget.notificationRecipientAddress,
-                          )
-                        : _TransactionLoading(),
-                  ),
-                ],
-              );
-            },
-          ),
-        ),
-      ),
+      builder: (
+        BuildContext context,
+        AsyncSnapshot<List<TransactionInfos>> list,
+      ) {
+        return list.hasData
+            ? _TransactionInfos(
+                list: list,
+                notificationRecipientAddress:
+                    widget.notificationRecipientAddress,
+              )
+            : _TransactionLoading();
+      },
     );
   }
 }
@@ -158,51 +138,36 @@ class _TransactionLoading extends ConsumerWidget {
 class _TransactionInfos extends ConsumerWidget {
   const _TransactionInfos({
     required this.list,
-    required this.scrollController,
     required this.notificationRecipientAddress,
   });
 
   final AsyncSnapshot<List<TransactionInfos>> list;
-  final ScrollController scrollController;
   final String notificationRecipientAddress;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Column(
-      children: <Widget>[
-        Expanded(
-          child: Stack(
-            children: <Widget>[
-              Scrollbar(
-                thumbVisibility: true,
-                controller: scrollController,
-                child: ListView.builder(
-                  controller: scrollController,
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  padding: const EdgeInsets.only(
-                    top: 15,
-                    bottom: 15,
-                  ),
-                  itemCount: list.data == null ? 0 : list.data!.length,
-                  itemBuilder: (
-                    BuildContext context,
-                    int index,
-                  ) {
-                    return Padding(
-                      padding: const EdgeInsets.only(
-                        right: 10,
-                      ),
-                      child: _TransactionBuildInfos(
-                        transactionInfo: list.data![index],
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
+      child: ListView.builder(
+        padding: const EdgeInsets.only(
+          top: 15,
+          bottom: 15,
         ),
-      ],
+        itemCount: list.data == null ? 0 : list.data!.length,
+        itemBuilder: (
+          BuildContext context,
+          int index,
+        ) {
+          return Padding(
+            padding: const EdgeInsets.only(
+              right: 10,
+            ),
+            child: _TransactionBuildInfos(
+              transactionInfo: list.data![index],
+            ),
+          );
+        },
+      ),
     );
   }
 }

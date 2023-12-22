@@ -52,6 +52,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
   }
 
   Future<void> _verifyPassword() async {
+    if (!mounted) return;
     final result = await ref
         .read(
           AuthenticationProviders.passwordAuthentication.notifier,
@@ -98,7 +99,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
               image: AssetImage(
                 ArchethicTheme.backgroundSmall,
               ),
-              fit: BoxFit.fitHeight,
+              fit: BoxFit.cover,
             ),
             gradient: LinearGradient(
               begin: Alignment.topLeft,

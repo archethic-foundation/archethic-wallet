@@ -15,7 +15,8 @@ import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/paste_icon.dart';
-import 'package:aewallet/ui/widgets/components/scrollbar.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/user_data_util.dart';
@@ -53,17 +54,14 @@ class AddContactSheet extends ConsumerWidget {
   }
 }
 
-class AddContactSheetBody extends ConsumerWidget {
+class AddContactSheetBody extends ConsumerWidget
+    implements SheetSkeletonInterface {
   const AddContactSheetBody({
     super.key,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-
-    final contactCreation =
-        ref.watch(ContactCreationFormProvider.contactCreationForm);
     final contactCreationNotifier =
         ref.watch(ContactCreationFormProvider.contactCreationForm.notifier);
 
@@ -88,100 +86,86 @@ class AddContactSheetBody extends ConsumerWidget {
         contactCreationNotifier.setError('');
       },
     );
+    return SheetSkeleton(
+      appBar: getAppBar(context, ref),
+      floatingActionButton: getFloatingActionButton(context, ref),
+      sheetContent: getSheetContent(context, ref),
+    );
+  }
 
-    return Scaffold(
-      drawerEdgeDragWidth: 0,
-      extendBodyBehindAppBar: true,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Row(
-        children: <Widget>[
-          AppButtonTinyConnectivity(
-            localizations.addContact,
-            Dimens.buttonBottomDimens,
-            key: const Key('addContact'),
-            onPressed: () async {
-              final isNameOk = await contactCreationNotifier.controlName(
+  @override
+  Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    final contactCreationNotifier =
+        ref.watch(ContactCreationFormProvider.contactCreationForm.notifier);
+    final contactCreation =
+        ref.watch(ContactCreationFormProvider.contactCreationForm);
+    return Row(
+      children: <Widget>[
+        AppButtonTinyConnectivity(
+          localizations.addContact,
+          Dimens.buttonBottomDimens,
+          key: const Key('addContact'),
+          onPressed: () async {
+            final isNameOk = await contactCreationNotifier.controlName(
+              context,
+            );
+
+            final isAddressOk = await contactCreationNotifier.controlAddress(
+              context,
+            );
+
+            if (isNameOk && isAddressOk) {
+              final newContact = await contactCreationNotifier.addContact();
+
+              ref
+                  .read(AccountProviders.selectedAccount.notifier)
+                  .refreshRecentTransactions();
+              UIUtil.showSnackbar(
+                localizations.contactAdded.replaceAll('%1', newContact.format),
                 context,
+                ref,
+                ArchethicTheme.text,
+                ArchethicTheme.snackBarShadow,
+                icon: Symbols.info,
               );
-
-              final isAddressOk = await contactCreationNotifier.controlAddress(
-                context,
-              );
-
-              if (isNameOk && isAddressOk) {
-                final newContact = await contactCreationNotifier.addContact();
-
-                ref
-                    .read(AccountProviders.selectedAccount.notifier)
-                    .refreshRecentTransactions();
-                UIUtil.showSnackbar(
-                  localizations.contactAdded
-                      .replaceAll('%1', newContact.format),
-                  context,
-                  ref,
-                  ArchethicTheme.text,
-                  ArchethicTheme.snackBarShadow,
-                  icon: Symbols.info,
-                );
-                context.pop();
-              }
-            },
-            disabled: !contactCreation.canCreateContact,
-          ),
-        ],
-      ),
-      backgroundColor: ArchethicTheme.background,
-      appBar: SheetAppBar(
-        title: localizations.addContact,
-        widgetLeft: BackButton(
-          key: const Key('back'),
-          color: ArchethicTheme.text,
-          onPressed: () {
-            context.pop();
+              context.pop();
+            }
           },
+          disabled: !contactCreation.canCreateContact,
         ),
+      ],
+    );
+  }
+
+  @override
+  PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    return SheetAppBar(
+      title: localizations.addContact,
+      widgetLeft: BackButton(
+        key: const Key('back'),
+        color: ArchethicTheme.text,
+        onPressed: () {
+          context.pop();
+        },
       ),
-      body: Container(
-        padding: const EdgeInsets.only(
-          bottom: 20,
+    );
+  }
+
+  @override
+  Widget getSheetContent(BuildContext context, WidgetRef ref) {
+    return const Column(
+      children: <Widget>[
+        AddContactTextFieldName(),
+        SizedBox(
+          height: 20,
         ),
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              ArchethicTheme.backgroundSmall,
-            ),
-            fit: BoxFit.fitHeight,
-            opacity: 0.7,
-          ),
+        AddContactTextFieldAddress(),
+        SizedBox(
+          height: 20,
         ),
-        child: const Padding(
-          padding: EdgeInsets.only(top: 120),
-          child: Column(
-            children: <Widget>[
-              SizedBox(height: 30),
-              Expanded(
-                child: ArchethicScrollbar(
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 10, right: 10, bottom: 30),
-                    child: Column(
-                      children: <Widget>[
-                        AddContactTextFieldName(),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        AddContactTextFieldAddress(),
-                        SizedBox(
-                          height: 20,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      ],
     );
   }
 }

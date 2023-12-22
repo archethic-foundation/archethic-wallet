@@ -24,9 +24,8 @@ class AddTokenDetail extends ConsumerWidget {
     final accountSelected =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
 
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.only(left: 10, right: 10),
       child: Column(
         children: [
           SheetDetailCard(
