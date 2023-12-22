@@ -214,13 +214,6 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                                               .textStyleSize12W600Primary,
                                         ),
                                       ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      VerifiedTokenIcon(
-                                        address: accountFungibleToken
-                                            .tokenInformation!.address!,
-                                      ),
                                     ],
                                   ),
                                   Row(
@@ -259,10 +252,21 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                             style:
                                 ArchethicThemeStyles.textStyleSize12W400Primary,
                           ),
-                          Text(
-                            accountFungibleToken.tokenInformation!.symbol!,
-                            style:
-                                ArchethicThemeStyles.textStyleSize12W600Primary,
+                          Row(
+                            children: [
+                              Text(
+                                accountFungibleToken.tokenInformation!.symbol!,
+                                style: ArchethicThemeStyles
+                                    .textStyleSize12W600Primary,
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              VerifiedTokenIcon(
+                                address: accountFungibleToken
+                                    .tokenInformation!.address!,
+                              ),
+                            ],
                           ),
                         ],
                       )
@@ -276,10 +280,21 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                             style: ArchethicThemeStyles
                                 .textStyleSize12W600Primary60,
                           ),
-                          Text(
-                            accountFungibleToken.tokenInformation!.symbol!,
-                            style:
-                                ArchethicThemeStyles.textStyleSize12W600Primary,
+                          Row(
+                            children: [
+                              Text(
+                                accountFungibleToken.tokenInformation!.symbol!,
+                                style: ArchethicThemeStyles
+                                    .textStyleSize12W600Primary,
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              VerifiedTokenIcon(
+                                address: accountFungibleToken
+                                    .tokenInformation!.address!,
+                              ),
+                            ],
                           ),
                         ],
                       ),

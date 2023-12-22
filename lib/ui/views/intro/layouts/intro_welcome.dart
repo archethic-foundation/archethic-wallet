@@ -1,7 +1,3 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-
-import 'dart:ui';
-
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/version.dart';
@@ -126,25 +122,16 @@ class _AppBar extends ConsumerWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-    return PreferredSize(
-      preferredSize: Size(MediaQuery.of(context).size.width, 40),
-      child: ClipRRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            actions: <Widget>[
-              const _Language(),
-              if (connectivityStatusProvider ==
-                  ConnectivityStatus.isDisconnected)
-                const IconNetworkWarning(
-                  alignment: Alignment.topRight,
-                ),
-            ],
+    return AppBar(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      actions: <Widget>[
+        const _Language(),
+        if (connectivityStatusProvider == ConnectivityStatus.isDisconnected)
+          const IconNetworkWarning(
+            alignment: Alignment.topRight,
           ),
-        ),
-      ),
+      ],
     );
   }
 }
@@ -155,14 +142,22 @@ class _Language extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return IconButton(
-      padding: const EdgeInsets.only(bottom: 4),
-      icon: Icon(
-        Symbols.translate,
-        color: ArchethicTheme.iconDrawer,
-        size: 25,
-        weight: IconSize.weightM,
-        opticalSize: IconSize.opticalSizeM,
-        grade: IconSize.gradeM,
+      padding: const EdgeInsets.only(bottom: 4, top: 10, right: 10),
+      icon: Container(
+        width: 30,
+        height: 30,
+        decoration: BoxDecoration(
+          color: ArchethicThemeBase.plum300,
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          Symbols.translate,
+          color: ArchethicTheme.iconDrawer,
+          size: 20,
+          weight: IconSize.weightM,
+          opticalSize: IconSize.opticalSizeM,
+          grade: IconSize.gradeM,
+        ),
       ),
       onPressed: () async {
         await LanguageDialog.getDialog(context, ref);
@@ -254,7 +249,7 @@ class _WelcomeTextSecond extends ConsumerWidget {
       child: AutoSizeText(
         localizations.welcomeText2,
         maxLines: 5,
-        style: ArchethicThemeStyles.textStyleSize12W100Primary,
+        style: ArchethicThemeStyles.textStyleSize12W400Primary,
       ),
     );
   }

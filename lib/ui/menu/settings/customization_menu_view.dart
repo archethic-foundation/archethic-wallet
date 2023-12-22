@@ -1,6 +1,7 @@
 part of 'settings_sheet.dart';
 
-class CustomizationMenuView extends ConsumerWidget {
+class CustomizationMenuView extends ConsumerWidget
+    implements SheetSkeletonInterface {
   const CustomizationMenuView({
     super.key,
   });
@@ -9,89 +10,100 @@ class CustomizationMenuView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    return SheetSkeleton(
+      appBar: getAppBar(context, ref),
+      floatingActionButton: getFloatingActionButton(context, ref),
+      sheetContent: getSheetContent(context, ref),
+    );
+  }
+
+  @override
+  Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
+    return const SizedBox.shrink();
+  }
+
+  @override
+  PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
+    return SheetAppBar(
+      title: localizations.customHeader,
+      widgetLeft: BackButton(
+        key: const Key('back'),
+        color: ArchethicTheme.text,
+        onPressed: () {
+          context.go(SettingsSheetWallet.routerPage);
+        },
+      ),
+    );
+  }
+
+  @override
+  Widget getSheetContent(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     final hasNotifications =
         ref.watch(DeviceAbilities.hasNotificationsProvider);
-    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      extendBody: true,
-      drawerEdgeDragWidth: 0,
-      resizeToAvoidBottomInset: false,
-      backgroundColor: ArchethicTheme.background,
-      appBar: SheetAppBar(
-        title: localizations.customHeader,
-        widgetLeft: BackButton(
-          key: const Key('back'),
-          color: ArchethicTheme.text,
-          onPressed: () {
-            context.go(SettingsSheetWallet.routerPage);
-          },
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: <Color>[
+            ArchethicThemeBase.blue800.withOpacity(0.4),
+            ArchethicThemeBase.blue800.withOpacity(1),
+          ],
+          begin: Alignment.topLeft,
+          end: const Alignment(5, 0),
         ),
       ),
-      body: DecoratedBox(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: <Color>[
-              ArchethicThemeBase.blue800.withOpacity(0.4),
-              ArchethicThemeBase.blue800.withOpacity(1),
-            ],
-            begin: Alignment.topLeft,
-            end: const Alignment(5, 0),
-          ),
-        ),
-        child: SafeArea(
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: Stack(
-                  children: <Widget>[
-                    ListView(
-                      children: <Widget>[
-                        const _CurrencySettingsListItem(),
+      child: SafeArea(
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: Stack(
+                children: <Widget>[
+                  ListView(
+                    children: <Widget>[
+                      const _CurrencySettingsListItem(),
+                      const _SettingsListItem.spacer(),
+                      _SettingsListItem.withDefaultValue(
+                        heading: localizations.primaryCurrency,
+                        defaultMethod: primaryCurrency,
+                        icon: Symbols.currency_exchange,
+                        onPressed: () =>
+                            PrimaryCurrencyDialog.getDialog(context, ref),
+                      ),
+                      const _SettingsListItem.spacer(),
+                      const _LanguageSettingsListItem(),
+                      const _SettingsListItem.spacer(),
+                      const _ShowBalancesSettingsListItem(),
+                      const _SettingsListItem.spacer(),
+                      if (connectivityStatusProvider ==
+                          ConnectivityStatus.isConnected)
+                        const _ShowBlogSettingsListItem(),
+                      if (connectivityStatusProvider ==
+                          ConnectivityStatus.isConnected)
                         const _SettingsListItem.spacer(),
-                        _SettingsListItem.withDefaultValue(
-                          heading: localizations.primaryCurrency,
-                          defaultMethod: primaryCurrency,
-                          icon: Symbols.currency_exchange,
-                          onPressed: () =>
-                              PrimaryCurrencyDialog.getDialog(context, ref),
-                        ),
+                      const _ShowPriceChartSettingsListItem(),
+                      if (hasNotifications &&
+                          connectivityStatusProvider ==
+                              ConnectivityStatus.isConnected)
                         const _SettingsListItem.spacer(),
-                        const _LanguageSettingsListItem(),
+                      if (hasNotifications &&
+                          connectivityStatusProvider ==
+                              ConnectivityStatus.isConnected)
+                        const _ActiveNotificationsSettingsListItem(),
+                      if (!kIsWeb && (Platform.isAndroid || Platform.isIOS))
                         const _SettingsListItem.spacer(),
-                        const _ShowBalancesSettingsListItem(),
-                        const _SettingsListItem.spacer(),
-                        if (connectivityStatusProvider ==
-                            ConnectivityStatus.isConnected)
-                          const _ShowBlogSettingsListItem(),
-                        if (connectivityStatusProvider ==
-                            ConnectivityStatus.isConnected)
-                          const _SettingsListItem.spacer(),
-                        const _ShowPriceChartSettingsListItem(),
-                        if (hasNotifications &&
-                            connectivityStatusProvider ==
-                                ConnectivityStatus.isConnected)
-                          const _SettingsListItem.spacer(),
-                        if (hasNotifications &&
-                            connectivityStatusProvider ==
-                                ConnectivityStatus.isConnected)
-                          const _ActiveNotificationsSettingsListItem(),
-                        if (!kIsWeb && (Platform.isAndroid || Platform.isIOS))
-                          const _SettingsListItem.spacer(),
-                        if (!kIsWeb && (Platform.isAndroid || Platform.isIOS))
-                          const _ActiveVibrationsSettingsListItem(),
-                        const _SettingsListItem.spacer(),
-                      ],
-                    ),
-                  ],
-                ),
+                      if (!kIsWeb && (Platform.isAndroid || Platform.isIOS))
+                        const _ActiveVibrationsSettingsListItem(),
+                      const _SettingsListItem.spacer(),
+                    ],
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

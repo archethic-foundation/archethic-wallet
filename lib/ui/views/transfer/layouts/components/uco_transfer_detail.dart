@@ -35,9 +35,8 @@ class UCOTransferDetail extends ConsumerWidget {
     if (primaryCurrency.primaryCurrency == AvailablePrimaryCurrencyEnum.fiat) {
       amountInUco = transfer.amountConverted;
     }
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.only(left: 20, right: 20),
       child: Column(
         children: [
           Padding(

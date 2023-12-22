@@ -165,7 +165,14 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                       }
                     },
                   )
-                : null,
+                : Icon(
+                    Symbols.search,
+                    color: ArchethicTheme.text,
+                    size: 18,
+                    weight: IconSize.weightM,
+                    opticalSize: IconSize.opticalSizeM,
+                    grade: IconSize.gradeM,
+                  ),
             suffixIcon: PasteIcon(
               onPaste: (String value) {
                 nftSearchBarNotifier.setSearchCriteria(value);

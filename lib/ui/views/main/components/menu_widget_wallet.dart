@@ -47,7 +47,7 @@ class MenuWidgetWallet extends ConsumerWidget {
           elevation: 0,
           color: Colors.transparent,
           child: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.9,
+            width: MediaQuery.of(context).size.width,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,

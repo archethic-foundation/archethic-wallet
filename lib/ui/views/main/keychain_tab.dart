@@ -22,7 +22,7 @@ class KeychainTab extends ConsumerWidget {
           image: AssetImage(
             ArchethicTheme.backgroundSmall,
           ),
-          fit: BoxFit.fitHeight,
+          fit: BoxFit.cover,
           opacity: 0.7,
         ),
       ),

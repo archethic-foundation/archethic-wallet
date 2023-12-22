@@ -11,14 +11,16 @@ import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/network_indicator.dart';
-import 'package:aewallet/ui/widgets/components/scrollbar.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/fees/fee_infos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class TransferFormSheet extends ConsumerWidget {
+class TransferFormSheet extends ConsumerWidget
+    implements SheetSkeletonInterface {
   const TransferFormSheet({
     this.actionButtonTitle,
     required this.title,
@@ -30,113 +32,90 @@ class TransferFormSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-    final bottom = MediaQuery.of(context).viewInsets.bottom;
     final accountSelected =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
-    final transfer = ref.watch(TransferFormProvider.transferForm);
-
     if (accountSelected == null) return const SizedBox();
 
-    return Scaffold(
-      drawerEdgeDragWidth: 0,
-      extendBodyBehindAppBar: true,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Row(
-        children: <Widget>[
-          AppButtonTinyConnectivity(
-            actionButtonTitle ?? localizations.send,
-            Dimens.buttonTopDimens,
-            key: const Key('send'),
-            onPressed: () async {
-              final transferNotifier =
-                  ref.read(TransferFormProvider.transferForm.notifier);
+    return SheetSkeleton(
+      appBar: getAppBar(context, ref),
+      floatingActionButton: getFloatingActionButton(context, ref),
+      sheetContent: getSheetContent(context, ref),
+    );
+  }
 
-              final isAddressOk = await transferNotifier.controlAddress(
-                context,
-                accountSelected,
-              );
-              final isAmountOk = transferNotifier.controlAmount(
-                context,
-                accountSelected,
-              );
+  @override
+  Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    final transfer = ref.watch(TransferFormProvider.transferForm);
+    final accountSelected =
+        ref.watch(AccountProviders.selectedAccount).valueOrNull;
+    return Row(
+      children: <Widget>[
+        AppButtonTinyConnectivity(
+          actionButtonTitle ?? localizations.send,
+          Dimens.buttonTopDimens,
+          key: const Key('send'),
+          onPressed: () async {
+            final transferNotifier =
+                ref.read(TransferFormProvider.transferForm.notifier);
 
-              if (isAddressOk && isAmountOk) {
-                transferNotifier.setTransferProcessStep(
-                  TransferProcessStep.confirmation,
-                );
-              }
-            },
-            disabled: !transfer.canTransfer,
-          ),
-        ],
-      ),
-      backgroundColor: ArchethicTheme.background,
-      appBar: SheetAppBar(
-        title: title,
-        widgetLeft: BackButton(
-          key: const Key('back'),
-          color: ArchethicTheme.text,
-          onPressed: () {
-            context.go(HomePage.routerPage);
+            final isAddressOk = await transferNotifier.controlAddress(
+              context,
+              accountSelected!,
+            );
+            final isAmountOk = transferNotifier.controlAmount(
+              context,
+              accountSelected,
+            );
+
+            if (isAddressOk && isAmountOk) {
+              transferNotifier.setTransferProcessStep(
+                TransferProcessStep.confirmation,
+              );
+            }
           },
+          disabled: !transfer.canTransfer,
         ),
-        widgetBeforeTitle: const NetworkIndicator(),
+      ],
+    );
+  }
+
+  @override
+  PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
+    return SheetAppBar(
+      title: title,
+      widgetLeft: BackButton(
+        key: const Key('back'),
+        color: ArchethicTheme.text,
+        onPressed: () {
+          context.go(HomePage.routerPage);
+        },
       ),
-      body: DecoratedBox(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              ArchethicTheme.backgroundSmall,
-            ),
-            fit: BoxFit.fitHeight,
-            opacity: 0.7,
-          ),
+      widgetBeforeTitle: const NetworkIndicator(),
+    );
+  }
+
+  @override
+  Widget getSheetContent(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    final transfer = ref.watch(TransferFormProvider.transferForm);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        const SizedBox(height: 25),
+        const TransferTextFieldAddress(),
+        if (transfer.transferType != TransferType.nft)
+          const TransferTextFieldAmount(),
+        const BalanceIndicatorWidget(allDigits: false),
+        FeeInfos(
+          asyncFeeEstimation: transfer.feeEstimation,
+          estimatedFeesNote: transfer.transferType == TransferType.nft
+              ? localizations.estimatedFeesNoteNFT
+              : localizations.estimatedFeesNote,
         ),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 120),
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: Container(
-                  margin: const EdgeInsets.only(left: 20, right: 20),
-                  child: ArchethicScrollbar(
-                    child: Padding(
-                      padding: EdgeInsets.only(bottom: bottom / 2),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          const SizedBox(height: 25),
-                          const TransferTextFieldAddress(),
-                          if (transfer.transferType != TransferType.nft)
-                            Container(
-                              padding: const EdgeInsets.only(
-                                top: 20,
-                                bottom: 20,
-                              ),
-                              alignment: Alignment.topCenter,
-                              child: const TransferTextFieldAmount(),
-                            ),
-                          const BalanceIndicatorWidget(allDigits: false),
-                          FeeInfos(
-                            asyncFeeEstimation: transfer.feeEstimation,
-                            estimatedFeesNote:
-                                transfer.transferType == TransferType.nft
-                                    ? localizations.estimatedFeesNoteNFT
-                                    : localizations.estimatedFeesNote,
-                          ),
-                          const SizedBox(height: 20),
-                          const TransferTextFieldMessage(),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+        const SizedBox(height: 20),
+        const TransferTextFieldMessage(),
+      ],
     );
   }
 }

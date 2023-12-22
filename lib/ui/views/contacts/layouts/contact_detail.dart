@@ -17,6 +17,8 @@ import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/views/messenger/layouts/create_discussion_validation_sheet.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +44,7 @@ class ContactDetailsRouteParams with _$ContactDetailsRouteParams {
       _$ContactDetailsRouteParamsFromJson(json);
 }
 
-class ContactDetail extends ConsumerWidget {
+class ContactDetail extends ConsumerWidget implements SheetSkeletonInterface {
   const ContactDetail({
     required this.contactAddress,
     this.readOnly = false,
@@ -55,46 +57,54 @@ class ContactDetail extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    return SheetSkeleton(
+      appBar: getAppBar(context, ref),
+      floatingActionButton: getFloatingActionButton(context, ref),
+      sheetContent: getSheetContent(context, ref),
+      thumbVisibility: false,
+    );
+  }
+
+  @override
+  Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
+    return const SizedBox.shrink();
+  }
+
+  @override
+  PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     final contact = ref
         .watch(ContactProviders.getContactWithAddress(contactAddress))
         .valueOrNull;
 
-    return Scaffold(
-      drawerEdgeDragWidth: 0,
-      resizeToAvoidBottomInset: false,
-      extendBodyBehindAppBar: true,
-      backgroundColor: ArchethicTheme.background,
-      appBar: SheetAppBar(
-        title: contact?.format ?? '...',
-        widgetRight: Padding(
-          padding: const EdgeInsets.only(right: 10, top: 10),
-          child: _ContactDetailBalance(contactAddress: contactAddress),
-        ),
-        widgetLeft: BackButton(
-          key: const Key('back'),
-          color: ArchethicTheme.text,
-          onPressed: () {
-            context.pop();
-          },
-        ),
+    return SheetAppBar(
+      title: contact?.format ?? '...',
+      widgetRight: Padding(
+        padding: const EdgeInsets.only(right: 10, top: 10),
+        child: _ContactDetailBalance(contactAddress: contactAddress),
       ),
-      body: DecoratedBox(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              ArchethicTheme.backgroundSmall,
+      widgetLeft: BackButton(
+        key: const Key('back'),
+        color: ArchethicTheme.text,
+        onPressed: () {
+          context.pop();
+        },
+      ),
+    );
+  }
+
+  @override
+  Widget getSheetContent(BuildContext context, WidgetRef ref) {
+    final contact = ref
+        .watch(ContactProviders.getContactWithAddress(contactAddress))
+        .valueOrNull;
+    return SizedBox(
+      height: MediaQuery.of(context).size.height - 200,
+      child: contact == null
+          ? const Center(child: CircularProgressIndicator())
+          : _ContactDetailBody(
+              contact: contact,
+              readOnly: readOnly,
             ),
-            fit: BoxFit.fitHeight,
-            opacity: 0.7,
-          ),
-        ),
-        child: contact == null
-            ? const Center(child: CircularProgressIndicator())
-            : _ContactDetailBody(
-                contact: contact,
-                readOnly: readOnly,
-              ),
-      ),
     );
   }
 }
@@ -149,93 +159,89 @@ class _ContactDetailBody extends ConsumerWidget {
 
     final preferences = ref.watch(SettingsProviders.settings);
 
-    return Padding(
-      padding: const EdgeInsets.only(top: 120),
-      child: Column(
-        children: <Widget>[
-          _ContactDetailActions(contact: contact, readOnly: readOnly),
-          Expanded(
-            child: ContactDetailTab(
-              infoQRCode: contact.address.toUpperCase(),
-              description: contact.type == ContactType.keychainService.name
-                  ? localizations.contactAddressInfoKeychainService
-                  : localizations.contactAddressInfoExternalContact,
-              messageCopied: localizations.addressCopied,
-            ),
+    return Column(
+      children: <Widget>[
+        _ContactDetailActions(contact: contact, readOnly: readOnly),
+        Expanded(
+          child: ContactDetailTab(
+            infoQRCode: contact.address.toUpperCase(),
+            description: contact.type == ContactType.keychainService.name
+                ? localizations.contactAddressInfoKeychainService
+                : localizations.contactAddressInfoExternalContact,
+            messageCopied: localizations.addressCopied,
           ),
-          Visibility(
-            visible: contact.type != ContactType.keychainService.name &&
-                readOnly == false,
-            child: Column(
-              children: [
-                TextButton(
-                  key: const Key('removeContact'),
-                  onPressed: () {
-                    sl.get<HapticUtil>().feedback(
-                          FeedbackType.light,
-                          preferences.activeVibrations,
-                        );
-                    AppDialogs.showConfirmDialog(
-                      context,
-                      ref,
-                      localizations.removeContact,
-                      localizations.removeContactConfirmation.replaceAll(
-                        '%1',
-                        contact.format,
-                      ),
-                      localizations.yes,
-                      () {
-                        ref.read(
-                          ContactProviders.deleteContact(
-                            contact: contact,
-                          ),
-                        );
+        ),
+        Visibility(
+          visible: contact.type != ContactType.keychainService.name &&
+              readOnly == false,
+          child: Column(
+            children: [
+              TextButton(
+                key: const Key('removeContact'),
+                onPressed: () {
+                  sl.get<HapticUtil>().feedback(
+                        FeedbackType.light,
+                        preferences.activeVibrations,
+                      );
+                  AppDialogs.showConfirmDialog(
+                    context,
+                    ref,
+                    localizations.removeContact,
+                    localizations.removeContactConfirmation.replaceAll(
+                      '%1',
+                      contact.format,
+                    ),
+                    localizations.yes,
+                    () {
+                      ref.read(
+                        ContactProviders.deleteContact(
+                          contact: contact,
+                        ),
+                      );
 
-                        ref
-                            .read(
-                              AccountProviders.selectedAccount.notifier,
-                            )
-                            .refreshRecentTransactions();
-                        UIUtil.showSnackbar(
-                          localizations.contactRemoved.replaceAll(
-                            '%1',
-                            contact.format,
-                          ),
-                          context,
-                          ref,
-                          ArchethicTheme.text,
-                          ArchethicTheme.snackBarShadow,
-                          icon: Symbols.info,
-                        );
-                        context.pop();
-                      },
-                      cancelText: localizations.no,
-                    );
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Symbols.delete,
-                        color: ArchethicThemeStyles
-                            .textStyleSize14W600PrimaryRed.color,
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      Text(
-                        localizations.deleteContact,
-                        style:
-                            ArchethicThemeStyles.textStyleSize14W600PrimaryRed,
-                      ),
-                    ],
-                  ),
+                      ref
+                          .read(
+                            AccountProviders.selectedAccount.notifier,
+                          )
+                          .refreshRecentTransactions();
+                      UIUtil.showSnackbar(
+                        localizations.contactRemoved.replaceAll(
+                          '%1',
+                          contact.format,
+                        ),
+                        context,
+                        ref,
+                        ArchethicTheme.text,
+                        ArchethicTheme.snackBarShadow,
+                        icon: Symbols.info,
+                      );
+                      context.pop();
+                    },
+                    cancelText: localizations.no,
+                  );
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Symbols.delete,
+                      color: ArchethicThemeStyles
+                          .textStyleSize14W600PrimaryRed.color,
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      localizations.deleteContact,
+                      style: ArchethicThemeStyles.textStyleSize14W600PrimaryRed,
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -16,6 +16,8 @@ import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/components/token_transfer_detail.dart';
 import 'package:aewallet/ui/views/transfer/layouts/components/uco_transfer_detail.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -41,7 +43,8 @@ class TransferConfirmSheet extends ConsumerStatefulWidget {
       _TransferConfirmSheetState();
 }
 
-class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
+class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet>
+    implements SheetSkeletonInterface {
   bool? animationOpen;
 
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
@@ -164,86 +167,69 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet> {
 
   @override
   Widget build(BuildContext context) {
+    return SheetSkeleton(
+      appBar: getAppBar(context, ref),
+      floatingActionButton: getFloatingActionButton(context, ref),
+      sheetContent: getSheetContent(context, ref),
+    );
+  }
+
+  @override
+  Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final transfer = ref.watch(TransferFormProvider.transferForm);
+    return Row(
+      children: <Widget>[
+        AppButtonTinyConnectivity(
+          localizations.confirm,
+          Dimens.buttonTopDimens,
+          key: const Key('confirm'),
+          onPressed: () async {
+            ShowSendingAnimation.build(
+              context,
+            );
+            await ref
+                .read(
+                  TransferFormProvider.transferForm.notifier,
+                )
+                .send(context);
+          },
+        ),
+      ],
+    );
+  }
+
+  @override
+  PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
     final transferNotifier =
         ref.watch(TransferFormProvider.transferForm.notifier);
 
-    return Scaffold(
-      drawerEdgeDragWidth: 0,
-      extendBodyBehindAppBar: true,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Row(
-        children: <Widget>[
-          AppButtonTinyConnectivity(
-            localizations.confirm,
-            Dimens.buttonTopDimens,
-            key: const Key('confirm'),
-            onPressed: () async {
-              ShowSendingAnimation.build(
-                context,
-              );
-              await ref
-                  .read(
-                    TransferFormProvider.transferForm.notifier,
-                  )
-                  .send(context);
-            },
-          ),
-        ],
+    return SheetAppBar(
+      title: widget.title ?? localizations.transfering,
+      widgetLeft: BackButton(
+        key: const Key('back'),
+        color: ArchethicTheme.text,
+        onPressed: () {
+          transferNotifier.setTransferProcessStep(
+            TransferProcessStep.form,
+          );
+        },
       ),
-      backgroundColor: ArchethicTheme.background,
-      appBar: SheetAppBar(
-        title: widget.title ?? localizations.transfering,
-        widgetLeft: BackButton(
-          key: const Key('back'),
-          color: ArchethicTheme.text,
-          onPressed: () {
-            transferNotifier.setTransferProcessStep(
-              TransferProcessStep.form,
-            );
-          },
-        ),
-      ),
-      body: DecoratedBox(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              ArchethicTheme.backgroundSmall,
-            ),
-            fit: BoxFit.fitHeight,
-            opacity: 0.7,
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 120, bottom: 100),
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      SizedBox(
-                        child: transfer.transferType == TransferType.uco
-                            ? const UCOTransferDetail()
-                            : transfer.transferType == TransferType.token ||
-                                    transfer.transferType == TransferType.nft
-                                ? TokenTransferDetail(
-                                    tokenId: widget.tokenId,
-                                  )
-                                : const SizedBox(),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+    );
+  }
+
+  @override
+  Widget getSheetContent(BuildContext context, WidgetRef ref) {
+    final transfer = ref.watch(TransferFormProvider.transferForm);
+    return SizedBox(
+      child: transfer.transferType == TransferType.uco
+          ? const UCOTransferDetail()
+          : transfer.transferType == TransferType.token ||
+                  transfer.transferType == TransferType.nft
+              ? TokenTransferDetail(
+                  tokenId: widget.tokenId,
+                )
+              : const SizedBox(),
     );
   }
 }

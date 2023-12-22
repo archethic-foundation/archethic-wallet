@@ -84,6 +84,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
   }
 
   Future<void> _verifyOTP(String otp) async {
+    if (!mounted) return;
     final result = await ref
         .read(
           AuthenticationProviders.yubikeyAuthentication.notifier,
@@ -137,7 +138,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
               image: AssetImage(
                 ArchethicTheme.backgroundSmall,
               ),
-              fit: BoxFit.fitHeight,
+              fit: BoxFit.cover,
             ),
             gradient: LinearGradient(
               begin: Alignment.topLeft,
@@ -232,7 +233,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.9,
+                        width: MediaQuery.of(context).size.width,
                         child: Row(
                           children: [
                             Expanded(
