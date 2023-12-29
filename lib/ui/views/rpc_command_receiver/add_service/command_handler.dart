@@ -12,6 +12,7 @@ import 'package:aewallet/domain/rpc/commands/failure.dart';
 import 'package:aewallet/domain/rpc/commands/send_transaction.dart';
 import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
 import 'package:aewallet/infrastructure/repositories/transaction/transaction_keychain_builder.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/add_service/layouts/add_service_confirmation_form.dart';
 import 'package:aewallet/util/notifications_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -19,7 +20,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:window_manager/window_manager.dart';
 
 class AddServiceHandler extends CommandHandler {
@@ -88,12 +88,22 @@ class AddServiceHandler extends CommandHandler {
               await windowManager.show();
             }
 
-            final result = (await context.push(
-              AddServiceConfirmationForm.routerPage,
-              extra: {'serviceName': nameEncoded, 'command': newCommand},
-            ))! as Result<TransactionConfirmation, TransactionError>;
+            final result = await showDialog<
+                Result<TransactionConfirmation, TransactionError>>(
+              useSafeArea: false,
+              context: context,
+              builder: (context) => Dialog.fullscreen(
+                child: DecoratedBox(
+                  decoration: ArchethicTheme.getDecorationSheet(),
+                  child: AddServiceConfirmationForm(
+                    nameEncoded,
+                    newCommand,
+                  ),
+                ),
+              ),
+            );
 
-            return result.map(
+            return result!.map(
                   failure: (failure) => Result.failure(
                     RPCFailure.fromTransactionError(failure),
                   ),

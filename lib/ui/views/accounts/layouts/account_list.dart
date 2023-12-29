@@ -5,6 +5,7 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/ui/views/accounts/layouts/components/account_list_item.dart';
+import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/widgets/components/refresh_indicator.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -48,8 +49,8 @@ class AccountsListWidget extends ConsumerWidget {
           await ref
               .read(AccountProviders.selectedAccount.notifier)
               .refreshRecentTransactions();
-
-          context.pop();
+          if (context.canPop()) context.pop();
+          context.go(HomePage.routerPage);
         }),
         child: ScrollConfiguration(
           behavior: ScrollConfiguration.of(context).copyWith(
@@ -59,33 +60,36 @@ class AccountsListWidget extends ConsumerWidget {
               PointerDeviceKind.trackpad,
             },
           ),
-          child: ListView.builder(
-            physics: const AlwaysScrollableScrollPhysics(),
-            padding: EdgeInsets.only(
-              top: MediaQuery.of(context).padding.top + 10,
-              bottom: MediaQuery.of(context).padding.bottom + 40,
-            ),
-            itemCount: accountsList.length,
-            itemBuilder: (BuildContext context, int index) {
-              Widget item = AccountListItem(
-                account: accountsList[index],
-              );
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 50),
+            child: ListView.builder(
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).padding.top + 10,
+                bottom: MediaQuery.of(context).padding.bottom + 40,
+              ),
+              itemCount: accountsList.length,
+              itemBuilder: (BuildContext context, int index) {
+                Widget item = AccountListItem(
+                  account: accountsList[index],
+                );
 
-              if (!kIsWeb) {
-                item = item
-                    .animate(delay: (100 * index).ms)
-                    .fadeIn(duration: 900.ms, delay: 200.ms)
-                    .shimmer(
-                      blendMode: BlendMode.srcOver,
-                      color: Colors.white12,
-                    )
-                    .move(
-                      begin: const Offset(-16, 0),
-                      curve: Curves.easeOutQuad,
-                    );
-              }
-              return item;
-            },
+                if (!kIsWeb) {
+                  item = item
+                      .animate(delay: (100 * index).ms)
+                      .fadeIn(duration: 900.ms, delay: 200.ms)
+                      .shimmer(
+                        blendMode: BlendMode.srcOver,
+                        color: Colors.white12,
+                      )
+                      .move(
+                        begin: const Offset(-16, 0),
+                        curve: Curves.easeOutQuad,
+                      );
+                }
+                return item;
+              },
+            ),
           ),
         ),
       ),
