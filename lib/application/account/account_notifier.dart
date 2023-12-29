@@ -21,7 +21,6 @@ class _AccountNotifier
       await doRefresh(account);
 
       state = AsyncValue.data(account.copyWith());
-      ref.invalidate(AccountProviders.account(account.name));
     } catch (e, stack) {
       log('Refresh failed', error: e, stackTrace: stack);
     }
