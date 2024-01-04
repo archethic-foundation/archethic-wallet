@@ -239,7 +239,7 @@ class _TransferTextFieldAmountState
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 10, bottom: 19),
+              padding: const EdgeInsets.only(right: 10, bottom: 23),
               child: InkWell(
                 onTap: () async {
                   transferNotifier.setDefineMaxAmountInProgress(
