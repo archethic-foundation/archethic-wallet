@@ -70,8 +70,6 @@ class _AccountNotifier
             tokenInformation.$1,
             tokenInformation.$2,
           );
-
-          ref.invalidate(AccountProviders.account(account.name));
         },
       );
 

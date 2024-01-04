@@ -72,7 +72,7 @@ class AddServiceConfirmationForm extends ConsumerWidget
               AnimationLoadingOverlay(
                 AnimationType.send,
                 ArchethicTheme.animationOverlayStrong,
-                title: '',
+                title: AppLocalizations.of(context)!.pleaseWait,
               ),
             );
 

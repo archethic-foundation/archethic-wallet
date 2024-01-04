@@ -14,7 +14,7 @@ import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_detail.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
+import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -159,8 +159,12 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
             Dimens.buttonTopDimens,
             key: const Key('confirm'),
             onPressed: () async {
-              ShowSendingAnimation.build(
-                context,
+              Navigator.of(context).push(
+                AnimationLoadingOverlay(
+                  AnimationType.send,
+                  ArchethicTheme.animationOverlayStrong,
+                  title: AppLocalizations.of(context)!.pleaseWait,
+                ),
               );
 
               await ref
