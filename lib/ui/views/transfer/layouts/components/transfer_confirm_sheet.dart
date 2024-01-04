@@ -16,9 +16,9 @@ import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/components/token_transfer_detail.dart';
 import 'package:aewallet/ui/views/transfer/layouts/components/uco_transfer_detail.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
+import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
-import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
@@ -184,8 +184,12 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet>
           Dimens.buttonTopDimens,
           key: const Key('confirm'),
           onPressed: () async {
-            ShowSendingAnimation.build(
-              context,
+            Navigator.of(context).push(
+              AnimationLoadingOverlay(
+                AnimationType.send,
+                ArchethicTheme.animationOverlayStrong,
+                title: AppLocalizations.of(context)!.pleaseWait,
+              ),
             );
             await ref
                 .read(
