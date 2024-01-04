@@ -85,7 +85,6 @@ class _AddContactTextFieldNameState
                             textInputAction: TextInputAction.next,
                             keyboardType: TextInputType.text,
                             inputFormatters: <TextInputFormatter>[
-                              UpperCaseTextFormatter(),
                               LengthLimitingTextInputFormatter(20),
                             ],
                             decoration: const InputDecoration(
