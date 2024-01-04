@@ -47,7 +47,7 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
             image: AssetImage(
               ArchethicTheme.backgroundWelcome,
             ),
-            fit: MediaQuery.of(context).size.width >= 400
+            fit: MediaQuery.of(context).size.width >= 440
                 ? BoxFit.fitWidth
                 : BoxFit.fitHeight,
             alignment: Alignment.centerRight,
