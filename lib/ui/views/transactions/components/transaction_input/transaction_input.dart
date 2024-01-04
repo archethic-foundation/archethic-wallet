@@ -39,7 +39,7 @@ class TransactionInput extends ConsumerWidget {
             transaction.from != null) {
           context.push(
             AddContactSheet.routerPage,
-            extra: transaction.recipient,
+            extra: transaction.from,
           );
         }
       },
