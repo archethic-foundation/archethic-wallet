@@ -7,7 +7,6 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/bloc/provider.dart';
 import 'package:aewallet/ui/views/contacts/bloc/state.dart';
