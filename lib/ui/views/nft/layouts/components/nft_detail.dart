@@ -45,7 +45,7 @@ class NFTDetail extends ConsumerStatefulWidget {
   final String address;
   final String symbol;
   final String tokenId;
-  final List<Map<String, dynamic>> collection;
+  final List<dynamic> collection;
   final Map<String, dynamic> properties;
   final String? nameInCollection;
   final bool detailCollection;
@@ -58,20 +58,6 @@ class NFTDetail extends ConsumerStatefulWidget {
 
 class _NFTDetailState extends ConsumerState<NFTDetail>
     implements SheetSkeletonInterface {
-  late ScrollController scrollController;
-
-  @override
-  void initState() {
-    scrollController = ScrollController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    scrollController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final accountSelected =
@@ -250,7 +236,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail>
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height - 100,
+      height: MediaQuery.of(context).size.height - 250,
       child: Column(
         children: <Widget>[
           if (widget.symbol.isNotEmpty)
@@ -281,6 +267,9 @@ class _NFTDetailState extends ConsumerState<NFTDetail>
                             ),
                             NFTDetailProperties(
                               properties: widget.properties,
+                            ),
+                            const SizedBox(
+                              height: 100,
                             ),
                           ],
                         ),
