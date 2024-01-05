@@ -54,11 +54,19 @@ class QRCodeWithOptions extends ConsumerWidget {
       ),
       child: Column(
         children: [
-          QrImageView(
-            eyeStyle: QrEyeStyle(color: ArchethicTheme.text),
-            dataModuleStyle: QrDataModuleStyle(color: ArchethicTheme.text),
-            data: infoQRCode,
-            size: size,
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: Colors.white,
+            ),
+            width: size + 10,
+            height: size + 10,
+            child: QrImageView(
+              eyeStyle: const QrEyeStyle(color: Colors.black),
+              dataModuleStyle: const QrDataModuleStyle(color: Colors.black),
+              data: infoQRCode,
+              size: size,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
