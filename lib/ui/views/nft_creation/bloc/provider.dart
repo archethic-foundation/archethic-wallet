@@ -211,7 +211,8 @@ class NftCreationFormNotifier
         .get<archethic.ApiService>()
         .getGenesisAddress(address.address!.address!);
     if (genesisAddress.address != null &&
-        genesisAddress.address == address.address!.address!) {
+        genesisAddress.address!.toUpperCase() ==
+            address.address!.address!.toUpperCase()) {
       state = state.copyWith(
         error:
             AppLocalizations.of(context)!.addressInvalidBecauseGenesisAddress,
@@ -230,7 +231,8 @@ class NftCreationFormNotifier
                 .get<archethic.ApiService>()
                 .getGenesisAddress(otherAddress.address!.address!);
 
-            if (otherAddress.address!.address == address.address!.address ||
+            if (otherAddress.address!.address!.toUpperCase() ==
+                    address.address!.address!.toUpperCase() ||
                 _genesisAddress == genesisAddress) {
               exist = true;
             }
@@ -266,7 +268,9 @@ class NftCreationFormNotifier
 
         return property.copyWith(
           addresses: [...property.addresses]..removeWhere(
-              (element) => element.address!.address == address,
+              (element) =>
+                  element.address!.address!.toUpperCase() ==
+                  address.toUpperCase(),
             ),
         );
       },
@@ -379,7 +383,7 @@ class NftCreationFormNotifier
   void removeProperty(String propertyName) {
     final propertiesToRemove = [...state.properties]..removeWhere(
         (NftCreationFormStateProperty element) =>
-            element.propertyName == propertyName,
+            element.propertyName.toUpperCase() == propertyName.toUpperCase(),
       );
     state = state.copyWith(
       properties: propertiesToRemove,
@@ -389,7 +393,8 @@ class NftCreationFormNotifier
   void setProperty(String propertyName, String propertyValue) {
     final propertiesToSet = [...state.properties]
       ..removeWhere(
-        (element) => element.propertyName == propertyName,
+        (element) =>
+            element.propertyName.toUpperCase() == propertyName.toUpperCase(),
       )
       ..add(
         NftCreationFormStateProperty(
