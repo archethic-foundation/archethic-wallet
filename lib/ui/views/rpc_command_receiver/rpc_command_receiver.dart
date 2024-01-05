@@ -42,7 +42,9 @@ class _RPCCommandReceiverState extends ConsumerState<RPCCommandReceiver> {
         return null;
       })
       ..addHandler(
-        SendTransactionHandler(context: context, ref: ref),
+        SendTransactionHandler(
+          context: context,
+        ),
       )
       ..addHandler(
         GetEndpointHandler(),

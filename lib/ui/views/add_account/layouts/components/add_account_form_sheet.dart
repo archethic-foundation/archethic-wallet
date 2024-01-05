@@ -104,9 +104,6 @@ class AddAccountFormSheet extends ConsumerWidget
           localizations.introNewWalletGetFirstInfosNameInfos,
           style: ArchethicThemeStyles.textStyleSize12W100Primary,
         ),
-        const SizedBox(
-          height: 30,
-        ),
       ],
     );
   }

@@ -452,7 +452,9 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
                                       ArchethicTheme.snackBarShadow,
                                       icon: Symbols.info,
                                     );
-                                    context.pop();
+                                    context.go(
+                                      HomePage.routerPage,
+                                    );
                                   }
                                 }
                               },

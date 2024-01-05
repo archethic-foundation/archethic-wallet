@@ -156,7 +156,7 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
         children: <Widget>[
           AppButtonTinyConnectivity(
             localizations.confirm,
-            Dimens.buttonTopDimens,
+            Dimens.buttonBottomDimens,
             key: const Key('confirm'),
             onPressed: () async {
               Navigator.of(context).push(

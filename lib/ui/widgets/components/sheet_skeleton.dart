@@ -26,9 +26,10 @@ class SheetSkeleton extends ConsumerWidget {
 
     return Scaffold(
       drawerEdgeDragWidth: 0,
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: floatingActionButton,
+      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
       extendBodyBehindAppBar: true,
       backgroundColor: ArchethicTheme.background,
       appBar: appBar,
