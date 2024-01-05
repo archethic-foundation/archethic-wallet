@@ -68,26 +68,32 @@ class NFTList extends ConsumerWidget {
         ),
       );
     }
-    return DynamicHeightGridView(
-      crossAxisCount:
-          Responsive.isDesktop(context) || Responsive.isTablet(context) ? 3 : 2,
-      crossAxisSpacing: 20,
-      mainAxisSpacing: 40,
-      shrinkWrap: true,
-      itemCount: accountTokenList.length,
-      builder: (context, index) {
-        final tokenInformation = accountTokenList[index].tokenInformation!;
-        return NFTListDetail(
-          address: tokenInformation.address ?? '',
-          name: tokenInformation.name ?? '',
-          properties: tokenInformation.tokenProperties ?? {},
-          symbol: tokenInformation.symbol ?? '',
-          tokenId: tokenInformation.id ?? '',
-          collection: tokenInformation.tokenCollection ?? [],
-          index: index,
-          roundBorder: true,
-        );
-      },
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 50),
+      child: DynamicHeightGridView(
+        crossAxisCount:
+            Responsive.isDesktop(context) || Responsive.isTablet(context)
+                ? 3
+                : 2,
+        crossAxisSpacing: 20,
+        mainAxisSpacing: 40,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: accountTokenList.length,
+        builder: (context, index) {
+          final tokenInformation = accountTokenList[index].tokenInformation!;
+          return NFTListDetail(
+            address: tokenInformation.address ?? '',
+            name: tokenInformation.name ?? '',
+            properties: tokenInformation.tokenProperties ?? {},
+            symbol: tokenInformation.symbol ?? '',
+            tokenId: tokenInformation.id ?? '',
+            collection: tokenInformation.tokenCollection ?? [],
+            index: index,
+            roundBorder: true,
+          );
+        },
+      ),
     );
   }
 }

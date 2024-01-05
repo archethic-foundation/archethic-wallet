@@ -53,13 +53,15 @@ extension AddTokenTransactionBuilder on archethic.Transaction {
         final authorizedKeys =
             List<archethic.AuthorizedKey>.empty(growable: true);
         for (final key in authorizedPublicKeys) {
-          authorizedKeys.add(
-            archethic.AuthorizedKey(
-              encryptedSecretKey:
-                  archethic.uint8ListToHex(archethic.ecEncrypt(aesKey, key)),
-              publicKey: key,
-            ),
-          );
+          if (key.isNotEmpty) {
+            authorizedKeys.add(
+              archethic.AuthorizedKey(
+                encryptedSecretKey:
+                    archethic.uint8ListToHex(archethic.ecEncrypt(aesKey, key)),
+                publicKey: key,
+              ),
+            );
+          }
         }
 
         final tokenPropertiesProtected = <String, dynamic>{};

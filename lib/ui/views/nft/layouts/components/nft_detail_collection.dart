@@ -6,7 +6,6 @@ import 'package:aewallet/ui/util/responsive.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_detail.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail.dart';
 import 'package:aewallet/ui/widgets/components/dynamic_height_grid_view.dart';
-import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +27,7 @@ class NFTDetailCollection extends ConsumerWidget {
   final String tokenId;
   final String name;
   final String symbol;
-  final List<Map<String, dynamic>> collection;
+  final List<dynamic> collection;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -59,45 +58,43 @@ class NFTDetailCollection extends ConsumerWidget {
           builder: (context, index) {
             final tokenInformation = collection[index];
 
-            return ArchethicScrollbar(
-              child: Column(
-                children: [
-                  Text(
-                    '${tokenInformation['name']}',
-                    style: ArchethicThemeStyles.textStyleSize10W100Primary,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      sl.get<HapticUtil>().feedback(
-                            FeedbackType.light,
-                            preferences.activeVibrations,
-                          );
+            return Column(
+              children: [
+                Text(
+                  '${tokenInformation['name']}',
+                  style: ArchethicThemeStyles.textStyleSize10W100Primary,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    sl.get<HapticUtil>().feedback(
+                          FeedbackType.light,
+                          preferences.activeVibrations,
+                        );
 
-                      context.push(
-                        NFTDetail.routerPage,
-                        extra: {
-                          'address': address,
-                          'name': name,
-                          'nameInCollection': tokenInformation['name'],
-                          'properties': tokenInformation,
-                          'collection': const [],
-                          'symbol': symbol,
-                          'tokenId': tokenInformation['id'] ?? index.toString(),
-                          'detailCollection': true,
-                        },
-                      );
-                    },
-                    child: NFTThumbnail(
-                      address: address,
-                      properties: tokenInformation,
-                      roundBorder: true,
-                    ),
+                    context.push(
+                      NFTDetail.routerPage,
+                      extra: {
+                        'address': address,
+                        'name': name,
+                        'nameInCollection': tokenInformation['name'],
+                        'properties': tokenInformation,
+                        'collection': const [],
+                        'symbol': symbol,
+                        'tokenId': tokenInformation['id'] ?? index.toString(),
+                        'detailCollection': true,
+                      },
+                    );
+                  },
+                  child: NFTThumbnail(
+                    address: address,
+                    properties: tokenInformation,
+                    roundBorder: true,
                   ),
-                ],
-              ),
+                ),
+              ],
             );
           },
         ),
