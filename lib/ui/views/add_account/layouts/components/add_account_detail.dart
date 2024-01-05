@@ -23,55 +23,51 @@ class AddAccountDetail extends ConsumerWidget {
     final accountSelected =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
 
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.only(left: 10, right: 10),
-      child: Column(
-        children: [
-          SheetDetailCard(
-            children: [
-              Text(
-                localizations.serviceName,
+    return Column(
+      children: [
+        SheetDetailCard(
+          children: [
+            Text(
+              localizations.serviceName,
+              style: ArchethicThemeStyles.textStyleSize12W400Primary,
+            ),
+            Expanded(
+              child: Text(
+                addAccount.name,
                 style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                textAlign: TextAlign.end,
               ),
-              Expanded(
-                child: Text(
-                  addAccount.name,
-                  style: ArchethicThemeStyles.textStyleSize12W400Primary,
-                  textAlign: TextAlign.end,
-                ),
+            ),
+          ],
+        ),
+        SheetDetailCard(
+          children: [
+            Text(
+              localizations.estimatedFees,
+              style: ArchethicThemeStyles.textStyleSize12W400Primary,
+            ),
+            Text(
+              '0 ${AccountBalance.cryptoCurrencyLabel}',
+              style: ArchethicThemeStyles.textStyleSize12W400Primary,
+            ),
+          ],
+        ),
+        SheetDetailCard(
+          children: [
+            Text(
+              localizations.availableAfterCreation,
+              style: ArchethicThemeStyles.textStyleSize12W400Primary,
+            ),
+            Text(
+              AmountFormatters.standard(
+                accountSelected!.balance!.nativeTokenValue,
+                addAccount.symbolFees(context),
               ),
-            ],
-          ),
-          SheetDetailCard(
-            children: [
-              Text(
-                localizations.estimatedFees,
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
-              ),
-              Text(
-                '0 ${AccountBalance.cryptoCurrencyLabel}',
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
-              ),
-            ],
-          ),
-          SheetDetailCard(
-            children: [
-              Text(
-                localizations.availableAfterCreation,
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
-              ),
-              Text(
-                AmountFormatters.standard(
-                  accountSelected!.balance!.nativeTokenValue,
-                  addAccount.symbolFees(context),
-                ),
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
-              ),
-            ],
-          ),
-        ],
-      ),
+              style: ArchethicThemeStyles.textStyleSize12W400Primary,
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

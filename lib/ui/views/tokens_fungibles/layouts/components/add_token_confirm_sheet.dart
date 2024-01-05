@@ -144,7 +144,7 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet>
       children: <Widget>[
         AppButtonTinyConnectivity(
           localizations.confirm,
-          Dimens.buttonTopDimens,
+          Dimens.buttonBottomDimens,
           key: const Key('confirm'),
           onPressed: () async {
             ShowSendingAnimation.build(

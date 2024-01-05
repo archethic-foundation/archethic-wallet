@@ -89,7 +89,108 @@ class _NFTDetailState extends ConsumerState<NFTDetail>
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    return const SizedBox.shrink();
+    final localizations = AppLocalizations.of(context)!;
+    final preferences = ref.watch(SettingsProviders.settings);
+    final accountSelected =
+        ref.watch(AccountProviders.selectedAccount).valueOrNull;
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        if (widget.collection.isEmpty)
+          FutureBuilder(
+            future: ref.watch(
+              NFTProviders.isAccountOwner(
+                accountSelected!.genesisAddress,
+                widget.address,
+                widget.tokenId,
+              ).future,
+            ),
+            builder: (
+              BuildContext context,
+              AsyncSnapshot<bool> snapshot,
+            ) {
+              if (snapshot.hasData) {
+                if (snapshot.data == true) {
+                  return Row(
+                    children: <Widget>[
+                      AppButtonTinyConnectivity(
+                        localizations.send,
+                        Dimens.buttonTopDimens,
+                        key: const Key('sendNFT'),
+                        onPressed: () async {
+                          sl.get<HapticUtil>().feedback(
+                                FeedbackType.light,
+                                preferences.activeVibrations,
+                              );
+                          final accountToken = getAccountToken(accountSelected);
+
+                          await TransferSheet(
+                            transferType: TransferType.nft,
+                            accountToken: accountToken,
+                            recipient: const TransferRecipient.address(
+                              address: Address(address: ''),
+                            ),
+                            tokenId: widget.tokenId,
+                          ).show(
+                            context: context,
+                            ref: ref,
+                          );
+                        },
+                      ),
+                    ],
+                  );
+                } else {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Symbols.info,
+                        size: 15,
+                        weight: IconSize.weightM,
+                        opticalSize: IconSize.opticalSizeM,
+                        grade: IconSize.gradeM,
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        AppLocalizations.of(context)!.nftNotOwnerInfo,
+                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                      ),
+                    ],
+                  );
+                }
+              } else {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 17),
+                  child: SizedBox.square(
+                    dimension: 16,
+                    child: CircularProgressIndicator(
+                      color:
+                          ArchethicThemeStyles.textStyleSize10W100Primary.color,
+                      strokeWidth: 1,
+                    ),
+                  ),
+                );
+              }
+            },
+          ),
+        Row(
+          children: <Widget>[
+            AppButtonTinyConnectivity(
+              localizations.viewExplorer,
+              Dimens.buttonBottomDimens,
+              key: const Key('viewExplorer'),
+              onPressed: () async {
+                UIUtil.showWebview(
+                  context,
+                  '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.address}',
+                  '',
+                );
+              },
+            ),
+          ],
+        ),
+      ],
+    );
   }
 
   @override
@@ -148,10 +249,6 @@ class _NFTDetailState extends ConsumerState<NFTDetail>
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-    final preferences = ref.watch(SettingsProviders.settings);
-    final accountSelected =
-        ref.watch(AccountProviders.selectedAccount).valueOrNull;
     return SizedBox(
       height: MediaQuery.of(context).size.height - 100,
       child: Column(
@@ -206,101 +303,6 @@ class _NFTDetailState extends ConsumerState<NFTDetail>
                       ),
               ),
             ),
-          ),
-          if (widget.collection.isEmpty)
-            FutureBuilder(
-              future: ref.watch(
-                NFTProviders.isAccountOwner(
-                  accountSelected!.genesisAddress,
-                  widget.address,
-                  widget.tokenId,
-                ).future,
-              ),
-              builder: (
-                BuildContext context,
-                AsyncSnapshot<bool> snapshot,
-              ) {
-                if (snapshot.hasData) {
-                  if (snapshot.data == true) {
-                    return Row(
-                      children: <Widget>[
-                        AppButtonTinyConnectivity(
-                          localizations.send,
-                          Dimens.buttonTopDimens,
-                          key: const Key('sendNFT'),
-                          onPressed: () async {
-                            sl.get<HapticUtil>().feedback(
-                                  FeedbackType.light,
-                                  preferences.activeVibrations,
-                                );
-                            final accountToken =
-                                getAccountToken(accountSelected);
-
-                            await TransferSheet(
-                              transferType: TransferType.nft,
-                              accountToken: accountToken,
-                              recipient: const TransferRecipient.address(
-                                address: Address(address: ''),
-                              ),
-                              tokenId: widget.tokenId,
-                            ).show(
-                              context: context,
-                              ref: ref,
-                            );
-                          },
-                        ),
-                      ],
-                    );
-                  } else {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Symbols.info,
-                          size: 15,
-                          weight: IconSize.weightM,
-                          opticalSize: IconSize.opticalSizeM,
-                          grade: IconSize.gradeM,
-                        ),
-                        const SizedBox(width: 5),
-                        Text(
-                          AppLocalizations.of(context)!.nftNotOwnerInfo,
-                          style:
-                              ArchethicThemeStyles.textStyleSize12W100Primary,
-                        ),
-                      ],
-                    );
-                  }
-                } else {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 17),
-                    child: SizedBox.square(
-                      dimension: 16,
-                      child: CircularProgressIndicator(
-                        color: ArchethicThemeStyles
-                            .textStyleSize10W100Primary.color,
-                        strokeWidth: 1,
-                      ),
-                    ),
-                  );
-                }
-              },
-            ),
-          Row(
-            children: <Widget>[
-              AppButtonTinyConnectivity(
-                localizations.viewExplorer,
-                Dimens.buttonBottomDimens,
-                key: const Key('viewExplorer'),
-                onPressed: () async {
-                  UIUtil.showWebview(
-                    context,
-                    '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.address}',
-                    '',
-                  );
-                },
-              ),
-            ],
           ),
         ],
       ),

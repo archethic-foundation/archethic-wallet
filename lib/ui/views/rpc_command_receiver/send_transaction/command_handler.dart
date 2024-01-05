@@ -8,18 +8,14 @@ import 'package:aewallet/domain/rpc/commands/send_transaction.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/send_transaction/layouts/send_transaction_confirmation_form.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/notifications_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window_manager/window_manager.dart';
 
 class SendTransactionHandler extends CommandHandler {
   SendTransactionHandler({
     required BuildContext context,
-    required WidgetRef ref,
   }) : super(
           canHandle: (command) =>
               command is RPCCommand<RPCSendTransactionCommandData>,
@@ -92,21 +88,4 @@ class SendTransactionHandler extends CommandHandler {
                 );
           },
         );
-
-  static Future<void> _showNotification({
-    required BuildContext context,
-    required WidgetRef ref,
-    required RPCCommand<RPCSendTransactionCommandData> command,
-  }) async {
-    final message = AppLocalizations.of(context)!
-        .transactionSignatureCommandReceivedNotification;
-
-    NotificationsUtil.showNotification(
-      title: 'Archethic',
-      body: message.replaceAll(
-        '%1',
-        command.origin.name,
-      ),
-    );
-  }
 }

@@ -146,10 +146,9 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet>
     final localizations = AppLocalizations.of(context)!;
     return Row(
       children: <Widget>[
-        AppButtonTiny(
-          AppButtonTinyType.primary,
+        AppButtonTinyConnectivity(
           localizations.confirm,
-          Dimens.buttonTopDimens,
+          Dimens.buttonBottomDimens,
           key: const Key('confirm'),
           onPressed: () async {
             ShowSendingAnimation.build(
@@ -191,12 +190,9 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet>
     return Column(
       children: <Widget>[
         const SizedBox(height: 30),
-        Padding(
-          padding: const EdgeInsets.only(left: 30, right: 30),
-          child: Text(
-            localizations.addAccountConfirmationMessage,
-            style: ArchethicThemeStyles.textStyleSize14W600Primary,
-          ),
+        Text(
+          localizations.addAccountConfirmationMessage,
+          style: ArchethicThemeStyles.textStyleSize14W600Primary,
         ),
         const SizedBox(
           height: 20,

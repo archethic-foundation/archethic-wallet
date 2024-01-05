@@ -53,7 +53,7 @@ class TransferFormSheet extends ConsumerWidget
       children: <Widget>[
         AppButtonTinyConnectivity(
           actionButtonTitle ?? localizations.send,
-          Dimens.buttonTopDimens,
+          Dimens.buttonBottomDimens,
           key: const Key('send'),
           onPressed: () async {
             final transferNotifier =

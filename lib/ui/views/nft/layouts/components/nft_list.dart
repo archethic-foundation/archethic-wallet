@@ -1,7 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-import 'dart:ui';
-
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/nft/nft_category.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -43,70 +40,54 @@ class NFTList extends ConsumerWidget {
     );
 
     if (accountTokenList.isEmpty) {
-      return SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 140, left: 10, right: 10),
-          child: Column(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Opacity(
-                  opacity: 0.5,
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: Image.asset(
-                      'assets/images/nft-empty.png',
-                      fit: BoxFit.fitHeight,
-                    ),
+      return Padding(
+        padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+        child: Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Opacity(
+                opacity: 0.5,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Image.asset(
+                    'assets/images/nft-empty.png',
+                    fit: BoxFit.fitHeight,
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                localizations.nftListEmptyExplanation,
-                style: ArchethicThemeStyles.textStyleSize12W100Primary,
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              localizations.nftListEmptyExplanation,
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
+            ),
+          ],
         ),
       );
     }
-    return Padding(
-      padding: const EdgeInsets.only(top: 10),
-      child: ScrollConfiguration(
-        behavior: ScrollConfiguration.of(context).copyWith(
-          dragDevices: {
-            PointerDeviceKind.touch,
-            PointerDeviceKind.mouse,
-            PointerDeviceKind.trackpad,
-          },
-        ),
-        child: DynamicHeightGridView(
-          crossAxisCount:
-              Responsive.isDesktop(context) || Responsive.isTablet(context)
-                  ? 3
-                  : 2,
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 40,
-          shrinkWrap: true,
-          itemCount: accountTokenList.length,
-          builder: (context, index) {
-            final tokenInformation = accountTokenList[index].tokenInformation!;
-            return NFTListDetail(
-              address: tokenInformation.address ?? '',
-              name: tokenInformation.name ?? '',
-              properties: tokenInformation.tokenProperties ?? {},
-              symbol: tokenInformation.symbol ?? '',
-              tokenId: tokenInformation.id ?? '',
-              collection: tokenInformation.tokenCollection ?? [],
-              index: index,
-              roundBorder: true,
-            );
-          },
-        ),
-      ),
+    return DynamicHeightGridView(
+      crossAxisCount:
+          Responsive.isDesktop(context) || Responsive.isTablet(context) ? 3 : 2,
+      crossAxisSpacing: 20,
+      mainAxisSpacing: 40,
+      shrinkWrap: true,
+      itemCount: accountTokenList.length,
+      builder: (context, index) {
+        final tokenInformation = accountTokenList[index].tokenInformation!;
+        return NFTListDetail(
+          address: tokenInformation.address ?? '',
+          name: tokenInformation.name ?? '',
+          properties: tokenInformation.tokenProperties ?? {},
+          symbol: tokenInformation.symbol ?? '',
+          tokenId: tokenInformation.id ?? '',
+          collection: tokenInformation.tokenCollection ?? [],
+          index: index,
+          roundBorder: true,
+        );
+      },
     );
   }
 }
