@@ -420,14 +420,21 @@ class RoutesPath {
       path: NFTDetail.routerPage,
       builder: (context, state) {
         final args = state.extra! as Map<String, dynamic>;
+        var collection = args['collection'];
+        if (args['collection'] == null ||
+            (args['collection'] as List).isEmpty) {
+          collection = [<String, dynamic>{}];
+        } else {
+          collection = args['collection'] as List<Map<String, dynamic>>;
+        }
         return NFTDetail(
-          name: args['name']! as String,
-          address: args['address']! as String,
-          symbol: args['symbol']! as String,
-          properties: args['properties']! as Map<String, dynamic>,
-          collection: args['collection']! as List<Map<String, dynamic>>,
-          tokenId: args['tokenId']! as String,
-          detailCollection: args['detailCollection']! as bool,
+          name: args['name'] as String? ?? '',
+          address: args['address'] as String? ?? '',
+          symbol: args['symbol'] as String? ?? '',
+          properties: args['properties'] as Map<String, dynamic>? ?? {},
+          collection: collection,
+          tokenId: args['tokenId'] as String? ?? '',
+          detailCollection: args['detailCollection'] as bool? ?? false,
           nameInCollection: args['nameInCollection'] as String?,
         );
       },
