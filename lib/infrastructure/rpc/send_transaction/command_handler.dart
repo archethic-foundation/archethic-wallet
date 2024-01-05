@@ -12,18 +12,8 @@ class RPCSendTransactionCommandHandler extends RPCCommandHandler<
   RPCCommand<RPCSendTransactionCommandData> commandToModel(RPCRequestDTO dto) {
     if ((dto.payload['data'] as Map<String, dynamic>)
         .containsKey('recipients')) {
-      if (dto.payload['data']['recipients'] is List<String>) {
-        final _newRecipients = <archethic.Recipient>[];
-        for (final recipientAddress
-            in dto.payload['data']['recipients'] as List<String>) {
-          final _recipient = archethic.Recipient(address: recipientAddress);
-          _newRecipients.add(_recipient);
-        }
-        dto.payload['data']['actionRecipients'] = _newRecipients;
-      } else {
-        dto.payload['data']['actionRecipients'] =
-            dto.payload['data']['recipients'];
-      }
+      dto.payload['data']['actionRecipients'] =
+          dto.payload['data']['recipients'];
       (dto.payload['data'] as Map<String, dynamic>).remove('recipients');
     }
 
