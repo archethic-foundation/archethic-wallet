@@ -39,6 +39,7 @@ class DynamicHeightGridView extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      padding: EdgeInsets.zero,
       controller: controller,
       shrinkWrap: shrinkWrap,
       physics: physics,
