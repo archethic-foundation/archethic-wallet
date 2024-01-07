@@ -48,6 +48,7 @@ extension SendTransactionCommandConversion on SendTransactionCommand {
           break;
         case 'transfer':
         case 'token':
+        case 'contract':
           indexSearchRef = senderAccount.genesisAddress;
           break;
         default:
@@ -75,6 +76,7 @@ extension SendTransactionCommandConversion on SendTransactionCommand {
           break;
         case 'transfer':
         case 'token':
+        case 'contract':
           signedTransaction = keychain
               .buildTransaction(
                 transaction,
