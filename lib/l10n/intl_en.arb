@@ -19,7 +19,7 @@
   "transferTokens": "Send %1",
   "transferToken": "Transfer Token",
   "transferTokenName": "Transfer %1",
-  "recentTransactionsHeader": "Recent transactions",
+  "recentTransactionsHeader": "Activity",
   "recentTransactionsNoTransactionYet": "No transaction yet",
   "transactionConfirmed1": "Transaction confirmed with %1 replication out of %2",
   "transactionConfirmed": "Transaction confirmed with %1 replications out of %2",

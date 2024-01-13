@@ -19,7 +19,7 @@
 	"transferTokens": "Envoyer des %1",
 	"transferToken": "Transfert Jeton",
 	"transferTokenName": "Transfert %1",
-	"recentTransactionsHeader": "Transactions récentes",
+	"recentTransactionsHeader": "Activité",
 	"recentTransactionsNoTransactionYet": "Aucune transaction pour le moment",
 	"transactionConfirmed1": "Transaction confirmée avec %1 réplication sur %1",
 	"transactionConfirmed": "Transaction confirmée avec %1 réplications sur %2",
