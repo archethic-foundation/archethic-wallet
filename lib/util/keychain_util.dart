@@ -291,6 +291,7 @@ class KeychainUtil with KeychainServiceMixin {
           final newContact = Contact(
             name: '@${Uri.encodeFull(account.nameDisplayed)}',
             address: uint8ListToHex(genesisAddress),
+            genesisAddress: uint8ListToHex(genesisAddress),
             type: ContactType.keychainService.name,
             publicKey:
                 uint8ListToHex(keychain.deriveKeypair(serviceName).publicKey!)

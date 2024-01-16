@@ -32,7 +32,7 @@ class SingleContact extends ConsumerWidget {
         context.push(
           ContactDetail.routerPage,
           extra: ContactDetailsRouteParams(
-            contactAddress: contact.address,
+            contactAddress: contact.genesisAddress!,
           ).toJson(),
         );
       },

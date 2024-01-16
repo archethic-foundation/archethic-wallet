@@ -323,7 +323,8 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage> {
                                   context.push(
                                     ContactDetail.routerPage,
                                     extra: ContactDetailsRouteParams(
-                                      contactAddress: contact.contact.address,
+                                      contactAddress:
+                                          contact.contact.genesisAddress!,
                                     ).toJson(),
                                   );
                                 },

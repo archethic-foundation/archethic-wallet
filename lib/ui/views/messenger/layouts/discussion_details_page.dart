@@ -206,7 +206,7 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage> {
                                         ContactDetail.routerPage,
                                         extra: ContactDetailsRouteParams(
                                           contactAddress:
-                                              contact.contact.address,
+                                              contact.contact.genesisAddress!,
                                         ).toJson(),
                                       );
                                     },

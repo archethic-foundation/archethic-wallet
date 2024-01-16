@@ -225,7 +225,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
                 context.push(
                   ContactDetail.routerPage,
                   extra: ContactDetailsRouteParams(
-                    contactAddress: data.value!.address,
+                    contactAddress: data.value!.genesisAddress!,
                   ).toJson(),
                 );
               },

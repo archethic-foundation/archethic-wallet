@@ -67,6 +67,7 @@ class HiveAppWalletDTO extends HiveObject {
     final newContact = Contact(
       name: '@${Uri.encodeFull(name)}',
       address: uint8ListToHex(genesisAddress),
+      genesisAddress: uint8ListToHex(genesisAddress),
       type: ContactType.keychainService.name,
       publicKey: uint8ListToHex(
         keychain

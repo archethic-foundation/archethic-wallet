@@ -77,7 +77,7 @@ class ContactDetail extends ConsumerWidget implements SheetSkeletonInterface {
         .valueOrNull;
 
     return SheetAppBar(
-      title: contact?.format ?? '...',
+      title: contact?.format ?? '',
       widgetRight: Padding(
         padding: const EdgeInsets.only(right: 10, top: 10),
         child: _ContactDetailBalance(contactAddress: contactAddress),
@@ -100,7 +100,12 @@ class ContactDetail extends ConsumerWidget implements SheetSkeletonInterface {
     return SizedBox(
       height: MediaQuery.of(context).size.height - 200,
       child: contact == null
-          ? const Center(child: CircularProgressIndicator())
+          ? Center(
+              child: CircularProgressIndicator(
+                color: ArchethicTheme.text,
+                strokeWidth: 1,
+              ),
+            )
           : _ContactDetailBody(
               contact: contact,
               readOnly: readOnly,
@@ -164,7 +169,7 @@ class _ContactDetailBody extends ConsumerWidget {
         _ContactDetailActions(contact: contact, readOnly: readOnly),
         Expanded(
           child: ContactDetailTab(
-            infoQRCode: contact.address.toUpperCase(),
+            infoQRCode: contact.genesisAddress!.toUpperCase(),
             description: contact.type == ContactType.keychainService.name
                 ? localizations.contactAddressInfoKeychainService
                 : localizations.contactAddressInfoExternalContact,
@@ -363,7 +368,7 @@ class _ContactDetailActions extends ConsumerWidget {
           onPressed: () {
             UIUtil.showWebview(
               context,
-              '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${contact.address}',
+              '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/chain?address=${contact.genesisAddress}',
               '',
             );
           },
