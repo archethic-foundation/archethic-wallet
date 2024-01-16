@@ -15,6 +15,7 @@ class ContactConverter implements JsonConverter<Contact, Map<String, dynamic>> {
     return Contact(
       name: json['name'] as String,
       address: json['address'] as String,
+      genesisAddress: json['genesisAddress'] as String,
       type: json['type'] as String,
       publicKey: json['publicKey'] as String,
       favorite: json['favorite'] == null ? null : json['favorite'] as bool,
@@ -30,6 +31,7 @@ class ContactConverter implements JsonConverter<Contact, Map<String, dynamic>> {
     return {
       'name': contact.name,
       'address': contact.address,
+      'genesisAddress': contact.genesisAddress,
       'type': contact.type,
       'publicKey': contact.publicKey,
       'favorite': contact.favorite,
@@ -40,7 +42,7 @@ class ContactConverter implements JsonConverter<Contact, Map<String, dynamic>> {
 
 enum ContactType { keychainService, externalContact }
 
-/// Next field available : 8
+/// Next field available : 9
 @HiveType(typeId: HiveTypeIds.contact)
 @AccountBalanceConverter()
 class Contact extends HiveObject {
@@ -49,6 +51,7 @@ class Contact extends HiveObject {
     required this.address,
     required this.type,
     required this.publicKey,
+    required this.genesisAddress,
     this.balance,
     this.favorite,
   });
@@ -76,4 +79,8 @@ class Contact extends HiveObject {
   /// Balance
   @HiveField(7)
   AccountBalance? balance;
+
+  /// Genesis Address
+  @HiveField(8)
+  String? genesisAddress;
 }

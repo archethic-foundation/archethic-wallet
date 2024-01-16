@@ -111,7 +111,8 @@ class AddDiscussionSheet extends ConsumerWidget {
                               context.push(
                                 ContactDetail.routerPage,
                                 extra: ContactDetailsRouteParams(
-                                  contactAddress: contact.contact.address,
+                                  contactAddress:
+                                      contact.contact.genesisAddress!,
                                 ).toJson(),
                               );
                             },

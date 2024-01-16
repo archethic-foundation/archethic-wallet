@@ -1,14 +1,18 @@
 import 'dart:developer';
 
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
+import 'package:aewallet/util/get_it_instance.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part '437.dart';
+part '492.dart';
 part 'migration_manager.freezed.dart';
 part 'migration_manager.g.dart';
 

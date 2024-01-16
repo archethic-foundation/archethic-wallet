@@ -21,6 +21,7 @@ class ContactAdapter extends TypeAdapter<Contact> {
       address: fields[1] as String,
       type: fields[4] as String,
       publicKey: fields[5] == null ? '' : fields[5] as String,
+      genesisAddress: fields[8] as String?,
       balance: fields[7] as AccountBalance?,
       favorite: fields[6] as bool?,
     );
@@ -29,7 +30,7 @@ class ContactAdapter extends TypeAdapter<Contact> {
   @override
   void write(BinaryWriter writer, Contact obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -41,7 +42,9 @@ class ContactAdapter extends TypeAdapter<Contact> {
       ..writeByte(6)
       ..write(obj.favorite)
       ..writeByte(7)
-      ..write(obj.balance);
+      ..write(obj.balance)
+      ..writeByte(8)
+      ..write(obj.genesisAddress);
   }
 
   @override

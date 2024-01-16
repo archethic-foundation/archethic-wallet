@@ -130,9 +130,14 @@ class ContactCreationFormNotifier
 
   Future<Contact> addContact() async {
     final publicKey = await _getGenesisPublicKey(state.address);
+
+    final genesisAddress =
+        await sl.get<ApiService>().getGenesisAddress(state.address);
+
     final newContact = Contact(
       name: '@${Uri.encodeFull(state.name)}',
       address: state.address,
+      genesisAddress: genesisAddress.address!,
       type: ContactType.externalContact.name,
       publicKey: publicKey.toUpperCase(),
       favorite: false,

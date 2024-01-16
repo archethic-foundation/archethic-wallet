@@ -144,8 +144,8 @@ class _CreateDiscussionValidationSheetState
                             context.push(
                               ContactDetail.routerPage,
                               extra: ContactDetailsRouteParams(
-                                contactAddress:
-                                    formState.membersList[index].address,
+                                contactAddress: formState
+                                    .membersList[index].genesisAddress!,
                                 readOnly: true,
                               ).toJson(),
                             );
