@@ -63,7 +63,6 @@ Future<void> main() async {
     final windowOptions = WindowOptions(
       size: sizeWindows,
       maximumSize: sizeWindows,
-      center: true,
       backgroundColor: Colors.transparent,
       fullScreen: false,
       title: 'Archethic Wallet',

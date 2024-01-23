@@ -151,7 +151,7 @@ class _TransactionInfos extends ConsumerWidget {
       child: ListView.builder(
         padding: const EdgeInsets.only(
           top: 15,
-          bottom: 15,
+          bottom: 200,
         ),
         itemCount: list.data == null ? 0 : list.data!.length,
         itemBuilder: (
