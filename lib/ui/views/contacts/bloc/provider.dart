@@ -137,7 +137,7 @@ class ContactCreationFormNotifier
     final newContact = Contact(
       name: '@${Uri.encodeFull(state.name)}',
       address: state.address,
-      genesisAddress: genesisAddress.address!,
+      genesisAddress: genesisAddress.address,
       type: ContactType.externalContact.name,
       publicKey: publicKey.toUpperCase(),
       favorite: false,
