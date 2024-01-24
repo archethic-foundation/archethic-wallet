@@ -27,6 +27,8 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
   final RPCCommand<RPCSignTransactionsCommandData> command;
   final double estimatedFees;
 
+  static const String routerPage = '/sign_transaction_confirmation';
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SheetSkeleton(
