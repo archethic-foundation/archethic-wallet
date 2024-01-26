@@ -171,7 +171,9 @@ class TransferSheetBody extends ConsumerWidget {
         case TransferType.token:
           return localizations.transferTokens.replaceAll(
             '%1',
-            transfer.accountToken!.tokenInformation!.symbol!,
+            transfer.accountToken!.tokenInformation!.isLPToken! == true
+                ? 'LP Tokens'
+                : transfer.accountToken!.tokenInformation!.symbol!,
           );
         case TransferType.nft:
           return localizations.transferNFT;

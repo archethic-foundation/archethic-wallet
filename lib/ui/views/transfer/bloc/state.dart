@@ -67,7 +67,9 @@ class TransferFormState with _$TransferFormState {
 
   String symbol(BuildContext context) => transferType == TransferType.uco
       ? AccountBalance.cryptoCurrencyLabel
-      : accountToken!.tokenInformation!.symbol!;
+      : accountToken!.tokenInformation!.isLPToken == true
+          ? 'LP Token'
+          : accountToken!.tokenInformation!.symbol!;
 
   String symbolFees(BuildContext context) => AccountBalance.cryptoCurrencyLabel;
 }

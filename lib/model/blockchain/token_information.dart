@@ -24,6 +24,7 @@ class TokenInformationConverter
       tokenCollection: json['tokenCollection'] as List<Map<String, dynamic>>?,
       aeip: json['aeip'] as List<int>?,
       decimals: json['decimals'] as int?,
+      isLPToken: json['isLPToken'] as bool?,
     );
   }
 
@@ -40,11 +41,12 @@ class TokenInformationConverter
       'tokenCollection': tokenInformation.tokenCollection,
       'aeip': tokenInformation.aeip,
       'decimals': tokenInformation.decimals,
+      'isLPToken': tokenInformation.isLPToken,
     };
   }
 }
 
-/// Next field available : 15
+/// Next field available : 17
 @HiveType(typeId: HiveTypeIds.tokenInformation)
 class TokenInformation extends HiveObject {
   TokenInformation({
@@ -58,6 +60,7 @@ class TokenInformation extends HiveObject {
     this.tokenCollection,
     this.aeip,
     this.decimals,
+    this.isLPToken,
   });
 
   /// Address of token
@@ -99,4 +102,8 @@ class TokenInformation extends HiveObject {
   /// Decimals
   @HiveField(15)
   int? decimals;
+
+  /// LP Token ?
+  @HiveField(16)
+  bool? isLPToken;
 }
