@@ -741,12 +741,40 @@ class AppService {
     // Search token Information
     final tokenMap = await sl.get<AppService>().getToken(
           tokenAddressList.toSet().toList(),
-          request: 'genesis, name, id, supply, symbol, type',
+          request: 'genesis, name, id, supply, symbol, type, properties',
         );
 
     for (final tokenBalance in balance.token) {
       final token = tokenMap[tokenBalance.address];
       if (token != null && token.type == 'fungible') {
+        var pairSymbolToken = '';
+        final tokenSymbolSearch = <String>[];
+        if (token.properties.isNotEmpty &&
+            token.properties['token1_address'] != null &&
+            token.properties['token2_address'] != null) {
+          if (token.properties['token1_address'] != 'UCO') {
+            tokenSymbolSearch.add(token.properties['token1_address']);
+          }
+          if (token.properties['token2_address'] != 'UCO') {
+            tokenSymbolSearch.add(token.properties['token2_address']);
+          }
+          final tokensSymbolMap = await sl.get<ApiService>().getToken(
+                tokenSymbolSearch,
+                request: 'name, symbol',
+              );
+          final pairSymbolToken1 = token.properties['token1_address'] != 'UCO'
+              ? tokensSymbolMap[token.properties['token1_address']] != null
+                  ? tokensSymbolMap[token.properties['token1_address']]!.name!
+                  : ''
+              : 'UCO';
+          final pairSymbolToken2 = token.properties['token2_address'] != 'UCO'
+              ? tokensSymbolMap[token.properties['token2_address']] != null
+                  ? tokensSymbolMap[token.properties['token2_address']]!.name!
+                  : ''
+              : 'UCO';
+          pairSymbolToken = '$pairSymbolToken1/$pairSymbolToken2';
+        }
+
         final tokenInformation = TokenInformation(
           address: tokenBalance.address,
           aeip: token.aeip,
@@ -754,7 +782,9 @@ class AppService {
           id: token.id,
           type: token.type,
           supply: fromBigInt(token.supply).toDouble(),
-          symbol: token.symbol,
+          isLPToken: pairSymbolToken.isNotEmpty,
+          symbol: pairSymbolToken.isNotEmpty ? pairSymbolToken : token.symbol,
+          tokenProperties: token.properties,
         );
         final accountFungibleToken = AccountToken(
           tokenInformation: tokenInformation,

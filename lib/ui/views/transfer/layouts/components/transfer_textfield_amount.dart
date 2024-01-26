@@ -208,7 +208,7 @@ class _TransferTextFieldAmountState
                         Row(
                           children: [
                             AutoSizeText(
-                              '${NumberUtil.formatThousands(transfer.accountToken!.amount!)} ${transfer.accountToken!.tokenInformation!.symbol}',
+                              '${NumberUtil.formatThousands(transfer.accountToken!.amount!)} ${transfer.accountToken!.tokenInformation!.isLPToken == true ? transfer.accountToken!.amount! > 1 ? 'LP Tokens' : 'LP Token ' : transfer.accountToken!.tokenInformation!.symbol}',
                               style: ArchethicThemeStyles
                                   .textStyleSize14W100Primary,
                             ),
