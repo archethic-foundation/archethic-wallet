@@ -764,12 +764,12 @@ class AppService {
               );
           final pairSymbolToken1 = token.properties['token1_address'] != 'UCO'
               ? tokensSymbolMap[token.properties['token1_address']] != null
-                  ? tokensSymbolMap[token.properties['token1_address']]!.name!
+                  ? tokensSymbolMap[token.properties['token1_address']]!.symbol!
                   : ''
               : 'UCO';
           final pairSymbolToken2 = token.properties['token2_address'] != 'UCO'
               ? tokensSymbolMap[token.properties['token2_address']] != null
-                  ? tokensSymbolMap[token.properties['token2_address']]!.name!
+                  ? tokensSymbolMap[token.properties['token2_address']]!.symbol!
                   : ''
               : 'UCO';
           pairSymbolToken = '$pairSymbolToken1/$pairSymbolToken2';
