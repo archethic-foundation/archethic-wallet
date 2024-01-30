@@ -1,4 +1,5 @@
 import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:flutter/material.dart';
 
 class ArchethicThemeStyles {
@@ -347,6 +348,14 @@ class ArchethicThemeStyles {
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w400,
       color: ArchethicTheme.text,
+    );
+  }
+
+  static TextStyle get textStyleSize12W400Highlighted {
+    return TextStyle(
+      fontSize: AppFontSizes.size12,
+      fontWeight: FontWeight.w400,
+      color: ArchethicThemeBase.raspberry300,
     );
   }
 

@@ -88,50 +88,56 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
       data: (formData) {
         return Column(
           children: <Widget>[
-            Text(
-              command.data.rpcSignTransactionCommandData.length == 1
-                  ? localizations.sign1TransactionCommandReceivedNotification
-                      .replaceAll(
-                        '%1',
-                        formData.value.signTransactionCommand.origin.name,
-                      )
-                      .replaceAll(
-                        '%2',
-                        _getShortName(
-                          formData
-                              .value.signTransactionCommand.data.serviceName,
-                        ),
-                      )
-                      .replaceAll(
-                        '%3',
-                        estimatedFees.formatNumber(
-                          language.getLocaleStringWithoutDefault(),
-                        ),
-                      )
-                  : localizations.signXTransactionsCommandReceivedNotification
-                      .replaceAll(
-                        '%1',
-                        formData.value.signTransactionCommand.origin.name,
-                      )
-                      .replaceAll(
-                        '%2',
-                        command.data.rpcSignTransactionCommandData.length
-                            .toString(),
-                      )
-                      .replaceAll(
-                        '%3',
-                        _getShortName(
-                          formData
-                              .value.signTransactionCommand.data.serviceName,
-                        ),
-                      )
-                      .replaceAll(
-                        '%4',
-                        estimatedFees.formatNumber(
-                          language.getLocaleStringWithoutDefault(),
-                        ),
-                      ),
-              style: ArchethicThemeStyles.textStyleSize12W400Primary,
+            Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(
+                    text: command.data.rpcSignTransactionCommandData.length == 1
+                        ? localizations
+                            .sign1TransactionCommandReceivedNotification
+                            .replaceAll(
+                              '%1',
+                              formData.value.signTransactionCommand.origin.name,
+                            )
+                            .replaceAll(
+                              '%2',
+                              _getShortName(
+                                formData.value.signTransactionCommand.data
+                                    .serviceName,
+                              ),
+                            )
+                        : localizations
+                            .signXTransactionsCommandReceivedNotification
+                            .replaceAll(
+                              '%1',
+                              formData.value.signTransactionCommand.origin.name,
+                            )
+                            .replaceAll(
+                              '%2',
+                              command.data.rpcSignTransactionCommandData.length
+                                  .toString(),
+                            )
+                            .replaceAll(
+                              '%3',
+                              _getShortName(
+                                formData.value.signTransactionCommand.data
+                                    .serviceName,
+                              ),
+                            ),
+                    style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                  ),
+                  TextSpan(
+                    text: ' ${estimatedFees.formatNumber(
+                      language.getLocaleStringWithoutDefault(),
+                    )}',
+                    style: ArchethicThemeStyles.textStyleSize12W400Highlighted,
+                  ),
+                  TextSpan(
+                    text: ' UCO',
+                    style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                  ),
+                ],
+              ),
             ),
             Column(
               children: command.data.rpcSignTransactionCommandData
