@@ -333,7 +333,7 @@
 	"activateNotifications": "Activer les notifications",
 	"transactionSignatureCommandReceivedNotification": "L'application %1 souhaite envoyer une transaction à la blockchain. Souhaitez-vous confirmer cette action avec le compte %2 ?",
 	"addServiceCommandReceivedNotification": "L'application %1 souhaite créer un nouveau service dans votre porte-clés.\nSouhaitez-vous confirmer cette action avec le compte %2 ?\nCette action ne requiert aucun frais.",
-	"sign1TransactionCommandReceivedNotification": "L'application %1 vous demande de signer 1 transaction.\nSouhaitez-vous confirmer cette action avec le compte %2 ?\n\nUne fois signée, les frais de traitement de la transaction est estimés à",
+	"sign1TransactionCommandReceivedNotification": "L'application %1 vous demande de signer 1 transaction.\nSouhaitez-vous confirmer cette action avec le compte %2 ?\n\nUne fois signée, les frais de traitement de la transaction sont estimés à",
 	"signXTransactionsCommandReceivedNotification": "L'application %1 vous demande de signer %2 transactions.\nSouhaitez-vous confirmer cette action avec le compte %3 ?\n\nUne fois signées, les frais de traitement des transactions sont estimés à",
 	"transactionInputNotification": "Vous avez reçu %1 %2 sur votre compte %3",
 	"searchField": "Recherche...",
