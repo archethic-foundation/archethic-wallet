@@ -66,6 +66,7 @@ class SendTransactionHandler extends CommandHandler {
             final result = await showDialog<
                 Result<TransactionConfirmation, TransactionError>>(
               useSafeArea: false,
+              useRootNavigator: false,
               context: context,
               builder: (context) => Dialog.fullscreen(
                 child: DecoratedBox(

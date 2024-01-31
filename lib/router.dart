@@ -113,14 +113,17 @@ class RoutesPath {
           },
         ),
         ShellRoute(
-          builder: (context, state, child) {
-            return AutoLockGuard(
-              child: RPCCommandReceiver(
+          builder: (context, state, child) => AutoLockGuard(
+            child: child,
+          ),
+          routes: [
+            ShellRoute(
+              builder: (context, state, child) => RPCCommandReceiver(
                 child: child,
               ),
-            );
-          },
-          routes: _authenticatedRoutes,
+              routes: _authenticatedRoutes,
+            ),
+          ],
         ),
       ],
       redirect: (context, state) {

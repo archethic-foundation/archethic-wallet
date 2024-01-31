@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
@@ -94,6 +95,7 @@ class SignTransactionsCommandHandler extends CommandHandler {
 
             final confirmation = await showDialog<bool>(
               useSafeArea: false,
+              useRootNavigator: false,
               context: context,
               builder: (context) => Dialog.fullscreen(
                 child: DecoratedBox(
