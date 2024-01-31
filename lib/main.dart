@@ -18,7 +18,7 @@ import 'package:aewallet/infrastructure/rpc/websocket_server.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/providers_observer.dart';
-import 'package:aewallet/router.dart';
+import 'package:aewallet/router/router.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_welcome.dart';
