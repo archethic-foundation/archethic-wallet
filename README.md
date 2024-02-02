@@ -47,7 +47,7 @@ All news about wallet are available on the [Archethic Youtube Channel](https://w
 ## How to install Archethic Wallet
 
 Available on Android, Windows, MacOS, iOS and Linux
-[https://www.archethic.net/aewallet.html](https://www.archethic.net/aewallet.html)
+[https://www.archethic.net/wallet/](https://www.archethic.net/wallet/)
 
 ## How to test the Archethic Wallet
 
