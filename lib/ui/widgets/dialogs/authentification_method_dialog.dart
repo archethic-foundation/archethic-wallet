@@ -112,34 +112,36 @@ class AuthentificationMethodDialog {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              PickerWidget(
-                scrollable: true,
-                pickerItems: pickerItemsList,
-                selectedIndexes: [curAuthMethod.method.index],
-                onSelected: (value) async {
-                  if (context.canPop()) context.pop();
+              Flexible(
+                child: PickerWidget(
+                  scrollable: true,
+                  pickerItems: pickerItemsList,
+                  selectedIndexes: [curAuthMethod.method.index],
+                  onSelected: (value) async {
+                    if (context.canPop()) context.pop();
 
-                  final authMethod = value.value;
-                  final success = await _applyAuthMethod(
-                    context,
-                    ref,
-                    authMethod,
-                  );
-
-                  if (success) {
-                    settingsNotifier.setAuthMethod(
-                      authMethod,
-                    );
-                  } else {
-                    if (context.canPop()) context.pop(value.value);
-                    await getDialog(
+                    final authMethod = value.value;
+                    final success = await _applyAuthMethod(
                       context,
                       ref,
-                      hasBiometrics,
-                      curAuthMethod,
+                      authMethod,
                     );
-                  }
-                },
+
+                    if (success) {
+                      settingsNotifier.setAuthMethod(
+                        authMethod,
+                      );
+                    } else {
+                      if (context.canPop()) context.pop(value.value);
+                      await getDialog(
+                        context,
+                        ref,
+                        hasBiometrics,
+                        curAuthMethod,
+                      );
+                    }
+                  },
+                ),
               ),
               const SizedBox(
                 height: 20,
