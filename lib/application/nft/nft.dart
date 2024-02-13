@@ -158,7 +158,7 @@ class NFTRepository {
       }
     }
 
-    final tokenMap = await sl.get<ApiService>().getToken(
+    final tokenMap = await sl.get<AppService>().getToken(
           tokenAddressList.toSet().toList(),
         );
 

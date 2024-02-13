@@ -6,6 +6,7 @@ import 'dart:async';
 import 'package:aewallet/application/account/providers.dart';
 
 import 'package:aewallet/bus/transaction_send_event.dart';
+import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -105,9 +106,10 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet>
           .get<ApiService>()
           .getLastTransaction([event.transactionAddress!]);
       final transaction = transactionMap[event.transactionAddress!];
-      final tokenMap = await sl.get<ApiService>().getToken(
-        [transaction!.data!.ledger!.token!.transfers[0].tokenAddress!],
-        request: 'id',
+      final tokenMap = await sl.get<AppService>().getToken(
+        [
+          transaction!.data!.ledger!.token!.transfers[0].tokenAddress!,
+        ],
       );
 
       final selectedAccount = await ref.read(

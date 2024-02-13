@@ -6,6 +6,8 @@ import 'dart:developer' as dev;
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:aewallet/infrastructure/hive/tokens_list.hive.dart';
+import 'package:aewallet/infrastructure/hive/wallet_token.hive.dart';
 import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/blockchain/token_information.dart';
@@ -35,16 +37,29 @@ class AppService {
   }
 
   Future<Map<String, Token>> getToken(
-    List<String> addresses, {
-    String request =
-        'genesis, name, id, supply, symbol, type, decimals, properties, collection, ownerships { authorizedPublicKeys { encryptedSecretKey,  publicKey }, secret }',
-  }) async {
+    List<String> addresses,
+  ) async {
     final tokenMap = <String, Token>{};
+
+    final addressesOutCache = <String>[];
+    final tokensListDatasource = await HiveTokensListDatasource.getInstance();
+
+    for (final address in addresses.toSet()) {
+      final token = tokensListDatasource.getToken(address);
+      if (token != null) {
+        tokenMap[address] = token.toModel();
+        print('getToken - get from cache $address');
+      } else {
+        addressesOutCache.add(address);
+        print('getToken - not find in cache $address');
+      }
+    }
+
     var antiSpam = 0;
     final futures = <Future>[];
-    for (final address in addresses.toSet()) {
-      // Delay the API call if we have made more than 15 requests
-      if (antiSpam > 0 && antiSpam % 15 == 0) {
+    for (final address in addressesOutCache) {
+      // Delay the API call if we have made more than 10 requests
+      if (antiSpam > 0 && antiSpam % 10 == 0) {
         await Future.delayed(const Duration(seconds: 1));
       }
 
@@ -52,15 +67,19 @@ class AppService {
       futures.add(
         sl.get<ApiService>().getToken(
           [address],
-          request: request,
         ),
       );
       antiSpam++;
     }
 
     final getTokens = await Future.wait(futures);
-    for (final getToken in getTokens) {
+    for (final Map<String, Token> getToken in getTokens) {
       tokenMap.addAll(getToken);
+
+      getToken.forEach((key, value) async {
+        value = value.copyWith(address: key);
+        await tokensListDatasource.setToken(value.toHive());
+      });
     }
 
     return tokenMap;
@@ -76,8 +95,8 @@ class AppService {
     var antiSpam = 0;
     final futures = <Future>[];
     for (final address in addresses.toSet()) {
-      // Delay the API call if we have made more than 15 requests
-      if (antiSpam > 0 && antiSpam % 15 == 0) {
+      // Delay the API call if we have made more than 10 requests
+      if (antiSpam > 0 && antiSpam % 10 == 0) {
         await Future.delayed(const Duration(seconds: 1));
       }
 
@@ -450,7 +469,6 @@ class AppService {
     // Search token Information
     final tokensAddressMap = await sl.get<AppService>().getToken(
           tokensAddresses.toSet().toList(),
-          request: 'genesis, name, id, supply, symbol, type',
         );
 
     for (final recentTransaction in recentTransactions) {
@@ -497,8 +515,8 @@ class AppService {
     var antiSpam = 0;
     var futures = <Future>[];
     for (final ownershipsAddress in ownershipsAddresses.toSet()) {
-      // Delay the API call if we have made more than 15 requests
-      if (antiSpam > 0 && antiSpam % 15 == 0) {
+      // Delay the API call if we have made more than 10 requests
+      if (antiSpam > 0 && antiSpam % 10 == 0) {
         await Future.delayed(const Duration(seconds: 1));
       }
 
@@ -561,8 +579,8 @@ class AppService {
     futures = <Future>[];
     for (final lastTransactionAddressToSearch
         in lastTransactionAddressesToSearch.toSet()) {
-      // Delay the API call if we have made more than 15 requests
-      if (antiSpam > 0 && antiSpam % 15 == 0) {
+      // Delay the API call if we have made more than 10 requests
+      if (antiSpam > 0 && antiSpam % 10 == 0) {
         await Future.delayed(const Duration(seconds: 1));
       }
 
@@ -741,7 +759,6 @@ class AppService {
     // Search token Information
     final tokenMap = await sl.get<AppService>().getToken(
           tokenAddressList.toSet().toList(),
-          request: 'genesis, name, id, supply, symbol, type, properties',
         );
 
     for (final tokenBalance in balance.token) {
@@ -758,9 +775,8 @@ class AppService {
           if (token.properties['token2_address'] != 'UCO') {
             tokenSymbolSearch.add(token.properties['token2_address']);
           }
-          final tokensSymbolMap = await sl.get<ApiService>().getToken(
+          final tokensSymbolMap = await sl.get<AppService>().getToken(
                 tokenSymbolSearch,
-                request: 'name, symbol',
               );
           final pairSymbolToken1 = token.properties['token1_address'] != 'UCO'
               ? tokensSymbolMap[token.properties['token1_address']] != null
@@ -1003,9 +1019,8 @@ class AppService {
             );
           }
           if (transaction.data!.ledger!.token!.transfers[i].amount != null) {
-            final tokenMap = await sl.get<ApiService>().getToken(
+            final tokenMap = await sl.get<AppService>().getToken(
               [transaction.data!.ledger!.token!.transfers[i].tokenAddress!],
-              request: 'symbol',
             );
             var tokenSymbol = '';
             if (tokenMap[transaction
