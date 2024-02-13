@@ -22,6 +22,47 @@ import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class AuthentificationMethodDialog {
+  static Future<bool> _applyAuthMethod(
+    BuildContext context,
+    WidgetRef ref,
+    AuthMethod authMethod,
+  ) async {
+    final localizations = AppLocalizations.of(context)!;
+
+    return switch (authMethod) {
+      AuthMethod.biometrics =>
+        await sl.get<BiometricUtil>().authenticateWithBiometrics(
+              context,
+              localizations.unlockBiometrics,
+            ),
+      AuthMethod.pin => (await context.push(
+          PinScreen.routerPage,
+          extra: {
+            'type': PinOverlayType.newPin.name,
+          },
+        ))! as bool,
+      AuthMethod.password => (await context.push(
+          SetPassword.routerPage,
+          extra: {
+            'header': localizations.setPasswordHeader,
+            'description': AppLocalizations.of(
+              context,
+            )!
+                .configureSecurityExplanationPassword,
+            'seed': ref.read(SessionProviders.session).loggedIn?.wallet.seed,
+          },
+        ))! as bool,
+      AuthMethod.yubikeyWithYubicloud => (await context.push(
+          SetYubikey.routerPage,
+          extra: {
+            'header': localizations.setYubicloudHeader,
+            'description': localizations.setYubicloudDescription,
+          },
+        ))! as bool,
+      AuthMethod.ledger => throw UnimplementedError(),
+    };
+  }
+
   static Future<void> getDialog(
     BuildContext context,
     WidgetRef ref,
@@ -53,6 +94,7 @@ class AuthentificationMethodDialog {
         ),
       );
     }
+
     await showDialog<AuthMethod>(
       context: context,
       builder: (BuildContext context) {
@@ -76,110 +118,26 @@ class AuthentificationMethodDialog {
                 selectedIndexes: [curAuthMethod.method.index],
                 onSelected: (value) async {
                   if (context.canPop()) context.pop();
-                  switch (value.value) {
-                    case AuthMethod.biometrics:
-                      final auth = await sl
-                          .get<BiometricUtil>()
-                          .authenticateWithBiometrics(
-                            context,
-                            localizations.unlockBiometrics,
-                          );
-                      if (auth) {
-                        settingsNotifier.setAuthMethod(
-                          AuthMethod.biometrics,
-                        );
-                      } else {
-                        if (context.canPop()) context.pop(value.value);
-                        await getDialog(
-                          context,
-                          ref,
-                          hasBiometrics,
-                          curAuthMethod,
-                        );
-                      }
-                      break;
-                    case AuthMethod.pin:
-                      if (context.canPop()) context.pop();
-                      final auth = (await context.push(
-                        PinScreen.routerPage,
-                        extra: {
-                          'type': PinOverlayType.newPin.name,
-                        },
-                      ))! as bool;
 
-                      if (auth) {
-                        settingsNotifier.setAuthMethod(
-                          AuthMethod.pin,
-                        );
-                      } else {
-                        if (context.canPop()) context.pop(value.value);
-                        await getDialog(
-                          context,
-                          ref,
-                          hasBiometrics,
-                          curAuthMethod,
-                        );
-                      }
-                      break;
-                    case AuthMethod.password:
-                      if (context.canPop()) context.pop();
-                      final auth = (await context.push(
-                        SetPassword.routerPage,
-                        extra: {
-                          'header': localizations.setPasswordHeader,
-                          'description': AppLocalizations.of(
-                            context,
-                          )!
-                              .configureSecurityExplanationPassword,
-                          'seed': ref
-                              .read(SessionProviders.session)
-                              .loggedIn
-                              ?.wallet
-                              .seed,
-                        },
-                      ))! as bool;
+                  final authMethod = value.value;
+                  final success = await _applyAuthMethod(
+                    context,
+                    ref,
+                    authMethod,
+                  );
 
-                      if (auth) {
-                        settingsNotifier.setAuthMethod(
-                          AuthMethod.password,
-                        );
-                      } else {
-                        if (context.canPop()) context.pop(value.value);
-                        await getDialog(
-                          context,
-                          ref,
-                          hasBiometrics,
-                          curAuthMethod,
-                        );
-                      }
-                      break;
-                    case AuthMethod.yubikeyWithYubicloud:
-                      if (context.canPop()) context.pop();
-                      final auth = (await context.push(
-                        SetYubikey.routerPage,
-                        extra: {
-                          'header': localizations.setYubicloudHeader,
-                          'description': localizations.setYubicloudDescription,
-                        },
-                      ))! as bool;
-
-                      if (auth) {
-                        settingsNotifier.setAuthMethod(
-                          AuthMethod.yubikeyWithYubicloud,
-                        );
-                      } else {
-                        if (context.canPop()) context.pop(value.value);
-                        await getDialog(
-                          context,
-                          ref,
-                          hasBiometrics,
-                          curAuthMethod,
-                        );
-                      }
-                      break;
-                    default:
-                      if (context.canPop()) context.pop(value.value);
-                      break;
+                  if (success) {
+                    settingsNotifier.setAuthMethod(
+                      authMethod,
+                    );
+                  } else {
+                    if (context.canPop()) context.pop(value.value);
+                    await getDialog(
+                      context,
+                      ref,
+                      hasBiometrics,
+                      curAuthMethod,
+                    );
                   }
                 },
               ),
