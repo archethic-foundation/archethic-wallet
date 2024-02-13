@@ -1,55 +1,27 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 part of 'settings_sheet.dart';
 
-class SettingsSheetWallet extends ConsumerStatefulWidget {
+class SettingsSheetWallet extends ConsumerWidget {
   const SettingsSheetWallet({super.key});
 
   static const String routerPage = '/settings';
 
-  @override
-  ConsumerState<SettingsSheetWallet> createState() =>
-      _SettingsSheetWalletMobileState();
-}
-
-class _SettingsSheetWalletMobileState extends ConsumerState<SettingsSheetWallet>
-    with TickerProviderStateMixin, WidgetsBindingObserver {
   bool notNull(Object? o) => o != null;
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    switch (state) {
-      case AppLifecycleState.paused:
-        super.didChangeAppLifecycleState(state);
-        break;
-      case AppLifecycleState.resumed:
-        super.didChangeAppLifecycleState(state);
-        break;
-      case AppLifecycleState.detached:
-        super.didChangeAppLifecycleState(state);
-        break;
-      case AppLifecycleState.inactive:
-        super.didChangeAppLifecycleState(state);
-        break;
-      case AppLifecycleState.hidden:
-        super.didChangeAppLifecycleState(state);
-        break;
-    }
-  }
-
-  void showSecurity() {
+  void showSecurity(BuildContext context) {
     context.go(SecurityMenuView.routerPage);
   }
 
-  void showCustom() {
+  void showCustom(BuildContext context) {
     context.go(CustomizationMenuView.routerPage);
   }
 
-  void showAbout() {
+  void showAbout(BuildContext context) {
     context.go(AboutMenuView.routerPage);
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
     return Scaffold(
@@ -82,9 +54,9 @@ class _SettingsSheetWalletMobileState extends ConsumerState<SettingsSheetWallet>
               constraints: const BoxConstraints.expand(),
             ),
             MainMenuView(
-              showSecurity: showSecurity,
-              showCustom: showCustom,
-              showAbout: showAbout,
+              showSecurity: () => showSecurity(context),
+              showCustom: () => showCustom(context),
+              showAbout: () => showAbout(context),
             ),
           ],
         ),
