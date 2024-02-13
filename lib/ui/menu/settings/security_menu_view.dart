@@ -352,7 +352,10 @@ class _SyncBlockchainSettingsListItem extends ConsumerWidget {
             CacheManagerHive.cacheManagerHiveTable,
           );
           await cache.clear();
-          ref
+          final tokensListDatasource =
+              await HiveTokensListDatasource.getInstance();
+          await tokensListDatasource.clearAll();
+          await ref
               .read(AccountProviders.selectedAccount.notifier)
               .refreshRecentTransactions();
         });

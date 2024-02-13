@@ -29,13 +29,14 @@ class TokenInformationAdapter extends TypeAdapter<TokenInformation> {
           ?.toList(),
       aeip: (fields[13] as List?)?.cast<int>(),
       decimals: fields[15] as int?,
+      isLPToken: fields[16] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, TokenInformation obj) {
     writer
-      ..writeByte(10)
+      ..writeByte(11)
       ..writeByte(0)
       ..write(obj.address)
       ..writeByte(1)
@@ -55,7 +56,9 @@ class TokenInformationAdapter extends TypeAdapter<TokenInformation> {
       ..writeByte(14)
       ..write(obj.tokenCollection)
       ..writeByte(15)
-      ..write(obj.decimals);
+      ..write(obj.decimals)
+      ..writeByte(16)
+      ..write(obj.isLPToken);
   }
 
   @override

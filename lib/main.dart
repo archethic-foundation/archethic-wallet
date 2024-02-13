@@ -62,6 +62,7 @@ Future<void> main() async {
 
     final windowOptions = WindowOptions(
       size: sizeWindows,
+      center: false,
       maximumSize: sizeWindows,
       backgroundColor: Colors.transparent,
       fullScreen: false,

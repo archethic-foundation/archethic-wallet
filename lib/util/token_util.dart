@@ -13,8 +13,9 @@ class TokenUtil {
   static Future<Map<String, Token>> getTokensFromAddress(
     String address,
   ) async {
-    final tokenMap =
-        await sl.get<AppService>().getToken([address], request: 'properties');
+    final tokenMap = await sl.get<AppService>().getToken(
+      [address],
+    );
 
     return tokenMap;
   }

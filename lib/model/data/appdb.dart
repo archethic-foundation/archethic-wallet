@@ -2,6 +2,7 @@
 
 import 'dart:developer';
 
+import 'package:aewallet/infrastructure/hive/wallet_token.hive.dart';
 import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/blockchain/token_information.dart';
@@ -43,6 +44,9 @@ class HiveTypeIds {
   static const notificationsSetup = 16;
   static const cacheItem = 17;
   static const tokenCollection = 18;
+  static const walletToken = 19;
+  static const walletTokenOwnership = 20;
+  static const walletTokenOwnershipAuthorizedKey = 21;
 }
 
 class DBHelper {
@@ -74,7 +78,10 @@ class DBHelper {
       ..registerAdapter(PubKeyAccessRecipientAdapter())
       ..registerAdapter(ContactAccessRecipientAdapter())
       ..registerAdapter(NotificationsSetupImplAdapter())
-      ..registerAdapter(CacheItemHiveAdapter());
+      ..registerAdapter(CacheItemHiveAdapter())
+      ..registerAdapter(WalletTokenHiveAdapter())
+      ..registerAdapter(WalletTokenOwnershipHiveAdapter())
+      ..registerAdapter(WalletTokenOwnershipAuthorizedKeyHiveAdapter());
   }
 
   // Contacts
