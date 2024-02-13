@@ -48,10 +48,8 @@ class AppService {
       final token = tokensListDatasource.getToken(address);
       if (token != null) {
         tokenMap[address] = token.toModel();
-        print('getToken - get from cache $address');
       } else {
         addressesOutCache.add(address);
-        print('getToken - not find in cache $address');
       }
     }
 
