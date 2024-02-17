@@ -15,6 +15,7 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
@@ -54,6 +55,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
     with SingleTickerProviderStateMixin, LockGuardMixin {
   static const int _pinLength = 6;
   double buttonSize = 70;
+  FocusNode _focusNode = FocusNode();
 
   String pinEnterTitle = '';
   String pinCreateTitle = '';
@@ -72,6 +74,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
   @override
   void initState() {
     super.initState();
+    _focusNode.requestFocus();
 
     // Initialize list all empty
     if (widget.type == PinOverlayType.enterPin) {
@@ -110,6 +113,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
   @override
   void dispose() {
     _controller.dispose();
+    _focusNode.dispose();
     super.dispose();
   }
 
@@ -330,8 +334,43 @@ class _PinScreenState extends ConsumerState<PinScreen>
       });
     }
 
-    return WillPopScope(
-      onWillPop: () async => widget.canNavigateBack,
+    return RawKeyboardListener(
+      focusNode: _focusNode,
+      onKey: (RawKeyEvent event) {
+        if (event is RawKeyDownEvent) {
+          final logicalKey = event.logicalKey;
+          if (logicalKey.keyLabel.isNotEmpty &&
+              '0123456789'.contains(logicalKey.keyLabel)) {
+            _setCharacter(logicalKey.keyLabel);
+            if (allExpectedCharactersEntered) {
+              // Mild delay so they can actually see the last dot get filled
+              Future<void>.delayed(
+                const Duration(milliseconds: 50),
+                () async {
+                  if (widget.type == PinOverlayType.enterPin) {
+                    await _checkPin(context, preferences);
+                  } else {
+                    if (!_awaitingConfirmation) {
+                      // Switch to confirm pin
+                      setState(() {
+                        _awaitingConfirmation = true;
+                        _header = AppLocalizations.of(context)!.pinConfirmTitle;
+                      });
+                    } else {
+                      // First and second pins match
+                      await _submitNewPin(context, ref, preferences);
+                    }
+                  }
+                },
+              );
+            }
+          }
+          if (logicalKey.keyLabel.isNotEmpty &&
+              logicalKey == LogicalKeyboardKey.backspace) {
+            _backSpace();
+          }
+        }
+      },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: DecoratedBox(
