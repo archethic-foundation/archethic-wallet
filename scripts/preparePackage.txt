@@ -5,3 +5,18 @@ flutter pub get
 dart format lib packages
 dart fix --dry-run
 flutter pub run flutter_native_splash:create --path=flutter_native_splash.yaml 
+
+Clean dependencies (from https://pub.dev/packages/dependency_validator)
+dart pub add --dev dependency_validator
+flutter pub run dependency_validator 
+dart pub remove dependency_validator
+
+Clean arb (https://pub.dev/packages/translations_cleaner)
+dart pub add --dev translations_cleaner
+dart run translations_cleaner clean-translations
+dart pub remove translations_cleaner
+
+List unused files (https://pub.dev/packages/daunused)
+dart pub add --dev daunused
+flutter pub run daunused:daunused.dart .
+dart pub remove daunused
