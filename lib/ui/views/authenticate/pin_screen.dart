@@ -55,7 +55,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
     with SingleTickerProviderStateMixin, LockGuardMixin {
   static const int _pinLength = 6;
   double buttonSize = 70;
-  FocusNode _focusNode = FocusNode();
+  final FocusNode _focusNode = FocusNode();
 
   String pinEnterTitle = '';
   String pinCreateTitle = '';
