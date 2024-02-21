@@ -92,7 +92,7 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
               TextSpan(
                 children: [
                   TextSpan(
-                    text: command.data.rpcSignTransactionCommandData.length == 1
+                    text: command.data.transactions.length == 1
                         ? localizations
                             .sign1TransactionCommandReceivedNotification
                             .replaceAll(
@@ -114,8 +114,7 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
                             )
                             .replaceAll(
                               '%2',
-                              command.data.rpcSignTransactionCommandData.length
-                                  .toString(),
+                              command.data.transactions.length.toString(),
                             )
                             .replaceAll(
                               '%3',
