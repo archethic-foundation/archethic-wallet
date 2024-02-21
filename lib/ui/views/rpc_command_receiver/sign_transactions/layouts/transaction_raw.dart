@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:aewallet/domain/rpc/commands/sign_transactions.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:material_symbols_icons/symbols.dart';
@@ -13,7 +13,7 @@ class TransactionRaw extends StatefulWidget {
     super.key,
   });
 
-  final MapEntry<int, RPCSignTransactionCommandData> command;
+  final MapEntry<int, awc.SignTransactionRequestData> command;
 
   @override
   TransactionRawState createState() => TransactionRawState();

@@ -74,22 +74,22 @@ class _$VerifiedTokensCopyWithImpl<$Res, $Val extends VerifiedTokens>
 }
 
 /// @nodoc
-abstract class _$$VerifiedTokensImplCopyWith<$Res>
+abstract class _$$_VerifiedTokensCopyWith<$Res>
     implements $VerifiedTokensCopyWith<$Res> {
-  factory _$$VerifiedTokensImplCopyWith(_$VerifiedTokensImpl value,
-          $Res Function(_$VerifiedTokensImpl) then) =
-      __$$VerifiedTokensImplCopyWithImpl<$Res>;
+  factory _$$_VerifiedTokensCopyWith(
+          _$_VerifiedTokens value, $Res Function(_$_VerifiedTokens) then) =
+      __$$_VerifiedTokensCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({List<String> mainnet, List<String> testnet, List<String> devnet});
 }
 
 /// @nodoc
-class __$$VerifiedTokensImplCopyWithImpl<$Res>
-    extends _$VerifiedTokensCopyWithImpl<$Res, _$VerifiedTokensImpl>
-    implements _$$VerifiedTokensImplCopyWith<$Res> {
-  __$$VerifiedTokensImplCopyWithImpl(
-      _$VerifiedTokensImpl _value, $Res Function(_$VerifiedTokensImpl) _then)
+class __$$_VerifiedTokensCopyWithImpl<$Res>
+    extends _$VerifiedTokensCopyWithImpl<$Res, _$_VerifiedTokens>
+    implements _$$_VerifiedTokensCopyWith<$Res> {
+  __$$_VerifiedTokensCopyWithImpl(
+      _$_VerifiedTokens _value, $Res Function(_$_VerifiedTokens) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -99,7 +99,7 @@ class __$$VerifiedTokensImplCopyWithImpl<$Res>
     Object? testnet = null,
     Object? devnet = null,
   }) {
-    return _then(_$VerifiedTokensImpl(
+    return _then(_$_VerifiedTokens(
       mainnet: null == mainnet
           ? _value._mainnet
           : mainnet // ignore: cast_nullable_to_non_nullable
@@ -118,8 +118,8 @@ class __$$VerifiedTokensImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$VerifiedTokensImpl implements _VerifiedTokens {
-  const _$VerifiedTokensImpl(
+class _$_VerifiedTokens implements _VerifiedTokens {
+  const _$_VerifiedTokens(
       {required final List<String> mainnet,
       required final List<String> testnet,
       required final List<String> devnet})
@@ -127,8 +127,8 @@ class _$VerifiedTokensImpl implements _VerifiedTokens {
         _testnet = testnet,
         _devnet = devnet;
 
-  factory _$VerifiedTokensImpl.fromJson(Map<String, dynamic> json) =>
-      _$$VerifiedTokensImplFromJson(json);
+  factory _$_VerifiedTokens.fromJson(Map<String, dynamic> json) =>
+      _$$_VerifiedTokensFromJson(json);
 
   final List<String> _mainnet;
   @override
@@ -163,7 +163,7 @@ class _$VerifiedTokensImpl implements _VerifiedTokens {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$VerifiedTokensImpl &&
+            other is _$_VerifiedTokens &&
             const DeepCollectionEquality().equals(other._mainnet, _mainnet) &&
             const DeepCollectionEquality().equals(other._testnet, _testnet) &&
             const DeepCollectionEquality().equals(other._devnet, _devnet));
@@ -180,13 +180,12 @@ class _$VerifiedTokensImpl implements _VerifiedTokens {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$VerifiedTokensImplCopyWith<_$VerifiedTokensImpl> get copyWith =>
-      __$$VerifiedTokensImplCopyWithImpl<_$VerifiedTokensImpl>(
-          this, _$identity);
+  _$$_VerifiedTokensCopyWith<_$_VerifiedTokens> get copyWith =>
+      __$$_VerifiedTokensCopyWithImpl<_$_VerifiedTokens>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$VerifiedTokensImplToJson(
+    return _$$_VerifiedTokensToJson(
       this,
     );
   }
@@ -196,10 +195,10 @@ abstract class _VerifiedTokens implements VerifiedTokens {
   const factory _VerifiedTokens(
       {required final List<String> mainnet,
       required final List<String> testnet,
-      required final List<String> devnet}) = _$VerifiedTokensImpl;
+      required final List<String> devnet}) = _$_VerifiedTokens;
 
   factory _VerifiedTokens.fromJson(Map<String, dynamic> json) =
-      _$VerifiedTokensImpl.fromJson;
+      _$_VerifiedTokens.fromJson;
 
   @override
   List<String> get mainnet;
@@ -209,6 +208,6 @@ abstract class _VerifiedTokens implements VerifiedTokens {
   List<String> get devnet;
   @override
   @JsonKey(ignore: true)
-  _$$VerifiedTokensImplCopyWith<_$VerifiedTokensImpl> get copyWith =>
+  _$$_VerifiedTokensCopyWith<_$_VerifiedTokens> get copyWith =>
       throw _privateConstructorUsedError;
 }

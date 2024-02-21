@@ -5,31 +5,32 @@ import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/core/result.dart';
+import 'package:aewallet/domain/rpc/command.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
-import 'package:aewallet/domain/rpc/commands/add_service.dart';
-import 'package:aewallet/domain/rpc/commands/command.dart';
-import 'package:aewallet/domain/rpc/commands/failure.dart';
-import 'package:aewallet/domain/rpc/commands/send_transaction.dart';
+import 'package:aewallet/domain/rpc/failure.dart';
 import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
 import 'package:aewallet/infrastructure/repositories/transaction/transaction_keychain_builder.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/add_service/layouts/add_service_confirmation_form.dart';
 import 'package:aewallet/util/notifications_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window_manager/window_manager.dart';
 
-class AddServiceHandler extends CommandHandler {
+class AddServiceHandler
+    extends CommandHandler<awc.AddServiceRequest, awc.SendTransactionResult> {
   AddServiceHandler({
     required BuildContext context,
     required WidgetRef ref,
   }) : super(
           canHandle: (command) =>
-              command is RPCCommand<RPCAddServiceCommandData>,
+              command is RPCAuthenticatedCommand<awc.AddServiceRequest>,
           handle: (command) async {
+            command as RPCAuthenticatedCommand<awc.AddServiceRequest>;
             _showNotification(
               context: context,
               ref: ref,
@@ -37,8 +38,8 @@ class AddServiceHandler extends CommandHandler {
             );
 
             if (command.data.name.isEmpty) {
-              return Result.failure(
-                RPCFailure.invalidParams(),
+              return const Result.failure(
+                awc.Failure.invalidParams,
               );
             }
             final networkSettings = ref.watch(
@@ -63,8 +64,8 @@ class AddServiceHandler extends CommandHandler {
             final kDerivationPath = '$kDerivationPathWithoutIndex$index';
 
             if (keychain.services.containsKey(nameEncoded)) {
-              return Result.failure(
-                RPCFailure.serviceAlreadyExists(),
+              return const Result.failure(
+                awc.Failure.serviceAlreadyExists,
               );
             }
             keychain = keychain.copyWithService(nameEncoded, kDerivationPath);
@@ -74,9 +75,10 @@ class AddServiceHandler extends CommandHandler {
               originPrivateKey: originPrivateKey,
             );
 
-            final newCommand = RPCCommand<RPCSendTransactionCommandData>(
+            final newCommand =
+                RPCAuthenticatedCommand<awc.SendTransactionRequest>(
               origin: command.origin,
-              data: RPCSendTransactionCommandData(
+              data: awc.SendTransactionRequest(
                 data: keychainTransaction.data!,
                 version: keychainTransaction.version,
                 type: keychainTransaction.type!,
@@ -106,7 +108,7 @@ class AddServiceHandler extends CommandHandler {
 
             return result!.map(
                   failure: (failure) => Result.failure(
-                    RPCFailure.fromTransactionError(failure),
+                    failure.toRpcFailure(),
                   ),
                   success: (success) {
                     Future<void>.sync(() async {
@@ -125,12 +127,16 @@ class AddServiceHandler extends CommandHandler {
                     });
 
                     return Result.success(
-                      success,
+                      awc.SendTransactionResult(
+                        maxConfirmations: success.maxConfirmations,
+                        nbConfirmations: success.nbConfirmations,
+                        transactionAddress: success.transactionAddress,
+                      ),
                     );
                   },
                 ) ??
-                Result.failure(
-                  RPCFailure.userRejected(),
+                const Result.failure(
+                  awc.Failure.userRejected,
                 );
           },
         );
@@ -138,7 +144,7 @@ class AddServiceHandler extends CommandHandler {
   static Future<void> _showNotification({
     required BuildContext context,
     required WidgetRef ref,
-    required RPCCommand<RPCAddServiceCommandData> command,
+    required RPCAuthenticatedCommand<awc.AddServiceRequest> command,
   }) async {
     final accountSelected =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;

@@ -2,9 +2,12 @@
 
 import 'package:aewallet/domain/repositories/settings.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
+import 'package:aewallet/domain/rpc/session_repository.dart';
+import 'package:aewallet/domain/rpc/session_service.dart';
 import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/infrastructure/repositories/settings.dart';
 import 'package:aewallet/infrastructure/rpc/deeplink_server.dart';
+import 'package:aewallet/infrastructure/rpc/session_repository.dart';
 import 'package:aewallet/infrastructure/rpc/websocket_server.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/service/app_service.dart';
@@ -27,14 +30,20 @@ Future<void> setupServiceLocator() async {
     ..registerLazySingleton<BiometricUtil>(BiometricUtil.new)
     ..registerLazySingleton<NFCUtil>(NFCUtil.new)
     ..registerLazySingleton<LedgerNanoSImpl>(LedgerNanoSImpl.new)
-    ..registerLazySingleton<CommandDispatcher>(
-      CommandDispatcher.new,
+    ..registerLazySingleton<CommandBus>(
+      CommandBus.new,
     )
     ..registerLazySingleton<ArchethicWebsocketRPCServer>(
       ArchethicWebsocketRPCServer.new,
     )
     ..registerLazySingleton<ArchethicDeeplinkRPCServer>(
       ArchethicDeeplinkRPCServer.new,
+    )
+    ..registerLazySingleton<SessionRepository>(
+      SessionRepositoryImpl.new,
+    )
+    ..registerLazySingleton<RPCSessionService>(
+      () => RPCSessionService(repository: sl<SessionRepository>()),
     )
     ..registerLazySingleton<SettingsRepositoryInterface>(
       SettingsRepository.new,

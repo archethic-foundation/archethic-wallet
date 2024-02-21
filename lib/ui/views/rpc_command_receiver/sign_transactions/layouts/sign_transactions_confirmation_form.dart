@@ -1,6 +1,5 @@
 import 'package:aewallet/application/settings/language.dart';
-import 'package:aewallet/domain/rpc/commands/command.dart';
-import 'package:aewallet/domain/rpc/commands/sign_transactions.dart';
+import 'package:aewallet/domain/rpc/command.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -11,6 +10,7 @@ import 'package:aewallet/ui/views/rpc_command_receiver/sign_transactions/layouts
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
+import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,7 +24,7 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
     super.key,
   });
 
-  final RPCCommand<RPCSignTransactionsCommandData> command;
+  final RPCAuthenticatedCommand<awc.SignTransactionRequest> command;
   final double estimatedFees;
 
   static const String routerPage = '/sign_transaction_confirmation';
@@ -92,7 +92,7 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
               TextSpan(
                 children: [
                   TextSpan(
-                    text: command.data.rpcSignTransactionCommandData.length == 1
+                    text: command.data.transactions.length == 1
                         ? localizations
                             .sign1TransactionCommandReceivedNotification
                             .replaceAll(
@@ -114,8 +114,7 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
                             )
                             .replaceAll(
                               '%2',
-                              command.data.rpcSignTransactionCommandData.length
-                                  .toString(),
+                              command.data.transactions.length.toString(),
                             )
                             .replaceAll(
                               '%3',
@@ -140,7 +139,7 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
               ),
             ),
             Column(
-              children: command.data.rpcSignTransactionCommandData
+              children: command.data.transactions
                   .asMap()
                   .entries
                   .map((rpcSignTransactionCommandData) {

@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SignTransactionConfirmationFormState {
-  RPCCommand<RPCSendTransactionCommandData> get signTransactionCommand =>
+  RPCCommand<SendTransactionRequest> get signTransactionCommand =>
       throw _privateConstructorUsedError;
   double get feesEstimation => throw _privateConstructorUsedError;
 
@@ -35,11 +35,10 @@ abstract class $SignTransactionConfirmationFormStateCopyWith<$Res> {
           SignTransactionConfirmationFormState>;
   @useResult
   $Res call(
-      {RPCCommand<RPCSendTransactionCommandData> signTransactionCommand,
+      {RPCCommand<SendTransactionRequest> signTransactionCommand,
       double feesEstimation});
 
-  $RPCCommandCopyWith<RPCSendTransactionCommandData, $Res>
-      get signTransactionCommand;
+  $RPCCommandCopyWith<SendTransactionRequest, $Res> get signTransactionCommand;
 }
 
 /// @nodoc
@@ -63,7 +62,7 @@ class _$SignTransactionConfirmationFormStateCopyWithImpl<$Res,
       signTransactionCommand: null == signTransactionCommand
           ? _value.signTransactionCommand
           : signTransactionCommand // ignore: cast_nullable_to_non_nullable
-              as RPCCommand<RPCSendTransactionCommandData>,
+              as RPCCommand<SendTransactionRequest>,
       feesEstimation: null == feesEstimation
           ? _value.feesEstimation
           : feesEstimation // ignore: cast_nullable_to_non_nullable
@@ -73,9 +72,8 @@ class _$SignTransactionConfirmationFormStateCopyWithImpl<$Res,
 
   @override
   @pragma('vm:prefer-inline')
-  $RPCCommandCopyWith<RPCSendTransactionCommandData, $Res>
-      get signTransactionCommand {
-    return $RPCCommandCopyWith<RPCSendTransactionCommandData, $Res>(
+  $RPCCommandCopyWith<SendTransactionRequest, $Res> get signTransactionCommand {
+    return $RPCCommandCopyWith<SendTransactionRequest, $Res>(
         _value.signTransactionCommand, (value) {
       return _then(_value.copyWith(signTransactionCommand: value) as $Val);
     });
@@ -92,12 +90,11 @@ abstract class _$$SignTransactionConfirmationFormStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {RPCCommand<RPCSendTransactionCommandData> signTransactionCommand,
+      {RPCCommand<SendTransactionRequest> signTransactionCommand,
       double feesEstimation});
 
   @override
-  $RPCCommandCopyWith<RPCSendTransactionCommandData, $Res>
-      get signTransactionCommand;
+  $RPCCommandCopyWith<SendTransactionRequest, $Res> get signTransactionCommand;
 }
 
 /// @nodoc
@@ -120,7 +117,7 @@ class __$$SignTransactionConfirmationFormStateImplCopyWithImpl<$Res>
       signTransactionCommand: null == signTransactionCommand
           ? _value.signTransactionCommand
           : signTransactionCommand // ignore: cast_nullable_to_non_nullable
-              as RPCCommand<RPCSendTransactionCommandData>,
+              as RPCCommand<SendTransactionRequest>,
       feesEstimation: null == feesEstimation
           ? _value.feesEstimation
           : feesEstimation // ignore: cast_nullable_to_non_nullable
@@ -138,7 +135,7 @@ class _$SignTransactionConfirmationFormStateImpl
       : super._();
 
   @override
-  final RPCCommand<RPCSendTransactionCommandData> signTransactionCommand;
+  final RPCCommand<SendTransactionRequest> signTransactionCommand;
   @override
   final double feesEstimation;
 
@@ -174,14 +171,13 @@ class _$SignTransactionConfirmationFormStateImpl
 abstract class _SignTransactionConfirmationFormState
     extends SignTransactionConfirmationFormState {
   const factory _SignTransactionConfirmationFormState(
-          {required final RPCCommand<RPCSendTransactionCommandData>
-              signTransactionCommand,
-          required final double feesEstimation}) =
-      _$SignTransactionConfirmationFormStateImpl;
+      {required final RPCCommand<SendTransactionRequest> signTransactionCommand,
+      required final double
+          feesEstimation}) = _$SignTransactionConfirmationFormStateImpl;
   const _SignTransactionConfirmationFormState._() : super._();
 
   @override
-  RPCCommand<RPCSendTransactionCommandData> get signTransactionCommand;
+  RPCCommand<SendTransactionRequest> get signTransactionCommand;
   @override
   double get feesEstimation;
   @override

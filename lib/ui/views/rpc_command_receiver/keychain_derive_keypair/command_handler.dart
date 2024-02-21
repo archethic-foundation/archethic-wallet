@@ -1,22 +1,22 @@
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/core/result.dart';
+import 'package:aewallet/domain/rpc/command.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
-import 'package:aewallet/domain/rpc/commands/command.dart';
-import 'package:aewallet/domain/rpc/commands/failure.dart';
-import 'package:aewallet/domain/rpc/commands/keychain_derive_keypair.dart';
 import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class KeychainDeriveKeypairCommandHandler extends CommandHandler {
+class KeychainDeriveKeypairCommandHandler extends CommandHandler<
+    awc.KeychainDeriveKeypairRequest, awc.KeychainDeriveKeypairResult> {
   KeychainDeriveKeypairCommandHandler({
     required WidgetRef ref,
   }) : super(
           canHandle: (command) =>
-              command is RPCCommand<RPCKeychainDeriveKeypairCommandData>,
+              command is RPCCommand<awc.KeychainDeriveKeypairRequest>,
           handle: (command) async {
-            command as RPCCommand<RPCKeychainDeriveKeypairCommandData>;
+            command as RPCCommand<awc.KeychainDeriveKeypairRequest>;
 
             final networkSettings = ref.watch(
               SettingsProviders.settings.select((settings) => settings.network),
@@ -32,21 +32,21 @@ class KeychainDeriveKeypairCommandHandler extends CommandHandler {
 
             if (keychain.services.containsKey(command.data.serviceName) ==
                 false) {
-              return Result.failure(RPCFailure.serviceNotFound());
+              return const Result.failure(awc.Failure.serviceNotFound);
             }
 
             final publicKey = uint8ListToHex(
               keychain
                   .deriveKeypair(
                     command.data.serviceName,
-                    index: command.data.index ?? 0,
-                    pathSuffix: command.data.pathSuffix ?? '',
+                    index: command.data.index,
+                    pathSuffix: command.data.pathSuffix,
                   )
                   .publicKey!,
             );
 
             return Result.success(
-              RPCKeychainDeriveKeypairResultData(publicKey: publicKey),
+              awc.KeychainDeriveKeypairResult(publicKey: publicKey),
             );
           },
         );

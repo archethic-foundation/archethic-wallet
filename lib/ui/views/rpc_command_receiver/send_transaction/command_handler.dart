@@ -1,33 +1,34 @@
 import 'dart:io';
 
 import 'package:aewallet/domain/models/core/result.dart';
+import 'package:aewallet/domain/rpc/command.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
-import 'package:aewallet/domain/rpc/commands/command.dart';
-import 'package:aewallet/domain/rpc/commands/failure.dart';
-import 'package:aewallet/domain/rpc/commands/send_transaction.dart';
+import 'package:aewallet/domain/rpc/failure.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/send_transaction/layouts/send_transaction_confirmation_form.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
 
-class SendTransactionHandler extends CommandHandler {
+class SendTransactionHandler extends CommandHandler<awc.SendTransactionRequest,
+    awc.SendTransactionResult> {
   SendTransactionHandler({
     required BuildContext context,
   }) : super(
           canHandle: (command) =>
-              command is RPCCommand<RPCSendTransactionCommandData>,
+              command is RPCAuthenticatedCommand<awc.SendTransactionRequest>,
           handle: (command) async {
-            command as RPCCommand<RPCSendTransactionCommandData>;
+            command as RPCAuthenticatedCommand<awc.SendTransactionRequest>;
 
             if (command.data.generateEncryptedSeedSC != null &&
                 command.data.generateEncryptedSeedSC == true) {
               if (command.data.data.code == null ||
                   command.data.data.code!.trim().isEmpty) {
-                return Result.failure(
-                  RPCFailure.invalidTransaction(),
+                return const Result.failure(
+                  awc.Failure.invalidTransaction,
                 );
               }
 
@@ -80,12 +81,18 @@ class SendTransactionHandler extends CommandHandler {
 
             return result!.map(
                   failure: (failure) => Result.failure(
-                    RPCFailure.fromTransactionError(failure),
+                    failure.toRpcFailure(),
                   ),
-                  success: Result.success,
+                  success: (success) => Result.success(
+                    awc.SendTransactionResult(
+                      maxConfirmations: success.maxConfirmations,
+                      nbConfirmations: success.nbConfirmations,
+                      transactionAddress: success.transactionAddress,
+                    ),
+                  ),
                 ) ??
-                Result.failure(
-                  RPCFailure.userRejected(),
+                const Result.failure(
+                  awc.Failure.userRejected,
                 );
           },
         );

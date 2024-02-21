@@ -1,17 +1,21 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/infrastructure/rpc/add_service/command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/dto/rpc_command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/get_accounts/command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/get_current_account/command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/get_endpoint/command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/get_services_from_keychain/command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/keychain_derive_address/command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/keychain_derive_keypair/command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/refresh_current_account/command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/send_transaction/command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/sign_transactions/command_handler.dart';
+import 'package:aewallet/infrastructure/rpc/dto/rpc_receiver.dart';
+import 'package:aewallet/infrastructure/rpc/get_accounts/command_receiver.dart';
+import 'package:aewallet/infrastructure/rpc/get_current_account/command_receiver.dart';
+import 'package:aewallet/infrastructure/rpc/get_endpoint/command_receiver.dart';
+import 'package:aewallet/infrastructure/rpc/get_services_from_keychain/command_receiver.dart';
+import 'package:aewallet/infrastructure/rpc/keychain_derive_address/command_receiver.dart';
+import 'package:aewallet/infrastructure/rpc/keychain_derive_keypair/command_receiver.dart';
+import 'package:aewallet/infrastructure/rpc/open_session_challenge/command_receiver.dart';
+import 'package:aewallet/infrastructure/rpc/open_session_handshake/command_receiver.dart';
+import 'package:aewallet/infrastructure/rpc/refresh_current_account/command_receiver.dart';
+import 'package:aewallet/infrastructure/rpc/send_transaction/command_receiver.dart';
+import 'package:aewallet/infrastructure/rpc/sign_transactions/command_receiver.dart';
+import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:deeplink_rpc/deeplink_rpc.dart';
 
 class ArchethicDeeplinkRPCServer extends DeeplinkRpcRequestReceiver {
@@ -20,7 +24,7 @@ class ArchethicDeeplinkRPCServer extends DeeplinkRpcRequestReceiver {
       DeeplinkRpcRequestHandler(
         route: const DeeplinkRpcRoute('send_transaction'),
         handle: (request) => _handle(
-          RPCSendTransactionCommandHandler(),
+          rpcSendTransactionReceiverFactory,
           request,
         ),
       ),
@@ -29,7 +33,7 @@ class ArchethicDeeplinkRPCServer extends DeeplinkRpcRequestReceiver {
       DeeplinkRpcRequestHandler(
         route: const DeeplinkRpcRoute('get_endpoint'),
         handle: (request) => _handle(
-          RPCGetEndpointCommandHandler(),
+          rpcGetEndpointCommandReceiverFactory,
           request,
         ),
       ),
@@ -38,7 +42,7 @@ class ArchethicDeeplinkRPCServer extends DeeplinkRpcRequestReceiver {
       DeeplinkRpcRequestHandler(
         route: const DeeplinkRpcRoute('refresh_current_account'),
         handle: (request) => _handle(
-          RPCRefreshCurrentAccountCommandHandler(),
+          rpcRefreshCurrentAccountCommandReceiverFactory,
           request,
         ),
       ),
@@ -47,7 +51,7 @@ class ArchethicDeeplinkRPCServer extends DeeplinkRpcRequestReceiver {
       DeeplinkRpcRequestHandler(
         route: const DeeplinkRpcRoute('get_current_account'),
         handle: (request) => _handle(
-          RPCGetCurrentAccountCommandHandler(),
+          rpcGetCurrentAccountCommandReceiverFactory,
           request,
         ),
       ),
@@ -56,7 +60,7 @@ class ArchethicDeeplinkRPCServer extends DeeplinkRpcRequestReceiver {
       DeeplinkRpcRequestHandler(
         route: const DeeplinkRpcRoute('get_accounts'),
         handle: (request) => _handle(
-          RPCGetAccountsCommandHandler(),
+          rpcGetAccountsCommandReceiverFactory,
           request,
         ),
       ),
@@ -65,7 +69,7 @@ class ArchethicDeeplinkRPCServer extends DeeplinkRpcRequestReceiver {
       DeeplinkRpcRequestHandler(
         route: const DeeplinkRpcRoute('add_service'),
         handle: (request) => _handle(
-          RPCAddServiceCommandHandler(),
+          rpcAddServiceReceiverFactory,
           request,
         ),
       ),
@@ -74,7 +78,7 @@ class ArchethicDeeplinkRPCServer extends DeeplinkRpcRequestReceiver {
       DeeplinkRpcRequestHandler(
         route: const DeeplinkRpcRoute('get_services_from_keychain'),
         handle: (request) => _handle(
-          RPCGetServicesFromKeychainCommandHandler(),
+          rpcGetServicesFromKeychainReceiverFactory,
           request,
         ),
       ),
@@ -83,7 +87,7 @@ class ArchethicDeeplinkRPCServer extends DeeplinkRpcRequestReceiver {
       DeeplinkRpcRequestHandler(
         route: const DeeplinkRpcRoute('keychain_derive_keypair'),
         handle: (request) => _handle(
-          RPCKeychainDeriveKeypairCommandHandler(),
+          rpcKeychainDeriveKeypairReceiverFactory,
           request,
         ),
       ),
@@ -92,7 +96,7 @@ class ArchethicDeeplinkRPCServer extends DeeplinkRpcRequestReceiver {
       DeeplinkRpcRequestHandler(
         route: const DeeplinkRpcRoute('keychain_derive_address'),
         handle: (request) => _handle(
-          RPCKeychainDeriveAddressCommandHandler(),
+          rpcKeychainDeriveAddressReceiverFactory,
           request,
         ),
       ),
@@ -101,35 +105,54 @@ class ArchethicDeeplinkRPCServer extends DeeplinkRpcRequestReceiver {
       DeeplinkRpcRequestHandler(
         route: const DeeplinkRpcRoute('sign_transactions'),
         handle: (request) => _handle(
-          RPCSignTransactionsCommandHandler(),
+          rpcSignTransactionReceiverFactory,
+          request,
+        ),
+      ),
+    );
+    registerHandler(
+      DeeplinkRpcRequestHandler(
+        route: const DeeplinkRpcRoute('open_session_handshake'),
+        handle: (request) => _handle(
+          rpcOpenSessionHandshakeCommandReceiverFactory,
+          request,
+        ),
+      ),
+    );
+    registerHandler(
+      DeeplinkRpcRequestHandler(
+        route: const DeeplinkRpcRoute('open_session_challenge'),
+        handle: (request) => _handle(
+          rpcOpenSessionChallengeCommandReceiverFactory,
           request,
         ),
       ),
     );
   }
 
+  static const logName = 'DeeplinkRpcHandler';
+
   static Future<Map<String, dynamic>> _handle(
-    RPCCommandHandler commandHandler,
+    RPCCommandReceiverFactory commandReceiverFactory,
     DeeplinkRpcRequest request,
   ) async {
-    const logName = 'DeeplinkRpcHandler';
+    try {
+      final commandReceiver =
+          await commandReceiverFactory.build(request.params);
+      final success = await commandReceiver.handle().valueOrThrow;
 
-    final result = await commandHandler.handle(request.params);
+      // 4. Transformation du R en Json, puis creation du RPCMessage
+      final resultPayload = commandReceiver.encodeResult(success);
+      return commandReceiver.messageCodec.build(resultPayload).toJson();
+    } catch (failure) {
+      failure as awc.Failure;
+      log(
+        'Command failed',
+        name: logName,
+        error: failure,
+      );
 
-    return result.map(
-      success: commandHandler.resultFromModel,
-      failure: (failure) {
-        log(
-          'Command failed',
-          name: logName,
-          error: failure,
-        );
-
-        throw DeeplinkRpcFailure(
-          code: failure.code,
-          message: failure.message ?? 'Command failed',
-        );
-      },
-    );
+      throw failure.toDeeplinkRpcFailure();
+    }
   }
 }

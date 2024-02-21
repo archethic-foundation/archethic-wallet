@@ -1,22 +1,22 @@
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/core/result.dart';
+import 'package:aewallet/domain/rpc/command.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
-import 'package:aewallet/domain/rpc/commands/command.dart';
-import 'package:aewallet/domain/rpc/commands/failure.dart';
-import 'package:aewallet/domain/rpc/commands/keychain_derive_address.dart';
 import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class KeychainDeriveAddressCommandHandler extends CommandHandler {
+class KeychainDeriveAddressCommandHandler extends CommandHandler<
+    awc.KeychainDeriveAddressRequest, awc.KeychainDeriveAddressResult> {
   KeychainDeriveAddressCommandHandler({
     required WidgetRef ref,
   }) : super(
           canHandle: (command) =>
-              command is RPCCommand<RPCKeychainDeriveAddressCommandData>,
+              command is RPCCommand<awc.KeychainDeriveAddressRequest>,
           handle: (command) async {
-            command as RPCCommand<RPCKeychainDeriveAddressCommandData>;
+            command as RPCCommand<awc.KeychainDeriveAddressRequest>;
 
             final networkSettings = ref.watch(
               SettingsProviders.settings.select((settings) => settings.network),
@@ -32,19 +32,19 @@ class KeychainDeriveAddressCommandHandler extends CommandHandler {
 
             if (keychain.services.containsKey(command.data.serviceName) ==
                 false) {
-              return Result.failure(RPCFailure.serviceNotFound());
+              return const Result.failure(awc.Failure.serviceNotFound);
             }
 
             final address = uint8ListToHex(
               keychain.deriveAddress(
                 command.data.serviceName,
-                index: command.data.index ?? 0,
-                pathSuffix: command.data.pathSuffix ?? '',
+                index: command.data.index,
+                pathSuffix: command.data.pathSuffix,
               ),
             );
 
             return Result.success(
-              RPCKeychainDeriveAddressResultData(address: address),
+              awc.KeychainDeriveAddressResult(address: address),
             );
           },
         );
