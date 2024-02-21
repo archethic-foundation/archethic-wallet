@@ -186,6 +186,9 @@ dependencies:
   # Get Mime Types, Extensions, Compressible for Dart and Flutter. Inspired from IANA Database
   mime_dart: ^3.0.0
 
+  # mDNS registration
+  nsd: ^2.3.1
+
   # Flutter plugin for accessing the NFC features on Android and iOS.
   nfc_manager: ^3.3.0
 
@@ -311,6 +314,8 @@ flutter:
 
   assets:
     - assets/ssl/isrg-root-x1.pem
+    - assets/ssl/private_key.pem
+    - assets/ssl/server.crt
     - assets/icons/
     - assets/icons/currency/
     - assets/icons/languages/
