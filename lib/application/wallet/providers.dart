@@ -123,6 +123,9 @@ class _SessionNotifier extends Notifier<Session> {
       mnemonics,
       languageCode: languageCode,
     );
+    if (seed.isEmpty) {
+      return null;
+    }
     final vault = await HiveVaultDatasource.getInstance();
     vault.setSeed(seed);
 

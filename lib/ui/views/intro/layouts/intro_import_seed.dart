@@ -516,7 +516,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                   mnemonics: phrase.toList(),
                                   languageCode: languageSeed,
                                 );
-
+                            context.pop();
                             if (newSession == null) {
                               setState(() {
                                 _mnemonicIsValid = false;
@@ -529,7 +529,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
                                 ArchethicTheme.text,
                                 ArchethicTheme.snackBarShadow,
                               );
-                              context.pop();
+                              context.go(IntroImportSeedPage.routerPage);
                               return;
                             }
 
