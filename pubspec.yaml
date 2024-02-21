@@ -246,6 +246,9 @@ dependencies:
   # String validation and sanitization for Dart
   validators: ^3.0.0
 
+  # Web3Auth is where passwordless auth meets non-custodial key infrastructure for Web3 apps and wallets
+  web3auth_flutter: ^3.1.6
+
   # RPC server
   web_socket_channel: ^2.4.0
 

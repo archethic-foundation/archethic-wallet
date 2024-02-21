@@ -6,11 +6,13 @@ import 'package:aewallet/ui/views/authenticate/yubikey_screen.dart';
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
+import 'package:aewallet/util/web3authn_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
+import 'package:web3auth_flutter/enums.dart' as web3authnenums;
 
 class AuthFactory {
   static Future<void> forceAuthenticate(
@@ -83,6 +85,20 @@ class AuthFactory {
         }
         break;
       case AuthMethod.ledger:
+        break;
+      case AuthMethod.discord:
+        auth = await sl.get<Web3AuthnUtil>().authenticateWithWeb3Authn(
+              context,
+              ref,
+              web3authnenums.Provider.discord,
+            );
+        return auth;
+      case AuthMethod.google:
+        auth = await sl.get<Web3AuthnUtil>().authenticateWithWeb3Authn(
+              context,
+              ref,
+              web3authnenums.Provider.google,
+            );
         break;
     }
     if (auth) {

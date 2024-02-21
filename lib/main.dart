@@ -26,6 +26,7 @@ import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/security_manager.dart';
 import 'package:aewallet/util/service_locator.dart';
+import 'package:aewallet/util/web3authn_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -42,6 +43,7 @@ Future<void> main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await DBHelper.setupDatabase();
   await setupServiceLocator();
+  await sl.get<Web3AuthnUtil>().init();
 
   final isRpcEnabled = (await sl
           .get<SettingsRepositoryInterface>()
