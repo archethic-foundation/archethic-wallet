@@ -55,7 +55,7 @@ class AppSeedBackupSheet extends ConsumerWidget {
                         mnemonic!,
                         languageCode: languageSeed,
                       );
-                      context.go(
+                      context.push(
                         IntroBackupConfirm.routerPage,
                         extra: {
                           'name': null,

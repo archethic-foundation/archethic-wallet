@@ -261,10 +261,14 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
                             key: const Key('back'),
                             color: ArchethicTheme.text,
                             onPressed: () {
-                              context.go(
-                                IntroBackupSeedPage.routerPage,
-                                extra: widget.name,
-                              );
+                              if (widget.welcomeProcess == false) {
+                                context.pop();
+                              } else {
+                                context.go(
+                                  IntroBackupSeedPage.routerPage,
+                                  extra: widget.name,
+                                );
+                              }
                             },
                           ),
                         ),
