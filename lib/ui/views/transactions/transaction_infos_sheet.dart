@@ -212,8 +212,6 @@ class _TransactionBuildInfos extends ConsumerWidget {
                               // Main Container
                               Container(
                                 padding: const EdgeInsets.only(
-                                  left: 45,
-                                  right: 5,
                                   bottom: 15,
                                 ),
                                 child: Row(
@@ -225,22 +223,13 @@ class _TransactionBuildInfos extends ConsumerWidget {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: <Widget>[
-                                          Row(
-                                            children: <Widget>[
-                                              Row(
-                                                children: <Widget>[
-                                                  AutoSizeText(
-                                                    TransactionInfos
-                                                        .getDisplayName(
-                                                      context,
-                                                      transactionInfo.domain,
-                                                    ),
-                                                    style: ArchethicThemeStyles
-                                                        .textStyleSize16W600Primary,
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
+                                          AutoSizeText(
+                                            TransactionInfos.getDisplayName(
+                                              context,
+                                              transactionInfo.domain,
+                                            ),
+                                            style: ArchethicThemeStyles
+                                                .textStyleSize16W600Primary,
                                           ),
                                         ],
                                       ),
