@@ -355,9 +355,14 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm> {
                                 }).toList(),
                               ),
                             ),
-                            Divider(
-                              height: 15,
-                              color: ArchethicTheme.text60,
+                            Opacity(
+                              opacity: 0.5,
+                              child: Container(
+                                height: 1,
+                                decoration: BoxDecoration(
+                                  gradient: ArchethicTheme.gradient,
+                                ),
+                              ),
                             ),
                             Container(
                               margin: const EdgeInsetsDirectional.only(

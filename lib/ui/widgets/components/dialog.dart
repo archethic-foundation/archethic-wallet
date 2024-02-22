@@ -1,5 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'dart:ui';
+
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/archethic_theme_base.dart';
@@ -35,83 +37,88 @@ class AppDialogs {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: ArchethicTheme.backgroundPopupColor,
+          insetPadding: EdgeInsets.zero,
+          backgroundColor: Colors.transparent,
           elevation: 0,
-          title: Text(
-            title,
-            style:
-                titleStyle ?? ArchethicThemeStyles.textStyleSize14W600Primary,
-          ),
-          content: DecoratedBox(
-            decoration: BoxDecoration(
-              color: ArchethicTheme.backgroundPopupColor,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text.rich(
-                  TextSpan(
-                    text: '',
-                    style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                    children: <InlineSpan>[
+          content: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: ArchethicTheme.sheetBackground.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: ArchethicTheme.sheetBorder,
+                  ),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text.rich(
                       TextSpan(
-                        text: content,
+                        text: '',
                         style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                        children: <InlineSpan>[
+                          TextSpan(
+                            text: content,
+                            style:
+                                ArchethicThemeStyles.textStyleSize12W100Primary,
+                          ),
+                          if (additionalContent != null)
+                            TextSpan(
+                              text: '\n\n$additionalContent',
+                              style: additionalContentStyle ??
+                                  ArchethicThemeStyles
+                                      .textStyleSize12W100Primary,
+                            ),
+                        ],
                       ),
-                      if (additionalContent != null)
-                        TextSpan(
-                          text: '\n\n$additionalContent',
-                          style: additionalContentStyle ??
-                              ArchethicThemeStyles.textStyleSize12W100Primary,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        AppButton(
+                          key: const Key('cancelButton'),
+                          labelBtn: AppLocalizations.of(
+                            context,
+                          )!
+                              .no,
+                          onPressed: () async {
+                            sl.get<HapticUtil>().feedback(
+                                  FeedbackType.light,
+                                  preferences.activeVibrations,
+                                );
+                            context.pop();
+                            if (cancelAction != null) {
+                              cancelAction();
+                            }
+                          },
                         ),
-                    ],
-                  ),
+                        AppButton(
+                          key: const Key('yesButton'),
+                          labelBtn: AppLocalizations.of(
+                            context,
+                          )!
+                              .yes,
+                          onPressed: () async {
+                            sl.get<HapticUtil>().feedback(
+                                  FeedbackType.light,
+                                  preferences.activeVibrations,
+                                );
+                            context.pop();
+                            onPressed();
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                  width: double.infinity,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      AppButton(
-                        key: const Key('cancelButton'),
-                        labelBtn: AppLocalizations.of(
-                          context,
-                        )!
-                            .no,
-                        onPressed: () async {
-                          sl.get<HapticUtil>().feedback(
-                                FeedbackType.light,
-                                preferences.activeVibrations,
-                              );
-                          context.pop();
-                          if (cancelAction != null) {
-                            cancelAction();
-                          }
-                        },
-                      ),
-                      AppButton(
-                        key: const Key('yesButton'),
-                        labelBtn: AppLocalizations.of(
-                          context,
-                        )!
-                            .yes,
-                        onPressed: () async {
-                          sl.get<HapticUtil>().feedback(
-                                FeedbackType.light,
-                                preferences.activeVibrations,
-                              );
-                          context.pop();
-                          onPressed();
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         );
@@ -134,6 +141,7 @@ class AppDialogs {
 
         final preferences = ref.watch(SettingsProviders.settings);
         return AlertDialog(
+          insetPadding: EdgeInsets.zero,
           backgroundColor: ArchethicTheme.backgroundPopupColor,
           elevation: 0,
           title: Text(
@@ -274,7 +282,7 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
               velocity: 0.5,
               number: 300,
               scale: 6,
-              starColor: ArchethicThemeBase.blue500,
+              starColor: ArchethicThemeBase.blue600,
               backgroundDecoration: const BoxDecoration(
                 color: Colors.transparent,
               ),

@@ -10,7 +10,12 @@ class ArchethicTheme {
   // Main Buttons
   static Color mainButtonLabel = ArchethicThemeBase.neutral0;
   static Color middleButtonLabel = ArchethicThemeBase.neutral0;
-  static Gradient gradientMainButton = ArchethicThemeBase.gradientPinkPurple500;
+  static Gradient gradientMainButton = LinearGradient(
+    colors: <Color>[
+      ArchethicThemeBase.blue400,
+      ArchethicThemeBase.blue600,
+    ],
+  );
   static Color maxButtonColor = ArchethicThemeBase.raspberry500;
 
   // IconData Widget
@@ -49,7 +54,8 @@ class ArchethicTheme {
   static Color textDark = ArchethicThemeBase.neutral0;
 
   // Sheet
-  static Color sheetBackground = ArchethicThemeBase.neutral900.withOpacity(0.7);
+  static Color sheetBackground = ArchethicThemeBase.brightPurpleBackground;
+  static Color sheetBorder = ArchethicThemeBase.brightPurpleBorder;
 
   // SnackBar
   static Color snackBarShadow = ArchethicThemeBase.neutral900.withOpacity(0.8);
@@ -66,9 +72,9 @@ class ArchethicTheme {
   static Color backgroundAccountsListCardSelected =
       ArchethicThemeBase.neutral0.withOpacity(0.1);
   static Color backgroundRecentTxListCardTransferOutput =
-      ArchethicThemeBase.purple200.withOpacity(0.2);
+      ArchethicThemeBase.purple500.withOpacity(0.2);
   static Color backgroundRecentTxListCardTokenCreation =
-      ArchethicThemeBase.blue800.withOpacity(0.4);
+      ArchethicThemeBase.blue700.withOpacity(0.4);
   static Color backgroundRecentTxListCardTransferInput =
       ArchethicThemeBase.raspberry500.withOpacity(0.4);
   static Color backgroundFungiblesTokensListCard =
@@ -79,7 +85,7 @@ class ArchethicTheme {
   static Color backgroundTransferListOutline =
       ArchethicThemeBase.neutral0.withOpacity(0.1);
   static Color backgroundPopupColor = ArchethicThemeBase.purple500;
-  static Color divider = ArchethicThemeBase.blue500.withOpacity(0.1);
+  static Color divider = ArchethicThemeBase.blue700.withOpacity(0.1);
 
   // Bottom Bar
   static num bottomBarBackgroundColorOpacity = 0.2;
@@ -108,7 +114,12 @@ class ArchethicTheme {
   static BoxShadow boxShadow = const BoxShadow(color: Colors.transparent);
   static BoxShadow boxShadowButton = const BoxShadow(color: Colors.transparent);
   static String assetsFolder = 'assets/themes/archethic/';
-  static Gradient gradient = ArchethicThemeBase.gradientPinkPurple500;
+  static Gradient gradient = LinearGradient(
+    colors: <Color>[
+      ArchethicThemeBase.blue400,
+      ArchethicThemeBase.blue600,
+    ],
+  );
 
   static Decoration getDecorationSheet() {
     return const BoxDecoration(
@@ -122,6 +133,14 @@ class ArchethicTheme {
       ),
     );
   }
+
+  static Gradient gradientInputFormBackground = LinearGradient(
+    colors: [
+      ArchethicThemeBase.neutral900.withOpacity(1),
+      ArchethicThemeBase.neutral900.withOpacity(0.3),
+    ],
+    stops: const [0, 1],
+  );
 
   static Color favoriteIconColor = const Color(0xFF00A4DB);
 

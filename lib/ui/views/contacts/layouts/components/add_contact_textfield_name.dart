@@ -70,7 +70,7 @@ class _AddContactTextFieldNameState
                               width: 0.5,
                             ),
                             gradient:
-                                ArchethicThemeBase.gradientInputFormBackground,
+                                ArchethicTheme.gradientInputFormBackground,
                           ),
                           child: TextField(
                             style: const TextStyle(

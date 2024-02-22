@@ -115,8 +115,8 @@ class _AddPublicKeyTextFieldPkState
                                       .primaryContainer,
                                   width: 0.5,
                                 ),
-                                gradient: ArchethicThemeBase
-                                    .gradientInputFormBackground,
+                                gradient:
+                                    ArchethicTheme.gradientInputFormBackground,
                               ),
                               child: Opacity(
                                 opacity: nftCreation

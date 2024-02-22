@@ -72,7 +72,7 @@ class _TransferTextFieldMessageState
                               width: 0.5,
                             ),
                             gradient:
-                                ArchethicThemeBase.gradientInputFormBackground,
+                                ArchethicTheme.gradientInputFormBackground,
                           ),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),

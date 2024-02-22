@@ -102,8 +102,8 @@ class _TransferTextFieldAddressState
                                       .primaryContainer,
                                   width: 0.5,
                                 ),
-                                gradient: ArchethicThemeBase
-                                    .gradientInputFormBackground,
+                                gradient:
+                                    ArchethicTheme.gradientInputFormBackground,
                               ),
                               child: Opacity(
                                 opacity: transfer.recipient.isAddressValid
