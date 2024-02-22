@@ -3,7 +3,6 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
@@ -228,7 +227,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
                               width: 0.5,
                             ),
                             gradient:
-                                ArchethicThemeBase.gradientInputFormBackground,
+                                ArchethicTheme.gradientInputFormBackground,
                           ),
                           child: TextField(
                             style: const TextStyle(
@@ -306,7 +305,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey> {
                               width: 0.5,
                             ),
                             gradient:
-                                ArchethicThemeBase.gradientInputFormBackground,
+                                ArchethicTheme.gradientInputFormBackground,
                           ),
                           child: TextField(
                             style: const TextStyle(

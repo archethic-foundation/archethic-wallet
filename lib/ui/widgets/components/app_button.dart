@@ -1,23 +1,24 @@
-import 'package:aewallet/ui/themes/archethic_theme_base.dart';
+/// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-
-enum AppButtonType { primary, primaryOutline }
 
 class AppButton extends StatefulWidget {
   const AppButton({
     super.key,
     required this.labelBtn,
-    this.icon,
     this.onPressed,
-    this.height = 30,
+    this.height = 40,
     this.disabled = false,
+    this.background = const Color(0xFF3D1D63),
+    this.fontSize = 16,
   });
-  final IconData? icon;
   final String labelBtn;
   final Function? onPressed;
   final bool disabled;
   final double height;
+  final Color background;
+  final double fontSize;
 
   @override
   AppButtonState createState() => AppButtonState();
@@ -78,35 +79,19 @@ class AppButtonState extends State<AppButton> {
         horizontal: 20,
       ),
       decoration: ShapeDecoration(
-        gradient: ArchethicThemeBase.gradientPinkPurple500,
+        gradient: ArchethicTheme.gradientMainButton,
         shape: const StadiumBorder(),
-        shadows: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.5),
-            blurRadius: 5,
-            offset: const Offset(0, 2),
-          ),
-        ],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (widget.icon != null)
-            Icon(
-              widget.icon,
-              color: widget.disabled
-                  ? Colors.white.withOpacity(0.5)
-                  : Colors.white,
-              size: 12,
-            ),
-          if (widget.icon != null) const SizedBox(width: 5),
           Text(
             widget.labelBtn,
             style: TextStyle(
               color: widget.disabled
                   ? Colors.white.withOpacity(0.5)
                   : Colors.white,
-              fontSize: 12,
+              fontSize: widget.fontSize,
               fontWeight: FontWeight.w400,
             ),
             maxLines: 1,

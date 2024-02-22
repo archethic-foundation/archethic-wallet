@@ -9,7 +9,6 @@ import 'package:aewallet/bus/otp_event.dart';
 import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/paste_icon.dart';
@@ -255,7 +254,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
                                                 .primaryContainer,
                                             width: 0.5,
                                           ),
-                                          gradient: ArchethicThemeBase
+                                          gradient: ArchethicTheme
                                               .gradientInputFormBackground,
                                         ),
                                         child: TextField(

@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/ui/themes/archethic_theme_base.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -32,7 +32,7 @@ class NetworkChoiceInfos extends ConsumerWidget {
                   color: Theme.of(context).colorScheme.primaryContainer,
                   width: 0.5,
                 ),
-                gradient: ArchethicThemeBase.gradientInputFormBackground,
+                gradient: ArchethicTheme.gradientInputFormBackground,
               ),
               child: InkWell(
                 onTap: onTap,

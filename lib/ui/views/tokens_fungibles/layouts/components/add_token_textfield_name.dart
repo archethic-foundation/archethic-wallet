@@ -70,7 +70,7 @@ class _AddTokenTextFieldNameState extends ConsumerState<AddTokenTextFieldName> {
                               width: 0.5,
                             ),
                             gradient:
-                                ArchethicThemeBase.gradientInputFormBackground,
+                                ArchethicTheme.gradientInputFormBackground,
                           ),
                           child: TextField(
                             style: const TextStyle(

@@ -50,8 +50,8 @@ class CustomizationMenuView extends ConsumerWidget
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: <Color>[
-            ArchethicThemeBase.blue800.withOpacity(0.4),
-            ArchethicThemeBase.blue800.withOpacity(1),
+            ArchethicThemeBase.blue700.withOpacity(0.4),
+            ArchethicThemeBase.blue700.withOpacity(1),
           ],
           begin: Alignment.topLeft,
           end: const Alignment(5, 0),

@@ -1,5 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'dart:ui';
+
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -67,20 +69,50 @@ class _MnemonicDisplayState extends ConsumerState<MnemonicDisplay> {
                 children: widget.wordList.asMap().entries.map((MapEntry entry) {
                   return Padding(
                     padding: const EdgeInsets.all(5),
-                    child: Chip(
-                      avatar: CircleAvatar(
-                        backgroundColor: ArchethicTheme.seedInfoBackground,
-                        child: Text(
-                          (entry.key + 1).toString(),
-                          style:
-                              ArchethicThemeStyles.textStyleSize12W100Primary60,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: ArchethicTheme.sheetBackground,
+                            border: Border.all(
+                              color: ArchethicTheme.sheetBorder,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              top: 5,
+                              bottom: 7,
+                              left: 10,
+                              right: 7,
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                CircleAvatar(
+                                  maxRadius: 10,
+                                  child: Text(
+                                    (entry.key + 1).toString(),
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize12W100Primary60,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  _seedObscured && widget.obscureSeed
+                                      ? '•' * 6
+                                      : entry.value,
+                                  style: ArchethicThemeStyles
+                                      .textStyleSize12W400Primary,
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                      label: Text(
-                        _seedObscured && widget.obscureSeed
-                            ? '•' * 6
-                            : entry.value,
-                        style: ArchethicThemeStyles.textStyleSize12W400Primary,
                       ),
                     ),
                   );

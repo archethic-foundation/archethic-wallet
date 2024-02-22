@@ -85,7 +85,7 @@ class _NFTCreationProcessInfosTabTextFieldNameState
                               width: 0.5,
                             ),
                             gradient:
-                                ArchethicThemeBase.gradientInputFormBackground,
+                                ArchethicTheme.gradientInputFormBackground,
                           ),
                           child: TextField(
                             key: const Key('nftCreationField'),

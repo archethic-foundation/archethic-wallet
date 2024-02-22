@@ -73,7 +73,7 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
                 velocity: 0.5,
                 number: 300,
                 scale: 6,
-                starColor: ArchethicThemeBase.blue500,
+                starColor: ArchethicThemeBase.blue600,
                 backgroundDecoration: const BoxDecoration(
                   color: Colors.transparent,
                 ),
@@ -147,7 +147,7 @@ class _Language extends ConsumerWidget {
         width: 30,
         height: 30,
         decoration: BoxDecoration(
-          color: ArchethicThemeBase.plum300,
+          color: ArchethicThemeBase.blue600,
           shape: BoxShape.circle,
         ),
         child: Icon(

@@ -81,8 +81,8 @@ class _AddContactTextFieldAddressState
                                       .primaryContainer,
                                   width: 0.5,
                                 ),
-                                gradient: ArchethicThemeBase
-                                    .gradientInputFormBackground,
+                                gradient:
+                                    ArchethicTheme.gradientInputFormBackground,
                               ),
                               child: Padding(
                                 padding:

@@ -122,7 +122,7 @@ class _TransferTextFieldAmountState
                                           .primaryContainer,
                                       width: 0.5,
                                     ),
-                                    gradient: ArchethicThemeBase
+                                    gradient: ArchethicTheme
                                         .gradientInputFormBackground,
                                   ),
                                   child: TextField(

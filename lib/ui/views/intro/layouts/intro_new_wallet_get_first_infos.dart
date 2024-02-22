@@ -3,7 +3,6 @@
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/network_choice_infos.dart';
@@ -183,7 +182,7 @@ class _IntroNewWalletDisclaimerState
                                                             .primaryContainer,
                                                         width: 0.5,
                                                       ),
-                                                      gradient: ArchethicThemeBase
+                                                      gradient: ArchethicTheme
                                                           .gradientInputFormBackground,
                                                     ),
                                                     child: TextField(

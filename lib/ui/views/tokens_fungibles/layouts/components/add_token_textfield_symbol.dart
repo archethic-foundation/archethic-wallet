@@ -74,8 +74,8 @@ class _AddTokenTextFieldSymbolState
                                       .primaryContainer,
                                   width: 0.5,
                                 ),
-                                gradient: ArchethicThemeBase
-                                    .gradientInputFormBackground,
+                                gradient:
+                                    ArchethicTheme.gradientInputFormBackground,
                               ),
                               child: TextField(
                                 style: const TextStyle(
