@@ -76,8 +76,16 @@ class ContactDetail extends ConsumerWidget implements SheetSkeletonInterface {
         .watch(ContactProviders.getContactWithAddress(contactAddress))
         .valueOrNull;
 
+    if (contact == null) {
+      return AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+      );
+    }
+
     return SheetAppBar(
-      title: contact?.format ?? '',
+      title: contact.format,
       widgetRight: Padding(
         padding: const EdgeInsets.only(right: 10, top: 10),
         child: _ContactDetailBalance(contactAddress: contactAddress),
