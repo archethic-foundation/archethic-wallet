@@ -1,5 +1,6 @@
-import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:archethic_dapp_framework_flutter/archethic-dapp-framework-flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,12 +12,12 @@ class RawInfoPopup {
     String info,
   ) async {
     return showMenu(
-      color: ArchethicTheme.backgroundDark,
+      color: aedappfm.AppThemeBase.primaryColor.withOpacity(0.8),
       elevation: 5,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20).copyWith(topLeft: Radius.zero),
+        borderRadius: BorderRadius.circular(16).copyWith(topLeft: Radius.zero),
         side: BorderSide(
-          color: ArchethicTheme.text60,
+          color: aedappfm.AppThemeBase.sheetBorder,
         ),
       ),
       context: context,

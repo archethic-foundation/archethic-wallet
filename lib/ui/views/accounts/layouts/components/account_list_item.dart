@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
@@ -29,6 +30,8 @@ import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/keychain_util.dart';
+import 'package:archethic_dapp_framework_flutter/archethic-dapp-framework-flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
@@ -234,285 +237,293 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
             );
           }
         },
-        child: Card(
-          clipBehavior: Clip.antiAlias,
-          shape: RoundedRectangleBorder(
-            side: BorderSide(
-              color: ArchethicTheme.backgroundAccountsListCardSelected,
-            ),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          elevation: 0,
-          color: widget.account.serviceType == 'archethicWallet'
-              ? ArchethicTheme.backgroundAccountsListCardSelected
-              : Colors.transparent,
-          child: Container(
-            height: 100,
-            color: widget.account.selected!
-                ? ArchethicTheme.backgroundAccountsListCardSelected
-                : ArchethicTheme.backgroundAccountsListCard,
-            padding: const EdgeInsets.symmetric(
-              vertical: 10,
-              horizontal: 20,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: 17,
-                        child: AutoSizeText(
-                          widget.account.nameDisplayed,
-                          style:
-                              ArchethicThemeStyles.textStyleSize12W400Primary,
-                        ),
-                      ),
-                      if (widget.account.serviceType != null)
-                        Row(
-                          children: [
-                            Icon(
-                              ServiceTypeFormatters(widget.account.serviceType!)
-                                  .getIcon(),
-                              size: 15,
-                            ),
-                            const SizedBox(width: 3),
-                            AutoSizeText(
-                              ServiceTypeFormatters(widget.account.serviceType!)
-                                  .getLabel(context),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                color: aedappfm.AppThemeBase.sheetBackground,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: aedappfm.AppThemeBase.sheetBorder,
+                ),
+              ),
+              child: Container(
+                height: 100,
+                color: widget.account.selected!
+                    ? ArchethicTheme.backgroundAccountsListCardSelected
+                    : ArchethicTheme.backgroundAccountsListCard,
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 20,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: 17,
+                            child: AutoSizeText(
+                              widget.account.nameDisplayed,
                               style: ArchethicThemeStyles
                                   .textStyleSize12W400Primary,
                             ),
-                          ],
-                        ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        children: [
-                          InkWell(
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: ArchethicTheme.backgroundDark
-                                    .withOpacity(0.3),
-                                border: Border.all(
-                                  color: ArchethicTheme.backgroundDarkest
-                                      .withOpacity(0.2),
-                                ),
-                              ),
-                              child: Icon(
-                                Symbols.open_in_new,
-                                color: ArchethicTheme.backgroundDarkest,
-                                size: 20,
-                              ),
-                            ),
-                            onTap: () async {
-                              sl.get<HapticUtil>().feedback(
-                                    FeedbackType.light,
-                                    preferences.activeVibrations,
-                                  );
-                              UIUtil.showWebview(
-                                context,
-                                '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.account.lastAddress}',
-                                '',
-                              );
-                            },
                           ),
+                          if (widget.account.serviceType != null)
+                            Row(
+                              children: [
+                                Icon(
+                                  ServiceTypeFormatters(
+                                    widget.account.serviceType!,
+                                  ).getIcon(),
+                                  size: 15,
+                                ),
+                                const SizedBox(width: 3),
+                                AutoSizeText(
+                                  ServiceTypeFormatters(
+                                          widget.account.serviceType!)
+                                      .getLabel(context),
+                                  style: ArchethicThemeStyles
+                                      .textStyleSize12W400Primary,
+                                ),
+                              ],
+                            ),
                           const SizedBox(
-                            width: 10,
+                            height: 5,
                           ),
-                          InkWell(
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: ArchethicTheme.backgroundDark
-                                    .withOpacity(0.3),
-                                border: Border.all(
-                                  color: ArchethicTheme.backgroundDarkest
-                                      .withOpacity(0.2),
+                          Row(
+                            children: [
+                              InkWell(
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: 40,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: ArchethicTheme.backgroundDark
+                                        .withOpacity(0.3),
+                                    border: Border.all(
+                                      color: ArchethicTheme.backgroundDarkest
+                                          .withOpacity(0.2),
+                                    ),
+                                  ),
+                                  child: Icon(
+                                    Symbols.open_in_new,
+                                    color: ArchethicTheme.backgroundDarkest,
+                                    size: 20,
+                                  ),
                                 ),
-                              ),
-                              child: Icon(
-                                Symbols.delete,
-                                color: ArchethicTheme.backgroundDarkest,
-                                size: 20,
-                              ),
-                            ),
-                            onTap: () async {
-                              final session =
-                                  ref.read(SessionProviders.session).loggedIn;
-                              final keychain = await sl
-                                  .get<ApiService>()
-                                  .getKeychain(session!.wallet.seed);
-
-                              var nbOfAccounts = 0;
-                              keychain.services.forEach((key, value) {
-                                if (key.startsWith('archethic-wallet')) {
-                                  nbOfAccounts++;
-                                }
-                              });
-                              if (nbOfAccounts <= 1 &&
-                                  widget.account.name
-                                      .startsWith('archethic-wallet')) {
-                                UIUtil.showSnackbar(
-                                  AppLocalizations.of(context)!
-                                      .removeKeychainAtLeast1,
-                                  context,
-                                  ref,
-                                  ArchethicTheme.text,
-                                  ArchethicTheme.snackBarShadow,
-                                  icon: Symbols.info,
-                                );
-                                return;
-                              }
-
-                              final language = ref.read(
-                                LanguageProviders.selectedLanguage,
-                              );
-
-                              sl.get<HapticUtil>().feedback(
-                                    FeedbackType.light,
-                                    preferences.activeVibrations,
+                                onTap: () async {
+                                  sl.get<HapticUtil>().feedback(
+                                        FeedbackType.light,
+                                        preferences.activeVibrations,
+                                      );
+                                  UIUtil.showWebview(
+                                    context,
+                                    '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.account.lastAddress}',
+                                    '',
                                   );
-                              AppDialogs.showConfirmDialog(
-                                  context,
-                                  ref,
-                                  CaseChange.toUpperCase(
-                                    localizations.warning,
-                                    language.getLocaleString(),
+                                },
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              InkWell(
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: 40,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: ArchethicTheme.backgroundDark
+                                        .withOpacity(0.3),
+                                    border: Border.all(
+                                      color: ArchethicTheme.backgroundDarkest
+                                          .withOpacity(0.2),
+                                    ),
                                   ),
-                                  localizations.removeKeychainDetail.replaceAll(
-                                    '%1',
-                                    widget.account.nameDisplayed,
+                                  child: Icon(
+                                    Symbols.delete,
+                                    color: ArchethicTheme.backgroundDarkest,
+                                    size: 20,
                                   ),
-                                  localizations.removeKeychainAction, () {
-                                // Show another confirm dialog
-                                AppDialogs.showConfirmDialog(
-                                  context,
-                                  ref,
-                                  localizations.areYouSure,
-                                  localizations.removeKeychainLater,
-                                  localizations.yes,
-                                  () async {
-                                    ShowSendingAnimation.build(
-                                      context,
-                                    );
+                                ),
+                                onTap: () async {
+                                  final session = ref
+                                      .read(SessionProviders.session)
+                                      .loggedIn;
+                                  final keychain = await sl
+                                      .get<ApiService>()
+                                      .getKeychain(session!.wallet.seed);
 
-                                    await KeychainUtil().removeService(
-                                      ref
-                                          .read(SettingsProviders.settings)
-                                          .network,
-                                      widget.account.name,
-                                      keychain,
+                                  var nbOfAccounts = 0;
+                                  keychain.services.forEach((key, value) {
+                                    if (key.startsWith('archethic-wallet')) {
+                                      nbOfAccounts++;
+                                    }
+                                  });
+                                  if (nbOfAccounts <= 1 &&
+                                      widget.account.name
+                                          .startsWith('archethic-wallet')) {
+                                    UIUtil.showSnackbar(
+                                      AppLocalizations.of(context)!
+                                          .removeKeychainAtLeast1,
+                                      context,
+                                      ref,
+                                      ArchethicTheme.text,
+                                      ArchethicTheme.snackBarShadow,
+                                      icon: Symbols.info,
                                     );
-                                  },
-                                );
-                              });
-                            },
+                                    return;
+                                  }
+
+                                  final language = ref.read(
+                                    LanguageProviders.selectedLanguage,
+                                  );
+
+                                  sl.get<HapticUtil>().feedback(
+                                        FeedbackType.light,
+                                        preferences.activeVibrations,
+                                      );
+                                  AppDialogs.showConfirmDialog(
+                                      context,
+                                      ref,
+                                      CaseChange.toUpperCase(
+                                        localizations.warning,
+                                        language.getLocaleString(),
+                                      ),
+                                      localizations.removeKeychainDetail
+                                          .replaceAll(
+                                        '%1',
+                                        widget.account.nameDisplayed,
+                                      ),
+                                      localizations.removeKeychainAction, () {
+                                    // Show another confirm dialog
+                                    AppDialogs.showConfirmDialog(
+                                      context,
+                                      ref,
+                                      localizations.areYouSure,
+                                      localizations.removeKeychainLater,
+                                      localizations.yes,
+                                      () async {
+                                        ShowSendingAnimation.build(
+                                          context,
+                                        );
+
+                                        await KeychainUtil().removeService(
+                                          ref
+                                              .read(SettingsProviders.settings)
+                                              .network,
+                                          widget.account.name,
+                                          keychain,
+                                        );
+                                      },
+                                    );
+                                  });
+                                },
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                ),
-                if (widget.account.serviceType != 'aeweb')
-                  if (settings.showBalances)
-                    primaryCurrency.primaryCurrency ==
-                            AvailablePrimaryCurrencyEnum.native
-                        ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              SizedBox(
-                                height: 17,
-                                child: AutoSizeText(
-                                  '${widget.account.balance!.nativeTokenValueToString(language.getLocaleStringWithoutDefault(), digits: 2)} ${widget.account.balance!.nativeTokenName}',
-                                  style: ArchethicThemeStyles
-                                      .textStyleSize12W400Primary,
-                                  textAlign: TextAlign.end,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 17,
-                                child: AutoSizeText(
-                                  fiatAmountString,
-                                  textAlign: TextAlign.end,
-                                  style: ArchethicThemeStyles
-                                      .textStyleSize12W400Primary,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 7,
-                              ),
-                              AccountListItemTokenInfo(account: widget.account),
-                            ],
-                          )
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              AutoSizeText(
-                                fiatAmountString,
-                                textAlign: TextAlign.end,
-                                style: ArchethicThemeStyles
-                                    .textStyleSize12W400Primary,
-                              ),
-                              AutoSizeText(
-                                '${widget.account.balance!.nativeTokenValueToString(language.getLocaleStringWithoutDefault(), digits: 2)} ${widget.account.balance!.nativeTokenName}',
-                                style: ArchethicThemeStyles
-                                    .textStyleSize12W400Primary,
-                                textAlign: TextAlign.end,
-                              ),
-                              const SizedBox(
-                                height: 7,
-                              ),
-                              AccountListItemTokenInfo(account: widget.account),
-                            ],
-                          )
-                  else
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        AutoSizeText(
-                          '···········',
-                          style:
-                              ArchethicThemeStyles.textStyleSize12W600Primary60,
-                        ),
-                        AutoSizeText(
-                          '···········',
-                          style:
-                              ArchethicThemeStyles.textStyleSize12W600Primary60,
-                        ),
-                        const SizedBox(
-                          height: 7,
-                        ),
-                        if (widget.account.serviceType != 'aeweb')
-                          AutoSizeText(
-                            '···········',
-                            style: ArchethicThemeStyles
-                                .textStyleSize12W600Primary60,
-                          ),
-                        if (widget.account.serviceType != 'aeweb')
-                          AutoSizeText(
-                            '···········',
-                            style: ArchethicThemeStyles
-                                .textStyleSize12W600Primary60,
-                          ),
-                      ],
                     ),
-              ],
+                    if (widget.account.serviceType != 'aeweb')
+                      if (settings.showBalances)
+                        primaryCurrency.primaryCurrency ==
+                                AvailablePrimaryCurrencyEnum.native
+                            ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  SizedBox(
+                                    height: 17,
+                                    child: AutoSizeText(
+                                      '${widget.account.balance!.nativeTokenValueToString(language.getLocaleStringWithoutDefault(), digits: 2)} ${widget.account.balance!.nativeTokenName}',
+                                      style: ArchethicThemeStyles
+                                          .textStyleSize12W400Primary,
+                                      textAlign: TextAlign.end,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 17,
+                                    child: AutoSizeText(
+                                      fiatAmountString,
+                                      textAlign: TextAlign.end,
+                                      style: ArchethicThemeStyles
+                                          .textStyleSize12W400Primary,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 7,
+                                  ),
+                                  AccountListItemTokenInfo(
+                                      account: widget.account),
+                                ],
+                              )
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  AutoSizeText(
+                                    fiatAmountString,
+                                    textAlign: TextAlign.end,
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize12W400Primary,
+                                  ),
+                                  AutoSizeText(
+                                    '${widget.account.balance!.nativeTokenValueToString(language.getLocaleStringWithoutDefault(), digits: 2)} ${widget.account.balance!.nativeTokenName}',
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize12W400Primary,
+                                    textAlign: TextAlign.end,
+                                  ),
+                                  const SizedBox(
+                                    height: 7,
+                                  ),
+                                  AccountListItemTokenInfo(
+                                      account: widget.account),
+                                ],
+                              )
+                      else
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            AutoSizeText(
+                              '···········',
+                              style: ArchethicThemeStyles
+                                  .textStyleSize12W600Primary60,
+                            ),
+                            AutoSizeText(
+                              '···········',
+                              style: ArchethicThemeStyles
+                                  .textStyleSize12W600Primary60,
+                            ),
+                            const SizedBox(
+                              height: 7,
+                            ),
+                            if (widget.account.serviceType != 'aeweb')
+                              AutoSizeText(
+                                '···········',
+                                style: ArchethicThemeStyles
+                                    .textStyleSize12W600Primary60,
+                              ),
+                            if (widget.account.serviceType != 'aeweb')
+                              AutoSizeText(
+                                '···········',
+                                style: ArchethicThemeStyles
+                                    .textStyleSize12W600Primary60,
+                              ),
+                          ],
+                        ),
+                  ],
+                ),
+              ),
             ),
           ),
         ),

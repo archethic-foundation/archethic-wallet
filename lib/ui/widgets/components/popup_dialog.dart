@@ -16,23 +16,28 @@ class PopupDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: Colors.transparent.withAlpha(180),
-      body: ClipRRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: ArchethicTheme.sheetBackground.withOpacity(0.2),
-              border: Border.all(
-                color: ArchethicTheme.sheetBorder,
+      body: AlertDialog(
+        insetPadding: EdgeInsets.zero,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        content: ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: ArchethicTheme.sheetBackground.withOpacity(0.2),
+                border: Border.all(
+                  color: ArchethicTheme.sheetBorder,
+                ),
               ),
-            ),
-            child: AlertDialog(
-              title: title,
-              insetPadding: EdgeInsets.zero,
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              content: content,
+              child: Wrap(
+                children: [
+                  Align(child: title),
+                  content,
+                ],
+              ),
             ),
           ),
         ),

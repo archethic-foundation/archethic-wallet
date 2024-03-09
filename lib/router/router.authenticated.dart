@@ -3,283 +3,475 @@ part of 'router.dart';
 final _authenticatedRoutes = [
   GoRoute(
     path: HomePage.routerPage,
-    builder: (context, state) => const HomePage(),
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: const HomePage(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
   ),
   GoRoute(
     path: SecurityMenuView.routerPage,
-    builder: (context, state) => const SecurityMenuView(),
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: const SecurityMenuView(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
   ),
   GoRoute(
     path: CustomizationMenuView.routerPage,
-    builder: (context, state) => const CustomizationMenuView(),
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: const CustomizationMenuView(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
   ),
   GoRoute(
     path: AboutMenuView.routerPage,
-    builder: (context, state) => const AboutMenuView(),
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: const AboutMenuView(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
   ),
   GoRoute(
     path: AppLockScreen.routerPage,
-    builder: (context, state) => const AppLockScreen(),
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: const AppLockScreen(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
   ),
   GoRoute(
     path: NFTListPerCategory.routerPage,
-    builder: (context, state) {
-      final args = state.extra! as int;
-      return NFTListPerCategory(
-        currentNftCategoryIndex: args,
-      );
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: NFTListPerCategory(
+        currentNftCategoryIndex: state.extra! as int,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
   GoRoute(
     path: NftCreationProcessSheet.routerPage,
-    builder: (context, state) => const NftCreationProcessSheet(),
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: const NftCreationProcessSheet(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
     routes: [
       GoRoute(
         name: AddAddress.routerPage,
         path: AddAddress.routerPage,
-        builder: (context, state) {
-          final params = AddAddressParams.fromJson(
-            state.extra! as Map<String, dynamic>,
-          );
-          return AddAddress(
-            propertyName: params.propertyName,
-            propertyValue: params.propertyValue,
-            readOnly: params.readOnly,
-          );
-        },
+        pageBuilder: (context, state) => CustomTransitionPage<void>(
+          key: state.pageKey,
+          child: AddAddress(
+            propertyName: AddAddressParams.fromJson(
+              state.extra! as Map<String, dynamic>,
+            ).propertyName,
+            propertyValue: AddAddressParams.fromJson(
+              state.extra! as Map<String, dynamic>,
+            ).propertyValue,
+            readOnly: AddAddressParams.fromJson(
+              state.extra! as Map<String, dynamic>,
+            ).readOnly,
+          ),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(
+            opacity: animation,
+            child: child,
+          ),
+        ),
       ),
     ],
   ),
   GoRoute(
     path: MessengerDiscussionPage.routerPage,
-    builder: (context, state) {
-      final args = state.extra! as String;
-      return MessengerDiscussionPage(
-        discussionAddress: args,
-      );
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: MessengerDiscussionPage(
+        discussionAddress: state.extra! as String,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
   GoRoute(
     path: DiscussionDetailsPage.routerPage,
-    builder: (context, state) {
-      final args = state.extra! as String;
-      return DiscussionDetailsPage(
-        discussionAddress: args,
-      );
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: DiscussionDetailsPage(
+        discussionAddress: state.extra! as String,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
   GoRoute(
     path: UpdateDiscussionPage.routerPage,
-    builder: (context, state) {
-      final args = state.extra as Discussion?;
-      return UpdateDiscussionPage(discussion: args!);
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: UpdateDiscussionPage(
+        discussion: state.extra! as Discussion,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
   GoRoute(
     path: AddAccountSheet.routerPage,
-    builder: (context, state) {
-      final args = state.extra as String?;
-      return AddAccountSheet(seed: args!);
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: AddAccountSheet(
+        seed: state.extra! as String,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
   GoRoute(
     path: AddContactSheet.routerPage,
-    builder: (context, state) {
-      final args = state.extra as String?;
-      return AddContactSheet(address: args);
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: AddContactSheet(
+        address: state.extra as String?,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
   GoRoute(
     path: BuySheet.routerPage,
-    builder: (context, state) {
-      return const BuySheet();
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: const BuySheet(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
   ),
   GoRoute(
     path: ContactDetail.routerPage,
-    builder: (context, state) {
-      final params = ContactDetailsRouteParams.fromJson(
-        state.extra! as Map<String, dynamic>,
-      );
-      return ContactDetail(
-        contactAddress: params.contactAddress,
-        readOnly: params.readOnly ?? false,
-      );
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: ContactDetail(
+        contactAddress: ContactDetailsRouteParams.fromJson(
+          state.extra! as Map<String, dynamic>,
+        ).contactAddress,
+        readOnly: ContactDetailsRouteParams.fromJson(
+              state.extra! as Map<String, dynamic>,
+            ).readOnly ??
+            false,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
   GoRoute(
     path: ConnectivityWarning.routerPage,
-    builder: (context, state) {
-      return const ConnectivityWarning();
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: const ConnectivityWarning(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
   ),
   GoRoute(
     path: AddTokenSheet.routerPage,
-    builder: (context, state) {
-      return const AddTokenSheet();
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: const AddTokenSheet(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
   ),
   GoRoute(
     path: ChartSheet.routerPage,
-    builder: (context, state) {
-      return const ChartSheet();
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: const ChartSheet(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
   ),
   GoRoute(
     path: AppSeedBackupSheet.routerPage,
-    builder: (context, state) {
-      final args = state.extra! as Map<String, dynamic>;
-      return AppSeedBackupSheet(
-        args['mnemonic'] == null
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: AppSeedBackupSheet(
+        (state.extra! as Map<String, dynamic>)['mnemonic'] == null
             ? <String>[]
-            : args['mnemonic']! as List<String>,
-        args['seed'] == null ? '' : args['seed']! as String,
-      );
-    },
+            : (state.extra! as Map<String, dynamic>)['mnemonic']!
+                as List<String>,
+        (state.extra! as Map<String, dynamic>)['seed'] == null
+            ? ''
+            : (state.extra! as Map<String, dynamic>)['seed']! as String,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
   GoRoute(
     path: TransactionInfosSheet.routerPage,
-    builder: (context, state) {
-      final args = state.extra! as String;
-      return TransactionInfosSheet(
-        args,
-      );
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: TransactionInfosSheet(
+        state.extra! as String,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
   GoRoute(
     path: TransferSheet.routerPage,
-    builder: (context, state) {
-      final args = state.extra! as Map<String, dynamic>;
-      return TransferSheet(
-        transferType:
-            TransferType.values.byName(args['transferType']! as String),
-        recipient: TransferRecipient.fromJson(args['recipient']),
-        actionButtonTitle: args['actionButtonTitle'] as String?,
-        accountToken: args['accountToken'] == null
-            ? null
-            : const AccountTokenConverter().fromJson(args['accountToken']),
-        tokenId: args['tokenId'] as String?,
-      );
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: TransferSheet(
+        transferType: TransferType.values.byName(
+            (state.extra! as Map<String, dynamic>)['transferType']! as String),
+        recipient: TransferRecipient.fromJson(
+            (state.extra! as Map<String, dynamic>)['recipient']),
+        actionButtonTitle: (state.extra!
+            as Map<String, dynamic>)['actionButtonTitle'] as String?,
+        accountToken:
+            (state.extra! as Map<String, dynamic>)['accountToken'] == null
+                ? null
+                : const AccountTokenConverter().fromJson(
+                    (state.extra! as Map<String, dynamic>)['accountToken']),
+        tokenId: (state.extra! as Map<String, dynamic>)['tokenId'] as String?,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
   GoRoute(
     path: NFTCreationProcessImportTabAEWebForm.routerPage,
-    builder: (context, state) {
-      final args = state.extra! as Map<String, dynamic>;
-      return NFTCreationProcessImportTabAEWebForm(
-        onConfirm: args['onConfirm']! as void Function(String uri),
-      );
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: NFTCreationProcessImportTabAEWebForm(
+        onConfirm: (state.extra! as Map<String, dynamic>)['onConfirm']! as void
+            Function(String uri),
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
   GoRoute(
     path: NFTCreationProcessImportTabHTTPForm.routerPage,
-    builder: (context, state) {
-      final args = state.extra! as Map<String, dynamic>;
-      return NFTCreationProcessImportTabHTTPForm(
-        onConfirm: args['onConfirm']! as void Function(String uri),
-      );
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: NFTCreationProcessImportTabHTTPForm(
+        onConfirm: (state.extra! as Map<String, dynamic>)['onConfirm']! as void
+            Function(String uri),
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
   GoRoute(
     path: NFTCreationProcessImportTabIPFSForm.routerPage,
-    builder: (context, state) {
-      final args = state.extra! as Map<String, dynamic>;
-      return NFTCreationProcessImportTabIPFSForm(
-        onConfirm: args['onConfirm']! as void Function(String uri),
-      );
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: NFTCreationProcessImportTabIPFSForm(
+        onConfirm: (state.extra! as Map<String, dynamic>)['onConfirm']! as void
+            Function(String uri),
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
   GoRoute(
     path: NFTDetail.routerPage,
-    builder: (context, state) {
-      final args = state.extra! as Map<String, dynamic>;
-      return NFTDetail(
-        name: args['name']! as String,
-        address: args['address']! as String,
-        symbol: args['symbol']! as String,
-        properties: args['properties']! as Map<String, dynamic>,
-        collection: args['collection'] as List<dynamic>,
-        tokenId: args['tokenId']! as String,
-        detailCollection: args['detailCollection']! as bool,
-        nameInCollection: args['nameInCollection'] as String?,
-      );
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: NFTDetail(
+        name: (state.extra! as Map<String, dynamic>)['name']! as String,
+        address: (state.extra! as Map<String, dynamic>)['address']! as String,
+        symbol: (state.extra! as Map<String, dynamic>)['symbol']! as String,
+        properties: (state.extra! as Map<String, dynamic>)['properties']!
+            as Map<String, dynamic>,
+        collection: (state.extra! as Map<String, dynamic>)['collection']
+            as List<dynamic>,
+        tokenId: (state.extra! as Map<String, dynamic>)['tokenId']! as String,
+        detailCollection:
+            (state.extra! as Map<String, dynamic>)['detailCollection']! as bool,
+        nameInCollection: (state.extra!
+            as Map<String, dynamic>)['nameInCollection'] as String?,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
   GoRoute(
     path: ConfigureCategoryList.routerPage,
-    builder: (context, state) {
-      return const ConfigureCategoryList();
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: const ConfigureCategoryList(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
   ),
   GoRoute(
     path: CreateDiscussionSheet.routerPage,
-    builder: (context, state) {
-      return const CreateDiscussionSheet();
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: const CreateDiscussionSheet(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
   ),
   GoRoute(
     path: SettingsSheetWallet.routerPage,
-    builder: (context, state) {
-      return const SettingsSheetWallet();
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: const SettingsSheetWallet(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
   ),
   GoRoute(
     path: CreateDiscussionValidationSheet.routerPage,
-    builder: (context, state) {
-      final args = state.extra! as Map<String, dynamic>;
-      return CreateDiscussionValidationSheet(
-        discussionCreationSuccess:
-            args['discussionCreationSuccess'] as Function?,
-        onDispose: args['onDispose'] as Function?,
-      );
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: CreateDiscussionValidationSheet(
+        discussionCreationSuccess: (state.extra!
+            as Map<String, dynamic>)['discussionCreationSuccess'] as Function?,
+        onDispose:
+            (state.extra! as Map<String, dynamic>)['onDispose'] as Function?,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
   GoRoute(
     path: AddDiscussionSheet.routerPage,
-    builder: (context, state) {
-      final args = state.extra! as Discussion;
-      return AddDiscussionSheet(
-        discussion: args,
-      );
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: AddDiscussionSheet(
+        discussion: state.extra! as Discussion,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
   GoRoute(
     path: AddServiceConfirmationForm.routerPage,
-    builder: (context, state) {
-      final args = state.extra! as Map<String, dynamic>;
-      return AddServiceConfirmationForm(
-        args['serviceName']! as String,
-        args['command']! as RPCCommand<RPCSendTransactionCommandData>,
-      );
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: AddServiceConfirmationForm(
+        (state.extra! as Map<String, dynamic>)['serviceName']! as String,
+        (state.extra! as Map<String, dynamic>)['command']!
+            as RPCCommand<RPCSendTransactionCommandData>,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
   GoRoute(
     path: SendTransactionConfirmationForm.routerPage,
-    builder: (context, state) {
-      final args = state.extra! as Map<String, dynamic>;
-      return SendTransactionConfirmationForm(
-        args['command']! as RPCCommand<RPCSendTransactionCommandData>,
-      );
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: SendTransactionConfirmationForm(
+        (state.extra! as Map<String, dynamic>)['command']!
+            as RPCCommand<RPCSendTransactionCommandData>,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
   GoRoute(
     path: SignTransactionsConfirmationForm.routerPage,
-    builder: (context, state) {
-      final args = state.extra! as Map<String, dynamic>;
-      return SignTransactionsConfirmationForm(
-        args['command']! as RPCCommand<RPCSignTransactionsCommandData>,
-        args['estimatedFees']! as double,
-      );
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: SignTransactionsConfirmationForm(
+        (state.extra! as Map<String, dynamic>)['command']!
+            as RPCCommand<RPCSignTransactionsCommandData>,
+        (state.extra! as Map<String, dynamic>)['estimatedFees']! as double,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
   GoRoute(
     path: UpdateDiscussionAddMembers.routerPage,
-    builder: (context, state) {
-      final args = state.extra! as Map<String, dynamic>;
-      return UpdateDiscussionAddMembers(
-        listMembers: args['listMembers']! as List<String>,
-        onDisposed: args['onDisposed'] as Function?,
-      );
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: UpdateDiscussionAddMembers(
+        listMembers: (state.extra! as Map<String, dynamic>)['listMembers']!
+            as List<String>,
+        onDisposed:
+            (state.extra! as Map<String, dynamic>)['onDisposed'] as Function?,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
 ];

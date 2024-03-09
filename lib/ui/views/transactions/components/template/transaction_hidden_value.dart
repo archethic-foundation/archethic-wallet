@@ -10,7 +10,7 @@ class TransactionHiddenValue extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return AutoSizeText(
       '···········',
-      style: ArchethicThemeStyles.textStyleSize12W600Primary60,
+      style: ArchethicThemeStyles.textStyleSize12W100Primary60,
     );
   }
 }

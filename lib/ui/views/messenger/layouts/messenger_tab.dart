@@ -32,8 +32,11 @@ class MessengerBody extends ConsumerWidget {
           image: AssetImage(
             ArchethicTheme.backgroundSmall,
           ),
-          fit: BoxFit.fitHeight,
-          opacity: 0.7,
+          fit: MediaQuery.of(context).size.width >= 440
+              ? BoxFit.fitWidth
+              : BoxFit.fitHeight,
+          alignment: Alignment.centerRight,
+          opacity: 0.5,
         ),
       ),
       child: SafeArea(

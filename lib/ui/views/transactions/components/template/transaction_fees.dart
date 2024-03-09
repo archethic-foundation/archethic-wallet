@@ -44,22 +44,22 @@ class TransactionFees extends ConsumerWidget {
         if (transaction.indexInLedger > 0)
           Text(
             '${localizations.txListFees} ${localizations.txListFeesIncluded}',
-            style: ArchethicThemeStyles.textStyleSize12W400Primary,
+            style: ArchethicThemeStyles.textStyleSize12W100Primary,
           )
         else if (settings.showBalances == true)
           primaryCurrency.primaryCurrency == AvailablePrimaryCurrencyEnum.native
               ? Text(
                   '${localizations.txListFees} ${transaction.fee!.toStringAsFixed(3)} ${AccountBalance.cryptoCurrencyLabel} ($amountConverted)',
-                  style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                  style: ArchethicThemeStyles.textStyleSize12W100Primary,
                 )
               : Text(
                   '${localizations.txListFees} $amountConverted (${transaction.fee!.toStringAsFixed(3)} ${AccountBalance.cryptoCurrencyLabel})',
-                  style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                  style: ArchethicThemeStyles.textStyleSize12W100Primary,
                 )
         else
           Text(
             '···········',
-            style: ArchethicThemeStyles.textStyleSize12W600Primary60,
+            style: ArchethicThemeStyles.textStyleSize12W100Primary60,
           ),
       ],
     );

@@ -3,54 +3,104 @@ part of 'router.dart';
 final _introductionRoutes = [
   GoRoute(
     path: IntroConfigureSecurity.routerPage,
-    builder: (context, state) {
-      final args = state.extra! as Map<String, dynamic>;
-      return IntroConfigureSecurity(
-        seed: args['seed']! as String,
-        name: args['name']! as String,
-      );
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: IntroConfigureSecurity(
+        seed: (state.extra! as Map<String, dynamic>)['seed']! as String,
+        name: (state.extra! as Map<String, dynamic>)['name']! as String,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
   GoRoute(
     path: IntroWelcome.routerPage,
-    builder: (context, state) => const IntroWelcome(),
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: const IntroWelcome(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
   GoRoute(
     path: IntroNewWalletGetFirstInfos.routerPage,
-    builder: (context, state) => const IntroNewWalletGetFirstInfos(),
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: const IntroNewWalletGetFirstInfos(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
   GoRoute(
     path: IntroBackupSeedPage.routerPage,
-    builder: (context, state) {
-      final args = state.extra! as String;
-      return IntroBackupSeedPage(
-        name: args,
-      );
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: IntroBackupSeedPage(
+        name: state.extra! as String,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
   GoRoute(
     path: IntroNewWalletDisclaimer.routerPage,
-    builder: (context, state) {
-      final args = state.extra! as String;
-      return IntroNewWalletDisclaimer(
-        name: args,
-      );
-    },
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: IntroNewWalletDisclaimer(
+        name: state.extra! as String,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
   GoRoute(
     path: IntroImportSeedPage.routerPage,
-    builder: (context, state) => const IntroImportSeedPage(),
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: const IntroImportSeedPage(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
   GoRoute(
     path: IntroBackupConfirm.routerPage,
-    builder: (context, state) {
-      final args = state.extra! as Map<String, dynamic>;
-      return IntroBackupConfirm(
-        name: args['name'] == null ? null : args['name']! as String,
-        seed: args['seed'] == null ? null : args['seed']! as String,
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: IntroBackupConfirm(
+        name: (state.extra! as Map<String, dynamic>)['name'] == null
+            ? null
+            : (state.extra! as Map<String, dynamic>)['name']! as String,
+        seed: (state.extra! as Map<String, dynamic>)['seed'] == null
+            ? null
+            : (state.extra! as Map<String, dynamic>)['seed']! as String,
         welcomeProcess:
-            args['welcomeProcess'] == null || args['welcomeProcess']! as bool,
-      );
-    },
+            (state.extra! as Map<String, dynamic>)['welcomeProcess'] == null ||
+                (state.extra! as Map<String, dynamic>)['welcomeProcess']!
+                    as bool,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
 ];

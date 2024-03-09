@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'dart:developer';
+import 'dart:ui';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
@@ -127,7 +128,11 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
             image: AssetImage(
               ArchethicTheme.backgroundSmall,
             ),
-            fit: BoxFit.fitHeight,
+            fit: MediaQuery.of(context).size.width >= 440
+                ? BoxFit.fitWidth
+                : BoxFit.fitHeight,
+            alignment: Alignment.centerRight,
+            opacity: 0.5,
           ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,
@@ -614,44 +619,66 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
       builder: (BuildContext context) {
         final localizations = AppLocalizations.of(context)!;
         return AlertDialog(
-          title: Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  localizations.keychainHeader,
-                  style: ArchethicThemeStyles.textStyleSize24W700Primary,
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                if (accounts.length > 1)
-                  Text(
-                    localizations.selectAccountDescSeveral,
-                    style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                  )
-                else
-                  Text(
-                    localizations.selectAccountDescOne,
-                    style: ArchethicThemeStyles.textStyleSize12W100Primary,
+          insetPadding: EdgeInsets.zero,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          content: ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: ArchethicTheme.sheetBackground.withOpacity(0.2),
+                  border: Border.all(
+                    color: ArchethicTheme.sheetBorder,
                   ),
-              ],
-            ),
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(16)),
-            side: BorderSide(
-              color: ArchethicTheme.text45,
-            ),
-          ),
-          content: SingleChildScrollView(
-            child: PickerWidget(
-              pickerItems: pickerItemsList,
-              selectedIndexes: const [0],
-              onSelected: (value) {
-                context.pop(value.value);
-              },
+                ),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            localizations.keychainHeader,
+                            style:
+                                ArchethicThemeStyles.textStyleSize24W700Primary,
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          if (accounts.length > 1)
+                            Text(
+                              localizations.selectAccountDescSeveral,
+                              style: ArchethicThemeStyles
+                                  .textStyleSize12W100Primary,
+                            )
+                          else
+                            Text(
+                              localizations.selectAccountDescOne,
+                              style: ArchethicThemeStyles
+                                  .textStyleSize12W100Primary,
+                            ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: PickerWidget(
+                          pickerItems: pickerItemsList,
+                          selectedIndexes: const [0],
+                          onSelected: (value) {
+                            context.pop(value.value);
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
         );

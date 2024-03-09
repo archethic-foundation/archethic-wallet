@@ -3,7 +3,6 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/main/bloc/nft_search_bar_provider.dart';
 import 'package:aewallet/ui/views/main/bloc/nft_search_bar_state.dart';
@@ -58,17 +57,8 @@ class NFTTabBody extends ConsumerWidget {
 
         await ref.read(AccountProviders.selectedAccount.notifier).refreshNFTs();
       }),
-      child: Container(
+      child: SizedBox(
         height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              ArchethicTheme.backgroundSmall,
-            ),
-            fit: BoxFit.cover,
-            opacity: 0.7,
-          ),
-        ),
         child: SingleChildScrollView(
           child: ScrollConfiguration(
             behavior: ScrollConfiguration.of(context).copyWith(

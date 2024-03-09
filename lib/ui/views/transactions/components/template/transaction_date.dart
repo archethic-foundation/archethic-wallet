@@ -20,7 +20,7 @@ class TransactionDate extends ConsumerWidget {
                   timestamp! * 1000,
                 ).toLocal(),
               ),
-          style: ArchethicThemeStyles.textStyleSize12W400Primary,
+          style: ArchethicThemeStyles.textStyleSize12W100Primary,
         ),
       ],
     );

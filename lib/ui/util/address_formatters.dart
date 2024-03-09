@@ -45,7 +45,7 @@ class AddressFormatters {
     if (_address.length < 21) {
       return addressUpperCased;
     } else {
-      return '${addressUpperCased.substring(0, 11)}...${addressUpperCased.substring(_address.length - 2)}';
+      return '${addressUpperCased.substring(0, 9)}...${addressUpperCased.substring(_address.length - 4)}';
     }
   }
 }

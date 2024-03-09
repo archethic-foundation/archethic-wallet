@@ -67,7 +67,11 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage> {
             image: AssetImage(
               ArchethicTheme.backgroundSmall,
             ),
-            fit: BoxFit.fitHeight,
+            fit: MediaQuery.of(context).size.width >= 440
+                ? BoxFit.fitWidth
+                : BoxFit.fitHeight,
+            alignment: Alignment.centerRight,
+            opacity: 0.5,
           ),
           gradient: LinearGradient(
             begin: Alignment.topLeft,

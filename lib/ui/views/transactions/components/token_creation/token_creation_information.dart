@@ -22,14 +22,14 @@ class TokenCreationInformation extends ConsumerWidget {
           Expanded(
             child: AutoSizeText(
               '${localizations.tokenCreated} ${transaction.tokenInformation!.name}',
-              style: ArchethicThemeStyles.textStyleSize12W400Primary,
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
             ),
           )
         else
           Expanded(
             child: AutoSizeText(
               '${localizations.nftCreated} ${transaction.tokenInformation!.name}',
-              style: ArchethicThemeStyles.textStyleSize12W400Primary,
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
             ),
           ),
         const SizedBox(

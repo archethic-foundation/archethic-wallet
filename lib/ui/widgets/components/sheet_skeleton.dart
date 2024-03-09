@@ -31,7 +31,7 @@ class SheetSkeleton extends ConsumerWidget {
       floatingActionButton: floatingActionButton,
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
       extendBodyBehindAppBar: true,
-      backgroundColor: ArchethicTheme.background,
+      backgroundColor: Colors.black,
       appBar: appBar,
       body: menu! == false
           ? DecoratedBox(
@@ -40,8 +40,11 @@ class SheetSkeleton extends ConsumerWidget {
                   image: AssetImage(
                     ArchethicTheme.backgroundSmall,
                   ),
-                  fit: BoxFit.cover,
-                  opacity: 0.7,
+                  fit: MediaQuery.of(context).size.width >= 440
+                      ? BoxFit.fitWidth
+                      : BoxFit.fitHeight,
+                  alignment: Alignment.centerRight,
+                  opacity: 0.5,
                 ),
               ),
               child: Padding(

@@ -6,7 +6,6 @@ import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/formatters.dart';
-import 'package:aewallet/ui/views/transactions/components/transaction_input/transaction_input_icon.dart';
 import 'package:aewallet/ui/widgets/tokens/verified_token_icon.dart';
 import 'package:aewallet/util/number_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -40,7 +39,7 @@ class TransferInput extends ConsumerWidget {
           hasTransactionInfo
               ? '$amountFormatted ${isCurrencyNative ? (transaction.tokenInformation!.symbol! == '' ? 'NFT' : transaction.tokenInformation!.symbol!) : transaction.tokenInformation!.symbol!}'
               : '$amountFormatted ${AccountBalance.cryptoCurrencyLabel}',
-          style: ArchethicThemeStyles.textStyleSize12W400Primary,
+          style: ArchethicThemeStyles.textStyleSize12W100Primary,
         ),
         if (transaction.tokenInformation != null &&
             transaction.tokenInformation!.type == 'fungible' &&
@@ -55,10 +54,6 @@ class TransferInput extends ConsumerWidget {
               ),
             ],
           ),
-        const SizedBox(
-          width: 2,
-        ),
-        const TransactionInputIcon(),
       ],
     );
   }
