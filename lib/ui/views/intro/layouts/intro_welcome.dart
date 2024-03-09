@@ -51,6 +51,7 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
                 ? BoxFit.fitWidth
                 : BoxFit.fitHeight,
             alignment: Alignment.centerRight,
+            opacity: 0.5,
           ),
         ),
         child: Stack(

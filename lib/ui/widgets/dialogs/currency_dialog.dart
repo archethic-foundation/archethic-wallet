@@ -1,11 +1,9 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/available_currency.dart';
-import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
+import 'package:archethic_dapp_framework_flutter/archethic-dapp-framework-flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,7 +15,6 @@ class CurrencyDialog {
     WidgetRef ref,
   ) async {
     final pickerItemsList = List<PickerItem>.empty(growable: true);
-
     for (final value in AvailableCurrencyEnum.values) {
       pickerItemsList.add(
         PickerItem(
@@ -43,32 +40,14 @@ class CurrencyDialog {
             SettingsProviders.settings.select((settings) => settings.currency),
           ),
         );
-        return AlertDialog(
-          backgroundColor: ArchethicTheme.backgroundPopupColor,
-          elevation: 0,
-          title: Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  AppLocalizations.of(context)!.currency,
-                  style: ArchethicThemeStyles.textStyleSize24W700Primary,
-                ),
-              ],
-            ),
-          ),
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(16)),
-          ),
-          content: SingleChildScrollView(
+        return aedappfm.PopupTemplate(
+          popupContent: SingleChildScrollView(
             child: PickerWidget(
               pickerItems: pickerItemsList,
               selectedIndexes: [currency.getIndex()],
               onSelected: (value) async {
                 final currency =
                     AvailableCurrency(value.value as AvailableCurrencyEnum);
-
                 await ref
                     .read(
                       SettingsProviders.settings.notifier,
@@ -82,6 +61,7 @@ class CurrencyDialog {
               },
             ),
           ),
+          popupTitle: AppLocalizations.of(context)!.currency,
         );
       },
     );

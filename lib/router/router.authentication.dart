@@ -6,36 +6,57 @@ List<GoRoute> _authenticationRoutes(
     [
       GoRoute(
         path: PasswordScreen.routerPage,
-        parentNavigatorKey: rootNavigatorKey,
-        builder: (context, state) {
-          final args = state.extra! as Map<String, dynamic>;
-          return PasswordScreen(
-            canNavigateBack: args['canNavigateBack']! as bool,
-          );
-        },
+        pageBuilder: (context, state) => CustomTransitionPage<void>(
+          key: state.pageKey,
+          child: PasswordScreen(
+            canNavigateBack: (state.extra!
+                as Map<String, dynamic>)['canNavigateBack']! as bool,
+          ),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(
+            opacity: animation,
+            child: child,
+          ),
+        ),
       ),
       GoRoute(
         path: PinScreen.routerPage,
-        parentNavigatorKey: rootNavigatorKey,
-        builder: (context, state) {
-          final args = state.extra! as Map<String, dynamic>;
-          return PinScreen(
-            PinOverlayType.values.byName(args['type']! as String),
-            canNavigateBack: args['canNavigateBack'] == null ||
-                args['canNavigateBack']! as bool,
-            description: args['description'] == null
-                ? ''
-                : args['description']! as String,
-          );
-        },
+        pageBuilder: (context, state) => CustomTransitionPage<void>(
+          key: state.pageKey,
+          child: PinScreen(
+            PinOverlayType.values.byName(
+                (state.extra! as Map<String, dynamic>)['type']! as String),
+            canNavigateBack:
+                (state.extra! as Map<String, dynamic>)['canNavigateBack'] ==
+                        null ||
+                    (state.extra! as Map<String, dynamic>)['canNavigateBack']!
+                        as bool,
+            description:
+                (state.extra! as Map<String, dynamic>)['description'] == null
+                    ? ''
+                    : (state.extra! as Map<String, dynamic>)['description']!
+                        as String,
+          ),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(
+            opacity: animation,
+            child: child,
+          ),
+        ),
       ),
       GoRoute(
         path: YubikeyScreen.routerPage,
-        builder: (context, state) {
-          final args = state.extra! as Map<String, dynamic>;
-          return YubikeyScreen(
-            canNavigateBack: args['canNavigateBack']! as bool,
-          );
-        },
+        pageBuilder: (context, state) => CustomTransitionPage<void>(
+          key: state.pageKey,
+          child: YubikeyScreen(
+            canNavigateBack: (state.extra!
+                as Map<String, dynamic>)['canNavigateBack']! as bool,
+          ),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(
+            opacity: animation,
+            child: child,
+          ),
+        ),
       ),
     ];

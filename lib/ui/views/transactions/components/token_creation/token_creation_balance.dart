@@ -10,6 +10,7 @@ import 'package:aewallet/ui/views/transactions/components/template/transaction_h
 import 'package:aewallet/util/number_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TokenCreationBalance extends ConsumerWidget {
@@ -42,11 +43,16 @@ class TokenCreationBalance extends ConsumerWidget {
         ? 'NFT'
         : transaction.tokenInformation!.symbol!;
 
-    return settings.showBalances
-        ? AutoSizeText(
-            '$currency $symbol',
-            style: ArchethicThemeStyles.textStyleSize12W400Primary,
+    return Row(
+      children: [
+        if (settings.showBalances)
+          AutoSizeText(
+            '${AppLocalizations.of(context)!.tokenInitialSupply} $currency $symbol',
+            style: ArchethicThemeStyles.textStyleSize12W100Primary,
           )
-        : const TransactionHiddenValue();
+        else
+          const TransactionHiddenValue(),
+      ],
+    );
   }
 }

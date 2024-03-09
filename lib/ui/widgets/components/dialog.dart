@@ -1,7 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-import 'dart:ui';
-
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/archethic_theme_base.dart';
@@ -9,6 +6,8 @@ import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
+import 'package:archethic_dapp_framework_flutter/archethic-dapp-framework-flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,91 +35,72 @@ class AppDialogs {
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          insetPadding: EdgeInsets.zero,
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          content: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-              child: Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: ArchethicTheme.sheetBackground.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: ArchethicTheme.sheetBorder,
-                  ),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text.rich(
+        return aedappfm.PopupTemplate(
+          popupContent: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text.rich(
+                TextSpan(
+                  text: '',
+                  style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                  children: <InlineSpan>[
+                    TextSpan(
+                      text: content,
+                      style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                    ),
+                    if (additionalContent != null)
                       TextSpan(
-                        text: '',
-                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                        children: <InlineSpan>[
-                          TextSpan(
-                            text: content,
-                            style:
-                                ArchethicThemeStyles.textStyleSize12W100Primary,
-                          ),
-                          if (additionalContent != null)
-                            TextSpan(
-                              text: '\n\n$additionalContent',
-                              style: additionalContentStyle ??
-                                  ArchethicThemeStyles
-                                      .textStyleSize12W100Primary,
-                            ),
-                        ],
+                        text: '\n\n$additionalContent',
+                        style: additionalContentStyle ??
+                            ArchethicThemeStyles.textStyleSize12W100Primary,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        AppButton(
-                          key: const Key('cancelButton'),
-                          labelBtn: AppLocalizations.of(
-                            context,
-                          )!
-                              .no,
-                          onPressed: () async {
-                            sl.get<HapticUtil>().feedback(
-                                  FeedbackType.light,
-                                  preferences.activeVibrations,
-                                );
-                            context.pop();
-                            if (cancelAction != null) {
-                              cancelAction();
-                            }
-                          },
-                        ),
-                        AppButton(
-                          key: const Key('yesButton'),
-                          labelBtn: AppLocalizations.of(
-                            context,
-                          )!
-                              .yes,
-                          onPressed: () async {
-                            sl.get<HapticUtil>().feedback(
-                                  FeedbackType.light,
-                                  preferences.activeVibrations,
-                                );
-                            context.pop();
-                            onPressed();
-                          },
-                        ),
-                      ],
-                    ),
                   ],
                 ),
               ),
-            ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AppButton(
+                    key: const Key('cancelButton'),
+                    labelBtn: AppLocalizations.of(
+                      context,
+                    )!
+                        .no,
+                    onPressed: () async {
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.light,
+                            preferences.activeVibrations,
+                          );
+                      context.pop();
+                      if (cancelAction != null) {
+                        cancelAction();
+                      }
+                    },
+                  ),
+                  AppButton(
+                    key: const Key('yesButton'),
+                    labelBtn: AppLocalizations.of(
+                      context,
+                    )!
+                        .yes,
+                    onPressed: () async {
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.light,
+                            preferences.activeVibrations,
+                          );
+                      context.pop();
+                      onPressed();
+                    },
+                  ),
+                ],
+              ),
+            ],
           ),
+          popupTitle: title,
+          displayCloseButton: false,
         );
       },
     );
@@ -140,43 +120,51 @@ class AppDialogs {
         buttonLabel = buttonLabel ?? AppLocalizations.of(context)!.ok;
 
         final preferences = ref.watch(SettingsProviders.settings);
-        return AlertDialog(
-          insetPadding: EdgeInsets.zero,
-          backgroundColor: ArchethicTheme.backgroundPopupColor,
-          elevation: 0,
-          title: Text(
-            title,
-            style: ArchethicThemeStyles.textStyleSize14W600Primary,
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(16)),
-            side: BorderSide(
-              color: ArchethicTheme.text45,
-            ),
-          ),
-          content: Text(
-            content,
-            style: ArchethicThemeStyles.textStyleSize12W100Primary,
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Container(
-                constraints: const BoxConstraints(maxWidth: 100),
+
+        return aedappfm.PopupTemplate(
+          popupContent: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
                 child: Text(
-                  buttonLabel!,
-                  style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                  title,
+                  style: ArchethicThemeStyles.textStyleSize14W600Primary,
                 ),
               ),
-              onPressed: () {
-                onPressed?.call();
-                sl.get<HapticUtil>().feedback(
-                      FeedbackType.light,
-                      preferences.activeVibrations,
-                    );
-                context.pop();
-              },
-            ),
-          ],
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                content,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  child: Container(
+                    constraints: const BoxConstraints(maxWidth: 100),
+                    child: Text(
+                      buttonLabel!,
+                      style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                    ),
+                  ),
+                  onPressed: () {
+                    onPressed?.call();
+                    sl.get<HapticUtil>().feedback(
+                          FeedbackType.light,
+                          preferences.activeVibrations,
+                        );
+                    context.pop();
+                  },
+                ),
+              ),
+            ],
+          ),
+          popupTitle: title,
         );
       },
     );
@@ -249,6 +237,8 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
                   fit: MediaQuery.of(context).size.width >= 440
                       ? BoxFit.fitWidth
                       : BoxFit.fitHeight,
+                  alignment: Alignment.centerRight,
+                  opacity: 0.5,
                 ),
               ),
             ),

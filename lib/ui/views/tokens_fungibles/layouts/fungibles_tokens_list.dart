@@ -1,5 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'dart:ui';
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/token.dart';
@@ -14,6 +16,8 @@ import 'package:aewallet/ui/widgets/tokens/verified_token_icon.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/number_util.dart';
+import 'package:archethic_dapp_framework_flutter/archethic-dapp-framework-flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -106,7 +110,7 @@ class _FungiblesTokensLine extends StatelessWidget {
       color: Colors.transparent,
       width: MediaQuery.of(context).size.width,
       child: Padding(
-        padding: const EdgeInsets.only(top: 6),
+        padding: const EdgeInsets.only(top: 15),
         child: _FungiblesTokensDetailTransfer(
           accountFungibleToken: accountToken,
         ),
@@ -128,206 +132,213 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
     return Column(
       children: [
-        Card(
-          shape: RoundedRectangleBorder(
-            side: BorderSide(
-              color: ArchethicTheme.backgroundRecentTxListCardTokenCreation,
-            ),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          elevation: 0,
-          color: ArchethicTheme.backgroundRecentTxListCardTokenCreation,
-          child: Container(
-            padding: const EdgeInsets.all(9.5),
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                color: aedappfm.AppThemeBase.sheetBackground,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: aedappfm.AppThemeBase.sheetBorder,
+                ),
+              ),
+              child: Container(
+                padding: const EdgeInsets.all(9.5),
+                width: MediaQuery.of(context).size.width,
+                child: Column(
                   children: [
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Container(
-                            alignment: Alignment.center,
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: ArchethicTheme.backgroundDark
-                                  .withOpacity(0.3),
-                              border: Border.all(
-                                color: ArchethicTheme.backgroundDarkest
-                                    .withOpacity(0.2),
-                                width: 2,
-                              ),
-                            ),
-                            child: IconButton(
-                              icon: Icon(
-                                Symbols.arrow_circle_up,
-                                color: ArchethicTheme.backgroundDarkest,
-                                size: 21,
-                              ),
-                              onPressed: () async {
-                                sl.get<HapticUtil>().feedback(
-                                      FeedbackType.light,
-                                      preferences.activeVibrations,
-                                    );
-                                await TransferSheet(
-                                  transferType: TransferType.token,
-                                  accountToken: accountFungibleToken,
-                                  recipient: const TransferRecipient.address(
-                                    address: Address(address: ''),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Container(
+                                alignment: Alignment.center,
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: ArchethicTheme.backgroundDark
+                                      .withOpacity(0.3),
+                                  border: Border.all(
+                                    color: ArchethicTheme.backgroundDarkest
+                                        .withOpacity(0.2),
+                                    width: 2,
                                   ),
-                                ).show(
-                                  context: context,
-                                  ref: ref,
-                                );
-                              },
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            child: InkWell(
-                              key: const Key('viewExplorer'),
-                              onTap: () {
-                                UIUtil.showWebview(
-                                  context,
-                                  '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${accountFungibleToken.tokenInformation!.address!}',
-                                  '',
-                                );
-                              },
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
+                                ),
+                                child: IconButton(
+                                  icon: Icon(
+                                    Symbols.arrow_circle_up,
+                                    color: ArchethicTheme.backgroundDarkest,
+                                    size: 21,
+                                  ),
+                                  onPressed: () async {
+                                    sl.get<HapticUtil>().feedback(
+                                          FeedbackType.light,
+                                          preferences.activeVibrations,
+                                        );
+                                    await TransferSheet(
+                                      transferType: TransferType.token,
+                                      accountToken: accountFungibleToken,
+                                      recipient:
+                                          const TransferRecipient.address(
+                                        address: Address(address: ''),
+                                      ),
+                                    ).show(
+                                      context: context,
+                                      ref: ref,
+                                    );
+                                  },
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                child: InkWell(
+                                  key: const Key('viewExplorer'),
+                                  onTap: () {
+                                    UIUtil.showWebview(
+                                      context,
+                                      '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${accountFungibleToken.tokenInformation!.address!}',
+                                      '',
+                                    );
+                                  },
+                                  child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Expanded(
-                                        child: AutoSizeText(
-                                          accountFungibleToken
-                                              .tokenInformation!.name!,
-                                          style: ArchethicThemeStyles
-                                              .textStyleSize12W600Primary,
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: AutoSizeText(
+                                              accountFungibleToken
+                                                  .tokenInformation!.name!,
+                                              style: ArchethicThemeStyles
+                                                  .textStyleSize12W100Primary,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          AutoSizeText(
+                                            AddressFormatters(
+                                              accountFungibleToken
+                                                  .tokenInformation!.address!,
+                                            ).getShortString4(),
+                                            style: ArchethicThemeStyles
+                                                .textStyleSize12W100Primary,
+                                          ),
+                                          const SizedBox(width: 5),
+                                          const Icon(
+                                            Symbols.open_in_new,
+                                            size: 11,
+                                          ),
+                                        ],
+                                      ),
+                                      if (preferences.showBalances == true)
+                                        Row(
+                                          children: [
+                                            Text(
+                                              NumberUtil.formatThousands(
+                                                accountFungibleToken.amount!,
+                                              ),
+                                              style: ArchethicThemeStyles
+                                                  .textStyleSize12W100Primary,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  accountFungibleToken
+                                                      .tokenInformation!
+                                                      .symbol!,
+                                                  style: ArchethicThemeStyles
+                                                      .textStyleSize12W100Primary,
+                                                ),
+                                                const SizedBox(
+                                                  width: 5,
+                                                ),
+                                                VerifiedTokenIcon(
+                                                  address: accountFungibleToken
+                                                      .tokenInformation!
+                                                      .address!,
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        )
+                                      else
+                                        Row(
+                                          children: [
+                                            Text(
+                                              '···········',
+                                              style: ArchethicThemeStyles
+                                                  .textStyleSize12W100Primary60,
+                                            ),
+                                            const SizedBox(width: 5),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  accountFungibleToken
+                                                      .tokenInformation!
+                                                      .symbol!,
+                                                  style: ArchethicThemeStyles
+                                                      .textStyleSize12W100Primary,
+                                                ),
+                                                const SizedBox(
+                                                  width: 5,
+                                                ),
+                                                VerifiedTokenIcon(
+                                                  address: accountFungibleToken
+                                                      .tokenInformation!
+                                                      .address!,
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
-                                      ),
+                                      if (kTokenFordiddenName.contains(
+                                            accountFungibleToken
+                                                .tokenInformation!.name!
+                                                .toUpperCase(),
+                                          ) ||
+                                          kTokenFordiddenName.contains(
+                                            accountFungibleToken
+                                                .tokenInformation!.symbol!
+                                                .toUpperCase(),
+                                          ))
+                                        Row(
+                                          children: [
+                                            const Icon(
+                                              Symbols.warning,
+                                              size: 10,
+                                            ),
+                                            const SizedBox(width: 5),
+                                            Text(
+                                              localizations
+                                                  .notOfficialUCOWarning,
+                                              style: ArchethicThemeStyles
+                                                  .textStyleSize10W100Primary,
+                                              textAlign: TextAlign.end,
+                                            ),
+                                          ],
+                                        ),
                                     ],
                                   ),
-                                  Row(
-                                    children: [
-                                      AutoSizeText(
-                                        AddressFormatters(
-                                          accountFungibleToken
-                                              .tokenInformation!.address!,
-                                        ).getShortString4(),
-                                        style: ArchethicThemeStyles
-                                            .textStyleSize12W400Primary,
-                                      ),
-                                      const SizedBox(width: 5),
-                                      const Icon(
-                                        Symbols.open_in_new,
-                                        size: 11,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    if (preferences.showBalances == true)
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            NumberUtil.formatThousands(
-                              accountFungibleToken.amount!,
-                            ),
-                            style:
-                                ArchethicThemeStyles.textStyleSize12W400Primary,
-                          ),
-                          Row(
-                            children: [
-                              VerifiedTokenIcon(
-                                address: accountFungibleToken
-                                    .tokenInformation!.address!,
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                accountFungibleToken.tokenInformation!.symbol!,
-                                style: ArchethicThemeStyles
-                                    .textStyleSize12W600Primary,
+                                ),
                               ),
                             ],
                           ),
-                        ],
-                      )
-                    else
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            '···········',
-                            style: ArchethicThemeStyles
-                                .textStyleSize12W600Primary60,
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                accountFungibleToken.tokenInformation!.symbol!,
-                                style: ArchethicThemeStyles
-                                    .textStyleSize12W600Primary,
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              VerifiedTokenIcon(
-                                address: accountFungibleToken
-                                    .tokenInformation!.address!,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                  ],
-                ),
-                if (kTokenFordiddenName.contains(
-                      accountFungibleToken.tokenInformation!.name!
-                          .toUpperCase(),
-                    ) ||
-                    kTokenFordiddenName.contains(
-                      accountFungibleToken.tokenInformation!.symbol!
-                          .toUpperCase(),
-                    ))
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        const Icon(
-                          Symbols.warning,
-                          size: 10,
-                        ),
-                        const SizedBox(width: 5),
-                        Text(
-                          localizations.notOfficialUCOWarning,
-                          style:
-                              ArchethicThemeStyles.textStyleSize10W100Primary,
-                          textAlign: TextAlign.end,
                         ),
                       ],
                     ),
-                  ),
-              ],
+                  ],
+                ),
+              ),
             ),
           ),
         ),

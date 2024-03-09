@@ -2,11 +2,10 @@
 
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
-
 import 'package:aewallet/model/primary_currency.dart';
-import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
+import 'package:archethic_dapp_framework_flutter/archethic-dapp-framework-flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,33 +37,24 @@ class PrimaryCurrencyDialog {
       builder: (BuildContext context) {
         final primaryCurrency =
             ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
-        return AlertDialog(
-          backgroundColor: ArchethicTheme.backgroundPopupColor,
-          elevation: 0,
-          title: Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: Text(
-              AppLocalizations.of(context)!.primaryCurrency,
-              style: ArchethicThemeStyles.textStyleSize24W700Primary,
+        return aedappfm.PopupTemplate(
+          popupContent: SingleChildScrollView(
+            child: PickerWidget(
+              pickerItems: pickerItemsList,
+              selectedIndexes: [primaryCurrency.getIndex()],
+              onSelected: (value) async {
+                final primaryCurrency = AvailablePrimaryCurrency(
+                  value.value as AvailablePrimaryCurrencyEnum,
+                );
+
+                await ref
+                    .read(SettingsProviders.settings.notifier)
+                    .selectPrimaryCurrency(primaryCurrency);
+                context.pop(value.value);
+              },
             ),
           ),
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(16)),
-          ),
-          content: PickerWidget(
-            pickerItems: pickerItemsList,
-            selectedIndexes: [primaryCurrency.getIndex()],
-            onSelected: (value) async {
-              final primaryCurrency = AvailablePrimaryCurrency(
-                value.value as AvailablePrimaryCurrencyEnum,
-              );
-
-              await ref
-                  .read(SettingsProviders.settings.notifier)
-                  .selectPrimaryCurrency(primaryCurrency);
-              context.pop(value.value);
-            },
-          ),
+          popupTitle: AppLocalizations.of(context)!.primaryCurrency,
         );
       },
     );

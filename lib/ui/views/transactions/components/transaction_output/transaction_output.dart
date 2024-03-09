@@ -44,7 +44,7 @@ class TransactionOuput extends ConsumerWidget {
           );
         }
       },
-      right: Column(
+      content: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           TransfertBalance(

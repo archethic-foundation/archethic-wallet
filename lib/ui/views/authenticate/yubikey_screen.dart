@@ -137,7 +137,11 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
               image: AssetImage(
                 ArchethicTheme.backgroundSmall,
               ),
-              fit: BoxFit.cover,
+              fit: MediaQuery.of(context).size.width >= 440
+                  ? BoxFit.fitWidth
+                  : BoxFit.fitHeight,
+              alignment: Alignment.centerRight,
+              opacity: 0.5,
             ),
             gradient: LinearGradient(
               begin: Alignment.topLeft,

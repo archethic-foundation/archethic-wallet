@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -23,117 +25,154 @@ class AuthentificationMethodDialogHelp {
       builder: (BuildContext context) {
         final preferences = ref.watch(SettingsProviders.settings);
         return AlertDialog(
-          backgroundColor: ArchethicTheme.backgroundPopupColor,
+          insetPadding: EdgeInsets.zero,
+          backgroundColor: Colors.transparent,
           elevation: 0,
-          title: Text(
-            AppLocalizations.of(context)!.information,
-            style: ArchethicThemeStyles.textStyleSize14W600Primary,
-          ),
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(16),
             ),
           ),
-          content: kIsWeb
-              ? ArchethicScrollbar(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        const AuthenticationMethod(
-                          AuthMethod.password,
-                        ).getDisplayName(context),
-                        style: ArchethicThemeStyles.textStyleSize12W400Primary,
-                      ),
-                      Text(
-                        const AuthenticationMethod(
-                          AuthMethod.password,
-                        ).getDescription(context),
-                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                      ),
-                    ],
-                  ),
-                )
-              : ArchethicScrollbar(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        const AuthenticationMethod(
-                          AuthMethod.pin,
-                        ).getDisplayName(context),
-                        style: ArchethicThemeStyles.textStyleSize12W400Primary,
-                      ),
-                      Text(
-                        const AuthenticationMethod(
-                          AuthMethod.pin,
-                        ).getDescription(context),
-                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        const AuthenticationMethod(
-                          AuthMethod.password,
-                        ).getDisplayName(context),
-                        style: ArchethicThemeStyles.textStyleSize12W400Primary,
-                      ),
-                      Text(
-                        const AuthenticationMethod(
-                          AuthMethod.password,
-                        ).getDescription(context),
-                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        const AuthenticationMethod(
-                          AuthMethod.biometrics,
-                        ).getDisplayName(context),
-                        style: ArchethicThemeStyles.textStyleSize12W400Primary,
-                      ),
-                      Text(
-                        const AuthenticationMethod(
-                          AuthMethod.biometrics,
-                        ).getDescription(context),
-                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        const AuthenticationMethod(
-                          AuthMethod.yubikeyWithYubicloud,
-                        ).getDisplayName(context),
-                        style: ArchethicThemeStyles.textStyleSize12W400Primary,
-                      ),
-                      Text(
-                        const AuthenticationMethod(
-                          AuthMethod.yubikeyWithYubicloud,
-                        ).getDescription(context),
-                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                      ),
-                    ],
+          content: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: ArchethicTheme.sheetBackground.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: ArchethicTheme.sheetBorder,
                   ),
                 ),
-          actions: <Widget>[
-            AppButton(
-              key: const Key('closeButton'),
-              labelBtn: AppLocalizations.of(
-                context,
-              )!
-                  .close,
-              onPressed: () async {
-                sl.get<HapticUtil>().feedback(
-                      FeedbackType.light,
-                      preferences.activeVibrations,
-                    );
-                context.pop();
-              },
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.information,
+                      style: ArchethicThemeStyles.textStyleSize14W600Primary,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    if (kIsWeb)
+                      ArchethicScrollbar(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              const AuthenticationMethod(
+                                AuthMethod.password,
+                              ).getDisplayName(context),
+                              style: ArchethicThemeStyles
+                                  .textStyleSize12W400Primary,
+                            ),
+                            Text(
+                              const AuthenticationMethod(
+                                AuthMethod.password,
+                              ).getDescription(context),
+                              style: ArchethicThemeStyles
+                                  .textStyleSize12W100Primary,
+                            ),
+                          ],
+                        ),
+                      )
+                    else
+                      ArchethicScrollbar(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              const AuthenticationMethod(
+                                AuthMethod.pin,
+                              ).getDisplayName(context),
+                              style: ArchethicThemeStyles
+                                  .textStyleSize12W400Primary,
+                            ),
+                            Text(
+                              const AuthenticationMethod(
+                                AuthMethod.pin,
+                              ).getDescription(context),
+                              style: ArchethicThemeStyles
+                                  .textStyleSize12W100Primary,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              const AuthenticationMethod(
+                                AuthMethod.password,
+                              ).getDisplayName(context),
+                              style: ArchethicThemeStyles
+                                  .textStyleSize12W400Primary,
+                            ),
+                            Text(
+                              const AuthenticationMethod(
+                                AuthMethod.password,
+                              ).getDescription(context),
+                              style: ArchethicThemeStyles
+                                  .textStyleSize12W100Primary,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              const AuthenticationMethod(
+                                AuthMethod.biometrics,
+                              ).getDisplayName(context),
+                              style: ArchethicThemeStyles
+                                  .textStyleSize12W400Primary,
+                            ),
+                            Text(
+                              const AuthenticationMethod(
+                                AuthMethod.biometrics,
+                              ).getDescription(context),
+                              style: ArchethicThemeStyles
+                                  .textStyleSize12W100Primary,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              const AuthenticationMethod(
+                                AuthMethod.yubikeyWithYubicloud,
+                              ).getDisplayName(context),
+                              style: ArchethicThemeStyles
+                                  .textStyleSize12W400Primary,
+                            ),
+                            Text(
+                              const AuthenticationMethod(
+                                AuthMethod.yubikeyWithYubicloud,
+                              ).getDescription(context),
+                              style: ArchethicThemeStyles
+                                  .textStyleSize12W100Primary,
+                            ),
+                          ],
+                        ),
+                      ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    AppButton(
+                      key: const Key('closeButton'),
+                      labelBtn: AppLocalizations.of(
+                        context,
+                      )!
+                          .close,
+                      onPressed: () async {
+                        sl.get<HapticUtil>().feedback(
+                              FeedbackType.light,
+                              preferences.activeVibrations,
+                            );
+                        context.pop();
+                      },
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ],
+          ),
         );
       },
     );

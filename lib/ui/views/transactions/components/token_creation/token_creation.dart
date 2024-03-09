@@ -26,7 +26,7 @@ class TokenCreation extends ConsumerWidget {
       transaction: transaction,
       borderColor: ArchethicTheme.backgroundRecentTxListCardTokenCreation,
       backgroundColor: ArchethicTheme.backgroundRecentTxListCardTokenCreation,
-      right: TokenCreationBalance(
+      content: TokenCreationBalance(
         transaction: transaction,
       ),
       information: TokenCreationInformation(

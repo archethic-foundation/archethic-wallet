@@ -75,11 +75,8 @@ class TxListLine extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) => Container(
         color: Colors.transparent,
         width: MediaQuery.of(context).size.width,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 6),
-          child: TransactionDetail(
-            transaction: recentTransaction,
-          ),
+        child: TransactionDetail(
+          transaction: recentTransaction,
         ),
       );
 }
@@ -93,7 +90,6 @@ class _TransactionsEmpty extends ConsumerWidget {
       alignment: Alignment.center,
       color: Colors.transparent,
       width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.only(top: 6),
       child: Card(
         shape: RoundedRectangleBorder(
           side: BorderSide(

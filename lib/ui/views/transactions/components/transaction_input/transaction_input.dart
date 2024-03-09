@@ -6,7 +6,6 @@ import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/contacts/layouts/add_contact.dart';
-import 'package:aewallet/ui/views/transactions/components/template/transaction_comment.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transaction_template.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transfer_balance.dart';
 import 'package:aewallet/ui/views/transactions/components/transaction_input/transaction_input_information.dart';
@@ -43,7 +42,7 @@ class TransactionInput extends ConsumerWidget {
           );
         }
       },
-      right: Column(
+      content: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           TransfertBalance(
@@ -57,11 +56,6 @@ class TransactionInput extends ConsumerWidget {
                   AvailablePrimaryCurrencyEnum.native,
             ),
           ),
-          if (transaction.decryptedSecret != null &&
-              transaction.decryptedSecret!.isNotEmpty)
-            TransactionComment(transaction: transaction)
-          else
-            const SizedBox(),
         ],
       ),
       information: TransactionInputInformation(

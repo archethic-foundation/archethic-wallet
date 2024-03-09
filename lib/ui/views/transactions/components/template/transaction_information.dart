@@ -20,12 +20,12 @@ class TransactionInformation extends ConsumerWidget {
         if (isEmpty)
           Text(
             AppLocalizations.of(context)!.executionSC,
-            style: ArchethicThemeStyles.textStyleSize12W400Primary,
+            style: ArchethicThemeStyles.textStyleSize12W100Primary,
           )
         else
           Text(
             message,
-            style: ArchethicThemeStyles.textStyleSize12W400Primary,
+            style: ArchethicThemeStyles.textStyleSize12W100Primary,
           ),
       ],
     );

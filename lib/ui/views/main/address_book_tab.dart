@@ -44,17 +44,8 @@ class _AddressBookTabState extends ConsumerState<AddressBookTab> {
         search: searchNameController.text,
       ),
     );
-    return Container(
+    return SizedBox(
       height: MediaQuery.of(context).size.height,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(
-            ArchethicTheme.backgroundSmall,
-          ),
-          fit: BoxFit.cover,
-          opacity: 0.7,
-        ),
-      ),
       child: Stack(
         children: [
           Padding(

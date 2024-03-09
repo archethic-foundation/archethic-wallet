@@ -92,26 +92,40 @@ class _HomePageState extends ConsumerState<HomePage>
       appBar: const MainAppBar(),
       drawerEdgeDragWidth: 0,
       resizeToAvoidBottomInset: false,
-      backgroundColor: ArchethicTheme.background,
-      body: IncomingTransactionsNotifier(
-        child: TabBarView(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: tabController,
-          children: const [
-            AddressBookTab(),
-            KeychainTab(),
-            Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                AccountTab(),
-                RecoveryPhraseBanner(),
-              ],
+      backgroundColor: Colors.black,
+      body: DecoratedBox(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              ArchethicTheme.backgroundSmall,
             ),
-            NFTTab(
-              key: Key('bottomBarAddressNFTlink'),
-            ),
-            if (FeatureFlags.messagingActive) MessengerTab(),
-          ],
+            fit: MediaQuery.of(context).size.width >= 440
+                ? BoxFit.fitWidth
+                : BoxFit.fitHeight,
+            alignment: Alignment.centerRight,
+            opacity: 0.5,
+          ),
+        ),
+        child: IncomingTransactionsNotifier(
+          child: TabBarView(
+            physics: const NeverScrollableScrollPhysics(),
+            controller: tabController,
+            children: const [
+              AddressBookTab(),
+              KeychainTab(),
+              Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  AccountTab(),
+                  RecoveryPhraseBanner(),
+                ],
+              ),
+              NFTTab(
+                key: Key('bottomBarAddressNFTlink'),
+              ),
+              if (FeatureFlags.messagingActive) MessengerTab(),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: Padding(

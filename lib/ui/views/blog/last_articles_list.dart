@@ -1,11 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'dart:math' as math;
+import 'dart:ui';
 
 import 'package:aewallet/application/blog.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
@@ -181,58 +181,64 @@ class SlidingCard extends ConsumerWidget {
     final gauss = math.exp(-(math.pow(offset!.abs() - 0.5, 2) / 0.08));
     return Transform.translate(
       offset: Offset(-32 * gauss * offset!.sign, 0),
-      child: Card(
-        elevation: 5,
-        shadowColor: Colors.black,
-        margin: index == 0
-            ? const EdgeInsets.only(right: 8, bottom: 8)
-            : const EdgeInsets.only(left: 8, right: 8, bottom: 8),
-        color: ArchethicThemeBase.purple800,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-          side: const BorderSide(color: Colors.white10),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            ClipRRect(
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(15)),
-              child: assetName == null
-                  ? SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: 150,
-                    )
-                  : ImageNetwork(
-                      url: '$assetName',
-                      width: MediaQuery.of(context).size.width,
-                      height: 150,
-                      alignment: Alignment(-offset!.abs(), 0),
-                      error: SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        height: 150,
-                      ),
-                      loading: SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        height: 150,
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            color: ArchethicTheme.text,
-                            strokeWidth: 1,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Card(
+            elevation: 0,
+            margin: index == 0
+                ? const EdgeInsets.only(right: 8, bottom: 8)
+                : const EdgeInsets.only(left: 8, right: 8, bottom: 8),
+            color: Colors.transparent,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+              side: const BorderSide(color: Colors.white10),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                ClipRRect(
+                  borderRadius:
+                      const BorderRadius.vertical(top: Radius.circular(16)),
+                  child: assetName == null
+                      ? SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: 150,
+                        )
+                      : ImageNetwork(
+                          url: '$assetName',
+                          fit: BoxFit.fitHeight,
+                          width: MediaQuery.of(context).size.width,
+                          height: 150,
+                          alignment: Alignment(-offset!.abs(), 0),
+                          error: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: 150,
+                          ),
+                          loading: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: 150,
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: ArchethicTheme.text,
+                                strokeWidth: 1,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
+                ),
+                Expanded(
+                  child: CardContent(
+                    name: name,
+                    date: date,
+                    offset: gauss,
+                    author: author,
+                  ),
+                ),
+              ],
             ),
-            Expanded(
-              child: CardContent(
-                name: name,
-                date: date,
-                offset: gauss,
-                author: author,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -255,7 +261,7 @@ class CardContent extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -263,7 +269,7 @@ class CardContent extends ConsumerWidget {
             offset: Offset(8 * offset!, 0),
             child: Text(
               name!.replaceAll(RegExp(r'\s+'), ' '),
-              style: ArchethicThemeStyles.textStyleSize14W600Primary,
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
             ),
           ),
           const SizedBox(height: 5),
@@ -271,7 +277,7 @@ class CardContent extends ConsumerWidget {
             offset: Offset(32 * offset!, 0),
             child: Text(
               '${date!} by ${author!}',
-              style: ArchethicThemeStyles.textStyleSize12W400Primary,
+              style: ArchethicThemeStyles.textStyleSize10W100Primary,
             ),
           ),
         ],

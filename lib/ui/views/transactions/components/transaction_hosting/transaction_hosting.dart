@@ -34,7 +34,7 @@ class TransactionHosting extends ConsumerWidget {
           );
         }
       },
-      right: const SizedBox(),
+      content: const SizedBox.shrink(),
       information: TransactionHostingInformation(
         transaction: transaction,
       ),

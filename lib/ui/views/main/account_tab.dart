@@ -6,7 +6,6 @@ import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/blog/last_articles_list.dart';
 import 'package:aewallet/ui/views/main/components/app_update_button.dart';
 import 'package:aewallet/ui/views/main/components/menu_widget_wallet.dart';
@@ -32,109 +31,97 @@ class AccountTab extends ConsumerWidget {
     final preferences = ref.watch(SettingsProviders.settings);
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(
-            ArchethicTheme.backgroundSmall,
-          ),
-          fit: BoxFit.cover,
-          opacity: 0.7,
+    return ArchethicRefreshIndicator(
+      onRefresh: () => Future<void>.sync(() async {
+        sl.get<HapticUtil>().feedback(
+              FeedbackType.light,
+              preferences.activeVibrations,
+            );
+
+        final _connectivityStatusProvider =
+            ref.read(connectivityStatusProviders);
+        if (_connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
+          return;
+        }
+
+        await ref
+            .read(AccountProviders.selectedAccount.notifier)
+            .refreshRecentTransactions();
+        ref
+          ..invalidate(BlogProviders.fetchArticles)
+          ..invalidate(ContactProviders.fetchContacts)
+          ..invalidate(MarketPriceProviders.currencyMarketPrice);
+      }),
+      child: ScrollConfiguration(
+        behavior: ScrollConfiguration.of(context).copyWith(
+          dragDevices: {
+            PointerDeviceKind.touch,
+            PointerDeviceKind.mouse,
+            PointerDeviceKind.trackpad,
+          },
         ),
-      ),
-      child: ArchethicRefreshIndicator(
-        onRefresh: () => Future<void>.sync(() async {
-          sl.get<HapticUtil>().feedback(
-                FeedbackType.light,
-                preferences.activeVibrations,
-              );
+        child: SingleChildScrollView(
+          child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: <Widget>[
+                    /// BACKGROUND IMAGE
+                    ArchethicScrollbar(
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).padding.top + 10,
+                          bottom: 80,
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            /// BALANCE
+                            const BalanceInfos(),
+                            const SizedBox(
+                              height: 10,
+                            ),
 
-          final _connectivityStatusProvider =
-              ref.read(connectivityStatusProviders);
-          if (_connectivityStatusProvider ==
-              ConnectivityStatus.isDisconnected) {
-            return;
-          }
+                            /// PRICE CHART
+                            if (preferences.showPriceChart &&
+                                connectivityStatusProvider ==
+                                    ConnectivityStatus.isConnected)
+                              const BalanceInfosChart(),
 
-          await ref
-              .read(AccountProviders.selectedAccount.notifier)
-              .refreshRecentTransactions();
-          ref
-            ..invalidate(BlogProviders.fetchArticles)
-            ..invalidate(ContactProviders.fetchContacts)
-            ..invalidate(MarketPriceProviders.currencyMarketPrice);
-        }),
-        child: ScrollConfiguration(
-          behavior: ScrollConfiguration.of(context).copyWith(
-            dragDevices: {
-              PointerDeviceKind.touch,
-              PointerDeviceKind.mouse,
-              PointerDeviceKind.trackpad,
-            },
-          ),
-          child: SingleChildScrollView(
-            child: Stack(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    children: <Widget>[
-                      /// BACKGROUND IMAGE
-                      ArchethicScrollbar(
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).padding.top + 10,
-                            bottom: 80,
-                          ),
-                          child: Column(
-                            children: <Widget>[
-                              /// BALANCE
-                              const BalanceInfos(),
-                              const SizedBox(
-                                height: 10,
-                              ),
+                            /// KPI
+                            if (preferences.showPriceChart &&
+                                connectivityStatusProvider ==
+                                    ConnectivityStatus.isConnected)
+                              const BalanceInfosKpi(),
 
-                              /// PRICE CHART
-                              if (preferences.showPriceChart &&
-                                  connectivityStatusProvider ==
-                                      ConnectivityStatus.isConnected)
-                                const BalanceInfosChart(),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            const MenuWidgetWallet(),
+                            const ExpandablePageView(
+                              children: [
+                                TxList(),
+                                FungiblesTokensListWidget(),
+                              ],
+                            ),
 
-                              /// KPI
-                              if (preferences.showPriceChart &&
-                                  connectivityStatusProvider ==
-                                      ConnectivityStatus.isConnected)
-                                const BalanceInfosKpi(),
-
-                              const SizedBox(
-                                height: 30,
-                              ),
-                              const MenuWidgetWallet(),
-                              const ExpandablePageView(
-                                children: [
-                                  TxList(),
-                                  FungiblesTokensListWidget(),
-                                ],
-                              ),
-
-                              /// BLOG
-                              if (connectivityStatusProvider ==
-                                  ConnectivityStatus.isConnected)
-                                const LastArticles(),
-                              const SizedBox(
-                                height: 80,
-                              ),
-                            ],
-                          ),
+                            /// BLOG
+                            if (connectivityStatusProvider ==
+                                ConnectivityStatus.isConnected)
+                              const LastArticles(),
+                            const SizedBox(
+                              height: 80,
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                if (!kIsWeb && (Platform.isAndroid || Platform.isIOS))
-                  const AppUpdateButton(),
-              ],
-            ),
+              ),
+              if (!kIsWeb && (Platform.isAndroid || Platform.isIOS))
+                const AppUpdateButton(),
+            ],
           ),
         ),
       ),

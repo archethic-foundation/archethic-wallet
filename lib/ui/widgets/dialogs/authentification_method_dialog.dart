@@ -5,7 +5,6 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
 import 'package:aewallet/ui/views/settings/set_password.dart';
 import 'package:aewallet/ui/views/settings/set_yubikey.dart';
@@ -14,6 +13,8 @@ import 'package:aewallet/ui/widgets/dialogs/authentification_method_dialog_help.
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
+import 'package:archethic_dapp_framework_flutter/archethic-dapp-framework-flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -98,18 +99,8 @@ class AuthentificationMethodDialog {
     await showDialog<AuthMethod>(
       context: context,
       builder: (BuildContext context) {
-        final localizations = AppLocalizations.of(context)!;
-        return AlertDialog(
-          backgroundColor: ArchethicTheme.backgroundPopupColor,
-          elevation: 0,
-          title: Text(
-            localizations.authMethod,
-            style: ArchethicThemeStyles.textStyleSize24W700Primary,
-          ),
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(16)),
-          ),
-          content: Column(
+        return aedappfm.PopupTemplate(
+          popupContent: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Flexible(
@@ -168,6 +159,7 @@ class AuthentificationMethodDialog {
               ),
             ],
           ),
+          popupTitle: AppLocalizations.of(context)!.authMethod,
         );
       },
     );

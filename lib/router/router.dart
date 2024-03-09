@@ -78,43 +78,82 @@ class RoutesPath {
       debugLogDiagnostics: true,
       extraCodec: const JsonCodec(),
       routes: [
-        GoRoute(path: '/', builder: (context, state) => const Splash()),
+        GoRoute(
+          path: '/',
+          pageBuilder: (context, state) => CustomTransitionPage<void>(
+            key: state.pageKey,
+            child: const Splash(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    FadeTransition(
+              opacity: animation,
+              child: child,
+            ),
+          ),
+        ),
         ..._authenticationRoutes(rootNavigatorKey),
         ..._introductionRoutes,
         GoRoute(
           path: ShowSendingAnimation.routerPage,
-          builder: (context, state) {
-            final args = state.extra as String?;
-
-            return AnimationLoadingPage(
-              title: args,
-            );
-          },
+          pageBuilder: (context, state) => CustomTransitionPage<void>(
+            key: state.pageKey,
+            child: AnimationLoadingPage(
+              title: state.extra as String?,
+            ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    FadeTransition(
+              opacity: animation,
+              child: child,
+            ),
+          ),
         ),
         GoRoute(
           path: SetPassword.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as Map<String, dynamic>;
-            return SetPassword(
-              header: args['header'] == null ? null : args['header']! as String,
-              description: args['description'] == null
+          pageBuilder: (context, state) => CustomTransitionPage<void>(
+            key: state.pageKey,
+            child: SetPassword(
+              header: (state.extra! as Map<String, dynamic>)['header'] == null
                   ? null
-                  : args['description']! as String,
-              seed: args['seed'] == null ? null : args['seed']! as String,
-            );
-          },
+                  : (state.extra! as Map<String, dynamic>)['header']! as String,
+              description:
+                  (state.extra! as Map<String, dynamic>)['description'] == null
+                      ? null
+                      : (state.extra! as Map<String, dynamic>)['description']!
+                          as String,
+              seed: (state.extra! as Map<String, dynamic>)['seed'] == null
+                  ? null
+                  : (state.extra! as Map<String, dynamic>)['seed']! as String,
+            ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    FadeTransition(
+              opacity: animation,
+              child: child,
+            ),
+          ),
         ),
         GoRoute(
           path: SetYubikey.routerPage,
-          builder: (context, state) {
-            final args = state.extra! as Map<String, dynamic>;
-            return SetYubikey(
-              header: args['header'] == null ? null : args['header']! as String,
-              description: args['description'] == null
+          pageBuilder: (context, state) => CustomTransitionPage<void>(
+            key: state.pageKey,
+            child: SetYubikey(
+              header: (state.extra! as Map<String, dynamic>)['header'] == null
                   ? null
-                  : args['description']! as String,
-            );
-          },
+                  : (state.extra! as Map<String, dynamic>)['header']! as String,
+              description:
+                  (state.extra! as Map<String, dynamic>)['description'] == null
+                      ? null
+                      : (state.extra! as Map<String, dynamic>)['description']!
+                          as String,
+            ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    FadeTransition(
+              opacity: animation,
+              child: child,
+            ),
+          ),
         ),
         AutoLockGuardRoute(
           routes: [
@@ -142,15 +181,31 @@ class RoutesPath {
 class AutoLockGuardRoute extends ShellRoute {
   AutoLockGuardRoute({required super.routes})
       : super(
-          builder: (context, state, child) => AutoLockGuard(child: child),
+          pageBuilder: (context, state, child) => CustomTransitionPage<void>(
+            key: state.pageKey,
+            child: AutoLockGuard(child: child),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    FadeTransition(
+              opacity: animation,
+              child: child,
+            ),
+          ),
         );
 }
 
 class RPCCommandReceiverRoute extends ShellRoute {
   RPCCommandReceiverRoute({required super.routes})
       : super(
-          builder: (context, state, child) => RPCCommandReceiver(
-            child: child,
+          pageBuilder: (context, state, child) => CustomTransitionPage<void>(
+            key: state.pageKey,
+            child: RPCCommandReceiver(child: child),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    FadeTransition(
+              opacity: animation,
+              child: child,
+            ),
           ),
         );
 }

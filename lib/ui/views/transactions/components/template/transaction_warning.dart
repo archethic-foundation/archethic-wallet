@@ -26,7 +26,7 @@ class TransactionWarning extends ConsumerWidget {
         const SizedBox(width: 5),
         Text(
           message,
-          style: ArchethicThemeStyles.textStyleSize12W400Primary,
+          style: ArchethicThemeStyles.textStyleSize12W100Primary,
           textAlign: TextAlign.end,
         ),
       ],

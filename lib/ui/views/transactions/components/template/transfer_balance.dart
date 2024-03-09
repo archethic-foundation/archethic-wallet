@@ -27,9 +27,7 @@ class TransfertBalance extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(SettingsProviders.settings);
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.end,
+    return Row(
       verticalDirection:
           isCurrencyNative ? VerticalDirection.down : VerticalDirection.up,
       children: [
@@ -41,12 +39,12 @@ class TransfertBalance extends ConsumerWidget {
         if (transaction.tokenInformation == null && transaction.amount != null)
           if (settings.showBalances == true)
             Text(
-              CurrencyUtil.convertAmountFormated(
+              ' (${CurrencyUtil.convertAmountFormated(
                 settings.currency.name,
                 marketPrice.amount,
                 transaction.amount!,
-              ),
-              style: ArchethicThemeStyles.textStyleSize12W400Primary,
+              )})',
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
             )
           else
             const TransactionHiddenValue(),
