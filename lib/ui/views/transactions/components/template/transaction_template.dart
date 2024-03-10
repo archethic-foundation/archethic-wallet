@@ -104,7 +104,7 @@ class TransactionTemplate extends ConsumerWidget {
                       const TransactionInputIcon()
                     else
                       transaction.typeTx == 2
-                          ? TransactionOutputIcon(transaction.recipient!)
+                          ? TransactionOutputIcon(transaction.recipient)
                           : const SizedBox.shrink(),
                     if (transaction.decryptedSecret != null &&
                         transaction.decryptedSecret!.isNotEmpty)
