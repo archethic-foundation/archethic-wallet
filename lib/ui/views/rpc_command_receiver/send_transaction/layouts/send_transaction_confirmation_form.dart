@@ -143,11 +143,11 @@ class SendTransactionConfirmationForm extends ConsumerWidget
                   children: [
                     Text(
                       localizations.estimatedFees,
-                      style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                      style: ArchethicThemeStyles.textStyleSize12W100Primary,
                     ),
                     Text(
                       '${formData.value.feesEstimation} ${AccountBalance.cryptoCurrencyLabel}',
-                      style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                      style: ArchethicThemeStyles.textStyleSize12W100Primary,
                     ),
                   ],
                 ),
@@ -155,7 +155,7 @@ class SendTransactionConfirmationForm extends ConsumerWidget
                   children: [
                     Text(
                       localizations.availableAfterCreation,
-                      style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                      style: ArchethicThemeStyles.textStyleSize12W100Primary,
                     ),
                     Text(
                       AmountFormatters.standard(
@@ -163,7 +163,7 @@ class SendTransactionConfirmationForm extends ConsumerWidget
                             formData.value.feesEstimation,
                         AccountBalance.cryptoCurrencyLabel,
                       ),
-                      style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                      style: ArchethicThemeStyles.textStyleSize12W100Primary,
                     ),
                   ],
                 ),
@@ -174,7 +174,7 @@ class SendTransactionConfirmationForm extends ConsumerWidget
                   localizations.signTransactionListTransactionsHeader
                       .replaceAll('%1', '')
                       .trim(),
-                  style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                  style: ArchethicThemeStyles.textStyleSize12W100Primary,
                 ),
                 SizedBox.fromSize(
                   child: Card(
@@ -192,7 +192,7 @@ class SendTransactionConfirmationForm extends ConsumerWidget
                         const JsonEncoder.withIndent('  ').convert(
                           command.data.data,
                         ),
-                        style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
                       ),
                     ),
                   ),

@@ -125,16 +125,6 @@ class AppDialogs {
           popupContent: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  title,
-                  style: ArchethicThemeStyles.textStyleSize14W600Primary,
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
               Text(
                 content,
                 style: ArchethicThemeStyles.textStyleSize12W100Primary,
@@ -149,7 +139,7 @@ class AppDialogs {
                     constraints: const BoxConstraints(maxWidth: 100),
                     child: Text(
                       buttonLabel!,
-                      style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                      style: ArchethicThemeStyles.textStyleSize12W100Primary,
                     ),
                   ),
                   onPressed: () {
@@ -234,7 +224,7 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
                   image: AssetImage(
                     ArchethicTheme.backgroundWelcome,
                   ),
-                  fit: MediaQuery.of(context).size.width >= 440
+                  fit: MediaQuery.of(context).size.width >= 370
                       ? BoxFit.fitWidth
                       : BoxFit.fitHeight,
                   alignment: Alignment.centerRight,

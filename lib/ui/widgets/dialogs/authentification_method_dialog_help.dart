@@ -66,7 +66,7 @@ class AuthentificationMethodDialogHelp {
                                 AuthMethod.password,
                               ).getDisplayName(context),
                               style: ArchethicThemeStyles
-                                  .textStyleSize12W400Primary,
+                                  .textStyleSize12W100Primary,
                             ),
                             Text(
                               const AuthenticationMethod(
@@ -88,7 +88,7 @@ class AuthentificationMethodDialogHelp {
                                 AuthMethod.pin,
                               ).getDisplayName(context),
                               style: ArchethicThemeStyles
-                                  .textStyleSize12W400Primary,
+                                  .textStyleSize12W100Primary,
                             ),
                             Text(
                               const AuthenticationMethod(
@@ -105,7 +105,7 @@ class AuthentificationMethodDialogHelp {
                                 AuthMethod.password,
                               ).getDisplayName(context),
                               style: ArchethicThemeStyles
-                                  .textStyleSize12W400Primary,
+                                  .textStyleSize12W100Primary,
                             ),
                             Text(
                               const AuthenticationMethod(
@@ -122,7 +122,7 @@ class AuthentificationMethodDialogHelp {
                                 AuthMethod.biometrics,
                               ).getDisplayName(context),
                               style: ArchethicThemeStyles
-                                  .textStyleSize12W400Primary,
+                                  .textStyleSize12W100Primary,
                             ),
                             Text(
                               const AuthenticationMethod(
@@ -139,7 +139,7 @@ class AuthentificationMethodDialogHelp {
                                 AuthMethod.yubikeyWithYubicloud,
                               ).getDisplayName(context),
                               style: ArchethicThemeStyles
-                                  .textStyleSize12W400Primary,
+                                  .textStyleSize12W100Primary,
                             ),
                             Text(
                               const AuthenticationMethod(

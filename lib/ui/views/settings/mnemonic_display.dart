@@ -107,7 +107,7 @@ class _MnemonicDisplayState extends ConsumerState<MnemonicDisplay> {
                                       ? '•' * 6
                                       : entry.value,
                                   style: ArchethicThemeStyles
-                                      .textStyleSize12W400Primary,
+                                      .textStyleSize12W100Primary,
                                 ),
                               ],
                             ),
@@ -156,7 +156,7 @@ class _MnemonicDisplayState extends ConsumerState<MnemonicDisplay> {
                             title: Text(
                               AppLocalizations.of(context)!.seedHex,
                               style: ArchethicThemeStyles
-                                  .textStyleSize12W400Primary,
+                                  .textStyleSize12W100Primary,
                             ),
                           );
                         },
@@ -165,7 +165,7 @@ class _MnemonicDisplayState extends ConsumerState<MnemonicDisplay> {
                           child: SelectableText(
                             widget.seed,
                             style:
-                                ArchethicThemeStyles.textStyleSize12W400Primary,
+                                ArchethicThemeStyles.textStyleSize12W100Primary,
                           ),
                         ),
                         isExpanded: _isExpanded,

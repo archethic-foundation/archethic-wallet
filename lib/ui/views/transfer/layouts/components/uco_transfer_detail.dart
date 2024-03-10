@@ -55,7 +55,7 @@ class UCOTransferDetail extends ConsumerWidget {
             children: [
               Text(
                 '${localizations.txListFrom} ${accountSelected.nameDisplayed}',
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
             ],
           ),
@@ -63,14 +63,14 @@ class UCOTransferDetail extends ConsumerWidget {
             children: [
               Text(
                 '${localizations.txListTo} ${transfer.recipient.format(localizations)}',
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
               Text(
                 AmountFormatters.standard(
                   amountInUco,
                   transfer.symbol(context),
                 ),
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
             ],
           ),
@@ -78,14 +78,14 @@ class UCOTransferDetail extends ConsumerWidget {
             children: [
               Text(
                 localizations.estimatedFees,
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
               Text(
                 AmountFormatters.standardSmallValue(
                   transfer.feeEstimationOrZero,
                   AccountBalance.cryptoCurrencyLabel,
                 ),
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
             ],
           ),
@@ -93,14 +93,14 @@ class UCOTransferDetail extends ConsumerWidget {
             children: [
               Text(
                 localizations.total,
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
               Text(
                 AmountFormatters.standard(
                   transfer.feeEstimationOrZero + amountInUco,
                   AccountBalance.cryptoCurrencyLabel,
                 ),
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
             ],
           ),
@@ -108,7 +108,7 @@ class UCOTransferDetail extends ConsumerWidget {
             children: [
               Text(
                 localizations.availableAfterTransfer,
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
               Text(
                 AmountFormatters.standard(
@@ -116,7 +116,7 @@ class UCOTransferDetail extends ConsumerWidget {
                       (transfer.feeEstimationOrZero + amountInUco),
                   transfer.symbol(context),
                 ),
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
             ],
           ),
@@ -129,14 +129,14 @@ class UCOTransferDetail extends ConsumerWidget {
                     children: [
                       Text(
                         localizations.sendMessageConfirmHeader,
-                        style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: Text(
                           transfer.message,
                           style:
-                              ArchethicThemeStyles.textStyleSize12W400Primary,
+                              ArchethicThemeStyles.textStyleSize12W100Primary,
                         ),
                       ),
                     ],

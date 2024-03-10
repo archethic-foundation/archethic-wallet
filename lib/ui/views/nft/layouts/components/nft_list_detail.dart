@@ -233,11 +233,11 @@ class _NFTLabelProperties extends ConsumerWidget {
         : propertiesToCount == 1
             ? Text(
                 '$propertiesToCount ${localizations.property}',
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               )
             : Text(
                 '$propertiesToCount ${localizations.properties}',
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               );
   }
 }

@@ -1,5 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'dart:ui';
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/model/data/contact.dart';
@@ -53,79 +55,100 @@ class ContactsDialog {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              backgroundColor: ArchethicTheme.backgroundPopupColor,
+              backgroundColor: Colors.transparent,
               elevation: 0,
               insetPadding: const EdgeInsets.only(
                 top: 100,
                 bottom: 100,
-                left: 20,
-                right: 20,
               ),
               alignment: Alignment.topCenter,
-              title: Column(
-                children: [
-                  Text(
-                    localizations.addressBookHeader,
-                    style: ArchethicThemeStyles.textStyleSize24W700Primary,
-                  ),
-                  AppTextField(
-                    focusNode: searchNameFocusNode,
-                    controller: searchNameController,
-                    autofocus: true,
-                    autocorrect: false,
-                    labelText: localizations.searchField,
-                    keyboardType: TextInputType.text,
-                    style: ArchethicThemeStyles.textStyleSize16W600Primary,
-                    inputFormatters: <TextInputFormatter>[
-                      UpperCaseTextFormatter(),
-                      LengthLimitingTextInputFormatter(20),
-                    ],
-                    onChanged: (text) async {
-                      contacts = await ref.read(
-                        ContactProviders.fetchContacts().future,
-                      )
-                        ..removeWhere(
-                          (element) =>
-                              element.format.toUpperCase() ==
-                              accountSelected!.nameDisplayed.toUpperCase(),
-                        );
-                      setState(
-                        () {
-                          contacts = contacts.where((Contact contact) {
-                            final contactName = contact.format.toUpperCase();
-                            return contactName.contains(text.toUpperCase());
-                          }).toList();
-                          pickerItemsList.clear();
-                          for (final contact in contacts) {
-                            if (contact.format.toUpperCase() !=
-                                accountSelected!.nameDisplayed.toUpperCase()) {
-                              pickerItemsList.add(
-                                PickerItem(
-                                  contact.format,
-                                  null,
-                                  null,
-                                  null,
-                                  contact,
-                                  true,
-                                ),
+              content: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: ArchethicTheme.sheetBackground.withOpacity(0.2),
+                      border: Border.all(
+                        color: ArchethicTheme.sheetBorder,
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          localizations.addressBookHeader,
+                          style:
+                              ArchethicThemeStyles.textStyleSize24W700Primary,
+                        ),
+                        AppTextField(
+                          focusNode: searchNameFocusNode,
+                          controller: searchNameController,
+                          autofocus: true,
+                          autocorrect: false,
+                          labelText: localizations.searchField,
+                          keyboardType: TextInputType.text,
+                          style:
+                              ArchethicThemeStyles.textStyleSize16W600Primary,
+                          inputFormatters: <TextInputFormatter>[
+                            UpperCaseTextFormatter(),
+                            LengthLimitingTextInputFormatter(20),
+                          ],
+                          onChanged: (text) async {
+                            contacts = await ref.read(
+                              ContactProviders.fetchContacts().future,
+                            )
+                              ..removeWhere(
+                                (element) =>
+                                    element.format.toUpperCase() ==
+                                    accountSelected!.nameDisplayed
+                                        .toUpperCase(),
                               );
-                            }
-                          }
-                        },
-                      );
-                    },
+                            setState(
+                              () {
+                                contacts = contacts.where((Contact contact) {
+                                  final contactName =
+                                      contact.format.toUpperCase();
+                                  return contactName
+                                      .contains(text.toUpperCase());
+                                }).toList();
+                                pickerItemsList.clear();
+                                for (final contact in contacts) {
+                                  if (contact.format.toUpperCase() !=
+                                      accountSelected!.nameDisplayed
+                                          .toUpperCase()) {
+                                    pickerItemsList.add(
+                                      PickerItem(
+                                        contact.format,
+                                        null,
+                                        null,
+                                        null,
+                                        contact,
+                                        true,
+                                      ),
+                                    );
+                                  }
+                                }
+                              },
+                            );
+                          },
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: PickerWidget(
+                              pickerItems: pickerItemsList,
+                              onSelected: (value) {
+                                context.pop(value.value);
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
-              ),
-              content: SingleChildScrollView(
-                child: PickerWidget(
-                  pickerItems: pickerItemsList,
-                  onSelected: (value) {
-                    context.pop(value.value);
-                  },
                 ),
               ),
             );

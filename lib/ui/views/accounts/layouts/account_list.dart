@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -11,7 +13,6 @@ import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -65,7 +66,7 @@ class AccountsListWidget extends ConsumerWidget {
             child: ListView.builder(
               physics: const AlwaysScrollableScrollPhysics(),
               padding: EdgeInsets.only(
-                top: MediaQuery.of(context).padding.top + 10,
+                top: MediaQuery.of(context).padding.top + 20,
                 bottom: MediaQuery.of(context).padding.bottom + 40,
               ),
               itemCount: accountsList.length,
@@ -87,7 +88,13 @@ class AccountsListWidget extends ConsumerWidget {
                         curve: Curves.easeOutQuad,
                       );
                 }
-                return item;
+                return ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                    child: item,
+                  ),
+                );
               },
             ),
           ),

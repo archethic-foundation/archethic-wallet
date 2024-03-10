@@ -54,7 +54,7 @@ class TransactionRawState extends State<TransactionRaw> {
                   '%1',
                   (widget.command.key + 1).toString(),
                 ),
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
             ],
           ),
@@ -77,7 +77,7 @@ class TransactionRawState extends State<TransactionRaw> {
                       child: SelectableText(
                         const JsonEncoder.withIndent('  ')
                             .convert(widget.command.value.data),
-                        style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
                       ),
                     ),
                   ),

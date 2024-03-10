@@ -180,37 +180,30 @@ class NFTCategoryRepository {
     return [
       NftCategory(
         name: localizations.nftWithoutCategory,
-        image: 'assets/images/category_nft_without.jpg',
       ),
       NftCategory(
         id: 1,
         name: localizations.nftCategoryArt,
-        image: 'assets/images/category_nft_art.jpg',
       ),
       NftCategory(
         id: 2,
         name: localizations.nftCategoryAccess,
-        image: 'assets/images/category_nft_access.jpg',
       ),
       /* NftCategory(
         id: 3,
         name: localizations.nftCategoryCollectibles,
-        image: 'assets/images/category_nft_collectibles.jpg',
       ),
       NftCategory(
         id: 4,
         name: localizations.nftCategoryMusic,
-        image: 'assets/images/category_nft_music.jpg',
       ),*/
       NftCategory(
         id: 5,
         name: localizations.nftCategoryDoc,
-        image: 'assets/images/category_nft_doc.jpg',
       ),
       NftCategory(
         id: 6,
         name: localizations.nftCategoryLoyaltyCard,
-        image: 'assets/images/category_nft_loyalty_card.jpg',
       ),
     ];
   }

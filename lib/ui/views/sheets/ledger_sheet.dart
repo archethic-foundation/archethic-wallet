@@ -164,7 +164,7 @@ class _LedgerSheetState extends ConsumerState<LedgerSheet> {
                         child: SelectableText(
                           response,
                           style:
-                              ArchethicThemeStyles.textStyleSize16W200Primary,
+                              ArchethicThemeStyles.textStyleSize16W100Primary,
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -175,12 +175,12 @@ class _LedgerSheetState extends ConsumerState<LedgerSheet> {
                       ),
                       Text(
                         info,
-                        style: ArchethicThemeStyles.textStyleSize16W200Primary,
+                        style: ArchethicThemeStyles.textStyleSize16W100Primary,
                         textAlign: TextAlign.center,
                       ),
                       SelectableText(
                         labelResponse,
-                        style: ArchethicThemeStyles.textStyleSize16W200Primary,
+                        style: ArchethicThemeStyles.textStyleSize16W100Primary,
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(

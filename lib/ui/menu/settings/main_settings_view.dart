@@ -52,7 +52,7 @@ class MainMenuView extends ConsumerWidget {
                                 .network
                                 .getDisplayName(context),
                             style:
-                                ArchethicThemeStyles.textStyleSize12W400Primary,
+                                ArchethicThemeStyles.textStyleSize12W100Primary,
                           ),
                         ),
                       ),

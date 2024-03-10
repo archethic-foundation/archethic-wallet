@@ -59,13 +59,13 @@ class SingleContactBalance extends ConsumerWidget {
                   children: [
                     AutoSizeText(
                       '${accountBalance.nativeTokenValueToString(language.getLocaleStringWithoutDefault(), digits: 2)} ${accountBalance.nativeTokenName}',
-                      style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                      style: ArchethicThemeStyles.textStyleSize12W100Primary,
                       textAlign: TextAlign.end,
                     ),
                     AutoSizeText(
                       fiatAmountString,
                       textAlign: TextAlign.end,
-                      style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                      style: ArchethicThemeStyles.textStyleSize12W100Primary,
                     ),
                   ],
                 )
@@ -75,11 +75,11 @@ class SingleContactBalance extends ConsumerWidget {
                     AutoSizeText(
                       fiatAmountString,
                       textAlign: TextAlign.end,
-                      style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                      style: ArchethicThemeStyles.textStyleSize12W100Primary,
                     ),
                     AutoSizeText(
                       '${accountBalance.nativeTokenValueToString(language.getLocaleStringWithoutDefault(), digits: 2)} ${accountBalance.nativeTokenName}',
-                      style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                      style: ArchethicThemeStyles.textStyleSize12W100Primary,
                       textAlign: TextAlign.end,
                     ),
                   ],
@@ -90,13 +90,13 @@ class SingleContactBalance extends ConsumerWidget {
             children: [
               AutoSizeText(
                 '···········',
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
                 textAlign: TextAlign.end,
               ),
               AutoSizeText(
                 '···········',
                 textAlign: TextAlign.end,
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
             ],
           );

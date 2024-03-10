@@ -144,7 +144,7 @@ class AddServiceConfirmationForm extends ConsumerWidget
                     '%2',
                     accountSelected!.nameDisplayed,
                   ),
-              style: ArchethicThemeStyles.textStyleSize12W400Primary,
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
             ),
             const SizedBox(
               height: 30,
@@ -171,12 +171,12 @@ class AddServiceConfirmationForm extends ConsumerWidget
             children: [
               Text(
                 localizations.serviceName,
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
               Expanded(
                 child: Text(
                   serviceName,
-                  style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                  style: ArchethicThemeStyles.textStyleSize12W100Primary,
                   textAlign: TextAlign.end,
                 ),
               ),
@@ -186,11 +186,11 @@ class AddServiceConfirmationForm extends ConsumerWidget
             children: [
               Text(
                 localizations.estimatedFees,
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
               Text(
                 '0 ${AccountBalance.cryptoCurrencyLabel}',
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
             ],
           ),
@@ -198,14 +198,14 @@ class AddServiceConfirmationForm extends ConsumerWidget
             children: [
               Text(
                 localizations.availableAfterCreation,
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
               Text(
                 AmountFormatters.standard(
                   accountSelected!.balance!.nativeTokenValue,
                   AccountBalance.cryptoCurrencyLabel,
                 ),
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
             ],
           ),

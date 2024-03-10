@@ -137,7 +137,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
               image: AssetImage(
                 ArchethicTheme.backgroundSmall,
               ),
-              fit: MediaQuery.of(context).size.width >= 440
+              fit: MediaQuery.of(context).size.width >= 370
                   ? BoxFit.fitWidth
                   : BoxFit.fitHeight,
               alignment: Alignment.centerRight,
@@ -190,7 +190,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
                   ),
                   child: AutoSizeText(
                     'OTP',
-                    style: ArchethicThemeStyles.textStyleSize16W400Primary,
+                    style: ArchethicThemeStyles.textStyleSize16W100Primary,
                     textAlign: TextAlign.center,
                     maxLines: 1,
                     stepGranularity: 0.1,
@@ -200,7 +200,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
                   ElevatedButton(
                     child: Text(
                       buttonNFCLabel,
-                      style: ArchethicThemeStyles.textStyleSize16W200Primary,
+                      style: ArchethicThemeStyles.textStyleSize16W100Primary,
                     ),
                     onPressed: () async {
                       sl.get<HapticUtil>().feedback(

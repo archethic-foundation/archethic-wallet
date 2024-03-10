@@ -88,7 +88,7 @@ class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
             children: [
               Text(
                 '${localizations.txListFrom} ${accountSelected.nameDisplayed}',
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
             ],
           ),
@@ -96,7 +96,7 @@ class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
             children: [
               Text(
                 '${localizations.txListTo} ${transfer.recipient.format(localizations)}',
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
               if (transfer.transferType != TransferType.nft)
                 Text(
@@ -104,7 +104,7 @@ class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
                     transfer.amount,
                     transfer.symbol(context),
                   ),
-                  style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                  style: ArchethicThemeStyles.textStyleSize12W100Primary,
                 )
               else
                 Expanded(
@@ -113,7 +113,7 @@ class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
                       transfer.amount,
                       'NFT "$nftName"',
                     ),
-                    style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                    style: ArchethicThemeStyles.textStyleSize12W100Primary,
                     textAlign: TextAlign.end,
                   ),
                 ),
@@ -123,14 +123,14 @@ class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
             children: [
               Text(
                 localizations.estimatedFees,
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
               Text(
                 AmountFormatters.standardSmallValue(
                   transfer.feeEstimation.valueOrNull ?? 0,
                   AccountBalance.cryptoCurrencyLabel,
                 ),
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
             ],
           ),
@@ -138,7 +138,7 @@ class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
             children: [
               Text(
                 localizations.availableAfterTransfer,
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
               if (transfer.transferType != TransferType.nft)
                 Text(
@@ -146,7 +146,7 @@ class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
                     transfer.accountToken!.amount! - transfer.amount,
                     transfer.symbol(context),
                   ),
-                  style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                  style: ArchethicThemeStyles.textStyleSize12W100Primary,
                 )
               else
                 Expanded(
@@ -155,7 +155,7 @@ class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
                       transfer.accountToken!.amount! - transfer.amount,
                       'NFT "$nftName"',
                     ),
-                    style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                    style: ArchethicThemeStyles.textStyleSize12W100Primary,
                     textAlign: TextAlign.end,
                   ),
                 ),
@@ -170,14 +170,14 @@ class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
                     children: [
                       Text(
                         localizations.sendMessageConfirmHeader,
-                        style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: Text(
                           transfer.message,
                           style:
-                              ArchethicThemeStyles.textStyleSize12W400Primary,
+                              ArchethicThemeStyles.textStyleSize12W100Primary,
                         ),
                       ),
                     ],

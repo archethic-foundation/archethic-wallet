@@ -12,7 +12,7 @@ part of 'nft_category.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 NftCategory _$NftCategoryFromJson(Map<String, dynamic> json) {
   return _NftCategory.fromJson(json);
@@ -22,7 +22,6 @@ NftCategory _$NftCategoryFromJson(Map<String, dynamic> json) {
 mixin _$NftCategory {
   int get id => throw _privateConstructorUsedError;
   dynamic get name => throw _privateConstructorUsedError;
-  String get image => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +35,7 @@ abstract class $NftCategoryCopyWith<$Res> {
           NftCategory value, $Res Function(NftCategory) then) =
       _$NftCategoryCopyWithImpl<$Res, NftCategory>;
   @useResult
-  $Res call({int id, dynamic name, String image});
+  $Res call({int id, dynamic name});
 }
 
 /// @nodoc
@@ -54,7 +53,6 @@ class _$NftCategoryCopyWithImpl<$Res, $Val extends NftCategory>
   $Res call({
     Object? id = null,
     Object? name = freezed,
-    Object? image = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -65,10 +63,6 @@ class _$NftCategoryCopyWithImpl<$Res, $Val extends NftCategory>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      image: null == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
-              as String,
     ) as $Val);
   }
 }
@@ -81,7 +75,7 @@ abstract class _$$NftCategoryImplCopyWith<$Res>
       __$$NftCategoryImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, dynamic name, String image});
+  $Res call({int id, dynamic name});
 }
 
 /// @nodoc
@@ -97,7 +91,6 @@ class __$$NftCategoryImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = freezed,
-    Object? image = null,
   }) {
     return _then(_$NftCategoryImpl(
       id: null == id
@@ -105,10 +98,6 @@ class __$$NftCategoryImplCopyWithImpl<$Res>
           : id // ignore: cast_nullable_to_non_nullable
               as int,
       name: freezed == name ? _value.name! : name,
-      image: null == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -116,8 +105,7 @@ class __$$NftCategoryImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$NftCategoryImpl extends _NftCategory {
-  const _$NftCategoryImpl({this.id = 0, this.name = '', this.image = ''})
-      : super._();
+  const _$NftCategoryImpl({this.id = 0, this.name = ''}) : super._();
 
   factory _$NftCategoryImpl.fromJson(Map<String, dynamic> json) =>
       _$$NftCategoryImplFromJson(json);
@@ -128,13 +116,10 @@ class _$NftCategoryImpl extends _NftCategory {
   @override
   @JsonKey()
   final dynamic name;
-  @override
-  @JsonKey()
-  final String image;
 
   @override
   String toString() {
-    return 'NftCategory(id: $id, name: $name, image: $image)';
+    return 'NftCategory(id: $id, name: $name)';
   }
 
   @override
@@ -143,14 +128,13 @@ class _$NftCategoryImpl extends _NftCategory {
         (other.runtimeType == runtimeType &&
             other is _$NftCategoryImpl &&
             (identical(other.id, id) || other.id == id) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            (identical(other.image, image) || other.image == image));
+            const DeepCollectionEquality().equals(other.name, name));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, const DeepCollectionEquality().hash(name), image);
+  int get hashCode =>
+      Object.hash(runtimeType, id, const DeepCollectionEquality().hash(name));
 
   @JsonKey(ignore: true)
   @override
@@ -167,10 +151,8 @@ class _$NftCategoryImpl extends _NftCategory {
 }
 
 abstract class _NftCategory extends NftCategory {
-  const factory _NftCategory(
-      {final int id,
-      final dynamic name,
-      final String image}) = _$NftCategoryImpl;
+  const factory _NftCategory({final int id, final dynamic name}) =
+      _$NftCategoryImpl;
   const _NftCategory._() : super._();
 
   factory _NftCategory.fromJson(Map<String, dynamic> json) =
@@ -180,8 +162,6 @@ abstract class _NftCategory extends NftCategory {
   int get id;
   @override
   dynamic get name;
-  @override
-  String get image;
   @override
   @JsonKey(ignore: true)
   _$$NftCategoryImplCopyWith<_$NftCategoryImpl> get copyWith =>

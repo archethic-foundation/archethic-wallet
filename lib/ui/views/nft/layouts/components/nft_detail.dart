@@ -244,7 +244,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail>
               padding: const EdgeInsets.only(top: 10),
               child: Text(
                 '[${widget.symbol}]',
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
             ),
           Expanded(

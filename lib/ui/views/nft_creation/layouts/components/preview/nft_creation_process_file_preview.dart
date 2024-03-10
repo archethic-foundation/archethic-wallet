@@ -54,7 +54,7 @@ class NFTCreationProcessFilePreview extends ConsumerWidget {
             child: Align(
               child: Text(
                 nftCreation.name,
-                style: ArchethicThemeStyles.textStyleSize16W400Primary,
+                style: ArchethicThemeStyles.textStyleSize16W100Primary,
               ),
             ),
           ),
@@ -65,7 +65,7 @@ class NFTCreationProcessFilePreview extends ConsumerWidget {
               child: Text(
                 key: const Key('nftCreationConfirmation'),
                 '[${nftCreation.symbol}]',
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
             ),
           ),
@@ -75,7 +75,7 @@ class NFTCreationProcessFilePreview extends ConsumerWidget {
             child: Align(
               child: Text(
                 nftCreation.description,
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
             ),
           ),

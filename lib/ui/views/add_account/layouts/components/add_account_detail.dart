@@ -29,12 +29,12 @@ class AddAccountDetail extends ConsumerWidget {
           children: [
             Text(
               localizations.serviceName,
-              style: ArchethicThemeStyles.textStyleSize12W400Primary,
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
             ),
             Expanded(
               child: Text(
                 addAccount.name,
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
                 textAlign: TextAlign.end,
               ),
             ),
@@ -44,11 +44,11 @@ class AddAccountDetail extends ConsumerWidget {
           children: [
             Text(
               localizations.estimatedFees,
-              style: ArchethicThemeStyles.textStyleSize12W400Primary,
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
             ),
             Text(
               '0 ${AccountBalance.cryptoCurrencyLabel}',
-              style: ArchethicThemeStyles.textStyleSize12W400Primary,
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
             ),
           ],
         ),
@@ -56,14 +56,14 @@ class AddAccountDetail extends ConsumerWidget {
           children: [
             Text(
               localizations.availableAfterCreation,
-              style: ArchethicThemeStyles.textStyleSize12W400Primary,
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
             ),
             Text(
               AmountFormatters.standard(
                 accountSelected!.balance!.nativeTokenValue,
                 addAccount.symbolFees(context),
               ),
-              style: ArchethicThemeStyles.textStyleSize12W400Primary,
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
             ),
           ],
         ),

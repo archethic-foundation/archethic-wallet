@@ -63,7 +63,7 @@ class NFTPropertiesArchethic extends ConsumerWidget {
                                     .toString()
                                     .breakText(30),
                                 style: ArchethicThemeStyles
-                                    .textStyleSize12W400Primary,
+                                    .textStyleSize12W100Primary,
                               ),
                             ),
                           ],

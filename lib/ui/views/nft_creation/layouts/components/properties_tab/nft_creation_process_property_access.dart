@@ -102,7 +102,7 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
                           overflow: TextOverflow.ellipsis,
                           softWrap: false,
                           style:
-                              ArchethicThemeStyles.textStyleSize12W400Primary,
+                              ArchethicThemeStyles.textStyleSize12W100Primary,
                         ),
                       ),
                     ],

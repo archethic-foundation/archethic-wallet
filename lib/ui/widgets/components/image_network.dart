@@ -43,7 +43,7 @@ class ImageNetwork extends ConsumerWidget {
             padding: const EdgeInsets.all(20),
             child: Text(
               localizations.imageNotAvailable,
-              style: ArchethicThemeStyles.textStyleSize12W400Primary,
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
               textAlign: TextAlign.center,
             ),
           );

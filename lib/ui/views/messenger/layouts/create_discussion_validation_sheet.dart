@@ -93,7 +93,7 @@ class _CreateDiscussionValidationSheetState
             image: AssetImage(
               ArchethicTheme.backgroundSmall,
             ),
-            fit: MediaQuery.of(context).size.width >= 440
+            fit: MediaQuery.of(context).size.width >= 370
                 ? BoxFit.fitWidth
                 : BoxFit.fitHeight,
             alignment: Alignment.centerRight,
