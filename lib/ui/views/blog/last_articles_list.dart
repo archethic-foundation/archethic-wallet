@@ -1,6 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:aewallet/application/blog.dart';
@@ -178,66 +176,61 @@ class SlidingCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final gauss = math.exp(-(math.pow(offset!.abs() - 0.5, 2) / 0.08));
-    return Transform.translate(
-      offset: Offset(-32 * gauss * offset!.sign, 0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: Card(
-            elevation: 0,
-            margin: index == 0
-                ? const EdgeInsets.only(right: 8, bottom: 8)
-                : const EdgeInsets.only(left: 8, right: 8, bottom: 8),
-            color: Colors.transparent,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-              side: const BorderSide(color: Colors.white10),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                ClipRRect(
-                  borderRadius:
-                      const BorderRadius.vertical(top: Radius.circular(16)),
-                  child: assetName == null
-                      ? SizedBox(
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: Card(
+          elevation: 0,
+          margin: index == 0
+              ? const EdgeInsets.only(right: 8, bottom: 8)
+              : const EdgeInsets.only(left: 8, right: 8, bottom: 8),
+          color: Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+            side: const BorderSide(color: Colors.white10),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              ClipRRect(
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(16)),
+                child: assetName == null
+                    ? SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: 150,
+                      )
+                    : ImageNetwork(
+                        url: '$assetName',
+                        fit: BoxFit.fitHeight,
+                        width: MediaQuery.of(context).size.width,
+                        height: 150,
+                        alignment: Alignment(-offset!.abs(), 0),
+                        error: SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: 150,
-                        )
-                      : ImageNetwork(
-                          url: '$assetName',
-                          fit: BoxFit.fitHeight,
+                        ),
+                        loading: SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: 150,
-                          alignment: Alignment(-offset!.abs(), 0),
-                          error: SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: 150,
-                          ),
-                          loading: SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: 150,
-                            child: Center(
-                              child: CircularProgressIndicator(
-                                color: ArchethicTheme.text,
-                                strokeWidth: 1,
-                              ),
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: ArchethicTheme.text,
+                              strokeWidth: 1,
                             ),
                           ),
                         ),
+                      ),
+              ),
+              Expanded(
+                child: CardContent(
+                  name: name,
+                  date: date,
+                  author: author,
                 ),
-                Expanded(
-                  child: CardContent(
-                    name: name,
-                    date: date,
-                    offset: gauss,
-                    author: author,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -250,12 +243,10 @@ class CardContent extends ConsumerWidget {
     super.key,
     @required this.name,
     @required this.date,
-    @required this.offset,
     @required this.author,
   });
   final String? name;
   final String? date;
-  final double? offset;
   final String? author;
 
   @override
@@ -265,20 +256,14 @@ class CardContent extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Transform.translate(
-            offset: Offset(8 * offset!, 0),
-            child: Text(
-              name!.replaceAll(RegExp(r'\s+'), ' '),
-              style: ArchethicThemeStyles.textStyleSize12W100Primary,
-            ),
+          Text(
+            name!.replaceAll(RegExp(r'\s+'), ' '),
+            style: ArchethicThemeStyles.textStyleSize12W100Primary,
           ),
           const SizedBox(height: 5),
-          Transform.translate(
-            offset: Offset(32 * offset!, 0),
-            child: Text(
-              '${date!} by ${author!}',
-              style: ArchethicThemeStyles.textStyleSize10W100Primary,
-            ),
+          Text(
+            '${date!} by ${author!}',
+            style: ArchethicThemeStyles.textStyleSize10W100Primary,
           ),
         ],
       ),

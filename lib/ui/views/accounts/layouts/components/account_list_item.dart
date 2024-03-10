@@ -244,10 +244,13 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
             ),
           ),
           child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              color: widget.account.selected!
+                  ? ArchethicTheme.backgroundAccountsListCardSelected
+                  : ArchethicTheme.backgroundAccountsListCard,
+            ),
             height: 100,
-            color: widget.account.selected!
-                ? ArchethicTheme.backgroundAccountsListCardSelected
-                : ArchethicTheme.backgroundAccountsListCard,
             padding: const EdgeInsets.symmetric(
               vertical: 10,
               horizontal: 20,
