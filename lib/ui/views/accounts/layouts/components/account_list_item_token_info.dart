@@ -24,25 +24,25 @@ class AccountListItemTokenInfo extends ConsumerWidget {
             account.balance!.tokensFungiblesNb > 1
                 ? '${account.balance!.tokensFungiblesNb} ${localizations.tokens}'
                 : '${account.balance!.tokensFungiblesNb} ${localizations.token}',
-            style: ArchethicThemeStyles.textStyleSize12W400Primary,
+            style: ArchethicThemeStyles.textStyleSize12W100Primary,
             textAlign: TextAlign.end,
           )
         else
           AutoSizeText(
             localizations.noToken,
-            style: ArchethicThemeStyles.textStyleSize12W400Primary45,
+            style: ArchethicThemeStyles.textStyleSize12W100Primary60,
             textAlign: TextAlign.end,
           ),
         if (account.balance != null && account.balance!.nftNb > 0)
           AutoSizeText(
             '${account.balance!.nftNb} ${localizations.nft}',
-            style: ArchethicThemeStyles.textStyleSize12W400Primary,
+            style: ArchethicThemeStyles.textStyleSize12W100Primary,
             textAlign: TextAlign.end,
           )
         else
           AutoSizeText(
             localizations.noNFT,
-            style: ArchethicThemeStyles.textStyleSize12W400Primary45,
+            style: ArchethicThemeStyles.textStyleSize12W100Primary60,
             textAlign: TextAlign.end,
           ),
       ],

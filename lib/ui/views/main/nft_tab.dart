@@ -83,7 +83,7 @@ class NFTTabBody extends ConsumerWidget {
                         Text(
                           AppLocalizations.of(context)!.nftTabDescriptionHeader,
                           style:
-                              ArchethicThemeStyles.textStyleSize12W400Primary,
+                              ArchethicThemeStyles.textStyleSize12W100Primary,
                           textAlign: TextAlign.justify,
                         ),
                         const SizedBox(

@@ -44,7 +44,7 @@ class MessengerDiscussionPage extends ConsumerWidget {
           image: AssetImage(
             ArchethicTheme.backgroundSmall,
           ),
-          fit: MediaQuery.of(context).size.width >= 440
+          fit: MediaQuery.of(context).size.width >= 370
               ? BoxFit.fitWidth
               : BoxFit.fitHeight,
           alignment: Alignment.centerRight,
@@ -483,7 +483,7 @@ class _MessageItem extends ConsumerWidget {
             const SizedBox(height: 3),
             SelectableText(
               message.content,
-              style: ArchethicThemeStyles.textStyleSize12W400Primary,
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
             ),
             Align(
               alignment: Alignment.bottomRight,

@@ -380,7 +380,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
               image: AssetImage(
                 ArchethicTheme.backgroundSmall,
               ),
-              fit: MediaQuery.of(context).size.width >= 440
+              fit: MediaQuery.of(context).size.width >= 370
                   ? BoxFit.fitWidth
                   : BoxFit.fitHeight,
               alignment: Alignment.centerRight,
@@ -443,7 +443,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
                           child: AutoSizeText(
                             widget.description,
                             style:
-                                ArchethicThemeStyles.textStyleSize16W200Primary,
+                                ArchethicThemeStyles.textStyleSize16W100Primary,
                             textAlign: TextAlign.center,
                             maxLines: 1,
                             stepGranularity: 0.1,
@@ -492,7 +492,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
                           child: AutoSizeText(
                             '${localizations.attempt}${pinAuthentication.failedAttemptsCount}/${pinAuthentication.maxAttemptsCount}',
                             style:
-                                ArchethicThemeStyles.textStyleSize16W200Primary,
+                                ArchethicThemeStyles.textStyleSize16W100Primary,
                             textAlign: TextAlign.center,
                             maxLines: 1,
                             stepGranularity: 0.1,

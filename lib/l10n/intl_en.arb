@@ -193,6 +193,7 @@
     "transactionBuyHeader": "Buy UCO",
     "receive": "Receive",
     "buy": "Buy",
+    "refresh": "Refresh",
     "chart": "Chart",
     "share": "Share",
     "chartOptionLabel1h": "1h",
@@ -423,7 +424,7 @@
         "placeholders_order": [],
         "placeholders": {}
     },
-    "exitNFTCreationProcessTitle": "Exit NFT Creation Process - Confirmation",
+    "exitNFTCreationProcessTitle": "Confirmation",
     "@exitNFTCreationProcessTitle": {
         "type": "text",
         "placeholders_order": [],

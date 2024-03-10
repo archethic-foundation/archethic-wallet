@@ -35,7 +35,7 @@ class NftCategoryDialog {
         PickerItem(
           nftCategory.name.toString(),
           null,
-          nftCategory.image,
+          null,
           null,
           nftCategory,
           true,

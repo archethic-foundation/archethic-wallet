@@ -44,22 +44,6 @@ class NFTList extends ConsumerWidget {
         padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
         child: Column(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Opacity(
-                opacity: 0.5,
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: Image.asset(
-                    'assets/images/nft-empty.png',
-                    fit: BoxFit.fitHeight,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
             Text(
               localizations.nftListEmptyExplanation,
               style: ArchethicThemeStyles.textStyleSize12W100Primary,

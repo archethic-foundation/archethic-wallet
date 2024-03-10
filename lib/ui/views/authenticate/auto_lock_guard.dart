@@ -276,7 +276,7 @@ class _LockMask extends ConsumerWidget {
                   image: AssetImage(
                     ArchethicTheme.backgroundWelcome,
                   ),
-                  fit: MediaQuery.of(context).size.width >= 440
+                  fit: MediaQuery.of(context).size.width >= 370
                       ? BoxFit.fitWidth
                       : BoxFit.fitHeight,
                   alignment: Alignment.centerRight,

@@ -25,7 +25,8 @@ List<GoRoute> _authenticationRoutes(
           key: state.pageKey,
           child: PinScreen(
             PinOverlayType.values.byName(
-                (state.extra! as Map<String, dynamic>)['type']! as String),
+              (state.extra! as Map<String, dynamic>)['type']! as String,
+            ),
             canNavigateBack:
                 (state.extra! as Map<String, dynamic>)['canNavigateBack'] ==
                         null ||

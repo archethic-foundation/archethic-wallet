@@ -97,7 +97,7 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage> {
                     ),
                     child: Text(
                       localizations.modify,
-                      style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                      style: ArchethicThemeStyles.textStyleSize12W100Primary,
                     ),
                   )
                 : null,
@@ -111,7 +111,7 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage> {
                 image: AssetImage(
                   ArchethicTheme.backgroundSmall,
                 ),
-                fit: MediaQuery.of(context).size.width >= 440
+                fit: MediaQuery.of(context).size.width >= 370
                     ? BoxFit.fitWidth
                     : BoxFit.fitHeight,
                 alignment: Alignment.centerRight,

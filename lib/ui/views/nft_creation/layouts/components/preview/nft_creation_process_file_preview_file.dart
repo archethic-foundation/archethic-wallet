@@ -38,7 +38,7 @@ class NFTCreationProcessFilePreviewFile extends ConsumerWidget {
           child: Align(
             child: Text(
               '${localizations.formatLabel} ${nftCreation.fileTypeMime!}',
-              style: ArchethicThemeStyles.textStyleSize12W400Primary,
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
             ),
           ),
         ),
@@ -47,7 +47,7 @@ class NFTCreationProcessFilePreviewFile extends ConsumerWidget {
           child: Align(
             child: Text(
               '${localizations.nftAddFileSize} ${filesize(nftCreation.fileSize)}',
-              style: ArchethicThemeStyles.textStyleSize12W400Primary,
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
             ),
           ),
         ),

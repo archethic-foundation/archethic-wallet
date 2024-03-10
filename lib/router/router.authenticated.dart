@@ -263,16 +263,19 @@ final _authenticatedRoutes = [
       key: state.pageKey,
       child: TransferSheet(
         transferType: TransferType.values.byName(
-            (state.extra! as Map<String, dynamic>)['transferType']! as String),
+          (state.extra! as Map<String, dynamic>)['transferType']! as String,
+        ),
         recipient: TransferRecipient.fromJson(
-            (state.extra! as Map<String, dynamic>)['recipient']),
+          (state.extra! as Map<String, dynamic>)['recipient'],
+        ),
         actionButtonTitle: (state.extra!
             as Map<String, dynamic>)['actionButtonTitle'] as String?,
         accountToken:
             (state.extra! as Map<String, dynamic>)['accountToken'] == null
                 ? null
                 : const AccountTokenConverter().fromJson(
-                    (state.extra! as Map<String, dynamic>)['accountToken']),
+                    (state.extra! as Map<String, dynamic>)['accountToken'],
+                  ),
         tokenId: (state.extra! as Map<String, dynamic>)['tokenId'] as String?,
       ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>

@@ -60,7 +60,7 @@ class NFTCreationProcessAccessLabel extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: AutoSizeText(
             label,
-            style: ArchethicThemeStyles.textStyleSize12W400Primary,
+            style: ArchethicThemeStyles.textStyleSize12W100Primary,
           ),
         ),
       ],

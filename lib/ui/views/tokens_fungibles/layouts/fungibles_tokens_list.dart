@@ -250,6 +250,7 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                                               style: ArchethicThemeStyles
                                                   .textStyleSize12W100Primary,
                                             ),
+                                            const SizedBox(width: 5),
                                             Row(
                                               children: [
                                                 Text(

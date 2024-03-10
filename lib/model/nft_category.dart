@@ -10,7 +10,6 @@ class NftCategory with _$NftCategory {
   const factory NftCategory({
     @Default(0) int id,
     @Default('') name,
-    @Default('') String image,
   }) = _NftCategory;
   const NftCategory._();
 

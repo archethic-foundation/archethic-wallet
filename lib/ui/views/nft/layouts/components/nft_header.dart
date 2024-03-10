@@ -74,27 +74,6 @@ class NFTHeader extends ConsumerWidget implements PreferredSizeWidget {
             padding: const EdgeInsets.only(right: 10, top: 10),
             child: Column(
               children: [
-                Hero(
-                  tag: 'nftCategory${nftCategory.name!}',
-                  child: Card(
-                    elevation: 5,
-                    shadowColor: Colors.black,
-                    color: ArchethicTheme.backgroundDark,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      side: const BorderSide(
-                        color: Colors.white10,
-                      ),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: Image.asset(
-                        nftCategory.image,
-                        width: 50,
-                      ),
-                    ),
-                  ),
-                ),
                 if (displayCategoryName)
                   Text(
                     nftCategory.name!,

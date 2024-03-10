@@ -47,7 +47,7 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
             image: AssetImage(
               ArchethicTheme.backgroundWelcome,
             ),
-            fit: MediaQuery.of(context).size.width >= 440
+            fit: MediaQuery.of(context).size.width >= 370
                 ? BoxFit.fitWidth
                 : BoxFit.fitHeight,
             alignment: Alignment.centerRight,
@@ -250,7 +250,7 @@ class _WelcomeTextSecond extends ConsumerWidget {
       child: AutoSizeText(
         localizations.welcomeText2,
         maxLines: 5,
-        style: ArchethicThemeStyles.textStyleSize12W400Primary,
+        style: ArchethicThemeStyles.textStyleSize12W100Primary,
       ),
     );
   }

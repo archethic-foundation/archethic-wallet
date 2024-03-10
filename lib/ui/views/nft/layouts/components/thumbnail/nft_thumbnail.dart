@@ -36,7 +36,7 @@ class NFTThumbnail extends ConsumerWidget {
             padding: const EdgeInsets.only(top: 10),
             child: Text(
               nameInCollection!,
-              style: ArchethicThemeStyles.textStyleSize12W400Primary,
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
             ),
           ),
         if (TokenUtil.isTokenFile(properties))

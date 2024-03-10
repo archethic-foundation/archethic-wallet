@@ -118,7 +118,7 @@ class _LedgerScreenState extends ConsumerState<LedgerScreen> {
                             child: AutoSizeText(
                               'Ledger',
                               style: ArchethicThemeStyles
-                                  .textStyleSize16W400Primary,
+                                  .textStyleSize16W100Primary,
                               textAlign: TextAlign.center,
                               maxLines: 1,
                               stepGranularity: 0.1,
@@ -171,7 +171,7 @@ class _SignTransactionButton extends StatelessWidget {
     return ElevatedButton(
       child: Text(
         'Ledger - Verify transaction',
-        style: ArchethicThemeStyles.textStyleSize16W200Primary,
+        style: ArchethicThemeStyles.textStyleSize16W100Primary,
       ),
       onPressed: () async {
         const addressIndex = '';
@@ -237,7 +237,7 @@ class _GetPublicKeyButton extends ConsumerWidget {
     return ElevatedButton(
       child: Text(
         'Ledger - Get Public Key',
-        style: ArchethicThemeStyles.textStyleSize16W200Primary,
+        style: ArchethicThemeStyles.textStyleSize16W100Primary,
       ),
       onPressed: () async {
         await sl.get<LedgerNanoSImpl>().connectLedger(getPubKeyAPDU());

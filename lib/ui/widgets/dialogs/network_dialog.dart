@@ -190,7 +190,7 @@ class _NetworkDialogCustomInput extends ConsumerWidget {
               ),
               Text(
                 'http://xxx.xxx.xxx.xxx:xxxx',
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
               const SizedBox(),
             ],
@@ -255,7 +255,7 @@ class _NetworkDevnetHeader extends ConsumerWidget {
         ),
         Text(
           localizations.enterEndpointHeader,
-          style: ArchethicThemeStyles.textStyleSize12W400Primary,
+          style: ArchethicThemeStyles.textStyleSize12W100Primary,
         ),
       ],
     );

@@ -124,7 +124,7 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
                                     .serviceName,
                               ),
                             ),
-                    style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                    style: ArchethicThemeStyles.textStyleSize12W100Primary,
                   ),
                   TextSpan(
                     text: ' ${estimatedFees.formatNumber(
@@ -134,7 +134,7 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
                   ),
                   TextSpan(
                     text: ' UCO',
-                    style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                    style: ArchethicThemeStyles.textStyleSize12W100Primary,
                   ),
                 ],
               ),

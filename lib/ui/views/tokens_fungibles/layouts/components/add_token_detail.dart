@@ -32,12 +32,12 @@ class AddTokenDetail extends ConsumerWidget {
             children: [
               Text(
                 localizations.tokenName,
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
               Expanded(
                 child: Text(
                   addToken.name,
-                  style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                  style: ArchethicThemeStyles.textStyleSize12W100Primary,
                   textAlign: TextAlign.end,
                 ),
               ),
@@ -47,11 +47,11 @@ class AddTokenDetail extends ConsumerWidget {
             children: [
               Text(
                 localizations.tokenSymbol,
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
               Text(
                 addToken.symbol,
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
             ],
           ),
@@ -59,11 +59,11 @@ class AddTokenDetail extends ConsumerWidget {
             children: [
               Text(
                 localizations.tokenInitialSupply,
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
               Text(
                 NumberUtil.formatThousands(addToken.initialSupply),
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
             ],
           ),
@@ -71,14 +71,14 @@ class AddTokenDetail extends ConsumerWidget {
             children: [
               Text(
                 localizations.estimatedFees,
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
               Text(
                 AmountFormatters.standardSmallValue(
                   addToken.feeEstimationOrZero,
                   AccountBalance.cryptoCurrencyLabel,
                 ),
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
             ],
           ),
@@ -86,7 +86,7 @@ class AddTokenDetail extends ConsumerWidget {
             children: [
               Text(
                 localizations.availableAfterCreation,
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
               Text(
                 AmountFormatters.standard(
@@ -94,7 +94,7 @@ class AddTokenDetail extends ConsumerWidget {
                       addToken.feeEstimationOrZero,
                   addToken.symbolFees(context),
                 ),
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
             ],
           ),

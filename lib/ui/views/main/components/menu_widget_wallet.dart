@@ -3,6 +3,7 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
+import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -26,6 +27,8 @@ class MenuWidgetWallet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    var refreshInProgress = false;
+
     final accountSelected = ref
         .watch(
           AccountProviders.selectedAccount,
@@ -143,6 +146,70 @@ class MenuWidgetWallet extends ConsumerWidget {
                       .animate()
                       .fade(duration: const Duration(milliseconds: 300))
                       .scale(duration: const Duration(milliseconds: 300)),
+                if (refreshInProgress == false)
+                  _ActionButton(
+                    text: localizations.refresh,
+                    icon: Symbols.refresh,
+                    onTap: () async {
+                      setState(
+                        () {
+                          refreshInProgress = true;
+                        },
+                      );
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.light,
+                            preferences.activeVibrations,
+                          );
+                      final _connectivityStatusProvider =
+                          ref.read(connectivityStatusProviders);
+                      if (_connectivityStatusProvider ==
+                          ConnectivityStatus.isDisconnected) {
+                        return;
+                      }
+
+                      await ref
+                          .read(AccountProviders.selectedAccount.notifier)
+                          .refreshRecentTransactions();
+                      ref
+                        ..invalidate(ContactProviders.fetchContacts)
+                        ..invalidate(MarketPriceProviders.currencyMarketPrice);
+                      setState(
+                        () {
+                          refreshInProgress = false;
+                        },
+                      );
+                    },
+                  )
+                      .animate()
+                      .fade(duration: const Duration(milliseconds: 350))
+                      .scale(duration: const Duration(milliseconds: 350))
+                else
+                  Stack(
+                    alignment: Alignment.topCenter,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(left: 10, right: 10),
+                        child: Opacity(
+                          opacity: 0.5,
+                          child: SizedBox(
+                            width: 40,
+                            height: 40,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 1,
+                            ),
+                          ),
+                        ),
+                      ),
+                      _ActionButton(
+                        text: localizations.refresh,
+                        icon: Symbols.refresh,
+                        enabled: false,
+                      )
+                          .animate()
+                          .fade(duration: const Duration(milliseconds: 350))
+                          .scale(duration: const Duration(milliseconds: 350)),
+                    ],
+                  ),
               ],
             ),
           ),

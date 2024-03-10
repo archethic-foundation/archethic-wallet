@@ -50,7 +50,7 @@ class NftCategoryMenu extends ConsumerWidget {
                 ? 3
                 : 2,
         crossAxisSpacing: 20,
-        childAspectRatio: 0.8,
+        childAspectRatio: 1.3,
       ),
       itemCount: nftCategories.length,
       itemBuilder: (context, index) {
@@ -73,43 +73,25 @@ class NftCategoryMenu extends ConsumerWidget {
               extra: nftCategories[index].id,
             );
           },
-          child: Column(
+          child: Stack(
             children: [
-              Stack(
-                children: [
-                  Hero(
-                    tag: 'nftCategory${nftCategories[index].name!}',
-                    child: CardCategory(
-                      background: SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: Image.asset(
-                          nftCategories[index].image,
-                          fit: BoxFit.fitWidth,
-                        ),
-                      ),
+              CardCategory(
+                categoryName: nftCategories[index].name!,
+              ),
+              if (count > 0)
+                Positioned(
+                  right: 10,
+                  top: 5,
+                  child: badge.Badge(
+                    badgeAnimation: const badge.BadgeAnimation.slide(
+                      toAnimate: false,
+                    ),
+                    badgeContent: Text(
+                      count.toString(),
+                      style: ArchethicThemeStyles.textStyleSize10W100Primary,
                     ),
                   ),
-                  if (count > 0)
-                    Padding(
-                      padding: const EdgeInsets.only(left: 12, top: 12),
-                      child: badge.Badge(
-                        badgeAnimation: const badge.BadgeAnimation.slide(
-                          toAnimate: false,
-                        ),
-                        badgeContent: Text(
-                          count.toString(),
-                          style:
-                              ArchethicThemeStyles.textStyleSize10W100Primary,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-              Text(
-                nftCategories[index].name!,
-                textAlign: TextAlign.center,
-                style: ArchethicThemeStyles.textStyleSize12W400Primary,
-              ),
+                ),
             ],
           ),
         )

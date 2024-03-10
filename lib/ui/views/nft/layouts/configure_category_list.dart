@@ -164,7 +164,7 @@ class ReorderableWidget extends ConsumerWidget {
                             title: Text(
                               nftCategory.name!,
                               style: ArchethicThemeStyles
-                                  .textStyleSize12W400Primary,
+                                  .textStyleSize12W100Primary,
                             ),
                             leading: nftCategory.id != 0
                                 ? IconButton(
@@ -234,7 +234,7 @@ class ReorderableWidget extends ConsumerWidget {
                               title: Text(
                                 nftCategory.name!,
                                 style: ArchethicThemeStyles
-                                    .textStyleSize12W400Primary,
+                                    .textStyleSize12W100Primary,
                               ),
                               leading: IconButton(
                                 icon: const Icon(
