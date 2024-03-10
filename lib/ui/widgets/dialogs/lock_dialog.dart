@@ -2,7 +2,7 @@
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/model/device_unlock_option.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
-import 'package:archethic_dapp_framework_flutter/archethic-dapp-framework-flutter.dart'
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';

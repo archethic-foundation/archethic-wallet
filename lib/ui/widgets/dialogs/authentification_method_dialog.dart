@@ -13,7 +13,7 @@ import 'package:aewallet/ui/widgets/dialogs/authentification_method_dialog_help.
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
-import 'package:archethic_dapp_framework_flutter/archethic-dapp-framework-flutter.dart'
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
