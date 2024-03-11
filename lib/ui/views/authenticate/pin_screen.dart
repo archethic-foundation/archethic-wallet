@@ -334,10 +334,10 @@ class _PinScreenState extends ConsumerState<PinScreen>
       });
     }
 
-    return RawKeyboardListener(
+    return KeyboardListener(
       focusNode: _focusNode,
-      onKey: (RawKeyEvent event) {
-        if (event is RawKeyDownEvent) {
+      onKeyEvent: (KeyEvent event) {
+        if (event is KeyDownEvent) {
           final logicalKey = event.logicalKey;
           if (logicalKey.keyLabel.isNotEmpty &&
               '0123456789'.contains(logicalKey.keyLabel)) {
