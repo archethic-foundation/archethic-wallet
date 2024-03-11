@@ -17,7 +17,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-          flutter-version: '3.13.9'
+          flutter-version: '3.19.3'
       - run: flutter --version
 
       - name: Setup Dependencies
@@ -69,7 +69,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-          flutter-version: '3.13.9'
+          flutter-version: '3.19.3'
       - run: flutter --version
 
       - name: Setup dependencies
