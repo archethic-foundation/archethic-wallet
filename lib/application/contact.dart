@@ -267,7 +267,6 @@ abstract class ContactProviders {
       ..invalidate(getContactWithAddress)
       ..invalidate(getContactWithPublicKey)
       ..invalidate(getContactWithGenesisPublicKey)
-      ..invalidate(getSelectedContact)
       ..invalidate(getBalance);
   }
 }

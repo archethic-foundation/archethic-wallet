@@ -2,19 +2,13 @@
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/nft/nft_category.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/responsive.dart';
-import 'package:aewallet/ui/views/nft/layouts/nft_list_per_category.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/card_category.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:go_router/go_router.dart';
 
 class NftCategoryMenu extends ConsumerWidget {
   const NftCategoryMenu({super.key});
@@ -23,7 +17,6 @@ class NftCategoryMenu extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedAccount =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
-    final preferences = ref.watch(SettingsProviders.settings);
 
     final nftCategories = ref
         .watch(
@@ -61,39 +54,28 @@ class NftCategoryMenu extends ConsumerWidget {
             categoryNftIndex: nftCategories[index].id,
           ),
         );
-        return InkWell(
-          key: Key('nftCategory$index'),
-          onTap: () {
-            sl.get<HapticUtil>().feedback(
-                  FeedbackType.light,
-                  preferences.activeVibrations,
-                );
-            context.go(
-              NFTListPerCategory.routerPage,
-              extra: nftCategories[index].id,
-            );
-          },
-          child: Stack(
-            children: [
-              CardCategory(
-                categoryName: nftCategories[index].name!,
-              ),
-              if (count > 0)
-                Positioned(
-                  right: 10,
-                  top: 5,
-                  child: badge.Badge(
-                    badgeAnimation: const badge.BadgeAnimation.slide(
-                      toAnimate: false,
-                    ),
-                    badgeContent: Text(
-                      count.toString(),
-                      style: ArchethicThemeStyles.textStyleSize10W100Primary,
-                    ),
+        return Stack(
+          children: [
+            CardCategory(
+              categoryName: nftCategories[index].name!,
+              index: index,
+              id: nftCategories[index].id,
+            ),
+            if (count > 0)
+              Positioned(
+                right: 10,
+                top: 5,
+                child: badge.Badge(
+                  badgeAnimation: const badge.BadgeAnimation.slide(
+                    toAnimate: false,
+                  ),
+                  badgeContent: Text(
+                    count.toString(),
+                    style: ArchethicThemeStyles.textStyleSize10W100Primary,
                   ),
                 ),
-            ],
-          ),
+              ),
+          ],
         )
             .animate()
             .fade(duration: Duration(milliseconds: 300 + (index * 50)))

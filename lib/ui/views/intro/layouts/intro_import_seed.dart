@@ -122,6 +122,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
+      backgroundColor: ArchethicTheme.backgroundDarkest,
       body: DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -619,9 +620,12 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage> {
       builder: (BuildContext context) {
         final localizations = AppLocalizations.of(context)!;
         return AlertDialog(
-          insetPadding: EdgeInsets.zero,
-          backgroundColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          backgroundColor: ArchethicTheme.backgroundPopupColor,
           elevation: 0,
+          contentPadding: EdgeInsets.zero,
           content: ClipRRect(
             borderRadius: BorderRadius.circular(16),
             child: BackdropFilter(
