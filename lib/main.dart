@@ -246,7 +246,8 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
   // late bool _hasCheckedLoggedIn;
 
   Future<void> initializeProviders() async {
-    await ref.read(SettingsProviders.settings.notifier).initialize();
+    final locale = ref.read(LanguageProviders.selectedLocale);
+    await ref.read(SettingsProviders.settings.notifier).initialize(locale);
     await ref.read(AuthenticationProviders.settings.notifier).initialize();
     if (FeatureFlags.messagingActive) {
       await ref.read(NotificationProviders.repository).initialize();
