@@ -16,6 +16,8 @@ import 'package:synchronized/synchronized.dart';
 
 /// Handles navigation to the lock screen
 mixin LockGuardMixin {
+  static const _logName = 'AuthenticationGuard-Mixin';
+
   /// Displays lock screen (with the timer) if
   /// application should be locked (too much authentication failures).
   ///
@@ -28,6 +30,7 @@ mixin LockGuardMixin {
       AuthenticationProviders.isLockCountdownRunning.future,
     );
     if (shouldLock) {
+      log('Show countdown screen', name: _logName);
       context.go(
         AppLockScreen.routerPage,
       );
@@ -91,6 +94,7 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     );
     switch (state) {
       case AppLifecycleState.resumed:
+        _hideLockMask();
         _forceAuthentIfNeeded();
 
         break;
@@ -143,7 +147,7 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
       'Hide lock mask',
       name: _logName,
     );
-    _LockMask.hide(context);
+    _LockMask.hide();
     ref.read(AuthenticationProviders.startupMaskVisibility.notifier).state =
         StartupMaskVisibility.hidden;
   }
@@ -185,36 +189,45 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
   }
 
   Future<void> _forceAuthentIfNeeded() async {
+    log('Force authent if needed', name: _logName);
     final value = await ref.read(
       AuthenticationProviders.authenticationGuard.future,
     );
 
     final lockDate = value.lockDate;
+    final authentRequired = lockDate != null;
 
-    if (lockDate == null) {
-      _hideLockMask();
+    if (!authentRequired) {
       return;
     }
 
     final durationBeforeLock = lockDate.difference(DateTime.now());
     log(
-      'duration before lock : $durationBeforeLock',
+      'Duration before lock : $durationBeforeLock',
       name: _logName,
     );
     if (durationBeforeLock <= Duration.zero) {
       await _forceAuthent();
       return;
     }
-    _hideLockMask();
   }
 
   Future<void> _forceAuthent() async {
+    log(
+      'Force authent',
+      name: _logName,
+    );
+
     if (_forceAuthenticationLock.inLock) {
+      log(
+        '... authent already running.',
+        name: _logName,
+      );
+
       return;
     }
 
     await _forceAuthenticationLock.synchronized(() async {
-      _showLockMask();
       await AuthFactory.forceAuthenticate(
         context,
         ref,
@@ -258,12 +271,50 @@ class InputListener extends StatelessWidget {
       );
 }
 
-class _LockMask extends ConsumerWidget {
-  const _LockMask();
+class _LockMask extends StatefulWidget {
+  const _LockMask._();
+
+  static OverlayEntry? _overlayEntry;
   static const routeName = 'LockMask';
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  State<_LockMask> createState() => _LockMaskState();
+
+  static void show(BuildContext context) {
+    log('Show', name: routeName);
+    if (_overlayEntry != null) {
+      log('... already visible. Abort', name: routeName);
+      return;
+    }
+
+    _overlayEntry = OverlayEntry(
+      builder: (BuildContext context) => const _LockMask._(),
+    );
+    Overlay.of(context).insert(_overlayEntry!);
+  }
+
+  static void hide() {
+    log('Hide', name: routeName);
+    if (_overlayEntry == null) {
+      log('... not visible. Abort', name: routeName);
+      return;
+    }
+
+    _overlayEntry?.remove();
+    _overlayEntry?.dispose();
+    _overlayEntry = null;
+  }
+}
+
+class _LockMaskState extends State<_LockMask> {
+  @override
+  void dispose() {
+    _LockMask.hide();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
       child: Stack(
@@ -272,6 +323,7 @@ class _LockMask extends ConsumerWidget {
           SizedBox.expand(
             child: DecoratedBox(
               decoration: BoxDecoration(
+                color: Colors.black,
                 image: DecorationImage(
                   image: AssetImage(
                     ArchethicTheme.backgroundWelcome,
@@ -296,23 +348,6 @@ class _LockMask extends ConsumerWidget {
           ),
         ],
       ),
-    );
-  }
-
-  static void show(BuildContext context) {
-    log('Show', name: routeName);
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const _LockMask(),
-        settings: const RouteSettings(name: routeName),
-      ),
-    );
-  }
-
-  static void hide(BuildContext context) {
-    log('Hide', name: routeName);
-    Navigator.of(context).popUntil(
-      (route) => route.settings.name != routeName,
     );
   }
 }
