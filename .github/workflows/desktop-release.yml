@@ -87,7 +87,7 @@ jobs:
       - name: Copy MSIX file to /artifacts
         run: |
           mkdir artifacts
-          cp build/windows/runner/Release/aewallet.msix artifacts/
+          cp build/windows/x64/runner/Release/aewallet.msix artifacts/
 
       - name: Get Version from pubspec.yaml
         id: get_version
