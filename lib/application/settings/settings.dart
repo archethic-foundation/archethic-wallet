@@ -1,6 +1,6 @@
 import 'dart:io';
+import 'dart:ui';
 
-import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/domain/models/market_price_history.dart';
 import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/domain/repositories/settings.dart';
@@ -23,8 +23,7 @@ class SettingsNotifier extends StateNotifier<Settings> {
 
   Ref ref;
 
-  Future<void> initialize() async {
-    final locale = ref.read(LanguageProviders.selectedLocale);
+  Future<void> initialize(Locale locale) async {
     state = await sl.get<SettingsRepositoryInterface>().getSettings(locale);
   }
 

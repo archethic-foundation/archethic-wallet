@@ -66,10 +66,10 @@ dependencies:
   coingecko_api: ^1.1.1+1
 
   # Collections and utilities functions and classes related to collections.
-  collection: ^1.17.2
+  collection: ^1.18.0
 
   # Flutter plugin for discovering the state of the network (WiFi & mobile/cellular) connectivity on Android and iOS.
-  connectivity_plus: ^4.0.2
+  connectivity_plus: ^5.0.2
 
   # Utilities for converting between data representations. Provides a number of Sink, Codec, Decoder, and Encoder types
   convert: ^3.1.1
@@ -81,7 +81,7 @@ dependencies:
   decimal: ^2.3.3
 
   # A RPC-via-deeplink communication library coded in Dart. This is dedicated to Flutter mobile applications (iOS / Android).
-  deeplink_rpc: ^1.0.4
+  deeplink_rpc: ^1.0.6
 
   # EventTaxi could be used to send events through different layers of the application decoupled from the architecture
   event_taxi: ^1.0.0
@@ -90,19 +90,19 @@ dependencies:
   exif: ^3.1.4
 
   # A package that allows you to use a native file explorer to pick single or multiple absolute file paths, with extension filtering support.
-  file_picker: ^5.3.3
+  file_picker: ^6.2.0
 
   # A package to get humanized file sizes. Translate raw file size into human readable strings
   filesize: ^2.0.1
 
   # A Flutter plugin to use the Firebase Core API, which enables connecting to multiple Firebase apps.
-  firebase_core: ^2.15.1
+  firebase_core: ^2.27.0
 
   # A package to use FCM
-  firebase_messaging: ^14.6.6
+  firebase_messaging: ^14.7.19
 
   # A powerful Flutter chart library, currently supporting Line Chart, Bar Chart and Pie Chart.
-  fl_chart: ^0.63.0
+  fl_chart: ^0.66.2
 
   flutter:
     sdk: flutter
@@ -126,13 +126,13 @@ dependencies:
     sdk: flutter
 
   # Customize Flutter's default white native splash screen with background color and splash image. Supports dark mode, full screen, and more.
-  flutter_native_splash: ^2.3.2
+  flutter_native_splash: ^2.3.10
 
   # State management
-  flutter_riverpod: ^2.4.0
+  flutter_riverpod: ^2.5.1
 
   # Flutter Secure Storage provides API to store data in secure storage. Keychain is used in iOS, KeyStore based solution is used in Android
-  flutter_secure_storage: ^8.0.0
+  flutter_secure_storage: ^9.0.0
 
   # An SVG rendering and widget library for Flutter, which allows painting and displaying Scalable Vector Graphics 1.1 files
   flutter_svg: ^2.0.6
@@ -150,14 +150,14 @@ dependencies:
   ghost: ^2.0.3
 
   # A declarative router for Flutter based on Navigation 2 supporting deep linking, data-driven routes and more
-  go_router: ^12.1.0
+  go_router: ^13.2.0
 
   # Hive is a lightweight and blazing fast key-value database written in pure Dart
   hive: ^2.2.3
   hive_flutter: ^1.1.0
 
   # A composable, multi-platform, Future-based API for HTTP requests
-  http: ^1.1.0
+  http: ^1.2.0
 
   # Convert all *.svg icons from dir to icon-font (.ttf) and generates flutter compatible dart class
   icon_font_generator: ^3.2.0
@@ -169,7 +169,7 @@ dependencies:
   infinite_scroll_pagination: ^4.0.0
 
   # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
-  intl: any
+  intl: ^0.18.1
 
   # Utilities to write a client or server using the JSON-RPC 2.0 spec.
   json_rpc_2: ^3.0.2
@@ -186,10 +186,10 @@ dependencies:
   loading_animation_widget: ^1.2.0+4
 
   # Flutter plugin for Android and iOS devices to allow local authentication via fingerprint, touch ID, face ID, passcode, pin, or pattern
-  local_auth: ^2.1.6
+  local_auth: ^2.2.0
 
   # Using Official Material Symbols Icons variable fonts
-  material_symbols_icons: ^4.2668.0
+  material_symbols_icons: ^4.2719.1
 
   # Get Mime Types, Extensions, Compressible for Dart and Flutter. Inspired from IANA Database
   mime_dart: ^3.0.0
@@ -201,19 +201,19 @@ dependencies:
   oktoast: ^3.3.1
 
   # Flutter plugin for querying information about the application package, such as CFBundleVersion on iOS or versionCode on Android
-  package_info_plus: ^4.1.0
+  package_info_plus: ^4.2.0
 
   # A basic password strength estimator for Dart. Considers the length of the password, used characters, and whether or not the password appears in the top 10,000 most used passwords.
   password_strength: ^0.2.0
 
   # A string-based path manipulation library. All of the path operations you know and love, with solid support for Windows, POSIX (Linux and Mac OS X), and the web.
-  path: ^1.8.3
+  path: ^1.9.0
 
   # Flutter plugin for getting commonly used locations on host platform file systems, such as the temp and app data directories.
   path_provider: ^2.1.0
 
   # Flutter plugin to render & show PDF pages as images on Web, MacOS, Windows, Android and iOS.
-  pdfx: ^2.4.0
+  pdfx: ^2.6.0
 
   # A Dart library implementing cryptographic algorithms and primitives, modeled on the BouncyCastle library
   pointycastle: ^3.7.0
@@ -225,7 +225,7 @@ dependencies:
   quiver: ^3.2.1
 
   # A package exposing annotations for riverpod_generator
-  riverpod_annotation: ^2.1.5
+  riverpod_annotation: ^2.3.5
 
   # RxDart is an implementation of the popular reactiveX api for asynchronous programming, leveraging the native Dart Streams api.
   rxdart: ^0.27.7
@@ -246,16 +246,16 @@ dependencies:
   unorm_dart: ^0.2.0
 
   # Flutter plugin for launching a URL. Supports web, phone, SMS, and email schemes
-  url_launcher: ^6.1.12
+  url_launcher: ^6.2.5
 
   # RFC4122 (v1, v4, v5) UUID Generator and Parser for all Dart platforms (Web, VM, Flutter)
-  uuid: ^3.0.7
+  uuid: ^4.3.3
 
   # String validation and sanitization for Dart
   validators: ^3.0.0
 
   # RPC server
-  web_socket_channel: ^2.4.0
+  web_socket_channel: ^2.4.3
 
   # This plugin allows Flutter desktop apps to resizing and repositioning the window.
   window_manager: ^0.3.5
@@ -273,9 +273,9 @@ dev_dependencies:
   # A command-line tool that create Msix installer from your flutter windows-build files.
   msix: ^3.16.6
   # Simple yet powerful Flutter-native UI testing framework eliminating limitations of flutter_test, integration_test, and flutter_driver.
-  patrol: ^2.2.3
+  patrol: ^3.5.2
   # A code generator for Riverpod. This both simplifies the syntax empowers it, such as allowing stateful hot-reload.
-  riverpod_generator: ^2.3.2
+  riverpod_generator: ^2.3.11
 
 msix_config:
   display_name: Archethic Wallet
