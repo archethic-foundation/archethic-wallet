@@ -97,7 +97,7 @@ jobs:
 
       - name: Archive Artifact
         run: |
-          mv build/windows/runner/Release/ archethic-wallet
+          mv build/windows/x64/runner/Release/ archethic-wallet
           Compress-Archive -Path archethic-wallet -DestinationPath "artifacts/archethic-wallet-${{ steps.get_version.outputs.version_app }}.zip"
 
       - name: Checksum
