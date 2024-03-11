@@ -89,8 +89,8 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
       AuthenticationProviders.passwordAuthentication,
     );
 
-    return WillPopScope(
-      onWillPop: () async => widget.canNavigateBack,
+    return PopScope(
+      onPopInvoked: (didPop) async => widget.canNavigateBack,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: DecoratedBox(

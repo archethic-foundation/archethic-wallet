@@ -260,7 +260,7 @@ class InputListener extends StatelessWidget {
   final Widget child;
   @override
   Widget build(BuildContext context) => Focus(
-        onKey: (_, __) {
+        onKeyEvent: (_, __) {
           onInput();
           return KeyEventResult.ignored;
         },
@@ -315,8 +315,8 @@ class _LockMaskState extends State<_LockMask> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      onPopInvoked: (didPop) async => false,
       child: Stack(
         alignment: Alignment.center,
         children: [

@@ -54,10 +54,8 @@ class AppLockScreen extends ConsumerWidget {
             .valueOrNull ??
         '';
 
-    return WillPopScope(
-      onWillPop: () async {
-        return false;
-      },
+    return PopScope(
+      onPopInvoked: (didPop) async => false,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: ArchethicTheme.backgroundDarkest,
