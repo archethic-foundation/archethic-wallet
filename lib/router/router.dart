@@ -82,6 +82,8 @@ class RoutesPath {
         GoRoute(
           path: '/',
           pageBuilder: (context, state) => CustomTransitionPage<void>(
+            transitionDuration: Duration.zero,
+            reverseTransitionDuration: Duration.zero,
             key: state.pageKey,
             child: const Splash(),
             transitionsBuilder:
@@ -97,6 +99,8 @@ class RoutesPath {
         GoRoute(
           path: ShowSendingAnimation.routerPage,
           pageBuilder: (context, state) => CustomTransitionPage<void>(
+            transitionDuration: Duration.zero,
+            reverseTransitionDuration: Duration.zero,
             key: state.pageKey,
             child: AnimationLoadingPage(
               title: state.extra as String?,
@@ -112,6 +116,8 @@ class RoutesPath {
         GoRoute(
           path: SetPassword.routerPage,
           pageBuilder: (context, state) => CustomTransitionPage<void>(
+            transitionDuration: Duration.zero,
+            reverseTransitionDuration: Duration.zero,
             key: state.pageKey,
             child: SetPassword(
               header: (state.extra! as Map<String, dynamic>)['header'] == null
@@ -137,6 +143,8 @@ class RoutesPath {
         GoRoute(
           path: SetYubikey.routerPage,
           pageBuilder: (context, state) => CustomTransitionPage<void>(
+            transitionDuration: Duration.zero,
+            reverseTransitionDuration: Duration.zero,
             key: state.pageKey,
             child: SetYubikey(
               header: (state.extra! as Map<String, dynamic>)['header'] == null
@@ -184,6 +192,8 @@ class AutoLockGuardRoute extends ShellRoute {
   AutoLockGuardRoute({required super.routes})
       : super(
           pageBuilder: (context, state, child) => CustomTransitionPage<void>(
+            transitionDuration: Duration.zero,
+            reverseTransitionDuration: Duration.zero,
             key: state.pageKey,
             child: AutoLockGuard(child: child),
             transitionsBuilder:
@@ -200,6 +210,8 @@ class RPCCommandReceiverRoute extends ShellRoute {
   RPCCommandReceiverRoute({required super.routes})
       : super(
           pageBuilder: (context, state, child) => CustomTransitionPage<void>(
+            transitionDuration: Duration.zero,
+            reverseTransitionDuration: Duration.zero,
             key: state.pageKey,
             child: RPCCommandReceiver(child: child),
             transitionsBuilder:

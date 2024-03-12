@@ -7,6 +7,8 @@ List<GoRoute> _authenticationRoutes(
       GoRoute(
         path: PasswordScreen.routerPage,
         pageBuilder: (context, state) => CustomTransitionPage<void>(
+          transitionDuration: Duration.zero,
+          reverseTransitionDuration: Duration.zero,
           key: state.pageKey,
           child: PasswordScreen(
             canNavigateBack: (state.extra!
@@ -22,6 +24,8 @@ List<GoRoute> _authenticationRoutes(
       GoRoute(
         path: PinScreen.routerPage,
         pageBuilder: (context, state) => CustomTransitionPage<void>(
+          transitionDuration: Duration.zero,
+          reverseTransitionDuration: Duration.zero,
           key: state.pageKey,
           child: PinScreen(
             PinOverlayType.values.byName(
@@ -48,6 +52,8 @@ List<GoRoute> _authenticationRoutes(
       GoRoute(
         path: YubikeyScreen.routerPage,
         pageBuilder: (context, state) => CustomTransitionPage<void>(
+          transitionDuration: Duration.zero,
+          reverseTransitionDuration: Duration.zero,
           key: state.pageKey,
           child: YubikeyScreen(
             canNavigateBack: (state.extra!

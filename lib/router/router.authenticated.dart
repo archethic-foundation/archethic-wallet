@@ -4,6 +4,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: HomePage.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: const HomePage(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
@@ -13,6 +15,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: SecurityMenuView.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: const SecurityMenuView(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
@@ -22,6 +26,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: CustomizationMenuView.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: const CustomizationMenuView(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
@@ -31,6 +37,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: AboutMenuView.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: const AboutMenuView(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
@@ -40,6 +48,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: AppLockScreen.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: const AppLockScreen(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
@@ -49,6 +59,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: NFTListPerCategory.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: NFTListPerCategory(
         currentNftCategoryIndex: state.extra! as int,
@@ -63,6 +75,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: NftCreationProcessSheet.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: const NftCreationProcessSheet(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
@@ -76,6 +90,8 @@ final _authenticatedRoutes = [
         name: AddAddress.routerPage,
         path: AddAddress.routerPage,
         pageBuilder: (context, state) => CustomTransitionPage<void>(
+          transitionDuration: Duration.zero,
+          reverseTransitionDuration: Duration.zero,
           key: state.pageKey,
           child: AddAddress(
             propertyName: AddAddressParams.fromJson(
@@ -100,6 +116,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: MessengerDiscussionPage.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: MessengerDiscussionPage(
         discussionAddress: state.extra! as String,
@@ -114,6 +132,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: DiscussionDetailsPage.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: DiscussionDetailsPage(
         discussionAddress: state.extra! as String,
@@ -128,6 +148,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: UpdateDiscussionPage.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: UpdateDiscussionPage(
         discussion: state.extra! as Discussion,
@@ -142,6 +164,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: AddAccountSheet.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: AddAccountSheet(
         seed: state.extra! as String,
@@ -156,6 +180,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: AddContactSheet.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: AddContactSheet(
         address: state.extra as String?,
@@ -170,6 +196,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: BuySheet.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: const BuySheet(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
@@ -179,6 +207,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: ContactDetail.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: ContactDetail(
         contactAddress: ContactDetailsRouteParams.fromJson(
@@ -199,6 +229,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: ConnectivityWarning.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: const ConnectivityWarning(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
@@ -208,6 +240,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: AddTokenSheet.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: const AddTokenSheet(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
@@ -217,6 +251,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: ChartSheet.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: const ChartSheet(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
@@ -226,6 +262,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: AppSeedBackupSheet.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: AppSeedBackupSheet(
         (state.extra! as Map<String, dynamic>)['mnemonic'] == null
@@ -246,6 +284,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: TransactionInfosSheet.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: TransactionInfosSheet(
         state.extra! as String,
@@ -260,6 +300,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: TransferSheet.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: TransferSheet(
         transferType: TransferType.values.byName(
@@ -288,6 +330,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: NFTCreationProcessImportTabAEWebForm.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: NFTCreationProcessImportTabAEWebForm(
         onConfirm: (state.extra! as Map<String, dynamic>)['onConfirm']! as void
@@ -303,6 +347,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: NFTCreationProcessImportTabHTTPForm.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: NFTCreationProcessImportTabHTTPForm(
         onConfirm: (state.extra! as Map<String, dynamic>)['onConfirm']! as void
@@ -318,6 +364,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: NFTCreationProcessImportTabIPFSForm.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: NFTCreationProcessImportTabIPFSForm(
         onConfirm: (state.extra! as Map<String, dynamic>)['onConfirm']! as void
@@ -333,6 +381,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: NFTDetail.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: NFTDetail(
         name: (state.extra! as Map<String, dynamic>)['name']! as String,
@@ -358,6 +408,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: ConfigureCategoryList.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: const ConfigureCategoryList(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
@@ -367,6 +419,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: CreateDiscussionSheet.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: const CreateDiscussionSheet(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
@@ -376,6 +430,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: SettingsSheetWallet.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: const SettingsSheetWallet(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
@@ -385,6 +441,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: CreateDiscussionValidationSheet.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: CreateDiscussionValidationSheet(
         discussionCreationSuccess: (state.extra!
@@ -402,6 +460,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: AddDiscussionSheet.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: AddDiscussionSheet(
         discussion: state.extra! as Discussion,
@@ -416,6 +476,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: AddServiceConfirmationForm.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: AddServiceConfirmationForm(
         (state.extra! as Map<String, dynamic>)['serviceName']! as String,
@@ -432,6 +494,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: SendTransactionConfirmationForm.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: SendTransactionConfirmationForm(
         (state.extra! as Map<String, dynamic>)['command']!
@@ -447,6 +511,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: SignTransactionsConfirmationForm.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: SignTransactionsConfirmationForm(
         (state.extra! as Map<String, dynamic>)['command']!
@@ -463,6 +529,8 @@ final _authenticatedRoutes = [
   GoRoute(
     path: UpdateDiscussionAddMembers.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: UpdateDiscussionAddMembers(
         listMembers: (state.extra! as Map<String, dynamic>)['listMembers']!

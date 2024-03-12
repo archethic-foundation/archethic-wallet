@@ -4,6 +4,8 @@ final _introductionRoutes = [
   GoRoute(
     path: IntroConfigureSecurity.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: IntroConfigureSecurity(
         seed: (state.extra! as Map<String, dynamic>)['seed']! as String,
@@ -19,6 +21,8 @@ final _introductionRoutes = [
   GoRoute(
     path: IntroWelcome.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: const IntroWelcome(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
@@ -31,6 +35,8 @@ final _introductionRoutes = [
   GoRoute(
     path: IntroNewWalletGetFirstInfos.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: const IntroNewWalletGetFirstInfos(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
@@ -43,6 +49,8 @@ final _introductionRoutes = [
   GoRoute(
     path: IntroBackupSeedPage.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: IntroBackupSeedPage(
         name: state.extra! as String,
@@ -57,6 +65,8 @@ final _introductionRoutes = [
   GoRoute(
     path: IntroNewWalletDisclaimer.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: IntroNewWalletDisclaimer(
         name: state.extra! as String,
@@ -71,6 +81,8 @@ final _introductionRoutes = [
   GoRoute(
     path: IntroImportSeedPage.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: const IntroImportSeedPage(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
@@ -83,6 +95,8 @@ final _introductionRoutes = [
   GoRoute(
     path: IntroBackupConfirm.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: IntroBackupConfirm(
         name: (state.extra! as Map<String, dynamic>)['name'] == null
