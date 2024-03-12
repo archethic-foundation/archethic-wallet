@@ -39,7 +39,7 @@ final _getVerifiedTokensProvider = FutureProvider<VerifiedTokens>.internal(
 
 typedef _GetVerifiedTokensRef = FutureProviderRef<VerifiedTokens>;
 String _$getVerifiedTokensFromNetworkHash() =>
-    r'c0e1bb98b8f28bb42ff04583c7f338d9c8b6992c';
+    r'2fa668047a8eb298967cceda206c4ba848025cce';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -195,7 +195,7 @@ class _GetVerifiedTokensFromNetworkProviderElement
       (origin as _GetVerifiedTokensFromNetworkProvider).network;
 }
 
-String _$isVerifiedTokenHash() => r'295f85e4c894d16e497f6ef83a40be21204500ff';
+String _$isVerifiedTokenHash() => r'49675ea9c1c497b6d5b7c85c8079aafb3b46f092';
 
 /// See also [_isVerifiedToken].
 @ProviderFor(_isVerifiedToken)
@@ -322,5 +322,23 @@ class _IsVerifiedTokenProviderElement extends FutureProviderElement<bool>
   @override
   String get address => (origin as _IsVerifiedTokenProvider).address;
 }
+
+String _$verifiedTokensNotifierHash() =>
+    r'c0e2459a5beb61bafa79df7aee32db3e5e8a44c0';
+
+/// See also [_VerifiedTokensNotifier].
+@ProviderFor(_VerifiedTokensNotifier)
+final _verifiedTokensNotifierProvider =
+    NotifierProvider<_VerifiedTokensNotifier, List<String>>.internal(
+  _VerifiedTokensNotifier.new,
+  name: r'_verifiedTokensNotifierProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$verifiedTokensNotifierHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$VerifiedTokensNotifier = Notifier<List<String>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

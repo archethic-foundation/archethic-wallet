@@ -6,6 +6,7 @@ import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/verified_tokens.dart';
 import 'package:aewallet/ui/views/blog/last_articles_list.dart';
 import 'package:aewallet/ui/views/main/components/app_update_button.dart';
 import 'package:aewallet/ui/views/main/components/menu_widget_wallet.dart';
@@ -51,6 +52,11 @@ class AccountTab extends ConsumerWidget {
           ..invalidate(BlogProviders.fetchArticles)
           ..invalidate(ContactProviders.fetchContacts)
           ..invalidate(MarketPriceProviders.currencyMarketPrice);
+        await ref
+            .read(
+              VerifiedTokensProviders.verifiedTokens.notifier,
+            )
+            .init();
       }),
       child: ScrollConfiguration(
         behavior: ScrollConfiguration.of(context).copyWith(

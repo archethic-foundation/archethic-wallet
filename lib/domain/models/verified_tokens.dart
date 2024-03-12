@@ -8,8 +8,6 @@ part 'verified_tokens.g.dart';
 @freezed
 class VerifiedTokens with _$VerifiedTokens {
   const factory VerifiedTokens({
-    required List<String> mainnet,
-    required List<String> testnet,
     required List<String> devnet,
   }) = _VerifiedTokens;
 

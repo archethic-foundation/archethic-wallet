@@ -1,6 +1,7 @@
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/version.dart';
+import 'package:aewallet/application/verified_tokens.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/archethic_theme_base.dart';
@@ -411,6 +412,11 @@ class _ButtonImportWallet extends ConsumerWidget {
                   ),
                 ),
               );
+              await ref
+                  .read(
+                    VerifiedTokensProviders.verifiedTokens.notifier,
+                  )
+                  .init();
               context.go(IntroImportSeedPage.routerPage);
             }
           },

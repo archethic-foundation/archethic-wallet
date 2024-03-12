@@ -10,6 +10,7 @@ import 'package:aewallet/application/notification/providers.dart';
 import 'package:aewallet/application/oracle/provider.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/verified_tokens.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/domain/repositories/settings.dart';
@@ -252,6 +253,11 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
     if (FeatureFlags.messagingActive) {
       await ref.read(NotificationProviders.repository).initialize();
     }
+    await ref
+        .read(
+          VerifiedTokensProviders.verifiedTokens.notifier,
+        )
+        .init();
   }
 
   Future<void> checkLoggedIn() async {
