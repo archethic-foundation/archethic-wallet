@@ -105,6 +105,7 @@ class AddContactSheetBody extends ConsumerWidget
           Dimens.buttonBottomDimens,
           key: const Key('addContact'),
           onPressed: () async {
+            contactCreationNotifier.setCreationInProgress(true);
             final isNameOk = await contactCreationNotifier.controlName(
               context,
             );
@@ -129,6 +130,7 @@ class AddContactSheetBody extends ConsumerWidget
               );
               context.pop();
             }
+            contactCreationNotifier.setCreationInProgress(false);
           },
           disabled: !contactCreation.canCreateContact,
         ),

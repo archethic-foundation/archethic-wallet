@@ -20,6 +20,7 @@ mixin _$ContactCreationFormState {
   String get address => throw _privateConstructorUsedError;
   bool get favorite => throw _privateConstructorUsedError;
   String get error => throw _privateConstructorUsedError;
+  bool get creationInProgress => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ContactCreationFormStateCopyWith<ContactCreationFormState> get copyWith =>
@@ -32,7 +33,12 @@ abstract class $ContactCreationFormStateCopyWith<$Res> {
           $Res Function(ContactCreationFormState) then) =
       _$ContactCreationFormStateCopyWithImpl<$Res, ContactCreationFormState>;
   @useResult
-  $Res call({String name, String address, bool favorite, String error});
+  $Res call(
+      {String name,
+      String address,
+      bool favorite,
+      String error,
+      bool creationInProgress});
 }
 
 /// @nodoc
@@ -53,6 +59,7 @@ class _$ContactCreationFormStateCopyWithImpl<$Res,
     Object? address = null,
     Object? favorite = null,
     Object? error = null,
+    Object? creationInProgress = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -71,6 +78,10 @@ class _$ContactCreationFormStateCopyWithImpl<$Res,
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String,
+      creationInProgress: null == creationInProgress
+          ? _value.creationInProgress
+          : creationInProgress // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -84,7 +95,12 @@ abstract class _$$ContactCreationFormStateImplCopyWith<$Res>
       __$$ContactCreationFormStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, String address, bool favorite, String error});
+  $Res call(
+      {String name,
+      String address,
+      bool favorite,
+      String error,
+      bool creationInProgress});
 }
 
 /// @nodoc
@@ -104,6 +120,7 @@ class __$$ContactCreationFormStateImplCopyWithImpl<$Res>
     Object? address = null,
     Object? favorite = null,
     Object? error = null,
+    Object? creationInProgress = null,
   }) {
     return _then(_$ContactCreationFormStateImpl(
       name: null == name
@@ -122,6 +139,10 @@ class __$$ContactCreationFormStateImplCopyWithImpl<$Res>
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String,
+      creationInProgress: null == creationInProgress
+          ? _value.creationInProgress
+          : creationInProgress // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -133,7 +154,8 @@ class _$ContactCreationFormStateImpl extends _ContactCreationFormState {
       {this.name = '',
       this.address = '',
       this.favorite = false,
-      this.error = ''})
+      this.error = '',
+      this.creationInProgress = false})
       : super._();
 
   @override
@@ -148,10 +170,13 @@ class _$ContactCreationFormStateImpl extends _ContactCreationFormState {
   @override
   @JsonKey()
   final String error;
+  @override
+  @JsonKey()
+  final bool creationInProgress;
 
   @override
   String toString() {
-    return 'ContactCreationFormState(name: $name, address: $address, favorite: $favorite, error: $error)';
+    return 'ContactCreationFormState(name: $name, address: $address, favorite: $favorite, error: $error, creationInProgress: $creationInProgress)';
   }
 
   @override
@@ -163,11 +188,14 @@ class _$ContactCreationFormStateImpl extends _ContactCreationFormState {
             (identical(other.address, address) || other.address == address) &&
             (identical(other.favorite, favorite) ||
                 other.favorite == favorite) &&
-            (identical(other.error, error) || other.error == error));
+            (identical(other.error, error) || other.error == error) &&
+            (identical(other.creationInProgress, creationInProgress) ||
+                other.creationInProgress == creationInProgress));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, name, address, favorite, error);
+  int get hashCode => Object.hash(
+      runtimeType, name, address, favorite, error, creationInProgress);
 
   @JsonKey(ignore: true)
   @override
@@ -182,7 +210,8 @@ abstract class _ContactCreationFormState extends ContactCreationFormState {
       {final String name,
       final String address,
       final bool favorite,
-      final String error}) = _$ContactCreationFormStateImpl;
+      final String error,
+      final bool creationInProgress}) = _$ContactCreationFormStateImpl;
   const _ContactCreationFormState._() : super._();
 
   @override
@@ -193,6 +222,8 @@ abstract class _ContactCreationFormState extends ContactCreationFormState {
   bool get favorite;
   @override
   String get error;
+  @override
+  bool get creationInProgress;
   @override
   @JsonKey(ignore: true)
   _$$ContactCreationFormStateImplCopyWith<_$ContactCreationFormStateImpl>

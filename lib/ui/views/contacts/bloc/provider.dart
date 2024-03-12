@@ -37,12 +37,16 @@ class ContactCreationFormNotifier
         ContactCreationFormProvider.initialContactCreationForm,
       );
 
-  Future<void> setName(String name, BuildContext context) async {
+  void setName(String name, BuildContext context) {
     state = state.copyWith(name: name, error: '');
   }
 
-  Future<void> setAddress(String address, BuildContext context) async {
+  void setAddress(String address, BuildContext context) {
     state = state.copyWith(address: address, error: '');
+  }
+
+  void setCreationInProgress(bool creationInProgress) {
+    state = state.copyWith(creationInProgress: creationInProgress);
   }
 
   Future<String> _getGenesisPublicKey(String address) async {
