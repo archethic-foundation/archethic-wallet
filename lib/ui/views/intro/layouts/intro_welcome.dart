@@ -9,8 +9,11 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_import_seed.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_new_wallet_get_first_infos.dart';
+import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/dialogs/language_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -30,108 +33,90 @@ class IntroWelcome extends ConsumerStatefulWidget {
   ConsumerState<IntroWelcome> createState() => _IntroWelcomeState();
 }
 
-class _IntroWelcomeState extends ConsumerState<IntroWelcome> {
+class _IntroWelcomeState extends ConsumerState<IntroWelcome>
+    implements SheetSkeletonInterface {
   bool cguChecked = false;
 
   @override
   Widget build(BuildContext context) {
-    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      extendBodyBehindAppBar: true,
-      appBar: const _AppBar(),
-      body: DecoratedBox(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              ArchethicTheme.backgroundWelcome,
-            ),
-            fit: MediaQuery.of(context).size.width >= 370
-                ? BoxFit.fitWidth
-                : BoxFit.fitHeight,
-            alignment: Alignment.centerRight,
-            opacity: 0.5,
-          ),
-        ),
-        child: Stack(
-          children: [
-            Opacity(
-              opacity: 0.8,
-              child: LitStarfieldContainer(
-                velocity: 0.2,
-                number: 600,
-                starColor: ArchethicThemeBase.neutral0,
-                scale: 3,
-                backgroundDecoration: const BoxDecoration(
-                  color: Colors.transparent,
-                ),
-              ),
-            ),
-            Opacity(
-              opacity: 0.3,
-              child: LitStarfieldContainer(
-                velocity: 0.5,
-                number: 300,
-                scale: 6,
-                starColor: ArchethicThemeBase.blue600,
-                backgroundDecoration: const BoxDecoration(
-                  color: Colors.transparent,
-                ),
-              ),
-            ),
-            LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) =>
-                  SafeArea(
-                minimum: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.035,
-                ),
-                child: Stack(
-                  children: [
-                    Column(
-                      children: <Widget>[
-                        const _Main(),
-                        _Footer(
-                          isConnectivityAvailable: connectivityStatusProvider ==
-                              ConnectivityStatus.isConnected,
-                          cguChecked: cguChecked,
-                          onToggleCGU: (newValue) {
-                            setState(() {
-                              cguChecked = newValue!;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+    return SheetSkeleton(
+      appBar: getAppBar(context, ref),
+      floatingActionButton: getFloatingActionButton(context, ref),
+      sheetContent: getSheetContent(context, ref),
     );
   }
-}
-
-class _AppBar extends ConsumerWidget implements PreferredSizeWidget {
-  const _AppBar();
 
   @override
-  Size get preferredSize => AppBar().preferredSize;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-    return AppBar(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      actions: <Widget>[
-        const _Language(),
-        if (connectivityStatusProvider == ConnectivityStatus.isDisconnected)
-          const IconNetworkWarning(
-            alignment: Alignment.topRight,
+    return _Footer(
+      isConnectivityAvailable:
+          connectivityStatusProvider == ConnectivityStatus.isConnected,
+      cguChecked: cguChecked,
+      onToggleCGU: (newValue) {
+        setState(() {
+          cguChecked = newValue!;
+        });
+      },
+    );
+  }
+
+  @override
+  PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
+
+    return SheetAppBar(
+      title: ' ',
+      widgetRight:
+          connectivityStatusProvider == ConnectivityStatus.isDisconnected
+              ? const Padding(
+                  padding: EdgeInsets.only(
+                    right: 7,
+                    top: 7,
+                  ),
+                  child: IconNetworkWarning(
+                    alignment: Alignment.topRight,
+                  ),
+                )
+              : const _Language(),
+    );
+  }
+
+  @override
+  Widget getSheetContent(BuildContext context, WidgetRef ref) {
+    return Stack(
+      children: [
+        Opacity(
+          opacity: 0.8,
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height - 200,
+            child: LitStarfieldContainer(
+              velocity: 0.2,
+              number: 600,
+              starColor: ArchethicThemeBase.neutral0,
+              scale: 3,
+              backgroundDecoration: const BoxDecoration(
+                color: Colors.transparent,
+              ),
+            ),
           ),
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).size.height - 200,
+          child: Opacity(
+            opacity: 0.3,
+            child: LitStarfieldContainer(
+              velocity: 0.5,
+              number: 300,
+              scale: 6,
+              starColor: ArchethicThemeBase.blue600,
+              backgroundDecoration: const BoxDecoration(
+                color: Colors.transparent,
+              ),
+            ),
+          ),
+        ),
+        const _Main(),
       ],
     );
   }
@@ -172,18 +157,14 @@ class _Main extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const Expanded(
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            _LogoArchethic(),
-            _WelcomeTextFirst(),
-            _WelcomeTextSecond(),
-          ],
-        ),
-      ),
+    return const Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        _LogoArchethic(),
+        _WelcomeTextFirst(),
+        _WelcomeTextSecond(),
+      ],
     );
   }
 }
@@ -194,20 +175,13 @@ class _LogoArchethic extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Center(
-      child: Container(
-        padding: const EdgeInsets.only(
-          left: 20,
-          right: 20,
-        ),
-        child: SizedBox(
-          height: 200,
-          child: AspectRatio(
-            aspectRatio: 3 / 1,
-            child: SvgPicture.asset(
-              '${ArchethicTheme.assetsFolder}Archethic - Logo.svg',
-              colorFilter:
-                  ColorFilter.mode(ArchethicTheme.text, BlendMode.srcIn),
-            ),
+      child: SizedBox(
+        height: 200,
+        child: AspectRatio(
+          aspectRatio: 3 / 1,
+          child: SvgPicture.asset(
+            '${ArchethicTheme.assetsFolder}Archethic - Logo.svg',
+            colorFilter: ColorFilter.mode(ArchethicTheme.text, BlendMode.srcIn),
           ),
         ),
       ),
@@ -221,16 +195,10 @@ class _WelcomeTextFirst extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    return Container(
-      margin: const EdgeInsets.only(
-        right: 20,
-        left: 20,
-      ),
-      child: AutoSizeText(
-        localizations.welcomeText,
-        maxLines: 3,
-        style: ArchethicThemeStyles.textStyleSize20W700Primary,
-      ),
+    return AutoSizeText(
+      localizations.welcomeText,
+      maxLines: 3,
+      style: ArchethicThemeStyles.textStyleSize20W700Primary,
     );
   }
 }
@@ -241,11 +209,9 @@ class _WelcomeTextSecond extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    return Container(
-      margin: const EdgeInsets.only(
+    return Padding(
+      padding: const EdgeInsets.only(
         top: 20,
-        right: 20,
-        left: 20,
       ),
       child: AutoSizeText(
         localizations.welcomeText2,
@@ -270,6 +236,7 @@ class _Footer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
         Column(
           children: <Widget>[

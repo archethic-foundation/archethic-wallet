@@ -13,6 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class SheetAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const SheetAppBar({
     required this.title,
+    this.styleTitle,
     this.widgetLeft,
     this.widgetRight,
     this.widgetBeforeTitle,
@@ -25,6 +26,7 @@ class SheetAppBar extends ConsumerWidget implements PreferredSizeWidget {
   final Widget? widgetRight;
   final Widget? widgetBeforeTitle;
   final Widget? widgetAfterTitle;
+  final TextStyle? styleTitle;
 
   @override
   Size get preferredSize => AppBar().preferredSize;
@@ -54,7 +56,7 @@ class SheetAppBar extends ConsumerWidget implements PreferredSizeWidget {
         fit: BoxFit.fitWidth,
         child: AutoSizeText(
           title,
-          style: ArchethicThemeStyles.textStyleSize24W700Primary,
+          style: styleTitle ?? ArchethicThemeStyles.textStyleSize24W700Primary,
         ),
       ).animate().fade(duration: const Duration(milliseconds: 300)),
       backgroundColor: Colors.transparent,
