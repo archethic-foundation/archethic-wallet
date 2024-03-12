@@ -218,10 +218,6 @@ class _SetYubikeyState extends ConsumerState<SetYubikey>
                             autocorrect: false,
                             controller: _clientIDController,
                             textInputAction: TextInputAction.next,
-                            autofocus: true,
-                            onSubmitted: (value) async {
-                              FocusScope.of(context).unfocus();
-                            },
                             onChanged: (value) async {
                               setState(() {
                                 _clientIDValidationText = '';
@@ -295,11 +291,8 @@ class _SetYubikeyState extends ConsumerState<SetYubikey>
                             ),
                             autocorrect: false,
                             controller: _clientAPIKeyController,
-                            textInputAction: TextInputAction.next,
+                            textInputAction: TextInputAction.done,
                             autofocus: true,
-                            onSubmitted: (value) async {
-                              FocusScope.of(context).unfocus();
-                            },
                             onChanged: (value) async {
                               setState(() {
                                 _clientAPIKeyValidationText = '';
