@@ -2,6 +2,7 @@
 
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/verified_tokens.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -131,13 +132,18 @@ class _IntroNewWalletDisclaimerState
                   ),
                 )
               : NetworkChoiceInfos(
-                  onTap: () {
-                    NetworkDialog.getDialog(
+                  onTap: () async {
+                    await NetworkDialog.getDialog(
                       context,
                       ref,
                       network,
                     );
                     FocusScope.of(context).requestFocus(nameFocusNode);
+                    await ref
+                        .read(
+                          VerifiedTokensProviders.verifiedTokens.notifier,
+                        )
+                        .init();
                   },
                 ),
     );

@@ -20,8 +20,6 @@ VerifiedTokens _$VerifiedTokensFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$VerifiedTokens {
-  List<String> get mainnet => throw _privateConstructorUsedError;
-  List<String> get testnet => throw _privateConstructorUsedError;
   List<String> get devnet => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,7 +34,7 @@ abstract class $VerifiedTokensCopyWith<$Res> {
           VerifiedTokens value, $Res Function(VerifiedTokens) then) =
       _$VerifiedTokensCopyWithImpl<$Res, VerifiedTokens>;
   @useResult
-  $Res call({List<String> mainnet, List<String> testnet, List<String> devnet});
+  $Res call({List<String> devnet});
 }
 
 /// @nodoc
@@ -52,19 +50,9 @@ class _$VerifiedTokensCopyWithImpl<$Res, $Val extends VerifiedTokens>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? mainnet = null,
-    Object? testnet = null,
     Object? devnet = null,
   }) {
     return _then(_value.copyWith(
-      mainnet: null == mainnet
-          ? _value.mainnet
-          : mainnet // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      testnet: null == testnet
-          ? _value.testnet
-          : testnet // ignore: cast_nullable_to_non_nullable
-              as List<String>,
       devnet: null == devnet
           ? _value.devnet
           : devnet // ignore: cast_nullable_to_non_nullable
@@ -81,7 +69,7 @@ abstract class _$$VerifiedTokensImplCopyWith<$Res>
       __$$VerifiedTokensImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<String> mainnet, List<String> testnet, List<String> devnet});
+  $Res call({List<String> devnet});
 }
 
 /// @nodoc
@@ -95,19 +83,9 @@ class __$$VerifiedTokensImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? mainnet = null,
-    Object? testnet = null,
     Object? devnet = null,
   }) {
     return _then(_$VerifiedTokensImpl(
-      mainnet: null == mainnet
-          ? _value._mainnet
-          : mainnet // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      testnet: null == testnet
-          ? _value._testnet
-          : testnet // ignore: cast_nullable_to_non_nullable
-              as List<String>,
       devnet: null == devnet
           ? _value._devnet
           : devnet // ignore: cast_nullable_to_non_nullable
@@ -119,32 +97,11 @@ class __$$VerifiedTokensImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$VerifiedTokensImpl implements _VerifiedTokens {
-  const _$VerifiedTokensImpl(
-      {required final List<String> mainnet,
-      required final List<String> testnet,
-      required final List<String> devnet})
-      : _mainnet = mainnet,
-        _testnet = testnet,
-        _devnet = devnet;
+  const _$VerifiedTokensImpl({required final List<String> devnet})
+      : _devnet = devnet;
 
   factory _$VerifiedTokensImpl.fromJson(Map<String, dynamic> json) =>
       _$$VerifiedTokensImplFromJson(json);
-
-  final List<String> _mainnet;
-  @override
-  List<String> get mainnet {
-    if (_mainnet is EqualUnmodifiableListView) return _mainnet;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_mainnet);
-  }
-
-  final List<String> _testnet;
-  @override
-  List<String> get testnet {
-    if (_testnet is EqualUnmodifiableListView) return _testnet;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_testnet);
-  }
 
   final List<String> _devnet;
   @override
@@ -156,7 +113,7 @@ class _$VerifiedTokensImpl implements _VerifiedTokens {
 
   @override
   String toString() {
-    return 'VerifiedTokens(mainnet: $mainnet, testnet: $testnet, devnet: $devnet)';
+    return 'VerifiedTokens(devnet: $devnet)';
   }
 
   @override
@@ -164,18 +121,13 @@ class _$VerifiedTokensImpl implements _VerifiedTokens {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$VerifiedTokensImpl &&
-            const DeepCollectionEquality().equals(other._mainnet, _mainnet) &&
-            const DeepCollectionEquality().equals(other._testnet, _testnet) &&
             const DeepCollectionEquality().equals(other._devnet, _devnet));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_mainnet),
-      const DeepCollectionEquality().hash(_testnet),
-      const DeepCollectionEquality().hash(_devnet));
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_devnet));
 
   @JsonKey(ignore: true)
   @override
@@ -193,18 +145,12 @@ class _$VerifiedTokensImpl implements _VerifiedTokens {
 }
 
 abstract class _VerifiedTokens implements VerifiedTokens {
-  const factory _VerifiedTokens(
-      {required final List<String> mainnet,
-      required final List<String> testnet,
-      required final List<String> devnet}) = _$VerifiedTokensImpl;
+  const factory _VerifiedTokens({required final List<String> devnet}) =
+      _$VerifiedTokensImpl;
 
   factory _VerifiedTokens.fromJson(Map<String, dynamic> json) =
       _$VerifiedTokensImpl.fromJson;
 
-  @override
-  List<String> get mainnet;
-  @override
-  List<String> get testnet;
   @override
   List<String> get devnet;
   @override
