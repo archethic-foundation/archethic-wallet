@@ -32,7 +32,7 @@ mixin LockGuardMixin {
     if (shouldLock) {
       log('Show countdown screen', name: _logName);
       // TODO(Chralu): Pb !keyReservation.contains(key)': is not true...
-      await context.push(
+      context.pushReplacement(
         AppLockScreen.routerPage,
       );
     }
