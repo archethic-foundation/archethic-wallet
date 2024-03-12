@@ -228,7 +228,6 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
                       ? BoxFit.fitWidth
                       : BoxFit.fitHeight,
                   alignment: Alignment.centerRight,
-                  opacity: 0.5,
                 ),
               ),
             ),

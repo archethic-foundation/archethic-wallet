@@ -187,19 +187,33 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet>
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    return Padding(
-      padding: const EdgeInsets.only(top: kToolbarHeight + 20),
-      child: DefaultTabController(
-        length: 4,
-        child: TabBarView(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: _tabController,
-          children: const [
-            NFTCreationProcessInfosTab(),
-            NFTCreationProcessImportTab(),
-            NFTCreationProcessPropertiesTab(),
-            NFTCreationProcessSummaryTab(),
-          ],
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(
+            ArchethicTheme.backgroundSmall,
+          ),
+          fit: MediaQuery.of(context).size.width >= 370
+              ? BoxFit.fitWidth
+              : BoxFit.fitHeight,
+          alignment: Alignment.centerRight,
+          opacity: 0.5,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(top: kToolbarHeight + 20),
+        child: DefaultTabController(
+          length: 4,
+          child: TabBarView(
+            physics: const NeverScrollableScrollPhysics(),
+            controller: _tabController,
+            children: const [
+              NFTCreationProcessInfosTab(),
+              NFTCreationProcessImportTab(),
+              NFTCreationProcessPropertiesTab(),
+              NFTCreationProcessSummaryTab(),
+            ],
+          ),
         ),
       ),
     );
