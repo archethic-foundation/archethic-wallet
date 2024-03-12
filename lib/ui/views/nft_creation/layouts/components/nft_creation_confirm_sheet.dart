@@ -15,6 +15,8 @@ import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/nft_creation_detail.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -32,7 +34,8 @@ class NftCreationConfirmSheet extends ConsumerStatefulWidget {
       _NftCreationConfirmState();
 }
 
-class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
+class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet>
+    implements SheetSkeletonInterface {
   bool? animationOpen;
 
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
@@ -139,107 +142,88 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet> {
 
   @override
   Widget build(BuildContext context) {
+    return SheetSkeleton(
+      appBar: getAppBar(context, ref),
+      floatingActionButton: getFloatingActionButton(context, ref),
+      sheetContent: getSheetContent(context, ref),
+    );
+  }
+
+  @override
+  Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
     final nftCreation = ref.watch(
       NftCreationFormProvider.nftCreationForm,
     );
+    return Row(
+      children: <Widget>[
+        AppButtonTinyConnectivity(
+          localizations.confirm,
+          Dimens.buttonBottomDimens,
+          key: const Key('confirm'),
+          onPressed: () async {
+            Navigator.of(context).push(
+              AnimationLoadingOverlay(
+                AnimationType.send,
+                ArchethicTheme.animationOverlayStrong,
+                title: AppLocalizations.of(context)!.pleaseWait,
+              ),
+            );
+
+            await ref
+                .read(
+                  NftCreationFormProvider.nftCreationForm.notifier,
+                )
+                .send(context);
+          },
+          disabled: nftCreation.canConfirmNFTCreation == false,
+        ),
+      ],
+    );
+  }
+
+  @override
+  PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     final nftCreationNotifier = ref.watch(
       NftCreationFormProvider.nftCreationForm.notifier,
     );
+    return SheetAppBar(
+      title: ' ',
+      widgetLeft: BackButton(
+        key: const Key('back'),
+        color: ArchethicTheme.text,
+        onPressed: () {
+          nftCreationNotifier
+            ..setIndexTab(NftCreationTab.summary.index)
+            ..setCheckPreventUserPublicInfo(false)
+            ..setNftCreationProcessStep(
+              NftCreationProcessStep.form,
+            );
+        },
+      ),
+    );
+  }
 
-    return Scaffold(
-      drawerEdgeDragWidth: 0,
-      extendBodyBehindAppBar: true,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Row(
-        children: <Widget>[
-          AppButtonTinyConnectivity(
-            localizations.confirm,
-            Dimens.buttonBottomDimens,
-            key: const Key('confirm'),
-            onPressed: () async {
-              Navigator.of(context).push(
-                AnimationLoadingOverlay(
-                  AnimationType.send,
-                  ArchethicTheme.animationOverlayStrong,
-                  title: AppLocalizations.of(context)!.pleaseWait,
-                ),
-              );
+  @override
+  Widget getSheetContent(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
 
-              await ref
-                  .read(
-                    NftCreationFormProvider.nftCreationForm.notifier,
-                  )
-                  .send(context);
-            },
-            disabled: nftCreation.canConfirmNFTCreation == false,
-          ),
-        ],
-      ),
-      backgroundColor: ArchethicTheme.background,
-      appBar: SheetAppBar(
-        title: localizations.createNFT,
-        widgetLeft: BackButton(
-          key: const Key('back'),
-          color: ArchethicTheme.text,
-          onPressed: () {
-            nftCreationNotifier
-              ..setIndexTab(NftCreationTab.summary.index)
-              ..setCheckPreventUserPublicInfo(false)
-              ..setNftCreationProcessStep(
-                NftCreationProcessStep.form,
-              );
-          },
-        ),
-      ),
-      body: DecoratedBox(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              ArchethicTheme.backgroundSmall,
-            ),
-            fit: MediaQuery.of(context).size.width >= 370
-                ? BoxFit.fitWidth
-                : BoxFit.fitHeight,
-            alignment: Alignment.centerRight,
-            opacity: 0.5,
-          ),
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: <Color>[
-              ArchethicTheme.backgroundDark,
-              ArchethicTheme.background,
-            ],
+    return Column(
+      children: <Widget>[
+        const SizedBox(height: 30),
+        Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20),
+          child: Text(
+            localizations.createNFTConfirmationMessage,
+            style: ArchethicThemeStyles.textStyleSize14W600Primary,
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 120, bottom: 100),
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: Column(
-                  children: <Widget>[
-                    const SizedBox(height: 30),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20, right: 20),
-                      child: Text(
-                        localizations.createNFTConfirmationMessage,
-                        style: ArchethicThemeStyles.textStyleSize14W600Primary,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const NftCreationDetail(),
-                  ],
-                ),
-              ),
-            ],
-          ),
+        const SizedBox(
+          height: 20,
         ),
-      ),
+        const NftCreationDetail(),
+      ],
     );
   }
 }

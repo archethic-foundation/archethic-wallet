@@ -9,6 +9,8 @@ class SheetSkeleton extends ConsumerWidget {
     required this.floatingActionButton,
     required this.appBar,
     required this.sheetContent,
+    this.floatingActionButtonLocation =
+        FloatingActionButtonLocation.centerFloat,
     this.thumbVisibility = true,
     this.menu = false,
     super.key,
@@ -19,6 +21,7 @@ class SheetSkeleton extends ConsumerWidget {
   final Widget sheetContent;
   final bool? thumbVisibility;
   final bool? menu;
+  final FloatingActionButtonLocation? floatingActionButtonLocation;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,7 +30,7 @@ class SheetSkeleton extends ConsumerWidget {
     return Scaffold(
       drawerEdgeDragWidth: 0,
       resizeToAvoidBottomInset: false,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: floatingActionButtonLocation,
       floatingActionButton: floatingActionButton,
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
       extendBodyBehindAppBar: true,

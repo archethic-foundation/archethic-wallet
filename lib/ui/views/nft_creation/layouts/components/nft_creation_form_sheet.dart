@@ -1,12 +1,17 @@
 import 'dart:ui';
 
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
-import 'package:aewallet/ui/views/nft/layouts/components/nft_header.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
+import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
+import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/tab_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -25,7 +30,8 @@ class NftCreationFormSheet extends ConsumerStatefulWidget {
 }
 
 class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin
+    implements SheetSkeletonInterface {
   late TabController? _tabController;
 
   @override
@@ -82,6 +88,17 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet>
 
   @override
   Widget build(BuildContext context) {
+    return SheetSkeleton(
+      appBar: getAppBar(context, ref),
+      floatingActionButton: getFloatingActionButton(context, ref),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      sheetContent: getSheetContent(context, ref),
+      menu: true,
+    );
+  }
+
+  @override
+  Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final nftCreation = ref.watch(
       NftCreationFormProvider.nftCreationForm,
     );
@@ -108,94 +125,81 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet>
       ),
     ];
 
-    return DefaultTabController(
-      length: 4,
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
-        extendBody: true,
-        drawerEdgeDragWidth: 0,
-        resizeToAvoidBottomInset: false,
-        backgroundColor: ArchethicTheme.background,
-        body: DecoratedBox(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                ArchethicTheme.backgroundSmall,
-              ),
-              fit: MediaQuery.of(context).size.width >= 370
-                  ? BoxFit.fitWidth
-                  : BoxFit.fitHeight,
-              alignment: Alignment.centerRight,
-              opacity: 0.5,
-            ),
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: <Color>[
-                ArchethicTheme.backgroundDark,
-                ArchethicTheme.background,
-              ],
-            ),
-          ),
-          child: SafeArea(
-            child: Column(
-              children: [
-                NFTHeader(
-                  currentNftCategoryIndex: nftCreation.currentNftCategoryIndex,
-                  onPressBack: () async {
-                    AppDialogs.showConfirmDialog(
-                      context,
-                      ref,
-                      AppLocalizations.of(context)!.exitNFTCreationProcessTitle,
-                      AppLocalizations.of(context)!
-                          .exitNFTCreationProcessSubtitle,
-                      AppLocalizations.of(context)!.yes,
-                      () {
-                        context.go(HomePage.routerPage);
-                      },
-                      cancelText: AppLocalizations.of(context)!.no,
-                    );
-                  },
-                ),
-                Divider(
-                  height: 2,
-                  color: ArchethicTheme.text15,
-                ),
-                Expanded(
-                  child: TabBarView(
-                    controller: _tabController,
-                    children: const [
-                      NFTCreationProcessInfosTab(),
-                      NFTCreationProcessImportTab(),
-                      NFTCreationProcessPropertiesTab(),
-                      NFTCreationProcessSummaryTab(),
-                    ],
-                  ),
-                ),
-              ],
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        ClipRRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: TabBar(
+              controller: _tabController,
+              dividerColor: Colors.transparent,
+              labelColor: ArchethicTheme.text,
+              indicatorColor: ArchethicTheme.text,
+              labelPadding: EdgeInsets.zero,
+              tabs: myTabs,
             ),
           ),
         ),
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.only(top: 8),
-          child: ClipRRect(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-              child: SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 8),
-                  child: TabBar(
-                    controller: _tabController,
-                    dividerColor: Colors.transparent,
-                    labelColor: ArchethicTheme.text,
-                    indicatorColor: ArchethicTheme.text,
-                    labelPadding: EdgeInsets.zero,
-                    tabs: myTabs,
+      ],
+    );
+  }
+
+  @override
+  PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
+
+    return SheetAppBar(
+      title: ' ',
+      widgetLeft: BackButton(
+        key: const Key('back'),
+        color: ArchethicTheme.text,
+        onPressed: () async {
+          AppDialogs.showConfirmDialog(
+            context,
+            ref,
+            AppLocalizations.of(context)!.exitNFTCreationProcessTitle,
+            AppLocalizations.of(context)!.exitNFTCreationProcessSubtitle,
+            AppLocalizations.of(context)!.yes,
+            () {
+              context.go(HomePage.routerPage);
+            },
+            cancelText: AppLocalizations.of(context)!.no,
+          );
+        },
+      ),
+      widgetRight:
+          connectivityStatusProvider == ConnectivityStatus.isDisconnected
+              ? const Padding(
+                  padding: EdgeInsets.only(right: 7, top: 7),
+                  child: IconNetworkWarning(),
+                )
+              : const Padding(
+                  padding: EdgeInsets.only(right: 10),
+                  child: BalanceIndicatorWidget(
+                    displaySwitchButton: false,
+                    allDigits: false,
+                    displayLabel: false,
                   ),
                 ),
-              ),
-            ),
-          ),
+    );
+  }
+
+  @override
+  Widget getSheetContent(BuildContext context, WidgetRef ref) {
+    return Padding(
+      padding: const EdgeInsets.only(top: kToolbarHeight + 20),
+      child: DefaultTabController(
+        length: 4,
+        child: TabBarView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: _tabController,
+          children: const [
+            NFTCreationProcessInfosTab(),
+            NFTCreationProcessImportTab(),
+            NFTCreationProcessPropertiesTab(),
+            NFTCreationProcessSummaryTab(),
+          ],
         ),
       ),
     );
