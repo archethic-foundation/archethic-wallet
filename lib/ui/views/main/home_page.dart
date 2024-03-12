@@ -14,7 +14,6 @@ import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/main/account_tab.dart';
 import 'package:aewallet/ui/views/main/address_book_tab.dart';
@@ -27,16 +26,17 @@ import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/views/messenger/layouts/messenger_tab.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/layouts/add_token_sheet.dart';
 import 'package:aewallet/ui/views/transactions/incoming_transactions_notifier.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/tab_item.dart';
 import 'package:aewallet/util/get_it_instance.dart';
+import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/notifications_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
@@ -442,6 +442,7 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
         )
         .valueOrNull;
     if (session == null) return const SizedBox();
+    final preferences = ref.watch(SettingsProviders.settings);
 
     return DefaultTabController(
       length: 2,
@@ -462,11 +463,47 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
                   style: ArchethicThemeStyles.textStyleSize14W600Primary,
                   textAlign: TextAlign.center,
                 ),
-                Text(
-                  key: const Key('fungibleTokenTab'),
-                  localizations.tokensHeader,
-                  style: ArchethicThemeStyles.textStyleSize14W600Primary,
-                  textAlign: TextAlign.center,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      key: const Key('fungibleTokenTab'),
+                      localizations.tokensHeader,
+                      style: ArchethicThemeStyles.textStyleSize14W600Primary,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    if (accountSelected!.balance!.isNativeTokenValuePositive())
+                      InkWell(
+                        onTap: () {
+                          sl.get<HapticUtil>().feedback(
+                                FeedbackType.light,
+                                preferences.activeVibrations,
+                              );
+                          context.go(AddTokenSheet.routerPage);
+                        },
+                        child: ShaderMask(
+                          child: SizedBox(
+                            width: 30,
+                            height: 30,
+                            child: Icon(
+                              Icons.add_circle_outline,
+                              opticalSize: IconSize.opticalSizeM,
+                              grade: IconSize.gradeM,
+                              weight: 800,
+                              color: ArchethicTheme.text,
+                              size: 28,
+                            ),
+                          ),
+                          shaderCallback: (Rect bounds) {
+                            const rect = Rect.fromLTRB(0, 0, 40, 40);
+                            return ArchethicTheme.gradient.createShader(rect);
+                          },
+                        ),
+                      ),
+                  ],
                 ),
               ],
               onTap: (index) {
@@ -490,24 +527,6 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
                   .toList(),
             ),
           ),
-          if (_currentPage == 1)
-            Padding(
-              padding: const EdgeInsets.only(top: 10, bottom: 10),
-              child: Row(
-                children: <Widget>[
-                  AppButtonTinyConnectivity(
-                    localizations.createFungibleToken,
-                    Dimens.buttonBottomDimens,
-                    key: const Key('createTokenFungible'),
-                    onPressed: () {
-                      context.go(AddTokenSheet.routerPage);
-                    },
-                    disabled:
-                        !accountSelected!.balance!.isNativeTokenValuePositive(),
-                  ),
-                ],
-              ),
-            ),
         ],
       ),
     );

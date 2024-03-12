@@ -90,6 +90,7 @@ class _TransactionsEmpty extends ConsumerWidget {
       alignment: Alignment.center,
       color: Colors.transparent,
       width: MediaQuery.of(context).size.width,
+      padding: const EdgeInsets.only(top: 6),
       child: Card(
         shape: RoundedRectangleBorder(
           side: BorderSide(
