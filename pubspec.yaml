@@ -258,7 +258,7 @@ dependencies:
   web_socket_channel: ^2.4.3
 
   # This plugin allows Flutter desktop apps to resizing and repositioning the window.
-  window_manager: ^0.3.5
+  window_manager: ^0.3.8
 
   # Yubico dart library for Dart/Flutter
   yubidart: ^2.0.0
