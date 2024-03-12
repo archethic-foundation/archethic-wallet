@@ -11,6 +11,9 @@ import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
+import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -52,7 +55,8 @@ class PinScreen extends ConsumerStatefulWidget {
 }
 
 class _PinScreenState extends ConsumerState<PinScreen>
-    with SingleTickerProviderStateMixin, LockGuardMixin {
+    with SingleTickerProviderStateMixin, LockGuardMixin
+    implements SheetSkeletonInterface {
   static const int _pinLength = 6;
   double buttonSize = 70;
   final FocusNode _focusNode = FocusNode();
@@ -309,6 +313,172 @@ class _PinScreenState extends ConsumerState<PinScreen>
 
   @override
   Widget build(BuildContext context) {
+    return SheetSkeleton(
+      appBar: getAppBar(context, ref),
+      floatingActionButton: getFloatingActionButton(context, ref),
+      sheetContent: getSheetContent(context, ref),
+    );
+  }
+
+  @override
+  Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
+    final preferences = ref.watch(SettingsProviders.settings);
+
+    return Container(
+      margin: EdgeInsets.only(
+        left: MediaQuery.of(context).size.width * 0.07,
+        right: MediaQuery.of(context).size.width * 0.07,
+        bottom: smallScreen(context)
+            ? MediaQuery.of(context).size.height * 0.02
+            : MediaQuery.of(context).size.height * 0.05,
+        top: MediaQuery.of(context).size.height * 0.05,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(
+              bottom: MediaQuery.of(context).size.height * 0.01,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                _buildPinScreenButton(
+                  _listPinNumber.elementAt(0).toString(),
+                  context,
+                ),
+                _buildPinScreenButton(
+                  _listPinNumber.elementAt(1).toString(),
+                  context,
+                ),
+                _buildPinScreenButton(
+                  _listPinNumber.elementAt(2).toString(),
+                  context,
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(
+              bottom: MediaQuery.of(context).size.height * 0.01,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                _buildPinScreenButton(
+                  _listPinNumber.elementAt(3).toString(),
+                  context,
+                ),
+                _buildPinScreenButton(
+                  _listPinNumber.elementAt(4).toString(),
+                  context,
+                ),
+                _buildPinScreenButton(
+                  _listPinNumber.elementAt(5).toString(),
+                  context,
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(
+              bottom: MediaQuery.of(context).size.height * 0.01,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                _buildPinScreenButton(
+                  _listPinNumber.elementAt(6).toString(),
+                  context,
+                ),
+                _buildPinScreenButton(
+                  _listPinNumber.elementAt(7).toString(),
+                  context,
+                ),
+                _buildPinScreenButton(
+                  _listPinNumber.elementAt(8).toString(),
+                  context,
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(
+              bottom: MediaQuery.of(context).size.height * 0.009,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                SizedBox(
+                  height: smallScreen(context) ? buttonSize - 15 : buttonSize,
+                  width: smallScreen(context) ? buttonSize - 15 : buttonSize,
+                ),
+                _buildPinScreenButton(
+                  _listPinNumber.elementAt(9).toString(),
+                  context,
+                ),
+                SizedBox(
+                  height: smallScreen(context) ? buttonSize - 15 : buttonSize,
+                  width: smallScreen(context) ? buttonSize - 15 : buttonSize,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(200),
+                    highlightColor: ArchethicTheme.text15,
+                    splashColor: ArchethicTheme.text30,
+                    onTap: () {},
+                    onTapDown: (TapDownDetails details) {
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.light,
+                            preferences.activeVibrations,
+                          );
+                      _backSpace();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                            color: ArchethicTheme.background40,
+                            blurRadius: 15,
+                            spreadRadius: -15,
+                          ),
+                        ],
+                      ),
+                      alignment: AlignmentDirectional.center,
+                      child: Icon(
+                        Symbols.backspace,
+                        color: ArchethicTheme.text,
+                        size: 26,
+                        weight: IconSize.weightM,
+                        opticalSize: IconSize.opticalSizeM,
+                        grade: IconSize.gradeM,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
+    return SheetAppBar(
+      title: ' ',
+      widgetLeft: BackButton(
+        key: const Key('back'),
+        color: ArchethicTheme.text,
+        onPressed: () {
+          context.pop(false);
+        },
+      ),
+    );
+  }
+
+  @override
+  Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
     final preferences = ref.watch(SettingsProviders.settings);
@@ -371,288 +541,85 @@ class _PinScreenState extends ConsumerState<PinScreen>
           }
         }
       },
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: ArchethicTheme.backgroundDarkest,
-        body: DecoratedBox(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                ArchethicTheme.backgroundSmall,
+      child: Column(
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 40),
+                child: AutoSizeText(
+                  _header,
+                  style: ArchethicThemeStyles.textStyleSize24W700Primary,
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  stepGranularity: 0.1,
+                ),
               ),
-              fit: MediaQuery.of(context).size.width >= 370
-                  ? BoxFit.fitWidth
-                  : BoxFit.fitHeight,
-              alignment: Alignment.centerRight,
-              opacity: 0.5,
-            ),
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: <Color>[
-                ArchethicTheme.backgroundDark,
-                ArchethicTheme.background,
-              ],
-            ),
-          ),
-          child: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) =>
-                SafeArea(
-              minimum: EdgeInsets.only(
-                bottom: MediaQuery.of(context).size.height * 0.035,
-              ),
-              child: Column(
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Container(
-                            margin: const EdgeInsetsDirectional.only(start: 15),
-                            height: 50,
-                            width: 50,
-                            child: widget.canNavigateBack
-                                ? BackButton(
-                                    key: const Key('back'),
-                                    color: ArchethicTheme.text,
-                                    onPressed: () {
-                                      context.pop(false);
-                                    },
-                                  )
-                                : const SizedBox(),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 40),
-                        child: AutoSizeText(
-                          _header,
-                          style:
-                              ArchethicThemeStyles.textStyleSize24W700Primary,
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
-                          stepGranularity: 0.1,
+              if (widget.description.isNotEmpty)
+                Container(
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 40,
+                    vertical: 10,
+                  ),
+                  child: AutoSizeText(
+                    widget.description,
+                    style: ArchethicThemeStyles.textStyleSize16W100Primary,
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    stepGranularity: 0.1,
+                  ),
+                ),
+              AnimatedBuilder(
+                animation: _controller,
+                builder: (context, child) => Container(
+                  margin: EdgeInsetsDirectional.only(
+                    start: MediaQuery.of(context).size.width * 0.25 +
+                        _animation.value,
+                    end: MediaQuery.of(context).size.width * 0.25 -
+                        _animation.value,
+                    top: MediaQuery.of(context).size.height * 0.05,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ...List.generate(
+                        displayedPin.length,
+                        (index) => Icon(
+                          Symbols.circle,
+                          fill: 1,
+                          color: ArchethicTheme.text,
+                          size: 15,
                         ),
                       ),
-                      if (widget.description.isNotEmpty)
-                        Container(
-                          margin: const EdgeInsets.symmetric(
-                            horizontal: 40,
-                            vertical: 10,
-                          ),
-                          child: AutoSizeText(
-                            widget.description,
-                            style:
-                                ArchethicThemeStyles.textStyleSize16W100Primary,
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                            stepGranularity: 0.1,
-                          ),
-                        ),
-                      AnimatedBuilder(
-                        animation: _controller,
-                        builder: (context, child) => Container(
-                          margin: EdgeInsetsDirectional.only(
-                            start: MediaQuery.of(context).size.width * 0.25 +
-                                _animation.value,
-                            end: MediaQuery.of(context).size.width * 0.25 -
-                                _animation.value,
-                            top: MediaQuery.of(context).size.height * 0.05,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              ...List.generate(
-                                displayedPin.length,
-                                (index) => Icon(
-                                  Symbols.circle,
-                                  fill: 1,
-                                  color: ArchethicTheme.text,
-                                  size: 15,
-                                ),
-                              ),
-                              ...List.generate(
-                                max(_pinLength - displayedPin.length, 0),
-                                (index) => Icon(
-                                  Symbols.remove,
-                                  color: ArchethicTheme.text,
-                                  size: 15,
-                                ),
-                              ),
-                            ],
-                          ),
+                      ...List.generate(
+                        max(_pinLength - displayedPin.length, 0),
+                        (index) => Icon(
+                          Symbols.remove,
+                          color: ArchethicTheme.text,
+                          size: 15,
                         ),
                       ),
-                      if (pinAuthentication.failedAttemptsCount > 0)
-                        Container(
-                          margin: const EdgeInsets.symmetric(
-                            horizontal: 40,
-                            vertical: 10,
-                          ),
-                          child: AutoSizeText(
-                            '${localizations.attempt}${pinAuthentication.failedAttemptsCount}/${pinAuthentication.maxAttemptsCount}',
-                            style:
-                                ArchethicThemeStyles.textStyleSize16W100Primary,
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                            stepGranularity: 0.1,
-                          ),
-                        ),
                     ],
                   ),
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width * 0.07,
-                        right: MediaQuery.of(context).size.width * 0.07,
-                        bottom: smallScreen(context)
-                            ? MediaQuery.of(context).size.height * 0.02
-                            : MediaQuery.of(context).size.height * 0.05,
-                        top: MediaQuery.of(context).size.height * 0.05,
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.only(
-                              bottom: MediaQuery.of(context).size.height * 0.01,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: <Widget>[
-                                _buildPinScreenButton(
-                                  _listPinNumber.elementAt(0).toString(),
-                                  context,
-                                ),
-                                _buildPinScreenButton(
-                                  _listPinNumber.elementAt(1).toString(),
-                                  context,
-                                ),
-                                _buildPinScreenButton(
-                                  _listPinNumber.elementAt(2).toString(),
-                                  context,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                              bottom: MediaQuery.of(context).size.height * 0.01,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: <Widget>[
-                                _buildPinScreenButton(
-                                  _listPinNumber.elementAt(3).toString(),
-                                  context,
-                                ),
-                                _buildPinScreenButton(
-                                  _listPinNumber.elementAt(4).toString(),
-                                  context,
-                                ),
-                                _buildPinScreenButton(
-                                  _listPinNumber.elementAt(5).toString(),
-                                  context,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                              bottom: MediaQuery.of(context).size.height * 0.01,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: <Widget>[
-                                _buildPinScreenButton(
-                                  _listPinNumber.elementAt(6).toString(),
-                                  context,
-                                ),
-                                _buildPinScreenButton(
-                                  _listPinNumber.elementAt(7).toString(),
-                                  context,
-                                ),
-                                _buildPinScreenButton(
-                                  _listPinNumber.elementAt(8).toString(),
-                                  context,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                              bottom:
-                                  MediaQuery.of(context).size.height * 0.009,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: <Widget>[
-                                SizedBox(
-                                  height: smallScreen(context)
-                                      ? buttonSize - 15
-                                      : buttonSize,
-                                  width: smallScreen(context)
-                                      ? buttonSize - 15
-                                      : buttonSize,
-                                ),
-                                _buildPinScreenButton(
-                                  _listPinNumber.elementAt(9).toString(),
-                                  context,
-                                ),
-                                SizedBox(
-                                  height: smallScreen(context)
-                                      ? buttonSize - 15
-                                      : buttonSize,
-                                  width: smallScreen(context)
-                                      ? buttonSize - 15
-                                      : buttonSize,
-                                  child: InkWell(
-                                    borderRadius: BorderRadius.circular(200),
-                                    highlightColor: ArchethicTheme.text15,
-                                    splashColor: ArchethicTheme.text30,
-                                    onTap: () {},
-                                    onTapDown: (TapDownDetails details) {
-                                      sl.get<HapticUtil>().feedback(
-                                            FeedbackType.light,
-                                            preferences.activeVibrations,
-                                          );
-                                      _backSpace();
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        boxShadow: <BoxShadow>[
-                                          BoxShadow(
-                                            color: ArchethicTheme.background40,
-                                            blurRadius: 15,
-                                            spreadRadius: -15,
-                                          ),
-                                        ],
-                                      ),
-                                      alignment: AlignmentDirectional.center,
-                                      child: Icon(
-                                        Symbols.backspace,
-                                        color: ArchethicTheme.text,
-                                        size: 26,
-                                        weight: IconSize.weightM,
-                                        opticalSize: IconSize.opticalSizeM,
-                                        grade: IconSize.gradeM,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
+              if (pinAuthentication.failedAttemptsCount > 0)
+                Container(
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 40,
+                    vertical: 10,
+                  ),
+                  child: AutoSizeText(
+                    '${localizations.attempt}${pinAuthentication.failedAttemptsCount}/${pinAuthentication.maxAttemptsCount}',
+                    style: ArchethicThemeStyles.textStyleSize16W100Primary,
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    stepGranularity: 0.1,
+                  ),
+                ),
+            ],
           ),
-        ),
+        ],
       ),
     );
   }

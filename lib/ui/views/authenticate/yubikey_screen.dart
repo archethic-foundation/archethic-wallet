@@ -11,7 +11,11 @@ import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
+import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/paste_icon.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/nfc.dart';
@@ -19,7 +23,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
@@ -39,7 +42,9 @@ class YubikeyScreen extends ConsumerStatefulWidget {
   ConsumerState<YubikeyScreen> createState() => _YubikeyScreenState();
 }
 
-class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
+class _YubikeyScreenState extends ConsumerState<YubikeyScreen>
+    with LockGuardMixin
+    implements SheetSkeletonInterface {
   StreamSubscription<OTPReceiveEvent>? _otpReceiveSub;
 
   double buttonSize = 100;
@@ -123,203 +128,171 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return SheetSkeleton(
+      appBar: getAppBar(context, ref),
+      floatingActionButton: getFloatingActionButton(context, ref),
+      sheetContent: getSheetContent(context, ref),
+    );
+  }
+
+  @override
+  Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
+    return const SizedBox.shrink();
+  }
+
+  @override
+  PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
+    return SheetAppBar(
+      title: ' ',
+      widgetLeft: BackButton(
+        key: const Key('back'),
+        color: ArchethicTheme.text,
+        onPressed: () {
+          context.pop(false);
+        },
+      ),
+    );
+  }
+
+  @override
+  Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
     final preferences = ref.watch(SettingsProviders.settings);
 
     return PopScope(
       onPopInvoked: (didPop) async => widget.canNavigateBack,
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: DecoratedBox(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                ArchethicTheme.backgroundSmall,
-              ),
-              fit: MediaQuery.of(context).size.width >= 370
-                  ? BoxFit.fitWidth
-                  : BoxFit.fitHeight,
-              alignment: Alignment.centerRight,
-              opacity: 0.5,
+      child: Column(
+        children: <Widget>[
+          Container(
+            margin: const EdgeInsets.symmetric(
+              horizontal: 40,
+              vertical: 10,
             ),
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: <Color>[
-                ArchethicTheme.backgroundDark,
-                ArchethicTheme.background,
-              ],
+            child: AutoSizeText(
+              'OTP',
+              style: ArchethicThemeStyles.textStyleSize16W100Primary,
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              stepGranularity: 0.1,
             ),
           ),
-          child: Material(
-            color: Colors.transparent,
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height * 0.06,
-                      ),
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            margin: const EdgeInsetsDirectional.only(start: 15),
-                            height: 50,
-                            width: 50,
-                            child: widget.canNavigateBack
-                                ? BackButton(
-                                    key: const Key('back'),
-                                    color: ArchethicTheme.text,
-                                    onPressed: () {
-                                      context.pop(false);
-                                    },
-                                  )
-                                : const SizedBox(),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 40,
-                    vertical: 10,
-                  ),
-                  child: AutoSizeText(
-                    'OTP',
-                    style: ArchethicThemeStyles.textStyleSize16W100Primary,
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                    stepGranularity: 0.1,
-                  ),
-                ),
-                if (isNFCAvailable)
-                  ElevatedButton(
-                    child: Text(
-                      buttonNFCLabel,
-                      style: ArchethicThemeStyles.textStyleSize16W100Primary,
-                    ),
-                    onPressed: () async {
-                      sl.get<HapticUtil>().feedback(
-                            FeedbackType.light,
-                            preferences.activeVibrations,
-                          );
-                      setState(() {
-                        buttonNFCLabel =
-                            localizations.yubikeyConnectHoldNearDevice;
-                      });
-                      await _tagRead();
-                    },
-                  )
-                else
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 40,
-                      vertical: 10,
-                    ),
-                    child: AutoSizeText(
-                      localizations.yubikeyConnectInvite,
-                      style: ArchethicThemeStyles.textStyleSize14W600Primary,
-                      maxLines: 1,
-                      stepGranularity: 0.1,
-                    ),
-                  ),
-                if (isNFCAvailable)
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                  )
-                else
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+          if (isNFCAvailable)
+            ElevatedButton(
+              child: Text(
+                buttonNFCLabel,
+                style: ArchethicThemeStyles.textStyleSize16W100Primary,
+              ),
+              onPressed: () async {
+                sl.get<HapticUtil>().feedback(
+                      FeedbackType.light,
+                      preferences.activeVibrations,
+                    );
+                setState(() {
+                  buttonNFCLabel = localizations.yubikeyConnectHoldNearDevice;
+                });
+                await _tagRead();
+              },
+            )
+          else
+            Container(
+              margin: const EdgeInsets.symmetric(
+                horizontal: 40,
+                vertical: 10,
+              ),
+              child: AutoSizeText(
+                localizations.yubikeyConnectInvite,
+                style: ArchethicThemeStyles.textStyleSize14W600Primary,
+                maxLines: 1,
+                stepGranularity: 0.1,
+              ),
+            ),
+          if (isNFCAvailable)
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+            )
+          else
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Row(
                     children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: DecoratedBox(
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            10,
-                                          ),
-                                          border: Border.all(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primaryContainer,
-                                            width: 0.5,
-                                          ),
-                                          gradient: ArchethicTheme
-                                              .gradientInputFormBackground,
-                                        ),
-                                        child: TextField(
-                                          style: const TextStyle(
-                                            fontSize: 14,
-                                          ),
-                                          autocorrect: false,
-                                          controller: enterOTPController,
-                                          textInputAction: TextInputAction.go,
-                                          autofocus: true,
-                                          onSubmitted: (value) async {
-                                            FocusScope.of(context).unfocus();
-                                          },
-                                          onChanged: (value) async {
-                                            if (value.trim().length == 44) {
-                                              EventTaxiImpl.singleton().fire(
-                                                OTPReceiveEvent(otp: value),
-                                              );
-                                            }
-                                          },
-                                          focusNode: enterOTPFocusNode,
-                                          keyboardType: TextInputType.text,
-                                          inputFormatters: <TextInputFormatter>[
-                                            LengthLimitingTextInputFormatter(
-                                              45,
-                                            ),
-                                          ],
-                                          decoration: const InputDecoration(
-                                            border: InputBorder.none,
-                                            contentPadding:
-                                                EdgeInsets.only(left: 10),
-                                          ),
-                                        ),
-                                      ),
+                      Expanded(
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(
+                                      10,
                                     ),
-                                  ],
+                                    border: Border.all(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primaryContainer,
+                                      width: 0.5,
+                                    ),
+                                    gradient: ArchethicTheme
+                                        .gradientInputFormBackground,
+                                  ),
+                                  child: TextField(
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                    autocorrect: false,
+                                    controller: enterOTPController,
+                                    textInputAction: TextInputAction.go,
+                                    autofocus: true,
+                                    onSubmitted: (value) async {
+                                      FocusScope.of(context).unfocus();
+                                    },
+                                    onChanged: (value) async {
+                                      if (value.trim().length == 44) {
+                                        EventTaxiImpl.singleton().fire(
+                                          OTPReceiveEvent(otp: value),
+                                        );
+                                      }
+                                    },
+                                    focusNode: enterOTPFocusNode,
+                                    keyboardType: TextInputType.text,
+                                    inputFormatters: <TextInputFormatter>[
+                                      LengthLimitingTextInputFormatter(
+                                        45,
+                                      ),
+                                    ],
+                                    decoration: const InputDecoration(
+                                      border: InputBorder.none,
+                                      contentPadding: EdgeInsets.only(left: 10),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                            PasteIcon(
-                              onPaste: (String value) {
-                                enterOTPController!.text = value;
-                                EventTaxiImpl.singleton().fire(
-                                  OTPReceiveEvent(
-                                    otp: enterOTPController!.text,
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
+                      PasteIcon(
+                        onPaste: (String value) {
+                          enterOTPController!.text = value;
+                          EventTaxiImpl.singleton().fire(
+                            OTPReceiveEvent(
+                              otp: enterOTPController!.text,
+                            ),
+                          );
+                        },
+                      ),
                     ],
-                  )
-                      .animate()
-                      .fade(duration: const Duration(milliseconds: 200))
-                      .scale(duration: const Duration(milliseconds: 200)),
+                  ),
+                ),
               ],
             ),
-          ),
-        ),
+        ],
       ),
     );
   }

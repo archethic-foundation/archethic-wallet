@@ -1,9 +1,11 @@
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
@@ -32,13 +34,22 @@ abstract class AppLockScreenProviders {
   );
 }
 
-class AppLockScreen extends ConsumerWidget {
+class AppLockScreen extends ConsumerWidget implements SheetSkeletonInterface {
   const AppLockScreen({super.key});
 
   static const routerPage = '/lock_screen_transition';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    return SheetSkeleton(
+      appBar: getAppBar(context, ref),
+      floatingActionButton: getFloatingActionButton(context, ref),
+      sheetContent: getSheetContent(context, ref),
+    );
+  }
+
+  @override
+  Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
     final activeVibrations = ref.watch(
@@ -53,104 +64,52 @@ class AppLockScreen extends ConsumerWidget {
             )
             .valueOrNull ??
         '';
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        AppButtonTiny(
+          AppButtonTinyType.primary,
+          isLocked ? countDownString : localizations.unlock,
+          Dimens.buttonBottomDimens,
+          key: const Key('unlock'),
+          onPressed: () {
+            if (isLocked) return;
+
+            sl.get<HapticUtil>().feedback(
+                  FeedbackType.light,
+                  activeVibrations,
+                );
+            context.pop();
+          },
+          disabled: isLocked,
+        ),
+      ],
+    );
+  }
+
+  @override
+  PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    final isLocked =
+        ref.watch(AuthenticationProviders.isLockCountdownRunning).valueOrNull ??
+            true;
+    return SheetAppBar(
+      title: isLocked ? localizations.locked : ' ',
+    );
+  }
+
+  @override
+  Widget getSheetContent(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
 
     return PopScope(
       onPopInvoked: (didPop) async => false,
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: ArchethicTheme.backgroundDarkest,
-        body: Stack(
-          children: <Widget>[
-            Positioned.fill(
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(
-                      ArchethicTheme.backgroundSmall,
-                    ),
-                    fit: MediaQuery.of(context).size.width >= 370
-                        ? BoxFit.fitWidth
-                        : BoxFit.fitHeight,
-                    alignment: Alignment.centerRight,
-                    opacity: 0.5,
-                  ),
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: <Color>[
-                      ArchethicTheme.backgroundDark,
-                      ArchethicTheme.background,
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            LayoutBuilder(
-              builder: (
-                BuildContext context,
-                BoxConstraints constraints,
-              ) =>
-                  SafeArea(
-                minimum: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.035,
-                  top: MediaQuery.of(context).size.height * 0.075,
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Expanded(
-                      child: Column(
-                        children: <Widget>[
-                          if (isLocked)
-                            Container(
-                              margin: const EdgeInsets.only(top: 10),
-                              child: Text(
-                                localizations.locked,
-                                style: ArchethicThemeStyles
-                                    .textStyleSize24W700Primary,
-                              ),
-                            ),
-                          Container(
-                            width: MediaQuery.of(context).size.width - 100,
-                            margin: const EdgeInsets.symmetric(
-                              horizontal: 50,
-                              vertical: 20,
-                            ),
-                            child: Text(
-                              localizations.tooManyFailedAttempts,
-                              style: ArchethicThemeStyles
-                                  .textStyleSize14W600Primary,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        AppButtonTiny(
-                          AppButtonTinyType.primary,
-                          isLocked ? countDownString : localizations.unlock,
-                          Dimens.buttonBottomDimens,
-                          key: const Key('unlock'),
-                          onPressed: () {
-                            if (isLocked) return;
-
-                            sl.get<HapticUtil>().feedback(
-                                  FeedbackType.light,
-                                  activeVibrations,
-                                );
-                            context.pop();
-                          },
-                          disabled: isLocked,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: Text(
+          localizations.tooManyFailedAttempts,
+          style: ArchethicThemeStyles.textStyleSize14W600Primary,
+          textAlign: TextAlign.center,
         ),
       ),
     );

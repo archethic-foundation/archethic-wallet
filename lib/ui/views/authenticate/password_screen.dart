@@ -10,8 +10,11 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
+import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -35,7 +38,8 @@ class PasswordScreen extends ConsumerStatefulWidget {
 }
 
 class _PasswordScreenState extends ConsumerState<PasswordScreen>
-    with LockGuardMixin {
+    with LockGuardMixin
+    implements SheetSkeletonInterface {
   FocusNode? enterPasswordFocusNode;
   TextEditingController? enterPasswordController;
 
@@ -83,6 +87,49 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
 
   @override
   Widget build(BuildContext context) {
+    return SheetSkeleton(
+      appBar: getAppBar(context, ref),
+      floatingActionButton: getFloatingActionButton(context, ref),
+      sheetContent: getSheetContent(context, ref),
+    );
+  }
+
+  @override
+  Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    return Row(
+      children: <Widget>[
+        AppButtonTiny(
+          AppButtonTinyType.primary,
+          localizations.confirm,
+          Dimens.buttonTopDimens,
+          key: const Key('confirm'),
+          onPressed: () async {
+            await _verifyPassword();
+          },
+          disabled: enterPasswordController!.text == '',
+        ),
+      ],
+    );
+  }
+
+  @override
+  PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    return SheetAppBar(
+      title: localizations.passwordMethod,
+      widgetLeft: BackButton(
+        key: const Key('back'),
+        color: ArchethicTheme.text,
+        onPressed: () {
+          context.pop(false);
+        },
+      ),
+    );
+  }
+
+  @override
+  Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
     final passwordAuthentication = ref.watch(
@@ -91,158 +138,67 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
 
     return PopScope(
       onPopInvoked: (didPop) async => widget.canNavigateBack,
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: DecoratedBox(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                ArchethicTheme.backgroundSmall,
+      child: Column(
+        children: <Widget>[
+          AppTextField(
+            topMargin: 30,
+            padding: const EdgeInsetsDirectional.only(
+              start: 16,
+              end: 16,
+            ),
+            focusNode: enterPasswordFocusNode,
+            controller: enterPasswordController,
+            textInputAction: TextInputAction.go,
+            autocorrect: false,
+            autofocus: true,
+            onChanged: (String newText) {
+              setState(() {
+                if (passwordError != null) {
+                  passwordError = null;
+                }
+              });
+            },
+            onSubmitted: (value) async {
+              FocusScope.of(context).unfocus();
+            },
+            labelText: localizations.enterPasswordHint,
+            keyboardType: TextInputType.text,
+            obscureText: !enterPasswordVisible!,
+            style: ArchethicThemeStyles.textStyleSize16W700Primary,
+            suffixButton: TextFieldButton(
+              icon: enterPasswordVisible!
+                  ? Symbols.visibility
+                  : Symbols.visibility_off,
+              onPressed: () {
+                setState(() {
+                  enterPasswordVisible = !enterPasswordVisible!;
+                });
+              },
+            ),
+          ),
+          if (passwordAuthentication.failedAttemptsCount > 0)
+            Container(
+              margin: const EdgeInsets.symmetric(
+                horizontal: 40,
+                vertical: 10,
               ),
-              fit: MediaQuery.of(context).size.width >= 370
-                  ? BoxFit.fitWidth
-                  : BoxFit.fitHeight,
-              alignment: Alignment.centerRight,
-              opacity: 0.5,
+              child: AutoSizeText(
+                '${localizations.attempt}${passwordAuthentication.failedAttemptsCount}/${passwordAuthentication.maxAttemptsCount}',
+                style: ArchethicThemeStyles.textStyleSize14W200Primary,
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                stepGranularity: 0.1,
+              ),
             ),
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: <Color>[
-                ArchethicTheme.backgroundDark,
-                ArchethicTheme.background,
-              ],
-            ),
-          ),
-          child: Material(
-            color: Colors.transparent,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.06,
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Container(
-                            margin: const EdgeInsetsDirectional.only(start: 15),
-                            height: 50,
-                            width: 50,
-                            child: widget.canNavigateBack
-                                ? BackButton(
-                                    key: const Key('back'),
-                                    color: ArchethicTheme.text,
-                                    onPressed: () {
-                                      context.pop(false);
-                                    },
-                                  )
-                                : const SizedBox(),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 40,
-                          vertical: 10,
-                        ),
-                        child: Text(
-                          localizations.passwordMethod,
-                          style:
-                              ArchethicThemeStyles.textStyleSize24W700Primary,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      AppTextField(
-                        topMargin: 30,
-                        padding: const EdgeInsetsDirectional.only(
-                          start: 16,
-                          end: 16,
-                        ),
-                        focusNode: enterPasswordFocusNode,
-                        controller: enterPasswordController,
-                        textInputAction: TextInputAction.go,
-                        autocorrect: false,
-                        autofocus: true,
-                        onChanged: (String newText) {
-                          setState(() {
-                            if (passwordError != null) {
-                              passwordError = null;
-                            }
-                          });
-                        },
-                        onSubmitted: (value) async {
-                          FocusScope.of(context).unfocus();
-                        },
-                        labelText: localizations.enterPasswordHint,
-                        keyboardType: TextInputType.text,
-                        obscureText: !enterPasswordVisible!,
-                        style: ArchethicThemeStyles.textStyleSize16W700Primary,
-                        suffixButton: TextFieldButton(
-                          icon: enterPasswordVisible!
-                              ? Symbols.visibility
-                              : Symbols.visibility_off,
-                          onPressed: () {
-                            setState(() {
-                              enterPasswordVisible = !enterPasswordVisible!;
-                            });
-                          },
-                        ),
-                      ),
-                      if (passwordAuthentication.failedAttemptsCount > 0)
-                        Container(
-                          margin: const EdgeInsets.symmetric(
-                            horizontal: 40,
-                            vertical: 10,
-                          ),
-                          child: AutoSizeText(
-                            '${localizations.attempt}${passwordAuthentication.failedAttemptsCount}/${passwordAuthentication.maxAttemptsCount}',
-                            style:
-                                ArchethicThemeStyles.textStyleSize14W200Primary,
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                            stepGranularity: 0.1,
-                          ),
-                        ),
-                      Container(
-                        alignment: AlignmentDirectional.center,
-                        margin: const EdgeInsets.only(top: 3),
-                        child: Text(
-                          passwordError == null ? '' : passwordError!,
-                          style:
-                              ArchethicThemeStyles.textStyleSize14W600Primary,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 40),
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          AppButtonTiny(
-                            AppButtonTinyType.primary,
-                            localizations.confirm,
-                            Dimens.buttonTopDimens,
-                            key: const Key('confirm'),
-                            onPressed: () async {
-                              await _verifyPassword();
-                            },
-                            disabled: enterPasswordController!.text == '',
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+          Container(
+            alignment: AlignmentDirectional.center,
+            margin: const EdgeInsets.only(top: 3),
+            child: Text(
+              passwordError == null ? '' : passwordError!,
+              style: ArchethicThemeStyles.textStyleSize14W600Primary,
             ),
           ),
-        ),
+        ],
       ),
     );
   }
