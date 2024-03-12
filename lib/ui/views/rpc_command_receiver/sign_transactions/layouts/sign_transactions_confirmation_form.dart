@@ -19,6 +19,7 @@ import 'package:go_router/go_router.dart';
 class SignTransactionsConfirmationForm extends ConsumerWidget
     implements SheetSkeletonInterface {
   const SignTransactionsConfirmationForm(
+    this.addresses,
     this.command,
     this.estimatedFees, {
     super.key,
@@ -26,6 +27,7 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
 
   final RPCCommand<RPCSignTransactionsCommandData> command;
   final double estimatedFees;
+  final List<String?> addresses;
 
   static const String routerPage = '/sign_transaction_confirmation';
 
@@ -143,8 +145,12 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
               children: command.data.rpcSignTransactionCommandData
                   .asMap()
                   .entries
-                  .map((rpcSignTransactionCommandData) {
+                  .map((entry) {
+                final index = entry.key;
+                final rpcSignTransactionCommandData = entry;
+
                 return TransactionRaw(
+                  addresses[index],
                   rpcSignTransactionCommandData,
                 );
               }).toList(),

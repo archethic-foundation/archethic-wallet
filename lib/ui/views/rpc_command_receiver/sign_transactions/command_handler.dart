@@ -61,7 +61,7 @@ class SignTransactionsCommandHandler extends CommandHandler {
             );
 
             var index = indexMap[addressGenesis] ?? 0;
-
+            final addresses = <String?>[];
             var globalFees = 0.0;
             for (final rpcSignTransactionCommandData
                 in command.data.rpcSignTransactionCommandData) {
@@ -86,6 +86,8 @@ class SignTransactionsCommandHandler extends CommandHandler {
                   .getTransactionFee(signedTransaction);
               final fees = archethic.fromBigInt(transactionFee.fee) * slippage;
               globalFees = globalFees + fees;
+
+              addresses.add(signedTransaction.address?.address);
             }
 
             if (!kIsWeb &&
@@ -101,6 +103,7 @@ class SignTransactionsCommandHandler extends CommandHandler {
                 child: DecoratedBox(
                   decoration: ArchethicTheme.getDecorationSheet(),
                   child: SignTransactionsConfirmationForm(
+                    addresses,
                     command,
                     globalFees,
                   ),

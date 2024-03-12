@@ -515,6 +515,7 @@ final _authenticatedRoutes = [
       reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: SignTransactionsConfirmationForm(
+        (state.extra! as Map<String, dynamic>)['addresses']! as List<String?>,
         (state.extra! as Map<String, dynamic>)['command']!
             as RPCCommand<RPCSignTransactionsCommandData>,
         (state.extra! as Map<String, dynamic>)['estimatedFees']! as double,

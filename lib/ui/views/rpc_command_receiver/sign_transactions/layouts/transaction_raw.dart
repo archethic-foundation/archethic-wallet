@@ -9,11 +9,13 @@ import 'package:material_symbols_icons/symbols.dart';
 
 class TransactionRaw extends StatefulWidget {
   const TransactionRaw(
+    this.address,
     this.command, {
     super.key,
   });
 
   final MapEntry<int, RPCSignTransactionCommandData> command;
+  final String? address;
 
   @override
   TransactionRawState createState() => TransactionRawState();
@@ -38,24 +40,37 @@ class TransactionRawState extends State<TransactionRaw> {
         ),
         GestureDetector(
           onTap: toggleExpanded,
-          child: Row(
+          child: Column(
             children: [
-              Icon(
-                isExpanded
-                    ? Symbols.keyboard_arrow_down
-                    : Symbols.keyboard_arrow_right,
-                size: 16,
-                weight: IconSize.weightM,
-                opticalSize: IconSize.opticalSizeM,
-                grade: IconSize.gradeM,
+              Row(
+                children: [
+                  Icon(
+                    isExpanded
+                        ? Symbols.keyboard_arrow_down
+                        : Symbols.keyboard_arrow_right,
+                    size: 16,
+                    weight: IconSize.weightM,
+                    opticalSize: IconSize.opticalSizeM,
+                    grade: IconSize.gradeM,
+                  ),
+                  Text(
+                    localizations.signTransactionListTransactionsHeader
+                        .replaceAll('%1', (widget.command.key + 1).toString()),
+                    style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                  ),
+                ],
               ),
-              Text(
-                localizations.signTransactionListTransactionsHeader.replaceAll(
-                  '%1',
-                  (widget.command.key + 1).toString(),
+              if (widget.address != null)
+                Row(
+                  children: [
+                    Expanded(
+                      child: SelectableText(
+                        widget.address!.toUpperCase(),
+                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                      ),
+                    ),
+                  ],
                 ),
-                style: ArchethicThemeStyles.textStyleSize12W100Primary,
-              ),
             ],
           ),
         ),
