@@ -143,7 +143,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen>
   @override
   PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     return SheetAppBar(
-      title: ' ',
+      title: 'OTP',
       widgetLeft: BackButton(
         key: const Key('back'),
         color: ArchethicTheme.text,
@@ -164,19 +164,6 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen>
       onPopInvoked: (didPop) async => widget.canNavigateBack,
       child: Column(
         children: <Widget>[
-          Container(
-            margin: const EdgeInsets.symmetric(
-              horizontal: 40,
-              vertical: 10,
-            ),
-            child: AutoSizeText(
-              'OTP',
-              style: ArchethicThemeStyles.textStyleSize16W100Primary,
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              stepGranularity: 0.1,
-            ),
-          ),
           if (isNFCAvailable)
             ElevatedButton(
               child: Text(
