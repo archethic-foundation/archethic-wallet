@@ -105,20 +105,17 @@ class ContactDetail extends ConsumerWidget implements SheetSkeletonInterface {
     final contact = ref
         .watch(ContactProviders.getContactWithAddress(contactAddress))
         .valueOrNull;
-    return SizedBox(
-      height: MediaQuery.of(context).size.height - 200,
-      child: contact == null
-          ? Center(
-              child: CircularProgressIndicator(
-                color: ArchethicTheme.text,
-                strokeWidth: 1,
-              ),
-            )
-          : _ContactDetailBody(
-              contact: contact,
-              readOnly: readOnly,
+    return contact == null
+        ? Center(
+            child: CircularProgressIndicator(
+              color: ArchethicTheme.text,
+              strokeWidth: 1,
             ),
-    );
+          )
+        : _ContactDetailBody(
+            contact: contact,
+            readOnly: readOnly,
+          );
   }
 }
 
@@ -175,14 +172,12 @@ class _ContactDetailBody extends ConsumerWidget {
     return Column(
       children: <Widget>[
         _ContactDetailActions(contact: contact, readOnly: readOnly),
-        Expanded(
-          child: ContactDetailTab(
-            infoQRCode: contact.genesisAddress!.toUpperCase(),
-            description: contact.type == ContactType.keychainService.name
-                ? localizations.contactAddressInfoKeychainService
-                : localizations.contactAddressInfoExternalContact,
-            messageCopied: localizations.addressCopied,
-          ),
+        ContactDetailTab(
+          infoQRCode: contact.genesisAddress!.toUpperCase(),
+          description: contact.type == ContactType.keychainService.name
+              ? localizations.contactAddressInfoKeychainService
+              : localizations.contactAddressInfoExternalContact,
+          messageCopied: localizations.addressCopied,
         ),
         Visibility(
           visible: contact.type != ContactType.keychainService.name &&

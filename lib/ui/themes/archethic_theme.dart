@@ -94,8 +94,7 @@ class ArchethicTheme {
       ArchethicThemeBase.neutral0.withOpacity(0.8);
   static Color bottomBarActiveColor = ArchethicThemeBase.neutral0;
   static Color bottomBarInactiveIcon = ArchethicThemeBase.neutral0;
-  static String backgroundSmall =
-      'assets/themes/archethic/background_welcome.png';
+  static String backgroundSmall = 'assets/themes/archethic/main-background.png';
   static String backgroundWelcome =
       'assets/themes/archethic/background_welcome.png';
 

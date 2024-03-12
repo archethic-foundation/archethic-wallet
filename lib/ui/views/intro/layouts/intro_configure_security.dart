@@ -54,6 +54,7 @@ class _IntroConfigureSecurityState extends ConsumerState<IntroConfigureSecurity>
       appBar: getAppBar(context, ref),
       floatingActionButton: getFloatingActionButton(context, ref),
       sheetContent: getSheetContent(context, ref),
+      backgroundImage: ArchethicTheme.backgroundWelcome,
     );
   }
 

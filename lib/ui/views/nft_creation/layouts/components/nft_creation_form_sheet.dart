@@ -193,11 +193,9 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet>
           image: AssetImage(
             ArchethicTheme.backgroundSmall,
           ),
-          fit: MediaQuery.of(context).size.width >= 370
-              ? BoxFit.fitWidth
-              : BoxFit.fitHeight,
+          fit: BoxFit.fitHeight,
           alignment: Alignment.centerRight,
-          opacity: 0.5,
+          opacity: 0.7,
         ),
       ),
       child: Padding(

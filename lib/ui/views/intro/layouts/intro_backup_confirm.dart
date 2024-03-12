@@ -223,6 +223,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
       appBar: getAppBar(context, ref),
       floatingActionButton: getFloatingActionButton(context, ref),
       sheetContent: getSheetContent(context, ref),
+      backgroundImage: ArchethicTheme.backgroundWelcome,
     );
   }
 

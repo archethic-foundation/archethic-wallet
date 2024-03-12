@@ -43,6 +43,7 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome>
       appBar: getAppBar(context, ref),
       floatingActionButton: getFloatingActionButton(context, ref),
       sheetContent: getSheetContent(context, ref),
+      backgroundImage: ArchethicTheme.backgroundWelcome,
     );
   }
 

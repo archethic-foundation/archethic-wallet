@@ -55,6 +55,7 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage>
       appBar: getAppBar(context, ref),
       floatingActionButton: getFloatingActionButton(context, ref),
       sheetContent: getSheetContent(context, ref),
+      backgroundImage: ArchethicTheme.backgroundWelcome,
     );
   }
 

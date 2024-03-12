@@ -30,6 +30,7 @@ class IntroNewWalletDisclaimer extends ConsumerWidget
       appBar: getAppBar(context, ref),
       floatingActionButton: getFloatingActionButton(context, ref),
       sheetContent: getSheetContent(context, ref),
+      backgroundImage: ArchethicTheme.backgroundWelcome,
     );
   }
 

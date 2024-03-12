@@ -13,6 +13,7 @@ class SheetSkeleton extends ConsumerWidget {
         FloatingActionButtonLocation.centerFloat,
     this.thumbVisibility = true,
     this.menu = false,
+    this.backgroundImage,
     super.key,
   });
 
@@ -21,6 +22,7 @@ class SheetSkeleton extends ConsumerWidget {
   final Widget sheetContent;
   final bool? thumbVisibility;
   final bool? menu;
+  final String? backgroundImage;
   final FloatingActionButtonLocation? floatingActionButtonLocation;
 
   @override
@@ -41,13 +43,13 @@ class SheetSkeleton extends ConsumerWidget {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
-                    ArchethicTheme.backgroundSmall,
+                    backgroundImage == null
+                        ? ArchethicTheme.backgroundSmall
+                        : backgroundImage!,
                   ),
-                  fit: MediaQuery.of(context).size.width >= 370
-                      ? BoxFit.fitWidth
-                      : BoxFit.fitHeight,
+                  fit: BoxFit.fitHeight,
                   alignment: Alignment.centerRight,
-                  opacity: 0.5,
+                  opacity: 0.7,
                 ),
               ),
               child: Padding(
