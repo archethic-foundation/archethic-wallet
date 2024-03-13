@@ -77,7 +77,7 @@ class _HomePageState extends ConsumerState<HomePage>
   Widget build(BuildContext context) {
     return SheetSkeleton(
       appBar: getAppBar(context, ref),
-      floatingActionButton: getFloatingActionButton(context, ref),
+      bottomNavigationBar: getFloatingActionButton(context, ref),
       sheetContent: getSheetContent(context, ref),
       menu: true,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

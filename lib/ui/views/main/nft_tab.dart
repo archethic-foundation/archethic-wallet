@@ -75,7 +75,7 @@ class NFTTabBody extends ConsumerWidget {
                   Padding(
                     padding: EdgeInsets.only(
                       top: MediaQuery.of(context).padding.top + 10,
-                      bottom: MediaQuery.of(context).padding.bottom + 70,
+                      bottom: MediaQuery.of(context).padding.bottom + 10,
                       left: 20,
                       right: 20,
                     ),

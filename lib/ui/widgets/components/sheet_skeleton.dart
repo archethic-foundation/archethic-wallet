@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SheetSkeleton extends ConsumerWidget {
   const SheetSkeleton({
-    required this.floatingActionButton,
+    this.floatingActionButton,
     required this.appBar,
     required this.sheetContent,
     this.floatingActionButtonLocation =
@@ -14,16 +14,18 @@ class SheetSkeleton extends ConsumerWidget {
     this.thumbVisibility = true,
     this.menu = false,
     this.backgroundImage,
+    this.bottomNavigationBar,
     super.key,
   });
 
-  final Widget floatingActionButton;
+  final Widget? floatingActionButton;
   final PreferredSizeWidget appBar;
   final Widget sheetContent;
   final bool? thumbVisibility;
   final bool? menu;
   final String? backgroundImage;
   final FloatingActionButtonLocation? floatingActionButtonLocation;
+  final Widget? bottomNavigationBar;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,6 +34,8 @@ class SheetSkeleton extends ConsumerWidget {
     return Scaffold(
       drawerEdgeDragWidth: 0,
       resizeToAvoidBottomInset: false,
+      bottomNavigationBar: bottomNavigationBar,
+      extendBody: true,
       floatingActionButtonLocation: floatingActionButtonLocation,
       floatingActionButton: floatingActionButton,
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,

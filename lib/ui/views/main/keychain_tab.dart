@@ -45,7 +45,7 @@ class KeychainTab extends ConsumerWidget {
                 alignment: Alignment.bottomCenter,
                 child: Padding(
                   padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).padding.bottom + 70,
+                    bottom: MediaQuery.of(context).padding.bottom + 10,
                   ),
                   child: const Row(
                     children: [
