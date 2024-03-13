@@ -204,6 +204,7 @@ class _NFTDetailState extends ConsumerState<NFTDetail>
           onTap: () {
             showDialog(
               context: context,
+              useRootNavigator: false,
               builder: (BuildContext context) {
                 return AlertDialog(
                   backgroundColor: ArchethicTheme.backgroundPopupColor,

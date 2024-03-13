@@ -34,6 +34,7 @@ class CurrencyDialog {
     return showDialog<AvailableCurrencyEnum>(
       barrierDismissible: false,
       context: context,
+      useRootNavigator: false,
       builder: (BuildContext context) {
         final currency = AvailableCurrency(
           ref.watch(

@@ -22,6 +22,7 @@ class AuthentificationMethodDialogHelp {
   ) async {
     return showDialog(
       context: context,
+      useRootNavigator: false,
       builder: (BuildContext context) {
         final preferences = ref.watch(SettingsProviders.settings);
         return AlertDialog(
