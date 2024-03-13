@@ -55,6 +55,7 @@ class NetworkDialog with UrlUtil {
     return showDialog<NetworksSetting>(
       context: context,
       barrierDismissible: false,
+      useRootNavigator: false,
       builder: (BuildContext context) {
         return PopupDialog(
           title: const _NetworkTitle(),
@@ -78,6 +79,7 @@ class NetworkDialog with UrlUtil {
                 await showDialog<AvailableNetworks>(
                   barrierDismissible: false,
                   context: context,
+                  useRootNavigator: false,
                   builder: (BuildContext context) {
                     return StatefulBuilder(
                       builder: (context, setState) {

@@ -49,6 +49,7 @@ class ContactsDialog {
     }
     return showDialog<Contact>(
       context: context,
+      useRootNavigator: false,
       builder: (BuildContext context) {
         final localizations = AppLocalizations.of(context)!;
 

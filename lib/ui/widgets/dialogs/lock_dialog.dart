@@ -31,6 +31,7 @@ class LockDialog {
     return showDialog<UnlockSetting>(
       barrierDismissible: false,
       context: context,
+      useRootNavigator: false,
       builder: (BuildContext context) {
         return aedappfm.PopupTemplate(
           popupContent: SingleChildScrollView(

@@ -34,6 +34,7 @@ class PrimaryCurrencyDialog {
     return showDialog<AvailablePrimaryCurrencyEnum>(
       barrierDismissible: false,
       context: context,
+      useRootNavigator: false,
       builder: (BuildContext context) {
         final primaryCurrency =
             ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);

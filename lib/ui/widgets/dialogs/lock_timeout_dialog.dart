@@ -47,6 +47,7 @@ class LockTimeoutDialog {
     return showDialog<LockTimeoutSetting>(
       barrierDismissible: false,
       context: context,
+      useRootNavigator: false,
       builder: (BuildContext context) {
         return aedappfm.PopupTemplate(
           popupContent: SingleChildScrollView(

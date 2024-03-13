@@ -33,6 +33,7 @@ class AppDialogs {
     cancelText ??= AppLocalizations.of(context)!.cancel;
     await showDialog(
       barrierDismissible: false,
+      useRootNavigator: false,
       context: context,
       builder: (BuildContext context) {
         return aedappfm.PopupTemplate(
@@ -116,6 +117,7 @@ class AppDialogs {
   }) {
     showDialog(
       context: context,
+      useRootNavigator: false,
       builder: (BuildContext context) {
         buttonLabel = buttonLabel ?? AppLocalizations.of(context)!.ok;
 
