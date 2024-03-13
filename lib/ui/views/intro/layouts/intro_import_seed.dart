@@ -184,7 +184,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
               RecoveryPhraseSavedProvider.setRecoveryPhraseSaved(true),
             );
 
-            context.pushReplacement(
+            context.push(
               IntroConfigureSecurity.routerPage,
               extra: {
                 'seed': newSession.wallet.seed,
