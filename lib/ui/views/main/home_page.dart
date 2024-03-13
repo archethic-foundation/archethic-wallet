@@ -458,10 +458,15 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
               indicatorColor: ArchethicTheme.text,
               labelPadding: EdgeInsets.zero,
               tabs: [
-                Text(
-                  localizations.recentTransactionsHeader,
-                  style: ArchethicThemeStyles.textStyleSize14W600Primary,
-                  textAlign: TextAlign.center,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      localizations.recentTransactionsHeader,
+                      style: ArchethicThemeStyles.textStyleSize14W600Primary,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
