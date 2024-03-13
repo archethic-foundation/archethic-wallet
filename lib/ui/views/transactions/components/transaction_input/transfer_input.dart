@@ -10,6 +10,7 @@ import 'package:aewallet/ui/widgets/tokens/verified_token_icon.dart';
 import 'package:aewallet/util/number_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TransferInput extends ConsumerWidget {
@@ -32,13 +33,13 @@ class TransferInput extends ConsumerWidget {
       transaction.amount!
           .formatNumber(language.getLocaleStringWithoutDefault()),
     );
-
+    final localizations = AppLocalizations.of(context)!;
     return Row(
       children: [
         AutoSizeText(
           hasTransactionInfo
-              ? '$amountFormatted ${isCurrencyNative ? (transaction.tokenInformation!.symbol! == '' ? 'NFT' : transaction.tokenInformation!.symbol!) : transaction.tokenInformation!.symbol!}'
-              : '$amountFormatted ${AccountBalance.cryptoCurrencyLabel}',
+              ? '${localizations.txListAmount} $amountFormatted ${isCurrencyNative ? (transaction.tokenInformation!.symbol! == '' ? 'NFT' : transaction.tokenInformation!.symbol!) : transaction.tokenInformation!.symbol!}'
+              : '${localizations.txListAmount} $amountFormatted ${AccountBalance.cryptoCurrencyLabel}',
           style: ArchethicThemeStyles.textStyleSize12W100Primary,
         ),
         if (transaction.tokenInformation != null &&

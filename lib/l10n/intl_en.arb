@@ -135,6 +135,7 @@
     "tokenInitialSupply": "Initial supply :",
     "tokenInitialSupplyPositive": "The initial supply should be > 0",
     "txListFrom": "From :",
+    "txListAmount": "Amount :",
     "txListTo": "To :",
     "txListFees": "Fees :",
     "@txListFees": {

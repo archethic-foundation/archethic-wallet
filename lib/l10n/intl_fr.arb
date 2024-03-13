@@ -136,6 +136,7 @@
     "tokenInitialSupply": "Offre initiale :",
     "tokenInitialSupplyPositive": "L'offre initiale doit être > 0",
     "txListFrom": "De :",
+    "txListAmount": "Montant :",
     "txListTo": "À :",
     "txListFees": "Frais :",
     "txListFeesIncluded": "Inclus dans la transaction précédente",
