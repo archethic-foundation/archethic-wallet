@@ -267,7 +267,13 @@ class InputListener extends StatelessWidget {
         child: Listener(
           onPointerDown: (_) => onInput(),
           onPointerMove: (_) => onInput(),
-          child: child,
+          child: NotificationListener<ScrollNotification>(
+            onNotification: (ScrollNotification notification) {
+              onInput();
+              return true;
+            },
+            child: child,
+          ),
         ),
       );
 }
