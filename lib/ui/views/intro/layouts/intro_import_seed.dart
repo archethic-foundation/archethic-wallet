@@ -189,6 +189,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
               extra: {
                 'seed': newSession.wallet.seed,
                 'name': accountSelected.name,
+                'isImportProfile': true,
               },
             );
             setState(() {

@@ -268,6 +268,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                       extra: {
                         'seed': widget.seed,
                         'name': widget.name,
+                        'isImportProfile': false,
                       },
                     );
                   } else {
@@ -314,6 +315,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                         extra: {
                           'seed': widget.seed,
                           'name': widget.name,
+                          'isImportProfile': false,
                         },
                       );
                     },

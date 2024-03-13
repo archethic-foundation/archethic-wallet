@@ -10,6 +10,8 @@ final _introductionRoutes = [
       child: IntroConfigureSecurity(
         seed: (state.extra! as Map<String, dynamic>)['seed']! as String,
         name: (state.extra! as Map<String, dynamic>)['name']! as String,
+        isImportProfile:
+            (state.extra! as Map<String, dynamic>)['isImportProfile']! as bool,
       ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
           FadeTransition(
