@@ -467,13 +467,15 @@ class _PinScreenState extends ConsumerState<PinScreen>
   PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     return SheetAppBar(
       title: ' ',
-      widgetLeft: BackButton(
-        key: const Key('back'),
-        color: ArchethicTheme.text,
-        onPressed: () {
-          context.pop(false);
-        },
-      ),
+      widgetLeft: widget.canNavigateBack
+          ? BackButton(
+              key: const Key('back'),
+              color: ArchethicTheme.text,
+              onPressed: () {
+                context.pop(false);
+              },
+            )
+          : const SizedBox(),
     );
   }
 

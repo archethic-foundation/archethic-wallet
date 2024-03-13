@@ -144,13 +144,15 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen>
   PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     return SheetAppBar(
       title: 'OTP',
-      widgetLeft: BackButton(
-        key: const Key('back'),
-        color: ArchethicTheme.text,
-        onPressed: () {
-          context.pop(false);
-        },
-      ),
+      widgetLeft: widget.canNavigateBack
+          ? BackButton(
+              key: const Key('back'),
+              color: ArchethicTheme.text,
+              onPressed: () {
+                context.pop(false);
+              },
+            )
+          : const SizedBox(),
     );
   }
 

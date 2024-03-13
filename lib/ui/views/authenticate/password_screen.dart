@@ -118,13 +118,15 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
     final localizations = AppLocalizations.of(context)!;
     return SheetAppBar(
       title: localizations.passwordMethod,
-      widgetLeft: BackButton(
-        key: const Key('back'),
-        color: ArchethicTheme.text,
-        onPressed: () {
-          context.pop(false);
-        },
-      ),
+      widgetLeft: widget.canNavigateBack
+          ? BackButton(
+              key: const Key('back'),
+              color: ArchethicTheme.text,
+              onPressed: () {
+                context.pop(false);
+              },
+            )
+          : const SizedBox(),
     );
   }
 
