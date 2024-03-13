@@ -44,6 +44,7 @@ class NftCategoryDialog {
     }
     return showDialog<NftCategory>(
       context: context,
+      useRootNavigator: false,
       builder: (BuildContext context) {
         final localizations = AppLocalizations.of(context)!;
 

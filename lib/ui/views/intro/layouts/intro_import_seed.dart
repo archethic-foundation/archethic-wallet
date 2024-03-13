@@ -522,6 +522,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
 
     final selection = await showDialog<Account>(
       barrierDismissible: false,
+      useRootNavigator: false,
       context: context,
       builder: (BuildContext context) {
         final localizations = AppLocalizations.of(context)!;

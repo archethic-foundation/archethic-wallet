@@ -34,6 +34,7 @@ class LanguageDialog {
     return showDialog<AvailableLanguage>(
       barrierDismissible: false,
       context: context,
+      useRootNavigator: false,
       builder: (BuildContext context) {
         final selectedLanguage = ref.read(LanguageProviders.selectedLanguage);
         return aedappfm.PopupTemplate(

@@ -35,6 +35,7 @@ class AccountsDialog {
         accounts.indexWhere((account) => account.name == selectedAccount.name);
     return showDialog<Account>(
       context: context,
+      useRootNavigator: false,
       builder: (BuildContext context) {
         final localizations = AppLocalizations.of(context)!;
 
