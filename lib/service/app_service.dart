@@ -498,11 +498,11 @@ class AppService {
           }
           break;
         case RecentTransaction.transferOutput:
-          if (recentTransaction.recipient != null) {
+          if (recentTransaction.from != null) {
             if (recentTransaction.timestamp! >= mostRecentTimestamp) {
-              ownershipsAddresses.add(recentTransaction.recipient!);
+              ownershipsAddresses.add(recentTransaction.from!);
             }
-            recentTransactionLastAddresses.add(recentTransaction.recipient!);
+            recentTransactionLastAddresses.add(recentTransaction.from!);
           }
           break;
       }
@@ -537,7 +537,7 @@ class AppService {
       switch (recentTransaction.typeTx) {
         case RecentTransaction.transferInput:
           if (recentTransaction.from != null &&
-              recentTransaction.timestamp! > mostRecentTimestamp) {
+              recentTransaction.timestamp! >= mostRecentTimestamp) {
             recentTransaction = _decryptedSecret(
               keypair: keychainServiceKeyPair!,
               ownerships: ownershipsMap[recentTransaction.from!] ?? [],
@@ -547,7 +547,7 @@ class AppService {
           break;
         case RecentTransaction.transferOutput:
           if (recentTransaction.address != null &&
-              recentTransaction.timestamp! > mostRecentTimestamp) {
+              recentTransaction.timestamp! >= mostRecentTimestamp) {
             recentTransaction = _decryptedSecret(
               keypair: keychainServiceKeyPair!,
               ownerships: ownershipsMap[recentTransaction.address!] ?? [],
