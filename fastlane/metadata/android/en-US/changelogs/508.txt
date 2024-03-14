@@ -1,0 +1,5 @@
+Archethic Wallet - Version 2.3.4 Build 508
+
+- Update User Interface
+- Unlock the wallet with PIN - Use keyboard
+- Fix bugs and improve performance
