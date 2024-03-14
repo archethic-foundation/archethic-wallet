@@ -77,6 +77,9 @@ class _NFTCreationProcessSummaryTabState
                 const NFTCreationProcessPropertiesList(
                   readOnly: true,
                 ),
+                const SizedBox(
+                  height: 70,
+                ),
               ],
             ),
           ),
