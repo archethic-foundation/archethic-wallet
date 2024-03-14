@@ -456,7 +456,7 @@ class AppService {
     for (final recentTransaction in recentTransactions) {
       if (recentTransaction.tokenAddress != null &&
           recentTransaction.tokenAddress!.isNotEmpty &&
-          recentTransaction.timestamp! > mostRecentTimestamp) {
+          recentTransaction.timestamp! >= mostRecentTimestamp) {
         tokensAddresses.add(recentTransaction.tokenAddress!);
       }
     }
@@ -473,7 +473,7 @@ class AppService {
       // Get token Information
       if (recentTransaction.tokenAddress != null &&
           recentTransaction.tokenAddress!.isNotEmpty &&
-          recentTransaction.timestamp! > mostRecentTimestamp) {
+          recentTransaction.timestamp! >= mostRecentTimestamp) {
         final token = tokensAddressMap[recentTransaction.tokenAddress];
         if (token != null) {
           recentTransaction.tokenInformation = TokenInformation(
@@ -491,7 +491,7 @@ class AppService {
       switch (recentTransaction.typeTx) {
         case RecentTransaction.transferInput:
           if (recentTransaction.from != null) {
-            if (recentTransaction.timestamp! > mostRecentTimestamp) {
+            if (recentTransaction.timestamp! >= mostRecentTimestamp) {
               ownershipsAddresses.add(recentTransaction.from!);
             }
             recentTransactionLastAddresses.add(recentTransaction.from!);
@@ -499,7 +499,7 @@ class AppService {
           break;
         case RecentTransaction.transferOutput:
           if (recentTransaction.recipient != null) {
-            if (recentTransaction.timestamp! > mostRecentTimestamp) {
+            if (recentTransaction.timestamp! >= mostRecentTimestamp) {
               ownershipsAddresses.add(recentTransaction.recipient!);
             }
             recentTransactionLastAddresses.add(recentTransaction.recipient!);
