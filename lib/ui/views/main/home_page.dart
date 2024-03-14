@@ -187,12 +187,7 @@ class _HomePageState extends ConsumerState<HomePage>
               alignment: Alignment.bottomCenter,
               children: [
                 AccountTab(),
-                Padding(
-                  padding: EdgeInsets.only(
-                    bottom: 40,
-                  ),
-                  child: RecoveryPhraseBanner(),
-                ),
+                RecoveryPhraseBanner(),
               ],
             ),
             NFTTab(
