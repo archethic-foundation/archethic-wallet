@@ -184,10 +184,13 @@ class _HomePageState extends ConsumerState<HomePage>
             AddressBookTab(),
             KeychainTab(),
             Stack(
-              alignment: Alignment.bottomCenter,
+              alignment: Alignment.topCenter,
               children: [
                 AccountTab(),
-                RecoveryPhraseBanner(),
+                Positioned(
+                  bottom: 0,
+                  child: RecoveryPhraseBanner(),
+                ),
               ],
             ),
             NFTTab(
