@@ -4,6 +4,7 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/market_price.dart';
+import 'package:aewallet/application/refresh_in_progress.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/verified_tokens.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -28,8 +29,6 @@ class MenuWidgetWallet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var refreshInProgress = false;
-
     final accountSelected = ref
         .watch(
           AccountProviders.selectedAccount,
@@ -38,189 +37,181 @@ class MenuWidgetWallet extends ConsumerWidget {
     final preferences = ref.watch(SettingsProviders.settings);
     final contact = ref.watch(ContactProviders.getSelectedContact).valueOrNull;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
+    final refreshInProgress = ref.watch(refreshInProgressProviders);
 
     if (accountSelected == null) return const SizedBox();
 
-    return StatefulBuilder(
-      builder: (context, setState) {
-        final localizations = AppLocalizations.of(context)!;
-        return Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          elevation: 0,
-          color: Colors.transparent,
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                if (accountSelected.balance!.isNativeTokenValuePositive() &&
-                    connectivityStatusProvider ==
-                        ConnectivityStatus.isConnected)
-                  _ActionButton(
-                    key: const Key('sendUCObutton'),
-                    text: localizations.send,
-                    icon: Symbols.call_made,
-                    onTap: () async {
-                      sl.get<HapticUtil>().feedback(
-                            FeedbackType.light,
-                            preferences.activeVibrations,
-                          );
+    final localizations = AppLocalizations.of(context)!;
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      elevation: 0,
+      color: Colors.transparent,
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            if (accountSelected.balance!.isNativeTokenValuePositive() &&
+                connectivityStatusProvider == ConnectivityStatus.isConnected)
+              _ActionButton(
+                key: const Key('sendUCObutton'),
+                text: localizations.send,
+                icon: Symbols.call_made,
+                onTap: () async {
+                  sl.get<HapticUtil>().feedback(
+                        FeedbackType.light,
+                        preferences.activeVibrations,
+                      );
 
-                      await const TransferSheet(
-                        transferType: TransferType.uco,
-                        recipient: TransferRecipient.address(
-                          address: Address(address: ''),
+                  await const TransferSheet(
+                    transferType: TransferType.uco,
+                    recipient: TransferRecipient.address(
+                      address: Address(address: ''),
+                    ),
+                  ).show(
+                    context: context,
+                    ref: ref,
+                  );
+                },
+              )
+                  .animate()
+                  .fade(duration: const Duration(milliseconds: 200))
+                  .scale(duration: const Duration(milliseconds: 200))
+            else
+              _ActionButton(
+                text: localizations.send,
+                icon: Symbols.call_made,
+                enabled: false,
+              )
+                  .animate()
+                  .fade(duration: const Duration(milliseconds: 200))
+                  .scale(duration: const Duration(milliseconds: 200)),
+            if (contact != null)
+              _ActionButton(
+                key: const Key('receiveUCObutton'),
+                text: localizations.receive,
+                icon: Symbols.call_received,
+                onTap: () async {
+                  sl.get<HapticUtil>().feedback(
+                        FeedbackType.light,
+                        preferences.activeVibrations,
+                      );
+                  context.push(
+                    ContactDetail.routerPage,
+                    extra: ContactDetailsRouteParams(
+                      contactAddress: contact.genesisAddress!,
+                    ).toJson(),
+                  );
+                },
+              )
+                  .animate()
+                  .fade(duration: const Duration(milliseconds: 250))
+                  .scale(duration: const Duration(milliseconds: 250))
+            else
+              _ActionButton(
+                text: localizations.receive,
+                icon: Symbols.call_received,
+                enabled: false,
+              )
+                  .animate()
+                  .fade(duration: const Duration(milliseconds: 250))
+                  .scale(duration: const Duration(milliseconds: 250)),
+            if (connectivityStatusProvider == ConnectivityStatus.isConnected)
+              _ActionButton(
+                text: localizations.buy,
+                icon: Symbols.add,
+                onTap: () {
+                  sl.get<HapticUtil>().feedback(
+                        FeedbackType.light,
+                        preferences.activeVibrations,
+                      );
+                  context.go(BuySheet.routerPage);
+                },
+              )
+                  .animate()
+                  .fade(duration: const Duration(milliseconds: 300))
+                  .scale(duration: const Duration(milliseconds: 300))
+            else
+              _ActionButton(
+                text: localizations.buy,
+                icon: Symbols.add,
+                enabled: false,
+              )
+                  .animate()
+                  .fade(duration: const Duration(milliseconds: 300))
+                  .scale(duration: const Duration(milliseconds: 300)),
+            if (refreshInProgress == false)
+              _ActionButton(
+                text: localizations.refresh,
+                icon: Symbols.refresh,
+                onTap: () async {
+                  ref
+                      .read(refreshInProgressProviders.notifier)
+                      .setRefreshInProgress(true);
+
+                  sl.get<HapticUtil>().feedback(
+                        FeedbackType.light,
+                        preferences.activeVibrations,
+                      );
+                  final _connectivityStatusProvider =
+                      ref.read(connectivityStatusProviders);
+                  if (_connectivityStatusProvider ==
+                      ConnectivityStatus.isDisconnected) {
+                    return;
+                  }
+
+                  await ref
+                      .read(AccountProviders.selectedAccount.notifier)
+                      .refreshRecentTransactions();
+                  ref
+                    ..invalidate(ContactProviders.fetchContacts)
+                    ..invalidate(MarketPriceProviders.currencyMarketPrice);
+                  await ref
+                      .read(
+                        VerifiedTokensProviders.verifiedTokens.notifier,
+                      )
+                      .init();
+                  ref
+                      .read(refreshInProgressProviders.notifier)
+                      .setRefreshInProgress(false);
+                },
+              )
+                  .animate()
+                  .fade(duration: const Duration(milliseconds: 350))
+                  .scale(duration: const Duration(milliseconds: 350))
+            else
+              Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: Opacity(
+                      opacity: 0.5,
+                      child: SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 1,
                         ),
-                      ).show(
-                        context: context,
-                        ref: ref,
-                      );
-                    },
-                  )
-                      .animate()
-                      .fade(duration: const Duration(milliseconds: 200))
-                      .scale(duration: const Duration(milliseconds: 200))
-                else
-                  _ActionButton(
-                    text: localizations.send,
-                    icon: Symbols.call_made,
-                    enabled: false,
-                  )
-                      .animate()
-                      .fade(duration: const Duration(milliseconds: 200))
-                      .scale(duration: const Duration(milliseconds: 200)),
-                if (contact != null)
-                  _ActionButton(
-                    key: const Key('receiveUCObutton'),
-                    text: localizations.receive,
-                    icon: Symbols.call_received,
-                    onTap: () async {
-                      sl.get<HapticUtil>().feedback(
-                            FeedbackType.light,
-                            preferences.activeVibrations,
-                          );
-                      context.push(
-                        ContactDetail.routerPage,
-                        extra: ContactDetailsRouteParams(
-                          contactAddress: contact.genesisAddress!,
-                        ).toJson(),
-                      );
-                    },
-                  )
-                      .animate()
-                      .fade(duration: const Duration(milliseconds: 250))
-                      .scale(duration: const Duration(milliseconds: 250))
-                else
-                  _ActionButton(
-                    text: localizations.receive,
-                    icon: Symbols.call_received,
-                    enabled: false,
-                  )
-                      .animate()
-                      .fade(duration: const Duration(milliseconds: 250))
-                      .scale(duration: const Duration(milliseconds: 250)),
-                if (connectivityStatusProvider ==
-                    ConnectivityStatus.isConnected)
-                  _ActionButton(
-                    text: localizations.buy,
-                    icon: Symbols.add,
-                    onTap: () {
-                      sl.get<HapticUtil>().feedback(
-                            FeedbackType.light,
-                            preferences.activeVibrations,
-                          );
-                      context.go(BuySheet.routerPage);
-                    },
-                  )
-                      .animate()
-                      .fade(duration: const Duration(milliseconds: 300))
-                      .scale(duration: const Duration(milliseconds: 300))
-                else
-                  _ActionButton(
-                    text: localizations.buy,
-                    icon: Symbols.add,
-                    enabled: false,
-                  )
-                      .animate()
-                      .fade(duration: const Duration(milliseconds: 300))
-                      .scale(duration: const Duration(milliseconds: 300)),
-                if (refreshInProgress == false)
+                      ),
+                    ),
+                  ),
                   _ActionButton(
                     text: localizations.refresh,
                     icon: Symbols.refresh,
-                    onTap: () async {
-                      setState(
-                        () {
-                          refreshInProgress = true;
-                        },
-                      );
-                      sl.get<HapticUtil>().feedback(
-                            FeedbackType.light,
-                            preferences.activeVibrations,
-                          );
-                      final _connectivityStatusProvider =
-                          ref.read(connectivityStatusProviders);
-                      if (_connectivityStatusProvider ==
-                          ConnectivityStatus.isDisconnected) {
-                        return;
-                      }
-
-                      await ref
-                          .read(AccountProviders.selectedAccount.notifier)
-                          .refreshRecentTransactions();
-                      ref
-                        ..invalidate(ContactProviders.fetchContacts)
-                        ..invalidate(MarketPriceProviders.currencyMarketPrice);
-                      await ref
-                          .read(
-                            VerifiedTokensProviders.verifiedTokens.notifier,
-                          )
-                          .init();
-                      setState(
-                        () {
-                          refreshInProgress = false;
-                        },
-                      );
-                    },
+                    enabled: false,
                   )
                       .animate()
                       .fade(duration: const Duration(milliseconds: 350))
-                      .scale(duration: const Duration(milliseconds: 350))
-                else
-                  Stack(
-                    alignment: Alignment.topCenter,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left: 10, right: 10),
-                        child: Opacity(
-                          opacity: 0.5,
-                          child: SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 1,
-                            ),
-                          ),
-                        ),
-                      ),
-                      _ActionButton(
-                        text: localizations.refresh,
-                        icon: Symbols.refresh,
-                        enabled: false,
-                      )
-                          .animate()
-                          .fade(duration: const Duration(milliseconds: 350))
-                          .scale(duration: const Duration(milliseconds: 350)),
-                    ],
-                  ),
-              ],
-            ),
-          ),
-        );
-      },
+                      .scale(duration: const Duration(milliseconds: 350)),
+                ],
+              ),
+          ],
+        ),
+      ),
     );
   }
 }
