@@ -82,7 +82,7 @@
     "manage": "Gérer",
     "invalidSeedPaste": "La phrase secrète que vous souhaitez coller n'est pas valide.",
     "unlockBiometrics": "Authentifier pour déverrouiller",
-    "lockAppSetting": "Auth. au lancement",
+    "lockAppSetting": "Activation du verouillage auto",
     "locked": "Bloqué",
     "unlock": "Ouvrir",
     "tooManyFailedAttempts": "Trop de tentatives de déverrouillage échouées.\nVeuillez réessayer svp.",
