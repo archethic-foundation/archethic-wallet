@@ -38,7 +38,7 @@ class ContactCreationFormNotifier
       );
 
   void setName(String name, BuildContext context) {
-    state = state.copyWith(name: name, error: '');
+    state = state.copyWith(name: name.trimLeft().trimRight(), error: '');
   }
 
   void setAddress(String address, BuildContext context) {

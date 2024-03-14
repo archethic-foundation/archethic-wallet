@@ -394,12 +394,13 @@ class NftCreationFormNotifier
     final propertiesToSet = [...state.properties]
       ..removeWhere(
         (element) =>
-            element.propertyName.toUpperCase() == propertyName.toUpperCase(),
+            element.propertyName.trimLeft().trimRight().toUpperCase() ==
+            propertyName.trimLeft().trimRight().toUpperCase(),
       )
       ..add(
         NftCreationFormStateProperty(
-          propertyName: propertyName,
-          propertyValue: propertyValue,
+          propertyName: propertyName.trimLeft().trimRight(),
+          propertyValue: propertyValue.trimLeft().trimRight(),
         ),
       )
       ..sort((a, b) => a.propertyName.compareTo(b.propertyName));
@@ -419,12 +420,12 @@ class NftCreationFormNotifier
       return;
     }
 
-    state = state.copyWith(name: name, error: '');
-    setProperty('name', name);
+    state = state.copyWith(name: name.trimLeft().trimRight(), error: '');
+    setProperty('name', name.trimLeft().trimRight());
   }
 
   void setSymbol(String symbol) {
-    state = state.copyWith(symbol: symbol, error: '');
+    state = state.copyWith(symbol: symbol.trimLeft().trimRight(), error: '');
   }
 
   void setInitialSupply(int initialSupply) {
@@ -432,13 +433,13 @@ class NftCreationFormNotifier
   }
 
   void setDescription(String description) {
-    state = state.copyWith(description: description);
-    setProperty('description', description);
+    state = state.copyWith(description: description.trimLeft().trimRight());
+    setProperty('description', description.trimLeft().trimRight());
   }
 
   void setPropertyName(String propertyName) {
     state = state.copyWith(
-      propertyName: propertyName,
+      propertyName: propertyName.trimLeft().trimRight(),
       error: '',
     );
   }
@@ -451,7 +452,7 @@ class NftCreationFormNotifier
 
   void setPropertyValue(String propertyValue) {
     state = state.copyWith(
-      propertyValue: propertyValue,
+      propertyValue: propertyValue.trimLeft().trimRight(),
       error: '',
     );
   }

@@ -149,7 +149,8 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
       return;
     }
 
-    if (kTokenFordiddenName.contains(name.toUpperCase())) {
+    if (kTokenFordiddenName
+        .contains(name.trimLeft().trimRight().toUpperCase())) {
       state = state.copyWith(
         errorNameText: AppLocalizations.of(context)!.tokenNameUCO,
       );
@@ -157,7 +158,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
     }
 
     state = state.copyWith(
-      name: name,
+      name: name.trimLeft().trimRight(),
     );
     _updateFees(
       context,
@@ -201,7 +202,8 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
       return;
     }
 
-    if (kTokenFordiddenName.contains(symbol.toUpperCase())) {
+    if (kTokenFordiddenName
+        .contains(symbol.trimLeft().trimRight().toUpperCase())) {
       state = state.copyWith(
         errorSymbolText: AppLocalizations.of(context)!.tokenSymbolUCO,
       );
@@ -209,7 +211,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
     }
 
     state = state.copyWith(
-      symbol: symbol,
+      symbol: symbol.trimLeft().trimRight(),
     );
     _updateFees(
       context,

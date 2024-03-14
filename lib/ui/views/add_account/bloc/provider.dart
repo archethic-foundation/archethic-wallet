@@ -49,7 +49,7 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
     String name,
   ) async {
     state = state.copyWith(
-      name: name,
+      name: name.trimLeft().trimRight(),
     );
     return;
   }
