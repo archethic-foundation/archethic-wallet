@@ -83,6 +83,7 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
   void dispose() {
     if (timer != null) timer!.cancel();
     WidgetsBinding.instance.removeObserver(this);
+    _LockMask.hide();
     super.dispose();
   }
 
