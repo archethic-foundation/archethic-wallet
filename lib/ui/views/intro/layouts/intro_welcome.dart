@@ -129,27 +129,30 @@ class _Language extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return IconButton(
+    return Padding(
       padding: const EdgeInsets.only(bottom: 4, top: 10, right: 10),
-      icon: Container(
-        width: 30,
-        height: 30,
-        decoration: BoxDecoration(
-          color: ArchethicThemeBase.blue600,
-          shape: BoxShape.circle,
+      child: IconButton(
+        icon: Container(
+          alignment: Alignment.center,
+          width: 30,
+          height: 30,
+          decoration: BoxDecoration(
+            color: ArchethicThemeBase.blue600,
+            shape: BoxShape.circle,
+          ),
+          child: Icon(
+            Symbols.translate,
+            color: ArchethicTheme.iconDrawer,
+            size: 20,
+            weight: IconSize.weightM,
+            opticalSize: IconSize.opticalSizeM,
+            grade: IconSize.gradeM,
+          ),
         ),
-        child: Icon(
-          Symbols.translate,
-          color: ArchethicTheme.iconDrawer,
-          size: 20,
-          weight: IconSize.weightM,
-          opticalSize: IconSize.opticalSizeM,
-          grade: IconSize.gradeM,
-        ),
+        onPressed: () async {
+          await LanguageDialog.getDialog(context, ref);
+        },
       ),
-      onPressed: () async {
-        await LanguageDialog.getDialog(context, ref);
-      },
     );
   }
 }
