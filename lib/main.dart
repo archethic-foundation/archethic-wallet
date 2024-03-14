@@ -258,6 +258,10 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
           VerifiedTokensProviders.verifiedTokens.notifier,
         )
         .init();
+    await SecurityManager().checkDeviceSecurity(ref, context);
+    await ref
+        .read(LocalDataMigrationProviders.localDataMigration.notifier)
+        .migrateLocalData();
   }
 
   Future<void> checkLoggedIn() async {
@@ -304,10 +308,6 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await initializeProviders();
       await checkLoggedIn();
-      await SecurityManager().checkDeviceSecurity(ref, context);
-      await ref
-          .read(LocalDataMigrationProviders.localDataMigration.notifier)
-          .migrateLocalData();
     });
   }
 

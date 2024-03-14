@@ -58,21 +58,18 @@ class AuthFactory {
       case AuthMethod.yubikeyWithYubicloud:
         auth = await _authenticateWithYubikey(
           context,
-          ref,
           canCancel: canCancel,
         );
         break;
       case AuthMethod.password:
         auth = await _authenticateWithPassword(
           context,
-          ref,
           canCancel: canCancel,
         );
         break;
       case AuthMethod.pin:
         auth = await _authenticateWithPin(
           context,
-          ref,
           canCancel: canCancel,
         );
         break;
@@ -94,8 +91,7 @@ class AuthFactory {
   }
 
   static Future<bool> _authenticateWithYubikey(
-    BuildContext context,
-    WidgetRef ref, {
+    BuildContext context, {
     required canCancel,
   }) async {
     final auth = (await context.push(
@@ -107,8 +103,7 @@ class AuthFactory {
   }
 
   static Future<bool> _authenticateWithPassword(
-    BuildContext context,
-    WidgetRef ref, {
+    BuildContext context, {
     required bool canCancel,
   }) async {
     final auth = (await context.push(
@@ -120,8 +115,7 @@ class AuthFactory {
   }
 
   static Future<bool> _authenticateWithPin(
-    BuildContext context,
-    WidgetRef ref, {
+    BuildContext context, {
     required bool canCancel,
   }) async {
     final auth = (await context.push(
