@@ -226,9 +226,7 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
                   image: AssetImage(
                     ArchethicTheme.backgroundWelcome,
                   ),
-                  fit: MediaQuery.of(context).size.width >= 370
-                      ? BoxFit.fitWidth
-                      : BoxFit.fitHeight,
+                  fit: BoxFit.fitHeight,
                   alignment: Alignment.centerRight,
                 ),
               ),

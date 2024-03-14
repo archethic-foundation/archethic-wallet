@@ -336,9 +336,7 @@ class _LockMaskState extends State<_LockMask> {
                   image: AssetImage(
                     ArchethicTheme.backgroundWelcome,
                   ),
-                  fit: MediaQuery.of(context).size.width >= 370
-                      ? BoxFit.fitWidth
-                      : BoxFit.fitHeight,
+                  fit: BoxFit.fitHeight,
                   alignment: Alignment.centerRight,
                   opacity: 0.5,
                 ),
