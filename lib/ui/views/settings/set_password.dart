@@ -156,10 +156,10 @@ class _SetPasswordState extends ConsumerState<SetPassword>
             icon: Symbols.shuffle,
             onPressed: () {
               setPasswordController!.text = '';
-              final passwordLength = Random().nextInt(8) + 5;
+              final passwordLength = Random().nextInt(8) + 10;
 
               const allowedChars =
-                  r'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#=+!£$%&?[](){}';
+                  r'abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ023456789@#=+!£$%&?[](){}';
               var i = 0;
               while (i < passwordLength) {
                 final random = Random.secure().nextInt(allowedChars.length);
