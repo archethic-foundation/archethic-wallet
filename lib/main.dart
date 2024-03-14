@@ -24,6 +24,7 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_welcome.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/security_manager.dart';
 import 'package:aewallet/util/service_locator.dart';
@@ -313,8 +314,10 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ArchethicTheme.background,
+    return SheetSkeleton(
+      appBar: AppBar(),
+      menu: true,
+      sheetContent: const SizedBox.shrink(),
     );
   }
 }

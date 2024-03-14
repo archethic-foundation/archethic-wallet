@@ -91,7 +91,7 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome>
         Opacity(
           opacity: 0.8,
           child: SizedBox(
-            height: MediaQuery.of(context).size.height - 200,
+            height: MediaQuery.of(context).size.height - 250,
             child: LitStarfieldContainer(
               velocity: 0.2,
               number: 600,
@@ -104,7 +104,7 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome>
           ),
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.height - 200,
+          height: MediaQuery.of(context).size.height - 250,
           child: Opacity(
             opacity: 0.3,
             child: LitStarfieldContainer(
