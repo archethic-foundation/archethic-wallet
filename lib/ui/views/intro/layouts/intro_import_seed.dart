@@ -339,59 +339,54 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                 textAlign: TextAlign.start,
               ),
             ),
-            SizedBox(
-              height: 48,
-              child: TextButton.icon(
-                label: const Text(''),
-                icon: Icon(
-                  Symbols.content_paste,
-                  weight: IconSize.weightM,
-                  opticalSize: IconSize.opticalSizeM,
-                  grade: IconSize.gradeM,
-                  color: ArchethicThemeStyles.textStyleSize16W600Primary.color,
-                ),
-                onPressed: () async {
-                  final data = await Clipboard.getData(
-                    'text/plain',
-                  );
+            IconButton(
+              icon: Icon(
+                Symbols.content_paste,
+                weight: IconSize.weightM,
+                opticalSize: IconSize.opticalSizeM,
+                grade: IconSize.gradeM,
+                color: ArchethicThemeStyles.textStyleSize16W600Primary.color,
+              ),
+              onPressed: () async {
+                final data = await Clipboard.getData(
+                  'text/plain',
+                );
 
-                  final pastedWords = data?.text
-                      ?.trimLeft()
-                      .trimRight()
-                      .toLowerCase()
-                      .split(RegExp('[^a-zA-ZÀ-ÿ]'))
-                      .where(
-                        (element) => element.isNotEmpty,
-                      );
-
-                  if (pastedWords == null ||
-                      pastedWords.length != wordEditingControllers.length ||
-                      pastedWords.any(
-                        (element) => !AppMnemomics.isValidWord(
-                          element,
-                          languageCode: languageSeed,
-                        ),
-                      )) {
-                    UIUtil.showSnackbar(
-                      localizations.invalidSeedPaste,
-                      context,
-                      ref,
-                      ArchethicTheme.text,
-                      ArchethicTheme.snackBarShadow,
+                final pastedWords = data?.text
+                    ?.trimLeft()
+                    .trimRight()
+                    .toLowerCase()
+                    .split(RegExp('[^a-zA-ZÀ-ÿ]'))
+                    .where(
+                      (element) => element.isNotEmpty,
                     );
 
-                    return;
+                if (pastedWords == null ||
+                    pastedWords.length != wordEditingControllers.length ||
+                    pastedWords.any(
+                      (element) => !AppMnemomics.isValidWord(
+                        element,
+                        languageCode: languageSeed,
+                      ),
+                    )) {
+                  UIUtil.showSnackbar(
+                    localizations.invalidSeedPaste,
+                    context,
+                    ref,
+                    ArchethicTheme.text,
+                    ArchethicTheme.snackBarShadow,
+                  );
+
+                  return;
+                }
+                setState(() {
+                  for (var i = 0; i < wordEditingControllers.length; i++) {
+                    wordEditingControllers[i]?.text = pastedWords.elementAt(i);
                   }
-                  setState(() {
-                    for (var i = 0; i < wordEditingControllers.length; i++) {
-                      wordEditingControllers[i]?.text =
-                          pastedWords.elementAt(i);
-                    }
-                    _mnemonicError = '';
-                    _mnemonicIsValid = true;
-                  });
-                },
-              ),
+                  _mnemonicError = '';
+                  _mnemonicIsValid = true;
+                });
+              },
             ),
           ],
         ),
