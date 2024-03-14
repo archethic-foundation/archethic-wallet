@@ -82,7 +82,14 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
           ArchethicTheme.text,
           ArchethicTheme.snackBarShadow,
         );
-        context.pop(false);
+        if (widget.welcomeProcess == false) {
+          context.pop(false);
+        } else {
+          context.go(
+            IntroBackupSeedPage.routerPage,
+            extra: widget.name,
+          );
+        }
         return;
       }
 
@@ -94,7 +101,14 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
           ArchethicTheme.text,
           ArchethicTheme.snackBarShadow,
         );
-        context.pop();
+        if (widget.welcomeProcess == false) {
+          context.pop();
+        } else {
+          context.go(
+            IntroBackupSeedPage.routerPage,
+            extra: widget.name,
+          );
+        }
         return;
       }
 
@@ -174,7 +188,14 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
           if (error == false) {
             context.go(HomePage.routerPage);
           } else {
-            context.pop();
+            if (widget.welcomeProcess == false) {
+              context.pop();
+            } else {
+              context.go(
+                IntroBackupSeedPage.routerPage,
+                extra: widget.name,
+              );
+            }
           }
           break;
         case TransactionSendEventType.transfer:
@@ -525,7 +546,14 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
         ArchethicTheme.snackBarShadow,
       );
 
-      context.pop();
+      if (widget.welcomeProcess == false) {
+        context.pop();
+      } else {
+        context.go(
+          IntroBackupSeedPage.routerPage,
+          extra: widget.name,
+        );
+      }
     }
   }
 }
