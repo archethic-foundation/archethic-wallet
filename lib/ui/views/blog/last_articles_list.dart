@@ -44,7 +44,7 @@ class LastArticlesState extends ConsumerState<LastArticles> {
   Widget build(BuildContext context) {
     final preferences = ref.watch(SettingsProviders.settings);
     if (preferences.showBlog == false) {
-      return const _LastArticlesNotShowed();
+      return const SizedBox.shrink();
     }
     final asyncArticlesList = ref.watch(BlogProviders.fetchArticles);
 
@@ -132,25 +132,6 @@ class LastArticlesState extends ConsumerState<LastArticles> {
               ),
             ],
           ),
-        ),
-      ],
-    );
-  }
-}
-
-class _LastArticlesNotShowed extends StatelessWidget {
-  const _LastArticlesNotShowed();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          height: 50,
-        ),
-        SizedBox(
-          height: 250,
         ),
       ],
     );
