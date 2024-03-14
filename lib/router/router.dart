@@ -8,7 +8,6 @@ import 'package:aewallet/main.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/ui/menu/settings/settings_sheet.dart';
-import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/add_account/layouts/add_account_sheet.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/ui/views/authenticate/lock_screen.dart';
