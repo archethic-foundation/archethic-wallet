@@ -244,31 +244,14 @@ class _FungiblesTokensDetailTransfer extends ConsumerWidget {
                                         Row(
                                           children: [
                                             Text(
-                                              NumberUtil.formatThousands(
-                                                accountFungibleToken.amount!,
-                                              ),
+                                              '${NumberUtil.formatThousands(accountFungibleToken.amount!)} ${accountFungibleToken.tokenInformation!.symbol!}',
                                               style: ArchethicThemeStyles
                                                   .textStyleSize12W100Primary,
                                             ),
                                             const SizedBox(width: 5),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  accountFungibleToken
-                                                      .tokenInformation!
-                                                      .symbol!,
-                                                  style: ArchethicThemeStyles
-                                                      .textStyleSize12W100Primary,
-                                                ),
-                                                const SizedBox(
-                                                  width: 5,
-                                                ),
-                                                VerifiedTokenIcon(
-                                                  address: accountFungibleToken
-                                                      .tokenInformation!
-                                                      .address!,
-                                                ),
-                                              ],
+                                            VerifiedTokenIcon(
+                                              address: accountFungibleToken
+                                                  .tokenInformation!.address!,
                                             ),
                                           ],
                                         )
