@@ -48,7 +48,7 @@ class LocalDataMigrationNotifier
 
   Future<void> migrateLocalData() async {
     final preferences = await HivePreferencesDatasource.getInstance();
-    final currentDataVersion = preferences.getCurrentDataVersion();
+    final currentDataVersion = await preferences.getCurrentDataVersion();
     log('Current data version: $currentDataVersion', name: logName);
 
     final migrations = ref.read(_migrationsProvider)
