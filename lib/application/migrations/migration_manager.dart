@@ -12,7 +12,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part '437.dart';
-part '492.dart';
+part '512.dart';
 part 'migration_manager.freezed.dart';
 part 'migration_manager.g.dart';
 
@@ -119,6 +119,7 @@ class LocalDataMigration {
 @riverpod
 List<LocalDataMigration> _migrations(_MigrationsRef ref) => [
       migration_437,
+      migration_512,
     ];
 
 class CurrentVersionRepository {
