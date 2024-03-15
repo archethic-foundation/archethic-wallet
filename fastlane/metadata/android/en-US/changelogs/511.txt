@@ -1,0 +1,4 @@
+
+Archethic Wallet - Version 2.3.5 Build 511
+
+- Fix migration process
