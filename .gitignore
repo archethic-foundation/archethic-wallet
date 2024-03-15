@@ -144,3 +144,4 @@ fastlane/metadata/**/Preview.html
 report.xml
 linux/appimage/AppDir/data/
 linux/appimage/AppDir/lib/
+android/secret/ae-wallet-c8d742e33023.json
