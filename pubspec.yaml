@@ -257,6 +257,8 @@ dependencies:
   # RPC server
   web_socket_channel: ^2.4.3
 
+  webview_flutter: ^4.7.0
+
   # This plugin allows Flutter desktop apps to resizing and repositioning the window.
   window_manager: ^0.3.8
 
