@@ -205,6 +205,17 @@ final _authenticatedRoutes = [
     ),
   ),
   GoRoute(
+    path: DEXSheet.routerPage,
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
+      key: state.pageKey,
+      child: const DEXSheet(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
+  ),
+  GoRoute(
     path: ContactDetail.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
       transitionDuration: Duration.zero,
