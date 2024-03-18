@@ -480,6 +480,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
             start: 20,
             end: 20,
             top: 15,
+            bottom: 80,
           ),
           child: Wrap(
             spacing: 10,
