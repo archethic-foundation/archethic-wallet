@@ -77,7 +77,7 @@ class FeeInfos extends ConsumerWidget {
                 fiatFeeEstimation,
                 2,
               )}',
-              style: ArchethicThemeStyles.textStyleSize14W100Primary,
+              style: ArchethicThemeStyles.textStyleSize14W200Primary,
             )
           else
             Text(
@@ -90,7 +90,7 @@ class FeeInfos extends ConsumerWidget {
                 AccountBalance.cryptoCurrencyLabel,
                 decimal: 2,
               )}',
-              style: ArchethicThemeStyles.textStyleSize14W100Primary,
+              style: ArchethicThemeStyles.textStyleSize14W200Primary,
             ),
         ],
       ),
@@ -110,7 +110,7 @@ class _CannotLoadFeeInfos extends ConsumerWidget {
       height: 40,
       child: Text(
         estimatedFeesNote,
-        style: ArchethicThemeStyles.textStyleSize14W100Primary,
+        style: ArchethicThemeStyles.textStyleSize14W200Primary,
       ),
     );
   }
@@ -130,7 +130,7 @@ class _LoadingFeeInfos extends ConsumerWidget {
         children: [
           Text(
             localizations.estimatedFeesCalculationNote,
-            style: ArchethicThemeStyles.textStyleSize14W100Primary,
+            style: ArchethicThemeStyles.textStyleSize14W200Primary,
           ),
           Padding(
             padding: const EdgeInsets.only(

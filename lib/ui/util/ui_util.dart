@@ -67,11 +67,11 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
-                    style: ArchethicThemeStyles.textStyleSize14W100Text60,
+                    style: ArchethicThemeStyles.textStyleSize14W200Text60,
                   ),
                   TextSpan(
                     text: stringPartTwo,
-                    style: ArchethicThemeStyles.textStyleSize14W100Text60,
+                    style: ArchethicThemeStyles.textStyleSize14W200Text60,
                   ),
                 ],
               ),
@@ -83,7 +83,7 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartThree,
-                    style: ArchethicThemeStyles.textStyleSize14W100Text60,
+                    style: ArchethicThemeStyles.textStyleSize14W200Text60,
                   ),
                 ],
               ),
@@ -95,11 +95,11 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartFour,
-                    style: ArchethicThemeStyles.textStyleSize14W100Text60,
+                    style: ArchethicThemeStyles.textStyleSize14W200Text60,
                   ),
                   TextSpan(
                     text: stringPartFive,
-                    style: ArchethicThemeStyles.textStyleSize14W100Text60,
+                    style: ArchethicThemeStyles.textStyleSize14W200Text60,
                   ),
                 ],
               ),
@@ -112,7 +112,7 @@ class UIUtil {
                 textAlign: TextAlign.center,
                 TextSpan(
                   text: contactName,
-                  style: ArchethicThemeStyles.textStyleSize14W100Primary,
+                  style: ArchethicThemeStyles.textStyleSize14W200Primary,
                 ),
               )
             : const SizedBox();
@@ -126,11 +126,11 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartOne,
-                    style: ArchethicThemeStyles.textStyleSize14W100Primary,
+                    style: ArchethicThemeStyles.textStyleSize14W200Primary,
                   ),
                   TextSpan(
                     text: stringPartTwo,
-                    style: ArchethicThemeStyles.textStyleSize14W100Primary,
+                    style: ArchethicThemeStyles.textStyleSize14W200Primary,
                   ),
                 ],
               ),
@@ -142,7 +142,7 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartThree,
-                    style: ArchethicThemeStyles.textStyleSize14W100Primary,
+                    style: ArchethicThemeStyles.textStyleSize14W200Primary,
                   ),
                 ],
               ),
@@ -154,11 +154,11 @@ class UIUtil {
                 children: <InlineSpan>[
                   TextSpan(
                     text: stringPartFour,
-                    style: ArchethicThemeStyles.textStyleSize14W100Primary,
+                    style: ArchethicThemeStyles.textStyleSize14W200Primary,
                   ),
                   TextSpan(
                     text: stringPartFive,
-                    style: ArchethicThemeStyles.textStyleSize14W100Primary,
+                    style: ArchethicThemeStyles.textStyleSize14W200Primary,
                   ),
                 ],
               ),
@@ -175,7 +175,7 @@ class UIUtil {
     TextStyle? textStyle,
   }) {
     final resolvedTextStyle =
-        textStyle ?? ArchethicThemeStyles.textStyleSize14W100Primary;
+        textStyle ?? ArchethicThemeStyles.textStyleSize14W200Primary;
     final stringPartOne = address.substring(0, 22);
     final stringPartTwo = address.substring(22, 44);
     final stringPartThree = address.substring(44, 64);

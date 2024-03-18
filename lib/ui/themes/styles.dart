@@ -101,19 +101,11 @@ class ArchethicThemeStyles {
     );
   }
 
-  static TextStyle get textStyleSize14W100Text60 {
+  static TextStyle get textStyleSize14W200Text60 {
     return TextStyle(
       fontSize: AppFontSizes.size14,
-      fontWeight: FontWeight.w100,
+      fontWeight: FontWeight.w200,
       color: ArchethicTheme.text60,
-    );
-  }
-
-  static TextStyle get textStyleSize14W100Primary {
-    return TextStyle(
-      fontSize: AppFontSizes.size14,
-      fontWeight: FontWeight.w100,
-      color: ArchethicTheme.text,
     );
   }
 
@@ -179,7 +171,7 @@ class ArchethicThemeStyles {
     return TextStyle(
       color: ArchethicTheme.text60,
       fontSize: AppFontSizes.size12,
-      fontWeight: FontWeight.w100,
+      fontWeight: FontWeight.w300,
     );
   }
 
@@ -187,7 +179,7 @@ class ArchethicThemeStyles {
     return TextStyle(
       color: ArchethicTheme.text,
       fontSize: AppFontSizes.size12,
-      fontWeight: FontWeight.w100,
+      fontWeight: FontWeight.w300,
     );
   }
 
@@ -195,7 +187,7 @@ class ArchethicThemeStyles {
     return TextStyle(
       color: ArchethicTheme.warning,
       fontSize: AppFontSizes.size12,
-      fontWeight: FontWeight.w100,
+      fontWeight: FontWeight.w300,
     );
   }
 
@@ -203,7 +195,7 @@ class ArchethicThemeStyles {
     return TextStyle(
       color: ArchethicTheme.background,
       fontSize: AppFontSizes.size12,
-      fontWeight: FontWeight.w100,
+      fontWeight: FontWeight.w300,
     );
   }
 
@@ -219,7 +211,7 @@ class ArchethicThemeStyles {
     return TextStyle(
       color: ArchethicTheme.text,
       fontSize: AppFontSizes.size12,
-      fontWeight: FontWeight.w100,
+      fontWeight: FontWeight.w300,
     );
   }
 

@@ -100,7 +100,7 @@ class _NFTCreationProcessImportTabFormUrlState
                         autocorrect: false,
                         maxLines: 10,
                         keyboardType: TextInputType.text,
-                        style: ArchethicThemeStyles.textStyleSize14W100Primary,
+                        style: ArchethicThemeStyles.textStyleSize14W200Primary,
                         suffixButton: PasteIcon(
                           onPaste: (String value) {
                             urlController.text = value;

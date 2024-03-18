@@ -184,7 +184,7 @@ class _TransferTextFieldAmountState
                           child: AutoSizeText(
                             '1 ${transfer.symbol(context)} = ${CurrencyUtil.getAmountPlusSymbol(currency.name, selectedCurrencyMarketPrice.amount)}',
                             style:
-                                ArchethicThemeStyles.textStyleSize14W100Primary,
+                                ArchethicThemeStyles.textStyleSize14W200Primary,
                           ),
                         ),
                         if (transfer.amount != 0)
@@ -194,7 +194,7 @@ class _TransferTextFieldAmountState
                               '= $valueLabel',
                               textAlign: TextAlign.right,
                               style: ArchethicThemeStyles
-                                  .textStyleSize14W100Primary,
+                                  .textStyleSize14W200Primary,
                             ),
                           )
                         else
@@ -210,7 +210,7 @@ class _TransferTextFieldAmountState
                             AutoSizeText(
                               '${NumberUtil.formatThousands(transfer.accountToken!.amount!)} ${transfer.accountToken!.tokenInformation!.isLPToken == true ? transfer.accountToken!.amount! > 1 ? 'LP Tokens' : 'LP Token ' : transfer.accountToken!.tokenInformation!.symbol}',
                               style: ArchethicThemeStyles
-                                  .textStyleSize14W100Primary,
+                                  .textStyleSize14W200Primary,
                             ),
                             if (transfer.accountToken != null &&
                                 transfer.accountToken!.tokenInformation !=

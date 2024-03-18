@@ -312,29 +312,29 @@ class _TransactionBuildInfos extends ConsumerWidget {
                 log('transactionInfo.valueInfo: ${transactionInfo.valueInfo} : data null');
                 return SelectableText(
                   transactionInfo.valueInfo,
-                  style: ArchethicThemeStyles.textStyleSize14W100Primary,
+                  style: ArchethicThemeStyles.textStyleSize14W200Primary,
                 );
               } else {
                 log('transactionInfo.valueInfo: ${transactionInfo.valueInfo} : data not null');
                 return SelectableText(
                   data.value!.format,
-                  style: ArchethicThemeStyles.textStyleSize14W100Primary,
+                  style: ArchethicThemeStyles.textStyleSize14W200Primary,
                 );
               }
             },
             error: (error) => SelectableText(
               transactionInfo.valueInfo,
-              style: ArchethicThemeStyles.textStyleSize14W100Primary,
+              style: ArchethicThemeStyles.textStyleSize14W200Primary,
             ),
             loading: (loading) => SelectableText(
               transactionInfo.valueInfo,
-              style: ArchethicThemeStyles.textStyleSize14W100Primary,
+              style: ArchethicThemeStyles.textStyleSize14W200Primary,
             ),
           );
     } else {
       return SelectableText(
         transactionInfo.valueInfo,
-        style: ArchethicThemeStyles.textStyleSize14W100Primary,
+        style: ArchethicThemeStyles.textStyleSize14W200Primary,
       );
     }
   }

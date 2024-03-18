@@ -151,7 +151,7 @@ class _BalanceIndicatorFiat extends ConsumerWidget {
           fiatValue,
         ),
       ),
-      style: ArchethicThemeStyles.textStyleSize14W100Primary,
+      style: ArchethicThemeStyles.textStyleSize14W200Primary,
     );
   }
 }
@@ -183,7 +183,7 @@ class _BalanceIndicatorNative extends ConsumerWidget {
             language.getLocaleStringWithoutDefault(),
           ),
         )} ${accountSelectedBalance.nativeTokenName}',
-        style: ArchethicThemeStyles.textStyleSize14W100Primary,
+        style: ArchethicThemeStyles.textStyleSize14W200Primary,
       );
     } else {
       return Text(
@@ -193,7 +193,7 @@ class _BalanceIndicatorNative extends ConsumerWidget {
             digits: 2,
           ),
         )} ${accountSelectedBalance.nativeTokenName}',
-        style: ArchethicThemeStyles.textStyleSize14W100Primary,
+        style: ArchethicThemeStyles.textStyleSize14W200Primary,
       );
     }
   }

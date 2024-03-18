@@ -77,7 +77,7 @@ class AboutMenuView extends ConsumerWidget implements SheetSkeletonInterface {
                                 return Text(
                                   asyncVersionString.asData?.value ?? '',
                                   style: ArchethicThemeStyles
-                                      .textStyleSize14W100Primary,
+                                      .textStyleSize14W200Primary,
                                 );
                               },
                             ),
