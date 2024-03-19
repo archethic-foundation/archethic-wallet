@@ -108,7 +108,7 @@ class BuySheet extends ConsumerWidget implements SheetSkeletonInterface {
                 onTap: () async {
                   UIUtil.showWebview(
                     context,
-                    'https://info.quickswap.exchange/#/pair/0x25bae75f6760ac30554cc62f9282307c3038c3a0',
+                    'https://quickswap.exchange/#/swap',
                     'Quick',
                   );
                 },
