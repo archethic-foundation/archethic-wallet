@@ -50,10 +50,7 @@ class DEXSheetState extends ConsumerState<DEXSheet> {
       ),
       body: SafeArea(
         child: AWCWebview(
-          uri: Uri.parse(
-              Platform.isAndroid // TODO(Reddwarf03) : Use production dex URI
-                  ? 'http://10.0.2.2:8080'
-                  : 'http://localhost:8080'),
+          uri: Uri.parse('https://dex.testnet.archethic.net'),
         ),
       ),
     );
