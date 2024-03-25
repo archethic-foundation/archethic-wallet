@@ -210,6 +210,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                       .scale(duration: const Duration(milliseconds: 350)),
                 ],
               ),
+            // TODO(redDwarf03): WebView POC - To remove
             if (DEXSheet.isAvailable)
               _ActionButton(
                 text: 'DEX',
