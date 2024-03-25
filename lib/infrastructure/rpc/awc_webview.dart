@@ -38,6 +38,12 @@ class _AWCWebviewState extends State<AWCWebview> {
             urlRequest: URLRequest(url: WebUri.uri(widget.uri)),
           );
         },
+        onReceivedServerTrustAuthRequest: (controller, challenge) async {
+          // TODO(reddwarf03): WARNING: Accepting all certificates is dangerous and should only be used during development.
+          return ServerTrustAuthResponse(
+            action: ServerTrustAuthResponseAction.PROCEED,
+          );
+        },
       );
 
   Future<void> _initMessageChannelRPC(
