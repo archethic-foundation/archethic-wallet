@@ -210,20 +210,21 @@ class MenuWidgetWallet extends ConsumerWidget {
                       .scale(duration: const Duration(milliseconds: 350)),
                 ],
               ),
-            _ActionButton(
-              text: 'DEX',
-              icon: Symbols.wallet,
-              onTap: () {
-                sl.get<HapticUtil>().feedback(
-                      FeedbackType.light,
-                      preferences.activeVibrations,
-                    );
-                context.go(DEXSheet.routerPage);
-              },
-            )
-                .animate()
-                .fade(duration: const Duration(milliseconds: 400))
-                .scale(duration: const Duration(milliseconds: 400))
+            if (DEXSheet.isAvailable)
+              _ActionButton(
+                text: 'DEX',
+                icon: Symbols.wallet,
+                onTap: () {
+                  sl.get<HapticUtil>().feedback(
+                        FeedbackType.light,
+                        preferences.activeVibrations,
+                      );
+                  context.push(DEXSheet.routerPage);
+                },
+              )
+                  .animate()
+                  .fade(duration: const Duration(milliseconds: 400))
+                  .scale(duration: const Duration(milliseconds: 400))
           ],
         ),
       ),

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:aewallet/infrastructure/rpc/awc_json_rpc_server.dart';
 import 'package:flutter/foundation.dart';
@@ -9,6 +10,8 @@ import 'package:stream_channel/stream_channel.dart';
 class AWCWebview extends StatefulWidget {
   const AWCWebview({super.key, required this.uri});
 
+  static bool get isAvailable => Platform.isAndroid || Platform.isIOS;
+
   final Uri uri;
 
   @override
@@ -17,6 +20,7 @@ class AWCWebview extends StatefulWidget {
 
 class _AWCWebviewState extends State<AWCWebview> {
   AWCJsonRPCServer? peerServer;
+  bool _isMessageChannelReady = false;
 
   @override
   void dispose() {
@@ -27,17 +31,7 @@ class _AWCWebviewState extends State<AWCWebview> {
   @override
   Widget build(BuildContext context) => InAppWebView(
         onLoadStop: (controller, url) async {
-          if (defaultTargetPlatform != TargetPlatform.android ||
-              await WebViewFeature.isFeatureSupported(
-                WebViewFeature.CREATE_WEB_MESSAGE_CHANNEL,
-              )) {
-            final port1 = await _initWebMessagePorts(controller);
-
-            final channel = WebMessagePortStreamChannel(port: port1);
-            peerServer = AWCJsonRPCServer(channel.cast<String>());
-
-            await peerServer?.listen();
-          }
+          await _initMessageChannelRPC(controller, url);
         },
         onWebViewCreated: (controller) async {
           await controller.loadUrl(
@@ -46,16 +40,43 @@ class _AWCWebviewState extends State<AWCWebview> {
         },
       );
 
-  Future<WebMessagePort> _initWebMessagePorts(
+  Future<void> _initMessageChannelRPC(
+    InAppWebViewController controller,
+    WebUri? uri,
+  ) async {
+    if (_isMessageChannelReady) return;
+    if (!await _isMessageChannelSupported) return;
+
+    final port1 = await _initMessageChannelPorts(controller);
+
+    final channel = WebMessagePortStreamChannel(port: port1);
+    peerServer = AWCJsonRPCServer(channel.cast<String>());
+    await peerServer?.listen();
+  }
+
+  Future<bool> get _isMessageChannelSupported async =>
+      defaultTargetPlatform != TargetPlatform.android ||
+      await WebViewFeature.isFeatureSupported(
+        WebViewFeature.CREATE_WEB_MESSAGE_CHANNEL,
+      );
+
+  Future<WebMessagePort> _initMessageChannelPorts(
     InAppWebViewController controller,
   ) async {
     controller.evaluateJavascript(
       source: """
+console.log("[AWC] Init webmessage");
+var onAWCReady = (awc) => {};
+var awcAvailable = true;
 var awc;
 window.addEventListener('message', function(event) {
     if (event.data == 'capturePort') {
         if (event.ports[0] != null) {
             awc = event.ports[0];
+            console.log("[AWC] Init webmessage Done");
+            if (onAWCReady !== undefined) {
+              onAWCReady(awc);
+            }
         }
     }
 }, false);
@@ -70,6 +91,7 @@ window.addEventListener('message', function(event) {
       message: WebMessage(data: 'capturePort', ports: [port2]),
       targetOrigin: WebUri('*'),
     );
+    _isMessageChannelReady = true;
     return port1;
   }
 }

@@ -1,13 +1,22 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'dart:io';
+
 import 'package:aewallet/infrastructure/rpc/awc_webview.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class DEXSheet extends ConsumerStatefulWidget {
   const DEXSheet({
     super.key,
   });
+
+  static bool get isAvailable => AWCWebview.isAvailable;
 
   static const String routerPage = '/dex';
 
@@ -16,54 +25,35 @@ class DEXSheet extends ConsumerStatefulWidget {
 }
 
 class DEXSheetState extends ConsumerState<DEXSheet> {
-  // late WebViewController? _webViewController;
-
   @override
   void initState() {
-//     _webViewController = WebViewController()
-//       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-//       ..setBackgroundColor(const Color(0x00000000))
-//       ..addJavaScriptChannel(
-//         'awc',
-//         onMessageReceived: (JavaScriptMessage message) async {
-//           print('message ${message.message}');
-//           await _webViewController!
-//               .runJavaScript("window.postMessage('toto', '*');");
-//           await _webViewController!
-//               .runJavaScript("window.postMessage('toto', '*');");
-
-//           await _webViewController!.runJavaScript('''
-// const event = new CustomEvent("myCustomEvent", {
-//     detail: {foo: 1, bar: false}
-// });
-// window.dispatchEvent(event);''');
-//         },
-//       )
-//       ..setNavigationDelegate(
-//         NavigationDelegate(
-//           onProgress: (int progress) {
-//             // Update loading bar.
-//           },
-//           onPageStarted: (String url) {},
-//           onPageFinished: (String url) {},
-//           onWebResourceError: (WebResourceError error) {
-//             log('$error');
-//           },
-//           onNavigationRequest: (NavigationRequest request) {
-//             return NavigationDecision.navigate;
-//           },
-//         ),
-//       )
-//       ..loadRequest(Uri.parse('http://localhost:59295/swap'));
+    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
+      InAppWebViewController.setWebContentsDebuggingEnabled(true);
+    }
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: AWCWebview(
-        uri: Uri.parse('http://localhost:8080'),
+    return Scaffold(
+      appBar: SheetAppBar(
+        title: 'Dex',
+        widgetLeft: BackButton(
+          key: const Key('back'),
+          color: ArchethicTheme.text,
+          onPressed: () {
+            context.pop();
+          },
+        ),
+      ),
+      body: SafeArea(
+        child: AWCWebview(
+          uri: Uri.parse(
+              Platform.isAndroid // TODO(Reddwarf03) : Use production dex URI
+                  ? 'http://10.0.2.2:8080'
+                  : 'http://localhost:8080'),
+        ),
       ),
     );
   }
