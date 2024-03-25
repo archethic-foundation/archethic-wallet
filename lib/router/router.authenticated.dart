@@ -485,60 +485,6 @@ final _authenticatedRoutes = [
     ),
   ),
   GoRoute(
-    path: AddServiceConfirmationForm.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
-      key: state.pageKey,
-      child: AddServiceConfirmationForm(
-        (state.extra! as Map<String, dynamic>)['serviceName']! as String,
-        (state.extra! as Map<String, dynamic>)['command']!
-            as RPCCommand<RPCSendTransactionCommandData>,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
-    ),
-  ),
-  GoRoute(
-    path: SendTransactionConfirmationForm.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
-      key: state.pageKey,
-      child: SendTransactionConfirmationForm(
-        (state.extra! as Map<String, dynamic>)['command']!
-            as RPCCommand<RPCSendTransactionCommandData>,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
-    ),
-  ),
-  GoRoute(
-    path: SignTransactionsConfirmationForm.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
-      key: state.pageKey,
-      child: SignTransactionsConfirmationForm(
-        (state.extra! as Map<String, dynamic>)['addresses']! as List<String?>,
-        (state.extra! as Map<String, dynamic>)['command']!
-            as RPCCommand<RPCSignTransactionsCommandData>,
-        (state.extra! as Map<String, dynamic>)['estimatedFees']! as double,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
-    ),
-  ),
-  GoRoute(
     path: UpdateDiscussionAddMembers.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
       transitionDuration: Duration.zero,
