@@ -3,7 +3,7 @@ description: Fully decentralized and cryptocurrency non-custodial hot wallet tha
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 2.3.6+512
+version: 2.3.7+515
 
 environment:
   sdk: ">=3.3.0 <4.0.0"
@@ -16,13 +16,13 @@ dependencies:
   # Retrieve version and url for local app update against store app Android and iOS
   app_version_update: ^4.0.1
 
-  #archethic_dapp_framework_flutter: ^0.0.0
+  archethic_dapp_framework_flutter: ^0.0.0
   #archethic_dapp_framework_flutter:
   #  git:
   #    url: https://github.com/archethic-foundation/archethic-dapp-framework-flutter.git
   #    ref: main
-  archethic_dapp_framework_flutter:
-    path: ../archethic-dapp-framework-flutter
+  #archethic_dapp_framework_flutter:
+  #  path: ../archethic-dapp-framework-flutter
 
   # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
   archethic_lib_dart: ^3.3.0
