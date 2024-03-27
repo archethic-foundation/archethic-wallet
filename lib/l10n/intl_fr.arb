@@ -490,5 +490,7 @@
     "balance": "Balance",
     "executionSC": "Execution Smart-contract",
     "seedHex": "Voir en hexadécimal",
-    "burnAddressLbl": "Burn address"
+    "burnAddressLbl": "Burn address",
+    "webChannelIncompatibilityWarning": "Système non compatible",
+    "webChannelIncompatibilityWarningDesc": "Votre système ne supporte pas les MessageChannels."
 }

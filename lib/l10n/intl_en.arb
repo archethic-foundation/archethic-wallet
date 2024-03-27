@@ -515,5 +515,7 @@
     "balance": "Balance",
     "executionSC": "Smart-contract execution",
     "seedHex": "View in Hexadecimal",
-    "burnAddressLbl": "Burn address"
+    "burnAddressLbl": "Burn address",
+    "webChannelIncompatibilityWarning": "Unsupported operating system",
+    "webChannelIncompatibilityWarningDesc": "Your operating system Webview does not support required MessageChannel feature."
 }

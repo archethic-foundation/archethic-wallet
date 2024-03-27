@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:aewallet/infrastructure/rpc/awc_json_rpc_server.dart';
@@ -10,9 +11,18 @@ import 'package:stream_channel/stream_channel.dart';
 class AWCWebview extends StatefulWidget {
   const AWCWebview({super.key, required this.uri});
 
+  static const _logName = 'AWCWebview';
+
   static bool get isAvailable => Platform.isAndroid || Platform.isIOS;
 
   final Uri uri;
+
+  static Future<bool> get isAWCSupported async {
+    return defaultTargetPlatform != TargetPlatform.android ||
+        await WebViewFeature.isFeatureSupported(
+          WebViewFeature.CREATE_WEB_MESSAGE_CHANNEL,
+        );
+  }
 
   @override
   State<AWCWebview> createState() => _AWCWebviewState();
@@ -21,6 +31,17 @@ class AWCWebview extends StatefulWidget {
 class _AWCWebviewState extends State<AWCWebview> {
   AWCJsonRPCServer? peerServer;
   bool _isMessageChannelReady = false;
+
+  @override
+  void initState() {
+    if (kDebugMode &&
+        !kIsWeb &&
+        defaultTargetPlatform == TargetPlatform.android) {
+      InAppWebViewController.setWebContentsDebuggingEnabled(true);
+    }
+
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -51,7 +72,10 @@ class _AWCWebviewState extends State<AWCWebview> {
     WebUri? uri,
   ) async {
     if (_isMessageChannelReady) return;
-    if (!await _isMessageChannelSupported) return;
+    if (!await AWCWebview.isAWCSupported) {
+      log('AWC unsupported.', name: AWCWebview._logName);
+      return;
+    }
 
     final port1 = await _initMessageChannelPorts(controller);
 
@@ -59,12 +83,6 @@ class _AWCWebviewState extends State<AWCWebview> {
     peerServer = AWCJsonRPCServer(channel.cast<String>());
     await peerServer?.listen();
   }
-
-  Future<bool> get _isMessageChannelSupported async =>
-      defaultTargetPlatform != TargetPlatform.android ||
-      await WebViewFeature.isFeatureSupported(
-        WebViewFeature.CREATE_WEB_MESSAGE_CHANNEL,
-      );
 
   Future<WebMessagePort> _initMessageChannelPorts(
     InAppWebViewController controller,
