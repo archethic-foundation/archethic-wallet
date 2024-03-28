@@ -32,7 +32,7 @@ class IconNetworkWarning extends ConsumerWidget {
                 FeedbackType.light,
                 preferences.activeVibrations,
               );
-          context.go(ConnectivityWarning.routerPage);
+          context.push(ConnectivityWarning.routerPage);
         },
       ),
     );
