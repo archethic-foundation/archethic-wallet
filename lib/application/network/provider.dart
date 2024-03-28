@@ -49,16 +49,25 @@ Future<bool> _isReservedNodeUri(
   if (DefaultNetworksHost.archethicTestNetHost.value == uri.host) return true;
 
   // Check if reserved nodes of network is used
-  final nodeListMain = await ref.watch(
-    _networkNodesProvider(
-      network: AvailableNetworks.archethicMainNet,
-    ).future,
-  );
-  final nodeListTest = await ref.watch(
-    _networkNodesProvider(
-      network: AvailableNetworks.archethicTestNet,
-    ).future,
-  );
+  var nodeListMain = <Node>[];
+  try {
+    nodeListMain = await ref.watch(
+      _networkNodesProvider(
+        network: AvailableNetworks.archethicMainNet,
+      ).future,
+    );
+    // ignore: empty_catches
+  } catch (e) {}
+
+  var nodeListTest = <Node>[];
+  try {
+    nodeListTest = await ref.watch(
+      _networkNodesProvider(
+        network: AvailableNetworks.archethicTestNet,
+      ).future,
+    );
+    // ignore: empty_catches
+  } catch (e) {}
 
   return nodeListMain.followedBy(nodeListTest).any(
         (node) => node.ip == uri.host && node.port == uri.port,
