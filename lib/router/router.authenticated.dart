@@ -204,6 +204,18 @@ final _authenticatedRoutes = [
           FadeTransition(opacity: animation, child: child),
     ),
   ),
+  // TODO(redDwarf03): WebView POC - To remove
+  GoRoute(
+    path: DEXSheet.routerPage,
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
+      key: state.pageKey,
+      child: const DEXSheet(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
+  ),
   GoRoute(
     path: ContactDetail.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
@@ -465,60 +477,6 @@ final _authenticatedRoutes = [
       key: state.pageKey,
       child: AddDiscussionSheet(
         discussion: state.extra! as Discussion,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
-    ),
-  ),
-  GoRoute(
-    path: AddServiceConfirmationForm.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
-      key: state.pageKey,
-      child: AddServiceConfirmationForm(
-        (state.extra! as Map<String, dynamic>)['serviceName']! as String,
-        (state.extra! as Map<String, dynamic>)['command']!
-            as RPCCommand<RPCSendTransactionCommandData>,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
-    ),
-  ),
-  GoRoute(
-    path: SendTransactionConfirmationForm.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
-      key: state.pageKey,
-      child: SendTransactionConfirmationForm(
-        (state.extra! as Map<String, dynamic>)['command']!
-            as RPCCommand<RPCSendTransactionCommandData>,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
-    ),
-  ),
-  GoRoute(
-    path: SignTransactionsConfirmationForm.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
-      key: state.pageKey,
-      child: SignTransactionsConfirmationForm(
-        (state.extra! as Map<String, dynamic>)['addresses']! as List<String?>,
-        (state.extra! as Map<String, dynamic>)['command']!
-            as RPCCommand<RPCSignTransactionsCommandData>,
-        (state.extra! as Map<String, dynamic>)['estimatedFees']! as double,
       ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
           FadeTransition(

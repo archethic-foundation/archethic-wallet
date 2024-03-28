@@ -3,7 +3,7 @@ description: Fully decentralized and cryptocurrency non-custodial hot wallet tha
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 2.3.6+512
+version: 2.3.7+515
 
 environment:
   sdk: ">=3.3.0 <4.0.0"
@@ -112,6 +112,9 @@ dependencies:
 
   # A flutter implementation of React hooks. It adds a new kind of widget with enhanced code reuse
   flutter_hooks: ^0.20.0
+
+  # A WebView
+  flutter_inappwebview: ^6.0.0
 
   # Flutter jailbreak and root detection plugin. This plugin wraps Rootbeer for use on Android and DTTJailbreakDetection for use on iOS.
   flutter_jailbreak_detection: ^1.10.0
@@ -236,6 +239,8 @@ dependencies:
   # Dartlang port of socket.io-client for web, flutter, dartvm to use
   socket_io_client: ^2.0.3+1
 
+  stream_channel: any
+
   # Lock mechanism to prevent concurrent access to asynchronous code.
   synchronized: ^3.1.0
 
@@ -256,6 +261,8 @@ dependencies:
 
   # RPC server
   web_socket_channel: ^2.4.3
+
+  webview_flutter: ^4.7.0
 
   # This plugin allows Flutter desktop apps to resizing and repositioning the window.
   window_manager: ^0.3.8
@@ -318,6 +325,7 @@ flutter:
 
   assets:
     - assets/ssl/isrg-root-x1.pem
+    - assets/ssl/r3.pem
     - assets/icons/
     - assets/icons/currency/
     - assets/icons/languages/

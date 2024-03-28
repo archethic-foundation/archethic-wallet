@@ -21,7 +21,6 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class AddServiceConfirmationForm extends ConsumerWidget
@@ -34,8 +33,6 @@ class AddServiceConfirmationForm extends ConsumerWidget
 
   final RPCCommand<RPCSendTransactionCommandData> command;
   final String serviceName;
-
-  static const String routerPage = '/add_service_confirmation';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -56,7 +53,7 @@ class AddServiceConfirmationForm extends ConsumerWidget
           localizations.cancel,
           Dimens.buttonBottomDimens,
           onPressed: () {
-            context.pop(
+            Navigator.of(context).pop(
               const Result<TransactionConfirmation, TransactionError>.failure(
                 TransactionError.userRejected(),
               ),
@@ -100,7 +97,7 @@ class AddServiceConfirmationForm extends ConsumerWidget
               },
             );
 
-            context
+            Navigator.of(context)
               ..pop() // Hide SendingAnimation
               ..pop(result);
           },

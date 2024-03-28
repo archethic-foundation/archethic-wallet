@@ -96,6 +96,10 @@ Future<void> main() async {
     SecurityContext.defaultContext.setTrustedCertificatesBytes(
       x1cert.buffer.asUint8List(),
     );
+    final r3cert = await rootBundle.load('assets/ssl/r3.pem');
+    SecurityContext.defaultContext.setTrustedCertificatesBytes(
+      r3cert.buffer.asUint8List(),
+    );
   }
 
   // Run app

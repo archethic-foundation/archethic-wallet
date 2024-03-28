@@ -14,7 +14,6 @@ import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 class SignTransactionsConfirmationForm extends ConsumerWidget
     implements SheetSkeletonInterface {
@@ -28,8 +27,6 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
   final RPCCommand<RPCSignTransactionsCommandData> command;
   final double estimatedFees;
   final List<String?> addresses;
-
-  static const String routerPage = '/sign_transaction_confirmation';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -50,7 +47,7 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
           localizations.cancel,
           Dimens.buttonBottomDimens,
           onPressed: () {
-            context.pop(false);
+            Navigator.of(context).pop(false);
           },
         ),
         AppButtonTiny(
@@ -58,7 +55,7 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
           localizations.confirm,
           Dimens.buttonBottomDimens,
           onPressed: () {
-            context.pop(true);
+            Navigator.of(context).pop(true);
           },
         ),
       ],
