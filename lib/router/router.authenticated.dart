@@ -204,7 +204,6 @@ final _authenticatedRoutes = [
           FadeTransition(opacity: animation, child: child),
     ),
   ),
-  // TODO(redDwarf03): WebView POC - To remove
   GoRoute(
     path: DEXSheet.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
