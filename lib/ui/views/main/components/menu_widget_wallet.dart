@@ -7,6 +7,7 @@ import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/refresh_in_progress.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/verified_tokens.dart';
+import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
@@ -210,8 +211,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                       .scale(duration: const Duration(milliseconds: 350)),
                 ],
               ),
-            // TODO(redDwarf03): WebView POC - To remove
-            if (DEXSheet.isAvailable)
+            if (FeatureFlags.dexActive && DEXSheet.isAvailable)
               _ActionButton(
                 text: 'DEX',
                 icon: Symbols.wallet,
@@ -225,7 +225,7 @@ class MenuWidgetWallet extends ConsumerWidget {
               )
                   .animate()
                   .fade(duration: const Duration(milliseconds: 400))
-                  .scale(duration: const Duration(milliseconds: 400))
+                  .scale(duration: const Duration(milliseconds: 400)),
           ],
         ),
       ),
