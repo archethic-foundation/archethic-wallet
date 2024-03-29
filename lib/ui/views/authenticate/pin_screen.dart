@@ -511,9 +511,22 @@ class _PinScreenState extends ConsumerState<PinScreen>
       onKeyEvent: (KeyEvent event) {
         if (event is KeyDownEvent) {
           final logicalKey = event.logicalKey;
-          if (logicalKey.keyLabel.isNotEmpty &&
-              '0123456789'.contains(logicalKey.keyLabel)) {
-            _setCharacter(logicalKey.keyLabel);
+
+          var keyLabel = '';
+          if (logicalKey.keyLabel == '' &&
+              logicalKey.debugName != null &&
+              logicalKey.debugName!.startsWith('Digit')) {
+            keyLabel = logicalKey.debugName!.substring(5);
+          } else if (logicalKey.keyId >= LogicalKeyboardKey.numpad0.keyId &&
+              logicalKey.keyId <= LogicalKeyboardKey.numpad9.keyId) {
+            keyLabel = (logicalKey.keyId - LogicalKeyboardKey.numpad0.keyId)
+                .toString();
+          } else {
+            keyLabel = logicalKey.keyLabel;
+          }
+
+          if (keyLabel.isNotEmpty && '0123456789'.contains(keyLabel)) {
+            _setCharacter(keyLabel);
             if (allExpectedCharactersEntered) {
               // Mild delay so they can actually see the last dot get filled
               Future<void>.delayed(
