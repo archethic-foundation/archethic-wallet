@@ -438,7 +438,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
                               SizedBox(
                                 height: 17,
                                 child: AutoSizeText(
-                                  '${widget.account.balance!.nativeTokenValueToString(language.getLocaleStringWithoutDefault(), digits: 2)} ${widget.account.balance!.nativeTokenName}',
+                                  '${widget.account.balance!.nativeTokenValueToString(language.getLocaleStringWithoutDefault(), digits: widget.account.balance!.nativeTokenValue < 1 ? 8 : 2)} ${widget.account.balance!.nativeTokenName}',
                                   style: ArchethicThemeStyles
                                       .textStyleSize12W100Primary,
                                   textAlign: TextAlign.end,
@@ -470,7 +470,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
                                     .textStyleSize12W100Primary,
                               ),
                               AutoSizeText(
-                                '${widget.account.balance!.nativeTokenValueToString(language.getLocaleStringWithoutDefault(), digits: 2)} ${widget.account.balance!.nativeTokenName}',
+                                '${widget.account.balance!.nativeTokenValueToString(language.getLocaleStringWithoutDefault(), digits: widget.account.balance!.nativeTokenValue < 1 ? 8 : 2)} ${widget.account.balance!.nativeTokenName}',
                                 style: ArchethicThemeStyles
                                     .textStyleSize12W100Primary,
                                 textAlign: TextAlign.end,

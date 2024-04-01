@@ -190,7 +190,7 @@ class _BalanceIndicatorNative extends ConsumerWidget {
         '${NumberUtil.formatThousandsStr(
           accountSelectedBalance.nativeTokenValueToString(
             language.getLocaleStringWithoutDefault(),
-            digits: 2,
+            digits: accountSelectedBalance.nativeTokenValue < 1 ? 8 : 2,
           ),
         )} ${accountSelectedBalance.nativeTokenName}',
         style: ArchethicThemeStyles.textStyleSize14W200Primary,
