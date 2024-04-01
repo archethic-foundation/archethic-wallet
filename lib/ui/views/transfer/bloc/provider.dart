@@ -451,20 +451,37 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       case AvailablePrimaryCurrencyEnum.fiat:
         var amountMax = 0.0;
         if (tokenPrice != null) {
-          amountMax = (balance.nativeTokenValue - fees) * tokenPrice;
+          amountMax = (balance.nativeTokenValue > fees
+                  ? balance.nativeTokenValue - fees
+                  : 0) *
+              tokenPrice;
           state = state.copyWith(
             amount: amountMax,
-            amountConverted: balance.nativeTokenValue - fees,
+            amountConverted: balance.nativeTokenValue > fees
+                ? balance.nativeTokenValue - fees
+                : 0,
             feeEstimation: AsyncValue.data(fees),
-            errorAmountText: '',
+            errorAmountText: balance.nativeTokenValue > fees
+                ? ''
+                : AppLocalizations.of(context)!.insufficientBalance.replaceAll(
+                      '%1',
+                      state.symbol(context),
+                    ),
           );
         }
         break;
       case AvailablePrimaryCurrencyEnum.native:
         state = state.copyWith(
-          amount: balance.nativeTokenValue - fees,
+          amount: balance.nativeTokenValue > fees
+              ? balance.nativeTokenValue - fees
+              : 0,
           feeEstimation: AsyncValue.data(fees),
-          errorAmountText: '',
+          errorAmountText: balance.nativeTokenValue > fees
+              ? ''
+              : AppLocalizations.of(context)!.insufficientBalance.replaceAll(
+                    '%1',
+                    state.symbol(context),
+                  ),
         );
         break;
     }
