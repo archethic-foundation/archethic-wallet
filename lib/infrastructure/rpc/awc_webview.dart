@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:aewallet/infrastructure/rpc/awc_json_rpc_server.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:stream_channel/stream_channel.dart';
 
@@ -50,21 +50,27 @@ class _AWCWebviewState extends State<AWCWebview> {
   }
 
   @override
-  Widget build(BuildContext context) => InAppWebView(
-        onLoadStop: (controller, url) async {
-          await _initMessageChannelRPC(controller, url);
-        },
-        onWebViewCreated: (controller) async {
-          await controller.loadUrl(
-            urlRequest: URLRequest(url: WebUri.uri(widget.uri)),
-          );
-        },
-        onReceivedServerTrustAuthRequest: (controller, challenge) async {
-          // TODO(reddwarf03): WARNING: Accepting all certificates is dangerous and should only be used during development.
-          return ServerTrustAuthResponse(
-            action: ServerTrustAuthResponseAction.PROCEED,
-          );
-        },
+  Widget build(BuildContext context) => ColoredBox(
+        color: Colors.black,
+        child: InAppWebView(
+          initialSettings: InAppWebViewSettings(
+            transparentBackground: true,
+          ),
+          onLoadStop: (controller, url) async {
+            await _initMessageChannelRPC(controller, url);
+          },
+          onWebViewCreated: (controller) async {
+            await controller.loadUrl(
+              urlRequest: URLRequest(url: WebUri.uri(widget.uri)),
+            );
+          },
+          onReceivedServerTrustAuthRequest: (controller, challenge) async {
+            // TODO(reddwarf03): WARNING: Accepting all certificates is dangerous and should only be used during development.
+            return ServerTrustAuthResponse(
+              action: ServerTrustAuthResponseAction.PROCEED,
+            );
+          },
+        ),
       );
 
   Future<void> _initMessageChannelRPC(
