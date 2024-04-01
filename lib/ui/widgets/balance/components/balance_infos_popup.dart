@@ -3,12 +3,14 @@
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/util/currency_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -34,6 +36,9 @@ class BalanceInfosPopup {
           ),
         )
         .valueOrNull;
+    final currency = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.currency),
+    );
     if (fiatBalance == null) return const SizedBox();
 
     return showMenu(
@@ -56,49 +61,55 @@ class BalanceInfosPopup {
           primaryCurrency.primaryCurrency == AvailablePrimaryCurrencyEnum.native
               ? [
                   _popupMenuItem(
-                    accountSelectedBalance,
                     context,
                     ref,
                     '1',
                     accountSelectedBalance.nativeTokenValueToString(
                       language.getLocaleStringWithoutDefault(),
                     ),
+                    ' ${accountSelectedBalance.nativeTokenName}',
                   ),
                   _popupMenuItem(
-                    accountSelectedBalance,
                     context,
                     ref,
                     '2',
-                    fiatBalance.toString(),
+                    CurrencyUtil.format(
+                      currency.name,
+                      fiatBalance,
+                    ),
+                    '',
                   ),
                 ]
               : [
                   _popupMenuItem(
-                    accountSelectedBalance,
                     context,
                     ref,
                     '2',
-                    fiatBalance.toString(),
+                    CurrencyUtil.format(
+                      currency.name,
+                      fiatBalance,
+                    ),
+                    '',
                   ),
                   _popupMenuItem(
-                    accountSelectedBalance,
                     context,
                     ref,
                     '1',
                     accountSelectedBalance.nativeTokenValueToString(
                       language.getLocaleStringWithoutDefault(),
                     ),
+                    ' ${accountSelectedBalance.nativeTokenName}',
                   ),
                 ],
     );
   }
 
   static PopupMenuItem _popupMenuItem(
-    AccountBalance accountSelectedBalance,
     BuildContext context,
     WidgetRef ref,
     String id,
     String value,
+    String suffixe,
   ) {
     return PopupMenuItem(
       value: id,
@@ -126,7 +137,7 @@ class BalanceInfosPopup {
                 width: 5,
               ),
               Text(
-                value,
+                value + suffixe,
                 style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
             ],
