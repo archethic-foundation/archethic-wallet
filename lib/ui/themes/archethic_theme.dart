@@ -97,6 +97,8 @@ class ArchethicTheme {
   static String backgroundSmall = 'assets/themes/archethic/main-background.png';
   static String backgroundWelcome =
       'assets/themes/archethic/background_welcome.png';
+  static String backgroundAESwap =
+      'assets/themes/archethic/background_aeSwap.png';
 
   // Animation Overlay
   static Color animationOverlayMedium =

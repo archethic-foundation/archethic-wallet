@@ -74,6 +74,36 @@ class MainMenuView extends ConsumerWidget {
                         icon: Symbols.tune,
                         onPressed: showCustom,
                       ),
+                      if (connectivityStatusProvider ==
+                              ConnectivityStatus.isConnected &&
+                          FeatureFlags.dexActive &&
+                          DEXSheet.isAvailable)
+                        const _SettingsListItem.spacer(),
+                      if (connectivityStatusProvider ==
+                              ConnectivityStatus.isConnected &&
+                          FeatureFlags.dexActive &&
+                          DEXSheet.isAvailable)
+                        _SettingsListItem.title(text: localizations.dapp),
+                      if (connectivityStatusProvider ==
+                              ConnectivityStatus.isConnected &&
+                          FeatureFlags.dexActive &&
+                          DEXSheet.isAvailable)
+                        const _SettingsListItem.spacer(),
+                      if (connectivityStatusProvider ==
+                              ConnectivityStatus.isConnected &&
+                          FeatureFlags.dexActive &&
+                          DEXSheet.isAvailable)
+                        _SettingsListItem.singleLineWithInfos(
+                          heading: localizations.aeSwapLinkHeader,
+                          info: localizations.aeSwapLinkDesc,
+                          icon: Symbols.swap_horiz_rounded,
+                          onPressed: () async {
+                            await context.push(
+                              DEXSheet.routerPage,
+                            );
+                          },
+                          background: ArchethicTheme.backgroundAESwap,
+                        ),
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.title(text: localizations.information),
                       const _SettingsListItem.spacer(),
