@@ -132,7 +132,7 @@ class _BalanceInfosNativeShowed extends ConsumerWidget {
         AutoSizeText(
           accountSelectedBalance.nativeTokenValueToString(
             language.getLocaleStringWithoutDefault(),
-            digits: 2,
+            digits: accountSelectedBalance.nativeTokenValue < 1 ? 8 : 2,
           ),
           style: ArchethicThemeStyles.textStyleSize25W900Primary,
         ),
@@ -187,7 +187,10 @@ class _BalanceInfosFiatShowed extends ConsumerWidget {
           style: ArchethicThemeStyles.textStyleSize25W900Primary,
         ),
         AutoSizeText(
-          '${accountSelectedBalance.nativeTokenValueToString(language.getLocaleStringWithoutDefault(), digits: 2)} ${accountSelectedBalance.nativeTokenName}',
+          '${accountSelectedBalance.nativeTokenValueToString(
+            language.getLocaleStringWithoutDefault(),
+            digits: accountSelectedBalance.nativeTokenValue < 1 ? 8 : 2,
+          )} ${accountSelectedBalance.nativeTokenName}',
           style: ArchethicThemeStyles.textStyleSize12W600Primary,
         ),
       ],

@@ -58,7 +58,7 @@ class SingleContactBalance extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     AutoSizeText(
-                      '${accountBalance.nativeTokenValueToString(language.getLocaleStringWithoutDefault(), digits: 2)} ${accountBalance.nativeTokenName}',
+                      '${accountBalance.nativeTokenValueToString(language.getLocaleStringWithoutDefault(), digits: accountBalance.nativeTokenValue < 1 ? 8 : 2)} ${accountBalance.nativeTokenName}',
                       style: ArchethicThemeStyles.textStyleSize12W100Primary,
                       textAlign: TextAlign.end,
                     ),
@@ -78,7 +78,7 @@ class SingleContactBalance extends ConsumerWidget {
                       style: ArchethicThemeStyles.textStyleSize12W100Primary,
                     ),
                     AutoSizeText(
-                      '${accountBalance.nativeTokenValueToString(language.getLocaleStringWithoutDefault(), digits: 2)} ${accountBalance.nativeTokenName}',
+                      '${accountBalance.nativeTokenValueToString(language.getLocaleStringWithoutDefault(), digits: accountBalance.nativeTokenValue < 1 ? 8 : 2)} ${accountBalance.nativeTokenName}',
                       style: ArchethicThemeStyles.textStyleSize12W100Primary,
                       textAlign: TextAlign.end,
                     ),
