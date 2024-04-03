@@ -5,7 +5,7 @@ fastlane beta
 # android
 flutter build apk --split-per-abi
 # web
-flutter build web --web-renderer canvaskit --release
+scripts/build_webapp.sh
 firebase deploy
 https://test-ae-wallet.web.app
 # macos
@@ -18,7 +18,7 @@ flutter pub run msix:create -c windows/certificates/archethic_wallet.pfx -p pass
 flutter pub run msix:create
 # https://www.advancedinstaller.com/install-test-certificate-from-msix.html
 # chrome extension
-flutter build web --web-renderer html --csp
+scripts/build_chrome_extension.sh
 # linux
 flutter build linux
 ## appimage
