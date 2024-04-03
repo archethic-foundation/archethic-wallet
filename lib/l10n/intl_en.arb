@@ -92,7 +92,7 @@
     "aboutPrivacyPolicy": "Privacy Policy",
     "aeWebsiteLinkHeader": "Archethic Website",
     "aeWebsiteLinkDesc": "Visit the Archethic website",
-    "aeSwapLinkHeader": "aeSwap",
+    "aeSwapLinkHeader": "aeSwap (beta)",
     "aeSwapLinkDesc": "Swap assets on-chain, add liquidity & access yield farming",
     "autoLockHeader": "Auto Lock",
     "xMinutes": "After %1 minutes",

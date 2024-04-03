@@ -3,7 +3,7 @@ description: Fully decentralized and cryptocurrency non-custodial hot wallet tha
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 2.3.7+515
+version: 2.3.7+517
 
 environment:
   sdk: ">=3.3.0 <4.0.0"
@@ -16,7 +16,7 @@ dependencies:
   # Retrieve version and url for local app update against store app Android and iOS
   app_version_update: ^4.0.1
 
-  archethic_dapp_framework_flutter: ^0.0.0
+  archethic_dapp_framework_flutter: ^1.0.0
   #archethic_dapp_framework_flutter:
   #  git:
   #    url: https://github.com/archethic-foundation/archethic-dapp-framework-flutter.git
@@ -239,6 +239,7 @@ dependencies:
   # Dartlang port of socket.io-client for web, flutter, dartvm to use
   socket_io_client: ^2.0.3+1
 
+  # An abstraction for two-way communication channels based on the Dart Stream class.
   stream_channel: any
 
   # Lock mechanism to prevent concurrent access to asynchronous code.
@@ -262,6 +263,7 @@ dependencies:
   # RPC server
   web_socket_channel: ^2.4.3
 
+  # A Flutter plugin that provides a WebView widget on Android and iOS
   webview_flutter: ^4.7.0
 
   # This plugin allows Flutter desktop apps to resizing and repositioning the window.
