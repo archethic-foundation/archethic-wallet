@@ -38,7 +38,7 @@ class DEXSheet extends ConsumerWidget implements SheetSkeletonInterface {
       title: const Column(
         children: [
           Text(
-            'aeSwap',
+            'aeSwap (beta)',
             style: TextStyle(
               fontSize: 20,
             ),
