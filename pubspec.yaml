@@ -349,6 +349,7 @@ flutter:
     - lib/model/json-schemas/nft/opensea.json
     - lib/model/json-schemas/nft/archethic.json
     - lib/domain/repositories/tokens/verified_tokens.json
+    - lib/domain/repositories/dapps/dapps.json
 
   fonts:
     - family: Roboto
