@@ -30,10 +30,10 @@ class SettingsNotifier extends StateNotifier<Settings> {
   Future<void> reset() => _update(
         state.copyWith(
           activeNotifications: !kIsWeb &&
-              (Platform.isIOS == true ||
-                  Platform.isAndroid == true ||
-                  Platform.isLinux == true ||
-                  Platform.isMacOS == true),
+              (Platform.isIOS ||
+                  Platform.isAndroid ||
+                  Platform.isLinux ||
+                  Platform.isMacOS),
           activeVibrations: true,
           activeRPCServer: true,
           currency: AvailableCurrencyEnum.usd,

@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:aewallet/application/settings/language.dart';
 
+import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -21,10 +21,10 @@ class SecurityManager {
   SecurityManager._internal();
 
   bool _checkPlatform() {
-    if (kIsWeb == true) {
+    if (kIsWeb) {
       return false;
     }
-    if (Platform.isIOS == false && Platform.isAndroid == false) {
+    if (!Platform.isIOS && !Platform.isAndroid) {
       return false;
     }
     return true;
