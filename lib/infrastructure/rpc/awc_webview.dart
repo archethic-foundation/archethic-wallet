@@ -13,7 +13,8 @@ class AWCWebview extends StatefulWidget {
 
   static const _logName = 'AWCWebview';
 
-  static bool get isAvailable => Platform.isAndroid || Platform.isIOS;
+  static bool get isAvailable =>
+      !kIsWeb && (Platform.isAndroid || Platform.isIOS);
 
   final Uri uri;
 
@@ -140,7 +141,7 @@ class WebMessagePortStreamChannel
     });
   }
 
-  final WebMessagePort port;
+  final IWebMessagePort port;
   final _in = StreamController<String>(sync: true);
   final _out = StreamController<String>(sync: true);
 
