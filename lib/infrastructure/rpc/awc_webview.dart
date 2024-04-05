@@ -86,7 +86,7 @@ class _AWCWebviewState extends State<AWCWebview> {
 
     final port1 = await _initMessageChannelPorts(controller);
 
-    final channel = WebMessagePortStreamChannel(port: port1);
+    final channel = WebviewMessagePortStreamChannel(port: port1);
     peerServer = AWCJsonRPCServer(channel.cast<String>());
     await peerServer?.listen();
   }
@@ -127,10 +127,12 @@ window.addEventListener('message', function(event) {
   }
 }
 
-class WebMessagePortStreamChannel
+class WebviewMessagePortStreamChannel
     with StreamChannelMixin<String>
     implements StreamChannel<String> {
-  WebMessagePortStreamChannel({required this.port}) {
+  WebviewMessagePortStreamChannel({required this.port}) {
+    print('Wallet Init WebMessage PortStreamchannel');
+
     port.setWebMessageCallback((message) {
       if (message == null) return;
       _in.add(message.data);

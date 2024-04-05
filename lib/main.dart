@@ -15,6 +15,7 @@ import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/domain/repositories/settings.dart';
 import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
+import 'package:aewallet/infrastructure/rpc/browser_extension_aws.dart';
 import 'package:aewallet/infrastructure/rpc/websocket_server.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/appdb.dart';
@@ -52,6 +53,12 @@ Future<void> main() async {
   final rpcWebsocketServer = sl.get<ArchethicWebsocketRPCServer>();
   if (isRpcEnabled && ArchethicWebsocketRPCServer.isPlatformCompatible) {
     rpcWebsocketServer.run();
+  }
+
+  print('Is Browser extension compatible ?');
+  if (BrowserExtensionAWS.isPlatformCompatible) {
+    print('yes');
+    BrowserExtensionAWS().run();
   }
 
   if (!kIsWeb && (Platform.isLinux || Platform.isMacOS || Platform.isWindows)) {

@@ -174,6 +174,9 @@ dependencies:
   # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
   intl: ^0.18.1
 
+  # Annotations to create static Dart interfaces for JavaScript APIs.
+  js: ^0.6.7
+
   # Utilities to write a client or server using the JSON-RPC 2.0 spec.
   json_rpc_2: ^3.0.2
 

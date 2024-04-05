@@ -9,7 +9,7 @@ import 'package:web_socket_channel/io.dart';
 class ArchethicWebsocketRPCServer {
   ArchethicWebsocketRPCServer();
 
-  static const logName = 'RPC Server';
+  static const logName = 'Websocket RPC Server';
   static const host = '127.0.0.1';
   static const port = 12345;
 
@@ -39,7 +39,7 @@ class ArchethicWebsocketRPCServer {
         );
 
         httpServer.listen((HttpRequest request) async {
-          log('Received request', name: logName);
+          log('Received connection', name: logName);
 
           final socket = await WebSocketTransformer.upgrade(request);
           final channel = IOWebSocketChannel(socket);
