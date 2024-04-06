@@ -22,7 +22,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["script.js"],
+      "resources": ["awc.js"],
       "matches": ["<all_urls>"]
     }
   ],
