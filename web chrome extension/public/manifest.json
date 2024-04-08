@@ -22,7 +22,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["awc.js"],
+      "resources": ["archethic.js"],
       "matches": ["<all_urls>"]
     }
   ],

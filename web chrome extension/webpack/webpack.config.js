@@ -3,7 +3,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 module.exports = {
     mode: "production",
     entry: {
-        awc: path.resolve(__dirname, "..", "src", "awc.ts"),
+        archethic: path.resolve(__dirname, "..", "src", "archethic.ts"),
         background: path.resolve(__dirname, "..", "src", "background.js"),
         content: path.resolve(__dirname, "..", "src", "content.js"),
     },
