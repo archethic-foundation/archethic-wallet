@@ -10,4 +10,6 @@ class BrowserExtensionAWS {
   static bool get isPlatformCompatible => false;
 
   Future<void> run() async {}
+
+  void stop() {}
 }

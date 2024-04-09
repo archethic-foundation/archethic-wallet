@@ -4,7 +4,7 @@ module.exports = {
     mode: "production",
     entry: {
         archethic: path.resolve(__dirname, "..", "src", "archethic.ts"),
-        background: path.resolve(__dirname, "..", "src", "background.js"),
+        background: path.resolve(__dirname, "..", "src", "background.ts"),
         content: path.resolve(__dirname, "..", "src", "content.js"),
     },
     devtool: 'inline-source-map',
