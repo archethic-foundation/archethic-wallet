@@ -11,6 +11,7 @@ class BrowserExtensionAWS {
 
   static bool get isPlatformCompatible => isWebBrowserExtension;
 
+  BrowserExtensionPort? _port;
   AWCJsonRPCServer? _peerServer;
   bool get isRunning => _peerServer != null;
 
@@ -28,6 +29,7 @@ class BrowserExtensionAWS {
         print('[AWCBrowserExtension] Connected to web background service');
         final channel = BrowserExtensionMessagePortStreamChannel(port: port);
         _peerServer = AWCJsonRPCServer(channel.cast<String>());
+        _port = port;
         await _peerServer?.listen();
       },
       (error, stack) {
@@ -36,6 +38,11 @@ class BrowserExtensionAWS {
         );
       },
     );
+  }
+
+  void stop() {
+    _port?.disconnect();
+    _peerServer?.close();
   }
 }
 
