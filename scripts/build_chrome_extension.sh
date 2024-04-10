@@ -5,6 +5,6 @@ realpath() {
 FULL_PATH_TO_SCRIPT="$(realpath "$0")"
 SCRIPT_DIRECTORY="$(dirname "$FULL_PATH_TO_SCRIPT")"
 
-cd "$SCRIPT_DIRECTORY/../web chrome extension" && npm run clean && npm run build && cd -
+cd "$SCRIPT_DIRECTORY/../web_chrome_extension" && npm run clean && npm run build && cd -
 
-. "$SCRIPT_DIRECTORY/lib/build_web.sh" "web chrome extension/dist" "build/chrome-extension" "flutter build web --web-renderer html --csp"
+. "$SCRIPT_DIRECTORY/lib/build_web.sh" "web_chrome_extension/dist" "build/chrome-extension" "flutter build web --web-renderer html --csp"
