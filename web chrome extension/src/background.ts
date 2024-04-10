@@ -149,6 +149,10 @@ class ExtensionPortResolver {
 
         if (this.#extensionWindow !== null) {
             console.log('Extension popup already exists.')
+            chrome.windows.update(
+                this.#extensionWindow.id!,
+                { focused: true },
+            )
             return
         }
 
@@ -164,6 +168,7 @@ class ExtensionPortResolver {
             this.#extensionWindow = window
         });
         chrome.windows.onRemoved.addListener((windowId) => {
+            console.log('Extension popup closed')
             if (this.#extensionWindow?.id === windowId) {
                 this.#extensionWindow = null;
             }
