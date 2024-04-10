@@ -5,4 +5,4 @@ realpath() {
 FULL_PATH_TO_SCRIPT="$(realpath "$0")"
 SCRIPT_DIRECTORY="$(dirname "$FULL_PATH_TO_SCRIPT")"
 
-. "$SCRIPT_DIRECTORY/lib/build_web.sh" "web browser" "build/webapp" "flutter build web --web-renderer canvaskit --release"
+. "$SCRIPT_DIRECTORY/lib/build_web.sh" "web_browser" "build/webapp" "flutter build web --web-renderer canvaskit --release"
