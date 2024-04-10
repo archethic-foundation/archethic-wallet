@@ -92,9 +92,11 @@ Future<void> main() async {
   }
 
   // Run app
-  await SystemChrome.setPreferredOrientations(
-    <DeviceOrientation>[DeviceOrientation.portraitUp],
-  );
+  if (!kIsWeb) {
+    await SystemChrome.setPreferredOrientations(
+      <DeviceOrientation>[DeviceOrientation.portraitUp],
+    );
+  }
 
   runApp(
     ProviderScope(
