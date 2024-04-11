@@ -20,6 +20,12 @@ extension TransactionErrorLocalizedExt on TransactionError {
           '%1',
           error.accountName,
         ),
+        rpcError: (error) => localization.rpcError
+            .replaceFirst('%1', error.code.toString())
+            .replaceFirst(
+              '%2',
+              '${error.message} ${error.data ?? ''}',
+            ),
         other: (_) => localization.genericError,
       );
 }

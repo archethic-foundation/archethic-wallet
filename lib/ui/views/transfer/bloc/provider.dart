@@ -717,7 +717,8 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     var amountInUCO = state.amount;
     final primaryCurrency =
         ref.read(PrimaryCurrencyProviders.selectedPrimaryCurrency);
-    if (primaryCurrency.primaryCurrency == AvailablePrimaryCurrencyEnum.fiat) {
+    if (primaryCurrency.primaryCurrency == AvailablePrimaryCurrencyEnum.fiat &&
+        state.transferType == TransferType.uco) {
       amountInUCO = state.amountConverted;
     }
 
@@ -853,11 +854,25 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
               ),
             );
           },
+          rpcError: (error) {
+            EventTaxiImpl.singleton().fire(
+              TransactionSendEvent(
+                transactionType: TransactionSendEventType.transfer,
+                response: localizations.rpcError
+                    .replaceFirst('%1', error.code.toString())
+                    .replaceFirst(
+                      '%2',
+                      '${error.message} ${error.data ?? ''}',
+                    ),
+                nbConfirmations: 0,
+              ),
+            );
+          },
           other: (error) {
             EventTaxiImpl.singleton().fire(
               TransactionSendEvent(
                 transactionType: TransactionSendEventType.transfer,
-                response: localizations.genericError,
+                response: '${localizations.genericError})',
                 nbConfirmations: 0,
               ),
             );

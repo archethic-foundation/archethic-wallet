@@ -283,7 +283,7 @@ class _NetworkNodesProviderElement
   AvailableNetworks get network => (origin as _NetworkNodesProvider).network;
 }
 
-String _$isReservedNodeUriHash() => r'60dab84965fa35027911aaa0cabff6c5523183b5';
+String _$isReservedNodeUriHash() => r'b9e48b3a7ea0ad17d8278e989e17ba9e3d57980a';
 
 /// See also [_isReservedNodeUri].
 @ProviderFor(_isReservedNodeUri)
