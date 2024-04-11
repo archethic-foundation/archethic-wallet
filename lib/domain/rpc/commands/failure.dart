@@ -90,6 +90,7 @@ class RPCFailure with _$RPCFailure implements Exception {
       insufficientFunds: (_) => RPCFailure.insufficientFunds(),
       userRejected: (_) => RPCFailure.userRejected(),
       unknownAccount: (_) => RPCFailure.unknownAccount(),
+      rpcError: (e) => RPCFailure.other(message: e.message),
       other: (e) => RPCFailure.other(message: e.message),
     );
   }

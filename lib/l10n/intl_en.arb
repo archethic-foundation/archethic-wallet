@@ -341,6 +341,7 @@
     "consensusNotReached": "The consensus is not reached. Please retry your request...",
     "transactionTimeOut": "The transaction encountered a timeout issue. Please retry your request...",
     "genericError": "We're sorry, but an error has occurred. Please retry your request...",
+    "rpcError": "Oh, a technical error has occured! (%1 - %2)",
     "noConnection": "The connection to the network could not be completed. Please check your network settings.",
     "nftPropertiesRequiredByCategory": "Properties required by the category:",
     "nftAssetProtected1PublicKey": "This asset is protected and accessible by 1 public key",

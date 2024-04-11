@@ -70,34 +70,34 @@ packages:
     dependency: "direct main"
     description:
       name: archethic_dapp_framework_flutter
-      sha256: "731b682f45e321bf70ae34944b4ec1f1d6be1b712fe6f0e531f49033448923cf"
+      sha256: "754680c601c8e240f33ab9b9ce0ae71d0db3033f6a0dfbebb0b6d3c038b35d48"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.1"
+    version: "1.1.3"
   archethic_lib_dart:
     dependency: "direct main"
     description:
       name: archethic_lib_dart
-      sha256: "6de293153303da1a32e8b32e12410bf3da351f24aeb5b77fccd052aab852bb7e"
+      sha256: "9bc7f6ebbb8b5cf0e7828818c957a804366b0e88f92999ed5a0fa57e72424f27"
       url: "https://pub.dev"
     source: hosted
-    version: "3.3.11"
+    version: "3.3.12"
   archethic_messaging_lib_dart:
     dependency: "direct main"
     description:
       name: archethic_messaging_lib_dart
-      sha256: "0baa181d1a9282c2314210a8e212acee1038020439363f48d7ad0835d8247b8b"
+      sha256: "645452cd2a13883842441ca2425d9d447c811e7df23f46f02bb0dd3dec47f8d0"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.12"
+    version: "0.0.13"
   archethic_wallet_client:
     dependency: transitive
     description:
       name: archethic_wallet_client
-      sha256: "6679c081ebffdb2e9c5aa73ed2b5b8bc8b90d0ba4483a08bff61669df4254b43"
+      sha256: "34de464321a45d2b346cc1ed8707c9bcc8af16fa47e0a3c97b5cbdd8fc848d14"
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.1"
+    version: "1.2.2"
   archive:
     dependency: transitive
     description:
@@ -110,10 +110,10 @@ packages:
     dependency: transitive
     description:
       name: args
-      sha256: eef6c46b622e0494a36c5a12d10d77fb4e855501a91c1b9ef9339326e58f0596
+      sha256: "7cf60b9f0cc88203c5a190b4cd62a99feea42759a7fa695010eb5de1c0b2252a"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.2"
+    version: "2.5.0"
   asn1lib:
     dependency: "direct main"
     description:
@@ -890,10 +890,10 @@ packages:
     dependency: "direct dev"
     description:
       name: freezed
-      sha256: "91bce569d4805ea5bad6619a3e8690df8ad062a235165af4c0c5d928dda15eaf"
+      sha256: a434911f643466d78462625df76fd9eb13e57348ff43fe1f77bbe909522c67a1
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.1"
+    version: "2.5.2"
   freezed_annotation:
     dependency: "direct main"
     description:
@@ -914,10 +914,10 @@ packages:
     dependency: "direct main"
     description:
       name: get_it
-      sha256: "36524bfb3f0b4ec952c3202466fdd69ad1f7ac1dd9b0a7564177707e45bfaeb9"
+      sha256: ae30b28cc73053f79fd46b15f430db16cae22a0554e6cd25333c840b310b0270
       url: "https://pub.dev"
     source: hosted
-    version: "7.6.8"
+    version: "7.6.9"
   ghost:
     dependency: "direct main"
     description:
