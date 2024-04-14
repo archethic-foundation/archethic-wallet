@@ -1,24 +1,3 @@
-//chrome.runtime.onConnect.addListener((port) => {console.log('connection interne'); port.onMessage.addListener((message) => {console.log(`message received ${message}`)})})
-
-// @JS()
-// library aws;
-
-// import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-// import 'package:js/js.dart';
-
-// @JS()
-// external BrowserExtensionAWSStub? get aws;
-
-// @JS('AWS')
-// class BrowserExtensionAWSStub {
-//   external set onConnect(Future<void> Function(IWebMessagePort port) callback);
-// }
-
-// @JS()
-// class BrowserExtensionAWSPort {
-//   external set onMessage(Function(dynamic message) callback);
-//   external void postMessage(dynamic message);
-// }
 @JS('chrome')
 library aws; // library name can be whatever you want
 
@@ -27,15 +6,46 @@ import 'package:js/js.dart';
 @JS('runtime.connect')
 external BrowserExtensionPort connect();
 
+@JS('runtime.sendMessage')
+external void sendMessage(dynamic message);
+
+@JS('runtime.onMessage')
+external BrowserExtensionEvent<
+    void Function(
+      dynamic message,
+      BrowserExtensionMessageSender sender,
+      Function(dynamic) sendResponse,
+    )> get onMessage;
+
+@JS('runtime.onMessageExternal')
+external BrowserExtensionEvent<
+    void Function(
+      dynamic message,
+      BrowserExtensionMessageSender sender,
+      Function(dynamic) sendResponse,
+    )> get onMessageExternal;
+
+@JS('runtime.onConnectExternal')
+external BrowserExtensionEvent<void Function(BrowserExtensionPort port)>
+    get onConnectExternal;
+
 @JS('extension')
 external dynamic get browserExtension;
 
 bool get isWebBrowserExtension => browserExtension != null;
 
+/**
+ * https://developer.chrome.com/docs/extensions/reference/api/runtime?type-Port#type-Port
+ */
 @JS('runtime.Port')
 class BrowserExtensionPort {
   @JS('onMessage')
-  external BrowserExtensionEvent get onMessage;
+  external BrowserExtensionEvent<
+      void Function(dynamic message, BrowserExtensionPort port)> get onMessage;
+
+  @JS('onDisconnect')
+  external BrowserExtensionEvent<void Function(BrowserExtensionPort port)>
+      get onDisconnect;
 
   @JS('disconnect')
   external disconnect();
@@ -44,13 +54,39 @@ class BrowserExtensionPort {
   external postMessage(dynamic message);
 }
 
+/**
+ * https://developer.chrome.com/docs/extensions/reference/api/events?type-Event#type-Event
+ */
 @JS()
-class BrowserExtensionEvent {
+class BrowserExtensionEvent<H extends Function> {
   @JS('addListener')
   external addListener(
-    void Function(
-      dynamic message,
-      BrowserExtensionPort port,
-    ) callback,
+    H callback,
   );
+
+  @JS('removeListener')
+  external removeListener(
+    H callback,
+  );
+}
+
+/**
+ * https://developer.chrome.com/docs/extensions/reference/api/runtime?type-MessageSender#type-MessageSender
+ */
+@JS()
+class BrowserExtensionMessageSender {
+  @JS('origin')
+  external String? get origin;
+
+  @JS('tab')
+  external BrowserExtensionTab? get tab;
+}
+
+/**
+ * https://developer.chrome.com/docs/extensions/reference/api/tabs#type-Tab
+ */
+@JS()
+class BrowserExtensionTab {
+  @JS('id')
+  external int? get id;
 }
