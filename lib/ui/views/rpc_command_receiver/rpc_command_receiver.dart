@@ -36,7 +36,8 @@ class RPCCommandReceiver extends ConsumerStatefulWidget {
 }
 
 class _RPCCommandReceiverState extends ConsumerState<RPCCommandReceiver> {
-  BrowserExtensionAWS? _browserExtensionAWS;
+  final _browserExtensionAWS =
+      BrowserExtensionAWS.isPlatformCompatible ? BrowserExtensionAWS() : null;
 
   @override
   void initState() {
@@ -109,12 +110,8 @@ class _RPCCommandReceiverState extends ConsumerState<RPCCommandReceiver> {
   }
 
   void _initBrowserExtensionRPC() {
-    print('maybe Init Browser extension RPC');
-    if (BrowserExtensionAWS.isPlatformCompatible) {
-      print('Init Browser extension RPC');
-      _browserExtensionAWS = BrowserExtensionAWS();
-      unawaited(_browserExtensionAWS?.run());
-    }
+    print('Init Browser extension RPC');
+    unawaited(_browserExtensionAWS?.run());
   }
 
   @override
@@ -133,7 +130,6 @@ class _RPCCommandReceiverState extends ConsumerState<RPCCommandReceiver> {
   void _disposeBrowserExtensionRPC() {
     print('Dispose Browser extension RPC');
     _browserExtensionAWS?.stop();
-    _browserExtensionAWS = null;
   }
 
   void _disposeCommandDispatcher() {

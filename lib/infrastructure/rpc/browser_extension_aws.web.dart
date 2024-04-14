@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:js';
 
 import 'package:aewallet/infrastructure/rpc/awc_json_rpc_server.dart';
@@ -7,29 +6,50 @@ import 'package:aewallet/infrastructure/rpc/browser_extension_aws.js.dart';
 import 'package:stream_channel/stream_channel.dart';
 
 class BrowserExtensionAWS {
+  BrowserExtensionAWS() {
+    print('[AWCBrowserExtension] Init');
+    onMessage.addListener(
+      allowInterop((message, sender, sendResponse) {
+        if (message == 'isExtensionPopupReady') {
+          sendResponse(_isRunning);
+        }
+      }),
+    );
+  }
   static const logName = 'Browser RPC Server';
 
   static bool get isPlatformCompatible => isWebBrowserExtension;
 
-  BrowserExtensionPort? _port;
-  AWCJsonRPCServer? _peerServer;
-  bool get isRunning => _peerServer != null;
+  bool _isRunning = false;
+
+  final Set<AWCJsonRPCServer> _peerServers = {};
+
+  void _connectionReceived(port) {
+    print('[AWCBrowserExtension] external connection received ');
+    final channel = BrowserExtensionMessagePortStreamChannel(port: port);
+    final peerServer = AWCJsonRPCServer(channel.cast<String>());
+    _peerServers.add(peerServer);
+
+    port.onDisconnect.addListener((_, __) {
+      print('[AWCBrowserExtension] external connection closed ');
+      _peerServers.remove(peerServer);
+    });
+
+    unawaited(peerServer.listen());
+  }
 
   Future<void> run() async => runZonedGuarded(
         () async {
-          if (isRunning) {
+          if (_isRunning) {
             print('[AWCBrowserExtension] Already running. Cancel `start`');
             return;
           }
 
-          log('Starting', name: logName);
+          print('[AWCBrowserExtension] Starting');
 
-          final port = connect();
-          print('[AWCBrowserExtension] Connected to web background service');
-          final channel = BrowserExtensionMessagePortStreamChannel(port: port);
-          _peerServer = AWCJsonRPCServer(channel.cast<String>());
-          _port = port;
-          await _peerServer?.listen();
+          onConnectExternal.addListener(allowInterop(_connectionReceived));
+          _isRunning = true;
+          sendMessage('extensionPopupReady');
         },
         (error, stack) {
           print(
@@ -39,8 +59,13 @@ class BrowserExtensionAWS {
       );
 
   void stop() {
-    _port?.disconnect();
-    _peerServer?.close();
+    print('[AWCBrowserExtension] Stopping');
+    _isRunning = false;
+    onConnectExternal.removeListener(allowInterop(_connectionReceived));
+    for (final peerServer in _peerServers) {
+      peerServer.close();
+    }
+    _peerServers.clear();
   }
 }
 
@@ -64,7 +89,8 @@ class BrowserExtensionMessagePortStreamChannel
       print('Wallet response sent ${event}');
       port.postMessage(event);
     });
-    print('Wallet Init WebMessage PortStreamchannel 2');
+
+    _out.sink.done.whenComplete(port.disconnect);
   }
 
   final BrowserExtensionPort port;
