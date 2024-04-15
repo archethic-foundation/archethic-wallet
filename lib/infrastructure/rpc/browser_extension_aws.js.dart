@@ -32,6 +32,12 @@ external BrowserExtensionEvent<void Function(BrowserExtensionPort port)>
 @JS('extension')
 external dynamic get browserExtension;
 
+@JS('windows.update')
+external void updateWindow(int windowId, dynamic updateInfo);
+
+@JS('windows.WINDOW_ID_CURRENT')
+external int get windowIdCurrent;
+
 bool get isWebBrowserExtension => browserExtension != null;
 
 /**
