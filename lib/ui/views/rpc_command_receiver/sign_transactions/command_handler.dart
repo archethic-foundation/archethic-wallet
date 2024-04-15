@@ -5,13 +5,13 @@ import 'package:aewallet/domain/rpc/commands/command.dart';
 import 'package:aewallet/domain/rpc/commands/failure.dart';
 import 'package:aewallet/domain/rpc/commands/sign_transactions.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/util/window_util_desktop.dart'
+    if (dart.library.js) 'package:aewallet/ui/util/window_util_web.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/sign_transactions/layouts/sign_transactions_confirmation_form.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/universal_platform.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:window_manager/window_manager.dart';
 
 const slippage = 1.01;
 
@@ -88,9 +88,7 @@ class SignTransactionsCommandHandler extends CommandHandler {
               addresses.add(signedTransaction.address?.address);
             }
 
-            if (UniversalPlatform.isDesktop) {
-              await windowManager.show();
-            }
+            await WindowUtil().showFirst();
 
             final confirmation = await showDialog<bool>(
               useSafeArea: false,
