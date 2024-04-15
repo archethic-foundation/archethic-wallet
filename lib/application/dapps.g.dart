@@ -6,11 +6,12 @@ part of 'dapps.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$dAppsRepositoryHash() => r'e0ff90bd27811981cdb0a797ef97c22f93c5e479';
+String _$dAppsRepositoryHash() => r'0f9c6e173ce536626d593b1fb106e557a89a6a73';
 
 /// See also [_dAppsRepository].
 @ProviderFor(_dAppsRepository)
-final _dAppsRepositoryProvider = AutoDisposeProvider<DAppsRepository>.internal(
+final _dAppsRepositoryProvider =
+    AutoDisposeProvider<DAppsRepositoryImpl>.internal(
   _dAppsRepository,
   name: r'_dAppsRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -20,23 +21,8 @@ final _dAppsRepositoryProvider = AutoDisposeProvider<DAppsRepository>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef _DAppsRepositoryRef = AutoDisposeProviderRef<DAppsRepository>;
-String _$getDAppsHash() => r'8e11b7174686c6a8b35f02d60a25e9d3c84f1255';
-
-/// See also [_getDApps].
-@ProviderFor(_getDApps)
-final _getDAppsProvider = AutoDisposeFutureProvider<List<DApps>>.internal(
-  _getDApps,
-  name: r'_getDAppsProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$getDAppsHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _GetDAppsRef = AutoDisposeFutureProviderRef<List<DApps>>;
-String _$getDAppsFromNetworkHash() =>
-    r'300ed4b91a71a313f395098f0abfbbfc42118540';
+typedef _DAppsRepositoryRef = AutoDisposeProviderRef<DAppsRepositoryImpl>;
+String _$getDAppHash() => r'5aedf446d4b47a1cfd409e7237a32618d2a8412d';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -59,12 +45,157 @@ class _SystemHash {
   }
 }
 
+/// See also [_getDApp].
+@ProviderFor(_getDApp)
+const _getDAppProvider = _GetDAppFamily();
+
+/// See also [_getDApp].
+class _GetDAppFamily extends Family<AsyncValue<DApp?>> {
+  /// See also [_getDApp].
+  const _GetDAppFamily();
+
+  /// See also [_getDApp].
+  _GetDAppProvider call(
+    AvailableNetworks network,
+    String code,
+  ) {
+    return _GetDAppProvider(
+      network,
+      code,
+    );
+  }
+
+  @override
+  _GetDAppProvider getProviderOverride(
+    covariant _GetDAppProvider provider,
+  ) {
+    return call(
+      provider.network,
+      provider.code,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_getDAppProvider';
+}
+
+/// See also [_getDApp].
+class _GetDAppProvider extends AutoDisposeFutureProvider<DApp?> {
+  /// See also [_getDApp].
+  _GetDAppProvider(
+    AvailableNetworks network,
+    String code,
+  ) : this._internal(
+          (ref) => _getDApp(
+            ref as _GetDAppRef,
+            network,
+            code,
+          ),
+          from: _getDAppProvider,
+          name: r'_getDAppProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$getDAppHash,
+          dependencies: _GetDAppFamily._dependencies,
+          allTransitiveDependencies: _GetDAppFamily._allTransitiveDependencies,
+          network: network,
+          code: code,
+        );
+
+  _GetDAppProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.network,
+    required this.code,
+  }) : super.internal();
+
+  final AvailableNetworks network;
+  final String code;
+
+  @override
+  Override overrideWith(
+    FutureOr<DApp?> Function(_GetDAppRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _GetDAppProvider._internal(
+        (ref) => create(ref as _GetDAppRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        network: network,
+        code: code,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<DApp?> createElement() {
+    return _GetDAppProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is _GetDAppProvider &&
+        other.network == network &&
+        other.code == code;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, network.hashCode);
+    hash = _SystemHash.combine(hash, code.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin _GetDAppRef on AutoDisposeFutureProviderRef<DApp?> {
+  /// The parameter `network` of this provider.
+  AvailableNetworks get network;
+
+  /// The parameter `code` of this provider.
+  String get code;
+}
+
+class _GetDAppProviderElement extends AutoDisposeFutureProviderElement<DApp?>
+    with _GetDAppRef {
+  _GetDAppProviderElement(super.provider);
+
+  @override
+  AvailableNetworks get network => (origin as _GetDAppProvider).network;
+  @override
+  String get code => (origin as _GetDAppProvider).code;
+}
+
+String _$getDAppsFromNetworkHash() =>
+    r'7515f15dd0b528f5a82a7a19dc8afcad3486cf84';
+
 /// See also [_getDAppsFromNetwork].
 @ProviderFor(_getDAppsFromNetwork)
 const _getDAppsFromNetworkProvider = _GetDAppsFromNetworkFamily();
 
 /// See also [_getDAppsFromNetwork].
-class _GetDAppsFromNetworkFamily extends Family<AsyncValue<List<DApps>>> {
+class _GetDAppsFromNetworkFamily extends Family<AsyncValue<List<DApp>>> {
   /// See also [_getDAppsFromNetwork].
   const _GetDAppsFromNetworkFamily();
 
@@ -103,7 +234,7 @@ class _GetDAppsFromNetworkFamily extends Family<AsyncValue<List<DApps>>> {
 
 /// See also [_getDAppsFromNetwork].
 class _GetDAppsFromNetworkProvider
-    extends AutoDisposeFutureProvider<List<DApps>> {
+    extends AutoDisposeFutureProvider<List<DApp>> {
   /// See also [_getDAppsFromNetwork].
   _GetDAppsFromNetworkProvider(
     AvailableNetworks network,
@@ -138,7 +269,7 @@ class _GetDAppsFromNetworkProvider
 
   @override
   Override overrideWith(
-    FutureOr<List<DApps>> Function(_GetDAppsFromNetworkRef provider) create,
+    FutureOr<List<DApp>> Function(_GetDAppsFromNetworkRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -155,7 +286,7 @@ class _GetDAppsFromNetworkProvider
   }
 
   @override
-  AutoDisposeFutureProviderElement<List<DApps>> createElement() {
+  AutoDisposeFutureProviderElement<List<DApp>> createElement() {
     return _GetDAppsFromNetworkProviderElement(this);
   }
 
@@ -173,13 +304,13 @@ class _GetDAppsFromNetworkProvider
   }
 }
 
-mixin _GetDAppsFromNetworkRef on AutoDisposeFutureProviderRef<List<DApps>> {
+mixin _GetDAppsFromNetworkRef on AutoDisposeFutureProviderRef<List<DApp>> {
   /// The parameter `network` of this provider.
   AvailableNetworks get network;
 }
 
 class _GetDAppsFromNetworkProviderElement
-    extends AutoDisposeFutureProviderElement<List<DApps>>
+    extends AutoDisposeFutureProviderElement<List<DApp>>
     with _GetDAppsFromNetworkRef {
   _GetDAppsFromNetworkProviderElement(super.provider);
 

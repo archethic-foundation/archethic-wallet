@@ -1,3 +1,4 @@
+import 'package:aewallet/application/dapps.dart';
 import 'package:aewallet/infrastructure/rpc/awc_webview.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/main/components/webview_appbar.dart';
@@ -12,10 +13,12 @@ import 'package:go_router/go_router.dart';
 class DEXSheet extends ConsumerWidget implements SheetSkeletonInterface {
   const DEXSheet({
     super.key,
+    required this.url,
   });
 
   static bool get isAvailable => AWCWebview.isAvailable;
   static const String routerPage = '/dex';
+  final String url;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -75,7 +78,7 @@ class DEXSheet extends ConsumerWidget implements SheetSkeletonInterface {
           if (!isAWCSupported) return const UnavailableFeatureWarning();
 
           return AWCWebview(
-            uri: Uri.parse('https://dex.testnet.archethic.net'),
+            uri: Uri.parse(url),
           );
         },
       ),

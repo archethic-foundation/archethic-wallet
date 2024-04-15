@@ -2,16 +2,16 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'dapps.freezed.dart';
-part 'dapps.g.dart';
+part 'dapp.freezed.dart';
+part 'dapp.g.dart';
 
 @freezed
-class DApps with _$DApps {
-  const factory DApps({
+class DApp with _$DApp {
+  const factory DApp({
     required String code,
     required String url,
     String? accessToken,
-  }) = _DApps;
+  }) = _DApp;
 
-  factory DApps.fromJson(Map<String, dynamic> json) => _$DAppsFromJson(json);
+  factory DApp.fromJson(Map<String, dynamic> json) => _$DAppFromJson(json);
 }
