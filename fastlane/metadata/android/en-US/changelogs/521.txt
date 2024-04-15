@@ -1,0 +1,4 @@
+Archethic Wallet - Version 2.3.7 Build 521
+
+- Fix bugs
+- Add access to aeSwap for mobile (Only Testnet environment)
