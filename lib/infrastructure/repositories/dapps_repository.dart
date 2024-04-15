@@ -35,6 +35,8 @@ class DAppsRepositoryImpl implements DAppsRepositoryInterface {
     String code,
   ) async {
     final dapps = await getDAppsFromNetwork(network);
+    if (dapps.isEmpty) return null;
+
     return dapps.firstWhere(
       (element) => element.code.toUpperCase() == code.toUpperCase(),
     );
@@ -46,14 +48,15 @@ class DAppsRepositoryImpl implements DAppsRepositoryInterface {
   ) async {
     final dApps = await _getDAppsLocal();
     switch (network) {
+      // aeWallet-DApps-Conf service
       // TODO(reddwarf03): Get true addresses
       case AvailableNetworks.archethicTestNet:
         return _getDAppsFromBlockchain(
-          '0000b01e7a497f0576a004c5957d14956e165a6f301d76cda35ba49be4444dac00eb',
+          '00009087BB05F2D4DDBDFA833486CD303A805C5F73154473E5604BEB1C1512475B42',
         );
       case AvailableNetworks.archethicMainNet:
         return _getDAppsFromBlockchain(
-          '000030ed4ed79a05cfaa90b803c0ba933307de9923064651975b59047df3aaf223bb',
+          '0000679EF0AF4ED6EDB1790B8E082880BD18632BB66190DE93422C8CFC7E57D678EE',
         );
       case AvailableNetworks.archethicDevNet:
         return dApps;
