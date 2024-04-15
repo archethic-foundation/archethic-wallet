@@ -1,4 +1,3 @@
-import 'package:aewallet/application/dapps.dart';
 import 'package:aewallet/infrastructure/rpc/awc_webview.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/main/components/webview_appbar.dart';

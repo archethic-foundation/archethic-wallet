@@ -52,12 +52,14 @@ class BrowserExtensionMessagePortStreamChannel
   BrowserExtensionMessagePortStreamChannel({required this.port}) {
     print('Wallet Init WebMessage PortStreamchannel');
 
-    port.onMessage.addListener(allowInterop((message, _) {
-      if (message == null) return;
-      print('Wallet message received ${message}');
-      _in.add(message);
-      print('Wallet message received done ${message}');
-    }));
+    port.onMessage.addListener(
+      allowInterop((message, _) {
+        if (message == null) return;
+        print('Wallet message received ${message}');
+        _in.add(message);
+        print('Wallet message received done ${message}');
+      }),
+    );
     print('Wallet Init WebMessage PortStreamchannel 1 ');
 
     _out.stream.listen((event) {
