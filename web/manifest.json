@@ -18,7 +18,8 @@
     "contextMenus",
     "clipboardWrite",
     "clipboardRead",
-    "activeTab"
+    "activeTab",
+    "tabs"
   ],
   "web_accessible_resources": [
     {
