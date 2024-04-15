@@ -210,7 +210,9 @@ final _authenticatedRoutes = [
       transitionDuration: Duration.zero,
       reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
-      child: const DEXSheet(),
+      child: DEXSheet(
+        url: state.extra! as String,
+      ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
           FadeTransition(opacity: animation, child: child),
     ),
