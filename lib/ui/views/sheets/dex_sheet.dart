@@ -1,11 +1,14 @@
 import 'package:aewallet/infrastructure/rpc/awc_webview.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/main/components/webview_appbar.dart';
+import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/sheets/unavailable_feature_warning.dart';
+import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/loading_list_header.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -37,27 +40,22 @@ class DEXSheet extends ConsumerWidget implements SheetSkeletonInterface {
   @override
   PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     return WebviewAppBar(
-      title: const Column(
-        children: [
-          Text(
-            'aeSwap (beta)',
-            style: TextStyle(
-              fontSize: 20,
-            ),
-          ),
-          Text(
-            'Decentralized Exchange',
-            style: TextStyle(
-              fontSize: 12,
-            ),
-          ),
-        ],
-      ),
+      title: const SizedBox.shrink(),
       widgetLeft: BackButton(
         key: const Key('back'),
         color: ArchethicTheme.text,
-        onPressed: () {
-          context.pop();
+        onPressed: () async {
+          AppDialogs.showConfirmDialog(
+            context,
+            ref,
+            AppLocalizations.of(context)!.exitAESwapTitle,
+            AppLocalizations.of(context)!.exitAESwap,
+            AppLocalizations.of(context)!.yes,
+            () {
+              context.go(HomePage.routerPage);
+            },
+            cancelText: AppLocalizations.of(context)!.no,
+          );
         },
       ),
     );
@@ -66,6 +64,7 @@ class DEXSheet extends ConsumerWidget implements SheetSkeletonInterface {
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     return SafeArea(
+      bottom: false,
       child: FutureBuilder<bool>(
         future: AWCWebview.isAWCSupported,
         builder: (context, snapshot) {

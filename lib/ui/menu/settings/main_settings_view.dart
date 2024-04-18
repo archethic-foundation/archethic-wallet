@@ -61,7 +61,7 @@ class MainMenuView extends ConsumerWidget {
                   ListView(
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.only(top: 10, bottom: 10),
+                        padding: const EdgeInsets.only(bottom: 10),
                         child: Align(
                           child: Text(
                             ref
@@ -72,24 +72,6 @@ class MainMenuView extends ConsumerWidget {
                                 ArchethicThemeStyles.textStyleSize12W100Primary,
                           ),
                         ),
-                      ),
-                      const _SettingsListItem.spacer(),
-                      _SettingsListItem.title(text: localizations.preferences),
-                      const _SettingsListItem.spacer(),
-                      _SettingsListItem.singleLine(
-                        heading: localizations.securityHeader,
-                        headingStyle:
-                            ArchethicThemeStyles.textStyleSize16W600Primary,
-                        icon: Symbols.security,
-                        onPressed: showSecurity,
-                      ),
-                      const _SettingsListItem.spacer(),
-                      _SettingsListItem.singleLine(
-                        heading: localizations.customHeader,
-                        headingStyle:
-                            ArchethicThemeStyles.textStyleSize16W600Primary,
-                        icon: Symbols.tune,
-                        onPressed: showCustom,
                       ),
                       if (aeSwapUrl != null)
                         Column(
@@ -185,6 +167,24 @@ class MainMenuView extends ConsumerWidget {
                             ArchethicThemeStyles.textStyleSize16W600Primary,
                         icon: Symbols.info,
                         onPressed: showAbout,
+                      ),
+                      const _SettingsListItem.spacer(),
+                      _SettingsListItem.title(text: localizations.preferences),
+                      const _SettingsListItem.spacer(),
+                      _SettingsListItem.singleLine(
+                        heading: localizations.securityHeader,
+                        headingStyle:
+                            ArchethicThemeStyles.textStyleSize16W600Primary,
+                        icon: Symbols.security,
+                        onPressed: showSecurity,
+                      ),
+                      const _SettingsListItem.spacer(),
+                      _SettingsListItem.singleLine(
+                        heading: localizations.customHeader,
+                        headingStyle:
+                            ArchethicThemeStyles.textStyleSize16W600Primary,
+                        icon: Symbols.tune,
+                        onPressed: showCustom,
                       ),
                       const _SettingsListItem.spacer(),
                       const SizedBox(height: 30),

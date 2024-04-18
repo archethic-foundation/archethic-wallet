@@ -22,8 +22,6 @@ class SettingsSheetWallet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-
     return Scaffold(
       extendBodyBehindAppBar: true,
       extendBody: true,
@@ -36,10 +34,6 @@ class SettingsSheetWallet extends ConsumerWidget {
         systemOverlayStyle: ArchethicTheme.brightness == Brightness.light
             ? SystemUiOverlayStyle.dark
             : SystemUiOverlayStyle.light,
-        title: AutoSizeText(
-          localizations.settings,
-          style: ArchethicThemeStyles.textStyleSize24W700Primary,
-        ),
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.close),
