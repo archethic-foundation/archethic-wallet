@@ -171,7 +171,6 @@
     "go": "Go!",
     "tokenCreated": "Token created :",
     "version": "Version :",
-    "settings": "Settings",
     "yubikeyWithYubiCloudMethod": "Yubikey",
     "yubikeyError_BAD_OTP": "The OTP is invalid format.",
     "enterYubikeyClientID": "Enter the client ID",
@@ -442,6 +441,8 @@
         "type": "text",
         "placeholders": {}
     },
+    "exitAESwapTitle": "Confirmation",
+    "exitAESwap": "Are you sure you want to leave aeSwap?",
     "connectivityWarningHeader": "Check your internet connection.",
     "connectivityWarningDesc": "You can use the application when your connection is interrupted, but the information may be outdated and some features are disabled.",
     "aewebHosting": "aeHosting",

@@ -69,7 +69,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
         padding: const EdgeInsets.only(left: 3),
         child: IconButton(
           icon: const Icon(
-            Symbols.settings,
+            Symbols.menu,
             weight: IconSize.weightM,
             opticalSize: IconSize.opticalSizeM,
             grade: IconSize.gradeM,
