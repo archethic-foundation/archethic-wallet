@@ -71,17 +71,22 @@ packages:
     description:
       name: archethic_dapp_framework_flutter
 <<<<<<< HEAD
+<<<<<<< HEAD
       sha256: b912149d3776feb4051bdaaf599347b2d19509621d7ba4a1a5ba593169315cf0
       url: "https://pub.dev"
     source: hosted
     version: "1.2.7"
 =======
+=======
+>>>>>>> 603fadb0 (⬆️ Update Archethic Dart SDK version 3.3.15)
 <<<<<<< HEAD
       sha256: "8d41e006b6af9222b7e6bca91e6dec20abf045d084a5caf55c8ba826e7259dcc"
       url: "https://pub.dev"
     source: hosted
     version: "1.2.4"
 =======
+=======
+>>>>>>> 1151b498 (⬆️ Update Archethic Dart SDK version 3.3.15)
 <<<<<<< HEAD
       sha256: "3b43ef8a3d65199edd5090f29ed642edcb0aee9d88f1166ee48b22e7862a7e53"
       url: "https://pub.dev"
@@ -93,24 +98,41 @@ packages:
     source: hosted
     version: "1.1.8"
 >>>>>>> 598e0208 (⬆️ Update Archethic Dart SDK version 3.3.14)
+<<<<<<< HEAD
 >>>>>>> a0b70429 (⬆️ Update Archethic Dart SDK version 3.3.14)
+<<<<<<< HEAD
 >>>>>>> 803fa57f (⬆️ Update Archethic Dart SDK version 3.3.14)
+=======
+=======
+=======
+      sha256: fb95a351f28850cd8b9ca34ebbdbadfce211a4e4a420d7871c284198fb88b99f
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.11"
+>>>>>>> 4bd5faf4 (⬆️ Update Archethic Dart SDK version 3.3.15)
+>>>>>>> 1151b498 (⬆️ Update Archethic Dart SDK version 3.3.15)
+>>>>>>> 603fadb0 (⬆️ Update Archethic Dart SDK version 3.3.15)
   archethic_lib_dart:
     dependency: "direct main"
     description:
       name: archethic_lib_dart
+<<<<<<< HEAD
 <<<<<<< HEAD
       sha256: "9d725d17a2ac7239a4d70048520daf45723661a829c09813f937bac613465060"
       url: "https://pub.dev"
     source: hosted
     version: "3.4.2"
 =======
+=======
+>>>>>>> 603fadb0 (⬆️ Update Archethic Dart SDK version 3.3.15)
 <<<<<<< HEAD
       sha256: "421f3ffe4b2f3816424fbb81ef572344a46a67590e4a237cc6251f8101582335"
       url: "https://pub.dev"
     source: hosted
     version: "3.4.1"
 =======
+=======
+>>>>>>> 1151b498 (⬆️ Update Archethic Dart SDK version 3.3.15)
 <<<<<<< HEAD
       sha256: "9644035fd44b68d6558d906b62bbd74800068e71367e929a1a73d60d2a54e054"
       url: "https://pub.dev"
@@ -122,8 +144,20 @@ packages:
     source: hosted
     version: "3.3.14"
 >>>>>>> 598e0208 (⬆️ Update Archethic Dart SDK version 3.3.14)
+<<<<<<< HEAD
 >>>>>>> a0b70429 (⬆️ Update Archethic Dart SDK version 3.3.14)
+<<<<<<< HEAD
 >>>>>>> 803fa57f (⬆️ Update Archethic Dart SDK version 3.3.14)
+=======
+=======
+=======
+      sha256: bcfaef5b204c396270c2241c89149a86b02a6bdbc0f64260288bace4536dd502
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.3.15"
+>>>>>>> 4bd5faf4 (⬆️ Update Archethic Dart SDK version 3.3.15)
+>>>>>>> 1151b498 (⬆️ Update Archethic Dart SDK version 3.3.15)
+>>>>>>> 603fadb0 (⬆️ Update Archethic Dart SDK version 3.3.15)
   archethic_messaging_lib_dart:
     dependency: "direct main"
     description:
@@ -137,17 +171,22 @@ packages:
     description:
       name: archethic_wallet_client
 <<<<<<< HEAD
+<<<<<<< HEAD
       sha256: "7d9ef9f23b285d4d5fc95bec08b3e4c51e8e636e1755f863426c5706ada2c175"
       url: "https://pub.dev"
     source: hosted
     version: "2.0.4"
 =======
+=======
+>>>>>>> 603fadb0 (⬆️ Update Archethic Dart SDK version 3.3.15)
 <<<<<<< HEAD
       sha256: b144c2db4988823b3c08f9e6ea73e3348abd8fb58a45cd29bd285acded0a98d6
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
 =======
+=======
+>>>>>>> 1151b498 (⬆️ Update Archethic Dart SDK version 3.3.15)
 <<<<<<< HEAD
       sha256: b26e2e7a2805c6f3b18c50007f165b79521ea5303745f8ac798acd6c25e9cb33
       url: "https://pub.dev"
@@ -159,8 +198,20 @@ packages:
     source: hosted
     version: "1.2.4"
 >>>>>>> 598e0208 (⬆️ Update Archethic Dart SDK version 3.3.14)
+<<<<<<< HEAD
 >>>>>>> a0b70429 (⬆️ Update Archethic Dart SDK version 3.3.14)
+<<<<<<< HEAD
 >>>>>>> 803fa57f (⬆️ Update Archethic Dart SDK version 3.3.14)
+=======
+=======
+=======
+      sha256: "7f8b8a0843f565a622c821edfd8f6cca0d7359e054316cc07c01d97f0819f939"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.5"
+>>>>>>> 4bd5faf4 (⬆️ Update Archethic Dart SDK version 3.3.15)
+>>>>>>> 1151b498 (⬆️ Update Archethic Dart SDK version 3.3.15)
+>>>>>>> 603fadb0 (⬆️ Update Archethic Dart SDK version 3.3.15)
   archive:
     dependency: transitive
     description:
