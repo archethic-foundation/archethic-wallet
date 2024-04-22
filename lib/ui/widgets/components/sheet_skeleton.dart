@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -51,7 +52,7 @@ class SheetSkeleton extends ConsumerWidget {
                         ? ArchethicTheme.backgroundSmall
                         : backgroundImage!,
                   ),
-                  fit: BoxFit.fitHeight,
+                  fit: kIsWeb ? BoxFit.cover : BoxFit.fitHeight,
                   alignment: Alignment.centerRight,
                   opacity: 0.7,
                 ),
