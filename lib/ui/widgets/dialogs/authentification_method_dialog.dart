@@ -15,6 +15,7 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -77,12 +78,17 @@ class AuthentificationMethodDialog {
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     for (final value in AuthMethod.values) {
       var displayed = false;
-      if (value != AuthMethod.ledger) {
-        if ((hasBiometrics && value == AuthMethod.biometrics) ||
-            value != AuthMethod.biometrics) {
-          displayed = true;
+      if (kIsWeb && value != AuthMethod.password) {
+        displayed = false;
+      } else {
+        if (value != AuthMethod.ledger) {
+          if ((hasBiometrics && value == AuthMethod.biometrics) ||
+              value != AuthMethod.biometrics) {
+            displayed = true;
+          }
         }
       }
+
       pickerItemsList.add(
         PickerItem(
           AuthenticationMethod(value).getDisplayName(context),

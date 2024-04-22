@@ -173,7 +173,7 @@ class _IntroConfigureSecurityState extends ConsumerState<IntroConfigureSecurity>
                           );
                   break;
                 case AuthMethod.password:
-                  authenticated = (await context.push(
+                  final result = await context.push(
                     SetPassword.routerPage,
                     extra: {
                       'header': localizations.setPasswordHeader,
@@ -183,25 +183,39 @@ class _IntroConfigureSecurityState extends ConsumerState<IntroConfigureSecurity>
                           .configureSecurityExplanationPassword,
                       'seed': widget.seed,
                     },
-                  ))! as bool;
+                  );
+                  if (result != null && result is bool) {
+                    authenticated = result;
+                  } else {
+                    authenticated = false;
+                  }
                   break;
                 case AuthMethod.pin:
-                  authenticated = (await context.push(
+                  final result = await context.push(
                     PinScreen.routerPage,
                     extra: {
                       'type': PinOverlayType.newPin.name,
                     },
-                  ))! as bool;
+                  );
+                  if (result != null && result is bool) {
+                    authenticated = result;
+                  } else {
+                    authenticated = false;
+                  }
                   break;
                 case AuthMethod.yubikeyWithYubicloud:
-                  authenticated = (await context.push(
+                  final result = await context.push(
                     SetYubikey.routerPage,
                     extra: {
                       'header': localizations.setYubicloudHeader,
                       'description': localizations.setYubicloudDescription,
                     },
-                  ))! as bool;
-
+                  );
+                  if (result != null && result is bool) {
+                    authenticated = result;
+                  } else {
+                    authenticated = false;
+                  }
                   break;
                 case AuthMethod.ledger:
                   break;
