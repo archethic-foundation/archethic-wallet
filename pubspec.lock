@@ -70,18 +70,32 @@ packages:
     dependency: "direct main"
     description:
       name: archethic_dapp_framework_flutter
+<<<<<<< HEAD
       sha256: e4ee365be75698a00de9910dba611b3b942e0bdb60e308c569a7a846d5edcb0e
       url: "https://pub.dev"
     source: hosted
     version: "1.1.6"
+=======
+      sha256: eb14fa7831628e17245c85e8d205e33ddd1985806c645c42a354f5a666ccfa76
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.12"
+>>>>>>> 0a65022d (⬆️ Update dependencies)
   archethic_lib_dart:
     dependency: "direct main"
     description:
       name: archethic_lib_dart
+<<<<<<< HEAD
       sha256: ca6f2585372a899964556078701b6cda582ebbd2daa6d9662f62c20c5f6c75da
       url: "https://pub.dev"
     source: hosted
     version: "3.3.13"
+=======
+      sha256: bcfaef5b204c396270c2241c89149a86b02a6bdbc0f64260288bace4536dd502
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.3.15"
+>>>>>>> 0a65022d (⬆️ Update dependencies)
   archethic_messaging_lib_dart:
     dependency: "direct main"
     description:
@@ -94,10 +108,17 @@ packages:
     dependency: transitive
     description:
       name: archethic_wallet_client
+<<<<<<< HEAD
       sha256: "46631cd56f7af7fbf6bbb984d8ce50b3ba7776a398341f459b2ab81c51a82553"
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
+=======
+      sha256: "7f8b8a0843f565a622c821edfd8f6cca0d7359e054316cc07c01d97f0819f939"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.5"
+>>>>>>> 0a65022d (⬆️ Update dependencies)
   archive:
     dependency: transitive
     description:
@@ -1090,18 +1111,18 @@ packages:
     dependency: "direct main"
     description:
       name: image_picker
-      sha256: "1f498d086203360cca099d20ffea2963f48c39ce91bdd8a3b6d4a045786b02c8"
+      sha256: fe9ee64ccb8d599a5dfb0e21cc6652232c610bcf667af4e79b9eb175cc30a7a5
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.8"
+    version: "1.1.0"
   image_picker_android:
     dependency: transitive
     description:
       name: image_picker_android
-      sha256: "844c6da4e4f2829dffdab97816bca09d0e0977e8dcef7450864aba4e07967a58"
+      sha256: "8e75431a62b7feb4fd55cb4a5c6f0ac4564460ec5dc09f9c4a0d50a5ce7c4cb9"
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.9+6"
+    version: "0.8.10"
   image_picker_for_web:
     dependency: transitive
     description:
@@ -1114,10 +1135,10 @@ packages:
     dependency: transitive
     description:
       name: image_picker_ios
-      sha256: "917a5cadd67d052554cfb258595e54217de53fac5b52939426e26319a02e6297"
+      sha256: f4a6f62be96d6fd268f32a6bf8ef444cd8e3fff64d16923c6e6fe55e0c84a761
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.9+2"
+    version: "0.8.10"
   image_picker_linux:
     dependency: transitive
     description:
@@ -1626,10 +1647,10 @@ packages:
     dependency: "direct main"
     description:
       name: pointycastle
-      sha256: "70fe966348fe08c34bf929582f1d8247d9d9408130723206472b4687227e4333"
+      sha256: "79fbafed02cfdbe85ef3fd06c7f4bc2cbcba0177e61b765264853d4253b21744"
       url: "https://pub.dev"
     source: hosted
-    version: "3.8.0"
+    version: "3.9.0"
   pool:
     dependency: transitive
     description:
