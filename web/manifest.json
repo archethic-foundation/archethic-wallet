@@ -10,8 +10,12 @@
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"]
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ]
     }
   ],
   "permissions": [
@@ -23,12 +27,20 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["archethic.js"],
-      "matches": ["<all_urls>"]
+      "resources": [
+        "archethic.js",
+        "pdf.js",
+        "pdf.worker.min.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
     }
   ],
   "externally_connectable": {
-    "matches": ["<all_urls>"]
+    "matches": [
+      "<all_urls>"
+    ]
   },
   "action": {
     "default_popup": "index.html",
