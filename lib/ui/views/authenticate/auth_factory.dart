@@ -94,39 +94,49 @@ class AuthFactory {
     BuildContext context, {
     required canCancel,
   }) async {
-    final auth = (await context.push(
+    final auth = await context.push(
       YubikeyScreen.routerPage,
       extra: {'canNavigateBack': canCancel},
-    ))! as bool;
+    );
 
-    return auth;
+    if (auth != null && auth is bool) {
+      return auth;
+    }
+
+    return false;
   }
 
   static Future<bool> _authenticateWithPassword(
     BuildContext context, {
     required bool canCancel,
   }) async {
-    final auth = (await context.push(
+    final auth = await context.push(
       PasswordScreen.routerPage,
       extra: {'canNavigateBack': canCancel},
-    ))! as bool;
+    );
+    if (auth != null && auth is bool) {
+      return auth;
+    }
 
-    return auth;
+    return false;
   }
 
   static Future<bool> _authenticateWithPin(
     BuildContext context, {
     required bool canCancel,
   }) async {
-    final auth = (await context.push(
+    final auth = await context.push(
       PinScreen.routerPage,
       extra: {
         'type': PinOverlayType.enterPin.name,
         'canNavigateBack': canCancel,
       },
-    ))! as bool;
+    );
+    if (auth != null && auth is bool) {
+      return auth;
+    }
 
-    return auth;
+    return false;
   }
 
   static Future<bool> _authenticateWithBiometrics(BuildContext context) async {
