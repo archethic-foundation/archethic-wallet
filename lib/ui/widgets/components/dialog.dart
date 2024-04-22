@@ -8,6 +8,7 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -214,9 +215,13 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
     Animation<double> animation,
     Animation<double> secondaryAnimation,
   ) {
-    return Material(
-      type: MaterialType.transparency,
-      child: Stack(
+    return Scaffold(
+      backgroundColor: Colors.black,
+      drawerEdgeDragWidth: 0,
+      resizeToAvoidBottomInset: false,
+      extendBody: true,
+      extendBodyBehindAppBar: true,
+      body: Stack(
         alignment: Alignment.center,
         children: [
           SizedBox.expand(
@@ -226,7 +231,7 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
                   image: AssetImage(
                     ArchethicTheme.backgroundWelcome,
                   ),
-                  fit: BoxFit.fitHeight,
+                  fit: kIsWeb ? BoxFit.cover : BoxFit.fitHeight,
                   alignment: Alignment.centerRight,
                 ),
               ),
