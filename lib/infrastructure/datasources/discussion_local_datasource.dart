@@ -8,9 +8,10 @@ class HiveDiscussionDatasource with SecuredHiveMixin {
 
   final LazyBox<Discussion> _discussionBox;
 
-  static Future<HiveDiscussionDatasource> getInstance() async {
+  static Future<HiveDiscussionDatasource> getInstance(String? password) async {
     final encryptedBox = await SecuredHiveMixin.openLazySecuredBox<Discussion>(
       'MessengerDiscussion',
+      password,
     );
     return HiveDiscussionDatasource._(encryptedBox);
   }

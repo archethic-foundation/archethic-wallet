@@ -32,9 +32,10 @@ class CacheManagerHive with SecuredHiveMixin {
   final Box<CacheItemHive> _cacheBox;
   final int maxCacheItems;
 
-  static Future<CacheManagerHive> getInstance() async {
+  static Future<CacheManagerHive> getInstance(String? password) async {
     final encryptedBox = await SecuredHiveMixin.openSecuredBox<CacheItemHive>(
       cacheManagerHiveTable,
+      password,
     );
     return CacheManagerHive(encryptedBox);
   }

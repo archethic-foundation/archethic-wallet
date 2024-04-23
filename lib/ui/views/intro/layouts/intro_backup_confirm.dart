@@ -527,7 +527,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
 
     try {
       await sl.get<DBHelper>().clearAppWallet();
-      final vault = await HiveVaultDatasource.getInstance();
+      final vault = await HiveVaultDatasource.getInstance(null);
       await vault.setSeed(widget.seed!);
 
       final originPrivateKey = sl.get<ApiService>().getOriginKey();

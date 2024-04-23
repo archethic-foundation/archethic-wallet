@@ -101,7 +101,7 @@ Future<Uint8List> _getImageFromToken(
   if (UniversalPlatform.isAndroid ||
       UniversalPlatform.isIOS ||
       UniversalPlatform.isMacOS) {
-    final cacheManagerHive = await CacheManagerHive.getInstance();
+    final cacheManagerHive = await CacheManagerHive.getInstance(null);
     final cacheItem = cacheManagerHive.get(address);
 
     if (cacheItem != null) {

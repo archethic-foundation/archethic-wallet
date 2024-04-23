@@ -8,7 +8,7 @@ import 'package:aewallet/model/device_unlock_option.dart';
 class AuthenticationRepository implements AuthenticationRepositoryInterface {
   HiveVaultDatasource? _vault;
   Future<HiveVaultDatasource> get vault async =>
-      _vault ??= await HiveVaultDatasource.getInstance();
+      _vault ??= await HiveVaultDatasource.getInstance(null);
 
   HivePreferencesDatasource? _preferences;
   Future<HivePreferencesDatasource> get preferences async =>
