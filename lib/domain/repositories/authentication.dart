@@ -7,7 +7,7 @@ abstract class AuthenticationRepositoryInterface {
   Future<int> getFailedPinAttempts();
   Future<void> incrementFailedAttempts();
 
-  Future<String?> getPassword();
+  Future<String?> getPassword(String? password);
   Future<void> setPassword(String password);
 
   Future<void> lock(Duration duration);

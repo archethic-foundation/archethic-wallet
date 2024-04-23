@@ -2,6 +2,7 @@
 
 import 'dart:math';
 
+import 'package:aewallet/application/authent_web.dart';
 import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -334,6 +335,11 @@ class _SetPasswordState extends ConsumerState<SetPassword>
       await vault.setPassword(
         stringEncryptBase64(setPasswordController!.text, widget.seed),
       );
+      if (kIsWeb) {
+        ref
+            .read(authentWebProviders.notifier)
+            .setAuthentWeb(setPasswordController!.text);
+      }
       context.pop(true);
     }
   }

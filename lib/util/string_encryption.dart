@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:aewallet/util/encrypt/encrypt.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:crypto/crypto.dart';
 import 'package:tuple/tuple.dart';
 
@@ -75,4 +76,34 @@ String stringDecryptBase64(String string, String? seed) {
   final iv = IV(keyndIV.item2);
   final encrypter = Encrypter(AES(key, mode: AESMode.cbc));
   return encrypter.decrypt64(base64.encode(encryptedBytes), iv: iv);
+}
+
+Uint8List stringEncryptBytes(String string, String? seed) {
+  final salt = _genRandomWithNonZero(8);
+  final keyndIV = _deriveKeyAndIV(seed!, salt);
+  final key = Key(keyndIV.item1);
+  final iv = IV(keyndIV.item2);
+  final encrypter = Encrypter(AES(key, mode: AESMode.cbc));
+  final encrypted = encrypter.encryptBytes(utf8.encode(string), iv: iv);
+  final encryptedBytesWithSalt = Uint8List.fromList(
+    _createUint8ListFromString('Salted__') + salt + encrypted.bytes,
+  );
+  return encryptedBytesWithSalt;
+}
+
+Uint8List stringDecryptBytes(String string, String? seed) {
+  final encryptedBytesWithSalt = base64.decode(string);
+  final encryptedBytes =
+      encryptedBytesWithSalt.sublist(16, encryptedBytesWithSalt.length);
+  final salt = encryptedBytesWithSalt.sublist(8, 16);
+  final keyndIV = _deriveKeyAndIV(seed!, salt);
+  final key = Key(keyndIV.item1);
+  final iv = IV(keyndIV.item2);
+  final encrypter = Encrypter(AES(key, mode: AESMode.cbc));
+  return Uint8List.fromList(
+    encrypter.decryptBytes(
+      Encrypted.fromBase16(uint8ListToHex(encryptedBytes)),
+      iv: iv,
+    ),
+  );
 }

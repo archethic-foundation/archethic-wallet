@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:developer' as dev;
 import 'dart:io';
 
+import 'package:aewallet/application/authent_web.dart';
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/migrations/migration_manager.dart';
 import 'package:aewallet/application/notification/providers.dart';
@@ -277,7 +278,11 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
       */
 
       if (FeatureFlags.forceLogout) {
-        await (await HiveVaultDatasource.getInstance(null)).clearAll();
+        String? authentWeb;
+        if (kIsWeb) {
+          authentWeb = ref.read(authentWebProviders);
+        }
+        await (await HiveVaultDatasource.getInstance(authentWeb)).clearAll();
         await sl.get<DBHelper>().clearAppWallet();
         context.go(IntroWelcome.routerPage);
         return;

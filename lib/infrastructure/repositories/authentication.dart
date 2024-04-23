@@ -6,22 +6,20 @@ import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/device_unlock_option.dart';
 
 class AuthenticationRepository implements AuthenticationRepositoryInterface {
-  HiveVaultDatasource? _vault;
-  Future<HiveVaultDatasource> get vault async =>
-      _vault ??= await HiveVaultDatasource.getInstance(null);
-
   HivePreferencesDatasource? _preferences;
   Future<HivePreferencesDatasource> get preferences async =>
       _preferences ??= await HivePreferencesDatasource.getInstance();
 
   @override
   Future<String?> getPin() async {
-    return (await vault).getPin();
+    final vault = await HiveVaultDatasource.getInstance(null);
+    return vault.getPin();
   }
 
   @override
   Future<void> setPin(String pin) async {
-    return (await vault).setPin(pin);
+    final vault = await HiveVaultDatasource.getInstance(null);
+    await vault.setPin(pin);
   }
 
   @override
@@ -40,13 +38,16 @@ class AuthenticationRepository implements AuthenticationRepositoryInterface {
   }
 
   @override
-  Future<String?> getPassword() async {
-    return (await vault).getPassword();
+  Future<String?> getPassword(String? password) async {
+    // TODO(reddwarf03): Strange....
+    final vault = await HiveVaultDatasource.getInstance(password);
+    return vault.getPassword();
   }
 
   @override
   Future<void> setPassword(String password) async {
-    return (await vault).setPassword(password);
+    final vault = await HiveVaultDatasource.getInstance(password);
+    await vault.setPassword(password);
   }
 
   @override

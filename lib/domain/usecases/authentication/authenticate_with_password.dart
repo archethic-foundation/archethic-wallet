@@ -17,7 +17,11 @@ class AuthenticateWithPassword
     PasswordCredentials credentials, {
     UseCaseProgressListener? onProgress,
   }) async {
-    final rawExpectedPassword = await repository.getPassword();
+    String? authentWeb;
+    if (kIsWeb) {
+      authentWeb = credentials.password;
+    }
+    final rawExpectedPassword = await repository.getPassword(authentWeb);
     if (rawExpectedPassword == null) {
       return const AuthenticationResult.notSetup();
     }
