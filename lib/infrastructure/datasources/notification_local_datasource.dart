@@ -22,6 +22,7 @@ class HiveNotificationLocalDatasource with SecuredHiveMixin {
     final encryptedBox =
         await SecuredHiveMixin.openLazySecuredBox<NotificationsSetup>(
       'NotificationsSetup',
+      null,
     );
 
     return HiveNotificationLocalDatasource._(encryptedBox);

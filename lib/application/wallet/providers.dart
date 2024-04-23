@@ -10,7 +10,11 @@ class _SessionNotifier extends Notifier<Session> {
   }
 
   Future<void> restore() async {
-    final vault = await HiveVaultDatasource.getInstance();
+    String? authentWeb;
+    if (kIsWeb) {
+      authentWeb = ref.read(authentWebProviders);
+    }
+    final vault = await HiveVaultDatasource.getInstance(authentWeb);
 
     final seed = vault.getSeed();
     var keychainSecuredInfos = vault.getKeychainSecuredInfos();
@@ -50,7 +54,11 @@ class _SessionNotifier extends Notifier<Session> {
 
       final keychainSecuredInfos = keychain.toKeychainSecuredInfos();
 
-      final vault = await HiveVaultDatasource.getInstance();
+      String? authentWeb;
+      if (kIsWeb) {
+        authentWeb = ref.read(authentWebProviders);
+      }
+      final vault = await HiveVaultDatasource.getInstance(authentWeb);
       await vault.setKeychainSecuredInfos(keychainSecuredInfos);
 
       final newWalletDTO = await KeychainUtil().getListAccountsFromKeychain(
@@ -78,7 +86,14 @@ class _SessionNotifier extends Notifier<Session> {
     await ContactProviders.reset(ref);
     await MessengerProviders.reset(ref);
 
-    await (await HiveVaultDatasource.getInstance()).clearAll();
+    String? authentWeb;
+    if (kIsWeb) {
+      authentWeb = ref.read(authentWebProviders);
+    }
+    await (await HiveVaultDatasource.getInstance(authentWeb)).clearAll();
+    if (kIsWeb) {
+      ref.invalidate(authentWebProviders);
+    }
     await _dbHelper.clearAppWallet();
     final cache = await Hive.openBox<CacheItemHive>(
       CacheManagerHive.cacheManagerHiveTable,
@@ -102,7 +117,11 @@ class _SessionNotifier extends Notifier<Session> {
 
     final keychainSecuredInfos = keychain.toKeychainSecuredInfos();
 
-    final vault = await HiveVaultDatasource.getInstance();
+    String? authentWeb;
+    if (kIsWeb) {
+      authentWeb = ref.read(authentWebProviders);
+    }
+    final vault = await HiveVaultDatasource.getInstance(authentWeb);
     await vault.setKeychainSecuredInfos(keychainSecuredInfos);
 
     state = Session.loggedIn(
@@ -126,7 +145,11 @@ class _SessionNotifier extends Notifier<Session> {
     if (seed.isEmpty) {
       return null;
     }
-    final vault = await HiveVaultDatasource.getInstance();
+    String? authentWeb;
+    if (kIsWeb) {
+      authentWeb = ref.read(authentWebProviders);
+    }
+    final vault = await HiveVaultDatasource.getInstance(authentWeb);
     await vault.setSeed(seed);
 
     try {
