@@ -12,6 +12,7 @@ import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/util/string_encryption.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -327,7 +328,9 @@ class _SetPasswordState extends ConsumerState<SetPassword>
         });
       }
     } else {
-      final vault = await HiveVaultDatasource.getInstance();
+      final vault = await HiveVaultDatasource.getInstance(
+        kIsWeb ? setPasswordController!.text : null,
+      );
       await vault.setPassword(
         stringEncryptBase64(setPasswordController!.text, widget.seed),
       );

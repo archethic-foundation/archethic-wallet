@@ -25,7 +25,7 @@ class MessengerRepository
 
   final NetworksSetting networksSetting;
 
-  final _localDatasource = HiveDiscussionDatasource.getInstance();
+  final _localDatasource = HiveDiscussionDatasource.getInstance(null);
   MessagingService? _messagingService;
   MessagingService get messagingService =>
       _messagingService ??= sl.get<MessagingService>();

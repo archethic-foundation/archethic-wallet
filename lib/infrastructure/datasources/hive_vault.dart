@@ -26,8 +26,9 @@ class HiveVaultDatasource with SecuredHiveMixin {
 
   // This doesn't have to be a singleton.
   // We just want to make sure that the box is open, before we start getting/setting objects on it
-  static Future<HiveVaultDatasource> getInstance() async {
-    final encryptedBox = await SecuredHiveMixin.openSecuredBox(_vaultBox);
+  static Future<HiveVaultDatasource> getInstance(String? password) async {
+    final encryptedBox =
+        await SecuredHiveMixin.openSecuredBox(_vaultBox, password);
     return HiveVaultDatasource._(encryptedBox);
   }
 

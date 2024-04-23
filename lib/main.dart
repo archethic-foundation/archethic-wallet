@@ -277,7 +277,7 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
       */
 
       if (FeatureFlags.forceLogout) {
-        await (await HiveVaultDatasource.getInstance()).clearAll();
+        await (await HiveVaultDatasource.getInstance(null)).clearAll();
         await sl.get<DBHelper>().clearAppWallet();
         context.go(IntroWelcome.routerPage);
         return;
