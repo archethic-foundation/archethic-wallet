@@ -2,8 +2,8 @@
 
 import 'dart:math';
 
-import 'package:aewallet/application/authent_web.dart';
 import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
+import 'package:aewallet/infrastructure/datasources/vault.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -13,7 +13,6 @@ import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/util/string_encryption.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -329,17 +328,12 @@ class _SetPasswordState extends ConsumerState<SetPassword>
         });
       }
     } else {
-      final vault = await HiveVaultDatasource.getInstance(
-        kIsWeb ? setPasswordController!.text : null,
-      );
+      await Vault.instance().unlock(setPasswordController!.text);
+
+      final vault = await HiveVaultDatasource.getInstance();
       await vault.setPassword(
         stringEncryptBase64(setPasswordController!.text, widget.seed),
       );
-      if (kIsWeb) {
-        ref
-            .read(authentWebProviders.notifier)
-            .setAuthentWeb(setPasswordController!.text);
-      }
       context.pop(true);
     }
   }

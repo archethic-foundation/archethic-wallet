@@ -15,9 +15,11 @@ class HiveTokensListDatasource {
 
   // This doesn't have to be a singleton.
   // We just want to make sure that the box is open, before we start getting/setting objects on it
+  static HiveTokensListDatasource? _instance;
   static Future<HiveTokensListDatasource> getInstance() async {
+    if (_instance?._box.isOpen == true) return _instance!;
     final box = await Hive.openBox<WalletTokenHive>(_tokensListBox);
-    return HiveTokensListDatasource._(box);
+    return _instance = HiveTokensListDatasource._(box);
   }
 
   Future<void> setTokensList(List<WalletTokenHive> v) async {

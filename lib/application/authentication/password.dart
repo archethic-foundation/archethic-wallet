@@ -52,18 +52,9 @@ class PasswordAuthenticationNotifier
       repository: authenticationRepository,
     ).run(password);
 
-    if (kIsWeb) {
-      ref.invalidate(authentWebProviders);
-    }
-
     authenticationResult.maybeMap(
       success: (success) {
         state = state.copyWith(isAuthent: true);
-        if (kIsWeb) {
-          ref
-              .read(authentWebProviders.notifier)
-              .setAuthentWeb(password.password);
-        }
       },
       tooMuchAttempts: (value) {
         ref.invalidate(AuthenticationProviders.lockCountdown);

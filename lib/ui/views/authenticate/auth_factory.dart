@@ -13,7 +13,7 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 
 class AuthFactory {
-  static Future<void> forceAuthenticate(
+  static Future<String> forceAuthenticate(
     BuildContext context,
     WidgetRef ref, {
     required AuthenticationMethod authMethod,
@@ -26,7 +26,7 @@ class AuthFactory {
       canCancel: canCancel,
     );
 
-    while (!authResult) {
+    while (authResult == null) {
       authResult = await authenticate(
         context,
         ref,
@@ -34,9 +34,10 @@ class AuthFactory {
         canCancel: canCancel,
       );
     }
+    return authResult;
   }
 
-  static Future<bool> authenticate(
+  static Future<String?> authenticate(
     BuildContext context,
     WidgetRef ref, {
     AuthenticationMethod? authMethod,
@@ -44,7 +45,7 @@ class AuthFactory {
     bool transitions = false,
     bool activeVibrations = false,
   }) async {
-    var auth = false;
+    String? auth;
 
     authMethod ??= AuthenticationMethod(
       ref.read(
@@ -56,10 +57,13 @@ class AuthFactory {
 
     switch (authMethod.method) {
       case AuthMethod.yubikeyWithYubicloud:
+        // TODO : Generate a key with Yubikey
         auth = await _authenticateWithYubikey(
           context,
           canCancel: canCancel,
-        );
+        )
+            ? 'should_be_yubikey_generated'
+            : null;
         break;
       case AuthMethod.password:
         auth = await _authenticateWithPassword(
@@ -68,21 +72,27 @@ class AuthFactory {
         );
         break;
       case AuthMethod.pin:
+        // TODO : Use pin as key
         auth = await _authenticateWithPin(
           context,
           canCancel: canCancel,
-        );
+        )
+            ? 'should_be_pin'
+            : null;
         break;
       case AuthMethod.biometrics:
+        // TODO : Generate a key with Biometrics
         final hasBiometrics = await sl.get<BiometricUtil>().hasBiometrics();
         if (hasBiometrics) {
-          auth = await _authenticateWithBiometrics(context);
+          auth = await _authenticateWithBiometrics(context)
+              ? 'should_be_biometrics_generated'
+              : null;
         }
         break;
       case AuthMethod.ledger:
         break;
     }
-    if (auth) {
+    if (auth != null) {
       sl.get<HapticUtil>().feedback(FeedbackType.success, activeVibrations);
     } else {
       sl.get<HapticUtil>().feedback(FeedbackType.error, activeVibrations);
@@ -106,7 +116,7 @@ class AuthFactory {
     return false;
   }
 
-  static Future<bool> _authenticateWithPassword(
+  static Future<String?> _authenticateWithPassword(
     BuildContext context, {
     required bool canCancel,
   }) async {
@@ -114,11 +124,11 @@ class AuthFactory {
       PasswordScreen.routerPage,
       extra: {'canNavigateBack': canCancel},
     );
-    if (auth != null && auth is bool) {
+    if (auth != null && auth is String) {
       return auth;
     }
 
-    return false;
+    return null;
   }
 
   static Future<bool> _authenticateWithPin(

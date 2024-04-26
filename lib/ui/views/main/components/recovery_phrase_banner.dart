@@ -35,7 +35,7 @@ class RecoveryPhraseBanner extends ConsumerWidget {
                       ref,
                       activeVibrations: preferences.activeVibrations,
                     );
-                    if (auth) {
+                    if (auth != null) {
                       await ref.ensuresAutolockMaskHidden();
 
                       final seed = ref

@@ -6,19 +6,20 @@ import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/device_unlock_option.dart';
 
 class AuthenticationRepository implements AuthenticationRepositoryInterface {
-  HivePreferencesDatasource? _preferences;
   Future<HivePreferencesDatasource> get preferences async =>
-      _preferences ??= await HivePreferencesDatasource.getInstance();
+      HivePreferencesDatasource.getInstance();
 
+  // TODO: replace by a checkPin method. For web platform security implications, we should not store clear pin
   @override
   Future<String?> getPin() async {
-    final vault = await HiveVaultDatasource.getInstance(null);
+    final vault = await HiveVaultDatasource.getInstance();
     return vault.getPin();
   }
 
+  // TODO: store a HASH(salt+pin) instead of clear pin. This is required by web platform security implications.
   @override
   Future<void> setPin(String pin) async {
-    final vault = await HiveVaultDatasource.getInstance(null);
+    final vault = await HiveVaultDatasource.getInstance();
     await vault.setPin(pin);
   }
 
@@ -37,16 +38,17 @@ class AuthenticationRepository implements AuthenticationRepositoryInterface {
     return (await preferences).resetLockAttempts();
   }
 
+  // TODO: replace by a checkPassword method. For web platform security implications, we should not store clear password
   @override
-  Future<String?> getPassword(String? password) async {
-    // TODO(reddwarf03): Strange....
-    final vault = await HiveVaultDatasource.getInstance(password);
+  Future<String?> getPassword() async {
+    final vault = await HiveVaultDatasource.getInstance();
     return vault.getPassword();
   }
 
+  // TODO: store a HASH(salt+password) instead of clear password. This is required by web platform security implications.
   @override
   Future<void> setPassword(String password) async {
-    final vault = await HiveVaultDatasource.getInstance(password);
+    final vault = await HiveVaultDatasource.getInstance();
     await vault.setPassword(password);
   }
 

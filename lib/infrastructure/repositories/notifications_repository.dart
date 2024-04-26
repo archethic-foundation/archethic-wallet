@@ -17,15 +17,16 @@ class NotificationsRepositoryImpl
   }
 
   late final NotificationBackendClient _client;
-  final _localSetup = HiveNotificationLocalDatasource.getInstance();
   final NetworksSetting networksSetting;
 
   @override
   Stream<TxSentEvent> get events => _client.events;
 
+  Future<HiveNotificationLocalDatasource> get _localSetup =>
+      HiveNotificationLocalDatasource.getInstance();
+
   Future<String?> get cachedFcmToken async {
-    final localSetup = await _localSetup;
-    return localSetup.getLastFcmToken();
+    return (await _localSetup).getLastFcmToken();
   }
 
   @override

@@ -1,8 +1,8 @@
-import 'package:aewallet/infrastructure/datasources/secured_datasource_mixin.dart';
+import 'package:aewallet/infrastructure/datasources/vault.dart';
 import 'package:aewallet/model/data/notification_setup_dto.dart';
 import 'package:hive/hive.dart';
 
-class HiveNotificationLocalDatasource with SecuredHiveMixin {
+class HiveNotificationLocalDatasource {
   HiveNotificationLocalDatasource._(this._notificationsSetupBox);
 
   static const _key = 'singleton';
@@ -18,14 +18,15 @@ class HiveNotificationLocalDatasource with SecuredHiveMixin {
   Future<void> _setSetup(NotificationsSetup setup) =>
       _notificationsSetupBox.put(_key, setup);
 
+  static HiveNotificationLocalDatasource? _instance;
   static Future<HiveNotificationLocalDatasource> getInstance() async {
-    final encryptedBox =
-        await SecuredHiveMixin.openLazySecuredBox<NotificationsSetup>(
+    if (_instance?._notificationsSetupBox.isOpen == true) return _instance!;
+
+    final encryptedBox = await Vault.instance().openLazyBox<NotificationsSetup>(
       'NotificationsSetup',
-      null,
     );
 
-    return HiveNotificationLocalDatasource._(encryptedBox);
+    return _instance = HiveNotificationLocalDatasource._(encryptedBox);
   }
 
   Future<void> addListenedAddresses(List<String> listenAddresses) async {

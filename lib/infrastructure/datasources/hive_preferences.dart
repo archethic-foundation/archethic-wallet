@@ -55,9 +55,12 @@ class HivePreferencesDatasource {
 
   // This doesn't have to be a singleton.
   // We just want to make sure that the box is open, before we start getting/setting objects on it
+  static HivePreferencesDatasource? _instance;
   static Future<HivePreferencesDatasource> getInstance() async {
+    if (_instance?._box.isOpen == true) return _instance!;
+
     final box = await Hive.openBox<dynamic>(_preferencesBox);
-    return HivePreferencesDatasource._(box);
+    return _instance = HivePreferencesDatasource._(box);
   }
 
   T _getValue<T>(dynamic key, {T? defaultValue}) =>

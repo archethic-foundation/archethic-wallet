@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/infrastructure/datasources/vault.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -17,12 +18,10 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:lit_starfield/lit_starfield.dart';
-import 'package:synchronized/synchronized.dart';
 
 part 'countdown_lock_screen.dart';
 part 'lock_mask_screen.dart';
@@ -56,17 +55,17 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
 
   @override
   void initState() {
+    super.initState();
     log(
       'Init state',
       name: _logName,
     );
 
     WidgetsBinding.instance.addObserver(this);
-    SchedulerBinding.instance.addPostFrameCallback(
-      (_) => _forceAuthentIfNeeded(),
-    );
 
-    super.initState();
+    Vault.instance()
+      ..passwordDelegate = _forceAuthent
+      ..shouldBeLocked = _shouldBeLocked;
   }
 
   @override
@@ -74,6 +73,10 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     if (timer != null) timer!.cancel();
     WidgetsBinding.instance.removeObserver(this);
     LockMaskOverlay.instance().hide();
+    Vault.instance()
+      ..passwordDelegate = null
+      ..shouldBeLocked = null;
+
     super.dispose();
   }
 
@@ -86,7 +89,6 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     switch (state) {
       case AppLifecycleState.resumed:
         _hideLockMask();
-        _forceAuthentIfNeeded();
 
         break;
       case AppLifecycleState.inactive:
@@ -117,7 +119,7 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     timer?.cancel();
     timer = RestartableTimer(
       durationBeforeLock,
-      _forceAuthent,
+      Vault.instance().lock,
     );
   }
 
@@ -179,8 +181,8 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     );
   }
 
-  Future<void> _forceAuthentIfNeeded() async {
-    log('Force authent if needed', name: _logName);
+  Future<bool> _shouldBeLocked() async {
+    log('Check if vault should be locked', name: _logName);
     final value = await ref.read(
       AuthenticationProviders.authenticationGuard.future,
     );
@@ -189,7 +191,7 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     final authentRequired = lockDate != null;
 
     if (!authentRequired) {
-      return;
+      return false;
     }
 
     final durationBeforeLock = lockDate.difference(DateTime.now());
@@ -197,29 +199,28 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
       'Duration before lock : $durationBeforeLock',
       name: _logName,
     );
-    if (durationBeforeLock <= Duration.zero) {
-      await _forceAuthent();
-      return;
-    }
+    return durationBeforeLock <= Duration.zero;
   }
 
-  Future<void> _forceAuthent() async {
+  static Completer<String>? _forceAuthenticationCompleter;
+  Future<String> _forceAuthent() async {
     log(
       'Force authent',
       name: _logName,
     );
 
-    if (_forceAuthenticationLock.inLock) {
+    if (_forceAuthenticationCompleter != null) {
       log(
         '... authent already running.',
         name: _logName,
       );
 
-      return;
+      return _forceAuthenticationCompleter!.future;
     }
 
-    await _forceAuthenticationLock.synchronized(() async {
-      await AuthFactory.forceAuthenticate(
+    _forceAuthenticationCompleter = Completer<String>();
+    try {
+      final key = await AuthFactory.forceAuthenticate(
         context,
         ref,
         authMethod: ref.read(
@@ -236,7 +237,13 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
           .read(AuthenticationProviders.authenticationGuard.notifier)
           .scheduleAutolock();
       _hideLockMask();
-    });
+
+      _forceAuthenticationCompleter?.complete(key);
+    } catch (e) {
+      _forceAuthenticationCompleter?.completeError(e);
+    }
+
+    return _forceAuthenticationCompleter!.future;
   }
 }
 

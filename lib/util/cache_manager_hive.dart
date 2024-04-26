@@ -1,7 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'dart:developer';
-import 'package:aewallet/infrastructure/datasources/secured_datasource_mixin.dart';
+
+import 'package:aewallet/infrastructure/datasources/vault.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:hive/hive.dart';
 
@@ -25,19 +26,20 @@ class CacheItemHive extends HiveObject {
   int ttl;
 }
 
-class CacheManagerHive with SecuredHiveMixin {
+class CacheManagerHive {
   CacheManagerHive(this._cacheBox, {this.maxCacheItems = 100});
 
   static const String cacheManagerHiveTable = 'cacheManagerHive';
   final Box<CacheItemHive> _cacheBox;
   final int maxCacheItems;
 
-  static Future<CacheManagerHive> getInstance(String? password) async {
-    final encryptedBox = await SecuredHiveMixin.openSecuredBox<CacheItemHive>(
+  static CacheManagerHive? _instance;
+  static Future<CacheManagerHive> getInstance() async {
+    if (_instance?._cacheBox.isOpen == true) return _instance!;
+    final encryptedBox = await Vault.instance().openBox<CacheItemHive>(
       cacheManagerHiveTable,
-      password,
     );
-    return CacheManagerHive(encryptedBox);
+    return _instance = CacheManagerHive(encryptedBox);
   }
 
   Future<void> put(String key, CacheItemHive cacheItemHive) async {
