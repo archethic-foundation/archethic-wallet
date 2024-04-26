@@ -128,7 +128,7 @@ class SecurityMenuView extends ConsumerWidget
                                       .read(SettingsProviders.settings)
                                       .activeVibrations,
                                 );
-                                if (auth) {
+                                if (auth != null) {
                                   await ref
                                       .read(SessionProviders.session.notifier)
                                       .logout();
@@ -178,7 +178,7 @@ class _AuthMethodSettingsListItem extends ConsumerWidget {
             activeVibrations:
                 ref.read(SettingsProviders.settings).activeVibrations,
           );
-          if (auth) {
+          if (auth != null) {
             return AuthentificationMethodDialog.getDialog(
               context,
               ref,
@@ -311,7 +311,7 @@ class _BackupSecretPhraseListItem extends ConsumerWidget {
           ref,
           activeVibrations: preferences.activeVibrations,
         );
-        if (auth) {
+        if (auth != null) {
           await ref.ensuresAutolockMaskHidden();
 
           final seed = ref.read(SessionProviders.session).loggedIn?.wallet.seed;

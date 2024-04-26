@@ -25,7 +25,8 @@ class MessengerRepository
 
   final NetworksSetting networksSetting;
 
-  final _localDatasource = HiveDiscussionDatasource.getInstance(null);
+  Future<HiveDiscussionDatasource> get _localDatasource =>
+      HiveDiscussionDatasource.getInstance();
   MessagingService? _messagingService;
   MessagingService get messagingService =>
       _messagingService ??= sl.get<MessagingService>();
@@ -429,7 +430,6 @@ class MessengerRepository
 
   @override
   Future<void> clear() async {
-    final localDatasource = await _localDatasource;
-    await localDatasource.clear();
+    await HiveDiscussionDatasource.clear();
   }
 }

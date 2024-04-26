@@ -119,7 +119,8 @@ class __$$PasswordAuthenticationStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PasswordAuthenticationStateImpl extends _PasswordAuthenticationState {
+class _$PasswordAuthenticationStateImpl extends _PasswordAuthenticationState
+    with DiagnosticableTreeMixin {
   const _$PasswordAuthenticationStateImpl(
       {required this.failedAttemptsCount,
       required this.maxAttemptsCount,
@@ -134,8 +135,18 @@ class _$PasswordAuthenticationStateImpl extends _PasswordAuthenticationState {
   final bool isAuthent;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'PasswordAuthenticationState(failedAttemptsCount: $failedAttemptsCount, maxAttemptsCount: $maxAttemptsCount, isAuthent: $isAuthent)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'PasswordAuthenticationState'))
+      ..add(DiagnosticsProperty('failedAttemptsCount', failedAttemptsCount))
+      ..add(DiagnosticsProperty('maxAttemptsCount', maxAttemptsCount))
+      ..add(DiagnosticsProperty('isAuthent', isAuthent));
   }
 
   @override
@@ -286,7 +297,8 @@ class __$$PinAuthenticationStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PinAuthenticationStateImpl extends _PinAuthenticationState {
+class _$PinAuthenticationStateImpl extends _PinAuthenticationState
+    with DiagnosticableTreeMixin {
   const _$PinAuthenticationStateImpl(
       {required this.failedAttemptsCount,
       required this.maxAttemptsCount,
@@ -301,8 +313,18 @@ class _$PinAuthenticationStateImpl extends _PinAuthenticationState {
   final bool isAuthent;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'PinAuthenticationState(failedAttemptsCount: $failedAttemptsCount, maxAttemptsCount: $maxAttemptsCount, isAuthent: $isAuthent)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'PinAuthenticationState'))
+      ..add(DiagnosticsProperty('failedAttemptsCount', failedAttemptsCount))
+      ..add(DiagnosticsProperty('maxAttemptsCount', maxAttemptsCount))
+      ..add(DiagnosticsProperty('isAuthent', isAuthent));
   }
 
   @override
@@ -446,7 +468,8 @@ class __$$AuthenticationGuardStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AuthenticationGuardStateImpl extends _AuthenticationGuardState {
+class _$AuthenticationGuardStateImpl extends _AuthenticationGuardState
+    with DiagnosticableTreeMixin {
   const _$AuthenticationGuardStateImpl(
       {required this.lockDate, required this.timerEnabled})
       : super._();
@@ -462,8 +485,17 @@ class _$AuthenticationGuardStateImpl extends _AuthenticationGuardState {
   final bool timerEnabled;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AuthenticationGuardState(lockDate: $lockDate, timerEnabled: $timerEnabled)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AuthenticationGuardState'))
+      ..add(DiagnosticsProperty('lockDate', lockDate))
+      ..add(DiagnosticsProperty('timerEnabled', timerEnabled));
   }
 
   @override
@@ -614,7 +646,8 @@ class __$$YubikeyAuthenticationStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$YubikeyAuthenticationStateImpl extends _YubikeyAuthenticationState {
+class _$YubikeyAuthenticationStateImpl extends _YubikeyAuthenticationState
+    with DiagnosticableTreeMixin {
   const _$YubikeyAuthenticationStateImpl(
       {required this.failedAttemptsCount,
       required this.maxAttemptsCount,
@@ -629,8 +662,18 @@ class _$YubikeyAuthenticationStateImpl extends _YubikeyAuthenticationState {
   final bool isAuthent;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'YubikeyAuthenticationState(failedAttemptsCount: $failedAttemptsCount, maxAttemptsCount: $maxAttemptsCount, isAuthent: $isAuthent)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'YubikeyAuthenticationState'))
+      ..add(DiagnosticsProperty('failedAttemptsCount', failedAttemptsCount))
+      ..add(DiagnosticsProperty('maxAttemptsCount', maxAttemptsCount))
+      ..add(DiagnosticsProperty('isAuthent', isAuthent));
   }
 
   @override

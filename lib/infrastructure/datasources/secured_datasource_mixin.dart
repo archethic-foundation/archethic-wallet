@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:flutter/foundation.dart';
@@ -7,78 +6,78 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pointycastle/export.dart';
 
-mixin SecuredHiveMixin {
-  // final List<int> secureKey = Hive.generateSecureKey();
+// mixin SecuredHiveMixin {
+// final List<int> secureKey = Hive.generateSecureKey();
 
-  // This doesn't have to be a singleton.
-  // We just want to make sure that the box is open, before we start getting/setting objects on it
-  static Future<Box<E>> openSecuredBox<E>(
-    String name,
-    String? password,
-  ) async {
-    try {
-      return await Hive.openBox<E>(
-        name,
-        encryptionCipher: kIsWeb
-            ? await _prepareCipherWeb(password!)
-            : await _prepareCipher(),
-      );
-    } catch (e, stack) {
-      log(
-        'Failed to open Hive encrypted Box<$E>($name).',
-        error: e,
-        stackTrace: stack,
-      );
-      rethrow;
-    }
-  }
+// This doesn't have to be a singleton.
+// We just want to make sure that the box is open, before we start getting/setting objects on it
+// static Future<Box<E>> openSecuredBox<E>(
+//   String name,
+//   String? password,
+// ) async {
+//   try {
+//     return await Hive.openBox<E>(
+//       name,
+//       encryptionCipher: kIsWeb
+//           ? await _prepareCipherWeb(password!)
+//           : await _prepareCipher(),
+//     );
+//   } catch (e, stack) {
+//     log(
+//       'Failed to open Hive encrypted Box<$E>($name).',
+//       error: e,
+//       stackTrace: stack,
+//     );
+//     rethrow;
+//   }
+// }
 
-  // This doesn't have to be a singleton.
-  // We just want to make sure that the box is open, before we start getting/setting objects on it
-  static Future<LazyBox<E>> openLazySecuredBox<E>(
-    String name,
-    String? password,
-  ) async {
-    try {
-      return Hive.openLazyBox<E>(
-        name,
-        encryptionCipher: kIsWeb
-            ? await _prepareCipherWeb(password!)
-            : await _prepareCipher(),
-      );
-    } catch (e, stack) {
-      log(
-        'Failed to open Hive encrypted LazyBox<$E>($name).',
-        error: e,
-        stackTrace: stack,
-      );
-      rethrow;
-    }
-  }
+// This doesn't have to be a singleton.
+// We just want to make sure that the box is open, before we start getting/setting objects on it
+// static Future<LazyBox<E>> openLazySecuredBox<E>(
+//   String name,
+//   String? password,
+// ) async {
+//   try {
+//     return Hive.openLazyBox<E>(
+//       name,
+//       encryptionCipher: kIsWeb
+//           ? await _prepareCipherWeb(password!)
+//           : await _prepareCipher(),
+//     );
+//   } catch (e, stack) {
+//     log(
+//       'Failed to open Hive encrypted LazyBox<$E>($name).',
+//       error: e,
+//       stackTrace: stack,
+//     );
+//     rethrow;
+//   }
+// }
 
-  static Future<HiveCipher> _prepareCipher() async {
-    const secureStorage = FlutterSecureStorage();
-    final encryptionKey = await Hive.readSecureKey(secureStorage) ??
-        await Hive.generateAndStoreSecureKey(secureStorage);
+// static Future<HiveCipher> _prepareCipher() async {
+//   const secureStorage = FlutterSecureStorage();
+//   final encryptionKey = await Hive.readSecureKey(secureStorage) ??
+//       await Hive.generateAndStoreSecureKey(secureStorage);
 
-    return HiveAesCipher(encryptionKey);
-  }
+//   return HiveAesCipher(encryptionKey);
+// }
 
-  static Future<HiveCipher> _prepareCipherWeb(String password) async {
-    const secureStorage = FlutterSecureStorage();
+// static Future<HiveCipher> _prepareCipherWeb(String password) async {
+//   const secureStorage = FlutterSecureStorage();
 
-    final encryptionKey = await Hive.readEncryptedSecureKey(
-          secureStorage,
-          password,
-        ) ??
-        await Hive.generateAndStoreEncryptedSecureKey(
-          secureStorage,
-          password,
-        );
+//   final encryptionKey = await Hive.readEncryptedSecureKey(
+//         secureStorage,
+//         password,
+//       ) ??
+//       await Hive.generateAndStoreEncryptedSecureKey(
+//         secureStorage,
+//         password,
+//       );
 
-    return HiveAesCipher(encryptionKey);
-  }
-}
+//   return HiveAesCipher(encryptionKey);
+// }
+// }
 
 extension HiveEncryptedSecuredKey on HiveInterface {
   Future<Uint8List> generateAndStoreSecureKey(
@@ -214,6 +213,7 @@ extension HiveEncryptedSecuredKey on HiveInterface {
     }
   }
 
+  // TODO(): Check if that's not too long to compute. I guess a simple SHA256(password+salt) would do the job
   // method to generate encryption key using user's password.
   static Uint8List _generatePBKDFKey(
     String password,

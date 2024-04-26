@@ -57,13 +57,15 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
 
   Future<void> _verifyPassword() async {
     if (!mounted) return;
+
+    final password = enterPasswordController!.text;
     final result = await ref
         .read(
           AuthenticationProviders.passwordAuthentication.notifier,
         )
         .authenticateWithPassword(
           PasswordCredentials(
-            password: enterPasswordController!.text,
+            password: password,
             seed: ref.read(SessionProviders.session).loggedIn!.wallet.seed,
           ),
         );
@@ -75,7 +77,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
               AuthenticationProviders.settings.notifier,
             )
             .setAuthMethod(AuthMethod.password);
-        context.pop(true);
+        context.pop<String?>(password);
         return;
       },
       orElse: () async {

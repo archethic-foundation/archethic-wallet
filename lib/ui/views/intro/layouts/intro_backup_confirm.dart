@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:aewallet/application/authent_web.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/recovery_phrase_saved.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -29,7 +28,6 @@ import 'package:aewallet/util/mnemonics.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -529,11 +527,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
 
     try {
       await sl.get<DBHelper>().clearAppWallet();
-      String? authentWeb;
-      if (kIsWeb) {
-        authentWeb = ref.read(authentWebProviders);
-      }
-      final vault = await HiveVaultDatasource.getInstance(authentWeb);
+      final vault = await HiveVaultDatasource.getInstance();
       await vault.setSeed(widget.seed!);
 
       final originPrivateKey = sl.get<ApiService>().getOriginKey();

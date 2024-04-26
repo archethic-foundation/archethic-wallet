@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:aewallet/application/authent_web.dart';
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';

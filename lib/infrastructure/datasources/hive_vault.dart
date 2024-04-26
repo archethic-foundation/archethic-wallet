@@ -2,13 +2,12 @@
 
 import 'dart:convert';
 
-// Package imports:
-import 'package:aewallet/infrastructure/datasources/secured_datasource_mixin.dart';
+import 'package:aewallet/infrastructure/datasources/vault.dart';
 import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
 import 'package:aewallet/model/data/secured_settings.dart';
 import 'package:hive/hive.dart';
 
-class HiveVaultDatasource with SecuredHiveMixin {
+class HiveVaultDatasource {
   HiveVaultDatasource._(this._box);
 
   static const String _vaultBox = '_vaultBox';
@@ -24,12 +23,17 @@ class HiveVaultDatasource with SecuredHiveMixin {
   static const String _keychainSecuredInfos =
       'archethic_keychain_secured_infos';
 
-  // This doesn't have to be a singleton.
-  // We just want to make sure that the box is open, before we start getting/setting objects on it
-  static Future<HiveVaultDatasource> getInstance(String? password) async {
-    final encryptedBox =
-        await SecuredHiveMixin.openSecuredBox(_vaultBox, password);
-    return HiveVaultDatasource._(encryptedBox);
+  static HiveVaultDatasource? _instance;
+  static Future<HiveVaultDatasource> getInstance() async {
+    if (_instance?._box.isOpen == true) return _instance!;
+
+    final encryptedBox = await Vault.instance().openBox(_vaultBox);
+    return _instance = HiveVaultDatasource._(encryptedBox);
+  }
+
+  static Future<bool> get boxExists => Vault.instance().boxExists(_vaultBox);
+  static Future<void> clear() async {
+    Vault.instance().clear(_vaultBox);
   }
 
   T _getValue<T>(dynamic key, {T? defaultValue}) =>

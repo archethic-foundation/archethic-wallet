@@ -106,12 +106,19 @@ class __$$AuthenticationResultImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AuthenticationResultImpl extends _AuthenticationResult {
+class _$AuthenticationResultImpl extends _AuthenticationResult
+    with DiagnosticableTreeMixin {
   const _$AuthenticationResultImpl() : super._();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AuthenticationResult.success()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'AuthenticationResult.success'));
   }
 
   @override
@@ -225,12 +232,20 @@ class __$$AuthenticationFailureImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AuthenticationFailureImpl extends _AuthenticationFailure {
+class _$AuthenticationFailureImpl extends _AuthenticationFailure
+    with DiagnosticableTreeMixin {
   const _$AuthenticationFailureImpl() : super._();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AuthenticationResult.wrongCredentials()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(
+        DiagnosticsProperty('type', 'AuthenticationResult.wrongCredentials'));
   }
 
   @override
@@ -345,12 +360,20 @@ class __$$AuthenticationNotSetupImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AuthenticationNotSetupImpl extends _AuthenticationNotSetup {
+class _$AuthenticationNotSetupImpl extends _AuthenticationNotSetup
+    with DiagnosticableTreeMixin {
   const _$AuthenticationNotSetupImpl() : super._();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AuthenticationResult.notSetup()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+        .add(DiagnosticsProperty('type', 'AuthenticationResult.notSetup'));
   }
 
   @override
@@ -465,13 +488,20 @@ class __$$AuthenticationTooMuchAttemptsImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AuthenticationTooMuchAttemptsImpl
-    extends _AuthenticationTooMuchAttempts {
+class _$AuthenticationTooMuchAttemptsImpl extends _AuthenticationTooMuchAttempts
+    with DiagnosticableTreeMixin {
   const _$AuthenticationTooMuchAttemptsImpl() : super._();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AuthenticationResult.tooMuchAttempts()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(
+        DiagnosticsProperty('type', 'AuthenticationResult.tooMuchAttempts'));
   }
 
   @override
@@ -644,12 +674,19 @@ class __$$UpdatePinSuccessImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UpdatePinSuccessImpl extends _UpdatePinSuccess {
+class _$UpdatePinSuccessImpl extends _UpdatePinSuccess
+    with DiagnosticableTreeMixin {
   const _$UpdatePinSuccessImpl() : super._();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'UpdatePinResult.success()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'UpdatePinResult.success'));
   }
 
   @override
@@ -747,12 +784,20 @@ class __$$UpdatePinsDoNotMatchImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UpdatePinsDoNotMatchImpl extends _UpdatePinsDoNotMatch {
+class _$UpdatePinsDoNotMatchImpl extends _UpdatePinsDoNotMatch
+    with DiagnosticableTreeMixin {
   const _$UpdatePinsDoNotMatchImpl() : super._();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'UpdatePinResult.pinsDoNotMatch()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+        .add(DiagnosticsProperty('type', 'UpdatePinResult.pinsDoNotMatch'));
   }
 
   @override

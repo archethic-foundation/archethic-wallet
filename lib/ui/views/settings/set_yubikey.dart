@@ -342,7 +342,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey>
           });
         }
       } else {
-        final vault = await HiveVaultDatasource.getInstance(null);
+        final vault = await HiveVaultDatasource.getInstance();
         await vault.setYubikeyClientAPIKey(_clientAPIKeyController!.text);
         await vault.setYubikeyClientID(_clientIDController!.text);
 
@@ -353,7 +353,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey>
               const AuthenticationMethod(AuthMethod.yubikeyWithYubicloud),
           activeVibrations: preferences.activeVibrations,
         );
-        if (auth) {
+        if (auth != null) {
           context.pop(true);
         }
       }

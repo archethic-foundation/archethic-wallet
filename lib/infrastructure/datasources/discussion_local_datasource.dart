@@ -1,19 +1,22 @@
-import 'package:aewallet/infrastructure/datasources/secured_datasource_mixin.dart';
+import 'package:aewallet/infrastructure/datasources/vault.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-class HiveDiscussionDatasource with SecuredHiveMixin {
+class HiveDiscussionDatasource {
   HiveDiscussionDatasource._(this._discussionBox);
 
   final LazyBox<Discussion> _discussionBox;
+  static const _discussionBoxName = 'MessengerDiscussion';
 
-  static Future<HiveDiscussionDatasource> getInstance(String? password) async {
-    final encryptedBox = await SecuredHiveMixin.openLazySecuredBox<Discussion>(
-      'MessengerDiscussion',
-      password,
+  static HiveDiscussionDatasource? _instance;
+  static Future<HiveDiscussionDatasource> getInstance() async {
+    if (_instance?._discussionBox.isOpen == true) return _instance!;
+
+    final encryptedBox = await Vault.instance().openLazyBox<Discussion>(
+      _discussionBoxName,
     );
-    return HiveDiscussionDatasource._(encryptedBox);
+    return _instance = HiveDiscussionDatasource._(encryptedBox);
   }
 
   String _discussionKey({
@@ -71,8 +74,8 @@ class HiveDiscussionDatasource with SecuredHiveMixin {
     );
   }
 
-  Future<void> clear() async {
-    await _discussionBox.clear();
+  static Future<void> clear() async {
+    await Vault.instance().clear(_discussionBoxName);
   }
 
   Future<void> setDiscussionLastMessage({

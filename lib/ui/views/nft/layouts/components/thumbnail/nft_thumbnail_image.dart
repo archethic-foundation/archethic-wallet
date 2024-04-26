@@ -98,10 +98,11 @@ Future<Uint8List> _getImageFromToken(
     'start _getImageFromToken ${DateTime.now().toUtc()}',
     name: 'cacheManagement',
   );
+
   if (UniversalPlatform.isAndroid ||
       UniversalPlatform.isIOS ||
       UniversalPlatform.isMacOS) {
-    final cacheManagerHive = await CacheManagerHive.getInstance(null);
+    final cacheManagerHive = await CacheManagerHive.getInstance();
     final cacheItem = cacheManagerHive.get(address);
 
     if (cacheItem != null) {

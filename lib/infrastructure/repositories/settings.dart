@@ -7,9 +7,8 @@ import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/available_language.dart';
 
 class SettingsRepository implements SettingsRepositoryInterface {
-  HivePreferencesDatasource? _preferences;
   Future<HivePreferencesDatasource> get preferences async =>
-      _preferences ??= await HivePreferencesDatasource.getInstance();
+      HivePreferencesDatasource.getInstance();
 
   @override
   Future<Settings> getSettings(Locale currentLocale) async {

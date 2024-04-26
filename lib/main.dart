@@ -4,7 +4,6 @@ import 'dart:async';
 import 'dart:developer' as dev;
 import 'dart:io';
 
-import 'package:aewallet/application/authent_web.dart';
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/migrations/migration_manager.dart';
 import 'package:aewallet/application/notification/providers.dart';
@@ -15,12 +14,15 @@ import 'package:aewallet/application/verified_tokens.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
+import 'package:aewallet/infrastructure/datasources/vault.dart';
+import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/providers_observer.dart';
 import 'package:aewallet/router/router.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_welcome.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
@@ -278,16 +280,27 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
       */
 
       if (FeatureFlags.forceLogout) {
-        String? authentWeb;
-        if (kIsWeb) {
-          authentWeb = ref.read(authentWebProviders);
-        }
-        await (await HiveVaultDatasource.getInstance(authentWeb)).clearAll();
+        await (await HiveVaultDatasource.getInstance()).clearAll();
         await sl.get<DBHelper>().clearAppWallet();
         context.go(IntroWelcome.routerPage);
         return;
       }
 
+      // Allows Vault to ask for password during restoration
+      Vault.instance().passwordDelegate = () {
+        return AuthFactory.forceAuthenticate(
+          context,
+          ref,
+          authMethod: ref.read(
+            AuthenticationProviders.settings.select(
+              (authSettings) => AuthenticationMethod(
+                authSettings.authenticationMethod,
+              ),
+            ),
+          ),
+          canCancel: false,
+        );
+      };
       await ref.read(SessionProviders.session.notifier).restore();
 
       final session = ref.read(SessionProviders.session);
