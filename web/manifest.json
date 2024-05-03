@@ -19,7 +19,6 @@
     }
   ],
   "permissions": [
-    "contextMenus",
     "clipboardWrite",
     "clipboardRead",
     "activeTab",
