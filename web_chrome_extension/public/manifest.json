@@ -1,7 +1,7 @@
 {
   "name": "Archethic Wallet",
   "description": "Archethic Wallet",
-  "version": "2.3.3.482",
+  "version": "2.3.8.526",
   "content_security_policy": {
     "extension_pages": "script-src 'self' ; object-src 'self'"
   },
