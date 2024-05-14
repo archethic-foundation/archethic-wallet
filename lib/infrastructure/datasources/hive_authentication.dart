@@ -7,8 +7,8 @@ import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
 import 'package:aewallet/model/data/secured_settings.dart';
 import 'package:hive/hive.dart';
 
-class HiveVaultDatasource {
-  HiveVaultDatasource._(this._box);
+class HiveAuthenticationDatasource {
+  HiveAuthenticationDatasource._(this._box);
 
   static const String _vaultBox = '_vaultBox';
   final Box<dynamic> _box;
@@ -23,12 +23,12 @@ class HiveVaultDatasource {
   static const String _keychainSecuredInfos =
       'archethic_keychain_secured_infos';
 
-  static HiveVaultDatasource? _instance;
-  static Future<HiveVaultDatasource> getInstance() async {
+  static HiveAuthenticationDatasource? _instance;
+  static Future<HiveAuthenticationDatasource> getInstance() async {
     if (_instance?._box.isOpen == true) return _instance!;
 
     final encryptedBox = await Vault.instance().openBox(_vaultBox);
-    return _instance = HiveVaultDatasource._(encryptedBox);
+    return _instance = HiveAuthenticationDatasource._(encryptedBox);
   }
 
   static Future<bool> get boxExists => Vault.instance().boxExists(_vaultBox);
@@ -97,10 +97,6 @@ class HiveVaultDatasource {
     } catch (e) {
       return null;
     }
-  }
-
-  Future<void> clearAll() async {
-    await _box.clear();
   }
 
   SecuredSettings toModel() => SecuredSettings(

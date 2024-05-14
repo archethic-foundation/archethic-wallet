@@ -28,7 +28,7 @@ class YubikeyAuthenticationNotifier
   Future<void> _loadInitialState() async {
     if (!mounted) return;
     final authenticationRepository = ref.read(
-      AuthenticationProviders._authenticationRepository,
+      AuthenticationProviders.authenticationRepository,
     );
 
     final maxAttemptsCount = state.maxAttemptsCount;
@@ -46,7 +46,7 @@ class YubikeyAuthenticationNotifier
   ) async {
     state = state.copyWith(isAuthent: false);
     final authenticationRepository = ref.read(
-      AuthenticationProviders._authenticationRepository,
+      AuthenticationProviders.authenticationRepository,
     );
     final authenticationResult = await AuthenticateWithYubikey(
       repository: authenticationRepository,

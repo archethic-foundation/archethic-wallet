@@ -18,6 +18,7 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_configure_security.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_welcome.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
+import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
@@ -134,6 +135,19 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
               });
               return;
             }
+
+            final seed = AppMnemomics.mnemonicListToSeed(
+              phrase.toList(),
+              languageCode: languageSeed,
+            );
+            await context.push(
+              IntroConfigureSecurity.routerPage,
+              extra: {
+                'seed': seed,
+                'isImportProfile': true,
+              },
+            );
+
             ShowSendingAnimation.build(context);
             final newSession = await ref
                 .read(SessionProviders.session.notifier)
@@ -141,10 +155,6 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                   mnemonics: phrase.toList(),
                   languageCode: languageSeed,
                 );
-
-            context
-              ..pop()
-              ..pop();
 
             if (newSession == null) {
               setState(() {
@@ -188,16 +198,8 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
               RecoveryPhraseSavedProvider.setRecoveryPhraseSaved(true),
             );
 
-            unawaited(
-              context.push(
-                IntroConfigureSecurity.routerPage,
-                extra: {
-                  'seed': newSession.wallet.seed,
-                  'name': accountSelected.name,
-                  'isImportProfile': true,
-                },
-              ),
-            );
+            context.go(HomePage.routerPage);
+
             setState(() {
               isPressed = false;
             });

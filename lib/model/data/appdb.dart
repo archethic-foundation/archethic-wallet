@@ -2,6 +2,8 @@
 
 import 'dart:developer';
 
+import 'package:aewallet/infrastructure/datasources/hive_authentication.dart';
+import 'package:aewallet/infrastructure/datasources/vault.dart';
 import 'package:aewallet/infrastructure/hive/wallet_token.hive.dart';
 import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
@@ -324,6 +326,11 @@ class DBHelper {
   Future<void> clearAppWallet() async {
     final box = await Hive.openBox<HiveAppWalletDTO>(appWalletTable);
     await box.clear();
+  }
+
+  Future<void> clearAuthentication() async {
+    await HiveAuthenticationDatasource.clear();
+    await Vault.instance().clearSecureKey();
   }
 
   Future<HiveAppWalletDTO> createAppWallet(String keyChainAddress) async {

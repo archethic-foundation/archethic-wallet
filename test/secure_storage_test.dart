@@ -94,7 +94,7 @@ void main() {
 
               await Hive.updateAndStoreEncryptedSecureKey(
                 secureStorage,
-                'previous_password',
+                expectedEncryptionKey,
                 'new_password',
               );
 
@@ -104,24 +104,6 @@ void main() {
               );
 
               expect(readEncryptionKey, expectedEncryptionKey);
-            },
-          );
-
-          test(
-            'Should not update Vault encryption key password when never created before',
-            () async {
-              const secureStorage = FlutterSecureStorage();
-
-              final newEncryptedSecureKey =
-                  await Hive.updateAndStoreEncryptedSecureKey(
-                secureStorage,
-                'previous_password',
-                'new_password',
-              );
-              expect(
-                newEncryptedSecureKey,
-                null,
-              );
             },
           );
         },
@@ -149,7 +131,7 @@ void main() {
           );
 
           test(
-            'Should return null when wrong salt and right password',
+            'Should throw InvalidCipherTextException when wrong salt and right password',
             () async {
               final encryptedSecureKey = Hive.encryptSecureKey(
                 'salt_ok',
@@ -157,34 +139,32 @@ void main() {
                 Uint8List.fromList([1, 2, 3, 4]),
               );
 
-              final decryptedSecureKey = Hive.decryptSecureKey(
-                'wrong_salt',
-                'password_ok',
-                encryptedSecureKey,
-              );
               expect(
-                decryptedSecureKey,
-                null,
+                () async => Hive.decryptSecureKey(
+                  'wrong_salt',
+                  'password_ok',
+                  encryptedSecureKey,
+                ),
+                throwsA(isA<InvalidCipherTextException>()),
               );
             },
           );
 
           test(
-            'Should return null when right salt and wrong password',
+            'Should throw InvalidCipherTextException when right salt and wrong password',
             () async {
               final encryptedSecuredKey = Hive.encryptSecureKey(
                 'salt_ok',
                 'password_ok',
                 Uint8List.fromList([1, 2, 3, 4]),
               );
-              final decryptedKey = Hive.decryptSecureKey(
-                'salt_ok',
-                'wrong_password',
-                encryptedSecuredKey,
-              );
               expect(
-                decryptedKey,
-                null,
+                () async => Hive.decryptSecureKey(
+                  'salt_ok',
+                  'wrong_password',
+                  encryptedSecuredKey,
+                ),
+                throwsA(isA<InvalidCipherTextException>()),
               );
             },
           );

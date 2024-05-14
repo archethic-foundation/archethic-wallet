@@ -51,7 +51,7 @@ class AuthentificationMethodDialog {
               context,
             )!
                 .configureSecurityExplanationPassword,
-            'seed': ref.read(SessionProviders.session).loggedIn?.wallet.seed,
+            'seed': ref.read(SessionProviders.session).loggedIn!.wallet.seed,
           },
         ))! as bool,
       AuthMethod.yubikeyWithYubicloud => (await context.push(

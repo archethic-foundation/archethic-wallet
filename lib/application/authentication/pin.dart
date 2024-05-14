@@ -27,7 +27,7 @@ class PinAuthenticationNotifier extends StateNotifier<PinAuthenticationState> {
   Future<void> _loadInitialState() async {
     if (!mounted) return;
     final authenticationRepository = ref.read(
-      AuthenticationProviders._authenticationRepository,
+      AuthenticationProviders.authenticationRepository,
     );
 
     final maxAttemptsCount = state.maxAttemptsCount;
@@ -45,7 +45,7 @@ class PinAuthenticationNotifier extends StateNotifier<PinAuthenticationState> {
   ) async {
     state = state.copyWith(isAuthent: false);
     final authenticationRepository = ref.read(
-      AuthenticationProviders._authenticationRepository,
+      AuthenticationProviders.authenticationRepository,
     );
     final authenticationResult = await AuthenticateWithPin(
       repository: authenticationRepository,
@@ -76,7 +76,7 @@ class PinAuthenticationNotifier extends StateNotifier<PinAuthenticationState> {
   }) async =>
       UpdateMyPin(
         repository: ref.read(
-          AuthenticationProviders._authenticationRepository,
+          AuthenticationProviders.authenticationRepository,
         ),
       ).run(
         PinUpdateCommand(

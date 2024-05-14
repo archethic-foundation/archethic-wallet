@@ -122,9 +122,7 @@ class RoutesPath {
                       ? null
                       : (state.extra! as Map<String, dynamic>)['description']!
                           as String,
-              seed: (state.extra! as Map<String, dynamic>)['seed'] == null
-                  ? null
-                  : (state.extra! as Map<String, dynamic>)['seed']! as String,
+              seed: (state.extra! as Map<String, dynamic>)['seed']! as String,
             ),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) =>

@@ -1,27 +1,13 @@
 import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/domain/repositories/authentication.dart';
 import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
-import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/device_unlock_option.dart';
 
-class AuthenticationRepository implements AuthenticationRepositoryInterface {
+abstract class AuthenticationRepositoryBase
+    implements AuthenticationRepositoryInterface {
   Future<HivePreferencesDatasource> get preferences async =>
       HivePreferencesDatasource.getInstance();
-
-  // TODO: replace by a checkPin method. For web platform security implications, we should not store clear pin
-  @override
-  Future<String?> getPin() async {
-    final vault = await HiveVaultDatasource.getInstance();
-    return vault.getPin();
-  }
-
-  // TODO: store a HASH(salt+pin) instead of clear pin. This is required by web platform security implications.
-  @override
-  Future<void> setPin(String pin) async {
-    final vault = await HiveVaultDatasource.getInstance();
-    await vault.setPin(pin);
-  }
 
   @override
   Future<int> getFailedPinAttempts() async {
@@ -36,20 +22,6 @@ class AuthenticationRepository implements AuthenticationRepositoryInterface {
   @override
   Future<void> resetFailedAttempts() async {
     return (await preferences).resetLockAttempts();
-  }
-
-  // TODO: replace by a checkPassword method. For web platform security implications, we should not store clear password
-  @override
-  Future<String?> getPassword() async {
-    final vault = await HiveVaultDatasource.getInstance();
-    return vault.getPassword();
-  }
-
-  // TODO: store a HASH(salt+password) instead of clear password. This is required by web platform security implications.
-  @override
-  Future<void> setPassword(String password) async {
-    final vault = await HiveVaultDatasource.getInstance();
-    await vault.setPassword(password);
   }
 
   @override

@@ -1,8 +1,7 @@
 import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/domain/repositories/authentication.dart';
 import 'package:aewallet/domain/usecases/usecase.dart';
-import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
-import 'package:aewallet/util/string_encryption.dart';
+import 'package:aewallet/infrastructure/datasources/hive_authentication.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:yubidart/yubidart.dart';

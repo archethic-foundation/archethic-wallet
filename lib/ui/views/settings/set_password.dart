@@ -2,8 +2,7 @@
 
 import 'dart:math';
 
-import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
-import 'package:aewallet/infrastructure/datasources/vault.dart';
+import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -12,7 +11,6 @@ import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
-import 'package:aewallet/util/string_encryption.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,12 +23,12 @@ class SetPassword extends ConsumerStatefulWidget {
     super.key,
     this.header,
     this.description,
-    this.seed,
+    required this.seed,
   });
 
   final String? header;
   final String? description;
-  final String? seed;
+  final String seed;
 
   static const routerPage = '/set_password';
 
@@ -328,12 +326,9 @@ class _SetPasswordState extends ConsumerState<SetPassword>
         });
       }
     } else {
-      await Vault.instance().unlock(setPasswordController!.text);
-
-      final vault = await HiveVaultDatasource.getInstance();
-      await vault.setPassword(
-        stringEncryptBase64(setPasswordController!.text, widget.seed),
-      );
+      await ref
+          .read(AuthenticationProviders.authenticationRepository)
+          .setPassword(setPasswordController!.text, widget.seed);
       context.pop(true);
     }
   }

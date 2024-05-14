@@ -80,13 +80,28 @@ import 'package:pointycastle/export.dart';
 // }
 
 extension HiveEncryptedSecuredKey on HiveInterface {
+  static const kSecureKey = 'archethic_wallet_secure_key';
+  static const kEncryptedSecureKey = 'archethic_wallet_encrypted_secure_key';
+  static const kEncryptedSecureKeySalt =
+      'archethic_wallet_encrypted_secure_key_salt';
+
+  Future<bool> isSecureKeyDefined(
+    FlutterSecureStorage secureStorage,
+  ) async =>
+      secureStorage.containsKey(key: kSecureKey);
+
+  Future<void> clearSecureKey(
+    FlutterSecureStorage secureStorage,
+  ) =>
+      secureStorage.delete(key: kSecureKey);
+
   Future<Uint8List> generateAndStoreSecureKey(
     FlutterSecureStorage secureStorage,
   ) async {
     final hiveKey = Hive.generateSecureKey();
 
     await secureStorage.write(
-      key: 'archethic_wallet_secure_key',
+      key: kSecureKey,
       value: base64UrlEncode(hiveKey.toList()),
     );
 
@@ -97,7 +112,7 @@ extension HiveEncryptedSecuredKey on HiveInterface {
     FlutterSecureStorage secureStorage,
   ) async {
     final keyBase64 = await secureStorage.read(
-      key: 'archethic_wallet_secure_key',
+      key: kSecureKey,
     );
 
     if (keyBase64 == null) {
@@ -107,18 +122,11 @@ extension HiveEncryptedSecuredKey on HiveInterface {
     return base64Url.decode(keyBase64);
   }
 
-  Future<Uint8List?> updateAndStoreEncryptedSecureKey(
+  Future<Uint8List> updateAndStoreEncryptedSecureKey(
     FlutterSecureStorage secureStorage,
-    String previousPassword,
+    Uint8List hiveKey,
     String newPassword,
   ) async {
-    final hiveKey = await readEncryptedSecureKey(
-      secureStorage,
-      previousPassword,
-    );
-
-    if (hiveKey == null) return null;
-
     final salt = archethic.generateRandomSeed();
     final encryptedKey = encryptSecureKey(
       salt,
@@ -127,11 +135,11 @@ extension HiveEncryptedSecuredKey on HiveInterface {
     );
 
     await secureStorage.write(
-      key: 'archethic_wallet_encrypted_secure_key',
+      key: kEncryptedSecureKey,
       value: base64UrlEncode(encryptedKey.toList()),
     );
     await secureStorage.write(
-      key: 'archethic_wallet_encrypted_secure_key_salt',
+      key: kEncryptedSecureKeySalt,
       value: base64UrlEncode(archethic.hexToUint8List(salt)),
     );
 
@@ -152,26 +160,44 @@ extension HiveEncryptedSecuredKey on HiveInterface {
     );
 
     await secureStorage.write(
-      key: 'archethic_wallet_encrypted_secure_key',
+      key: kEncryptedSecureKey,
       value: base64UrlEncode(encryptedKey.toList()),
     );
     await secureStorage.write(
-      key: 'archethic_wallet_encrypted_secure_key_salt',
+      key: kEncryptedSecureKeySalt,
       value: base64UrlEncode(archethic.hexToUint8List(salt)),
     );
 
     return Uint8List.fromList(hiveKey);
   }
 
+  Future<bool> isEncryptedSecureKeyDefined(
+    FlutterSecureStorage secureStorage,
+  ) async {
+    final keyDefined = await secureStorage.containsKey(
+      key: kEncryptedSecureKey,
+    );
+    final keySaltDefined = await secureStorage.containsKey(
+      key: kEncryptedSecureKeySalt,
+    );
+
+    return keyDefined && keySaltDefined;
+  }
+
+  Future<void> clearEncryptedSecureKey(
+    FlutterSecureStorage secureStorage,
+  ) =>
+      secureStorage.delete(key: kEncryptedSecureKey);
+
   Future<Uint8List?> readEncryptedSecureKey(
     FlutterSecureStorage secureStorage,
     String password,
   ) async {
     final encryptedKeyBase64 = await secureStorage.read(
-      key: 'archethic_wallet_encrypted_secure_key',
+      key: kEncryptedSecureKey,
     );
     final saltBase64 = await secureStorage.read(
-      key: 'archethic_wallet_encrypted_secure_key_salt',
+      key: kEncryptedSecureKeySalt,
     );
 
     if (encryptedKeyBase64 == null || saltBase64 == null) {
@@ -206,11 +232,7 @@ extension HiveEncryptedSecuredKey on HiveInterface {
   ) {
     final derivedKey = _generatePBKDFKey(password, salt);
 
-    try {
-      return archethic.aesDecrypt(encryptedSecuredKey, derivedKey);
-    } on InvalidCipherTextException {
-      return null;
-    }
+    return archethic.aesDecrypt(encryptedSecuredKey, derivedKey);
   }
 
   // TODO(): Check if that's not too long to compute. I guess a simple SHA256(password+salt) would do the job

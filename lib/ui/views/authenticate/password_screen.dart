@@ -66,7 +66,8 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
         .authenticateWithPassword(
           PasswordCredentials(
             password: password,
-            seed: ref.read(SessionProviders.session).loggedIn!.wallet.seed,
+            seed: ref.read(SessionProviders.session).loggedIn?.wallet.seed ??
+                '', //TODO(Chralu): Migrate HiveAuthentication database to remove password/pin encription
           ),
         );
 
