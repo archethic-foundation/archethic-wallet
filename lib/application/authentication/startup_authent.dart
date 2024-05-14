@@ -18,7 +18,7 @@ class LastInteractionDateNotifier
   FutureOr<LastInteractionDateValue> build() async {
     return (
       date: await ref
-          .watch(AuthenticationProviders._authenticationRepository)
+          .watch(AuthenticationProviders.authenticationRepository)
           .getLastInteractionDate(),
       isStartupValue: true,
     );
@@ -38,7 +38,7 @@ class LastInteractionDateNotifier
     if (date == null) return;
 
     await ref
-        .read(AuthenticationProviders._authenticationRepository)
+        .read(AuthenticationProviders.authenticationRepository)
         .setLastInteractionDate(date);
     log('persist $date', name: _logName);
     state = AsyncValue.data(
@@ -53,7 +53,7 @@ class LastInteractionDateNotifier
     log('clear storage', name: _logName);
 
     await ref
-        .read(AuthenticationProviders._authenticationRepository)
+        .read(AuthenticationProviders.authenticationRepository)
         .removeLastInteractionDate();
 
     state = const AsyncValue.data(

@@ -8,7 +8,6 @@ import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
 import 'package:aewallet/ui/views/intro/bloc/provider.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/settings/set_password.dart';
 import 'package:aewallet/ui/views/settings/set_yubikey.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
@@ -32,11 +31,9 @@ class IntroConfigureSecurity extends ConsumerStatefulWidget {
   const IntroConfigureSecurity({
     super.key,
     required this.seed,
-    required this.name,
     required this.isImportProfile,
   });
   final String? seed;
-  final String? name;
   final bool isImportProfile;
 
   static const routerPage = '/intro_configure_security';
@@ -228,7 +225,7 @@ class _IntroConfigureSecurityState extends ConsumerState<IntroConfigureSecurity>
                     .setAuthMethod(authMethod);
 
                 if (widget.isImportProfile) {
-                  context.go(HomePage.routerPage);
+                  context.pop();
                 } else {
                   EventTaxiImpl.singleton().fire(AuthenticatedEvent());
                 }

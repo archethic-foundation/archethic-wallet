@@ -10,12 +10,12 @@ class _SessionNotifier extends Notifier<Session> {
   }
 
   Future<void> restore() async {
-    if (!await HiveVaultDatasource.boxExists) {
+    if (!await HiveAuthenticationDatasource.boxExists) {
       await logout();
       return;
     }
 
-    final vault = await HiveVaultDatasource.getInstance();
+    final vault = await HiveAuthenticationDatasource.getInstance();
     final seed = vault.getSeed();
     var keychainSecuredInfos = vault.getKeychainSecuredInfos();
     if (keychainSecuredInfos == null && seed != null) {
@@ -54,7 +54,7 @@ class _SessionNotifier extends Notifier<Session> {
 
       final keychainSecuredInfos = keychain.toKeychainSecuredInfos();
 
-      final vault = await HiveVaultDatasource.getInstance();
+      final vault = await HiveAuthenticationDatasource.getInstance();
       await vault.setKeychainSecuredInfos(keychainSecuredInfos);
 
       final newWalletDTO = await KeychainUtil().getListAccountsFromKeychain(
@@ -82,7 +82,7 @@ class _SessionNotifier extends Notifier<Session> {
     await ContactProviders.reset(ref);
     await MessengerProviders.reset(ref);
 
-    await HiveVaultDatasource.clear();
+    await HiveAuthenticationDatasource.clear();
     await _dbHelper.clearAppWallet();
     final cache = await Hive.openBox<CacheItemHive>(
       CacheManagerHive.cacheManagerHiveTable,
@@ -106,7 +106,7 @@ class _SessionNotifier extends Notifier<Session> {
 
     final keychainSecuredInfos = keychain.toKeychainSecuredInfos();
 
-    final vault = await HiveVaultDatasource.getInstance();
+    final vault = await HiveAuthenticationDatasource.getInstance();
     await vault.setKeychainSecuredInfos(keychainSecuredInfos);
 
     state = Session.loggedIn(
@@ -130,7 +130,7 @@ class _SessionNotifier extends Notifier<Session> {
     if (seed.isEmpty) {
       return null;
     }
-    final vault = await HiveVaultDatasource.getInstance();
+    final vault = await HiveAuthenticationDatasource.getInstance();
     await vault.setSeed(seed);
 
     try {

@@ -15,6 +15,7 @@ class Failure with _$Failure implements Exception {
   const factory Failure.insufficientFunds() = _InsuffientFunds;
   const factory Failure.unauthorized() = _Inauthorized;
   const factory Failure.invalidValue() = _InvalidValue;
+  const factory Failure.locked() = _LockedApplication;
   const factory Failure.other({
     Object? cause,
     StackTrace? stack,

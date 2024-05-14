@@ -9,7 +9,6 @@ final _introductionRoutes = [
       key: state.pageKey,
       child: IntroConfigureSecurity(
         seed: (state.extra! as Map<String, dynamic>)['seed']! as String,
-        name: (state.extra! as Map<String, dynamic>)['name']! as String,
         isImportProfile:
             (state.extra! as Map<String, dynamic>)['isImportProfile']! as bool,
       ),

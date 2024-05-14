@@ -1,14 +1,15 @@
 import 'package:aewallet/domain/models/authentication.dart';
 
 abstract class AuthenticationRepositoryInterface {
-  Future<String?> getPin();
+  Future<bool> isPinValid(String pin);
   Future<void> setPin(String pin);
   Future<void> resetFailedAttempts();
   Future<int> getFailedPinAttempts();
   Future<void> incrementFailedAttempts();
 
-  Future<String?> getPassword();
-  Future<void> setPassword(String password);
+  Future<bool> get isPasswordDefined;
+  Future<bool> isPasswordValid(String password, String seed);
+  Future<void> setPassword(String password, String seed);
 
   Future<void> lock(Duration duration);
   Future<void> resetLock();

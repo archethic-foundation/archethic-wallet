@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
+import 'package:aewallet/infrastructure/datasources/hive_authentication.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -342,7 +342,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey>
           });
         }
       } else {
-        final vault = await HiveVaultDatasource.getInstance();
+        final vault = await HiveAuthenticationDatasource.getInstance();
         await vault.setYubikeyClientAPIKey(_clientAPIKeyController!.text);
         await vault.setYubikeyClientID(_clientIDController!.text);
 

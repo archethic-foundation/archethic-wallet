@@ -16,7 +16,7 @@ class AuthenticationSettingsNotifier
 
   Future<void> initialize() async {
     state = await ref
-        .read(AuthenticationProviders._authenticationRepository)
+        .read(AuthenticationProviders.authenticationRepository)
         .getSettings();
   }
 
@@ -30,7 +30,7 @@ class AuthenticationSettingsNotifier
 
   Future<void> _update(AuthenticationSettings authSettings) async {
     await ref
-        .read(AuthenticationProviders._authenticationRepository)
+        .read(AuthenticationProviders.authenticationRepository)
         .setSettings(authSettings);
     state = authSettings;
   }

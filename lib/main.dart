@@ -13,7 +13,6 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/verified_tokens.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
-import 'package:aewallet/infrastructure/datasources/hive_vault.dart';
 import 'package:aewallet/infrastructure/datasources/vault.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/available_language.dart';
@@ -280,8 +279,9 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
       */
 
       if (FeatureFlags.forceLogout) {
-        await (await HiveVaultDatasource.getInstance()).clearAll();
         await sl.get<DBHelper>().clearAppWallet();
+        await sl.get<DBHelper>().clearAuthentication();
+
         context.go(IntroWelcome.routerPage);
         return;
       }
@@ -301,29 +301,48 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
           canCancel: false,
         );
       };
+
       await ref.read(SessionProviders.session.notifier).restore();
 
       final session = ref.read(SessionProviders.session);
-      FlutterNativeSplash.remove();
 
       if (session.isLoggedOut) {
+        await sl.get<DBHelper>().clearAppWallet();
+        await sl.get<DBHelper>().clearAuthentication();
+
         context.go(IntroWelcome.routerPage);
         return;
       }
       await ref
           .read(ArchethicOracleUCOProviders.archethicOracleUCO.notifier)
           .init();
+
       context.go(HomePage.routerPage);
     } catch (e, stack) {
       dev.log(e.toString(), error: e, stackTrace: stack);
-      FlutterNativeSplash.remove();
       context.go(IntroWelcome.routerPage);
     }
+  }
+
+  void removeNativeSplashOnNextNavigation() {
+    void removeNativeSplash() {
+      FlutterNativeSplash.remove();
+      GoRouter.of(context)
+          .routeInformationProvider
+          .removeListener(removeNativeSplash);
+    }
+
+    GoRouter.of(context)
+        .routeInformationProvider
+        .addListener(removeNativeSplash);
   }
 
   @override
   void initState() {
     super.initState();
+
+    removeNativeSplashOnNextNavigation();
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await initializeProviders();
       await checkLoggedIn();

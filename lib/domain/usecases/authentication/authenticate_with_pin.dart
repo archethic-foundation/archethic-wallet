@@ -17,9 +17,7 @@ class AuthenticateWithPin
     PinCredentials credentials, {
     UseCaseProgressListener? onProgress,
   }) async {
-    final expectedPin = await repository.getPin();
-
-    if (expectedPin == credentials.pin) {
+    if (await repository.isPinValid(credentials.pin)) {
       return authenticationSucceed();
     }
 

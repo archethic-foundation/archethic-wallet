@@ -26,6 +26,7 @@ mixin _$Failure {
     required TResult Function() insufficientFunds,
     required TResult Function() unauthorized,
     required TResult Function() invalidValue,
+    required TResult Function() locked,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) =>
       throw _privateConstructorUsedError;
@@ -39,6 +40,7 @@ mixin _$Failure {
     TResult? Function()? insufficientFunds,
     TResult? Function()? unauthorized,
     TResult? Function()? invalidValue,
+    TResult? Function()? locked,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) =>
       throw _privateConstructorUsedError;
@@ -52,6 +54,7 @@ mixin _$Failure {
     TResult Function()? insufficientFunds,
     TResult Function()? unauthorized,
     TResult Function()? invalidValue,
+    TResult Function()? locked,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
   }) =>
@@ -66,6 +69,7 @@ mixin _$Failure {
     required TResult Function(_InsuffientFunds value) insufficientFunds,
     required TResult Function(_Inauthorized value) unauthorized,
     required TResult Function(_InvalidValue value) invalidValue,
+    required TResult Function(_LockedApplication value) locked,
     required TResult Function(_OtherFailure value) other,
   }) =>
       throw _privateConstructorUsedError;
@@ -79,6 +83,7 @@ mixin _$Failure {
     TResult? Function(_InsuffientFunds value)? insufficientFunds,
     TResult? Function(_Inauthorized value)? unauthorized,
     TResult? Function(_InvalidValue value)? invalidValue,
+    TResult? Function(_LockedApplication value)? locked,
     TResult? Function(_OtherFailure value)? other,
   }) =>
       throw _privateConstructorUsedError;
@@ -92,6 +97,7 @@ mixin _$Failure {
     TResult Function(_InsuffientFunds value)? insufficientFunds,
     TResult Function(_Inauthorized value)? unauthorized,
     TResult Function(_InvalidValue value)? invalidValue,
+    TResult Function(_LockedApplication value)? locked,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),
   }) =>
@@ -161,6 +167,7 @@ class _$LoggedOutImpl extends _LoggedOut {
     required TResult Function() insufficientFunds,
     required TResult Function() unauthorized,
     required TResult Function() invalidValue,
+    required TResult Function() locked,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) {
     return loggedOut();
@@ -177,6 +184,7 @@ class _$LoggedOutImpl extends _LoggedOut {
     TResult? Function()? insufficientFunds,
     TResult? Function()? unauthorized,
     TResult? Function()? invalidValue,
+    TResult? Function()? locked,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
     return loggedOut?.call();
@@ -193,6 +201,7 @@ class _$LoggedOutImpl extends _LoggedOut {
     TResult Function()? insufficientFunds,
     TResult Function()? unauthorized,
     TResult Function()? invalidValue,
+    TResult Function()? locked,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
   }) {
@@ -213,6 +222,7 @@ class _$LoggedOutImpl extends _LoggedOut {
     required TResult Function(_InsuffientFunds value) insufficientFunds,
     required TResult Function(_Inauthorized value) unauthorized,
     required TResult Function(_InvalidValue value) invalidValue,
+    required TResult Function(_LockedApplication value) locked,
     required TResult Function(_OtherFailure value) other,
   }) {
     return loggedOut(this);
@@ -229,6 +239,7 @@ class _$LoggedOutImpl extends _LoggedOut {
     TResult? Function(_InsuffientFunds value)? insufficientFunds,
     TResult? Function(_Inauthorized value)? unauthorized,
     TResult? Function(_InvalidValue value)? invalidValue,
+    TResult? Function(_LockedApplication value)? locked,
     TResult? Function(_OtherFailure value)? other,
   }) {
     return loggedOut?.call(this);
@@ -245,6 +256,7 @@ class _$LoggedOutImpl extends _LoggedOut {
     TResult Function(_InsuffientFunds value)? insufficientFunds,
     TResult Function(_Inauthorized value)? unauthorized,
     TResult Function(_InvalidValue value)? invalidValue,
+    TResult Function(_LockedApplication value)? locked,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),
   }) {
@@ -306,6 +318,7 @@ class _$NetworkFailureImpl extends _NetworkFailure {
     required TResult Function() insufficientFunds,
     required TResult Function() unauthorized,
     required TResult Function() invalidValue,
+    required TResult Function() locked,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) {
     return network();
@@ -322,6 +335,7 @@ class _$NetworkFailureImpl extends _NetworkFailure {
     TResult? Function()? insufficientFunds,
     TResult? Function()? unauthorized,
     TResult? Function()? invalidValue,
+    TResult? Function()? locked,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
     return network?.call();
@@ -338,6 +352,7 @@ class _$NetworkFailureImpl extends _NetworkFailure {
     TResult Function()? insufficientFunds,
     TResult Function()? unauthorized,
     TResult Function()? invalidValue,
+    TResult Function()? locked,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
   }) {
@@ -358,6 +373,7 @@ class _$NetworkFailureImpl extends _NetworkFailure {
     required TResult Function(_InsuffientFunds value) insufficientFunds,
     required TResult Function(_Inauthorized value) unauthorized,
     required TResult Function(_InvalidValue value) invalidValue,
+    required TResult Function(_LockedApplication value) locked,
     required TResult Function(_OtherFailure value) other,
   }) {
     return network(this);
@@ -374,6 +390,7 @@ class _$NetworkFailureImpl extends _NetworkFailure {
     TResult? Function(_InsuffientFunds value)? insufficientFunds,
     TResult? Function(_Inauthorized value)? unauthorized,
     TResult? Function(_InvalidValue value)? invalidValue,
+    TResult? Function(_LockedApplication value)? locked,
     TResult? Function(_OtherFailure value)? other,
   }) {
     return network?.call(this);
@@ -390,6 +407,7 @@ class _$NetworkFailureImpl extends _NetworkFailure {
     TResult Function(_InsuffientFunds value)? insufficientFunds,
     TResult Function(_Inauthorized value)? unauthorized,
     TResult Function(_InvalidValue value)? invalidValue,
+    TResult Function(_LockedApplication value)? locked,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),
   }) {
@@ -480,6 +498,7 @@ class _$QuotaExceededFailureImpl extends _QuotaExceededFailure {
     required TResult Function() insufficientFunds,
     required TResult Function() unauthorized,
     required TResult Function() invalidValue,
+    required TResult Function() locked,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) {
     return quotaExceeded(cooldownEndDate);
@@ -496,6 +515,7 @@ class _$QuotaExceededFailureImpl extends _QuotaExceededFailure {
     TResult? Function()? insufficientFunds,
     TResult? Function()? unauthorized,
     TResult? Function()? invalidValue,
+    TResult? Function()? locked,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
     return quotaExceeded?.call(cooldownEndDate);
@@ -512,6 +532,7 @@ class _$QuotaExceededFailureImpl extends _QuotaExceededFailure {
     TResult Function()? insufficientFunds,
     TResult Function()? unauthorized,
     TResult Function()? invalidValue,
+    TResult Function()? locked,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
   }) {
@@ -532,6 +553,7 @@ class _$QuotaExceededFailureImpl extends _QuotaExceededFailure {
     required TResult Function(_InsuffientFunds value) insufficientFunds,
     required TResult Function(_Inauthorized value) unauthorized,
     required TResult Function(_InvalidValue value) invalidValue,
+    required TResult Function(_LockedApplication value) locked,
     required TResult Function(_OtherFailure value) other,
   }) {
     return quotaExceeded(this);
@@ -548,6 +570,7 @@ class _$QuotaExceededFailureImpl extends _QuotaExceededFailure {
     TResult? Function(_InsuffientFunds value)? insufficientFunds,
     TResult? Function(_Inauthorized value)? unauthorized,
     TResult? Function(_InvalidValue value)? invalidValue,
+    TResult? Function(_LockedApplication value)? locked,
     TResult? Function(_OtherFailure value)? other,
   }) {
     return quotaExceeded?.call(this);
@@ -564,6 +587,7 @@ class _$QuotaExceededFailureImpl extends _QuotaExceededFailure {
     TResult Function(_InsuffientFunds value)? insufficientFunds,
     TResult Function(_Inauthorized value)? unauthorized,
     TResult Function(_InvalidValue value)? invalidValue,
+    TResult Function(_LockedApplication value)? locked,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),
   }) {
@@ -631,6 +655,7 @@ class _$ServiceNotFoundImpl extends _ServiceNotFound {
     required TResult Function() insufficientFunds,
     required TResult Function() unauthorized,
     required TResult Function() invalidValue,
+    required TResult Function() locked,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) {
     return serviceNotFound();
@@ -647,6 +672,7 @@ class _$ServiceNotFoundImpl extends _ServiceNotFound {
     TResult? Function()? insufficientFunds,
     TResult? Function()? unauthorized,
     TResult? Function()? invalidValue,
+    TResult? Function()? locked,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
     return serviceNotFound?.call();
@@ -663,6 +689,7 @@ class _$ServiceNotFoundImpl extends _ServiceNotFound {
     TResult Function()? insufficientFunds,
     TResult Function()? unauthorized,
     TResult Function()? invalidValue,
+    TResult Function()? locked,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
   }) {
@@ -683,6 +710,7 @@ class _$ServiceNotFoundImpl extends _ServiceNotFound {
     required TResult Function(_InsuffientFunds value) insufficientFunds,
     required TResult Function(_Inauthorized value) unauthorized,
     required TResult Function(_InvalidValue value) invalidValue,
+    required TResult Function(_LockedApplication value) locked,
     required TResult Function(_OtherFailure value) other,
   }) {
     return serviceNotFound(this);
@@ -699,6 +727,7 @@ class _$ServiceNotFoundImpl extends _ServiceNotFound {
     TResult? Function(_InsuffientFunds value)? insufficientFunds,
     TResult? Function(_Inauthorized value)? unauthorized,
     TResult? Function(_InvalidValue value)? invalidValue,
+    TResult? Function(_LockedApplication value)? locked,
     TResult? Function(_OtherFailure value)? other,
   }) {
     return serviceNotFound?.call(this);
@@ -715,6 +744,7 @@ class _$ServiceNotFoundImpl extends _ServiceNotFound {
     TResult Function(_InsuffientFunds value)? insufficientFunds,
     TResult Function(_Inauthorized value)? unauthorized,
     TResult Function(_InvalidValue value)? invalidValue,
+    TResult Function(_LockedApplication value)? locked,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),
   }) {
@@ -777,6 +807,7 @@ class _$ServiceAlreadyExistsImpl extends _ServiceAlreadyExists {
     required TResult Function() insufficientFunds,
     required TResult Function() unauthorized,
     required TResult Function() invalidValue,
+    required TResult Function() locked,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) {
     return serviceAlreadyExists();
@@ -793,6 +824,7 @@ class _$ServiceAlreadyExistsImpl extends _ServiceAlreadyExists {
     TResult? Function()? insufficientFunds,
     TResult? Function()? unauthorized,
     TResult? Function()? invalidValue,
+    TResult? Function()? locked,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
     return serviceAlreadyExists?.call();
@@ -809,6 +841,7 @@ class _$ServiceAlreadyExistsImpl extends _ServiceAlreadyExists {
     TResult Function()? insufficientFunds,
     TResult Function()? unauthorized,
     TResult Function()? invalidValue,
+    TResult Function()? locked,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
   }) {
@@ -829,6 +862,7 @@ class _$ServiceAlreadyExistsImpl extends _ServiceAlreadyExists {
     required TResult Function(_InsuffientFunds value) insufficientFunds,
     required TResult Function(_Inauthorized value) unauthorized,
     required TResult Function(_InvalidValue value) invalidValue,
+    required TResult Function(_LockedApplication value) locked,
     required TResult Function(_OtherFailure value) other,
   }) {
     return serviceAlreadyExists(this);
@@ -845,6 +879,7 @@ class _$ServiceAlreadyExistsImpl extends _ServiceAlreadyExists {
     TResult? Function(_InsuffientFunds value)? insufficientFunds,
     TResult? Function(_Inauthorized value)? unauthorized,
     TResult? Function(_InvalidValue value)? invalidValue,
+    TResult? Function(_LockedApplication value)? locked,
     TResult? Function(_OtherFailure value)? other,
   }) {
     return serviceAlreadyExists?.call(this);
@@ -861,6 +896,7 @@ class _$ServiceAlreadyExistsImpl extends _ServiceAlreadyExists {
     TResult Function(_InsuffientFunds value)? insufficientFunds,
     TResult Function(_Inauthorized value)? unauthorized,
     TResult Function(_InvalidValue value)? invalidValue,
+    TResult Function(_LockedApplication value)? locked,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),
   }) {
@@ -922,6 +958,7 @@ class _$InsuffientFundsImpl extends _InsuffientFunds {
     required TResult Function() insufficientFunds,
     required TResult Function() unauthorized,
     required TResult Function() invalidValue,
+    required TResult Function() locked,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) {
     return insufficientFunds();
@@ -938,6 +975,7 @@ class _$InsuffientFundsImpl extends _InsuffientFunds {
     TResult? Function()? insufficientFunds,
     TResult? Function()? unauthorized,
     TResult? Function()? invalidValue,
+    TResult? Function()? locked,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
     return insufficientFunds?.call();
@@ -954,6 +992,7 @@ class _$InsuffientFundsImpl extends _InsuffientFunds {
     TResult Function()? insufficientFunds,
     TResult Function()? unauthorized,
     TResult Function()? invalidValue,
+    TResult Function()? locked,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
   }) {
@@ -974,6 +1013,7 @@ class _$InsuffientFundsImpl extends _InsuffientFunds {
     required TResult Function(_InsuffientFunds value) insufficientFunds,
     required TResult Function(_Inauthorized value) unauthorized,
     required TResult Function(_InvalidValue value) invalidValue,
+    required TResult Function(_LockedApplication value) locked,
     required TResult Function(_OtherFailure value) other,
   }) {
     return insufficientFunds(this);
@@ -990,6 +1030,7 @@ class _$InsuffientFundsImpl extends _InsuffientFunds {
     TResult? Function(_InsuffientFunds value)? insufficientFunds,
     TResult? Function(_Inauthorized value)? unauthorized,
     TResult? Function(_InvalidValue value)? invalidValue,
+    TResult? Function(_LockedApplication value)? locked,
     TResult? Function(_OtherFailure value)? other,
   }) {
     return insufficientFunds?.call(this);
@@ -1006,6 +1047,7 @@ class _$InsuffientFundsImpl extends _InsuffientFunds {
     TResult Function(_InsuffientFunds value)? insufficientFunds,
     TResult Function(_Inauthorized value)? unauthorized,
     TResult Function(_InvalidValue value)? invalidValue,
+    TResult Function(_LockedApplication value)? locked,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),
   }) {
@@ -1067,6 +1109,7 @@ class _$InauthorizedImpl extends _Inauthorized {
     required TResult Function() insufficientFunds,
     required TResult Function() unauthorized,
     required TResult Function() invalidValue,
+    required TResult Function() locked,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) {
     return unauthorized();
@@ -1083,6 +1126,7 @@ class _$InauthorizedImpl extends _Inauthorized {
     TResult? Function()? insufficientFunds,
     TResult? Function()? unauthorized,
     TResult? Function()? invalidValue,
+    TResult? Function()? locked,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
     return unauthorized?.call();
@@ -1099,6 +1143,7 @@ class _$InauthorizedImpl extends _Inauthorized {
     TResult Function()? insufficientFunds,
     TResult Function()? unauthorized,
     TResult Function()? invalidValue,
+    TResult Function()? locked,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
   }) {
@@ -1119,6 +1164,7 @@ class _$InauthorizedImpl extends _Inauthorized {
     required TResult Function(_InsuffientFunds value) insufficientFunds,
     required TResult Function(_Inauthorized value) unauthorized,
     required TResult Function(_InvalidValue value) invalidValue,
+    required TResult Function(_LockedApplication value) locked,
     required TResult Function(_OtherFailure value) other,
   }) {
     return unauthorized(this);
@@ -1135,6 +1181,7 @@ class _$InauthorizedImpl extends _Inauthorized {
     TResult? Function(_InsuffientFunds value)? insufficientFunds,
     TResult? Function(_Inauthorized value)? unauthorized,
     TResult? Function(_InvalidValue value)? invalidValue,
+    TResult? Function(_LockedApplication value)? locked,
     TResult? Function(_OtherFailure value)? other,
   }) {
     return unauthorized?.call(this);
@@ -1151,6 +1198,7 @@ class _$InauthorizedImpl extends _Inauthorized {
     TResult Function(_InsuffientFunds value)? insufficientFunds,
     TResult Function(_Inauthorized value)? unauthorized,
     TResult Function(_InvalidValue value)? invalidValue,
+    TResult Function(_LockedApplication value)? locked,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),
   }) {
@@ -1212,6 +1260,7 @@ class _$InvalidValueImpl extends _InvalidValue {
     required TResult Function() insufficientFunds,
     required TResult Function() unauthorized,
     required TResult Function() invalidValue,
+    required TResult Function() locked,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) {
     return invalidValue();
@@ -1228,6 +1277,7 @@ class _$InvalidValueImpl extends _InvalidValue {
     TResult? Function()? insufficientFunds,
     TResult? Function()? unauthorized,
     TResult? Function()? invalidValue,
+    TResult? Function()? locked,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
     return invalidValue?.call();
@@ -1244,6 +1294,7 @@ class _$InvalidValueImpl extends _InvalidValue {
     TResult Function()? insufficientFunds,
     TResult Function()? unauthorized,
     TResult Function()? invalidValue,
+    TResult Function()? locked,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
   }) {
@@ -1264,6 +1315,7 @@ class _$InvalidValueImpl extends _InvalidValue {
     required TResult Function(_InsuffientFunds value) insufficientFunds,
     required TResult Function(_Inauthorized value) unauthorized,
     required TResult Function(_InvalidValue value) invalidValue,
+    required TResult Function(_LockedApplication value) locked,
     required TResult Function(_OtherFailure value) other,
   }) {
     return invalidValue(this);
@@ -1280,6 +1332,7 @@ class _$InvalidValueImpl extends _InvalidValue {
     TResult? Function(_InsuffientFunds value)? insufficientFunds,
     TResult? Function(_Inauthorized value)? unauthorized,
     TResult? Function(_InvalidValue value)? invalidValue,
+    TResult? Function(_LockedApplication value)? locked,
     TResult? Function(_OtherFailure value)? other,
   }) {
     return invalidValue?.call(this);
@@ -1296,6 +1349,7 @@ class _$InvalidValueImpl extends _InvalidValue {
     TResult Function(_InsuffientFunds value)? insufficientFunds,
     TResult Function(_Inauthorized value)? unauthorized,
     TResult Function(_InvalidValue value)? invalidValue,
+    TResult Function(_LockedApplication value)? locked,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),
   }) {
@@ -1309,6 +1363,157 @@ class _$InvalidValueImpl extends _InvalidValue {
 abstract class _InvalidValue extends Failure {
   const factory _InvalidValue() = _$InvalidValueImpl;
   const _InvalidValue._() : super._();
+}
+
+/// @nodoc
+abstract class _$$LockedApplicationImplCopyWith<$Res> {
+  factory _$$LockedApplicationImplCopyWith(_$LockedApplicationImpl value,
+          $Res Function(_$LockedApplicationImpl) then) =
+      __$$LockedApplicationImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$LockedApplicationImplCopyWithImpl<$Res>
+    extends _$FailureCopyWithImpl<$Res, _$LockedApplicationImpl>
+    implements _$$LockedApplicationImplCopyWith<$Res> {
+  __$$LockedApplicationImplCopyWithImpl(_$LockedApplicationImpl _value,
+      $Res Function(_$LockedApplicationImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$LockedApplicationImpl extends _LockedApplication {
+  const _$LockedApplicationImpl() : super._();
+
+  @override
+  String toString() {
+    return 'Failure.locked()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$LockedApplicationImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loggedOut,
+    required TResult Function() network,
+    required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
+    required TResult Function() serviceNotFound,
+    required TResult Function() serviceAlreadyExists,
+    required TResult Function() insufficientFunds,
+    required TResult Function() unauthorized,
+    required TResult Function() invalidValue,
+    required TResult Function() locked,
+    required TResult Function(Object? cause, StackTrace? stack) other,
+  }) {
+    return locked();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loggedOut,
+    TResult? Function()? network,
+    TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
+    TResult? Function()? serviceNotFound,
+    TResult? Function()? serviceAlreadyExists,
+    TResult? Function()? insufficientFunds,
+    TResult? Function()? unauthorized,
+    TResult? Function()? invalidValue,
+    TResult? Function()? locked,
+    TResult? Function(Object? cause, StackTrace? stack)? other,
+  }) {
+    return locked?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loggedOut,
+    TResult Function()? network,
+    TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
+    TResult Function()? serviceNotFound,
+    TResult Function()? serviceAlreadyExists,
+    TResult Function()? insufficientFunds,
+    TResult Function()? unauthorized,
+    TResult Function()? invalidValue,
+    TResult Function()? locked,
+    TResult Function(Object? cause, StackTrace? stack)? other,
+    required TResult orElse(),
+  }) {
+    if (locked != null) {
+      return locked();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_LoggedOut value) loggedOut,
+    required TResult Function(_NetworkFailure value) network,
+    required TResult Function(_QuotaExceededFailure value) quotaExceeded,
+    required TResult Function(_ServiceNotFound value) serviceNotFound,
+    required TResult Function(_ServiceAlreadyExists value) serviceAlreadyExists,
+    required TResult Function(_InsuffientFunds value) insufficientFunds,
+    required TResult Function(_Inauthorized value) unauthorized,
+    required TResult Function(_InvalidValue value) invalidValue,
+    required TResult Function(_LockedApplication value) locked,
+    required TResult Function(_OtherFailure value) other,
+  }) {
+    return locked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_LoggedOut value)? loggedOut,
+    TResult? Function(_NetworkFailure value)? network,
+    TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
+    TResult? Function(_ServiceNotFound value)? serviceNotFound,
+    TResult? Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
+    TResult? Function(_InsuffientFunds value)? insufficientFunds,
+    TResult? Function(_Inauthorized value)? unauthorized,
+    TResult? Function(_InvalidValue value)? invalidValue,
+    TResult? Function(_LockedApplication value)? locked,
+    TResult? Function(_OtherFailure value)? other,
+  }) {
+    return locked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_LoggedOut value)? loggedOut,
+    TResult Function(_NetworkFailure value)? network,
+    TResult Function(_QuotaExceededFailure value)? quotaExceeded,
+    TResult Function(_ServiceNotFound value)? serviceNotFound,
+    TResult Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
+    TResult Function(_InsuffientFunds value)? insufficientFunds,
+    TResult Function(_Inauthorized value)? unauthorized,
+    TResult Function(_InvalidValue value)? invalidValue,
+    TResult Function(_LockedApplication value)? locked,
+    TResult Function(_OtherFailure value)? other,
+    required TResult orElse(),
+  }) {
+    if (locked != null) {
+      return locked(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _LockedApplication extends Failure {
+  const factory _LockedApplication() = _$LockedApplicationImpl;
+  const _LockedApplication._() : super._();
 }
 
 /// @nodoc
@@ -1389,6 +1594,7 @@ class _$OtherFailureImpl extends _OtherFailure {
     required TResult Function() insufficientFunds,
     required TResult Function() unauthorized,
     required TResult Function() invalidValue,
+    required TResult Function() locked,
     required TResult Function(Object? cause, StackTrace? stack) other,
   }) {
     return other(cause, stack);
@@ -1405,6 +1611,7 @@ class _$OtherFailureImpl extends _OtherFailure {
     TResult? Function()? insufficientFunds,
     TResult? Function()? unauthorized,
     TResult? Function()? invalidValue,
+    TResult? Function()? locked,
     TResult? Function(Object? cause, StackTrace? stack)? other,
   }) {
     return other?.call(cause, stack);
@@ -1421,6 +1628,7 @@ class _$OtherFailureImpl extends _OtherFailure {
     TResult Function()? insufficientFunds,
     TResult Function()? unauthorized,
     TResult Function()? invalidValue,
+    TResult Function()? locked,
     TResult Function(Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
   }) {
@@ -1441,6 +1649,7 @@ class _$OtherFailureImpl extends _OtherFailure {
     required TResult Function(_InsuffientFunds value) insufficientFunds,
     required TResult Function(_Inauthorized value) unauthorized,
     required TResult Function(_InvalidValue value) invalidValue,
+    required TResult Function(_LockedApplication value) locked,
     required TResult Function(_OtherFailure value) other,
   }) {
     return other(this);
@@ -1457,6 +1666,7 @@ class _$OtherFailureImpl extends _OtherFailure {
     TResult? Function(_InsuffientFunds value)? insufficientFunds,
     TResult? Function(_Inauthorized value)? unauthorized,
     TResult? Function(_InvalidValue value)? invalidValue,
+    TResult? Function(_LockedApplication value)? locked,
     TResult? Function(_OtherFailure value)? other,
   }) {
     return other?.call(this);
@@ -1473,6 +1683,7 @@ class _$OtherFailureImpl extends _OtherFailure {
     TResult Function(_InsuffientFunds value)? insufficientFunds,
     TResult Function(_Inauthorized value)? unauthorized,
     TResult Function(_InvalidValue value)? invalidValue,
+    TResult Function(_LockedApplication value)? locked,
     TResult Function(_OtherFailure value)? other,
     required TResult orElse(),
   }) {

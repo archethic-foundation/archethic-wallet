@@ -5,7 +5,8 @@ import 'package:aewallet/application/utils.dart';
 import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/domain/repositories/authentication.dart';
 import 'package:aewallet/domain/usecases/authentication/authentication.dart';
-import 'package:aewallet/infrastructure/repositories/authentication.dart';
+import 'package:aewallet/infrastructure/repositories/authentication.other.dart';
+import 'package:aewallet/infrastructure/repositories/authentication.web.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/model/device_unlock_option.dart';
@@ -24,9 +25,12 @@ part 'startup_authent.dart';
 part 'yubikey.dart';
 
 abstract class AuthenticationProviders {
-  static final _authenticationRepository =
+  static final authenticationRepository =
       Provider<AuthenticationRepositoryInterface>(
-    (ref) => AuthenticationRepository(),
+    (ref) {
+      if (kIsWeb) return AuthenticationRepositoryWeb();
+      return AuthenticationRepositoryOther();
+    },
   );
 
   /// Whether the application is locked.
@@ -43,7 +47,7 @@ abstract class AuthenticationProviders {
     (ref) async* {
       final lockDate = await ref
           .watch(
-            AuthenticationProviders._authenticationRepository,
+            AuthenticationProviders.authenticationRepository,
           )
           .getLockUntilDate();
       if (lockDate == null || lockDate.isBefore(DateTime.now().toUtc())) {
@@ -98,7 +102,7 @@ abstract class AuthenticationProviders {
   static Future<void> reset(Ref ref) async {
     await ref.read(AuthenticationProviders.settings.notifier).reset();
     await ref.read(authenticationGuard.notifier).unscheduleAutolock();
-    final authentRepository = ref.read(_authenticationRepository);
+    final authentRepository = ref.read(authenticationRepository);
     await authentRepository.resetFailedAttempts();
     await authentRepository.resetLock();
 

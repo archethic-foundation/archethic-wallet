@@ -6,7 +6,7 @@ part of 'wallet.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$sessionNotifierHash() => r'84828cbb20a960ed85e124d969fa674e12ea85b3';
+String _$sessionNotifierHash() => r'42995e67826c831c1b96114c72de48bfa0a5cf43';
 
 /// See also [_SessionNotifier].
 @ProviderFor(_SessionNotifier)
