@@ -30,10 +30,8 @@ import 'package:material_symbols_icons/symbols.dart';
 class IntroConfigureSecurity extends ConsumerStatefulWidget {
   const IntroConfigureSecurity({
     super.key,
-    required this.seed,
     required this.isImportProfile,
   });
-  final String? seed;
   final bool isImportProfile;
 
   static const routerPage = '/intro_configure_security';
@@ -178,7 +176,6 @@ class _IntroConfigureSecurityState extends ConsumerState<IntroConfigureSecurity>
                         context,
                       )!
                           .configureSecurityExplanationPassword,
-                      'seed': widget.seed,
                     },
                   );
                   if (result != null && result is bool) {

@@ -8,8 +8,8 @@ abstract class AuthenticationRepositoryInterface {
   Future<void> incrementFailedAttempts();
 
   Future<bool> get isPasswordDefined;
-  Future<bool> isPasswordValid(String password, String seed);
-  Future<void> setPassword(String password, String seed);
+  Future<bool> isPasswordValid(String password);
+  Future<void> setPassword(String password);
 
   Future<void> lock(Duration duration);
   Future<void> resetLock();

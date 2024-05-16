@@ -2,7 +2,6 @@
 
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
@@ -51,7 +50,6 @@ class AuthentificationMethodDialog {
               context,
             )!
                 .configureSecurityExplanationPassword,
-            'seed': ref.read(SessionProviders.session).loggedIn!.wallet.seed,
           },
         ))! as bool,
       AuthMethod.yubikeyWithYubicloud => (await context.push(

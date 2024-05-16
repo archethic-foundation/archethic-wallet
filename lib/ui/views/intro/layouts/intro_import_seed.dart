@@ -136,14 +136,9 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
               return;
             }
 
-            final seed = AppMnemomics.mnemonicListToSeed(
-              phrase.toList(),
-              languageCode: languageSeed,
-            );
             await context.push(
               IntroConfigureSecurity.routerPage,
               extra: {
-                'seed': seed,
                 'isImportProfile': true,
               },
             );

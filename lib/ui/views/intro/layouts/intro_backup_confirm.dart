@@ -285,7 +285,6 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                     await context.push(
                       IntroConfigureSecurity.routerPage,
                       extra: {
-                        'seed': widget.seed,
                         'isImportProfile': false,
                       },
                     );
@@ -331,7 +330,6 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                       await context.push(
                         IntroConfigureSecurity.routerPage,
                         extra: {
-                          'seed': widget.seed,
                           'name': widget.name,
                           'isImportProfile': false,
                         },

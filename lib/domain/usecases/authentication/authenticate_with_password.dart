@@ -23,7 +23,6 @@ class AuthenticateWithPassword
 
     if (await repository.isPasswordValid(
       credentials.password,
-      credentials.seed,
     )) {
       return authenticationSucceed();
     }

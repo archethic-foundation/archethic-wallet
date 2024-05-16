@@ -3,7 +3,6 @@
 import 'dart:async';
 
 import 'package:aewallet/application/authentication/authentication.dart';
-import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -66,8 +65,6 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
         .authenticateWithPassword(
           PasswordCredentials(
             password: password,
-            seed: ref.read(SessionProviders.session).loggedIn?.wallet.seed ??
-                '', //TODO(Chralu): Migrate HiveAuthentication database to remove password/pin encription
           ),
         );
 
