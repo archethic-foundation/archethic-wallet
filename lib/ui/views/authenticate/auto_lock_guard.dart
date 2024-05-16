@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/infrastructure/datasources/vault.dart';
+import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -47,8 +48,6 @@ class AutoLockGuard extends ConsumerStatefulWidget {
 
 class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     with WidgetsBindingObserver {
-  static final _forceAuthenticationLock = Lock();
-
   RestartableTimer? timer;
 
   static const _logName = 'AuthenticationGuard-Widget';

@@ -2,7 +2,7 @@
 
 import 'dart:developer';
 
-import 'package:aewallet/infrastructure/datasources/vault.dart';
+import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:hive/hive.dart';
 

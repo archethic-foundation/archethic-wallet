@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:aewallet/infrastructure/datasources/secured_datasource_mixin.dart';
+import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_flutter/hive_flutter.dart';

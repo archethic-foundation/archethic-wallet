@@ -2,11 +2,11 @@ import 'package:aewallet/model/data/appdb.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:hive/hive.dart';
 
-part 'wallet_token.hive.g.dart';
+part 'wallet_token_dto.hive.g.dart';
 
 @HiveType(typeId: HiveTypeIds.walletToken)
-class WalletTokenHive extends HiveObject {
-  WalletTokenHive({
+class WalletTokenHiveDto extends HiveObject {
+  WalletTokenHiveDto({
     required this.address,
     required this.genesis,
     required this.name,
@@ -21,8 +21,8 @@ class WalletTokenHive extends HiveObject {
     required this.ownerships,
   });
 
-  factory WalletTokenHive.fromModel(Token token) {
-    return WalletTokenHive(
+  factory WalletTokenHiveDto.fromModel(Token token) {
+    return WalletTokenHiveDto(
       address: token.address,
       genesis: token.genesis,
       name: token.name,
@@ -35,7 +35,7 @@ class WalletTokenHive extends HiveObject {
       collection: token.collection,
       aeip: token.aeip,
       ownerships:
-          token.ownerships?.map(WalletTokenOwnershipHive.fromModel).toList(),
+          token.ownerships?.map(WalletTokenOwnershipHiveDto.fromModel).toList(),
     );
   }
 
@@ -73,7 +73,7 @@ class WalletTokenHive extends HiveObject {
   List<int>? aeip;
 
   @HiveField(11)
-  List<WalletTokenOwnershipHive>? ownerships;
+  List<WalletTokenOwnershipHiveDto>? ownerships;
 
   Token toModel() {
     return Token(
@@ -95,7 +95,7 @@ class WalletTokenHive extends HiveObject {
 }
 
 extension WalletTokenHiveConversionExt on Token {
-  WalletTokenHive toHive() => WalletTokenHive(
+  WalletTokenHiveDto toHive() => WalletTokenHiveDto(
         address: address,
         genesis: genesis,
         name: name,
@@ -108,27 +108,27 @@ extension WalletTokenHiveConversionExt on Token {
         collection: collection,
         aeip: aeip,
         ownerships:
-            ownerships?.map(WalletTokenOwnershipHive.fromModel).toList(),
+            ownerships?.map(WalletTokenOwnershipHiveDto.fromModel).toList(),
       );
 }
 
 @HiveType(typeId: HiveTypeIds.walletTokenOwnership)
-class WalletTokenOwnershipHive extends HiveObject {
-  WalletTokenOwnershipHive({
+class WalletTokenOwnershipHiveDto extends HiveObject {
+  WalletTokenOwnershipHiveDto({
     required this.authorizedPublicKeys,
     required this.secret,
   });
-  factory WalletTokenOwnershipHive.fromModel(Ownership ownership) {
-    return WalletTokenOwnershipHive(
+  factory WalletTokenOwnershipHiveDto.fromModel(Ownership ownership) {
+    return WalletTokenOwnershipHiveDto(
       authorizedPublicKeys: ownership.authorizedPublicKeys
-          .map(WalletTokenOwnershipAuthorizedKeyHive.fromModel)
+          .map(WalletTokenOwnershipAuthorizedKeyHiveDto.fromModel)
           .toList(),
       secret: ownership.secret,
     );
   }
 
   @HiveField(0)
-  List<WalletTokenOwnershipAuthorizedKeyHive> authorizedPublicKeys;
+  List<WalletTokenOwnershipAuthorizedKeyHiveDto> authorizedPublicKeys;
 
   @HiveField(1)
   String? secret;
@@ -142,25 +142,25 @@ class WalletTokenOwnershipHive extends HiveObject {
 }
 
 extension WalletTokenOwnershipHiveConversionExt on Ownership {
-  WalletTokenOwnershipHive toHive() => WalletTokenOwnershipHive(
+  WalletTokenOwnershipHiveDto toHive() => WalletTokenOwnershipHiveDto(
         authorizedPublicKeys: authorizedPublicKeys
-            .map(WalletTokenOwnershipAuthorizedKeyHive.fromModel)
+            .map(WalletTokenOwnershipAuthorizedKeyHiveDto.fromModel)
             .toList(),
         secret: secret,
       );
 }
 
 @HiveType(typeId: HiveTypeIds.walletTokenOwnershipAuthorizedKey)
-class WalletTokenOwnershipAuthorizedKeyHive extends HiveObject {
-  WalletTokenOwnershipAuthorizedKeyHive({
+class WalletTokenOwnershipAuthorizedKeyHiveDto extends HiveObject {
+  WalletTokenOwnershipAuthorizedKeyHiveDto({
     required this.publicKey,
     required this.encryptedSecretKey,
   });
 
-  factory WalletTokenOwnershipAuthorizedKeyHive.fromModel(
+  factory WalletTokenOwnershipAuthorizedKeyHiveDto.fromModel(
     AuthorizedKey authorizedPublicKey,
   ) {
-    return WalletTokenOwnershipAuthorizedKeyHive(
+    return WalletTokenOwnershipAuthorizedKeyHiveDto(
       publicKey: authorizedPublicKey.publicKey,
       encryptedSecretKey: authorizedPublicKey.encryptedSecretKey,
     );
@@ -181,8 +181,8 @@ class WalletTokenOwnershipAuthorizedKeyHive extends HiveObject {
 }
 
 extension WalletTokenOwnershipAuthorizedKeyHiveConversionExt on AuthorizedKey {
-  WalletTokenOwnershipAuthorizedKeyHive toHive() =>
-      WalletTokenOwnershipAuthorizedKeyHive(
+  WalletTokenOwnershipAuthorizedKeyHiveDto toHive() =>
+      WalletTokenOwnershipAuthorizedKeyHiveDto(
         publicKey: publicKey,
         encryptedSecretKey: encryptedSecretKey,
       );

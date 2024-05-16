@@ -5,7 +5,6 @@ class YubikeyAuthenticationState with _$YubikeyAuthenticationState {
   const factory YubikeyAuthenticationState({
     required int failedAttemptsCount,
     required int maxAttemptsCount,
-    required bool isAuthent,
   }) = _YubikeyAuthenticationState;
   const YubikeyAuthenticationState._();
 }
@@ -17,7 +16,6 @@ class YubikeyAuthenticationNotifier
           YubikeyAuthenticationState(
             failedAttemptsCount: 0,
             maxAttemptsCount: AuthenticateWithYubikey.maxFailedAttempts,
-            isAuthent: false,
           ),
         ) {
     _loadInitialState();
@@ -44,7 +42,6 @@ class YubikeyAuthenticationNotifier
   Future<AuthenticationResult> authenticateWithYubikey(
     YubikeyCredentials otp,
   ) async {
-    state = state.copyWith(isAuthent: false);
     final authenticationRepository = ref.read(
       AuthenticationProviders.authenticationRepository,
     );
@@ -53,9 +50,6 @@ class YubikeyAuthenticationNotifier
     ).run(otp);
 
     authenticationResult.maybeMap(
-      success: (success) {
-        state = state.copyWith(isAuthent: true);
-      },
       tooMuchAttempts: (value) {
         ref.invalidate(AuthenticationProviders.lockCountdown);
       },

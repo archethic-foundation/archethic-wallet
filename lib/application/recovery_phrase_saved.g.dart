@@ -7,7 +7,7 @@ part of 'recovery_phrase_saved.dart';
 // **************************************************************************
 
 String _$isRecoveryPhraseSavedHash() =>
-    r'e74fe27f4e109056a3fc68bc6793e9edf1eb878a';
+    r'941528e20a4522370988b1366c321610c5963878';
 
 /// See also [_isRecoveryPhraseSaved].
 @ProviderFor(_isRecoveryPhraseSaved)
@@ -23,7 +23,7 @@ final _isRecoveryPhraseSavedProvider = AutoDisposeFutureProvider<bool>.internal(
 
 typedef _IsRecoveryPhraseSavedRef = AutoDisposeFutureProviderRef<bool>;
 String _$setRecoveryPhraseSavedHash() =>
-    r'd149ec4155d979322fa510fbbe64bd6e88dee9af';
+    r'1c267ec2935a27aeb38833497600deecd0e6a114';
 
 /// Copied from Dart SDK
 class _SystemHash {

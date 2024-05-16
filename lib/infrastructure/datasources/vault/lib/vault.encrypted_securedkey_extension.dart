@@ -1,126 +1,14 @@
-import 'dart:convert';
+part of '../vault.dart';
 
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
-import 'package:flutter/foundation.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:pointycastle/export.dart';
-
-// mixin SecuredHiveMixin {
-// final List<int> secureKey = Hive.generateSecureKey();
-
-// This doesn't have to be a singleton.
-// We just want to make sure that the box is open, before we start getting/setting objects on it
-// static Future<Box<E>> openSecuredBox<E>(
-//   String name,
-//   String? password,
-// ) async {
-//   try {
-//     return await Hive.openBox<E>(
-//       name,
-//       encryptionCipher: kIsWeb
-//           ? await _prepareCipherWeb(password!)
-//           : await _prepareCipher(),
-//     );
-//   } catch (e, stack) {
-//     log(
-//       'Failed to open Hive encrypted Box<$E>($name).',
-//       error: e,
-//       stackTrace: stack,
-//     );
-//     rethrow;
-//   }
-// }
-
-// This doesn't have to be a singleton.
-// We just want to make sure that the box is open, before we start getting/setting objects on it
-// static Future<LazyBox<E>> openLazySecuredBox<E>(
-//   String name,
-//   String? password,
-// ) async {
-//   try {
-//     return Hive.openLazyBox<E>(
-//       name,
-//       encryptionCipher: kIsWeb
-//           ? await _prepareCipherWeb(password!)
-//           : await _prepareCipher(),
-//     );
-//   } catch (e, stack) {
-//     log(
-//       'Failed to open Hive encrypted LazyBox<$E>($name).',
-//       error: e,
-//       stackTrace: stack,
-//     );
-//     rethrow;
-//   }
-// }
-
-// static Future<HiveCipher> _prepareCipher() async {
-//   const secureStorage = FlutterSecureStorage();
-//   final encryptionKey = await Hive.readSecureKey(secureStorage) ??
-//       await Hive.generateAndStoreSecureKey(secureStorage);
-
-//   return HiveAesCipher(encryptionKey);
-// }
-
-// static Future<HiveCipher> _prepareCipherWeb(String password) async {
-//   const secureStorage = FlutterSecureStorage();
-
-//   final encryptionKey = await Hive.readEncryptedSecureKey(
-//         secureStorage,
-//         password,
-//       ) ??
-//       await Hive.generateAndStoreEncryptedSecureKey(
-//         secureStorage,
-//         password,
-//       );
-
-//   return HiveAesCipher(encryptionKey);
-// }
-// }
-
+/// Used on Web platform only.
+///
+/// Helpers to store [Vault] encryption data :
+///   - [secureKey] :
+///
 extension HiveEncryptedSecuredKey on HiveInterface {
-  static const kSecureKey = 'archethic_wallet_secure_key';
   static const kEncryptedSecureKey = 'archethic_wallet_encrypted_secure_key';
   static const kEncryptedSecureKeySalt =
       'archethic_wallet_encrypted_secure_key_salt';
-
-  Future<bool> isSecureKeyDefined(
-    FlutterSecureStorage secureStorage,
-  ) async =>
-      secureStorage.containsKey(key: kSecureKey);
-
-  Future<void> clearSecureKey(
-    FlutterSecureStorage secureStorage,
-  ) =>
-      secureStorage.delete(key: kSecureKey);
-
-  Future<Uint8List> generateAndStoreSecureKey(
-    FlutterSecureStorage secureStorage,
-  ) async {
-    final hiveKey = Hive.generateSecureKey();
-
-    await secureStorage.write(
-      key: kSecureKey,
-      value: base64UrlEncode(hiveKey.toList()),
-    );
-
-    return Uint8List.fromList(hiveKey);
-  }
-
-  Future<Uint8List?> readSecureKey(
-    FlutterSecureStorage secureStorage,
-  ) async {
-    final keyBase64 = await secureStorage.read(
-      key: kSecureKey,
-    );
-
-    if (keyBase64 == null) {
-      return null;
-    }
-
-    return base64Url.decode(keyBase64);
-  }
 
   Future<Uint8List> updateAndStoreEncryptedSecureKey(
     FlutterSecureStorage secureStorage,

@@ -1,13 +1,13 @@
 import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/domain/repositories/authentication.dart';
-import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
+import 'package:aewallet/infrastructure/datasources/preferences.hive.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/device_unlock_option.dart';
 
 abstract class AuthenticationRepositoryBase
     implements AuthenticationRepositoryInterface {
-  Future<HivePreferencesDatasource> get preferences async =>
-      HivePreferencesDatasource.getInstance();
+  Future<PreferencesHiveDatasource> get preferences async =>
+      PreferencesHiveDatasource.getInstance();
 
   @override
   Future<int> getFailedPinAttempts() async {

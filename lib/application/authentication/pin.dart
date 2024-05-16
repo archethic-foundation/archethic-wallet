@@ -5,7 +5,6 @@ class PinAuthenticationState with _$PinAuthenticationState {
   const factory PinAuthenticationState({
     required int failedAttemptsCount,
     required int maxAttemptsCount,
-    required bool isAuthent,
   }) = _PinAuthenticationState;
   const PinAuthenticationState._();
 }
@@ -16,7 +15,6 @@ class PinAuthenticationNotifier extends StateNotifier<PinAuthenticationState> {
           PinAuthenticationState(
             failedAttemptsCount: 0,
             maxAttemptsCount: AuthenticateWithPin.maxFailedAttempts,
-            isAuthent: false,
           ),
         ) {
     _loadInitialState();
@@ -43,7 +41,6 @@ class PinAuthenticationNotifier extends StateNotifier<PinAuthenticationState> {
   Future<AuthenticationResult> authenticateWithPin(
     PinCredentials pin,
   ) async {
-    state = state.copyWith(isAuthent: false);
     final authenticationRepository = ref.read(
       AuthenticationProviders.authenticationRepository,
     );
@@ -52,9 +49,6 @@ class PinAuthenticationNotifier extends StateNotifier<PinAuthenticationState> {
     ).run(pin);
 
     authenticationResult.maybeMap(
-      success: (success) {
-        state = state.copyWith(isAuthent: true);
-      },
       tooMuchAttempts: (value) {
         ref.invalidate(AuthenticationProviders.lockCountdown);
       },

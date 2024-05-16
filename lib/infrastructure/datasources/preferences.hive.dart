@@ -13,8 +13,8 @@ import 'package:aewallet/model/primary_currency.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 
-class HivePreferencesDatasource {
-  HivePreferencesDatasource._(this._box);
+class PreferencesHiveDatasource {
+  PreferencesHiveDatasource._(this._box);
 
   static const String _preferencesBox = '_preferencesBox';
   final Box<dynamic> _box;
@@ -55,12 +55,12 @@ class HivePreferencesDatasource {
 
   // This doesn't have to be a singleton.
   // We just want to make sure that the box is open, before we start getting/setting objects on it
-  static HivePreferencesDatasource? _instance;
-  static Future<HivePreferencesDatasource> getInstance() async {
+  static PreferencesHiveDatasource? _instance;
+  static Future<PreferencesHiveDatasource> getInstance() async {
     if (_instance?._box.isOpen == true) return _instance!;
 
     final box = await Hive.openBox<dynamic>(_preferencesBox);
-    return _instance = HivePreferencesDatasource._(box);
+    return _instance = PreferencesHiveDatasource._(box);
   }
 
   T _getValue<T>(dynamic key, {T? defaultValue}) =>

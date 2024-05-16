@@ -6,8 +6,6 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
-import 'package:aewallet/infrastructure/datasources/hive_authentication.dart';
-import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -525,10 +523,6 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
     );
 
     try {
-      await sl.get<DBHelper>().clearAppWallet();
-      final vault = await HiveAuthenticationDatasource.getInstance();
-      await vault.setSeed(widget.seed!);
-
       final originPrivateKey = sl.get<ApiService>().getOriginKey();
 
       await KeychainUtil().createKeyChain(

@@ -17,7 +17,8 @@ class AuthenticateWithYubikey
     YubikeyCredentials credentials, {
     UseCaseProgressListener? onProgress,
   }) async {
-    final vault = await HiveAuthenticationDatasource.getInstance();
+    final vault = await AuthentHiveSecuredDatasource.getInstance();
+
     final yubikeyClientAPIKey = vault.getYubikeyClientAPIKey();
     final yubikeyClientID = vault.getYubikeyClientID();
     if (yubikeyClientID.isEmpty && yubikeyClientAPIKey.isEmpty) {

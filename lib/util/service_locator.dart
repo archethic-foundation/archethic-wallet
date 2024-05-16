@@ -2,7 +2,7 @@
 
 import 'package:aewallet/domain/repositories/settings.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
-import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
+import 'package:aewallet/infrastructure/datasources/preferences.hive.dart';
 import 'package:aewallet/infrastructure/repositories/settings.dart';
 import 'package:aewallet/infrastructure/rpc/deeplink_server.dart';
 import 'package:aewallet/infrastructure/rpc/websocket_server.dart';
@@ -44,7 +44,7 @@ Future<void> setupServiceLocator() async {
 }
 
 Future<void> _setupServiceLocatorNetworkDependencies() async {
-  final preferences = await HivePreferencesDatasource.getInstance();
+  final preferences = await PreferencesHiveDatasource.getInstance();
   final network = preferences.getNetwork().getLink();
   sl
     ..registerLazySingleton<ApiService>(

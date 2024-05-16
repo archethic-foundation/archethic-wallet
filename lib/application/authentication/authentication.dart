@@ -5,7 +5,7 @@ import 'package:aewallet/application/utils.dart';
 import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/domain/repositories/authentication.dart';
 import 'package:aewallet/domain/usecases/authentication/authentication.dart';
-import 'package:aewallet/infrastructure/repositories/authentication.other.dart';
+import 'package:aewallet/infrastructure/repositories/authentication.nonweb.dart';
 import 'package:aewallet/infrastructure/repositories/authentication.web.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
@@ -29,7 +29,7 @@ abstract class AuthenticationProviders {
       Provider<AuthenticationRepositoryInterface>(
     (ref) {
       if (kIsWeb) return AuthenticationRepositoryWeb();
-      return AuthenticationRepositoryOther();
+      return AuthenticationRepositoryNonWeb();
     },
   );
 

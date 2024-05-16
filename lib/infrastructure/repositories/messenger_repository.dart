@@ -4,8 +4,8 @@ import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/repositories/messenger_repository.dart';
-import 'package:aewallet/infrastructure/datasources/discussion_local_datasource.dart';
-import 'package:aewallet/infrastructure/datasources/discussion_remote_datasource.dart';
+import 'package:aewallet/infrastructure/datasources/discussion.remote.dart';
+import 'package:aewallet/infrastructure/datasources/discussion.vault.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
@@ -25,8 +25,8 @@ class MessengerRepository
 
   final NetworksSetting networksSetting;
 
-  Future<HiveDiscussionDatasource> get _localDatasource =>
-      HiveDiscussionDatasource.getInstance();
+  Future<DiscussionVaultDatasource> get _localDatasource =>
+      DiscussionVaultDatasource.getInstance();
   MessagingService? _messagingService;
   MessagingService get messagingService =>
       _messagingService ??= sl.get<MessagingService>();
@@ -430,6 +430,6 @@ class MessengerRepository
 
   @override
   Future<void> clear() async {
-    await HiveDiscussionDatasource.clear();
+    await DiscussionVaultDatasource.clear();
   }
 }

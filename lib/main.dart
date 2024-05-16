@@ -13,7 +13,6 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/verified_tokens.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
-import 'package:aewallet/infrastructure/datasources/vault.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/appdb.dart';
@@ -39,6 +38,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:window_manager/window_manager.dart';
+
+import 'infrastructure/datasources/vault/vault.dart';
 
 Future<void> main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();

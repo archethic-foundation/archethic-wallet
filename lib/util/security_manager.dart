@@ -1,5 +1,5 @@
 import 'package:aewallet/application/settings/language.dart';
-import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
+import 'package:aewallet/infrastructure/datasources/preferences.hive.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -45,7 +45,7 @@ class SecurityManager {
       return;
     }
 
-    final preferences = await HivePreferencesDatasource.getInstance();
+    final preferences = await PreferencesHiveDatasource.getInstance();
     if (await isDeviceSecured()) {
       // user will see a popup next time his device is jailbroken or in dev mode
       await preferences.setHasShownRootWarning(false);

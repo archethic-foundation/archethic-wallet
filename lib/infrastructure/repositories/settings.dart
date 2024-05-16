@@ -2,13 +2,13 @@ import 'dart:ui';
 
 import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/domain/repositories/settings.dart';
-import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
+import 'package:aewallet/infrastructure/datasources/preferences.hive.dart';
 import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/available_language.dart';
 
 class SettingsRepository implements SettingsRepositoryInterface {
-  Future<HivePreferencesDatasource> get preferences async =>
-      HivePreferencesDatasource.getInstance();
+  Future<PreferencesHiveDatasource> get preferences async =>
+      PreferencesHiveDatasource.getInstance();
 
   @override
   Future<Settings> getSettings(Locale currentLocale) async {

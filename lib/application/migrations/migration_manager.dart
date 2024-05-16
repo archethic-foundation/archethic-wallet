@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
-import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
+import 'package:aewallet/infrastructure/datasources/preferences.hive.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -47,7 +47,7 @@ class LocalDataMigrationNotifier
   }
 
   Future<void> migrateLocalData() async {
-    final preferences = await HivePreferencesDatasource.getInstance();
+    final preferences = await PreferencesHiveDatasource.getInstance();
     final currentDataVersion = await preferences.getCurrentDataVersion();
     log('Current data version: $currentDataVersion', name: logName);
 
