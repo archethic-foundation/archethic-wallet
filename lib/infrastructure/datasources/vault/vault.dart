@@ -59,12 +59,12 @@ class Vault {
     return HiveAesCipher(await _vaultCipher!.get());
   }
 
-  void lock() {
+  Future<void> lock() async {
     log(
       'Locking vault',
       name: _logName,
     );
-    Hive.close();
+    await Hive.close();
     _vaultCipher = null;
   }
 
@@ -123,13 +123,13 @@ class Vault {
       'Opening box $name',
       name: _logName,
     );
-    await _applyAutolock();
+    await applyAutolock();
     if (Hive.isBoxOpen(name)) {
       return Hive.box(name);
     }
 
     try {
-      await _ensureVaultIsUnlocked();
+      await ensureVaultIsUnlocked();
 
       return await Hive.openBox<E>(
         name,
@@ -154,13 +154,13 @@ class Vault {
       name: _logName,
     );
 
-    await _applyAutolock();
+    await applyAutolock();
     if (Hive.isBoxOpen(name)) {
       return Hive.lazyBox(name);
     }
 
     try {
-      await _ensureVaultIsUnlocked();
+      await ensureVaultIsUnlocked();
 
       return await Hive.openLazyBox<E>(
         name,
@@ -177,17 +177,24 @@ class Vault {
     }
   }
 
-  Future<void> _applyAutolock() async {
+  Future<void> applyAutolock() async {
     if (shouldBeLocked == null || await shouldBeLocked!() == false) return;
     log(
       'Apply autolock to Vault.',
       name: _logName,
     );
-    lock();
+    await lock();
   }
 
-  Future<void> _ensureVaultIsUnlocked() async {
-    if (_vaultCipher != null) return;
+  Future<void> ensureVaultIsUnlocked() async {
+    if (_vaultCipher != null) {
+      log(
+        'Vault already unlocked.',
+        name: _logName,
+      );
+
+      return;
+    }
 
     if (passwordDelegate == null) {
       throw Exception(
@@ -199,16 +206,7 @@ class Vault {
       name: _logName,
     );
     final password = await passwordDelegate!();
-    log(
-      'User unlocked',
-      name: _logName,
-    );
 
     unlock(password);
-
-    log(
-      'Vault Unlocked.',
-      name: _logName,
-    );
   }
 }
