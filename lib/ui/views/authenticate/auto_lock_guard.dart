@@ -88,6 +88,11 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     switch (state) {
       case AppLifecycleState.resumed:
         _hideLockMask();
+        Future.sync(() async {
+          final vault = Vault.instance();
+          await vault.applyAutolock();
+          await vault.ensureVaultIsUnlocked();
+        });
 
         break;
       case AppLifecycleState.inactive:
@@ -118,7 +123,11 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     timer?.cancel();
     timer = RestartableTimer(
       durationBeforeLock,
-      Vault.instance().lock,
+      () async {
+        final vault = Vault.instance();
+        await vault.lock();
+        await vault.ensureVaultIsUnlocked();
+      },
     );
   }
 
