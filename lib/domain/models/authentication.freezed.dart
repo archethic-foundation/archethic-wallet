@@ -19,21 +19,21 @@ mixin _$Credentials {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String pin) pin,
-    required TResult Function(String password, String seed) password,
+    required TResult Function(String password) password,
     required TResult Function(String otp) yubikey,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String pin)? pin,
-    TResult? Function(String password, String seed)? password,
+    TResult? Function(String password)? password,
     TResult? Function(String otp)? yubikey,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String pin)? pin,
-    TResult Function(String password, String seed)? password,
+    TResult Function(String password)? password,
     TResult Function(String otp)? yubikey,
     required TResult orElse(),
   }) =>
@@ -146,7 +146,7 @@ class _$PinCredentialsImpl extends PinCredentials {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String pin) pin,
-    required TResult Function(String password, String seed) password,
+    required TResult Function(String password) password,
     required TResult Function(String otp) yubikey,
   }) {
     return pin(this.pin);
@@ -156,7 +156,7 @@ class _$PinCredentialsImpl extends PinCredentials {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String pin)? pin,
-    TResult? Function(String password, String seed)? password,
+    TResult? Function(String password)? password,
     TResult? Function(String otp)? yubikey,
   }) {
     return pin?.call(this.pin);
@@ -166,7 +166,7 @@ class _$PinCredentialsImpl extends PinCredentials {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String pin)? pin,
-    TResult Function(String password, String seed)? password,
+    TResult Function(String password)? password,
     TResult Function(String otp)? yubikey,
     required TResult orElse(),
   }) {
@@ -228,7 +228,7 @@ abstract class _$$PasswordCredentialsImplCopyWith<$Res> {
           $Res Function(_$PasswordCredentialsImpl) then) =
       __$$PasswordCredentialsImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String password, String seed});
+  $Res call({String password});
 }
 
 /// @nodoc
@@ -243,16 +243,11 @@ class __$$PasswordCredentialsImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? password = null,
-    Object? seed = null,
   }) {
     return _then(_$PasswordCredentialsImpl(
       password: null == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      seed: null == seed
-          ? _value.seed
-          : seed // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -261,17 +256,14 @@ class __$$PasswordCredentialsImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$PasswordCredentialsImpl extends PasswordCredentials {
-  const _$PasswordCredentialsImpl({required this.password, required this.seed})
-      : super._();
+  const _$PasswordCredentialsImpl({required this.password}) : super._();
 
   @override
   final String password;
-  @override
-  final String seed;
 
   @override
   String toString() {
-    return 'Credentials.password(password: $password, seed: $seed)';
+    return 'Credentials.password(password: $password)';
   }
 
   @override
@@ -280,12 +272,11 @@ class _$PasswordCredentialsImpl extends PasswordCredentials {
         (other.runtimeType == runtimeType &&
             other is _$PasswordCredentialsImpl &&
             (identical(other.password, password) ||
-                other.password == password) &&
-            (identical(other.seed, seed) || other.seed == seed));
+                other.password == password));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, password, seed);
+  int get hashCode => Object.hash(runtimeType, password);
 
   @JsonKey(ignore: true)
   @override
@@ -298,32 +289,32 @@ class _$PasswordCredentialsImpl extends PasswordCredentials {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String pin) pin,
-    required TResult Function(String password, String seed) password,
+    required TResult Function(String password) password,
     required TResult Function(String otp) yubikey,
   }) {
-    return password(this.password, seed);
+    return password(this.password);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String pin)? pin,
-    TResult? Function(String password, String seed)? password,
+    TResult? Function(String password)? password,
     TResult? Function(String otp)? yubikey,
   }) {
-    return password?.call(this.password, seed);
+    return password?.call(this.password);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String pin)? pin,
-    TResult Function(String password, String seed)? password,
+    TResult Function(String password)? password,
     TResult Function(String otp)? yubikey,
     required TResult orElse(),
   }) {
     if (password != null) {
-      return password(this.password, seed);
+      return password(this.password);
     }
     return orElse();
   }
@@ -364,13 +355,11 @@ class _$PasswordCredentialsImpl extends PasswordCredentials {
 }
 
 abstract class PasswordCredentials extends Credentials {
-  const factory PasswordCredentials(
-      {required final String password,
-      required final String seed}) = _$PasswordCredentialsImpl;
+  const factory PasswordCredentials({required final String password}) =
+      _$PasswordCredentialsImpl;
   const PasswordCredentials._() : super._();
 
   String get password;
-  String get seed;
   @JsonKey(ignore: true)
   _$$PasswordCredentialsImplCopyWith<_$PasswordCredentialsImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -442,7 +431,7 @@ class _$YubikeyCredentialsImpl extends YubikeyCredentials {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String pin) pin,
-    required TResult Function(String password, String seed) password,
+    required TResult Function(String password) password,
     required TResult Function(String otp) yubikey,
   }) {
     return yubikey(otp);
@@ -452,7 +441,7 @@ class _$YubikeyCredentialsImpl extends YubikeyCredentials {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String pin)? pin,
-    TResult? Function(String password, String seed)? password,
+    TResult? Function(String password)? password,
     TResult? Function(String otp)? yubikey,
   }) {
     return yubikey?.call(otp);
@@ -462,7 +451,7 @@ class _$YubikeyCredentialsImpl extends YubikeyCredentials {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String pin)? pin,
-    TResult Function(String password, String seed)? password,
+    TResult Function(String password)? password,
     TResult Function(String otp)? yubikey,
     required TResult orElse(),
   }) {

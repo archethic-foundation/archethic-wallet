@@ -18,11 +18,11 @@ class AuthenticationRepositoryWeb extends AuthenticationRepositoryBase
   }
 
   @override
-  Future<bool> isPasswordValid(String password, String seed) async =>
+  Future<bool> isPasswordValid(String password) async =>
       _isPassphraseValid(password);
 
   @override
-  Future<void> setPassword(String password, String seed) async {
+  Future<void> setPassword(String password) async {
     final vault = Vault.instance();
     if (await vault.isSetup) {
       await vault.updateSecureKey(password);

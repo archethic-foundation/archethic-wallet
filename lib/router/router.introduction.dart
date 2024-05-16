@@ -8,7 +8,6 @@ final _introductionRoutes = [
       reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: IntroConfigureSecurity(
-        seed: (state.extra! as Map<String, dynamic>)['seed']! as String,
         isImportProfile:
             (state.extra! as Map<String, dynamic>)['isImportProfile']! as bool,
       ),

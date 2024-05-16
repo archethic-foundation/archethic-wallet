@@ -1,6 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'dart:developer';
 import 'dart:ui';
 
 import 'package:aewallet/domain/models/market_price_history.dart';
@@ -66,17 +65,6 @@ class PreferencesHiveDatasource {
   T _getValue<T>(dynamic key, {T? defaultValue}) =>
       _box.get(key, defaultValue: defaultValue) as T;
 
-  Future<void> migrateStringToIntData(String key) async {
-    log('Migrate local data for $key', name: 'migrateStringToIntData');
-    final value = _box.get(key);
-    if (value is String) {
-      final intValue = int.tryParse(value);
-      if (intValue != null) {
-        await _box.put(key, intValue);
-      }
-    }
-  }
-
   Future<void> _setValue<T>(dynamic key, T value) => _box.put(key, value);
 
   Future<void> _removeValue<T>(dynamic key) => _box.delete(key);
@@ -90,19 +78,15 @@ class PreferencesHiveDatasource {
   Future<void> setCurrentDataVersion(int version) =>
       _setValue(currentVersion, version);
 
-  Future<int> getCurrentDataVersion() async {
-    try {
-      return _getValue(currentVersion, defaultValue: 0);
-    } catch (e) {
-      log('Error type: $e', name: 'getCurrentDataVersion');
-      final value = _box.get(currentVersion);
-      if (value is String) {
-        await migrateStringToIntData(currentVersion);
-        return int.tryParse(value) ?? 0;
-      } else {
-        return value;
-      }
+  Future<int?> getCurrentDataVersion() async {
+    // implicit String to Int conversion to ensure
+    // compatibility with first MigrationSystem version.
+    final value = _box.get(currentVersion);
+    if (value is String) {
+      return int.tryParse(value);
     }
+
+    return value;
   }
 
   Future<void> setAuthMethod(AuthenticationMethod method) =>

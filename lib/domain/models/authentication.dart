@@ -14,7 +14,6 @@ class Credentials with _$Credentials {
 
   const factory Credentials.password({
     required String password,
-    required String seed,
   }) = PasswordCredentials;
 
   const factory Credentials.yubikey({

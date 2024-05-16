@@ -23,12 +23,10 @@ class SetPassword extends ConsumerStatefulWidget {
     super.key,
     this.header,
     this.description,
-    required this.seed,
   });
 
   final String? header;
   final String? description;
-  final String seed;
 
   static const routerPage = '/set_password';
 
@@ -328,7 +326,7 @@ class _SetPasswordState extends ConsumerState<SetPassword>
     } else {
       await ref
           .read(AuthenticationProviders.authenticationRepository)
-          .setPassword(setPasswordController!.text, widget.seed);
+          .setPassword(setPasswordController!.text);
       context.pop(true);
     }
   }

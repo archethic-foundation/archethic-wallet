@@ -4,15 +4,20 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/infrastructure/datasources/preferences.hive.dart';
+import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:aewallet/util/get_it_instance.dart';
+import 'package:aewallet/util/string_encryption.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hive/hive.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part '437.dart';
 part '512.dart';
+part '526.dart';
 part 'migration_manager.freezed.dart';
 part 'migration_manager.g.dart';
 
@@ -49,6 +54,13 @@ class LocalDataMigrationNotifier
   Future<void> migrateLocalData() async {
     final preferences = await PreferencesHiveDatasource.getInstance();
     final currentDataVersion = await preferences.getCurrentDataVersion();
+
+    if (currentDataVersion == null) {
+      log('Application freshly installed. No migration to run', name: logName);
+      await _updateCurrentDataVersion();
+      return;
+    }
+
     log('Current data version: $currentDataVersion', name: logName);
 
     final migrations = ref.read(_migrationsProvider)
@@ -78,6 +90,11 @@ class LocalDataMigrationNotifier
     }
 
     log('Migrations successfully executed', name: logName);
+    await _updateCurrentDataVersion();
+  }
+
+  Future<void> _updateCurrentDataVersion() async {
+    final preferences = await PreferencesHiveDatasource.getInstance();
 
     final currentAppVersion =
         await CurrentVersionRepository().getCurrentAppVersion();
@@ -120,6 +137,7 @@ class LocalDataMigration {
 List<LocalDataMigration> _migrations(_MigrationsRef ref) => [
       migration_437,
       migration_512,
+      migration_526,
     ];
 
 class CurrentVersionRepository {
