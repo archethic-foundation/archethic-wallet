@@ -1,6 +1,6 @@
 import 'package:aewallet/domain/repositories/notifications_repository.dart';
-import 'package:aewallet/infrastructure/datasources/notification_backend_client.dart';
-import 'package:aewallet/infrastructure/datasources/notification_local_datasource.dart';
+import 'package:aewallet/infrastructure/datasources/notification.remote.dart';
+import 'package:aewallet/infrastructure/datasources/notification.vault.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,8 +22,8 @@ class NotificationsRepositoryImpl
   @override
   Stream<TxSentEvent> get events => _client.events;
 
-  Future<HiveNotificationLocalDatasource> get _localSetup =>
-      HiveNotificationLocalDatasource.getInstance();
+  Future<NotificationVaultDatasource> get _localSetup =>
+      NotificationVaultDatasource.getInstance();
 
   Future<String?> get cachedFcmToken async {
     return (await _localSetup).getLastFcmToken();

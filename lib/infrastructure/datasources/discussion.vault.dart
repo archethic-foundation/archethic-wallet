@@ -1,22 +1,22 @@
-import 'package:aewallet/infrastructure/datasources/vault.dart';
+import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-class HiveDiscussionDatasource {
-  HiveDiscussionDatasource._(this._discussionBox);
+class DiscussionVaultDatasource {
+  DiscussionVaultDatasource._(this._discussionBox);
 
   final LazyBox<Discussion> _discussionBox;
   static const _discussionBoxName = 'MessengerDiscussion';
 
-  static HiveDiscussionDatasource? _instance;
-  static Future<HiveDiscussionDatasource> getInstance() async {
+  static DiscussionVaultDatasource? _instance;
+  static Future<DiscussionVaultDatasource> getInstance() async {
     if (_instance?._discussionBox.isOpen == true) return _instance!;
 
     final encryptedBox = await Vault.instance().openLazyBox<Discussion>(
       _discussionBoxName,
     );
-    return _instance = HiveDiscussionDatasource._(encryptedBox);
+    return _instance = DiscussionVaultDatasource._(encryptedBox);
   }
 
   String _discussionKey({

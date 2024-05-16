@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
+import 'package:aewallet/infrastructure/datasources/preferences.hive.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'recovery_phrase_saved.g.dart';
@@ -9,7 +9,7 @@ part 'recovery_phrase_saved.g.dart';
 Future<bool> _isRecoveryPhraseSaved(
   _IsRecoveryPhraseSavedRef ref,
 ) async {
-  final preferences = await HivePreferencesDatasource.getInstance();
+  final preferences = await PreferencesHiveDatasource.getInstance();
   return preferences.getRecoveryPhraseSaved();
 }
 
@@ -18,7 +18,7 @@ Future<void> _setRecoveryPhraseSaved(
   _SetRecoveryPhraseSavedRef ref,
   bool value,
 ) async {
-  final preferences = await HivePreferencesDatasource.getInstance();
+  final preferences = await PreferencesHiveDatasource.getInstance();
   await preferences.setRecoveryPhraseSaved(value);
   ref.invalidate(RecoveryPhraseSavedProvider.isRecoveryPhraseSaved);
 }

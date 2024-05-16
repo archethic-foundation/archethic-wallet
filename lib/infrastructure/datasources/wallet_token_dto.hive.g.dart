@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'wallet_token.hive.dart';
+part of 'wallet_token_dto.hive.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class WalletTokenHiveAdapter extends TypeAdapter<WalletTokenHive> {
+class WalletTokenHiveDtoAdapter extends TypeAdapter<WalletTokenHiveDto> {
   @override
   final int typeId = 19;
 
   @override
-  WalletTokenHive read(BinaryReader reader) {
+  WalletTokenHiveDto read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return WalletTokenHive(
+    return WalletTokenHiveDto(
       address: fields[0] as String?,
       genesis: fields[1] as String?,
       name: fields[2] as String?,
@@ -30,12 +30,12 @@ class WalletTokenHiveAdapter extends TypeAdapter<WalletTokenHive> {
           .map((dynamic e) => (e as Map).cast<String, dynamic>())
           .toList(),
       aeip: (fields[10] as List?)?.cast<int>(),
-      ownerships: (fields[11] as List?)?.cast<WalletTokenOwnershipHive>(),
+      ownerships: (fields[11] as List?)?.cast<WalletTokenOwnershipHiveDto>(),
     );
   }
 
   @override
-  void write(BinaryWriter writer, WalletTokenHive obj) {
+  void write(BinaryWriter writer, WalletTokenHiveDto obj) {
     writer
       ..writeByte(12)
       ..writeByte(0)
@@ -70,31 +70,31 @@ class WalletTokenHiveAdapter extends TypeAdapter<WalletTokenHive> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is WalletTokenHiveAdapter &&
+      other is WalletTokenHiveDtoAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
 
-class WalletTokenOwnershipHiveAdapter
-    extends TypeAdapter<WalletTokenOwnershipHive> {
+class WalletTokenOwnershipHiveDtoAdapter
+    extends TypeAdapter<WalletTokenOwnershipHiveDto> {
   @override
   final int typeId = 20;
 
   @override
-  WalletTokenOwnershipHive read(BinaryReader reader) {
+  WalletTokenOwnershipHiveDto read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return WalletTokenOwnershipHive(
+    return WalletTokenOwnershipHiveDto(
       authorizedPublicKeys:
-          (fields[0] as List).cast<WalletTokenOwnershipAuthorizedKeyHive>(),
+          (fields[0] as List).cast<WalletTokenOwnershipAuthorizedKeyHiveDto>(),
       secret: fields[1] as String?,
     );
   }
 
   @override
-  void write(BinaryWriter writer, WalletTokenOwnershipHive obj) {
+  void write(BinaryWriter writer, WalletTokenOwnershipHiveDto obj) {
     writer
       ..writeByte(2)
       ..writeByte(0)
@@ -109,30 +109,31 @@ class WalletTokenOwnershipHiveAdapter
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is WalletTokenOwnershipHiveAdapter &&
+      other is WalletTokenOwnershipHiveDtoAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
 
-class WalletTokenOwnershipAuthorizedKeyHiveAdapter
-    extends TypeAdapter<WalletTokenOwnershipAuthorizedKeyHive> {
+class WalletTokenOwnershipAuthorizedKeyHiveDtoAdapter
+    extends TypeAdapter<WalletTokenOwnershipAuthorizedKeyHiveDto> {
   @override
   final int typeId = 21;
 
   @override
-  WalletTokenOwnershipAuthorizedKeyHive read(BinaryReader reader) {
+  WalletTokenOwnershipAuthorizedKeyHiveDto read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return WalletTokenOwnershipAuthorizedKeyHive(
+    return WalletTokenOwnershipAuthorizedKeyHiveDto(
       publicKey: fields[0] as String?,
       encryptedSecretKey: fields[1] as String?,
     );
   }
 
   @override
-  void write(BinaryWriter writer, WalletTokenOwnershipAuthorizedKeyHive obj) {
+  void write(
+      BinaryWriter writer, WalletTokenOwnershipAuthorizedKeyHiveDto obj) {
     writer
       ..writeByte(2)
       ..writeByte(0)
@@ -147,7 +148,7 @@ class WalletTokenOwnershipAuthorizedKeyHiveAdapter
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is WalletTokenOwnershipAuthorizedKeyHiveAdapter &&
+      other is WalletTokenOwnershipAuthorizedKeyHiveDtoAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

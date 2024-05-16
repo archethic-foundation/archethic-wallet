@@ -12,7 +12,7 @@ import 'package:aewallet/application/settings/version.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/dapp.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
-import 'package:aewallet/infrastructure/hive/tokens_list.hive.dart';
+import 'package:aewallet/infrastructure/datasources/tokens_list.hive.dart';
 import 'package:aewallet/infrastructure/rpc/websocket_server.dart';
 import 'package:aewallet/main.dart';
 import 'package:aewallet/model/authentication_method.dart';

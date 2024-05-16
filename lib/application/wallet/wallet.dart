@@ -7,7 +7,7 @@ import 'package:aewallet/application/notification/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/app_wallet.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
-import 'package:aewallet/infrastructure/datasources/hive_authentication.dart';
+import 'package:aewallet/infrastructure/datasources/keychain_info.vault.dart';
 import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';

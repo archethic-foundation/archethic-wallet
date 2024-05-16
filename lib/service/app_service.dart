@@ -6,8 +6,8 @@ import 'dart:developer' as dev;
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:aewallet/infrastructure/hive/tokens_list.hive.dart';
-import 'package:aewallet/infrastructure/hive/wallet_token.hive.dart';
+import 'package:aewallet/infrastructure/datasources/tokens_list.hive.dart';
+import 'package:aewallet/infrastructure/datasources/wallet_token_dto.hive.dart';
 import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/blockchain/token_information.dart';
@@ -42,7 +42,7 @@ class AppService {
     final tokenMap = <String, Token>{};
 
     final addressesOutCache = <String>[];
-    final tokensListDatasource = await HiveTokensListDatasource.getInstance();
+    final tokensListDatasource = await TokensListHiveDatasource.getInstance();
 
     for (final address in addresses.toSet()) {
       final token = tokensListDatasource.getToken(address);

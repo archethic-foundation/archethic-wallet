@@ -1,10 +1,17 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:aewallet/domain/models/core/failures.dart';
-import 'package:aewallet/infrastructure/datasources/secured_datasource_mixin.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:pointycastle/export.dart';
+
+part 'lib/password_vault_cipher.dart';
+part 'lib/simple_vault_cipher.dart';
+part 'lib/vault.encrypted_securedkey_extension.dart';
+part 'lib/vault.raw_securedkey_extension.dart';
 
 abstract class VaultCipher {
   factory VaultCipher(String password) {
@@ -28,91 +35,18 @@ abstract class VaultCipher {
   );
 }
 
-/// Encryption key is AES encrypted before storage
-class PasswordVaultCipher implements VaultCipher {
-  PasswordVaultCipher({required this.password});
-
-  final String password;
-
-  Uint8List? _key;
-
-  static Future<bool> get isSetup => Hive.isEncryptedSecureKeyDefined(
-        const FlutterSecureStorage(),
-      );
-
-  static Future<void> clear() => Hive.clearEncryptedSecureKey(
-        const FlutterSecureStorage(),
-      );
-
-  @override
-  Future<Uint8List> get() async => _key ?? (_key = await _genKey());
-
-  Future<Uint8List> _genKey() async {
-    const secureStorage = FlutterSecureStorage();
-
-    final encryptionKey = await Hive.readEncryptedSecureKey(
-          secureStorage,
-          password,
-        ) ??
-        await Hive.generateAndStoreEncryptedSecureKey(
-          secureStorage,
-          password,
-        );
-
-    return encryptionKey;
-  }
-
-  @override
-  Future<void> updateSecureKey(
-    String newPassword,
-  ) async {
-    const secureStorage = FlutterSecureStorage();
-
-    await Hive.updateAndStoreEncryptedSecureKey(
-      secureStorage,
-      await get(),
-      newPassword,
-    );
-  }
-}
-
-/// Encryption key is AES encrypted before storage
-class SimpleVaultCipher implements VaultCipher {
-  static Future<bool> get isSetup => Hive.isSecureKeyDefined(
-        const FlutterSecureStorage(),
-      );
-
-  static Future<void> clear() => Hive.clearSecureKey(
-        const FlutterSecureStorage(),
-      );
-
-  @override
-  Future<Uint8List> get() async {
-    const secureStorage = FlutterSecureStorage();
-    final encryptionKey = await Hive.readSecureKey(secureStorage) ??
-        await Hive.generateAndStoreSecureKey(secureStorage);
-
-    return encryptionKey;
-  }
-
-  @override
-  Future<void> updateSecureKey(
-    String newPassword,
-  ) async {}
-}
-
 typedef VaultPasswordDelegate = Future<String> Function();
 typedef VaultAutolockDelegate = Future<bool> Function();
 
 class Vault {
+  Vault._();
+
   factory Vault.instance() {
     Vault._instance ??= Vault._();
     return Vault._instance!;
   }
 
-  static const LOGNAME = 'Vault';
-
-  Vault._();
+  static const _logName = 'Vault';
 
   static Vault? _instance;
 
@@ -128,7 +62,7 @@ class Vault {
   void lock() {
     log(
       'Locking vault',
-      name: LOGNAME,
+      name: _logName,
     );
     Hive.close();
     _vaultCipher = null;
@@ -137,7 +71,7 @@ class Vault {
   Future<void> unlock(String password) async {
     log(
       'Unlocking vault',
-      name: LOGNAME,
+      name: _logName,
     );
     _vaultCipher = VaultCipher(password);
 
@@ -145,7 +79,7 @@ class Vault {
     await _vaultCipher!.get();
     log(
       'Vault unlocked',
-      name: LOGNAME,
+      name: _logName,
     );
   }
 
@@ -164,7 +98,7 @@ class Vault {
   Future<void> clearSecureKey() async {
     log(
       'Clearing vault secure key',
-      name: LOGNAME,
+      name: _logName,
     );
     await VaultCipher.clear();
   }
@@ -174,7 +108,7 @@ class Vault {
   ) async {
     log(
       'Updating vault secure key',
-      name: LOGNAME,
+      name: _logName,
     );
     if (_vaultCipher == null) {
       throw const Failure.locked();
@@ -187,7 +121,7 @@ class Vault {
   ) async {
     log(
       'Opening box $name',
-      name: LOGNAME,
+      name: _logName,
     );
     await _applyAutolock();
     if (Hive.isBoxOpen(name)) {
@@ -206,7 +140,7 @@ class Vault {
         'Failed to open Hive encrypted Box<$E>($name).',
         error: e,
         stackTrace: stack,
-        name: LOGNAME,
+        name: _logName,
       );
       rethrow;
     }
@@ -217,7 +151,7 @@ class Vault {
   ) async {
     log(
       'Opening lazy box $name',
-      name: LOGNAME,
+      name: _logName,
     );
 
     await _applyAutolock();
@@ -237,7 +171,7 @@ class Vault {
         'Failed to open Hive encrypted Lazy Box<$E>($name).',
         error: e,
         stackTrace: stack,
-        name: LOGNAME,
+        name: _logName,
       );
       rethrow;
     }
@@ -247,7 +181,7 @@ class Vault {
     if (shouldBeLocked == null || await shouldBeLocked!() == false) return;
     log(
       'Apply autolock to Vault.',
-      name: LOGNAME,
+      name: _logName,
     );
     lock();
   }
@@ -262,19 +196,19 @@ class Vault {
     }
     log(
       'Requesting user action to unlock',
-      name: LOGNAME,
+      name: _logName,
     );
     final password = await passwordDelegate!();
     log(
       'User unlocked',
-      name: LOGNAME,
+      name: _logName,
     );
 
     unlock(password);
 
     log(
       'Vault Unlocked.',
-      name: LOGNAME,
+      name: _logName,
     );
   }
 }

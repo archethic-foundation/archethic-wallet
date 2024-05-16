@@ -2,9 +2,9 @@
 
 import 'dart:developer';
 
-import 'package:aewallet/infrastructure/datasources/hive_authentication.dart';
-import 'package:aewallet/infrastructure/datasources/vault.dart';
-import 'package:aewallet/infrastructure/hive/wallet_token.hive.dart';
+import 'package:aewallet/infrastructure/datasources/keychain_info.vault.dart';
+import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
+import 'package:aewallet/infrastructure/datasources/wallet_token_dto.hive.dart';
 import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/blockchain/token_information.dart';
@@ -81,9 +81,9 @@ class DBHelper {
       ..registerAdapter(ContactAccessRecipientAdapter())
       ..registerAdapter(NotificationsSetupImplAdapter())
       ..registerAdapter(CacheItemHiveAdapter())
-      ..registerAdapter(WalletTokenHiveAdapter())
-      ..registerAdapter(WalletTokenOwnershipHiveAdapter())
-      ..registerAdapter(WalletTokenOwnershipAuthorizedKeyHiveAdapter());
+      ..registerAdapter(WalletTokenHiveDtoAdapter())
+      ..registerAdapter(WalletTokenOwnershipHiveDtoAdapter())
+      ..registerAdapter(WalletTokenOwnershipAuthorizedKeyHiveDtoAdapter());
   }
 
   // Contacts
@@ -329,7 +329,7 @@ class DBHelper {
   }
 
   Future<void> clearAuthentication() async {
-    await HiveAuthenticationDatasource.clear();
+    await KeychainInfoVaultDatasource.clear();
     await Vault.instance().clearSecureKey();
   }
 

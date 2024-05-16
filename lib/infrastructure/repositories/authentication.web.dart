@@ -1,5 +1,5 @@
 import 'package:aewallet/domain/repositories/authentication.dart';
-import 'package:aewallet/infrastructure/datasources/vault.dart';
+import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:aewallet/infrastructure/repositories/authentication.base.dart';
 
 class AuthenticationRepositoryWeb extends AuthenticationRepositoryBase
