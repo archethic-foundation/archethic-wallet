@@ -97,7 +97,7 @@ class AppTextField extends ConsumerStatefulWidget {
   final Widget? overrideTextFieldWidget;
   final int? buttonFadeDurationMs;
   final TextInputType? keyboardType;
-  final Function? onSubmitted;
+  final Function(String text)? onSubmitted;
   final Function(String)? onChanged;
   final double? topMargin;
   final double? leftMargin;
@@ -142,6 +142,7 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
                   if (widget.textInputAction == TextInputAction.done) {
                     FocusScope.of(context).unfocus();
                   }
+                  widget.onSubmitted?.call(text);
                 },
                 onChanged: widget.onChanged,
                 style: widget.style,
