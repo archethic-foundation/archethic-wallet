@@ -13,10 +13,17 @@ packages:
     dependency: transitive
     description:
       name: _flutterfire_internals
+<<<<<<< HEAD
       sha256: "37a42d06068e2fe3deddb2da079a8c4d105f241225ba27b7122b37e9865fd8f7"
       url: "https://pub.dev"
     source: hosted
     version: "1.3.35"
+=======
+      sha256: "2350805d7afefb0efe7acd325cb19d3ae8ba4039b906eade3807ffb69938a01f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.33"
+>>>>>>> 66a944e7 (💄 Add DApps tab)
   adaptive_number:
     dependency: transitive
     description:
@@ -72,6 +79,7 @@ packages:
       name: archethic_dapp_framework_flutter
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       sha256: b912149d3776feb4051bdaaf599347b2d19509621d7ba4a1a5ba593169315cf0
       url: "https://pub.dev"
     source: hosted
@@ -79,6 +87,8 @@ packages:
 =======
 =======
 >>>>>>> 603fadb0 (⬆️ Update Archethic Dart SDK version 3.3.15)
+=======
+>>>>>>> d7b84f30 (💄 Add DApps tab)
 <<<<<<< HEAD
       sha256: "8d41e006b6af9222b7e6bca91e6dec20abf045d084a5caf55c8ba826e7259dcc"
       url: "https://pub.dev"
@@ -87,6 +97,8 @@ packages:
 =======
 =======
 >>>>>>> 1151b498 (⬆️ Update Archethic Dart SDK version 3.3.15)
+=======
+>>>>>>> a417d392 (💄 Add DApps tab)
 <<<<<<< HEAD
       sha256: "3b43ef8a3d65199edd5090f29ed642edcb0aee9d88f1166ee48b22e7862a7e53"
       url: "https://pub.dev"
@@ -110,8 +122,20 @@ packages:
     source: hosted
     version: "1.1.11"
 >>>>>>> 4bd5faf4 (⬆️ Update Archethic Dart SDK version 3.3.15)
+<<<<<<< HEAD
 >>>>>>> 1151b498 (⬆️ Update Archethic Dart SDK version 3.3.15)
+<<<<<<< HEAD
 >>>>>>> 603fadb0 (⬆️ Update Archethic Dart SDK version 3.3.15)
+=======
+=======
+=======
+      sha256: "638753209488c4efd992257fb708668be3e5e696d1f320c3b30d02945d7e7332"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.17"
+>>>>>>> 66a944e7 (💄 Add DApps tab)
+>>>>>>> a417d392 (💄 Add DApps tab)
+>>>>>>> d7b84f30 (💄 Add DApps tab)
   archethic_lib_dart:
     dependency: "direct main"
     description:
@@ -216,10 +240,24 @@ packages:
     dependency: transitive
     description:
       name: archive
+<<<<<<< HEAD
       sha256: cb6a278ef2dbb298455e1a713bda08524a175630ec643a242c399c932a0a1f7d
       url: "https://pub.dev"
     source: hosted
     version: "3.6.1"
+=======
+<<<<<<< HEAD
+      sha256: "6bd38d335f0954f5fad9c79e614604fbf03a0e5b975923dd001b6ea965ef5b4b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.6.0"
+=======
+      sha256: ecf4273855368121b1caed0d10d4513c7241dfc813f7d3c8933b36622ae9b265
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.5.1"
+>>>>>>> 66a944e7 (💄 Add DApps tab)
+>>>>>>> a417d392 (💄 Add DApps tab)
   args:
     dependency: transitive
     description:
@@ -697,10 +735,17 @@ packages:
     dependency: "direct main"
     description:
       name: firebase_core
+<<<<<<< HEAD
       sha256: "26de145bb9688a90962faec6f838247377b0b0d32cc0abecd9a4e43525fc856c"
       url: "https://pub.dev"
     source: hosted
     version: "2.32.0"
+=======
+      sha256: "372d94ced114b9c40cb85e18c50ac94a7e998c8eec630c50d7aec047847d27bf"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.31.0"
+>>>>>>> 66a944e7 (💄 Add DApps tab)
   firebase_core_platform_interface:
     dependency: transitive
     description:
@@ -721,26 +766,47 @@ packages:
     dependency: "direct main"
     description:
       name: firebase_messaging
+<<<<<<< HEAD
       sha256: a1662cc95d9750a324ad9df349b873360af6f11414902021f130c68ec02267c4
       url: "https://pub.dev"
     source: hosted
     version: "14.9.4"
+=======
+      sha256: e0882a7426821f7caccaabfc15a535155cd15b4daa73a5a7b3af701a552d73ab
+      url: "https://pub.dev"
+    source: hosted
+    version: "14.9.2"
+>>>>>>> 66a944e7 (💄 Add DApps tab)
   firebase_messaging_platform_interface:
     dependency: transitive
     description:
       name: firebase_messaging_platform_interface
+<<<<<<< HEAD
       sha256: "87c4a922cb6f811cfb7a889bdbb3622702443c52a0271636cbc90d813ceac147"
       url: "https://pub.dev"
     source: hosted
     version: "4.5.37"
+=======
+      sha256: "52e12cc50e1395ad7ea3552dcbe9958fb1994b5afcf58ee4c0db053932a6fce5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.5.35"
+>>>>>>> 66a944e7 (💄 Add DApps tab)
   firebase_messaging_web:
     dependency: transitive
     description:
       name: firebase_messaging_web
+<<<<<<< HEAD
       sha256: "0d34dca01a7b103ed7f20138bffbb28eb0e61a677bf9e78a028a932e2c7322d5"
       url: "https://pub.dev"
     source: hosted
     version: "3.8.7"
+=======
+      sha256: "8812cc5929380b783f92290d934bf32e2fea06701583f47cdccd5f13f4f24522"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.8.5"
+>>>>>>> 66a944e7 (💄 Add DApps tab)
   fixnum:
     dependency: transitive
     description:
@@ -923,10 +989,17 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_secure_storage
+<<<<<<< HEAD
       sha256: "165164745e6afb5c0e3e3fcc72a012fb9e58496fb26ffb92cf22e16a821e85d0"
       url: "https://pub.dev"
     source: hosted
     version: "9.2.2"
+=======
+      sha256: "8496a89eea74e23f92581885f876455d9d460e71201405dffe5f55dfe1155864"
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.2.1"
+>>>>>>> 66a944e7 (💄 Add DApps tab)
   flutter_secure_storage_linux:
     dependency: transitive
     description:
@@ -939,10 +1012,17 @@ packages:
     dependency: transitive
     description:
       name: flutter_secure_storage_macos
+<<<<<<< HEAD
       sha256: "1693ab11121a5f925bbea0be725abfcfbbcf36c1e29e571f84a0c0f436147a81"
       url: "https://pub.dev"
     source: hosted
     version: "3.1.2"
+=======
+      sha256: b768a7dab26d6186b68e2831b3104f8968154f0f4fdbf66e7c2dd7bdf299daaf
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.1"
+>>>>>>> 66a944e7 (💄 Add DApps tab)
   flutter_secure_storage_platform_interface:
     dependency: transitive
     description:
@@ -1413,10 +1493,17 @@ packages:
     dependency: transitive
     description:
       name: local_auth_darwin
+<<<<<<< HEAD
       sha256: e424ebf90d5233452be146d4a7da4bcd7a70278b67791592f3fde1bda8eef9e2
       url: "https://pub.dev"
     source: hosted
     version: "1.3.1"
+=======
+      sha256: "959145a4cf6f0de745b9ec9ac60101270eb4c5b8b7c2a0470907014adc1c618d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.0"
+>>>>>>> 66a944e7 (💄 Add DApps tab)
   local_auth_platform_interface:
     dependency: transitive
     description:
@@ -1669,10 +1756,24 @@ packages:
     dependency: transitive
     description:
       name: patrol_finders
+<<<<<<< HEAD
       sha256: "6bf2c3093fbccd02f80f73fafc1bd021d76410cbab6e329be220b5e3bc58f072"
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
+=======
+<<<<<<< HEAD
+      sha256: "2b51b43019d5db2a47b2fca53c1c54928a87459535d1ae966cd25d165641c7ce"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.1"
+=======
+      sha256: e14214e88c84d34a1d7c89778ddf5c5a913bfc0a6a308da47d3ebca374a1f5f4
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
+>>>>>>> 66a944e7 (💄 Add DApps tab)
+>>>>>>> a417d392 (💄 Add DApps tab)
   pdfx:
     dependency: "direct main"
     description:
@@ -2290,10 +2391,24 @@ packages:
     dependency: transitive
     description:
       name: webview_flutter_android
+<<<<<<< HEAD
       sha256: f42447ca49523f11d8f70abea55ea211b3cafe172dd7a0e7ac007bb35dd356dc
       url: "https://pub.dev"
     source: hosted
     version: "3.16.4"
+=======
+<<<<<<< HEAD
+      sha256: "0d21cfc3bfdd2e30ab2ebeced66512b91134b39e72e97b43db2d47dda1c4e53a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.16.3"
+=======
+      sha256: dad3313c9ead95517bb1cae5e1c9d20ba83729d5a59e5e83c0a2d66203f27f91
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.16.1"
+>>>>>>> 66a944e7 (💄 Add DApps tab)
+>>>>>>> a417d392 (💄 Add DApps tab)
   webview_flutter_platform_interface:
     dependency: transitive
     description:

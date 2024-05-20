@@ -29,6 +29,7 @@ import 'package:aewallet/ui/views/intro/layouts/intro_new_wallet_disclaimer.dart
 import 'package:aewallet/ui/views/intro/layouts/intro_new_wallet_get_first_infos.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_welcome.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
+import 'package:aewallet/ui/views/main/nft_tab.dart';
 import 'package:aewallet/ui/views/messenger/layouts/add_discussion_sheet.dart';
 import 'package:aewallet/ui/views/messenger/layouts/create_discussion_sheet.dart';
 import 'package:aewallet/ui/views/messenger/layouts/create_discussion_validation_sheet.dart';

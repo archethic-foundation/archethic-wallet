@@ -46,6 +46,31 @@ final _authenticatedRoutes = [
     ),
   ),
   GoRoute(
+    path: AppLockScreen.routerPage,
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
+      key: state.pageKey,
+      child: const AppLockScreen(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
+  ),
+  GoRoute(
+    path: NFTTab.routerPage,
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
+      key: state.pageKey,
+      child: const NFTTab(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
+  ),
+  GoRoute(
     path: NFTListPerCategory.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
       transitionDuration: Duration.zero,
@@ -199,9 +224,7 @@ final _authenticatedRoutes = [
       transitionDuration: Duration.zero,
       reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
-      child: DEXSheet(
-        url: state.extra! as String,
-      ),
+      child: const DEXSheet(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
           FadeTransition(opacity: animation, child: child),
     ),
