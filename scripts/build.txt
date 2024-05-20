@@ -18,8 +18,6 @@ flutter pub run msix:create -c windows/certificates/archethic_wallet.pfx -p pass
 flutter pub run msix:create
 # https://www.advancedinstaller.com/install-test-certificate-from-msix.html
 # chrome extension
-cd web chrome extension
-npm install 
 scripts/build_chrome_extension.sh
 # linux
 flutter build linux

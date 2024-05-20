@@ -33,11 +33,11 @@ async function openExtensionPopup(): Promise<void> {
     })
 }
 
-async function extensionPopupExists(): Promise<Boolean> {
+async function extensionPopupExists(): Promise<boolean> {
     return (await findExtensionWindowId()) !== null
 }
 
-async function isExtensionPopupReady(): Promise<Boolean> {
+async function isExtensionPopupReady(): Promise<boolean> {
     if (await extensionPopupExists()) {
         return await chrome.runtime.sendMessage('isExtensionPopupReady');
     }
@@ -45,13 +45,13 @@ async function isExtensionPopupReady(): Promise<Boolean> {
 }
 
 async function waitForExtensionPopup() {
-    return new Promise<void>(async (resolve, reject) => {
+    return new Promise<void>(async (resolve) => {
         if (await isExtensionPopupReady()) {
             resolve()
             return
         }
 
-        const _extensionPopupReadyListener = (message: any) => {
+        const _extensionPopupReadyListener = (message: string) => {
             if (message === 'extensionPopupReady') {
                 console.log('Extension popup ready')
                 chrome.runtime.onMessage.removeListener(_extensionPopupReadyListener)
