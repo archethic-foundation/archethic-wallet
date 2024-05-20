@@ -163,7 +163,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen>
     final preferences = ref.watch(SettingsProviders.settings);
 
     return PopScope(
-      onPopInvoked: (didPop) async => widget.canNavigateBack,
+      canPop: widget.canNavigateBack,
       child: Column(
         children: <Widget>[
           if (isNFCAvailable)
