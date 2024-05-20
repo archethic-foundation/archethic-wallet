@@ -41,10 +41,13 @@ class AppLockScreen extends ConsumerWidget implements SheetSkeletonInterface {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return SheetSkeleton(
-      appBar: getAppBar(context, ref),
-      floatingActionButton: getFloatingActionButton(context, ref),
-      sheetContent: getSheetContent(context, ref),
+    return PopScope(
+      canPop: false,
+      child: SheetSkeleton(
+        appBar: getAppBar(context, ref),
+        floatingActionButton: getFloatingActionButton(context, ref),
+        sheetContent: getSheetContent(context, ref),
+      ),
     );
   }
 
@@ -102,15 +105,12 @@ class AppLockScreen extends ConsumerWidget implements SheetSkeletonInterface {
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
-    return PopScope(
-      onPopInvoked: (didPop) async => false,
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: Text(
-          localizations.tooManyFailedAttempts,
-          style: ArchethicThemeStyles.textStyleSize14W600Primary,
-          textAlign: TextAlign.center,
-        ),
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      child: Text(
+        localizations.tooManyFailedAttempts,
+        style: ArchethicThemeStyles.textStyleSize14W600Primary,
+        textAlign: TextAlign.center,
       ),
     );
   }

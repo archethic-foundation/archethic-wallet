@@ -88,7 +88,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      onPopInvoked: (didPop) async => widget.canNavigateBack,
+      canPop: widget.canNavigateBack,
       child: SheetSkeleton(
         appBar: getAppBar(context, ref),
         floatingActionButton: getFloatingActionButton(context, ref),

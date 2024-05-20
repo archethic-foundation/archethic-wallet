@@ -324,7 +324,7 @@ class _LockMaskState extends State<_LockMask> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      onPopInvoked: (didPop) async => false,
+      canPop: false,
       child: Stack(
         alignment: Alignment.center,
         children: [
