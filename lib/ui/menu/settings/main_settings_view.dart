@@ -21,23 +21,6 @@ class MainMenuView extends ConsumerWidget {
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
-    final networkSettings = ref.watch(
-      SettingsProviders.settings.select((settings) => settings.network),
-    );
-
-    DApp? aeSwapUrl;
-    if (connectivityStatusProvider == ConnectivityStatus.isConnected &&
-        FeatureFlags.dexActive &&
-        DEXSheet.isAvailable) {
-      ref.watch(DAppsProviders.getDApp(networkSettings.network, 'aeSwap')).map(
-            data: (data) {
-              aeSwapUrl = data.value;
-            },
-            error: (error) {},
-            loading: (loading) {},
-          );
-    }
-
     if (selectedAccount == null) return const SizedBox();
 
     return DecoratedBox(
@@ -73,44 +56,6 @@ class MainMenuView extends ConsumerWidget {
                           ),
                         ),
                       ),
-                      if (aeSwapUrl != null)
-                        Column(
-                          children: [
-                            if (connectivityStatusProvider ==
-                                    ConnectivityStatus.isConnected &&
-                                FeatureFlags.dexActive &&
-                                DEXSheet.isAvailable)
-                              const _SettingsListItem.spacer(),
-                            if (connectivityStatusProvider ==
-                                    ConnectivityStatus.isConnected &&
-                                FeatureFlags.dexActive &&
-                                DEXSheet.isAvailable)
-                              _SettingsListItem.title(
-                                text: localizations.dapp,
-                              ),
-                            if (connectivityStatusProvider ==
-                                    ConnectivityStatus.isConnected &&
-                                FeatureFlags.dexActive &&
-                                DEXSheet.isAvailable)
-                              const _SettingsListItem.spacer(),
-                            if (connectivityStatusProvider ==
-                                    ConnectivityStatus.isConnected &&
-                                FeatureFlags.dexActive &&
-                                DEXSheet.isAvailable)
-                              _SettingsListItem.singleLineWithInfos(
-                                heading: localizations.aeSwapLinkHeader,
-                                info: localizations.aeSwapLinkDesc,
-                                icon: Symbols.swap_horiz_rounded,
-                                onPressed: () async {
-                                  await context.push(
-                                    DEXSheet.routerPage,
-                                    extra: aeSwapUrl!.url,
-                                  );
-                                },
-                                background: ArchethicTheme.backgroundAESwap,
-                              ),
-                          ],
-                        ),
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.manualLockAction,

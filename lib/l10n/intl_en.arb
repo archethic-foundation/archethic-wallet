@@ -504,7 +504,6 @@
     "bottomMainMenuAddressBook": "Address book",
     "bottomMainMenuKeychain": "Keychain",
     "bottomMainMenuMain": "Main",
-    "bottomMainMenuNFT": "NFT",
     "bottomMainMenuMessenger": "Messenger",
     "youHaveBeenAddedToADiscussion": "You have been added to a discussion",
     "leaveDiscussion": "Leave the discussion",
@@ -540,5 +539,12 @@
     "transactionRawSmartContractCallAddress": "Contract address",
     "transactionRawSmartContractCallArguments": "Arguments",
     "transactionRawRawOption": "Raw",
-    "transactionRawFormattedOption": "Formatted"
+    "transactionRawFormattedOption": "Formatted",
+    "dAppsHeader": "DApps",
+    "nftHeader": "NFT",
+    "aeSwapHeader": "aeSwap",
+    "bottomMainMenuDApps": "DApps",
+    "dappsTabDescriptionHeader": "Accelerate adoption with native services",
+    "dappsAESwapDesc": "Swap assets on-chain and access yield farming by adding liquidity",
+    "dappsNFTDesc": "Create your own no-code NFT"
 }

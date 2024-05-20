@@ -1,6 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-import 'dart:async';
 import 'dart:ui';
 
 import 'package:aewallet/application/account/providers.dart';
@@ -13,7 +11,6 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/messenger/layouts/create_discussion_sheet.dart';
-import 'package:aewallet/ui/views/nft/layouts/configure_category_list.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -80,22 +77,6 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
         ),
       ),
       actions: [
-        if (preferences.mainScreenCurrentPage == 3)
-          IconButton(
-            icon: const Icon(
-              Symbols.tune,
-              weight: IconSize.weightM,
-              opticalSize: IconSize.opticalSizeM,
-              grade: IconSize.gradeM,
-            ),
-            onPressed: () async {
-              sl.get<HapticUtil>().feedback(
-                    FeedbackType.light,
-                    preferences.activeVibrations,
-                  );
-              unawaited(context.push(ConfigureCategoryList.routerPage));
-            },
-          ),
         if (preferences.mainScreenCurrentPage == 4)
           Padding(
             padding: const EdgeInsets.only(right: 3),
@@ -175,7 +156,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                   ? FittedBox(
                       fit: BoxFit.fitWidth,
                       child: AutoSizeText(
-                        'NFT',
+                        localizations.dAppsHeader,
                         style: ArchethicThemeStyles.textStyleSize24W700Primary,
                       ),
                     )
