@@ -43,7 +43,7 @@ class YubikeyScreen extends ConsumerStatefulWidget {
 }
 
 class _YubikeyScreenState extends ConsumerState<YubikeyScreen>
-    with LockGuardMixin
+    with CountdownLockMixin
     implements SheetSkeletonInterface {
   StreamSubscription<OTPReceiveEvent>? _otpReceiveSub;
 

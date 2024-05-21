@@ -55,7 +55,7 @@ class PinScreen extends ConsumerStatefulWidget {
 }
 
 class _PinScreenState extends ConsumerState<PinScreen>
-    with SingleTickerProviderStateMixin, LockGuardMixin
+    with SingleTickerProviderStateMixin, CountdownLockMixin
     implements SheetSkeletonInterface {
   static const int _pinLength = 6;
   double buttonSize = 70;

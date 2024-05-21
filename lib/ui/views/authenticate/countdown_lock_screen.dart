@@ -1,18 +1,26 @@
-import 'package:aewallet/application/authentication/authentication.dart';
-import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
-import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:go_router/go_router.dart';
+part of 'auto_lock_guard.dart';
+
+/// Handles navigation to the lock screen
+mixin CountdownLockMixin {
+  static const _logName = 'AuthenticationGuard-Mixin';
+
+  /// Displays lock screen (with the timer) if
+  /// application should be locked (too much authentication failures).
+  ///
+  /// This must be called when check is needed.
+  Future<void> showLockCountdownScreenIfNeeded(
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
+    final shouldLock = await ref.read(
+      AuthenticationProviders.isLockCountdownRunning.future,
+    );
+    if (shouldLock) {
+      log('Show countdown screen', name: _logName);
+      CountdownLockOverlay.instance().show(context);
+    }
+  }
+}
 
 abstract class DurationFormatters {
   static String _twoDigitsFormatter(int value) =>
@@ -34,10 +42,19 @@ abstract class AppLockScreenProviders {
   );
 }
 
-class AppLockScreen extends ConsumerWidget implements SheetSkeletonInterface {
-  const AppLockScreen({super.key});
+class CountdownLockOverlay with LockOverlayMixin {
+  factory CountdownLockOverlay.instance() =>
+      _instance ?? (_instance = CountdownLockOverlay._());
+  CountdownLockOverlay._();
+  static CountdownLockOverlay? _instance;
 
-  static const routerPage = '/lock_screen_transition';
+  @override
+  Widget get child => const _CountdownLockScreen();
+}
+
+class _CountdownLockScreen extends ConsumerWidget
+    implements SheetSkeletonInterface {
+  const _CountdownLockScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -82,7 +99,7 @@ class AppLockScreen extends ConsumerWidget implements SheetSkeletonInterface {
                   FeedbackType.light,
                   activeVibrations,
                 );
-            context.pop();
+            CountdownLockOverlay.instance().hide();
           },
           disabled: isLocked,
         ),

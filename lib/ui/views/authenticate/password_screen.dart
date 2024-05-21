@@ -38,7 +38,7 @@ class PasswordScreen extends ConsumerStatefulWidget {
 }
 
 class _PasswordScreenState extends ConsumerState<PasswordScreen>
-    with LockGuardMixin
+    with CountdownLockMixin
     implements SheetSkeletonInterface {
   FocusNode? enterPasswordFocusNode;
   TextEditingController? enterPasswordController;

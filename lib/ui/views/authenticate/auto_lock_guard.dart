@@ -2,41 +2,30 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:aewallet/application/authentication/authentication.dart';
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
-import 'package:aewallet/ui/views/authenticate/lock_screen.dart';
+import 'package:aewallet/ui/views/authenticate/lock_overlay.mixin.dart';
+import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
+import 'package:aewallet/util/get_it_instance.dart';
+import 'package:aewallet/util/haptic_util.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:lit_starfield/lit_starfield.dart';
 import 'package:synchronized/synchronized.dart';
 
-/// Handles navigation to the lock screen
-mixin LockGuardMixin {
-  static const _logName = 'AuthenticationGuard-Mixin';
-
-  /// Displays lock screen (with the timer) if
-  /// application should be locked (too much authentication failures).
-  ///
-  /// This must be called when check is needed.
-  Future<void> showLockCountdownScreenIfNeeded(
-    BuildContext context,
-    WidgetRef ref,
-  ) async {
-    final shouldLock = await ref.read(
-      AuthenticationProviders.isLockCountdownRunning.future,
-    );
-    if (shouldLock) {
-      log('Show countdown screen', name: _logName);
-      context.pushReplacement(
-        AppLockScreen.routerPage,
-      );
-    }
-  }
-}
+part 'countdown_lock_screen.dart';
+part 'lock_mask_screen.dart';
 
 /// Listens to app state changes and schedules autoLock
 /// accordingly.
@@ -60,6 +49,7 @@ class AutoLockGuard extends ConsumerStatefulWidget {
 class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     with WidgetsBindingObserver {
   static final _forceAuthenticationLock = Lock();
+
   RestartableTimer? timer;
 
   static const _logName = 'AuthenticationGuard-Widget';
@@ -83,7 +73,7 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
   void dispose() {
     if (timer != null) timer!.cancel();
     WidgetsBinding.instance.removeObserver(this);
-    _LockMask.hide();
+    LockMaskOverlay.instance().hide();
     super.dispose();
   }
 
@@ -138,7 +128,7 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     );
     if (ref.read(AuthenticationProviders.startupMaskVisibility) ==
         StartupMaskVisibility.visible) return;
-    _LockMask.show(context);
+    LockMaskOverlay.instance().show(context);
     ref.read(AuthenticationProviders.startupMaskVisibility.notifier).state =
         StartupMaskVisibility.visible;
   }
@@ -148,7 +138,7 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
       'Hide lock mask',
       name: _logName,
     );
-    _LockMask.hide();
+    LockMaskOverlay.instance().hide();
     ref.read(AuthenticationProviders.startupMaskVisibility.notifier).state =
         StartupMaskVisibility.hidden;
   }
@@ -277,83 +267,4 @@ class InputListener extends StatelessWidget {
           ),
         ),
       );
-}
-
-class _LockMask extends StatefulWidget {
-  const _LockMask._();
-
-  static OverlayEntry? _overlayEntry;
-  static const routeName = 'LockMask';
-
-  @override
-  State<_LockMask> createState() => _LockMaskState();
-
-  static void show(BuildContext context) {
-    log('Show', name: routeName);
-    if (_overlayEntry != null) {
-      log('... already visible. Abort', name: routeName);
-      return;
-    }
-
-    _overlayEntry = OverlayEntry(
-      builder: (BuildContext context) => const _LockMask._(),
-    );
-    Overlay.of(context).insert(_overlayEntry!);
-  }
-
-  static void hide() {
-    log('Hide', name: routeName);
-    if (_overlayEntry == null) {
-      log('... not visible. Abort', name: routeName);
-      return;
-    }
-
-    _overlayEntry?.remove();
-    _overlayEntry?.dispose();
-    _overlayEntry = null;
-  }
-}
-
-class _LockMaskState extends State<_LockMask> {
-  @override
-  void dispose() {
-    _LockMask.hide();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          SizedBox.expand(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                color: Colors.black,
-                image: DecorationImage(
-                  image: AssetImage(
-                    ArchethicTheme.backgroundWelcome,
-                  ),
-                  fit: BoxFit.fitHeight,
-                  alignment: Alignment.centerRight,
-                  opacity: 0.5,
-                ),
-              ),
-            ),
-          ),
-          const LitStarfieldContainer(
-            backgroundDecoration: BoxDecoration(
-              color: Colors.transparent,
-            ),
-          ),
-          Image.asset(
-            '${ArchethicTheme.assetsFolder}logo_crystal.png',
-            width: 200,
-          ),
-        ],
-      ),
-    );
-  }
 }
