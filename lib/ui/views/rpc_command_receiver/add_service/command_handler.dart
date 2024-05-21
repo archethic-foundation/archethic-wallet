@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -15,8 +13,8 @@ import 'package:aewallet/infrastructure/repositories/transaction/transaction_key
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/add_service/layouts/add_service_confirmation_form.dart';
 import 'package:aewallet/util/notifications_util.dart';
+import 'package:aewallet/util/universal_platform.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -83,8 +81,7 @@ class AddServiceHandler extends CommandHandler {
               ),
             );
 
-            if (!kIsWeb &&
-                (Platform.isLinux || Platform.isMacOS || Platform.isWindows)) {
+            if (UniversalPlatform.isDesktop) {
               await windowManager.show();
             }
 

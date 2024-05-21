@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:aewallet/infrastructure/rpc/awc_json_rpc_server.dart';
+import 'package:aewallet/util/universal_platform.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -13,8 +13,7 @@ class AWCWebview extends StatefulWidget {
 
   static const _logName = 'AWCWebview';
 
-  static bool get isAvailable =>
-      !kIsWeb && (Platform.isAndroid || Platform.isIOS);
+  static bool get isAvailable => UniversalPlatform.isMobile;
 
   final Uri uri;
 

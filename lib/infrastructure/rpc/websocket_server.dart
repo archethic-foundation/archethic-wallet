@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:aewallet/infrastructure/rpc/awc_json_rpc_server.dart';
-import 'package:flutter/foundation.dart';
+import 'package:aewallet/util/universal_platform.dart';
 import 'package:web_socket_channel/io.dart';
 
 class ArchethicWebsocketRPCServer {
@@ -13,10 +13,7 @@ class ArchethicWebsocketRPCServer {
   static const host = '127.0.0.1';
   static const port = 12345;
 
-  static bool get isPlatformCompatible {
-    return !kIsWeb &&
-        (Platform.isLinux || Platform.isMacOS || Platform.isWindows);
-  }
+  static bool get isPlatformCompatible => UniversalPlatform.isDesktop;
 
   HttpServer? _runningHttpServer;
   final Set<AWCJsonRPCServer> _openedSockets = {};

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
@@ -9,8 +7,8 @@ import 'package:aewallet/domain/rpc/commands/sign_transactions.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/sign_transactions/layouts/sign_transactions_confirmation_form.dart';
 import 'package:aewallet/util/get_it_instance.dart';
+import 'package:aewallet/util/universal_platform.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window_manager/window_manager.dart';
@@ -90,8 +88,7 @@ class SignTransactionsCommandHandler extends CommandHandler {
               addresses.add(signedTransaction.address?.address);
             }
 
-            if (!kIsWeb &&
-                (Platform.isLinux || Platform.isMacOS || Platform.isWindows)) {
+            if (UniversalPlatform.isDesktop) {
               await windowManager.show();
             }
 

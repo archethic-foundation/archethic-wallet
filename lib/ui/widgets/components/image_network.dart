@@ -1,10 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'dart:io';
-
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/util/universal_platform.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,7 +30,9 @@ class ImageNetwork extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    if (!kIsWeb && (Platform.isAndroid || Platform.isIOS || Platform.isMacOS)) {
+    if (UniversalPlatform.isAndroid ||
+        UniversalPlatform.isIOS ||
+        UniversalPlatform.isMacOS) {
       return CachedNetworkImage(
         imageUrl: url,
         width: width ?? MediaQuery.of(context).size.width,

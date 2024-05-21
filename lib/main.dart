@@ -26,6 +26,7 @@ import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/security_manager.dart';
 import 'package:aewallet/util/service_locator.dart';
+import 'package:aewallet/util/universal_platform.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -43,11 +44,11 @@ Future<void> main() async {
   await DBHelper.setupDatabase();
   await setupServiceLocator();
 
-  if (!kIsWeb && (Platform.isLinux || Platform.isMacOS || Platform.isWindows)) {
+  if (UniversalPlatform.isDesktop) {
     await windowManager.ensureInitialized();
 
     var sizeWindows = const Size(370, 800);
-    if (Platform.isLinux) {
+    if (UniversalPlatform.isLinux) {
       sizeWindows = const Size(430, 850);
     }
 
@@ -64,14 +65,14 @@ Future<void> main() async {
 
     await windowManager.waitUntilReadyToShow(windowOptions, () async {
       // https://github.com/leanflutter/window_manager/issues/238
-      if (Platform.isLinux) {
+      if (UniversalPlatform.isLinux) {
         await windowManager.setResizable(true);
       } else {
         await windowManager.setResizable(false);
       }
 
       // ignore: cascade_invocations
-      if (Platform.isWindows) {
+      if (UniversalPlatform.isWindows) {
         windowManager.setMaximizable(false);
       }
       await windowManager.show();
@@ -79,7 +80,7 @@ Future<void> main() async {
     });
   }
 
-  if (!kIsWeb && Platform.isAndroid) {
+  if (UniversalPlatform.isAndroid) {
     // Fix LetsEncrypt root certificate for Android<7.1
     final x1cert = await rootBundle.load('assets/ssl/isrg-root-x1.pem');
     SecurityContext.defaultContext.setTrustedCertificatesBytes(

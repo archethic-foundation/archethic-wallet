@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:aewallet/application/app_version_update_info.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -7,7 +5,7 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
-import 'package:flutter/foundation.dart';
+import 'package:aewallet/util/universal_platform.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,7 +17,9 @@ class AppUpdateButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (kIsWeb || Platform.isWindows || Platform.isLinux) {
+    if (UniversalPlatform.isWeb ||
+        UniversalPlatform.isWindows ||
+        UniversalPlatform.isLinux) {
       return const SizedBox();
     }
 

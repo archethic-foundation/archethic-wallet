@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
@@ -8,8 +6,8 @@ import 'package:aewallet/domain/rpc/commands/send_transaction.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/send_transaction/layouts/send_transaction_confirmation_form.dart';
 import 'package:aewallet/util/get_it_instance.dart';
+import 'package:aewallet/util/universal_platform.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -58,8 +56,7 @@ class SendTransactionHandler extends CommandHandler {
               );
             }
 
-            if (!kIsWeb &&
-                (Platform.isLinux || Platform.isMacOS || Platform.isWindows)) {
+            if (UniversalPlatform.isDesktop) {
               await windowManager.show();
             }
 

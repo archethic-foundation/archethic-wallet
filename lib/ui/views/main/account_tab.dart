@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/blog.dart';
 import 'package:aewallet/application/connectivity_status.dart';
@@ -18,7 +16,7 @@ import 'package:aewallet/ui/widgets/components/refresh_indicator.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
-import 'package:flutter/foundation.dart';
+import 'package:aewallet/util/universal_platform.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -125,8 +123,7 @@ class AccountTab extends ConsumerWidget {
                   ],
                 ),
               ),
-              if (!kIsWeb && (Platform.isAndroid || Platform.isIOS))
-                const AppUpdateButton(),
+              if (UniversalPlatform.isMobile) const AppUpdateButton(),
             ],
           ),
         ),

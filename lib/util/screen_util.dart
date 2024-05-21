@@ -1,9 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-// Dart imports:
-import 'dart:io';
-
 // Flutter imports:
+import 'package:aewallet/util/universal_platform.dart';
 import 'package:flutter/foundation.dart';
 
 class ScreenUtil {
@@ -16,7 +14,7 @@ class ScreenUtil {
         return true;
       }
     } else {
-      if (Platform.isMacOS || Platform.isLinux || Platform.isWindows) {
+      if (UniversalPlatform.isDesktop) {
         return true;
       } else {
         return false;

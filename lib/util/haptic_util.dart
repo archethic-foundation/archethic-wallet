@@ -1,11 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-// Dart imports:
-import 'dart:io';
-
 // Flutter imports:
-import 'package:flutter/foundation.dart';
-
+import 'package:aewallet/util/universal_platform.dart';
 // Package imports:
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
@@ -19,8 +15,7 @@ class HapticUtil {
     if (activeVibrations == false) {
       return;
     }
-    if ((!kIsWeb && (Platform.isIOS || Platform.isAndroid)) &&
-        await Vibrate.canVibrate) {
+    if (UniversalPlatform.isMobile && await Vibrate.canVibrate) {
       Vibrate.feedback(feedbackType);
     }
   }

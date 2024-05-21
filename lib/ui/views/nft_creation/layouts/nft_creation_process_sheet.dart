@@ -26,6 +26,7 @@ import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:aewallet/ui/widgets/fees/fee_infos.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
+import 'package:aewallet/util/universal_platform.dart';
 import 'package:aewallet/util/user_data_util.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';

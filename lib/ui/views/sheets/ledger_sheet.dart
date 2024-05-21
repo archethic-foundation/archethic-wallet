@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:aewallet/ui/themes/styles.dart';
 // Project imports:
@@ -12,6 +11,7 @@ import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/ledger/archethic_ledger_util.dart';
+import 'package:aewallet/util/universal_platform.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:convert/convert.dart';
 import 'package:flutter/foundation.dart';
@@ -192,7 +192,7 @@ class _LedgerSheetState extends ConsumerState<LedgerSheet> {
               ),
             ),
           ),
-          if (kIsWeb || Platform.isMacOS)
+          if (UniversalPlatform.isWeb || UniversalPlatform.isMacOS)
             Column(
               children: <Widget>[
                 Row(

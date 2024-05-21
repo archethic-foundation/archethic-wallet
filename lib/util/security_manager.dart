@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/infrastructure/datasources/hive_preferences.dart';
 import 'package:aewallet/model/available_language.dart';
@@ -7,7 +5,7 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/util/case_converter.dart';
-import 'package:flutter/foundation.dart';
+import 'package:aewallet/util/universal_platform.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_jailbreak_detection/flutter_jailbreak_detection.dart';
@@ -21,13 +19,7 @@ class SecurityManager {
   SecurityManager._internal();
 
   bool _checkPlatform() {
-    if (kIsWeb) {
-      return false;
-    }
-    if (!Platform.isIOS && !Platform.isAndroid) {
-      return false;
-    }
-    return true;
+    return UniversalPlatform.isMobile;
   }
 
   static final SecurityManager _singleton = SecurityManager._internal();
