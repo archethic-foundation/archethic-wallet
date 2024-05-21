@@ -1,6 +1,4 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
+import 'package:aewallet/util/universal_platform.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:local_auth/local_auth.dart';
 
@@ -8,7 +6,7 @@ class DeviceAbilities {
   // TODO(reddwarf03): Don't use providers. Not necessary
   static final hasBiometricsProvider = FutureProvider<bool>(
     (ref) async {
-      if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
+      if (UniversalPlatform.isMobile) {
         final localAuth = LocalAuthentication();
         final canCheck = await localAuth.canCheckBiometrics;
         if (canCheck) {
@@ -29,11 +27,10 @@ class DeviceAbilities {
 
   static final hasNotificationsProvider = Provider<bool>(
     (ref) {
-      if (!kIsWeb &&
-          (Platform.isIOS ||
-              Platform.isAndroid ||
-              Platform.isLinux ||
-              Platform.isMacOS)) {
+      if (UniversalPlatform.isIOS ||
+          UniversalPlatform.isAndroid ||
+          UniversalPlatform.isLinux ||
+          UniversalPlatform.isMacOS) {
         return true;
       }
       return false;
@@ -42,7 +39,7 @@ class DeviceAbilities {
 
   static final hasQRCodeProvider = Provider<bool>(
     (ref) {
-      if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
+      if (UniversalPlatform.isMobile) {
         return true;
       }
       return false;

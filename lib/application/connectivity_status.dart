@@ -1,8 +1,7 @@
 import 'dart:async';
-import 'dart:io';
 
+import 'package:aewallet/util/universal_platform.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum ConnectivityStatus { isConnected, isDisconnected }
@@ -24,7 +23,7 @@ class ConnectivityStatusNotifier extends StateNotifier<ConnectivityStatus> {
 
 extension _ConnectivityResultExt on ConnectivityResult {
   ConnectivityStatus get toConnectivityStatus {
-    if (kIsWeb || (!kIsWeb && Platform.isLinux)) {
+    if (UniversalPlatform.isWeb || UniversalPlatform.isLinux) {
       return ConnectivityStatus.isConnected;
     }
     switch (this) {

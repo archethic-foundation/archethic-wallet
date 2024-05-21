@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/nft/nft_category.dart';
 import 'package:aewallet/model/data/account.dart';
@@ -9,7 +7,7 @@ import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
-import 'package:flutter/foundation.dart';
+import 'package:aewallet/util/universal_platform.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -191,8 +189,7 @@ class ReorderableWidget extends ConsumerWidget {
                                         Colors.redAccent[400]!.withOpacity(0.5),
                                   )
                                 : const SizedBox(),
-                            trailing: (!kIsWeb &&
-                                    (Platform.isAndroid || Platform.isIOS))
+                            trailing: UniversalPlatform.isMobile
                                 ? ReorderableDragStartListener(
                                     index:
                                         nftCategoryToSort.indexOf(nftCategory),

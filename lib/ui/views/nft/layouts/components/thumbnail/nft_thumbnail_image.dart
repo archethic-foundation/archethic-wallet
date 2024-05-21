@@ -1,13 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'dart:developer' as dev;
-import 'dart:io';
 
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail_error.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail_loading.dart';
 import 'package:aewallet/util/cache_manager_hive.dart';
 import 'package:aewallet/util/mime_util.dart';
 import 'package:aewallet/util/token_util.dart';
+import 'package:aewallet/util/universal_platform.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -98,7 +98,9 @@ Future<Uint8List> _getImageFromToken(
     'start _getImageFromToken ${DateTime.now().toUtc()}',
     name: 'cacheManagement',
   );
-  if (!kIsWeb && (Platform.isAndroid || Platform.isIOS || Platform.isMacOS)) {
+  if (UniversalPlatform.isAndroid ||
+      UniversalPlatform.isIOS ||
+      UniversalPlatform.isMacOS) {
     final cacheManagerHive = await CacheManagerHive.getInstance();
     final cacheItem = cacheManagerHive.get(address);
 

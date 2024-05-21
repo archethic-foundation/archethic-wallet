@@ -1,9 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'dart:io';
-
 // Flutter imports:
-import 'package:flutter/foundation.dart';
+import 'package:aewallet/util/universal_platform.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:local_auth/local_auth.dart';
@@ -15,7 +13,7 @@ class BiometricUtil {
   /// @returns true if device has fingerprint/faceID available and registered, false otherwise
   // TODO(reddwarf03): remove hasBiometricsProvider (3)
   Future<bool> hasBiometrics() async {
-    if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
+    if (UniversalPlatform.isMobile) {
       final localAuth = LocalAuthentication();
       final canCheck = await localAuth.canCheckBiometrics;
       if (canCheck) {

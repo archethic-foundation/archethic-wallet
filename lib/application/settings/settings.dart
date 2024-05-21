@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:aewallet/domain/models/market_price_history.dart';
@@ -9,7 +8,7 @@ import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-import 'package:flutter/foundation.dart';
+import 'package:aewallet/util/universal_platform.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class SettingsProviders {
@@ -29,11 +28,10 @@ class SettingsNotifier extends StateNotifier<Settings> {
 
   Future<void> reset() => _update(
         state.copyWith(
-          activeNotifications: !kIsWeb &&
-              (Platform.isIOS ||
-                  Platform.isAndroid ||
-                  Platform.isLinux ||
-                  Platform.isMacOS),
+          activeNotifications: UniversalPlatform.isIOS ||
+              UniversalPlatform.isAndroid ||
+              UniversalPlatform.isLinux ||
+              UniversalPlatform.isMacOS,
           activeVibrations: true,
           activeRPCServer: true,
           currency: AvailableCurrencyEnum.usd,

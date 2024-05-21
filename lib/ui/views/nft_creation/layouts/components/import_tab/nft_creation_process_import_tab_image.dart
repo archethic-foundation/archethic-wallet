@@ -6,7 +6,7 @@ class NFTCreationProcessImportTabImage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (kIsWeb == true || (!Platform.isAndroid && !Platform.isIOS)) {
+    if (UniversalPlatform.isWeb || !UniversalPlatform.isMobile) {
       return const SizedBox();
     }
 
