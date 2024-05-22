@@ -212,3 +212,36 @@ We are using the icons from google, material icons : https://fonts.google.com/ic
 
 #### Icons generator
 - To convert all svg icons from ``assets/fonts`` folder, run the following command : ``icon_font_generator --from=assets/icons/menu --class-name=UiIcons --out-font=assets/fonts/ui_icons.ttf --out-flutter=lib/ui/widgets/components/icons.dart``. See [Icon Font Generator documentation](https://pub.dev/packages/icon_font_generator)
+
+
+## Data storage
+**Wallet** data are stored using [Hive](https://docs.hivedb.dev/). 
+
+Storage **Boxes** are split into  categories :
+ - **Raw boxes :** Those boxes contain non-sensitive data
+ - **Vaults :** those boxes are [encrypted Hive boxes](https://docs.hivedb.dev/#/advanced/encrypted_box)
+    - **Web platform :** to mitigate lack of [**FlutterSecureStorage**](https://pub.dev/packages/flutter_secure_storage) on web platform, the **Box Encryption Key** is itself encrypted using user password.
+    - **Other platforms :** the **Box Encryption Key** is stored in the system [**FlutterSecureStorage**](https://pub.dev/packages/flutter_secure_storage)
+ - **Encrypted boxes :** these boxes are used on **non web platforms** only. They store user **Pin** or **Password** code
+
+ ### Raw boxes
+
+ - **[_preferencesBox](./lib/infrastructure/datasources/preferences.hive.dart)** : User settings
+ - **[tokensListBox](./lib/infrastructure/datasources/tokens_list.hive.dart)** : Cache for [Tokens](./lib/infrastructure/datasources/wallet_token_dto.hive.dart) read from API
+ - **[contacts](./lib/model/data/appdb.dart)** : User registered [Contacts](./lib/model/data/contact.dart)
+ - **[appWallet](./lib/model/data/appdb.dart)** : Non-sensitive [Wallet data](./lib/domain/models/app_wallet.dart)
+ - **[price](./lib/model/data/appdb.dart)** : Cache for currency [Prices](./lib/model/data/price.dart) read from Oracle
+
+### Vault
+
+- **[_vaultBox](./lib/infrastructure/datasources/keychain_info.vault.dart)** : Sensitive data
+    - keychain seed
+    - [KeychainSecuredInfos](./lib/model/blockchain/keychain_secured_infos.dart)
+- **[CacheManagerHive](./lib/util/cache_manager_hive.dart)**: Blockchain cache for various data
+    - Token images data
+- **[NotificationsSetup](./lib/infrastructure/datasources/notification.vault.dart)** : [Push notification data](./lib/model/data/notification_setup_dto.dart)
+- **[MessengerDiscussion](./lib/infrastructure/datasources/discussion.vault.dart)** : [Discussions data](./lib/model/data/messenger/discussion.dart)
+
+### Encrypted boxes
+
+- **[NonWebAuthentication](./lib/infrastructure/datasources/authent_nonweb.secured_hive.dart)** : User authentication data (pin/password)

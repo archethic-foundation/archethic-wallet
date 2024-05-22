@@ -13,7 +13,7 @@ import 'package:hive/hive.dart';
 class AuthentHiveSecuredDatasource {
   AuthentHiveSecuredDatasource._(this._box);
 
-  static const String _vaultBox = '_vaultBox';
+  static const String _authenticationBox = 'NonWebAuthentication';
   final Box<dynamic> _box;
 
   static const String _pin = 'archethic_wallet_pin';
@@ -25,7 +25,7 @@ class AuthentHiveSecuredDatasource {
   // This doesn't have to be a singleton.
   // We just want to make sure that the box is open, before we start getting/setting objects on it
   static Future<AuthentHiveSecuredDatasource> getInstance() async {
-    final encryptedBox = await _openSecuredBox(_vaultBox);
+    final encryptedBox = await _openSecuredBox(_authenticationBox);
     return AuthentHiveSecuredDatasource._(encryptedBox);
   }
 
