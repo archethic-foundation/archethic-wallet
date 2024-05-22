@@ -238,6 +238,7 @@ class _SetPasswordState extends ConsumerState<SetPassword>
           controller: confirmPasswordController,
           textInputAction: TextInputAction.done,
           autocorrect: false,
+          onSubmitted: (_) => _validateRequest(),
           onChanged: (String newText) {
             if (passwordError != null) {
               setState(() {
