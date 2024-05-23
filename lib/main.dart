@@ -8,10 +8,10 @@ import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/migrations/migration_manager.dart';
 import 'package:aewallet/application/notification/providers.dart';
 import 'package:aewallet/application/oracle/provider.dart';
+import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/verified_tokens.dart';
-import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
 import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
@@ -284,22 +284,6 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
         return;
       }
 
-      // Allows Vault to ask for password during restoration
-      Vault.instance().passwordDelegate = () {
-        return AuthFactory.forceAuthenticate(
-          context,
-          ref,
-          authMethod: ref.read(
-            AuthenticationProviders.settings.select(
-              (authSettings) => AuthenticationMethod(
-                authSettings.authenticationMethod,
-              ),
-            ),
-          ),
-          canCancel: false,
-        );
-      };
-
       await ref.read(SessionProviders.session.notifier).restore();
 
       final session = ref.read(SessionProviders.session);
@@ -332,16 +316,44 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
         .addListener(removeNativeSplash);
   }
 
+  VaultPasswordDelegate? _passwordDelegate;
+
   @override
   void initState() {
     super.initState();
 
     removeNativeSplashOnNextNavigation();
 
+    // Allows Vault to ask for password during restoration
+    _passwordDelegate = () => AuthFactory.forceAuthenticate(
+          context,
+          ref,
+          authMethod: ref.read(
+            AuthenticationProviders.settings.select(
+              (authSettings) => AuthenticationMethod(
+                authSettings.authenticationMethod,
+              ),
+            ),
+          ),
+          canCancel: false,
+        );
+    Vault.instance().passwordDelegate = _passwordDelegate;
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await initializeProviders();
       await checkLoggedIn();
     });
+  }
+
+  @override
+  void dispose() {
+    /// If some other screen updated the passwordDelegate,
+    /// then we should not reset it.
+    if (Vault.instance().passwordDelegate == _passwordDelegate) {
+      Vault.instance().passwordDelegate = null;
+    }
+
+    super.dispose();
   }
 
   @override

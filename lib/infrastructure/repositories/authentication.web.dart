@@ -14,7 +14,7 @@ class AuthenticationRepositoryWeb extends AuthenticationRepositoryBase
 
   @override
   Future<void> setPin(String pin) async {
-    await Vault.instance().updateSecureKey(pin);
+    await _updateVaultPassphrase(pin);
   }
 
   @override
@@ -23,11 +23,18 @@ class AuthenticationRepositoryWeb extends AuthenticationRepositoryBase
 
   @override
   Future<void> setPassword(String password) async {
+    await _updateVaultPassphrase(password);
+  }
+
+  /// Updates or sets Vault passphrase.
+  ///
+  /// If a passphrase was already setup, then the Vault MUST be unlocked before calling this.
+  Future<void> _updateVaultPassphrase(String passphrase) async {
     final vault = Vault.instance();
     if (await vault.isSetup) {
-      await vault.updateSecureKey(password);
+      await vault.updateSecureKey(passphrase);
     } else {
-      await vault.unlock(password);
+      await vault.unlock(passphrase);
     }
   }
 
