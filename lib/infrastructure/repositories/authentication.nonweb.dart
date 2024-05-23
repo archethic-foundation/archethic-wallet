@@ -16,7 +16,7 @@ class AuthenticationRepositoryNonWeb extends AuthenticationRepositoryBase
   @override
   Future<void> setPin(String pin) async {
     final vault = await AuthentHiveSecuredDatasource.getInstance();
-    vault.setPin(pin);
+    await vault.setPin(pin);
   }
 
   @override

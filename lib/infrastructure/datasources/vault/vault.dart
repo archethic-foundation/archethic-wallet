@@ -207,6 +207,6 @@ class Vault {
     );
     final password = await passwordDelegate!();
 
-    unlock(password);
+    await unlock(password);
   }
 }
