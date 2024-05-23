@@ -177,6 +177,6 @@ class ContactsHiveDatasource {
   }
 
   Future<void> clearContacts() async {
-    await Hive.deleteBox(contactsTable);
+    await Hive.deleteBox<Contact>(contactsTable);
   }
 }

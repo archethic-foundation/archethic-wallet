@@ -19,6 +19,10 @@ class DiscussionVaultDatasource {
     return _instance = DiscussionVaultDatasource._(encryptedBox);
   }
 
+  static Future<void> clear() async {
+    await Vault.instance().clear<Discussion>(_discussionBoxName);
+  }
+
   String _discussionKey({
     required String ownerAddress,
     required String discussionAddress,
@@ -72,10 +76,6 @@ class DiscussionVaultDatasource {
         name: discussionName,
       ),
     );
-  }
-
-  static Future<void> clear() async {
-    await Vault.instance().clear(_discussionBoxName);
   }
 
   Future<void> setDiscussionLastMessage({

@@ -24,6 +24,6 @@ class PriceHiveDatasource {
   }
 
   Future<void> clearPrice() async {
-    await Hive.deleteBox(priceTable);
+    await Hive.deleteBox<Price>(priceTable);
   }
 }
