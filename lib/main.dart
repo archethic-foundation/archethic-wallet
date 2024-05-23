@@ -11,7 +11,7 @@ import 'package:aewallet/application/oracle/provider.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/verified_tokens.dart';
-import 'package:aewallet/application/wallet/wallet.dart';
+import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
 import 'package:aewallet/infrastructure/datasources/vault/vault.dart';

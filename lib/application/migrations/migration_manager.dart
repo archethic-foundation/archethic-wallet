@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
-import 'package:aewallet/application/wallet/wallet.dart';
+import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/infrastructure/datasources/preferences.hive.dart';
 import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:aewallet/util/get_it_instance.dart';

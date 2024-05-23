@@ -2,7 +2,7 @@
 
 import 'dart:developer';
 
-import 'package:aewallet/application/wallet/wallet.dart';
+import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/main.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:flutter/material.dart';

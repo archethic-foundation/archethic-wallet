@@ -1,4 +1,4 @@
-part of 'wallet.dart';
+part of 'session.dart';
 
 @immutable
 abstract class Session {

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:aewallet/application/wallet/wallet.dart';
+import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/domain/repositories/settings.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/domain/rpc/commands/failure.dart';

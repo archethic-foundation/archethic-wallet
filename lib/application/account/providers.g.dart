@@ -258,7 +258,7 @@ final _accountsNotifierProvider =
 
 typedef _$AccountsNotifier = AutoDisposeAsyncNotifier<List<Account>>;
 String _$selectedAccountNotifierHash() =>
-    r'21b80b2036f29bf5f4127b34b17972bf52118d83';
+    r'd0cba50e7938424a93e6afb396e066dbab2dee24';
 
 /// See also [_SelectedAccountNotifier].
 @ProviderFor(_SelectedAccountNotifier)

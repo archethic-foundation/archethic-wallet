@@ -8,7 +8,7 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/recovery_phrase_saved.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/wallet/wallet.dart';
+import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';

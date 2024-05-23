@@ -900,7 +900,7 @@ final _discussionsProvider = AutoDisposeAsyncNotifierProvider<_Discussions,
 
 typedef _$Discussions = AutoDisposeAsyncNotifier<Iterable<Discussion>>;
 String _$messageCreationFormNotifierHash() =>
-    r'b5a2c5ef6d68ca9d1bb861ab865ba4b360d93e25';
+    r'e30292b95b8600957a64596890cad5bc64d382d9';
 
 abstract class _$MessageCreationFormNotifier
     extends BuildlessAutoDisposeNotifier<MessageCreationFormState> {
@@ -1051,7 +1051,7 @@ class _MessageCreationFormNotifierProviderElement
 }
 
 String _$paginatedDiscussionMessagesNotifierHash() =>
-    r'0c809e9183663eb92a68bf5771aeb6881f4770b8';
+    r'08abbf2958cf3c62d9c8c75f9359f50211cae703';
 
 abstract class _$PaginatedDiscussionMessagesNotifier
     extends BuildlessAutoDisposeNotifier<

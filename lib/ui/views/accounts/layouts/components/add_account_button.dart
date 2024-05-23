@@ -1,4 +1,4 @@
-import 'package:aewallet/application/wallet/wallet.dart';
+import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/add_account/layouts/add_account_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
