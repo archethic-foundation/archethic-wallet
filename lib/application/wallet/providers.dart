@@ -127,7 +127,7 @@ class _SessionNotifier extends Notifier<Session> {
       return null;
     }
     final vault = await HiveVaultDatasource.getInstance();
-    vault.setSeed(seed);
+    await vault.setSeed(seed);
 
     try {
       final keychain = await sl.get<ApiService>().getKeychain(seed);

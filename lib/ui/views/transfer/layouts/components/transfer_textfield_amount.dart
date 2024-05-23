@@ -242,7 +242,7 @@ class _TransferTextFieldAmountState
               padding: const EdgeInsets.only(right: 10, bottom: 23),
               child: InkWell(
                 onTap: () async {
-                  transferNotifier.setDefineMaxAmountInProgress(
+                  await transferNotifier.setDefineMaxAmountInProgress(
                     defineMaxAmountInProgress: true,
                   );
                   sl.get<HapticUtil>().feedback(
@@ -250,7 +250,7 @@ class _TransferTextFieldAmountState
                         settings.activeVibrations,
                       );
                   if (transferNotifier.controlMaxSend(context) == false) {
-                    transferNotifier.setDefineMaxAmountInProgress(
+                    await transferNotifier.setDefineMaxAmountInProgress(
                       defineMaxAmountInProgress: false,
                     );
                     return;
@@ -264,7 +264,7 @@ class _TransferTextFieldAmountState
                     tokenPrice: selectedCurrencyMarketPrice.amount,
                   );
                   _updateAmountTextController();
-                  transferNotifier.setDefineMaxAmountInProgress(
+                  await transferNotifier.setDefineMaxAmountInProgress(
                     defineMaxAmountInProgress: false,
                   );
                 },

@@ -163,11 +163,13 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet>
           Dimens.buttonBottomDimens,
           key: const Key('confirm'),
           onPressed: () async {
-            Navigator.of(context).push(
-              AnimationLoadingOverlay(
-                AnimationType.send,
-                ArchethicTheme.animationOverlayStrong,
-                title: AppLocalizations.of(context)!.pleaseWait,
+            unawaited(
+              Navigator.of(context).push(
+                AnimationLoadingOverlay(
+                  AnimationType.send,
+                  ArchethicTheme.animationOverlayStrong,
+                  title: AppLocalizations.of(context)!.pleaseWait,
+                ),
               ),
             );
 

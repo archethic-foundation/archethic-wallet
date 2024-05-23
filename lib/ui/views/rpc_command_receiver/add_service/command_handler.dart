@@ -132,11 +132,11 @@ class AddServiceHandler extends CommandHandler {
           },
         );
 
-  static Future<void> _showNotification({
+  static void _showNotification({
     required BuildContext context,
     required WidgetRef ref,
     required RPCCommand<RPCAddServiceCommandData> command,
-  }) async {
+  }) {
     final accountSelected =
         ref.watch(AccountProviders.selectedAccount).valueOrNull;
 

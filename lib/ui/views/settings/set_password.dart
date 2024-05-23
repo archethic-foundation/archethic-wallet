@@ -328,7 +328,7 @@ class _SetPasswordState extends ConsumerState<SetPassword>
       }
     } else {
       final vault = await HiveVaultDatasource.getInstance();
-      vault.setPassword(
+      await vault.setPassword(
         stringEncryptBase64(setPasswordController!.text, widget.seed),
       );
       context.pop(true);

@@ -270,7 +270,7 @@ class ArchethicTransactionRepository
       apiService: apiService,
     );
     // ignore: cascade_invocations
-    _transactionSender!.send(
+    await _transactionSender!.send(
       transaction: await _buildTransaction(transaction),
       onConfirmation: onConfirmation,
       onError: onError,

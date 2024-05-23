@@ -55,7 +55,7 @@ class _CreateDiscussionValidationSheetState
       // When the users selects only one contact, no need to ask him for the name of the discussion
       if (formState.membersList.length == 1) {
         final discussionDefaultName = formState.membersList.first.format;
-        formNotifier.setName(discussionDefaultName);
+        await formNotifier.setName(discussionDefaultName);
         nameController.text = discussionDefaultName;
       }
     });

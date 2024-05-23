@@ -50,7 +50,7 @@ class KeychainUtil with KeychainServiceMixin {
     );
 
     dev.log('>>> Create access <<< ${accessKeychainTx.address}');
-    transactionSender.send(
+    await transactionSender.send(
       transaction: accessKeychainTx,
       onConfirmation: (event) async {
         if (TransactionConfirmation.isEnoughConfirmations(
@@ -127,7 +127,7 @@ class KeychainUtil with KeychainServiceMixin {
     );
 
     dev.log('>>> Create keychain <<< ${keychainTransaction.address}');
-    transactionSender.send(
+    await transactionSender.send(
       transaction: keychainTransaction,
       onConfirmation: (event) async {
         if (TransactionConfirmation.isEnoughConfirmations(

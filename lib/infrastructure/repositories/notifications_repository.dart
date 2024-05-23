@@ -80,7 +80,7 @@ class NotificationsRepositoryImpl
         previousToken: await cachedFcmToken,
         newToken: token,
       );
-      (await _localSetup).updateFcmToken(token);
+      await (await _localSetup).updateFcmToken(token);
     }
 
     await _restoreWebsocketSubscriptions();
@@ -99,7 +99,7 @@ class NotificationsRepositoryImpl
           previousToken: previousFcmToken,
           newToken: fcmToken,
         );
-        (await _localSetup).updateFcmToken(fcmToken);
+        await (await _localSetup).updateFcmToken(fcmToken);
       }
     });
   }

@@ -134,7 +134,7 @@ class _AddPublicKeyTextFieldPkState
                                     autocorrect: false,
                                     controller: publicKeyController,
                                     onChanged: (text) async {
-                                      nftCreationNotifier
+                                      await nftCreationNotifier
                                           .setPropertyAccessRecipientNameOrPublicKey(
                                         context: context,
                                         text: text,

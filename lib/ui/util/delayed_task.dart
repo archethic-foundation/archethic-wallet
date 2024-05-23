@@ -23,15 +23,17 @@ class CancelableTask<T> {
     }
 
     _completer = Completer();
-    task().then((result) {
-      if (_canceled) {
-        _completer!.completeError(
-          const CanceledTask(),
-        );
-        return;
-      }
-      _completer!.complete(result);
-    });
+    unawaited(
+      task().then((result) {
+        if (_canceled) {
+          _completer!.completeError(
+            const CanceledTask(),
+          );
+          return;
+        }
+        _completer!.complete(result);
+      }),
+    );
 
     return _completer!.future;
   }

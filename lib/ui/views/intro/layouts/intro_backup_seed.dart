@@ -121,7 +121,7 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage>
                       mnemonic = AppMnemomics.seedToMnemonic(
                         seed!,
                       );
-                      ref
+                      await ref
                           .read(
                             SettingsProviders.settings.notifier,
                           )
@@ -154,7 +154,7 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage>
                         languageCode: 'fr',
                       );
 
-                      ref
+                      await ref
                           .read(
                             SettingsProviders.settings.notifier,
                           )

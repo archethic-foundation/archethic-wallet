@@ -55,7 +55,7 @@ class CurrencyDialog {
                     )
                     .selectCurrency(currency);
 
-                ref
+                await ref
                     .read(AccountProviders.selectedAccount.notifier)
                     .refreshBalance();
                 context.pop(value.value);

@@ -120,7 +120,7 @@ class AuthentificationMethodDialog {
                     );
 
                     if (success) {
-                      settingsNotifier.setAuthMethod(
+                      await settingsNotifier.setAuthMethod(
                         authMethod,
                       );
                     } else {

@@ -117,7 +117,7 @@ class AddContactSheetBody extends ConsumerWidget
             if (isNameOk && isAddressOk) {
               final newContact = await contactCreationNotifier.addContact();
 
-              ref
+              await ref
                   .read(AccountProviders.selectedAccount.notifier)
                   .refreshRecentTransactions();
               UIUtil.showSnackbar(

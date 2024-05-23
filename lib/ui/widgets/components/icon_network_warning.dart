@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/views/sheets/connectivity_warning.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -32,7 +34,7 @@ class IconNetworkWarning extends ConsumerWidget {
                 FeedbackType.light,
                 preferences.activeVibrations,
               );
-          context.push(ConnectivityWarning.routerPage);
+          unawaited(context.push(ConnectivityWarning.routerPage));
         },
       ),
     );

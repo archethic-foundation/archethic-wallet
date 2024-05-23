@@ -341,7 +341,7 @@ class _SyncBlockchainSettingsListItem extends ConsumerWidget {
       heading: localizations.resyncWallet,
       info: localizations.resyncWalletDescription,
       icon: Symbols.sync,
-      onPressed: () async {
+      onPressed: () {
         AppDialogs.showConfirmDialog(context, ref, localizations.resyncWallet,
             localizations.resyncWalletAreYouSure, localizations.yes, () async {
           final session = ref.read(SessionProviders.session).loggedIn!;

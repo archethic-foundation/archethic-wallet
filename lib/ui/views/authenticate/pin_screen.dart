@@ -277,7 +277,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
           PinCredentials(pin: _pin),
         );
 
-    result.maybeMap(
+    await result.maybeMap(
       success: (_) async {
         context.pop(true);
         return;

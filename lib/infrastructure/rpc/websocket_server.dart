@@ -20,74 +20,70 @@ class ArchethicWebsocketRPCServer {
 
   bool get isRunning => _openedSockets.isNotEmpty || _runningHttpServer != null;
 
-  Future<void> run() async {
-    runZonedGuarded(
-      () async {
-        if (isRunning) {
-          log('Already running. Cancel `start`', name: logName);
-          return;
-        }
+  Future<void> run() async => runZonedGuarded(
+        () async {
+          if (isRunning) {
+            log('Already running. Cancel `start`', name: logName);
+            return;
+          }
 
-        log('Starting at ws://$host:$port', name: logName);
-        final httpServer = await HttpServer.bind(
-          host,
-          port,
-          shared: true,
-        );
+          log('Starting at ws://$host:$port', name: logName);
+          final httpServer = await HttpServer.bind(
+            host,
+            port,
+            shared: true,
+          );
 
-        httpServer.listen((HttpRequest request) async {
-          log('Received connection', name: logName);
+          httpServer.listen((HttpRequest request) async {
+            log('Received connection', name: logName);
 
-          final socket = await WebSocketTransformer.upgrade(request);
-          final channel = IOWebSocketChannel(socket);
+            final socket = await WebSocketTransformer.upgrade(request);
+            final channel = IOWebSocketChannel(socket);
 
-          final peerServer = AWCJsonRPCServer(channel.cast<String>());
+            final peerServer = AWCJsonRPCServer(channel.cast<String>());
 
-          _openedSockets.add(peerServer);
-          await peerServer.listen();
-        });
-        _runningHttpServer = httpServer;
-      },
-      (error, stack) {
-        log(
-          'WebSocket server failed',
-          error: error,
-          stackTrace: stack,
-          name: logName,
-        );
-      },
-    );
-  }
+            _openedSockets.add(peerServer);
+            await peerServer.listen();
+          });
+          _runningHttpServer = httpServer;
+        },
+        (error, stack) {
+          log(
+            'WebSocket server failed',
+            error: error,
+            stackTrace: stack,
+            name: logName,
+          );
+        },
+      );
 
-  Future<void> stop() async {
-    runZonedGuarded(
-      () async {
-        if (!isRunning) {
-          log('Already stopped. Cancel `stop`', name: logName);
-          return;
-        }
+  Future<void> stop() async => runZonedGuarded(
+        () async {
+          if (!isRunning) {
+            log('Already stopped. Cancel `stop`', name: logName);
+            return;
+          }
 
-        log('Closing all websocket connections', name: logName);
-        for (final socket in _openedSockets) {
-          await socket.close();
-        }
-        _openedSockets.clear();
+          log('Closing all websocket connections', name: logName);
+          for (final socket in _openedSockets) {
+            await socket.close();
+          }
+          _openedSockets.clear();
 
-        log('Stopping at ws://$host:$port', name: logName);
-        await _runningHttpServer?.close();
-        _runningHttpServer = null;
-        log('Server stopped at ws://$host:$port', name: logName);
-      },
-      (error, stack) {
-        log(
-          'WebSocket server failed to stop',
-          error: error,
-          stackTrace: stack,
-          name: logName,
-        );
-      },
-    );
-  }
+          log('Stopping at ws://$host:$port', name: logName);
+          await _runningHttpServer?.close();
+          _runningHttpServer = null;
+          log('Server stopped at ws://$host:$port', name: logName);
+        },
+        (error, stack) {
+          log(
+            'WebSocket server failed to stop',
+            error: error,
+            stackTrace: stack,
+            name: logName,
+          );
+        },
+      );
 }
 
 abstract class ExceptionUtil {

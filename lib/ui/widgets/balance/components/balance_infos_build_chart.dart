@@ -20,8 +20,8 @@ class BalanceInfosChart extends ConsumerWidget {
         .valueOrNull;
 
     return InkWell(
-      onTap: () async {
-        await sl.get<HapticUtil>().feedback(
+      onTap: () {
+        sl.get<HapticUtil>().feedback(
               FeedbackType.light,
               settings.activeVibrations,
             );

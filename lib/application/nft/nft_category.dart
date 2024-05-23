@@ -250,7 +250,7 @@ abstract class NftCategoryProvidersActions {
     required List<NftCategory> nftCategoryListCustomized,
     required Account account,
   }) async {
-    ref.watch(_nftCategoryRepositoryProvider).updateNftCategoryList(
+    await ref.watch(_nftCategoryRepositoryProvider).updateNftCategoryList(
           nftCategoryListCustomized,
           account,
         );

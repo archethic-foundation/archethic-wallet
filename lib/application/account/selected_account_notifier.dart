@@ -16,7 +16,9 @@ class _SelectedAccountNotifier extends AutoDisposeAsyncNotifier<Account?> {
     }
 
     if (accounts.isNotEmpty) {
-      ref.read(AccountProviders.accounts.notifier).selectAccount(accounts[0]);
+      await ref
+          .read(AccountProviders.accounts.notifier)
+          .selectAccount(accounts[0]);
     }
     return null;
   }

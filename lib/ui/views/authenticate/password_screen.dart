@@ -79,7 +79,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
         return;
       },
       orElse: () async {
-        showLockCountdownScreenIfNeeded(context, ref);
+        await showLockCountdownScreenIfNeeded(context, ref);
         enterPasswordController!.text = '';
       },
     );

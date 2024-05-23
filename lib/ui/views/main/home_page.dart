@@ -221,15 +221,15 @@ class _HomePageState extends ConsumerState<HomePage>
           debugPrint('Event type : ${txEvent.type}');
 
           if (txEvent.type == MessengerConstants.notificationTypeNewMessage) {
-            manageNewMessageNotification(txEvent);
+            await manageNewMessageNotification(txEvent);
           }
           if (txEvent.type ==
               MessengerConstants.notificationTypeNewDiscussion) {
-            manageNewDiscussionNotification(txEvent);
+            await manageNewDiscussionNotification(txEvent);
           }
           if (txEvent.type ==
               MessengerConstants.notificationTypeDiscussionUpdated) {
-            manageNewDiscussionUpdatedNotification(txEvent);
+            await manageNewDiscussionUpdatedNotification(txEvent);
           }
         },
       );

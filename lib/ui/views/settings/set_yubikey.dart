@@ -343,9 +343,8 @@ class _SetYubikeyState extends ConsumerState<SetYubikey>
         }
       } else {
         final vault = await HiveVaultDatasource.getInstance();
-        vault
-          ..setYubikeyClientAPIKey(_clientAPIKeyController!.text)
-          ..setYubikeyClientID(_clientIDController!.text);
+        await vault.setYubikeyClientAPIKey(_clientAPIKeyController!.text);
+        await vault.setYubikeyClientID(_clientIDController!.text);
 
         final auth = await AuthFactory.authenticate(
           context,

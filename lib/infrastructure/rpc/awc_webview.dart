@@ -93,7 +93,7 @@ class _AWCWebviewState extends State<AWCWebview> {
   Future<WebMessagePort> _initMessageChannelPorts(
     InAppWebViewController controller,
   ) async {
-    controller.evaluateJavascript(
+    await controller.evaluateJavascript(
       source: """
 console.log("[AWC] Init webmessage");
 var onAWCReady = (awc) => {};

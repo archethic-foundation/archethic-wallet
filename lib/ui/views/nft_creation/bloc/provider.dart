@@ -189,10 +189,9 @@ class NftCreationFormNotifier
   Future<void> setFees(
     BuildContext context,
   ) async {
-    _updateFees(
+    await _updateFees(
       context,
     );
-    return;
   }
 
   Future<void> addAddress(
@@ -789,7 +788,7 @@ class NftCreationFormNotifier
       ),
     );
 
-    transactionRepository.send(
+    await transactionRepository.send(
       transaction: transaction,
       onConfirmation: (confirmation) async {
         if (archethic.TransactionConfirmation.isEnoughConfirmations(
@@ -797,7 +796,7 @@ class NftCreationFormNotifier
           confirmation.maxConfirmations,
           TransactionValidationRatios.addNFT,
         )) {
-          transactionRepository.close();
+          await transactionRepository.close();
           EventTaxiImpl.singleton().fire(
             TransactionSendEvent(
               transactionType: TransactionSendEventType.token,

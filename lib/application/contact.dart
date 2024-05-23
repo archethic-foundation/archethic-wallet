@@ -108,7 +108,7 @@ Future<void> _saveContact(
   if (contact == null) {
     throw Exception('Contact is null');
   }
-  ref.watch(_contactRepositoryProvider).saveContact(contact);
+  await ref.watch(_contactRepositoryProvider).saveContact(contact);
   ref.invalidate(_contactRepositoryProvider);
 }
 
@@ -120,7 +120,7 @@ Future<void> _deleteContact(
   if (contact == null) {
     throw Exception('Contact is null');
   }
-  ref.watch(_contactRepositoryProvider).deleteContact(contact);
+  await ref.watch(_contactRepositoryProvider).deleteContact(contact);
   ref.invalidate(_contactRepositoryProvider);
 }
 
