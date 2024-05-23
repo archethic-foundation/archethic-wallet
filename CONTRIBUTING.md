@@ -228,9 +228,9 @@ Storage **Boxes** are split into  categories :
 
  - **[_preferencesBox](./lib/infrastructure/datasources/preferences.hive.dart)** : User settings
  - **[tokensListBox](./lib/infrastructure/datasources/tokens_list.hive.dart)** : Cache for [Tokens](./lib/infrastructure/datasources/wallet_token_dto.hive.dart) read from API
- - **[contacts](./lib/model/data/appdb.dart)** : User registered [Contacts](./lib/model/data/contact.dart)
- - **[appWallet](./lib/model/data/appdb.dart)** : Non-sensitive [Wallet data](./lib/domain/models/app_wallet.dart)
- - **[price](./lib/model/data/appdb.dart)** : Cache for currency [Prices](./lib/model/data/price.dart) read from Oracle
+ - **[contacts](./lib/infrastructure/datasources/contacts.hive.dart)** : User registered [Contacts](./lib/model/data/contact.dart)
+ - **[appWallet](./lib/infrastructure/datasources/appwallet.hive.dart)** : Non-sensitive [Wallet data](./lib/domain/models/app_wallet.dart)
+ - **[price](./lib/infrastructure/datasources/price.hive.dart)** : Cache for currency [Prices](./lib/model/data/price.dart) read from Oracle
 
 ### Vault
 
