@@ -6,6 +6,7 @@ import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/main.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -27,19 +28,20 @@ class _LoggingOutScreenState extends ConsumerState<LoggingOutScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       log('Logging out');
-      await ref.read(SessionProviders.session.notifier).logout();
+      await Future.wait([
+        Future.delayed(const Duration(seconds: 2)),
+        ref.read(SessionProviders.session.notifier).logout(),
+      ]);
       log('Logged out');
       context.go(Splash.routerPage);
     });
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return AnimationLoadingPage(title: "Logging out");
+    final localizations = AppLocalizations.of(context)!;
+    return AnimationLoadingPage(
+      title: localizations.loggingOutWaitMessage,
+    );
   }
 }

@@ -117,6 +117,7 @@
     "confirmSecretPhraseKo": "L'ordre n'est pas correct.",
     "confirmSecretPhraseOk": "Votre phrase secrète a été confirmée avec succès.",
     "backupSecretPhrase": "Phrase secrète de récupération",
+    "loggingOutWaitMessage": "Déconnexion",
     "ok": "Ok",
     "information": "Informations",
     "dapp": "Applications",
