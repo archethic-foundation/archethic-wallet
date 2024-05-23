@@ -5,6 +5,20 @@ List<GoRoute> _authenticationRoutes(
 ) =>
     [
       GoRoute(
+        path: LoggingOutScreen.routerPage,
+        pageBuilder: (context, state) => CustomTransitionPage<void>(
+          transitionDuration: Duration.zero,
+          reverseTransitionDuration: Duration.zero,
+          key: state.pageKey,
+          child: const LoggingOutScreen(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(
+            opacity: animation,
+            child: child,
+          ),
+        ),
+      ),
+      GoRoute(
         path: PasswordScreen.routerPage,
         pageBuilder: (context, state) => CustomTransitionPage<void>(
           transitionDuration: Duration.zero,
