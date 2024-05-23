@@ -15,30 +15,28 @@ class BrowserExtensionAWS {
   AWCJsonRPCServer? _peerServer;
   bool get isRunning => _peerServer != null;
 
-  Future<void> run() async {
-    runZonedGuarded(
-      () async {
-        if (isRunning) {
-          print('[AWCBrowserExtension] Already running. Cancel `start`');
-          return;
-        }
+  Future<void> run() async => runZonedGuarded(
+        () async {
+          if (isRunning) {
+            print('[AWCBrowserExtension] Already running. Cancel `start`');
+            return;
+          }
 
-        log('Starting', name: logName);
+          log('Starting', name: logName);
 
-        final port = connect();
-        print('[AWCBrowserExtension] Connected to web background service');
-        final channel = BrowserExtensionMessagePortStreamChannel(port: port);
-        _peerServer = AWCJsonRPCServer(channel.cast<String>());
-        _port = port;
-        await _peerServer?.listen();
-      },
-      (error, stack) {
-        print(
-          '[AWCBrowserExtension] failed : $error',
-        );
-      },
-    );
-  }
+          final port = connect();
+          print('[AWCBrowserExtension] Connected to web background service');
+          final channel = BrowserExtensionMessagePortStreamChannel(port: port);
+          _peerServer = AWCJsonRPCServer(channel.cast<String>());
+          _port = port;
+          await _peerServer?.listen();
+        },
+        (error, stack) {
+          print(
+            '[AWCBrowserExtension] failed : $error',
+          );
+        },
+      );
 
   void stop() {
     _port?.disconnect();

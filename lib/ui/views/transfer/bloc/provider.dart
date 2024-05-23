@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
@@ -278,7 +280,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       if (await _checkAddressType(context) == false) {
         return;
       }
-      _updateFees(context);
+      unawaited(_updateFees(context));
       return;
     }
 
@@ -299,7 +301,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     if (await _checkAddressType(context) == false) {
       return;
     }
-    _updateFees(context);
+    unawaited(_updateFees(context));
   }
 
   Future<void> setRecipient({
@@ -309,9 +311,11 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     _setRecipient(
       recipient: contact,
     );
-    _updateFees(
-      context,
-      delay: Duration.zero,
+    unawaited(
+      _updateFees(
+        context,
+        delay: Duration.zero,
+      ),
     );
   }
 
@@ -334,9 +338,11 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         ),
       );
     }
-    _updateFees(
-      context,
-      delay: Duration.zero,
+    unawaited(
+      _updateFees(
+        context,
+        delay: Duration.zero,
+      ),
     );
   }
 
@@ -429,7 +435,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         amount: state.accountToken!.amount!,
         errorAmountText: '',
       );
-      _updateFees(context);
+      unawaited(_updateFees(context));
       return;
     }
 
@@ -497,7 +503,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         amountConverted: 0,
         errorAmountText: '',
       );
-      _updateFees(context);
+      unawaited(_updateFees(context));
       return;
     }
 
@@ -526,7 +532,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       errorAmountText: '',
     );
 
-    _updateFees(context);
+    unawaited(_updateFees(context));
   }
 
   Future<void> setDefineMaxAmountInProgress({
@@ -544,7 +550,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     state = state.copyWith(
       message: message.trim(),
     );
-    _updateFees(context);
+    unawaited(_updateFees(context));
   }
 
   void setTransferProcessStep(TransferProcessStep transferProcessStep) {
@@ -783,7 +789,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         break;
     }
 
-    transferRepository.send(
+    await transferRepository.send(
       transaction: transaction,
       onConfirmation: (confirmation) async {
         if (archethic.TransactionConfirmation.isEnoughConfirmations(
@@ -791,7 +797,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
           confirmation.maxConfirmations,
           TransactionValidationRatios.transfer,
         )) {
-          transferRepository.close();
+          await transferRepository.close();
           EventTaxiImpl.singleton().fire(
             TransactionSendEvent(
               transactionType: TransactionSendEventType.transfer,

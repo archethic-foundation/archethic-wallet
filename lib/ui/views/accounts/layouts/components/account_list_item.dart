@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'dart:async';
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/market_price.dart';
@@ -386,40 +387,43 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
                                     FeedbackType.light,
                                     preferences.activeVibrations,
                                   );
-                              AppDialogs.showConfirmDialog(
-                                  context,
-                                  ref,
-                                  CaseChange.toUpperCase(
-                                    localizations.warning,
-                                    language.getLocaleString(),
-                                  ),
-                                  localizations.removeKeychainDetail.replaceAll(
-                                    '%1',
-                                    widget.account.nameDisplayed,
-                                  ),
-                                  localizations.removeKeychainAction, () {
-                                // Show another confirm dialog
+                              unawaited(
                                 AppDialogs.showConfirmDialog(
-                                  context,
-                                  ref,
-                                  localizations.areYouSure,
-                                  localizations.removeKeychainLater,
-                                  localizations.yes,
-                                  () async {
-                                    ShowSendingAnimation.build(
-                                      context,
-                                    );
+                                    context,
+                                    ref,
+                                    CaseChange.toUpperCase(
+                                      localizations.warning,
+                                      language.getLocaleString(),
+                                    ),
+                                    localizations.removeKeychainDetail
+                                        .replaceAll(
+                                      '%1',
+                                      widget.account.nameDisplayed,
+                                    ),
+                                    localizations.removeKeychainAction, () {
+                                  // Show another confirm dialog
+                                  AppDialogs.showConfirmDialog(
+                                    context,
+                                    ref,
+                                    localizations.areYouSure,
+                                    localizations.removeKeychainLater,
+                                    localizations.yes,
+                                    () async {
+                                      ShowSendingAnimation.build(
+                                        context,
+                                      );
 
-                                    await KeychainUtil().removeService(
-                                      ref
-                                          .read(SettingsProviders.settings)
-                                          .network,
-                                      widget.account.name,
-                                      keychain,
-                                    );
-                                  },
-                                );
-                              });
+                                      await KeychainUtil().removeService(
+                                        ref
+                                            .read(SettingsProviders.settings)
+                                            .network,
+                                        widget.account.name,
+                                        keychain,
+                                      );
+                                    },
+                                  );
+                                }),
+                              );
                             },
                           ),
                         ],

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:aewallet/application/account/providers.dart';
@@ -68,11 +69,13 @@ class SendTransactionConfirmationForm extends ConsumerWidget
           localizations.confirm,
           Dimens.buttonBottomDimens,
           onPressed: () async {
-            Navigator.of(context).push(
-              AnimationLoadingOverlay(
-                AnimationType.send,
-                ArchethicTheme.animationOverlayStrong,
-                title: AppLocalizations.of(context)!.pleaseWait,
+            unawaited(
+              Navigator.of(context).push(
+                AnimationLoadingOverlay(
+                  AnimationType.send,
+                  ArchethicTheme.animationOverlayStrong,
+                  title: AppLocalizations.of(context)!.pleaseWait,
+                ),
               ),
             );
 

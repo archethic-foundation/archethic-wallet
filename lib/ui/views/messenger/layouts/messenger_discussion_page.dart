@@ -72,7 +72,7 @@ class MessengerDiscussionPage extends ConsumerWidget {
                 opticalSize: IconSize.opticalSizeM,
                 grade: IconSize.gradeM,
               ),
-              onPressed: () async {
+              onPressed: () {
                 context.push(
                   DiscussionDetailsPage.routerPage,
                   extra: discussionAddress,

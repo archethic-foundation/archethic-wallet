@@ -154,7 +154,7 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet>
       widgetLeft: BackButton(
         key: const Key('back'),
         color: ArchethicTheme.text,
-        onPressed: () async {
+        onPressed: () {
           AppDialogs.showConfirmDialog(
             context,
             ref,

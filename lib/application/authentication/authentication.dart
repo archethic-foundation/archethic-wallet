@@ -97,9 +97,9 @@ abstract class AuthenticationProviders {
   static Future<void> reset(Ref ref) async {
     await ref.read(AuthenticationProviders.settings.notifier).reset();
     await ref.read(authenticationGuard.notifier).unscheduleAutolock();
-    ref.read(_authenticationRepository)
-      ..resetFailedAttempts()
-      ..resetLock();
+    final authentRepository = ref.read(_authenticationRepository);
+    await authentRepository.resetFailedAttempts();
+    await authentRepository.resetLock();
 
     ref
       ..invalidate(passwordAuthentication)

@@ -73,7 +73,7 @@ Future<void> main() async {
 
       // ignore: cascade_invocations
       if (UniversalPlatform.isWindows) {
-        windowManager.setMaximizable(false);
+        await windowManager.setMaximizable(false);
       }
       await windowManager.show();
       await windowManager.focus();
@@ -142,7 +142,9 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
     dev.log('Lifecycle State : $state');
     var isDeviceSecured = false;
     ref.invalidate(ArchethicOracleUCOProviders.archethicOracleUCO);
-    ref.read(ArchethicOracleUCOProviders.archethicOracleUCO.notifier).init();
+    await ref
+        .read(ArchethicOracleUCOProviders.archethicOracleUCO.notifier)
+        .init();
     // Account for user changing locale when leaving the app
     switch (state) {
       case AppLifecycleState.paused:
@@ -153,7 +155,7 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
         updateDefaultLocale();
         // Value changed since last time we came in pause state
         if (isDeviceSecured != await SecurityManager().isDeviceSecured()) {
-          SecurityManager().checkDeviceSecurity(
+          await SecurityManager().checkDeviceSecurity(
             ref,
             rootNavigatorKey.currentState!.overlay!.context,
           );
@@ -290,7 +292,9 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
         context.go(IntroWelcome.routerPage);
         return;
       }
-      ref.read(ArchethicOracleUCOProviders.archethicOracleUCO.notifier).init();
+      await ref
+          .read(ArchethicOracleUCOProviders.archethicOracleUCO.notifier)
+          .init();
       context.go(HomePage.routerPage);
     } catch (e, stack) {
       dev.log(e.toString(), error: e, stackTrace: stack);

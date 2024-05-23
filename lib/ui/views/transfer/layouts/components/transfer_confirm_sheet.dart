@@ -4,7 +4,6 @@ import 'dart:async';
 
 // Project imports:
 import 'package:aewallet/application/account/providers.dart';
-
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -124,11 +123,11 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet>
       await ref.read(AccountProviders.selectedAccount.notifier).refreshNFTs();
     }
 
-    ref
+    await ref
         .read(AccountProviders.selectedAccount.notifier)
         .refreshRecentTransactions();
     if (transfer.transferType == TransferType.token) {
-      ref
+      await ref
           .read(AccountProviders.selectedAccount.notifier)
           .refreshFungibleTokens();
     }
@@ -186,11 +185,13 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet>
           Dimens.buttonBottomDimens,
           key: const Key('confirm'),
           onPressed: () async {
-            Navigator.of(context).push(
-              AnimationLoadingOverlay(
-                AnimationType.send,
-                ArchethicTheme.animationOverlayStrong,
-                title: AppLocalizations.of(context)!.pleaseWait,
+            unawaited(
+              Navigator.of(context).push(
+                AnimationLoadingOverlay(
+                  AnimationType.send,
+                  ArchethicTheme.animationOverlayStrong,
+                  title: AppLocalizations.of(context)!.pleaseWait,
+                ),
               ),
             );
             await ref

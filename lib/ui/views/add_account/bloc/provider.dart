@@ -109,7 +109,7 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
       seed: state.seed,
     );
 
-    transactionRepository.send(
+    await transactionRepository.send(
       transaction: transaction,
       onConfirmation: (confirmation) async {
         if (archethic.TransactionConfirmation.isEnoughConfirmations(
@@ -117,7 +117,7 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
           confirmation.maxConfirmations,
           TransactionValidationRatios.addAccount,
         )) {
-          transactionRepository.close();
+          await transactionRepository.close();
           EventTaxiImpl.singleton().fire(
             TransactionSendEvent(
               transactionType: TransactionSendEventType.keychain,
@@ -203,7 +203,7 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
       seed: state.seed,
     );
 
-    transactionRepository.send(
+    await transactionRepository.send(
       transaction: transaction,
       onConfirmation: (confirmation) async {
         if (archethic.TransactionConfirmation.isEnoughConfirmations(
@@ -211,7 +211,7 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
           confirmation.maxConfirmations,
           TransactionValidationRatios.addAccount,
         )) {
-          transactionRepository.close();
+          await transactionRepository.close();
           EventTaxiImpl.singleton().fire(
             TransactionSendEvent(
               transactionType: TransactionSendEventType.keychain,

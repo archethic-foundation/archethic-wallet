@@ -24,7 +24,7 @@ class NFTCreationProcessImportTabCamera extends ConsumerWidget {
           maxHeight: 1800,
         );
         if (pickedFile != null) {
-          nftCreationNotifier.setContentProperties(
+          await nftCreationNotifier.setContentProperties(
             context,
             File(pickedFile.path).readAsBytesSync(),
             FileImportType.camera,

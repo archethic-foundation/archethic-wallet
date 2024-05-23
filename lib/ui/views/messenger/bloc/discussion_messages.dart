@@ -49,7 +49,7 @@ class _MessageCreationFormNotifier extends _$MessageCreationFormNotifier {
           )
           .valueOrThrow;
 
-      ref
+      await ref
           .read(
             _paginatedDiscussionMessagesNotifierProvider(discussion.address)
                 .notifier,
@@ -164,7 +164,7 @@ class _PaginatedDiscussionMessagesNotifier
           if (_alreadyHasMessageWithAddress(newMessage.address)) {
             return;
           }
-          addMessage(newMessage);
+          await addMessage(newMessage);
         }
       },
     );

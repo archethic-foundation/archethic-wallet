@@ -253,16 +253,16 @@ class HivePreferencesDatasource {
       );
 
   Future<void> resetLockAttempts() async {
-    _removeValue(pinAttempts);
+    await _removeValue(pinAttempts);
   }
 
-  void removeLockDate() {
-    _removeValue(pinLockUntil);
+  Future<void> removeLockDate() async {
+    await _removeValue(pinLockUntil);
   }
 
-  void setLockDate(DateTime lockDate) {
+  Future<void> setLockDate(DateTime lockDate) async {
     final lockDateStr = DateFormat.yMd().add_jms().format(lockDate.toUtc());
-    _setValue(pinLockUntil, lockDateStr);
+    await _setValue(pinLockUntil, lockDateStr);
   }
 
   DateTime? getLockDate() {

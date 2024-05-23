@@ -94,7 +94,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                 key: const Key('receiveUCObutton'),
                 text: localizations.receive,
                 icon: Symbols.call_received,
-                onTap: () async {
+                onTap: () {
                   sl.get<HapticUtil>().feedback(
                         FeedbackType.light,
                         preferences.activeVibrations,

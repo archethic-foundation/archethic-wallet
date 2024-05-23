@@ -518,9 +518,11 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
 
   Future<void> createKeychain() async {
     final localizations = AppLocalizations.of(context)!;
-    context.push(
-      ShowSendingAnimation.routerPage,
-      extra: localizations.appWalletInitInProgress,
+    unawaited(
+      context.push(
+        ShowSendingAnimation.routerPage,
+        extra: localizations.appWalletInitInProgress,
+      ),
     );
 
     try {

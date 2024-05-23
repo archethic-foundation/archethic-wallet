@@ -120,7 +120,7 @@ class _TransferTextFieldAddressState
                                     autocorrect: false,
                                     controller: sendAddressController,
                                     onChanged: (text) async {
-                                      transferNotifier
+                                      await transferNotifier
                                           .setRecipientNameOrAddress(
                                         context: context,
                                         text: text,

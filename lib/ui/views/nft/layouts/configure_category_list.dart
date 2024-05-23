@@ -147,7 +147,7 @@ class ReorderableWidget extends ConsumerWidget {
                     final nftCategory = nftCategoryToSort.removeAt(oldIndex);
                     nftCategoryToSort.insert(newIndex, nftCategory);
 
-                    NftCategoryProvidersActions.updateNftCategoryList(
+                    await NftCategoryProvidersActions.updateNftCategoryList(
                       ref,
                       nftCategoryListCustomized: nftCategoryToSort,
                       account: accountSelected,

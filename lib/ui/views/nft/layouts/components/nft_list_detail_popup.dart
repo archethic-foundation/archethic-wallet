@@ -78,7 +78,7 @@ class NFTListDetailPopup {
           categoryNftIndex: nftCategoryChoosen!.id,
         );
 
-        ref.read(AccountProviders.selectedAccount.notifier).refreshNFTs();
+        await ref.read(AccountProviders.selectedAccount.notifier).refreshNFTs();
         ref.invalidate(AccountProviders.getAccountNFTFiltered);
         UIUtil.showSnackbar(
           AppLocalizations.of(context)!.nftCategoryChangeCategoryOk,

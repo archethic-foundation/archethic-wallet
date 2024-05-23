@@ -166,31 +166,37 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
               newSession.wallet.appKeychain.accounts,
             );
 
-            ref
-                .read(
-                  AccountProviders.account(
-                    accountSelected!.name,
-                  ).notifier,
-                )
-                .refreshRecentTransactions();
-            ref
-                .read(
-                  AccountProviders.account(
-                    accountSelected.name,
-                  ).notifier,
-                )
-                .refreshNFTs();
+            unawaited(
+              ref
+                  .read(
+                    AccountProviders.account(
+                      accountSelected!.name,
+                    ).notifier,
+                  )
+                  .refreshRecentTransactions(),
+            );
+            unawaited(
+              ref
+                  .read(
+                    AccountProviders.account(
+                      accountSelected.name,
+                    ).notifier,
+                  )
+                  .refreshNFTs(),
+            );
             ref.read(
               RecoveryPhraseSavedProvider.setRecoveryPhraseSaved(true),
             );
 
-            context.push(
-              IntroConfigureSecurity.routerPage,
-              extra: {
-                'seed': newSession.wallet.seed,
-                'name': accountSelected.name,
-                'isImportProfile': true,
-              },
+            unawaited(
+              context.push(
+                IntroConfigureSecurity.routerPage,
+                extra: {
+                  'seed': newSession.wallet.seed,
+                  'name': accountSelected.name,
+                  'isImportProfile': true,
+                },
+              ),
             );
             setState(() {
               isPressed = false;
@@ -248,7 +254,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                                 preferences.activeVibrations,
                               );
 
-                          ref
+                          await ref
                               .read(SettingsProviders.settings.notifier)
                               .setLanguageSeed('en');
                         },
@@ -277,7 +283,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                                 preferences.activeVibrations,
                               );
 
-                          ref
+                          await ref
                               .read(SettingsProviders.settings.notifier)
                               .setLanguageSeed('fr');
                         },

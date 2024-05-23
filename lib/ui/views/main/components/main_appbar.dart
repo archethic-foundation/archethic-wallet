@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:aewallet/application/account/providers.dart';
@@ -92,7 +93,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                     FeedbackType.light,
                     preferences.activeVibrations,
                   );
-              context.push(ConfigureCategoryList.routerPage);
+              unawaited(context.push(ConfigureCategoryList.routerPage));
             },
           ),
         if (preferences.mainScreenCurrentPage == 4)

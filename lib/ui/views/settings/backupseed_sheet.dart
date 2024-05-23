@@ -51,7 +51,7 @@ class AppSeedBackupSheet extends ConsumerWidget
                   localizations.recoveryPhraseSave,
                   Dimens.buttonBottomDimens,
                   key: const Key('saveRecoveryPhrase'),
-                  onPressed: () async {
+                  onPressed: () {
                     final languageSeed = ref.read(
                       SettingsProviders.settings.select(
                         (settings) => settings.languageSeed,

@@ -19,7 +19,7 @@ class NFTCreationProcessImportTabFile extends ConsumerWidget {
           if (kIsWeb) {
             // TODO(reddwarf03): Fix Web uploading
             final uploadfile = result.files.single.bytes;
-            nftCreationNotifier.setContentProperties(
+            await nftCreationNotifier.setContentProperties(
               context,
               File.fromRawPath(uploadfile!).readAsBytesSync(),
               FileImportType.file,
@@ -32,7 +32,7 @@ class NFTCreationProcessImportTabFile extends ConsumerWidget {
             );
           } else {
             // use for phone
-            nftCreationNotifier.setContentProperties(
+            await nftCreationNotifier.setContentProperties(
               context,
               File(result.files.single.path!).readAsBytesSync(),
               FileImportType.file,

@@ -80,7 +80,7 @@ class _AddAccountTextFieldNameState
                             autocorrect: false,
                             controller: nameController,
                             onChanged: (text) async {
-                              addAccountNotifier.setName(
+                              await addAccountNotifier.setName(
                                 text,
                               );
                             },

@@ -1,5 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'dart:async';
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
@@ -159,7 +161,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
     state = state.copyWith(
       name: name,
     );
-    _updateFees(
+    await _updateFees(
       context,
     );
     return;
@@ -211,8 +213,10 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
     state = state.copyWith(
       symbol: symbol,
     );
-    _updateFees(
-      context,
+    unawaited(
+      _updateFees(
+        context,
+      ),
     );
     return;
   }
@@ -243,8 +247,10 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
     state = state.copyWith(
       initialSupply: initialSupply,
     );
-    _updateFees(
-      context,
+    unawaited(
+      _updateFees(
+        context,
+      ),
     );
     return;
   }
@@ -286,7 +292,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
       ),
     );
 
-    transactionRepository.send(
+    await transactionRepository.send(
       transaction: transaction,
       onConfirmation: (confirmation) async {
         if (archethic.TransactionConfirmation.isEnoughConfirmations(
@@ -294,7 +300,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
           confirmation.maxConfirmations,
           TransactionValidationRatios.addFungibleToken,
         )) {
-          transactionRepository.close();
+          await transactionRepository.close();
           EventTaxiImpl.singleton().fire(
             TransactionSendEvent(
               transactionType: TransactionSendEventType.token,

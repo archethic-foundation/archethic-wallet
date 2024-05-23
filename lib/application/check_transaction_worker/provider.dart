@@ -168,7 +168,7 @@ class _CheckTransactionNotifier
       return [];
     }
 
-    _scheduleCheck();
+    await _scheduleCheck();
     return [];
   }
 

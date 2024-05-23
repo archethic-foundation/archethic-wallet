@@ -21,7 +21,7 @@ class AuthenticationRepository implements AuthenticationRepositoryInterface {
 
   @override
   Future<void> setPin(String pin) async {
-    (await vault).setPin(pin);
+    return (await vault).setPin(pin);
   }
 
   @override
@@ -31,12 +31,12 @@ class AuthenticationRepository implements AuthenticationRepositoryInterface {
 
   @override
   Future<void> incrementFailedAttempts() async {
-    (await preferences).incrementLockAttempts();
+    return (await preferences).incrementLockAttempts();
   }
 
   @override
   Future<void> resetFailedAttempts() async {
-    await (await preferences).resetLockAttempts();
+    return (await preferences).resetLockAttempts();
   }
 
   @override
@@ -46,12 +46,12 @@ class AuthenticationRepository implements AuthenticationRepositoryInterface {
 
   @override
   Future<void> setPassword(String password) async {
-    (await vault).setPassword(password);
+    return (await vault).setPassword(password);
   }
 
   @override
   Future<void> resetLock() async {
-    (await preferences).removeLockDate();
+    return (await preferences).removeLockDate();
   }
 
   @override
@@ -61,7 +61,7 @@ class AuthenticationRepository implements AuthenticationRepositoryInterface {
 
   @override
   Future<void> lock(Duration duration) async {
-    (await preferences).setLockDate(DateTime.now().add(duration));
+    return (await preferences).setLockDate(DateTime.now().add(duration));
   }
 
   @override
@@ -92,14 +92,15 @@ class AuthenticationRepository implements AuthenticationRepositoryInterface {
 
   @override
   Future<void> setSettings(AuthenticationSettings settings) async {
-    (await preferences).setAuthMethod(
+    final syncPrefs = await preferences;
+    await syncPrefs.setAuthMethod(
       AuthenticationMethod(settings.authenticationMethod),
     );
-    (await preferences).setPinPadShuffle(
+    await syncPrefs.setPinPadShuffle(
       settings.pinPadShuffle,
     );
-    (await preferences).setLock(settings.lock == UnlockOption.yes);
-    (await preferences).setLockTimeout(
+    await syncPrefs.setLock(settings.lock == UnlockOption.yes);
+    await syncPrefs.setLockTimeout(
       settings.lockTimeout,
     );
   }

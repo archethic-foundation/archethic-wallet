@@ -84,7 +84,7 @@ class _TransferTextFieldMessageState
                               autocorrect: false,
                               controller: messageController,
                               onChanged: (text) async {
-                                transferNotifier.setMessage(
+                                await transferNotifier.setMessage(
                                   context: context,
                                   message: text,
                                 );

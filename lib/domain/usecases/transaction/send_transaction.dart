@@ -147,7 +147,7 @@ class SendTransactionUseCase
 
     try {
       // ignore: cascade_invocations
-      transactionSender.send(
+      await transactionSender.send(
         transaction: transaction,
         onConfirmation: (confirmation) async {
           onProgress?.call(

@@ -118,7 +118,7 @@ class _AddAddressState extends ConsumerState<AddAddress>
                         preferences.activeVibrations,
                       );
 
-                  ref
+                  await ref
                       .read(
                         NftCreationFormProvider.nftCreationForm.notifier,
                       )
