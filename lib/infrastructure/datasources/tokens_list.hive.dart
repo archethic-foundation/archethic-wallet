@@ -39,5 +39,6 @@ class TokensListHiveDatasource {
     return _box.values.toList();
   }
 
-  static Future<void> clear() => Hive.deleteBox(_tokensListBox);
+  static Future<void> clear() =>
+      Hive.deleteBox<WalletTokenHiveDto>(_tokensListBox);
 }

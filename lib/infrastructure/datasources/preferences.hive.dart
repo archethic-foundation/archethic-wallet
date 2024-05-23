@@ -263,7 +263,7 @@ class PreferencesHiveDatasource {
     }
   }
 
-  static Future<void> clear() => Hive.deleteBox(_preferencesBox);
+  static Future<void> clear() => Hive.deleteBox<dynamic>(_preferencesBox);
 
   Future<DateTime?> getLastInteractionDate() async {
     return _getValue(lastInteractionDate, defaultValue: null);

@@ -16,7 +16,7 @@ class AppWalletHiveDatasource {
   static const String appWalletTable = 'appWallet';
 
   Future<void> clearAppWallet() async {
-    await Hive.deleteBox(appWalletTable);
+    await Hive.deleteBox<HiveAppWalletDTO>(appWalletTable);
   }
 
   Future<HiveAppWalletDTO> createAppWallet(String keyChainAddress) async {

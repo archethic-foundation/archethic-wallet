@@ -42,6 +42,9 @@ class CacheManagerHive {
     return _instance = CacheManagerHive(encryptedBox);
   }
 
+  static Future<void> clear() =>
+      Vault.instance().clear<CacheItemHive>(cacheManagerHiveTable);
+
   Future<void> put(String key, CacheItemHive cacheItemHive) async {
     if (_cacheBox.length >= maxCacheItems) {
       log('Remove oldest item', name: 'cacheManagerHive');
@@ -79,8 +82,6 @@ class CacheManagerHive {
   void delete(String key) {
     _cacheBox.delete(key);
   }
-
-  static Future<void> clear() => Vault.instance().clear(cacheManagerHiveTable);
 
   void _removeOldestItem() {
     final oldestKey = _cacheBox.keyAt(0);

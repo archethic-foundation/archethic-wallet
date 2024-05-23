@@ -92,12 +92,12 @@ class Vault {
     return Hive.boxExists(name);
   }
 
-  Future<void> clear(String name) async {
+  Future<void> clear<E>(String name) async {
     log(
       'Deleting vault box $name...',
       name: _logName,
     );
-    await Hive.deleteBox(name);
+    await Hive.deleteBox<E>(name);
     log(
       '... vault box $name deleted',
       name: _logName,

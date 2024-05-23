@@ -64,7 +64,7 @@ class AuthentHiveSecuredDatasource {
   String getYubikeyClientID() => _getValue(_yubikeyClientID, defaultValue: '');
 
   static Future<void> clear() async {
-    await Hive.deleteBox(_authenticationBox);
+    await Hive.deleteBox<dynamic>(_authenticationBox);
   }
 
   static Future<Box<E>> _openSecuredBox<E>(
