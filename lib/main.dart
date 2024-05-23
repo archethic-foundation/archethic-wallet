@@ -13,10 +13,10 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/verified_tokens.dart';
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
+import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
 import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/available_language.dart';
-import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/providers_observer.dart';
 import 'package:aewallet/router/router.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -25,7 +25,6 @@ import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_welcome.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/security_manager.dart';
 import 'package:aewallet/util/service_locator.dart';
 import 'package:aewallet/util/universal_platform.dart';
@@ -140,7 +139,7 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
     didChangeAppLifecycleStateAsync(state);
   }
 
-  Future didChangeAppLifecycleStateAsync(AppLifecycleState state) async {
+  Future<void> didChangeAppLifecycleStateAsync(AppLifecycleState state) async {
     dev.log('Lifecycle State : $state');
     var isDeviceSecured = false;
     ref.invalidate(ArchethicOracleUCOProviders.archethicOracleUCO);
@@ -279,8 +278,7 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
       */
 
       if (FeatureFlags.forceLogout) {
-        await sl.get<DBHelper>().clearAppWallet();
-        await sl.get<DBHelper>().clearAuthentication();
+        await ref.read(SessionProviders.session.notifier).logout();
 
         context.go(IntroWelcome.routerPage);
         return;
@@ -307,9 +305,6 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
       final session = ref.read(SessionProviders.session);
 
       if (session.isLoggedOut) {
-        await sl.get<DBHelper>().clearAppWallet();
-        await sl.get<DBHelper>().clearAuthentication();
-
         context.go(IntroWelcome.routerPage);
         return;
       }
