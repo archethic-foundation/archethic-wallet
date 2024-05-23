@@ -25,9 +25,7 @@ class KeychainInfoVaultDatasource {
   }
 
   static Future<bool> get boxExists => Vault.instance().boxExists(_vaultBox);
-  static Future<void> clear() async {
-    Vault.instance().clear(_vaultBox);
-  }
+  static Future<void> clear() => Vault.instance().clear(_vaultBox);
 
   T _getValue<T>(dynamic key, {T? defaultValue}) =>
       _box.get(key, defaultValue: defaultValue) as T;

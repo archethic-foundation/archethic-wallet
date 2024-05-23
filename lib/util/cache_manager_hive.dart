@@ -80,9 +80,7 @@ class CacheManagerHive {
     _cacheBox.delete(key);
   }
 
-  void clear() {
-    _cacheBox.clear();
-  }
+  static Future<void> clear() => Vault.instance().clear(cacheManagerHiveTable);
 
   void _removeOldestItem() {
     final oldestKey = _cacheBox.keyAt(0);

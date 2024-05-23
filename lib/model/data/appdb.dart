@@ -2,6 +2,7 @@
 
 import 'dart:developer';
 
+import 'package:aewallet/infrastructure/datasources/hive.extension.dart';
 import 'package:aewallet/infrastructure/datasources/keychain_info.vault.dart';
 import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:aewallet/infrastructure/datasources/wallet_token_dto.hive.dart';
@@ -246,8 +247,7 @@ class DBHelper {
   }
 
   Future<void> clearContacts() async {
-    final box = await Hive.openBox<Contact>(contactsTable);
-    await box.clear();
+    await Hive.deleteBox(contactsTable);
   }
 
   Future<List<Account>> getAccounts() async {
@@ -324,8 +324,7 @@ class DBHelper {
   }
 
   Future<void> clearAppWallet() async {
-    final box = await Hive.openBox<HiveAppWalletDTO>(appWalletTable);
-    await box.clear();
+    await Hive.deleteBox(appWalletTable);
   }
 
   Future<void> clearAuthentication() async {
@@ -335,8 +334,10 @@ class DBHelper {
 
   Future<HiveAppWalletDTO> createAppWallet(String keyChainAddress) async {
     final box = await Hive.openBox<HiveAppWalletDTO>(appWalletTable);
-    final appKeychain =
-        AppKeychain(address: keyChainAddress, accounts: <Account>[]);
+    final appKeychain = AppKeychain(
+      address: keyChainAddress,
+      accounts: <Account>[],
+    );
     final appWallet = HiveAppWalletDTO(appKeychain: appKeychain);
     await box.add(appWallet);
     return appWallet;
@@ -369,7 +370,6 @@ class DBHelper {
   }
 
   Future<void> clearPrice() async {
-    final box = await Hive.openBox<Price>(priceTable);
-    await box.clear();
+    await Hive.deleteBox(priceTable);
   }
 }

@@ -84,10 +84,7 @@ class _SessionNotifier extends Notifier<Session> {
 
     await KeychainInfoVaultDatasource.clear();
     await _dbHelper.clearAppWallet();
-    final cache = await Hive.openBox<CacheItemHive>(
-      CacheManagerHive.cacheManagerHiveTable,
-    );
-    await cache.clear();
+    await CacheManagerHive.clear();
 
     state = const Session.loggedOut();
   }

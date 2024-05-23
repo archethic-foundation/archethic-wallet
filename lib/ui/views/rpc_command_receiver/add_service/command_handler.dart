@@ -15,7 +15,6 @@ import 'package:aewallet/ui/util/window_util_desktop.dart'
     if (dart.library.js) 'package:aewallet/ui/util/window_util_web.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/add_service/layouts/add_service_confirmation_form.dart';
 import 'package:aewallet/util/notifications_util.dart';
-import 'package:aewallet/util/universal_platform.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
