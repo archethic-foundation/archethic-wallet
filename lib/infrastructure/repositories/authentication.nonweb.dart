@@ -1,5 +1,6 @@
 import 'package:aewallet/domain/repositories/authentication.dart';
 import 'package:aewallet/infrastructure/datasources/authent_nonweb.secured_hive.dart';
+import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:aewallet/infrastructure/repositories/authentication.base.dart';
 
 class AuthenticationRepositoryNonWeb extends AuthenticationRepositoryBase
@@ -17,6 +18,8 @@ class AuthenticationRepositoryNonWeb extends AuthenticationRepositoryBase
   Future<void> setPin(String pin) async {
     final vault = await AuthentHiveSecuredDatasource.getInstance();
     await vault.setPin(pin);
+
+    await Vault.instance().unlock(pin);
   }
 
   @override
@@ -37,5 +40,7 @@ class AuthenticationRepositoryNonWeb extends AuthenticationRepositoryBase
   Future<void> setPassword(String password) async {
     final vault = await AuthentHiveSecuredDatasource.getInstance();
     await vault.setPassword(password);
+
+    await Vault.instance().unlock(password);
   }
 }
