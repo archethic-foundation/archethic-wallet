@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:aewallet/domain/models/core/failures.dart';
+import 'package:aewallet/infrastructure/datasources/hive.extension.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -92,7 +93,15 @@ class Vault {
   }
 
   Future<void> clear(String name) async {
-    await Hive.deleteBoxFromDisk(name);
+    log(
+      'Deleting vault box $name...',
+      name: _logName,
+    );
+    await Hive.deleteBox(name);
+    log(
+      '... vault box $name deleted',
+      name: _logName,
+    );
   }
 
   Future<void> clearSecureKey() async {

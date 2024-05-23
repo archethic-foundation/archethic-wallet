@@ -2,6 +2,7 @@
 
 import 'dart:developer';
 
+import 'package:aewallet/infrastructure/datasources/hive.extension.dart';
 import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive/hive.dart';
@@ -62,8 +63,8 @@ class AuthentHiveSecuredDatasource {
 
   String getYubikeyClientID() => _getValue(_yubikeyClientID, defaultValue: '');
 
-  Future<void> clearAll() async {
-    await _box.clear();
+  static Future<void> clear() async {
+    await Hive.deleteBox(_authenticationBox);
   }
 
   static Future<Box<E>> _openSecuredBox<E>(

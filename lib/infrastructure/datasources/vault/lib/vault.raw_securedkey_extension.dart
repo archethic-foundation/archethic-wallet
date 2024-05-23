@@ -1,4 +1,5 @@
 part of '../vault.dart';
+
 /// Used on NonWeb platform only.
 ///
 /// Helpers to store [Vault] encryption data :

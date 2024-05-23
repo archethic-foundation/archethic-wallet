@@ -3,6 +3,7 @@
 import 'dart:ui';
 
 import 'package:aewallet/domain/models/market_price_history.dart';
+import 'package:aewallet/infrastructure/datasources/hive.extension.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/available_language.dart';
@@ -262,9 +263,7 @@ class PreferencesHiveDatasource {
     }
   }
 
-  Future<void> clearAll() async {
-    await _box.clear();
-  }
+  static Future<void> clear() => Hive.deleteBox(_preferencesBox);
 
   Future<DateTime?> getLastInteractionDate() async {
     return _getValue(lastInteractionDate, defaultValue: null);
