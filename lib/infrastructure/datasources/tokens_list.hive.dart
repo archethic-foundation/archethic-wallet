@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/infrastructure/datasources/hive.extension.dart';
 import 'package:aewallet/infrastructure/datasources/wallet_token_dto.hive.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:hive/hive.dart';
@@ -20,13 +21,6 @@ class TokensListHiveDatasource {
     if (_instance?._box.isOpen == true) return _instance!;
     final box = await Hive.openBox<WalletTokenHiveDto>(_tokensListBox);
     return _instance = TokensListHiveDatasource._(box);
-  }
-
-  Future<void> setTokensList(List<WalletTokenHiveDto> v) async {
-    await _box.clear();
-    for (final token in v) {
-      await _box.put(token.address!.toUpperCase(), token);
-    }
   }
 
   Future<void> setToken(WalletTokenHiveDto v) async {
