@@ -1,5 +1,5 @@
+import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
 import 'package:aewallet/model/blockchain/token_information.dart';
-import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:hive/hive.dart';

@@ -1,4 +1,4 @@
-import 'package:aewallet/model/data/appdb.dart';
+import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 

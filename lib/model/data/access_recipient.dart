@@ -1,4 +1,4 @@
-import 'package:aewallet/model/data/appdb.dart';
+import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/public_key.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';

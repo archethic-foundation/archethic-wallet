@@ -11,9 +11,9 @@ import 'package:aewallet/domain/models/transfer.dart';
 import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
+import 'package:aewallet/infrastructure/datasources/contacts.hive.dart';
 import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
 import 'package:aewallet/model/data/account.dart';
-import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
@@ -51,6 +51,8 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
   TransferFormNotifier();
 
   CancelableTask<double?>? _calculateFeesTask;
+
+  final contactsHiveDatasource = ContactsHiveDatasource.instance();
 
   Future<void> _updateFees(
     BuildContext context, {
@@ -262,7 +264,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         return;
       }
 
-      final contact = await sl.get<DBHelper>().getContactWithAddress(text);
+      final contact = await contactsHiveDatasource.getContactWithAddress(text);
       if (contact != null) {
         _setRecipient(
           recipient: TransferRecipient.contact(
@@ -285,7 +287,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     }
 
     try {
-      final contact = await sl.get<DBHelper>().getContactWithName(text);
+      final contact = await contactsHiveDatasource.getContactWithName(text);
       _setRecipient(
         recipient: TransferRecipient.contact(
           contact: contact!,
@@ -323,9 +325,9 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     required BuildContext context,
     required archethic.Address address,
   }) async {
-    final contact = await sl.get<DBHelper>().getContactWithAddress(
-          address.address!,
-        );
+    final contact = await contactsHiveDatasource.getContactWithAddress(
+      address.address!,
+    );
 
     if (contact != null) {
       _setRecipient(

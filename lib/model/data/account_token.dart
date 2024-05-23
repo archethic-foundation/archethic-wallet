@@ -1,8 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
 import 'package:aewallet/model/blockchain/token_information.dart';
 // Project imports:
-import 'package:aewallet/model/data/appdb.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 

@@ -1,9 +1,9 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
-
 import 'package:aewallet/application/wallet/wallet.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/ui/views/accounts/layouts/components/account_list_item.dart';

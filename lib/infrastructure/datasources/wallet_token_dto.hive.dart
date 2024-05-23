@@ -1,4 +1,4 @@
-import 'package:aewallet/model/data/appdb.dart';
+import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:hive/hive.dart';
 

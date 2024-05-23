@@ -3,7 +3,7 @@ part of '../vault.dart';
 /// Used on NonWeb platform only.
 ///
 /// Helpers to store [Vault] encryption data :
-///   - [secureKey] :
+///   - [kSecureKey]
 ///
 extension HiveRawSecuredKey on HiveInterface {
   static const kSecureKey = 'archethic_wallet_secure_key';

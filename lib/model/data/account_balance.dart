@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'package:aewallet/model/data/appdb.dart';
+import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/util/number_util.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

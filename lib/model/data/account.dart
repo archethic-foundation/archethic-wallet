@@ -1,10 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'package:aewallet/infrastructure/datasources/account.hive.dart';
+import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
 import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/account_token.dart';
-import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/nft_infos_off_chain.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -237,7 +238,7 @@ class Account extends HiveObject with KeychainServiceMixin {
   }
 
   Future<void> updateAccount() async {
-    await sl.get<DBHelper>().updateAccount(this);
+    await AccountHiveDatasource.instance().updateAccount(this);
   }
 
   Future<void> updateNftInfosOffChainFavorite(String? tokenId) async {
