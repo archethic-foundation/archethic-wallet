@@ -6,13 +6,13 @@ import 'dart:developer' as dev;
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:aewallet/infrastructure/datasources/contacts.hive.dart';
 import 'package:aewallet/infrastructure/datasources/tokens_list.hive.dart';
 import 'package:aewallet/infrastructure/datasources/wallet_token_dto.hive.dart';
 import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/blockchain/token_information.dart';
 import 'package:aewallet/model/data/account_token.dart';
-import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/model/transaction_infos.dart';
@@ -559,7 +559,7 @@ class AppService {
     }
 
     // Check if the recent transactions are with contacts
-    final contactsList = await sl.get<DBHelper>().getContacts();
+    final contactsList = await ContactsHiveDatasource.instance().getContacts();
     final contactsListUpdated = <Contact>[];
     final contactsAddresses = <String>[];
     for (final contact in contactsList) {
@@ -617,7 +617,7 @@ class AppService {
               contact.address.toUpperCase()) {
         contact.address = lastAddressesMap[contact.address]!.address!.address ??
             contact.address;
-        await sl.get<DBHelper>().saveContact(contact);
+        await ContactsHiveDatasource.instance().saveContact(contact);
       }
       contactsListUpdated.add(contact);
     }

@@ -1,5 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'dart:async';
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
@@ -99,11 +101,13 @@ class MenuWidgetWallet extends ConsumerWidget {
                         FeedbackType.light,
                         preferences.activeVibrations,
                       );
-                  context.push(
-                    ContactDetail.routerPage,
-                    extra: ContactDetailsRouteParams(
-                      contactAddress: contact.genesisAddress!,
-                    ).toJson(),
+                  unawaited(
+                    context.push(
+                      ContactDetail.routerPage,
+                      extra: ContactDetailsRouteParams(
+                        contactAddress: contact.genesisAddress!,
+                      ).toJson(),
+                    ),
                   );
                 },
               )

@@ -3,7 +3,8 @@ part of '../vault.dart';
 /// Used on Web platform only.
 ///
 /// Helpers to store [Vault] encryption data :
-///   - [secureKey] :
+///   - [kEncryptedSecureKey] : AES key encrypted with user password
+///   - [kEncryptedSecureKeySalt] : AES key encryption salt
 ///
 extension HiveEncryptedSecuredKey on HiveInterface {
   static const kEncryptedSecureKey = 'archethic_wallet_encrypted_secure_key';
@@ -123,7 +124,7 @@ extension HiveEncryptedSecuredKey on HiveInterface {
     return archethic.aesDecrypt(encryptedSecuredKey, derivedKey);
   }
 
-  // TODO(): Check if that's not too long to compute. I guess a simple SHA256(password+salt) would do the job
+  // TODO(Chralu): Check if that's not too long to compute. I guess a simple SHA256(password+salt) would do the job
   // method to generate encryption key using user's password.
   static Uint8List _generatePBKDFKey(
     String password,

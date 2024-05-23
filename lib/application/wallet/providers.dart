@@ -2,7 +2,7 @@ part of 'wallet.dart';
 
 @Riverpod(keepAlive: true)
 class _SessionNotifier extends Notifier<Session> {
-  final DBHelper _dbHelper = sl.get<DBHelper>();
+  final _appWalletDatasource = AppWalletHiveDatasource.instance();
 
   @override
   Session build() {
@@ -24,7 +24,7 @@ class _SessionNotifier extends Notifier<Session> {
       keychainSecuredInfos = keychain.toKeychainSecuredInfos();
       await vault.setKeychainSecuredInfos(keychainSecuredInfos);
     }
-    final appWalletDTO = await _dbHelper.getAppWallet();
+    final appWalletDTO = await _appWalletDatasource.getAppWallet();
 
     if (seed == null || appWalletDTO == null) {
       await logout();
@@ -83,7 +83,7 @@ class _SessionNotifier extends Notifier<Session> {
     await MessengerProviders.reset(ref);
 
     await KeychainInfoVaultDatasource.clear();
-    await _dbHelper.clearAppWallet();
+    await _appWalletDatasource.clearAppWallet();
     await CacheManagerHive.clear();
 
     state = const Session.loggedOut();
@@ -119,7 +119,7 @@ class _SessionNotifier extends Notifier<Session> {
     required List<String> mnemonics,
     required String languageCode,
   }) async {
-    await sl.get<DBHelper>().clearAppWallet();
+    await _appWalletDatasource.clearAppWallet();
 
     final seed = AppMnemomics.mnemonicListToSeed(
       mnemonics,

@@ -1,8 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'package:aewallet/infrastructure/datasources/account.hive.dart';
+import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
 import 'package:aewallet/model/data/account.dart';
-import 'package:aewallet/model/data/appdb.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:hive/hive.dart';
 
 part 'app_keychain.g.dart';
@@ -34,7 +34,7 @@ class AppKeychain extends HiveObject {
     // To manage the migration of https://github.com/archethic-foundation/archethic-wallet/pull/759
     for (final account in accounts) {
       if (account.serviceType == 'archethicWallet') {
-        await sl.get<DBHelper>().changeAccount(account.name);
+        await AccountHiveDatasource.instance().changeAccount(account.name);
         return account;
       }
     }

@@ -15,8 +15,8 @@ import 'package:aewallet/domain/models/transaction.dart';
 import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
+import 'package:aewallet/infrastructure/datasources/contacts.hive.dart';
 import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
-import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -58,6 +58,7 @@ class NftCreationFormNotifier
   NftCreationFormNotifier();
 
   CancelableTask<double?>? _calculateFeesTask;
+  final contactsHiveDatasource = ContactsHiveDatasource.instance();
 
   @override
   NftCreationFormState build() {
@@ -296,9 +297,9 @@ class NftCreationFormNotifier
   }) async {
     if (!text.startsWith('@')) {
       try {
-        final contact = await sl.get<DBHelper>().getContactWithPublicKey(
-              text,
-            );
+        final contact = await contactsHiveDatasource.getContactWithPublicKey(
+          text,
+        );
         _setPropertyAccessRecipient(
           recipient: PropertyAccessRecipient.contact(contact: contact),
         );
@@ -314,7 +315,7 @@ class NftCreationFormNotifier
     }
 
     try {
-      final contact = await sl.get<DBHelper>().getContactWithName(text);
+      final contact = await contactsHiveDatasource.getContactWithName(text);
       _setPropertyAccessRecipient(
         recipient: PropertyAccessRecipient.contact(
           contact: contact!,
@@ -343,9 +344,9 @@ class NftCreationFormNotifier
     required archethic.Address address,
   }) async {
     try {
-      final contact = await sl.get<DBHelper>().getContactWithAddress(
-            address.address!,
-          );
+      final contact = await contactsHiveDatasource.getContactWithAddress(
+        address.address!,
+      );
 
       _setPropertyAccessRecipient(
         recipient: PropertyAccessRecipient.contact(contact: contact!),

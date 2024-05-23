@@ -29,8 +29,7 @@ class _AddPublicKeyTextFieldPkState
           TextPosition(offset: publicKeyController.text.length),
         );
         if (publicKeyController.text.startsWith('@')) {
-          sl
-              .get<DBHelper>()
+          ContactsHiveDatasource.instance()
               .getContactsWithNameLike(publicKeyController.text)
               .then((List<Contact> contactList) {});
         }

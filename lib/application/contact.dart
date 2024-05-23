@@ -1,8 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/infrastructure/datasources/contacts.hive.dart';
 import 'package:aewallet/model/data/account_balance.dart';
-import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
@@ -162,12 +162,14 @@ Future<AccountBalance> _getBalance(
 }
 
 class ContactRepository {
+  final hiveDatasource = ContactsHiveDatasource.instance();
+
   Future<List<Contact>> getAllContacts() async {
-    return sl.get<DBHelper>().getContacts();
+    return hiveDatasource.getContacts();
   }
 
   Future<List<Contact>> searchContacts({required String search}) async {
-    final contacts = await sl.get<DBHelper>().getContacts();
+    final contacts = await hiveDatasource.getContacts();
     return contacts
         .where(
           (contact) =>
@@ -205,41 +207,41 @@ class ContactRepository {
   }
 
   Future<void> saveContact(Contact newContact) async {
-    await sl.get<DBHelper>().saveContact(newContact);
+    await hiveDatasource.saveContact(newContact);
   }
 
   Future<void> deleteContact(Contact newContact) async {
-    await sl.get<DBHelper>().deleteContact(newContact);
+    await hiveDatasource.deleteContact(newContact);
   }
 
   Future<bool> isContactExistsWithName(String contactName) async {
-    return sl.get<DBHelper>().contactExistsWithName(contactName);
+    return hiveDatasource.contactExistsWithName(contactName);
   }
 
   Future<Contact?> getContactWithName(String contactName) async {
-    return sl.get<DBHelper>().getContactWithName(contactName);
+    return hiveDatasource.getContactWithName(contactName);
   }
 
   Future<Contact?> getContactWithAddress(String address) async {
-    return sl.get<DBHelper>().getContactWithAddress(address);
+    return hiveDatasource.getContactWithAddress(address);
   }
 
   Future<bool> isContactExistsWithAddress(String address) async {
-    return sl.get<DBHelper>().contactExistsWithAddress(address);
+    return hiveDatasource.contactExistsWithAddress(address);
   }
 
   Future<Contact> getContactWithPublicKey(String publicKey) async {
-    return sl.get<DBHelper>().getContactWithPublicKey(publicKey);
+    return hiveDatasource.getContactWithPublicKey(publicKey);
   }
 
   Future<Contact> getContactWithGenesisPublicKey(
     String genesisPublicKey,
   ) async {
-    return sl.get<DBHelper>().getContactWithGenesisPublicKey(genesisPublicKey);
+    return hiveDatasource.getContactWithGenesisPublicKey(genesisPublicKey);
   }
 
   Future<void> clear() async {
-    await sl.get<DBHelper>().clearContacts();
+    await hiveDatasource.clearContacts();
   }
 }
 

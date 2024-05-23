@@ -7,13 +7,14 @@ import 'dart:typed_data';
 
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
+import 'package:aewallet/infrastructure/datasources/appwallet.hive.dart';
+import 'package:aewallet/infrastructure/datasources/contacts.hive.dart';
 import 'package:aewallet/infrastructure/repositories/transaction/transaction_keychain_builder.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
 import 'package:aewallet/model/blockchain/keychain_secured_infos_service.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
-import 'package:aewallet/model/data/appdb.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
 import 'package:aewallet/model/keychain_service_keypair.dart';
@@ -23,6 +24,8 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
 
 class KeychainUtil with KeychainServiceMixin {
+  final appWalletDatasource = AppWalletHiveDatasource.instance();
+
   Future<void> createKeyChainAccess(
     NetworksSetting networkSettings,
     String? seed,
@@ -226,9 +229,9 @@ class KeychainUtil with KeychainServiceMixin {
         final lastTransactionMap =
             await sl.get<ApiService>().getLastTransaction([addressKeychain]);
 
-        currentAppWallet = await sl.get<DBHelper>().createAppWallet(
-              lastTransactionMap[addressKeychain]!.address!.address!,
-            );
+        currentAppWallet = await appWalletDatasource.createAppWallet(
+          lastTransactionMap[addressKeychain]!.address!.address!,
+        );
       } else {
         currentAppWallet = appWallet;
       }
@@ -239,8 +242,7 @@ class KeychainUtil with KeychainServiceMixin {
       final genesisAddressAccountList = <String>[];
       final lastAddressAccountList = <String>[];
 
-      await sl
-          .get<DBHelper>()
+      await ContactsHiveDatasource.instance()
           .deleteContactByType(ContactType.keychainService.name);
 
       /// Get all services for archethic blockchain
@@ -297,7 +299,7 @@ class KeychainUtil with KeychainServiceMixin {
                 uint8ListToHex(keychain.deriveKeypair(serviceName).publicKey!)
                     .toUpperCase(),
           );
-          await sl.get<DBHelper>().saveContact(newContact);
+          await ContactsHiveDatasource.instance().saveContact(newContact);
         }
       });
 
@@ -367,7 +369,7 @@ class KeychainUtil with KeychainServiceMixin {
       accounts.sort((a, b) => a.nameDisplayed.compareTo(b.nameDisplayed));
       currentAppWallet.appKeychain.accounts = accounts;
 
-      await sl.get<DBHelper>().saveAppWallet(currentAppWallet);
+      await appWalletDatasource.saveAppWallet(currentAppWallet);
     } catch (e) {
       throw Exception();
     }

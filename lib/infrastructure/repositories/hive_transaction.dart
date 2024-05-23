@@ -1,23 +1,22 @@
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/repositories/transaction_local.dart';
+import 'package:aewallet/infrastructure/datasources/account.hive.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
-import 'package:aewallet/model/data/appdb.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 
 class HiveTransactionRepository implements TransactionLocalRepositoryInterface {
-  final DBHelper _dbHelper = sl.get<DBHelper>();
+  final _accountDatasource = AccountHiveDatasource.instance();
 
   @override
   Future<List<RecentTransaction>> getRecentTransactions(
     String accountName,
   ) async {
-    final localAccount = await _dbHelper.getAccount(accountName);
+    final localAccount = await _accountDatasource.getAccount(accountName);
     return localAccount?.recentTransactions ?? [];
   }
 
   @override
   Future<String?> getLastTransactionAddress(String accountName) async {
-    final localAccount = await _dbHelper.getAccount(accountName);
+    final localAccount = await _accountDatasource.getAccount(accountName);
     return localAccount?.lastAddress;
   }
 
@@ -27,13 +26,13 @@ class HiveTransactionRepository implements TransactionLocalRepositoryInterface {
     required String lastAddress,
     required List<RecentTransaction> recentTransactions,
   }) async {
-    final localAccount = await _dbHelper.getAccount(accountName);
+    final localAccount = await _accountDatasource.getAccount(accountName);
 
     if (localAccount == null) {
       return const Failure.invalidValue();
     }
 
-    await _dbHelper.updateAccount(
+    await _accountDatasource.updateAccount(
       localAccount.copyWith(
         lastAddress: lastAddress,
         recentTransactions: recentTransactions,

@@ -29,8 +29,7 @@ class _TransferTextFieldAddressState
           TextPosition(offset: sendAddressController.text.length),
         );
         if (sendAddressController.text.startsWith('@')) {
-          sl
-              .get<DBHelper>()
+          ContactsHiveDatasource.instance()
               .getContactsWithNameLike(sendAddressController.text)
               .then((List<Contact> contactList) {});
         }

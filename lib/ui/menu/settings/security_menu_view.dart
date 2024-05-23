@@ -339,21 +339,27 @@ class _SyncBlockchainSettingsListItem extends ConsumerWidget {
       info: localizations.resyncWalletDescription,
       icon: Symbols.sync,
       onPressed: () {
-        AppDialogs.showConfirmDialog(context, ref, localizations.resyncWallet,
-            localizations.resyncWalletAreYouSure, localizations.yes, () async {
-          final session = ref.read(SessionProviders.session).loggedIn!;
-          for (final element in session.wallet.appKeychain.accounts) {
-            await element.clearRecentTransactionsFromCache();
-          }
-          final cache = await Hive.openBox<CacheItemHive>(
-            CacheManagerHive.cacheManagerHiveTable,
-          );
-          await cache.clear();
-          await TokensListHiveDatasource.clear();
-          await ref
-              .read(AccountProviders.selectedAccount.notifier)
-              .refreshRecentTransactions();
-        });
+        AppDialogs.showConfirmDialog(
+          context,
+          ref,
+          localizations.resyncWallet,
+          localizations.resyncWalletAreYouSure,
+          localizations.yes,
+          () async {
+            final session = ref.read(SessionProviders.session).loggedIn!;
+            for (final element in session.wallet.appKeychain.accounts) {
+              await element.clearRecentTransactionsFromCache();
+            }
+            final cache = await Hive.openBox<CacheItemHive>(
+              CacheManagerHive.cacheManagerHiveTable,
+            );
+            await cache.clear();
+            await TokensListHiveDatasource.clear();
+            await ref
+                .read(AccountProviders.selectedAccount.notifier)
+                .refreshRecentTransactions();
+          },
+        );
       },
       displayChevron: false,
     );
