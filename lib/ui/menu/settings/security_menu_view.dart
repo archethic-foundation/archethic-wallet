@@ -129,10 +129,7 @@ class SecurityMenuView extends ConsumerWidget
                                       .activeVibrations,
                                 );
                                 if (auth != null) {
-                                  await ref
-                                      .read(SessionProviders.session.notifier)
-                                      .logout();
-                                  context.go(Splash.routerPage);
+                                  context.go(LoggingOutScreen.routerPage);
                                 }
                               },
                             );
