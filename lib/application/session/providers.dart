@@ -1,4 +1,4 @@
-part of 'wallet.dart';
+part of 'session.dart';
 
 @Riverpod(keepAlive: true)
 class _SessionNotifier extends Notifier<Session> {

@@ -721,7 +721,7 @@ class _GetContactWithGenesisPublicKeyProviderElement
       (origin as _GetContactWithGenesisPublicKeyProvider).genesisPublicKey;
 }
 
-String _$saveContactHash() => r'618ffd2195caf59b253a4866ef3c259e29ddcba9';
+String _$saveContactHash() => r'500ec532811a1325390328679f4c63b1ac77b9fa';
 
 /// See also [_saveContact].
 @ProviderFor(_saveContact)
@@ -849,7 +849,7 @@ class _SaveContactProviderElement extends AutoDisposeFutureProviderElement<void>
   Contact? get contact => (origin as _SaveContactProvider).contact;
 }
 
-String _$deleteContactHash() => r'2e752a050b11741ff8e7b5ace2b5688b5b0bfea9';
+String _$deleteContactHash() => r'd839e40ae2247446d3ea771b3193579baacd8f1d';
 
 /// See also [_deleteContact].
 @ProviderFor(_deleteContact)

@@ -8,7 +8,7 @@ import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/wallet/wallet.dart';
+import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/account.dart';

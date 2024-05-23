@@ -9,6 +9,7 @@ import 'package:aewallet/domain/models/app_wallet.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/infrastructure/datasources/appwallet.hive.dart';
 import 'package:aewallet/infrastructure/datasources/keychain_info.vault.dart';
+import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/util/cache_manager_hive.dart';
@@ -20,5 +21,5 @@ import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'providers.dart';
+part 'session.g.dart';
 part 'state.dart';
-part 'wallet.g.dart';
