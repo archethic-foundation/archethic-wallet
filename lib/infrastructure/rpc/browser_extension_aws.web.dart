@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_web_libraries_in_flutter, avoid_print
+
 import 'dart:async';
 import 'dart:js';
 
@@ -78,15 +80,15 @@ class BrowserExtensionMessagePortStreamChannel
     port.onMessage.addListener(
       allowInterop((message, _) {
         if (message == null) return;
-        print('Wallet message received ${message}');
+        print('Wallet message received $message');
         _in.add(message);
-        print('Wallet message received done ${message}');
+        print('Wallet message received done $message');
       }),
     );
     print('Wallet Init WebMessage PortStreamchannel 1 ');
 
     _out.stream.listen((event) {
-      print('Wallet response sent ${event}');
+      print('Wallet response sent $event');
       port.postMessage(event);
     });
 

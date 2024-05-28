@@ -40,9 +40,7 @@ external int get windowIdCurrent;
 
 bool get isWebBrowserExtension => browserExtension != null;
 
-/**
- * https://developer.chrome.com/docs/extensions/reference/api/runtime?type-Port#type-Port
- */
+/// https://developer.chrome.com/docs/extensions/reference/api/runtime?type-Port#type-Port
 @JS('runtime.Port')
 class BrowserExtensionPort {
   @JS('onMessage')
@@ -54,31 +52,27 @@ class BrowserExtensionPort {
       get onDisconnect;
 
   @JS('disconnect')
-  external disconnect();
+  external void disconnect();
 
   @JS('postMessage')
-  external postMessage(dynamic message);
+  external void postMessage(dynamic message);
 }
 
-/**
- * https://developer.chrome.com/docs/extensions/reference/api/events?type-Event#type-Event
- */
+/// https://developer.chrome.com/docs/extensions/reference/api/events?type-Event#type-Event
 @JS()
 class BrowserExtensionEvent<H extends Function> {
   @JS('addListener')
-  external addListener(
+  external void addListener(
     H callback,
   );
 
   @JS('removeListener')
-  external removeListener(
+  external void removeListener(
     H callback,
   );
 }
 
-/**
- * https://developer.chrome.com/docs/extensions/reference/api/runtime?type-MessageSender#type-MessageSender
- */
+/// https://developer.chrome.com/docs/extensions/reference/api/runtime?type-MessageSender#type-MessageSender
 @JS()
 class BrowserExtensionMessageSender {
   @JS('origin')
@@ -88,9 +82,7 @@ class BrowserExtensionMessageSender {
   external BrowserExtensionTab? get tab;
 }
 
-/**
- * https://developer.chrome.com/docs/extensions/reference/api/tabs#type-Tab
- */
+/// https://developer.chrome.com/docs/extensions/reference/api/tabs#type-Tab
 @JS()
 class BrowserExtensionTab {
   @JS('id')
