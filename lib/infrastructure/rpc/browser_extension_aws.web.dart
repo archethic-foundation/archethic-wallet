@@ -10,13 +10,6 @@ import 'package:stream_channel/stream_channel.dart';
 class BrowserExtensionAWS {
   BrowserExtensionAWS() {
     print('[AWCBrowserExtension] Init');
-    onMessage.addListener(
-      allowInterop((message, sender, sendResponse) {
-        if (message == 'isExtensionPopupReady') {
-          sendResponse(_isRunning);
-        }
-      }),
-    );
   }
   static const logName = 'Browser RPC Server';
 
@@ -51,7 +44,7 @@ class BrowserExtensionAWS {
 
           onConnectExternal.addListener(allowInterop(_connectionReceived));
           _isRunning = true;
-          sendMessage('extensionPopupReady');
+          // sendMessage('extensionPopupReady');
         },
         (error, stack) {
           print(
