@@ -1,8 +1,7 @@
-chrome.runtime.onMessageExternal.addListener((message, sender, sendResponse) => {
-    if (message === 'waitForExtensionPopup') {
-        waitForExtensionPopup().then(() => {
-            sendResponse()
-        })
+chrome.runtime.onMessageExternal.addListener(async (message, sender, sendResponse) => {
+    if (message === 'ensureExtensionPopupOpened') {
+        await ensureExtensionPopupOpened()
+        sendResponse()
     }
 })
 
@@ -33,33 +32,13 @@ async function openExtensionPopup(): Promise<void> {
     })
 }
 
-async function extensionPopupExists(): Promise<boolean> {
+async function isExtensionPopupOpened(): Promise<boolean> {
     return (await findExtensionWindowId()) !== null
 }
 
-async function isExtensionPopupReady(): Promise<boolean> {
-    if (await extensionPopupExists()) {
-        return await chrome.runtime.sendMessage('isExtensionPopupReady');
+async function ensureExtensionPopupOpened() {
+    if (await isExtensionPopupOpened()) {
+        return
     }
-    return false
-}
-
-async function waitForExtensionPopup() {
-    return new Promise<void>(async (resolve) => {
-        if (await isExtensionPopupReady()) {
-            resolve()
-            return
-        }
-
-        const _extensionPopupReadyListener = (message: string) => {
-            if (message === 'extensionPopupReady') {
-                console.log('Extension popup ready')
-                chrome.runtime.onMessage.removeListener(_extensionPopupReadyListener)
-                resolve()
-            }
-        }
-
-        chrome.runtime.onMessage.addListener(_extensionPopupReadyListener)
-        openExtensionPopup()
-    })
+    await openExtensionPopup()
 }
