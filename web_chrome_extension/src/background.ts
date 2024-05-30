@@ -1,46 +1,93 @@
-chrome.runtime.onMessageExternal.addListener(async (message, sender, sendResponse) => {
+chrome.runtime.onMessageExternal.addListener((message, sender, sendResponse) => {
     if (message === 'ensureExtensionPopupOpened') {
-        await ensureExtensionPopupOpened()
-        sendResponse()
+        ensureExtensionPopupOpened().then(() => { sendResponse() })
+        return true
     }
 })
 
-async function findExtensionWindowId(): Promise<number | null> {
-    const extensionTabs = await chrome.tabs.query({ url: `chrome-extension://${chrome.runtime.id}/index.html` })
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message === 'areMultipleExtensionPopupsOpened') {
+        areMultipleExtensionPopupsOpened().then((response) => {
+            sendResponse(response)
+        })
+        return true
+    }
+    if (message === 'focusExtensionPopup') {
+        focusExtensionPopup().then((response) => {
+            sendResponse(response)
+        })
+        return true
+    }
+})
+
+chrome.action.onClicked.addListener(async function (tab) {
+    await openExtensionPopup()
+});
+
+
+function extensionUrl(): string {
+    return `chrome-extension://${chrome.runtime.id}/index.html`
+}
+
+/**
+ * @returns {boolean} true if a extension popup has been focused
+ */
+async function focusExtensionPopup(): Promise<boolean> {
+    const extensionTab = await findExtensionTab()
+    if (extensionTab !== null) {
+        await chrome.windows.update(
+            extensionTab.windowId,
+            { focused: true },
+        )
+        if (extensionTab.id !== undefined) {
+            await chrome.tabs.update(
+                extensionTab.id,
+                { active: true },
+            )
+        }
+        return true
+    }
+    return false
+}
+
+async function findExtensionTab(): Promise<chrome.tabs.Tab | null> {
+    const extensionTabs = await chrome.tabs.query({ url: extensionUrl() })
 
     if (extensionTabs.length === 0) return null
-    return extensionTabs[0].windowId
+    return extensionTabs[0]
 }
 
 async function openExtensionPopup(): Promise<void> {
-    const extensionWindowId = await findExtensionWindowId()
-    if (extensionWindowId !== null) {
-        console.log('Extension popup already exists.')
-        chrome.windows.update(
-            extensionWindowId!,
-            { focused: true },
-        )
+    if (await focusExtensionPopup()) {
         return
     }
 
-    chrome.windows.getCurrent(function (currentWindow) {
-        let left = Math.round((currentWindow.left ?? 200) + (currentWindow.width ?? 0) / 2);
-        let top = Math.round((currentWindow.top ?? 200) + (currentWindow.height ?? 0) / 2);
+    const currentWindow = await chrome.windows.getCurrent();
 
-        chrome.windows.create({
-            url: "index.html",
-            width: 370,
-            height: 800,
-            type: "panel",
-            focused: true,
-            left: left,
-            top: top,
-        })
+    const popupWidth = 370
+    const popupHeight = 800
+
+    let left = Math.round((currentWindow.left ?? 200) + (currentWindow.width ?? 0) - popupWidth - 32);
+    let top = Math.round((currentWindow.top ?? 200) + 64);
+
+    await chrome.windows.create({
+        url: "index.html",
+        width: popupWidth,
+        height: popupHeight,
+        type: "panel",
+        focused: true,
+        left: left,
+        top: top,
     })
 }
 
 async function isExtensionPopupOpened(): Promise<boolean> {
-    return (await findExtensionWindowId()) !== null
+    return (await findExtensionTab()) !== null
+}
+
+async function areMultipleExtensionPopupsOpened(): Promise<boolean> {
+    const extensionTabs = await chrome.tabs.query({ url: extensionUrl() })
+    return extensionTabs.length > 1
 }
 
 async function ensureExtensionPopupOpened() {
