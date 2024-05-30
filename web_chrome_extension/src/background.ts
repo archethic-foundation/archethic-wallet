@@ -6,10 +6,10 @@ chrome.runtime.onMessageExternal.addListener(async (message, sender, sendRespons
 })
 
 async function findExtensionWindowId(): Promise<number | null> {
-    const extentionTabs = await chrome.tabs.query({ url: `chrome-extension://${chrome.runtime.id}/index.html` })
+    const extensionTabs = await chrome.tabs.query({ url: `chrome-extension://${chrome.runtime.id}/index.html` })
 
-    if (extentionTabs.length === 0) return null
-    return extentionTabs[0].windowId
+    if (extensionTabs.length === 0) return null
+    return extensionTabs[0].windowId
 }
 
 async function openExtensionPopup(): Promise<void> {
@@ -23,12 +23,19 @@ async function openExtensionPopup(): Promise<void> {
         return
     }
 
-    chrome.windows.create({
-        url: "index.html",
-        width: 370,
-        height: 800,
-        type: "panel",
-        focused: true,
+    chrome.windows.getCurrent(function (currentWindow) {
+        let left = Math.round((currentWindow.left ?? 200) + (currentWindow.width ?? 0) / 2);
+        let top = Math.round((currentWindow.top ?? 200) + (currentWindow.height ?? 0) / 2);
+
+        chrome.windows.create({
+            url: "index.html",
+            width: 370,
+            height: 800,
+            type: "panel",
+            focused: true,
+            left: left,
+            top: top,
+        })
     })
 }
 
