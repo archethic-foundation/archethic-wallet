@@ -10,6 +10,7 @@ import 'package:stream_channel/stream_channel.dart';
 class BrowserExtensionAWS {
   BrowserExtensionAWS() {
     print('[AWCBrowserExtension] Init');
+    _interopConnectionReceived = allowInterop(_connectionReceived);
   }
   static const logName = 'Browser RPC Server';
 
@@ -19,16 +20,18 @@ class BrowserExtensionAWS {
 
   final Set<AWCJsonRPCServer> _peerServers = {};
 
-  void _connectionReceived(port) {
+  late Function(BrowserExtensionPort port) _interopConnectionReceived;
+  void _connectionReceived(BrowserExtensionPort port) {
     print('[AWCBrowserExtension] external connection received ');
     final channel = BrowserExtensionMessagePortStreamChannel(port: port);
     final peerServer = AWCJsonRPCServer(channel.cast<String>());
     _peerServers.add(peerServer);
 
-    port.onDisconnect.addListener((_, __) {
+    port.onDisconnect.addListener(allowInterop((_) async {
       print('[AWCBrowserExtension] external connection closed ');
+      await peerServer.close();
       _peerServers.remove(peerServer);
-    });
+    }));
 
     unawaited(peerServer.listen());
   }
@@ -42,9 +45,8 @@ class BrowserExtensionAWS {
 
           print('[AWCBrowserExtension] Starting');
 
-          onConnectExternal.addListener(allowInterop(_connectionReceived));
+          onConnectExternal.addListener(_interopConnectionReceived);
           _isRunning = true;
-          // sendMessage('extensionPopupReady');
         },
         (error, stack) {
           print(
@@ -53,12 +55,12 @@ class BrowserExtensionAWS {
         },
       );
 
-  void stop() {
+  Future<void> stop() async {
     print('[AWCBrowserExtension] Stopping');
     _isRunning = false;
-    onConnectExternal.removeListener(allowInterop(_connectionReceived));
+    onConnectExternal.removeListener(_interopConnectionReceived);
     for (final peerServer in _peerServers) {
-      peerServer.close();
+      await peerServer.close();
     }
     _peerServers.clear();
   }
@@ -78,18 +80,29 @@ class BrowserExtensionMessagePortStreamChannel
         print('Wallet message received done $message');
       }),
     );
-    print('Wallet Init WebMessage PortStreamchannel 1 ');
 
-    _out.stream.listen((event) {
+    _out.onCancel = close;
+
+    _outSubscription = _out.stream.listen((event) {
       print('Wallet response sent $event');
       port.postMessage(event);
     });
+  }
 
-    _out.sink.done.whenComplete(port.disconnect);
+  Future<void> close() async {
+    print('Wallet releases port');
+    _out.onCancel = null;
+    await _outSubscription.cancel();
+    await _out.close();
+    port.disconnect();
+
+    await _in.close();
+    print('Wallet port release done');
   }
 
   final BrowserExtensionPort port;
   final _in = StreamController<String>(sync: true);
+  late StreamSubscription _outSubscription;
   final _out = StreamController<String>(sync: true);
 
   @override

@@ -11,5 +11,5 @@ class BrowserExtensionAWS {
 
   Future<void> run() async {}
 
-  void stop() {}
+  Future<void> stop() async {}
 }

@@ -122,14 +122,14 @@ class _RPCCommandReceiverState extends ConsumerState<RPCCommandReceiver> {
     _disposeCommandDispatcher();
   }
 
-  void _disposeWebsocketRPC() {
+  Future<void> _disposeWebsocketRPC() async {
     print('Dispose websocket RPC');
-    sl.get<ArchethicWebsocketRPCServer>().stop();
+    await sl.get<ArchethicWebsocketRPCServer>().stop();
   }
 
-  void _disposeBrowserExtensionRPC() {
+  Future<void> _disposeBrowserExtensionRPC() async {
     print('Dispose Browser extension RPC');
-    _browserExtensionAWS?.stop();
+    await _browserExtensionAWS?.stop();
   }
 
   void _disposeCommandDispatcher() {
