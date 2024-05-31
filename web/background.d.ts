@@ -1,5 +1,8 @@
-declare function findExtensionWindowId(): Promise<number | null>;
+/// <reference types="chrome" />
+declare function extensionUrl(): string;
+declare function focusExtensionPopup(): Promise<boolean>;
+declare function findExtensionTab(): Promise<chrome.tabs.Tab | null>;
 declare function openExtensionPopup(): Promise<void>;
-declare function extensionPopupExists(): Promise<boolean>;
-declare function isExtensionPopupReady(): Promise<boolean>;
-declare function waitForExtensionPopup(): Promise<void>;
+declare function isExtensionPopupOpened(): Promise<boolean>;
+declare function areMultipleExtensionPopupsOpened(): Promise<boolean>;
+declare function ensureExtensionPopupOpened(): Promise<void>;
