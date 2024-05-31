@@ -1,0 +1,1 @@
+!async function(){document.addEventListener("DOMContentLoaded",(async function(){await chrome.runtime.sendMessage("areMultipleExtensionPopupsOpened",(e=>{e&&(chrome.runtime.sendMessage("focusExtensionPopup"),window.close())}))}))}();
