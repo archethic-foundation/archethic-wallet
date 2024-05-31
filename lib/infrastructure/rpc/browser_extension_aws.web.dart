@@ -23,6 +23,7 @@ class BrowserExtensionAWS {
   late Function(BrowserExtensionPort port) _interopConnectionReceived;
   void _connectionReceived(BrowserExtensionPort port) {
     print('[AWCBrowserExtension] external connection received ');
+    port.postMessage('connected');
     final channel = BrowserExtensionMessagePortStreamChannel(port: port);
     final peerServer = AWCJsonRPCServer(channel.cast<String>());
     _peerServers.add(peerServer);
