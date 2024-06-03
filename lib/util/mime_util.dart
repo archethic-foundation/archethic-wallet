@@ -4,6 +4,7 @@ import 'package:mime_dart/mime_dart.dart';
 class MimeUtil {
   static List<String> imageTypeMimeImage = [
     'image/jpeg',
+    'image/jpg',
     'image/png',
     'image/gif',
     'image/webp',
