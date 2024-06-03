@@ -449,8 +449,8 @@ final _authenticatedRoutes = [
       child: CreateDiscussionValidationSheet(
         discussionCreationSuccess: (state.extra!
             as Map<String, dynamic>)['discussionCreationSuccess'] as Function?,
-        onDispose:
-            (state.extra! as Map<String, dynamic>)['onDispose'] as Function?,
+        fromRouterPage:
+            (state.extra! as Map<String, dynamic>)['fromRouterPage'] as String?,
       ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
           FadeTransition(

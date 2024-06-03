@@ -15,7 +15,6 @@ import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -96,20 +95,16 @@ class CreateDiscussionSheetState extends ConsumerState<CreateDiscussionSheet>
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final formState = ref.watch(MessengerProviders.createDiscussionForm);
     final localizations = AppLocalizations.of(context)!;
-    final formNotifier =
-        ref.watch(MessengerProviders.createDiscussionForm.notifier);
 
     return AppButtonTinyConnectivity(
       localizations.next,
       Dimens.buttonBottomDimens,
-      key: const Key(
-        'discussionNextButton',
-      ),
+      key: const Key('discussionNextButton'),
       onPressed: () {
-        context.go(
+        context.push(
           CreateDiscussionValidationSheet.routerPage,
           extra: {
-            'onDispose': formNotifier.resetValidation,
+            'fromRouterPage': CreateDiscussionSheet.routerPage,
           },
         );
       },

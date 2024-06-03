@@ -6,12 +6,13 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
+import 'package:aewallet/ui/views/messenger/layouts/create_discussion_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -21,11 +22,11 @@ class CreateDiscussionValidationSheet extends ConsumerStatefulWidget {
   const CreateDiscussionValidationSheet({
     super.key,
     this.discussionCreationSuccess,
-    this.onDispose,
+    this.fromRouterPage,
   });
 
   final Function? discussionCreationSuccess;
-  final Function? onDispose;
+  final String? fromRouterPage;
 
   static const String routerPage = '/create_discussion_validation';
 
@@ -41,7 +42,17 @@ class _CreateDiscussionValidationSheetState
 
   @override
   void dispose() {
-    if (widget.onDispose != null) widget.onDispose!;
+    if (widget.fromRouterPage == CreateDiscussionValidationSheet.routerPage) {
+      ref
+          .watch(MessengerProviders.createDiscussionForm.notifier)
+          .removeAllMembers();
+    }
+
+    if (widget.fromRouterPage == CreateDiscussionSheet.routerPage) {
+      ref
+          .read(MessengerProviders.createDiscussionForm.notifier)
+          .resetValidation();
+    }
     super.dispose();
   }
 
@@ -80,43 +91,38 @@ class _CreateDiscussionValidationSheetState
         ref.watch(MessengerProviders.createDiscussionForm.notifier);
     final formState = ref.watch(MessengerProviders.createDiscussionForm);
 
-    return Row(
-      children: <Widget>[
-        AppButtonTiny(
-          AppButtonTinyType.primary,
-          localizations.createDiscussion,
-          Dimens.none,
-          key: const Key('addMessengerDiscussion'),
-          disabled: formState.canSubmit == false,
-          onPressed: () async {
-            ShowSendingAnimation.build(
+    return AppButtonTinyConnectivity(
+      localizations.createDiscussion,
+      Dimens.buttonBottomDimens,
+      key: const Key('addMessengerDiscussion'),
+      disabled: formState.canSubmit == false,
+      onPressed: () async {
+        ShowSendingAnimation.build(
+          context,
+        );
+
+        final result = await formNotifier.createDiscussion();
+        context.pop(); // wait popup
+
+        result.map(
+          success: (success) {
+            context
+              ..pop() // create discussion validation sheet
+              ..pop(); // create discussion sheet
+            widget.discussionCreationSuccess?.call();
+          },
+          failure: (failure) {
+            UIUtil.showSnackbar(
+              localizations.addMessengerDiscussionFailure,
               context,
-            );
-
-            final result = await formNotifier.createDiscussion();
-            context.pop(); // wait popup
-
-            result.map(
-              success: (success) {
-                context
-                  ..pop() // create discussion validation sheet
-                  ..pop(); // create discussion sheet
-                widget.discussionCreationSuccess?.call();
-              },
-              failure: (failure) {
-                UIUtil.showSnackbar(
-                  localizations.addMessengerDiscussionFailure,
-                  context,
-                  ref,
-                  ArchethicTheme.text,
-                  ArchethicTheme.snackBarShadow,
-                  duration: const Duration(seconds: 5),
-                );
-              },
+              ref,
+              ArchethicTheme.text,
+              ArchethicTheme.snackBarShadow,
+              duration: const Duration(seconds: 5),
             );
           },
-        ),
-      ],
+        );
+      },
     );
   }
 
@@ -144,18 +150,73 @@ class _CreateDiscussionValidationSheetState
     final formState = ref.watch(MessengerProviders.createDiscussionForm);
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Visibility(
           visible: formState.membersList.length > 1,
-          child: AppTextField(
-            leftMargin: 0,
-            rightMargin: 0,
-            labelText: localizations.name,
-            onChanged: (text) {
-              formNotifier.setName(text);
-            },
-            controller: nameController,
-          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 5),
+                child: Text(
+                  AppLocalizations.of(context)!.name,
+                ),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                    10,
+                                  ),
+                                  border: Border.all(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .primaryContainer,
+                                    width: 0.5,
+                                  ),
+                                  gradient: ArchethicTheme
+                                      .gradientInputFormBackground,
+                                ),
+                                child: TextField(
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                  autocorrect: false,
+                                  controller: nameController,
+                                  onChanged: formNotifier.setName,
+                                  textInputAction: TextInputAction.next,
+                                  keyboardType: TextInputType.text,
+                                  decoration: const InputDecoration(
+                                    border: InputBorder.none,
+                                    contentPadding: EdgeInsets.only(left: 10),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          )
+              .animate()
+              .fade(duration: const Duration(milliseconds: 200))
+              .scale(duration: const Duration(milliseconds: 200)),
         ),
         const SizedBox(
           height: 30,
@@ -164,10 +225,8 @@ class _CreateDiscussionValidationSheetState
           localizations.aboutToCreateADiscussion,
           style: ArchethicThemeStyles.textStyleSize14W600Primary,
         ),
-        const SizedBox(
-          height: 15,
-        ),
-        Expanded(
+        SizedBox(
+          height: MediaQuery.of(context).size.height - 150,
           child: ListView.builder(
             itemCount: formState.membersList.length,
             itemBuilder: (context, index) {
