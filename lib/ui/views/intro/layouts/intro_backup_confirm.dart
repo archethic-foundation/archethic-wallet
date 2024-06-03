@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/recovery_phrase_saved.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/session/session.dart';
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';

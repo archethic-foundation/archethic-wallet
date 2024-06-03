@@ -54,7 +54,7 @@ class CountdownLockOverlay with LockOverlayMixin {
 
 class _CountdownLockScreen extends ConsumerWidget
     implements SheetSkeletonInterface {
-  const _CountdownLockScreen({super.key});
+  const _CountdownLockScreen();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

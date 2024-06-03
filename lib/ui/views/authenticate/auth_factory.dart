@@ -57,7 +57,7 @@ class AuthFactory {
 
     switch (authMethod.method) {
       case AuthMethod.yubikeyWithYubicloud:
-        // TODO : Generate a key with Yubikey
+        // TODO(Chralu): Generate a key with Yubikey
         auth = await _authenticateWithYubikey(
           context,
           canCancel: canCancel,
@@ -72,7 +72,7 @@ class AuthFactory {
         );
         break;
       case AuthMethod.pin:
-        // TODO : Use pin as key
+        // TODO(Chralu): Use pin as key
         auth = await _authenticateWithPin(
           context,
           canCancel: canCancel,
@@ -81,7 +81,7 @@ class AuthFactory {
             : null;
         break;
       case AuthMethod.biometrics:
-        // TODO : Generate a key with Biometrics
+        // TODO(Chralu): Generate a key with Biometrics
         final hasBiometrics = await sl.get<BiometricUtil>().hasBiometrics();
         if (hasBiometrics) {
           auth = await _authenticateWithBiometrics(context)
