@@ -4,8 +4,8 @@ import 'dart:developer';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/session/session.dart';
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/transaction_infos.dart';
 import 'package:aewallet/service/app_service.dart';

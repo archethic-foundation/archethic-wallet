@@ -14,7 +14,7 @@ class LockMaskOverlay with LockOverlayMixin {
 }
 
 class _LockMask extends StatelessWidget {
-  const _LockMask({super.key});
+  const _LockMask();
 
   @override
   Widget build(BuildContext context) {

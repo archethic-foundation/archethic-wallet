@@ -5,8 +5,8 @@ import 'dart:typed_data';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/session/session.dart';
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/token.dart';
 import 'package:aewallet/domain/models/token_property.dart';
