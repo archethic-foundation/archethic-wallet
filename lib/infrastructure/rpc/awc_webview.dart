@@ -6,6 +6,7 @@ import 'package:aewallet/util/universal_platform.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:logging/logging.dart';
 import 'package:stream_channel/stream_channel.dart';
 
 class AWCWebview extends StatefulWidget {
@@ -130,7 +131,7 @@ class WebviewMessagePortStreamChannel
     with StreamChannelMixin<String>
     implements StreamChannel<String> {
   WebviewMessagePortStreamChannel({required this.port}) {
-    print('Wallet Init WebMessage PortStreamchannel');
+    logger.info('Wallet Init WebMessage PortStreamchannel');
 
     port.setWebMessageCallback((message) {
       if (message == null) return;
@@ -141,6 +142,7 @@ class WebviewMessagePortStreamChannel
       port.postMessage(WebMessage(data: event));
     });
   }
+  static final logger = Logger('AWCBrowserExtension');
 
   final IWebMessagePort port;
   final _in = StreamController<String>(sync: true);

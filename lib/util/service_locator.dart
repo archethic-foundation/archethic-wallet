@@ -1,5 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
 import 'package:aewallet/domain/repositories/settings.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
@@ -11,6 +10,7 @@ import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
+import 'package:aewallet/util/logger.dart';
 import 'package:aewallet/util/nfc.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show AddressService, ApiService, OracleService;
@@ -70,6 +70,7 @@ Future<void> _setupServiceLocatorNetworkDependencies() async {
         logsActivation: false,
       ),
     );
+  await LoggerSetup.setup();
 }
 
 Future<void> updateServiceLocatorNetworkDependencies() async {

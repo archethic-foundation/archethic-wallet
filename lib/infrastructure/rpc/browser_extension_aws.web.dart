@@ -1,18 +1,19 @@
-// ignore_for_file: avoid_web_libraries_in_flutter, avoid_print
+// ignore_for_file: avoid_web_libraries_in_flutter
 
 import 'dart:async';
 import 'dart:js';
 
 import 'package:aewallet/infrastructure/rpc/awc_json_rpc_server.dart';
 import 'package:aewallet/infrastructure/rpc/browser_extension_aws.js.dart';
+import 'package:logging/logging.dart';
 import 'package:stream_channel/stream_channel.dart';
 
 class BrowserExtensionAWS {
   BrowserExtensionAWS() {
-    print('[AWCBrowserExtension] Init');
+    logger.info('Init');
     _interopConnectionReceived = allowInterop(_connectionReceived);
   }
-  static const logName = 'Browser RPC Server';
+  static final logger = Logger('Browser RPC Server');
 
   static bool get isPlatformCompatible => isWebBrowserExtension;
 
@@ -22,17 +23,19 @@ class BrowserExtensionAWS {
 
   late Function(BrowserExtensionPort port) _interopConnectionReceived;
   void _connectionReceived(BrowserExtensionPort port) {
-    print('[AWCBrowserExtension] external connection received ');
+    logger.info('external connection received');
     port.postMessage('connected');
     final channel = BrowserExtensionMessagePortStreamChannel(port: port);
     final peerServer = AWCJsonRPCServer(channel.cast<String>());
     _peerServers.add(peerServer);
 
-    port.onDisconnect.addListener(allowInterop((_) async {
-      print('[AWCBrowserExtension] external connection closed ');
-      await peerServer.close();
-      _peerServers.remove(peerServer);
-    }));
+    port.onDisconnect.addListener(
+      allowInterop((_) async {
+        logger.info('external connection closed');
+        await peerServer.close();
+        _peerServers.remove(peerServer);
+      }),
+    );
 
     unawaited(peerServer.listen());
   }
@@ -40,24 +43,26 @@ class BrowserExtensionAWS {
   Future<void> run() async => runZonedGuarded(
         () async {
           if (_isRunning) {
-            print('[AWCBrowserExtension] Already running. Cancel `start`');
+            logger.info('Already running. Cancel `start`');
+
             return;
           }
-
-          print('[AWCBrowserExtension] Starting');
+          logger.info('Starting');
 
           onConnectExternal.addListener(_interopConnectionReceived);
           _isRunning = true;
         },
         (error, stack) {
-          print(
-            '[AWCBrowserExtension] failed : $error',
+          logger.severe(
+            'failed',
+            error,
+            stack,
           );
         },
       );
 
   Future<void> stop() async {
-    print('[AWCBrowserExtension] Stopping');
+    logger.info('Stopping');
     _isRunning = false;
     onConnectExternal.removeListener(_interopConnectionReceived);
     for (final peerServer in _peerServers) {
@@ -71,34 +76,39 @@ class BrowserExtensionMessagePortStreamChannel
     with StreamChannelMixin<String>
     implements StreamChannel<String> {
   BrowserExtensionMessagePortStreamChannel({required this.port}) {
-    print('Wallet Init WebMessage PortStreamchannel');
+    logger.info('Wallet Init WebMessage PortStreamchannel');
 
     port.onMessage.addListener(
       allowInterop((message, _) {
         if (message == null) return;
-        print('Wallet message received $message');
+        logger.info('Wallet message received $message');
+
         _in.add(message);
-        print('Wallet message received done $message');
+        logger.info('Wallet message received done $message');
       }),
     );
 
     _out.onCancel = close;
 
     _outSubscription = _out.stream.listen((event) {
-      print('Wallet response sent $event');
+      logger.info('Wallet response sent $event');
+
       port.postMessage(event);
     });
   }
 
+  static final logger = Logger('Browser RPC Server - StreamChannel');
+
   Future<void> close() async {
-    print('Wallet releases port');
+    logger.info('Wallet releases port');
+
     _out.onCancel = null;
     await _outSubscription.cancel();
     await _out.close();
     port.disconnect();
 
     await _in.close();
-    print('Wallet port release done');
+    logger.info('Wallet releases done');
   }
 
   final BrowserExtensionPort port;
