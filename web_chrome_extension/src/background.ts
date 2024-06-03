@@ -20,7 +20,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
 })
 
-chrome.action.onClicked.addListener(async function (tab) {
+chrome.action.onClicked.addListener(async function (_) {
     await openExtensionPopup()
 });
 
@@ -67,8 +67,8 @@ async function openExtensionPopup(): Promise<void> {
     const popupWidth = 370
     const popupHeight = 800
 
-    let left = Math.round((currentWindow.left ?? 200) + (currentWindow.width ?? 0) - popupWidth - 32);
-    let top = Math.round((currentWindow.top ?? 200) + 64);
+    const left = Math.round((currentWindow.left ?? 200) + (currentWindow.width ?? 0) - popupWidth - 32);
+    const top = Math.round((currentWindow.top ?? 200) + 64);
 
     await chrome.windows.create({
         url: "index.html",
