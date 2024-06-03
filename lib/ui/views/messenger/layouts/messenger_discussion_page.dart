@@ -8,12 +8,14 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
+import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/views/messenger/layouts/discussion_details_page.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/date_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -21,7 +23,8 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-class MessengerDiscussionPage extends ConsumerWidget {
+class MessengerDiscussionPage extends ConsumerWidget
+    implements SheetSkeletonInterface {
   const MessengerDiscussionPage({
     super.key,
     required this.discussionAddress,
@@ -33,88 +36,71 @@ class MessengerDiscussionPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    return SheetSkeleton(
+      appBar: getAppBar(context, ref),
+      floatingActionButton: getFloatingActionButton(context, ref),
+      sheetContent: getSheetContent(context, ref),
+      thumbVisibility: false,
+    );
+  }
+
+  @override
+  Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final selectedContact =
         ref.watch(ContactProviders.getSelectedContact).valueOrNull;
-
     final discussion =
         ref.watch(MessengerProviders.discussion(discussionAddress));
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(
-            ArchethicTheme.backgroundSmall,
-          ),
-          fit: MediaQuery.of(context).size.width >= 370
-              ? BoxFit.fitWidth
-              : BoxFit.fitHeight,
-          alignment: Alignment.centerRight,
-          opacity: 0.5,
-        ),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: <Color>[
-            ArchethicTheme.backgroundDark,
-            ArchethicTheme.background,
-          ],
-        ),
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          actions: [
-            IconButton(
-              icon: const Icon(
-                Symbols.info,
-                weight: IconSize.weightM,
-                opticalSize: IconSize.opticalSizeM,
-                grade: IconSize.gradeM,
-              ),
-              onPressed: () {
-                context.push(
-                  DiscussionDetailsPage.routerPage,
-                  extra: discussionAddress,
-                );
-              },
-            ),
-          ],
-          title: discussion.maybeMap(
-            data: (data) {
-              final displayName = ref.watch(
-                MessengerProviders.discussionDisplayName(data.value),
-              );
+    if (discussion.value != null &&
+        discussion.value!.membersPubKeys.any(
+          (element) => element == selectedContact?.publicKey,
+        )) {
+      // User can only send a message when he is still in the discussion
+      return _MessageSendForm(
+        discussionAddress: discussionAddress,
+      );
+    }
 
-              return Text(displayName);
-            },
-            orElse: () => const Text('           ')
-                .animate(
-                  onComplete: (controller) =>
-                      controller.repeat(period: 1.seconds),
-                )
-                .shimmer(),
-          ),
+    return const SizedBox.shrink();
+  }
+
+  @override
+  PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
+    final discussion =
+        ref.watch(MessengerProviders.discussion(discussionAddress));
+    return SheetAppBar(
+      title: discussion.maybeMap(
+        data: (data) {
+          final displayName = ref.watch(
+            MessengerProviders.discussionDisplayName(data.value),
+          );
+
+          return displayName;
+        },
+        orElse: () => '           ',
+      ),
+      widgetLeft: IconButton(
+        icon: const Icon(
+          Symbols.info,
+          weight: IconSize.weightM,
+          opticalSize: IconSize.opticalSizeM,
+          grade: IconSize.gradeM,
         ),
-        body: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: _MessagesList(
-                  discussionAddress: discussionAddress,
-                ),
-              ),
-              if (discussion.value != null &&
-                  discussion.value!.membersPubKeys.any(
-                    (element) => element == selectedContact?.publicKey,
-                  )) // User can only send a message when he is still in the discussion
-                _MessageSendForm(
-                  discussionAddress: discussionAddress,
-                ),
-            ],
-          ),
-        ),
+        onPressed: () {
+          context.push(
+            DiscussionDetailsPage.routerPage,
+            extra: discussionAddress,
+          );
+        },
+      ),
+    );
+  }
+
+  @override
+  Widget getSheetContent(BuildContext context, WidgetRef ref) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height - 150,
+      child: _MessagesList(
+        discussionAddress: discussionAddress,
       ),
     );
   }

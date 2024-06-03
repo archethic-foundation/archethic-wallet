@@ -6,11 +6,14 @@ import 'package:aewallet/ui/util/access_recipient_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
+import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/messenger/bloc/discussion_search_bar_provider.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/components/tap_outside_unfocus.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -24,7 +27,8 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-class AddDiscussionSheet extends ConsumerWidget {
+class AddDiscussionSheet extends ConsumerWidget
+    implements SheetSkeletonInterface {
   const AddDiscussionSheet({
     required this.discussion,
     super.key,
@@ -36,6 +40,48 @@ class AddDiscussionSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    return SheetSkeleton(
+      appBar: getAppBar(context, ref),
+      floatingActionButton: getFloatingActionButton(context, ref),
+      sheetContent: getSheetContent(context, ref),
+      thumbVisibility: false,
+    );
+  }
+
+  @override
+  Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+
+    return AppButtonTiny(
+      AppButtonTinyType.primary,
+      localizations.addRemoteMessengerGroup,
+      Dimens.buttonBottomDimens,
+      key: const Key('addRemoteMessengerGroup'),
+      onPressed: () async {
+        await ref
+            .read(MessengerProviders.discussions.notifier)
+            .addRemoteDiscussion(discussion);
+        ref
+            .read(
+              DiscussionSearchBarProvider.discussionSearchBar.notifier,
+            )
+            .reset();
+        context.pop();
+      },
+    );
+  }
+
+  @override
+  PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
+    return SheetAppBar(
+      title: ref.watch(
+        MessengerProviders.discussionDisplayName(discussion),
+      ),
+    );
+  }
+
+  @override
+  Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
     final bottom = MediaQuery.of(context).viewInsets.bottom;
@@ -134,28 +180,6 @@ class AddDiscussionSheet extends ConsumerWidget {
                   ),
                 ),
               ),
-            ),
-            Row(
-              children: [
-                AppButtonTiny(
-                  AppButtonTinyType.primary,
-                  localizations.addRemoteMessengerGroup,
-                  Dimens.buttonBottomDimens,
-                  key: const Key('addRemoteMessengerGroup'),
-                  onPressed: () async {
-                    await ref
-                        .read(MessengerProviders.discussions.notifier)
-                        .addRemoteDiscussion(discussion);
-                    ref
-                        .read(
-                          DiscussionSearchBarProvider
-                              .discussionSearchBar.notifier,
-                        )
-                        .reset();
-                    context.pop();
-                  },
-                ),
-              ],
             ),
           ],
         ),

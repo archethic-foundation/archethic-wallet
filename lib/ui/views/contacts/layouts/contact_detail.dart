@@ -348,11 +348,7 @@ class _ContactDetailActions extends ConsumerWidget {
                         .read(SettingsProviders.settings.notifier)
                         .setMainScreenCurrentPage(4);
                   },
-                  'onDispose': () {
-                    ref
-                        .watch(MessengerProviders.createDiscussionForm.notifier)
-                        .removeAllMembers();
-                  },
+                  'fromRouterPage': CreateDiscussionValidationSheet.routerPage,
                 },
               );
             },
