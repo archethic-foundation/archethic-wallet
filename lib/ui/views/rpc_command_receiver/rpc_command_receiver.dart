@@ -21,6 +21,7 @@ import 'package:aewallet/ui/views/rpc_command_receiver/sub_current_account/comma
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logging/logging.dart';
 
 class RPCCommandReceiver extends ConsumerStatefulWidget {
   const RPCCommandReceiver({
@@ -38,7 +39,7 @@ class RPCCommandReceiver extends ConsumerStatefulWidget {
 class _RPCCommandReceiverState extends ConsumerState<RPCCommandReceiver> {
   final _browserExtensionAWS =
       BrowserExtensionAWS.isPlatformCompatible ? BrowserExtensionAWS() : null;
-
+  static final logger = Logger('RPCCommandReceiver');
   @override
   void initState() {
     _initCommandDispatcher();
@@ -48,7 +49,7 @@ class _RPCCommandReceiverState extends ConsumerState<RPCCommandReceiver> {
   }
 
   void _initCommandDispatcher() {
-    print('Init RPC Command dispatcher');
+    logger.info('Init RPC Command dispatcher');
     sl.get<CommandDispatcher>()
       ..clear()
       ..addGuard((command) async {
@@ -98,7 +99,7 @@ class _RPCCommandReceiverState extends ConsumerState<RPCCommandReceiver> {
   }
 
   Future<void> _initWebsocketRPC() async {
-    print('Init websocket RPC');
+    logger.info('Init websocket RPC');
     final isRpcEnabled = (await sl
             .get<SettingsRepositoryInterface>()
             .getSettings(const Locale('fr')))
@@ -110,7 +111,7 @@ class _RPCCommandReceiverState extends ConsumerState<RPCCommandReceiver> {
   }
 
   void _initBrowserExtensionRPC() {
-    print('Init Browser extension RPC');
+    logger.info('Init Browser extension RPC');
     unawaited(_browserExtensionAWS?.run());
   }
 
@@ -123,17 +124,17 @@ class _RPCCommandReceiverState extends ConsumerState<RPCCommandReceiver> {
   }
 
   Future<void> _disposeWebsocketRPC() async {
-    print('Dispose websocket RPC');
+    logger.info('Dispose websocket RPC');
     await sl.get<ArchethicWebsocketRPCServer>().stop();
   }
 
   Future<void> _disposeBrowserExtensionRPC() async {
-    print('Dispose Browser extension RPC');
+    logger.info('Dispose Browser extension RPC');
     await _browserExtensionAWS?.stop();
   }
 
   void _disposeCommandDispatcher() {
-    print('Dispose RPC command dispatcher');
+    logger.info('Dispose RPC command dispatcher');
     sl.get<CommandDispatcher>().clear();
   }
 

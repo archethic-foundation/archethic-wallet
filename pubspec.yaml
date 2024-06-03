@@ -202,6 +202,9 @@ dependencies:
   # Flutter plugin for Android and iOS devices to allow local authentication via fingerprint, touch ID, face ID, passcode, pin, or pattern
   local_auth: ^2.2.0
 
+  # Logging lib
+  logging: ^1.2.0
+
   # Using Official Material Symbols Icons variable fonts
   material_symbols_icons: ^4.2719.1
 
