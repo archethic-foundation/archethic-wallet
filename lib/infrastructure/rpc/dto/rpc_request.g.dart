@@ -26,7 +26,7 @@ _$RpcRequestImpl _$$RpcRequestImplFromJson(Map<String, dynamic> json) =>
     _$RpcRequestImpl(
       origin:
           RpcRequestOriginDTO.fromJson(json['origin'] as Map<String, dynamic>),
-      version: json['version'] as int,
+      version: (json['version'] as num).toInt(),
       payload: json['payload'] as Map<String, dynamic>,
     );
 

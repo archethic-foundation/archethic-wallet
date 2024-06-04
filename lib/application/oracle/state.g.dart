@@ -9,7 +9,7 @@ part of 'state.dart';
 _$ArchethicOracleUCOImpl _$$ArchethicOracleUCOImplFromJson(
         Map<String, dynamic> json) =>
     _$ArchethicOracleUCOImpl(
-      timestamp: json['timestamp'] as int? ?? 0,
+      timestamp: (json['timestamp'] as num?)?.toInt() ?? 0,
       eur: (json['eur'] as num?)?.toDouble() ?? 0,
       usd: (json['usd'] as num?)?.toDouble() ?? 0,
     );

@@ -9,10 +9,12 @@ part of 'keychain_service_keypair.dart';
 _$KeychainServiceKeyPairImpl _$$KeychainServiceKeyPairImplFromJson(
         Map<String, dynamic> json) =>
     _$KeychainServiceKeyPairImpl(
-      privateKey:
-          (json['privateKey'] as List<dynamic>).map((e) => e as int).toList(),
-      publicKey:
-          (json['publicKey'] as List<dynamic>).map((e) => e as int).toList(),
+      privateKey: (json['privateKey'] as List<dynamic>)
+          .map((e) => (e as num).toInt())
+          .toList(),
+      publicKey: (json['publicKey'] as List<dynamic>)
+          .map((e) => (e as num).toInt())
+          .toList(),
     );
 
 Map<String, dynamic> _$$KeychainServiceKeyPairImplToJson(
