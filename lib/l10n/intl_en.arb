@@ -82,7 +82,7 @@
     "manage": "Manage",
     "invalidSeedPaste": "Pasted seed is not valid.",
     "unlockBiometrics": "Authenticate to Unlock",
-    "manualLockAction": "Lock Application",
+    "manualLockAction": "Lock application",
     "lockAppSetting": "Activate auto lock",
     "locked": "Locked",
     "unlock": "Unlock",
