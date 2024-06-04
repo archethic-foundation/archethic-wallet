@@ -23,7 +23,6 @@ import 'package:aewallet/ui/views/main/components/recovery_phrase_banner.dart';
 import 'package:aewallet/ui/views/main/dapps_tab.dart';
 import 'package:aewallet/ui/views/main/keychain_tab.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
-import 'package:aewallet/ui/views/messenger/layouts/messenger_tab.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/layouts/add_token_sheet.dart';
 import 'package:aewallet/ui/views/transactions/incoming_transactions_notifier.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
@@ -194,7 +193,6 @@ class _HomePageState extends ConsumerState<HomePage>
               ],
             ),
             DAppsTab(),
-            if (FeatureFlags.messagingActive) MessengerTab(),
           ],
         ),
       ),

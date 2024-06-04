@@ -85,7 +85,7 @@ class NFTTabBody extends ConsumerWidget implements SheetSkeletonInterface {
                 FeedbackType.light,
                 preferences.activeVibrations,
               );
-          context.push(ConfigureCategoryList.routerPage);
+          await context.push(ConfigureCategoryList.routerPage);
         },
       ),
     );
