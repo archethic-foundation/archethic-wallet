@@ -87,7 +87,7 @@ class DEXSheetState extends ConsumerState<DEXSheet>
         key: const Key('back'),
         color: ArchethicTheme.text,
         onPressed: () async {
-          AppDialogs.showConfirmDialog(
+          await AppDialogs.showConfirmDialog(
             context,
             ref,
             AppLocalizations.of(context)!.exitAESwapTitle,

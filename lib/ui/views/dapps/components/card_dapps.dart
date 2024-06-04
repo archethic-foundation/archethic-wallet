@@ -99,7 +99,7 @@ class CardDapps extends ConsumerWidget {
                               Symbols.arrow_right_alt,
                               size: 18,
                               color: ArchethicThemeBase.raspberry300,
-                            )
+                            ),
                           ],
                         ),
                         Text(
