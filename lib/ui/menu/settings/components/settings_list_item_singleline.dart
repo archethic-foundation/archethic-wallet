@@ -118,6 +118,7 @@ class _SettingsListItemSingleLine extends _SettingsListItem {
     required this.heading,
     required this.headingStyle,
     required this.icon,
+    this.displayChevron = true,
     this.onPressed,
   });
 
@@ -125,6 +126,7 @@ class _SettingsListItemSingleLine extends _SettingsListItem {
   final TextStyle headingStyle;
   final IconData icon;
   final VoidCallback? onPressed;
+  final bool? displayChevron;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -166,13 +168,14 @@ class _SettingsListItemSingleLine extends _SettingsListItem {
               ),
             ),
             const Spacer(),
-            Icon(
-              Symbols.chevron_right,
-              color: ArchethicTheme.iconDrawer,
-              weight: IconSize.weightM,
-              opticalSize: IconSize.opticalSizeM,
-              grade: IconSize.gradeM,
-            ),
+            if (displayChevron != null && displayChevron == true)
+              Icon(
+                Symbols.chevron_right,
+                color: ArchethicTheme.iconDrawer,
+                weight: IconSize.weightM,
+                opticalSize: IconSize.opticalSizeM,
+                grade: IconSize.gradeM,
+              ),
           ],
         ),
       ),

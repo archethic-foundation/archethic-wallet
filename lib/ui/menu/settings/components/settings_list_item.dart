@@ -14,6 +14,7 @@ abstract class _SettingsListItem extends ConsumerWidget {
     required String heading,
     required TextStyle headingStyle,
     required IconData icon,
+    bool? displayChevron,
     VoidCallback? onPressed,
   }) = _SettingsListItemSingleLine;
 

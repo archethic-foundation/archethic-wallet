@@ -82,6 +82,7 @@
     "manage": "Gérer",
     "invalidSeedPaste": "La phrase secrète que vous souhaitez coller n'est pas valide.",
     "unlockBiometrics": "Authentifier pour déverrouiller",
+    "manualLockAction": "Verouiller l'application",
     "lockAppSetting": "Activation du verouillage auto",
     "locked": "Bloqué",
     "unlock": "Ouvrir",

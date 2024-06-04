@@ -5,6 +5,7 @@ import 'package:aewallet/application/utils.dart';
 import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/domain/repositories/authentication.dart';
 import 'package:aewallet/domain/usecases/authentication/authentication.dart';
+import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:aewallet/infrastructure/repositories/authentication.nonweb.dart';
 import 'package:aewallet/infrastructure/repositories/authentication.web.dart';
 import 'package:aewallet/model/authentication_method.dart';

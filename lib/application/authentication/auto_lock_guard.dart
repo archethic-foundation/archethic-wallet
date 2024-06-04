@@ -148,6 +148,12 @@ class AuthenticationGuardNotifier
     return null;
   }
 
+  Future<void> lock() async {
+    final vault = Vault.instance();
+    await vault.lock();
+    await vault.ensureVaultIsUnlocked();
+  }
+
   Future<void> scheduleNextStartupAutolock() async {
     log(
       'Schedule next startup Autolock',
