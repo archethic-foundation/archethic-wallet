@@ -14,6 +14,7 @@ class SheetSkeleton extends ConsumerWidget {
         FloatingActionButtonLocation.centerFloat,
     this.thumbVisibility = true,
     this.menu = false,
+    this.resizeToAvoidBottomInset = false,
     this.backgroundImage,
     this.bottomNavigationBar,
     super.key,
@@ -22,8 +23,9 @@ class SheetSkeleton extends ConsumerWidget {
   final Widget? floatingActionButton;
   final PreferredSizeWidget appBar;
   final Widget sheetContent;
-  final bool? thumbVisibility;
-  final bool? menu;
+  final bool thumbVisibility;
+  final bool resizeToAvoidBottomInset;
+  final bool menu;
   final String? backgroundImage;
   final FloatingActionButtonLocation? floatingActionButtonLocation;
   final Widget? bottomNavigationBar;
@@ -34,7 +36,7 @@ class SheetSkeleton extends ConsumerWidget {
 
     return Scaffold(
       drawerEdgeDragWidth: 0,
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       bottomNavigationBar: bottomNavigationBar,
       extendBody: true,
       floatingActionButtonLocation: floatingActionButtonLocation,
@@ -43,7 +45,7 @@ class SheetSkeleton extends ConsumerWidget {
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.black,
       appBar: appBar,
-      body: menu! == false
+      body: menu == false
           ? DecoratedBox(
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -65,13 +67,13 @@ class SheetSkeleton extends ConsumerWidget {
                   children: <Widget>[
                     Expanded(
                       child: ArchethicScrollbar(
-                        thumbVisibility: thumbVisibility!,
+                        thumbVisibility: thumbVisibility,
                         child: Padding(
                           padding: EdgeInsets.only(
                             top: 20,
                             left: 15,
                             right: 15,
-                            bottom: bottom + 80,
+                            bottom: resizeToAvoidBottomInset ? 0 : bottom + 80,
                           ),
                           child: sheetContent,
                         ),
