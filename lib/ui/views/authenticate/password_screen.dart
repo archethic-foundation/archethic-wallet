@@ -54,7 +54,15 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
     showLockCountdownScreenIfNeeded(context, ref);
   }
 
+  @override
+  void dispose() {
+    enterPasswordController?.dispose();
+    enterPasswordFocusNode?.dispose();
+    super.dispose();
+  }
+
   Future<void> _verifyPassword() async {
+    if (!_canBeSubmitted) return;
     if (!mounted) return;
 
     final password = enterPasswordController!.text;
@@ -79,6 +87,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
         return;
       },
       orElse: () async {
+        _focusTextField();
         await showLockCountdownScreenIfNeeded(context, ref);
         enterPasswordController!.text = '';
       },
@@ -89,13 +98,19 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
   Widget build(BuildContext context) {
     return PopScope(
       canPop: widget.canNavigateBack,
-      child: SheetSkeleton(
-        appBar: getAppBar(context, ref),
-        floatingActionButton: getFloatingActionButton(context, ref),
-        sheetContent: getSheetContent(context, ref),
+      child: GestureDetector(
+        onTap: _focusTextField,
+        child: SheetSkeleton(
+          appBar: getAppBar(context, ref),
+          resizeToAvoidBottomInset: true,
+          floatingActionButton: getFloatingActionButton(context, ref),
+          sheetContent: getSheetContent(context, ref),
+        ),
       ),
     );
   }
+
+  bool get _canBeSubmitted => enterPasswordController!.text != '';
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
@@ -110,7 +125,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
           onPressed: () async {
             await _verifyPassword();
           },
-          disabled: enterPasswordController!.text == '',
+          disabled: !_canBeSubmitted,
         ),
       ],
     );
@@ -131,6 +146,14 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
             )
           : const SizedBox(),
     );
+  }
+
+  void _unfocus() {
+    FocusScope.of(context).unfocus();
+  }
+
+  void _focusTextField() {
+    enterPasswordFocusNode?.requestFocus();
   }
 
   @override
@@ -162,7 +185,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
             });
           },
           onSubmitted: (value) async {
-            FocusScope.of(context).unfocus();
+            _unfocus();
             await _verifyPassword();
           },
           labelText: localizations.enterPasswordHint,
