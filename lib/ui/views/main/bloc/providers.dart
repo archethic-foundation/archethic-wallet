@@ -1,4 +1,3 @@
-import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,11 +8,7 @@ final mainTabControllerProvider =
 });
 
 class TabControllerNotifier extends StateNotifier<TabController?> {
-  TabControllerNotifier() : super(null) {
-    if (FeatureFlags.messagingActive) {
-      tabCount++;
-    }
-  }
+  TabControllerNotifier() : super(null);
 
   int tabCount = 4;
 

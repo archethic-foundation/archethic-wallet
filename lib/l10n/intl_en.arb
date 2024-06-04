@@ -546,5 +546,6 @@
     "bottomMainMenuDApps": "DApps",
     "dappsTabDescriptionHeader": "Accelerate adoption with native services",
     "dappsAESwapDesc": "Swap assets on-chain and access yield farming by adding liquidity",
-    "dappsNFTDesc": "Create your own no-code NFT"
+    "dappsNFTDesc": "Create your own no-code NFT",
+    "dappsMessagingDesc": "Communicate securely"
 }

@@ -58,10 +58,6 @@ class _HomePageState extends ConsumerState<HomePage>
     super.initState();
     NotificationsUtil.init();
 
-    if (FeatureFlags.messagingActive) {
-      tabCount++;
-    }
-
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       ref.read(mainTabControllerProvider.notifier).initState(this);
 
@@ -135,12 +131,6 @@ class _HomePageState extends ConsumerState<HomePage>
                   icon: Symbols.widgets,
                   label: AppLocalizations.of(context)!.bottomMainMenuDApps,
                 ),
-                if (FeatureFlags.messagingActive)
-                  TabItem(
-                    icon: Symbols.chat,
-                    label:
-                        AppLocalizations.of(context)!.bottomMainMenuMessenger,
-                  ),
               ],
             ),
           ),
