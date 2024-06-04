@@ -9,7 +9,7 @@ import 'package:pointycastle/pointycastle.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   group(
-    'Vault',
+    'Vault - SecureStorage',
     () {
       setUp(() async {
         FlutterSecureStorage.setMockInitialValues({});

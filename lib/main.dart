@@ -316,7 +316,7 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
         .addListener(removeNativeSplash);
   }
 
-  VaultPasswordDelegate? _passwordDelegate;
+  VaultPassphraseDelegate? _passwordDelegate;
 
   @override
   void initState() {
@@ -337,7 +337,7 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
           ),
           canCancel: false,
         );
-    Vault.instance().passwordDelegate = _passwordDelegate;
+    Vault.instance().passphraseDelegate = _passwordDelegate;
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await initializeProviders();
@@ -349,8 +349,8 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
   void dispose() {
     /// If some other screen updated the passwordDelegate,
     /// then we should not reset it.
-    if (Vault.instance().passwordDelegate == _passwordDelegate) {
-      Vault.instance().passwordDelegate = null;
+    if (Vault.instance().passphraseDelegate == _passwordDelegate) {
+      Vault.instance().passphraseDelegate = null;
     }
 
     super.dispose();

@@ -15,20 +15,6 @@ part 'lib/vault.encrypted_securedkey_extension.dart';
 part 'lib/vault.raw_securedkey_extension.dart';
 
 abstract class VaultCipher {
-  factory VaultCipher(String password) {
-    return kIsWeb
-        ? PasswordVaultCipher(password: password)
-        : SimpleVaultCipher();
-  }
-
-  static Future<bool> get isSetup async {
-    return kIsWeb ? PasswordVaultCipher.isSetup : SimpleVaultCipher.isSetup;
-  }
-
-  static Future<void> clear() async {
-    return kIsWeb ? PasswordVaultCipher.clear() : SimpleVaultCipher.clear();
-  }
-
   Future<Uint8List> get();
 
   Future<void> updateSecureKey(
@@ -36,22 +22,67 @@ abstract class VaultCipher {
   );
 }
 
-typedef VaultPasswordDelegate = Future<String> Function();
+abstract class VaultCipherFactory {
+  factory VaultCipherFactory() =>
+      kIsWeb ? PasswordVaultCipherFactory() : SimpleVaultCipherFactory();
+
+  VaultCipher build(String password);
+
+  Future<bool> get isSetup;
+
+  Future<void> clear();
+}
+
+class PasswordVaultCipherFactory implements VaultCipherFactory {
+  @override
+  VaultCipher build(String password) => PasswordVaultCipher(
+        passphrase: password,
+      );
+
+  @override
+  Future<bool> get isSetup => PasswordVaultCipher.isSetup;
+
+  @override
+  Future<void> clear() => PasswordVaultCipher.clear();
+}
+
+class SimpleVaultCipherFactory implements VaultCipherFactory {
+  @override
+  VaultCipher build(String password) => SimpleVaultCipher();
+
+  @override
+  Future<void> clear() => SimpleVaultCipher.clear();
+
+  @override
+  Future<bool> get isSetup => SimpleVaultCipher.isSetup;
+}
+
+typedef VaultPassphraseDelegate = Future<String> Function();
 typedef VaultAutolockDelegate = Future<bool> Function();
 
 class Vault {
-  Vault._();
+  Vault._({VaultCipherFactory? cipherFactory}) {
+    _cipherFactory = cipherFactory ?? VaultCipherFactory();
+  }
 
-  factory Vault.instance() {
-    Vault._instance ??= Vault._();
+  factory Vault.instance({VaultCipherFactory? cipherFactory}) {
+    Vault._instance ??= Vault._(cipherFactory: cipherFactory);
     return Vault._instance!;
   }
+
+  @visibleForTesting
+  static Future<void> reset() async {
+    Vault._instance = null;
+    await Hive.deleteFromDisk();
+  }
+
+  late final VaultCipherFactory _cipherFactory;
 
   static const _logName = 'Vault';
 
   static Vault? _instance;
 
-  VaultPasswordDelegate? passwordDelegate;
+  VaultPassphraseDelegate? passphraseDelegate;
   VaultAutolockDelegate? shouldBeLocked;
   VaultCipher? _vaultCipher;
 
@@ -74,7 +105,7 @@ class Vault {
       'Unlocking vault',
       name: _logName,
     );
-    _vaultCipher = VaultCipher(password);
+    _vaultCipher = _cipherFactory.build(password);
 
     // Ensures we are able to retrieve the encryption key
     await _vaultCipher!.get();
@@ -85,7 +116,7 @@ class Vault {
   }
 
   Future<bool> get isSetup async {
-    return VaultCipher.isSetup;
+    return _cipherFactory.isSetup;
   }
 
   Future<bool> boxExists(String name) {
@@ -109,11 +140,12 @@ class Vault {
       'Clearing vault secure key',
       name: _logName,
     );
-    await VaultCipher.clear();
+    await _cipherFactory.clear();
+    await lock();
   }
 
   Future<void> updateSecureKey(
-    String newPassword,
+    String passphrase,
   ) async {
     log(
       'Updating vault secure key',
@@ -122,7 +154,7 @@ class Vault {
     if (_vaultCipher == null) {
       throw const Failure.locked();
     }
-    await _vaultCipher!.updateSecureKey(newPassword);
+    await _vaultCipher!.updateSecureKey(passphrase);
   }
 
   Future<Box<E>> openBox<E>(
@@ -205,7 +237,7 @@ class Vault {
       return;
     }
 
-    if (passwordDelegate == null) {
+    if (passphraseDelegate == null) {
       throw Exception(
         'Vault.passwordDelegate must be set before opening Boxes.',
       );
@@ -214,8 +246,8 @@ class Vault {
       'Requesting user action to unlock',
       name: _logName,
     );
-    final password = await passwordDelegate!();
+    final passphrase = await passphraseDelegate!();
 
-    await unlock(password);
+    await unlock(passphrase);
   }
 }

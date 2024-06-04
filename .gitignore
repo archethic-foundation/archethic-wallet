@@ -13,6 +13,8 @@
 .svn/
 dist/
 
+# Test 
+test/tmp_data
 
 # Fastlane
 

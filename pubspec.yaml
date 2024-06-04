@@ -293,6 +293,8 @@ dev_dependencies:
   hive_generator: ^2.0.1
   # Automatically generate code for converting to and from JSON by annotating Dart classes.
   json_serializable: ^6.7.0
+  # Mocking library (tests)
+  mockito: ^5.4.4
   # A command-line tool that create Msix installer from your flutter windows-build files.
   msix: ^3.16.7
   # Simple yet powerful Flutter-native UI testing framework eliminating limitations of flutter_test, integration_test, and flutter_driver.
