@@ -70,7 +70,7 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
   void dispose() {
     if (timer != null) timer!.cancel();
     WidgetsBinding.instance.removeObserver(this);
-    LockMaskOverlay.instance().hide();
+    _hideMask();
     Vault.instance()
       ..passphraseDelegate = null
       ..shouldBeLocked = null;
@@ -86,7 +86,7 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     );
     switch (state) {
       case AppLifecycleState.resumed:
-        _hideLockMask();
+        _hideMask();
         Future.sync(() async {
           final vault = Vault.instance();
           await vault.applyAutolock();
@@ -95,7 +95,7 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
 
         break;
       case AppLifecycleState.inactive:
-        _showLockMask();
+        _showMask();
         ref
             .read(AuthenticationProviders.authenticationGuard.notifier)
             .scheduleNextStartupAutolock();
@@ -130,7 +130,7 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     );
   }
 
-  void _showLockMask() {
+  void _showMask() {
     log(
       'Show lock mask',
       name: _logName,
@@ -142,7 +142,7 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
         StartupMaskVisibility.visible;
   }
 
-  void _hideLockMask() {
+  void _hideMask() {
     log(
       'Hide lock mask',
       name: _logName,
@@ -243,11 +243,13 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
       ref
           .read(AuthenticationProviders.authenticationGuard.notifier)
           .scheduleAutolock();
-      _hideLockMask();
+      _hideMask();
 
       _forceAuthenticationCompleter?.complete(key);
+      _forceAuthenticationCompleter = null;
     } catch (e) {
       _forceAuthenticationCompleter?.completeError(e);
+      _forceAuthenticationCompleter = null;
     }
 
     return _forceAuthenticationCompleter!.future;
