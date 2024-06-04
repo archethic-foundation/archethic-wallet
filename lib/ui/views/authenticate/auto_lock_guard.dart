@@ -123,9 +123,9 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     timer = RestartableTimer(
       durationBeforeLock,
       () async {
-        final vault = Vault.instance();
-        await vault.lock();
-        await vault.ensureVaultIsUnlocked();
+        await ref
+            .read(AuthenticationProviders.authenticationGuard.notifier)
+            .lock();
       },
     );
   }
