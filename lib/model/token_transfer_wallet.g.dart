@@ -9,10 +9,10 @@ part of 'token_transfer_wallet.dart';
 _$TokenTransferWalletImpl _$$TokenTransferWalletImplFromJson(
         Map<String, dynamic> json) =>
     _$TokenTransferWalletImpl(
-      amount: json['amount'] as int?,
+      amount: (json['amount'] as num?)?.toInt(),
       to: json['to'] as String?,
       tokenAddress: json['tokenAddress'] as String?,
-      tokenId: json['tokenId'] as int?,
+      tokenId: (json['tokenId'] as num?)?.toInt(),
       toContactName: json['toContactName'] as String?,
     );
 

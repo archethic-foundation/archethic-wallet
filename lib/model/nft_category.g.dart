@@ -8,7 +8,7 @@ part of 'nft_category.dart';
 
 _$NftCategoryImpl _$$NftCategoryImplFromJson(Map<String, dynamic> json) =>
     _$NftCategoryImpl(
-      id: json['id'] as int? ?? 0,
+      id: (json['id'] as num?)?.toInt() ?? 0,
       name: json['name'] ?? '',
     );
 

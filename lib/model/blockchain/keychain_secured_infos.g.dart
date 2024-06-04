@@ -9,8 +9,10 @@ part of 'keychain_secured_infos.dart';
 _$KeychainSecuredInfosImpl _$$KeychainSecuredInfosImplFromJson(
         Map<String, dynamic> json) =>
     _$KeychainSecuredInfosImpl(
-      seed: (json['seed'] as List<dynamic>).map((e) => e as int).toList(),
-      version: json['version'] as int,
+      seed: (json['seed'] as List<dynamic>)
+          .map((e) => (e as num).toInt())
+          .toList(),
+      version: (json['version'] as num).toInt(),
       services: (json['services'] as Map<String, dynamic>?)?.map(
             (k, e) => MapEntry(
                 k,

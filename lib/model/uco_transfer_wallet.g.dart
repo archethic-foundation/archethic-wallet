@@ -9,7 +9,7 @@ part of 'uco_transfer_wallet.dart';
 _$UCOTransferWalletImpl _$$UCOTransferWalletImplFromJson(
         Map<String, dynamic> json) =>
     _$UCOTransferWalletImpl(
-      amount: json['amount'] as int?,
+      amount: (json['amount'] as num?)?.toInt(),
       to: json['to'] as String?,
       toContactName: json['toContactName'] as String?,
     );
