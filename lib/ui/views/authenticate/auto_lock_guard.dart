@@ -62,7 +62,7 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     WidgetsBinding.instance.addObserver(this);
 
     Vault.instance()
-      ..passwordDelegate = _forceAuthent
+      ..passphraseDelegate = _forceAuthent
       ..shouldBeLocked = _shouldBeLocked;
   }
 
@@ -72,7 +72,7 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     WidgetsBinding.instance.removeObserver(this);
     LockMaskOverlay.instance().hide();
     Vault.instance()
-      ..passwordDelegate = null
+      ..passphraseDelegate = null
       ..shouldBeLocked = null;
 
     super.dispose();

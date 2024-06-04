@@ -2,9 +2,9 @@ part of '../vault.dart';
 
 /// Encryption key is AES encrypted before storage
 class PasswordVaultCipher implements VaultCipher {
-  PasswordVaultCipher({required this.password});
+  PasswordVaultCipher({required this.passphrase});
 
-  final String password;
+  final String passphrase;
 
   Uint8List? _key;
 
@@ -24,11 +24,11 @@ class PasswordVaultCipher implements VaultCipher {
 
     final encryptionKey = await Hive.readEncryptedSecureKey(
           secureStorage,
-          password,
+          passphrase,
         ) ??
         await Hive.generateAndStoreEncryptedSecureKey(
           secureStorage,
-          password,
+          passphrase,
         );
 
     return encryptionKey;
