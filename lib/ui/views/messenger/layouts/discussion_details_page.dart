@@ -131,63 +131,63 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage>
 
     return discussion.maybeMap(
       data: (data) {
-        return Padding(
-          padding: const EdgeInsets.only(top: 120),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 15,
+        return Column(
+          children: [
+            const SizedBox(
+              height: 15,
+            ),
+            Text(
+              ref.watch(
+                MessengerProviders.discussionDisplayName(
+                  data.value,
+                ),
               ),
-              Text(
-                ref.watch(
-                  MessengerProviders.discussionDisplayName(
-                    data.value,
+              textAlign: TextAlign.center,
+              style: ArchethicThemeStyles.textStyleSize28W700Primary,
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            TextButton(
+              onPressed: () {
+                sl.get<HapticUtil>().feedback(
+                      FeedbackType.light,
+                      preferences.activeVibrations,
+                    );
+                Clipboard.setData(
+                  ClipboardData(text: widget.discussionAddress),
+                );
+                UIUtil.showSnackbar(
+                  localizations.addressCopied,
+                  context,
+                  ref,
+                  ArchethicTheme.text,
+                  ArchethicTheme.snackBarShadow,
+                  icon: Symbols.info,
+                );
+              },
+              child: Row(
+                children: [
+                  Icon(
+                    Symbols.content_copy,
+                    color: ArchethicTheme.text,
+                    weight: IconSize.weightM,
+                    opticalSize: IconSize.opticalSizeM,
+                    grade: IconSize.gradeM,
                   ),
-                ),
-                textAlign: TextAlign.center,
-                style: ArchethicThemeStyles.textStyleSize28W700Primary,
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Text(
+                    localizations.addressCopy,
+                    style: ArchethicThemeStyles.textStyleSize14W700Primary,
+                  ),
+                ],
               ),
-              const SizedBox(
-                height: 15,
-              ),
-              TextButton(
-                onPressed: () {
-                  sl.get<HapticUtil>().feedback(
-                        FeedbackType.light,
-                        preferences.activeVibrations,
-                      );
-                  Clipboard.setData(
-                    ClipboardData(text: widget.discussionAddress),
-                  );
-                  UIUtil.showSnackbar(
-                    localizations.addressCopied,
-                    context,
-                    ref,
-                    ArchethicTheme.text,
-                    ArchethicTheme.snackBarShadow,
-                    icon: Symbols.info,
-                  );
-                },
-                child: Row(
-                  children: [
-                    Icon(
-                      Symbols.content_copy,
-                      color: ArchethicTheme.text,
-                      weight: IconSize.weightM,
-                      opticalSize: IconSize.opticalSizeM,
-                      grade: IconSize.gradeM,
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Text(
-                      localizations.addressCopy,
-                      style: ArchethicThemeStyles.textStyleSize14W700Primary,
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height - 150,
+              child: Expanded(
                 child: ArchethicScrollbar(
                   child: ExpansionTile(
                     shape: const Border(),
@@ -235,92 +235,91 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage>
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 8,
-              ),
-              if (discussion.value != null &&
-                  discussion.value!.membersPubKeys.any(
-                    (element) => element == selectedContact?.publicKey,
-                  ))
-                TextButton(
-                  onPressed: () {
-                    final language = ref.read(
-                      LanguageProviders.selectedLanguage,
-                    );
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            if (discussion.value != null &&
+                discussion.value!.membersPubKeys.any(
+                  (element) => element == selectedContact?.publicKey,
+                ))
+              TextButton(
+                onPressed: () {
+                  final language = ref.read(
+                    LanguageProviders.selectedLanguage,
+                  );
 
-                    AppDialogs.showConfirmDialog(
-                      context,
-                      ref,
-                      CaseChange.toUpperCase(
-                        localizations.leaveDiscussion,
-                        language.getLocaleString(),
-                      ),
-                      localizations.areYouSureLeaveDiscussion,
-                      localizations.yes,
-                      () async {
-                        final auth = await AuthFactory.authenticate(
-                          context,
-                          ref,
-                          activeVibrations: ref
-                              .read(SettingsProviders.settings)
-                              .activeVibrations,
-                        );
-                        if (auth == false) {
-                          return;
-                        }
+                  AppDialogs.showConfirmDialog(
+                    context,
+                    ref,
+                    CaseChange.toUpperCase(
+                      localizations.leaveDiscussion,
+                      language.getLocaleString(),
+                    ),
+                    localizations.areYouSureLeaveDiscussion,
+                    localizations.yes,
+                    () async {
+                      final auth = await AuthFactory.authenticate(
+                        context,
+                        ref,
+                        activeVibrations: ref
+                            .read(SettingsProviders.settings)
+                            .activeVibrations,
+                      );
+                      if (auth == false) {
+                        return;
+                      }
 
-                        ShowSendingAnimation.build(
-                          context,
-                        );
-                        final result = await formNotifier.leaveDiscussion();
+                      ShowSendingAnimation.build(
+                        context,
+                      );
+                      final result = await formNotifier.leaveDiscussion();
 
-                        context.pop(); // wait popup
+                      context.pop(); // wait popup
 
-                        result.map(
-                          success: (_) {
-                            context.pop(); // Going back to discussion page
-                          },
-                          failure: (failure) {
-                            UIUtil.showSnackbar(
-                              localizations.updateDiscussionFailure,
-                              context,
-                              ref,
-                              ArchethicTheme.text,
-                              ArchethicTheme.snackBarShadow,
-                              duration: const Duration(seconds: 5),
-                            );
-                          },
-                        );
-                      },
-                      cancelText: localizations.no,
-                    );
-                  },
-                  child: Row(
-                    children: [
-                      Icon(
-                        Symbols.logout,
-                        color: ArchethicThemeStyles
-                            .textStyleSize14W600PrimaryRed.color,
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      Text(
-                        localizations.leaveDiscussion,
-                        style:
-                            ArchethicThemeStyles.textStyleSize14W600PrimaryRed,
-                      ),
-                    ],
-                  ),
-                )
-              else
-                Text(
-                  localizations.youAreNoLongPartOfDiscussion,
-                  textAlign: TextAlign.center,
-                  style: ArchethicThemeStyles.textStyleSize14W200Primary,
+                      result.map(
+                        success: (_) {
+                          context.pop(); // Going back to discussion page
+                        },
+                        failure: (failure) {
+                          UIUtil.showSnackbar(
+                            localizations.updateDiscussionFailure,
+                            context,
+                            ref,
+                            ArchethicTheme.text,
+                            ArchethicTheme.snackBarShadow,
+                            duration: const Duration(seconds: 5),
+                          );
+                        },
+                      );
+                    },
+                    cancelText: localizations.no,
+                  );
+                },
+                child: Row(
+                  children: [
+                    Icon(
+                      Symbols.logout,
+                      color: ArchethicThemeStyles
+                          .textStyleSize14W600PrimaryRed.color,
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      localizations.leaveDiscussion,
+                      style: ArchethicThemeStyles.textStyleSize14W600PrimaryRed,
+                    ),
+                  ],
                 ),
-            ],
-          ),
+              )
+            else
+              Text(
+                localizations.youAreNoLongPartOfDiscussion,
+                textAlign: TextAlign.center,
+                style: ArchethicThemeStyles.textStyleSize14W200Primary,
+              ),
+          ],
         );
       },
       orElse: () => Scaffold(

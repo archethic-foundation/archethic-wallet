@@ -47,7 +47,7 @@ class MessengerBody extends ConsumerWidget {
                   final discussion = discussions.value[index];
                   return DiscussionListItem.loaded(
                     key: Key(discussion.address),
-                    onTap: () => context.go(
+                    onTap: () => context.push(
                       MessengerDiscussionPage.routerPage,
                       extra: discussion.address,
                     ),
