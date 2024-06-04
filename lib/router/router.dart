@@ -35,6 +35,7 @@ import 'package:aewallet/ui/views/messenger/layouts/create_discussion_sheet.dart
 import 'package:aewallet/ui/views/messenger/layouts/create_discussion_validation_sheet.dart';
 import 'package:aewallet/ui/views/messenger/layouts/discussion_details_page.dart';
 import 'package:aewallet/ui/views/messenger/layouts/messenger_discussion_page.dart';
+import 'package:aewallet/ui/views/messenger/layouts/messenger_tab.dart';
 import 'package:aewallet/ui/views/messenger/layouts/update_discussion_add_members.dart';
 import 'package:aewallet/ui/views/messenger/layouts/update_discussion_page.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_detail.dart';

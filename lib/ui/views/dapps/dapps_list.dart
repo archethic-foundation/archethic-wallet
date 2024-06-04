@@ -1,7 +1,9 @@
+import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/model/dapps_info.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/dapps/components/card_dapps.dart';
 import 'package:aewallet/ui/views/main/nft_tab.dart';
+import 'package:aewallet/ui/views/messenger/layouts/messenger_tab.dart';
 import 'package:aewallet/ui/views/sheets/dex_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -40,6 +42,16 @@ class DAppsListState extends ConsumerState<DAppsList> {
           dAppLink: NFTTab.routerPage,
         ),
       );
+
+      if (FeatureFlags.messagingActive) {
+        dAppsInfoList.add(
+          DAppsInfo(
+            dAppName: 'Messaging',
+            dAppDesc: AppLocalizations.of(context)!.dappsMessagingDesc,
+            dAppLink: MessengerTab.routerPage,
+          ),
+        );
+      }
       setState(() {});
     });
 

@@ -132,6 +132,22 @@ class MainMenuView extends ConsumerWidget {
                         onPressed: showCustom,
                       ),
                       const _SettingsListItem.spacer(),
+                      _SettingsListItem.singleLine(
+                        heading: localizations.manualLockAction,
+                        headingStyle:
+                            ArchethicThemeStyles.textStyleSize16W600Primary,
+                        icon: Symbols.lock,
+                        displayChevron: false,
+                        onPressed: () {
+                          ref
+                              .read(
+                                AuthenticationProviders
+                                    .authenticationGuard.notifier,
+                              )
+                              .lock();
+                        },
+                      ),
+                      const _SettingsListItem.spacer(),
                       const SizedBox(height: 30),
                     ],
                   ),

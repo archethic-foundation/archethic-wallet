@@ -10,7 +10,6 @@ import 'package:aewallet/ui/menu/settings/settings_sheet.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/messenger/layouts/create_discussion_sheet.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -77,26 +76,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
         ),
       ),
       actions: [
-        if (preferences.mainScreenCurrentPage == 4)
-          Padding(
-            padding: const EdgeInsets.only(right: 3),
-            child: IconButton(
-              icon: const Icon(
-                Symbols.edit_square,
-                weight: IconSize.weightM,
-                opticalSize: IconSize.opticalSizeM,
-                grade: IconSize.gradeM,
-              ),
-              onPressed: () async {
-                sl.get<HapticUtil>().feedback(
-                      FeedbackType.light,
-                      preferences.activeVibrations,
-                    );
-                context.go(CreateDiscussionSheet.routerPage);
-              },
-            ),
-          )
-        else if (preferences.mainScreenCurrentPage == 0 ||
+        if (preferences.mainScreenCurrentPage == 0 ||
             preferences.mainScreenCurrentPage == 1 ||
             preferences.mainScreenCurrentPage == 2)
           preferences.showBalances
