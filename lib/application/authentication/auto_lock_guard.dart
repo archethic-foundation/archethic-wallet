@@ -90,7 +90,6 @@ class AuthenticationGuardState with _$AuthenticationGuardState {
 class AuthenticationGuardNotifier
     extends AsyncNotifier<AuthenticationGuardState> {
   static const logName = 'AuthenticationGuard-Provider';
-  RestartableTimer? timer;
 
   @override
   Future<AuthenticationGuardState> build() async {

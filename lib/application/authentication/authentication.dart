@@ -10,7 +10,6 @@ import 'package:aewallet/infrastructure/repositories/authentication.web.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/model/device_unlock_option.dart';
-import 'package:async/async.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -21,7 +20,7 @@ part 'authentication.g.dart';
 part 'password.dart';
 part 'pin.dart';
 part 'settings.dart';
-part 'startup_authent.dart';
+part 'auto_lock_guard.dart';
 part 'yubikey.dart';
 
 abstract class AuthenticationProviders {
