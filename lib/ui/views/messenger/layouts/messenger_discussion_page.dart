@@ -78,7 +78,14 @@ class MessengerDiscussionPage extends ConsumerWidget
         },
         orElse: () => '           ',
       ),
-      widgetLeft: IconButton(
+      widgetLeft: BackButton(
+        key: const Key('back'),
+        color: ArchethicTheme.text,
+        onPressed: () {
+          context.pop();
+        },
+      ),
+      widgetRight: IconButton(
         icon: const Icon(
           Symbols.info,
           weight: IconSize.weightM,
