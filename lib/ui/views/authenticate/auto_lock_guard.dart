@@ -226,31 +226,35 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     }
 
     _forceAuthenticationCompleter = Completer<String>();
-    try {
-      final key = await AuthFactory.forceAuthenticate(
-        context,
-        ref,
-        authMethod: ref.read(
-          AuthenticationProviders.settings.select(
-            (authSettings) => AuthenticationMethod(
-              authSettings.authenticationMethod,
+    unawaited(
+      Future.sync(() async {
+        try {
+          final key = await AuthFactory.forceAuthenticate(
+            context,
+            ref,
+            authMethod: ref.read(
+              AuthenticationProviders.settings.select(
+                (authSettings) => AuthenticationMethod(
+                  authSettings.authenticationMethod,
+                ),
+              ),
             ),
-          ),
-        ),
-        canCancel: false,
-      );
+            canCancel: false,
+          );
 
-      ref
-          .read(AuthenticationProviders.authenticationGuard.notifier)
-          .scheduleAutolock();
-      _hideMask();
+          ref
+              .read(AuthenticationProviders.authenticationGuard.notifier)
+              .scheduleAutolock();
+          _hideMask();
 
-      _forceAuthenticationCompleter?.complete(key);
-      _forceAuthenticationCompleter = null;
-    } catch (e) {
-      _forceAuthenticationCompleter?.completeError(e);
-      _forceAuthenticationCompleter = null;
-    }
+          _forceAuthenticationCompleter?.complete(key);
+          _forceAuthenticationCompleter = null;
+        } catch (e) {
+          _forceAuthenticationCompleter?.completeError(e);
+          _forceAuthenticationCompleter = null;
+        }
+      }),
+    );
 
     return _forceAuthenticationCompleter!.future;
   }
