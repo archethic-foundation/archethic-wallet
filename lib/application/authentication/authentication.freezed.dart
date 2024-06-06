@@ -15,6 +15,177 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
+mixin _$AuthenticationGuardState {
+  /// Date at which the application should be locked
+  /// [null] when application should not be locked
+  DateTime? get lockDate => throw _privateConstructorUsedError;
+
+  /// [true] when a timer should be set to
+  /// lock application during use.
+  bool get timerEnabled => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $AuthenticationGuardStateCopyWith<AuthenticationGuardState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AuthenticationGuardStateCopyWith<$Res> {
+  factory $AuthenticationGuardStateCopyWith(AuthenticationGuardState value,
+          $Res Function(AuthenticationGuardState) then) =
+      _$AuthenticationGuardStateCopyWithImpl<$Res, AuthenticationGuardState>;
+  @useResult
+  $Res call({DateTime? lockDate, bool timerEnabled});
+}
+
+/// @nodoc
+class _$AuthenticationGuardStateCopyWithImpl<$Res,
+        $Val extends AuthenticationGuardState>
+    implements $AuthenticationGuardStateCopyWith<$Res> {
+  _$AuthenticationGuardStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? lockDate = freezed,
+    Object? timerEnabled = null,
+  }) {
+    return _then(_value.copyWith(
+      lockDate: freezed == lockDate
+          ? _value.lockDate
+          : lockDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      timerEnabled: null == timerEnabled
+          ? _value.timerEnabled
+          : timerEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$AuthenticationGuardStateImplCopyWith<$Res>
+    implements $AuthenticationGuardStateCopyWith<$Res> {
+  factory _$$AuthenticationGuardStateImplCopyWith(
+          _$AuthenticationGuardStateImpl value,
+          $Res Function(_$AuthenticationGuardStateImpl) then) =
+      __$$AuthenticationGuardStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({DateTime? lockDate, bool timerEnabled});
+}
+
+/// @nodoc
+class __$$AuthenticationGuardStateImplCopyWithImpl<$Res>
+    extends _$AuthenticationGuardStateCopyWithImpl<$Res,
+        _$AuthenticationGuardStateImpl>
+    implements _$$AuthenticationGuardStateImplCopyWith<$Res> {
+  __$$AuthenticationGuardStateImplCopyWithImpl(
+      _$AuthenticationGuardStateImpl _value,
+      $Res Function(_$AuthenticationGuardStateImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? lockDate = freezed,
+    Object? timerEnabled = null,
+  }) {
+    return _then(_$AuthenticationGuardStateImpl(
+      lockDate: freezed == lockDate
+          ? _value.lockDate
+          : lockDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      timerEnabled: null == timerEnabled
+          ? _value.timerEnabled
+          : timerEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$AuthenticationGuardStateImpl extends _AuthenticationGuardState
+    with DiagnosticableTreeMixin {
+  const _$AuthenticationGuardStateImpl(
+      {required this.lockDate, required this.timerEnabled})
+      : super._();
+
+  /// Date at which the application should be locked
+  /// [null] when application should not be locked
+  @override
+  final DateTime? lockDate;
+
+  /// [true] when a timer should be set to
+  /// lock application during use.
+  @override
+  final bool timerEnabled;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AuthenticationGuardState(lockDate: $lockDate, timerEnabled: $timerEnabled)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AuthenticationGuardState'))
+      ..add(DiagnosticsProperty('lockDate', lockDate))
+      ..add(DiagnosticsProperty('timerEnabled', timerEnabled));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AuthenticationGuardStateImpl &&
+            (identical(other.lockDate, lockDate) ||
+                other.lockDate == lockDate) &&
+            (identical(other.timerEnabled, timerEnabled) ||
+                other.timerEnabled == timerEnabled));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, lockDate, timerEnabled);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AuthenticationGuardStateImplCopyWith<_$AuthenticationGuardStateImpl>
+      get copyWith => __$$AuthenticationGuardStateImplCopyWithImpl<
+          _$AuthenticationGuardStateImpl>(this, _$identity);
+}
+
+abstract class _AuthenticationGuardState extends AuthenticationGuardState {
+  const factory _AuthenticationGuardState(
+      {required final DateTime? lockDate,
+      required final bool timerEnabled}) = _$AuthenticationGuardStateImpl;
+  const _AuthenticationGuardState._() : super._();
+
+  @override
+
+  /// Date at which the application should be locked
+  /// [null] when application should not be locked
+  DateTime? get lockDate;
+  @override
+
+  /// [true] when a timer should be set to
+  /// lock application during use.
+  bool get timerEnabled;
+  @override
+  @JsonKey(ignore: true)
+  _$$AuthenticationGuardStateImplCopyWith<_$AuthenticationGuardStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$PasswordAuthenticationState {
   int get failedAttemptsCount => throw _privateConstructorUsedError;
   int get maxAttemptsCount => throw _privateConstructorUsedError;
@@ -326,177 +497,6 @@ abstract class _PinAuthenticationState extends PinAuthenticationState {
   @override
   @JsonKey(ignore: true)
   _$$PinAuthenticationStateImplCopyWith<_$PinAuthenticationStateImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-mixin _$AuthenticationGuardState {
-  /// Date at which the application should be locked
-  /// [null] when application should not be locked
-  DateTime? get lockDate => throw _privateConstructorUsedError;
-
-  /// [true] when a timer should be set to
-  /// lock application during use.
-  bool get timerEnabled => throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $AuthenticationGuardStateCopyWith<AuthenticationGuardState> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $AuthenticationGuardStateCopyWith<$Res> {
-  factory $AuthenticationGuardStateCopyWith(AuthenticationGuardState value,
-          $Res Function(AuthenticationGuardState) then) =
-      _$AuthenticationGuardStateCopyWithImpl<$Res, AuthenticationGuardState>;
-  @useResult
-  $Res call({DateTime? lockDate, bool timerEnabled});
-}
-
-/// @nodoc
-class _$AuthenticationGuardStateCopyWithImpl<$Res,
-        $Val extends AuthenticationGuardState>
-    implements $AuthenticationGuardStateCopyWith<$Res> {
-  _$AuthenticationGuardStateCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? lockDate = freezed,
-    Object? timerEnabled = null,
-  }) {
-    return _then(_value.copyWith(
-      lockDate: freezed == lockDate
-          ? _value.lockDate
-          : lockDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      timerEnabled: null == timerEnabled
-          ? _value.timerEnabled
-          : timerEnabled // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$AuthenticationGuardStateImplCopyWith<$Res>
-    implements $AuthenticationGuardStateCopyWith<$Res> {
-  factory _$$AuthenticationGuardStateImplCopyWith(
-          _$AuthenticationGuardStateImpl value,
-          $Res Function(_$AuthenticationGuardStateImpl) then) =
-      __$$AuthenticationGuardStateImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({DateTime? lockDate, bool timerEnabled});
-}
-
-/// @nodoc
-class __$$AuthenticationGuardStateImplCopyWithImpl<$Res>
-    extends _$AuthenticationGuardStateCopyWithImpl<$Res,
-        _$AuthenticationGuardStateImpl>
-    implements _$$AuthenticationGuardStateImplCopyWith<$Res> {
-  __$$AuthenticationGuardStateImplCopyWithImpl(
-      _$AuthenticationGuardStateImpl _value,
-      $Res Function(_$AuthenticationGuardStateImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? lockDate = freezed,
-    Object? timerEnabled = null,
-  }) {
-    return _then(_$AuthenticationGuardStateImpl(
-      lockDate: freezed == lockDate
-          ? _value.lockDate
-          : lockDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      timerEnabled: null == timerEnabled
-          ? _value.timerEnabled
-          : timerEnabled // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$AuthenticationGuardStateImpl extends _AuthenticationGuardState
-    with DiagnosticableTreeMixin {
-  const _$AuthenticationGuardStateImpl(
-      {required this.lockDate, required this.timerEnabled})
-      : super._();
-
-  /// Date at which the application should be locked
-  /// [null] when application should not be locked
-  @override
-  final DateTime? lockDate;
-
-  /// [true] when a timer should be set to
-  /// lock application during use.
-  @override
-  final bool timerEnabled;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AuthenticationGuardState(lockDate: $lockDate, timerEnabled: $timerEnabled)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AuthenticationGuardState'))
-      ..add(DiagnosticsProperty('lockDate', lockDate))
-      ..add(DiagnosticsProperty('timerEnabled', timerEnabled));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$AuthenticationGuardStateImpl &&
-            (identical(other.lockDate, lockDate) ||
-                other.lockDate == lockDate) &&
-            (identical(other.timerEnabled, timerEnabled) ||
-                other.timerEnabled == timerEnabled));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, lockDate, timerEnabled);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$AuthenticationGuardStateImplCopyWith<_$AuthenticationGuardStateImpl>
-      get copyWith => __$$AuthenticationGuardStateImplCopyWithImpl<
-          _$AuthenticationGuardStateImpl>(this, _$identity);
-}
-
-abstract class _AuthenticationGuardState extends AuthenticationGuardState {
-  const factory _AuthenticationGuardState(
-      {required final DateTime? lockDate,
-      required final bool timerEnabled}) = _$AuthenticationGuardStateImpl;
-  const _AuthenticationGuardState._() : super._();
-
-  @override
-
-  /// Date at which the application should be locked
-  /// [null] when application should not be locked
-  DateTime? get lockDate;
-  @override
-
-  /// [true] when a timer should be set to
-  /// lock application during use.
-  bool get timerEnabled;
-  @override
-  @JsonKey(ignore: true)
-  _$$AuthenticationGuardStateImplCopyWith<_$AuthenticationGuardStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 

@@ -4,12 +4,7 @@ class AuthenticationSettingsNotifier
     extends StateNotifier<AuthenticationSettings> {
   AuthenticationSettingsNotifier(this.ref)
       : super(
-          const AuthenticationSettings(
-            authenticationMethod: AuthMethod.pin,
-            pinPadShuffle: false,
-            lock: UnlockOption.yes,
-            lockTimeout: LockTimeoutOption.oneMin,
-          ),
+          AuthenticationSettings.defaultValue,
         );
 
   final Ref ref;
@@ -34,6 +29,10 @@ class AuthenticationSettingsNotifier
         .setSettings(authSettings);
     state = authSettings;
   }
+
+  Future<void> setPrivacyMask(PrivacyMaskOption maskOption) => _update(
+        state.copyWith(privacyMask: maskOption),
+      );
 
   Future<void> setAuthMethod(AuthMethod method) => _update(
         state.copyWith(authenticationMethod: method),

@@ -69,7 +69,7 @@ class CustomizationMenuView extends ConsumerWidget
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.withDefaultValue(
                         heading: localizations.primaryCurrency,
-                        defaultMethod: primaryCurrency,
+                        defaultValue: primaryCurrency,
                         icon: Symbols.currency_exchange,
                         onPressed: () =>
                             PrimaryCurrencyDialog.getDialog(context, ref),
@@ -124,7 +124,7 @@ class _CurrencySettingsListItem extends ConsumerWidget {
       heading: localizations.changeCurrencyHeader,
       info: localizations.changeCurrencyDesc
           .replaceAll('%1', AccountBalance.cryptoCurrencyLabel),
-      defaultMethod: AvailableCurrency(currency),
+      defaultValue: AvailableCurrency(currency),
       icon: Symbols.euro,
       onPressed: () => CurrencyDialog.getDialog(context, ref),
       disabled: false,
@@ -142,7 +142,7 @@ class _LanguageSettingsListItem extends ConsumerWidget {
 
     return _SettingsListItem.withDefaultValue(
       heading: localizations.language,
-      defaultMethod: LanguageSetting(language),
+      defaultValue: LanguageSetting(language),
       icon: Symbols.translate,
       onPressed: () => LanguageDialog.getDialog(context, ref),
     );

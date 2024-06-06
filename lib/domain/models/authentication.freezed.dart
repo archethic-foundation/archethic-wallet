@@ -513,6 +513,7 @@ mixin _$AuthenticationSettings {
   bool get pinPadShuffle => throw _privateConstructorUsedError;
   UnlockOption get lock => throw _privateConstructorUsedError;
   LockTimeoutOption get lockTimeout => throw _privateConstructorUsedError;
+  PrivacyMaskOption get privacyMask => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AuthenticationSettingsCopyWith<AuthenticationSettings> get copyWith =>
@@ -529,7 +530,8 @@ abstract class $AuthenticationSettingsCopyWith<$Res> {
       {AuthMethod authenticationMethod,
       bool pinPadShuffle,
       UnlockOption lock,
-      LockTimeoutOption lockTimeout});
+      LockTimeoutOption lockTimeout,
+      PrivacyMaskOption privacyMask});
 }
 
 /// @nodoc
@@ -550,6 +552,7 @@ class _$AuthenticationSettingsCopyWithImpl<$Res,
     Object? pinPadShuffle = null,
     Object? lock = null,
     Object? lockTimeout = null,
+    Object? privacyMask = null,
   }) {
     return _then(_value.copyWith(
       authenticationMethod: null == authenticationMethod
@@ -568,6 +571,10 @@ class _$AuthenticationSettingsCopyWithImpl<$Res,
           ? _value.lockTimeout
           : lockTimeout // ignore: cast_nullable_to_non_nullable
               as LockTimeoutOption,
+      privacyMask: null == privacyMask
+          ? _value.privacyMask
+          : privacyMask // ignore: cast_nullable_to_non_nullable
+              as PrivacyMaskOption,
     ) as $Val);
   }
 }
@@ -585,7 +592,8 @@ abstract class _$$AuthenticationSettingsImplCopyWith<$Res>
       {AuthMethod authenticationMethod,
       bool pinPadShuffle,
       UnlockOption lock,
-      LockTimeoutOption lockTimeout});
+      LockTimeoutOption lockTimeout,
+      PrivacyMaskOption privacyMask});
 }
 
 /// @nodoc
@@ -605,6 +613,7 @@ class __$$AuthenticationSettingsImplCopyWithImpl<$Res>
     Object? pinPadShuffle = null,
     Object? lock = null,
     Object? lockTimeout = null,
+    Object? privacyMask = null,
   }) {
     return _then(_$AuthenticationSettingsImpl(
       authenticationMethod: null == authenticationMethod
@@ -623,6 +632,10 @@ class __$$AuthenticationSettingsImplCopyWithImpl<$Res>
           ? _value.lockTimeout
           : lockTimeout // ignore: cast_nullable_to_non_nullable
               as LockTimeoutOption,
+      privacyMask: null == privacyMask
+          ? _value.privacyMask
+          : privacyMask // ignore: cast_nullable_to_non_nullable
+              as PrivacyMaskOption,
     ));
   }
 }
@@ -634,7 +647,8 @@ class _$AuthenticationSettingsImpl extends _AuthenticationSettings {
       {required this.authenticationMethod,
       required this.pinPadShuffle,
       required this.lock,
-      required this.lockTimeout})
+      required this.lockTimeout,
+      required this.privacyMask})
       : super._();
 
   @override
@@ -645,10 +659,12 @@ class _$AuthenticationSettingsImpl extends _AuthenticationSettings {
   final UnlockOption lock;
   @override
   final LockTimeoutOption lockTimeout;
+  @override
+  final PrivacyMaskOption privacyMask;
 
   @override
   String toString() {
-    return 'AuthenticationSettings(authenticationMethod: $authenticationMethod, pinPadShuffle: $pinPadShuffle, lock: $lock, lockTimeout: $lockTimeout)';
+    return 'AuthenticationSettings(authenticationMethod: $authenticationMethod, pinPadShuffle: $pinPadShuffle, lock: $lock, lockTimeout: $lockTimeout, privacyMask: $privacyMask)';
   }
 
   @override
@@ -662,12 +678,14 @@ class _$AuthenticationSettingsImpl extends _AuthenticationSettings {
                 other.pinPadShuffle == pinPadShuffle) &&
             (identical(other.lock, lock) || other.lock == lock) &&
             (identical(other.lockTimeout, lockTimeout) ||
-                other.lockTimeout == lockTimeout));
+                other.lockTimeout == lockTimeout) &&
+            (identical(other.privacyMask, privacyMask) ||
+                other.privacyMask == privacyMask));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, authenticationMethod, pinPadShuffle, lock, lockTimeout);
+  int get hashCode => Object.hash(runtimeType, authenticationMethod,
+      pinPadShuffle, lock, lockTimeout, privacyMask);
 
   @JsonKey(ignore: true)
   @override
@@ -682,7 +700,8 @@ abstract class _AuthenticationSettings extends AuthenticationSettings {
           {required final AuthMethod authenticationMethod,
           required final bool pinPadShuffle,
           required final UnlockOption lock,
-          required final LockTimeoutOption lockTimeout}) =
+          required final LockTimeoutOption lockTimeout,
+          required final PrivacyMaskOption privacyMask}) =
       _$AuthenticationSettingsImpl;
   const _AuthenticationSettings._() : super._();
 
@@ -694,6 +713,8 @@ abstract class _AuthenticationSettings extends AuthenticationSettings {
   UnlockOption get lock;
   @override
   LockTimeoutOption get lockTimeout;
+  @override
+  PrivacyMaskOption get privacyMask;
   @override
   @JsonKey(ignore: true)
   _$$AuthenticationSettingsImplCopyWith<_$AuthenticationSettingsImpl>

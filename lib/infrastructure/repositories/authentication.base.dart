@@ -3,6 +3,7 @@ import 'package:aewallet/domain/repositories/authentication.dart';
 import 'package:aewallet/infrastructure/datasources/preferences.hive.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/device_unlock_option.dart';
+import 'package:aewallet/model/privacy_mask_option.dart';
 
 abstract class AuthenticationRepositoryBase
     implements AuthenticationRepositoryInterface {
@@ -62,6 +63,9 @@ abstract class AuthenticationRepositoryBase
       pinPadShuffle: loadedPreferences.getPinPadShuffle(),
       lock: loadedPreferences.getLock() ? UnlockOption.yes : UnlockOption.no,
       lockTimeout: loadedPreferences.getLockTimeout(),
+      privacyMask: loadedPreferences.getMaskScreenWhenAppInBackground()
+          ? PrivacyMaskOption.enabled
+          : PrivacyMaskOption.disabled,
     );
   }
 

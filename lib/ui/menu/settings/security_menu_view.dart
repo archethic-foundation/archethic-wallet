@@ -75,6 +75,8 @@ class SecurityMenuView extends ConsumerWidget
                       const _LockSettingsListItem(),
                       // Authentication Timer
                       const _SettingsListItem.spacer(),
+                      const _PrivacyMaskSettingsListItem(),
+                      const _SettingsListItem.spacer(),
                       const _AutoLockSettingsListItem(),
                       const _SettingsListItem.spacer(),
                       const _BackupSecretPhraseListItem(),
@@ -165,7 +167,7 @@ class _AuthMethodSettingsListItem extends ConsumerWidget {
 
     return _SettingsListItem.withDefaultValue(
       heading: localizations.authMethod,
-      defaultMethod: AuthenticationMethod(authenticationMethod),
+      defaultValue: AuthenticationMethod(authenticationMethod),
       icon: Symbols.fingerprint,
       onPressed: asyncHasBiometrics.maybeWhen(
         data: (hasBiometrics) => () async {
@@ -207,7 +209,7 @@ class _LockSettingsListItem extends ConsumerWidget {
 
     return _SettingsListItem.withDefaultValue(
       heading: localizations.lockAppSetting,
-      defaultMethod: UnlockSetting(lock),
+      defaultValue: UnlockSetting(lock),
       icon: Symbols.login,
       onPressed: () async {
         final unlockSetting = await LockDialog.getDialog(
@@ -217,6 +219,38 @@ class _LockSettingsListItem extends ConsumerWidget {
         );
         if (unlockSetting == null) return;
         await authenticationSettingsNotifier.setLockApp(unlockSetting.setting);
+      },
+    );
+  }
+}
+
+class _PrivacyMaskSettingsListItem extends ConsumerWidget {
+  const _PrivacyMaskSettingsListItem();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+
+    final maskEnabled = ref.watch(
+      AuthenticationProviders.settings.select(
+        (settings) => settings.privacyMask == PrivacyMaskOption.enabled,
+      ),
+    );
+
+    return _SettingsListItem.withSwitch(
+      heading: localizations.privacyMaskSetting,
+      icon: Symbols.eye_tracking,
+      isSwitched: maskEnabled,
+      onChanged: (bool isSwitched) {
+        ref
+            .read(
+              AuthenticationProviders.settings.notifier,
+            )
+            .setPrivacyMask(
+              isSwitched
+                  ? PrivacyMaskOption.enabled
+                  : PrivacyMaskOption.disabled,
+            );
       },
     );
   }
@@ -244,7 +278,7 @@ class _AutoLockSettingsListItem extends ConsumerWidget {
 
     return _SettingsListItem.withDefaultValue(
       heading: localizations.autoLockHeader,
-      defaultMethod: LockTimeoutSetting(lockTimeout),
+      defaultValue: LockTimeoutSetting(lockTimeout),
       icon: Symbols.lock,
       onPressed: () async {
         final lockTimeoutSetting = await LockTimeoutDialog.getDialog(

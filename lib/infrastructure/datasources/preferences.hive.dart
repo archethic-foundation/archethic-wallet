@@ -2,6 +2,7 @@
 
 import 'dart:ui';
 
+import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/domain/models/market_price_history.dart';
 import 'package:aewallet/infrastructure/datasources/hive.extension.dart';
 import 'package:aewallet/model/authentication_method.dart';
@@ -9,7 +10,9 @@ import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
+import 'package:aewallet/model/device_unlock_option.dart';
 import 'package:aewallet/model/primary_currency.dart';
+import 'package:aewallet/model/privacy_mask_option.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 
@@ -29,6 +32,8 @@ class PreferencesHiveDatasource {
   static const String curNetworkDevEndpoint = '_cur_network_dev_endpoint';
   static const String curTheme = 'archethic_wallet_cur_theme';
   static const String lock = 'archethic_wallet_lock';
+  static const String hideScreenWhenAppInBackground =
+      'archethic_wallet_hide_screen_when_app_in_background';
   static const String lockTimeout = 'archethic_wallet_lock_timeout';
   static const String lastInteractionDate =
       'archethic_wallet_last_interaction_date';
@@ -94,8 +99,11 @@ class PreferencesHiveDatasource {
       _setValue(authMethod, method.getIndex());
 
   AuthenticationMethod getAuthMethod() => AuthenticationMethod(
-        AuthMethod
-            .values[_getValue(authMethod, defaultValue: AuthMethod.pin.index)],
+        AuthMethod.values[_getValue(
+          authMethod,
+          defaultValue:
+              AuthenticationSettings.defaultValue.authenticationMethod.index,
+        )],
       );
 
   Future<void> setCurrency(AvailableCurrency currency) =>
@@ -145,22 +153,17 @@ class PreferencesHiveDatasource {
         ),
       );
 
-  // Future<void> setNetworkDevEndpoint(String s) {
-  //   return _setValue(curNetworkDevEndpoint, s);
-  // }
-
-  // String getNetworkDevEndpoint() => _getValue(
-  //       curNetworkDevEndpoint,
-  //       defaultValue: 'http://localhost:4000',
-  //     );
-
   Future<void> setLanguageSeed(String v) => _setValue(languageSeed, v);
 
   String getLanguageSeed() => _getValue(languageSeed, defaultValue: '');
 
   Future<void> setLock(bool value) => _setValue(lock, value);
 
-  bool getLock() => _getValue(lock, defaultValue: true);
+  bool getLock() => _getValue(
+        lock,
+        defaultValue:
+            AuthenticationSettings.defaultValue.lock == UnlockOption.yes,
+      );
 
   Future<void> setFirstLaunch(bool value) => _setValue(firstLaunch, value);
 
@@ -168,7 +171,10 @@ class PreferencesHiveDatasource {
 
   Future<void> setPinPadShuffle(bool value) => _setValue(pinPadShuffle, value);
 
-  bool getPinPadShuffle() => _getValue(pinPadShuffle, defaultValue: false);
+  bool getPinPadShuffle() => _getValue(
+        pinPadShuffle,
+        defaultValue: AuthenticationSettings.defaultValue.pinPadShuffle,
+      );
 
   Future<void> setShowBalances(bool value) => _setValue(showBalances, value);
 
@@ -225,12 +231,21 @@ class PreferencesHiveDatasource {
         defaultValue: MarketPriceHistoryInterval.hour.index,
       )];
 
+  bool getMaskScreenWhenAppInBackground() => _getValue(
+        hideScreenWhenAppInBackground,
+        defaultValue: AuthenticationSettings.defaultValue.privacyMask ==
+            PrivacyMaskOption.enabled,
+      );
+
+  Future<void> setMaskScreenWhenAppInBackground(bool hide) =>
+      _setValue(hideScreenWhenAppInBackground, hide);
+
   Future<void> setLockTimeout(LockTimeoutOption lockTimeoutOption) =>
       _setValue(lockTimeout, lockTimeoutOption.index);
 
   LockTimeoutOption getLockTimeout() => LockTimeoutOption.values[_getValue(
         lockTimeout,
-        defaultValue: LockTimeoutOption.oneMin.index,
+        defaultValue: AuthenticationSettings.defaultValue.lockTimeout.index,
       )];
 
   int getLockAttempts() => _getValue(pinAttempts, defaultValue: 0);

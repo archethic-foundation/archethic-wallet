@@ -1,5 +1,6 @@
 {
     "@@last_modified": "2021-12-07T12:33:16.270871",
+    "@@locale": "en",
     "welcomeText": "Digital sovereignty at your fingertips",
     "welcomeText2": "Archethic gives back to humanity control over technology, and to each individual, control over their identity.",
     "cancel": "Cancel",
@@ -89,6 +90,7 @@
     "tooManyFailedAttempts": "Too many failed unlock attempts.\nPlease, try again",
     "attempt": "Attempt: ",
     "securityHeader": "Security",
+    "privacyMaskSetting": "Mask screen in background",
     "aboutHeader": "About",
     "aboutPrivacyPolicy": "Privacy Policy",
     "aeWebsiteLinkHeader": "Archethic Website",
@@ -145,13 +147,11 @@
     "txListFees": "Fees :",
     "@txListFees": {
         "type": "text",
-        "placeholders_order": [],
         "placeholders": {}
     },
     "txListFeesIncluded": "Included in the previous transaction",
     "@txListFeesIncluded": {
         "type": "text",
-        "placeholders_order": [],
         "placeholders": {}
     },
     "recoveryPhrase": "Recovery Phrase",
@@ -428,19 +428,16 @@
     "createNFTConfirmation": "Are you sure you want to create this NFT?",
     "@createNFTConfirmation": {
         "type": "text",
-        "placeholders_order": [],
         "placeholders": {}
     },
     "exitNFTCreationProcessTitle": "Confirmation",
     "@exitNFTCreationProcessTitle": {
         "type": "text",
-        "placeholders_order": [],
         "placeholders": {}
     },
     "exitNFTCreationProcessSubtitle": "Are you sure you want to exit the NFT creation process? All the information you have entered so far will be lost.",
     "@exitNFTCreationProcessSubtitle": {
         "type": "text",
-        "placeholders_order": [],
         "placeholders": {}
     },
     "connectivityWarningHeader": "Check your internet connection.",

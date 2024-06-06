@@ -18,6 +18,7 @@ import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/model/device_unlock_option.dart';
+import 'package:aewallet/model/privacy_mask_option.dart';
 import 'package:aewallet/model/setting_item.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/archethic_theme_base.dart';
