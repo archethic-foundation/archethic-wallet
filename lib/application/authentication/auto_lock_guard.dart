@@ -93,26 +93,22 @@ class AuthenticationGuardNotifier
 
   @override
   Future<AuthenticationGuardState> build() async {
-    final autoLockOption = ref.watch(
-      AuthenticationProviders.settings.select((settings) => settings.lock),
+    final lockTimeoutOption = ref.watch(
+      AuthenticationProviders.settings.select(
+        (settings) => settings.lockTimeout,
+      ),
     );
 
-    if (autoLockOption == UnlockOption.no) {
+    if (lockTimeoutOption == LockTimeoutOption.disabled) {
       return const AuthenticationGuardState(
         lockDate: null,
         timerEnabled: false,
       );
     }
 
-    final lockTimeout = ref.watch(
-      AuthenticationProviders.settings.select(
-        (settings) => settings.lockTimeout.duration,
-      ),
-    );
-
     return AuthenticationGuardState(
       lockDate: await _lockDate,
-      timerEnabled: lockTimeout > Duration.zero,
+      timerEnabled: lockTimeoutOption.duration > Duration.zero,
     );
   }
 

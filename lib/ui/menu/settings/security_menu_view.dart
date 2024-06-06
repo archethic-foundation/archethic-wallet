@@ -70,9 +70,6 @@ class SecurityMenuView extends ConsumerWidget
                     children: <Widget>[
                       // Authentication Method
                       const _AuthMethodSettingsListItem(),
-                      // Authenticate on Launch
-                      const _SettingsListItem.spacer(),
-                      const _LockSettingsListItem(),
                       // Authentication Timer
                       const _SettingsListItem.spacer(),
                       const _PrivacyMaskSettingsListItem(),
@@ -192,38 +189,6 @@ class _AuthMethodSettingsListItem extends ConsumerWidget {
   }
 }
 
-class _LockSettingsListItem extends ConsumerWidget {
-  const _LockSettingsListItem();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-
-    final lock = ref.watch(
-      AuthenticationProviders.settings.select(
-        (settings) => settings.lock,
-      ),
-    );
-    final authenticationSettingsNotifier =
-        ref.read(AuthenticationProviders.settings.notifier);
-
-    return _SettingsListItem.withDefaultValue(
-      heading: localizations.lockAppSetting,
-      defaultValue: UnlockSetting(lock),
-      icon: Symbols.login,
-      onPressed: () async {
-        final unlockSetting = await LockDialog.getDialog(
-          context,
-          ref,
-          UnlockSetting(lock),
-        );
-        if (unlockSetting == null) return;
-        await authenticationSettingsNotifier.setLockApp(unlockSetting.setting);
-      },
-    );
-  }
-}
-
 class _PrivacyMaskSettingsListItem extends ConsumerWidget {
   const _PrivacyMaskSettingsListItem();
 
@@ -263,11 +228,6 @@ class _AutoLockSettingsListItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
-    final lock = ref.watch(
-      AuthenticationProviders.settings.select(
-        (settings) => settings.lock,
-      ),
-    );
     final lockTimeout = ref.watch(
       AuthenticationProviders.settings.select(
         (settings) => settings.lockTimeout,
@@ -290,7 +250,6 @@ class _AutoLockSettingsListItem extends ConsumerWidget {
         await authenticationSettingsNotifier
             .setLockTimeout(lockTimeoutSetting.setting);
       },
-      disabled: lock == UnlockOption.no,
     );
   }
 }

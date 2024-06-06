@@ -10,7 +10,6 @@ import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
-import 'package:aewallet/model/device_unlock_option.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/model/privacy_mask_option.dart';
 import 'package:hive/hive.dart';
@@ -32,8 +31,8 @@ class PreferencesHiveDatasource {
   static const String curNetworkDevEndpoint = '_cur_network_dev_endpoint';
   static const String curTheme = 'archethic_wallet_cur_theme';
   static const String lock = 'archethic_wallet_lock';
-  static const String hideScreenWhenAppInBackground =
-      'archethic_wallet_hide_screen_when_app_in_background';
+  static const String privacyMaskEnabled =
+      'archethic_wallet_privacy_mask_enabled';
   static const String lockTimeout = 'archethic_wallet_lock_timeout';
   static const String lastInteractionDate =
       'archethic_wallet_last_interaction_date';
@@ -157,14 +156,6 @@ class PreferencesHiveDatasource {
 
   String getLanguageSeed() => _getValue(languageSeed, defaultValue: '');
 
-  Future<void> setLock(bool value) => _setValue(lock, value);
-
-  bool getLock() => _getValue(
-        lock,
-        defaultValue:
-            AuthenticationSettings.defaultValue.lock == UnlockOption.yes,
-      );
-
   Future<void> setFirstLaunch(bool value) => _setValue(firstLaunch, value);
 
   bool getFirstLaunch() => _getValue(firstLaunch, defaultValue: true);
@@ -231,14 +222,14 @@ class PreferencesHiveDatasource {
         defaultValue: MarketPriceHistoryInterval.hour.index,
       )];
 
-  bool getMaskScreenWhenAppInBackground() => _getValue(
-        hideScreenWhenAppInBackground,
+  bool getPrivacyMaskEnabled() => _getValue(
+        privacyMaskEnabled,
         defaultValue: AuthenticationSettings.defaultValue.privacyMask ==
             PrivacyMaskOption.enabled,
       );
 
-  Future<void> setMaskScreenWhenAppInBackground(bool hide) =>
-      _setValue(hideScreenWhenAppInBackground, hide);
+  Future<void> setPrivacyMaskEnabled(bool enabled) =>
+      _setValue(privacyMaskEnabled, enabled);
 
   Future<void> setLockTimeout(LockTimeoutOption lockTimeoutOption) =>
       _setValue(lockTimeout, lockTimeoutOption.index);

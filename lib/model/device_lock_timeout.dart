@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 
 enum LockTimeoutOption {
-  zero,
+  disabled,
   tenSec,
   thirtySec,
   oneMin,
@@ -18,7 +18,7 @@ enum LockTimeoutOption {
 extension LockTimeoutToDurationExt on LockTimeoutOption {
   Duration get duration {
     switch (this) {
-      case LockTimeoutOption.zero:
+      case LockTimeoutOption.disabled:
         return Duration.zero;
       case LockTimeoutOption.tenSec:
         return const Duration(seconds: 10);
@@ -49,8 +49,8 @@ class LockTimeoutSetting extends SettingSelectionItem {
   String getDisplayName(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
     switch (setting) {
-      case LockTimeoutOption.zero:
-        return localizations.instantly;
+      case LockTimeoutOption.disabled:
+        return localizations.disabled;
       case LockTimeoutOption.tenSec:
         return localizations.xSecondes.replaceAll('%1', '10');
       case LockTimeoutOption.thirtySec:

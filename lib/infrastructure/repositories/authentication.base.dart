@@ -2,7 +2,6 @@ import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/domain/repositories/authentication.dart';
 import 'package:aewallet/infrastructure/datasources/preferences.hive.dart';
 import 'package:aewallet/model/authentication_method.dart';
-import 'package:aewallet/model/device_unlock_option.dart';
 import 'package:aewallet/model/privacy_mask_option.dart';
 
 abstract class AuthenticationRepositoryBase
@@ -61,9 +60,8 @@ abstract class AuthenticationRepositoryBase
     return AuthenticationSettings(
       authenticationMethod: loadedPreferences.getAuthMethod().method,
       pinPadShuffle: loadedPreferences.getPinPadShuffle(),
-      lock: loadedPreferences.getLock() ? UnlockOption.yes : UnlockOption.no,
       lockTimeout: loadedPreferences.getLockTimeout(),
-      privacyMask: loadedPreferences.getMaskScreenWhenAppInBackground()
+      privacyMask: loadedPreferences.getPrivacyMaskEnabled()
           ? PrivacyMaskOption.enabled
           : PrivacyMaskOption.disabled,
     );
@@ -78,9 +76,10 @@ abstract class AuthenticationRepositoryBase
     await syncPrefs.setPinPadShuffle(
       settings.pinPadShuffle,
     );
-    await syncPrefs.setLock(settings.lock == UnlockOption.yes);
     await syncPrefs.setLockTimeout(
       settings.lockTimeout,
     );
+    await syncPrefs.setPrivacyMaskEnabled(
+        settings.privacyMask == PrivacyMaskOption.enabled);
   }
 }
