@@ -1,6 +1,5 @@
 import 'dart:core';
 
-import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/recovery_phrase_saved.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -36,8 +35,6 @@ class RecoveryPhraseBanner extends ConsumerWidget {
                       activeVibrations: preferences.activeVibrations,
                     );
                     if (auth != null) {
-                      await ref.ensuresAutolockMaskHidden();
-
                       final seed = ref
                           .read(SessionProviders.session)
                           .loggedIn

@@ -145,27 +145,19 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
       'Show lock mask',
       name: _logName,
     );
-    if (ref.read(AuthenticationProviders.startupMaskVisibility) ==
-        StartupMaskVisibility.visible) return;
+
     LockMaskOverlay.instance().show(context);
-    ref.read(AuthenticationProviders.startupMaskVisibility.notifier).state =
-        StartupMaskVisibility.visible;
   }
 
   void _hideMask() {
-    if (_isMaskDisabled) return;
+    // Do not use `ref` here. This would cause an error
+    // when widget is disposed.
     log(
       'Hide lock mask',
       name: _logName,
     );
-    LockMaskOverlay.instance().hide();
 
-    // https://github.com/archethic-foundation/archethic-wallet/issues/978
-    // Fixes disposed `context` issue when wallet is removed.
-    if (ref.context.mounted) {
-      ref.read(AuthenticationProviders.startupMaskVisibility.notifier).state =
-          StartupMaskVisibility.hidden;
-    }
+    LockMaskOverlay.instance().hide();
   }
 
   void _updateLockTimer() {

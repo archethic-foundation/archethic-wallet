@@ -1,9 +1,6 @@
 part of 'router.dart';
 
-List<GoRoute> _authenticationRoutes(
-  GlobalKey<NavigatorState> rootNavigatorKey,
-) =>
-    [
+List<GoRoute> get _authenticationRoutes => [
       GoRoute(
         path: LoggingOutScreen.routerPage,
         pageBuilder: (context, state) => CustomTransitionPage<void>(
