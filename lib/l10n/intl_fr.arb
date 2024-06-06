@@ -102,7 +102,7 @@
     "xMinute": "Après %1 minute",
     "xSecondes": "Après %1 secondes",
     "xSeconde": "Après %1 seconde",
-    "instantly": "Immédiatement",
+    "disabled": "Désactivé",
     "tapToReveal": "Tapez pour révéler",
     "tapToHide": "Tapez pour cacher",
     "pinPadShuffle": "Lecture aléatoire du clavier PIN",

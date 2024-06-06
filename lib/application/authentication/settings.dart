@@ -15,13 +15,7 @@ class AuthenticationSettingsNotifier
         .getSettings();
   }
 
-  Future<void> reset() => _update(
-        state.copyWith(
-          lock: UnlockOption.yes,
-          pinPadShuffle: false,
-          lockTimeout: LockTimeoutOption.oneMin,
-        ),
-      );
+  Future<void> reset() => _update(AuthenticationSettings.defaultValue);
 
   Future<void> _update(AuthenticationSettings authSettings) async {
     await ref
@@ -41,11 +35,6 @@ class AuthenticationSettingsNotifier
   Future<void> setPinPadShuffle(bool pinPadShuffle) => _update(
         state.copyWith(pinPadShuffle: pinPadShuffle),
       );
-
-  Future<void> setLockApp(UnlockOption lockOption) => _update(
-        state.copyWith(lock: lockOption),
-      );
-
   Future<void> setLockTimeout(LockTimeoutOption lockTimeout) => _update(
         state.copyWith(lockTimeout: lockTimeout),
       );

@@ -102,7 +102,7 @@
     "xMinute": "After %1 minute",
     "xSecondes": "After %1 secondes",
     "xSeconde": "After %1 seconde",
-    "instantly": "Instantly",
+    "disabled": "Disabled",
     "tapToReveal": "Tap to reveal",
     "tapToHide": "Tap to hide",
     "pinPadShuffle": "PIN Pad Shuffle",
