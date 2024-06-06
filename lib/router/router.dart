@@ -89,7 +89,7 @@ class RoutesPath {
             ),
           ),
         ),
-        ..._authenticationRoutes(rootNavigatorKey),
+        ..._authenticationRoutes,
         ..._introductionRoutes,
         GoRoute(
           path: ShowSendingAnimation.routerPage,

@@ -74,11 +74,6 @@ abstract class AuthenticationProviders {
     name: AuthenticationGuardNotifier.logName,
   );
 
-  static final startupMaskVisibility = StartupMaskVisibilityProvider(
-    (ref) => StartupMaskVisibility.hidden,
-    name: 'StartupMaskVisibilityProvider',
-  );
-
   static final passwordAuthentication = StateNotifierProvider<
       PasswordAuthenticationNotifier, PasswordAuthenticationState>(
     PasswordAuthenticationNotifier.new,

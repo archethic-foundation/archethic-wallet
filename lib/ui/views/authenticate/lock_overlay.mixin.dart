@@ -8,6 +8,8 @@ mixin LockOverlayMixin {
   OverlayEntry? _overlayEntry;
   static const _logName = 'LockOverlay';
 
+  bool get isVisible => _overlayEntry != null;
+
   void show(BuildContext context) {
     log('Show', name: _logName);
     if (_overlayEntry != null) {
