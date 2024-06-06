@@ -21,7 +21,7 @@ abstract class _SettingsListItem extends ConsumerWidget {
   /// Settings item with a dropdown option
   const factory _SettingsListItem.withDefaultValue({
     required String heading,
-    required SettingSelectionItem defaultMethod,
+    required SettingSelectionItem defaultValue,
     required IconData icon,
     required Function onPressed,
     bool disabled,
@@ -30,7 +30,7 @@ abstract class _SettingsListItem extends ConsumerWidget {
   const factory _SettingsListItem.withDefaultValueWithInfos({
     required String heading,
     required String info,
-    required SettingSelectionItem defaultMethod,
+    required SettingSelectionItem defaultValue,
     required IconData icon,
     required Function onPressed,
     required bool disabled,

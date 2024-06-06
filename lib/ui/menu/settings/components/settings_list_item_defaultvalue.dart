@@ -4,14 +4,14 @@ part of '../settings_sheet.dart';
 class _SettingsListItemWithDefaultValue extends _SettingsListItem {
   const _SettingsListItemWithDefaultValue({
     required this.heading,
-    required this.defaultMethod,
+    required this.defaultValue,
     required this.icon,
     required this.onPressed,
     this.disabled = false,
   });
 
   final String heading;
-  final SettingSelectionItem defaultMethod;
+  final SettingSelectionItem defaultValue;
   final IconData icon;
   final Function onPressed;
   final bool disabled;
@@ -62,7 +62,7 @@ class _SettingsListItemWithDefaultValue extends _SettingsListItem {
                     ),
                   ),
                   AutoSizeText(
-                    defaultMethod.getDisplayName(context),
+                    defaultValue.getDisplayName(context),
                     style: disabled
                         ? ArchethicThemeStyles.textStyleSize12W100Primary30
                         : ArchethicThemeStyles.textStyleSize12W100Primary,
@@ -84,7 +84,7 @@ class _SettingsListItemWithDefaultValueWithInfos extends _SettingsListItem {
   const _SettingsListItemWithDefaultValueWithInfos({
     required this.heading,
     required this.info,
-    required this.defaultMethod,
+    required this.defaultValue,
     required this.icon,
     required this.onPressed,
     required this.disabled,
@@ -92,7 +92,7 @@ class _SettingsListItemWithDefaultValueWithInfos extends _SettingsListItem {
 
   final String heading;
   final String info;
-  final SettingSelectionItem defaultMethod;
+  final SettingSelectionItem defaultValue;
   final IconData icon;
   final Function onPressed;
   final bool disabled;
@@ -141,7 +141,7 @@ class _SettingsListItemWithDefaultValueWithInfos extends _SettingsListItem {
                         style: ArchethicThemeStyles.textStyleSize16W600Primary,
                       ),
                       Text(
-                        defaultMethod.getDisplayName(context),
+                        defaultValue.getDisplayName(context),
                         style: disabled
                             ? ArchethicThemeStyles.textStyleSize12W100Primary30
                             : ArchethicThemeStyles.textStyleSize12W100Primary,

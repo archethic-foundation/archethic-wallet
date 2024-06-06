@@ -1,5 +1,6 @@
 {
     "@@last_modified": "2021-11-07T17:33:43.139040",
+    "@@locale": "fr",
     "welcomeText": "Digital sovereignty at your fingertips",
     "welcomeText2": "Archethic redonne à l'humanité la maîtrise de la technologie et à chaque individu la maîtrise de son identité.",
     "cancel": "Annuler",
@@ -89,6 +90,7 @@
     "tooManyFailedAttempts": "Trop de tentatives de déverrouillage échouées.\nVeuillez réessayer svp.",
     "attempt": "Tentative: ",
     "securityHeader": "Sécurité",
+    "privacyMaskSetting": "Masquer l'écran en arrière plan",
     "aboutHeader": "À propos",
     "aboutPrivacyPolicy": "Politique de confidentialité",
     "aeWebsiteLinkHeader": "Site web d'Archethic",

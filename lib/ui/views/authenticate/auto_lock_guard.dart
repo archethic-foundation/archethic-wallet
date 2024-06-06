@@ -5,6 +5,7 @@ import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:aewallet/model/authentication_method.dart';
+import 'package:aewallet/model/privacy_mask_option.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -130,7 +131,16 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     );
   }
 
+  bool get _isMaskDisabled => ref.read(
+        AuthenticationProviders.settings.select(
+          (authSettings) =>
+              authSettings.privacyMask == PrivacyMaskOption.disabled,
+        ),
+      );
+
   void _showMask() {
+    if (_isMaskDisabled) return;
+
     log(
       'Show lock mask',
       name: _logName,
@@ -143,6 +153,7 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
   }
 
   void _hideMask() {
+    if (_isMaskDisabled) return;
     log(
       'Hide lock mask',
       name: _logName,
