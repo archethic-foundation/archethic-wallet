@@ -86,6 +86,8 @@ class Vault {
   VaultAutolockDelegate? shouldBeLocked;
   VaultCipher? _vaultCipher;
 
+  final isLocked = ValueNotifier(true);
+
   Future<HiveCipher> get encryptionCipher async {
     if (_vaultCipher == null) throw const Failure.locked();
     return HiveAesCipher(await _vaultCipher!.get());
@@ -98,6 +100,7 @@ class Vault {
     );
     await Hive.close();
     _vaultCipher = null;
+    isLocked.value = true;
   }
 
   Future<void> unlock(String password) async {
@@ -109,6 +112,7 @@ class Vault {
 
     // Ensures we are able to retrieve the encryption key
     await _vaultCipher!.get();
+    isLocked.value = false;
     log(
       'Vault unlocked',
       name: _logName,
@@ -228,7 +232,7 @@ class Vault {
   }
 
   Future<void> ensureVaultIsUnlocked() async {
-    if (_vaultCipher != null) {
+    if (!isLocked.value) {
       log(
         'Vault already unlocked.',
         name: _logName,

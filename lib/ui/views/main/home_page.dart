@@ -478,7 +478,9 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
                     const SizedBox(
                       width: 10,
                     ),
-                    if (accountSelected!.balance!.isNativeTokenValuePositive())
+                    if (accountSelected?.balance
+                            ?.isNativeTokenValuePositive() ==
+                        true)
                       InkWell(
                         onTap: () {
                           sl.get<HapticUtil>().feedback(
