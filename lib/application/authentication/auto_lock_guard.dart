@@ -71,6 +71,18 @@ final _lastInteractionDateNotifierProvider = AsyncNotifierProvider<
   name: LastInteractionDateNotifier._logName,
 );
 
+final _vaultLockedProvider = Provider<bool>(
+  (ref) {
+    Vault.instance().isLocked.addListener(ref.invalidateSelf);
+    ref.onDispose(
+      () {
+        Vault.instance().isLocked.removeListener(ref.invalidateSelf);
+      },
+    );
+    return Vault.instance().isLocked.value;
+  },
+);
+
 @freezed
 class AuthenticationGuardState with _$AuthenticationGuardState {
   const factory AuthenticationGuardState({
@@ -81,6 +93,9 @@ class AuthenticationGuardState with _$AuthenticationGuardState {
     /// [true] when a timer should be set to
     /// lock application during use.
     required bool timerEnabled,
+
+    /// [true] if application is locked
+    required bool isLocked,
   }) = _AuthenticationGuardState;
 
   const AuthenticationGuardState._();
@@ -99,16 +114,20 @@ class AuthenticationGuardNotifier
       ),
     );
 
+    final isLocked = ref.watch(_vaultLockedProvider);
+
     if (lockTimeoutOption == LockTimeoutOption.disabled) {
-      return const AuthenticationGuardState(
+      return AuthenticationGuardState(
         lockDate: null,
         timerEnabled: false,
+        isLocked: isLocked,
       );
     }
 
     return AuthenticationGuardState(
       lockDate: await _lockDate,
       timerEnabled: lockTimeoutOption.duration > Duration.zero,
+      isLocked: isLocked,
     );
   }
 
@@ -147,6 +166,14 @@ class AuthenticationGuardNotifier
   Future<void> lock() async {
     final vault = Vault.instance();
     await vault.lock();
+    await vault.ensureVaultIsUnlocked();
+  }
+
+  /// Asks for user input to unlock
+  /// the Vault if required.
+  Future<void> unlock() async {
+    final vault = Vault.instance();
+    await vault.applyAutolock();
     await vault.ensureVaultIsUnlocked();
   }
 

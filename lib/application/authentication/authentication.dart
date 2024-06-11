@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:aewallet/application/utils.dart';
 import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/domain/repositories/authentication.dart';
 import 'package:aewallet/domain/usecases/authentication/authentication.dart';
@@ -11,6 +10,7 @@ import 'package:aewallet/infrastructure/repositories/authentication.web.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/model/privacy_mask_option.dart';
+import 'package:aewallet/util/functional_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

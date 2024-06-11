@@ -88,11 +88,7 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     switch (state) {
       case AppLifecycleState.resumed:
         _hideMask();
-        Future.sync(() async {
-          final vault = Vault.instance();
-          await vault.applyAutolock();
-          await vault.ensureVaultIsUnlocked();
-        });
+        ref.read(AuthenticationProviders.authenticationGuard.notifier).unlock();
 
         break;
       case AppLifecycleState.inactive:
@@ -184,6 +180,12 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
   Widget build(BuildContext context) {
     _updateLockTimer();
 
+    final isLocked = ref.watch(
+      AuthenticationProviders.authenticationGuard.select(
+        (value) => value.value?.isLocked ?? true,
+      ),
+    );
+
     return InputListener(
       onInput: () {
         ref
@@ -192,7 +194,7 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
             )
             .scheduleAutolock();
       },
-      child: widget.child,
+      child: isLocked ? const _LockMask() : widget.child,
     );
   }
 
