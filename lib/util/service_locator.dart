@@ -70,7 +70,7 @@ Future<void> _setupServiceLocatorNetworkDependencies() async {
         logsActivation: false,
       ),
     );
-  await LoggerSetup.setup();
+  await LoggerSetup.instance().setup();
 }
 
 Future<void> updateServiceLocatorNetworkDependencies() async {
