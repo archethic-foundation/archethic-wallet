@@ -264,6 +264,7 @@ class ArchethicTransactionRepository
     required TransactionConfirmationHandler onConfirmation,
     required TransactionErrorHandler onError,
   }) async {
+    // TODO(chralu): CAREFUL !! if [send] is called twice, then the first request will be leaked.
     _transactionSender = archethic.ArchethicTransactionSender(
       phoenixHttpEndpoint: phoenixHttpEndpoint,
       websocketEndpoint: websocketEndpoint,
@@ -271,6 +272,7 @@ class ArchethicTransactionRepository
     );
     // ignore: cascade_invocations
     await _transactionSender!.send(
+      // TODO(Chralu): [timeout] should be passed as parameter here.
       transaction: await _buildTransaction(transaction),
       onConfirmation: onConfirmation,
       onError: onError,
