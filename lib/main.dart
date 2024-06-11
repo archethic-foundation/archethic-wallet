@@ -141,6 +141,7 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
   Future<void> didChangeAppLifecycleStateAsync(AppLifecycleState state) async {
     _logger.info('Lifecycle State : $state');
     var isDeviceSecured = false;
+    // TODO(Chralu): Shouldn't this listener stopped when app is paused ?
     ref.invalidate(ArchethicOracleUCOProviders.archethicOracleUCO);
     await ref
         .read(ArchethicOracleUCOProviders.archethicOracleUCO.notifier)
