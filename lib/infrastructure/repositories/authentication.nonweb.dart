@@ -6,6 +6,13 @@ import 'package:aewallet/infrastructure/repositories/authentication.base.dart';
 class AuthenticationRepositoryNonWeb extends AuthenticationRepositoryBase
     implements AuthenticationRepositoryInterface {
   @override
+  Future<void> clear() async {
+    await resetFailedAttempts();
+    await resetLock();
+    await AuthentHiveSecuredDatasource.clear();
+  }
+
+  @override
   Future<bool> isPinValid(String pin) async {
     final authDatasource = await AuthentHiveSecuredDatasource.getInstance();
 

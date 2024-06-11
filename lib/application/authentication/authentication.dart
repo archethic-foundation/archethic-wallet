@@ -18,10 +18,10 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'authentication.freezed.dart';
 part 'authentication.g.dart';
+part 'auto_lock_guard.dart';
 part 'password.dart';
 part 'pin.dart';
 part 'settings.dart';
-part 'auto_lock_guard.dart';
 part 'yubikey.dart';
 
 abstract class AuthenticationProviders {
@@ -102,9 +102,7 @@ abstract class AuthenticationProviders {
   static Future<void> reset(Ref ref) async {
     await ref.read(AuthenticationProviders.settings.notifier).reset();
     await ref.read(authenticationGuard.notifier).unscheduleAutolock();
-    final authentRepository = ref.read(authenticationRepository);
-    await authentRepository.resetFailedAttempts();
-    await authentRepository.resetLock();
+    await ref.read(authenticationRepository).clear();
 
     ref
       ..invalidate(passwordAuthentication)

@@ -5,6 +5,12 @@ import 'package:aewallet/infrastructure/repositories/authentication.base.dart';
 class AuthenticationRepositoryWeb extends AuthenticationRepositoryBase
     implements AuthenticationRepositoryInterface {
   @override
+  Future<void> clear() async {
+    await resetFailedAttempts();
+    await resetLock();
+  }
+
+  @override
   Future<bool> get isPasswordDefined async {
     return true;
   }
