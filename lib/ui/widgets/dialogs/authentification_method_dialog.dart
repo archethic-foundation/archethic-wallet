@@ -114,8 +114,6 @@ class AuthentificationMethodDialog {
                   pickerItems: pickerItemsList,
                   selectedIndexes: [curAuthMethod.method.index],
                   onSelected: (value) async {
-                    if (context.canPop()) context.pop();
-
                     final authMethod = value.value;
                     final success = await _applyAuthMethod(
                       context,
@@ -127,14 +125,7 @@ class AuthentificationMethodDialog {
                       await settingsNotifier.setAuthMethod(
                         authMethod,
                       );
-                    } else {
                       if (context.canPop()) context.pop(value.value);
-                      await getDialog(
-                        context,
-                        ref,
-                        hasBiometrics,
-                        curAuthMethod,
-                      );
                     }
                   },
                 ),
