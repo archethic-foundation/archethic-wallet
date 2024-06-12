@@ -16,6 +16,13 @@ List<GoRoute> get _authenticationRoutes => [
         ),
       ),
       GoRoute(
+        path: BiometricsScreen.routerPage,
+        pageBuilder: (context, state) => NoTransitionPage<void>(
+          key: state.pageKey,
+          child: const BiometricsScreen(),
+        ),
+      ),
+      GoRoute(
         path: PasswordScreen.routerPage,
         pageBuilder: (context, state) => CustomTransitionPage<void>(
           transitionDuration: Duration.zero,

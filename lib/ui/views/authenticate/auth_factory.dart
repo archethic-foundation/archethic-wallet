@@ -1,5 +1,6 @@
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/model/authentication_method.dart';
+import 'package:aewallet/ui/views/authenticate/biometrics_screen.dart';
 import 'package:aewallet/ui/views/authenticate/password_screen.dart';
 import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
 import 'package:aewallet/ui/views/authenticate/yubikey_screen.dart';
@@ -7,7 +8,6 @@ import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
@@ -149,11 +149,16 @@ class AuthFactory {
     return false;
   }
 
-  static Future<bool> _authenticateWithBiometrics(BuildContext context) async {
-    final auth = await sl.get<BiometricUtil>().authenticateWithBiometrics(
-          context,
-          AppLocalizations.of(context)!.unlockBiometrics,
-        );
-    return auth;
+  static Future<bool> _authenticateWithBiometrics(
+    BuildContext context,
+  ) async {
+    final auth = await context.push(
+      BiometricsScreen.routerPage,
+    );
+    if (auth != null && auth is bool) {
+      return auth;
+    }
+
+    return false;
   }
 }
