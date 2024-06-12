@@ -80,6 +80,7 @@ abstract class AuthenticationRepositoryBase
       settings.lockTimeout,
     );
     await syncPrefs.setPrivacyMaskEnabled(
-        settings.privacyMask == PrivacyMaskOption.enabled);
+      settings.privacyMask == PrivacyMaskOption.enabled,
+    );
   }
 }
