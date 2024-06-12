@@ -19,12 +19,18 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class NetworkDialog with UrlUtil {
-  static Future<NetworksSetting?> getDialog(
-    BuildContext context,
-    WidgetRef ref,
-    NetworksSetting curNetworksSetting,
-  ) async {
+class NetworkDialog extends ConsumerWidget {
+  const NetworkDialog({
+    super.key,
+  });
+  static const routerPage = '/network_dialog';
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final curNetworksSetting = ref.watch(
+      SettingsProviders.settings.select((value) => value.network),
+    );
+
     final localizations = AppLocalizations.of(context)!;
     final endpointFocusNode = FocusNode();
     final endpointController = TextEditingController();
@@ -52,101 +58,94 @@ class NetworkDialog with UrlUtil {
       );
     }
 
-    return showDialog<NetworksSetting>(
-      context: context,
-      barrierDismissible: false,
-      useRootNavigator: false,
-      builder: (BuildContext context) {
-        return PopupDialog(
-          title: const _NetworkTitle(),
-          content: PickerWidget(
-            pickerItems: pickerItemsList,
-            selectedIndexes: [curNetworksSetting.getIndex()],
-            onSelected: (value) async {
-              final selectedNetworkSettings = value.value as NetworksSetting;
-              await ref
-                  .read(SettingsProviders.settings.notifier)
-                  .setNetwork(selectedNetworkSettings);
+    return PopupDialog(
+      title: const _NetworkTitle(),
+      content: PickerWidget(
+        pickerItems: pickerItemsList,
+        selectedIndexes: [curNetworksSetting.getIndex()],
+        onSelected: (value) async {
+          final selectedNetworkSettings = value.value as NetworksSetting;
+          await ref
+              .read(SettingsProviders.settings.notifier)
+              .setNetwork(selectedNetworkSettings);
 
-              // If selected network is DevNet
-              // Show a dialog to enter a custom network
-              // else use the network selected
-              if (selectedNetworkSettings.network ==
-                  AvailableNetworks.archethicDevNet) {
-                endpointController.text =
-                    selectedNetworkSettings.networkDevEndpoint;
+          // If selected network is DevNet
+          // Show a dialog to enter a custom network
+          // else use the network selected
+          if (selectedNetworkSettings.network ==
+              AvailableNetworks.archethicDevNet) {
+            endpointController.text =
+                selectedNetworkSettings.networkDevEndpoint;
 
-                await showDialog<AvailableNetworks>(
-                  barrierDismissible: false,
-                  context: context,
-                  useRootNavigator: false,
-                  builder: (BuildContext context) {
-                    return StatefulBuilder(
-                      builder: (context, setState) {
-                        return _NetworkDialogCustomInput(
-                          endpointFocusNode: endpointFocusNode,
-                          endpointController: endpointController,
-                          onSubmitNetwork: () async {
-                            void setError(String errorText) {
-                              UIUtil.showSnackbar(
-                                errorText,
-                                context,
-                                ref,
-                                ArchethicTheme.text,
-                                ArchethicTheme.snackBarShadow,
-                              );
-                            }
+            await showDialog<AvailableNetworks>(
+              barrierDismissible: false,
+              context: context,
+              useRootNavigator: false,
+              builder: (BuildContext context) {
+                return StatefulBuilder(
+                  builder: (context, setState) {
+                    return _NetworkDialogCustomInput(
+                      endpointFocusNode: endpointFocusNode,
+                      endpointController: endpointController,
+                      onSubmitNetwork: () async {
+                        void setError(String errorText) {
+                          UIUtil.showSnackbar(
+                            errorText,
+                            context,
+                            ref,
+                            ArchethicTheme.text,
+                            ArchethicTheme.snackBarShadow,
+                          );
+                        }
 
-                            if (endpointController.text.isEmpty) {
-                              setError(localizations.enterEndpointBlank);
-                              return;
-                            }
+                        if (endpointController.text.isEmpty) {
+                          setError(localizations.enterEndpointBlank);
+                          return;
+                        }
 
-                            if (!UrlUtil.isUrlValid(endpointController.text)) {
-                              setError(localizations.enterEndpointNotValid);
-                              return;
-                            }
+                        if (!UrlUtil.isUrlValid(endpointController.text)) {
+                          setError(localizations.enterEndpointNotValid);
+                          return;
+                        }
 
-                            final uriInput =
-                                UrlUtil.convertUri(endpointController.text);
+                        final uriInput =
+                            UrlUtil.convertUri(endpointController.text);
 
-                            if (await ref.watch(
-                              NetworkProvider.isReservedNodeUri(
-                                uri: uriInput,
-                              ).future,
-                            )) {
-                              setError(
-                                localizations.enterEndpointUseByNetwork,
-                              );
-                              return;
-                            }
+                        if (await ref.watch(
+                          NetworkProvider.isReservedNodeUri(
+                            uri: uriInput,
+                          ).future,
+                        )) {
+                          setError(
+                            localizations.enterEndpointUseByNetwork,
+                          );
+                          return;
+                        }
 
-                            await ref
-                                .read(
-                                  SettingsProviders.settings.notifier,
-                                )
-                                .setNetwork(
-                                  NetworksSetting(
-                                    network: AvailableNetworks.archethicDevNet,
-                                    networkDevEndpoint: uriInput.toString(),
-                                  ),
-                                );
+                        await ref
+                            .read(
+                              SettingsProviders.settings.notifier,
+                            )
+                            .setNetwork(
+                              NetworksSetting(
+                                network: AvailableNetworks.archethicDevNet,
+                                networkDevEndpoint: uriInput.toString(),
+                              ),
+                            );
 
-                            context.pop();
-                          },
-                        );
+                        context.pop();
                       },
                     );
                   },
                 );
-              }
-              await updateServiceLocatorNetworkDependencies();
+              },
+            );
+          }
+          await updateServiceLocatorNetworkDependencies();
 
-              context.pop(selectedNetworkSettings);
-            },
-          ),
-        );
-      },
+          context.pop(selectedNetworkSettings);
+        },
+      ),
     );
   }
 }

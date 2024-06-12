@@ -1,8 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:aewallet/application/connectivity_status.dart';
-import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/verified_tokens.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -108,8 +106,6 @@ class _IntroNewWalletDisclaimerState
 
   @override
   PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
-    final settings = ref.watch(SettingsProviders.settings);
-    final network = settings.network;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     return SheetAppBar(
       title: ' ',
@@ -133,17 +129,8 @@ class _IntroNewWalletDisclaimerState
                 )
               : NetworkChoiceInfos(
                   onTap: () async {
-                    await NetworkDialog.getDialog(
-                      context,
-                      ref,
-                      network,
-                    );
+                    await context.push(NetworkDialog.routerPage);
                     FocusScope.of(context).requestFocus(nameFocusNode);
-                    await ref
-                        .read(
-                          VerifiedTokensProviders.verifiedTokens.notifier,
-                        )
-                        .init();
                   },
                 ),
     );

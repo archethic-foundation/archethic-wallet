@@ -94,9 +94,7 @@ final _introductionRoutes = [
   ),
   GoRoute(
     path: IntroBackupConfirm.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
+    pageBuilder: (context, state) => NoTransitionPage<void>(
       key: state.pageKey,
       child: IntroBackupConfirm(
         name: (state.extra! as Map<String, dynamic>)['name'] == null
@@ -110,11 +108,13 @@ final _introductionRoutes = [
                 (state.extra! as Map<String, dynamic>)['welcomeProcess']!
                     as bool,
       ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
+    ),
+  ),
+  GoRoute(
+    path: NetworkDialog.routerPage,
+    pageBuilder: (context, state) => DialogPage<NetworksSetting>(
+      barrierDismissible: false,
+      builder: (BuildContext context) => const NetworkDialog(),
     ),
   ),
 ];
