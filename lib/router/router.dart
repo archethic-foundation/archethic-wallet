@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:aewallet/infrastructure/rpc/deeplink_server.dart';
 import 'package:aewallet/main.dart';
+import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
+import 'package:aewallet/router/dialog_page.dart';
 import 'package:aewallet/ui/menu/settings/settings_sheet.dart';
 import 'package:aewallet/ui/views/add_account/layouts/add_account_sheet.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
@@ -52,6 +54,7 @@ import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
+import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

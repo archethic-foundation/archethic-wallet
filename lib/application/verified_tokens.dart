@@ -79,6 +79,7 @@ class VerifiedTokensRepository {
     return VerifiedTokensList().getVerifiedTokens();
   }
 
+  /// TODO(Chralu): use dapp framework method
   Future<List<String>> getVerifiedTokensFromNetwork(
     AvailableNetworks network,
   ) async {

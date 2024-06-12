@@ -1,7 +1,6 @@
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/version.dart';
-import 'package:aewallet/application/verified_tokens.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/archethic_theme_base.dart';
@@ -406,20 +405,7 @@ class _ButtonImportWallet extends ConsumerWidget {
           key: const Key('importWallet'),
           onPressed: () async {
             if (cguChecked) {
-              await NetworkDialog.getDialog(
-                context,
-                ref,
-                ref.read(
-                  SettingsProviders.settings.select(
-                    (settings) => settings.network,
-                  ),
-                ),
-              );
-              await ref
-                  .read(
-                    VerifiedTokensProviders.verifiedTokens.notifier,
-                  )
-                  .init();
+              await context.push(NetworkDialog.routerPage);
               context.go(IntroImportSeedPage.routerPage);
             }
           },
