@@ -5,12 +5,11 @@ import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:aewallet/model/authentication_method.dart';
-import 'package:aewallet/model/privacy_mask_option.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
-import 'package:aewallet/ui/views/authenticate/lock_overlay.mixin.dart';
+import 'package:aewallet/ui/views/authenticate/components/lock_overlay.mixin.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
@@ -24,8 +23,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:lit_starfield/lit_starfield.dart';
 
+part 'components/lock_mask_screen.dart';
 part 'countdown_lock_screen.dart';
-part 'lock_mask_screen.dart';
 
 /// Listens to app state changes and schedules autoLock
 /// accordingly.
@@ -53,6 +52,33 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
   static const _logName = 'AuthenticationGuard-Widget';
 
   @override
+  Widget build(BuildContext context) {
+    _updateLockTimer();
+
+    final isLocked = ref.watch(
+      AuthenticationProviders.authenticationGuard.select(
+        (value) => value.value?.isLocked ?? true,
+      ),
+    );
+
+    return InputListener(
+      onInput: () {
+        ref
+            .read(
+              AuthenticationProviders.authenticationGuard.notifier,
+            )
+            .scheduleAutolock();
+      },
+      child: Stack(
+        children: [
+          widget.child,
+          if (isLocked) const LockMask(),
+        ],
+      ),
+    );
+  }
+
+  @override
   void initState() {
     super.initState();
     log(
@@ -71,10 +97,13 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
   void dispose() {
     if (timer != null) timer!.cancel();
     WidgetsBinding.instance.removeObserver(this);
-    _hideMask();
-    Vault.instance()
-      ..passphraseDelegate = null
-      ..shouldBeLocked = null;
+
+    if (Vault.instance().passphraseDelegate == _forceAuthent) {
+      Vault.instance().passphraseDelegate = null;
+    }
+    if (Vault.instance().shouldBeLocked == _shouldBeLocked) {
+      Vault.instance().shouldBeLocked = null;
+    }
 
     super.dispose();
   }
@@ -87,12 +116,10 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     );
     switch (state) {
       case AppLifecycleState.resumed:
-        _hideMask();
         ref.read(AuthenticationProviders.authenticationGuard.notifier).unlock();
 
         break;
       case AppLifecycleState.inactive:
-        _showMask();
         ref
             .read(AuthenticationProviders.authenticationGuard.notifier)
             .scheduleNextStartupAutolock();
@@ -127,35 +154,6 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     );
   }
 
-  bool get _isMaskDisabled => ref.read(
-        AuthenticationProviders.settings.select(
-          (authSettings) =>
-              authSettings.privacyMask == PrivacyMaskOption.disabled,
-        ),
-      );
-
-  void _showMask() {
-    if (_isMaskDisabled) return;
-
-    log(
-      'Show lock mask',
-      name: _logName,
-    );
-
-    LockMaskOverlay.instance().show(context);
-  }
-
-  void _hideMask() {
-    // Do not use `ref` here. This would cause an error
-    // when widget is disposed.
-    log(
-      'Hide lock mask',
-      name: _logName,
-    );
-
-    LockMaskOverlay.instance().hide();
-  }
-
   void _updateLockTimer() {
     final value = ref
         .watch(
@@ -174,28 +172,6 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
       _scheduleLock(durationBeforeLock);
       return;
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    _updateLockTimer();
-
-    final isLocked = ref.watch(
-      AuthenticationProviders.authenticationGuard.select(
-        (value) => value.value?.isLocked ?? true,
-      ),
-    );
-
-    return InputListener(
-      onInput: () {
-        ref
-            .read(
-              AuthenticationProviders.authenticationGuard.notifier,
-            )
-            .scheduleAutolock();
-      },
-      child: isLocked ? const _LockMask() : widget.child,
-    );
   }
 
   Future<bool> _shouldBeLocked() async {
@@ -255,7 +231,6 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
           ref
               .read(AuthenticationProviders.authenticationGuard.notifier)
               .scheduleAutolock();
-          _hideMask();
 
           _forceAuthenticationCompleter?.complete(key);
           _forceAuthenticationCompleter = null;

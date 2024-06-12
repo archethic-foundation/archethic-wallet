@@ -14,14 +14,12 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/verified_tokens.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
-import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
-import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/providers_observer.dart';
 import 'package:aewallet/router/router.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
+import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_welcome.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
@@ -99,6 +97,7 @@ Future<void> main() async {
       <DeviceOrientation>[DeviceOrientation.portraitUp],
     );
   }
+  FlutterNativeSplash.remove();
 
   runApp(
     ProviderScope(
@@ -303,41 +302,9 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
     }
   }
 
-  void removeNativeSplashOnNextNavigation() {
-    void removeNativeSplash() {
-      FlutterNativeSplash.remove();
-      GoRouter.of(context)
-          .routeInformationProvider
-          .removeListener(removeNativeSplash);
-    }
-
-    GoRouter.of(context)
-        .routeInformationProvider
-        .addListener(removeNativeSplash);
-  }
-
-  VaultPassphraseDelegate? _passwordDelegate;
-
   @override
   void initState() {
     super.initState();
-
-    removeNativeSplashOnNextNavigation();
-
-    // Allows Vault to ask for password during restoration
-    _passwordDelegate = () => AuthFactory.forceAuthenticate(
-          context,
-          ref,
-          authMethod: ref.read(
-            AuthenticationProviders.settings.select(
-              (authSettings) => AuthenticationMethod(
-                authSettings.authenticationMethod,
-              ),
-            ),
-          ),
-          canCancel: false,
-        );
-    Vault.instance().passphraseDelegate = _passwordDelegate;
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await initializeProviders();
@@ -346,22 +313,13 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
   }
 
   @override
-  void dispose() {
-    /// If some other screen updated the passwordDelegate,
-    /// then we should not reset it.
-    if (Vault.instance().passphraseDelegate == _passwordDelegate) {
-      Vault.instance().passphraseDelegate = null;
-    }
-
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return SheetSkeleton(
-      appBar: AppBar(),
-      menu: true,
-      sheetContent: const SizedBox.shrink(),
+    return AutoLockGuard(
+      child: SheetSkeleton(
+        appBar: AppBar(),
+        menu: true,
+        sheetContent: const SizedBox.shrink(),
+      ),
     );
   }
 }

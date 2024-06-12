@@ -1,4 +1,4 @@
-part of 'auto_lock_guard.dart';
+part of '../auto_lock_guard.dart';
 
 /// Manages a singleton overlay
 /// It is used to easily lock screen.
@@ -10,11 +10,11 @@ class LockMaskOverlay with LockOverlayMixin {
   static LockMaskOverlay? _instance;
 
   @override
-  Widget get child => const _LockMask();
+  Widget get child => const LockMask();
 }
 
-class _LockMask extends StatelessWidget {
-  const _LockMask();
+class LockMask extends StatelessWidget {
+  const LockMask({super.key});
 
   @override
   Widget build(BuildContext context) {
