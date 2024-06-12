@@ -71,8 +71,10 @@ class SecurityMenuView extends ConsumerWidget
                       // Authentication Method
                       const _AuthMethodSettingsListItem(),
                       // Authentication Timer
-                      const _SettingsListItem.spacer(),
-                      const _PrivacyMaskSettingsListItem(),
+                      if (FeatureFlags.privacyMask) ...[
+                        const _SettingsListItem.spacer(),
+                        const _PrivacyMaskSettingsListItem(),
+                      ],
                       const _SettingsListItem.spacer(),
                       const _AutoLockSettingsListItem(),
                       const _SettingsListItem.spacer(),
