@@ -1,15 +1,15 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:aewallet/infrastructure/rpc/awc_json_rpc_server.dart';
 import 'package:aewallet/util/universal_platform.dart';
+import 'package:logging/logging.dart';
 import 'package:web_socket_channel/io.dart';
 
 class ArchethicWebsocketRPCServer {
   ArchethicWebsocketRPCServer();
 
-  static const logName = 'Websocket RPC Server';
+  static final _logger = Logger('Websocket RPC Server');
   static const host = '127.0.0.1';
   static const port = 12345;
 
@@ -23,11 +23,11 @@ class ArchethicWebsocketRPCServer {
   Future<void> run() async => runZonedGuarded(
         () async {
           if (isRunning) {
-            log('Already running. Cancel `start`', name: logName);
+            _logger.info('Already running. Cancel `start`');
             return;
           }
 
-          log('Starting at ws://$host:$port', name: logName);
+          _logger.info('Starting at ws://$host:$port');
           final httpServer = await HttpServer.bind(
             host,
             port,
@@ -35,7 +35,7 @@ class ArchethicWebsocketRPCServer {
           );
 
           httpServer.listen((HttpRequest request) async {
-            log('Received connection', name: logName);
+            _logger.info('Received connection');
 
             final socket = await WebSocketTransformer.upgrade(request);
             final channel = IOWebSocketChannel(socket);
@@ -48,40 +48,30 @@ class ArchethicWebsocketRPCServer {
           _runningHttpServer = httpServer;
         },
         (error, stack) {
-          log(
-            'WebSocket server failed',
-            error: error,
-            stackTrace: stack,
-            name: logName,
-          );
+          _logger.severe('WebSocket server failed', error, stack);
         },
       );
 
   Future<void> stop() async => runZonedGuarded(
         () async {
           if (!isRunning) {
-            log('Already stopped. Cancel `stop`', name: logName);
+            _logger.info('Already stopped. Cancel `stop`');
             return;
           }
 
-          log('Closing all websocket connections', name: logName);
+          _logger.info('Closing all websocket connections');
           for (final socket in _openedSockets) {
             await socket.close();
           }
           _openedSockets.clear();
 
-          log('Stopping at ws://$host:$port', name: logName);
+          _logger.info('Stopping at ws://$host:$port');
           await _runningHttpServer?.close();
           _runningHttpServer = null;
-          log('Server stopped at ws://$host:$port', name: logName);
+          _logger.info('Server stopped at ws://$host:$port');
         },
         (error, stack) {
-          log(
-            'WebSocket server failed to stop',
-            error: error,
-            stackTrace: stack,
-            name: logName,
-          );
+          _logger.severe('WebSocket server failed to stop', error, stack);
         },
       );
 }

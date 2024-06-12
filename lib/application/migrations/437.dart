@@ -5,12 +5,12 @@ part of 'migration_manager.dart';
 final migration_437 = LocalDataMigration(
   minAppVersion: 437,
   run: (ref) async {
+    final logger = Logger('DataMigration - 437');
     // We need to reload keychain because of account's name structure change
     // https://github.com/archethic-foundation/archethic-wallet/pull/759
     if (ref.read(SessionProviders.session).isLoggedOut) {
-      log(
+      logger.info(
         'Skipping migration 437 process : user logged out.',
-        name: logName,
       );
       return;
     }

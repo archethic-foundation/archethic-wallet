@@ -1,11 +1,10 @@
-import 'dart:developer';
-
 import 'package:aewallet/infrastructure/datasources/hive.extension.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:hive/hive.dart';
+import 'package:logging/logging.dart';
 
 class ContactsHiveDatasource {
   ContactsHiveDatasource._();
@@ -14,6 +13,7 @@ class ContactsHiveDatasource {
     return _instance ?? (_instance = ContactsHiveDatasource._());
   }
 
+  static final _logger = Logger('ContactsHiveDatasource');
   static ContactsHiveDatasource? _instance;
 
   static const String contactsTable = 'contacts';
@@ -92,7 +92,7 @@ class ContactsHiveDatasource {
     Contact? contactSelected;
 
     final address = hash(publicKey);
-    log('address contact: ${uint8ListToHex(address)}');
+    _logger.info('address contact: ${uint8ListToHex(address)}');
     contactSelected = await getContactWithAddress(uint8ListToHex(address));
 
     if (contactSelected == null) {

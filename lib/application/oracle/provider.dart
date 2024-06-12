@@ -1,11 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:aewallet/application/oracle/state.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:logging/logging.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'provider.g.dart';
@@ -14,10 +14,12 @@ part 'provider.g.dart';
 class _ArchethicOracleUCONotifier extends Notifier<ArchethicOracleUCO> {
   ArchethicOracle? archethicOracle;
 
+  static final _logger = Logger('ArchethicOracleUCONotifier');
+
   @override
   ArchethicOracleUCO build() {
     ref.onDispose(() {
-      log('dispose ArchethicOracleUCONotifier');
+      _logger.info('dispose ArchethicOracleUCONotifier');
       if (archethicOracle != null) {
         sl
             .get<OracleService>()
@@ -46,7 +48,7 @@ class _ArchethicOracleUCONotifier extends Notifier<ArchethicOracleUCO> {
   }
 
   void _fillInfo(OracleUcoPrice oracleUcoPrice) {
-    log('Oracle: ${oracleUcoPrice.timestamp}, ${oracleUcoPrice.uco}');
+    _logger.info('Oracle: ${oracleUcoPrice.timestamp}, ${oracleUcoPrice.uco}');
     state = state.copyWith(
       timestamp: oracleUcoPrice.timestamp ?? 0,
       eur: oracleUcoPrice.uco!.eur ?? 0,

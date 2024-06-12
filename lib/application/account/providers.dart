@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/nft/nft.dart';
@@ -12,6 +11,7 @@ import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logging/logging.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'account_notifier.dart';

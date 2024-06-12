@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/domain/repositories/authentication.dart';
@@ -13,6 +12,7 @@ import 'package:aewallet/model/privacy_mask_option.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:logging/logging.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'authentication.freezed.dart';
@@ -70,7 +70,7 @@ abstract class AuthenticationProviders {
   static final authenticationGuard = AsyncNotifierProvider<
       AuthenticationGuardNotifier, AuthenticationGuardState>(
     AuthenticationGuardNotifier.new,
-    name: AuthenticationGuardNotifier.logName,
+    name: AuthenticationGuardNotifier._logger.name,
   );
 
   static final passwordAuthentication = StateNotifierProvider<

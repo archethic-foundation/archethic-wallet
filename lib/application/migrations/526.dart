@@ -7,7 +7,7 @@ part of 'migration_manager.dart';
 final migration_526 = LocalDataMigration(
   minAppVersion: 526,
   run: (ref) async {
-    const logName = 'DataMigration_EncryptedPassword';
+    final logger = Logger('DataMigration_EncryptedPassword');
 
     const _kSourceBox = '_vaultBox';
     const _kDestinationBox = 'NonWebAuthentication';
@@ -20,13 +20,13 @@ final migration_526 = LocalDataMigration(
     Future<void> _migratePassword(Box sourceBox, Box destinationBox) async {
       final encryptedPassword = sourceBox.get(_kPassword);
       if (encryptedPassword == null) {
-        log('No password to migrate', name: logName);
+        logger.info('No password to migrate');
         return;
       }
 
       final seed = sourceBox.get(_kSeed);
       if (seed == null) {
-        log('No password to migrate', name: logName);
+        logger.info('No password to migrate');
         return;
       }
 
@@ -38,9 +38,9 @@ final migration_526 = LocalDataMigration(
         await destinationBox.put(_kPassword, rawPassword);
         await sourceBox.delete(_kPassword);
 
-        log('Password migrated', name: logName);
+        logger.info('Password migrated');
       } catch (e) {
-        log('Password decryption failed', name: logName);
+        logger.severe('Password decryption failed');
         return;
       }
     }
@@ -52,13 +52,13 @@ final migration_526 = LocalDataMigration(
     ) async {
       final data = sourceBox.get(key);
       if (data == null) {
-        log('No $key to migrate', name: logName);
+        logger.info('No $key to migrate');
         return;
       }
 
       await destinationBox.put(key, data);
       await sourceBox.delete(key);
-      log('$key migrated', name: logName);
+      logger.info('$key migrated');
     }
 
     Future<HiveCipher?> _prepareCipher() async {
@@ -81,7 +81,7 @@ final migration_526 = LocalDataMigration(
           encryptionCipher: cipher,
         );
       } catch (e) {
-        log('Unable to open box', name: logName);
+        logger.severe('Unable to open box');
         return null;
       }
     }
@@ -94,7 +94,7 @@ final migration_526 = LocalDataMigration(
     }
 
     if (sourceBox == null) {
-      log('No authentication data to migrate', name: logName);
+      logger.info('No authentication data to migrate');
       return;
     }
 

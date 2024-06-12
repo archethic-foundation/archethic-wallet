@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/infrastructure/datasources/hive.extension.dart';
@@ -7,6 +6,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:logging/logging.dart';
 import 'package:pointycastle/export.dart';
 
 part 'lib/password_vault_cipher.dart';
@@ -78,7 +78,7 @@ class Vault {
 
   late final VaultCipherFactory _cipherFactory;
 
-  static const _logName = 'Vault';
+  static final _logger = Logger('Vault');
 
   static Vault? _instance;
 
@@ -94,9 +94,8 @@ class Vault {
   }
 
   Future<void> lock() async {
-    log(
+    _logger.info(
       'Locking vault',
-      name: _logName,
     );
     await Hive.close();
     _vaultCipher = null;
@@ -104,18 +103,16 @@ class Vault {
   }
 
   Future<void> unlock(String password) async {
-    log(
+    _logger.info(
       'Unlocking vault',
-      name: _logName,
     );
     _vaultCipher = _cipherFactory.build(password);
 
     // Ensures we are able to retrieve the encryption key
     await _vaultCipher!.get();
     isLocked.value = false;
-    log(
+    _logger.info(
       'Vault unlocked',
-      name: _logName,
     );
   }
 
@@ -128,21 +125,18 @@ class Vault {
   }
 
   Future<void> clear<E>(String name) async {
-    log(
+    _logger.info(
       'Deleting vault box $name...',
-      name: _logName,
     );
     await Hive.deleteBox<E>(name);
-    log(
+    _logger.info(
       '... vault box $name deleted',
-      name: _logName,
     );
   }
 
   Future<void> clearSecureKey() async {
-    log(
+    _logger.info(
       'Clearing vault secure key',
-      name: _logName,
     );
     await _cipherFactory.clear();
     await lock();
@@ -151,9 +145,8 @@ class Vault {
   Future<void> updateSecureKey(
     String passphrase,
   ) async {
-    log(
+    _logger.info(
       'Updating vault secure key',
-      name: _logName,
     );
     if (_vaultCipher == null) {
       throw const Failure.locked();
@@ -164,9 +157,8 @@ class Vault {
   Future<Box<E>> openBox<E>(
     String name,
   ) async {
-    log(
+    _logger.info(
       'Opening box $name',
-      name: _logName,
     );
     await applyAutolock();
     if (Hive.isBoxOpen(name)) {
@@ -181,11 +173,10 @@ class Vault {
         encryptionCipher: await encryptionCipher,
       );
     } catch (e, stack) {
-      log(
+      _logger.severe(
         'Failed to open Hive encrypted Box<$E>($name).',
-        error: e,
-        stackTrace: stack,
-        name: _logName,
+        e,
+        stack,
       );
       rethrow;
     }
@@ -194,9 +185,8 @@ class Vault {
   Future<LazyBox<E>> openLazyBox<E>(
     String name,
   ) async {
-    log(
+    _logger.info(
       'Opening lazy box $name',
-      name: _logName,
     );
 
     await applyAutolock();
@@ -212,11 +202,10 @@ class Vault {
         encryptionCipher: await encryptionCipher,
       );
     } catch (e, stack) {
-      log(
+      _logger.severe(
         'Failed to open Hive encrypted Lazy Box<$E>($name).',
-        error: e,
-        stackTrace: stack,
-        name: _logName,
+        e,
+        stack,
       );
       rethrow;
     }
@@ -224,18 +213,16 @@ class Vault {
 
   Future<void> applyAutolock() async {
     if (shouldBeLocked == null || await shouldBeLocked!() == false) return;
-    log(
+    _logger.info(
       'Apply autolock to Vault.',
-      name: _logName,
     );
     await lock();
   }
 
   Future<void> ensureVaultIsUnlocked() async {
     if (!isLocked.value) {
-      log(
+      _logger.info(
         'Vault already unlocked.',
-        name: _logName,
       );
 
       return;
@@ -246,9 +233,8 @@ class Vault {
         'Vault.passwordDelegate must be set before opening Boxes.',
       );
     }
-    log(
+    _logger.info(
       'Requesting user action to unlock',
-      name: _logName,
     );
     final passphrase = await passphraseDelegate!();
 

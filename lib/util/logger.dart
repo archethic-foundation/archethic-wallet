@@ -10,8 +10,6 @@ class LoggerSetup {
 
   static LoggerSetup? _instance;
 
-  List<StreamSubscription<LogRecord>> _subscriptions = [];
-
   Future<void> setup() async {
     Logger.root.level = kDebugMode ? Level.ALL : Level.INFO;
 
@@ -23,23 +21,18 @@ class LoggerSetup {
   }
 
   Future<void> _registerLogListeners() async {
-    for (final subscription in _subscriptions) {
-      await subscription.cancel();
-    }
-    _subscriptions = [];
+    Logger.root.clearListeners();
 
     if (kIsWeb) {
-      _subscriptions.add(
-        Logger.root.onRecord.listen((event) {
-          debugPrint('[${event.loggerName}] ${event.message}');
-          if (event.error != null) {
-            debugPrint('\t${event.error}');
-          }
-          if (event.stackTrace != null) {
-            debugPrint('\t${event.stackTrace}');
-          }
-        }),
-      );
+      Logger.root.onRecord.listen((event) {
+        debugPrint('[${event.loggerName}] ${event.message}');
+        if (event.error != null) {
+          debugPrint('\t${event.error}');
+        }
+        if (event.stackTrace != null) {
+          debugPrint('\t${event.stackTrace}');
+        }
+      });
     }
 
     if (!kIsWeb) {

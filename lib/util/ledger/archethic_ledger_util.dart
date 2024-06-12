@@ -1,13 +1,14 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-// Dart imports:
-import 'dart:developer';
 import 'dart:typed_data';
 
 // Package imports:
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:convert/convert.dart';
 import 'package:ledger_dart_lib/ledger_dart_lib.dart';
+import 'package:logging/logging.dart';
+
+final _logger = Logger('LedgerUtils');
 
 Uint8List getSignTxnAPDU(
   OnChainWalletData onChainWalletData,
@@ -19,7 +20,7 @@ Uint8List getSignTxnAPDU(
     hexToUint8List(onChainWalletData.encodedWalletKey!),
     hexToUint8List(onChainWalletData.encryptedWallet!),
   ]);
-  log(uint8ListToHex(transaction.originSignaturePayload()));
+  _logger.info(uint8ListToHex(transaction.originSignaturePayload()));
   payload = concatUint8List([transaction.originSignaturePayload(), payload]);
   final payloadLength = hexToUint8List(payload.lengthInBytes.toRadixString(16));
   final signPayload = concatUint8List([payloadLength, payload]);

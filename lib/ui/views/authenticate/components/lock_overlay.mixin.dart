@@ -1,19 +1,18 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 
 mixin LockOverlayMixin {
   Widget get child;
 
   OverlayEntry? _overlayEntry;
-  static const _logName = 'LockOverlay';
+  static final _logger = Logger('LockOverlay');
 
   bool get isVisible => _overlayEntry != null;
 
   void show(BuildContext context) {
-    log('Show', name: _logName);
+    _logger.info('Show');
     if (_overlayEntry != null) {
-      log('... already visible. Abort', name: _logName);
+      _logger.info('... already visible. Abort');
       return;
     }
 
@@ -24,9 +23,9 @@ mixin LockOverlayMixin {
   }
 
   void hide() {
-    log('Hide', name: _logName);
+    _logger.info('Hide');
     if (_overlayEntry == null) {
-      log('... not visible. Abort', name: _logName);
+      _logger.info('... not visible. Abort');
       return;
     }
 

@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
 
 import 'package:aewallet/domain/repositories/notifications_repository.dart';
 import 'package:http/http.dart' as http;
+import 'package:logging/logging.dart';
 import 'package:socket_io_client/socket_io_client.dart' as socket_io;
 import 'package:socket_io_client/socket_io_client.dart';
 
@@ -19,23 +19,23 @@ class NotificationBackendClient {
       OptionBuilder().setTransports(['websocket']).build(),
     )
       ..onConnectError((e) {
-        log('Connection failed', name: _logName, error: e);
+        _logger.severe('Connection failed', e);
       })
       ..onConnect((_) {
-        log('Did connect', name: _logName);
+        _logger.info('Did connect');
         onConnect();
       })
       ..onReconnect((_) {
-        log('Did reconnect', name: _logName);
+        _logger.info('Did reconnect');
       })
       ..onDisconnect((_) {
-        log('Did disconnect', name: _logName);
+        _logger.info('Did disconnect');
       });
   }
 
   final VoidCallback onConnect;
 
-  static const _logName = 'NotificationBackendClient';
+  static final _logger = Logger('NotificationBackendClient');
 
   final String notificationBackendUrl;
 
@@ -48,7 +48,7 @@ class NotificationBackendClient {
     socket.on(
       'TxSent',
       (event) {
-        log('TxSent event received', name: _logName);
+        _logger.info('TxSent event received');
         _eventsStreamController.add(TxSentEvent.fromJson(event));
       },
     );

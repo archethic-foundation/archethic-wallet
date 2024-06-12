@@ -2,6 +2,7 @@ part of 'providers.dart';
 
 class _AccountNotifier
     extends AutoDisposeFamilyAsyncNotifier<Account?, String> {
+  final _logger = Logger('AccountNotifier');
   @override
   FutureOr<Account?> build(String name) async {
     final repository = ref.read(AccountProviders.accountsRepository);
@@ -22,7 +23,7 @@ class _AccountNotifier
 
       state = AsyncValue.data(account.copyWith());
     } catch (e, stack) {
-      log('Refresh failed', error: e, stackTrace: stack);
+      _logger.severe('Refresh failed', e, stack);
     }
   }
 
@@ -38,13 +39,17 @@ class _AccountNotifier
 
   Future<void> refreshRecentTransactions() => _refresh(
         (account) async {
-          log('${DateTime.now()} Start method refreshRecentTransactions for ${account.nameDisplayed}');
+          _logger.fine(
+            'Start method refreshRecentTransactions for ${account.nameDisplayed}',
+          );
           await Future.wait([
             _refreshRecentTransactions(account),
             _refreshBalance(account),
             account.updateFungiblesTokens(),
           ]);
-          log('${DateTime.now()} End method refreshRecentTransactions for ${account.nameDisplayed}');
+          _logger.fine(
+            'End method refreshRecentTransactions for ${account.nameDisplayed}',
+          );
         },
       );
 
@@ -77,7 +82,7 @@ class _AccountNotifier
 
   Future<void> refreshAll() => _refresh(
         (account) async {
-          log('${DateTime.now()} Start method refreshAll');
+          _logger.fine('Start method refreshAll');
           final session = ref.read(SessionProviders.session).loggedIn!;
           final tokenInformation = await ref.read(
             NFTProviders.getNFTList(
@@ -96,7 +101,7 @@ class _AccountNotifier
               tokenInformation.$2,
             ),
           ]);
-          log('${DateTime.now()} End method refreshAll');
+          _logger.fine('End method refreshAll');
         },
       );
 }

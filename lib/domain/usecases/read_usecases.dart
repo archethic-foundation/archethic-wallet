@@ -1,12 +1,11 @@
-import 'dart:developer';
-
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/usecases/usecase.dart';
+import 'package:logging/logging.dart';
 
 /// Handles read strategies and persistent cache.
 mixin ReadStrategy<CommandT, ValueT> {
-  final String _logName = 'Read $ValueT Usecase';
+  final _logger = Logger('Read $ValueT Usecase');
 
   /// Reads data from local data source.
   Future<ValueT?> getLocal(CommandT command);
@@ -18,32 +17,38 @@ mixin ReadStrategy<CommandT, ValueT> {
   Future<ValueT?> getRemote(CommandT command);
 
   Future<Result<ValueT, Failure>> _getFromRemoteFirst(CommandT command) async {
-    log('Get from remote first', name: _logName);
+    _logger.info('Get from remote first');
     try {
       final remoteValue = await getRemote(command);
 
       if (remoteValue != null) {
-        log('Using and saving remote value', name: _logName);
+        _logger.info('Using and saving remote value');
         await saveLocal(command, remoteValue);
         return Result.success(remoteValue);
       }
     } catch (e, stackTrace) {
-      log('Remote read failed',
-          name: _logName, error: e, stackTrace: stackTrace,);
+      _logger.severe(
+        'Remote read failed',
+        e,
+        stackTrace,
+      );
     }
 
     try {
       final localValue = await getLocal(command);
       if (localValue != null) {
-        log('Using local value', name: _logName);
+        _logger.info('Using local value');
         return Result.success(localValue);
       }
     } catch (e, stackTrace) {
-      log('Local read failed',
-          name: _logName, error: e, stackTrace: stackTrace,);
+      _logger.severe(
+        'Local read failed',
+        e,
+        stackTrace,
+      );
     }
 
-    log('Unable to fetch local or remote value', name: _logName);
+    _logger.info('Unable to fetch local or remote value');
     return const Result.failure(
       Failure.other(
         cause: 'Unable to fetch local or remote value',
@@ -52,32 +57,38 @@ mixin ReadStrategy<CommandT, ValueT> {
   }
 
   Future<Result<ValueT, Failure>> _getFromLocalFirst(CommandT command) async {
-    log('Get from local first', name: _logName);
+    _logger.info('Get from local first');
 
     try {
       final localValue = await getLocal(command);
       if (localValue != null) {
-        log('Using local value', name: _logName);
+        _logger.info('Using local value');
         return Result.success(localValue);
       }
     } catch (e, stackTrace) {
-      log('Local read failed',
-          name: _logName, error: e, stackTrace: stackTrace,);
+      _logger.severe(
+        'Local read failed',
+        e,
+        stackTrace,
+      );
     }
 
     try {
       final remoteValue = await getRemote(command);
       if (remoteValue != null) {
-        log('Using and saving remote value', name: _logName);
+        _logger.info('Using and saving remote value');
 
         await saveLocal(command, remoteValue);
         return Result.success(remoteValue);
       }
     } catch (e, stackTrace) {
-      log('Remote read failed',
-          name: _logName, error: e, stackTrace: stackTrace,);
+      _logger.severe(
+        'Remote read failed',
+        e,
+        stackTrace,
+      );
     }
-    log('Unable to fetch local or remote value', name: _logName);
+    _logger.info('Unable to fetch local or remote value');
 
     return const Result.failure(
       Failure.other(

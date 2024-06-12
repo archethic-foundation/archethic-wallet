@@ -1,7 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'dart:developer';
-
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/main.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
@@ -9,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:logging/logging.dart';
 
 class LoggingOutScreen extends ConsumerStatefulWidget {
   const LoggingOutScreen({
@@ -23,16 +22,18 @@ class LoggingOutScreen extends ConsumerStatefulWidget {
 }
 
 class _LoggingOutScreenState extends ConsumerState<LoggingOutScreen> {
+  static final _logger = Logger('LoggingOutScreen');
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      log('Logging out');
+      _logger.info('Logging out');
       await Future.wait([
         Future.delayed(const Duration(seconds: 2)),
         ref.read(SessionProviders.session.notifier).logout(),
       ]);
-      log('Logged out');
+      _logger.info('Logged out');
       context.go(Splash.routerPage);
     });
   }

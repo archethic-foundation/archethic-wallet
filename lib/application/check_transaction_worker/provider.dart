@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
@@ -9,6 +8,7 @@ import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'provider.g.dart';
@@ -22,23 +22,23 @@ abstract class CheckTransactionsProvider {
 class _CheckTransactionNotifier
     extends AsyncNotifier<List<ReceivedTransaction>> {
   Timer? _checkTransactionsTimer;
+  static final _logger = Logger('CheckTransactionScheduler');
 
   Future<void> _cancelCheck() async {
     if (_checkTransactionsTimer == null) return;
-    log('cancelling scheduler', name: 'CheckTransactionScheduler');
+    _logger.info('cancelling scheduler');
     _checkTransactionsTimer?.cancel();
     _checkTransactionsTimer = null;
   }
 
   Future<void> _scheduleCheck() async {
     if (_checkTransactionsTimer != null && _checkTransactionsTimer!.isActive) {
-      log(
+      _logger.info(
         'start abort : scheduler already running',
-        name: 'CheckTransactionScheduler',
       );
       return;
     }
-    log('starting scheduler', name: 'CheckTransactionScheduler');
+    _logger.info('starting scheduler');
 
     _checkTransactionsTimer = Timer.periodic(
       const Duration(seconds: 30),
@@ -137,11 +137,10 @@ class _CheckTransactionNotifier
 
           state = AsyncValue.data(transactionsToNotify);
         } catch (e, stack) {
-          log(
+          _logger.severe(
             'refresh failed.',
-            name: 'CheckTransactionScheduler',
-            error: e,
-            stackTrace: stack,
+            e,
+            stack,
           );
         }
       },

@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:aewallet/domain/models/app_wallet.dart';
 import 'package:aewallet/domain/models/core/result.dart';
@@ -11,6 +10,7 @@ import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:logging/logging.dart';
 
 part 'send_transaction.freezed.dart';
 
@@ -32,6 +32,7 @@ class SendTransactionCommand with _$SendTransactionCommand {
 }
 
 extension SendTransactionCommandConversion on SendTransactionCommand {
+  static final _logger = Logger('SendTransactionCommand');
   Future<Transaction?> toArchethicTransaction({
     required AppWallet wallet,
     required Account senderAccount,
@@ -92,7 +93,7 @@ extension SendTransactionCommandConversion on SendTransactionCommand {
 
       return signedTransaction;
     } catch (e, stack) {
-      log('Transaction creation failed', error: e, stackTrace: stack);
+      _logger.severe('Transaction creation failed', e, stack);
       return null;
     }
   }
@@ -117,7 +118,7 @@ class SendTransactionUseCase
     SendTransactionCommand command, {
     UseCaseProgressListener? onProgress,
   }) async {
-    const logName = 'SendTransactionUseCase';
+    final _logger = Logger('SendTransactionUseCase');
 
     final operationCompleter =
         Completer<Result<TransactionConfirmation, TransactionError>>();
@@ -157,17 +158,17 @@ class SendTransactionUseCase
             ),
           );
           if (confirmation.isFullyConfirmed) {
-            log('Final confirmation received : $confirmation', name: logName);
+            _logger.info('Final confirmation received : $confirmation');
             operationCompleter.complete(
               Result.success(confirmation),
             );
             return;
           }
 
-          log('Confirmation received : $confirmation', name: logName);
+          _logger.info('Confirmation received : $confirmation');
         },
         onError: (error) async {
-          log('Transaction error received', name: logName, error: error);
+          _logger.severe('Transaction error received', error);
           _fail(error);
         },
       );

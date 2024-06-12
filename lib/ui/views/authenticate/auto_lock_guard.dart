@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -22,6 +21,7 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:lit_starfield/lit_starfield.dart';
+import 'package:logging/logging.dart';
 
 part 'components/lock_mask_screen.dart';
 part 'countdown_lock_screen.dart';
@@ -49,7 +49,7 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     with WidgetsBindingObserver {
   RestartableTimer? timer;
 
-  static const _logName = 'AuthenticationGuard-Widget';
+  static final _logger = Logger('AuthenticationGuard-Widget');
 
   @override
   Widget build(BuildContext context) {
@@ -81,9 +81,8 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
   @override
   void initState() {
     super.initState();
-    log(
+    _logger.info(
       'Init state',
-      name: _logName,
     );
 
     WidgetsBinding.instance.addObserver(this);
@@ -110,9 +109,8 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    log(
+    _logger.info(
       'AppLifecycleState : $state',
-      name: _logName,
     );
     switch (state) {
       case AppLifecycleState.resumed:
@@ -135,14 +133,14 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
   }
 
   void _unscheduleLock() {
-    log('Unschedule lock', name: _logName);
+    _logger.info('Unschedule lock');
 
     timer?.cancel();
     timer = null;
   }
 
   void _scheduleLock(Duration durationBeforeLock) {
-    log('Schedule lock in $durationBeforeLock', name: _logName);
+    _logger.info('Schedule lock in $durationBeforeLock');
     timer?.cancel();
     timer = RestartableTimer(
       durationBeforeLock,
@@ -175,7 +173,7 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
   }
 
   Future<bool> _shouldBeLocked() async {
-    log('Check if vault should be locked', name: _logName);
+    _logger.info('Check if vault should be locked');
     final value = await ref.read(
       AuthenticationProviders.authenticationGuard.future,
     );
@@ -188,24 +186,21 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     }
 
     final durationBeforeLock = lockDate.difference(DateTime.now());
-    log(
+    _logger.info(
       'Duration before lock : $durationBeforeLock',
-      name: _logName,
     );
     return durationBeforeLock <= Duration.zero;
   }
 
   static Completer<String>? _forceAuthenticationCompleter;
   Future<String> _forceAuthent() async {
-    log(
+    _logger.info(
       'Force authent',
-      name: _logName,
     );
 
     if (_forceAuthenticationCompleter != null) {
-      log(
+      _logger.info(
         '... authent already running.',
-        name: _logName,
       );
 
       return _forceAuthenticationCompleter!.future;
