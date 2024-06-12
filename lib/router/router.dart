@@ -7,9 +7,11 @@ import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/ui/menu/settings/settings_sheet.dart';
 import 'package:aewallet/ui/views/add_account/layouts/add_account_sheet.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
+import 'package:aewallet/ui/views/authenticate/biometrics_screen.dart';
 import 'package:aewallet/ui/views/authenticate/logging_out.dart';
 import 'package:aewallet/ui/views/authenticate/password_screen.dart';
 import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
+import 'package:aewallet/ui/views/authenticate/privacy_mask.dart';
 import 'package:aewallet/ui/views/authenticate/yubikey_screen.dart';
 import 'package:aewallet/ui/views/contacts/layouts/add_contact.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
@@ -75,7 +77,7 @@ class RoutesPath {
       extraCodec: const JsonCodec(),
       routes: [
         GoRoute(
-          path: '/',
+          path: Splash.routerPage,
           pageBuilder: (context, state) => CustomTransitionPage<void>(
             transitionDuration: Duration.zero,
             reverseTransitionDuration: Duration.zero,
@@ -182,18 +184,24 @@ class RoutesPath {
 class AutoLockGuardRoute extends ShellRoute {
   AutoLockGuardRoute({required super.routes})
       : super(
-          pageBuilder: (context, state, child) => CustomTransitionPage<void>(
-            transitionDuration: Duration.zero,
-            reverseTransitionDuration: Duration.zero,
-            key: state.pageKey,
-            child: AutoLockGuard(child: child),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) =>
-                    FadeTransition(
-              opacity: animation,
-              child: child,
-            ),
-          ),
+          pageBuilder: (context, state, child) {
+            return NoTransitionPage<void>(
+              key: state.pageKey,
+              child: AutoLockGuard(child: PrivacyMaskGuard(child: child)),
+            );
+          },
+        );
+}
+
+class PrivacyMaskGuardRoute extends ShellRoute {
+  PrivacyMaskGuardRoute({required super.routes})
+      : super(
+          pageBuilder: (context, state, child) {
+            return NoTransitionPage<void>(
+              key: state.pageKey,
+              child: PrivacyMaskGuard(child: child),
+            );
+          },
         );
 }
 
