@@ -21,7 +21,9 @@ import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_welcome.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
+import 'package:aewallet/ui/widgets/components/limited_width_layout.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
+import 'package:aewallet/ui/widgets/components/window_size.dart';
 import 'package:aewallet/util/security_manager.dart';
 import 'package:aewallet/util/service_locator.dart';
 import 'package:aewallet/util/universal_platform.dart';
@@ -46,15 +48,12 @@ Future<void> main() async {
   if (UniversalPlatform.isDesktop) {
     await windowManager.ensureInitialized();
 
-    var sizeWindows = const Size(370, 800);
-    if (UniversalPlatform.isLinux) {
-      sizeWindows = const Size(430, 850);
-    }
+    final idealSize = WindowSize().idealSize;
 
     final windowOptions = WindowOptions(
-      size: sizeWindows,
+      size: idealSize,
       center: false,
-      maximumSize: sizeWindows,
+      maximumSize: idealSize,
       backgroundColor: Colors.transparent,
       fullScreen: false,
       title: 'Archethic Wallet',
@@ -195,36 +194,38 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
       ArchethicTheme.statusBar,
     );
 
-    return GestureDetector(
-      onTap: () {
-        // Hide soft input keyboard after tapping outside anywhere on screen
-        FocusScope.of(context).requestFocus(FocusNode());
-      },
-      child: OKToast(
-        textStyle: ArchethicThemeStyles.textStyleSize14W700Background,
-        backgroundColor: ArchethicTheme.background,
-        child: MaterialApp.router(
-          routerConfig: router,
-          debugShowCheckedModeBanner: false,
-          title: 'Archethic Wallet',
-          theme: ThemeData(
-            brightness: Brightness.dark,
-            fontFamily: 'PPTelegraf',
-            useMaterial3: true,
+    return LimitedWidthLayout(
+      child: GestureDetector(
+        onTap: () {
+          // Hide soft input keyboard after tapping outside anywhere on screen
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: OKToast(
+          textStyle: ArchethicThemeStyles.textStyleSize14W700Background,
+          backgroundColor: ArchethicTheme.background,
+          child: MaterialApp.router(
+            routerConfig: router,
+            debugShowCheckedModeBanner: false,
+            title: 'Archethic Wallet',
+            theme: ThemeData(
+              brightness: Brightness.dark,
+              fontFamily: 'PPTelegraf',
+              useMaterial3: true,
+            ),
+            darkTheme: ThemeData(
+              brightness: Brightness.dark,
+              fontFamily: 'PPTelegraf',
+              useMaterial3: true,
+            ),
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            locale: language.getLocale(),
+            supportedLocales: ref.read(LanguageProviders.availableLocales),
           ),
-          darkTheme: ThemeData(
-            brightness: Brightness.dark,
-            fontFamily: 'PPTelegraf',
-            useMaterial3: true,
-          ),
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-          ],
-          locale: language.getLocale(),
-          supportedLocales: ref.read(LanguageProviders.availableLocales),
         ),
       ),
     );
