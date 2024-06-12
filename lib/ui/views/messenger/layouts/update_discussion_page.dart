@@ -83,7 +83,7 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage>
           activeVibrations:
               ref.read(SettingsProviders.settings).activeVibrations,
         );
-        if (auth == false) {
+        if (auth == null) {
           return;
         }
 

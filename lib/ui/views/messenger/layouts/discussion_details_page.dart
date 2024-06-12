@@ -266,7 +266,7 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage>
                             .read(SettingsProviders.settings)
                             .activeVibrations,
                       );
-                      if (auth == false) {
+                      if (auth == null) {
                         return;
                       }
 

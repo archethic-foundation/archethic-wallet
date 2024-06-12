@@ -159,7 +159,7 @@ class CreateDiscussionSheetState extends ConsumerState<CreateDiscussionSheet>
         if (pickerItemsList.isEmpty)
           Center(
             child: Padding(
-              padding: const EdgeInsets.only(top: 20.0),
+              padding: const EdgeInsets.only(top: 20),
               child: Text(
                 localizations.noContacts,
                 style: ArchethicThemeStyles.textStyleSize14W200Primary,
