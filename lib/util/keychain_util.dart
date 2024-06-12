@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'dart:async';
-import 'dart:developer' as dev;
 import 'dart:math';
 import 'dart:typed_data';
 
@@ -22,9 +21,12 @@ import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
+import 'package:logging/logging.dart';
 
 class KeychainUtil with KeychainServiceMixin {
   final appWalletDatasource = AppWalletHiveDatasource.instance();
+
+  final _logger = Logger('KeychainUtil');
 
   Future<void> createKeyChainAccess(
     NetworksSetting networkSettings,
@@ -52,7 +54,7 @@ class KeychainUtil with KeychainServiceMixin {
       apiService: sl.get<ApiService>(),
     );
 
-    dev.log('>>> Create access <<< ${accessKeychainTx.address}');
+    _logger.info('>>> Create access <<< ${accessKeychainTx.address}');
     await transactionSender.send(
       transaction: accessKeychainTx,
       onConfirmation: (event) async {
@@ -129,7 +131,7 @@ class KeychainUtil with KeychainServiceMixin {
       apiService: sl.get<ApiService>(),
     );
 
-    dev.log('>>> Create keychain <<< ${keychainTransaction.address}');
+    _logger.info('>>> Create keychain <<< ${keychainTransaction.address}');
     await transactionSender.send(
       transaction: keychainTransaction,
       onConfirmation: (event) async {

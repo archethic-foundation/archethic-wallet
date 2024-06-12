@@ -1,10 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'dart:developer';
-
 import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
 import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:hive/hive.dart';
+import 'package:logging/logging.dart';
 
 part 'cache_manager_hive.g.dart';
 
@@ -33,6 +32,8 @@ class CacheManagerHive {
   final Box<CacheItemHive> _cacheBox;
   final int maxCacheItems;
 
+  final _logger = Logger('cacheManagerHive');
+
   static CacheManagerHive? _instance;
   static Future<CacheManagerHive> getInstance() async {
     if (_instance?._cacheBox.isOpen == true) return _instance!;
@@ -47,7 +48,7 @@ class CacheManagerHive {
 
   Future<void> put(String key, CacheItemHive cacheItemHive) async {
     if (_cacheBox.length >= maxCacheItems) {
-      log('Remove oldest item', name: 'cacheManagerHive');
+      _logger.info('Remove oldest item');
       _removeOldestItem();
     }
     await _cacheBox.put(key, cacheItemHive);
@@ -65,7 +66,7 @@ class CacheManagerHive {
         if (DateTime.now().isBefore(ttlExpirationTime)) {
           return cachedItem.value;
         } else {
-          log('Delete expired item $key', name: 'cacheManagerHive');
+          _logger.info('Delete expired item $key');
           _cacheBox.delete(key);
         }
       } else {

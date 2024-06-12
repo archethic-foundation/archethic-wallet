@@ -2,7 +2,7 @@ part of 'auto_lock_guard.dart';
 
 /// Handles navigation to the lock screen
 mixin CountdownLockMixin {
-  static const _logName = 'AuthenticationGuard-Mixin';
+  static final _logger = Logger('AuthenticationGuard-Mixin');
 
   /// Displays lock screen (with the timer) if
   /// application should be locked (too much authentication failures).
@@ -16,7 +16,7 @@ mixin CountdownLockMixin {
       AuthenticationProviders.isLockCountdownRunning.future,
     );
     if (shouldLock) {
-      log('Show countdown screen', name: _logName);
+      _logger.info('Show countdown screen');
       CountdownLockOverlay.instance().show(context);
     }
   }

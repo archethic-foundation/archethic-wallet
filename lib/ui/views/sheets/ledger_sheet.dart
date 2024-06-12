@@ -1,7 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'dart:developer';
-
 import 'package:aewallet/ui/themes/styles.dart';
 // Project imports:
 
@@ -19,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ledger_dart_lib/ledger_dart_lib.dart';
+import 'package:logging/logging.dart';
 
 /*final getArchAddress = transport(
     0xe0,
@@ -51,6 +50,7 @@ class _LedgerSheetState extends ConsumerState<LedgerSheet> {
   String labelResponse = '';
   String info = '';
   String method = '';
+  final _logger = Logger('LedgerSheet');
 
   void update() {
     setState(() {
@@ -236,7 +236,8 @@ class _LedgerSheetState extends ConsumerState<LedgerSheet> {
                               hex.decode(enterPayloadController!.text),
                             ),
                           );
-                          log('getArchAddress: ${uint8ListToHex(getArchAddress)}');
+                          _logger.info(
+                              'getArchAddress: ${uint8ListToHex(getArchAddress)}');
                           await sl
                               .get<LedgerNanoSImpl>()
                               .connectLedger(getArchAddress);

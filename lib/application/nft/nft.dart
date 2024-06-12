@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer' as dev;
 import 'dart:typed_data';
 
 import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
@@ -9,6 +8,7 @@ import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:logging/logging.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'nft.g.dart';
@@ -52,6 +52,8 @@ Future<(List<AccountToken>, List<AccountToken>)> _getNFTList(
 }
 
 class NFTRepository {
+  static final _logger = Logger('NFTRepository');
+
   Future<bool> isAccountOwner(
     String accountAddress,
     String tokenAddress,
@@ -257,8 +259,8 @@ class NFTRepository {
         final decryptedSecret = aesDecrypt(ownership.secret, aesKey);
         try {
           propertiesDecrypted.addAll(json.decode(utf8.decode(decryptedSecret)));
-        } catch (e) {
-          dev.log('Decryption error $e');
+        } catch (e, stack) {
+          _logger.severe('Decryption error', e, stack);
         }
       }
     }

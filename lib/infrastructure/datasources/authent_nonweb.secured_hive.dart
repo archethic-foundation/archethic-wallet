@@ -1,11 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'dart:developer';
-
 import 'package:aewallet/infrastructure/datasources/hive.extension.dart';
 import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive/hive.dart';
+import 'package:logging/logging.dart';
 
 /// Class used on non-web platforms only
 /// It stores authent infos in FlutterSecureStorage
@@ -13,6 +12,8 @@ import 'package:hive/hive.dart';
 /// On Web platforms authent info are not stored as is. They are instead used to encrypt the [Vault] AES key.
 class AuthentHiveSecuredDatasource {
   AuthentHiveSecuredDatasource._(this._box);
+
+  static final _logger = Logger('AuthentHiveSecuredDatasource');
 
   static const String _authenticationBox = 'NonWebAuthentication';
   final Box<dynamic> _box;
@@ -76,11 +77,7 @@ class AuthentHiveSecuredDatasource {
         encryptionCipher: await _prepareCipher(),
       );
     } catch (e, stack) {
-      log(
-        'Failed to open Hive encrypted Box<$E>($name).',
-        error: e,
-        stackTrace: stack,
-      );
+      _logger.severe('Failed to open Hive encrypted Box<$E>($name).', e, stack);
       rethrow;
     }
   }

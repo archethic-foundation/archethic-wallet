@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:aewallet/domain/rpc/subscription.dart';
 import 'package:aewallet/infrastructure/rpc/add_service/command_handler.dart';
@@ -18,6 +17,7 @@ import 'package:aewallet/infrastructure/rpc/sign_transactions/command_handler.da
 import 'package:aewallet/infrastructure/rpc/sub_account/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/sub_current_account/command_handler.dart';
 import 'package:json_rpc_2/json_rpc_2.dart';
+import 'package:logging/logging.dart';
 import 'package:stream_channel/stream_channel.dart';
 
 class AWCJsonRPCServer {
@@ -85,7 +85,7 @@ class AWCJsonRPCServer {
       );
   }
 
-  static const logName = 'RPC Server';
+  static final _logger = Logger('RPC Server');
   final StreamChannel<String> channel;
   late final SubscribablePeer _peer;
 
@@ -101,10 +101,9 @@ class AWCJsonRPCServer {
     return result.map(
       success: commandHandler.resultFromModel,
       failure: (failure) {
-        log(
+        _logger.info(
           'Command failed',
-          name: logName,
-          error: failure,
+          failure,
         );
 
         throw RpcException(
@@ -137,11 +136,7 @@ class AWCJsonRPCServer {
         );
       },
       failure: (failure) {
-        log(
-          'Command failed',
-          name: logName,
-          error: failure,
-        );
+        _logger.severe('Command failed', failure);
 
         throw RpcException(
           failure.code,

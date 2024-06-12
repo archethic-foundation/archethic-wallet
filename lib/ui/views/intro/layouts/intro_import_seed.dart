@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'dart:async';
-import 'dart:developer';
 import 'dart:ui';
 
 import 'package:aewallet/application/account/providers.dart';
@@ -34,6 +33,7 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
+import 'package:logging/logging.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:unorm_dart/unorm_dart.dart' as unorm;
 
@@ -48,6 +48,8 @@ class IntroImportSeedPage extends ConsumerStatefulWidget {
 
 class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
     implements SheetSkeletonInterface {
+  final _logger = Logger('IntroImportSeed');
+
   bool _mnemonicIsValid = false;
   String _mnemonicError = '';
   bool? isPressed;
@@ -512,9 +514,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
             key: Key('accountName${account.nameDisplayed}'),
           ),
         );
-        log(
-          '<<accountName${account.nameDisplayed}>>',
-        );
+        _logger.info('<<accountName${account.nameDisplayed}>>');
       }
     }
 

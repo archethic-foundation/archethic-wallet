@@ -12,7 +12,8 @@ typedef LastInteractionDateValue = ({
 
 class LastInteractionDateNotifier
     extends AsyncNotifier<LastInteractionDateValue> {
-  static const _logName = 'AuthenticationGuard-LastInteractionDateProvider';
+  static final _logger =
+      Logger('AuthenticationGuard-LastInteractionDateProvider');
 
   @override
   FutureOr<LastInteractionDateValue> build() async {
@@ -40,7 +41,7 @@ class LastInteractionDateNotifier
     await ref
         .read(AuthenticationProviders.authenticationRepository)
         .setLastInteractionDate(date);
-    log('persist $date', name: _logName);
+    _logger.info('persist $date');
     state = AsyncValue.data(
       (
         date: date,
@@ -50,7 +51,7 @@ class LastInteractionDateNotifier
   }
 
   Future<void> clear() async {
-    log('clear storage', name: _logName);
+    _logger.fine('clear storage');
 
     await ref
         .read(AuthenticationProviders.authenticationRepository)
@@ -68,7 +69,7 @@ class LastInteractionDateNotifier
 final _lastInteractionDateNotifierProvider = AsyncNotifierProvider<
     LastInteractionDateNotifier, LastInteractionDateValue>(
   LastInteractionDateNotifier.new,
-  name: LastInteractionDateNotifier._logName,
+  name: LastInteractionDateNotifier._logger.name,
 );
 
 final _vaultLockedProvider = Provider<bool>(
@@ -104,7 +105,7 @@ class AuthenticationGuardState with _$AuthenticationGuardState {
 @Riverpod(keepAlive: true)
 class AuthenticationGuardNotifier
     extends AsyncNotifier<AuthenticationGuardState> {
-  static const logName = 'AuthenticationGuard-Provider';
+  static final _logger = Logger('AuthenticationGuard-Provider');
 
   @override
   Future<AuthenticationGuardState> build() async {
@@ -178,9 +179,8 @@ class AuthenticationGuardNotifier
   }
 
   Future<void> scheduleNextStartupAutolock() async {
-    log(
+    _logger.info(
       'Schedule next startup Autolock',
-      name: logName,
     );
 
     final loadedState = state.valueOrNull;
@@ -193,9 +193,8 @@ class AuthenticationGuardNotifier
   }
 
   void scheduleAutolock() {
-    log(
+    _logger.info(
       'Schedule Autolock',
-      name: logName,
     );
 
     final loadedState = state.valueOrNull;
@@ -207,9 +206,8 @@ class AuthenticationGuardNotifier
   }
 
   Future<void> unscheduleAutolock() async {
-    log(
+    _logger.info(
       'Unschedule Autolock',
-      name: logName,
     );
     await ref.read(_lastInteractionDateNotifierProvider.notifier).clear();
   }

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:aewallet/infrastructure/rpc/awc_json_rpc_server.dart';
 import 'package:aewallet/util/universal_platform.dart';
@@ -12,7 +11,7 @@ import 'package:stream_channel/stream_channel.dart';
 class AWCWebview extends StatefulWidget {
   const AWCWebview({super.key, required this.uri});
 
-  static const _logName = 'AWCWebview';
+  static final _logger = Logger('AWCWebview');
 
   static bool get isAvailable => UniversalPlatform.isMobile;
 
@@ -80,7 +79,7 @@ class _AWCWebviewState extends State<AWCWebview> {
   ) async {
     if (_isMessageChannelReady) return;
     if (!await AWCWebview.isAWCSupported) {
-      log('AWC unsupported.', name: AWCWebview._logName);
+      AWCWebview._logger.info('AWC unsupported.');
       return;
     }
 
@@ -96,7 +95,7 @@ class _AWCWebviewState extends State<AWCWebview> {
   ) async {
     await controller.evaluateJavascript(
       source: """
-console.log("[AWC] Init webmessage");
+console.AWCWebview._logger.info("[AWC] Init webmessage");
 var onAWCReady = (awc) => {};
 var awcAvailable = true;
 var awc;
@@ -104,7 +103,7 @@ window.addEventListener('message', function(event) {
     if (event.data == 'capturePort') {
         if (event.ports[0] != null) {
             awc = event.ports[0];
-            console.log("[AWC] Init webmessage Done");
+            console.AWCWebview._logger.info("[AWC] Init webmessage Done");
             if (onAWCReady !== undefined) {
               onAWCReady(awc);
             }

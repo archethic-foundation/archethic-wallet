@@ -1,7 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'dart:developer' as dev;
-
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail_error.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail_loading.dart';
 import 'package:aewallet/util/cache_manager_hive.dart';
@@ -11,6 +9,7 @@ import 'package:aewallet/util/universal_platform.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
+import 'package:logging/logging.dart';
 
 class NFTThumbnailImage extends StatefulWidget {
   const NFTThumbnailImage({
@@ -30,6 +29,7 @@ class NFTThumbnailImage extends StatefulWidget {
 
 class NFTThumbnailImageState extends State<NFTThumbnailImage>
     with AutomaticKeepAliveClientMixin {
+  final _logger = Logger('NFTThumbnailImage');
   @override
   bool get wantKeepAlive {
     return true;
@@ -53,18 +53,16 @@ class NFTThumbnailImageState extends State<NFTThumbnailImage>
             ),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasError) {
-                dev.log(
+                _logger.info(
                   '${widget.address} Error ${DateTime.now().toUtc()}',
-                  name: 'NFTThumbnailImage',
                 );
                 return NFTThumbnailError(
                   message: localizations.previewNotAvailable,
                 );
               }
               if (snapshot.hasData) {
-                dev.log(
+                _logger.info(
                   '${widget.address} Data ${DateTime.now().toUtc()}',
-                  name: 'NFTThumbnailImage',
                 );
                 return widget.roundBorder == true
                     ? ClipRRect(
@@ -77,9 +75,8 @@ class NFTThumbnailImageState extends State<NFTThumbnailImage>
                         snapshot.data!,
                       );
               } else {
-                dev.log(
+                _logger.info(
                   '${widget.address} Loading ${DateTime.now().toUtc()}',
-                  name: 'NFTThumbnailImage',
                 );
                 return const NFTThumbnailLoading();
               }
@@ -94,10 +91,10 @@ Future<Uint8List> _getImageFromToken(
   String address,
   Map<String, dynamic> properties,
 ) async {
-  dev.log(
-    'start _getImageFromToken ${DateTime.now().toUtc()}',
-    name: 'cacheManagement',
-  );
+  final _logger = Logger('cacheManagement')
+    ..info(
+      'start _getImageFromToken ${DateTime.now().toUtc()}',
+    );
 
   if (UniversalPlatform.isAndroid ||
       UniversalPlatform.isIOS ||
@@ -106,43 +103,40 @@ Future<Uint8List> _getImageFromToken(
     final cacheItem = cacheManagerHive.get(address);
 
     if (cacheItem != null) {
-      dev.log('Use cache for token $address', name: 'cacheManagement');
-      dev.log(
-        'end _getImageFromToken ${DateTime.now().toUtc()}',
-        name: 'cacheManagement',
-      );
+      _logger
+        ..info('Use cache for token $address')
+        ..info(
+          'end _getImageFromToken ${DateTime.now().toUtc()}',
+        );
       return cacheItem;
     } else {
-      dev.log('No cache for token $address', name: 'cacheManagement');
+      _logger.info('No cache for token $address');
       final imageBytes = await TokenUtil.getImageFromToken(
         properties,
       );
       if (imageBytes == null) {
-        dev.log(
+        _logger.info(
           'end _getImageFromToken ${DateTime.now().toUtc()}',
-          name: 'cacheManagement',
         );
         return Uint8List.fromList([]);
       }
-      dev.log('Add cache for token $address', name: 'cacheManagement');
+      _logger.info('Add cache for token $address');
       await cacheManagerHive.put(
         address,
         CacheItemHive(imageBytes),
       );
-      dev.log(
+      _logger.info(
         'end _getImageFromToken ${DateTime.now().toUtc()}',
-        name: 'cacheManagement',
       );
       return imageBytes;
     }
   } else {
-    dev.log('No cache for token $address', name: 'cacheManagement');
+    _logger.info('No cache for token $address');
     final imageBytes = await TokenUtil.getImageFromToken(
       properties,
     );
-    dev.log(
+    _logger.info(
       'end _getImageFromToken ${DateTime.now().toUtc()}',
-      name: 'cacheManagement',
     );
     return imageBytes!;
   }

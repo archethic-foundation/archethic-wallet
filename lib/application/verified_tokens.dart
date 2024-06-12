@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/verified_tokens.dart';
@@ -7,6 +6,7 @@ import 'package:aewallet/infrastructure/repositories/verified_tokens_list.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:logging/logging.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'verified_tokens.g.dart';
@@ -14,6 +14,8 @@ part 'verified_tokens.g.dart';
 @Riverpod(keepAlive: true)
 class _VerifiedTokensNotifier extends Notifier<List<String>> {
   List<String>? verifiedTokensList;
+
+  static final _logger = Logger('VerifiedTokensNotifier');
 
   @override
   List<String> build() {
@@ -31,7 +33,8 @@ class _VerifiedTokensNotifier extends Notifier<List<String>> {
     final verifiedTokensFromNetwork = await ref
         .watch(_verifiedTokensRepositoryProvider)
         .getVerifiedTokensFromNetwork(networkSettings.network);
-    log('Verified tokens list (${networkSettings.network}) $verifiedTokensFromNetwork');
+    _logger.info(
+        'Verified tokens list (${networkSettings.network}) $verifiedTokensFromNetwork');
     state = verifiedTokensFromNetwork;
   }
 }
@@ -75,6 +78,8 @@ Future<bool> _isVerifiedToken(
 }
 
 class VerifiedTokensRepository {
+  static final _logger = Logger('VerifiedTokensRepository');
+
   Future<VerifiedTokens> getVerifiedTokens() async {
     return VerifiedTokensList().getVerifiedTokens();
   }
@@ -111,7 +116,7 @@ class VerifiedTokensRepository {
           jsonDecode(lastAddressMap[txAddress]!.data!.content!);
       if (jsonMap['verifiedTokens'] != null &&
           jsonMap['verifiedTokens']['tokens'] != null) {
-        log('Verified tokens ${jsonMap['verifiedTokens']['tokens']}');
+        _logger.info('Verified tokens ${jsonMap['verifiedTokens']['tokens']}');
         return List.from(jsonMap['verifiedTokens']['tokens']);
       }
     }

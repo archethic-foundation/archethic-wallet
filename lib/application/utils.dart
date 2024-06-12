@@ -1,15 +1,16 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logging/logging.dart';
 
 extension WidgetRefExt on WidgetRef {
   Future<void> waitUntil<T>(
     ProviderListenable<T> provider,
     bool Function(T? previous, T next) predicate,
   ) async {
+    final _logger = Logger('WaitUntilProvider ${provider.runtimeType}');
     if (predicate(null, read(provider))) return;
-    log('start', name: 'WaitUntilProvider ${provider.runtimeType}');
+    _logger.info('start');
     final waitCompleter = Completer();
     ProviderSubscription? subscription;
 
@@ -20,15 +21,16 @@ extension WidgetRefExt on WidgetRef {
 
         subscription?.close();
         waitCompleter.complete();
-        log(
+        _logger.info(
           'predicate verified',
-          name: 'WaitUntilProvider ${provider.runtimeType}',
         );
       },
       onError: (error, stackTrace) {
         subscription?.close();
         waitCompleter.completeError(error, stackTrace);
-        log('canceled', name: 'WaitUntilProvider ${provider.runtimeType}');
+        _logger.info(
+          'canceled',
+        );
       },
     );
 

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
@@ -7,6 +5,7 @@ import 'package:aewallet/domain/rpc/commands/failure.dart';
 import 'package:aewallet/domain/rpc/subscription.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_request.dart';
 import 'package:aewallet/util/get_it_instance.dart';
+import 'package:logging/logging.dart';
 
 /// [RPCCommandHandler] is responsible for converting
 /// data between RPC channel (deeplink, websocket ...) DTOs
@@ -20,8 +19,8 @@ abstract class RPCCommandHandler<C, R> {
   Map<String, dynamic> resultFromModel(covariant R model);
 
   Future<Result<dynamic, RPCFailure>> handle(Map<String, dynamic> data) async {
-    final logName = 'RPCCommandHandler [$runtimeType]';
-    log('Received command', name: logName);
+    final _logger = Logger('RPCCommandHandler [$runtimeType]')
+      ..info('Received command');
 
     try {
       final requestDTO = RPCRequestDTO.fromJson(
@@ -35,12 +34,7 @@ abstract class RPCCommandHandler<C, R> {
       return sl.get<CommandDispatcher>().add(commandModel);
       // ignore: avoid_catching_errors
     } on TypeError catch (e, stack) {
-      log(
-        'Invalid data',
-        name: logName,
-        error: e,
-        stackTrace: stack,
-      );
+      _logger.severe('Invalid data', e, stack);
       return Result.failure(RPCFailure.invalidParams());
     }
   }

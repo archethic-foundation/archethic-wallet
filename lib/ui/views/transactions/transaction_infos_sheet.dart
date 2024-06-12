@@ -1,7 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'dart:developer';
-
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/session/session.dart';
@@ -27,6 +25,7 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:logging/logging.dart';
 
 class TransactionInfosSheet extends ConsumerStatefulWidget {
   const TransactionInfosSheet(this.notificationRecipientAddress, {super.key});
@@ -177,6 +176,8 @@ class _TransactionBuildInfos extends ConsumerWidget {
 
   final TransactionInfos transactionInfo;
 
+  static final _logger = Logger('TransactionBuildInfos');
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final preferences = ref.watch(SettingsProviders.settings);
@@ -301,7 +302,7 @@ class _TransactionBuildInfos extends ConsumerWidget {
   ) {
     if (transactionInfo.domain == 'UCOLedger' &&
         transactionInfo.titleInfo == 'To') {
-      log('transactionInfo.valueInfo: ${transactionInfo.valueInfo}');
+      _logger.info('transactionInfo.valueInfo: ${transactionInfo.valueInfo}');
       return ref
           .watch(
             ContactProviders.getContactWithAddress(transactionInfo.valueInfo),
@@ -309,13 +310,17 @@ class _TransactionBuildInfos extends ConsumerWidget {
           .map(
             data: (data) {
               if (data.value == null) {
-                log('transactionInfo.valueInfo: ${transactionInfo.valueInfo} : data null');
+                _logger.info(
+                  'transactionInfo.valueInfo: ${transactionInfo.valueInfo} : data null',
+                );
                 return SelectableText(
                   transactionInfo.valueInfo,
                   style: ArchethicThemeStyles.textStyleSize14W200Primary,
                 );
               } else {
-                log('transactionInfo.valueInfo: ${transactionInfo.valueInfo} : data not null');
+                _logger.info(
+                  'transactionInfo.valueInfo: ${transactionInfo.valueInfo} : data not null',
+                );
                 return SelectableText(
                   data.value!.format,
                   style: ArchethicThemeStyles.textStyleSize14W200Primary,

@@ -2,7 +2,6 @@
 
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer' as dev;
 import 'dart:math';
 import 'dart:typed_data';
 
@@ -23,8 +22,11 @@ import 'package:aewallet/util/queue.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:logging/logging.dart';
 
 class AppService {
+  static final _logger = Logger('AppService');
+
   Future<Map<String, List<Transaction>>> getTransactionChain(
     Map<String, String> addresses,
     String? request,
@@ -184,7 +186,7 @@ class AppService {
   ) {
     final recentTransactions = <RecentTransaction>[];
     for (final transaction in transactionChain) {
-      dev.log('type ${transaction.type!} ${transaction.toJson()}');
+      _logger.info('type ${transaction.type!} ${transaction.toJson()}');
       if (transaction.type! == 'token') {
         final recentTransaction = RecentTransaction()
           ..address = transaction.address!.address
@@ -275,34 +277,25 @@ class AppService {
     String address,
     int mostRecentTimestamp,
   ) async {
+    final _logger = Logger('AppService - recentTx');
+
     var newRecentTransactionList = recentTransactionList;
-    dev.log(
-      '>> START getTransaction : ${DateTime.now()}',
-      name: 'recentTx',
-    );
+    _logger.info('>> START getTransaction : ${DateTime.now()}');
     final transaction = await sl.get<ApiService>().getTransaction(
       [address],
       request:
           'address, type, chainLength, validationStamp { timestamp, ledgerOperations { fee } }, data { actionRecipients { action, address, args } ledger { uco { transfers { amount, to } } token {transfers {amount, to, tokenAddress, tokenId } } } }',
     );
-    dev.log('$transaction');
-    dev.log(
-      '>> END getTransaction : ${DateTime.now()}',
-      name: 'recentTx',
-    );
-    dev.log(
-      '>> START getTransactionInputs : ${DateTime.now()}',
-      name: 'recentTx',
-    );
+    _logger
+      ..info('$transaction')
+      ..info('>> END getTransaction : ${DateTime.now()}')
+      ..info('>> START getTransactionInputs : ${DateTime.now()}');
     final transactionInputs = await sl.get<ApiService>().getTransactionInputs(
       [address],
       request: 'from, spent, tokenAddress, tokenId, amount, timestamp',
       limit: 10,
     );
-    dev.log(
-      '>> END getTransactionInputs : ${DateTime.now()}',
-      name: 'recentTx',
-    );
+    _logger.info('>> END getTransactionInputs : ${DateTime.now()}');
     if (transaction[address] != null) {
       final transactionTimeStamp =
           transaction[address]!.validationStamp!.timestamp!;
@@ -320,10 +313,11 @@ class AppService {
           ..sort((tx1, tx2) => tx1.timestamp!.compareTo(tx2.timestamp!));
       }
 
-      dev.log('1) $transactionInputs');
-      dev.log(
-        'transactionTimeStamp $transactionTimeStamp > mostRecentTimestamp $mostRecentTimestamp)',
-      );
+      _logger
+        ..info('1) $transactionInputs')
+        ..info(
+          'transactionTimeStamp $transactionTimeStamp > mostRecentTimestamp $mostRecentTimestamp)',
+        );
       if (transactionTimeStamp > mostRecentTimestamp) {
         newRecentTransactionList
           ..addAll(
@@ -351,9 +345,8 @@ class AppService {
     KeychainSecuredInfos keychainSecuredInfos,
     List<RecentTransaction> localRecentTransactionList,
   ) async {
-    dev.log(
+    _logger.info(
       '>> START getRecentTransactions : ${DateTime.now()}',
-      name: 'recentTx',
     );
 
     // get the most recent movement in cache
@@ -371,7 +364,7 @@ class AppService {
     final lastIndex = await sl.get<ApiService>().getTransactionIndex(
       [lastAddress],
     );
-    dev.log('lastAddress : $lastAddress -> lastIndex: $lastIndex');
+    _logger.info('lastAddress : $lastAddress -> lastIndex: $lastIndex');
     var index = lastIndex[lastAddress] ?? 0;
     String addressToSearch;
     var iterMax = 10;
@@ -384,12 +377,12 @@ class AppService {
           index: index,
         ),
       );
-      dev.log('addressToSearch : $addressToSearch');
+      _logger.info('addressToSearch : $addressToSearch');
       if (localRecentTransactionList.any(
         (element) =>
             element.address!.toUpperCase() == addressToSearch.toUpperCase(),
       )) {
-        dev.log('addressToSearch exists in local -> break');
+        _logger.info('addressToSearch exists in local -> break');
         if (addressToSearch.toUpperCase() == lastAddress.toUpperCase()) {
           recentTransactions = await _buildRecentTransactionFromTransaction(
             recentTransactions,
@@ -628,9 +621,8 @@ class AppService {
       recentTransactions: recentTransactions,
     );
 
-    dev.log(
+    _logger.info(
       '>> END getRecentTransactions : ${DateTime.now()}',
-      name: 'recentTx',
     );
 
     return recentTransactions;
@@ -735,7 +727,7 @@ class AppService {
   }
 
   Future<List<AccountToken>> getFungiblesTokensList(String address) async {
-    dev.log(
+    _logger.info(
       '>> START getFungiblesTokensList : ${DateTime.now()}',
     );
 
@@ -811,7 +803,7 @@ class AppService {
       (a, b) => a.tokenInformation!.name!.compareTo(b.tokenInformation!.name!),
     );
 
-    dev.log(
+    _logger.info(
       '>> END getFungiblesTokensList : ${DateTime.now()}',
     );
 
@@ -1146,7 +1138,7 @@ class AppService {
       transactionFee =
           await sl.get<ApiService>().getTransactionFee(transaction);
     } catch (e, stack) {
-      dev.log('Failed to get transaction fees', error: e, stackTrace: stack);
+      _logger.severe('Failed to get transaction fees', e, stack);
     }
     return fromBigInt(transactionFee.fee).toDouble();
   }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/session/session.dart';
@@ -12,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
+import 'package:logging/logging.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -20,8 +19,6 @@ part '512.dart';
 part '526.dart';
 part 'migration_manager.freezed.dart';
 part 'migration_manager.g.dart';
-
-const logName = 'DataMigration';
 
 @freezed
 class LocalDataMigrationState with _$LocalDataMigrationState {
@@ -42,6 +39,8 @@ class LocalDataMigrationNotifier
     extends AutoDisposeNotifier<LocalDataMigrationState> {
   LocalDataMigrationNotifier();
 
+  static final _logger = Logger('DataMigration');
+
   @override
   LocalDataMigrationState build() {
     return const LocalDataMigrationState();
@@ -56,12 +55,12 @@ class LocalDataMigrationNotifier
     final currentDataVersion = await preferences.getCurrentDataVersion();
 
     if (currentDataVersion == null) {
-      log('Application freshly installed. No migration to run', name: logName);
+      _logger.info('Application freshly installed. No migration to run');
       await _updateCurrentDataVersion();
       return;
     }
 
-    log('Current data version: $currentDataVersion', name: logName);
+    _logger.info('Current data version: $currentDataVersion');
 
     final migrations = ref.read(_migrationsProvider)
       ..sort(
@@ -70,16 +69,14 @@ class LocalDataMigrationNotifier
 
     for (final migration in migrations) {
       if (migration.shouldSkip(currentDataVersion)) {
-        log(
+        _logger.info(
           'Skipping migration from version ${migration.minAppVersion}',
-          name: logName,
         );
         continue;
       }
 
-      log(
+      _logger.info(
         'Running migration from version ${migration.minAppVersion}',
-        name: logName,
       );
 
       _setMigrationInProgress(true);
@@ -89,7 +86,7 @@ class LocalDataMigrationNotifier
       _setMigrationInProgress(false);
     }
 
-    log('Migrations successfully executed', name: logName);
+    _logger.info('Migrations successfully executed');
     await _updateCurrentDataVersion();
   }
 
@@ -100,16 +97,14 @@ class LocalDataMigrationNotifier
         await CurrentVersionRepository().getCurrentAppVersion();
     final currentAppBuildNumber = int.tryParse(currentAppVersion.$2);
     if (currentAppBuildNumber == null) {
-      log(
+      _logger.info(
         'Failed to update current data version : Unable to determine application build number ($currentAppVersion).',
-        name: logName,
       );
       return;
     }
     await preferences.setCurrentDataVersion(currentAppBuildNumber);
-    log(
+    _logger.info(
       'Current data version updated to $currentAppBuildNumber.',
-      name: logName,
     );
   }
 }

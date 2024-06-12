@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'dart:async';
-import 'dart:developer' as dev;
 import 'dart:io';
 
 import 'package:aewallet/application/authentication/authentication.dart';
@@ -34,6 +33,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:logging/logging.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -120,6 +120,7 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
   static final GlobalKey<NavigatorState> rootNavigatorKey =
       GlobalKey<NavigatorState>();
   final router = RoutesPath(rootNavigatorKey).createRouter();
+  final _logger = Logger('AppWidget');
 
   @override
   void initState() {
@@ -139,7 +140,7 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
   }
 
   Future<void> didChangeAppLifecycleStateAsync(AppLifecycleState state) async {
-    dev.log('Lifecycle State : $state');
+    _logger.info('Lifecycle State : $state');
     var isDeviceSecured = false;
     ref.invalidate(ArchethicOracleUCOProviders.archethicOracleUCO);
     await ref
@@ -243,7 +244,7 @@ class Splash extends ConsumerStatefulWidget {
 }
 
 class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
-  // late bool _hasCheckedLoggedIn;
+  final _logger = Logger('SplashState');
 
   Future<void> initializeProviders() async {
     final locale = ref.read(LanguageProviders.selectedLocale);
@@ -297,7 +298,7 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
 
       context.go(HomePage.routerPage);
     } catch (e, stack) {
-      dev.log(e.toString(), error: e, stackTrace: stack);
+      _logger.severe(e.toString(), e, stack);
       context.go(IntroWelcome.routerPage);
     }
   }

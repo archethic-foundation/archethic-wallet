@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'dart:async';
-import 'dart:developer' as dev;
 
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -12,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logging/logging.dart';
 import 'package:quiver/strings.dart';
 import 'package:validators/validators.dart';
 
@@ -29,6 +29,8 @@ class QRScanErrs {
 }
 
 class UserDataUtil {
+  static final _logger = Logger('UserDataUtil');
+
   static String? _parseData(String data, DataType type) {
     final dataTrim = data.trim();
     if (type == DataType.raw) {
@@ -96,7 +98,7 @@ class UserDataUtil {
     } on FormatException {
       return QRScanErrs.cancelError;
     } catch (e, stack) {
-      dev.log('Unknown QR Scan Error', error: e, stackTrace: stack);
+      _logger.severe('Unknown QR Scan Error', e, stack);
       return QRScanErrs.unknownError;
     }
   }
