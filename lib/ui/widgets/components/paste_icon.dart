@@ -25,7 +25,7 @@ class PasteIcon extends TextFieldButton {
     final preferences = ref.watch(SettingsProviders.settings);
 
     return TextFieldButton(
-      icon: Symbols.content_paste,
+      icon: Symbols.content_copy,
       onPressed: () {
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,
