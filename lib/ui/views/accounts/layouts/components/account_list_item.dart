@@ -16,6 +16,7 @@ import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/ui/util/address_formatters.dart';
 import 'package:aewallet/ui/util/service_type_formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/accounts/layouts/components/account_list_item_token_info.dart';
@@ -35,6 +36,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
@@ -54,8 +56,11 @@ class AccountListItem extends ConsumerStatefulWidget {
   ConsumerState<AccountListItem> createState() => _AccountListItemState();
 }
 
-class _AccountListItemState extends ConsumerState<AccountListItem> {
+class _AccountListItemState extends ConsumerState<AccountListItem>
+    with AutomaticKeepAliveClientMixin {
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
+  @override
+  bool get wantKeepAlive => true;
 
   void _registerBus() {
     _sendTxSub = EventTaxiImpl.singleton()
@@ -148,6 +153,8 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     final preferences = ref.watch(SettingsProviders.settings);
     final localizations = AppLocalizations.of(context)!;
 
@@ -250,7 +257,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
                   ? ArchethicTheme.backgroundAccountsListCardSelected
                   : ArchethicTheme.backgroundAccountsListCard,
             ),
-            height: 100,
+            height: 120,
             padding: const EdgeInsets.symmetric(
               vertical: 10,
               horizontal: 20,
@@ -262,14 +269,57 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
                         height: 17,
                         child: AutoSizeText(
                           widget.account.nameDisplayed,
-                          style:
-                              ArchethicThemeStyles.textStyleSize12W100Primary,
+                          style: ArchethicThemeStyles.textStyleSize12W600Primary
+                              .copyWith(
+                            color: aedappfm.AppThemeBase.secondaryColor,
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          sl.get<HapticUtil>().feedback(
+                                FeedbackType.light,
+                                preferences.activeVibrations,
+                              );
+                          Clipboard.setData(
+                            ClipboardData(
+                              text: widget.account.genesisAddress.toLowerCase(),
+                            ),
+                          );
+                          UIUtil.showSnackbar(
+                            '${localizations.addressCopied}\n${widget.account.genesisAddress.toLowerCase()}',
+                            context,
+                            ref,
+                            ArchethicTheme.text,
+                            ArchethicTheme.snackBarShadow,
+                            icon: Symbols.info,
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            Text(
+                              AddressFormatters(
+                                widget.account.genesisAddress,
+                              ).getShortString4().toLowerCase(),
+                              style: ArchethicThemeStyles
+                                  .textStyleSize12W100Primary,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            const Icon(
+                              Symbols.content_copy,
+                              weight: IconSize.weightM,
+                              opticalSize: IconSize.opticalSizeM,
+                              grade: IconSize.gradeM,
+                              size: 16,
+                            ),
+                          ],
                         ),
                       ),
                       if (widget.account.serviceType != null)
@@ -436,7 +486,6 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
                             AvailablePrimaryCurrencyEnum.native
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               SizedBox(
                                 height: 17,
@@ -464,7 +513,6 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
                           )
                         : Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               AutoSizeText(
                                 fiatAmountString,
@@ -486,7 +534,6 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
                           )
                   else
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
                         AutoSizeText(

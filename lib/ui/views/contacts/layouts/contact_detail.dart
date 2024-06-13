@@ -9,6 +9,7 @@ import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/ui/util/address_formatters.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/layouts/components/contact_detail_tab.dart';
@@ -19,6 +20,8 @@ import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -84,6 +87,12 @@ class ContactDetail extends ConsumerWidget implements SheetSkeletonInterface {
 
     return SheetAppBar(
       title: contact.format,
+      widgetAfterTitle: Text(
+        AddressFormatters(
+          contactAddress,
+        ).getShortString4().toLowerCase(),
+        style: ArchethicThemeStyles.textStyleSize14W600Primary,
+      ),
       widgetRight: Padding(
         padding: const EdgeInsets.only(right: 10, top: 10),
         child: _ContactDetailBalance(contactAddress: contactAddress),
@@ -323,6 +332,48 @@ class _ContactDetailActions extends ConsumerWidget {
               ],
             ),
           ),
+        _btnExplorer(context, ref),
+      ],
+    );
+  }
+
+  Widget _btnExplorer(BuildContext context, WidgetRef ref) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Column(
+          children: [
+            InkWell(
+              child: Container(
+                height: 40,
+                width: 40,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  gradient: aedappfm.AppThemeBase.gradientBtn,
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Symbols.open_in_new,
+                  size: 20,
+                ),
+              ),
+              onTap: () {
+                UIUtil.showWebview(
+                  context,
+                  '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/chain?address=${contact.genesisAddress}',
+                  '',
+                );
+              },
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Text(
+              AppLocalizations.of(context)!.explorer,
+              style: const TextStyle(fontSize: 10),
+            ),
+          ],
+        ),
       ],
     );
   }

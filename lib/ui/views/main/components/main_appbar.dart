@@ -8,10 +8,13 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/menu/settings/settings_sheet.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/ui/util/address_formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -115,9 +118,59 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
           : preferences.mainScreenCurrentPage == 2
               ? FittedBox(
                   fit: BoxFit.fitWidth,
-                  child: Text(
-                    selectedAccount?.nameDisplayed ?? ' ',
-                    style: ArchethicThemeStyles.textStyleSize24W700Primary,
+                  child: InkWell(
+                    onTap: () {
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.light,
+                            preferences.activeVibrations,
+                          );
+                      Clipboard.setData(
+                        ClipboardData(
+                          text: selectedAccount?.genesisAddress.toLowerCase() ??
+                              '',
+                        ),
+                      );
+                      UIUtil.showSnackbar(
+                        '${localizations.addressCopied}\n${selectedAccount?.genesisAddress.toLowerCase()}',
+                        context,
+                        ref,
+                        ArchethicTheme.text,
+                        ArchethicTheme.snackBarShadow,
+                        icon: Symbols.info,
+                      );
+                    },
+                    child: Column(
+                      children: [
+                        Text(
+                          selectedAccount?.nameDisplayed ?? ' ',
+                          style: ArchethicThemeStyles.textStyleSize24W700Primary
+                              .copyWith(
+                            color: aedappfm.AppThemeBase.secondaryColor,
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              AddressFormatters(
+                                selectedAccount?.genesisAddress ?? '',
+                              ).getShortString4().toLowerCase(),
+                              style: ArchethicThemeStyles
+                                  .textStyleSize14W600Primary,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            const Icon(
+                              Symbols.content_copy,
+                              weight: IconSize.weightM,
+                              opticalSize: IconSize.opticalSizeM,
+                              grade: IconSize.gradeM,
+                              size: 16,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ).animate().fade(duration: const Duration(milliseconds: 300))
               : preferences.mainScreenCurrentPage == 3
