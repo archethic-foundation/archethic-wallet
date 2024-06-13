@@ -12,6 +12,7 @@
 .history
 .svn/
 dist/
+*.bak
 
 # Test 
 test/tmp_data
