@@ -10,6 +10,7 @@ class WindowSize {
   Size get idealSize {
     if (UniversalPlatform.isLinux) return const Size(430, 850);
     if (UniversalPlatform.isWeb) return const Size(500, 800);
+    if (UniversalPlatform.isMobile) return const Size(500, 800);
     return const Size(370, 800);
   }
 
