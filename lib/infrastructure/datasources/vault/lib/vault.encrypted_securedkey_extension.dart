@@ -17,7 +17,7 @@ extension HiveEncryptedSecuredKey on HiveInterface {
     String newPassword,
   ) async {
     final salt = archethic.generateRandomSeed();
-    final encryptedKey = encryptSecureKey(
+    final encryptedKey = await encryptSecureKey(
       salt,
       newPassword,
       hiveKey,
@@ -42,7 +42,7 @@ extension HiveEncryptedSecuredKey on HiveInterface {
     final salt = archethic.generateRandomSeed();
 
     final hiveKey = Hive.generateSecureKey();
-    final encryptedKey = encryptSecureKey(
+    final encryptedKey = await encryptSecureKey(
       salt,
       password,
       Uint8List.fromList(hiveKey),
@@ -101,12 +101,12 @@ extension HiveEncryptedSecuredKey on HiveInterface {
     return decryptedKey;
   }
 
-  Uint8List encryptSecureKey(
+  Future<Uint8List> encryptSecureKey(
     String salt,
     String password,
     Uint8List clearSecuredKey,
-  ) {
-    final derivedKey = _generatePBKDFKey(password, salt);
+  ) async {
+    final derivedKey = await _generateKey(password, salt);
 
     return archethic.aesEncrypt(
       archethic.uint8ListToHex(Uint8List.fromList(clearSecuredKey)),
@@ -114,37 +114,39 @@ extension HiveEncryptedSecuredKey on HiveInterface {
     );
   }
 
-  Uint8List? decryptSecureKey(
+  Future<Uint8List?> decryptSecureKey(
     String salt,
     String password,
     Uint8List encryptedSecuredKey,
-  ) {
-    final derivedKey = _generatePBKDFKey(password, salt);
+  ) async {
+    final derivedKey = await _generateKey(password, salt);
 
     return archethic.aesDecrypt(encryptedSecuredKey, derivedKey);
   }
 
-  // TODO(Chralu): Check if that's not too long to compute. I guess a simple SHA256(password+salt) would do the job
-  // method to generate encryption key using user's password.
-  static Uint8List _generatePBKDFKey(
+  Future<Uint8List> _generateKey(
     String password,
     String salt, {
-    int iterations = 10000,
+    int iterations = Argon2Parameters.DEFAULT_ITERATIONS,
     int derivedKeyLength = 32,
-  }) {
-    final passwordBytes = utf8.encode(password);
-    final saltBytes = utf8.encode(salt);
+  }) =>
+      compute(
+        (_) {
+          final passwordBytes = utf8.encode(password);
+          final saltBytes = utf8.encode(salt);
 
-    final params = Pbkdf2Parameters(
-      Uint8List.fromList(saltBytes),
-      iterations,
-      derivedKeyLength,
-    );
-    final pbkdf2 = PBKDF2KeyDerivator(HMac(SHA256Digest(), 64));
+          final derivator = KeyDerivator('argon2')
+            ..init(
+              Argon2Parameters(
+                Argon2Parameters.ARGON2_id,
+                saltBytes,
+                desiredKeyLength: derivedKeyLength,
+                iterations: iterations,
+              ),
+            );
 
-    // ignore: cascade_invocations
-    pbkdf2.init(params);
-
-    return pbkdf2.process(Uint8List.fromList(passwordBytes));
-  }
+          return derivator.process(passwordBytes);
+        },
+        null,
+      );
 }
