@@ -39,6 +39,13 @@ class PasswordAuthenticationNotifier
     );
   }
 
+  Future<void> setPassword(String password) async {
+    final authenticationRepository = ref.read(
+      AuthenticationProviders.authenticationRepository,
+    );
+    await authenticationRepository.setPassword(password);
+  }
+
   Future<AuthenticationResult> authenticateWithPassword(
     PasswordCredentials password,
   ) async {

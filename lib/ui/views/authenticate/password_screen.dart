@@ -44,6 +44,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
 
   String? passwordError;
   bool? enterPasswordVisible;
+  bool isProcessing = false;
 
   @override
   void initState() {
@@ -62,9 +63,12 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
   }
 
   Future<void> _verifyPassword() async {
+    if (isProcessing) return;
     if (!_canBeSubmitted) return;
     if (!mounted) return;
 
+    // Do not use setState for that [isProcessing] flag : unlock operation stalls UI on web, so it delays setState operation.
+    isProcessing = true;
     final password = enterPasswordController!.text;
     final result = await ref
         .read(
@@ -90,6 +94,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
         _focusTextField();
         await showLockCountdownScreenIfNeeded(context, ref);
         enterPasswordController!.text = '';
+        isProcessing = false;
       },
     );
   }
@@ -122,9 +127,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
           localizations.confirm,
           Dimens.buttonTopDimens,
           key: const Key('confirm'),
-          onPressed: () async {
-            await _verifyPassword();
-          },
+          onPressed: _verifyPassword,
           disabled: !_canBeSubmitted,
         ),
       ],

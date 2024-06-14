@@ -47,6 +47,7 @@ class _SetPasswordState extends ConsumerState<SetPassword>
   bool? passwordsMatch;
   bool? setPasswordVisible;
   bool? confirmPasswordVisible;
+  bool isProcessing = false;
 
   @override
   void initState() {
@@ -80,9 +81,7 @@ class _SetPasswordState extends ConsumerState<SetPassword>
           localizations.confirm,
           Dimens.buttonTopDimens,
           key: const Key('confirm'),
-          onPressed: () async {
-            await _validateRequest();
-          },
+          onPressed: _validateRequest,
         ),
       ],
     );
@@ -311,24 +310,27 @@ class _SetPasswordState extends ConsumerState<SetPassword>
   }
 
   Future<void> _validateRequest() async {
+    if (isProcessing) return;
+
     if (setPasswordController!.text.isEmpty ||
         confirmPasswordController!.text.isEmpty) {
-      if (mounted) {
-        setState(() {
-          passwordError = AppLocalizations.of(context)!.passwordBlank;
-        });
-      }
-    } else if (setPasswordController!.text != confirmPasswordController!.text) {
-      if (mounted) {
-        setState(() {
-          passwordError = AppLocalizations.of(context)!.passwordsDontMatch;
-        });
-      }
-    } else {
-      await ref
-          .read(AuthenticationProviders.authenticationRepository)
-          .setPassword(setPasswordController!.text);
-      context.pop(true);
+      setState(() {
+        passwordError = AppLocalizations.of(context)!.passwordBlank;
+      });
+      return;
     }
+    if (setPasswordController!.text != confirmPasswordController!.text) {
+      setState(() {
+        passwordError = AppLocalizations.of(context)!.passwordsDontMatch;
+      });
+      return;
+    }
+
+    // Do not use setState for that [isProcessing] flag : unlock operation stalls UI on web, so it delays setState operation.
+    isProcessing = true;
+    await ref
+        .read(AuthenticationProviders.passwordAuthentication.notifier)
+        .setPassword(setPasswordController!.text);
+    context.pop(true);
   }
 }
