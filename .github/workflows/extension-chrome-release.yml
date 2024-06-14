@@ -29,7 +29,7 @@ jobs:
         run: flutter pub get
 
       - name: Build Chrome Extension
-        run: bash ./scripts/lib/build_chrome_extension.sh
+        run: bash ./scripts/build_chrome_extension.sh
 
       - name: Get Version from pubspec.yaml
         id: get_version
