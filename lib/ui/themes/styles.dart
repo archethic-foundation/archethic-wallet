@@ -154,7 +154,7 @@ class ArchethicThemeStyles {
   static TextStyle get textStyleSize12W100PositiveValue {
     return TextStyle(
       fontSize: AppFontSizes.size12,
-      fontWeight: FontWeight.w800,
+      fontWeight: FontWeight.w100,
       color: ArchethicTheme.positiveValue,
     );
   }
@@ -162,7 +162,7 @@ class ArchethicThemeStyles {
   static TextStyle get textStyleSize12W100NegativeValue {
     return TextStyle(
       fontSize: AppFontSizes.size12,
-      fontWeight: FontWeight.w800,
+      fontWeight: FontWeight.w100,
       color: ArchethicTheme.negativeValue,
     );
   }

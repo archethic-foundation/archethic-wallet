@@ -2,6 +2,7 @@ import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/primary_currency.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,6 +31,7 @@ class TransferFormState with _$TransferFormState {
     @Default(0.0) double amountConverted,
     required AccountBalance accountBalance,
     required TransferRecipient recipient,
+    AEToken? aeToken,
     AccountToken? accountToken,
     @Default('') String tokenId,
     @Default('') String message,
@@ -57,7 +59,7 @@ class TransferFormState with _$TransferFormState {
             return (amount + fees) < accountBalance.nativeTokenValue;
         }
       case TransferType.token:
-        return amount != accountToken!.amount!;
+        return amount != aeToken!.balance;
       case TransferType.nft:
         return false;
     }
@@ -67,9 +69,9 @@ class TransferFormState with _$TransferFormState {
 
   String symbol(BuildContext context) => transferType == TransferType.uco
       ? AccountBalance.cryptoCurrencyLabel
-      : accountToken!.tokenInformation!.isLPToken == true
+      : aeToken!.isLpToken == true
           ? 'LP Token'
-          : accountToken!.tokenInformation!.symbol!;
+          : aeToken!.symbol;
 
   String symbolFees(BuildContext context) => AccountBalance.cryptoCurrencyLabel;
 }

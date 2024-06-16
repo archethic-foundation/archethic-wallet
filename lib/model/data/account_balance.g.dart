@@ -21,13 +21,14 @@ class AccountBalanceAdapter extends TypeAdapter<AccountBalance> {
       nativeTokenName: fields[1] as String,
       tokensFungiblesNb: fields[5] == null ? 0 : fields[5] as int,
       nftNb: fields[6] == null ? 0 : fields[6] as int,
+      totalUSD: fields[7] == null ? 0 : fields[7] as double,
     );
   }
 
   @override
   void write(BinaryWriter writer, AccountBalance obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.nativeTokenValue)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class AccountBalanceAdapter extends TypeAdapter<AccountBalance> {
       ..writeByte(5)
       ..write(obj.tokensFungiblesNb)
       ..writeByte(6)
-      ..write(obj.nftNb);
+      ..write(obj.nftNb)
+      ..writeByte(7)
+      ..write(obj.totalUSD);
   }
 
   @override

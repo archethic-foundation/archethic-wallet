@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Ethereum</title>
+    <g id="Bridge" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Blockchain" transform="translate(0.000000, -54.000000)" fill-rule="nonzero">
+            <g id="Ethereum" transform="translate(0.000000, 54.000000)">
+                <g id="Group-45">
+                    <circle id="Oval" fill="#627EEA" cx="24" cy="24" r="24"></circle>
+                    <polygon id="Path" fill-opacity="0.602" fill="#FFFFFF" points="24.7479497 5.99671952 24.7479497 19.302351 35.993439 24.3280481"></polygon>
+                    <polygon id="Path_1_" fill="#FFFFFF" points="24.7479497 5.99671952 13.5024604 24.3280481 24.7479497 19.302351"></polygon>
+                    <polygon id="Path_2_" fill-opacity="0.602" fill="#FFFFFF" points="24.7479497 32.9491525 24.7479497 41.9901586 36 26.4209951"></polygon>
+                    <polygon id="Path_3_" fill="#FFFFFF" points="24.7479497 41.9901586 24.7479497 32.9491525 13.5024604 26.4209951"></polygon>
+                    <polygon id="Path_4_" fill-opacity="0.2" fill="#FFFFFF" points="24.7479497 30.8562056 35.993439 24.3280481 24.7479497 19.302351"></polygon>
+                </g>
+                <polygon id="Path_5_" fill-opacity="0.602" fill="#FFFFFF" points="14 24.2197615 25 31 25 19"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -28,6 +28,7 @@ mixin _$TransferFormState {
   double get amountConverted => throw _privateConstructorUsedError;
   AccountBalance get accountBalance => throw _privateConstructorUsedError;
   TransferRecipient get recipient => throw _privateConstructorUsedError;
+  AEToken? get aeToken => throw _privateConstructorUsedError;
   AccountToken? get accountToken => throw _privateConstructorUsedError;
   String get tokenId => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
@@ -55,6 +56,7 @@ abstract class $TransferFormStateCopyWith<$Res> {
       double amountConverted,
       AccountBalance accountBalance,
       TransferRecipient recipient,
+      AEToken? aeToken,
       AccountToken? accountToken,
       String tokenId,
       String message,
@@ -63,6 +65,7 @@ abstract class $TransferFormStateCopyWith<$Res> {
       String errorMessageText});
 
   $TransferRecipientCopyWith<$Res> get recipient;
+  $AETokenCopyWith<$Res>? get aeToken;
 }
 
 /// @nodoc
@@ -86,6 +89,7 @@ class _$TransferFormStateCopyWithImpl<$Res, $Val extends TransferFormState>
     Object? amountConverted = null,
     Object? accountBalance = null,
     Object? recipient = null,
+    Object? aeToken = freezed,
     Object? accountToken = freezed,
     Object? tokenId = null,
     Object? message = null,
@@ -126,6 +130,10 @@ class _$TransferFormStateCopyWithImpl<$Res, $Val extends TransferFormState>
           ? _value.recipient
           : recipient // ignore: cast_nullable_to_non_nullable
               as TransferRecipient,
+      aeToken: freezed == aeToken
+          ? _value.aeToken
+          : aeToken // ignore: cast_nullable_to_non_nullable
+              as AEToken?,
       accountToken: freezed == accountToken
           ? _value.accountToken
           : accountToken // ignore: cast_nullable_to_non_nullable
@@ -160,6 +168,18 @@ class _$TransferFormStateCopyWithImpl<$Res, $Val extends TransferFormState>
       return _then(_value.copyWith(recipient: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AETokenCopyWith<$Res>? get aeToken {
+    if (_value.aeToken == null) {
+      return null;
+    }
+
+    return $AETokenCopyWith<$Res>(_value.aeToken!, (value) {
+      return _then(_value.copyWith(aeToken: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -179,6 +199,7 @@ abstract class _$$TransferFormStateImplCopyWith<$Res>
       double amountConverted,
       AccountBalance accountBalance,
       TransferRecipient recipient,
+      AEToken? aeToken,
       AccountToken? accountToken,
       String tokenId,
       String message,
@@ -188,6 +209,8 @@ abstract class _$$TransferFormStateImplCopyWith<$Res>
 
   @override
   $TransferRecipientCopyWith<$Res> get recipient;
+  @override
+  $AETokenCopyWith<$Res>? get aeToken;
 }
 
 /// @nodoc
@@ -209,6 +232,7 @@ class __$$TransferFormStateImplCopyWithImpl<$Res>
     Object? amountConverted = null,
     Object? accountBalance = null,
     Object? recipient = null,
+    Object? aeToken = freezed,
     Object? accountToken = freezed,
     Object? tokenId = null,
     Object? message = null,
@@ -249,6 +273,10 @@ class __$$TransferFormStateImplCopyWithImpl<$Res>
           ? _value.recipient
           : recipient // ignore: cast_nullable_to_non_nullable
               as TransferRecipient,
+      aeToken: freezed == aeToken
+          ? _value.aeToken
+          : aeToken // ignore: cast_nullable_to_non_nullable
+              as AEToken?,
       accountToken: freezed == accountToken
           ? _value.accountToken
           : accountToken // ignore: cast_nullable_to_non_nullable
@@ -289,6 +317,7 @@ class _$TransferFormStateImpl extends _TransferFormState {
       this.amountConverted = 0.0,
       required this.accountBalance,
       required this.recipient,
+      this.aeToken,
       this.accountToken,
       this.tokenId = '',
       this.message = '',
@@ -323,6 +352,8 @@ class _$TransferFormStateImpl extends _TransferFormState {
   @override
   final TransferRecipient recipient;
   @override
+  final AEToken? aeToken;
+  @override
   final AccountToken? accountToken;
   @override
   @JsonKey()
@@ -342,7 +373,7 @@ class _$TransferFormStateImpl extends _TransferFormState {
 
   @override
   String toString() {
-    return 'TransferFormState(transferType: $transferType, transferProcessStep: $transferProcessStep, feeEstimation: $feeEstimation, defineMaxAmountInProgress: $defineMaxAmountInProgress, amount: $amount, amountConverted: $amountConverted, accountBalance: $accountBalance, recipient: $recipient, accountToken: $accountToken, tokenId: $tokenId, message: $message, errorAddressText: $errorAddressText, errorAmountText: $errorAmountText, errorMessageText: $errorMessageText)';
+    return 'TransferFormState(transferType: $transferType, transferProcessStep: $transferProcessStep, feeEstimation: $feeEstimation, defineMaxAmountInProgress: $defineMaxAmountInProgress, amount: $amount, amountConverted: $amountConverted, accountBalance: $accountBalance, recipient: $recipient, aeToken: $aeToken, accountToken: $accountToken, tokenId: $tokenId, message: $message, errorAddressText: $errorAddressText, errorAmountText: $errorAmountText, errorMessageText: $errorMessageText)';
   }
 
   @override
@@ -366,6 +397,7 @@ class _$TransferFormStateImpl extends _TransferFormState {
                 other.accountBalance == accountBalance) &&
             (identical(other.recipient, recipient) ||
                 other.recipient == recipient) &&
+            (identical(other.aeToken, aeToken) || other.aeToken == aeToken) &&
             (identical(other.accountToken, accountToken) ||
                 other.accountToken == accountToken) &&
             (identical(other.tokenId, tokenId) || other.tokenId == tokenId) &&
@@ -389,6 +421,7 @@ class _$TransferFormStateImpl extends _TransferFormState {
       amountConverted,
       accountBalance,
       recipient,
+      aeToken,
       accountToken,
       tokenId,
       message,
@@ -414,6 +447,7 @@ abstract class _TransferFormState extends TransferFormState {
       final double amountConverted,
       required final AccountBalance accountBalance,
       required final TransferRecipient recipient,
+      final AEToken? aeToken,
       final AccountToken? accountToken,
       final String tokenId,
       final String message,
@@ -441,6 +475,8 @@ abstract class _TransferFormState extends TransferFormState {
   AccountBalance get accountBalance;
   @override
   TransferRecipient get recipient;
+  @override
+  AEToken? get aeToken;
   @override
   AccountToken? get accountToken;
   @override

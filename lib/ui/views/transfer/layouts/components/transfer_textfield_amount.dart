@@ -208,26 +208,19 @@ class _TransferTextFieldAmountState
                         Row(
                           children: [
                             AutoSizeText(
-                              '${NumberUtil.formatThousands(transfer.accountToken!.amount!)} ${transfer.accountToken!.tokenInformation!.isLPToken == true ? transfer.accountToken!.amount! > 1 ? 'LP Tokens' : 'LP Token ' : transfer.accountToken!.tokenInformation!.symbol}',
+                              '${NumberUtil.formatThousands(transfer.aeToken!.balance)} ${transfer.aeToken!.isLpToken == true ? '${transfer.aeToken!.lpTokenPair!.token1.symbol}/${transfer.aeToken!.lpTokenPair!.token2.symbol}' : transfer.aeToken!.symbol}',
                               style: ArchethicThemeStyles
                                   .textStyleSize14W200Primary,
                             ),
-                            if (transfer.accountToken != null &&
-                                transfer.accountToken!.tokenInformation !=
-                                    null &&
-                                transfer.accountToken!.tokenInformation!.type ==
-                                    'fungible' &&
-                                transfer.accountToken!.tokenInformation!
-                                        .address !=
-                                    null)
+                            if (transfer.aeToken != null &&
+                                transfer.aeToken!.isVerified)
                               Row(
                                 children: [
                                   const SizedBox(
                                     width: 5,
                                   ),
                                   VerifiedTokenIcon(
-                                    address: transfer.accountToken!
-                                        .tokenInformation!.address!,
+                                    address: transfer.aeToken!.address!,
                                   ),
                                 ],
                               ),

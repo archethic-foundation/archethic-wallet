@@ -125,7 +125,6 @@
     "updateAvailableTitle": "Mise à jour de l'application",
     "updateAvailableDesc": "Une nouvelle version (%1) est disponible.\n\nVeuillez mettre à jour l'application.",
     "createToken": "Créer un jeton",
-    "fungiblesTokensListNoTokenYet": "Aucun jeton pour le moment",
     "addTokenConfirmationMessage": "Confirmez-vous la création du jeton suivant ?",
     "addAccountConfirmationMessage": "Confirmez-vous la création du compte suivant ?",
     "searchNFTHint": "Rechercher un NFT\nà partir d'une adresse.",
@@ -478,5 +477,6 @@
     "bottomMainMenuDApps": "DApps",
     "dappsTabDescriptionHeader": "Accélérez l'adoption avec des services natifs",
     "dappsAESwapDesc": "Échangez des actifs on-chain, ajoutez de la liquidité et accédez au yield farming",
-    "dappsNFTDesc": "Créez votre propre NFT sans coder"
+    "dappsNFTDesc": "Créez votre propre NFT sans coder",
+    "price": "Prix"
 }

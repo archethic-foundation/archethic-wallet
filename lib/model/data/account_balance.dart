@@ -33,7 +33,7 @@ class AccountBalanceConverter
   }
 }
 
-/// Next field available : 7
+/// Next field available : 8
 @HiveType(typeId: HiveTypeIds.accountBalance)
 class AccountBalance extends HiveObject {
   AccountBalance({
@@ -41,6 +41,7 @@ class AccountBalance extends HiveObject {
     required this.nativeTokenName,
     this.tokensFungiblesNb = 0,
     this.nftNb = 0,
+    this.totalUSD = 0,
   });
 
   static const String cryptoCurrencyLabel = 'UCO';
@@ -60,6 +61,10 @@ class AccountBalance extends HiveObject {
   /// Token Price
   @HiveField(6, defaultValue: 0)
   int nftNb;
+
+  /// Token Price
+  @HiveField(7, defaultValue: 0)
+  double totalUSD;
 
   String nativeTokenValueToString(String locale, {int? digits}) {
     if (nativeTokenValue > 1000000) {

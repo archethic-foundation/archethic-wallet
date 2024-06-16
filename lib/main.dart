@@ -289,7 +289,6 @@ class SplashState extends ConsumerState<Splash> {
         context.go(IntroWelcome.routerPage);
         return;
       }
-
       context.go(HomePage.routerPage);
     } catch (e, stack) {
       _logger.severe(e.toString(), e, stack);

@@ -28,6 +28,8 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/number_util.dart';
 import 'package:aewallet/util/user_data_util.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +52,7 @@ class TransferSheet extends ConsumerWidget {
     required this.recipient,
     this.actionButtonTitle,
     this.accountToken,
+    this.aeToken,
     this.tokenId,
     super.key,
   });
@@ -59,6 +62,7 @@ class TransferSheet extends ConsumerWidget {
   final TransferRecipient recipient;
   final String? actionButtonTitle;
   final AccountToken? accountToken;
+  final aedappfm.AEToken? aeToken;
   final TransferType transferType;
   final String? tokenId;
 
@@ -76,6 +80,9 @@ class TransferSheet extends ConsumerWidget {
         'accountToken': accountToken == null
             ? null
             : const AccountTokenConverter().toJson(accountToken!),
+        'aeToken': aeToken == null
+            ? null
+            : const aedappfm.AETokenJsonConverter().toJson(aeToken!),
         'tokenId': tokenId,
       },
     );
@@ -98,6 +105,7 @@ class TransferSheet extends ConsumerWidget {
             feeEstimation: const AsyncValue.data(0),
             transferType: transferType,
             accountToken: accountToken,
+            aeToken: aeToken,
             recipient: recipient,
             accountBalance: selectedAccount.balance!,
             amount: transferType == TransferType.nft ? 1 : 0,
@@ -171,9 +179,9 @@ class TransferSheetBody extends ConsumerWidget {
         case TransferType.token:
           return localizations.transferTokens.replaceAll(
             '%1',
-            transfer.accountToken!.tokenInformation!.isLPToken! == true
+            transfer.aeToken!.isLpToken == true
                 ? 'LP Tokens'
-                : transfer.accountToken!.tokenInformation!.symbol!,
+                : transfer.aeToken!.symbol,
           );
         case TransferType.nft:
           return localizations.transferNFT;

@@ -39,6 +39,7 @@ class AppService {
     return transactionChainMap;
   }
 
+  // TODO(reddwarf03): doublons with TokenRepositoryImpl
   Future<Map<String, Token>> getToken(
     List<String> addresses,
   ) async {
@@ -710,6 +711,7 @@ class AppService {
     return recentTransaction;
   }
 
+  // TODO(reddwarf03): USE PROVIDER
   Future<List<AccountToken>> getFungiblesTokensList(String address) async {
     _logger.info(
       '>> START getFungiblesTokensList : ${DateTime.now()}',

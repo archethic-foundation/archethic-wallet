@@ -287,7 +287,6 @@
     "archethicDoesntKeepCopy": "As a reminder, Archethic doesn't keep any copy.",
     "amountZero": "Your amount should be > 0",
     "maxSendRecipientMissing": "Please, enter the recipient to define the max amount.",
-    "fungiblesTokensListNoTokenYet": "No token yet",
     "createFungibleToken": "Create a token",
     "tokenInitialSupplyTooHigh": "The initial supply is too high",
     "tokenSymbolMissing": "Choose a Symbol for the Token",
@@ -498,5 +497,6 @@
     "bottomMainMenuDApps": "DApps",
     "dappsTabDescriptionHeader": "Accelerate adoption with native services",
     "dappsAESwapDesc": "Swap assets on-chain and access yield farming by adding liquidity",
-    "dappsNFTDesc": "Create your own no-code NFT"
+    "dappsNFTDesc": "Create your own no-code NFT",
+    "price": "Price"
 }

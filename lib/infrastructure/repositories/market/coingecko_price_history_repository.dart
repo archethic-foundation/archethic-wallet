@@ -12,17 +12,16 @@ class CoinGeckoPriceHistoryRepository
   CoinGeckoApi? _coinGeckoApi;
   CoinGeckoApi get coinGeckoApi => _coinGeckoApi ??= sl.get<CoinGeckoApi>();
 
-  static const archethicId = 'archethic';
-
   @override
   Future<Result<double, Failure>> getPriceEvolution({
     required List<PriceHistoryValue> priceHistory,
     required MarketPriceHistoryInterval interval,
+    required String coinId,
   }) =>
       Result.guard(
         () async {
           final coinResult = await coinGeckoApi.coins.getCoinData(
-            id: archethicId,
+            id: coinId,
             // ignore: avoid_redundant_argument_values
             marketData: true,
             communityData: false,
@@ -46,13 +45,14 @@ class CoinGeckoPriceHistoryRepository
   Future<Result<List<PriceHistoryValue>, Failure>> getWithInterval({
     required AvailableCurrencyEnum vsCurrency,
     required MarketPriceHistoryInterval interval,
+    required String coinId,
   }) =>
       Result.guard(
         () async {
           final now = DateTime.now();
           final coinGeckoResponse =
               await coinGeckoApi.coins.getCoinMarketChartRanged(
-            id: archethicId,
+            id: coinId,
             vsCurrency: vsCurrency.name,
             from: now.subtract(
               interval.duration,

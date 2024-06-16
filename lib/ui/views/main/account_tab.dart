@@ -7,7 +7,7 @@ import 'package:aewallet/application/verified_tokens.dart';
 import 'package:aewallet/ui/views/main/components/app_update_button.dart';
 import 'package:aewallet/ui/views/main/components/menu_widget_wallet.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
-import 'package:aewallet/ui/views/tokens_fungibles/layouts/fungibles_tokens_list.dart';
+import 'package:aewallet/ui/views/tokens_list/layouts/tokens_list_sheet.dart';
 import 'package:aewallet/ui/views/transactions/transaction_recent_list.dart';
 import 'package:aewallet/ui/widgets/balance/balance_infos.dart';
 import 'package:aewallet/ui/widgets/components/refresh_indicator.dart';
@@ -80,30 +80,15 @@ class AccountTab extends ConsumerWidget {
                           children: <Widget>[
                             /// BALANCE
                             const BalanceInfos(),
+
                             const SizedBox(
                               height: 10,
-                            ),
-
-                            /// PRICE CHART
-                            if (preferences.showPriceChart &&
-                                connectivityStatusProvider ==
-                                    ConnectivityStatus.isConnected)
-                              const BalanceInfosChart(),
-
-                            /// KPI
-                            if (preferences.showPriceChart &&
-                                connectivityStatusProvider ==
-                                    ConnectivityStatus.isConnected)
-                              const BalanceInfosKpi(),
-
-                            const SizedBox(
-                              height: 30,
                             ),
                             const MenuWidgetWallet(),
                             const ExpandablePageView(
                               children: [
                                 TxList(),
-                                FungiblesTokensListWidget(),
+                                TokensListSheet(),
                               ],
                             ),
                             const SizedBox(

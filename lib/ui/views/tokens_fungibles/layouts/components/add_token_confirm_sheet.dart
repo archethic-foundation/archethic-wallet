@@ -9,7 +9,6 @@ import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/provider.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/state.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/layouts/components/add_token_detail.dart';
@@ -102,8 +101,7 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet>
               .selectedAccountNotifier)
           ?.refreshFungibleTokens(),
     );
-
-    context.go(HomePage.routerPage);
+    context.pop();
   }
 
   void _showSendFailed(

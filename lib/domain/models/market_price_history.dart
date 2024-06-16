@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'market_price_history.freezed.dart';
+part 'market_price_history.g.dart';
 
 enum MarketPriceHistoryInterval {
   hour,
@@ -36,12 +40,26 @@ extension PriceHistoryIntervalToString on MarketPriceHistoryInterval {
   }
 }
 
-@immutable
-class PriceHistoryValue {
-  const PriceHistoryValue({
-    required this.price,
-    required this.time,
-  });
-  final num price;
-  final DateTime time;
+class PriceHistoryValueConverter
+    implements JsonConverter<PriceHistoryValue, Map<String, dynamic>> {
+  const PriceHistoryValueConverter();
+
+  @override
+  PriceHistoryValue fromJson(Map<String, dynamic> json) {
+    return PriceHistoryValue.fromJson(json);
+  }
+
+  @override
+  Map<String, dynamic> toJson(PriceHistoryValue object) => object.toJson();
+}
+
+@freezed
+class PriceHistoryValue with _$PriceHistoryValue {
+  const factory PriceHistoryValue({
+    required num price,
+    required DateTime time,
+  }) = _PriceHistoryValue;
+
+  factory PriceHistoryValue.fromJson(Map<String, dynamic> json) =>
+      _$PriceHistoryValueFromJson(json);
 }

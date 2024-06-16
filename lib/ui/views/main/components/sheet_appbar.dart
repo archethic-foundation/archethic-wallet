@@ -56,11 +56,13 @@ class SheetAppBar extends ConsumerWidget implements PreferredSizeWidget {
         fit: BoxFit.fitWidth,
         child: Column(
           children: [
-            AutoSizeText(
-              title,
-              style:
-                  styleTitle ?? ArchethicThemeStyles.textStyleSize24W700Primary,
-            ),
+            if (widgetBeforeTitle != null) widgetBeforeTitle!,
+            if (title.isNotEmpty)
+              AutoSizeText(
+                title,
+                style: styleTitle ??
+                    ArchethicThemeStyles.textStyleSize24W700Primary,
+              ),
             if (widgetAfterTitle != null) widgetAfterTitle!,
           ],
         ),

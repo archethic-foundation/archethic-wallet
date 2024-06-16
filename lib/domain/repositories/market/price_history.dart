@@ -7,10 +7,12 @@ abstract class PriceHistoryRepositoryInterface {
   Future<Result<List<PriceHistoryValue>, Failure>> getWithInterval({
     required AvailableCurrencyEnum vsCurrency,
     required MarketPriceHistoryInterval interval,
+    required String coinId,
   });
 
   Future<Result<double, Failure>> getPriceEvolution({
     required List<PriceHistoryValue> priceHistory,
     required MarketPriceHistoryInterval interval,
+    required String coinId,
   });
 }
