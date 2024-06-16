@@ -23,36 +23,19 @@ MarketPriceHistoryInterval _intervalOption(Ref ref) => ref.watch(
 Future<List<PriceHistoryValue>> _priceHistory(
   _PriceHistoryRef ref, {
   required MarketPriceHistoryInterval scaleOption,
+  required String coinId,
 }) async {
   return ref
       .watch(_repositoryProvider)
       .getWithInterval(
         vsCurrency: AvailableCurrencyEnum.usd,
         interval: scaleOption,
-      )
-      .valueOrThrow;
-}
-
-@Riverpod(keepAlive: true)
-Future<double> _priceEvolution(
-  Ref ref, {
-  required MarketPriceHistoryInterval scaleOption,
-}) async {
-  final priceHistory = await ref.watch(
-    _priceHistoryProvider(scaleOption: scaleOption).future,
-  );
-
-  return ref
-      .watch(_repositoryProvider)
-      .getPriceEvolution(
-        priceHistory: priceHistory,
-        interval: scaleOption,
+        coinId: coinId,
       )
       .valueOrThrow;
 }
 
 abstract class PriceHistoryProviders {
   static final scaleOption = _intervalOptionProvider;
-  static const chartData = _priceHistoryProvider;
-  static const priceEvolution = _priceEvolutionProvider;
+  static const priceHistory = _priceHistoryProvider;
 }

@@ -20,13 +20,13 @@ dependencies:
       url: https://github.com/redDwarf03/app_version_update.git
       ref: main
 
-  archethic_dapp_framework_flutter: ^1.2.12
+  #archethic_dapp_framework_flutter: ^1.2.12
   #archethic_dapp_framework_flutter:
   #  git:
   #    url: https://github.com/archethic-foundation/archethic-dapp-framework-flutter.git
   #    ref: web_extension_support
-  #archethic_dapp_framework_flutter:
-  #  path: ../archethic-dapp-framework-flutter
+  archethic_dapp_framework_flutter:
+    path: ../archethic-dapp-framework-flutter
 
   # RPC datastructures.
   archethic_wallet_client: ^2.0.8
@@ -336,6 +336,7 @@ flutter:
   assets:
     - assets/ssl/isrg-root-x1.pem
     - assets/ssl/r3.pem
+    - assets/bc-logos/
     - assets/icons/
     - assets/icons/languages/
     - assets/icons/menu/

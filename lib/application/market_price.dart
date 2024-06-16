@@ -1,4 +1,3 @@
-import 'package:aewallet/application/oracle/provider.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/market_price.dart';
 import 'package:aewallet/domain/repositories/market/market.dart';
@@ -7,6 +6,8 @@ import 'package:aewallet/infrastructure/repositories/market/archethic_oracle_uco
 import 'package:aewallet/infrastructure/repositories/market/coingecko_uco_market.dart';
 import 'package:aewallet/infrastructure/repositories/market/local_uco_market.dart';
 import 'package:aewallet/model/available_currency.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'market_price.g.dart';
@@ -39,7 +40,7 @@ Future<MarketPrice> _selectedCurrencyMarketPrice(
   _SelectedCurrencyMarketPriceRef ref,
 ) async {
   final archethicOracleUCO =
-      ref.watch(ArchethicOracleUCOProviders.archethicOracleUCO);
+      ref.watch(aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO);
   return MarketPrice(
     amount: archethicOracleUCO.usd,
     lastLoading: archethicOracleUCO.timestamp,

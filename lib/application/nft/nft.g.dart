@@ -6,11 +6,11 @@ part of 'nft.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$nftRepositoryHash() => r'c16cc640004fbaf88bbe6c50e643bbe5b8c577ed';
+String _$nftRepositoryHash() => r'32d486b353f1e969e4c4163e61aeabc4bba32263';
 
 /// See also [_nftRepository].
 @ProviderFor(_nftRepository)
-final _nftRepositoryProvider = AutoDisposeProvider<NFTRepository>.internal(
+final _nftRepositoryProvider = AutoDisposeProvider<NFTRepositoryImpl>.internal(
   _nftRepository,
   name: r'_nftRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -20,7 +20,7 @@ final _nftRepositoryProvider = AutoDisposeProvider<NFTRepository>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef _NftRepositoryRef = AutoDisposeProviderRef<NFTRepository>;
+typedef _NftRepositoryRef = AutoDisposeProviderRef<NFTRepositoryImpl>;
 String _$getNFTInfoHash() => r'a59335fcff6d092a022ed269a6c906de7cd90cf5';
 
 /// Copied from Dart SDK

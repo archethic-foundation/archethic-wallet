@@ -9,12 +9,11 @@ import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/refresh_in_progress.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/verified_tokens.dart';
-import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
+import 'package:aewallet/ui/widgets/components/action_button.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -59,7 +58,7 @@ class MenuWidgetWallet extends ConsumerWidget {
           children: <Widget>[
             if (accountSelected.balance!.isNativeTokenValuePositive() &&
                 connectivityStatusProvider == ConnectivityStatus.isConnected)
-              _ActionButton(
+              ActionButton(
                 key: const Key('sendUCObutton'),
                 text: localizations.send,
                 icon: Symbols.call_made,
@@ -84,7 +83,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                   .fade(duration: const Duration(milliseconds: 200))
                   .scale(duration: const Duration(milliseconds: 200))
             else
-              _ActionButton(
+              ActionButton(
                 text: localizations.send,
                 icon: Symbols.call_made,
                 enabled: false,
@@ -93,7 +92,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                   .fade(duration: const Duration(milliseconds: 200))
                   .scale(duration: const Duration(milliseconds: 200)),
             if (contact != null)
-              _ActionButton(
+              ActionButton(
                 key: const Key('receiveUCObutton'),
                 text: localizations.receive,
                 icon: Symbols.call_received,
@@ -116,7 +115,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                   .fade(duration: const Duration(milliseconds: 250))
                   .scale(duration: const Duration(milliseconds: 250))
             else
-              _ActionButton(
+              ActionButton(
                 text: localizations.receive,
                 icon: Symbols.call_received,
                 enabled: false,
@@ -125,7 +124,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                   .fade(duration: const Duration(milliseconds: 250))
                   .scale(duration: const Duration(milliseconds: 250)),
             if (connectivityStatusProvider == ConnectivityStatus.isConnected)
-              _ActionButton(
+              ActionButton(
                 text: localizations.buy,
                 icon: Symbols.add,
                 onTap: () {
@@ -140,7 +139,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                   .fade(duration: const Duration(milliseconds: 300))
                   .scale(duration: const Duration(milliseconds: 300))
             else
-              _ActionButton(
+              ActionButton(
                 text: localizations.buy,
                 icon: Symbols.add,
                 enabled: false,
@@ -149,7 +148,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                   .fade(duration: const Duration(milliseconds: 300))
                   .scale(duration: const Duration(milliseconds: 300)),
             if (refreshInProgress == false)
-              _ActionButton(
+              ActionButton(
                 text: localizations.refresh,
                 icon: Symbols.refresh,
                 onTap: () async {
@@ -201,7 +200,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                       ),
                     ),
                   ),
-                  _ActionButton(
+                  ActionButton(
                     text: localizations.refresh,
                     icon: Symbols.refresh,
                     enabled: false,
@@ -214,101 +213,6 @@ class MenuWidgetWallet extends ConsumerWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _ActionButton extends ConsumerWidget {
-  const _ActionButton({
-    this.onTap,
-    required this.text,
-    required this.icon,
-    this.enabled = true,
-    super.key,
-  });
-
-  final VoidCallback? onTap;
-  final String text;
-  final IconData icon;
-  final bool enabled;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10),
-      child: onTap != null
-          ? InkWell(
-              onTap: onTap,
-              child: Column(
-                children: <Widget>[
-                  ShaderMask(
-                    child: SizedBox(
-                      width: 40,
-                      height: 40,
-                      child: Icon(
-                        icon,
-                        weight: 800,
-                        opticalSize: IconSize.opticalSizeM,
-                        grade: IconSize.gradeM,
-                        color: enabled
-                            ? Colors.white
-                            : ArchethicTheme.text.withOpacity(0.3),
-                        size: 38,
-                      ),
-                    ),
-                    shaderCallback: (Rect bounds) {
-                      const rect = Rect.fromLTRB(0, 0, 40, 40);
-                      return ArchethicTheme.gradient.createShader(rect);
-                    },
-                  ),
-                  const SizedBox(height: 5),
-                  if (enabled)
-                    Text(
-                      text,
-                      style: ArchethicThemeStyles.textStyleSize14W600Primary,
-                    )
-                  else
-                    Text(
-                      text,
-                      style: ArchethicThemeStyles
-                          .textStyleSize14W600PrimaryDisabled,
-                    ),
-                ],
-              ),
-            )
-          : Column(
-              children: <Widget>[
-                ShaderMask(
-                  child: SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: Icon(
-                      icon,
-                      color: enabled
-                          ? Colors.white
-                          : ArchethicTheme.text.withOpacity(0.3),
-                      size: 38,
-                    ),
-                  ),
-                  shaderCallback: (Rect bounds) {
-                    const rect = Rect.fromLTRB(0, 0, 40, 40);
-                    return ArchethicTheme.gradient.createShader(rect);
-                  },
-                ),
-                const SizedBox(height: 5),
-                if (enabled)
-                  Text(
-                    text,
-                    style: ArchethicThemeStyles.textStyleSize14W600Primary,
-                  )
-                else
-                  Text(
-                    text,
-                    style:
-                        ArchethicThemeStyles.textStyleSize14W600PrimaryDisabled,
-                  ),
-              ],
-            ),
     );
   }
 }

@@ -84,6 +84,17 @@ class NetworksSetting extends SettingSelectionItem {
     }
   }
 
+  String getNetworkLabel() {
+    switch (network) {
+      case AvailableNetworks.archethicMainNet:
+        return 'mainnet';
+      case AvailableNetworks.archethicTestNet:
+        return 'testnet';
+      case AvailableNetworks.archethicDevNet:
+        return 'devnet';
+    }
+  }
+
   // For saving to shared prefs
   int getIndex() {
     return network.index;

@@ -16,17 +16,12 @@ import 'package:aewallet/ui/views/main/components/main_appbar.dart';
 import 'package:aewallet/ui/views/main/components/recovery_phrase_banner.dart';
 import 'package:aewallet/ui/views/main/dapps_tab.dart';
 import 'package:aewallet/ui/views/main/keychain_tab.dart';
-import 'package:aewallet/ui/views/tokens_fungibles/layouts/add_token_sheet.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/tab_item.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -223,14 +218,7 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
     final localizations = AppLocalizations.of(context)!;
 
     final session = ref.watch(sessionNotifierProvider).loggedIn;
-    final accountSelected = ref
-        .watch(
-          AccountProviders.accounts,
-        )
-        .valueOrNull
-        ?.selectedAccount;
     if (session == null) return const SizedBox();
-    final preferences = ref.watch(SettingsProviders.settings);
 
     return DefaultTabController(
       length: 2,
@@ -265,39 +253,6 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
                       style: ArchethicThemeStyles.textStyleSize14W600Primary,
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    if (accountSelected?.balance
-                            ?.isNativeTokenValuePositive() ==
-                        true)
-                      InkWell(
-                        onTap: () {
-                          sl.get<HapticUtil>().feedback(
-                                FeedbackType.light,
-                                preferences.activeVibrations,
-                              );
-                          context.go(AddTokenSheet.routerPage);
-                        },
-                        child: ShaderMask(
-                          child: SizedBox(
-                            width: 30,
-                            height: 30,
-                            child: Icon(
-                              Icons.add_circle_outline,
-                              opticalSize: IconSize.opticalSizeM,
-                              grade: IconSize.gradeM,
-                              weight: 800,
-                              color: ArchethicTheme.text,
-                              size: 28,
-                            ),
-                          ),
-                          shaderCallback: (Rect bounds) {
-                            const rect = Rect.fromLTRB(0, 0, 40, 40);
-                            return ArchethicTheme.gradient.createShader(rect);
-                          },
-                        ),
-                      ),
                   ],
                 ),
               ],

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:aewallet/domain/models/market_price_history.dart';
 import 'package:aewallet/infrastructure/rpc/deeplink_server.dart';
 import 'package:aewallet/main.dart';
 import 'package:aewallet/model/available_networks.dart';
@@ -40,9 +41,9 @@ import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_shee
 import 'package:aewallet/ui/views/rpc_command_receiver/rpc_command_receiver.dart';
 import 'package:aewallet/ui/views/settings/backupseed_sheet.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
-import 'package:aewallet/ui/views/sheets/chart_sheet.dart';
 import 'package:aewallet/ui/views/sheets/connectivity_warning.dart';
 import 'package:aewallet/ui/views/sheets/dex_sheet.dart';
+import 'package:aewallet/ui/views/tokens_detail/layouts/token_detail_sheet.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/layouts/add_token_sheet.dart';
 import 'package:aewallet/ui/views/transactions/transaction_infos_sheet.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
@@ -51,6 +52,8 @@ import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
 import 'package:aewallet/util/get_it_instance.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

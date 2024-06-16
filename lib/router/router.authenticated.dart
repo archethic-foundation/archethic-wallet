@@ -215,15 +215,35 @@ final _authenticatedRoutes = [
     ),
   ),
   GoRoute(
-    path: ChartSheet.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
-      key: state.pageKey,
-      child: const ChartSheet(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(opacity: animation, child: child),
-    ),
+    path: TokenDetailSheet.routerPage,
+    pageBuilder: (context, state) {
+      final aeToken = const aedappfm.AETokenJsonConverter().fromJson(
+        (state.extra! as Map<String, dynamic>)['aeToken'],
+      );
+
+      final chartInfosJson =
+          (state.extra! as Map<String, dynamic>)['chartInfos'];
+      final chartInfos = chartInfosJson != null
+          ? (chartInfosJson as List<dynamic>)
+              .map(
+                (item) =>
+                    PriceHistoryValue.fromJson(item as Map<String, dynamic>),
+              )
+              .toList()
+          : null;
+
+      return CustomTransitionPage<void>(
+        transitionDuration: Duration.zero,
+        reverseTransitionDuration: Duration.zero,
+        key: state.pageKey,
+        child: TokenDetailSheet(
+          aeToken: aeToken,
+          chartInfos: chartInfos,
+        ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(opacity: animation, child: child),
+      );
+    },
   ),
   GoRoute(
     path: AppSeedBackupSheet.routerPage,
@@ -265,33 +285,40 @@ final _authenticatedRoutes = [
   ),
   GoRoute(
     path: TransferSheet.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
-      key: state.pageKey,
-      child: TransferSheet(
-        transferType: TransferType.values.byName(
-          (state.extra! as Map<String, dynamic>)['transferType']! as String,
+    pageBuilder: (context, state) {
+      return CustomTransitionPage<void>(
+        transitionDuration: Duration.zero,
+        reverseTransitionDuration: Duration.zero,
+        key: state.pageKey,
+        child: TransferSheet(
+          transferType: TransferType.values.byName(
+            (state.extra! as Map<String, dynamic>)['transferType']! as String,
+          ),
+          recipient: TransferRecipient.fromJson(
+            (state.extra! as Map<String, dynamic>)['recipient'],
+          ),
+          actionButtonTitle: (state.extra!
+              as Map<String, dynamic>)['actionButtonTitle'] as String?,
+          aeToken: (state.extra! as Map<String, dynamic>)['aeToken'] == null
+              ? null
+              : const aedappfm.AETokenJsonConverter().fromJson(
+                  (state.extra! as Map<String, dynamic>)['aeToken'],
+                ),
+          accountToken:
+              (state.extra! as Map<String, dynamic>)['accountToken'] == null
+                  ? null
+                  : const AccountTokenConverter().fromJson(
+                      (state.extra! as Map<String, dynamic>)['accountToken'],
+                    ),
+          tokenId: (state.extra! as Map<String, dynamic>)['tokenId'] as String?,
         ),
-        recipient: TransferRecipient.fromJson(
-          (state.extra! as Map<String, dynamic>)['recipient'],
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(
+          opacity: animation,
+          child: child,
         ),
-        actionButtonTitle: (state.extra!
-            as Map<String, dynamic>)['actionButtonTitle'] as String?,
-        accountToken:
-            (state.extra! as Map<String, dynamic>)['accountToken'] == null
-                ? null
-                : const AccountTokenConverter().fromJson(
-                    (state.extra! as Map<String, dynamic>)['accountToken'],
-                  ),
-        tokenId: (state.extra! as Map<String, dynamic>)['tokenId'] as String?,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
-    ),
+      );
+    },
   ),
   GoRoute(
     path: NFTCreationProcessImportTabAEWebForm.routerPage,

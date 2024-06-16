@@ -61,19 +61,83 @@ packages:
   archethic_dapp_framework_flutter:
     dependency: "direct main"
     description:
+<<<<<<< HEAD
       name: archethic_dapp_framework_flutter
       sha256: "50305d48c2736a313e8e239f43405e81103127db9949840d1836a2abd0d0e5fa"
       url: "https://pub.dev"
     source: hosted
+<<<<<<< HEAD
     version: "1.2.12"
+=======
+<<<<<<< HEAD
+    version: "1.2.10"
+=======
+<<<<<<< HEAD
+    version: "1.2.8"
+=======
+<<<<<<< HEAD
+    version: "1.2.7"
+=======
+<<<<<<< HEAD
+    version: "1.2.4"
+=======
+    version: "1.2.3"
+=======
+      path: "../archethic-dapp-framework-flutter"
+      relative: true
+    source: path
+    version: "1.2.0"
+>>>>>>> 870f7567 (🚧 UI Adjustments)
+>>>>>>> fb89ea61 (🚧 UI Adjustments)
+>>>>>>> 3b0f1027 (🚧 UI Adjustments)
+>>>>>>> 849d21aa (🚧 UI Adjustments)
+>>>>>>> 3c447e76 (🚧 UI Adjustments)
+>>>>>>> 1cb80d60 (🚧 UI Adjustments)
   archethic_lib_dart:
     dependency: transitive
     description:
       name: archethic_lib_dart
+<<<<<<< HEAD
       sha256: "9d725d17a2ac7239a4d70048520daf45723661a829c09813f937bac613465060"
+=======
+<<<<<<< HEAD
+      sha256: "421f3ffe4b2f3816424fbb81ef572344a46a67590e4a237cc6251f8101582335"
+>>>>>>> 3b0f1027 (🚧 UI Adjustments)
       url: "https://pub.dev"
     source: hosted
     version: "3.4.2"
+<<<<<<< HEAD
+=======
+  archethic_messaging_lib_dart:
+    dependency: "direct main"
+    description:
+      name: archethic_messaging_lib_dart
+      sha256: "3cc9c70ab559f0f68b430db94ec171289f662c6d847e3def88bdb565d04598e1"
+      url: "https://pub.dev"
+    source: hosted
+<<<<<<< HEAD
+    version: "0.0.19"
+=======
+<<<<<<< HEAD
+    version: "0.0.18"
+=======
+    version: "0.0.17"
+=======
+      sha256: ecdf2e5619725f4f5ca4f2ce6a35b3ac99fa8ca46ec2bac4b2ed6990b350cbfe
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.4.0"
+  archethic_messaging_lib_dart:
+    dependency: "direct main"
+    description:
+      path: "../messaging_dart_sdk"
+      relative: true
+    source: path
+    version: "0.0.13"
+>>>>>>> 870f7567 (🚧 UI Adjustments)
+>>>>>>> fb89ea61 (🚧 UI Adjustments)
+>>>>>>> 3b0f1027 (🚧 UI Adjustments)
+>>>>>>> 3d788c91 (🚧 UI Adjustments)
   archethic_wallet_client:
     dependency: "direct main"
     description:
@@ -959,6 +1023,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  gradient_borders:
+    dependency: transitive
+    description:
+      name: gradient_borders
+      sha256: b1cd969552c83f458ff755aa68e13a0327d09f06c3f42f471b423b01427f21f8
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   graphql:
     dependency: transitive
     description:

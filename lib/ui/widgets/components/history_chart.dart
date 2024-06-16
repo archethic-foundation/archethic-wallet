@@ -19,6 +19,7 @@ class HistoryChart extends StatelessWidget {
     required this.optionChartSelected,
     required this.currency,
     required this.completeChart,
+    required this.lineTouchEnabled,
   });
 
   final List<PriceHistoryValue> intervals;
@@ -30,6 +31,7 @@ class HistoryChart extends StatelessWidget {
   final MarketPriceHistoryInterval optionChartSelected;
   final String currency;
   final bool completeChart;
+  final bool lineTouchEnabled;
 
   double get maxY {
     final max = intervals.fold<double>(
@@ -62,12 +64,13 @@ class HistoryChart extends StatelessWidget {
       isStrokeCapRound: true,
       belowBarData: completeChart
           ? BarAreaData(show: true, gradient: gradientColorsBar)
-          : BarAreaData(),
+          : BarAreaData(show: true, gradient: gradientColorsBar),
       dotData: const FlDotData(show: false),
     );
 
     return LineChartData(
       lineTouchData: LineTouchData(
+        enabled: lineTouchEnabled,
         touchTooltipData: LineTouchTooltipData(
           fitInsideHorizontally: true,
           fitInsideVertically: true,
