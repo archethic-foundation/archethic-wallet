@@ -115,12 +115,12 @@ void main() {
             'Should decrypt securedKey with right salt and password',
             () async {
               final securedKey = Uint8List.fromList([1, 2, 3, 4]);
-              final encryptedSecureKey = Hive.encryptSecureKey(
+              final encryptedSecureKey = await Hive.encryptSecureKey(
                 'salt_ok',
                 'password_ok',
                 securedKey,
               );
-              final decryptedSecureKey = Hive.decryptSecureKey(
+              final decryptedSecureKey = await Hive.decryptSecureKey(
                 'salt_ok',
                 'password_ok',
                 encryptedSecureKey,
@@ -143,7 +143,7 @@ void main() {
                 () async => Hive.decryptSecureKey(
                   'wrong_salt',
                   'password_ok',
-                  encryptedSecureKey,
+                  await encryptedSecureKey,
                 ),
                 throwsA(isA<InvalidCipherTextException>()),
               );
@@ -162,7 +162,7 @@ void main() {
                 () async => Hive.decryptSecureKey(
                   'salt_ok',
                   'wrong_password',
-                  encryptedSecuredKey,
+                  await encryptedSecuredKey,
                 ),
                 throwsA(isA<InvalidCipherTextException>()),
               );

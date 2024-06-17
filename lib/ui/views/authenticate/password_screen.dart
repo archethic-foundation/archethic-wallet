@@ -67,8 +67,18 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
     if (!_canBeSubmitted) return;
     if (!mounted) return;
 
-    // Do not use setState for that [isProcessing] flag : unlock operation stalls UI on web, so it delays setState operation.
-    isProcessing = true;
+    setState(() {
+      isProcessing = true;
+    });
+    // wait for next redraw to perform operation.
+    // that way, we ensure [isProcessing] change is reflecter on the UI
+    // This is necessary because [setPassword] decyphering operation
+    // stalls UI on web platform (single-threaded)
+    await Future.delayed(
+      const Duration(milliseconds: 5),
+      () {},
+    );
+
     final password = enterPasswordController!.text;
     final result = await ref
         .read(
@@ -128,7 +138,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
           Dimens.buttonTopDimens,
           key: const Key('confirm'),
           onPressed: _verifyPassword,
-          disabled: !_canBeSubmitted,
+          disabled: !_canBeSubmitted || isProcessing,
         ),
       ],
     );
