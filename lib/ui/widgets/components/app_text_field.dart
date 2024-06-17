@@ -115,8 +115,8 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(
-        left: widget.leftMargin ?? MediaQuery.of(context).size.width * 0.105,
-        right: widget.rightMargin ?? MediaQuery.of(context).size.width * 0.105,
+        left: widget.leftMargin ?? 70,
+        right: widget.rightMargin ?? 70,
         top: widget.topMargin!,
       ),
       padding: widget.padding,
