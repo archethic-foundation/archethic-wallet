@@ -90,12 +90,17 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet>
       icon: Symbols.info,
     );
 
-    await ref
-        .read(AccountProviders.selectedAccount.notifier)
-        .refreshRecentTransactions();
-    await ref
-        .read(AccountProviders.selectedAccount.notifier)
-        .refreshFungibleTokens();
+    unawaited(
+      ref
+          .read(AccountProviders.selectedAccount.notifier)
+          .refreshRecentTransactions(),
+    );
+    unawaited(
+      ref
+          .read(AccountProviders.selectedAccount.notifier)
+          .refreshFungibleTokens(),
+    );
+
     context.go(HomePage.routerPage);
   }
 
