@@ -63,10 +63,10 @@ class AppService {
         await Future.delayed(const Duration(seconds: 1));
       }
 
-      // Make the API call and update the antiSpam counter
       futures.add(
-        sl.get<ApiService>().getToken(
-          [address],
+        _retryOnException(
+          () => sl.get<ApiService>().getToken([address]),
+          actionDescription: 'address: $address',
         ),
       );
       antiSpam++;
@@ -102,13 +102,17 @@ class AppService {
 
       // Make the API call and update the antiSpam counter
       futures.add(
-        sl.get<ApiService>().getTransactionInputs(
-          [address],
-          request: request,
-          limit: limit,
-          pagingOffset: pagingOffset,
+        _retryOnException(
+          () => sl.get<ApiService>().getTransactionInputs(
+            [address],
+            request: request,
+            limit: limit,
+            pagingOffset: pagingOffset,
+          ),
+          actionDescription: 'address: $address',
         ),
       );
+
       antiSpam++;
     }
 
@@ -513,10 +517,14 @@ class AppService {
 
       // Make the API call and update the antiSpam counter
       futures.add(
-        sl.get<ApiService>().getTransactionOwnerships(
-          [ownershipsAddress],
+        _retryOnException(
+          () => sl.get<ApiService>().getTransactionOwnerships(
+            [ownershipsAddress],
+          ),
+          actionDescription: 'ownershipsAddress: $ownershipsAddress',
         ),
       );
+
       antiSpam++;
     }
 
@@ -577,11 +585,16 @@ class AppService {
 
       // Make the API call and update the antiSpam counter
       futures.add(
-        sl.get<ApiService>().getLastTransaction(
-          [lastTransactionAddressToSearch],
-          request: 'address',
+        _retryOnException(
+          () => sl.get<ApiService>().getLastTransaction(
+            [lastTransactionAddressToSearch],
+            request: 'address',
+          ),
+          actionDescription:
+              'lastTransactionAddressToSearch: $lastTransactionAddressToSearch',
         ),
       );
+
       antiSpam++;
     }
 
@@ -1141,5 +1154,44 @@ class AppService {
       _logger.severe('Failed to get transaction fees', e, stack);
     }
     return fromBigInt(transactionFee.fee).toDouble();
+  }
+
+  /// Retry function with a delay for Too Many Requests errors.
+  Future<T> _retryOnException<T>(
+    Future<T> Function() action, {
+    String? actionDescription,
+  }) async {
+    const maxRetries = 3;
+    const delaySeconds = 5;
+
+    var retryCount = 0;
+    while (retryCount < maxRetries) {
+      try {
+        _logger.info('${DateTime.now()} Call $action');
+        if (actionDescription != null) {
+          _logger.info(
+            '${DateTime.now()} $actionDescription}',
+          );
+        }
+        return await action();
+      } catch (e) {
+        if (e is ArchethicTooManyRequestsException) {
+          retryCount++;
+          _logger.info('${DateTime.now()} Retry $action}');
+          if (actionDescription != null) {
+            _logger.info(
+              '${DateTime.now()} $actionDescription}',
+            );
+          }
+
+          await Future.delayed(const Duration(seconds: delaySeconds));
+        } else {
+          rethrow;
+        }
+      }
+    }
+
+    print('${DateTime.now()} Max retries exceeded $action');
+    throw Exception('Max retries exceeded');
   }
 }
