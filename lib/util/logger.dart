@@ -11,7 +11,7 @@ class LoggerSetup {
   static LoggerSetup? _instance;
 
   Future<void> setup() async {
-    Logger.root.level = kDebugMode ? Level.ALL : Level.INFO;
+    Logger.root.level = kDebugMode ? Level.ALL : Level.SEVERE;
 
     /// Note : When in debug mode, logs are displayed
     /// in debug console. There is no need to register log listeners.
