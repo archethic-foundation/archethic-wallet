@@ -82,6 +82,7 @@ class _SetPasswordState extends ConsumerState<SetPassword>
           Dimens.buttonTopDimens,
           key: const Key('confirm'),
           onPressed: _validateRequest,
+          disabled: isProcessing,
         ),
       ],
     );
@@ -237,7 +238,9 @@ class _SetPasswordState extends ConsumerState<SetPassword>
           controller: confirmPasswordController,
           textInputAction: TextInputAction.done,
           autocorrect: false,
-          onSubmitted: (_) => _validateRequest(),
+          onSubmitted: (_) async {
+            await _validateRequest();
+          },
           onChanged: (String newText) {
             if (passwordError != null) {
               setState(() {
@@ -326,8 +329,17 @@ class _SetPasswordState extends ConsumerState<SetPassword>
       return;
     }
 
-    // Do not use setState for that [isProcessing] flag : unlock operation stalls UI on web, so it delays setState operation.
-    isProcessing = true;
+    setState(() {
+      isProcessing = true;
+    });
+    // wait for next redraw to perfor operation.
+    // that way, we ensure [isProcessing] change is reflecter on the UI
+    // This is necessary because [setPassword] decyphering operation
+    // stalls UI on web platform (single-threaded)
+    await Future.delayed(
+      const Duration(milliseconds: 5),
+      () {},
+    );
     await ref
         .read(AuthenticationProviders.passwordAuthentication.notifier)
         .setPassword(setPasswordController!.text);
