@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/domain/repositories/settings.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
-import 'package:aewallet/domain/rpc/commands/failure.dart';
 import 'package:aewallet/infrastructure/rpc/browser_extension_aws.dart';
 import 'package:aewallet/infrastructure/rpc/websocket_server.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/add_service/command_handler.dart';
@@ -19,6 +18,7 @@ import 'package:aewallet/ui/views/rpc_command_receiver/sign_transactions/command
 import 'package:aewallet/ui/views/rpc_command_receiver/sub_account/command_handler.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/sub_current_account/command_handler.dart';
 import 'package:aewallet/util/get_it_instance.dart';
+import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
@@ -54,7 +54,7 @@ class _RPCCommandReceiverState extends ConsumerState<RPCCommandReceiver> {
       ..clear()
       ..addGuard((command) async {
         if (ref.read(SessionProviders.session).isLoggedOut) {
-          return RPCFailure.disconnected();
+          return awc.Failure.connectivity;
         }
         return null;
       })

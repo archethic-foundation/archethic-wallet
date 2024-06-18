@@ -1,22 +1,23 @@
 import 'package:aewallet/domain/rpc/commands/command.dart';
-import 'package:aewallet/domain/rpc/commands/sign_transactions.dart';
+import 'package:aewallet/infrastructure/rpc/dto/request_origin.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/dto/rpc_request.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
+import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 
 class RPCSignTransactionsCommandHandler extends RPCCommandHandler<
-    RPCSignTransactionsCommandData, RPCSignTransactionsResultData> {
+    awc.SignTransactionRequest, awc.SignTransactionsResult> {
   RPCSignTransactionsCommandHandler() : super();
 
   @override
-  RPCCommand<RPCSignTransactionsCommandData> commandToModel(
-    RPCRequestDTO dto,
+  RPCCommand<awc.SignTransactionRequest> commandToModel(
+    awc.Request dto,
   ) {
-    final rpcSignTransactionCommandDataList = <RPCSignTransactionCommandData>[];
+    final rpcSignTransactionCommandDataList =
+        <awc.SignTransactionRequestData>[];
     final transactions = dto.payload['transactions'];
     for (final Map<String, dynamic> transaction in transactions) {
       final tx = archethic.Transaction.fromJson(transaction);
-      final rpcSignTransactionCommandData = RPCSignTransactionCommandData(
+      final rpcSignTransactionCommandData = awc.SignTransactionRequestData(
         data: tx.data!,
         version: tx.version,
         type: tx.type!,
@@ -25,29 +26,18 @@ class RPCSignTransactionsCommandHandler extends RPCCommandHandler<
     }
 
     return RPCCommand(
-      origin: dto.origin.toModel(),
-      data: RPCSignTransactionsCommandData(
+      origin: dto.origin.toModel,
+      data: awc.SignTransactionRequest(
         serviceName: dto.payload['serviceName'],
         pathSuffix: dto.payload['pathSuffix'],
-        rpcSignTransactionCommandData: rpcSignTransactionCommandDataList,
+        transactions: rpcSignTransactionCommandDataList,
       ),
     );
   }
 
   @override
   Map<String, dynamic> resultFromModel(
-    RPCSignTransactionsResultData model,
+    awc.SignTransactionsResult model,
   ) =>
-      {
-        'signedTxs': model.signedTxs
-            .map(
-              (transaction) => {
-                'address': transaction.address,
-                'previousPublicKey': transaction.previousPublicKey,
-                'previousSignature': transaction.previousSignature,
-                'originSignature': transaction.originSignature,
-              },
-            )
-            .toList(),
-      };
+      model.toJson();
 }

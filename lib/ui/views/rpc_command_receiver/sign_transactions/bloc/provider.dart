@@ -1,5 +1,5 @@
 import 'package:aewallet/domain/rpc/commands/command.dart';
-import 'package:aewallet/domain/rpc/commands/sign_transactions.dart';
+import 'package:archethic_wallet_client/archethic_wallet_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -9,7 +9,7 @@ part 'provider.freezed.dart';
 class SignTransactionsConfirmationFormState
     with _$SignTransactionsConfirmationFormState {
   const factory SignTransactionsConfirmationFormState({
-    required RPCCommand<RPCSignTransactionsCommandData> signTransactionCommand,
+    required RPCCommand<SignTransactionRequest> signTransactionCommand,
   }) = _SignTransactionsConfirmationFormState;
   const SignTransactionsConfirmationFormState._();
 }
@@ -17,10 +17,10 @@ class SignTransactionsConfirmationFormState
 class SignTransactionsConfirmationFormNotifier
     extends AutoDisposeFamilyAsyncNotifier<
         SignTransactionsConfirmationFormState,
-        RPCCommand<RPCSignTransactionsCommandData>> {
+        RPCCommand<SignTransactionRequest>> {
   @override
   Future<SignTransactionsConfirmationFormState> build(
-    RPCCommand<RPCSignTransactionsCommandData> arg,
+    RPCCommand<SignTransactionRequest> arg,
   ) async {
     return SignTransactionsConfirmationFormState(
       signTransactionCommand: arg,
@@ -32,7 +32,7 @@ class SignTransactionsConfirmationProviders {
   static final form = AsyncNotifierProvider.autoDispose.family<
       SignTransactionsConfirmationFormNotifier,
       SignTransactionsConfirmationFormState,
-      RPCCommand<RPCSignTransactionsCommandData>>(
+      RPCCommand<SignTransactionRequest>>(
     SignTransactionsConfirmationFormNotifier.new,
   );
 }
