@@ -126,7 +126,7 @@ class ArchethicDeeplinkRPCServer extends DeeplinkRpcRequestReceiver {
 
         throw DeeplinkRpcFailure(
           code: failure.code,
-          message: failure.message ?? 'Command failed',
+          message: failure.message,
         );
       },
     );

@@ -13,6 +13,7 @@
 .svn/
 dist/
 *.bak
+pubspec_overrides.yaml
 
 # Test 
 test/tmp_data

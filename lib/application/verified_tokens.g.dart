@@ -324,7 +324,7 @@ class _IsVerifiedTokenProviderElement extends FutureProviderElement<bool>
 }
 
 String _$verifiedTokensNotifierHash() =>
-    r'c0e2459a5beb61bafa79df7aee32db3e5e8a44c0';
+    r'10e04193cf6739956d6b71b4d938a690a32e1b5a';
 
 /// See also [_VerifiedTokensNotifier].
 @ProviderFor(_VerifiedTokensNotifier)

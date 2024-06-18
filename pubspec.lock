@@ -69,35 +69,31 @@ packages:
   archethic_dapp_framework_flutter:
     dependency: "direct main"
     description:
-      name: archethic_dapp_framework_flutter
-      sha256: "3b43ef8a3d65199edd5090f29ed642edcb0aee9d88f1166ee48b22e7862a7e53"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.23"
+      path: "../../packages/archethic-dapp-framework-flutter"
+      relative: true
+    source: path
+    version: "1.2.1"
   archethic_lib_dart:
     dependency: "direct main"
     description:
-      name: archethic_lib_dart
-      sha256: "9644035fd44b68d6558d906b62bbd74800068e71367e929a1a73d60d2a54e054"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.3.16"
+      path: "../../packages/libdart"
+      relative: true
+    source: path
+    version: "3.4.0"
   archethic_messaging_lib_dart:
     dependency: "direct main"
     description:
-      name: archethic_messaging_lib_dart
-      sha256: "645452cd2a13883842441ca2425d9d447c811e7df23f46f02bb0dd3dec47f8d0"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.13"
+      path: "../../packages/messaging_dart_sdk"
+      relative: true
+    source: path
+    version: "0.0.14"
   archethic_wallet_client:
-    dependency: transitive
+    dependency: "direct main"
     description:
-      name: archethic_wallet_client
-      sha256: b26e2e7a2805c6f3b18c50007f165b79521ea5303745f8ac798acd6c25e9cb33
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.7"
+      path: "../../packages/archethic-wallet-client-dart"
+      relative: true
+    source: path
+    version: "2.0.0"
   archive:
     dependency: transitive
     description:

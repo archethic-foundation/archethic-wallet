@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SignTransactionsConfirmationFormState {
-  RPCCommand<RPCSignTransactionsCommandData> get signTransactionCommand =>
+  RPCCommand<SignTransactionRequest> get signTransactionCommand =>
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -33,11 +33,9 @@ abstract class $SignTransactionsConfirmationFormStateCopyWith<$Res> {
       _$SignTransactionsConfirmationFormStateCopyWithImpl<$Res,
           SignTransactionsConfirmationFormState>;
   @useResult
-  $Res call(
-      {RPCCommand<RPCSignTransactionsCommandData> signTransactionCommand});
+  $Res call({RPCCommand<SignTransactionRequest> signTransactionCommand});
 
-  $RPCCommandCopyWith<RPCSignTransactionsCommandData, $Res>
-      get signTransactionCommand;
+  $RPCCommandCopyWith<SignTransactionRequest, $Res> get signTransactionCommand;
 }
 
 /// @nodoc
@@ -60,15 +58,14 @@ class _$SignTransactionsConfirmationFormStateCopyWithImpl<$Res,
       signTransactionCommand: null == signTransactionCommand
           ? _value.signTransactionCommand
           : signTransactionCommand // ignore: cast_nullable_to_non_nullable
-              as RPCCommand<RPCSignTransactionsCommandData>,
+              as RPCCommand<SignTransactionRequest>,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $RPCCommandCopyWith<RPCSignTransactionsCommandData, $Res>
-      get signTransactionCommand {
-    return $RPCCommandCopyWith<RPCSignTransactionsCommandData, $Res>(
+  $RPCCommandCopyWith<SignTransactionRequest, $Res> get signTransactionCommand {
+    return $RPCCommandCopyWith<SignTransactionRequest, $Res>(
         _value.signTransactionCommand, (value) {
       return _then(_value.copyWith(signTransactionCommand: value) as $Val);
     });
@@ -84,12 +81,10 @@ abstract class _$$SignTransactionsConfirmationFormStateImplCopyWith<$Res>
       __$$SignTransactionsConfirmationFormStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {RPCCommand<RPCSignTransactionsCommandData> signTransactionCommand});
+  $Res call({RPCCommand<SignTransactionRequest> signTransactionCommand});
 
   @override
-  $RPCCommandCopyWith<RPCSignTransactionsCommandData, $Res>
-      get signTransactionCommand;
+  $RPCCommandCopyWith<SignTransactionRequest, $Res> get signTransactionCommand;
 }
 
 /// @nodoc
@@ -111,7 +106,7 @@ class __$$SignTransactionsConfirmationFormStateImplCopyWithImpl<$Res>
       signTransactionCommand: null == signTransactionCommand
           ? _value.signTransactionCommand
           : signTransactionCommand // ignore: cast_nullable_to_non_nullable
-              as RPCCommand<RPCSignTransactionsCommandData>,
+              as RPCCommand<SignTransactionRequest>,
     ));
   }
 }
@@ -125,7 +120,7 @@ class _$SignTransactionsConfirmationFormStateImpl
       : super._();
 
   @override
-  final RPCCommand<RPCSignTransactionsCommandData> signTransactionCommand;
+  final RPCCommand<SignTransactionRequest> signTransactionCommand;
 
   @override
   String toString() {
@@ -156,13 +151,13 @@ class _$SignTransactionsConfirmationFormStateImpl
 abstract class _SignTransactionsConfirmationFormState
     extends SignTransactionsConfirmationFormState {
   const factory _SignTransactionsConfirmationFormState(
-          {required final RPCCommand<RPCSignTransactionsCommandData>
+          {required final RPCCommand<SignTransactionRequest>
               signTransactionCommand}) =
       _$SignTransactionsConfirmationFormStateImpl;
   const _SignTransactionsConfirmationFormState._() : super._();
 
   @override
-  RPCCommand<RPCSignTransactionsCommandData> get signTransactionCommand;
+  RPCCommand<SignTransactionRequest> get signTransactionCommand;
   @override
   @JsonKey(ignore: true)
   _$$SignTransactionsConfirmationFormStateImplCopyWith<

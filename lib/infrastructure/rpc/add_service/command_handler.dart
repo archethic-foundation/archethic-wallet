@@ -1,28 +1,27 @@
-import 'package:aewallet/domain/rpc/commands/add_service.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
+import 'package:aewallet/infrastructure/rpc/dto/request_origin.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/dto/rpc_request.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 
-class RPCAddServiceCommandHandler extends RPCCommandHandler<
-    RPCAddServiceCommandData, TransactionConfirmation> {
+class RPCAddServiceCommandHandler
+    extends RPCCommandHandler<awc.AddServiceRequest, TransactionConfirmation> {
   RPCAddServiceCommandHandler() : super();
 
   @override
-  RPCCommand<RPCAddServiceCommandData> commandToModel(RPCRequestDTO dto) =>
+  RPCCommand<awc.AddServiceRequest> commandToModel(awc.Request dto) =>
       RPCCommand(
-        origin: dto.origin.toModel(),
-        data: RPCAddServiceCommandData(
+        origin: dto.origin.toModel,
+        data: awc.AddServiceRequest(
           name: dto.payload['name'],
         ),
       );
 
   @override
-  Map<String, dynamic> resultFromModel(TransactionConfirmation model) {
-    return {
-      'maxConfirmations': model.maxConfirmations,
-      'nbConfirmations': model.nbConfirmations,
-      'transactionAddress': model.transactionAddress,
-    };
-  }
+  Map<String, dynamic> resultFromModel(TransactionConfirmation model) =>
+      awc.SendTransactionResult(
+        maxConfirmations: model.maxConfirmations,
+        nbConfirmations: model.nbConfirmations,
+        transactionAddress: model.transactionAddress,
+      ).toJson();
 }

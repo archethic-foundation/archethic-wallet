@@ -3,11 +3,12 @@ import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
-import 'package:aewallet/domain/rpc/commands/send_transaction.dart';
 import 'package:aewallet/domain/usecases/transaction/send_transaction.dart';
 import 'package:aewallet/domain/usecases/usecase.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:archethic_wallet_client/archethic_wallet_client.dart'
+    show SendTransactionRequest;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -18,17 +19,16 @@ part 'provider.g.dart';
 @freezed
 class AddServiceConfirmationFormState with _$AddServiceConfirmationFormState {
   const factory AddServiceConfirmationFormState({
-    required RPCCommand<RPCSendTransactionCommandData> signTransactionCommand,
+    required RPCCommand<SendTransactionRequest> signTransactionCommand,
   }) = _AddServiceConfirmationFormState;
   const AddServiceConfirmationFormState._();
 }
 
 class AddServiceConfirmationFormNotifier extends AutoDisposeFamilyAsyncNotifier<
-    AddServiceConfirmationFormState,
-    RPCCommand<RPCSendTransactionCommandData>> {
+    AddServiceConfirmationFormState, RPCCommand<SendTransactionRequest>> {
   @override
   Future<AddServiceConfirmationFormState> build(
-    RPCCommand<RPCSendTransactionCommandData> arg,
+    RPCCommand<SendTransactionRequest> arg,
   ) async {
     return AddServiceConfirmationFormState(
       signTransactionCommand: arg,
@@ -81,7 +81,7 @@ class AddServiceConfirmationProviders {
   static final form = AsyncNotifierProvider.autoDispose.family<
       AddServiceConfirmationFormNotifier,
       AddServiceConfirmationFormState,
-      RPCCommand<RPCSendTransactionCommandData>>(
+      RPCCommand<SendTransactionRequest>>(
     AddServiceConfirmationFormNotifier.new,
   );
 }

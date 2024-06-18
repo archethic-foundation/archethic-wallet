@@ -1,19 +1,19 @@
 import 'package:aewallet/domain/rpc/commands/command.dart';
-import 'package:aewallet/domain/rpc/commands/keychain_derive_address.dart';
+import 'package:aewallet/infrastructure/rpc/dto/request_origin.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/dto/rpc_request.dart';
+import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 
 class RPCKeychainDeriveAddressCommandHandler extends RPCCommandHandler<
-    RPCKeychainDeriveAddressCommandData, RPCKeychainDeriveAddressResultData> {
+    awc.KeychainDeriveAddressRequest, awc.KeychainDeriveAddressResult> {
   RPCKeychainDeriveAddressCommandHandler() : super();
 
   @override
-  RPCCommand<RPCKeychainDeriveAddressCommandData> commandToModel(
-    RPCRequestDTO dto,
+  RPCCommand<awc.KeychainDeriveAddressRequest> commandToModel(
+    awc.Request dto,
   ) =>
       RPCCommand(
-        origin: dto.origin.toModel(),
-        data: RPCKeychainDeriveAddressCommandData(
+        origin: dto.origin.toModel,
+        data: awc.KeychainDeriveAddressRequest(
           serviceName: dto.payload['serviceName'],
           index: dto.payload['index'] ?? 0,
           pathSuffix: dto.payload['pathSuffix'] ?? '',
@@ -22,7 +22,7 @@ class RPCKeychainDeriveAddressCommandHandler extends RPCCommandHandler<
 
   @override
   Map<String, dynamic> resultFromModel(
-    RPCKeychainDeriveAddressResultData model,
+    awc.KeychainDeriveAddressResult model,
   ) =>
-      {'address': model.address};
+      model.toJson();
 }

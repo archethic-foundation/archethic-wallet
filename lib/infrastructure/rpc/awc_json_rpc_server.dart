@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:aewallet/domain/rpc/subscription.dart';
 import 'package:aewallet/infrastructure/rpc/add_service/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/dto/rpc_request.dart';
-import 'package:aewallet/infrastructure/rpc/dto/rpc_subscription.dart';
 import 'package:aewallet/infrastructure/rpc/get_accounts/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/get_current_account/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/get_endpoint/command_handler.dart';
@@ -16,6 +14,7 @@ import 'package:aewallet/infrastructure/rpc/send_transaction/command_handler.dar
 import 'package:aewallet/infrastructure/rpc/sign_transactions/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/sub_account/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/sub_current_account/command_handler.dart';
+import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:json_rpc_2/json_rpc_2.dart';
 import 'package:logging/logging.dart';
 import 'package:stream_channel/stream_channel.dart';
@@ -108,13 +107,13 @@ class AWCJsonRPCServer {
 
         throw RpcException(
           failure.code,
-          failure.message ?? 'Command failed',
+          failure.message,
         );
       },
     );
   }
 
-  Future<RPCSubscriptionDTO> _handleSubscription(
+  Future<awc.Subscription> _handleSubscription(
     RPCSubscriptionHandler commandHandler,
     Parameters params,
   ) async {
@@ -122,11 +121,11 @@ class AWCJsonRPCServer {
     return result.map(
       success: (success) {
         success as RPCSubscription;
-        return RPCSubscriptionDTO(
+        return awc.Subscription(
           id: success.id,
           updates: success.updates
               .map(
-                (update) => RPCSubscriptionUpdateDTO(
+                (update) => awc.SubscriptionUpdate(
                   subscriptionId: success.id,
                   data: commandHandler.notificationFromModel(update),
                 ),
@@ -140,7 +139,7 @@ class AWCJsonRPCServer {
 
         throw RpcException(
           failure.code,
-          failure.message ?? 'Command failed',
+          failure.message,
         );
       },
     );
@@ -162,7 +161,7 @@ class SubscribablePeer {
 
   void registerSubscriptionMethod(
     String name,
-    Future<RPCSubscriptionDTO> Function(dynamic params) subscriptionCallback,
+    Future<awc.Subscription> Function(dynamic params) subscriptionCallback,
   ) {
     registerMethod(
       name,
@@ -185,11 +184,11 @@ class SubscribablePeer {
     registerMethod(
       name,
       (params) async {
-        final requestDTO = RPCRequestDTO.fromJson(
+        final requestDTO = awc.Request.fromJson(
           params.value,
         );
 
-        final unsubscribeCommand = RPCUnsubscribeCommandDTO.fromJson(
+        final unsubscribeCommand = awc.UnsubscribeRequest.fromJson(
           requestDTO.payload,
         );
         _removeSubscription(unsubscribeCommand.subscriptionId);

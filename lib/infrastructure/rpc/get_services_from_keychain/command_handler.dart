@@ -1,35 +1,24 @@
 import 'package:aewallet/domain/rpc/commands/command.dart';
-import 'package:aewallet/domain/rpc/commands/get_services_from_keychain.dart';
+import 'package:aewallet/infrastructure/rpc/dto/request_origin.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/dto/rpc_request.dart';
+import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 
 class RPCGetServicesFromKeychainCommandHandler extends RPCCommandHandler<
-    RPCGetServicesFromKeychainCommandData,
-    RPCGetServicesFromKeychainResultData> {
+    awc.GetServicesFromKeychainRequest, awc.GetServicesFromKeychainResult> {
   RPCGetServicesFromKeychainCommandHandler() : super();
 
   @override
-  RPCCommand<RPCGetServicesFromKeychainCommandData> commandToModel(
-    RPCRequestDTO dto,
+  RPCCommand<awc.GetServicesFromKeychainRequest> commandToModel(
+    awc.Request dto,
   ) =>
       RPCCommand(
-        origin: dto.origin.toModel(),
-        data: const RPCGetServicesFromKeychainCommandData(),
+        origin: dto.origin.toModel,
+        data: const awc.GetServicesFromKeychainRequest(),
       );
 
   @override
   Map<String, dynamic> resultFromModel(
-    RPCGetServicesFromKeychainResultData model,
+    awc.GetServicesFromKeychainResult model,
   ) =>
-      {
-        'services': model.services
-            .map(
-              (service) => {
-                'derivationPath': service.derivationPath,
-                'curve': service.curve,
-                'hashAlgo': service.hashAlgo,
-              },
-            )
-            .toList(),
-      };
+      model.toJson();
 }

@@ -1,29 +1,20 @@
 import 'package:aewallet/domain/rpc/commands/command.dart';
-import 'package:aewallet/domain/rpc/commands/get_accounts.dart';
+import 'package:aewallet/infrastructure/rpc/dto/request_origin.dart';
 import 'package:aewallet/infrastructure/rpc/dto/rpc_command_handler.dart';
-import 'package:aewallet/infrastructure/rpc/dto/rpc_request.dart';
+import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 
-class RPCGetAccountsCommandHandler extends RPCCommandHandler<
-    RPCGetAccountsCommandData, RPCGetAccountsResultData> {
+class RPCGetAccountsCommandHandler
+    extends RPCCommandHandler<awc.GetAccountsRequest, awc.GetAccountsResult> {
   RPCGetAccountsCommandHandler() : super();
 
   @override
-  RPCCommand<RPCGetAccountsCommandData> commandToModel(RPCRequestDTO dto) =>
+  RPCCommand<awc.GetAccountsRequest> commandToModel(awc.Request dto) =>
       RPCCommand(
-        origin: dto.origin.toModel(),
-        data: const RPCGetAccountsCommandData(),
+        origin: dto.origin.toModel,
+        data: const awc.GetAccountsRequest(),
       );
 
   @override
-  Map<String, dynamic> resultFromModel(RPCGetAccountsResultData model) => {
-        'accounts': model.accounts
-            .map(
-              (account) => {
-                'shortName': account.shortName,
-                'serviceName': account.serviceName,
-                'genesisAddress': account.genesisAddress,
-              },
-            )
-            .toList(),
-      };
+  Map<String, dynamic> resultFromModel(awc.GetAccountsResult model) =>
+      model.toJson();
 }
