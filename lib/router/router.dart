@@ -169,9 +169,9 @@ class RoutesPath {
           ],
         ),
       ],
-      redirect: (context, state) {
-        if (deeplinkRpcReceiver.canHandle(state.name)) {
-          deeplinkRpcReceiver.handle(state.name);
+      redirect: (context, state) async {
+        if (deeplinkRpcReceiver.canHandle(state.matchedLocation)) {
+          await deeplinkRpcReceiver.handle(state.matchedLocation);
         }
         return null;
       },
