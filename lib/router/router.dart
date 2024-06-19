@@ -161,9 +161,9 @@ class RoutesPath {
             ),
           ),
         ),
-        RPCCommandReceiverRoute(
+        AutoLockGuardRoute(
           routes: [
-            AutoLockGuardRoute(
+            RPCCommandReceiverRoute(
               routes: _authenticatedRoutes,
             ),
           ],
