@@ -73,31 +73,32 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
                 ),
               ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(
-                  width: Responsive.drawerWidth(context) - 100,
-                  child: Text(
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  AutoSizeText(
                     heading,
                     style: headingStyle ??
                         ArchethicThemeStyles.textStyleSize16W600Primary,
                   ),
-                ),
-                SizedBox(
-                  width: Responsive.drawerWidth(context) - 100,
-                  child: AutoSizeText(
-                    info,
-                    maxLines: 5,
-                    stepGranularity: 0.1,
-                    minFontSize: 8,
-                    style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 250),
+                    child: AutoSizeText(
+                      info,
+                      maxLines: 5,
+                      stepGranularity: 0.1,
+                      minFontSize: 8,
+                      style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-            const Spacer(),
+            const SizedBox(
+              width: 13,
+            ),
             if (displayChevron != null && displayChevron == true)
               Icon(
                 Symbols.chevron_right,
@@ -160,14 +161,15 @@ class _SettingsListItemSingleLine extends _SettingsListItem {
                 height: AppFontSizes.size28,
               ),
             ),
-            SizedBox(
-              width: Responsive.drawerWidth(context) - 100,
+            Expanded(
               child: AutoSizeText(
                 heading,
                 style: headingStyle,
               ),
             ),
-            const Spacer(),
+            const SizedBox(
+              width: 13,
+            ),
             if (displayChevron != null && displayChevron == true)
               Icon(
                 Symbols.chevron_right,

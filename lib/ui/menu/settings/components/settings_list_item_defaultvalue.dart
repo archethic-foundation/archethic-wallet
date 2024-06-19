@@ -48,29 +48,28 @@ class _SettingsListItemWithDefaultValue extends _SettingsListItem {
                   height: AppFontSizes.size28,
                 ),
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(
-                    width: Responsive.drawerWidth(context) - 100,
-                    child: Text(
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    AutoSizeText(
                       heading,
                       style: disabled
                           ? ArchethicThemeStyles.textStyleSize16W600Primary30
                           : ArchethicThemeStyles.textStyleSize16W600Primary,
                     ),
-                  ),
-                  AutoSizeText(
-                    defaultValue.getDisplayName(context),
-                    style: disabled
-                        ? ArchethicThemeStyles.textStyleSize12W100Primary30
-                        : ArchethicThemeStyles.textStyleSize12W100Primary,
-                    maxLines: 1,
-                    stepGranularity: 0.1,
-                    minFontSize: 8,
-                  ),
-                ],
+                    AutoSizeText(
+                      defaultValue.getDisplayName(context),
+                      style: disabled
+                          ? ArchethicThemeStyles.textStyleSize12W100Primary30
+                          : ArchethicThemeStyles.textStyleSize12W100Primary,
+                      maxLines: 1,
+                      stepGranularity: 0.1,
+                      minFontSize: 8,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -127,13 +126,12 @@ class _SettingsListItemWithDefaultValueWithInfos extends _SettingsListItem {
                 height: AppFontSizes.size28,
               ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(
-                  width: Responsive.drawerWidth(context) - 80,
-                  child: Row(
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
@@ -148,18 +146,21 @@ class _SettingsListItemWithDefaultValueWithInfos extends _SettingsListItem {
                       ),
                     ],
                   ),
-                ),
-                SizedBox(
-                  width: Responsive.drawerWidth(context) - 80,
-                  child: AutoSizeText(
-                    info,
-                    maxLines: 5,
-                    stepGranularity: 0.1,
-                    minFontSize: 8,
-                    style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 250),
+                    child: AutoSizeText(
+                      info,
+                      maxLines: 5,
+                      stepGranularity: 0.1,
+                      minFontSize: 8,
+                      style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
+            ),
+            const SizedBox(
+              width: 13,
             ),
           ],
         ),

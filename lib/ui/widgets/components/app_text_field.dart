@@ -99,7 +99,7 @@ class AppTextField extends ConsumerStatefulWidget {
   final TextInputType? keyboardType;
   final Function(String text)? onSubmitted;
   final Function(String)? onChanged;
-  final double? topMargin;
+  final double topMargin;
   final double? leftMargin;
   final double? rightMargin;
   final TextStyle? style;
@@ -117,7 +117,7 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
       margin: EdgeInsets.only(
         left: widget.leftMargin ?? 70,
         right: widget.rightMargin ?? 70,
-        top: widget.topMargin!,
+        top: widget.topMargin,
       ),
       padding: widget.padding,
       width: double.infinity,

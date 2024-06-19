@@ -1,7 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-// Flutter imports:
-import 'package:aewallet/ui/widgets/components/window_size.dart';
 import 'package:flutter/material.dart';
 
 class Responsive extends StatelessWidget {
@@ -35,9 +33,5 @@ class Responsive extends StatelessWidget {
     } else {
       return mobile;
     }
-  }
-
-  static double drawerWidth(BuildContext context) {
-    return WindowSize().idealSize.width * 0.60;
   }
 }

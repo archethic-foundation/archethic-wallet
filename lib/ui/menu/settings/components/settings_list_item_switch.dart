@@ -50,14 +50,15 @@ class _SettingsListItemSwitch extends _SettingsListItem {
                 height: AppFontSizes.size28,
               ),
             ),
-            SizedBox(
-              width: Responsive.drawerWidth(context) - 130,
+            Expanded(
               child: Text(
                 heading,
                 style: ArchethicThemeStyles.textStyleSize16W600Primary,
               ),
             ),
-            const Spacer(),
+            const SizedBox(
+              width: 13,
+            ),
             Container(
               padding: const EdgeInsets.only(left: 2),
               height: 30,
