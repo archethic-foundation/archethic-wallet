@@ -20,6 +20,7 @@ import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/number_util.dart';
 import 'package:aewallet/util/queue.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
@@ -55,25 +56,17 @@ class AppService {
       }
     }
 
-    var antiSpam = 0;
-    final futures = <Future>[];
-    for (final address in addressesOutCache) {
-      // Delay the API call if we have made more than 10 requests
-      if (antiSpam > 0 && antiSpam % 10 == 0) {
-        await Future.delayed(const Duration(seconds: 1));
-      }
+    final getTokensTasks = addressesOutCache.map(
+      (address) {
+        return () => _retryOnException(
+              () => sl.get<ApiService>().getToken([address]),
+              actionDescription: 'address: $address',
+            );
+      },
+    );
+    final getTokens = await getTokensTasks.batch();
 
-      futures.add(
-        _retryOnException(
-          () => sl.get<ApiService>().getToken([address]),
-          actionDescription: 'address: $address',
-        ),
-      );
-      antiSpam++;
-    }
-
-    final getTokens = await Future.wait(futures);
-    for (final Map<String, Token> getToken in getTokens) {
+    for (final getToken in getTokens) {
       tokenMap.addAll(getToken);
 
       getToken.forEach((key, value) async {
@@ -92,31 +85,20 @@ class AppService {
     int pagingOffset = 0,
   }) async {
     final transactionInputs = <String, List<TransactionInput>>{};
-    var antiSpam = 0;
-    final futures = <Future>[];
-    for (final address in addresses.toSet()) {
-      // Delay the API call if we have made more than 10 requests
-      if (antiSpam > 0 && antiSpam % 10 == 0) {
-        await Future.delayed(const Duration(seconds: 1));
-      }
 
-      // Make the API call and update the antiSpam counter
-      futures.add(
-        _retryOnException(
-          () => sl.get<ApiService>().getTransactionInputs(
-            [address],
-            request: request,
-            limit: limit,
-            pagingOffset: pagingOffset,
-          ),
-          actionDescription: 'address: $address',
-        ),
-      );
+    final getTransactionInputsTasks = addresses.toSet().map(
+          (address) => () => _retryOnException(
+                () => sl.get<ApiService>().getTransactionInputs(
+                  [address],
+                  request: request,
+                  limit: limit,
+                  pagingOffset: pagingOffset,
+                ),
+                actionDescription: 'address: $address',
+              ),
+        );
 
-      antiSpam++;
-    }
-
-    final getTransactionInputs = await Future.wait(futures);
+    final getTransactionInputs = await getTransactionInputsTasks.batch();
     for (final getTransactionInput in getTransactionInputs) {
       transactionInputs.addAll(getTransactionInput);
     }
@@ -507,28 +489,18 @@ class AppService {
 
     // Get List of ownerships
     final ownershipsMap = <String, List<Ownership>>{};
-    var antiSpam = 0;
-    var futures = <Future>[];
-    for (final ownershipsAddress in ownershipsAddresses.toSet()) {
-      // Delay the API call if we have made more than 10 requests
-      if (antiSpam > 0 && antiSpam % 10 == 0) {
-        await Future.delayed(const Duration(seconds: 1));
-      }
+    final getTransactionOwnershipsTasks = ownershipsAddresses.toSet().map(
+          (ownershipsAddress) => () => _retryOnException(
+                () => sl.get<ApiService>().getTransactionOwnerships(
+                  [ownershipsAddress],
+                ),
+                actionDescription: 'ownershipsAddress: $ownershipsAddress',
+              ),
+        );
 
-      // Make the API call and update the antiSpam counter
-      futures.add(
-        _retryOnException(
-          () => sl.get<ApiService>().getTransactionOwnerships(
-            [ownershipsAddress],
-          ),
-          actionDescription: 'ownershipsAddress: $ownershipsAddress',
-        ),
-      );
+    final getTransactionOwnerships =
+        await getTransactionOwnershipsTasks.batch();
 
-      antiSpam++;
-    }
-
-    final getTransactionOwnerships = await Future.wait(futures);
     for (final getTransactionOwnership in getTransactionOwnerships) {
       ownershipsMap.addAll(getTransactionOwnership);
     }
@@ -574,31 +546,19 @@ class AppService {
     ];
 
     final lastAddressesMap = <String, Transaction>{};
-    antiSpam = 0;
-    futures = <Future>[];
-    for (final lastTransactionAddressToSearch
-        in lastTransactionAddressesToSearch.toSet()) {
-      // Delay the API call if we have made more than 10 requests
-      if (antiSpam > 0 && antiSpam % 10 == 0) {
-        await Future.delayed(const Duration(seconds: 1));
-      }
 
-      // Make the API call and update the antiSpam counter
-      futures.add(
-        _retryOnException(
-          () => sl.get<ApiService>().getLastTransaction(
-            [lastTransactionAddressToSearch],
-            request: 'address',
-          ),
-          actionDescription:
-              'lastTransactionAddressToSearch: $lastTransactionAddressToSearch',
-        ),
-      );
-
-      antiSpam++;
-    }
-
-    final getLastTransactions = await Future.wait(futures);
+    final getLastTransactionsTasks =
+        lastTransactionAddressesToSearch.toSet().map(
+              (lastTransactionAddressToSearch) => () => _retryOnException(
+                    () => sl.get<ApiService>().getLastTransaction(
+                      [lastTransactionAddressToSearch],
+                      request: 'address',
+                    ),
+                    actionDescription:
+                        'lastTransactionAddressToSearch: $lastTransactionAddressToSearch',
+                  ),
+            );
+    final getLastTransactions = await getLastTransactionsTasks.batch();
     for (final getLastTransaction in getLastTransactions) {
       lastAddressesMap.addAll(getLastTransaction);
     }
@@ -1191,7 +1151,21 @@ class AppService {
       }
     }
 
-    print('${DateTime.now()} Max retries exceeded $action');
+    _logger.info('${DateTime.now()} Max retries exceeded $action');
     throw Exception('Max retries exceeded');
+  }
+}
+
+extension FutureBatch<T> on Iterable<Future<T> Function()> {
+  Future<List<T>> batch({
+    int chunkSize = 10,
+    Duration restDuration = const Duration(seconds: 1),
+  }) async {
+    final results = <T>[];
+    final chunks = slices(chunkSize);
+    for (final chunk in chunks) {
+      results.addAll(await Future.wait(chunk.map((action) => action())));
+    }
+    return results;
   }
 }
