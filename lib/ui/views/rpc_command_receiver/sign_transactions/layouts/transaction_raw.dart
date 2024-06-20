@@ -1,13 +1,14 @@
-import 'dart:convert';
-
-import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/application/settings/language.dart';
+import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/ui/util/formatters.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
-import 'package:material_symbols_icons/symbols.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TransactionRaw extends StatefulWidget {
+class TransactionRaw extends ConsumerStatefulWidget {
   const TransactionRaw(
     this.address,
     this.command, {
@@ -21,85 +22,286 @@ class TransactionRaw extends StatefulWidget {
   TransactionRawState createState() => TransactionRawState();
 }
 
-class TransactionRawState extends State<TransactionRaw> {
-  bool isExpanded = false;
-
-  void toggleExpanded() {
-    setState(() {
-      isExpanded = !isExpanded;
-    });
-  }
-
+class TransactionRawState extends ConsumerState<TransactionRaw> {
   @override
   Widget build(BuildContext context) {
+    final language = ref.watch(
+      LanguageProviders.selectedLanguage,
+    );
+    final transactionData = widget.command.value.data;
     final localizations = AppLocalizations.of(context)!;
-    return Column(
-      children: [
-        const SizedBox(
-          height: 20,
-        ),
-        GestureDetector(
-          onTap: toggleExpanded,
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    isExpanded
-                        ? Symbols.keyboard_arrow_down
-                        : Symbols.keyboard_arrow_right,
-                    size: 16,
-                    weight: IconSize.weightM,
-                    opticalSize: IconSize.opticalSizeM,
-                    grade: IconSize.gradeM,
-                  ),
-                  Text(
-                    localizations.signTransactionListTransactionsHeader
-                        .replaceAll('%1', (widget.command.key + 1).toString()),
-                    style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                  ),
-                ],
-              ),
-              if (widget.address != null)
-                Row(
-                  children: [
-                    Expanded(
-                      child: SelectableText(
-                        widget.address!.toUpperCase(),
-                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                      ),
-                    ),
-                  ],
-                ),
-            ],
+
+    List<Widget> buildTransactionData() {
+      final widgets = <Widget>[];
+
+      if (transactionData.code?.isNotEmpty ?? false) {
+        widgets.add(
+          ListTile(
+            title: const Text('Code'),
+            subtitle: Text(transactionData.code!),
           ),
-        ),
-        AnimatedSwitcher(
-          duration: const Duration(milliseconds: 300),
-          child: isExpanded
-              ? SizedBox.fromSize(
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        color: ArchethicTheme.backgroundTransferListOutline,
+        );
+      }
+      if (transactionData.content?.isNotEmpty ?? false) {
+        widgets.add(
+          ListTile(
+            title: const Text('Content'),
+            subtitle: Text(transactionData.content!),
+          ),
+        );
+      }
+
+      if (transactionData.ledger != null) {
+        if (transactionData.ledger!.token != null &&
+            transactionData.ledger!.token!.transfers.isNotEmpty) {
+          widgets.add(
+            ListTile(
+              title: SelectableText(
+                'Token Transfers',
+                style: ArchethicThemeStyles.textStyleSize12W400Highlighted,
+              ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: transactionData.ledger!.token!.transfers
+                    .map(
+                      (transfer) => Padding(
+                        padding: const EdgeInsets.only(left: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SelectionArea(
+                              child: Text.rich(
+                                TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: 'Amount: ',
+                                      style: ArchethicThemeStyles
+                                          .textStyleSize12W400Highlighted,
+                                    ),
+                                    TextSpan(
+                                      text: fromBigInt(transfer.amount)
+                                          .toDouble()
+                                          .formatNumber(
+                                            language
+                                                .getLocaleStringWithoutDefault(),
+                                          ),
+                                      style: ArchethicThemeStyles
+                                          .textStyleSize12W100Primary,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SelectionArea(
+                              child: Text.rich(
+                                TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: 'To: ',
+                                      style: ArchethicThemeStyles
+                                          .textStyleSize12W400Highlighted,
+                                    ),
+                                    TextSpan(
+                                      text: '${transfer.to}',
+                                      style: ArchethicThemeStyles
+                                          .textStyleSize12W100Primary,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      borderRadius: BorderRadius.circular(10),
+                    )
+                    .toList(),
+              ),
+            ),
+          );
+        }
+        if (transactionData.ledger!.uco != null &&
+            transactionData.ledger!.uco!.transfers.isNotEmpty) {
+          widgets.add(
+            ListTile(
+              title: SelectableText(
+                'UCO Transfers',
+                style: ArchethicThemeStyles.textStyleSize12W400Highlighted,
+              ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: transactionData.ledger!.uco!.transfers
+                    .map(
+                      (transfer) => Padding(
+                        padding: const EdgeInsets.only(left: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SelectionArea(
+                              child: Text.rich(
+                                TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: 'Amount: ',
+                                      style: ArchethicThemeStyles
+                                          .textStyleSize12W400Highlighted,
+                                    ),
+                                    TextSpan(
+                                      text: fromBigInt(transfer.amount)
+                                          .toDouble()
+                                          .formatNumber(
+                                            language
+                                                .getLocaleStringWithoutDefault(),
+                                          ),
+                                      style: ArchethicThemeStyles
+                                          .textStyleSize12W100Primary,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SelectionArea(
+                              child: Text.rich(
+                                TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: 'To: ',
+                                      style: ArchethicThemeStyles
+                                          .textStyleSize12W400Highlighted,
+                                    ),
+                                    TextSpan(
+                                      text: '${transfer.to}',
+                                      style: ArchethicThemeStyles
+                                          .textStyleSize12W100Primary,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
+          );
+        }
+      }
+
+      if (transactionData.ownerships.isNotEmpty) {
+        widgets.add(
+          ListTile(
+            title: SelectableText(
+              'Ownerships',
+              style: ArchethicThemeStyles.textStyleSize12W400Highlighted,
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: transactionData.ownerships
+                  .map(
+                    (ownership) => Text(
+                      ownership.toString(),
+                      style: ArchethicThemeStyles.textStyleSize12W100Primary,
                     ),
-                    elevation: 0,
-                    color: ArchethicTheme.backgroundTransferListCard,
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: SelectableText(
-                        const JsonEncoder.withIndent('  ')
-                            .convert(widget.command.value.data),
-                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                  )
+                  .toList(),
+            ),
+          ),
+        );
+      }
+
+      if (transactionData.actionRecipients.isNotEmpty) {
+        widgets.add(
+          ListTile(
+            title: SelectableText(
+              'Smart contract calls',
+              style: ArchethicThemeStyles.textStyleSize12W400Highlighted,
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: transactionData.actionRecipients
+                  .map(
+                    (actionRecipient) => Padding(
+                      padding: const EdgeInsets.only(left: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SelectionArea(
+                            child: Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'Action: ',
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize12W400Highlighted,
+                                  ),
+                                  TextSpan(
+                                    text: actionRecipient.action ?? '',
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize12W100Primary,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SelectionArea(
+                            child: Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'Address: ',
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize12W400Highlighted,
+                                  ),
+                                  TextSpan(
+                                    text: actionRecipient.address ?? '',
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize12W100Primary,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SelectionArea(
+                            child: Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'Arguments: ',
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize12W400Highlighted,
+                                  ),
+                                  TextSpan(
+                                    text: actionRecipient.args!.join(', '),
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize12W100Primary,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                )
-              : const SizedBox.shrink(),
+                  )
+                  .toList(),
+            ),
+          ),
+        );
+      }
+
+      return widgets;
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: SizedBox(
+        height: 400,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: buildTransactionData(),
         ),
-      ],
+      ),
     );
   }
 }
