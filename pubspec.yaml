@@ -38,7 +38,7 @@ dependencies:
   #  path: ../libdart-2
 
   # Archethic Messaging Dart SDK
-  archethic_messaging_lib_dart: ^0.0.14
+  archethic_messaging_lib_dart: ^0.0.15
   #archethic_messaging_lib_dart:
   #  git:
   #    url: https://github.com/archethic-foundation/messaging_dart_sdk.git
