@@ -35,6 +35,9 @@ abstract class RPCCommandHandler<C, R> {
     } on TypeError catch (e, stack) {
       _logger.severe('Invalid data', e, stack);
       return const Result.failure(awc.Failure.invalidParams);
+    } catch (e, stack) {
+      _logger.severe('Command failed', e, stack);
+      return const Result.failure(awc.Failure.other);
     }
   }
 }
