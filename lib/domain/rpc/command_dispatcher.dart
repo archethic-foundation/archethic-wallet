@@ -141,7 +141,7 @@ class CommandDispatcher {
       return;
     }
 
-    handler
+    await handler
         .handle(command.command)
         .then(
           command.completer.complete,
