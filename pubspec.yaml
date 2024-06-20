@@ -48,6 +48,8 @@ dependencies:
 
   # RPC datastructures.
   archethic_wallet_client: ^2.0.0
+  #archethic_wallet_client:
+  #  path: ../archethic-wallet-client-dart
 
   # An ASN1 parser library for Dart. Encodes / decodes from ASN1 Objects to BER bytes
   asn1lib: ^1.5.0
