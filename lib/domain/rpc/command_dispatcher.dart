@@ -145,7 +145,7 @@ class CommandDispatcher {
         .handle(command.command)
         .then(
           command.completer.complete,
-          onError: (error) => command.completer.complete(Result.failure(error)),
+          onError: command.completer.completeError,
         )
         .whenComplete(_process);
   }
