@@ -21,6 +21,23 @@ class RPCSubscribeCurrentAccountCommandHandler extends RPCSubscriptionHandler<
           genesisAddress: '',
           name: '',
         );
-    return modelNotNull.toJson();
+    return {
+      'name': _getShortName(modelNotNull.name),
+      'genesisAddress': modelNotNull.genesisAddress,
+    };
+  }
+
+  String _getShortName(String name) {
+    var result = name;
+    if (name.startsWith('archethic-wallet-')) {
+      result = result.replaceFirst('archethic-wallet-', '');
+    }
+    if (name.startsWith('aeweb-')) {
+      result = result.replaceFirst('aeweb-', '');
+    }
+
+    return Uri.decodeFull(
+      result,
+    );
   }
 }
