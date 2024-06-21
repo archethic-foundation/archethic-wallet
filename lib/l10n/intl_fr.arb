@@ -500,5 +500,20 @@
     "seedHex": "Voir en hexadécimal",
     "burnAddressLbl": "Burn address",
     "webChannelIncompatibilityWarning": "Système non compatible",
-    "webChannelIncompatibilityWarningDesc": "Votre système ne supporte pas les MessageChannels."
+    "webChannelIncompatibilityWarningDesc": "Votre système ne supporte pas les MessageChannels.",
+    "transactionRaw": "Transaction",
+    "transactionRawCode": "Code",
+    "transactionRawContent": "Contenu",
+    "transactionRawTokenTransfers": "Transfert de token",
+    "transactionRawTokenTransferTokenAddress": "Adresse du token",
+    "transactionRawTokenTransferAmount": "Montant",
+    "transactionRawTokenTransferTo": "A",
+    "transactionRawUCOTransfers": "Transfert de UCO",
+    "transactionRawUCOTransferAmount": "Montant",
+    "transactionRawUCOTransferTo": "A",
+    "transactionRawOwnerships": "Autorisations",
+    "transactionRawSmartContractCalls": "Appels smart contract",
+    "transactionRawSmartContractCallAction": "Action",
+    "transactionRawSmartContractCallAddress": "Adresse du contrat",
+    "transactionRawSmartContractCallArguments": "Arguments"
 }
