@@ -220,6 +220,7 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
                 final rpcSignTransactionCommandData = entry;
 
                 return TransactionRaw(
+                  index,
                   addresses[index],
                   rpcSignTransactionCommandData,
                 );

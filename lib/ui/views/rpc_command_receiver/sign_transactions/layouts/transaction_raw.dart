@@ -1,7 +1,10 @@
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/model/available_language.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/formatters.dart';
+import 'package:aewallet/ui/widgets/components/scrollbar.dart';
+import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:flutter/material.dart';
@@ -10,11 +13,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TransactionRaw extends ConsumerStatefulWidget {
   const TransactionRaw(
+    this.index,
     this.address,
     this.command, {
     super.key,
   });
 
+  final int index;
   final MapEntry<int, awc.SignTransactionRequestData> command;
   final String? address;
 
@@ -32,21 +37,55 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
     final localizations = AppLocalizations.of(context)!;
 
     List<Widget> buildTransactionData() {
-      final widgets = <Widget>[];
+      final widgets = <Widget>[
+        Column(
+          children: [
+            Opacity(
+              opacity: 0.4,
+              child: Container(
+                height: 1,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  gradient: ArchethicTheme.gradientMainButton,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              '${localizations.transactionRaw} ${widget.index + 1}',
+              style: ArchethicThemeStyles.textStyleSize14W600Primary,
+            ),
+          ],
+        ),
+      ];
 
       if (transactionData.code?.isNotEmpty ?? false) {
         widgets.add(
           ListTile(
-            title: const Text('Code'),
-            subtitle: Text(transactionData.code!),
+            title: Text(
+              localizations.transactionRawCode,
+              style: ArchethicThemeStyles.textStyleSize12W400Highlighted,
+            ),
+            subtitle: Text(
+              transactionData.code!,
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
+            ),
           ),
         );
       }
       if (transactionData.content?.isNotEmpty ?? false) {
         widgets.add(
           ListTile(
-            title: const Text('Content'),
-            subtitle: Text(transactionData.content!),
+            title: Text(
+              localizations.transactionRawContent,
+              style: ArchethicThemeStyles.textStyleSize12W400Highlighted,
+            ),
+            subtitle: Text(
+              transactionData.content!,
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
+            ),
           ),
         );
       }
@@ -57,7 +96,7 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
           widgets.add(
             ListTile(
               title: SelectableText(
-                'Token Transfers',
+                localizations.transactionRawTokenTransfers,
                 style: ArchethicThemeStyles.textStyleSize12W400Highlighted,
               ),
               subtitle: Column(
@@ -74,17 +113,13 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
                                 TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: 'Amount: ',
+                                      text:
+                                          '${localizations.transactionRawTokenTransferTokenAddress}: ',
                                       style: ArchethicThemeStyles
                                           .textStyleSize12W400Highlighted,
                                     ),
                                     TextSpan(
-                                      text: fromBigInt(transfer.amount)
-                                          .toDouble()
-                                          .formatNumber(
-                                            language
-                                                .getLocaleStringWithoutDefault(),
-                                          ),
+                                      text: transfer.tokenAddress,
                                       style: ArchethicThemeStyles
                                           .textStyleSize12W100Primary,
                                     ),
@@ -93,11 +128,76 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
                               ),
                             ),
                             SelectionArea(
+                              child: FutureBuilder<Map<String, Token>>(
+                                future: sl.get<ApiService>().getToken(
+                                  [transfer.tokenAddress!],
+                                  request: 'symbol',
+                                ),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData &&
+                                      snapshot.data![transfer.tokenAddress!] !=
+                                          null) {
+                                    return Text.rich(
+                                      TextSpan(
+                                        children: [
+                                          TextSpan(
+                                            text:
+                                                '${localizations.transactionRawTokenTransferAmount}: ',
+                                            style: ArchethicThemeStyles
+                                                .textStyleSize12W400Highlighted,
+                                          ),
+                                          TextSpan(
+                                            text: fromBigInt(transfer.amount)
+                                                .toDouble()
+                                                .formatNumber(
+                                                  language
+                                                      .getLocaleStringWithoutDefault(),
+                                                ),
+                                            style: ArchethicThemeStyles
+                                                .textStyleSize12W100Primary,
+                                          ),
+                                          TextSpan(
+                                            text:
+                                                ' ${snapshot.data![transfer.tokenAddress!]!.symbol}',
+                                            style: ArchethicThemeStyles
+                                                .textStyleSize12W100Primary,
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }
+                                  return Text.rich(
+                                    TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text:
+                                              '${localizations.transactionRawTokenTransferAmount}: ',
+                                          style: ArchethicThemeStyles
+                                              .textStyleSize12W400Highlighted,
+                                        ),
+                                        TextSpan(
+                                          text: fromBigInt(transfer.amount)
+                                              .toDouble()
+                                              .formatNumber(
+                                                language
+                                                    .getLocaleStringWithoutDefault(),
+                                              ),
+                                          style: ArchethicThemeStyles
+                                              .textStyleSize12W100Primary,
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            SelectionArea(
                               child: Text.rich(
                                 TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: 'To: ',
+                                      text:
+                                          '${localizations.transactionRawTokenTransferTo}: ',
                                       style: ArchethicThemeStyles
                                           .textStyleSize12W400Highlighted,
                                     ),
@@ -124,7 +224,7 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
           widgets.add(
             ListTile(
               title: SelectableText(
-                'UCO Transfers',
+                localizations.transactionRawUCOTransfers,
                 style: ArchethicThemeStyles.textStyleSize12W400Highlighted,
               ),
               subtitle: Column(
@@ -141,17 +241,17 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
                                 TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: 'Amount: ',
+                                      text:
+                                          '${localizations.transactionRawUCOTransferAmount}: ',
                                       style: ArchethicThemeStyles
                                           .textStyleSize12W400Highlighted,
                                     ),
                                     TextSpan(
-                                      text: fromBigInt(transfer.amount)
-                                          .toDouble()
-                                          .formatNumber(
-                                            language
-                                                .getLocaleStringWithoutDefault(),
-                                          ),
+                                      text:
+                                          '${fromBigInt(transfer.amount).toDouble().formatNumber(
+                                                language
+                                                    .getLocaleStringWithoutDefault(),
+                                              )} UCO',
                                       style: ArchethicThemeStyles
                                           .textStyleSize12W100Primary,
                                     ),
@@ -164,7 +264,8 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
                                 TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: 'To: ',
+                                      text:
+                                          '${localizations.transactionRawUCOTransferTo}: ',
                                       style: ArchethicThemeStyles
                                           .textStyleSize12W400Highlighted,
                                     ),
@@ -192,7 +293,7 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
         widgets.add(
           ListTile(
             title: SelectableText(
-              'Ownerships',
+              localizations.transactionRawOwnerships,
               style: ArchethicThemeStyles.textStyleSize12W400Highlighted,
             ),
             subtitle: Column(
@@ -214,7 +315,7 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
         widgets.add(
           ListTile(
             title: SelectableText(
-              'Smart contract calls',
+              localizations.transactionRawSmartContractCalls,
               style: ArchethicThemeStyles.textStyleSize12W400Highlighted,
             ),
             subtitle: Column(
@@ -231,12 +332,15 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
                               TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: 'Action: ',
+                                    text:
+                                        '${localizations.transactionRawSmartContractCallAction}: ',
                                     style: ArchethicThemeStyles
                                         .textStyleSize12W400Highlighted,
                                   ),
                                   TextSpan(
-                                    text: actionRecipient.action ?? '',
+                                    text: actionRecipient.action
+                                            ?.replaceAll('_', ' ') ??
+                                        '',
                                     style: ArchethicThemeStyles
                                         .textStyleSize12W100Primary,
                                   ),
@@ -249,7 +353,8 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
                               TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: 'Address: ',
+                                    text:
+                                        '${localizations.transactionRawSmartContractCallAddress}: ',
                                     style: ArchethicThemeStyles
                                         .textStyleSize12W400Highlighted,
                                   ),
@@ -262,24 +367,75 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
                               ),
                             ),
                           ),
-                          SelectionArea(
-                            child: Text.rich(
-                              TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: 'Arguments: ',
-                                    style: ArchethicThemeStyles
-                                        .textStyleSize12W400Highlighted,
-                                  ),
-                                  TextSpan(
-                                    text: actionRecipient.args!.join(', '),
-                                    style: ArchethicThemeStyles
-                                        .textStyleSize12W100Primary,
-                                  ),
-                                ],
+                          if (actionRecipient.args != null &&
+                              actionRecipient.args!.isNotEmpty)
+                            SelectionArea(
+                              child: FutureBuilder<Map<String, Transaction>>(
+                                future: sl.get<ApiService>().getLastTransaction(
+                                  [actionRecipient.address!],
+                                  request: 'data { code }',
+                                ),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData &&
+                                      snapshot.data![
+                                              actionRecipient.address!] !=
+                                          null) {
+                                    final transaction = snapshot
+                                        .data![actionRecipient.address!];
+                                    final code = transaction?.data?.code ?? '';
+                                    return Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          '${localizations.transactionRawSmartContractCallArguments}: ',
+                                          style: ArchethicThemeStyles
+                                              .textStyleSize12W400Highlighted,
+                                        ),
+                                        ...actionRecipient.args!
+                                            .asMap()
+                                            .entries
+                                            .map((entry) {
+                                          final index = entry.key;
+                                          final arg = entry.value;
+                                          return Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 15),
+                                            child: Text(
+                                              '${_getSmartContractCallArgName(code, actionRecipient.action ?? '', index)}: $arg',
+                                              style: ArchethicThemeStyles
+                                                  .textStyleSize12W100Primary,
+                                            ),
+                                          );
+                                        }),
+                                      ],
+                                    );
+                                  }
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '${localizations.transactionRawSmartContractCallArguments}: ',
+                                        style: ArchethicThemeStyles
+                                            .textStyleSize12W400Highlighted,
+                                      ),
+                                      ...actionRecipient.args!.map((arg) {
+                                        return Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 15),
+                                          child: Text(
+                                            arg.toString(),
+                                            style: ArchethicThemeStyles
+                                                .textStyleSize12W100Primary,
+                                          ),
+                                        );
+                                      }),
+                                    ],
+                                  );
+                                },
                               ),
                             ),
-                          ),
                         ],
                       ),
                     ),
@@ -295,13 +451,42 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
 
     return Padding(
       padding: const EdgeInsets.only(top: 10),
-      child: SizedBox(
-        height: 400,
+      child: ArchethicScrollbar(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: buildTransactionData(),
         ),
       ),
     );
+  }
+
+  String _getSmartContractCallArgName(
+    String content,
+    String methodName,
+    int index,
+  ) {
+    final actionRegex =
+        RegExp(r'actions triggered_by: transaction, on: (\w+)\(([^)]*)\) do');
+    final matches = actionRegex.allMatches(content);
+
+    for (final match in matches) {
+      final matchedMethodName = match.group(1);
+      if (matchedMethodName == methodName) {
+        final params =
+            match.group(2)?.split(',').map((param) => param.trim()).toList() ??
+                [];
+
+        if (index < params.length) {
+          if (params[index].trim().isEmpty) {
+            return '';
+          }
+          final argumentName = params[index].replaceAll('_', ' ');
+
+          return argumentName[0].toUpperCase() +
+              argumentName.substring(1).toLowerCase();
+        }
+      }
+    }
+    return '';
   }
 }
