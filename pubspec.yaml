@@ -20,13 +20,13 @@ dependencies:
       url: https://github.com/redDwarf03/app_version_update.git
       ref: main
 
-  #archethic_dapp_framework_flutter: ^1.2.2
+  archethic_dapp_framework_flutter: ^1.2.3
   #archethic_dapp_framework_flutter:
   #  git:
   #    url: https://github.com/archethic-foundation/archethic-dapp-framework-flutter.git
   #    ref: web_extension_support
-  archethic_dapp_framework_flutter:
-    path: ../archethic-dapp-framework-flutter
+  #archethic_dapp_framework_flutter:
+  #  path: ../archethic-dapp-framework-flutter
 
   # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
   archethic_lib_dart: ^3.4.0
@@ -38,22 +38,22 @@ dependencies:
   #  path: ../libdart-2
 
   # Archethic Messaging Dart SDK
-  #archethic_messaging_lib_dart: ^0.0.16
+  archethic_messaging_lib_dart: ^0.0.17
   #archethic_messaging_lib_dart:
   #  git:
   #    url: https://github.com/archethic-foundation/messaging_dart_sdk.git
   #    ref: main
-  archethic_messaging_lib_dart:
-    path: ../messaging_dart_sdk
+  #archethic_messaging_lib_dart:
+  #  path: ../messaging_dart_sdk
 
   # RPC datastructures.
-  #archethic_wallet_client: ^2.0.0
+  archethic_wallet_client: ^2.0.2
   #archethic_wallet_client:
   #  git:
   #    url: https://github.com/archethic-foundation/archethic-wallet-client-dart.git
   #    ref: 40-add-a-description-for-each-tx-to-sign-to-explain-the-goal-of-the-tx
-  archethic_wallet_client:
-    path: ../archethic-wallet-client-dart
+  #archethic_wallet_client:
+  #  path: ../archethic-wallet-client-dart
 
   # An ASN1 parser library for Dart. Encodes / decodes from ASN1 Objects to BER bytes
   asn1lib: ^1.5.0
