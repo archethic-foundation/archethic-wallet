@@ -30,6 +30,7 @@ class RPCSignTransactionsCommandHandler extends RPCCommandHandler<
       data: awc.SignTransactionRequest(
         serviceName: dto.payload['serviceName'],
         pathSuffix: dto.payload['pathSuffix'],
+        description: dto.payload['description'],
         transactions: rpcSignTransactionCommandDataList,
       ),
     );

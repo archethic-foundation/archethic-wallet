@@ -25,13 +25,15 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
   const SignTransactionsConfirmationForm(
     this.addresses,
     this.command,
-    this.estimatedFees, {
+    this.estimatedFees,
+    this.description, {
     super.key,
   });
 
   final RPCCommand<awc.SignTransactionRequest> command;
   final double estimatedFees;
   final List<String?> addresses;
+  final Map<String, dynamic> description;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -77,6 +79,9 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
+    final locale = ref.read(LanguageProviders.selectedLocale);
+    final descriptionLocale =
+        description[locale.languageCode] ?? description['en'] ?? '';
     final localizations = AppLocalizations.of(context)!;
     final formState = ref.watch(
       SignTransactionsConfirmationProviders.form(command),
@@ -99,8 +104,7 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
     );
 
     return formState.map(
-      error: (error) =>
-          const SizedBox(), // TODO(reddwarf): should we display an error/loading screen ?
+      error: (error) => const SizedBox(),
       loading: (loading) => const SizedBox(),
       data: (formData) {
         return Column(
@@ -212,6 +216,17 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
                       style: ArchethicThemeStyles.textStyleSize12W100Primary,
                     ),
                   ],
+                ),
+              ),
+            if (descriptionLocale.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    descriptionLocale,
+                    style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                  ),
                 ),
               ),
             Column(

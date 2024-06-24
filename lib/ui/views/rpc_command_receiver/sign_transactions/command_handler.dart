@@ -27,6 +27,7 @@ class SignTransactionsCommandHandler extends CommandHandler {
             final signedTransactionList = <awc.SignTransactionsResultDetail>[];
             final serviceName = command.data.serviceName;
             final pathSuffix = command.data.pathSuffix;
+            final description = command.data.description;
 
             final seed =
                 ref.read(SessionProviders.session).loggedIn!.wallet.seed;
@@ -99,6 +100,7 @@ class SignTransactionsCommandHandler extends CommandHandler {
                     addresses,
                     command,
                     globalFees,
+                    description,
                   ),
                 ),
               ),

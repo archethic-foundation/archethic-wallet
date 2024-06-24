@@ -70,10 +70,10 @@ packages:
     dependency: "direct main"
     description:
       name: archethic_dapp_framework_flutter
-      sha256: "76897b26a0e86efbf2495aafcd8c92af9cb045467d346b368346d97bd16b1a58"
+      sha256: "68be5a7a396b648cbd5e3602c6019e5196e85c67b9f093d03ab9589f96803301"
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.1"
+    version: "1.2.2"
   archethic_lib_dart:
     dependency: "direct main"
     description:
@@ -86,18 +86,18 @@ packages:
     dependency: "direct main"
     description:
       name: archethic_messaging_lib_dart
-      sha256: "72e1a6bcc5d11fdc0ce3427e1098cd9cb6b9b013a904eeb6982c286b13d0af1c"
+      sha256: be32822328ec2d09c95f735ef111d13139d2594f050727eccd1a98b730036da1
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.15"
+    version: "0.0.16"
   archethic_wallet_client:
     dependency: "direct main"
     description:
       name: archethic_wallet_client
-      sha256: "207e5351c0d13b8e6a853127c8cab26bac881a7ec1b99a6e2ef57c0a4547948c"
+      sha256: "94343bdb2b602fe8e4c9f3c558f0295663efef76714ebac22a37497618d87f65"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   archive:
     dependency: transitive
     description:
@@ -150,10 +150,10 @@ packages:
     dependency: "direct main"
     description:
       name: barcode_scan2
-      sha256: "847ff88888213a3b2866d98839ee6d85e4da8002df83e7971d355d24d5f31c4c"
+      sha256: "142d1264864b415b866e51c8306e78c8de228230f5a59d9ae5f77d1490c79de1"
       url: "https://pub.dev"
     source: hosted
-    version: "4.3.0"
+    version: "4.3.1"
   bip39_mnemonic:
     dependency: "direct main"
     description:
@@ -422,10 +422,10 @@ packages:
     dependency: "direct main"
     description:
       name: deeplink_rpc
-      sha256: eefff517ccc79f26b4414fc3387932d49f80248640ebfbf8331d4a998531d1d9
+      sha256: e08e6422913fcdb12b5243ba6f622c841e523ed0577a6442fe90f7ccd6652901
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.6"
+    version: "1.0.8"
   device_info_plus:
     dependency: transitive
     description:
