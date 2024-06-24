@@ -1,9 +1,9 @@
+import 'dart:convert';
+
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/model/available_language.dart';
-import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/formatters.dart';
-import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
@@ -20,7 +20,7 @@ class TransactionRaw extends ConsumerStatefulWidget {
   });
 
   final int index;
-  final MapEntry<int, awc.SignTransactionRequestData> command;
+  final awc.SignTransactionRequestData command;
   final String? address;
 
   @override
@@ -28,41 +28,20 @@ class TransactionRaw extends ConsumerStatefulWidget {
 }
 
 class TransactionRawState extends ConsumerState<TransactionRaw> {
+  bool _isExpanded = false;
+  bool _isJsonView = false;
+
   @override
   Widget build(BuildContext context) {
     final language = ref.watch(
       LanguageProviders.selectedLanguage,
     );
-    final transactionData = widget.command.value.data;
+    final transactionData = widget.command.data;
     final localizations = AppLocalizations.of(context)!;
 
     List<Widget> buildTransactionData() {
       final widgets = <Widget>[
-        Column(
-          children: [
-            Opacity(
-              opacity: 0.4,
-              child: Container(
-                height: 1,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  gradient: ArchethicTheme.gradientMainButton,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
-              '${localizations.transactionRaw} ${widget.index + 1}',
-              style: ArchethicThemeStyles.textStyleSize14W600Primary,
-            ),
-          ],
-        ),
-      ];
-
-      if (transactionData.code?.isNotEmpty ?? false) {
-        widgets.add(
+        if (transactionData.code?.isNotEmpty ?? false)
           ListTile(
             title: Text(
               localizations.transactionRawCode,
@@ -73,27 +52,20 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
               style: ArchethicThemeStyles.textStyleSize12W100Primary,
             ),
           ),
-        );
-      }
-      if (transactionData.content?.isNotEmpty ?? false) {
-        widgets.add(
+        if (transactionData.content?.isNotEmpty ?? false)
           ListTile(
             title: Text(
               localizations.transactionRawContent,
               style: ArchethicThemeStyles.textStyleSize12W400Highlighted,
             ),
-            subtitle: Text(
+            subtitle: SelectableText(
               transactionData.content!,
               style: ArchethicThemeStyles.textStyleSize12W100Primary,
             ),
           ),
-        );
-      }
-
-      if (transactionData.ledger != null) {
-        if (transactionData.ledger!.token != null &&
-            transactionData.ledger!.token!.transfers.isNotEmpty) {
-          widgets.add(
+        if (transactionData.ledger != null) ...[
+          if (transactionData.ledger!.token != null &&
+              transactionData.ledger!.token!.transfers.isNotEmpty)
             ListTile(
               title: SelectableText(
                 localizations.transactionRawTokenTransfers,
@@ -217,11 +189,8 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
                     .toList(),
               ),
             ),
-          );
-        }
-        if (transactionData.ledger!.uco != null &&
-            transactionData.ledger!.uco!.transfers.isNotEmpty) {
-          widgets.add(
+          if (transactionData.ledger!.uco != null &&
+              transactionData.ledger!.uco!.transfers.isNotEmpty)
             ListTile(
               title: SelectableText(
                 localizations.transactionRawUCOTransfers,
@@ -285,12 +254,8 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
                     .toList(),
               ),
             ),
-          );
-        }
-      }
-
-      if (transactionData.ownerships.isNotEmpty) {
-        widgets.add(
+        ],
+        if (transactionData.ownerships.isNotEmpty)
           ListTile(
             title: SelectableText(
               localizations.transactionRawOwnerships,
@@ -308,11 +273,7 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
                   .toList(),
             ),
           ),
-        );
-      }
-
-      if (transactionData.actionRecipients.isNotEmpty) {
-        widgets.add(
+        if (transactionData.actionRecipients.isNotEmpty)
           ListTile(
             title: SelectableText(
               localizations.transactionRawSmartContractCalls,
@@ -443,19 +404,80 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
                   .toList(),
             ),
           ),
-        );
-      }
+      ];
 
       return widgets;
     }
 
+    Widget buildJsonView() {
+      final jsonData = const JsonEncoder.withIndent('  ').convert(
+        widget.command.data,
+      );
+      return SelectableText(
+        jsonData,
+        style: ArchethicThemeStyles.textStyleSize12W100Primary,
+      );
+    }
+
     return Padding(
       padding: const EdgeInsets.only(top: 10),
-      child: ArchethicScrollbar(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: buildTransactionData(),
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '${localizations.transactionRaw} ${widget.index + 1}',
+                style: ArchethicThemeStyles.textStyleSize14W600Primary,
+              ),
+              Row(
+                children: [
+                  Text(
+                    'Formatted',
+                    style: ArchethicThemeStyles.textStyleSize10W100Primary,
+                  ),
+                  Radio(
+                    value: false,
+                    groupValue: _isJsonView,
+                    onChanged: (value) {
+                      setState(() {
+                        _isJsonView = value!;
+                      });
+                    },
+                  ),
+                  Text(
+                    'Raw',
+                    style: ArchethicThemeStyles.textStyleSize10W100Primary,
+                  ),
+                  Radio(
+                    value: true,
+                    groupValue: _isJsonView,
+                    onChanged: (value) {
+                      setState(() {
+                        _isJsonView = value!;
+                      });
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      _isExpanded ? Icons.expand_less : Icons.expand_more,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isExpanded = !_isExpanded;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+          if (_isExpanded)
+            (_isJsonView
+                ? buildJsonView()
+                : Column(children: buildTransactionData())),
+        ],
       ),
     );
   }

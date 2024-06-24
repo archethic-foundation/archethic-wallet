@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
@@ -107,141 +109,159 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
       error: (error) => const SizedBox(),
       loading: (loading) => const SizedBox(),
       data: (formData) {
-        return Column(
-          children: <Widget>[
-            if (primaryCurrency.primaryCurrency ==
-                AvailablePrimaryCurrencyEnum.native)
-              Text.rich(
-                TextSpan(
-                  children: [
+        return ScrollConfiguration(
+          behavior: ScrollConfiguration.of(context).copyWith(
+            dragDevices: {
+              PointerDeviceKind.touch,
+              PointerDeviceKind.mouse,
+              PointerDeviceKind.trackpad,
+            },
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                if (primaryCurrency.primaryCurrency ==
+                    AvailablePrimaryCurrencyEnum.native)
+                  Text.rich(
                     TextSpan(
-                      text: command.data.transactions.length == 1
-                          ? localizations
-                              .sign1TransactionCommandReceivedNotification
-                              .replaceAll(
-                                '%1',
-                                formData
-                                    .value.signTransactionCommand.origin.name,
-                              )
-                              .replaceAll(
-                                '%2',
-                                _getShortName(
-                                  formData.value.signTransactionCommand.data
-                                      .serviceName,
-                                ),
-                              )
-                          : localizations
-                              .signXTransactionsCommandReceivedNotification
-                              .replaceAll(
-                                '%1',
-                                formData
-                                    .value.signTransactionCommand.origin.name,
-                              )
-                              .replaceAll(
-                                '%2',
-                                command.data.transactions.length.toString(),
-                              )
-                              .replaceAll(
-                                '%3',
-                                _getShortName(
-                                  formData.value.signTransactionCommand.data
-                                      .serviceName,
-                                ),
-                              ),
-                      style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                      children: [
+                        TextSpan(
+                          text: command.data.transactions.length == 1
+                              ? localizations
+                                  .sign1TransactionCommandReceivedNotification
+                                  .replaceAll(
+                                    '%1',
+                                    formData.value.signTransactionCommand.origin
+                                        .name,
+                                  )
+                                  .replaceAll(
+                                    '%2',
+                                    _getShortName(
+                                      formData.value.signTransactionCommand.data
+                                          .serviceName,
+                                    ),
+                                  )
+                              : localizations
+                                  .signXTransactionsCommandReceivedNotification
+                                  .replaceAll(
+                                    '%1',
+                                    formData.value.signTransactionCommand.origin
+                                        .name,
+                                  )
+                                  .replaceAll(
+                                    '%2',
+                                    command.data.transactions.length.toString(),
+                                  )
+                                  .replaceAll(
+                                    '%3',
+                                    _getShortName(
+                                      formData.value.signTransactionCommand.data
+                                          .serviceName,
+                                    ),
+                                  ),
+                          style:
+                              ArchethicThemeStyles.textStyleSize12W100Primary,
+                        ),
+                        TextSpan(
+                          text: ' ${estimatedFees.formatNumber(
+                            language.getLocaleStringWithoutDefault(),
+                          )} UCO',
+                          style: ArchethicThemeStyles
+                              .textStyleSize12W400Highlighted,
+                        ),
+                        TextSpan(
+                          text: ' ($amountInFiat)',
+                          style:
+                              ArchethicThemeStyles.textStyleSize12W100Primary,
+                        ),
+                      ],
                     ),
+                  )
+                else
+                  Text.rich(
                     TextSpan(
-                      text: ' ${estimatedFees.formatNumber(
-                        language.getLocaleStringWithoutDefault(),
-                      )} UCO',
-                      style:
-                          ArchethicThemeStyles.textStyleSize12W400Highlighted,
+                      children: [
+                        TextSpan(
+                          text: command.data.transactions.length == 1
+                              ? localizations
+                                  .sign1TransactionCommandReceivedNotification
+                                  .replaceAll(
+                                    '%1',
+                                    formData.value.signTransactionCommand.origin
+                                        .name,
+                                  )
+                                  .replaceAll(
+                                    '%2',
+                                    _getShortName(
+                                      formData.value.signTransactionCommand.data
+                                          .serviceName,
+                                    ),
+                                  )
+                              : localizations
+                                  .signXTransactionsCommandReceivedNotification
+                                  .replaceAll(
+                                    '%1',
+                                    formData.value.signTransactionCommand.origin
+                                        .name,
+                                  )
+                                  .replaceAll(
+                                    '%2',
+                                    command.data.transactions.length.toString(),
+                                  )
+                                  .replaceAll(
+                                    '%3',
+                                    _getShortName(
+                                      formData.value.signTransactionCommand.data
+                                          .serviceName,
+                                    ),
+                                  ),
+                          style:
+                              ArchethicThemeStyles.textStyleSize12W100Primary,
+                        ),
+                        TextSpan(
+                          text: ' $amountInFiat',
+                          style: ArchethicThemeStyles
+                              .textStyleSize12W400Highlighted,
+                        ),
+                        TextSpan(
+                          text: ' (${estimatedFees.formatNumber(
+                            language.getLocaleStringWithoutDefault(),
+                          )} UCO)',
+                          style:
+                              ArchethicThemeStyles.textStyleSize12W100Primary,
+                        ),
+                      ],
                     ),
-                    TextSpan(
-                      text: ' ($amountInFiat)',
-                      style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                    ),
-                  ],
-                ),
-              )
-            else
-              Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: command.data.transactions.length == 1
-                          ? localizations
-                              .sign1TransactionCommandReceivedNotification
-                              .replaceAll(
-                                '%1',
-                                formData
-                                    .value.signTransactionCommand.origin.name,
-                              )
-                              .replaceAll(
-                                '%2',
-                                _getShortName(
-                                  formData.value.signTransactionCommand.data
-                                      .serviceName,
-                                ),
-                              )
-                          : localizations
-                              .signXTransactionsCommandReceivedNotification
-                              .replaceAll(
-                                '%1',
-                                formData
-                                    .value.signTransactionCommand.origin.name,
-                              )
-                              .replaceAll(
-                                '%2',
-                                command.data.transactions.length.toString(),
-                              )
-                              .replaceAll(
-                                '%3',
-                                _getShortName(
-                                  formData.value.signTransactionCommand.data
-                                      .serviceName,
-                                ),
-                              ),
-                      style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                    ),
-                    TextSpan(
-                      text: ' $amountInFiat',
-                      style:
-                          ArchethicThemeStyles.textStyleSize12W400Highlighted,
-                    ),
-                    TextSpan(
-                      text: ' (${estimatedFees.formatNumber(
-                        language.getLocaleStringWithoutDefault(),
-                      )} UCO)',
-                      style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                    ),
-                  ],
-                ),
-              ),
-            if (descriptionLocale.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    descriptionLocale,
-                    style: ArchethicThemeStyles.textStyleSize12W100Primary,
                   ),
+                if (descriptionLocale.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        descriptionLocale,
+                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                      ),
+                    ),
+                  ),
+                ListView.builder(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: command.data.transactions.length,
+                  itemBuilder: (context, index) {
+                    final rpcSignTransactionCommandData =
+                        command.data.transactions[index];
+                    return TransactionRaw(
+                      index,
+                      addresses[index],
+                      rpcSignTransactionCommandData,
+                    );
+                  },
                 ),
-              ),
-            Column(
-              children: command.data.transactions.asMap().entries.map((entry) {
-                final index = entry.key;
-                final rpcSignTransactionCommandData = entry;
-
-                return TransactionRaw(
-                  index,
-                  addresses[index],
-                  rpcSignTransactionCommandData,
-                );
-              }).toList(),
+              ],
             ),
-          ],
+          ),
         );
       },
     );
