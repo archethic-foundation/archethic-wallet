@@ -45,7 +45,7 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
     final preferences = ref.watch(SettingsProviders.settings);
     return TextButton(
       style: ButtonStyle(
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
           const RoundedRectangleBorder(),
         ),
       ),
@@ -135,7 +135,7 @@ class _SettingsListItemSingleLine extends _SettingsListItem {
 
     return TextButton(
       style: ButtonStyle(
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
           const RoundedRectangleBorder(),
         ),
       ),
