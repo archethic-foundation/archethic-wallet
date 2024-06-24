@@ -20,13 +20,13 @@ dependencies:
       url: https://github.com/redDwarf03/app_version_update.git
       ref: main
 
-  archethic_dapp_framework_flutter: ^1.2.2
+  #archethic_dapp_framework_flutter: ^1.2.2
   #archethic_dapp_framework_flutter:
   #  git:
   #    url: https://github.com/archethic-foundation/archethic-dapp-framework-flutter.git
   #    ref: web_extension_support
-  #archethic_dapp_framework_flutter:
-  #  path: ../archethic-dapp-framework-flutter
+  archethic_dapp_framework_flutter:
+    path: ../archethic-dapp-framework-flutter
 
   # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
   archethic_lib_dart: ^3.4.0
@@ -38,13 +38,13 @@ dependencies:
   #  path: ../libdart-2
 
   # Archethic Messaging Dart SDK
-  archethic_messaging_lib_dart: ^0.0.16
+  #archethic_messaging_lib_dart: ^0.0.16
   #archethic_messaging_lib_dart:
   #  git:
   #    url: https://github.com/archethic-foundation/messaging_dart_sdk.git
   #    ref: main
-  #archethic_messaging_lib_dart:
-  #  path: ../messaging_dart_sdk
+  archethic_messaging_lib_dart:
+    path: ../messaging_dart_sdk
 
   # RPC datastructures.
   archethic_wallet_client: ^2.0.0
@@ -80,7 +80,11 @@ dependencies:
   clock: ^1.1.1
 
   # Dart package that provides simple access to the CoinGecko API (Version 3)
-  coingecko_api: ^1.1.1+1
+  #coingecko_api: ^1.1.1+1
+  coingecko_api:
+    git:
+      url: https://github.com/redDwarf03/coingecko_api.git
+      ref: master
 
   # Collections and utilities functions and classes related to collections.
   collection: ^1.18.0
@@ -189,7 +193,7 @@ dependencies:
   infinite_scroll_pagination: ^4.0.0
 
   # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
-  intl: ^0.18.1
+  intl: ^0.19.0
 
   # Annotations to create static Dart interfaces for JavaScript APIs.
   js: ^0.6.7
