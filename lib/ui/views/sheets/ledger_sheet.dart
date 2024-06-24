@@ -237,7 +237,8 @@ class _LedgerSheetState extends ConsumerState<LedgerSheet> {
                             ),
                           );
                           _logger.info(
-                              'getArchAddress: ${uint8ListToHex(getArchAddress)}');
+                            'getArchAddress: ${uint8ListToHex(getArchAddress)}',
+                          );
                           await sl
                               .get<LedgerNanoSImpl>()
                               .connectLedger(getArchAddress);
