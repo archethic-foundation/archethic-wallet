@@ -91,10 +91,9 @@ packages:
   archethic_wallet_client:
     dependency: "direct main"
     description:
-      name: archethic_wallet_client
-      sha256: "94343bdb2b602fe8e4c9f3c558f0295663efef76714ebac22a37497618d87f65"
-      url: "https://pub.dev"
-    source: hosted
+      path: "../archethic-wallet-client-dart"
+      relative: true
+    source: path
     version: "2.0.1"
   archive:
     dependency: transitive
