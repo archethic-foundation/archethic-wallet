@@ -17,9 +17,9 @@ class _SettingsListItemSwitch extends _SettingsListItem {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final preferences = ref.watch(SettingsProviders.settings);
-    final thumbIcon = MaterialStateProperty.resolveWith<Icon?>(
-      (Set<MaterialState> states) {
-        if (states.contains(MaterialState.selected)) {
+    final thumbIcon = WidgetStateProperty.resolveWith<Icon?>(
+      (Set<WidgetState> states) {
+        if (states.contains(WidgetState.selected)) {
           return const Icon(Symbols.check);
         }
         return const Icon(Symbols.close);
@@ -27,7 +27,7 @@ class _SettingsListItemSwitch extends _SettingsListItem {
     );
     return TextButton(
       style: ButtonStyle(
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
           const RoundedRectangleBorder(),
         ),
       ),

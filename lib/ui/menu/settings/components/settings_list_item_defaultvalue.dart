@@ -24,7 +24,7 @@ class _SettingsListItemWithDefaultValue extends _SettingsListItem {
       ignoring: disabled,
       child: TextButton(
         style: ButtonStyle(
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          shape: WidgetStateProperty.all<RoundedRectangleBorder>(
             const RoundedRectangleBorder(),
           ),
         ),
@@ -102,7 +102,7 @@ class _SettingsListItemWithDefaultValueWithInfos extends _SettingsListItem {
 
     return TextButton(
       style: ButtonStyle(
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
           const RoundedRectangleBorder(),
         ),
       ),
