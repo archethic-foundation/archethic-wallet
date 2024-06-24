@@ -34,7 +34,8 @@ class _VerifiedTokensNotifier extends Notifier<List<String>> {
         .watch(_verifiedTokensRepositoryProvider)
         .getVerifiedTokensFromNetwork(networkSettings.network);
     _logger.info(
-        'Verified tokens list (${networkSettings.network}) $verifiedTokensFromNetwork');
+      'Verified tokens list (${networkSettings.network}) $verifiedTokensFromNetwork',
+    );
     state = verifiedTokensFromNetwork;
   }
 }
