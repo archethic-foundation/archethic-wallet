@@ -86,10 +86,10 @@ packages:
     dependency: "direct main"
     description:
       name: archethic_messaging_lib_dart
-      sha256: "3ced98fa8fdd3519ed1377e4d1060845380bb3e2d47e5a89ccf156d505625cdd"
+      sha256: "04477df4d7d144f9945913ca839a36d1421cc95388a7b015650f6289d66d3cc5"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.17"
+    version: "0.0.18"
   archethic_wallet_client:
     dependency: "direct main"
     description:
