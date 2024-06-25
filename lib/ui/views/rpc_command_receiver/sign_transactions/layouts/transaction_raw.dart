@@ -434,7 +434,7 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
               Row(
                 children: [
                   Text(
-                    'Formatted',
+                    localizations.transactionRawFormattedOption,
                     style: ArchethicThemeStyles.textStyleSize10W100Primary,
                   ),
                   Radio(
@@ -447,7 +447,7 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
                     },
                   ),
                   Text(
-                    'Raw',
+                    localizations.transactionRawRawOption,
                     style: ArchethicThemeStyles.textStyleSize10W100Primary,
                   ),
                   Radio(

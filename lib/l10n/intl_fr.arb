@@ -515,5 +515,7 @@
     "transactionRawSmartContractCalls": "Appels smart contract",
     "transactionRawSmartContractCallAction": "Action",
     "transactionRawSmartContractCallAddress": "Adresse du contrat",
-    "transactionRawSmartContractCallArguments": "Arguments"
+    "transactionRawSmartContractCallArguments": "Arguments",
+    "transactionRawRawOption": "Brut",
+    "transactionRawFormattedOption": "Formaté"
 }
