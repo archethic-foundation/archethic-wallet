@@ -70,10 +70,10 @@ packages:
     dependency: "direct main"
     description:
       name: archethic_dapp_framework_flutter
-      sha256: "1d1574db56534c2167da3a376eedfff0dcaee0e3d9b01d575d6f88f8022ede32"
+      sha256: "8d41e006b6af9222b7e6bca91e6dec20abf045d084a5caf55c8ba826e7259dcc"
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.3"
+    version: "1.2.4"
   archethic_lib_dart:
     dependency: "direct main"
     description:
@@ -94,10 +94,10 @@ packages:
     dependency: "direct main"
     description:
       name: archethic_wallet_client
-      sha256: "671a4d8570f408a90fcb70d7039be2af518872440c0d7ba74732c5e19cd3be85"
+      sha256: b144c2db4988823b3c08f9e6ea73e3348abd8fb58a45cd29bd285acded0a98d6
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.2"
+    version: "2.0.3"
   archive:
     dependency: transitive
     description:
@@ -1547,10 +1547,10 @@ packages:
     dependency: "direct dev"
     description:
       name: patrol
-      sha256: "7be9a5f249f0a36acf61e7a9192069ac07339ebbfb7e7817cc7e19111fb9e3f1"
+      sha256: "04f8740d294aa91f415be7c6656fd2b2035720842251215491faaf656b1e98ef"
       url: "https://pub.dev"
     source: hosted
-    version: "3.8.0"
+    version: "3.9.0"
   patrol_finders:
     dependency: transitive
     description:
