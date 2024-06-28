@@ -243,6 +243,7 @@
     "enterPasswordHint": "Enter your password",
     "passwordsDontMatch": "Passwords do not match",
     "passwordBlank": "Password cannot be empty",
+    "passwordConfirmationBlank": "Password confirmation cannot be empty",
     "welcomeDisclaimerChoice": "I have read and agree to the privacy policy",
     "welcomeDisclaimerLink": "Terms of use",
     "showBalances": "Show balances",

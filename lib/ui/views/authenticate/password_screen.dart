@@ -16,6 +16,8 @@ import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -171,59 +173,108 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-
     final passwordAuthentication = ref.watch(
       AuthenticationProviders.passwordAuthentication,
     );
 
     return Column(
-      children: <Widget>[
-        AppTextField(
-          topMargin: 30,
-          padding: const EdgeInsetsDirectional.only(
-            start: 16,
-            end: 16,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 5),
+          child: Text(
+            AppLocalizations.of(context)!.enterPasswordHint,
           ),
-          focusNode: enterPasswordFocusNode,
-          controller: enterPasswordController,
-          textInputAction: TextInputAction.done,
-          autocorrect: false,
-          autofocus: true,
-          onChanged: (String newText) {
-            setState(() {
-              if (passwordError != null) {
-                passwordError = null;
-              }
-            });
-          },
-          onSubmitted: (value) async {
-            _unfocus();
-            await _verifyPassword();
-          },
-          labelText: localizations.enterPasswordHint,
-          keyboardType: TextInputType.text,
-          obscureText: !enterPasswordVisible!,
-          style: ArchethicThemeStyles.textStyleSize16W700Primary,
-          suffixButton: TextFieldButton(
-            icon: enterPasswordVisible!
-                ? Symbols.visibility
-                : Symbols.visibility_off,
-            onPressed: () {
-              setState(() {
-                enterPasswordVisible = !enterPasswordVisible!;
-              });
-            },
-          ),
+        ),
+        Row(
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width - 80,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                  10,
+                                ),
+                                border: Border.all(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer,
+                                  width: 0.5,
+                                ),
+                                gradient:
+                                    ArchethicTheme.gradientInputFormBackground,
+                              ),
+                              child: TextField(
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                ),
+                                autocorrect: false,
+                                controller: enterPasswordController,
+                                obscureText: !enterPasswordVisible!,
+                                onChanged: (String newText) {
+                                  setState(() {
+                                    if (passwordError != null) {
+                                      passwordError = null;
+                                    }
+                                  });
+                                },
+                                onSubmitted: (value) async {
+                                  _unfocus();
+                                  await _verifyPassword();
+                                },
+                                focusNode: enterPasswordFocusNode,
+                                textInputAction: TextInputAction.next,
+                                keyboardType: TextInputType.text,
+                                inputFormatters: <TextInputFormatter>[
+                                  LengthLimitingTextInputFormatter(
+                                    20,
+                                  ),
+                                ],
+                                decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding: EdgeInsets.only(left: 10),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            TextFieldButton(
+              icon: enterPasswordVisible!
+                  ? Symbols.visibility
+                  : Symbols.visibility_off,
+              onPressed: () {
+                setState(() {
+                  enterPasswordVisible = !enterPasswordVisible!;
+                });
+              },
+            ),
+          ],
         ),
         if (passwordAuthentication.failedAttemptsCount > 0)
           Container(
+            alignment: Alignment.center,
             margin: const EdgeInsets.symmetric(
               horizontal: 40,
               vertical: 10,
             ),
             child: AutoSizeText(
-              '${localizations.attempt}${passwordAuthentication.failedAttemptsCount}/${passwordAuthentication.maxAttemptsCount}',
+              '${AppLocalizations.of(context)!.attempt}${passwordAuthentication.failedAttemptsCount}/${passwordAuthentication.maxAttemptsCount}',
               style: ArchethicThemeStyles.textStyleSize14W200Primary,
               textAlign: TextAlign.center,
               maxLines: 1,
@@ -239,6 +290,9 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
           ),
         ),
       ],
-    );
+    )
+        .animate()
+        .fade(duration: const Duration(milliseconds: 200))
+        .scale(duration: const Duration(milliseconds: 200));
   }
 }

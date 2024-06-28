@@ -233,6 +233,7 @@
     "enterPasswordHint": "Saisissez votre mot de passe",
     "passwordsDontMatch": "Les mots de passe ne correspondent pas",
     "passwordBlank": "Le mot de passe est obligatoire",
+    "passwordConfirmationBlank": "La confirmation du mot de passe est obligatoire",
     "passwordStrengthWeak": "Votre mot de passe est faible.",
     "passwordStrengthAlright": "Votre mot de passe est bon.",
     "passwordStrengthStrong": "Votre mot de passe est fort.",
