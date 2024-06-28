@@ -109,7 +109,6 @@ class IntroNewWalletDisclaimer extends ConsumerWidget
         AutoSizeText(
           localizations.backupSafetyLabel3,
           style: ArchethicThemeStyles.textStyleSize12W100Primary,
-          textAlign: TextAlign.justify,
         ),
         Divider(
           height: 20,
@@ -125,7 +124,6 @@ class IntroNewWalletDisclaimer extends ConsumerWidget
         AutoSizeText(
           localizations.backupSafetyLabel5,
           style: ArchethicThemeStyles.textStyleSize12W100Primary,
-          textAlign: TextAlign.justify,
         ),
         Divider(
           height: 20,
@@ -141,7 +139,6 @@ class IntroNewWalletDisclaimer extends ConsumerWidget
         AutoSizeText(
           localizations.backupSafetyLabel7,
           style: ArchethicThemeStyles.textStyleSize12W100Primary,
-          textAlign: TextAlign.justify,
         ),
         const SizedBox(
           height: 20,
