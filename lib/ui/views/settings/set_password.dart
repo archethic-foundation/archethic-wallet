@@ -12,6 +12,8 @@ import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -36,30 +38,34 @@ class SetPassword extends ConsumerStatefulWidget {
 
 class _SetPasswordState extends ConsumerState<SetPassword>
     implements SheetSkeletonInterface {
-  FocusNode? setPasswordFocusNode;
-  TextEditingController? setPasswordController;
-  FocusNode? confirmPasswordFocusNode;
-  TextEditingController? confirmPasswordController;
-  bool? animationOpen;
-  double passwordStrength = 0;
-
+  late TextEditingController pwdController;
+  late FocusNode pwdFocusNode;
+  late TextEditingController pwdConfirmController;
+  late FocusNode pwdConfirmFocusNode;
   String? passwordError;
-  bool? passwordsMatch;
   bool? setPasswordVisible;
-  bool? confirmPasswordVisible;
+  bool? passwordsMatch;
+  double passwordStrength = 0;
   bool isProcessing = false;
 
   @override
   void initState() {
     super.initState();
     setPasswordVisible = false;
-    confirmPasswordVisible = false;
+    pwdFocusNode = FocusNode();
+    pwdController = TextEditingController();
+    pwdConfirmFocusNode = FocusNode();
+    pwdConfirmController = TextEditingController();
     passwordsMatch = false;
-    setPasswordFocusNode = FocusNode();
-    confirmPasswordFocusNode = FocusNode();
-    setPasswordController = TextEditingController();
-    confirmPasswordController = TextEditingController();
-    animationOpen = false;
+  }
+
+  @override
+  void dispose() {
+    pwdFocusNode.dispose();
+    pwdController.dispose();
+    pwdConfirmController.dispose();
+    pwdConfirmFocusNode.dispose();
+    super.dispose();
   }
 
   @override
@@ -105,177 +111,290 @@ class _SetPasswordState extends ConsumerState<SetPassword>
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AppTextField(
-          topMargin: 30,
-          cursorColor: ArchethicTheme.text,
-          focusNode: setPasswordFocusNode,
-          controller: setPasswordController,
-          textInputAction: TextInputAction.next,
-          autocorrect: false,
-          onChanged: (String newText) async {
-            passwordStrength = estimatePasswordStrength(
-              setPasswordController!.text,
-            );
-            if (passwordError != null) {
-              setState(() {
-                passwordError = null;
-              });
-            }
-
-            if (confirmPasswordController!.text ==
-                setPasswordController!.text) {
-              if (mounted) {
-                setState(() {
-                  passwordsMatch = true;
-                });
-              }
-            } else {
-              if (mounted) {
-                setState(() {
-                  passwordsMatch = false;
-                });
-              }
-            }
-          },
-          labelText: localizations.createPasswordHint,
-          keyboardType: TextInputType.text,
-          obscureText: !setPasswordVisible!,
-          style: ArchethicThemeStyles.textStyleSize16W700Primary,
-          onSubmitted: (text) {
-            confirmPasswordFocusNode!.requestFocus();
-          },
-          prefixButton: TextFieldButton(
-            icon: Symbols.shuffle,
-            onPressed: () {
-              setPasswordController!.text = '';
-              final passwordLength = Random().nextInt(8) + 10;
-
-              const allowedChars =
-                  r'abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ023456789@#=+!£$%&?[](){}';
-              var i = 0;
-              while (i < passwordLength) {
-                final random = Random.secure().nextInt(allowedChars.length);
-                setPasswordController!.text += allowedChars[random];
-                i++;
-              }
-
-              setState(() {
-                setPasswordVisible = true;
-                passwordStrength = estimatePasswordStrength(
-                  setPasswordController!.text,
-                );
-              });
-            },
-          ),
-          suffixButton: TextFieldButton(
-            icon: setPasswordVisible!
-                ? Symbols.visibility
-                : Symbols.visibility_off,
-            onPressed: () {
-              setState(() {
-                setPasswordVisible = !setPasswordVisible!;
-              });
-            },
-          ),
-        ),
-        Align(
-          alignment: Alignment.centerRight,
-          child: Container(
-            padding: EdgeInsets.only(
-              top: 10,
-              right: MediaQuery.of(context).size.width * 0.105,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
+        Column(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  width: 150,
-                  child: LinearProgressIndicator(
-                    value: passwordStrength,
-                    backgroundColor: Colors.grey[300],
-                    color: passwordStrength <= 0.25
-                        ? Colors.red
-                        : passwordStrength <= 0.6
-                            ? Colors.orange
-                            : passwordStrength <= 0.8
-                                ? Colors.yellow
-                                : Colors.green,
-                    minHeight: 5,
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: Text(
+                    AppLocalizations.of(context)!.createPasswordHint,
                   ),
                 ),
-                if (passwordStrength <= 0.25)
-                  Text(
-                    localizations.passwordStrengthWeak,
-                    textAlign: TextAlign.end,
-                    style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                  )
-                else
-                  passwordStrength <= 0.8
-                      ? Text(
-                          localizations.passwordStrengthAlright,
-                          textAlign: TextAlign.end,
-                          style:
-                              ArchethicThemeStyles.textStyleSize12W100Primary,
-                        )
-                      : Text(
-                          localizations.passwordStrengthStrong,
-                          textAlign: TextAlign.end,
-                          style:
-                              ArchethicThemeStyles.textStyleSize12W100Primary,
-                        ),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width - 130,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: DecoratedBox(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                          10,
+                                        ),
+                                        border: Border.all(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primaryContainer,
+                                          width: 0.5,
+                                        ),
+                                        gradient: ArchethicTheme
+                                            .gradientInputFormBackground,
+                                      ),
+                                      child: TextField(
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                        ),
+                                        autocorrect: false,
+                                        controller: pwdController,
+                                        obscureText: !setPasswordVisible!,
+                                        onChanged: (text) async {
+                                          passwordStrength =
+                                              estimatePasswordStrength(
+                                            pwdController.text,
+                                          );
+                                          if (passwordError != null) {
+                                            setState(() {
+                                              passwordError = null;
+                                            });
+                                          }
+
+                                          if (pwdConfirmController.text ==
+                                              pwdController.text) {
+                                            if (mounted) {
+                                              setState(() {
+                                                passwordsMatch = true;
+                                              });
+                                            }
+                                          } else {
+                                            if (mounted) {
+                                              setState(() {
+                                                passwordsMatch = false;
+                                              });
+                                            }
+                                          }
+                                        },
+                                        focusNode: pwdFocusNode,
+                                        textInputAction: TextInputAction.next,
+                                        keyboardType: TextInputType.text,
+                                        inputFormatters: <TextInputFormatter>[
+                                          LengthLimitingTextInputFormatter(
+                                            20,
+                                          ),
+                                        ],
+                                        decoration: const InputDecoration(
+                                          border: InputBorder.none,
+                                          contentPadding:
+                                              EdgeInsets.only(left: 10),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    TextFieldButton(
+                      icon: Symbols.shuffle,
+                      onPressed: () {
+                        pwdController.text = '';
+                        final passwordLength = Random().nextInt(8) + 10;
+
+                        const allowedChars =
+                            r'abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ023456789@#=+!£$%&?[](){}';
+                        var i = 0;
+                        while (i < passwordLength) {
+                          final random =
+                              Random.secure().nextInt(allowedChars.length);
+                          pwdController.text += allowedChars[random];
+                          i++;
+                        }
+
+                        setState(() {
+                          setPasswordVisible = true;
+                          passwordStrength = estimatePasswordStrength(
+                            pwdController.text,
+                          );
+                        });
+                      },
+                    ),
+                    TextFieldButton(
+                      icon: setPasswordVisible!
+                          ? Symbols.visibility
+                          : Symbols.visibility_off,
+                      onPressed: () {
+                        setState(() {
+                          setPasswordVisible = !setPasswordVisible!;
+                        });
+                      },
+                    ),
+                  ],
+                ),
               ],
+            )
+                .animate()
+                .fade(duration: const Duration(milliseconds: 200))
+                .scale(duration: const Duration(milliseconds: 200)),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Container(
+                padding: const EdgeInsets.only(
+                  top: 10,
+                  right: 5,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SizedBox(
+                      width: 150,
+                      child: LinearProgressIndicator(
+                        value: passwordStrength,
+                        backgroundColor: Colors.grey[300],
+                        color: passwordStrength <= 0.25
+                            ? Colors.red
+                            : passwordStrength <= 0.6
+                                ? Colors.orange
+                                : passwordStrength <= 0.8
+                                    ? Colors.yellow
+                                    : Colors.green,
+                        minHeight: 5,
+                      ),
+                    ),
+                    if (passwordStrength <= 0.25)
+                      Text(
+                        AppLocalizations.of(context)!.passwordStrengthWeak,
+                        textAlign: TextAlign.end,
+                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                      )
+                    else
+                      passwordStrength <= 0.8
+                          ? Text(
+                              AppLocalizations.of(context)!
+                                  .passwordStrengthAlright,
+                              textAlign: TextAlign.end,
+                              style: ArchethicThemeStyles
+                                  .textStyleSize12W100Primary,
+                            )
+                          : Text(
+                              AppLocalizations.of(context)!
+                                  .passwordStrengthStrong,
+                              textAlign: TextAlign.end,
+                              style: ArchethicThemeStyles
+                                  .textStyleSize12W100Primary,
+                            ),
+                  ],
+                ),
+              ),
             ),
-          ),
-        ),
-        AppTextField(
-          topMargin: 20,
-          focusNode: confirmPasswordFocusNode,
-          controller: confirmPasswordController,
-          textInputAction: TextInputAction.done,
-          autocorrect: false,
-          onSubmitted: (_) async {
-            await _validateRequest();
-          },
-          onChanged: (String newText) {
-            if (passwordError != null) {
-              setState(() {
-                passwordError = null;
-              });
-            }
-            if (confirmPasswordController!.text ==
-                setPasswordController!.text) {
-              if (mounted) {
-                setState(() {
-                  passwordsMatch = true;
-                });
-              }
-            } else {
-              if (mounted) {
-                setState(() {
-                  passwordsMatch = false;
-                });
-              }
-            }
-          },
-          labelText: localizations.confirmPasswordHint,
-          keyboardType: TextInputType.text,
-          obscureText: !confirmPasswordVisible!,
-          style: ArchethicThemeStyles.textStyleSize16W700Primary,
-          suffixButton: TextFieldButton(
-            icon: confirmPasswordVisible!
-                ? Symbols.visibility
-                : Symbols.visibility_off,
-            onPressed: () {
-              setState(() {
-                confirmPasswordVisible = !confirmPasswordVisible!;
-              });
-            },
-          ),
+            const SizedBox(
+              height: 10,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: Text(
+                    AppLocalizations.of(context)!.confirmPasswordHint,
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(
+                                      10,
+                                    ),
+                                    border: Border.all(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primaryContainer,
+                                      width: 0.5,
+                                    ),
+                                    gradient: ArchethicTheme
+                                        .gradientInputFormBackground,
+                                  ),
+                                  child: TextField(
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                    autocorrect: false,
+                                    controller: pwdConfirmController,
+                                    obscureText: !setPasswordVisible!,
+                                    onChanged: (text) async {
+                                      if (passwordError != null) {
+                                        setState(() {
+                                          passwordError = null;
+                                        });
+                                      }
+                                      if (pwdConfirmController.text ==
+                                          pwdController.text) {
+                                        if (mounted) {
+                                          setState(() {
+                                            passwordsMatch = true;
+                                          });
+                                        }
+                                      } else {
+                                        if (mounted) {
+                                          setState(() {
+                                            passwordsMatch = false;
+                                          });
+                                        }
+                                      }
+                                    },
+                                    focusNode: pwdConfirmFocusNode,
+                                    textInputAction: TextInputAction.next,
+                                    keyboardType: TextInputType.text,
+                                    inputFormatters: <TextInputFormatter>[
+                                      LengthLimitingTextInputFormatter(
+                                        20,
+                                      ),
+                                    ],
+                                    decoration: const InputDecoration(
+                                      border: InputBorder.none,
+                                      contentPadding: EdgeInsets.only(left: 10),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            )
+                .animate()
+                .fade(duration: const Duration(milliseconds: 200))
+                .scale(duration: const Duration(milliseconds: 200)),
+          ],
         ),
         const SizedBox(height: 20),
         // Error Text
@@ -315,14 +434,19 @@ class _SetPasswordState extends ConsumerState<SetPassword>
   Future<void> _validateRequest() async {
     if (isProcessing) return;
 
-    if (setPasswordController!.text.isEmpty ||
-        confirmPasswordController!.text.isEmpty) {
+    if (pwdController.text.isEmpty) {
       setState(() {
         passwordError = AppLocalizations.of(context)!.passwordBlank;
       });
       return;
     }
-    if (setPasswordController!.text != confirmPasswordController!.text) {
+    if (pwdConfirmController.text.isEmpty) {
+      setState(() {
+        passwordError = AppLocalizations.of(context)!.passwordConfirmationBlank;
+      });
+      return;
+    }
+    if (pwdController.text != pwdConfirmController.text) {
       setState(() {
         passwordError = AppLocalizations.of(context)!.passwordsDontMatch;
       });
@@ -342,7 +466,7 @@ class _SetPasswordState extends ConsumerState<SetPassword>
     );
     await ref
         .read(AuthenticationProviders.passwordAuthentication.notifier)
-        .setPassword(setPasswordController!.text);
+        .setPassword(pwdController.text);
     context.pop(true);
   }
 }
