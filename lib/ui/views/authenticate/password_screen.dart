@@ -188,8 +188,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
         ),
         Row(
           children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width - 80,
+            Expanded(
               child: Row(
                 children: [
                   Expanded(

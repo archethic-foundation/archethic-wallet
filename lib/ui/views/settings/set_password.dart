@@ -127,8 +127,7 @@ class _SetPasswordState extends ConsumerState<SetPassword>
                 ),
                 Row(
                   children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width - 130,
+                    Expanded(
                       child: Row(
                         children: [
                           Expanded(
