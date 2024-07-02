@@ -28,7 +28,7 @@ class TransactionRaw extends ConsumerStatefulWidget {
 }
 
 class TransactionRawState extends ConsumerState<TransactionRaw> {
-  bool _isExpanded = false;
+  bool _isExpanded = true;
   bool _isJsonView = false;
 
   @override
