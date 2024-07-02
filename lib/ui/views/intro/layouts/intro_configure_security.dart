@@ -78,7 +78,7 @@ class _IntroConfigureSecurityState extends ConsumerState<IntroConfigureSecurity>
         key: const Key('back'),
         color: ArchethicTheme.text,
         onPressed: () {
-          context.pop();
+          context.pop(false);
         },
       ),
       widgetRight:

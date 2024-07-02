@@ -34,7 +34,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart';
-import 'package:material_symbols_icons/symbols.dart';
 import 'package:unorm_dart/unorm_dart.dart' as unorm;
 
 class IntroImportSeedPage extends ConsumerStatefulWidget {
@@ -71,6 +70,9 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
 
   @override
   void dispose() {
+    for (final controller in wordEditingControllers) {
+      controller?.dispose();
+    }
     super.dispose();
   }
 
@@ -92,266 +94,135 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
         (settings) => settings.languageSeed,
       ),
     );
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        AppButtonTinyConnectivity(
-          localizations.next,
-          Dimens.buttonTopDimens,
-          key: const Key('seedWordsOKbutton'),
-          onPressed: () async {
-            setState(() {
-              _mnemonicError = '';
-              isPressed = true;
-            });
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            AppButtonTinyConnectivity(
+              localizations.next,
+              Dimens.buttonTopDimens,
+              key: const Key('seedWordsOKbutton'),
+              onPressed: () async {
+                setState(() {
+                  _mnemonicError = '';
+                  isPressed = true;
+                });
 
-            _mnemonicIsValid = true;
-            for (final word in phrase) {
-              final _word = word.trim();
-              if (_word == '') {
-                _mnemonicIsValid = false;
-                _mnemonicError = localizations.mnemonicSizeError;
-              } else {
-                if (AppMnemomics.isValidWord(
-                      _word,
-                      languageCode: languageSeed,
-                    ) ==
-                    false) {
-                  _mnemonicIsValid = false;
-                  _mnemonicError =
-                      localizations.mnemonicInvalidWord.replaceAll('%1', _word);
+                _mnemonicIsValid = true;
+                for (final word in phrase) {
+                  final _word = word.trim();
+                  if (_word == '') {
+                    _mnemonicIsValid = false;
+                    _mnemonicError = localizations.mnemonicSizeError;
+                  } else {
+                    if (AppMnemomics.isValidWord(
+                          _word,
+                          languageCode: languageSeed,
+                        ) ==
+                        false) {
+                      _mnemonicIsValid = false;
+                      _mnemonicError = localizations.mnemonicInvalidWord
+                          .replaceAll('%1', _word);
+                    }
+                  }
                 }
-              }
-            }
 
-            if (!_mnemonicIsValid) {
-              UIUtil.showSnackbar(
-                _mnemonicError,
-                context,
-                ref,
-                ArchethicTheme.text,
-                ArchethicTheme.snackBarShadow,
-              );
-              setState(() {
-                isPressed = false;
-              });
-              return;
-            }
+                if (!_mnemonicIsValid) {
+                  UIUtil.showSnackbar(
+                    _mnemonicError,
+                    context,
+                    ref,
+                    ArchethicTheme.text,
+                    ArchethicTheme.snackBarShadow,
+                  );
+                  setState(() {
+                    isPressed = false;
+                  });
+                  return;
+                }
 
-            await context.push(
-              IntroConfigureSecurity.routerPage,
-              extra: {
-                'isImportProfile': true,
-              },
-            );
+                final result = await context.push(
+                  IntroConfigureSecurity.routerPage,
+                  extra: {
+                    'isImportProfile': true,
+                  },
+                );
+                if (result != null && result == false) {
+                  setState(() {
+                    _mnemonicError = '';
+                    isPressed = false;
+                  });
+                  return;
+                }
+                ShowSendingAnimation.build(context);
+                final newSession = await ref
+                    .read(SessionProviders.session.notifier)
+                    .restoreFromMnemonics(
+                      mnemonics: phrase.toList(),
+                      languageCode: languageSeed,
+                    );
 
-            ShowSendingAnimation.build(context);
-            final newSession = await ref
-                .read(SessionProviders.session.notifier)
-                .restoreFromMnemonics(
-                  mnemonics: phrase.toList(),
-                  languageCode: languageSeed,
+                if (newSession == null) {
+                  setState(() {
+                    _mnemonicIsValid = false;
+                    isPressed = false;
+                  });
+                  UIUtil.showSnackbar(
+                    localizations.noKeychain,
+                    context,
+                    ref,
+                    ArchethicTheme.text,
+                    ArchethicTheme.snackBarShadow,
+                  );
+                  context.go(IntroImportSeedPage.routerPage);
+                  return;
+                }
+
+                final accountSelected = await _accountsDialog(
+                  newSession.wallet.appKeychain.accounts,
                 );
 
-            if (newSession == null) {
-              setState(() {
-                _mnemonicIsValid = false;
-                isPressed = false;
-              });
-              UIUtil.showSnackbar(
-                localizations.noKeychain,
-                context,
-                ref,
-                ArchethicTheme.text,
-                ArchethicTheme.snackBarShadow,
-              );
-              context.go(IntroImportSeedPage.routerPage);
-              return;
-            }
+                unawaited(
+                  ref
+                      .read(
+                        AccountProviders.account(
+                          accountSelected!.name,
+                        ).notifier,
+                      )
+                      .refreshRecentTransactions(),
+                );
+                unawaited(
+                  ref
+                      .read(
+                        AccountProviders.account(
+                          accountSelected.name,
+                        ).notifier,
+                      )
+                      .refreshNFTs(),
+                );
+                ref.read(
+                  RecoveryPhraseSavedProvider.setRecoveryPhraseSaved(true),
+                );
 
-            final accountSelected = await _accountsDialog(
-              newSession.wallet.appKeychain.accounts,
-            );
+                context.go(HomePage.routerPage);
 
-            unawaited(
-              ref
-                  .read(
-                    AccountProviders.account(
-                      accountSelected!.name,
-                    ).notifier,
-                  )
-                  .refreshRecentTransactions(),
-            );
-            unawaited(
-              ref
-                  .read(
-                    AccountProviders.account(
-                      accountSelected.name,
-                    ).notifier,
-                  )
-                  .refreshNFTs(),
-            );
-            ref.read(
-              RecoveryPhraseSavedProvider.setRecoveryPhraseSaved(true),
-            );
-
-            context.go(HomePage.routerPage);
-
-            setState(() {
-              isPressed = false;
-            });
-          },
-          disabled: isPressed == true,
-        ),
-      ],
-    );
-  }
-
-  @override
-  PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-    final preferences = ref.watch(SettingsProviders.settings);
-    final languageSeed = ref.watch(
-      SettingsProviders.settings.select(
-        (settings) => settings.languageSeed,
-      ),
-    );
-
-    return SheetAppBar(
-      title: localizations.importSecretPhrase,
-      widgetLeft: BackButton(
-        key: const Key('back'),
-        color: ArchethicTheme.text,
-        onPressed: () {
-          context.go(IntroWelcome.routerPage);
-        },
-      ),
-      widgetRight:
-          connectivityStatusProvider == ConnectivityStatus.isDisconnected
-              ? const Padding(
-                  padding: EdgeInsets.only(
-                    right: 7,
-                    top: 7,
-                  ),
-                  child: IconNetworkWarning(
-                    alignment: Alignment.topRight,
-                  ),
-                )
-              : Row(
-                  children: [
-                    Container(
-                      margin: const EdgeInsetsDirectional.only(
-                        start: 15,
-                      ),
-                      height: 50,
-                      width: 50,
-                      child: TextButton(
-                        onPressed: () async {
-                          sl.get<HapticUtil>().feedback(
-                                FeedbackType.light,
-                                preferences.activeVibrations,
-                              );
-
-                          await ref
-                              .read(SettingsProviders.settings.notifier)
-                              .setLanguageSeed('en');
-                        },
-                        child: languageSeed == 'en'
-                            ? Image.asset(
-                                'assets/icons/languages/united-states.png',
-                              )
-                            : Opacity(
-                                opacity: 0.3,
-                                child: Image.asset(
-                                  'assets/icons/languages/united-states.png',
-                                ),
-                              ),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsetsDirectional.only(
-                        start: 15,
-                      ),
-                      height: 50,
-                      width: 50,
-                      child: TextButton(
-                        onPressed: () async {
-                          sl.get<HapticUtil>().feedback(
-                                FeedbackType.light,
-                                preferences.activeVibrations,
-                              );
-
-                          await ref
-                              .read(SettingsProviders.settings.notifier)
-                              .setLanguageSeed('fr');
-                        },
-                        child: languageSeed == 'fr'
-                            ? Image.asset(
-                                'assets/icons/languages/france.png',
-                              )
-                            : Opacity(
-                                opacity: 0.3,
-                                child: Image.asset(
-                                  'assets/icons/languages/france.png',
-                                ),
-                              ),
-                      ),
-                    ),
-                  ],
-                ),
-    );
-  }
-
-  @override
-  Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-
-    final languageSeed = ref.watch(
-      SettingsProviders.settings.select(
-        (settings) => settings.languageSeed,
-      ),
-    );
-
-    void _validateWord(String word) {
-      if (!AppMnemomics.isValidWord(
-        word,
-        languageCode: languageSeed,
-      )) {
-        setState(() {
-          _mnemonicIsValid = false;
-          _mnemonicError = localizations.mnemonicInvalidWord.replaceAll(
-            '%1',
-            word,
-          );
-        });
-      } else {
-        setState(() {
-          _mnemonicError = '';
-          _mnemonicIsValid = true;
-        });
-      }
-    }
-
-    return Column(
-      children: <Widget>[
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                localizations.importSecretPhraseHint,
-                style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                textAlign: TextAlign.start,
-              ),
+                setState(() {
+                  isPressed = false;
+                });
+              },
+              disabled: isPressed == true,
             ),
-            IconButton(
-              icon: Icon(
-                Symbols.content_paste,
-                weight: IconSize.weightM,
-                opticalSize: IconSize.opticalSizeM,
-                grade: IconSize.gradeM,
-                color: ArchethicThemeStyles.textStyleSize16W600Primary.color,
-              ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            AppButtonTinyConnectivity(
+              localizations.paste24Words,
+              Dimens.buttonBottomDimens,
+              key: const Key('seedWordsPast24Words'),
               onPressed: () async {
                 final data = await Clipboard.getData(
                   'text/plain',
@@ -392,15 +263,178 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                   _mnemonicIsValid = true;
                 });
               },
+              disabled: isPressed == true,
             ),
           ],
+        ),
+      ],
+    );
+  }
+
+  @override
+  PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
+
+    return SheetAppBar(
+      title: localizations.importSecretPhrase,
+      widgetLeft: BackButton(
+        key: const Key('back'),
+        color: ArchethicTheme.text,
+        onPressed: () {
+          context.go(IntroWelcome.routerPage);
+        },
+      ),
+      widgetRight:
+          connectivityStatusProvider == ConnectivityStatus.isDisconnected
+              ? const Padding(
+                  padding: EdgeInsets.only(
+                    right: 7,
+                    top: 7,
+                  ),
+                  child: IconNetworkWarning(
+                    alignment: Alignment.topRight,
+                  ),
+                )
+              : const SizedBox.shrink(),
+    );
+  }
+
+  @override
+  Widget getSheetContent(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    final preferences = ref.watch(SettingsProviders.settings);
+    final languageSeed = ref.watch(
+      SettingsProviders.settings.select(
+        (settings) => settings.languageSeed,
+      ),
+    );
+
+    void _validateWord(String word) {
+      if (word.isEmpty) {
+        setState(() {
+          _mnemonicError = '';
+          _mnemonicIsValid = true;
+        });
+        return;
+      }
+      if (!AppMnemomics.isValidWord(
+        word,
+        languageCode: languageSeed,
+      )) {
+        setState(() {
+          _mnemonicIsValid = false;
+          _mnemonicError = localizations.mnemonicInvalidWord.replaceAll(
+            '%1',
+            word,
+          );
+        });
+      } else {
+        setState(() {
+          _mnemonicError = '';
+          _mnemonicIsValid = true;
+        });
+      }
+    }
+
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Text(
+                '1) ${localizations.importSecretPhraseLanguage}',
+                style: ArchethicThemeStyles.textStyleSize14W200Primary,
+              ),
+            ),
+            Row(
+              children: [
+                Container(
+                  margin: const EdgeInsetsDirectional.only(
+                    start: 15,
+                  ),
+                  height: 50,
+                  width: 50,
+                  child: TextButton(
+                    onPressed: () async {
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.light,
+                            preferences.activeVibrations,
+                          );
+
+                      await ref
+                          .read(SettingsProviders.settings.notifier)
+                          .setLanguageSeed('en');
+                    },
+                    child: languageSeed == 'en'
+                        ? Image.asset(
+                            'assets/icons/languages/united-states.png',
+                          )
+                        : Opacity(
+                            opacity: 0.3,
+                            child: Image.asset(
+                              'assets/icons/languages/united-states.png',
+                            ),
+                          ),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsetsDirectional.only(
+                    start: 15,
+                  ),
+                  height: 50,
+                  width: 50,
+                  child: TextButton(
+                    onPressed: () async {
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.light,
+                            preferences.activeVibrations,
+                          );
+
+                      await ref
+                          .read(SettingsProviders.settings.notifier)
+                          .setLanguageSeed('fr');
+                    },
+                    child: languageSeed == 'fr'
+                        ? Image.asset(
+                            'assets/icons/languages/france.png',
+                          )
+                        : Opacity(
+                            opacity: 0.3,
+                            child: Image.asset(
+                              'assets/icons/languages/france.png',
+                            ),
+                          ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                '2) ${localizations.importSecretPhraseHint}',
+                style: ArchethicThemeStyles.textStyleSize14W200Primary,
+                textAlign: TextAlign.start,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 10,
         ),
         if (_mnemonicError != '')
           SizedBox(
             height: 40,
             child: Text(
               _mnemonicError,
-              style: ArchethicThemeStyles.textStyleSize14W200Primary,
+              style: ArchethicThemeStyles.textStyleSize14W600PrimaryRed,
             ),
           )
         else
@@ -408,6 +442,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
             height: 40,
           ),
         GridView.count(
+          padding: EdgeInsets.zero,
           physics: const NeverScrollableScrollPhysics(),
           childAspectRatio: 1 / 0.62,
           shrinkWrap: true,
@@ -452,39 +487,61 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                     return Stack(
                       alignment: AlignmentDirectional.center,
                       children: <Widget>[
-                        TextFormField(
-                          key: Key('seedWord$index'),
-                          textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                            labelText: (index + 1).toString(),
-                          ),
-                          inputFormatters: [
-                            LowerCaseTextFormatter(),
-                          ],
-                          controller: textEditingController,
-                          focusNode: focusNode,
-                          style:
-                              ArchethicThemeStyles.textStyleSize12W100Primary,
-                          autocorrect: false,
-                          onChanged: (value) {
-                            final _value = value.trim();
-                            if (_value.isEmpty) {
-                              return;
-                            }
-                            _validateWord(_value);
-                          },
-                        ),
-                        Positioned(
-                          bottom: 1,
-                          child: Container(
-                            height: 1,
-                            width: MediaQuery.of(
-                              context,
-                            ).size.width,
-                            decoration: BoxDecoration(
-                              gradient: ArchethicTheme.gradient,
+                        Row(
+                          children: [
+                            Expanded(
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: DecoratedBox(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            10,
+                                          ),
+                                          border: Border.all(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primaryContainer,
+                                            width: 0.5,
+                                          ),
+                                          gradient: ArchethicTheme
+                                              .gradientInputFormBackground,
+                                        ),
+                                        child: TextField(
+                                          key: Key('seedWord$index'),
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                          autocorrect: false,
+                                          controller: textEditingController,
+                                          focusNode: focusNode,
+                                          onChanged: (value) {
+                                            final _value = value.trim();
+                                            _validateWord(_value);
+                                          },
+                                          textInputAction: TextInputAction.next,
+                                          keyboardType: TextInputType.text,
+                                          inputFormatters: [
+                                            LowerCaseTextFormatter(),
+                                          ],
+                                          decoration: InputDecoration(
+                                            hintText: (index + 1).toString(),
+                                            border: InputBorder.none,
+                                            contentPadding:
+                                                const EdgeInsets.only(left: 10),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
                       ],
                     );
@@ -493,6 +550,9 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
               ),
             );
           }),
+        ),
+        const SizedBox(
+          height: 100,
         ),
       ],
     );
