@@ -136,8 +136,8 @@ class MainMenuView extends ConsumerWidget {
                             ArchethicThemeStyles.textStyleSize16W600Primary,
                         icon: Symbols.lock,
                         displayChevron: false,
-                        onPressed: () {
-                          ref
+                        onPressed: () async {
+                          await ref
                               .read(
                                 AuthenticationProviders
                                     .authenticationGuard.notifier,
