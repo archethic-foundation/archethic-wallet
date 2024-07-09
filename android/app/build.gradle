@@ -40,7 +40,7 @@ android {
     defaultConfig {
         applicationId "net.archethic.archethic_wallet"
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
         multiDexEnabled true
