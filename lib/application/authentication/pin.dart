@@ -30,7 +30,7 @@ class PinAuthenticationNotifier extends StateNotifier<PinAuthenticationState> {
 
     final maxAttemptsCount = state.maxAttemptsCount;
     final failedPinAttempts =
-        await authenticationRepository.getFailedPinAttempts();
+        await authenticationRepository.getFailedAttempts();
 
     if (!mounted) return;
     state = state.copyWith(
@@ -38,7 +38,7 @@ class PinAuthenticationNotifier extends StateNotifier<PinAuthenticationState> {
     );
   }
 
-  Future<AuthenticationResult> authenticateWithPin(
+  Future<AuthenticationResult> decodeWithPin(
     PinCredentials pin,
   ) async {
     final authenticationRepository = ref.read(
@@ -56,9 +56,8 @@ class PinAuthenticationNotifier extends StateNotifier<PinAuthenticationState> {
     );
 
     state = state.copyWith(
-      failedAttemptsCount:
-          await authenticationRepository.getFailedPinAttempts() %
-              state.maxAttemptsCount,
+      failedAttemptsCount: await authenticationRepository.getFailedAttempts() %
+          state.maxAttemptsCount,
     );
 
     return authenticationResult;
@@ -67,6 +66,7 @@ class PinAuthenticationNotifier extends StateNotifier<PinAuthenticationState> {
   Future<UpdatePinResult> updatePin({
     required String pin,
     required String pinConfirmation,
+    required Uint8List challenge,
   }) async =>
       UpdateMyPin(
         repository: ref.read(
@@ -76,6 +76,7 @@ class PinAuthenticationNotifier extends StateNotifier<PinAuthenticationState> {
         PinUpdateCommand(
           pin: pin,
           pinConfirmation: pinConfirmation,
+          challenge: challenge,
         ),
       );
 }

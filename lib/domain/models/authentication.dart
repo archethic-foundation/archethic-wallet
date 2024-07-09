@@ -2,6 +2,7 @@ import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/model/privacy_mask_option.dart';
 import 'package:aewallet/util/universal_platform.dart';
+import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'authentication.freezed.dart';
@@ -11,14 +12,17 @@ class Credentials with _$Credentials {
   const Credentials._();
   const factory Credentials.pin({
     required String pin,
+    required Uint8List challenge,
   }) = PinCredentials;
 
   const factory Credentials.password({
     required String password,
+    required Uint8List challenge,
   }) = PasswordCredentials;
 
   const factory Credentials.yubikey({
     required String otp,
+    required Uint8List challenge,
   }) = YubikeyCredentials;
 }
 

@@ -3,8 +3,10 @@ part of 'authentication.dart';
 @freezed
 class UpdatePinResult with _$UpdatePinResult {
   const UpdatePinResult._();
-  const factory UpdatePinResult.success() = _UpdatePinSuccess;
-  const factory UpdatePinResult.pinsDoNotMatch() = _UpdatePinsDoNotMatch;
+  const factory UpdatePinResult.success({
+    required Uint8List encodedChallenge,
+  }) = _UpdatePinSuccess;
+  const factory UpdatePinResult.pinsDoNotMatch() = _UpdatePinDoNotMatch;
 }
 
 @immutable
@@ -12,10 +14,12 @@ class PinUpdateCommand {
   const PinUpdateCommand({
     required this.pin,
     required this.pinConfirmation,
+    required this.challenge,
   });
 
   final String pin;
   final String pinConfirmation;
+  final Uint8List challenge;
 }
 
 class UpdateMyPin extends UseCase<PinUpdateCommand, UpdatePinResult> {
@@ -34,7 +38,10 @@ class UpdateMyPin extends UseCase<PinUpdateCommand, UpdatePinResult> {
       return const UpdatePinResult.pinsDoNotMatch();
     }
 
-    await repository.setPin(command.pin);
-    return const UpdatePinResult.success();
+    final encodedKey = await repository.encodeWithPin(
+      command.pin,
+      command.challenge,
+    );
+    return UpdatePinResult.success(encodedChallenge: encodedKey);
   }
 }

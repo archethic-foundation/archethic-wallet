@@ -36,16 +36,18 @@ mixin AuthenticationWithLock {
     return Duration.zero;
   }
 
-  Future<AuthenticationResult> authenticationSucceed() async {
+  Future<AuthenticationResult> authenticationSucceed(
+    Uint8List decodedChallenge,
+  ) async {
     await repository.resetFailedAttempts();
     await repository.resetLock();
 
-    return const AuthenticationResult.success();
+    return AuthenticationResult.success(decodedChallenge: decodedChallenge);
   }
 
   Future<AuthenticationResult> authenticationFailed() async {
     await repository.incrementFailedAttempts();
-    final failedAttempts = await repository.getFailedPinAttempts();
+    final failedAttempts = await repository.getFailedAttempts();
     if (failedAttempts >= maxFailedAttempts) {
       await repository.lock(lockDuration(failedAttempts));
       return const AuthenticationResult.tooMuchAttempts();
@@ -58,7 +60,9 @@ mixin AuthenticationWithLock {
 @freezed
 class AuthenticationResult with _$AuthenticationResult {
   const AuthenticationResult._();
-  const factory AuthenticationResult.success() = _AuthenticationResult;
+  const factory AuthenticationResult.success({
+    required Uint8List decodedChallenge,
+  }) = _AuthenticationResult;
   const factory AuthenticationResult.wrongCredentials() =
       _AuthenticationFailure;
   const factory AuthenticationResult.notSetup() = _AuthenticationNotSetup;

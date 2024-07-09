@@ -31,7 +31,7 @@ class YubikeyAuthenticationNotifier
 
     final maxAttemptsCount = state.maxAttemptsCount;
     final failedPinAttempts =
-        await authenticationRepository.getFailedPinAttempts();
+        await authenticationRepository.getFailedAttempts();
 
     if (!mounted) return;
     state = state.copyWith(
@@ -57,9 +57,8 @@ class YubikeyAuthenticationNotifier
     );
 
     state = state.copyWith(
-      failedAttemptsCount:
-          await authenticationRepository.getFailedPinAttempts() %
-              state.maxAttemptsCount,
+      failedAttemptsCount: await authenticationRepository.getFailedAttempts() %
+          state.maxAttemptsCount,
     );
 
     return authenticationResult;

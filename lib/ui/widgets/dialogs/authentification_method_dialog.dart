@@ -1,15 +1,15 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:aewallet/application/authentication/authentication.dart';
+import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/domain/models/core/failures.dart';
+import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
-import 'package:aewallet/ui/views/settings/set_password.dart';
-import 'package:aewallet/ui/views/settings/set_yubikey.dart';
+import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/ui/widgets/dialogs/authentification_method_dialog_help.dart';
-import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -22,83 +22,47 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-class AuthentificationMethodDialog {
-  static Future<bool> _applyAuthMethod(
-    BuildContext context,
-    WidgetRef ref,
-    AuthMethod authMethod,
-  ) async {
-    final localizations = AppLocalizations.of(context)!;
+extension AuthMethodAvailability on AuthMethod {
+  Future<bool> isAvailable(WidgetRef ref) async {
+    if (kIsWeb && this != AuthMethod.password) {
+      return false;
+    }
 
-    return switch (authMethod) {
-      AuthMethod.biometrics =>
-        await sl.get<BiometricUtil>().authenticateWithBiometrics(
-              context,
-              localizations.unlockBiometrics,
-            ),
-      AuthMethod.pin => (await context.push(
-          PinScreen.routerPage,
-          extra: {
-            'type': PinOverlayType.newPin.name,
-          },
-        ))! as bool,
-      AuthMethod.password => (await context.push(
-          SetPassword.routerPage,
-          extra: {
-            'header': localizations.setPasswordHeader,
-            'description': AppLocalizations.of(
-              context,
-            )!
-                .configureSecurityExplanationPassword,
-          },
-        ))! as bool,
-      AuthMethod.yubikeyWithYubicloud => (await context.push(
-          SetYubikey.routerPage,
-          extra: {
-            'header': localizations.setYubicloudHeader,
-            'description': localizations.setYubicloudDescription,
-          },
-        ))! as bool,
-      AuthMethod.ledger => throw UnimplementedError(),
-    };
+    final hasBiometrics = await ref.read(
+      DeviceAbilities.hasBiometricsProvider.future,
+    );
+    if (this == AuthMethod.biometrics && !hasBiometrics) {
+      return false;
+    }
+
+    return true;
   }
+}
 
+class AuthentificationMethodDialog {
   static Future<void> getDialog(
     BuildContext context,
     WidgetRef ref,
-    bool hasBiometrics,
     AuthenticationMethod curAuthMethod,
   ) async {
     final settingsNotifier = ref.read(
       AuthenticationProviders.settings.notifier,
     );
-    final preferences = ref.watch(SettingsProviders.settings);
-    final pickerItemsList = List<PickerItem>.empty(growable: true);
-    for (final value in AuthMethod.values) {
-      var displayed = false;
-      if (kIsWeb && value != AuthMethod.password) {
-        displayed = false;
-      } else {
-        if (value != AuthMethod.ledger) {
-          if ((hasBiometrics && value == AuthMethod.biometrics) ||
-              value != AuthMethod.biometrics) {
-            displayed = true;
-          }
-        }
-      }
+    final preferences = ref.read(SettingsProviders.settings);
 
-      pickerItemsList.add(
-        PickerItem(
-          AuthenticationMethod(value).getDisplayName(context),
+    final pickerItemsList = await Future.wait(
+      AuthMethod.values.map(
+        (method) async => PickerItem<AuthMethod>(
+          AuthenticationMethod(method).getDisplayName(context),
           null,
-          AuthenticationMethod.getIcon(value),
+          AuthenticationMethod.getIcon(method),
           ArchethicTheme.pickerItemIconEnabled,
-          value,
+          method,
           true,
-          displayed: displayed,
+          displayed: await method.isAvailable(ref),
         ),
-      );
-    }
+      ),
+    ) as List<PickerItem>;
 
     await showDialog<AuthMethod>(
       context: context,
@@ -115,18 +79,23 @@ class AuthentificationMethodDialog {
                   selectedIndexes: [curAuthMethod.method.index],
                   onSelected: (value) async {
                     final authMethod = value.value;
-                    final success = await _applyAuthMethod(
-                      context,
-                      ref,
+
+                    try {
+                      await Vault.instance().updateCipher(
+                        AuthFactory.of(context).vaultCipherDelegate(
+                          authMethod: authMethod,
+                        ),
+                      );
+                    } on Failure catch (e) {
+                      if (e == const Failure.operationCanceled()) {
+                        return;
+                      }
+                      rethrow;
+                    }
+                    await settingsNotifier.setAuthMethod(
                       authMethod,
                     );
-
-                    if (success) {
-                      await settingsNotifier.setAuthMethod(
-                        authMethod,
-                      );
-                      if (context.canPop()) context.pop(value.value);
-                    }
+                    if (context.canPop()) context.pop(value.value);
                   },
                 ),
               ),

@@ -1,17 +1,36 @@
+import 'dart:typed_data';
+
 import 'package:aewallet/domain/models/authentication.dart';
 
 abstract class AuthenticationRepositoryInterface {
   Future<void> clear();
 
-  Future<bool> isPinValid(String pin);
-  Future<void> setPin(String pin);
   Future<void> resetFailedAttempts();
-  Future<int> getFailedPinAttempts();
+  Future<int> getFailedAttempts();
   Future<void> incrementFailedAttempts();
 
-  Future<bool> get isPasswordDefined;
-  Future<bool> isPasswordValid(String password);
-  Future<void> setPassword(String password);
+  Future<Uint8List> decodeWithPassword(
+    String password,
+    Uint8List challenge,
+  );
+  Future<Uint8List> encodeWithPassword(
+    String password,
+    Uint8List challenge,
+  );
+
+  Future<Uint8List> decodeWithPin(
+    String pin,
+    Uint8List challenge,
+  );
+  Future<Uint8List> encodeWithPin(
+    String pin,
+    Uint8List challenge,
+  );
+
+  Future<void> setYubikey({
+    required String clientId,
+    required String clientApiKey,
+  });
 
   Future<void> lock(Duration duration);
   Future<void> resetLock();

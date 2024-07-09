@@ -109,6 +109,17 @@ class AuthenticationGuardNotifier
 
   @override
   Future<AuthenticationGuardState> build() async {
+    ref.listen(
+      _vaultLockedProvider,
+      (wasLocked, isLocked) {
+        if (wasLocked == isLocked) return;
+        if (isLocked) return;
+
+        _logger.info('Vault unlocked. Scheduling autolock.');
+        scheduleAutolock();
+      },
+    );
+
     final lockTimeoutOption = ref.watch(
       AuthenticationProviders.settings.select(
         (settings) => settings.lockTimeout,

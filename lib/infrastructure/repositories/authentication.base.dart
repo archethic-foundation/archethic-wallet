@@ -1,5 +1,6 @@
 import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/domain/repositories/authentication.dart';
+import 'package:aewallet/infrastructure/datasources/authent_nonweb.secured_hive.dart';
 import 'package:aewallet/infrastructure/datasources/preferences.hive.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/privacy_mask_option.dart';
@@ -10,7 +11,7 @@ abstract class AuthenticationRepositoryBase
       PreferencesHiveDatasource.getInstance();
 
   @override
-  Future<int> getFailedPinAttempts() async {
+  Future<int> getFailedAttempts() async {
     return (await preferences).getLockAttempts();
   }
 
@@ -82,5 +83,15 @@ abstract class AuthenticationRepositoryBase
     await syncPrefs.setPrivacyMaskEnabled(
       settings.privacyMask == PrivacyMaskOption.enabled,
     );
+  }
+
+  @override
+  Future<void> setYubikey({
+    required String clientId,
+    required String clientApiKey,
+  }) async {
+    final vault = await AuthentHiveSecuredDatasource.getInstance();
+    await vault.setYubikeyClientAPIKey(clientApiKey);
+    await vault.setYubikeyClientID(clientId);
   }
 }

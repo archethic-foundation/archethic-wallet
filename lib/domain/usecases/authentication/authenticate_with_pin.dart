@@ -17,10 +17,14 @@ class AuthenticateWithPin
     PinCredentials credentials, {
     UseCaseProgressListener? onProgress,
   }) async {
-    if (await repository.isPinValid(credentials.pin)) {
-      return authenticationSucceed();
+    try {
+      final decodedKey = await repository.decodeWithPin(
+        credentials.pin,
+        credentials.challenge,
+      );
+      return authenticationSucceed(decodedKey);
+    } catch (e) {
+      return authenticationFailed();
     }
-
-    return authenticationFailed();
   }
 }

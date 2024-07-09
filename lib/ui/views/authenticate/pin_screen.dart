@@ -1,5 +1,3 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-
 import 'dart:math';
 
 // Project imports:
@@ -25,6 +23,8 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+enum CipherDelegateAction { encode, decode }
+
 enum PinOverlayType { newPin, enterPin }
 
 class ShakeCurve extends Curve {
@@ -38,6 +38,8 @@ class ShakeCurve extends Curve {
 class PinScreen extends ConsumerStatefulWidget {
   const PinScreen(
     this.type, {
+    required this.action,
+    required this.challenge,
     this.description = '',
     this.canNavigateBack = true,
     super.key,
@@ -47,6 +49,8 @@ class PinScreen extends ConsumerStatefulWidget {
   static const routerPage = '/pin';
 
   final bool canNavigateBack;
+  final CipherDelegateAction action;
+  final Uint8List challenge;
   final PinOverlayType type;
   final String description;
 
@@ -189,7 +193,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
               const Duration(milliseconds: 50),
               () async {
                 if (widget.type == PinOverlayType.enterPin) {
-                  await _checkPin(context, preferences);
+                  await _decodePayload(context, preferences);
                 } else {
                   if (!_awaitingConfirmation) {
                     // Switch to confirm pin
@@ -199,7 +203,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
                     });
                   } else {
                     // First and second pins match
-                    await _submitNewPin(context, ref, preferences);
+                    await _encodePayload(context, ref, preferences);
                   }
                 }
               },
@@ -228,7 +232,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
     );
   }
 
-  Future<void> _submitNewPin(
+  Future<void> _encodePayload(
     BuildContext context,
     WidgetRef ref,
     Settings preferences,
@@ -238,6 +242,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
         .updatePin(
           pin: _pin,
           pinConfirmation: _pinConfirmed,
+          challenge: widget.challenge,
         );
 
     await updatePinResult.map(
@@ -262,24 +267,27 @@ class _PinScreenState extends ConsumerState<PinScreen>
               AuthenticationProviders.settings.notifier,
             )
             .setAuthMethod(AuthMethod.pin);
-        context.pop(true);
+        context.pop(value.encodedChallenge);
       },
     );
   }
 
-  Future<void> _checkPin(BuildContext context, Settings preferences) async {
+  Future<void> _decodePayload(
+    BuildContext context,
+    Settings preferences,
+  ) async {
     if (!mounted) return;
     final result = await ref
         .read(
           AuthenticationProviders.pinAuthentication.notifier,
         )
-        .authenticateWithPin(
-          PinCredentials(pin: _pin),
+        .decodeWithPin(
+          PinCredentials(pin: _pin, challenge: widget.challenge),
         );
 
     await result.maybeMap(
-      success: (_) async {
-        context.pop(true);
+      success: (success) async {
+        context.pop(success.decodedChallenge);
         return;
       },
       orElse: () {
@@ -472,7 +480,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
               key: const Key('back'),
               color: ArchethicTheme.text,
               onPressed: () {
-                context.pop(false);
+                context.pop();
               },
             )
           : const SizedBox(),
@@ -532,8 +540,8 @@ class _PinScreenState extends ConsumerState<PinScreen>
               Future<void>.delayed(
                 const Duration(milliseconds: 50),
                 () async {
-                  if (widget.type == PinOverlayType.enterPin) {
-                    await _checkPin(context, preferences);
+                  if (widget.action == CipherDelegateAction.decode) {
+                    await _decodePayload(context, preferences);
                   } else {
                     if (!_awaitingConfirmation) {
                       // Switch to confirm pin
@@ -543,7 +551,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
                       });
                     } else {
                       // First and second pins match
-                      await _submitNewPin(context, ref, preferences);
+                      await _encodePayload(context, ref, preferences);
                     }
                   }
                 },

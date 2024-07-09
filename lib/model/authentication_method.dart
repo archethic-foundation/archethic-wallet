@@ -8,7 +8,6 @@ enum AuthMethod {
   pin,
   biometrics,
   yubikeyWithYubicloud,
-  ledger,
   password,
 }
 
@@ -29,8 +28,6 @@ class AuthenticationMethod extends SettingSelectionItem {
         return localizations.pinMethod;
       case AuthMethod.yubikeyWithYubicloud:
         return localizations.yubikeyWithYubiCloudMethod;
-      case AuthMethod.ledger:
-        return localizations.ledgerMethod;
       case AuthMethod.password:
         return localizations.passwordMethod;
     }
@@ -45,8 +42,6 @@ class AuthenticationMethod extends SettingSelectionItem {
         return localizations.configureSecurityExplanationPIN;
       case AuthMethod.yubikeyWithYubicloud:
         return localizations.configureSecurityExplanationYubikey;
-      case AuthMethod.ledger:
-        return '';
       case AuthMethod.password:
         return localizations.configureSecurityExplanationPassword;
     }
@@ -61,8 +56,6 @@ class AuthenticationMethod extends SettingSelectionItem {
       case AuthMethod.yubikeyWithYubicloud:
         return 'assets/icons/yubikey.png';
       case AuthMethod.password:
-        return 'assets/icons/password.png';
-      case AuthMethod.ledger:
         return 'assets/icons/password.png';
     }
   }

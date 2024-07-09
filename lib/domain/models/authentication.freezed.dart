@@ -16,25 +16,26 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Credentials {
+  Uint8List get challenge => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String pin) pin,
-    required TResult Function(String password) password,
-    required TResult Function(String otp) yubikey,
+    required TResult Function(String pin, Uint8List challenge) pin,
+    required TResult Function(String password, Uint8List challenge) password,
+    required TResult Function(String otp, Uint8List challenge) yubikey,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String pin)? pin,
-    TResult? Function(String password)? password,
-    TResult? Function(String otp)? yubikey,
+    TResult? Function(String pin, Uint8List challenge)? pin,
+    TResult? Function(String password, Uint8List challenge)? password,
+    TResult? Function(String otp, Uint8List challenge)? yubikey,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String pin)? pin,
-    TResult Function(String password)? password,
-    TResult Function(String otp)? yubikey,
+    TResult Function(String pin, Uint8List challenge)? pin,
+    TResult Function(String password, Uint8List challenge)? password,
+    TResult Function(String otp, Uint8List challenge)? yubikey,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -60,6 +61,10 @@ mixin _$Credentials {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $CredentialsCopyWith<Credentials> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -67,6 +72,8 @@ abstract class $CredentialsCopyWith<$Res> {
   factory $CredentialsCopyWith(
           Credentials value, $Res Function(Credentials) then) =
       _$CredentialsCopyWithImpl<$Res, Credentials>;
+  @useResult
+  $Res call({Uint8List challenge});
 }
 
 /// @nodoc
@@ -78,15 +85,30 @@ class _$CredentialsCopyWithImpl<$Res, $Val extends Credentials>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? challenge = null,
+  }) {
+    return _then(_value.copyWith(
+      challenge: null == challenge
+          ? _value.challenge
+          : challenge // ignore: cast_nullable_to_non_nullable
+              as Uint8List,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$PinCredentialsImplCopyWith<$Res> {
+abstract class _$$PinCredentialsImplCopyWith<$Res>
+    implements $CredentialsCopyWith<$Res> {
   factory _$$PinCredentialsImplCopyWith(_$PinCredentialsImpl value,
           $Res Function(_$PinCredentialsImpl) then) =
       __$$PinCredentialsImplCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call({String pin});
+  $Res call({String pin, Uint8List challenge});
 }
 
 /// @nodoc
@@ -101,27 +123,44 @@ class __$$PinCredentialsImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? pin = null,
+    Object? challenge = null,
   }) {
     return _then(_$PinCredentialsImpl(
       pin: null == pin
           ? _value.pin
           : pin // ignore: cast_nullable_to_non_nullable
               as String,
+      challenge: null == challenge
+          ? _value.challenge
+          : challenge // ignore: cast_nullable_to_non_nullable
+              as Uint8List,
     ));
   }
 }
 
 /// @nodoc
 
-class _$PinCredentialsImpl extends PinCredentials {
-  const _$PinCredentialsImpl({required this.pin}) : super._();
+class _$PinCredentialsImpl extends PinCredentials with DiagnosticableTreeMixin {
+  const _$PinCredentialsImpl({required this.pin, required this.challenge})
+      : super._();
 
   @override
   final String pin;
+  @override
+  final Uint8List challenge;
 
   @override
-  String toString() {
-    return 'Credentials.pin(pin: $pin)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'Credentials.pin(pin: $pin, challenge: $challenge)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'Credentials.pin'))
+      ..add(DiagnosticsProperty('pin', pin))
+      ..add(DiagnosticsProperty('challenge', challenge));
   }
 
   @override
@@ -129,11 +168,13 @@ class _$PinCredentialsImpl extends PinCredentials {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PinCredentialsImpl &&
-            (identical(other.pin, pin) || other.pin == pin));
+            (identical(other.pin, pin) || other.pin == pin) &&
+            const DeepCollectionEquality().equals(other.challenge, challenge));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, pin);
+  int get hashCode => Object.hash(
+      runtimeType, pin, const DeepCollectionEquality().hash(challenge));
 
   @JsonKey(ignore: true)
   @override
@@ -145,33 +186,33 @@ class _$PinCredentialsImpl extends PinCredentials {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String pin) pin,
-    required TResult Function(String password) password,
-    required TResult Function(String otp) yubikey,
+    required TResult Function(String pin, Uint8List challenge) pin,
+    required TResult Function(String password, Uint8List challenge) password,
+    required TResult Function(String otp, Uint8List challenge) yubikey,
   }) {
-    return pin(this.pin);
+    return pin(this.pin, challenge);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String pin)? pin,
-    TResult? Function(String password)? password,
-    TResult? Function(String otp)? yubikey,
+    TResult? Function(String pin, Uint8List challenge)? pin,
+    TResult? Function(String password, Uint8List challenge)? password,
+    TResult? Function(String otp, Uint8List challenge)? yubikey,
   }) {
-    return pin?.call(this.pin);
+    return pin?.call(this.pin, challenge);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String pin)? pin,
-    TResult Function(String password)? password,
-    TResult Function(String otp)? yubikey,
+    TResult Function(String pin, Uint8List challenge)? pin,
+    TResult Function(String password, Uint8List challenge)? password,
+    TResult Function(String otp, Uint8List challenge)? yubikey,
     required TResult orElse(),
   }) {
     if (pin != null) {
-      return pin(this.pin);
+      return pin(this.pin, challenge);
     }
     return orElse();
   }
@@ -212,23 +253,29 @@ class _$PinCredentialsImpl extends PinCredentials {
 }
 
 abstract class PinCredentials extends Credentials {
-  const factory PinCredentials({required final String pin}) =
-      _$PinCredentialsImpl;
+  const factory PinCredentials(
+      {required final String pin,
+      required final Uint8List challenge}) = _$PinCredentialsImpl;
   const PinCredentials._() : super._();
 
   String get pin;
+  @override
+  Uint8List get challenge;
+  @override
   @JsonKey(ignore: true)
   _$$PinCredentialsImplCopyWith<_$PinCredentialsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$PasswordCredentialsImplCopyWith<$Res> {
+abstract class _$$PasswordCredentialsImplCopyWith<$Res>
+    implements $CredentialsCopyWith<$Res> {
   factory _$$PasswordCredentialsImplCopyWith(_$PasswordCredentialsImpl value,
           $Res Function(_$PasswordCredentialsImpl) then) =
       __$$PasswordCredentialsImplCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call({String password});
+  $Res call({String password, Uint8List challenge});
 }
 
 /// @nodoc
@@ -243,27 +290,46 @@ class __$$PasswordCredentialsImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? password = null,
+    Object? challenge = null,
   }) {
     return _then(_$PasswordCredentialsImpl(
       password: null == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
+      challenge: null == challenge
+          ? _value.challenge
+          : challenge // ignore: cast_nullable_to_non_nullable
+              as Uint8List,
     ));
   }
 }
 
 /// @nodoc
 
-class _$PasswordCredentialsImpl extends PasswordCredentials {
-  const _$PasswordCredentialsImpl({required this.password}) : super._();
+class _$PasswordCredentialsImpl extends PasswordCredentials
+    with DiagnosticableTreeMixin {
+  const _$PasswordCredentialsImpl(
+      {required this.password, required this.challenge})
+      : super._();
 
   @override
   final String password;
+  @override
+  final Uint8List challenge;
 
   @override
-  String toString() {
-    return 'Credentials.password(password: $password)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'Credentials.password(password: $password, challenge: $challenge)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'Credentials.password'))
+      ..add(DiagnosticsProperty('password', password))
+      ..add(DiagnosticsProperty('challenge', challenge));
   }
 
   @override
@@ -272,11 +338,13 @@ class _$PasswordCredentialsImpl extends PasswordCredentials {
         (other.runtimeType == runtimeType &&
             other is _$PasswordCredentialsImpl &&
             (identical(other.password, password) ||
-                other.password == password));
+                other.password == password) &&
+            const DeepCollectionEquality().equals(other.challenge, challenge));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, password);
+  int get hashCode => Object.hash(
+      runtimeType, password, const DeepCollectionEquality().hash(challenge));
 
   @JsonKey(ignore: true)
   @override
@@ -288,33 +356,33 @@ class _$PasswordCredentialsImpl extends PasswordCredentials {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String pin) pin,
-    required TResult Function(String password) password,
-    required TResult Function(String otp) yubikey,
+    required TResult Function(String pin, Uint8List challenge) pin,
+    required TResult Function(String password, Uint8List challenge) password,
+    required TResult Function(String otp, Uint8List challenge) yubikey,
   }) {
-    return password(this.password);
+    return password(this.password, challenge);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String pin)? pin,
-    TResult? Function(String password)? password,
-    TResult? Function(String otp)? yubikey,
+    TResult? Function(String pin, Uint8List challenge)? pin,
+    TResult? Function(String password, Uint8List challenge)? password,
+    TResult? Function(String otp, Uint8List challenge)? yubikey,
   }) {
-    return password?.call(this.password);
+    return password?.call(this.password, challenge);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String pin)? pin,
-    TResult Function(String password)? password,
-    TResult Function(String otp)? yubikey,
+    TResult Function(String pin, Uint8List challenge)? pin,
+    TResult Function(String password, Uint8List challenge)? password,
+    TResult Function(String otp, Uint8List challenge)? yubikey,
     required TResult orElse(),
   }) {
     if (password != null) {
-      return password(this.password);
+      return password(this.password, challenge);
     }
     return orElse();
   }
@@ -355,23 +423,29 @@ class _$PasswordCredentialsImpl extends PasswordCredentials {
 }
 
 abstract class PasswordCredentials extends Credentials {
-  const factory PasswordCredentials({required final String password}) =
-      _$PasswordCredentialsImpl;
+  const factory PasswordCredentials(
+      {required final String password,
+      required final Uint8List challenge}) = _$PasswordCredentialsImpl;
   const PasswordCredentials._() : super._();
 
   String get password;
+  @override
+  Uint8List get challenge;
+  @override
   @JsonKey(ignore: true)
   _$$PasswordCredentialsImplCopyWith<_$PasswordCredentialsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$YubikeyCredentialsImplCopyWith<$Res> {
+abstract class _$$YubikeyCredentialsImplCopyWith<$Res>
+    implements $CredentialsCopyWith<$Res> {
   factory _$$YubikeyCredentialsImplCopyWith(_$YubikeyCredentialsImpl value,
           $Res Function(_$YubikeyCredentialsImpl) then) =
       __$$YubikeyCredentialsImplCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call({String otp});
+  $Res call({String otp, Uint8List challenge});
 }
 
 /// @nodoc
@@ -386,27 +460,45 @@ class __$$YubikeyCredentialsImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? otp = null,
+    Object? challenge = null,
   }) {
     return _then(_$YubikeyCredentialsImpl(
       otp: null == otp
           ? _value.otp
           : otp // ignore: cast_nullable_to_non_nullable
               as String,
+      challenge: null == challenge
+          ? _value.challenge
+          : challenge // ignore: cast_nullable_to_non_nullable
+              as Uint8List,
     ));
   }
 }
 
 /// @nodoc
 
-class _$YubikeyCredentialsImpl extends YubikeyCredentials {
-  const _$YubikeyCredentialsImpl({required this.otp}) : super._();
+class _$YubikeyCredentialsImpl extends YubikeyCredentials
+    with DiagnosticableTreeMixin {
+  const _$YubikeyCredentialsImpl({required this.otp, required this.challenge})
+      : super._();
 
   @override
   final String otp;
+  @override
+  final Uint8List challenge;
 
   @override
-  String toString() {
-    return 'Credentials.yubikey(otp: $otp)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'Credentials.yubikey(otp: $otp, challenge: $challenge)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'Credentials.yubikey'))
+      ..add(DiagnosticsProperty('otp', otp))
+      ..add(DiagnosticsProperty('challenge', challenge));
   }
 
   @override
@@ -414,11 +506,13 @@ class _$YubikeyCredentialsImpl extends YubikeyCredentials {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$YubikeyCredentialsImpl &&
-            (identical(other.otp, otp) || other.otp == otp));
+            (identical(other.otp, otp) || other.otp == otp) &&
+            const DeepCollectionEquality().equals(other.challenge, challenge));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, otp);
+  int get hashCode => Object.hash(
+      runtimeType, otp, const DeepCollectionEquality().hash(challenge));
 
   @JsonKey(ignore: true)
   @override
@@ -430,33 +524,33 @@ class _$YubikeyCredentialsImpl extends YubikeyCredentials {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String pin) pin,
-    required TResult Function(String password) password,
-    required TResult Function(String otp) yubikey,
+    required TResult Function(String pin, Uint8List challenge) pin,
+    required TResult Function(String password, Uint8List challenge) password,
+    required TResult Function(String otp, Uint8List challenge) yubikey,
   }) {
-    return yubikey(otp);
+    return yubikey(otp, challenge);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String pin)? pin,
-    TResult? Function(String password)? password,
-    TResult? Function(String otp)? yubikey,
+    TResult? Function(String pin, Uint8List challenge)? pin,
+    TResult? Function(String password, Uint8List challenge)? password,
+    TResult? Function(String otp, Uint8List challenge)? yubikey,
   }) {
-    return yubikey?.call(otp);
+    return yubikey?.call(otp, challenge);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String pin)? pin,
-    TResult Function(String password)? password,
-    TResult Function(String otp)? yubikey,
+    TResult Function(String pin, Uint8List challenge)? pin,
+    TResult Function(String password, Uint8List challenge)? password,
+    TResult Function(String otp, Uint8List challenge)? yubikey,
     required TResult orElse(),
   }) {
     if (yubikey != null) {
-      return yubikey(otp);
+      return yubikey(otp, challenge);
     }
     return orElse();
   }
@@ -497,11 +591,15 @@ class _$YubikeyCredentialsImpl extends YubikeyCredentials {
 }
 
 abstract class YubikeyCredentials extends Credentials {
-  const factory YubikeyCredentials({required final String otp}) =
-      _$YubikeyCredentialsImpl;
+  const factory YubikeyCredentials(
+      {required final String otp,
+      required final Uint8List challenge}) = _$YubikeyCredentialsImpl;
   const YubikeyCredentials._() : super._();
 
   String get otp;
+  @override
+  Uint8List get challenge;
+  @override
   @JsonKey(ignore: true)
   _$$YubikeyCredentialsImplCopyWith<_$YubikeyCredentialsImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -629,7 +727,8 @@ class __$$AuthenticationSettingsImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AuthenticationSettingsImpl extends _AuthenticationSettings {
+class _$AuthenticationSettingsImpl extends _AuthenticationSettings
+    with DiagnosticableTreeMixin {
   const _$AuthenticationSettingsImpl(
       {required this.authenticationMethod,
       required this.pinPadShuffle,
@@ -647,8 +746,19 @@ class _$AuthenticationSettingsImpl extends _AuthenticationSettings {
   final PrivacyMaskOption privacyMask;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AuthenticationSettings(authenticationMethod: $authenticationMethod, pinPadShuffle: $pinPadShuffle, lockTimeout: $lockTimeout, privacyMask: $privacyMask)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AuthenticationSettings'))
+      ..add(DiagnosticsProperty('authenticationMethod', authenticationMethod))
+      ..add(DiagnosticsProperty('pinPadShuffle', pinPadShuffle))
+      ..add(DiagnosticsProperty('lockTimeout', lockTimeout))
+      ..add(DiagnosticsProperty('privacyMask', privacyMask));
   }
 
   @override

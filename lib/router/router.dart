@@ -8,12 +8,16 @@ import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/router/dialog_page.dart';
 import 'package:aewallet/ui/menu/settings/settings_sheet.dart';
 import 'package:aewallet/ui/views/add_account/layouts/add_account_sheet.dart';
+import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/ui/views/authenticate/biometrics_screen.dart';
 import 'package:aewallet/ui/views/authenticate/logging_out.dart';
 import 'package:aewallet/ui/views/authenticate/password_screen.dart';
 import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
 import 'package:aewallet/ui/views/authenticate/privacy_mask.dart';
+import 'package:aewallet/ui/views/authenticate/set_biometrics_screen.dart';
+import 'package:aewallet/ui/views/authenticate/set_password_screen.dart';
+import 'package:aewallet/ui/views/authenticate/set_yubikey_screen.dart';
 import 'package:aewallet/ui/views/authenticate/yubikey_screen.dart';
 import 'package:aewallet/ui/views/contacts/layouts/add_contact.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
@@ -42,8 +46,6 @@ import 'package:aewallet/ui/views/nft_creation/layouts/components/import_tab/nft
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/rpc_command_receiver.dart';
 import 'package:aewallet/ui/views/settings/backupseed_sheet.dart';
-import 'package:aewallet/ui/views/settings/set_password.dart';
-import 'package:aewallet/ui/views/settings/set_yubikey.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
 import 'package:aewallet/ui/views/sheets/chart_sheet.dart';
 import 'package:aewallet/ui/views/sheets/connectivity_warning.dart';
@@ -56,6 +58,7 @@ import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
 import 'package:aewallet/util/get_it_instance.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -79,92 +82,87 @@ class RoutesPath {
       debugLogDiagnostics: true,
       extraCodec: const JsonCodec(),
       routes: [
-        GoRoute(
-          path: Splash.routerPage,
-          pageBuilder: (context, state) => CustomTransitionPage<void>(
-            transitionDuration: Duration.zero,
-            reverseTransitionDuration: Duration.zero,
-            key: state.pageKey,
-            child: const Splash(),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) =>
-                    FadeTransition(
-              opacity: animation,
-              child: child,
-            ),
-          ),
-        ),
-        ..._authenticationRoutes,
-        ..._introductionRoutes,
-        GoRoute(
-          path: ShowSendingAnimation.routerPage,
-          pageBuilder: (context, state) => CustomTransitionPage<void>(
-            transitionDuration: Duration.zero,
-            reverseTransitionDuration: Duration.zero,
-            key: state.pageKey,
-            child: AnimationLoadingPage(
-              title: state.extra as String?,
-            ),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) =>
-                    FadeTransition(
-              opacity: animation,
-              child: child,
-            ),
-          ),
-        ),
-        GoRoute(
-          path: SetPassword.routerPage,
-          pageBuilder: (context, state) => CustomTransitionPage<void>(
-            transitionDuration: Duration.zero,
-            reverseTransitionDuration: Duration.zero,
-            key: state.pageKey,
-            child: SetPassword(
-              header: (state.extra! as Map<String, dynamic>)['header'] == null
-                  ? null
-                  : (state.extra! as Map<String, dynamic>)['header']! as String,
-              description:
-                  (state.extra! as Map<String, dynamic>)['description'] == null
-                      ? null
-                      : (state.extra! as Map<String, dynamic>)['description']!
-                          as String,
-            ),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) =>
-                    FadeTransition(
-              opacity: animation,
-              child: child,
-            ),
-          ),
-        ),
-        GoRoute(
-          path: SetYubikey.routerPage,
-          pageBuilder: (context, state) => CustomTransitionPage<void>(
-            transitionDuration: Duration.zero,
-            reverseTransitionDuration: Duration.zero,
-            key: state.pageKey,
-            child: SetYubikey(
-              header: (state.extra! as Map<String, dynamic>)['header'] == null
-                  ? null
-                  : (state.extra! as Map<String, dynamic>)['header']! as String,
-              description:
-                  (state.extra! as Map<String, dynamic>)['description'] == null
-                      ? null
-                      : (state.extra! as Map<String, dynamic>)['description']!
-                          as String,
-            ),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) =>
-                    FadeTransition(
-              opacity: animation,
-              child: child,
-            ),
-          ),
-        ),
-        AutoLockGuardRoute(
+        ShellRoute(
+          builder: (context, state, child) => AuthFactory(child: child),
           routes: [
-            RPCCommandReceiverRoute(
-              routes: _authenticatedRoutes,
+            GoRoute(
+              path: Splash.routerPage,
+              pageBuilder: (context, state) => CustomTransitionPage<void>(
+                transitionDuration: Duration.zero,
+                reverseTransitionDuration: Duration.zero,
+                key: state.pageKey,
+                child: const Splash(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) =>
+                        FadeTransition(
+                  opacity: animation,
+                  child: child,
+                ),
+              ),
+            ),
+            ..._authenticationRoutes,
+            ..._introductionRoutes,
+            GoRoute(
+              path: ShowSendingAnimation.routerPage,
+              pageBuilder: (context, state) => CustomTransitionPage<void>(
+                transitionDuration: Duration.zero,
+                reverseTransitionDuration: Duration.zero,
+                key: state.pageKey,
+                child: AnimationLoadingPage(
+                  title: state.extra as String?,
+                ),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) =>
+                        FadeTransition(
+                  opacity: animation,
+                  child: child,
+                ),
+              ),
+            ),
+            GoRoute(
+              path: SetBiometricsScreen.routerPage,
+              pageBuilder: (context, state) {
+                final extra = state.extra! as Map<String, dynamic>;
+                return NoTransitionPage<Uint8List>(
+                  child: SetBiometricsScreen(
+                    challenge: extra['challenge'] as Uint8List,
+                  ),
+                );
+              },
+            ),
+            GoRoute(
+              path: SetPassword.routerPage,
+              pageBuilder: (context, state) {
+                final extra = state.extra! as Map<String, dynamic>;
+                return NoTransitionPage<Uint8List>(
+                  key: state.pageKey,
+                  child: SetPassword(
+                    header: extra['header'] as String?,
+                    description: extra['description'] as String?,
+                    challenge: extra['challenge']
+                        as Uint8List, //TODO(Chralu): set that parameter when navigating
+                  ),
+                );
+              },
+            ),
+            GoRoute(
+              path: SetYubikey.routerPage,
+              pageBuilder: (context, state) {
+                final extra = state.extra! as Map<String, dynamic>;
+                return NoTransitionPage<void>(
+                  key: state.pageKey,
+                  child: SetYubikey(
+                    challenge: extra['challenge'] as Uint8List,
+                  ),
+                );
+              },
+            ),
+            AutoLockGuardRoute(
+              routes: [
+                RPCCommandReceiverRoute(
+                  routes: _authenticatedRoutes,
+                ),
+              ],
             ),
           ],
         ),
@@ -191,18 +189,6 @@ class AutoLockGuardRoute extends ShellRoute {
             return NoTransitionPage<void>(
               key: state.pageKey,
               child: AutoLockGuard(child: PrivacyMaskGuard(child: child)),
-            );
-          },
-        );
-}
-
-class PrivacyMaskGuardRoute extends ShellRoute {
-  PrivacyMaskGuardRoute({required super.routes})
-      : super(
-          pageBuilder: (context, state, child) {
-            return NoTransitionPage<void>(
-              key: state.pageKey,
-              child: PrivacyMaskGuard(child: child),
             );
           },
         );

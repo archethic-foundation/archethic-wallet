@@ -4,7 +4,6 @@ import 'dart:async';
 
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/domain/models/authentication.dart';
-import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -27,12 +26,14 @@ class PasswordScreen extends ConsumerStatefulWidget {
   const PasswordScreen({
     super.key,
     required this.canNavigateBack,
+    required this.challenge,
   });
 
   static const name = 'PasswordScreen';
   static const routerPage = '/password';
 
   final bool canNavigateBack;
+  final Uint8List challenge;
 
   @override
   ConsumerState<PasswordScreen> createState() => _PasswordScreenState();
@@ -89,17 +90,13 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
         .authenticateWithPassword(
           PasswordCredentials(
             password: password,
+            challenge: widget.challenge,
           ),
         );
 
     await result.maybeMap(
-      success: (_) async {
-        await ref
-            .read(
-              AuthenticationProviders.settings.notifier,
-            )
-            .setAuthMethod(AuthMethod.password);
-        context.pop<String?>(password);
+      success: (value) async {
+        context.pop(value.decodedChallenge);
         return;
       },
       orElse: () async {
@@ -156,7 +153,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
               key: const Key('back'),
               color: ArchethicTheme.text,
               onPressed: () {
-                context.pop(false);
+                context.pop();
               },
             )
           : const SizedBox(),

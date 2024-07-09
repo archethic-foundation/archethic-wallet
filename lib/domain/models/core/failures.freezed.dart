@@ -20,6 +20,7 @@ mixin _$Failure {
   TResult when<TResult extends Object?>({
     required TResult Function() loggedOut,
     required TResult Function() network,
+    required TResult Function() operationCanceled,
     required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
     required TResult Function() serviceNotFound,
     required TResult Function() serviceAlreadyExists,
@@ -34,6 +35,7 @@ mixin _$Failure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loggedOut,
     TResult? Function()? network,
+    TResult? Function()? operationCanceled,
     TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult? Function()? serviceNotFound,
     TResult? Function()? serviceAlreadyExists,
@@ -48,6 +50,7 @@ mixin _$Failure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loggedOut,
     TResult Function()? network,
+    TResult Function()? operationCanceled,
     TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult Function()? serviceNotFound,
     TResult Function()? serviceAlreadyExists,
@@ -63,6 +66,7 @@ mixin _$Failure {
   TResult map<TResult extends Object?>({
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
+    required TResult Function(_OperationCanceled value) operationCanceled,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
     required TResult Function(_ServiceNotFound value) serviceNotFound,
     required TResult Function(_ServiceAlreadyExists value) serviceAlreadyExists,
@@ -77,6 +81,7 @@ mixin _$Failure {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
+    TResult? Function(_OperationCanceled value)? operationCanceled,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult? Function(_ServiceNotFound value)? serviceNotFound,
     TResult? Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
@@ -91,6 +96,7 @@ mixin _$Failure {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
+    TResult Function(_OperationCanceled value)? operationCanceled,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult Function(_ServiceNotFound value)? serviceNotFound,
     TResult Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
@@ -161,6 +167,7 @@ class _$LoggedOutImpl extends _LoggedOut {
   TResult when<TResult extends Object?>({
     required TResult Function() loggedOut,
     required TResult Function() network,
+    required TResult Function() operationCanceled,
     required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
     required TResult Function() serviceNotFound,
     required TResult Function() serviceAlreadyExists,
@@ -178,6 +185,7 @@ class _$LoggedOutImpl extends _LoggedOut {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loggedOut,
     TResult? Function()? network,
+    TResult? Function()? operationCanceled,
     TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult? Function()? serviceNotFound,
     TResult? Function()? serviceAlreadyExists,
@@ -195,6 +203,7 @@ class _$LoggedOutImpl extends _LoggedOut {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loggedOut,
     TResult Function()? network,
+    TResult Function()? operationCanceled,
     TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult Function()? serviceNotFound,
     TResult Function()? serviceAlreadyExists,
@@ -216,6 +225,7 @@ class _$LoggedOutImpl extends _LoggedOut {
   TResult map<TResult extends Object?>({
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
+    required TResult Function(_OperationCanceled value) operationCanceled,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
     required TResult Function(_ServiceNotFound value) serviceNotFound,
     required TResult Function(_ServiceAlreadyExists value) serviceAlreadyExists,
@@ -233,6 +243,7 @@ class _$LoggedOutImpl extends _LoggedOut {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
+    TResult? Function(_OperationCanceled value)? operationCanceled,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult? Function(_ServiceNotFound value)? serviceNotFound,
     TResult? Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
@@ -250,6 +261,7 @@ class _$LoggedOutImpl extends _LoggedOut {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
+    TResult Function(_OperationCanceled value)? operationCanceled,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult Function(_ServiceNotFound value)? serviceNotFound,
     TResult Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
@@ -312,6 +324,7 @@ class _$NetworkFailureImpl extends _NetworkFailure {
   TResult when<TResult extends Object?>({
     required TResult Function() loggedOut,
     required TResult Function() network,
+    required TResult Function() operationCanceled,
     required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
     required TResult Function() serviceNotFound,
     required TResult Function() serviceAlreadyExists,
@@ -329,6 +342,7 @@ class _$NetworkFailureImpl extends _NetworkFailure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loggedOut,
     TResult? Function()? network,
+    TResult? Function()? operationCanceled,
     TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult? Function()? serviceNotFound,
     TResult? Function()? serviceAlreadyExists,
@@ -346,6 +360,7 @@ class _$NetworkFailureImpl extends _NetworkFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loggedOut,
     TResult Function()? network,
+    TResult Function()? operationCanceled,
     TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult Function()? serviceNotFound,
     TResult Function()? serviceAlreadyExists,
@@ -367,6 +382,7 @@ class _$NetworkFailureImpl extends _NetworkFailure {
   TResult map<TResult extends Object?>({
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
+    required TResult Function(_OperationCanceled value) operationCanceled,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
     required TResult Function(_ServiceNotFound value) serviceNotFound,
     required TResult Function(_ServiceAlreadyExists value) serviceAlreadyExists,
@@ -384,6 +400,7 @@ class _$NetworkFailureImpl extends _NetworkFailure {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
+    TResult? Function(_OperationCanceled value)? operationCanceled,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult? Function(_ServiceNotFound value)? serviceNotFound,
     TResult? Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
@@ -401,6 +418,7 @@ class _$NetworkFailureImpl extends _NetworkFailure {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
+    TResult Function(_OperationCanceled value)? operationCanceled,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult Function(_ServiceNotFound value)? serviceNotFound,
     TResult Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
@@ -421,6 +439,163 @@ class _$NetworkFailureImpl extends _NetworkFailure {
 abstract class _NetworkFailure extends Failure {
   const factory _NetworkFailure() = _$NetworkFailureImpl;
   const _NetworkFailure._() : super._();
+}
+
+/// @nodoc
+abstract class _$$OperationCanceledImplCopyWith<$Res> {
+  factory _$$OperationCanceledImplCopyWith(_$OperationCanceledImpl value,
+          $Res Function(_$OperationCanceledImpl) then) =
+      __$$OperationCanceledImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$OperationCanceledImplCopyWithImpl<$Res>
+    extends _$FailureCopyWithImpl<$Res, _$OperationCanceledImpl>
+    implements _$$OperationCanceledImplCopyWith<$Res> {
+  __$$OperationCanceledImplCopyWithImpl(_$OperationCanceledImpl _value,
+      $Res Function(_$OperationCanceledImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$OperationCanceledImpl extends _OperationCanceled {
+  const _$OperationCanceledImpl() : super._();
+
+  @override
+  String toString() {
+    return 'Failure.operationCanceled()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$OperationCanceledImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loggedOut,
+    required TResult Function() network,
+    required TResult Function() operationCanceled,
+    required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
+    required TResult Function() serviceNotFound,
+    required TResult Function() serviceAlreadyExists,
+    required TResult Function() insufficientFunds,
+    required TResult Function() unauthorized,
+    required TResult Function() invalidValue,
+    required TResult Function() locked,
+    required TResult Function(Object? cause, StackTrace? stack) other,
+  }) {
+    return operationCanceled();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loggedOut,
+    TResult? Function()? network,
+    TResult? Function()? operationCanceled,
+    TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
+    TResult? Function()? serviceNotFound,
+    TResult? Function()? serviceAlreadyExists,
+    TResult? Function()? insufficientFunds,
+    TResult? Function()? unauthorized,
+    TResult? Function()? invalidValue,
+    TResult? Function()? locked,
+    TResult? Function(Object? cause, StackTrace? stack)? other,
+  }) {
+    return operationCanceled?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loggedOut,
+    TResult Function()? network,
+    TResult Function()? operationCanceled,
+    TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
+    TResult Function()? serviceNotFound,
+    TResult Function()? serviceAlreadyExists,
+    TResult Function()? insufficientFunds,
+    TResult Function()? unauthorized,
+    TResult Function()? invalidValue,
+    TResult Function()? locked,
+    TResult Function(Object? cause, StackTrace? stack)? other,
+    required TResult orElse(),
+  }) {
+    if (operationCanceled != null) {
+      return operationCanceled();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_LoggedOut value) loggedOut,
+    required TResult Function(_NetworkFailure value) network,
+    required TResult Function(_OperationCanceled value) operationCanceled,
+    required TResult Function(_QuotaExceededFailure value) quotaExceeded,
+    required TResult Function(_ServiceNotFound value) serviceNotFound,
+    required TResult Function(_ServiceAlreadyExists value) serviceAlreadyExists,
+    required TResult Function(_InsuffientFunds value) insufficientFunds,
+    required TResult Function(_Inauthorized value) unauthorized,
+    required TResult Function(_InvalidValue value) invalidValue,
+    required TResult Function(_LockedApplication value) locked,
+    required TResult Function(_OtherFailure value) other,
+  }) {
+    return operationCanceled(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_LoggedOut value)? loggedOut,
+    TResult? Function(_NetworkFailure value)? network,
+    TResult? Function(_OperationCanceled value)? operationCanceled,
+    TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
+    TResult? Function(_ServiceNotFound value)? serviceNotFound,
+    TResult? Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
+    TResult? Function(_InsuffientFunds value)? insufficientFunds,
+    TResult? Function(_Inauthorized value)? unauthorized,
+    TResult? Function(_InvalidValue value)? invalidValue,
+    TResult? Function(_LockedApplication value)? locked,
+    TResult? Function(_OtherFailure value)? other,
+  }) {
+    return operationCanceled?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_LoggedOut value)? loggedOut,
+    TResult Function(_NetworkFailure value)? network,
+    TResult Function(_OperationCanceled value)? operationCanceled,
+    TResult Function(_QuotaExceededFailure value)? quotaExceeded,
+    TResult Function(_ServiceNotFound value)? serviceNotFound,
+    TResult Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
+    TResult Function(_InsuffientFunds value)? insufficientFunds,
+    TResult Function(_Inauthorized value)? unauthorized,
+    TResult Function(_InvalidValue value)? invalidValue,
+    TResult Function(_LockedApplication value)? locked,
+    TResult Function(_OtherFailure value)? other,
+    required TResult orElse(),
+  }) {
+    if (operationCanceled != null) {
+      return operationCanceled(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _OperationCanceled extends Failure {
+  const factory _OperationCanceled() = _$OperationCanceledImpl;
+  const _OperationCanceled._() : super._();
 }
 
 /// @nodoc
@@ -492,6 +667,7 @@ class _$QuotaExceededFailureImpl extends _QuotaExceededFailure {
   TResult when<TResult extends Object?>({
     required TResult Function() loggedOut,
     required TResult Function() network,
+    required TResult Function() operationCanceled,
     required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
     required TResult Function() serviceNotFound,
     required TResult Function() serviceAlreadyExists,
@@ -509,6 +685,7 @@ class _$QuotaExceededFailureImpl extends _QuotaExceededFailure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loggedOut,
     TResult? Function()? network,
+    TResult? Function()? operationCanceled,
     TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult? Function()? serviceNotFound,
     TResult? Function()? serviceAlreadyExists,
@@ -526,6 +703,7 @@ class _$QuotaExceededFailureImpl extends _QuotaExceededFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loggedOut,
     TResult Function()? network,
+    TResult Function()? operationCanceled,
     TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult Function()? serviceNotFound,
     TResult Function()? serviceAlreadyExists,
@@ -547,6 +725,7 @@ class _$QuotaExceededFailureImpl extends _QuotaExceededFailure {
   TResult map<TResult extends Object?>({
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
+    required TResult Function(_OperationCanceled value) operationCanceled,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
     required TResult Function(_ServiceNotFound value) serviceNotFound,
     required TResult Function(_ServiceAlreadyExists value) serviceAlreadyExists,
@@ -564,6 +743,7 @@ class _$QuotaExceededFailureImpl extends _QuotaExceededFailure {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
+    TResult? Function(_OperationCanceled value)? operationCanceled,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult? Function(_ServiceNotFound value)? serviceNotFound,
     TResult? Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
@@ -581,6 +761,7 @@ class _$QuotaExceededFailureImpl extends _QuotaExceededFailure {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
+    TResult Function(_OperationCanceled value)? operationCanceled,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult Function(_ServiceNotFound value)? serviceNotFound,
     TResult Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
@@ -649,6 +830,7 @@ class _$ServiceNotFoundImpl extends _ServiceNotFound {
   TResult when<TResult extends Object?>({
     required TResult Function() loggedOut,
     required TResult Function() network,
+    required TResult Function() operationCanceled,
     required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
     required TResult Function() serviceNotFound,
     required TResult Function() serviceAlreadyExists,
@@ -666,6 +848,7 @@ class _$ServiceNotFoundImpl extends _ServiceNotFound {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loggedOut,
     TResult? Function()? network,
+    TResult? Function()? operationCanceled,
     TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult? Function()? serviceNotFound,
     TResult? Function()? serviceAlreadyExists,
@@ -683,6 +866,7 @@ class _$ServiceNotFoundImpl extends _ServiceNotFound {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loggedOut,
     TResult Function()? network,
+    TResult Function()? operationCanceled,
     TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult Function()? serviceNotFound,
     TResult Function()? serviceAlreadyExists,
@@ -704,6 +888,7 @@ class _$ServiceNotFoundImpl extends _ServiceNotFound {
   TResult map<TResult extends Object?>({
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
+    required TResult Function(_OperationCanceled value) operationCanceled,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
     required TResult Function(_ServiceNotFound value) serviceNotFound,
     required TResult Function(_ServiceAlreadyExists value) serviceAlreadyExists,
@@ -721,6 +906,7 @@ class _$ServiceNotFoundImpl extends _ServiceNotFound {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
+    TResult? Function(_OperationCanceled value)? operationCanceled,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult? Function(_ServiceNotFound value)? serviceNotFound,
     TResult? Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
@@ -738,6 +924,7 @@ class _$ServiceNotFoundImpl extends _ServiceNotFound {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
+    TResult Function(_OperationCanceled value)? operationCanceled,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult Function(_ServiceNotFound value)? serviceNotFound,
     TResult Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
@@ -801,6 +988,7 @@ class _$ServiceAlreadyExistsImpl extends _ServiceAlreadyExists {
   TResult when<TResult extends Object?>({
     required TResult Function() loggedOut,
     required TResult Function() network,
+    required TResult Function() operationCanceled,
     required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
     required TResult Function() serviceNotFound,
     required TResult Function() serviceAlreadyExists,
@@ -818,6 +1006,7 @@ class _$ServiceAlreadyExistsImpl extends _ServiceAlreadyExists {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loggedOut,
     TResult? Function()? network,
+    TResult? Function()? operationCanceled,
     TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult? Function()? serviceNotFound,
     TResult? Function()? serviceAlreadyExists,
@@ -835,6 +1024,7 @@ class _$ServiceAlreadyExistsImpl extends _ServiceAlreadyExists {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loggedOut,
     TResult Function()? network,
+    TResult Function()? operationCanceled,
     TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult Function()? serviceNotFound,
     TResult Function()? serviceAlreadyExists,
@@ -856,6 +1046,7 @@ class _$ServiceAlreadyExistsImpl extends _ServiceAlreadyExists {
   TResult map<TResult extends Object?>({
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
+    required TResult Function(_OperationCanceled value) operationCanceled,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
     required TResult Function(_ServiceNotFound value) serviceNotFound,
     required TResult Function(_ServiceAlreadyExists value) serviceAlreadyExists,
@@ -873,6 +1064,7 @@ class _$ServiceAlreadyExistsImpl extends _ServiceAlreadyExists {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
+    TResult? Function(_OperationCanceled value)? operationCanceled,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult? Function(_ServiceNotFound value)? serviceNotFound,
     TResult? Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
@@ -890,6 +1082,7 @@ class _$ServiceAlreadyExistsImpl extends _ServiceAlreadyExists {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
+    TResult Function(_OperationCanceled value)? operationCanceled,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult Function(_ServiceNotFound value)? serviceNotFound,
     TResult Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
@@ -952,6 +1145,7 @@ class _$InsuffientFundsImpl extends _InsuffientFunds {
   TResult when<TResult extends Object?>({
     required TResult Function() loggedOut,
     required TResult Function() network,
+    required TResult Function() operationCanceled,
     required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
     required TResult Function() serviceNotFound,
     required TResult Function() serviceAlreadyExists,
@@ -969,6 +1163,7 @@ class _$InsuffientFundsImpl extends _InsuffientFunds {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loggedOut,
     TResult? Function()? network,
+    TResult? Function()? operationCanceled,
     TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult? Function()? serviceNotFound,
     TResult? Function()? serviceAlreadyExists,
@@ -986,6 +1181,7 @@ class _$InsuffientFundsImpl extends _InsuffientFunds {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loggedOut,
     TResult Function()? network,
+    TResult Function()? operationCanceled,
     TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult Function()? serviceNotFound,
     TResult Function()? serviceAlreadyExists,
@@ -1007,6 +1203,7 @@ class _$InsuffientFundsImpl extends _InsuffientFunds {
   TResult map<TResult extends Object?>({
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
+    required TResult Function(_OperationCanceled value) operationCanceled,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
     required TResult Function(_ServiceNotFound value) serviceNotFound,
     required TResult Function(_ServiceAlreadyExists value) serviceAlreadyExists,
@@ -1024,6 +1221,7 @@ class _$InsuffientFundsImpl extends _InsuffientFunds {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
+    TResult? Function(_OperationCanceled value)? operationCanceled,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult? Function(_ServiceNotFound value)? serviceNotFound,
     TResult? Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
@@ -1041,6 +1239,7 @@ class _$InsuffientFundsImpl extends _InsuffientFunds {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
+    TResult Function(_OperationCanceled value)? operationCanceled,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult Function(_ServiceNotFound value)? serviceNotFound,
     TResult Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
@@ -1103,6 +1302,7 @@ class _$InauthorizedImpl extends _Inauthorized {
   TResult when<TResult extends Object?>({
     required TResult Function() loggedOut,
     required TResult Function() network,
+    required TResult Function() operationCanceled,
     required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
     required TResult Function() serviceNotFound,
     required TResult Function() serviceAlreadyExists,
@@ -1120,6 +1320,7 @@ class _$InauthorizedImpl extends _Inauthorized {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loggedOut,
     TResult? Function()? network,
+    TResult? Function()? operationCanceled,
     TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult? Function()? serviceNotFound,
     TResult? Function()? serviceAlreadyExists,
@@ -1137,6 +1338,7 @@ class _$InauthorizedImpl extends _Inauthorized {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loggedOut,
     TResult Function()? network,
+    TResult Function()? operationCanceled,
     TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult Function()? serviceNotFound,
     TResult Function()? serviceAlreadyExists,
@@ -1158,6 +1360,7 @@ class _$InauthorizedImpl extends _Inauthorized {
   TResult map<TResult extends Object?>({
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
+    required TResult Function(_OperationCanceled value) operationCanceled,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
     required TResult Function(_ServiceNotFound value) serviceNotFound,
     required TResult Function(_ServiceAlreadyExists value) serviceAlreadyExists,
@@ -1175,6 +1378,7 @@ class _$InauthorizedImpl extends _Inauthorized {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
+    TResult? Function(_OperationCanceled value)? operationCanceled,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult? Function(_ServiceNotFound value)? serviceNotFound,
     TResult? Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
@@ -1192,6 +1396,7 @@ class _$InauthorizedImpl extends _Inauthorized {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
+    TResult Function(_OperationCanceled value)? operationCanceled,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult Function(_ServiceNotFound value)? serviceNotFound,
     TResult Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
@@ -1254,6 +1459,7 @@ class _$InvalidValueImpl extends _InvalidValue {
   TResult when<TResult extends Object?>({
     required TResult Function() loggedOut,
     required TResult Function() network,
+    required TResult Function() operationCanceled,
     required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
     required TResult Function() serviceNotFound,
     required TResult Function() serviceAlreadyExists,
@@ -1271,6 +1477,7 @@ class _$InvalidValueImpl extends _InvalidValue {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loggedOut,
     TResult? Function()? network,
+    TResult? Function()? operationCanceled,
     TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult? Function()? serviceNotFound,
     TResult? Function()? serviceAlreadyExists,
@@ -1288,6 +1495,7 @@ class _$InvalidValueImpl extends _InvalidValue {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loggedOut,
     TResult Function()? network,
+    TResult Function()? operationCanceled,
     TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult Function()? serviceNotFound,
     TResult Function()? serviceAlreadyExists,
@@ -1309,6 +1517,7 @@ class _$InvalidValueImpl extends _InvalidValue {
   TResult map<TResult extends Object?>({
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
+    required TResult Function(_OperationCanceled value) operationCanceled,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
     required TResult Function(_ServiceNotFound value) serviceNotFound,
     required TResult Function(_ServiceAlreadyExists value) serviceAlreadyExists,
@@ -1326,6 +1535,7 @@ class _$InvalidValueImpl extends _InvalidValue {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
+    TResult? Function(_OperationCanceled value)? operationCanceled,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult? Function(_ServiceNotFound value)? serviceNotFound,
     TResult? Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
@@ -1343,6 +1553,7 @@ class _$InvalidValueImpl extends _InvalidValue {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
+    TResult Function(_OperationCanceled value)? operationCanceled,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult Function(_ServiceNotFound value)? serviceNotFound,
     TResult Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
@@ -1405,6 +1616,7 @@ class _$LockedApplicationImpl extends _LockedApplication {
   TResult when<TResult extends Object?>({
     required TResult Function() loggedOut,
     required TResult Function() network,
+    required TResult Function() operationCanceled,
     required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
     required TResult Function() serviceNotFound,
     required TResult Function() serviceAlreadyExists,
@@ -1422,6 +1634,7 @@ class _$LockedApplicationImpl extends _LockedApplication {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loggedOut,
     TResult? Function()? network,
+    TResult? Function()? operationCanceled,
     TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult? Function()? serviceNotFound,
     TResult? Function()? serviceAlreadyExists,
@@ -1439,6 +1652,7 @@ class _$LockedApplicationImpl extends _LockedApplication {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loggedOut,
     TResult Function()? network,
+    TResult Function()? operationCanceled,
     TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult Function()? serviceNotFound,
     TResult Function()? serviceAlreadyExists,
@@ -1460,6 +1674,7 @@ class _$LockedApplicationImpl extends _LockedApplication {
   TResult map<TResult extends Object?>({
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
+    required TResult Function(_OperationCanceled value) operationCanceled,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
     required TResult Function(_ServiceNotFound value) serviceNotFound,
     required TResult Function(_ServiceAlreadyExists value) serviceAlreadyExists,
@@ -1477,6 +1692,7 @@ class _$LockedApplicationImpl extends _LockedApplication {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
+    TResult? Function(_OperationCanceled value)? operationCanceled,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult? Function(_ServiceNotFound value)? serviceNotFound,
     TResult? Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
@@ -1494,6 +1710,7 @@ class _$LockedApplicationImpl extends _LockedApplication {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
+    TResult Function(_OperationCanceled value)? operationCanceled,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult Function(_ServiceNotFound value)? serviceNotFound,
     TResult Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
@@ -1588,6 +1805,7 @@ class _$OtherFailureImpl extends _OtherFailure {
   TResult when<TResult extends Object?>({
     required TResult Function() loggedOut,
     required TResult Function() network,
+    required TResult Function() operationCanceled,
     required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
     required TResult Function() serviceNotFound,
     required TResult Function() serviceAlreadyExists,
@@ -1605,6 +1823,7 @@ class _$OtherFailureImpl extends _OtherFailure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loggedOut,
     TResult? Function()? network,
+    TResult? Function()? operationCanceled,
     TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult? Function()? serviceNotFound,
     TResult? Function()? serviceAlreadyExists,
@@ -1622,6 +1841,7 @@ class _$OtherFailureImpl extends _OtherFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loggedOut,
     TResult Function()? network,
+    TResult Function()? operationCanceled,
     TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
     TResult Function()? serviceNotFound,
     TResult Function()? serviceAlreadyExists,
@@ -1643,6 +1863,7 @@ class _$OtherFailureImpl extends _OtherFailure {
   TResult map<TResult extends Object?>({
     required TResult Function(_LoggedOut value) loggedOut,
     required TResult Function(_NetworkFailure value) network,
+    required TResult Function(_OperationCanceled value) operationCanceled,
     required TResult Function(_QuotaExceededFailure value) quotaExceeded,
     required TResult Function(_ServiceNotFound value) serviceNotFound,
     required TResult Function(_ServiceAlreadyExists value) serviceAlreadyExists,
@@ -1660,6 +1881,7 @@ class _$OtherFailureImpl extends _OtherFailure {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_LoggedOut value)? loggedOut,
     TResult? Function(_NetworkFailure value)? network,
+    TResult? Function(_OperationCanceled value)? operationCanceled,
     TResult? Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult? Function(_ServiceNotFound value)? serviceNotFound,
     TResult? Function(_ServiceAlreadyExists value)? serviceAlreadyExists,
@@ -1677,6 +1899,7 @@ class _$OtherFailureImpl extends _OtherFailure {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LoggedOut value)? loggedOut,
     TResult Function(_NetworkFailure value)? network,
+    TResult Function(_OperationCanceled value)? operationCanceled,
     TResult Function(_QuotaExceededFailure value)? quotaExceeded,
     TResult Function(_ServiceNotFound value)? serviceNotFound,
     TResult Function(_ServiceAlreadyExists value)? serviceAlreadyExists,

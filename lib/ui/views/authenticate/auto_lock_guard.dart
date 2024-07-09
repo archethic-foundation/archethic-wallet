@@ -2,12 +2,9 @@ import 'dart:async';
 
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
-import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/authenticate/components/lock_overlay.mixin.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
@@ -86,23 +83,12 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
     );
 
     WidgetsBinding.instance.addObserver(this);
-
-    Vault.instance()
-      ..passphraseDelegate = _forceAuthent
-      ..shouldBeLocked = _shouldBeLocked;
   }
 
   @override
   void dispose() {
     if (timer != null) timer!.cancel();
     WidgetsBinding.instance.removeObserver(this);
-
-    if (Vault.instance().passphraseDelegate == _forceAuthent) {
-      Vault.instance().passphraseDelegate = null;
-    }
-    if (Vault.instance().shouldBeLocked == _shouldBeLocked) {
-      Vault.instance().shouldBeLocked = null;
-    }
 
     super.dispose();
   }
@@ -168,73 +154,6 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
       _scheduleLock(durationBeforeLock);
       return;
     }
-  }
-
-  Future<bool> _shouldBeLocked() async {
-    _logger.info('Check if vault should be locked');
-    final value = await ref.read(
-      AuthenticationProviders.authenticationGuard.future,
-    );
-
-    final lockDate = value.lockDate;
-    final authentRequired = lockDate != null;
-
-    if (!authentRequired) {
-      return false;
-    }
-
-    final durationBeforeLock = lockDate.difference(DateTime.now());
-    _logger.info(
-      'Duration before lock : $durationBeforeLock',
-    );
-    return durationBeforeLock <= Duration.zero;
-  }
-
-  static Completer<String>? _forceAuthenticationCompleter;
-  Future<String> _forceAuthent() async {
-    _logger.info(
-      'Force authent',
-    );
-
-    if (_forceAuthenticationCompleter != null) {
-      _logger.info(
-        '... authent already running.',
-      );
-
-      return _forceAuthenticationCompleter!.future;
-    }
-
-    _forceAuthenticationCompleter = Completer<String>();
-    unawaited(
-      Future.sync(() async {
-        try {
-          final key = await AuthFactory.forceAuthenticate(
-            context,
-            ref,
-            authMethod: ref.read(
-              AuthenticationProviders.settings.select(
-                (authSettings) => AuthenticationMethod(
-                  authSettings.authenticationMethod,
-                ),
-              ),
-            ),
-            canCancel: false,
-          );
-
-          ref
-              .read(AuthenticationProviders.authenticationGuard.notifier)
-              .scheduleAutolock();
-
-          _forceAuthenticationCompleter?.complete(key);
-          _forceAuthenticationCompleter = null;
-        } catch (e) {
-          _forceAuthenticationCompleter?.completeError(e);
-          _forceAuthenticationCompleter = null;
-        }
-      }),
-    );
-
-    return _forceAuthenticationCompleter!.future;
   }
 }
 

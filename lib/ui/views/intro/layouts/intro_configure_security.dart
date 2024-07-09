@@ -2,20 +2,19 @@ import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
+import 'package:aewallet/domain/models/core/failures.dart';
+import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
+import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/intro/bloc/provider.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/views/settings/set_password.dart';
-import 'package:aewallet/ui/views/settings/set_yubikey.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/dialogs/authentification_method_dialog_help.dart';
-import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -158,74 +157,31 @@ class _IntroConfigureSecurityState extends ConsumerState<IntroConfigureSecurity>
               });
               if (_accessModesSelected == null) return;
               final authMethod = _accessModesSelected!.value as AuthMethod;
-              var authenticated = false;
-              switch (authMethod) {
-                case AuthMethod.biometrics:
-                  authenticated =
-                      await sl.get<BiometricUtil>().authenticateWithBiometrics(
-                            context,
-                            localizations.unlockBiometrics,
-                          );
-                  break;
-                case AuthMethod.password:
-                  final result = await context.push(
-                    SetPassword.routerPage,
-                    extra: {
-                      'header': localizations.setPasswordHeader,
-                      'description': AppLocalizations.of(
-                        context,
-                      )!
-                          .configureSecurityExplanationPassword,
-                    },
-                  );
-                  if (result != null && result is bool) {
-                    authenticated = result;
-                  } else {
-                    authenticated = false;
-                  }
-                  break;
-                case AuthMethod.pin:
-                  final result = await context.push(
-                    PinScreen.routerPage,
-                    extra: {
-                      'type': PinOverlayType.newPin.name,
-                    },
-                  );
-                  if (result != null && result is bool) {
-                    authenticated = result;
-                  } else {
-                    authenticated = false;
-                  }
-                  break;
-                case AuthMethod.yubikeyWithYubicloud:
-                  final result = await context.push(
-                    SetYubikey.routerPage,
-                    extra: {
-                      'header': localizations.setYubicloudHeader,
-                      'description': localizations.setYubicloudDescription,
-                    },
-                  );
-                  if (result != null && result is bool) {
-                    authenticated = result;
-                  } else {
-                    authenticated = false;
-                  }
-                  break;
-                case AuthMethod.ledger:
-                  break;
-              }
-              if (authenticated) {
-                await ref
-                    .read(
-                      AuthenticationProviders.settings.notifier,
-                    )
-                    .setAuthMethod(authMethod);
 
-                if (widget.isImportProfile) {
-                  context.pop();
-                } else {
-                  EventTaxiImpl.singleton().fire(AuthenticatedEvent());
+              final cipherDelegate =
+                  AuthFactory.of(context).vaultCipherDelegate(
+                authMethod: authMethod,
+              );
+
+              try {
+                await Vault.instance().initCipher(cipherDelegate);
+              } on Failure catch (e) {
+                if (e == const Failure.operationCanceled()) {
+                  return;
                 }
+                rethrow;
+              }
+
+              await ref
+                  .read(
+                    AuthenticationProviders.settings.notifier,
+                  )
+                  .setAuthMethod(authMethod);
+
+              if (widget.isImportProfile) {
+                context.pop();
+              } else {
+                EventTaxiImpl.singleton().fire(AuthenticatedEvent());
               }
             },
           ),

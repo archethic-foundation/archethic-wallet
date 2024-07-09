@@ -29,7 +29,7 @@ class AuthenticateWithYubikey
         .verify(credentials.otp, yubikeyClientAPIKey, yubikeyClientID);
 
     if (verificationResponse.status == 'OK') {
-      return authenticationSucceed();
+      return authenticationSucceed(credentials.challenge);
     }
 
     return authenticationFailed();

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/domain/repositories/authentication.dart';
 import 'package:aewallet/domain/usecases/authentication/authentication.dart';
+import 'package:aewallet/domain/usecases/authentication/update_my_password.dart';
 import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:aewallet/infrastructure/repositories/authentication.nonweb.dart';
 import 'package:aewallet/infrastructure/repositories/authentication.web.dart';
