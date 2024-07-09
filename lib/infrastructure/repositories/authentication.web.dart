@@ -1,9 +1,15 @@
+import 'dart:typed_data';
+
 import 'package:aewallet/domain/repositories/authentication.dart';
 import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:aewallet/infrastructure/repositories/authentication.base.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthenticationRepositoryWeb extends AuthenticationRepositoryBase
+    with VaultSecureKeyEncryption
     implements AuthenticationRepositoryInterface {
+  final secureStorage = const FlutterSecureStorage();
+
   @override
   Future<void> clear() async {
     await resetFailedAttempts();
@@ -11,46 +17,34 @@ class AuthenticationRepositoryWeb extends AuthenticationRepositoryBase
   }
 
   @override
-  Future<bool> get isPasswordDefined async {
-    return true;
+  Future<Uint8List> decodeWithPassword(
+    String password,
+    Uint8List challenge,
+  ) async {
+    return decrypt(secureStorage, password, challenge);
   }
 
   @override
-  Future<bool> isPinValid(String pin) async => _isPassphraseValid(pin);
-
-  @override
-  Future<void> setPin(String pin) async {
-    await _updateVaultPassphrase(pin);
+  Future<Uint8List> encodeWithPassword(
+    String password,
+    Uint8List challenge,
+  ) async {
+    return encrypt(secureStorage, password, challenge);
   }
 
   @override
-  Future<bool> isPasswordValid(String password) async =>
-      _isPassphraseValid(password);
+  Future<Uint8List> decodeWithPin(
+    String pin,
+    Uint8List challenge,
+  ) async {
+    return decrypt(secureStorage, pin, challenge);
+  }
 
   @override
-  Future<void> setPassword(String password) async {
-    await _updateVaultPassphrase(password);
-  }
-
-  /// Updates or sets Vault passphrase.
-  ///
-  /// If a passphrase was already setup, then the Vault MUST be unlocked before calling this.
-  Future<void> _updateVaultPassphrase(String passphrase) async {
-    final vault = Vault.instance();
-    if (await vault.isSetup) {
-      await vault.updateSecureKey(passphrase);
-    } else {
-      await vault.unlock(passphrase);
-    }
-  }
-
-  Future<bool> _isPassphraseValid(String passphrase) async {
-    try {
-      final vault = Vault.instance();
-      await vault.unlock(passphrase);
-      return true;
-    } catch (e) {
-      return false;
-    }
+  Future<Uint8List> encodeWithPin(
+    String pin,
+    Uint8List challenge,
+  ) async {
+    return encrypt(secureStorage, pin, challenge);
   }
 }

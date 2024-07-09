@@ -18,6 +18,7 @@ import 'package:aewallet/providers_observer.dart';
 import 'package:aewallet/router/router.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_welcome.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
@@ -247,6 +248,10 @@ class SplashState extends ConsumerState<Splash> {
   final _logger = Logger('SplashState');
 
   Future<void> initializeProviders() async {
+    await ref
+        .read(LocalDataMigrationProviders.localDataMigration.notifier)
+        .migrateLocalData();
+
     final locale = ref.read(LanguageProviders.selectedLocale);
     await ref.read(SettingsProviders.settings.notifier).initialize(locale);
     await ref.read(AuthenticationProviders.settings.notifier).initialize();
@@ -259,9 +264,8 @@ class SplashState extends ConsumerState<Splash> {
         )
         .init();
     await SecurityManager().checkDeviceSecurity(ref, context);
-    await ref
-        .read(LocalDataMigrationProviders.localDataMigration.notifier)
-        .migrateLocalData();
+
+    AuthFactory.of(context).init();
   }
 
   Future<void> checkLoggedIn() async {

@@ -259,16 +259,8 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage>
                     localizations.areYouSureLeaveDiscussion,
                     localizations.yes,
                     () async {
-                      final auth = await AuthFactory.authenticate(
-                        context,
-                        ref,
-                        activeVibrations: ref
-                            .read(SettingsProviders.settings)
-                            .activeVibrations,
-                      );
-                      if (auth == null) {
-                        return;
-                      }
+                      final auth = await AuthFactory.authenticate();
+                      if (!auth) return;
 
                       ShowSendingAnimation.build(
                         context,

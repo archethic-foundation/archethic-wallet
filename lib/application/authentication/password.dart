@@ -31,19 +31,12 @@ class PasswordAuthenticationNotifier
 
     final maxAttemptsCount = state.maxAttemptsCount;
     final failedPinAttempts =
-        await authenticationRepository.getFailedPinAttempts();
+        await authenticationRepository.getFailedAttempts();
 
     if (!mounted) return;
     state = state.copyWith(
       failedAttemptsCount: failedPinAttempts % maxAttemptsCount,
     );
-  }
-
-  Future<void> setPassword(String password) async {
-    final authenticationRepository = ref.read(
-      AuthenticationProviders.authenticationRepository,
-    );
-    await authenticationRepository.setPassword(password);
   }
 
   Future<AuthenticationResult> authenticateWithPassword(
@@ -64,11 +57,25 @@ class PasswordAuthenticationNotifier
     );
 
     state = state.copyWith(
-      failedAttemptsCount:
-          await authenticationRepository.getFailedPinAttempts() %
-              state.maxAttemptsCount,
+      failedAttemptsCount: await authenticationRepository.getFailedAttempts() %
+          state.maxAttemptsCount,
     );
 
     return authenticationResult;
   }
+
+  Future<UpdatePasswordResult> updatePassword({
+    required String password,
+    required String passwordConfirmation,
+    required Uint8List challenge,
+  }) async =>
+      UpdateMyPassword(
+        repository: ref.read(AuthenticationProviders.authenticationRepository),
+      ).run(
+        UpdatePasswordCommand(
+          password: password,
+          passwordConfirmation: passwordConfirmation,
+          challenge: challenge,
+        ),
+      );
 }

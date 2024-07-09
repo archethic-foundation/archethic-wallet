@@ -77,15 +77,8 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage>
       Dimens.buttonBottomDimens,
       key: const Key('modifyDiscussion'),
       onPressed: () async {
-        final auth = await AuthFactory.authenticate(
-          context,
-          ref,
-          activeVibrations:
-              ref.read(SettingsProviders.settings).activeVibrations,
-        );
-        if (auth == null) {
-          return;
-        }
+        final auth = await AuthFactory.authenticate();
+        if (!auth) return;
 
         ShowSendingAnimation.build(
           context,

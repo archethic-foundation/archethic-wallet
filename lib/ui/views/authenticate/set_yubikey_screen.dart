@@ -1,11 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/infrastructure/datasources/authent_nonweb.secured_hive.dart';
-import 'package:aewallet/model/authentication_method.dart';
+import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
+import 'package:aewallet/ui/views/authenticate/yubikey_screen.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
@@ -22,15 +20,10 @@ import 'package:url_launcher/url_launcher.dart';
 class SetYubikey extends ConsumerStatefulWidget {
   const SetYubikey({
     super.key,
-    this.header,
-    this.description,
-    this.apiKey,
-    this.clientID,
+    required this.challenge,
   });
-  final String? header;
-  final String? description;
-  final String? apiKey;
-  final String? clientID;
+
+  final Uint8List challenge;
 
   static const routerPage = '/set_yubikey';
 
@@ -55,12 +48,6 @@ class _SetYubikeyState extends ConsumerState<SetYubikey>
     _clientIDFocusNode = FocusNode();
     _clientAPIKeyController = TextEditingController();
     _clientIDController = TextEditingController();
-    if (widget.apiKey != null) {
-      _clientAPIKeyController!.text = widget.apiKey!;
-    }
-    if (widget.clientID != null) {
-      _clientIDController!.text = widget.clientID!;
-    }
     animationOpen = false;
   }
 
@@ -100,7 +87,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey>
         key: const Key('back'),
         color: ArchethicTheme.text,
         onPressed: () {
-          context.pop(false);
+          context.pop();
         },
       ),
     );
@@ -108,35 +95,35 @@ class _SetYubikeyState extends ConsumerState<SetYubikey>
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (widget.description != null)
-          Container(
-            margin: const EdgeInsetsDirectional.only(
-              start: 20,
-              end: 20,
-              top: 15,
-            ),
-            child: Linkify(
-              text: widget.description!,
-              style: ArchethicThemeStyles.textStyleSize12W100Primary,
-              textAlign: TextAlign.left,
-              options: const LinkifyOptions(
-                humanize: false,
-              ),
-              linkStyle:
-                  ArchethicThemeStyles.textStyleSize12W100Primary.copyWith(
-                decoration: TextDecoration.underline,
-              ),
-              onOpen: (link) async {
-                final uri = Uri.parse(link.url);
-                if (!await canLaunchUrl(uri)) return;
-
-                await launchUrl(uri);
-              },
-            ),
+        Container(
+          margin: const EdgeInsetsDirectional.only(
+            start: 20,
+            end: 20,
+            top: 15,
           ),
+          child: Linkify(
+            text: localizations.setYubicloudDescription,
+            style: ArchethicThemeStyles.textStyleSize12W100Primary,
+            textAlign: TextAlign.left,
+            options: const LinkifyOptions(
+              humanize: false,
+            ),
+            linkStyle: ArchethicThemeStyles.textStyleSize12W100Primary.copyWith(
+              decoration: TextDecoration.underline,
+            ),
+            onOpen: (link) async {
+              final uri = Uri.parse(link.url);
+              if (!await canLaunchUrl(uri)) return;
+
+              await launchUrl(uri);
+            },
+          ),
+        ),
         Container(
           padding: const EdgeInsets.only(
             top: 20,
@@ -325,38 +312,39 @@ class _SetYubikeyState extends ConsumerState<SetYubikey>
   }
 
   Future<void> validate() async {
-    final preferences = ref.watch(SettingsProviders.settings);
-    if (_clientIDController!.text.isEmpty) {
-      if (mounted) {
-        setState(() {
-          _clientIDValidationText =
-              AppLocalizations.of(context)!.enterYubikeyClientIDEmpty;
-        });
-      }
-    } else {
-      if (_clientAPIKeyController!.text.isEmpty) {
-        if (mounted) {
-          setState(() {
-            _clientAPIKeyValidationText =
-                AppLocalizations.of(context)!.enterYubikeyAPIKeyEmpty;
-          });
-        }
-      } else {
-        final vault = await AuthentHiveSecuredDatasource.getInstance();
-        await vault.setYubikeyClientAPIKey(_clientAPIKeyController!.text);
-        await vault.setYubikeyClientID(_clientIDController!.text);
+    final clientId = _clientIDController!.text;
+    final clientApiKey = _clientAPIKeyController!.text;
 
-        final auth = await AuthFactory.authenticate(
-          context,
-          ref,
-          authMethod:
-              const AuthenticationMethod(AuthMethod.yubikeyWithYubicloud),
-          activeVibrations: preferences.activeVibrations,
-        );
-        if (auth != null) {
-          context.pop(true);
-        }
-      }
+    if (clientId.isEmpty) {
+      setState(() {
+        _clientIDValidationText =
+            AppLocalizations.of(context)!.enterYubikeyClientIDEmpty;
+      });
+      return;
     }
+
+    if (clientApiKey.isEmpty) {
+      setState(() {
+        _clientAPIKeyValidationText =
+            AppLocalizations.of(context)!.enterYubikeyAPIKeyEmpty;
+      });
+      return;
+    }
+
+    final auth = await context.push<Uint8List>(
+      YubikeyScreen.routerPage,
+      extra: {
+        'canNavigateBack': true,
+        'challenge': widget.challenge,
+      },
+    );
+    if (auth == null) return;
+
+    await ref.read(AuthenticationProviders.authenticationRepository).setYubikey(
+          clientId: clientId,
+          clientApiKey: clientApiKey,
+        );
+
+    context.pop(widget.challenge);
   }
 }

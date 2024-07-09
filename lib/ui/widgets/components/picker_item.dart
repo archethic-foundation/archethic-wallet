@@ -89,7 +89,7 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
           final isItemSelected = selectedIndexes.contains(index);
           if (widget.pickerItems[index].displayed) {
             return InkWell(
-              onTap: () {
+              onTap: () async {
                 if (widget.pickerItems[index].enabled) {
                   sl.get<HapticUtil>().feedback(
                         FeedbackType.light,

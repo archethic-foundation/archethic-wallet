@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$AuthenticationResult {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() success,
+    required TResult Function(Uint8List decodedChallenge) success,
     required TResult Function() wrongCredentials,
     required TResult Function() notSetup,
     required TResult Function() tooMuchAttempts,
@@ -26,7 +26,7 @@ mixin _$AuthenticationResult {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? success,
+    TResult? Function(Uint8List decodedChallenge)? success,
     TResult? Function()? wrongCredentials,
     TResult? Function()? notSetup,
     TResult? Function()? tooMuchAttempts,
@@ -34,7 +34,7 @@ mixin _$AuthenticationResult {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? success,
+    TResult Function(Uint8List decodedChallenge)? success,
     TResult Function()? wrongCredentials,
     TResult Function()? notSetup,
     TResult Function()? tooMuchAttempts,
@@ -93,6 +93,8 @@ abstract class _$$AuthenticationResultImplCopyWith<$Res> {
   factory _$$AuthenticationResultImplCopyWith(_$AuthenticationResultImpl value,
           $Res Function(_$AuthenticationResultImpl) then) =
       __$$AuthenticationResultImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Uint8List decodedChallenge});
 }
 
 /// @nodoc
@@ -102,68 +104,98 @@ class __$$AuthenticationResultImplCopyWithImpl<$Res>
   __$$AuthenticationResultImplCopyWithImpl(_$AuthenticationResultImpl _value,
       $Res Function(_$AuthenticationResultImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? decodedChallenge = null,
+  }) {
+    return _then(_$AuthenticationResultImpl(
+      decodedChallenge: null == decodedChallenge
+          ? _value.decodedChallenge
+          : decodedChallenge // ignore: cast_nullable_to_non_nullable
+              as Uint8List,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$AuthenticationResultImpl extends _AuthenticationResult
     with DiagnosticableTreeMixin {
-  const _$AuthenticationResultImpl() : super._();
+  const _$AuthenticationResultImpl({required this.decodedChallenge})
+      : super._();
+
+  @override
+  final Uint8List decodedChallenge;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AuthenticationResult.success()';
+    return 'AuthenticationResult.success(decodedChallenge: $decodedChallenge)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'AuthenticationResult.success'));
+    properties
+      ..add(DiagnosticsProperty('type', 'AuthenticationResult.success'))
+      ..add(DiagnosticsProperty('decodedChallenge', decodedChallenge));
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AuthenticationResultImpl);
+            other is _$AuthenticationResultImpl &&
+            const DeepCollectionEquality()
+                .equals(other.decodedChallenge, decodedChallenge));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(decodedChallenge));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AuthenticationResultImplCopyWith<_$AuthenticationResultImpl>
+      get copyWith =>
+          __$$AuthenticationResultImplCopyWithImpl<_$AuthenticationResultImpl>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() success,
+    required TResult Function(Uint8List decodedChallenge) success,
     required TResult Function() wrongCredentials,
     required TResult Function() notSetup,
     required TResult Function() tooMuchAttempts,
   }) {
-    return success();
+    return success(decodedChallenge);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? success,
+    TResult? Function(Uint8List decodedChallenge)? success,
     TResult? Function()? wrongCredentials,
     TResult? Function()? notSetup,
     TResult? Function()? tooMuchAttempts,
   }) {
-    return success?.call();
+    return success?.call(decodedChallenge);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? success,
+    TResult Function(Uint8List decodedChallenge)? success,
     TResult Function()? wrongCredentials,
     TResult Function()? notSetup,
     TResult Function()? tooMuchAttempts,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success();
+      return success(decodedChallenge);
     }
     return orElse();
   }
@@ -208,8 +240,14 @@ class _$AuthenticationResultImpl extends _AuthenticationResult
 }
 
 abstract class _AuthenticationResult extends AuthenticationResult {
-  const factory _AuthenticationResult() = _$AuthenticationResultImpl;
+  const factory _AuthenticationResult(
+      {required final Uint8List decodedChallenge}) = _$AuthenticationResultImpl;
   const _AuthenticationResult._() : super._();
+
+  Uint8List get decodedChallenge;
+  @JsonKey(ignore: true)
+  _$$AuthenticationResultImplCopyWith<_$AuthenticationResultImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -261,7 +299,7 @@ class _$AuthenticationFailureImpl extends _AuthenticationFailure
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() success,
+    required TResult Function(Uint8List decodedChallenge) success,
     required TResult Function() wrongCredentials,
     required TResult Function() notSetup,
     required TResult Function() tooMuchAttempts,
@@ -272,7 +310,7 @@ class _$AuthenticationFailureImpl extends _AuthenticationFailure
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? success,
+    TResult? Function(Uint8List decodedChallenge)? success,
     TResult? Function()? wrongCredentials,
     TResult? Function()? notSetup,
     TResult? Function()? tooMuchAttempts,
@@ -283,7 +321,7 @@ class _$AuthenticationFailureImpl extends _AuthenticationFailure
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? success,
+    TResult Function(Uint8List decodedChallenge)? success,
     TResult Function()? wrongCredentials,
     TResult Function()? notSetup,
     TResult Function()? tooMuchAttempts,
@@ -389,7 +427,7 @@ class _$AuthenticationNotSetupImpl extends _AuthenticationNotSetup
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() success,
+    required TResult Function(Uint8List decodedChallenge) success,
     required TResult Function() wrongCredentials,
     required TResult Function() notSetup,
     required TResult Function() tooMuchAttempts,
@@ -400,7 +438,7 @@ class _$AuthenticationNotSetupImpl extends _AuthenticationNotSetup
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? success,
+    TResult? Function(Uint8List decodedChallenge)? success,
     TResult? Function()? wrongCredentials,
     TResult? Function()? notSetup,
     TResult? Function()? tooMuchAttempts,
@@ -411,7 +449,7 @@ class _$AuthenticationNotSetupImpl extends _AuthenticationNotSetup
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? success,
+    TResult Function(Uint8List decodedChallenge)? success,
     TResult Function()? wrongCredentials,
     TResult Function()? notSetup,
     TResult Function()? tooMuchAttempts,
@@ -517,7 +555,7 @@ class _$AuthenticationTooMuchAttemptsImpl extends _AuthenticationTooMuchAttempts
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() success,
+    required TResult Function(Uint8List decodedChallenge) success,
     required TResult Function() wrongCredentials,
     required TResult Function() notSetup,
     required TResult Function() tooMuchAttempts,
@@ -528,7 +566,7 @@ class _$AuthenticationTooMuchAttemptsImpl extends _AuthenticationTooMuchAttempts
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? success,
+    TResult? Function(Uint8List decodedChallenge)? success,
     TResult? Function()? wrongCredentials,
     TResult? Function()? notSetup,
     TResult? Function()? tooMuchAttempts,
@@ -539,7 +577,7 @@ class _$AuthenticationTooMuchAttemptsImpl extends _AuthenticationTooMuchAttempts
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? success,
+    TResult Function(Uint8List decodedChallenge)? success,
     TResult Function()? wrongCredentials,
     TResult Function()? notSetup,
     TResult Function()? tooMuchAttempts,
@@ -600,19 +638,19 @@ abstract class _AuthenticationTooMuchAttempts extends AuthenticationResult {
 mixin _$UpdatePinResult {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() success,
+    required TResult Function(Uint8List encodedChallenge) success,
     required TResult Function() pinsDoNotMatch,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? success,
+    TResult? Function(Uint8List encodedChallenge)? success,
     TResult? Function()? pinsDoNotMatch,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? success,
+    TResult Function(Uint8List encodedChallenge)? success,
     TResult Function()? pinsDoNotMatch,
     required TResult orElse(),
   }) =>
@@ -620,19 +658,19 @@ mixin _$UpdatePinResult {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_UpdatePinSuccess value) success,
-    required TResult Function(_UpdatePinsDoNotMatch value) pinsDoNotMatch,
+    required TResult Function(_UpdatePinDoNotMatch value) pinsDoNotMatch,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_UpdatePinSuccess value)? success,
-    TResult? Function(_UpdatePinsDoNotMatch value)? pinsDoNotMatch,
+    TResult? Function(_UpdatePinDoNotMatch value)? pinsDoNotMatch,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_UpdatePinSuccess value)? success,
-    TResult Function(_UpdatePinsDoNotMatch value)? pinsDoNotMatch,
+    TResult Function(_UpdatePinDoNotMatch value)? pinsDoNotMatch,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -661,6 +699,8 @@ abstract class _$$UpdatePinSuccessImplCopyWith<$Res> {
   factory _$$UpdatePinSuccessImplCopyWith(_$UpdatePinSuccessImpl value,
           $Res Function(_$UpdatePinSuccessImpl) then) =
       __$$UpdatePinSuccessImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Uint8List encodedChallenge});
 }
 
 /// @nodoc
@@ -670,61 +710,90 @@ class __$$UpdatePinSuccessImplCopyWithImpl<$Res>
   __$$UpdatePinSuccessImplCopyWithImpl(_$UpdatePinSuccessImpl _value,
       $Res Function(_$UpdatePinSuccessImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? encodedChallenge = null,
+  }) {
+    return _then(_$UpdatePinSuccessImpl(
+      encodedChallenge: null == encodedChallenge
+          ? _value.encodedChallenge
+          : encodedChallenge // ignore: cast_nullable_to_non_nullable
+              as Uint8List,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$UpdatePinSuccessImpl extends _UpdatePinSuccess
     with DiagnosticableTreeMixin {
-  const _$UpdatePinSuccessImpl() : super._();
+  const _$UpdatePinSuccessImpl({required this.encodedChallenge}) : super._();
+
+  @override
+  final Uint8List encodedChallenge;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UpdatePinResult.success()';
+    return 'UpdatePinResult.success(encodedChallenge: $encodedChallenge)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'UpdatePinResult.success'));
+    properties
+      ..add(DiagnosticsProperty('type', 'UpdatePinResult.success'))
+      ..add(DiagnosticsProperty('encodedChallenge', encodedChallenge));
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$UpdatePinSuccessImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$UpdatePinSuccessImpl &&
+            const DeepCollectionEquality()
+                .equals(other.encodedChallenge, encodedChallenge));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(encodedChallenge));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UpdatePinSuccessImplCopyWith<_$UpdatePinSuccessImpl> get copyWith =>
+      __$$UpdatePinSuccessImplCopyWithImpl<_$UpdatePinSuccessImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() success,
+    required TResult Function(Uint8List encodedChallenge) success,
     required TResult Function() pinsDoNotMatch,
   }) {
-    return success();
+    return success(encodedChallenge);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? success,
+    TResult? Function(Uint8List encodedChallenge)? success,
     TResult? Function()? pinsDoNotMatch,
   }) {
-    return success?.call();
+    return success?.call(encodedChallenge);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? success,
+    TResult Function(Uint8List encodedChallenge)? success,
     TResult Function()? pinsDoNotMatch,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success();
+      return success(encodedChallenge);
     }
     return orElse();
   }
@@ -733,7 +802,7 @@ class _$UpdatePinSuccessImpl extends _UpdatePinSuccess
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_UpdatePinSuccess value) success,
-    required TResult Function(_UpdatePinsDoNotMatch value) pinsDoNotMatch,
+    required TResult Function(_UpdatePinDoNotMatch value) pinsDoNotMatch,
   }) {
     return success(this);
   }
@@ -742,7 +811,7 @@ class _$UpdatePinSuccessImpl extends _UpdatePinSuccess
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_UpdatePinSuccess value)? success,
-    TResult? Function(_UpdatePinsDoNotMatch value)? pinsDoNotMatch,
+    TResult? Function(_UpdatePinDoNotMatch value)? pinsDoNotMatch,
   }) {
     return success?.call(this);
   }
@@ -751,7 +820,7 @@ class _$UpdatePinSuccessImpl extends _UpdatePinSuccess
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_UpdatePinSuccess value)? success,
-    TResult Function(_UpdatePinsDoNotMatch value)? pinsDoNotMatch,
+    TResult Function(_UpdatePinDoNotMatch value)? pinsDoNotMatch,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -762,31 +831,37 @@ class _$UpdatePinSuccessImpl extends _UpdatePinSuccess
 }
 
 abstract class _UpdatePinSuccess extends UpdatePinResult {
-  const factory _UpdatePinSuccess() = _$UpdatePinSuccessImpl;
+  const factory _UpdatePinSuccess({required final Uint8List encodedChallenge}) =
+      _$UpdatePinSuccessImpl;
   const _UpdatePinSuccess._() : super._();
+
+  Uint8List get encodedChallenge;
+  @JsonKey(ignore: true)
+  _$$UpdatePinSuccessImplCopyWith<_$UpdatePinSuccessImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$UpdatePinsDoNotMatchImplCopyWith<$Res> {
-  factory _$$UpdatePinsDoNotMatchImplCopyWith(_$UpdatePinsDoNotMatchImpl value,
-          $Res Function(_$UpdatePinsDoNotMatchImpl) then) =
-      __$$UpdatePinsDoNotMatchImplCopyWithImpl<$Res>;
+abstract class _$$UpdatePinDoNotMatchImplCopyWith<$Res> {
+  factory _$$UpdatePinDoNotMatchImplCopyWith(_$UpdatePinDoNotMatchImpl value,
+          $Res Function(_$UpdatePinDoNotMatchImpl) then) =
+      __$$UpdatePinDoNotMatchImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$UpdatePinsDoNotMatchImplCopyWithImpl<$Res>
-    extends _$UpdatePinResultCopyWithImpl<$Res, _$UpdatePinsDoNotMatchImpl>
-    implements _$$UpdatePinsDoNotMatchImplCopyWith<$Res> {
-  __$$UpdatePinsDoNotMatchImplCopyWithImpl(_$UpdatePinsDoNotMatchImpl _value,
-      $Res Function(_$UpdatePinsDoNotMatchImpl) _then)
+class __$$UpdatePinDoNotMatchImplCopyWithImpl<$Res>
+    extends _$UpdatePinResultCopyWithImpl<$Res, _$UpdatePinDoNotMatchImpl>
+    implements _$$UpdatePinDoNotMatchImplCopyWith<$Res> {
+  __$$UpdatePinDoNotMatchImplCopyWithImpl(_$UpdatePinDoNotMatchImpl _value,
+      $Res Function(_$UpdatePinDoNotMatchImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$UpdatePinsDoNotMatchImpl extends _UpdatePinsDoNotMatch
+class _$UpdatePinDoNotMatchImpl extends _UpdatePinDoNotMatch
     with DiagnosticableTreeMixin {
-  const _$UpdatePinsDoNotMatchImpl() : super._();
+  const _$UpdatePinDoNotMatchImpl() : super._();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -804,7 +879,7 @@ class _$UpdatePinsDoNotMatchImpl extends _UpdatePinsDoNotMatch
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UpdatePinsDoNotMatchImpl);
+            other is _$UpdatePinDoNotMatchImpl);
   }
 
   @override
@@ -813,7 +888,7 @@ class _$UpdatePinsDoNotMatchImpl extends _UpdatePinsDoNotMatch
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() success,
+    required TResult Function(Uint8List encodedChallenge) success,
     required TResult Function() pinsDoNotMatch,
   }) {
     return pinsDoNotMatch();
@@ -822,7 +897,7 @@ class _$UpdatePinsDoNotMatchImpl extends _UpdatePinsDoNotMatch
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? success,
+    TResult? Function(Uint8List encodedChallenge)? success,
     TResult? Function()? pinsDoNotMatch,
   }) {
     return pinsDoNotMatch?.call();
@@ -831,7 +906,7 @@ class _$UpdatePinsDoNotMatchImpl extends _UpdatePinsDoNotMatch
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? success,
+    TResult Function(Uint8List encodedChallenge)? success,
     TResult Function()? pinsDoNotMatch,
     required TResult orElse(),
   }) {
@@ -845,7 +920,7 @@ class _$UpdatePinsDoNotMatchImpl extends _UpdatePinsDoNotMatch
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_UpdatePinSuccess value) success,
-    required TResult Function(_UpdatePinsDoNotMatch value) pinsDoNotMatch,
+    required TResult Function(_UpdatePinDoNotMatch value) pinsDoNotMatch,
   }) {
     return pinsDoNotMatch(this);
   }
@@ -854,7 +929,7 @@ class _$UpdatePinsDoNotMatchImpl extends _UpdatePinsDoNotMatch
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_UpdatePinSuccess value)? success,
-    TResult? Function(_UpdatePinsDoNotMatch value)? pinsDoNotMatch,
+    TResult? Function(_UpdatePinDoNotMatch value)? pinsDoNotMatch,
   }) {
     return pinsDoNotMatch?.call(this);
   }
@@ -863,7 +938,7 @@ class _$UpdatePinsDoNotMatchImpl extends _UpdatePinsDoNotMatch
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_UpdatePinSuccess value)? success,
-    TResult Function(_UpdatePinsDoNotMatch value)? pinsDoNotMatch,
+    TResult Function(_UpdatePinDoNotMatch value)? pinsDoNotMatch,
     required TResult orElse(),
   }) {
     if (pinsDoNotMatch != null) {
@@ -873,7 +948,7 @@ class _$UpdatePinsDoNotMatchImpl extends _UpdatePinsDoNotMatch
   }
 }
 
-abstract class _UpdatePinsDoNotMatch extends UpdatePinResult {
-  const factory _UpdatePinsDoNotMatch() = _$UpdatePinsDoNotMatchImpl;
-  const _UpdatePinsDoNotMatch._() : super._();
+abstract class _UpdatePinDoNotMatch extends UpdatePinResult {
+  const factory _UpdatePinDoNotMatch() = _$UpdatePinDoNotMatchImpl;
+  const _UpdatePinDoNotMatch._() : super._();
 }
