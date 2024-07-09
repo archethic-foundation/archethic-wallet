@@ -131,8 +131,9 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet>
           .read(AccountProviders.selectedAccount.notifier)
           .refreshFungibleTokens();
     }
-
-    context.go(HomePage.routerPage);
+    if (mounted) {
+      context.go(HomePage.routerPage);
+    }
   }
 
   void _showSendFailed(
