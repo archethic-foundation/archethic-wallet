@@ -29,26 +29,22 @@ class RecoveryPhraseBanner extends ConsumerWidget {
                   onTap: () async {
                     final preferences = ref.read(SettingsProviders.settings);
 
-                    final auth = await AuthFactory.authenticate(
-                      context,
-                      ref,
-                      activeVibrations: preferences.activeVibrations,
+                    final auth = await AuthFactory.authenticate();
+                    if (!auth) return;
+
+                    final seed = ref
+                        .read(SessionProviders.session)
+                        .loggedIn
+                        ?.wallet
+                        .seed;
+                    final mnemonic = AppMnemomics.seedToMnemonic(
+                      seed!,
+                      languageCode: preferences.languageSeed,
                     );
-                    if (auth != null) {
-                      final seed = ref
-                          .read(SessionProviders.session)
-                          .loggedIn
-                          ?.wallet
-                          .seed;
-                      final mnemonic = AppMnemomics.seedToMnemonic(
-                        seed!,
-                        languageCode: preferences.languageSeed,
-                      );
-                      context.go(
-                        AppSeedBackupSheet.routerPage,
-                        extra: {'mnemonic': mnemonic, 'seed': seed},
-                      );
-                    }
+                    context.go(
+                      AppSeedBackupSheet.routerPage,
+                      extra: {'mnemonic': mnemonic, 'seed': seed},
+                    );
                   },
                   child: InfoBanner(
                     AppLocalizations.of(context)!.recoveryPhraseBackupRequired,

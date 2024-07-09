@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/infrastructure/datasources/hive.extension.dart';
+import 'package:aewallet/ui/util/singleton_task.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -9,64 +11,29 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:logging/logging.dart';
 import 'package:pointycastle/export.dart';
 
-part 'lib/password_vault_cipher.dart';
-part 'lib/simple_vault_cipher.dart';
 part 'lib/vault.encrypted_securedkey_extension.dart';
 part 'lib/vault.raw_securedkey_extension.dart';
 
-abstract class VaultCipher {
-  Future<Uint8List> get();
-
-  Future<void> updateSecureKey(
-    String newPassword,
-  );
+abstract class VaultCipherDelegate {
+  Future<Uint8List?> encode(Uint8List payload, bool userCancelable);
+  Future<Uint8List?> decode(Uint8List payload, bool userCancelable);
 }
 
-abstract class VaultCipherFactory {
-  factory VaultCipherFactory() =>
-      kIsWeb ? PasswordVaultCipherFactory() : SimpleVaultCipherFactory();
-
-  VaultCipher build(String password);
-
-  Future<bool> get isSetup;
-
-  Future<void> clear();
-}
-
-class PasswordVaultCipherFactory implements VaultCipherFactory {
-  @override
-  VaultCipher build(String password) => PasswordVaultCipher(
-        passphrase: password,
-      );
-
-  @override
-  Future<bool> get isSetup => PasswordVaultCipher.isSetup;
-
-  @override
-  Future<void> clear() => PasswordVaultCipher.clear();
-}
-
-class SimpleVaultCipherFactory implements VaultCipherFactory {
-  @override
-  VaultCipher build(String password) => SimpleVaultCipher();
-
-  @override
-  Future<void> clear() => SimpleVaultCipher.clear();
-
-  @override
-  Future<bool> get isSetup => SimpleVaultCipher.isSetup;
-}
-
-typedef VaultPassphraseDelegate = Future<String> Function();
 typedef VaultAutolockDelegate = Future<bool> Function();
 
-class Vault {
-  Vault._({VaultCipherFactory? cipherFactory}) {
-    _cipherFactory = cipherFactory ?? VaultCipherFactory();
-  }
+class VaultCipher {
+  VaultCipher(this.key);
 
-  factory Vault.instance({VaultCipherFactory? cipherFactory}) {
-    Vault._instance ??= Vault._(cipherFactory: cipherFactory);
+  final Uint8List key;
+
+  HiveCipher get hiveCipher => HiveAesCipher(key);
+}
+
+class Vault {
+  Vault._();
+
+  factory Vault.instance() {
+    Vault._instance ??= Vault._();
     return Vault._instance!;
   }
 
@@ -76,48 +43,130 @@ class Vault {
     await Hive.deleteFromDisk();
   }
 
-  late final VaultCipherFactory _cipherFactory;
-
   static final _logger = Logger('Vault');
 
   static Vault? _instance;
 
-  VaultPassphraseDelegate? passphraseDelegate;
   VaultAutolockDelegate? shouldBeLocked;
   VaultCipher? _vaultCipher;
+  VaultCipherDelegate? _cipherDelegate;
+
+  VaultCipher get _vaultCipherOrThrow {
+    if (_vaultCipher == null) throw const Failure.locked();
+
+    return _vaultCipher!;
+  }
+
+  VaultCipherDelegate get _cipherDelegateOrThrow {
+    if (_cipherDelegate == null) {
+      throw Exception(
+        'Vault.cipherDelegate must be set before opening Boxes.',
+      );
+    }
+
+    return _cipherDelegate!;
+  }
 
   final isLocked = ValueNotifier(true);
 
-  Future<HiveCipher> get encryptionCipher async {
-    if (_vaultCipher == null) throw const Failure.locked();
-    return HiveAesCipher(await _vaultCipher!.get());
-  }
+  SingletonTask<void>? __lockTask;
+  SingletonTask<void> get _lockTask => __lockTask ??= SingletonTask<void>(
+        name: 'Vault lock task',
+        task: () async {
+          await Hive.close();
+          _vaultCipher = null;
+          isLocked.value = true;
+        },
+      );
 
   Future<void> lock() async {
     _logger.info(
       'Locking vault',
     );
-    await Hive.close();
-    _vaultCipher = null;
-    isLocked.value = true;
+    return _lockTask.run();
   }
 
-  Future<void> unlock(String password) async {
+  SingletonTask<void>? __unlockTask;
+  SingletonTask<void> get _unlockTask => __unlockTask ??= SingletonTask<void>(
+        name: 'Vault unlock task',
+        task: () async {
+          final encryptedKey = await _readEncryptedKey();
+
+          if (encryptedKey == null) {
+            _logger.info(
+              'Abort : Vault not initialized.',
+            );
+            //TODO(Chralu): stockage non initialisé
+            throw const Failure.invalidValue();
+          }
+
+          final key = await _cipherDelegateOrThrow.decode(encryptedKey, false);
+          if (key == null) {
+            _logger.info(
+              'Abort : User canceled operation.',
+            );
+
+            throw const Failure.operationCanceled();
+          }
+          _vaultCipher = VaultCipher(
+            key,
+          );
+
+          isLocked.value = false;
+          _logger.info(
+            'Vault unlocked',
+          );
+        },
+      );
+
+  Future<void> unlock() async {
     _logger.info(
       'Unlocking vault',
     );
-    _vaultCipher = _cipherFactory.build(password);
 
-    // Ensures we are able to retrieve the encryption key
-    await _vaultCipher!.get();
-    isLocked.value = false;
+    return _unlockTask.run();
+  }
+
+  SingletonTask<bool>? __verifyUnlockAbilityTask;
+  SingletonTask<bool> get _verifyUnlockAbilityTask =>
+      __verifyUnlockAbilityTask ??= SingletonTask<bool>(
+        name: 'Verify unlock ability task',
+        task: () async {
+          try {
+            final encryptedKey = await _readEncryptedKey();
+
+            if (encryptedKey == null) {
+              _logger.info(
+                'Abort : Vault not initialized.',
+              );
+              // TODO(Chralu): Replace by a "invalid request" failure
+              throw const Failure.locked();
+            }
+
+            final decodedChallenge =
+                await _cipherDelegateOrThrow.decode(encryptedKey, true);
+
+            final canBeUnlocked = decodedChallenge != null;
+            _logger.info(
+              'Vault ${canBeUnlocked ? 'can' : 'cannot'} be unlocked.',
+            );
+
+            return canBeUnlocked;
+          } catch (e) {
+            return false;
+          }
+        },
+      );
+
+  Future<bool> verifyUnlockAbility() async {
     _logger.info(
-      'Vault unlocked',
+      'Verify unlock ability',
     );
+    return _verifyUnlockAbilityTask.run();
   }
 
   Future<bool> get isSetup async {
-    return _cipherFactory.isSetup;
+    return (await _readEncryptedKey()) != null;
   }
 
   Future<bool> boxExists(String name) {
@@ -138,20 +187,59 @@ class Vault {
     _logger.info(
       'Clearing vault secure key',
     );
-    await _cipherFactory.clear();
+    await _clearEncryptedKey();
     await lock();
   }
 
-  Future<void> updateSecureKey(
-    String passphrase,
-  ) async {
+  VaultCipherDelegate? get cipherDelegate => _cipherDelegate;
+
+  set cipherDelegate(VaultCipherDelegate? cipherDelegate) {
+    _logger.info(
+      'Set cipher delegate',
+    );
+    _cipherDelegate = cipherDelegate;
+  }
+
+  Future<void> initCipher(VaultCipherDelegate newCipherDelegate) async {
+    _logger.info(
+      'Init vault secure key',
+    );
+
+    final key = Uint8List.fromList(Hive.generateSecureKey());
+
+    final encryptedKey = await newCipherDelegate.encode(
+      key,
+      true,
+    );
+
+    if (encryptedKey == null) throw const Failure.operationCanceled();
+    await _writeEncryptedSecureKey(encryptedKey);
+
+    _cipherDelegate = newCipherDelegate;
+    _vaultCipher = VaultCipher(
+      key,
+    );
+
+    isLocked.value = false;
+  }
+
+  Future<void> updateCipher(VaultCipherDelegate newCipherDelegate) async {
     _logger.info(
       'Updating vault secure key',
     );
     if (_vaultCipher == null) {
       throw const Failure.locked();
     }
-    await _vaultCipher!.updateSecureKey(passphrase);
+
+    final encryptedKey = await newCipherDelegate.encode(
+      _vaultCipher!.key,
+      true,
+    );
+
+    if (encryptedKey == null) throw const Failure.operationCanceled();
+    await _writeEncryptedSecureKey(encryptedKey);
+
+    _cipherDelegate = newCipherDelegate;
   }
 
   Future<Box<E>> openBox<E>(
@@ -170,7 +258,7 @@ class Vault {
 
       return await Hive.openBox<E>(
         name,
-        encryptionCipher: await encryptionCipher,
+        encryptionCipher: _vaultCipherOrThrow.hiveCipher,
       );
     } catch (e, stack) {
       _logger.severe(
@@ -199,7 +287,7 @@ class Vault {
 
       return await Hive.openLazyBox<E>(
         name,
-        encryptionCipher: await encryptionCipher,
+        encryptionCipher: _vaultCipherOrThrow.hiveCipher,
       );
     } catch (e, stack) {
       _logger.severe(
@@ -228,16 +316,35 @@ class Vault {
       return;
     }
 
-    if (passphraseDelegate == null) {
-      throw Exception(
-        'Vault.passwordDelegate must be set before opening Boxes.',
-      );
-    }
-    _logger.info(
-      'Requesting user action to unlock',
-    );
-    final passphrase = await passphraseDelegate!();
+    await unlock();
+  }
+}
 
-    await unlock(passphrase);
+extension _VaultKeyDataSource on Vault {
+  static const kEncryptedSecureKey = 'archethic_wallet_encrypted_secure_key';
+  Future<Uint8List?> _readEncryptedKey() async {
+    const secureStorage = FlutterSecureStorage();
+
+    final key = await secureStorage.read(key: kEncryptedSecureKey);
+    if (key != null) return base64Decode(key);
+
+    return null;
+  }
+
+  Future<void> _writeEncryptedSecureKey(Uint8List key) async {
+    const secureStorage = FlutterSecureStorage();
+
+    await secureStorage.write(
+      key: kEncryptedSecureKey,
+      value: base64Encode(key),
+    );
+  }
+
+  Future<void> _clearEncryptedKey() async {
+    const secureStorage = FlutterSecureStorage();
+
+    await secureStorage.delete(
+      key: kEncryptedSecureKey,
+    );
   }
 }

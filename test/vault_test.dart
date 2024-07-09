@@ -136,7 +136,7 @@ void main() {
           final box = await vault().openBox<String>(boxName);
           await box.put('aKey', 'aValue');
 
-          await vault().updateSecureKey('newPassphrase');
+          await vault().updateCipher('newPassphrase');
           await vault().lock();
 
           // WHEN

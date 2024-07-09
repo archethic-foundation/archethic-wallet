@@ -122,16 +122,10 @@ class SecurityMenuView extends ConsumerWidget
                               localizations.removeWalletReassurance,
                               localizations.yes,
                               () async {
-                                final auth = await AuthFactory.authenticate(
-                                  context,
-                                  ref,
-                                  activeVibrations: ref
-                                      .read(SettingsProviders.settings)
-                                      .activeVibrations,
-                                );
-                                if (auth != null) {
-                                  context.go(LoggingOutScreen.routerPage);
-                                }
+                                final auth = await AuthFactory.authenticate();
+                                if (!auth) return;
+
+                                context.go(LoggingOutScreen.routerPage);
                               },
                             );
                           });
@@ -162,31 +156,21 @@ class _AuthMethodSettingsListItem extends ConsumerWidget {
         (settings) => settings.authenticationMethod,
       ),
     );
-    final asyncHasBiometrics = ref.watch(DeviceAbilities.hasBiometricsProvider);
 
     return _SettingsListItem.withDefaultValue(
       heading: localizations.authMethod,
       defaultValue: AuthenticationMethod(authenticationMethod),
       icon: Symbols.fingerprint,
-      onPressed: asyncHasBiometrics.maybeWhen(
-        data: (hasBiometrics) => () async {
-          final auth = await AuthFactory.authenticate(
-            context,
-            ref,
-            activeVibrations:
-                ref.read(SettingsProviders.settings).activeVibrations,
-          );
-          if (auth != null) {
-            return AuthentificationMethodDialog.getDialog(
-              context,
-              ref,
-              hasBiometrics,
-              AuthenticationMethod(authenticationMethod),
-            );
-          }
-        },
-        orElse: () => () {},
-      ),
+      onPressed: () async {
+        final auth = await AuthFactory.authenticate();
+        if (!auth) return;
+
+        await AuthentificationMethodDialog.getDialog(
+          context,
+          ref,
+          AuthenticationMethod(authenticationMethod),
+        );
+      },
     );
   }
 }
@@ -298,23 +282,19 @@ class _BackupSecretPhraseListItem extends ConsumerWidget {
       onPressed: () async {
         final preferences = ref.read(SettingsProviders.settings);
 
-        final auth = await AuthFactory.authenticate(
-          context,
-          ref,
-          activeVibrations: preferences.activeVibrations,
-        );
-        if (auth != null) {
-          final seed = ref.read(SessionProviders.session).loggedIn?.wallet.seed;
-          final mnemonic = AppMnemomics.seedToMnemonic(
-            seed!,
-            languageCode: preferences.languageSeed,
-          );
+        final auth = await AuthFactory.authenticate();
+        if (!auth) return;
 
-          context.go(
-            AppSeedBackupSheet.routerPage,
-            extra: {'mnemonic': mnemonic, 'seed': seed},
-          );
-        }
+        final seed = ref.read(SessionProviders.session).loggedIn?.wallet.seed;
+        final mnemonic = AppMnemomics.seedToMnemonic(
+          seed!,
+          languageCode: preferences.languageSeed,
+        );
+
+        context.go(
+          AppSeedBackupSheet.routerPage,
+          extra: {'mnemonic': mnemonic, 'seed': seed},
+        );
       },
     );
   }

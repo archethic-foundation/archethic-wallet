@@ -32,11 +32,13 @@ class YubikeyScreen extends ConsumerStatefulWidget {
   const YubikeyScreen({
     super.key,
     required this.canNavigateBack,
+    required this.challenge,
   });
 
   static const name = 'YubikeyScreen';
   static const routerPage = '/yubikey';
   final bool canNavigateBack;
+  final Uint8List challenge;
 
   @override
   ConsumerState<YubikeyScreen> createState() => _YubikeyScreenState();
@@ -94,9 +96,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen>
           AuthenticationProviders.yubikeyAuthentication.notifier,
         )
         .authenticateWithYubikey(
-          YubikeyCredentials(
-            otp: otp,
-          ),
+          YubikeyCredentials(otp: otp, challenge: Uint8List(2)),
         );
 
     final localizations = AppLocalizations.of(context)!;
@@ -108,7 +108,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen>
               AuthenticationProviders.settings.notifier,
             )
             .setAuthMethod(AuthMethod.yubikeyWithYubicloud);
-        context.pop(true);
+        context.pop(widget.challenge);
         return;
       },
       orElse: () async {
@@ -119,7 +119,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen>
           ArchethicTheme.text,
           ArchethicTheme.snackBarShadow,
         );
-        context.pop(false);
+        context.pop();
       },
     );
 
@@ -149,7 +149,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen>
               key: const Key('back'),
               color: ArchethicTheme.text,
               onPressed: () {
-                context.pop(false);
+                context.pop();
               },
             )
           : const SizedBox(),

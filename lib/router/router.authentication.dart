@@ -3,85 +3,68 @@ part of 'router.dart';
 List<GoRoute> get _authenticationRoutes => [
       GoRoute(
         path: LoggingOutScreen.routerPage,
-        pageBuilder: (context, state) => CustomTransitionPage<void>(
-          transitionDuration: Duration.zero,
-          reverseTransitionDuration: Duration.zero,
+        pageBuilder: (context, state) => NoTransitionPage<void>(
           key: state.pageKey,
           child: const LoggingOutScreen(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-              FadeTransition(
-            opacity: animation,
-            child: child,
-          ),
         ),
       ),
       GoRoute(
         path: BiometricsScreen.routerPage,
-        pageBuilder: (context, state) => NoTransitionPage<void>(
-          key: state.pageKey,
-          child: const BiometricsScreen(),
-        ),
+        pageBuilder: (context, state) {
+          final extra = state.extra! as Map<String, dynamic>;
+
+          return NoTransitionPage<void>(
+            key: state.pageKey,
+            child: BiometricsScreen(
+              challenge: extra['challenge'] as Uint8List,
+            ),
+          );
+        },
       ),
       GoRoute(
         path: PasswordScreen.routerPage,
-        pageBuilder: (context, state) => CustomTransitionPage<void>(
-          transitionDuration: Duration.zero,
-          reverseTransitionDuration: Duration.zero,
-          key: state.pageKey,
-          child: PasswordScreen(
-            canNavigateBack: (state.extra!
-                as Map<String, dynamic>)['canNavigateBack']! as bool,
-          ),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-              FadeTransition(
-            opacity: animation,
-            child: child,
-          ),
-        ),
+        pageBuilder: (context, state) {
+          final extra = state.extra! as Map<String, dynamic>;
+          return NoTransitionPage<void>(
+            key: state.pageKey,
+            child: PasswordScreen(
+              canNavigateBack: extra['canNavigateBack'] as bool,
+              challenge: extra['challenge'] as Uint8List,
+            ),
+          );
+        },
       ),
       GoRoute(
         path: PinScreen.routerPage,
-        pageBuilder: (context, state) => CustomTransitionPage<void>(
-          transitionDuration: Duration.zero,
-          reverseTransitionDuration: Duration.zero,
-          key: state.pageKey,
-          child: PinScreen(
-            PinOverlayType.values.byName(
-              (state.extra! as Map<String, dynamic>)['type']! as String,
+        pageBuilder: (context, state) {
+          final extra = state.extra! as Map<String, dynamic>;
+
+          return NoTransitionPage<void>(
+            key: state.pageKey,
+            child: PinScreen(
+              PinOverlayType.values.byName(
+                extra['type']! as String,
+              ),
+              canNavigateBack: extra['canNavigateBack'] == null ||
+                  extra['canNavigateBack']! as bool,
+              description: extra['description'] as String? ?? '',
+              action: CipherDelegateAction.values.byName(extra['action']),
+              challenge: extra['challenge'],
             ),
-            canNavigateBack:
-                (state.extra! as Map<String, dynamic>)['canNavigateBack'] ==
-                        null ||
-                    (state.extra! as Map<String, dynamic>)['canNavigateBack']!
-                        as bool,
-            description:
-                (state.extra! as Map<String, dynamic>)['description'] == null
-                    ? ''
-                    : (state.extra! as Map<String, dynamic>)['description']!
-                        as String,
-          ),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-              FadeTransition(
-            opacity: animation,
-            child: child,
-          ),
-        ),
+          );
+        },
       ),
       GoRoute(
         path: YubikeyScreen.routerPage,
-        pageBuilder: (context, state) => CustomTransitionPage<void>(
-          transitionDuration: Duration.zero,
-          reverseTransitionDuration: Duration.zero,
-          key: state.pageKey,
-          child: YubikeyScreen(
-            canNavigateBack: (state.extra!
-                as Map<String, dynamic>)['canNavigateBack']! as bool,
-          ),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-              FadeTransition(
-            opacity: animation,
-            child: child,
-          ),
-        ),
+        pageBuilder: (context, state) {
+          final extra = state.extra! as Map<String, dynamic>;
+          return NoTransitionPage<void>(
+            key: state.pageKey,
+            child: YubikeyScreen(
+              canNavigateBack: extra['canNavigateBack']! as bool,
+              challenge: extra['challenge'] as Uint8List,
+            ),
+          );
+        },
       ),
     ];

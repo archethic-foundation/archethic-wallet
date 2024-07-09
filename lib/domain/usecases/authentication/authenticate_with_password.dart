@@ -17,16 +17,14 @@ class AuthenticateWithPassword
     PasswordCredentials credentials, {
     UseCaseProgressListener? onProgress,
   }) async {
-    if (!await repository.isPasswordDefined) {
-      return const AuthenticationResult.notSetup();
+    try {
+      final decodedKey = await repository.decodeWithPassword(
+        credentials.password,
+        credentials.challenge,
+      );
+      return authenticationSucceed(decodedKey);
+    } catch (e) {
+      return authenticationFailed();
     }
-
-    if (await repository.isPasswordValid(
-      credentials.password,
-    )) {
-      return authenticationSucceed();
-    }
-
-    return authenticationFailed();
   }
 }

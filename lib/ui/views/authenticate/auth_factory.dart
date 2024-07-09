@@ -1,164 +1,117 @@
 import 'package:aewallet/application/authentication/authentication.dart';
+import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:aewallet/model/authentication_method.dart';
-import 'package:aewallet/ui/views/authenticate/biometrics_screen.dart';
-import 'package:aewallet/ui/views/authenticate/password_screen.dart';
-import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
-import 'package:aewallet/ui/views/authenticate/yubikey_screen.dart';
-import 'package:aewallet/util/biometrics_util.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
+import 'package:aewallet/ui/views/authenticate/biometrics_cipher_delegate.dart';
+import 'package:aewallet/ui/views/authenticate/password_cipher_delegate.dart';
+import 'package:aewallet/ui/views/authenticate/pin_cipher_delegate.dart';
+import 'package:aewallet/ui/views/authenticate/yubikey_otp_cipher_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:go_router/go_router.dart';
+import 'package:logging/logging.dart';
 
-class AuthFactory {
-  static Future<String> forceAuthenticate(
-    BuildContext context,
-    WidgetRef ref, {
-    required AuthenticationMethod authMethod,
-    bool canCancel = true,
-  }) async {
-    var authResult = await authenticate(
-      context,
-      ref,
-      authMethod: authMethod,
-      canCancel: canCancel,
-    );
+final _logger = Logger('AuthFactory');
 
-    while (authResult == null) {
-      authResult = await authenticate(
-        context,
-        ref,
-        authMethod: authMethod,
-        canCancel: canCancel,
-      );
-    }
-    return authResult;
+class AuthFactory extends InheritedWidget {
+  AuthFactory({
+    super.key,
+    required Widget child,
+  }) : super(
+          child: _AuthFactory(
+            key: _authFactoryKey,
+            child: child,
+          ),
+        );
+
+  static final _authFactoryKey = GlobalKey<__AuthFactoryState>();
+
+  static AuthFactory? maybeOf(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<AuthFactory>();
   }
 
-  static Future<String?> authenticate(
-    BuildContext context,
-    WidgetRef ref, {
-    AuthenticationMethod? authMethod,
-    bool canCancel = true,
-    bool transitions = false,
-    bool activeVibrations = false,
-  }) async {
-    String? auth;
+  static AuthFactory of(BuildContext context) {
+    final result = maybeOf(context);
+    assert(result != null, 'No AuthFactory found in context');
+    return result!;
+  }
 
+  void init() {
+    _logger.info('Init AuthFactory and Vault authent.');
+    Vault.instance()
+      ..cipherDelegate = vaultCipherDelegate()
+      ..shouldBeLocked = shouldBeLocked;
+  }
+
+  @override
+  bool updateShouldNotify(AuthFactory oldWidget) => false;
+
+  VaultCipherDelegate vaultCipherDelegate({
+    AuthMethod? authMethod,
+  }) =>
+      _authFactoryKey.currentState!.vaultCipherDelegate(authMethod: authMethod);
+
+  Future<bool> shouldBeLocked() async =>
+      _authFactoryKey.currentState!.shouldBeLocked();
+
+  static Future<bool> authenticate() async =>
+      Vault.instance().verifyUnlockAbility();
+}
+
+class _AuthFactory extends ConsumerStatefulWidget {
+  const _AuthFactory({
+    super.key,
+    required this.child,
+  });
+
+  final Widget child;
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => __AuthFactoryState();
+}
+
+class __AuthFactoryState extends ConsumerState<_AuthFactory> {
+  VaultCipherDelegate vaultCipherDelegate({
+    AuthMethod? authMethod,
+  }) {
     authMethod ??= AuthenticationMethod(
       ref.read(
         AuthenticationProviders.settings.select(
           (settings) => settings.authenticationMethod,
         ),
       ),
-    );
+    ).method;
 
-    switch (authMethod.method) {
-      case AuthMethod.yubikeyWithYubicloud:
-        // TODO(Chralu): Generate a key with Yubikey
-        auth = await _authenticateWithYubikey(
-          context,
-          canCancel: canCancel,
-        )
-            ? 'should_be_yubikey_generated'
-            : null;
-        break;
+    switch (authMethod) {
       case AuthMethod.password:
-        auth = await _authenticateWithPassword(
-          context,
-          canCancel: canCancel,
-        );
-        break;
+        return PasswordCipherDelegate(context);
+      case AuthMethod.yubikeyWithYubicloud:
+        return YubikeyOTPCipherDelegate(context: context);
       case AuthMethod.pin:
-        // TODO(Chralu): Use pin as key
-        auth = await _authenticateWithPin(
-          context,
-          canCancel: canCancel,
-        )
-            ? 'should_be_pin'
-            : null;
-        break;
+        return PinCipherDelegate(context);
       case AuthMethod.biometrics:
-        // TODO(Chralu): Generate a key with Biometrics
-        final hasBiometrics = await sl.get<BiometricUtil>().hasBiometrics();
-        if (hasBiometrics) {
-          auth = await _authenticateWithBiometrics(context)
-              ? 'should_be_biometrics_generated'
-              : null;
-        }
-        break;
-      case AuthMethod.ledger:
-        break;
+        return BiometricsCipherDelegate(context: context);
     }
-    if (auth != null) {
-      sl.get<HapticUtil>().feedback(FeedbackType.success, activeVibrations);
-    } else {
-      sl.get<HapticUtil>().feedback(FeedbackType.error, activeVibrations);
-    }
-    return auth;
   }
 
-  static Future<bool> _authenticateWithYubikey(
-    BuildContext context, {
-    required canCancel,
-  }) async {
-    final auth = await context.push(
-      YubikeyScreen.routerPage,
-      extra: {'canNavigateBack': canCancel},
+  Future<bool> shouldBeLocked() async {
+    _logger.info('Check if vault should be locked');
+    final value = await ref.read(
+      AuthenticationProviders.authenticationGuard.future,
     );
 
-    if (auth != null && auth is bool) {
-      return auth;
+    final lockDate = value.lockDate;
+    final authentRequired = lockDate != null;
+
+    if (!authentRequired) {
+      return false;
     }
 
-    return false;
-  }
-
-  static Future<String?> _authenticateWithPassword(
-    BuildContext context, {
-    required bool canCancel,
-  }) async {
-    final auth = await context.push(
-      PasswordScreen.routerPage,
-      extra: {'canNavigateBack': canCancel},
+    final durationBeforeLock = lockDate.difference(DateTime.now());
+    _logger.info(
+      'Duration before lock : $durationBeforeLock',
     );
-    if (auth != null && auth is String) {
-      return auth;
-    }
-
-    return null;
+    return durationBeforeLock <= Duration.zero;
   }
 
-  static Future<bool> _authenticateWithPin(
-    BuildContext context, {
-    required bool canCancel,
-  }) async {
-    final auth = await context.push(
-      PinScreen.routerPage,
-      extra: {
-        'type': PinOverlayType.enterPin.name,
-        'canNavigateBack': canCancel,
-      },
-    );
-    if (auth != null && auth is bool) {
-      return auth;
-    }
-
-    return false;
-  }
-
-  static Future<bool> _authenticateWithBiometrics(
-    BuildContext context,
-  ) async {
-    final auth = await context.push(
-      BiometricsScreen.routerPage,
-    );
-    if (auth != null && auth is bool) {
-      return auth;
-    }
-
-    return false;
-  }
+  @override
+  Widget build(BuildContext context) => widget.child;
 }

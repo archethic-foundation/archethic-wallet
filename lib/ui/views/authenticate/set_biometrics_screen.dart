@@ -8,13 +8,13 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class BiometricsScreen extends ConsumerStatefulWidget {
-  const BiometricsScreen({
+class SetBiometricsScreen extends ConsumerStatefulWidget {
+  const SetBiometricsScreen({
     super.key,
     required this.challenge,
   });
 
-  static const routerPage = '/biometrics';
+  static const routerPage = '/set_biometrics';
 
   final Uint8List challenge;
 
@@ -23,7 +23,7 @@ class BiometricsScreen extends ConsumerStatefulWidget {
       _BiometricsScreenState();
 }
 
-class _BiometricsScreenState extends ConsumerState<BiometricsScreen> {
+class _BiometricsScreenState extends ConsumerState<SetBiometricsScreen> {
   @override
   Widget build(BuildContext context) => const LockMask();
 
