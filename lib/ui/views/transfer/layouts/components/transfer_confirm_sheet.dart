@@ -99,39 +99,47 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet>
       duration: const Duration(milliseconds: 5000),
       icon: Symbols.info,
     );
-    final transfer = ref.read(TransferFormProvider.transferForm);
-    if (transfer.transferType == TransferType.nft) {
-      final transactionMap = await sl
-          .get<ApiService>()
-          .getLastTransaction([event.transactionAddress!]);
-      final transaction = transactionMap[event.transactionAddress!];
-      final tokenMap = await sl.get<AppService>().getToken(
-        [
-          transaction!.data!.ledger!.token!.transfers[0].tokenAddress!,
-        ],
+
+    try {
+      final transfer = ref.read(TransferFormProvider.transferForm);
+      if (transfer.transferType == TransferType.nft) {
+        final transactionMap = await sl
+            .get<ApiService>()
+            .getLastTransaction([event.transactionAddress!]);
+        final transaction = transactionMap[event.transactionAddress!];
+        final tokenMap = await sl.get<AppService>().getToken(
+          [
+            transaction!.data!.ledger!.token!.transfers[0].tokenAddress!,
+          ],
+        );
+
+        final selectedAccount = await ref.read(
+          AccountProviders.selectedAccount.future,
+        );
+
+        await selectedAccount!.removeftInfosOffChain(
+          tokenMap[transaction.data!.ledger!.token!.transfers[0].tokenAddress!]!
+              .id,
+        ); // TODO(reddwarf03): we should not interact directly with data source. Use Providers instead. (3)
+
+        unawaited(
+          ref.read(AccountProviders.selectedAccount.notifier).refreshNFTs(),
+        );
+      }
+
+      unawaited(
+        ref
+            .read(AccountProviders.selectedAccount.notifier)
+            .refreshRecentTransactions(),
       );
-
-      final selectedAccount = await ref.read(
-        AccountProviders.selectedAccount.future,
-      );
-
-      await selectedAccount!.removeftInfosOffChain(
-        tokenMap[transaction.data!.ledger!.token!.transfers[0].tokenAddress!]!
-            .id,
-      ); // TODO(reddwarf03): we should not interact directly with data source. Use Providers instead. (3)
-
-      await ref.read(AccountProviders.selectedAccount.notifier).refreshNFTs();
-    }
-
-    await ref
-        .read(AccountProviders.selectedAccount.notifier)
-        .refreshRecentTransactions();
-    if (transfer.transferType == TransferType.token) {
-      await ref
-          .read(AccountProviders.selectedAccount.notifier)
-          .refreshFungibleTokens();
-    }
-    if (mounted) {
+      if (transfer.transferType == TransferType.token) {
+        unawaited(
+          ref
+              .read(AccountProviders.selectedAccount.notifier)
+              .refreshFungibleTokens(),
+        );
+      }
+    } finally {
       context.go(HomePage.routerPage);
     }
   }
