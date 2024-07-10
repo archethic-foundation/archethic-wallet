@@ -335,10 +335,7 @@ final _authenticatedRoutes = [
       transitionDuration: Duration.zero,
       reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
-      child: NFTCreationProcessImportTabAEWebForm(
-        onConfirm: (state.extra! as Map<String, dynamic>)['onConfirm']! as void
-            Function(String uri),
-      ),
+      child: const NFTCreationProcessImportTabAEWebForm(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
           FadeTransition(
         opacity: animation,
@@ -352,10 +349,7 @@ final _authenticatedRoutes = [
       transitionDuration: Duration.zero,
       reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
-      child: NFTCreationProcessImportTabHTTPForm(
-        onConfirm: (state.extra! as Map<String, dynamic>)['onConfirm']! as void
-            Function(String uri),
-      ),
+      child: const NFTCreationProcessImportTabHTTPForm(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
           FadeTransition(
         opacity: animation,
@@ -369,10 +363,7 @@ final _authenticatedRoutes = [
       transitionDuration: Duration.zero,
       reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
-      child: NFTCreationProcessImportTabIPFSForm(
-        onConfirm: (state.extra! as Map<String, dynamic>)['onConfirm']! as void
-            Function(String uri),
-      ),
+      child: const NFTCreationProcessImportTabIPFSForm(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
           FadeTransition(
         opacity: animation,

@@ -2,6 +2,7 @@
 
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/import_tab/nft_creation_process_import_tab_template_form.dart';
 import 'package:aewallet/util/url_util.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +13,7 @@ import 'package:go_router/go_router.dart';
 class NFTCreationProcessImportTabAEWebForm extends ConsumerWidget with UrlUtil {
   const NFTCreationProcessImportTabAEWebForm({
     super.key,
-    required this.onConfirm,
   });
-
-  final void Function(String uri) onConfirm;
 
   static const routerPage = '/nft_creation_process_import_tab_aeweb';
 
@@ -52,9 +50,17 @@ class NFTCreationProcessImportTabAEWebForm extends ConsumerWidget with UrlUtil {
           setError(localizations.nftAEWebUrlNotValid);
           return;
         }
-        onConfirm(
+
+        final nftCreationNotifier = ref.read(
+          NftCreationFormProvider.nftCreationForm.notifier,
+        );
+
+        // ignore: cascade_invocations
+        nftCreationNotifier.setContentAEWebProperties(
+          context,
           valueCleaned,
         );
+
         contextForm.pop();
       },
     );
