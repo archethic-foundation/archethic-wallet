@@ -5,145 +5,151 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive/hive.dart';
 import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-import 'package:pointycastle/export.dart';
+import 'package:mockito/mockito.dart' as mockito;
 
-@GenerateNiceMocks([MockSpec<VaultDelegate>()])
+@GenerateNiceMocks([MockSpec<VaultCipherDelegate>()])
 import 'vault_test.mocks.dart';
-
-class VaultDelegate {
-  VaultDelegate();
-
-  Future<String> passwordDelegate() async {
-    throw UnimplementedError();
-  }
-}
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  /// Enforce usage of the [PasswordVaultCipherFactory].
-  /// That way, we actually test the vault key encryption.
-  Vault vault() => Vault.instance(cipherFactory: PasswordVaultCipherFactory());
-
   group(
     'Vault',
     () {
-      late MockVaultDelegate vaultDelegate;
+      late Vault vault;
+      late MockVaultCipherDelegate cipherDelegate;
       setUp(() async {
+        vault = Vault.instance();
         Hive.init('${Directory.current.path}/test/tmp_data');
         await Vault.reset();
         FlutterSecureStorage.setMockInitialValues({});
       });
 
-      void _setupUserInputPassphrase(String passphrase) {
-        vaultDelegate = MockVaultDelegate();
-        when(vaultDelegate.passwordDelegate())
-            .thenAnswer((_) async => passphrase);
-        vault().passphraseDelegate = vaultDelegate.passwordDelegate;
+      void _setupCipherDelegate() {
+        cipherDelegate = MockVaultCipherDelegate();
+        mockito
+            .when(
+              cipherDelegate.decode(
+                mockito.any,
+                mockito.any,
+              ),
+            )
+            .thenAnswer(
+              (invocation) async => invocation.positionalArguments[0],
+            );
+        mockito
+            .when(
+              cipherDelegate.encode(
+                mockito.any,
+                mockito.any,
+              ),
+            )
+            .thenAnswer(
+              (invocation) async => invocation.positionalArguments[0],
+            );
+      }
+
+      Future<void> _initVault() async {
+        _setupCipherDelegate();
+
+        await vault.initCipher(cipherDelegate);
       }
 
       test(
-        'Should ask for passphrase when creating the vault [box]',
+        'Should throw when storage not initialized',
         () async {
           // GIVEN
-          _setupUserInputPassphrase('passphrase');
+          _setupCipherDelegate();
+          vault.cipherDelegate = cipherDelegate;
           const boxName = 'abox';
 
           // WHEN
-          final box = await vault().openBox<String>(boxName);
 
           // THEN
-          expect(box, const TypeMatcher<Box<String>>());
-          verify(vaultDelegate.passwordDelegate()).called(1);
+          expect(
+            () => vault.openBox<String>(boxName),
+            throwsA(anything),
+          );
         },
       );
 
       test(
-        'Should ask for passphrase when creating the vault [lazybox]',
+        'Should encode AES key on storage initialisation',
         () async {
           // GIVEN
-          _setupUserInputPassphrase('passphrase');
+          _setupCipherDelegate();
+
+          // WHEN
+          await vault.initCipher(cipherDelegate);
+
+          // THEN
+          mockito.verify(cipherDelegate.encode(mockito.any, true)).called(1);
+        },
+      );
+
+      test(
+        'Should encode AES key on cipher delegate update',
+        () async {
+          // GIVEN
+          _setupCipherDelegate();
+          await vault.initCipher(cipherDelegate);
+
+          // WHEN
+          _setupCipherDelegate();
+          await vault.updateCipher(cipherDelegate);
+
+          // THEN
+          mockito.verify(cipherDelegate.encode(mockito.any, true)).called(1);
+        },
+      );
+
+      test(
+        'Should decode AES key when opening the vault [box]',
+        () async {
+          // GIVEN
+          await _initVault();
+          await vault.lock();
           const boxName = 'abox';
 
           // WHEN
-          final box = await vault().openLazyBox<String>(boxName);
+          final box = await vault.openBox<String>(boxName);
+
+          // THEN
+          expect(box, const TypeMatcher<Box<String>>());
+          mockito.verify(cipherDelegate.decode(mockito.any, false)).called(1);
+        },
+      );
+
+      test(
+        'Should decode AES key when opening the vault [lazybox]',
+        () async {
+          // GIVEN
+          await _initVault();
+          await vault.lock();
+          const boxName = 'abox';
+
+          // WHEN
+          final box = await vault.openLazyBox<String>(boxName);
 
           // THEN
           expect(box, const TypeMatcher<LazyBox<String>>());
-          verify(vaultDelegate.passwordDelegate()).called(1);
+          mockito.verify(cipherDelegate.decode(mockito.any, false)).called(1);
         },
       );
 
       test(
-        'Should not ask for passphrase when Vault already unlocked',
+        'Should not decode AES key when Vault already unlocked',
         () async {
           // GIVEN
-          _setupUserInputPassphrase('passphrase');
-          await vault().unlock('passphrase');
+          await _initVault();
           const boxName = 'abox';
 
           // WHEN
-          final box = await vault().openBox<String>(boxName);
+          final box = await vault.openLazyBox<String>(boxName);
 
           // THEN
-          expect(box, const TypeMatcher<Box<String>>());
-          verifyNever(vaultDelegate.passwordDelegate());
-        },
-      );
-
-      test(
-        'Should ask for passphrase when Vault locked',
-        () async {
-          // GIVEN
-          _setupUserInputPassphrase('passphrase');
-          await vault().unlock('passphrase');
-          await vault().lock();
-
-          // WHEN
-          final box = await vault().openBox<String>('aBox');
-
-          // THEN
-          expect(box, const TypeMatcher<Box<String>>());
-          verify(vaultDelegate.passwordDelegate()).called(1);
-        },
-      );
-
-      test(
-        'Should ask for passphrase after clearing secure key',
-        () async {
-          // GIVEN
-          _setupUserInputPassphrase('passphrase');
-          await vault().unlock('passphrase');
-          await vault().clearSecureKey();
-
-          // WHEN
-          final box = await vault().openBox<String>('aBox');
-
-          // THEN
-          expect(box, const TypeMatcher<Box<String>>());
-          verify(vaultDelegate.passwordDelegate()).called(1);
-        },
-      );
-
-      test(
-        'Should reject data reading with wrong passphrase',
-        () async {
-          // GIVEN
-          _setupUserInputPassphrase('oldPassphrase');
-
-          const boxName = 'box';
-          final box = await vault().openBox<String>(boxName);
-          await box.put('aKey', 'aValue');
-
-          await vault().updateCipher('newPassphrase');
-          await vault().lock();
-
-          // WHEN
-          expect(
-            () => vault().openBox<String>(boxName),
-            throwsA(isA<InvalidCipherTextException>()),
-          );
+          expect(box, const TypeMatcher<LazyBox<String>>());
+          mockito.verifyNever(cipherDelegate.decode(mockito.any, false));
         },
       );
     },
