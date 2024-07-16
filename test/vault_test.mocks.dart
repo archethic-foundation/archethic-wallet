@@ -4,11 +4,10 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
+import 'dart:typed_data' as _i4;
 
+import 'package:aewallet/infrastructure/datasources/vault/vault.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i4;
-
-import 'vault_test.dart' as _i2;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -23,30 +22,42 @@ import 'vault_test.dart' as _i2;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-/// A class which mocks [VaultDelegate].
+/// A class which mocks [VaultCipherDelegate].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockVaultDelegate extends _i1.Mock implements _i2.VaultDelegate {
+class MockVaultCipherDelegate extends _i1.Mock
+    implements _i2.VaultCipherDelegate {
   @override
-  _i3.Future<String> passwordDelegate() => (super.noSuchMethod(
+  _i3.Future<_i4.Uint8List?> encode(
+    _i4.Uint8List? payload,
+    bool? userCancelable,
+  ) =>
+      (super.noSuchMethod(
         Invocation.method(
-          #passwordDelegate,
-          [],
+          #encode,
+          [
+            payload,
+            userCancelable,
+          ],
         ),
-        returnValue: _i3.Future<String>.value(_i4.dummyValue<String>(
-          this,
-          Invocation.method(
-            #passwordDelegate,
-            [],
-          ),
-        )),
-        returnValueForMissingStub:
-            _i3.Future<String>.value(_i4.dummyValue<String>(
-          this,
-          Invocation.method(
-            #passwordDelegate,
-            [],
-          ),
-        )),
-      ) as _i3.Future<String>);
+        returnValue: _i3.Future<_i4.Uint8List?>.value(),
+        returnValueForMissingStub: _i3.Future<_i4.Uint8List?>.value(),
+      ) as _i3.Future<_i4.Uint8List?>);
+
+  @override
+  _i3.Future<_i4.Uint8List?> decode(
+    _i4.Uint8List? payload,
+    bool? userCancelable,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #decode,
+          [
+            payload,
+            userCancelable,
+          ],
+        ),
+        returnValue: _i3.Future<_i4.Uint8List?>.value(),
+        returnValueForMissingStub: _i3.Future<_i4.Uint8List?>.value(),
+      ) as _i3.Future<_i4.Uint8List?>);
 }
