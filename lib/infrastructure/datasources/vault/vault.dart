@@ -96,7 +96,6 @@ class Vault {
             _logger.info(
               'Abort : Vault not initialized.',
             );
-            //TODO(Chralu): stockage non initialisé
             throw const Failure.invalidValue();
           }
 
@@ -139,7 +138,6 @@ class Vault {
               _logger.info(
                 'Abort : Vault not initialized.',
               );
-              // TODO(Chralu): Replace by a "invalid request" failure
               throw const Failure.locked();
             }
 
