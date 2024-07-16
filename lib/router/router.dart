@@ -139,8 +139,7 @@ class RoutesPath {
                   child: SetPassword(
                     header: extra['header'] as String?,
                     description: extra['description'] as String?,
-                    challenge: extra['challenge']
-                        as Uint8List, //TODO(Chralu): set that parameter when navigating
+                    challenge: extra['challenge'] as Uint8List,
                   ),
                 );
               },
