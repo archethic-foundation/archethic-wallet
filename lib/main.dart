@@ -141,16 +141,14 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
   Future<void> didChangeAppLifecycleStateAsync(AppLifecycleState state) async {
     _logger.info('Lifecycle State : $state');
     var isDeviceSecured = false;
-    // TODO(Chralu): Shouldn't this listener stopped when app is paused ?
-    ref.invalidate(ArchethicOracleUCOProviders.archethicOracleUCO);
-    await ref
-        .read(ArchethicOracleUCOProviders.archethicOracleUCO.notifier)
-        .init();
     // Account for user changing locale when leaving the app
     switch (state) {
       case AppLifecycleState.paused:
         isDeviceSecured = await SecurityManager().isDeviceSecured();
-        super.didChangeAppLifecycleState(state);
+
+        await ref
+            .read(ArchethicOracleUCOProviders.archethicOracleUCO.notifier)
+            .stopSubscription();
         break;
       case AppLifecycleState.resumed:
         updateDefaultLocale();
@@ -161,18 +159,18 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
             rootNavigatorKey.currentState!.overlay!.context,
           );
         }
-        super.didChangeAppLifecycleState(state);
+
+        await ref
+            .read(ArchethicOracleUCOProviders.archethicOracleUCO.notifier)
+            .startSubscription();
+
         break;
       case AppLifecycleState.inactive:
-        super.didChangeAppLifecycleState(state);
-        break;
       case AppLifecycleState.detached:
-        super.didChangeAppLifecycleState(state);
-        break;
       case AppLifecycleState.hidden:
-        super.didChangeAppLifecycleState(state);
         break;
     }
+    super.didChangeAppLifecycleState(state);
   }
 
   void updateDefaultLocale() {
@@ -245,7 +243,7 @@ class Splash extends ConsumerStatefulWidget {
   ConsumerState<Splash> createState() => SplashState();
 }
 
-class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
+class SplashState extends ConsumerState<Splash> {
   final _logger = Logger('SplashState');
 
   Future<void> initializeProviders() async {
@@ -294,9 +292,6 @@ class SplashState extends ConsumerState<Splash> with WidgetsBindingObserver {
         context.go(IntroWelcome.routerPage);
         return;
       }
-      await ref
-          .read(ArchethicOracleUCOProviders.archethicOracleUCO.notifier)
-          .init();
 
       context.go(HomePage.routerPage);
     } catch (e, stack) {

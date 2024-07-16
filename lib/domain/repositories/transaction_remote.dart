@@ -9,9 +9,11 @@ import 'package:aewallet/model/data/account.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 
 typedef TransactionConfirmationHandler = Future<void> Function(
+  archethic.TransactionSenderInterface sender,
   archethic.TransactionConfirmation confirmation,
 );
 typedef TransactionErrorHandler = Future<void> Function(
+  archethic.TransactionSenderInterface sender,
   archethic.TransactionError error,
 );
 
@@ -35,6 +37,4 @@ abstract class TransactionRemoteRepositoryInterface {
     required Account account,
     required KeychainSecuredInfos keychainSecuredInfos,
   });
-
-  Future<void> close();
 }

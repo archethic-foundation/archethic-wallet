@@ -41,7 +41,7 @@ Future<MarketPrice> _selectedCurrencyMarketPrice(Ref ref) async {
     ),
   );
 
-  if (currency.name == 'usd') {
+  if (currency == AvailableCurrencyEnum.usd) {
     final archethicOracleUCO =
         ref.watch(ArchethicOracleUCOProviders.archethicOracleUCO);
     return MarketPrice(
@@ -50,7 +50,7 @@ Future<MarketPrice> _selectedCurrencyMarketPrice(Ref ref) async {
       useOracle: true,
     );
   } else {
-    if (currency.name == 'eur') {
+    if (currency == AvailableCurrencyEnum.eur) {
       final archethicOracleUCO =
           ref.watch(ArchethicOracleUCOProviders.archethicOracleUCO);
       return MarketPrice(

@@ -111,13 +111,13 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
 
     await transactionRepository.send(
       transaction: transaction,
-      onConfirmation: (confirmation) async {
+      onConfirmation: (sender, confirmation) async {
         if (archethic.TransactionConfirmation.isEnoughConfirmations(
           confirmation.nbConfirmations,
           confirmation.maxConfirmations,
           TransactionValidationRatios.addAccount,
         )) {
-          await transactionRepository.close();
+          sender.close();
           EventTaxiImpl.singleton().fire(
             TransactionSendEvent(
               transactionType: TransactionSendEventType.keychain,
@@ -129,7 +129,7 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
           );
         }
       },
-      onError: (error) async {
+      onError: (sender, error) async {
         error.maybeMap(
           connectivity: (_) {
             EventTaxiImpl.singleton().fire(
@@ -205,13 +205,13 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
 
     await transactionRepository.send(
       transaction: transaction,
-      onConfirmation: (confirmation) async {
+      onConfirmation: (sender, confirmation) async {
         if (archethic.TransactionConfirmation.isEnoughConfirmations(
           confirmation.nbConfirmations,
           confirmation.maxConfirmations,
           TransactionValidationRatios.addAccount,
         )) {
-          await transactionRepository.close();
+          sender.close();
           EventTaxiImpl.singleton().fire(
             TransactionSendEvent(
               transactionType: TransactionSendEventType.keychain,
@@ -223,7 +223,7 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
           );
         }
       },
-      onError: (error) async {
+      onError: (sender, error) async {
         error.maybeMap(
           connectivity: (_) {
             EventTaxiImpl.singleton().fire(

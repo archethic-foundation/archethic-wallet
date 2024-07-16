@@ -793,13 +793,13 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
     await transferRepository.send(
       transaction: transaction,
-      onConfirmation: (confirmation) async {
+      onConfirmation: (sender, confirmation) async {
         if (archethic.TransactionConfirmation.isEnoughConfirmations(
           confirmation.nbConfirmations,
           confirmation.maxConfirmations,
           TransactionValidationRatios.transfer,
         )) {
-          await transferRepository.close();
+          sender.close();
           EventTaxiImpl.singleton().fire(
             TransactionSendEvent(
               transactionType: TransactionSendEventType.transfer,
@@ -811,7 +811,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
           );
         }
       },
-      onError: (error) async {
+      onError: (sender, error) async {
         error.maybeMap(
           connectivity: (_) {
             EventTaxiImpl.singleton().fire(
