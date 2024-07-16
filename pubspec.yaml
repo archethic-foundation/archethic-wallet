@@ -29,11 +29,11 @@ dependencies:
   #  path: ../archethic-dapp-framework-flutter
 
   # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
-  archethic_lib_dart: ^3.4.0
-  #archethic_lib_dart:
-  #  git:
-  #    url: https://github.com/archethic-foundation/libdart.git
-  #    ref: dev
+  # archethic_lib_dart: ^3.4.0
+  archethic_lib_dart:
+    git:
+      url: https://github.com/archethic-foundation/libdart.git
+      ref: fix_websocket_subscription_release
   #archethic_lib_dart:
   #  path: ../libdart-2
 

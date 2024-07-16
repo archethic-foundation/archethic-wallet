@@ -791,13 +791,13 @@ class NftCreationFormNotifier
 
     await transactionRepository.send(
       transaction: transaction,
-      onConfirmation: (confirmation) async {
+      onConfirmation: (sender, confirmation) async {
         if (archethic.TransactionConfirmation.isEnoughConfirmations(
           confirmation.nbConfirmations,
           confirmation.maxConfirmations,
           TransactionValidationRatios.addNFT,
         )) {
-          await transactionRepository.close();
+          sender.close();
           EventTaxiImpl.singleton().fire(
             TransactionSendEvent(
               transactionType: TransactionSendEventType.token,
@@ -809,7 +809,7 @@ class NftCreationFormNotifier
           );
         }
       },
-      onError: (error) async {
+      onError: (sender, error) async {
         error.maybeMap(
           connectivity: (_) {
             EventTaxiImpl.singleton().fire(

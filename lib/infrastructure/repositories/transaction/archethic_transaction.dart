@@ -38,15 +38,6 @@ class ArchethicTransactionRepository
 
   final String phoenixHttpEndpoint;
   final String websocketEndpoint;
-  archethic.TransactionSenderInterface? _transactionSender;
-
-  @override
-  Future<void> close() async {
-    if (_transactionSender == null) return;
-
-    _transactionSender!.close();
-    return;
-  }
 
   @override
   Future<String> getLastTransactionAddress({
@@ -264,18 +255,23 @@ class ArchethicTransactionRepository
     required TransactionConfirmationHandler onConfirmation,
     required TransactionErrorHandler onError,
   }) async {
-    // TODO(chralu): CAREFUL !! if [send] is called twice, then the first request will be leaked.
-    _transactionSender = archethic.ArchethicTransactionSender(
+    final transactionSender = archethic.ArchethicTransactionSender(
       phoenixHttpEndpoint: phoenixHttpEndpoint,
       websocketEndpoint: websocketEndpoint,
       apiService: apiService,
     );
-    // ignore: cascade_invocations
-    await _transactionSender!.send(
-      // TODO(Chralu): [timeout] should be passed as parameter here.
+
+    await transactionSender.send(
+      timeout: timeout,
       transaction: await _buildTransaction(transaction),
-      onConfirmation: onConfirmation,
-      onError: onError,
+      onConfirmation: (transactionConfirmation) => onConfirmation(
+        transactionSender,
+        transactionConfirmation,
+      ),
+      onError: (error) => onError(
+        transactionSender,
+        error,
+      ),
     );
   }
 }

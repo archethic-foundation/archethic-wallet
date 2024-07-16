@@ -12,26 +12,34 @@ part 'provider.g.dart';
 
 @Riverpod(keepAlive: true)
 class _ArchethicOracleUCONotifier extends Notifier<ArchethicOracleUCO> {
-  ArchethicOracle? archethicOracle;
+  ArchethicOracle? archethicOracleSubscription;
 
   static final _logger = Logger('ArchethicOracleUCONotifier');
 
   @override
   ArchethicOracleUCO build() {
-    ref.onDispose(() {
-      _logger.info('dispose ArchethicOracleUCONotifier');
-      if (archethicOracle != null) {
-        sl
-            .get<OracleService>()
-            .closeOracleUpdatesSubscription(archethicOracle!);
-      }
-    });
+    ref.onDispose(stopSubscription);
+
+    _getValue();
+
+    startSubscription();
     return const ArchethicOracleUCO();
   }
 
-  Future<void> init() async {
-    await _getValue();
+  Future<void> startSubscription() async {
+    if (archethicOracleSubscription != null) return;
+
+    _logger.info('Start listening to Oracle');
     await _subscribe();
+  }
+
+  Future<void> stopSubscription() async {
+    _logger.info('Stop listening to Oracle');
+    if (archethicOracleSubscription == null) return;
+    sl
+        .get<OracleService>()
+        .closeOracleUpdatesSubscription(archethicOracleSubscription!);
+    archethicOracleSubscription = null;
   }
 
   Future<void> _getValue() async {
@@ -40,7 +48,7 @@ class _ArchethicOracleUCONotifier extends Notifier<ArchethicOracleUCO> {
   }
 
   Future<void> _subscribe() async {
-    archethicOracle = await sl
+    archethicOracleSubscription = await sl
         .get<OracleService>()
         .subscribeToOracleUpdates((oracleUcoPrice) {
       _fillInfo(oracleUcoPrice!);
