@@ -103,7 +103,11 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
         _focusTextField();
         await showLockCountdownScreenIfNeeded(context, ref);
         enterPasswordController!.text = '';
-        isProcessing = false;
+        setState(
+          () {
+            isProcessing = false;
+          },
+        );
       },
     );
   }
