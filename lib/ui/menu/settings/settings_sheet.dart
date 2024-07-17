@@ -7,6 +7,7 @@ import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/version.dart';
+import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/infrastructure/datasources/tokens_list.hive.dart';
 import 'package:aewallet/infrastructure/rpc/websocket_server.dart';
 import 'package:aewallet/model/authentication_method.dart';
