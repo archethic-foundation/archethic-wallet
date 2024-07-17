@@ -69,14 +69,6 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
   }
 
   @override
-  void dispose() {
-    for (final controller in wordEditingControllers) {
-      controller?.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SheetSkeleton(
       appBar: getAppBar(context, ref),
