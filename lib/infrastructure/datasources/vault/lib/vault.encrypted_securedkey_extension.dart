@@ -1,7 +1,6 @@
 part of '../vault.dart';
 
 mixin VaultSecureKeyEncryption {
-  static const kEncryptedSecureKey = 'archethic_wallet_encrypted_secure_key';
   static const kEncryptedSecureKeySalt =
       'archethic_wallet_encrypted_secure_key_salt';
 
