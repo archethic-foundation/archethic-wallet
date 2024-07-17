@@ -1,8 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/infrastructure/datasources/hive.extension.dart';
 import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive/hive.dart';
 import 'package:logging/logging.dart';
 
@@ -15,14 +15,13 @@ class AuthentHiveSecuredDatasource {
 
   static final _logger = Logger('AuthentHiveSecuredDatasource');
 
-  static const String _authenticationBox = 'NonWebAuthentication';
+  static const _authenticationBox = 'NonWebAuthentication';
   final Box<dynamic> _box;
 
-  static const String _pin = 'archethic_wallet_pin';
-  static const String _password = 'archethic_wallet_password';
-  static const String _yubikeyClientID = 'archethic_wallet_yubikeyClientID';
-  static const String _yubikeyClientAPIKey =
-      'archethic_wallet_yubikeyClientAPIKey';
+  static const _pin = 'archethic_wallet_pin';
+  static const _password = 'archethic_wallet_password';
+  static const _yubikeyClientID = 'archethic_wallet_yubikeyClientID';
+  static const _yubikeyClientAPIKey = 'archethic_wallet_yubikeyClientAPIKey';
 
   // This doesn't have to be a singleton.
   // We just want to make sure that the box is open, before we start getting/setting objects on it
@@ -83,10 +82,12 @@ class AuthentHiveSecuredDatasource {
   }
 
   static Future<HiveCipher> _prepareCipher() async {
-    const secureStorage = FlutterSecureStorage();
-    final encryptionKey = await Hive.readSecureKey(secureStorage) ??
-        await Hive.generateAndStoreSecureKey(secureStorage);
+    // On non web platforms, vault key is actually a raw AES key.
+    // We use the same key to read `AuthentHiveSecuredDatasource` box.
+    final key = await Vault.instance().readEncryptedKey();
 
-    return HiveAesCipher(encryptionKey);
+    if (key == null) throw const Failure.locked();
+
+    return HiveAesCipher(key);
   }
 }

@@ -12,7 +12,6 @@ import 'package:logging/logging.dart';
 import 'package:pointycastle/export.dart';
 
 part 'lib/vault.encrypted_securedkey_extension.dart';
-part 'lib/vault.raw_securedkey_extension.dart';
 
 abstract class VaultCipherDelegate {
   Future<Uint8List?> encode(Uint8List payload, bool userCancelable);
@@ -90,7 +89,7 @@ class Vault {
   SingletonTask<void> get _unlockTask => __unlockTask ??= SingletonTask<void>(
         name: 'Vault unlock task',
         task: () async {
-          final encryptedKey = await _readEncryptedKey();
+          final encryptedKey = await readEncryptedKey();
 
           if (encryptedKey == null) {
             _logger.info(
@@ -132,7 +131,7 @@ class Vault {
         name: 'Verify unlock ability task',
         task: () async {
           try {
-            final encryptedKey = await _readEncryptedKey();
+            final encryptedKey = await readEncryptedKey();
 
             if (encryptedKey == null) {
               _logger.info(
@@ -164,7 +163,7 @@ class Vault {
   }
 
   Future<bool> get isSetup async {
-    return (await _readEncryptedKey()) != null;
+    return (await readEncryptedKey()) != null;
   }
 
   Future<bool> boxExists(String name) {
@@ -318,9 +317,9 @@ class Vault {
   }
 }
 
-extension _VaultKeyDataSource on Vault {
+extension VaultKeyDataSource on Vault {
   static const kEncryptedSecureKey = 'archethic_wallet_encrypted_secure_key';
-  Future<Uint8List?> _readEncryptedKey() async {
+  Future<Uint8List?> readEncryptedKey() async {
     const secureStorage = FlutterSecureStorage();
 
     final key = await secureStorage.read(key: kEncryptedSecureKey);
