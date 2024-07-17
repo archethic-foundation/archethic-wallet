@@ -74,6 +74,7 @@ packages:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       sha256: b912149d3776feb4051bdaaf599347b2d19509621d7ba4a1a5ba593169315cf0
       url: "https://pub.dev"
     source: hosted
@@ -141,10 +142,17 @@ packages:
     version: "1.1.24"
 >>>>>>> ffdb4b51 (Fix rebase)
 >>>>>>> 64b2469e (Fix rebase)
+=======
+      sha256: bba3f504d6488895cdfd1c132d9e95d4f6df828a6d64c390da6f575803d510b9
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.6"
+>>>>>>> 2f1ccf92 (rebase)
   archethic_lib_dart:
     dependency: "direct main"
     description:
       name: archethic_lib_dart
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -158,10 +166,13 @@ packages:
 =======
 >>>>>>> 64b2469e (Fix rebase)
 <<<<<<< HEAD
+=======
+>>>>>>> 2f1ccf92 (rebase)
       sha256: "421f3ffe4b2f3816424fbb81ef572344a46a67590e4a237cc6251f8101582335"
       url: "https://pub.dev"
     source: hosted
     version: "3.4.1"
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> 1151b498 (⬆️ Update Archethic Dart SDK version 3.3.15)
@@ -198,6 +209,8 @@ packages:
 =======
 >>>>>>> ffdb4b51 (Fix rebase)
 >>>>>>> 64b2469e (Fix rebase)
+=======
+>>>>>>> 2f1ccf92 (rebase)
   archethic_messaging_lib_dart:
     dependency: "direct main"
     description:
@@ -213,6 +226,7 @@ packages:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       sha256: "7d9ef9f23b285d4d5fc95bec08b3e4c51e8e636e1755f863426c5706ada2c175"
       url: "https://pub.dev"
     source: hosted
@@ -223,10 +237,13 @@ packages:
 =======
 >>>>>>> 64b2469e (Fix rebase)
 <<<<<<< HEAD
+=======
+>>>>>>> 2f1ccf92 (rebase)
       sha256: b144c2db4988823b3c08f9e6ea73e3348abd8fb58a45cd29bd285acded0a98d6
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> 1151b498 (⬆️ Update Archethic Dart SDK version 3.3.15)
@@ -263,35 +280,16 @@ packages:
 =======
 >>>>>>> ffdb4b51 (Fix rebase)
 >>>>>>> 64b2469e (Fix rebase)
+=======
+>>>>>>> 2f1ccf92 (rebase)
   archive:
     dependency: transitive
     description:
       name: archive
-<<<<<<< HEAD
-<<<<<<< HEAD
       sha256: cb6a278ef2dbb298455e1a713bda08524a175630ec643a242c399c932a0a1f7d
       url: "https://pub.dev"
     source: hosted
     version: "3.6.1"
-=======
-<<<<<<< HEAD
-      sha256: "6bd38d335f0954f5fad9c79e614604fbf03a0e5b975923dd001b6ea965ef5b4b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.6.0"
-=======
-      sha256: ecf4273855368121b1caed0d10d4513c7241dfc813f7d3c8933b36622ae9b265
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.5.1"
->>>>>>> 66a944e7 (💄 Add DApps tab)
->>>>>>> a417d392 (💄 Add DApps tab)
-=======
-      sha256: cb6a278ef2dbb298455e1a713bda08524a175630ec643a242c399c932a0a1f7d
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.6.1"
->>>>>>> ffdb4b51 (Fix rebase)
   args:
     dependency: transitive
     description:
@@ -786,6 +784,7 @@ packages:
     description:
       name: firebase_core_web
 <<<<<<< HEAD
+<<<<<<< HEAD
       sha256: "23509cb3cddfb3c910c143279ac3f07f06d3120f7d835e4a5d4b42558e978712"
       url: "https://pub.dev"
     source: hosted
@@ -803,6 +802,12 @@ packages:
     version: "2.17.1"
 >>>>>>> ffdb4b51 (Fix rebase)
 >>>>>>> 64b2469e (Fix rebase)
+=======
+      sha256: "23509cb3cddfb3c910c143279ac3f07f06d3120f7d835e4a5d4b42558e978712"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.17.3"
+>>>>>>> 2f1ccf92 (rebase)
   firebase_messaging:
     dependency: "direct main"
     description:
@@ -1299,10 +1304,17 @@ packages:
     dependency: transitive
     description:
       name: image_picker_android
+<<<<<<< HEAD
       sha256: cea2bd5b9fcff039a4901d3b13c67fe747f940be9ba76bde1bcd218d168eeb7f
       url: "https://pub.dev"
     source: hosted
     version: "0.8.12+6"
+=======
+      sha256: ff39a10ab4f48f4ac70776d0494a97bf073cd2570892cd46bc8a5cac162c25db
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.8.12+4"
+>>>>>>> 2f1ccf92 (rebase)
   image_picker_for_web:
     dependency: transitive
     description:
@@ -1548,6 +1560,7 @@ packages:
     description:
       name: material_symbols_icons
 <<<<<<< HEAD
+<<<<<<< HEAD
       sha256: "37f88057af06224cd99242bd9b5ceda8c1ebddfff67bd5e8432521910a3d4598"
       url: "https://pub.dev"
     source: hosted
@@ -1565,6 +1578,12 @@ packages:
     version: "4.2758.0"
 >>>>>>> ffdb4b51 (Fix rebase)
 >>>>>>> 64b2469e (Fix rebase)
+=======
+      sha256: "6102193e0c451426e9bb5e6cbc8533609e464bb2afa7fce42d9d79790e012beb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2768.0"
+>>>>>>> 2f1ccf92 (rebase)
   meta:
     dependency: transitive
     description:
@@ -1769,30 +1788,10 @@ packages:
     dependency: transitive
     description:
       name: patrol_finders
-<<<<<<< HEAD
-<<<<<<< HEAD
       sha256: "6bf2c3093fbccd02f80f73fafc1bd021d76410cbab6e329be220b5e3bc58f072"
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
-=======
-<<<<<<< HEAD
-=======
->>>>>>> ffdb4b51 (Fix rebase)
-      sha256: "2b51b43019d5db2a47b2fca53c1c54928a87459535d1ae966cd25d165641c7ce"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.1"
-<<<<<<< HEAD
-=======
-      sha256: e14214e88c84d34a1d7c89778ddf5c5a913bfc0a6a308da47d3ebca374a1f5f4
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.0"
->>>>>>> 66a944e7 (💄 Add DApps tab)
->>>>>>> a417d392 (💄 Add DApps tab)
-=======
->>>>>>> ffdb4b51 (Fix rebase)
   pdfx:
     dependency: "direct main"
     description:
@@ -2410,30 +2409,10 @@ packages:
     dependency: transitive
     description:
       name: webview_flutter_android
-<<<<<<< HEAD
-<<<<<<< HEAD
       sha256: f42447ca49523f11d8f70abea55ea211b3cafe172dd7a0e7ac007bb35dd356dc
       url: "https://pub.dev"
     source: hosted
     version: "3.16.4"
-=======
-<<<<<<< HEAD
-=======
->>>>>>> ffdb4b51 (Fix rebase)
-      sha256: "0d21cfc3bfdd2e30ab2ebeced66512b91134b39e72e97b43db2d47dda1c4e53a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.16.3"
-<<<<<<< HEAD
-=======
-      sha256: dad3313c9ead95517bb1cae5e1c9d20ba83729d5a59e5e83c0a2d66203f27f91
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.16.1"
->>>>>>> 66a944e7 (💄 Add DApps tab)
->>>>>>> a417d392 (💄 Add DApps tab)
-=======
->>>>>>> ffdb4b51 (Fix rebase)
   webview_flutter_platform_interface:
     dependency: transitive
     description:
