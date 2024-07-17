@@ -1,8 +1,10 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/infrastructure/datasources/preferences.hive.dart';
-import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/string_encryption.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -18,6 +20,7 @@ part '437.dart';
 part '512.dart';
 part '526.dart';
 part '540.dart';
+part '541.dart';
 part 'migration_manager.freezed.dart';
 part 'migration_manager.g.dart';
 
@@ -135,6 +138,7 @@ List<LocalDataMigration> _migrations(_MigrationsRef ref) => [
       migration_512,
       migration_526,
       migration_540,
+      migration_541,
     ];
 
 class CurrentVersionRepository {

@@ -61,9 +61,24 @@ final migration_526 = LocalDataMigration(
       logger.info('$key migrated');
     }
 
+    const kSecureKey = 'archethic_wallet_secure_key';
+    Future<Uint8List?> _readSecureKey(
+      FlutterSecureStorage secureStorage,
+    ) async {
+      final keyBase64 = await secureStorage.read(
+        key: kSecureKey,
+      );
+
+      if (keyBase64 == null) {
+        return null;
+      }
+
+      return base64Url.decode(keyBase64);
+    }
+
     Future<HiveCipher?> _prepareCipher() async {
       const secureStorage = FlutterSecureStorage();
-      final encryptionKey = await Hive.readSecureKey(secureStorage);
+      final encryptionKey = await _readSecureKey(secureStorage);
 
       if (encryptionKey == null) return null;
       return HiveAesCipher(encryptionKey);
