@@ -297,7 +297,7 @@ class _CGU extends ConsumerWidget {
                 onTap: () {
                   UIUtil.showWebview(
                     context,
-                    'https://www.archethic.net/privacy-policy-wallet/',
+                    'https://www.archethic.net/privacy-policy-wallet.html',
                     localizations.welcomeDisclaimerLink,
                   );
                 },
