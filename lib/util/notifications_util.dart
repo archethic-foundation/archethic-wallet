@@ -15,15 +15,15 @@ class NotificationsUtil {
         channelDescription: 'channel description',
         importance: Importance.max,
       ),
-      iOS: IOSNotificationDetails(),
-      macOS: MacOSNotificationDetails(),
+      iOS: DarwinNotificationDetails(),
+      macOS: DarwinNotificationDetails(),
     );
   }
 
   static Future init() async {
     const android = AndroidInitializationSettings('@drawable/ic_notification');
-    const iOS = IOSInitializationSettings();
-    const macOS = MacOSInitializationSettings();
+    const iOS = DarwinInitializationSettings();
+    const macOS = DarwinInitializationSettings();
     const linux =
         LinuxInitializationSettings(defaultActionName: 'Open notification');
     const settings = InitializationSettings(
@@ -34,8 +34,8 @@ class NotificationsUtil {
     );
     await _notifications.initialize(
       settings,
-      onSelectNotification: (payload) async {
-        onNotifications.add(payload);
+      onDidReceiveNotificationResponse: (response) async {
+        onNotifications.add(response.payload);
       },
     );
   }
