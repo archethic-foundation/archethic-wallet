@@ -1,8 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'package:aewallet/domain/models/core/failures.dart';
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:aewallet/infrastructure/datasources/hive.extension.dart';
 import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive/hive.dart';
 import 'package:logging/logging.dart';
 
@@ -73,21 +76,49 @@ class AuthentHiveSecuredDatasource {
     try {
       return await Hive.openBox<E>(
         name,
-        encryptionCipher: await _prepareCipher(),
+        encryptionCipher:
+            await _AuthentHiveSecuredDatasourceSecureKey.prepareCipher(),
       );
     } catch (e, stack) {
       _logger.severe('Failed to open Hive encrypted Box<$E>($name).', e, stack);
       rethrow;
     }
   }
+}
 
-  static Future<HiveCipher> _prepareCipher() async {
-    // On non web platforms, vault key is actually a raw AES key.
-    // We use the same key to read `AuthentHiveSecuredDatasource` box.
-    final key = await Vault.instance().readEncryptedKey();
+extension _AuthentHiveSecuredDatasourceSecureKey
+    on AuthentHiveSecuredDatasource {
+  static const kSecureKey = 'archethic_wallet_authent_secure_key';
 
-    if (key == null) throw const Failure.locked();
+  static Future<HiveCipher> prepareCipher() async => HiveAesCipher(
+        await _readSecureKey() ?? await _initSecureKey(),
+      );
 
-    return HiveAesCipher(key);
+  static Future<Uint8List?> _readSecureKey() async {
+    const secureStorage = FlutterSecureStorage();
+
+    final key = await secureStorage.read(key: kSecureKey);
+    if (key != null) return base64Decode(key);
+
+    return null;
+  }
+
+  static Future<Uint8List> _initSecureKey() async {
+    const secureStorage = FlutterSecureStorage();
+
+    final key = Uint8List.fromList(Hive.generateSecureKey());
+    await secureStorage.write(
+      key: kSecureKey,
+      value: base64Encode(key),
+    );
+    return key;
+  }
+
+  static Future<void> _clearSecureKey() async {
+    const secureStorage = FlutterSecureStorage();
+
+    await secureStorage.delete(
+      key: kSecureKey,
+    );
   }
 }

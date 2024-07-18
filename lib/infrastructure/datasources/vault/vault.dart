@@ -210,7 +210,7 @@ class Vault {
     );
 
     if (encryptedKey == null) throw const Failure.operationCanceled();
-    await _writeEncryptedSecureKey(encryptedKey);
+    await _writeEncryptedKey(encryptedKey);
 
     _cipherDelegate = newCipherDelegate;
     _vaultCipher = VaultCipher(
@@ -234,7 +234,7 @@ class Vault {
     );
 
     if (encryptedKey == null) throw const Failure.operationCanceled();
-    await _writeEncryptedSecureKey(encryptedKey);
+    await _writeEncryptedKey(encryptedKey);
 
     _cipherDelegate = newCipherDelegate;
   }
@@ -328,7 +328,7 @@ extension VaultKeyDataSource on Vault {
     return null;
   }
 
-  Future<void> _writeEncryptedSecureKey(Uint8List key) async {
+  Future<void> _writeEncryptedKey(Uint8List key) async {
     const secureStorage = FlutterSecureStorage();
 
     await secureStorage.write(
