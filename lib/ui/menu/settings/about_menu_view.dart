@@ -95,7 +95,7 @@ class AboutMenuView extends ConsumerWidget implements SheetSkeletonInterface {
                           onPressed: () async {
                             UIUtil.showWebview(
                               context,
-                              'https://www.archethic.net/privacy-policy-wallet/',
+                              'https://www.archethic.net/privacy-policy-wallet.html',
                               localizations.aboutPrivacyPolicy,
                             );
                           },
