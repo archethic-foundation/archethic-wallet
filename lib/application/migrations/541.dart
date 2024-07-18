@@ -9,18 +9,39 @@ final migration_541 = LocalDataMigration(
   run: (ref) async {
     final logger = Logger('DataMigration_MoveVaultKey');
 
-    const kEncryptedSecureKey = 'archethic_wallet_encrypted_secure_key';
-    const kSecureKey = 'archethic_wallet_secure_key';
-
+    const kEncryptedVaultSecureKey = 'archethic_wallet_encrypted_secure_key';
+    const kVaultSecureKey = 'archethic_wallet_secure_key';
+    const kNonWebAuthenticationSecureKey =
+        'archethic_wallet_authent_secure_key';
     const secureStorage = FlutterSecureStorage();
 
-    final key = await secureStorage.read(key: kSecureKey);
-    if (key == null) {
-      logger.info('No Vault key to migrate');
-      return;
+    Future<void> _migrateVaultSecureKey() async {
+      final key = await secureStorage.read(key: kVaultSecureKey);
+      if (key == null) {
+        logger.info('No Vault key to migrate');
+        return;
+      }
+      logger.info('Migrating Vault key');
+      await secureStorage.write(key: kEncryptedVaultSecureKey, value: key);
     }
-    logger.info('Migrating Vault key');
-    await secureStorage.write(key: kEncryptedSecureKey, value: key);
-    await secureStorage.delete(key: kSecureKey);
+
+    Future<void> _migrateNonWehAuthentSecureKey() async {
+      final key = await secureStorage.read(key: kVaultSecureKey);
+      if (key == null) {
+        logger.info('No NonWebAuthent secure key to migrate');
+        return;
+      }
+      logger.info('Migrating NonWebAuthent secure key');
+      await secureStorage.write(
+        key: kNonWebAuthenticationSecureKey,
+        value: key,
+      );
+    }
+
+    await _migrateVaultSecureKey();
+
+    await _migrateNonWehAuthentSecureKey();
+
+    await secureStorage.delete(key: kVaultSecureKey);
   },
 );
