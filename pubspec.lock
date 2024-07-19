@@ -70,17 +70,10 @@ packages:
     dependency: "direct main"
     description:
       name: archethic_dapp_framework_flutter
-<<<<<<< HEAD
       sha256: b912149d3776feb4051bdaaf599347b2d19509621d7ba4a1a5ba593169315cf0
       url: "https://pub.dev"
     source: hosted
     version: "1.2.7"
-=======
-      sha256: bba3f504d6488895cdfd1c132d9e95d4f6df828a6d64c390da6f575803d510b9
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.6"
->>>>>>> 4e60fa4c (chore: :arrow_up: Update local notification to prevent issue with android permission USE_FULL_SCREEN_INTENT)
   archethic_lib_dart:
     dependency: "direct main"
     description:
@@ -1106,17 +1099,10 @@ packages:
     dependency: transitive
     description:
       name: image_picker_android
-<<<<<<< HEAD
       sha256: cea2bd5b9fcff039a4901d3b13c67fe747f940be9ba76bde1bcd218d168eeb7f
       url: "https://pub.dev"
     source: hosted
     version: "0.8.12+6"
-=======
-      sha256: "9e32a194887720d6bc40bbae6035511bdd6cd0f03ea7af92166387504471f147"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.8.12+5"
->>>>>>> 4e60fa4c (chore: :arrow_up: Update local notification to prevent issue with android permission USE_FULL_SCREEN_INTENT)
   image_picker_for_web:
     dependency: transitive
     description:
@@ -1361,17 +1347,10 @@ packages:
     dependency: "direct main"
     description:
       name: material_symbols_icons
-<<<<<<< HEAD
       sha256: "37f88057af06224cd99242bd9b5ceda8c1ebddfff67bd5e8432521910a3d4598"
       url: "https://pub.dev"
     source: hosted
     version: "4.2771.0"
-=======
-      sha256: "6102193e0c451426e9bb5e6cbc8533609e464bb2afa7fce42d9d79790e012beb"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.2768.0"
->>>>>>> 4e60fa4c (chore: :arrow_up: Update local notification to prevent issue with android permission USE_FULL_SCREEN_INTENT)
   meta:
     dependency: transitive
     description:
@@ -2037,17 +2016,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_android
-<<<<<<< HEAD
       sha256: "95d8027db36a0e52caf55680f91e33ea6aa12a3ce608c90b06f4e429a21067ac"
       url: "https://pub.dev"
     source: hosted
     version: "6.3.5"
-=======
-      sha256: eac82dc8e5f48818054f46021e9e5f34c239f8d301e7e29165b977c8d1189fed
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.3.4"
->>>>>>> 4e60fa4c (chore: :arrow_up: Update local notification to prevent issue with android permission USE_FULL_SCREEN_INTENT)
   url_launcher_ios:
     dependency: transitive
     description:
