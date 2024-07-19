@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -14,7 +13,6 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lit_starfield/lit_starfield.dart';
 
 class AppDialogs {
   static Future showConfirmDialog(
@@ -248,7 +246,7 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
               ),
             ),
           ),
-          Opacity(
+          /*Opacity(
             opacity: 0.8,
             child: LitStarfieldContainer(
               velocity: 0.2,
@@ -271,7 +269,7 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
                 color: Colors.transparent,
               ),
             ),
-          ),
+          ),*/
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

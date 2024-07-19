@@ -38,11 +38,11 @@ class LockMask extends StatelessWidget {
               ),
             ),
           ),
-          const LitStarfieldContainer(
+          /*const LitStarfieldContainer(
             backgroundDecoration: BoxDecoration(
               color: Colors.transparent,
             ),
-          ),
+          ),*/
           Image.asset(
             '${ArchethicTheme.assetsFolder}logo_crystal.png',
             width: 200,

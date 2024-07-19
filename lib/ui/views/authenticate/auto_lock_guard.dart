@@ -20,7 +20,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:lit_starfield/lit_starfield.dart';
 import 'package:logging/logging.dart';
 
 part 'components/lock_mask_screen.dart';

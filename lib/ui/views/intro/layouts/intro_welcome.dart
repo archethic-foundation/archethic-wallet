@@ -22,7 +22,7 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lit_starfield/lit_starfield.dart';
+
 import 'package:material_symbols_icons/symbols.dart';
 
 class IntroWelcome extends ConsumerStatefulWidget {
@@ -85,8 +85,10 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome>
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    return Stack(
+    return const Stack(
       children: [
+        // TODO(reddwarf03): Follow https://github.com/flutter/flutter/issues/128885
+        /*
         Opacity(
           opacity: 0.8,
           child: SizedBox(
@@ -116,8 +118,8 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome>
               ),
             ),
           ),
-        ),
-        const _Main(),
+        ),*/
+        _Main(),
       ],
     );
   }
