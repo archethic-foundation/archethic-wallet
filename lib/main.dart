@@ -27,6 +27,8 @@ import 'package:aewallet/ui/widgets/components/window_size.dart';
 import 'package:aewallet/util/security_manager.dart';
 import 'package:aewallet/util/service_locator.dart';
 import 'package:aewallet/util/universal_platform.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -147,7 +149,8 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
         isDeviceSecured = await SecurityManager().isDeviceSecured();
 
         await ref
-            .read(ArchethicOracleUCOProviders.archethicOracleUCO.notifier)
+            .read(aedappfm
+                .ArchethicOracleUCOProviders.archethicOracleUCO.notifier)
             .stopSubscription();
         break;
       case AppLifecycleState.resumed:
@@ -161,7 +164,8 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
         }
 
         await ref
-            .read(ArchethicOracleUCOProviders.archethicOracleUCO.notifier)
+            .read(aedappfm
+                .ArchethicOracleUCOProviders.archethicOracleUCO.notifier)
             .startSubscription();
 
         break;
