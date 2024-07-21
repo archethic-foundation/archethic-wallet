@@ -36,7 +36,6 @@ Archethic Wallet has implemented the following features:
 - Share address with QR Code or mobile share feature
 - Address book
 - UCO Price chart
-- Access latest Archethic blog articles
 
 ## Application Initial Screen
 <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png?v=20240312" width="300"/>

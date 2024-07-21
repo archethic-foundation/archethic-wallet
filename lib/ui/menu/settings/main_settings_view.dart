@@ -166,6 +166,19 @@ class MainMenuView extends ConsumerWidget {
                       if (connectivityStatusProvider ==
                           ConnectivityStatus.isConnected)
                         const _SettingsListItem.spacer(),
+                      _SettingsListItem.singleLineWithInfos(
+                        heading: localizations.mediumLinkHeader,
+                        info: localizations.mediumLinkDesc,
+                        icon: Symbols.news,
+                        onPressed: () async {
+                          UIUtil.showWebview(
+                            context,
+                            'https://medium.com/archethic',
+                            localizations.mediumLinkHeader,
+                          );
+                        },
+                      ),
+                      const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLine(
                         heading: localizations.aboutHeader,
                         headingStyle:

@@ -26,7 +26,6 @@ class SettingsRepository implements SettingsRepositoryInterface {
       network: loadedPreferences.getNetwork(),
       primaryCurrency: loadedPreferences.getPrimaryCurrency(),
       showBalances: loadedPreferences.getShowBalances(),
-      showBlog: loadedPreferences.getShowBlog(),
       showPriceChart: loadedPreferences.getShowPriceChart(),
       priceChartIntervalOption: loadedPreferences.getPriceChartIntervalOption(),
     );
@@ -48,7 +47,6 @@ class SettingsRepository implements SettingsRepositoryInterface {
     await loadedPreferences.setNetwork(settings.network);
     await loadedPreferences.setPrimaryCurrency(settings.primaryCurrency);
     await loadedPreferences.setShowBalances(settings.showBalances);
-    await loadedPreferences.setShowBlog(settings.showBlog);
     await loadedPreferences.setShowPriceChart(settings.showPriceChart);
     await loadedPreferences
         .setPriceChartIntervalOption(settings.priceChartIntervalOption);

@@ -41,7 +41,6 @@ class SettingsNotifier extends StateNotifier<Settings> {
             AvailablePrimaryCurrencyEnum.native,
           ),
           showBalances: true,
-          showBlog: true,
           showPriceChart: true,
         ),
       );
@@ -53,10 +52,6 @@ class SettingsNotifier extends StateNotifier<Settings> {
 
   Future<void> setShowBalances(bool showBalances) => _update(
         state.copyWith(showBalances: showBalances),
-      );
-
-  Future<void> setShowBlog(bool showBlog) => _update(
-        state.copyWith(showBlog: showBlog),
       );
 
   Future<void> setShowPriceChart(bool showPriceChart) => _update(

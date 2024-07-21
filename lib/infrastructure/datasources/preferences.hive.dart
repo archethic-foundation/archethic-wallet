@@ -42,7 +42,6 @@ class PreferencesHiveDatasource {
   static const String pinLockUntil = 'archethic_wallet_pin_lock_until';
   static const String pinPadShuffle = 'archethic_wallet_pinPadShuffle';
   static const String showBalances = 'archethic_wallet_showBalances';
-  static const String showBlog = 'archethic_wallet_showBlog';
   static const String showPriceChart = 'archethic_wallet_showPriceChart';
   static const String priceChartScale = 'archethic_wallet_priceChartScale';
   static const String activeVibrations = 'archethic_wallet_activeVibrations';
@@ -170,10 +169,6 @@ class PreferencesHiveDatasource {
   Future<void> setShowBalances(bool value) => _setValue(showBalances, value);
 
   bool getShowBalances() => _getValue(showBalances, defaultValue: true);
-
-  Future<void> setShowBlog(bool value) => _setValue(showBlog, value);
-
-  bool getShowBlog() => _getValue(showBlog, defaultValue: true);
 
   Future<void> setActiveVibrations(bool value) =>
       _setValue(activeVibrations, value);
