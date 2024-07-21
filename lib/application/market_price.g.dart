@@ -192,10 +192,14 @@ class _CurrencyMarketPriceProviderElement
 
 String _$selectedCurrencyMarketPriceHash() =>
 <<<<<<< HEAD
+<<<<<<< HEAD
     r'b37795bf99d0655475030698f3ad8f74af0fe105';
 =======
     r'916fbf25a847d2d714b9c5bfe2bf5a6eeb277e08';
 >>>>>>> e4c1a772 (🚧 UI Adjustments)
+=======
+    r'36bc3cad954a7124b0099af5ff1c3d8107fdf5f5';
+>>>>>>> 09b97206 (fix rebase)
 
 /// See also [_selectedCurrencyMarketPrice].
 @ProviderFor(_selectedCurrencyMarketPrice)
