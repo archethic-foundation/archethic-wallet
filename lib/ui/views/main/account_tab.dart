@@ -1,11 +1,9 @@
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/blog.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/verified_tokens.dart';
-import 'package:aewallet/ui/views/blog/last_articles_list.dart';
 import 'package:aewallet/ui/views/main/components/app_update_button.dart';
 import 'package:aewallet/ui/views/main/components/menu_widget_wallet.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
@@ -47,7 +45,6 @@ class AccountTab extends ConsumerWidget {
             .read(AccountProviders.selectedAccount.notifier)
             .refreshRecentTransactions();
         ref
-          ..invalidate(BlogProviders.fetchArticles)
           ..invalidate(ContactProviders.fetchContacts)
           ..invalidate(MarketPriceProviders.currencyMarketPrice);
         await ref
@@ -108,11 +105,6 @@ class AccountTab extends ConsumerWidget {
                                 FungiblesTokensListWidget(),
                               ],
                             ),
-
-                            /// BLOG
-                            if (connectivityStatusProvider ==
-                                ConnectivityStatus.isConnected)
-                              const LastArticles(),
                             const SizedBox(
                               height: 80,
                             ),

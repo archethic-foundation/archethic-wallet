@@ -17,7 +17,6 @@ class Settings with _$Settings {
     required String languageSeed,
     required bool firstLaunch,
     required bool showBalances,
-    required bool showBlog,
     required bool activeVibrations,
     required bool activeRPCServer,
     required bool activeNotifications,
@@ -42,7 +41,6 @@ class Settings with _$Settings {
         primaryCurrency:
             AvailablePrimaryCurrency(AvailablePrimaryCurrencyEnum.native),
         showBalances: true,
-        showBlog: true,
         showPriceChart: true,
         priceChartIntervalOption: MarketPriceHistoryInterval.hour,
       );

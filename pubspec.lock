@@ -927,14 +927,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.7.0"
-  ghost:
-    dependency: "direct main"
-    description:
-      name: ghost
-      sha256: "626bbbdb68486c078a7c32bd13dbeddb425ce8f8894a230d7bc501cf46d68634"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.0"
   glob:
     dependency: transitive
     description:

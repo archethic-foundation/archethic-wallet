@@ -1,5 +1,4 @@
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/blog.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/market_price.dart';
@@ -31,7 +30,6 @@ class RefreshCurrentAccountHandler extends CommandHandler {
                 .read(AccountProviders.selectedAccount.notifier)
                 .refreshRecentTransactions();
             ref
-              ..invalidate(BlogProviders.fetchArticles)
               ..invalidate(ContactProviders.fetchContacts)
               ..invalidate(MarketPriceProviders.currencyMarketPrice);
 

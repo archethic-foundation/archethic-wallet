@@ -79,12 +79,6 @@ class CustomizationMenuView extends ConsumerWidget
                       const _SettingsListItem.spacer(),
                       const _ShowBalancesSettingsListItem(),
                       const _SettingsListItem.spacer(),
-                      if (connectivityStatusProvider ==
-                          ConnectivityStatus.isConnected)
-                        const _ShowBlogSettingsListItem(),
-                      if (connectivityStatusProvider ==
-                          ConnectivityStatus.isConnected)
-                        const _SettingsListItem.spacer(),
                       const _ShowPriceChartSettingsListItem(),
                       if (hasNotifications &&
                           connectivityStatusProvider ==
@@ -165,29 +159,6 @@ class _ShowBalancesSettingsListItem extends ConsumerWidget {
       isSwitched: showBalancesSetting,
       onChanged: (showBalances) async {
         await preferencesNotifier.setShowBalances(showBalances);
-      },
-    );
-  }
-}
-
-class _ShowBlogSettingsListItem extends ConsumerWidget {
-  const _ShowBlogSettingsListItem();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-
-    final showBlogSetting = ref.watch(
-      SettingsProviders.settings.select((settings) => settings.showBlog),
-    );
-    final preferencesNotifier = ref.read(SettingsProviders.settings.notifier);
-
-    return _SettingsListItem.withSwitch(
-      heading: localizations.showBlog,
-      icon: Symbols.article,
-      isSwitched: showBlogSetting,
-      onChanged: (showBlog) async {
-        await preferencesNotifier.setShowBlog(showBlog);
       },
     );
   }
