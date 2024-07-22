@@ -26,7 +26,6 @@ class AccountTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final preferences = ref.watch(SettingsProviders.settings);
-    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     return ArchethicRefreshIndicator(
       onRefresh: () => Future<void>.sync(() async {
@@ -76,22 +75,22 @@ class AccountTab extends ConsumerWidget {
                           top: MediaQuery.of(context).padding.top + 10,
                           bottom: 80,
                         ),
-                        child: Column(
+                        child: const Column(
                           children: <Widget>[
                             /// BALANCE
-                            const BalanceInfos(),
+                            BalanceInfos(),
 
-                            const SizedBox(
+                            SizedBox(
                               height: 10,
                             ),
-                            const MenuWidgetWallet(),
-                            const ExpandablePageView(
+                            MenuWidgetWallet(),
+                            ExpandablePageView(
                               children: [
                                 TxList(),
                                 TokensListSheet(),
                               ],
                             ),
-                            const SizedBox(
+                            SizedBox(
                               height: 80,
                             ),
                           ],

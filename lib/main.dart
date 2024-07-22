@@ -149,8 +149,9 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
         isDeviceSecured = await SecurityManager().isDeviceSecured();
 
         await ref
-            .read(aedappfm
-                .ArchethicOracleUCOProviders.archethicOracleUCO.notifier)
+            .read(
+              aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.notifier,
+            )
             .stopSubscription();
         break;
       case AppLifecycleState.resumed:
@@ -164,8 +165,9 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
         }
 
         await ref
-            .read(aedappfm
-                .ArchethicOracleUCOProviders.archethicOracleUCO.notifier)
+            .read(
+              aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.notifier,
+            )
             .startSubscription();
 
         break;
