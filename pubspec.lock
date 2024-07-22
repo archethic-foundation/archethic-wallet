@@ -64,6 +64,7 @@ packages:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       name: archethic_dapp_framework_flutter
       sha256: "50305d48c2736a313e8e239f43405e81103127db9949840d1836a2abd0d0e5fa"
       url: "https://pub.dev"
@@ -115,13 +116,21 @@ packages:
 =======
 =======
 =======
+=======
+>>>>>>> e6d415b1 (lints)
       path: "../archethic-dapp-framework-flutter"
       relative: true
     source: path
     version: "1.2.7"
+<<<<<<< HEAD
 >>>>>>> 73bd942e (fix rebase)
 >>>>>>> cf0b2edd (fix rebase)
+<<<<<<< HEAD
 >>>>>>> 13f39fee (fix rebase)
+=======
+=======
+>>>>>>> e6d415b1 (lints)
+>>>>>>> 6ca99974 (lints)
   archethic_lib_dart:
     dependency: transitive
     description:
