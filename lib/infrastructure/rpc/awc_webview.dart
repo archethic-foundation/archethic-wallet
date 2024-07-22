@@ -83,6 +83,7 @@ class _AWCWebviewState extends State<AWCWebview> {
       return;
     }
 
+    AWCWebview._logger.info('Initializing AWC.');
     final port1 = await _initMessageChannelPorts(controller);
 
     final channel = WebviewMessagePortStreamChannel(port: port1);
@@ -95,7 +96,7 @@ class _AWCWebviewState extends State<AWCWebview> {
   ) async {
     await controller.evaluateJavascript(
       source: """
-console.AWCWebview._logger.info("[AWC] Init webmessage");
+console.info("[AWC] Init webmessage");
 var onAWCReady = (awc) => {};
 var awcAvailable = true;
 var awc;
@@ -103,7 +104,7 @@ window.addEventListener('message', function(event) {
     if (event.data == 'capturePort') {
         if (event.ports[0] != null) {
             awc = event.ports[0];
-            console.AWCWebview._logger.info("[AWC] Init webmessage Done");
+            console.info("[AWC] Init webmessage Done");
             if (onAWCReady !== undefined) {
               onAWCReady(awc);
             }
@@ -134,14 +135,16 @@ class WebviewMessagePortStreamChannel
 
     port.setWebMessageCallback((message) {
       if (message == null) return;
+      logger.info('Message received');
       _in.add(message.data);
     });
 
     _out.stream.listen((event) {
       port.postMessage(WebMessage(data: event));
+      logger.info('Response sent');
     });
   }
-  static final logger = Logger('AWCBrowserExtension');
+  static final logger = Logger('AWS-StreamChannel-Webview');
 
   final IWebMessagePort port;
   final _in = StreamController<String>(sync: true);
