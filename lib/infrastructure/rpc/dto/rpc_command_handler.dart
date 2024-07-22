@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
@@ -19,7 +21,7 @@ abstract class RPCCommandHandler<C, R> {
 
   Future<Result<dynamic, awc.Failure>> handle(Map<String, dynamic> data) async {
     final _logger = Logger('RPCCommandHandler [$runtimeType]')
-      ..info('Received command');
+      ..info('Received command : ${jsonEncode(data)}');
 
     try {
       final requestDTO = awc.Request.fromJson(

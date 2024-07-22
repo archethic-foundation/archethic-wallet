@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:aewallet/domain/rpc/subscription.dart';
 import 'package:aewallet/infrastructure/rpc/add_service/command_handler.dart';
@@ -84,7 +85,7 @@ class AWCJsonRPCServer {
       );
   }
 
-  static final _logger = Logger('RPC Server');
+  static final _logger = Logger('AWS-JsonRPCServer');
   final StreamChannel<String> channel;
   late final SubscribablePeer _peer;
 
@@ -98,9 +99,13 @@ class AWCJsonRPCServer {
   ) async {
     final result = await commandHandler.handle(params.value);
     return result.map(
-      success: commandHandler.resultFromModel,
+      success: (success) {
+        final result = commandHandler.resultFromModel(success);
+        _logger.info('Command result : ${jsonEncode(result)}');
+        return result;
+      },
       failure: (failure) {
-        _logger.info(
+        _logger.severe(
           'Command failed',
           failure,
         );
@@ -121,7 +126,8 @@ class AWCJsonRPCServer {
     return result.map(
       success: (success) {
         success as RPCSubscription;
-        return awc.Subscription(
+
+        final subscription = awc.Subscription(
           id: success.id,
           updates: success.updates
               .map(
@@ -131,11 +137,24 @@ class AWCJsonRPCServer {
                 ),
               )
               .distinct()
-              .map((dto) => dto.toJson()),
+              .map((dto) {
+            final update = dto.toJson();
+            _logger.info(
+              'Subscription update : ${jsonEncode(update)}',
+            );
+
+            return update;
+          }),
         );
+
+        _logger.info(
+          'Subscription result : ${jsonEncode(subscription.toJson())}',
+        );
+
+        return subscription;
       },
       failure: (failure) {
-        _logger.severe('Command failed', failure);
+        _logger.severe('Subscription failed', failure);
 
         throw RpcException(
           failure.code,
