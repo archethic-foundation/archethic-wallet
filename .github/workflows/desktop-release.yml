@@ -22,7 +22,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-          flutter-version: '3.22.2'
+          flutter-version: '3.22.3'
       - run: flutter --version
 
       - name: Install Flutter dependencies
@@ -58,7 +58,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-          flutter-version: '3.22.2'
+          flutter-version: '3.22.3'
       - run: flutter --version
 
       - name: Setup Dependencies
@@ -110,7 +110,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-          flutter-version: '3.22.2'
+          flutter-version: '3.22.3'
       - run: flutter --version
 
       - name: Setup dependencies
