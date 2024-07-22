@@ -46,12 +46,6 @@ class DAppsRepositoryImpl implements DAppsRepositoryInterface {
   Future<List<DApp>> getDAppsFromNetwork(
     AvailableNetworks network,
   ) async {
-    return [
-      const DApp(
-        code: 'aeSwap',
-        url: 'http://localhost:8080',
-      ),
-    ];
     final dApps = await _getDAppsLocal();
     switch (network) {
       // aeWallet-DApps-Conf service
