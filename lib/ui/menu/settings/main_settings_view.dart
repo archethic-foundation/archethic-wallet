@@ -57,22 +57,6 @@ class MainMenuView extends ConsumerWidget {
                         ),
                       ),
                       const _SettingsListItem.spacer(),
-                      _SettingsListItem.singleLine(
-                        heading: localizations.manualLockAction,
-                        headingStyle:
-                            ArchethicThemeStyles.textStyleSize16W600Primary,
-                        icon: Symbols.lock,
-                        displayChevron: false,
-                        onPressed: () async {
-                          await ref
-                              .read(
-                                AuthenticationProviders
-                                    .authenticationGuard.notifier,
-                              )
-                              .lock();
-                        },
-                      ),
-                      const _SettingsListItem.spacer(),
                       _SettingsListItem.title(text: localizations.information),
                       const _SettingsListItem.spacer(),
                       if (connectivityStatusProvider ==
