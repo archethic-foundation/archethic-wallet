@@ -152,10 +152,6 @@ class MenuWidgetWallet extends ConsumerWidget {
                 text: localizations.refresh,
                 icon: Symbols.refresh,
                 onTap: () async {
-                  ref
-                      .read(refreshInProgressProviders.notifier)
-                      .setRefreshInProgress(true);
-
                   sl.get<HapticUtil>().feedback(
                         FeedbackType.light,
                         preferences.activeVibrations,
@@ -170,17 +166,17 @@ class MenuWidgetWallet extends ConsumerWidget {
                   await ref
                       .read(AccountProviders.selectedAccount.notifier)
                       .refreshRecentTransactions();
-                  ref
-                    ..invalidate(ContactProviders.fetchContacts)
-                    ..invalidate(MarketPriceProviders.currencyMarketPrice);
-                  await ref
-                      .read(
-                        VerifiedTokensProviders.verifiedTokens.notifier,
-                      )
-                      .init();
-                  ref
-                      .read(refreshInProgressProviders.notifier)
-                      .setRefreshInProgress(false);
+
+                  if (context.mounted) {
+                    ref
+                      ..invalidate(ContactProviders.fetchContacts)
+                      ..invalidate(MarketPriceProviders.currencyMarketPrice);
+                    await ref
+                        .read(
+                          VerifiedTokensProviders.verifiedTokens.notifier,
+                        )
+                        .init();
+                  }
                 },
               )
                   .animate()
