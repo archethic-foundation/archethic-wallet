@@ -1,6 +1,7 @@
-import 'package:aewallet/domain/models/market_price_history.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,7 +10,7 @@ import 'package:material_symbols_icons/symbols.dart';
 class PriceEvolutionIndicator extends ConsumerWidget {
   const PriceEvolutionIndicator(this.chartInfos, {super.key});
 
-  final List<PriceHistoryValue>? chartInfos;
+  final List<aedappfm.PriceHistoryValue>? chartInfos;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

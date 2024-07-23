@@ -1,6 +1,5 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/domain/models/market_price_history.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/address_formatters.dart';
@@ -38,7 +37,7 @@ class TokenDetailSheet extends ConsumerWidget
   });
 
   final aedappfm.AEToken aeToken;
-  final List<PriceHistoryValue>? chartInfos;
+  final List<aedappfm.PriceHistoryValue>? chartInfos;
 
   static const String routerPage = '/tokenDetail';
 

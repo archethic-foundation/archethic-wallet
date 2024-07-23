@@ -27,7 +27,7 @@ mixin _$Settings {
   bool get activeRPCServer => throw _privateConstructorUsedError;
   int get mainScreenCurrentPage => throw _privateConstructorUsedError;
   bool get showPriceChart => throw _privateConstructorUsedError;
-  MarketPriceHistoryInterval get priceChartIntervalOption =>
+  aedappfm.MarketPriceHistoryInterval get priceChartIntervalOption =>
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -51,7 +51,7 @@ abstract class $SettingsCopyWith<$Res> {
       bool activeRPCServer,
       int mainScreenCurrentPage,
       bool showPriceChart,
-      MarketPriceHistoryInterval priceChartIntervalOption});
+      aedappfm.MarketPriceHistoryInterval priceChartIntervalOption});
 }
 
 /// @nodoc
@@ -123,7 +123,7 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
       priceChartIntervalOption: null == priceChartIntervalOption
           ? _value.priceChartIntervalOption
           : priceChartIntervalOption // ignore: cast_nullable_to_non_nullable
-              as MarketPriceHistoryInterval,
+              as aedappfm.MarketPriceHistoryInterval,
     ) as $Val);
   }
 }
@@ -147,7 +147,7 @@ abstract class _$$SettingsImplCopyWith<$Res>
       bool activeRPCServer,
       int mainScreenCurrentPage,
       bool showPriceChart,
-      MarketPriceHistoryInterval priceChartIntervalOption});
+      aedappfm.MarketPriceHistoryInterval priceChartIntervalOption});
 }
 
 /// @nodoc
@@ -217,7 +217,7 @@ class __$$SettingsImplCopyWithImpl<$Res>
       priceChartIntervalOption: null == priceChartIntervalOption
           ? _value.priceChartIntervalOption
           : priceChartIntervalOption // ignore: cast_nullable_to_non_nullable
-              as MarketPriceHistoryInterval,
+              as aedappfm.MarketPriceHistoryInterval,
     ));
   }
 }
@@ -260,7 +260,7 @@ class _$SettingsImpl extends _Settings {
   @override
   final bool showPriceChart;
   @override
-  final MarketPriceHistoryInterval priceChartIntervalOption;
+  final aedappfm.MarketPriceHistoryInterval priceChartIntervalOption;
 
   @override
   String toString() {
@@ -320,7 +320,13 @@ class _$SettingsImpl extends _Settings {
 
 abstract class _Settings extends Settings {
   const factory _Settings(
+<<<<<<< HEAD
           {required final AvailablePrimaryCurrency primaryCurrency,
+=======
+<<<<<<< HEAD
+          {required final AvailableCurrencyEnum currency,
+          required final AvailablePrimaryCurrency primaryCurrency,
+>>>>>>> 91c6ba93 (feat: :sparkles: Use fetch-api-service instead of coingecko)
           required final AvailableLanguage language,
           required final NetworksSetting network,
           required final String languageSeed,
@@ -332,6 +338,22 @@ abstract class _Settings extends Settings {
           required final bool showPriceChart,
           required final MarketPriceHistoryInterval priceChartIntervalOption}) =
       _$SettingsImpl;
+=======
+      {required final AvailableCurrencyEnum currency,
+      required final AvailablePrimaryCurrency primaryCurrency,
+      required final AvailableLanguage language,
+      required final NetworksSetting network,
+      required final String languageSeed,
+      required final bool firstLaunch,
+      required final bool showBalances,
+      required final bool activeVibrations,
+      required final bool activeRPCServer,
+      required final bool activeNotifications,
+      required final int mainScreenCurrentPage,
+      required final bool showPriceChart,
+      required final aedappfm.MarketPriceHistoryInterval
+          priceChartIntervalOption}) = _$SettingsImpl;
+>>>>>>> 9e840ffb (feat: :sparkles: Use fetch-api-service instead of coingecko)
   const _Settings._() : super._();
 
   @override
@@ -355,7 +377,7 @@ abstract class _Settings extends Settings {
   @override
   bool get showPriceChart;
   @override
-  MarketPriceHistoryInterval get priceChartIntervalOption;
+  aedappfm.MarketPriceHistoryInterval get priceChartIntervalOption;
   @override
   @JsonKey(ignore: true)
   _$$SettingsImplCopyWith<_$SettingsImpl> get copyWith =>

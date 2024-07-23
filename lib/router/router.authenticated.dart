@@ -226,8 +226,9 @@ final _authenticatedRoutes = [
       final chartInfos = chartInfosJson != null
           ? (chartInfosJson as List<dynamic>)
               .map(
-                (item) =>
-                    PriceHistoryValue.fromJson(item as Map<String, dynamic>),
+                (item) => aedappfm.PriceHistoryValue.fromJson(
+                  item as Map<String, dynamic>,
+                ),
               )
               .toList()
           : null;

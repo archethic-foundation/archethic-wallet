@@ -3,11 +3,11 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/price_history/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/domain/models/market_price_history.dart';
-import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/ui/util/chart_option_label.dart';
+import 'package:aewallet/ui/widgets/balance/components/price_evolution_indicator.dart';
 import 'package:aewallet/ui/widgets/components/history_chart.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;

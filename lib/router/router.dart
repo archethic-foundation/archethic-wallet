@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:aewallet/domain/models/market_price_history.dart';
 import 'package:aewallet/infrastructure/rpc/deeplink_server.dart';
 import 'package:aewallet/main.dart';
 import 'package:aewallet/model/available_networks.dart';

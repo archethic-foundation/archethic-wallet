@@ -206,7 +206,6 @@
     "chartOptionLabel30d": "30d",
     "chartOptionLabel60d": "60d",
     "chartOptionLabel7d": "7d",
-    "chartOptionLabelAll": "All",
     "chartOptionLabel24h": "24h",
     "estimatedFees": "Estimated fees :",
     "estimatedFeesNote": "The fees will be estimated when the recipient and the amount are specified.",

@@ -75,7 +75,7 @@ class TokensRepositoryImpl implements TokensRepository {
         name: defUCOToken?.name ?? '',
         isVerified: true,
         icon: defUCOToken?.icon,
-        coingeckoCoinId: defUCOToken?.coingeckoCoinId,
+        ucid: defUCOToken?.ucid,
         balance: archethic
             .fromBigInt(balanceMap[userGenesisAddress]!.uco)
             .toDouble(),
@@ -141,7 +141,7 @@ class TokensRepositoryImpl implements TokensRepository {
             address: token.address!.toUpperCase(),
             balance: archethic.fromBigInt(tokenBalance.amount).toDouble(),
             icon: defToken?.icon,
-            coingeckoCoinId: defToken?.coingeckoCoinId ?? '',
+            ucid: defToken?.ucid,
             supply: archethic.fromBigInt(token.supply).toDouble(),
             isLpToken: pairSymbolToken1 != null && pairSymbolToken2 != null,
             symbol: pairSymbolToken1 != null && pairSymbolToken2 != null

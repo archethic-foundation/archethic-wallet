@@ -1,8 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-import 'package:aewallet/domain/models/market_price_history.dart';
 import 'package:aewallet/util/currency_util.dart';
-// Package imports:
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:collection/collection.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -22,13 +21,13 @@ class HistoryChart extends StatelessWidget {
     required this.lineTouchEnabled,
   });
 
-  final List<PriceHistoryValue> intervals;
+  final List<aedappfm.PriceHistoryValue> intervals;
   final Gradient gradientColors;
   final Gradient gradientColorsBar;
   final Color tooltipBg;
   final TextStyle tooltipText;
   final TextStyle axisTextStyle;
-  final MarketPriceHistoryInterval optionChartSelected;
+  final aedappfm.MarketPriceHistoryInterval optionChartSelected;
   final String currency;
   final bool completeChart;
   final bool lineTouchEnabled;
@@ -81,23 +80,19 @@ class HistoryChart extends StatelessWidget {
               var title = '';
               final dt = intervals[touchedSpot.x.toInt()].time;
               switch (optionChartSelected) {
-                case MarketPriceHistoryInterval.hour:
-                case MarketPriceHistoryInterval.day:
+                case aedappfm.MarketPriceHistoryInterval.hour:
+                case aedappfm.MarketPriceHistoryInterval.day:
                   title =
                       '${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}';
                   break;
-                case MarketPriceHistoryInterval.week:
-                case MarketPriceHistoryInterval.twoWeeks:
-                case MarketPriceHistoryInterval.month:
-                case MarketPriceHistoryInterval.twoMonths:
+                case aedappfm.MarketPriceHistoryInterval.week:
+                case aedappfm.MarketPriceHistoryInterval.twoWeeks:
+                case aedappfm.MarketPriceHistoryInterval.month:
+                case aedappfm.MarketPriceHistoryInterval.twoMonths:
                   title =
                       '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
                   break;
-                case MarketPriceHistoryInterval.year:
-                case MarketPriceHistoryInterval.all:
-                  title =
-                      '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}/${dt.year}';
-                  break;
+                case aedappfm.MarketPriceHistoryInterval.year:
               }
               return LineTooltipItem(
                 '$title\n${CurrencyUtil.formatWithNumberOfDigits(touchedSpot.y, 5)}',
@@ -126,25 +121,21 @@ class HistoryChart extends StatelessWidget {
                         value < intervals.length - intervals.length ~/ 4) {
                       final dt = intervals[value.toInt()].time;
                       switch (optionChartSelected) {
-                        case MarketPriceHistoryInterval.day:
+                        case aedappfm.MarketPriceHistoryInterval.day:
                           title = '${dt.hour.toString().padLeft(2, '0')}h';
                           break;
-                        case MarketPriceHistoryInterval.hour:
+                        case aedappfm.MarketPriceHistoryInterval.hour:
                           title =
                               '${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}';
                           break;
-                        case MarketPriceHistoryInterval.week:
-                        case MarketPriceHistoryInterval.twoWeeks:
-                        case MarketPriceHistoryInterval.month:
-                        case MarketPriceHistoryInterval.twoMonths:
+                        case aedappfm.MarketPriceHistoryInterval.week:
+                        case aedappfm.MarketPriceHistoryInterval.twoWeeks:
+                        case aedappfm.MarketPriceHistoryInterval.month:
+                        case aedappfm.MarketPriceHistoryInterval.twoMonths:
                           title =
                               '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
                           break;
-                        case MarketPriceHistoryInterval.year:
-                        case MarketPriceHistoryInterval.all:
-                          title =
-                              '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}/${dt.year}';
-                          break;
+                        case aedappfm.MarketPriceHistoryInterval.year:
                       }
                     }
                     return Padding(
