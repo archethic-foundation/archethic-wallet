@@ -197,13 +197,15 @@ class TokenDetailSheet extends ConsumerWidget
         TokenDetailInfo(
           aeToken: aeToken,
         ),
-        TokenDetailChart(chartInfos: chartInfos),
+        if (chartInfos != null && chartInfos!.isNotEmpty)
+          TokenDetailChart(chartInfos: chartInfos),
         SizedBox(
           width: MediaQuery.of(context).size.width,
           height: 20,
         ),
-        TokenDetailChartInterval(chartInfos: chartInfos),
-        if (chartInfos != null)
+        if (chartInfos != null && chartInfos!.isNotEmpty)
+          TokenDetailChartInterval(chartInfos: chartInfos),
+        if (chartInfos != null && chartInfos!.isNotEmpty)
           Padding(
             padding: const EdgeInsets.only(top: 20, left: 10),
             child: BalanceInfosKpi(
