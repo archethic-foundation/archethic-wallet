@@ -1,0 +1,10 @@
+Archethic Wallet - Version 2.3.8 Build 546
+
+- Improve security & performance
+- Improve sign DApp transaction screen
+- Improve auto lock settings  
+- Add manual lock app
+- Remove blog and add medium link in the menu
+- Improve UX/UI password screens
+- Improve UX/UI import wallet
+- Fix bugs
