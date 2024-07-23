@@ -1,6 +1,5 @@
 import 'package:aewallet/application/price_history/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/domain/models/market_price_history.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/widgets/components/history_chart.dart';
@@ -15,7 +14,7 @@ class TokenDetailChart extends ConsumerWidget {
     this.chartInfos,
   });
 
-  final List<PriceHistoryValue>? chartInfos;
+  final List<aedappfm.PriceHistoryValue>? chartInfos;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

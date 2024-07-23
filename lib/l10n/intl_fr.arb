@@ -198,7 +198,6 @@
     "chartOptionLabel30d": "30j",
     "chartOptionLabel60d": "60j",
     "chartOptionLabel7d": "7j",
-    "chartOptionLabelAll": "Tout",
     "chartOptionLabel24h": "24h",
     "estimatedFees": "Frais estimés :",
     "estimatedFeesNote": "Les frais seront estimés quand le destinataire et le montant seront spécifiés.",

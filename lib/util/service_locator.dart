@@ -14,12 +14,10 @@ import 'package:aewallet/util/logger.dart';
 import 'package:aewallet/util/nfc.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show AddressService, ApiService, OracleService;
-import 'package:coingecko_api/coingecko_api.dart';
 
 Future<void> setupServiceLocator() async {
   sl
     ..registerLazySingleton<AppService>(AppService.new)
-    ..registerLazySingleton<CoinGeckoApi>(CoinGeckoApi.new)
     ..registerLazySingleton<DBHelper>(DBHelper.new)
     ..registerLazySingleton<HapticUtil>(HapticUtil.new)
     ..registerLazySingleton<BiometricUtil>(BiometricUtil.new)

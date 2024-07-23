@@ -1,11 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/price_history/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/domain/models/market_price_history.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/ui/util/chart_option_label.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:bottom_bar/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,20 +19,20 @@ class TokenDetailChartInterval extends ConsumerWidget {
     this.chartInfos,
   });
 
-  final List<PriceHistoryValue>? chartInfos;
+  final List<aedappfm.PriceHistoryValue>? chartInfos;
 
-  static const List<MarketPriceHistoryInterval> _chartIntervalOptions = [
-    MarketPriceHistoryInterval.hour,
-    MarketPriceHistoryInterval.day,
-    MarketPriceHistoryInterval.week,
-    MarketPriceHistoryInterval.twoWeeks,
-    MarketPriceHistoryInterval.month,
-    MarketPriceHistoryInterval.twoMonths,
-    MarketPriceHistoryInterval.year,
-    MarketPriceHistoryInterval.all,
+  static const List<aedappfm.MarketPriceHistoryInterval> _chartIntervalOptions =
+      [
+    aedappfm.MarketPriceHistoryInterval.hour,
+    aedappfm.MarketPriceHistoryInterval.day,
+    aedappfm.MarketPriceHistoryInterval.week,
+    aedappfm.MarketPriceHistoryInterval.twoWeeks,
+    aedappfm.MarketPriceHistoryInterval.month,
+    aedappfm.MarketPriceHistoryInterval.twoMonths,
+    aedappfm.MarketPriceHistoryInterval.year,
   ];
 
-  int _intervalOptionIndex(MarketPriceHistoryInterval interval) =>
+  int _intervalOptionIndex(aedappfm.MarketPriceHistoryInterval interval) =>
       _chartIntervalOptions.indexWhere((element) => element == interval);
 
   @override

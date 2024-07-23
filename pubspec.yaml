@@ -61,13 +61,6 @@ dependencies:
   # A fakeable wrapper for dart:core clock APIs
   clock: ^1.1.1
 
-  # Dart package that provides simple access to the CoinGecko API (Version 3)
-  #coingecko_api: ^1.1.1+1
-  coingecko_api:
-    git:
-      url: https://github.com/redDwarf03/coingecko_api.git
-      ref: master
-
   # Collections and utilities functions and classes related to collections.
   collection: ^1.18.0
 

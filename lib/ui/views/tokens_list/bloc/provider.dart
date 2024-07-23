@@ -2,7 +2,6 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/price_history/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/tokens/tokens.dart';
-import 'package:aewallet/domain/models/market_price_history.dart';
 import 'package:aewallet/ui/views/tokens_list/bloc/state.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
 import 'package:flutter/material.dart';
@@ -87,17 +86,17 @@ class TokensListFormNotifier extends AutoDisposeNotifier<TokensListFormState> {
   }
 
   Future<List<PriceHistoryValue>?> getPriceHistoryValues(
-    String? coingeckoCoinId,
+    int? ucid,
   ) async {
     List<PriceHistoryValue>? chartInfos;
 
-    if (coingeckoCoinId != null && coingeckoCoinId.isNotEmpty) {
+    if (ucid != null) {
       final settings = ref.watch(SettingsProviders.settings);
 
       chartInfos = await ref.read(
         PriceHistoryProviders.priceHistory(
           scaleOption: settings.priceChartIntervalOption,
-          coinId: coingeckoCoinId,
+          ucid: ucid,
         ).future,
       );
     }

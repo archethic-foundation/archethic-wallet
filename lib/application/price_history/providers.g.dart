@@ -6,11 +6,12 @@ part of 'providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$repositoryHash() => r'2d0970425bfa60ca8bd216a9118fb6c8502cc577';
+String _$repositoryHash() => r'9d6e088a720a2095a4061d2f27a0667df30d50c3';
 
 /// See also [_repository].
 @ProviderFor(_repository)
-final _repositoryProvider = Provider<PriceHistoryRepositoryInterface>.internal(
+final _repositoryProvider =
+    Provider<CoinPriceHistoryRepositoryInterface>.internal(
   _repository,
   name: r'_repositoryProvider',
   debugGetCreateSourceHash:
@@ -19,7 +20,7 @@ final _repositoryProvider = Provider<PriceHistoryRepositoryInterface>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef _RepositoryRef = ProviderRef<PriceHistoryRepositoryInterface>;
+typedef _RepositoryRef = ProviderRef<CoinPriceHistoryRepositoryInterface>;
 String _$intervalOptionHash() => r'1d96ed2fccef7118b031018144165de4749ec1b4';
 
 /// See also [_intervalOption].
@@ -36,10 +37,14 @@ final _intervalOptionProvider = Provider<MarketPriceHistoryInterval>.internal(
 
 typedef _IntervalOptionRef = ProviderRef<MarketPriceHistoryInterval>;
 <<<<<<< HEAD
+<<<<<<< HEAD
 String _$priceHistoryHash() => r'6b820fd2086504d30bd7cd4e5c7ceb0650fc02dd';
 =======
 String _$priceHistoryHash() => r'54c97861c17ceb12b1d1dc6432d9f5cdfb2a6748';
 >>>>>>> e4c1a772 (🚧 UI Adjustments)
+=======
+String _$priceHistoryHash() => r'1d1bd84b4617f71d3ce5ad98daf7009749689bb9';
+>>>>>>> 91c6ba93 (feat: :sparkles: Use fetch-api-service instead of coingecko)
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -74,11 +79,11 @@ class _PriceHistoryFamily extends Family<AsyncValue<List<PriceHistoryValue>>> {
   /// See also [_priceHistory].
   _PriceHistoryProvider call({
     required MarketPriceHistoryInterval scaleOption,
-    required String coinId,
+    required int ucid,
   }) {
     return _PriceHistoryProvider(
       scaleOption: scaleOption,
-      coinId: coinId,
+      ucid: ucid,
     );
   }
 
@@ -88,7 +93,7 @@ class _PriceHistoryFamily extends Family<AsyncValue<List<PriceHistoryValue>>> {
   ) {
     return call(
       scaleOption: provider.scaleOption,
-      coinId: provider.coinId,
+      ucid: provider.ucid,
     );
   }
 
@@ -112,12 +117,12 @@ class _PriceHistoryProvider extends FutureProvider<List<PriceHistoryValue>> {
   /// See also [_priceHistory].
   _PriceHistoryProvider({
     required MarketPriceHistoryInterval scaleOption,
-    required String coinId,
+    required int ucid,
   }) : this._internal(
           (ref) => _priceHistory(
             ref as _PriceHistoryRef,
             scaleOption: scaleOption,
-            coinId: coinId,
+            ucid: ucid,
           ),
           from: _priceHistoryProvider,
           name: r'_priceHistoryProvider',
@@ -129,7 +134,7 @@ class _PriceHistoryProvider extends FutureProvider<List<PriceHistoryValue>> {
           allTransitiveDependencies:
               _PriceHistoryFamily._allTransitiveDependencies,
           scaleOption: scaleOption,
-          coinId: coinId,
+          ucid: ucid,
         );
 
   _PriceHistoryProvider._internal(
@@ -140,11 +145,11 @@ class _PriceHistoryProvider extends FutureProvider<List<PriceHistoryValue>> {
     required super.debugGetCreateSourceHash,
     required super.from,
     required this.scaleOption,
-    required this.coinId,
+    required this.ucid,
   }) : super.internal();
 
   final MarketPriceHistoryInterval scaleOption;
-  final String coinId;
+  final int ucid;
 
   @override
   Override overrideWith(
@@ -161,7 +166,7 @@ class _PriceHistoryProvider extends FutureProvider<List<PriceHistoryValue>> {
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
         scaleOption: scaleOption,
-        coinId: coinId,
+        ucid: ucid,
       ),
     );
   }
@@ -175,14 +180,14 @@ class _PriceHistoryProvider extends FutureProvider<List<PriceHistoryValue>> {
   bool operator ==(Object other) {
     return other is _PriceHistoryProvider &&
         other.scaleOption == scaleOption &&
-        other.coinId == coinId;
+        other.ucid == ucid;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, scaleOption.hashCode);
-    hash = _SystemHash.combine(hash, coinId.hashCode);
+    hash = _SystemHash.combine(hash, ucid.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -192,8 +197,8 @@ mixin _PriceHistoryRef on FutureProviderRef<List<PriceHistoryValue>> {
   /// The parameter `scaleOption` of this provider.
   MarketPriceHistoryInterval get scaleOption;
 
-  /// The parameter `coinId` of this provider.
-  String get coinId;
+  /// The parameter `ucid` of this provider.
+  int get ucid;
 }
 
 class _PriceHistoryProviderElement
@@ -205,7 +210,7 @@ class _PriceHistoryProviderElement
   MarketPriceHistoryInterval get scaleOption =>
       (origin as _PriceHistoryProvider).scaleOption;
   @override
-  String get coinId => (origin as _PriceHistoryProvider).coinId;
+  int get ucid => (origin as _PriceHistoryProvider).ucid;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

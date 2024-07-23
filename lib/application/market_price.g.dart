@@ -7,7 +7,11 @@ part of 'market_price.dart';
 // **************************************************************************
 
 String _$remoteRepositoriesHash() =>
+<<<<<<< HEAD
     r'362a295c805d83fbba9037ae975c2d6fca22130d';
+=======
+    r'eeaffe7671b95883cedbbde55fc48eb3d51ab6c3';
+>>>>>>> 91c6ba93 (feat: :sparkles: Use fetch-api-service instead of coingecko)
 
 /// See also [_remoteRepositories].
 @ProviderFor(_remoteRepositories)

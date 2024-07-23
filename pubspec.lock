@@ -403,15 +403,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.10.0"
-  coingecko_api:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: master
-      resolved-ref: e14be0ce4cec7b421638dadf7ce8ca7d42b0ee33
-      url: "https://github.com/redDwarf03/coingecko_api.git"
-    source: git
-    version: "1.1.1+1"
   collection:
     dependency: "direct main"
     description:
@@ -555,6 +546,7 @@ packages:
       sha256: "282d3cf731045a2feb66abfe61bbc40870ae50a3ed10a4d3d217556c35c8c2ba"
       url: "https://pub.dev"
     source: hosted
+<<<<<<< HEAD
     version: "7.0.1"
   dio:
     dependency: transitive
@@ -571,7 +563,14 @@ packages:
       sha256: "33259a9276d6cea88774a0000cfae0d861003497755969c92faa223108620dc8"
       url: "https://pub.dev"
     source: hosted
+<<<<<<< HEAD
     version: "2.0.0"
+=======
+    version: "1.0.1"
+=======
+    version: "7.0.0"
+>>>>>>> 73c50b32 (feat: :sparkles: Use fetch-api-service instead of coingecko)
+>>>>>>> 9e840ffb (feat: :sparkles: Use fetch-api-service instead of coingecko)
   ecdsa:
     dependency: transitive
     description:
@@ -725,10 +724,24 @@ packages:
     dependency: transitive
     description:
       name: flutter_cache_manager
+<<<<<<< HEAD
       sha256: "400b6592f16a4409a7f2bb929a9a7e38c72cceb8ffb99ee57bbf2cb2cecf8386"
       url: "https://pub.dev"
     source: hosted
     version: "3.4.1"
+=======
+<<<<<<< HEAD
+      sha256: a77f77806a790eb9ba0118a5a3a936e81c4fea2b61533033b2b0c3d50bbde5ea
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.4.0"
+=======
+      sha256: ceff65d74d907b1b772e22cf04daad60fb472461638977d9fae8b00a63e01e3d
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.3.3"
+>>>>>>> 73c50b32 (feat: :sparkles: Use fetch-api-service instead of coingecko)
+>>>>>>> 9e840ffb (feat: :sparkles: Use fetch-api-service instead of coingecko)
   flutter_hooks:
     dependency: "direct main"
     description:

@@ -1,6 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/domain/models/authentication.dart';
-import 'package:aewallet/domain/models/market_price_history.dart';
 import 'package:aewallet/infrastructure/datasources/hive.extension.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/available_language.dart';
@@ -8,6 +7,8 @@ import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/model/privacy_mask_option.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 
@@ -180,17 +181,17 @@ class PreferencesHiveDatasource {
   bool getShowPriceChart() => _getValue(showPriceChart, defaultValue: true);
 
   Future<void> setPriceChartIntervalOption(
-    MarketPriceHistoryInterval scaleOption,
+    aedappfm.MarketPriceHistoryInterval scaleOption,
   ) =>
       _setValue(
         priceChartScale,
         scaleOption.index,
       );
 
-  MarketPriceHistoryInterval getPriceChartIntervalOption() =>
-      MarketPriceHistoryInterval.values[_getValue(
+  aedappfm.MarketPriceHistoryInterval getPriceChartIntervalOption() =>
+      aedappfm.MarketPriceHistoryInterval.values[_getValue(
         priceChartScale,
-        defaultValue: MarketPriceHistoryInterval.hour.index,
+        defaultValue: aedappfm.MarketPriceHistoryInterval.hour.index,
       )];
 
   bool getPrivacyMaskEnabled() => _getValue(

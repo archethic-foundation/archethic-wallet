@@ -3,7 +3,6 @@ import 'package:aewallet/domain/models/market_price.dart';
 import 'package:aewallet/domain/repositories/market/market.dart';
 import 'package:aewallet/domain/usecases/market/get_market_price.dart';
 import 'package:aewallet/infrastructure/repositories/market/archethic_oracle_uco_market.dart';
-import 'package:aewallet/infrastructure/repositories/market/coingecko_uco_market.dart';
 import 'package:aewallet/infrastructure/repositories/market/local_uco_market.dart';
 import 'package:aewallet/model/available_currency.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -18,7 +17,6 @@ List<MarketRepositoryInterface> _remoteRepositories(
 ) =>
     [
       ArchethicOracleUCOMarketRepository(),
-      CoingeckoUCOMarketRepository(),
     ];
 
 @Riverpod(keepAlive: true)

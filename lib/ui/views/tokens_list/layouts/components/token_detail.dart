@@ -1,6 +1,5 @@
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/domain/models/market_price_history.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/address_formatters.dart';
@@ -44,10 +43,10 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
           )
         : 0.0;
 
-    return FutureBuilder<List<PriceHistoryValue>?>(
+    return FutureBuilder<List<aedappfm.PriceHistoryValue>?>(
       future: ref
           .read(TokensListFormProvider.tokensListForm.notifier)
-          .getPriceHistoryValues(widget.aeToken.coingeckoCoinId),
+          .getPriceHistoryValues(widget.aeToken.ucid),
       builder: (context, snapshot) {
         return InkWell(
           onTap: () async {
@@ -188,9 +187,7 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                                 if (settings.showPriceChart &&
                                     snapshot.hasData &&
                                     widget.aeToken.isVerified &&
-                                    widget.aeToken.coingeckoCoinId != null &&
-                                    widget
-                                        .aeToken.coingeckoCoinId!.isNotEmpty &&
+                                    widget.aeToken.ucid != null &&
                                     connectivityStatusProvider ==
                                         ConnectivityStatus.isConnected)
                                   BalanceInfosKpi(
@@ -228,8 +225,7 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
               if (settings.showPriceChart &&
                   snapshot.hasData &&
                   widget.aeToken.isVerified &&
-                  widget.aeToken.coingeckoCoinId != null &&
-                  widget.aeToken.coingeckoCoinId!.isNotEmpty &&
+                  widget.aeToken.ucid != null &&
                   connectivityStatusProvider == ConnectivityStatus.isConnected)
                 Positioned(
                   child: Column(

@@ -1,7 +1,9 @@
-import 'package:aewallet/domain/models/market_price_history.dart';
+import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/primary_currency.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'settings.freezed.dart';
@@ -19,7 +21,7 @@ class Settings with _$Settings {
     required bool activeRPCServer,
     required int mainScreenCurrentPage,
     required bool showPriceChart,
-    required MarketPriceHistoryInterval priceChartIntervalOption,
+    required aedappfm.MarketPriceHistoryInterval priceChartIntervalOption,
   }) = _Settings;
 
   factory Settings.empty() => const Settings(
@@ -37,7 +39,7 @@ class Settings with _$Settings {
             AvailablePrimaryCurrency(AvailablePrimaryCurrencyEnum.native),
         showBalances: true,
         showPriceChart: true,
-        priceChartIntervalOption: MarketPriceHistoryInterval.hour,
+        priceChartIntervalOption: aedappfm.MarketPriceHistoryInterval.hour,
       );
 
   const Settings._();
