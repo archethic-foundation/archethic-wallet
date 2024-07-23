@@ -90,7 +90,7 @@ class _SetPasswordState extends ConsumerState<SetPassword>
           localizations.confirm,
           Dimens.buttonTopDimens,
           key: const Key('confirm'),
-          onPressed: _validateRequest,
+          onPressed: validate,
           disabled: isProcessing,
         ),
       ],
@@ -348,7 +348,7 @@ class _SetPasswordState extends ConsumerState<SetPassword>
                                     autocorrect: false,
                                     controller: pwdConfirmController,
                                     obscureText: !setPasswordVisible!,
-                                    onSubmitted: (_) => _validateRequest(),
+                                    onSubmitted: (_) => validate(),
                                     onChanged: (text) async {
                                       if (passwordError != null) {
                                         setState(() {
@@ -434,7 +434,7 @@ class _SetPasswordState extends ConsumerState<SetPassword>
     );
   }
 
-  Future<void> _validateRequest() async {
+  Future<void> validate() async {
     final localizations = AppLocalizations.of(context)!;
 
     if (isProcessing) return;
