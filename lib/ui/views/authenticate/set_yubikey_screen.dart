@@ -33,22 +33,29 @@ class SetYubikey extends ConsumerStatefulWidget {
 
 class _SetYubikeyState extends ConsumerState<SetYubikey>
     implements SheetSkeletonInterface {
-  FocusNode? _clientIDFocusNode;
-  TextEditingController? _clientIDController;
-  FocusNode? _clientAPIKeyFocusNode;
-  TextEditingController? _clientAPIKeyController;
-  bool? animationOpen;
-  String _clientIDValidationText = '';
-  String _clientAPIKeyValidationText = '';
+  late FocusNode clientIDFocusNode;
+  late TextEditingController clientIDController;
+  late FocusNode clientAPIKeyFocusNode;
+  late TextEditingController clientAPIKeyController;
+  String clientIDValidationText = '';
+  String clientAPIKeyValidationText = '';
 
   @override
   void initState() {
     super.initState();
-    _clientAPIKeyFocusNode = FocusNode();
-    _clientIDFocusNode = FocusNode();
-    _clientAPIKeyController = TextEditingController();
-    _clientIDController = TextEditingController();
-    animationOpen = false;
+    clientAPIKeyFocusNode = FocusNode();
+    clientIDFocusNode = FocusNode();
+    clientAPIKeyController = TextEditingController();
+    clientIDController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    clientAPIKeyFocusNode.dispose();
+    clientIDFocusNode.dispose();
+    clientAPIKeyController.dispose();
+    clientIDController.dispose();
+    super.dispose();
   }
 
   @override
@@ -70,9 +77,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey>
           localizations.confirm,
           Dimens.buttonTopDimens,
           key: const Key('confirm'),
-          onPressed: () async {
-            await validate();
-          },
+          onPressed: validate,
         ),
       ],
     );
@@ -136,7 +141,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey>
           alignment: AlignmentDirectional.center,
           margin: const EdgeInsets.only(top: 3),
           child: Text(
-            _clientIDValidationText,
+            clientIDValidationText,
             style: ArchethicThemeStyles.textStyleSize14W600Primary,
           ),
         ),
@@ -151,7 +156,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey>
           alignment: AlignmentDirectional.center,
           margin: const EdgeInsets.only(top: 3),
           child: Text(
-            _clientAPIKeyValidationText,
+            clientAPIKeyValidationText,
             style: ArchethicThemeStyles.textStyleSize14W600Primary,
           ),
         ),
@@ -203,14 +208,14 @@ class _SetYubikeyState extends ConsumerState<SetYubikey>
                               fontSize: 14,
                             ),
                             autocorrect: false,
-                            controller: _clientIDController,
+                            controller: clientIDController,
                             textInputAction: TextInputAction.next,
                             onChanged: (value) async {
                               setState(() {
-                                _clientIDValidationText = '';
+                                clientIDValidationText = '';
                               });
                             },
-                            focusNode: _clientIDFocusNode,
+                            focusNode: clientIDFocusNode,
                             keyboardType: TextInputType.text,
                             inputFormatters: <TextInputFormatter>[
                               LengthLimitingTextInputFormatter(10),
@@ -277,15 +282,15 @@ class _SetYubikeyState extends ConsumerState<SetYubikey>
                               fontSize: 14,
                             ),
                             autocorrect: false,
-                            controller: _clientAPIKeyController,
+                            controller: clientAPIKeyController,
                             textInputAction: TextInputAction.done,
                             autofocus: true,
                             onChanged: (value) async {
                               setState(() {
-                                _clientAPIKeyValidationText = '';
+                                clientAPIKeyValidationText = '';
                               });
                             },
-                            focusNode: _clientAPIKeyFocusNode,
+                            focusNode: clientAPIKeyFocusNode,
                             keyboardType: TextInputType.text,
                             inputFormatters: <TextInputFormatter>[
                               LengthLimitingTextInputFormatter(40),
@@ -312,12 +317,12 @@ class _SetYubikeyState extends ConsumerState<SetYubikey>
   }
 
   Future<void> validate() async {
-    final clientId = _clientIDController!.text;
-    final clientApiKey = _clientAPIKeyController!.text;
+    final clientId = clientIDController.text;
+    final clientApiKey = clientAPIKeyController.text;
 
     if (clientId.isEmpty) {
       setState(() {
-        _clientIDValidationText =
+        clientIDValidationText =
             AppLocalizations.of(context)!.enterYubikeyClientIDEmpty;
       });
       return;
@@ -325,7 +330,7 @@ class _SetYubikeyState extends ConsumerState<SetYubikey>
 
     if (clientApiKey.isEmpty) {
       setState(() {
-        _clientAPIKeyValidationText =
+        clientAPIKeyValidationText =
             AppLocalizations.of(context)!.enterYubikeyAPIKeyEmpty;
       });
       return;
