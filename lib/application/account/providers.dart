@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/nft/nft.dart';
+import 'package:aewallet/application/refresh_in_progress.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/domain/repositories/account.dart';
 import 'package:aewallet/infrastructure/repositories/local_account.dart';

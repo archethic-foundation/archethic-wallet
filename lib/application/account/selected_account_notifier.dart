@@ -36,8 +36,10 @@ class _SelectedAccountNotifier extends AutoDisposeAsyncNotifier<Account?> {
     final accountNotifier = ref.read(
       AccountProviders.account(accountName).notifier,
     );
-
-    return doRefresh(accountNotifier);
+    ref.read(refreshInProgressProviders.notifier).setRefreshInProgress(true);
+    await doRefresh(accountNotifier);
+    ref.read(refreshInProgressProviders.notifier).setRefreshInProgress(false);
+    return;
   }
 
   Future<void> refreshRecentTransactions() => _refresh(
