@@ -193,11 +193,6 @@ class _SetPasswordState extends ConsumerState<SetPassword>
                                         focusNode: pwdFocusNode,
                                         textInputAction: TextInputAction.next,
                                         keyboardType: TextInputType.text,
-                                        inputFormatters: <TextInputFormatter>[
-                                          LengthLimitingTextInputFormatter(
-                                            20,
-                                          ),
-                                        ],
                                         decoration: const InputDecoration(
                                           border: InputBorder.none,
                                           contentPadding:
@@ -373,11 +368,6 @@ class _SetPasswordState extends ConsumerState<SetPassword>
                                     focusNode: pwdConfirmFocusNode,
                                     textInputAction: TextInputAction.next,
                                     keyboardType: TextInputType.text,
-                                    inputFormatters: <TextInputFormatter>[
-                                      LengthLimitingTextInputFormatter(
-                                        20,
-                                      ),
-                                    ],
                                     decoration: const InputDecoration(
                                       border: InputBorder.none,
                                       contentPadding: EdgeInsets.only(left: 10),
