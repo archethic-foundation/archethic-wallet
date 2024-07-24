@@ -235,11 +235,6 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
                                 focusNode: enterPasswordFocusNode,
                                 textInputAction: TextInputAction.next,
                                 keyboardType: TextInputType.text,
-                                inputFormatters: <TextInputFormatter>[
-                                  LengthLimitingTextInputFormatter(
-                                    20,
-                                  ),
-                                ],
                                 decoration: const InputDecoration(
                                   border: InputBorder.none,
                                   contentPadding: EdgeInsets.only(left: 10),
