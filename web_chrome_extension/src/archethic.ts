@@ -30,9 +30,9 @@ class AWCWebBrowserExtensionStreamChannel implements AWCStreamChannel<string> {
         console.log(`[AWC] Connecting to popup extension ...`)
         this._port = chrome.runtime.connect(this.extensionId)
         this._port.onDisconnect.addListener(() => {
-            this._port = null
             this._connectionClosed()
         })
+
         this._port.onMessage.addListener((message: string, _) => {
             if (message === 'connected') {
                 this._connectionReady()
@@ -41,10 +41,11 @@ class AWCWebBrowserExtensionStreamChannel implements AWCStreamChannel<string> {
             }
             console.log(`[AWC] Received message ${message}`)
             if (this.onReceive !== null) this.onReceive(message)
-        })
+        });
     }
 
     _connectionClosed() {
+        this._port = null
         console.log(`[AWC] Connection closed`)
         this._state = AWCStreamChannelState.CLOSED
         if (this.onClose !== null) this.onClose('')

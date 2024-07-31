@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@archethicjs/sdk": "^1.21.0",
+    "@archethicjs/sdk": "file:/Users/charly/Documents/TheTribe/archethic/libjs",
     "@types/chrome": "^0.0.265",
     "copy-webpack-plugin": "^12.0.2",
     "ts-loader": "^9.5.1",
