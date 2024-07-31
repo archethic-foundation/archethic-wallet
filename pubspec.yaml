@@ -20,7 +20,7 @@ dependencies:
       url: https://github.com/redDwarf03/app_version_update.git
       ref: main
 
-  archethic_dapp_framework_flutter: ^1.2.8
+  archethic_dapp_framework_flutter: ^1.2.10
   #archethic_dapp_framework_flutter:
   #  git:
   #    url: https://github.com/archethic-foundation/archethic-dapp-framework-flutter.git
@@ -47,7 +47,7 @@ dependencies:
   # path: ../messaging_dart_sdk
 
   # RPC datastructures.
-  archethic_wallet_client: ^2.0.5
+  archethic_wallet_client: ^2.0.7
   #archethic_wallet_client:
   #  git:
   #    url: https://github.com/archethic-foundation/archethic-wallet-client-dart.git
