@@ -18,6 +18,7 @@ class AWCWebBrowserExtensionStreamChannel implements AWCStreamChannel<string> {
     async connect(): Promise<void> {
         if (this._port !== null) {
             console.log(`[AWC] Popup extension already running`)
+            this._connectionReady() // In case DApp creates a new client, it will seamlessly reuse the same streamchannel.
             return
         }
 
