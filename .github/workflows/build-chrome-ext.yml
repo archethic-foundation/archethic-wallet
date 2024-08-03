@@ -7,6 +7,7 @@ on:
 
 jobs:
   build-chrome-extension:
+    if: contains(github.event.release.tag_name, 'chrome') || (!contains(github.event.release.tag_name, 'linux') && !contains(github.event.release.tag_name, 'windows') && !contains(github.event.release.tag_name, 'chrome'))
     runs-on: ubuntu-latest
 
     steps:
@@ -31,9 +32,6 @@ jobs:
       - name: Build Chrome Extension
         run: bash ./scripts/build_chrome_extension.sh
 
-      - name: List build directory contents
-        run: ls -R build
-
       - name: Get Version from pubspec.yaml
         id: get_version
         run: |
@@ -41,18 +39,34 @@ jobs:
           echo "version_app=${version_str}" >> $GITHUB_OUTPUT
           echo "env_version_app=${version_str}" >> $GITHUB_ENV
 
+      - name: List build directory contents for debugging
+        run: ls -R build
+
+      - name: Check build directory exists
+        run: |
+          echo "Current working directory: $(pwd)"
+          echo "Contents of current directory:"
+          ls -la
+          if [ ! -d "build/chrome-extension" ]; then
+            echo "Error: build/chrome-extension directory does not exist."
+            find . -type d -name "chrome-extension"
+            exit 1
+          else
+            echo "build/chrome-extension directory exists."
+            ls build/chrome-extension
+          fi
+
+      - name: Install 7z
+        run: sudo apt-get install -y p7zip-full
+
       - name: Zip build folder
         run: |
-          if [ -d build/chrome-extension ]; then
-            cd build/chrome-extension
-            zip -r ../../chrome-extension-${{ steps.get_version.outputs.version_app }}.zip ./
-          else
-            echo "Directory build/chrome-extension does not exist"
-            exit 1
-          fi
+          echo "Creating zip file..."
+          (cd chrome-extension; 7z a -tzip ../../chrome-extension-build-${{ steps.get_version.outputs.version_app }}.zip ./)
+        working-directory: build
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: chrome-extension-build-${{ steps.get_version.outputs.version_app }}
-          path: chrome-extension-${{ steps.get_version.outputs.version_app }}.zip
+          path: chrome-extension-build-${{ steps.get_version.outputs.version_app }}.zip
