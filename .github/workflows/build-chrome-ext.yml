@@ -1,0 +1,51 @@
+name: Build and Package Chrome Extension app
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  build-chrome-extension:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '21.2'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          flutter-version: '3.22.3'
+      - run: flutter --version
+
+      - name: Install Flutter dependencies
+        run: flutter pub get
+
+      - name: Build Chrome Extension
+        run: bash ./scripts/build_chrome_extension.sh
+
+      - name: Get Version from pubspec.yaml
+        id: get_version
+        run: |
+          version_str=$(grep -oP '(?<=^version: ).*' pubspec.yaml | awk '{$1=$1};1')
+          echo "version_app=${version_str}" >> $GITHUB_OUTPUT
+          echo "env_version_app=${version_str}" >> $GITHUB_ENV
+
+      - name: Zip build folder
+        run: |
+          cd build/chrome-extension
+          zip -r ../chrome-extension-${{ steps.get_version.outputs.version_app }}.zip ./
+        working-directory: build/chrome-extension
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: chrome-extension-build-${{ steps.get_version.outputs.version_app }}
+          path: build/chrome-extension-${{ steps.get_version.outputs.version_app }}.zip

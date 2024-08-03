@@ -1,0 +1,65 @@
+name: Build and Package Windows app
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          flutter-version: '3.22.3'
+      - run: flutter --version
+
+      - name: Setup dependencies
+        run: |
+          flutter doctor
+          choco install cmake ninja python3
+          choco install -y visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64"
+
+      - name: Build Flutter Application
+        run: flutter build windows --release
+
+      - name: Publish to store
+        run: flutter pub run msix:create --store
+
+      - name: Copy MSIX file to /artifacts
+        run: |
+          mkdir artifacts
+          cp build/windows/x64/runner/Release/aewallet.msix artifacts/
+
+      - name: Get Version from pubspec.yaml
+        id: get_version
+        run: |
+          $version_str=$(gc .\pubspec.yaml | select-string '(?<=^version: ).*' -AllMatches | Select-Object -Expand Matches | %{$_.Value})
+          echo "version_app=${version_str}" >> $Env:GITHUB_OUTPUT
+
+      - name: Archive Artifact
+        run: |
+          mv build/windows/x64/runner/Release/ archethic-wallet
+          Compress-Archive -Path archethic-wallet -DestinationPath "artifacts/archethic-wallet-${{ steps.get_version.outputs.version_app }}.zip"
+
+      - name: Checksum
+        run: |
+          sha256sum artifacts/archethic-wallet-${{ steps.get_version.outputs.version_app }}.zip
+
+      - name: Upload Artifact MSIX
+        uses: actions/upload-artifact@v4
+        with:
+          name: aewallet
+          path: artifacts/aewallet.msix
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: archethic-wallet-windows-${{ steps.get_version.outputs.version_app }}
+          path: artifacts/archethic-wallet-${{ steps.get_version.outputs.version_app }}.zip
