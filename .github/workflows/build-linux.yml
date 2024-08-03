@@ -1,0 +1,60 @@
+name: Build and Package Linux app
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          flutter-version: '3.22.3'
+      - run: flutter --version
+
+      - name: Setup Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libsecret-1-dev libjsoncpp-dev fuse libgtk-3-0 python3-pip libgtkmm-3.0-1v5 libnotify4 gstreamer1.0-tools
+
+      - name: Build Flutter Application
+        run: flutter build linux --release
+
+      - name: Get Version from pubspec.yaml
+        id: get_version
+        run: |
+          version_str=$(grep -oP '(?<=^version: ).*' pubspec.yaml | awk '{$1=$1};1')
+          echo "version_app=${version_str}" >> $GITHUB_OUTPUT
+          echo "env_version_app=${version_str}" >> $GITHUB_ENV
+
+      - name: Install appimage-builder
+        run: |
+          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage -O /usr/local/bin/appimagetool
+          chmod +x /usr/local/bin/appimagetool
+          sudo pip3 install appimage-builder
+      
+      - name: Generate AppImage
+        run: |
+          appimage-builder --recipe AppImageBuilder.yml --skip-test
+
+      - name: Check files
+        run: |
+          ls -R
+
+      - name: Checksum
+        run: |
+          sha256sum archethic_wallet-${{ steps.get_version.outputs.version_app }}-x86_64.AppImage
+
+      - name: Upload AppImage Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: archethic-wallet-${{ steps.get_version.outputs.version_app }}-appimage
+          path: archethic_wallet-${{ steps.get_version.outputs.version_app }}-x86_64.AppImage
