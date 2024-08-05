@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-chrome-extension:
-    if: contains(github.event.release.tag_name, 'chrome') || (!contains(github.event.release.tag_name, 'linux') && !contains(github.event.release.tag_name, 'windows'))
+    if: contains(github.event.release.tag_name, 'chrome') || (!contains(github.event.release.tag_name, 'linux') && !contains(github.event.release.tag_name, 'windows') && !contains(github.event.release.tag_name, 'chrome'))
     runs-on: ubuntu-latest
 
     steps:
@@ -62,15 +62,15 @@ jobs:
       - name: Zip build folder
         run: |
           echo "Creating zip file..."
-          (cd chrome-extension; 7z a -tzip ../../chrome-extension-build-${{ steps.get_version.outputs.version_app }}.zip ./)
+          (cd chrome-extension; 7z a -tzip ../../archethic-wallet-chrome-extension-${{ steps.get_version.outputs.version_app }}.zip ./)
         working-directory: build
 
-      - name: Upload artifact
+      - name: Upload artifact to action
         uses: actions/upload-artifact@v4
         with:
-          name: chrome-extension-build-${{ steps.get_version.outputs.version_app }}
-          path: chrome-extension-build-${{ steps.get_version.outputs.version_app }}.zip
-      - name: Release
+          name: archethic-wallet-chrome-extension-${{ steps.get_version.outputs.version_app }}
+          path: archethic-wallet-chrome-extension-${{ steps.get_version.outputs.version_app }}.zip
+      - name: Upload artifact to release
         uses: softprops/action-gh-release@v2
         with:
-          files: chrome-extension-build-${{ steps.get_version.outputs.version_app }}.zip
+          files: archethic-wallet-chrome-extension-${{ steps.get_version.outputs.version_app }}.zip
