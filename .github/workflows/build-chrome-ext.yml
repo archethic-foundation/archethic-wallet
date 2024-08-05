@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-chrome-extension:
-    if: contains(github.event.release.tag_name, 'chrome') || (!contains(github.event.release.tag_name, 'linux') && !contains(github.event.release.tag_name, 'windows') && !contains(github.event.release.tag_name, 'chrome'))
+    if: contains(github.event.release.tag_name, 'chrome') || (!contains(github.event.release.tag_name, 'linux') && !contains(github.event.release.tag_name, 'windows'))
     runs-on: ubuntu-latest
 
     steps:
@@ -17,13 +17,13 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '21.2'
+          node-version: "21.2"
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-          flutter-version: '3.22.3'
+          flutter-version: "3.22.3"
       - run: flutter --version
 
       - name: Install Flutter dependencies
@@ -70,3 +70,7 @@ jobs:
         with:
           name: chrome-extension-build-${{ steps.get_version.outputs.version_app }}
           path: chrome-extension-build-${{ steps.get_version.outputs.version_app }}.zip
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: chrome-extension-build-${{ steps.get_version.outputs.version_app }}.zip
