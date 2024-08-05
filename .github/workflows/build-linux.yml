@@ -45,6 +45,7 @@ jobs:
       - name: Generate AppImage
         run: |
           appimage-builder --recipe AppImageBuilder.yml --skip-test
+          mv archethic_wallet-${{ steps.get_version.outputs.version_app }}-x86_64.AppImage archethic-wallet-linux-${{ steps.get_version.outputs.version_app }}-x86_64.AppImage
 
       - name: Check files
         run: |
@@ -52,14 +53,14 @@ jobs:
 
       - name: Checksum
         run: |
-          sha256sum archethic_wallet-${{ steps.get_version.outputs.version_app }}-x86_64.AppImage
+          sha256sum archethic-wallet-linux-${{ steps.get_version.outputs.version_app }}-x86_64.AppImage
 
-      - name: Upload AppImage Artifact
+      - name: Upload artifact to action
         uses: actions/upload-artifact@v4
         with:
-          name: archethic-wallet-${{ steps.get_version.outputs.version_app }}-appimage
-          path: archethic_wallet-${{ steps.get_version.outputs.version_app }}-x86_64.AppImage
-      - name: Release
+          name: archethic-wallet-linux-${{ steps.get_version.outputs.version_app }}-appimage
+          path: archethic-wallet-linux-${{ steps.get_version.outputs.version_app }}-x86_64.AppImage
+      - name: Upload artifact to release
         uses: softprops/action-gh-release@v2
         with:
-          files: archethic_wallet-${{ steps.get_version.outputs.version_app }}-x86_64.AppImage
+          files: archethic-wallet-linux-${{ steps.get_version.outputs.version_app }}-x86_64.AppImage

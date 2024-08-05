@@ -6,7 +6,7 @@ script:
   - mkdir -p AppDir/usr/share/icons/
 AppDir:
   after_bundle:
-    - cp build/linux/x64/release/bundle/archethic_wallet AppDir
+    - cp build/linux/x64/release/bundle/archethic_wallet AppDir # TODO(Reddwarf03) : Not sure this is useful
     - cp -r build/linux/x64/release/bundle/lib/. AppDir/lib
     - cp -r build/linux/x64/release/bundle/data AppDir
     - cp linux/archethic_wallet_appimage_icon.png AppDir/usr/share/icons/
