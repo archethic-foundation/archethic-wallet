@@ -18,7 +18,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-          flutter-version: '3.22.3'
+          flutter-version: "3.22.3"
       - run: flutter --version
 
       - name: Setup dependencies
@@ -64,3 +64,7 @@ jobs:
         with:
           name: archethic-wallet-windows-${{ steps.get_version.outputs.version_app }}
           path: artifacts/archethic-wallet-${{ steps.get_version.outputs.version_app }}.zip
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/archethic-wallet-${{ steps.get_version.outputs.version_app }}.zip
