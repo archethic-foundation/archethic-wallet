@@ -12,7 +12,7 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/sign_transactions/bloc/provider.dart';
-import 'package:aewallet/ui/views/rpc_command_receiver/sign_transactions/layouts/transaction_raw.dart';
+import 'package:aewallet/ui/views/rpc_command_receiver/util/transaction_raw.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
@@ -255,7 +255,7 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
                     return TransactionRaw(
                       index,
                       addresses[index],
-                      rpcSignTransactionCommandData,
+                      rpcSignTransactionCommandData.data,
                     );
                   },
                 ),
