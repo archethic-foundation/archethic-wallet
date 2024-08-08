@@ -6,7 +6,6 @@ import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,12 +14,12 @@ class TransactionRaw extends ConsumerStatefulWidget {
   const TransactionRaw(
     this.index,
     this.address,
-    this.command, {
+    this.data, {
     super.key,
   });
 
   final int index;
-  final awc.SignTransactionRequestData command;
+  final Data data;
   final String? address;
 
   @override
@@ -36,7 +35,7 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
     final language = ref.watch(
       LanguageProviders.selectedLanguage,
     );
-    final transactionData = widget.command.data;
+    final transactionData = widget.data;
     final localizations = AppLocalizations.of(context)!;
 
     List<Widget> buildTransactionData() {
@@ -411,7 +410,7 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
 
     Widget buildJsonView() {
       final jsonData = const JsonEncoder.withIndent('  ').convert(
-        widget.command.data,
+        widget.data,
       );
       return SelectableText(
         jsonData,
