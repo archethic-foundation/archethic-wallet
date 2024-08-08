@@ -1,0 +1,3 @@
+Archethic Wallet - Version 2.3.11 Build 551
+
+- aeSwap available on Android (beta)

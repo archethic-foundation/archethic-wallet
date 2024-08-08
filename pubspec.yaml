@@ -3,7 +3,7 @@ description: Fully decentralized and cryptocurrency non-custodial hot wallet tha
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 2.3.10+550
+version: 2.3.11+551
 
 environment:
   sdk: ">=3.3.0 <4.0.0"
@@ -296,6 +296,9 @@ dependencies:
   # Yubico dart library for Dart/Flutter
   yubidart: ^2.0.0
 
+dependency_overrides:
+  webview_flutter_android: 3.16.1
+
 dev_dependencies:
   build_runner: ^2.4.5
   flutter_launcher_icons: ^0.13.1
@@ -308,7 +311,7 @@ dev_dependencies:
   # A command-line tool that create Msix installer from your flutter windows-build files.
   msix: ^3.16.7
   # Simple yet powerful Flutter-native UI testing framework eliminating limitations of flutter_test, integration_test, and flutter_driver.
-  patrol: ^3.5.2
+  #patrol: ^3.5.2
   # A code generator for Riverpod. This both simplifies the syntax empowers it, such as allowing stateful hot-reload.
   riverpod_generator: ^2.3.11
 
@@ -317,7 +320,7 @@ msix_config:
   publisher_display_name: Archethic Technologies SARL
   identity_name: ArchethicTechnologiesSARL.ArchethicWallet
   publisher: CN=9687A561-7463-4BA7-BD4D-A04574BAF854
-  msix_version: 2.310.550.0
+  msix_version: 2.311.551.0
   icons_background_color: "#000000"
   languages: en-us
   store: true
