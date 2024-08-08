@@ -32,8 +32,11 @@ class TransferFormSheet extends ConsumerWidget
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final accountSelected =
-        ref.watch(AccountProviders.selectedAccount).valueOrNull;
+    final accountSelected = ref.watch(
+      AccountProviders.accounts.select(
+        (accounts) => accounts.valueOrNull?.selectedAccount,
+      ),
+    );
     if (accountSelected == null) return const SizedBox();
 
     return SheetSkeleton(
@@ -47,8 +50,11 @@ class TransferFormSheet extends ConsumerWidget
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final transfer = ref.watch(TransferFormProvider.transferForm);
-    final accountSelected =
-        ref.watch(AccountProviders.selectedAccount).valueOrNull;
+    final accountSelected = ref.watch(
+      AccountProviders.accounts.select(
+        (accounts) => accounts.valueOrNull?.selectedAccount,
+      ),
+    );
     return Row(
       children: <Widget>[
         AppButtonTinyConnectivity(

@@ -34,8 +34,9 @@ class FungiblesTokensListWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final fungibleTokensAsyncValue = ref.watch(
-          AccountProviders.selectedAccount
-              .select((value) => value.valueOrNull?.accountTokens),
+          AccountProviders.accounts.select(
+            (value) => value.valueOrNull?.selectedAccount?.accountTokens,
+          ),
         ) ??
         [];
 

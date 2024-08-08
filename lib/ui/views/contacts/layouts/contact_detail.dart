@@ -1,5 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'dart:async';
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -200,18 +202,21 @@ class _ContactDetailBody extends ConsumerWidget {
                       contact.format,
                     ),
                     localizations.yes,
-                    () {
+                    () async {
                       ref.read(
                         ContactProviders.deleteContact(
                           contact: contact,
                         ),
                       );
 
-                      ref
-                          .read(
-                            AccountProviders.selectedAccount.notifier,
-                          )
-                          .refreshRecentTransactions();
+                      unawaited(
+                        (await ref
+                                .read(
+                                  AccountProviders.accounts.notifier,
+                                )
+                                .selectedAccountNotifier)
+                            ?.refreshRecentTransactions(),
+                      );
                       UIUtil.showSnackbar(
                         localizations.contactRemoved.replaceAll(
                           '%1',
@@ -274,7 +279,7 @@ class _ContactDetailActions extends ConsumerWidget {
     );
 
     final selectedAccount =
-        ref.read(AccountProviders.selectedAccount).valueOrNull;
+        ref.read(AccountProviders.accounts).valueOrNull?.selectedAccount;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

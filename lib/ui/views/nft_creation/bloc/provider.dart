@@ -40,7 +40,7 @@ final _nftCreationFormProvider =
   },
   dependencies: [
     _nftCreationFormProviderArgs,
-    AccountProviders.selectedAccount,
+    AccountProviders.accounts,
     NftCreationFormProvider._repository,
     SessionProviders.session,
   ],
@@ -65,9 +65,10 @@ class NftCreationFormNotifier
     final arg = ref.watch(_nftCreationFormProviderArgs)!;
     final selectedAccount = ref
         .watch(
-          AccountProviders.selectedAccount,
+          AccountProviders.accounts,
         )
-        .valueOrNull!;
+        .value!
+        .selectedAccount!;
 
     return NftCreationFormState(
       feeEstimation: const AsyncValue.data(0),
@@ -130,9 +131,11 @@ class NftCreationFormNotifier
     required BuildContext context,
     required NftCreationFormState formState,
   }) async {
-    final selectedAccount = await ref.read(
-      AccountProviders.selectedAccount.future,
-    );
+    final selectedAccount = await ref
+        .read(
+          AccountProviders.accounts.future,
+        )
+        .selectedAccount;
 
     late Transaction transaction;
 
@@ -763,9 +766,11 @@ class NftCreationFormNotifier
 
     final localizations = AppLocalizations.of(context)!;
 
-    final selectedAccount = await ref.read(
-      AccountProviders.selectedAccount.future,
-    );
+    final selectedAccount = await ref
+        .read(
+          AccountProviders.accounts.future,
+        )
+        .selectedAccount;
 
     late Transaction transaction;
 

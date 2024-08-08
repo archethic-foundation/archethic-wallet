@@ -6,7 +6,7 @@ part of 'providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$discussionHash() => r'10b881aaeeb36c4a906a3525086c81ab108a8255';
+String _$discussionHash() => r'127c3442eeb564c6a9d0eb518a47ea748066a090';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -423,7 +423,7 @@ class _AccessRecipientWithPublicKeyProviderElement
   String get pubKey => (origin as _AccessRecipientWithPublicKeyProvider).pubKey;
 }
 
-String _$remoteDiscussionHash() => r'686c3e57cdf4f6d0616c2371cda5110356bd3d13';
+String _$remoteDiscussionHash() => r'6677a2258f7fb6b9a95bda83ba0e969c99dbf095';
 
 /// See also [_remoteDiscussion].
 @ProviderFor(_remoteDiscussion)
@@ -569,7 +569,7 @@ final _sortedDiscussionsProvider =
 
 typedef _SortedDiscussionsRef = AutoDisposeFutureProviderRef<List<Discussion>>;
 String _$messageCreationFeesHash() =>
-    r'b9785f58fee1d54451c98b8642746e240132ed2e';
+    r'8ffbc45613bc999c599a5fc82768ae6735285cfd';
 
 /// See also [_messageCreationFees].
 @ProviderFor(_messageCreationFees)
@@ -717,7 +717,7 @@ class _MessageCreationFeesProviderElement
 }
 
 String _$discussionMessagesHash() =>
-    r'fd47155c1eb2c43e819918b8f1f14cbf2031dce5';
+    r'6d72cbbc2b11654d77d62833d5d6ede5f51fec80';
 
 /// See also [_discussionMessages].
 @ProviderFor(_discussionMessages)
@@ -884,7 +884,7 @@ class _DiscussionMessagesProviderElement
   int get pageSize => (origin as _DiscussionMessagesProvider).pageSize;
 }
 
-String _$discussionsHash() => r'a4c36b61d6370a8e2ba8fb15e67ae9cc8e9917fb';
+String _$discussionsHash() => r'99b52a70c2f7c4d98457bd0182dd37c7dece78df';
 
 /// See also [_Discussions].
 @ProviderFor(_Discussions)
@@ -900,7 +900,7 @@ final _discussionsProvider = AutoDisposeAsyncNotifierProvider<_Discussions,
 
 typedef _$Discussions = AutoDisposeAsyncNotifier<Iterable<Discussion>>;
 String _$messageCreationFormNotifierHash() =>
-    r'e30292b95b8600957a64596890cad5bc64d382d9';
+    r'e59f51260358c2984692698a444ec6435f444000';
 
 abstract class _$MessageCreationFormNotifier
     extends BuildlessAutoDisposeNotifier<MessageCreationFormState> {
@@ -1051,7 +1051,7 @@ class _MessageCreationFormNotifierProviderElement
 }
 
 String _$paginatedDiscussionMessagesNotifierHash() =>
-    r'08abbf2958cf3c62d9c8c75f9359f50211cae703';
+    r'6824118bad563fd647d05a5b4b3717c09f875cea';
 
 abstract class _$PaginatedDiscussionMessagesNotifier
     extends BuildlessAutoDisposeNotifier<

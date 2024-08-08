@@ -15,8 +15,11 @@ class NftCategoryMenu extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedAccount =
-        ref.watch(AccountProviders.selectedAccount).valueOrNull;
+    final selectedAccount = ref.watch(
+      AccountProviders.accounts.select(
+        (accounts) => accounts.valueOrNull?.selectedAccount,
+      ),
+    );
 
     final nftCategories = ref
         .watch(

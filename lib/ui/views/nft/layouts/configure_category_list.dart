@@ -30,9 +30,10 @@ class _ConfigureCategoryListState extends ConsumerState<ConfigureCategoryList>
   Widget build(BuildContext context) {
     final accountSelected = ref
         .watch(
-          AccountProviders.selectedAccount,
+          AccountProviders.accounts,
         )
-        .valueOrNull;
+        .valueOrNull
+        ?.selectedAccount;
 
     final listNftCategory = ref
         .watch(
@@ -79,9 +80,10 @@ class _ConfigureCategoryListState extends ConsumerState<ConfigureCategoryList>
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final accountSelected = ref
         .watch(
-          AccountProviders.selectedAccount,
+          AccountProviders.accounts,
         )
-        .valueOrNull;
+        .valueOrNull
+        ?.selectedAccount;
 
     final listNftCategory = ref
         .watch(

@@ -43,7 +43,7 @@ class CreateDiscussionSheetState extends ConsumerState<CreateDiscussionSheet>
         ContactProviders.fetchContacts().future,
       );
       final selectedAccount =
-          await ref.read(AccountProviders.selectedAccount.future);
+          await ref.read(AccountProviders.accounts.future).selectedAccount;
 
       if (contactsList.isNotEmpty) {
         for (final contact in contactsList) {

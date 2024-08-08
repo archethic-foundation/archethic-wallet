@@ -108,7 +108,10 @@ class NFTTabBody extends ConsumerWidget implements SheetSkeletonInterface {
           return;
         }
 
-        await ref.read(AccountProviders.selectedAccount.notifier).refreshNFTs();
+        await (await ref
+                .read(AccountProviders.accounts.notifier)
+                .selectedAccountNotifier)
+            ?.refreshNFTs();
       }),
       child: Column(
         children: [

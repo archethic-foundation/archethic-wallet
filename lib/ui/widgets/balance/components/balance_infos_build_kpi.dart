@@ -33,8 +33,8 @@ class BalanceInfosKpi extends ConsumerWidget {
       SettingsProviders.settings.select((settings) => settings.currency),
     );
     final accountSelectedBalance = ref.watch(
-      AccountProviders.selectedAccount.select(
-        (value) => value.valueOrNull?.balance,
+      AccountProviders.accounts.select(
+        (value) => value.valueOrNull?.selectedAccount?.balance,
       ),
     );
     if (accountSelectedBalance == null || currencyMarketPrice == null) {

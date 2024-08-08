@@ -120,8 +120,11 @@ class SendTransactionConfirmationForm extends ConsumerWidget
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final accountSelected =
-        ref.watch(AccountProviders.selectedAccount).valueOrNull;
+    final accountSelected = ref.watch(
+      AccountProviders.accounts.select(
+        (accounts) => accounts.valueOrNull?.selectedAccount,
+      ),
+    );
 
     final formState = ref.watch(
       SignTransactionConfirmationProviders.form(command),

@@ -9,7 +9,8 @@ class ProvidersLogger extends ProviderObserver {
     ProviderContainer container,
   ) {
     if (provider.name != null) {
-      Logger(provider.name!).info('didAddProvider($value)');
+      Logger('${provider.name!}${provider.argument != null ? ':${provider.argument}' : ''}')
+          .info('didAddProvider($value)');
     }
   }
 

@@ -44,9 +44,10 @@ class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
     final transfer = ref.watch(TransferFormProvider.transferForm);
     final accountSelected = ref
         .watch(
-          AccountProviders.selectedAccount,
+          AccountProviders.accounts,
         )
-        .valueOrNull;
+        .valueOrNull
+        ?.selectedAccount;
 
     var nftName = '';
     if (transfer.transferType == TransferType.nft) {

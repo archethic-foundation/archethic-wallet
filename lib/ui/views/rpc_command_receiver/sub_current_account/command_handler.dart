@@ -10,7 +10,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
 final accountUpdateProvider = StreamProvider.autoDispose((ref) async* {
-  final account = await ref.watch(AccountProviders.selectedAccount.future);
+  final account =
+      await ref.watch(AccountProviders.accounts.future).selectedAccount;
   yield account?.toRPC;
 });
 

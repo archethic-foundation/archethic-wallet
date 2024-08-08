@@ -44,9 +44,11 @@ class MessengerConstants {
 class _Discussions extends AutoDisposeAsyncNotifier<Iterable<Discussion>> {
   @override
   FutureOr<Iterable<Discussion>> build() async {
-    final selectedAccount = await ref.watch(
-      AccountProviders.selectedAccount.future,
-    );
+    final selectedAccount = await ref
+        .watch(
+          AccountProviders.accounts.future,
+        )
+        .selectedAccount;
     if (selectedAccount == null) throw const Failure.loggedOut();
 
     final repository = ref.watch(MessengerProviders.messengerRepository);
@@ -69,9 +71,11 @@ class _Discussions extends AutoDisposeAsyncNotifier<Iterable<Discussion>> {
     final discussions = state.valueOrNull;
     if (discussions == null) throw const Failure.other();
 
-    final selectedAccount = await ref.read(
-      AccountProviders.selectedAccount.future,
-    );
+    final selectedAccount = await ref
+        .read(
+          AccountProviders.accounts.future,
+        )
+        .selectedAccount;
     if (selectedAccount == null) throw const Failure.loggedOut();
 
     final createdDiscussion = await ref
@@ -90,9 +94,11 @@ class _Discussions extends AutoDisposeAsyncNotifier<Iterable<Discussion>> {
     final discussions = state.valueOrNull;
     if (discussions == null) throw const Failure.other();
 
-    final selectedAccount = await ref.read(
-      AccountProviders.selectedAccount.future,
-    );
+    final selectedAccount = await ref
+        .read(
+          AccountProviders.accounts.future,
+        )
+        .selectedAccount;
     if (selectedAccount == null) throw const Failure.loggedOut();
 
     await ref
@@ -109,9 +115,11 @@ class _Discussions extends AutoDisposeAsyncNotifier<Iterable<Discussion>> {
 
 @riverpod
 Future<Discussion> _discussion(_DiscussionRef ref, String address) async {
-  final selectedAccount = await ref.watch(
-    AccountProviders.selectedAccount.future,
-  );
+  final selectedAccount = await ref
+      .watch(
+        AccountProviders.accounts.future,
+      )
+      .selectedAccount;
   if (selectedAccount == null) throw const Failure.loggedOut();
 
   return ref
@@ -176,9 +184,11 @@ Future<Discussion> _remoteDiscussion(
   _RemoteDiscussionRef ref,
   String address,
 ) async {
-  final selectedAccount = await ref.watch(
-    AccountProviders.selectedAccount.future,
-  );
+  final selectedAccount = await ref
+      .watch(
+        AccountProviders.accounts.future,
+      )
+      .selectedAccount;
   if (selectedAccount == null) throw const Failure.loggedOut();
 
   final session = ref.read(SessionProviders.session).loggedIn;

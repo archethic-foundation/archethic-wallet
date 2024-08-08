@@ -171,28 +171,14 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                   context.go(IntroImportSeedPage.routerPage);
                   return;
                 }
-
-                final accountSelected = await _accountsDialog(
+                await _accountsDialog(
                   newSession.wallet.appKeychain.accounts,
                 );
-
                 unawaited(
-                  ref
-                      .read(
-                        AccountProviders.account(
-                          accountSelected!.name,
-                        ).notifier,
-                      )
-                      .refreshRecentTransactions(),
-                );
-                unawaited(
-                  ref
-                      .read(
-                        AccountProviders.account(
-                          accountSelected.name,
-                        ).notifier,
-                      )
-                      .refreshNFTs(),
+                  (await ref
+                          .read(AccountProviders.accounts.notifier)
+                          .selectedAccountNotifier)
+                      ?.refreshAll(),
                 );
                 ref.read(
                   RecoveryPhraseSavedProvider.setRecoveryPhraseSaved(true),

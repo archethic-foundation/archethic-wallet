@@ -82,11 +82,11 @@ class TransferSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedAccount = ref
-        .watch(
-          AccountProviders.selectedAccount,
-        )
-        .valueOrNull;
+    final selectedAccount = ref.watch(
+      AccountProviders.accounts.select(
+        (value) => value.valueOrNull?.selectedAccount,
+      ),
+    );
 
     if (selectedAccount == null) return const SizedBox();
 

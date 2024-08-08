@@ -17,8 +17,11 @@ class TransactionDetail extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final accountSelected =
-        ref.watch(AccountProviders.selectedAccount).valueOrNull;
+    final accountSelected = ref.watch(
+      AccountProviders.accounts.select(
+        (accounts) => accounts.valueOrNull?.selectedAccount,
+      ),
+    );
 
     final selectedCurrencyMarketPrice =
         ref.watch(MarketPriceProviders.selectedCurrencyMarketPrice).valueOrNull;

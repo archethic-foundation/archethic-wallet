@@ -2,7 +2,6 @@
 
 import 'dart:async';
 
-import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/nft/nft.dart';
 import 'package:aewallet/application/refresh_in_progress.dart';
 import 'package:aewallet/application/session/session.dart';
@@ -18,7 +17,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'account_notifier.dart';
 part 'accounts_notifier.dart';
 part 'providers.g.dart';
-part 'selected_account_notifier.dart';
 
 @riverpod
 AccountRepository _accountRepository(_AccountRepositoryRef ref) =>
@@ -109,18 +107,19 @@ class AccountRepository {
 abstract class AccountProviders {
   static final accountsRepository = Provider<AccountLocalRepositoryInterface>(
     (ref) => AccountLocalRepository(),
+    name: '_accountsRepositoryProvider',
   );
   static final accounts = _accountsNotifierProvider;
   static final accountExists = FutureProvider.autoDispose.family<bool, String>(
     (ref, arg) async => (await ref.watch(account(arg).future)) != null,
+    name: '_accountExistsProvider',
   );
   static final account = AsyncNotifierProvider.autoDispose
       .family<_AccountNotifier, Account?, String>(
     _AccountNotifier.new,
+    name: '_accountNotifierProvider',
   );
   static final sortedAccounts = _sortedAccountsProvider;
-  static final selectedAccount = _selectedAccountNotifierProvider;
-  static final selectedAccountName = _selectedAccountNameProvider;
   static final accountRepository = _accountRepositoryProvider;
   static const getAccountNFTFiltered = _getAccountNFTFilteredProvider;
 }

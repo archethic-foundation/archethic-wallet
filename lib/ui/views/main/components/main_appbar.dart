@@ -43,9 +43,10 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
     );
     final selectedAccount = ref
         .watch(
-          AccountProviders.selectedAccount,
+          AccountProviders.accounts,
         )
-        .valueOrNull;
+        .valueOrNull
+        ?.selectedAccount;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     return AppBar(

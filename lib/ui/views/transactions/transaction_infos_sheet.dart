@@ -43,8 +43,11 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet>
     implements SheetSkeletonInterface {
   @override
   Widget build(BuildContext context) {
-    final selectedAccount =
-        ref.watch(AccountProviders.selectedAccount).valueOrNull;
+    final selectedAccount = ref.watch(
+      AccountProviders.accounts.select(
+        (accounts) => accounts.valueOrNull?.selectedAccount,
+      ),
+    );
 
     if (selectedAccount == null) return const SizedBox();
 
@@ -95,8 +98,11 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet>
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final session = ref.watch(SessionProviders.session).loggedIn!;
-    final selectedAccount =
-        ref.watch(AccountProviders.selectedAccount).valueOrNull;
+    final selectedAccount = ref.watch(
+      AccountProviders.accounts.select(
+        (accounts) => accounts.valueOrNull?.selectedAccount,
+      ),
+    );
     return FutureBuilder<List<TransactionInfos>>(
       future: sl.get<AppService>().getTransactionAllInfos(
             widget.notificationRecipientAddress,

@@ -15,7 +15,13 @@ final migration_437 = LocalDataMigration(
       return;
     }
     await ref.read(SessionProviders.session.notifier).refresh();
-    await ref.read(AccountProviders.selectedAccount.future);
-    await ref.read(AccountProviders.selectedAccount.notifier).refreshAll();
+    final selectedAccount =
+        await ref.read(AccountProviders.accounts.future).selectedAccount;
+    if (selectedAccount != null) {
+      await (await ref
+              .read(AccountProviders.accounts.notifier)
+              .selectedAccountNotifier)
+          ?.refreshAll();
+    }
   },
 );

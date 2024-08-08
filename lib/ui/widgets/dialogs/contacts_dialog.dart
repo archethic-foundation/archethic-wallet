@@ -28,9 +28,11 @@ class ContactsDialog {
 
     final pickerItemsList = List<PickerItem>.empty(growable: true);
     var contacts = await ref.read(ContactProviders.fetchContacts().future);
-    final accountSelected = await ref.read(
-      AccountProviders.selectedAccount.future,
-    );
+    final accountSelected = await ref
+        .read(
+          AccountProviders.accounts.future,
+        )
+        .selectedAccount;
 
     for (final contact in contacts) {
       if (contact.format.toUpperCase() !=

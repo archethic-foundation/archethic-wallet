@@ -14,8 +14,9 @@ class GetCurrentAccountCommandHandler extends CommandHandler {
           handle: (command) async {
             command as RPCCommand<awc.GetCurrentAccountRequest>;
 
-            final selectedAccount =
-                await ref.read(AccountProviders.selectedAccount.future);
+            final selectedAccount = await ref
+                .read(AccountProviders.accounts.future)
+                .selectedAccount;
 
             if (selectedAccount == null) {
               return const Result.failure(
