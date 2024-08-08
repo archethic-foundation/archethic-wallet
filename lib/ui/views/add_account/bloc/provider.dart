@@ -30,7 +30,7 @@ final _addAccountFormProvider =
   },
   dependencies: [
     AddAccountFormProvider.initialAddAccountForm,
-    AccountProviders.selectedAccount,
+    AccountProviders.accounts,
     AddAccountFormProvider._repository,
     AccountProviders.sortedAccounts,
     SessionProviders.session,

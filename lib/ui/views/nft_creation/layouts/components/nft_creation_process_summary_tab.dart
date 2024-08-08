@@ -17,8 +17,11 @@ class _NFTCreationProcessSummaryTabState
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
-    final accountSelected =
-        ref.watch(AccountProviders.selectedAccount).valueOrNull;
+    final accountSelected = ref.watch(
+      AccountProviders.accounts.select(
+        (accounts) => accounts.valueOrNull?.selectedAccount,
+      ),
+    );
     final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
     final nftCreationNotifier = ref.watch(
       NftCreationFormProvider.nftCreationForm.notifier,

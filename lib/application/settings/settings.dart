@@ -28,10 +28,7 @@ class SettingsNotifier extends StateNotifier<Settings> {
 
   Future<void> reset() => _update(
         state.copyWith(
-          activeNotifications: UniversalPlatform.isIOS ||
-              UniversalPlatform.isAndroid ||
-              UniversalPlatform.isLinux ||
-              UniversalPlatform.isMacOS,
+          activeNotifications: false,
           activeVibrations: true,
           activeRPCServer: true,
           currency: AvailableCurrencyEnum.usd,

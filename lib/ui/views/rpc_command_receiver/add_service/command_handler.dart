@@ -111,9 +111,10 @@ class AddServiceHandler extends CommandHandler {
                             .read(SessionProviders.session.notifier)
                             .refresh();
 
-                        await ref
-                            .read(AccountProviders.selectedAccount.notifier)
-                            .refreshRecentTransactions();
+                        await (await ref
+                                .read(AccountProviders.accounts.notifier)
+                                .selectedAccountNotifier)
+                            ?.refreshRecentTransactions();
                       }
                     });
 
@@ -133,8 +134,11 @@ class AddServiceHandler extends CommandHandler {
     required WidgetRef ref,
     required RPCCommand<awc.AddServiceRequest> command,
   }) {
-    final accountSelected =
-        ref.watch(AccountProviders.selectedAccount).valueOrNull;
+    final accountSelected = ref.watch(
+      AccountProviders.accounts.select(
+        (accounts) => accounts.valueOrNull?.selectedAccount,
+      ),
+    );
 
     final message =
         AppLocalizations.of(context)!.addServiceCommandReceivedNotification;

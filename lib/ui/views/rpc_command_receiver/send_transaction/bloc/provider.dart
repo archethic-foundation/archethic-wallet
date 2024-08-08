@@ -33,8 +33,11 @@ class SignTransactionConfirmationFormNotifier
   Future<SignTransactionConfirmationFormState> build(
     RPCCommand<SendTransactionRequest> arg,
   ) async {
-    final accountSelected =
-        ref.watch(AccountProviders.selectedAccount).valueOrNull;
+    final accountSelected = ref.watch(
+      AccountProviders.accounts.select(
+        (accounts) => accounts.valueOrNull?.selectedAccount,
+      ),
+    );
 
     final apiService = sl.get<ApiService>();
     final transactionBuilt = await SendTransactionCommand(
@@ -65,8 +68,11 @@ class SignTransactionConfirmationFormNotifier
         orElse: () => const Result.failure(TransactionError.other()),
         data: (data) {
           final useCase = ref.read(_sendTransactionUseCaseProvider);
-          final accountSelected =
-              ref.watch(AccountProviders.selectedAccount).valueOrNull;
+          final accountSelected = ref.watch(
+            AccountProviders.accounts.select(
+              (accounts) => accounts.valueOrNull?.selectedAccount,
+            ),
+          );
 
           return useCase
               .run(

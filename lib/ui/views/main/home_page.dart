@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:core';
 import 'dart:ui';
 
@@ -103,14 +104,19 @@ class _HomePageState extends ConsumerState<HomePage>
               labelColor: ArchethicTheme.text,
               indicatorColor: ArchethicTheme.text,
               labelPadding: EdgeInsets.zero,
-              onTap: (selectedIndex) {
-                ref
-                    .read(SettingsProviders.settings.notifier)
-                    .setMainScreenCurrentPage(selectedIndex);
-                if (selectedIndex == 3) {
+              onTap: (selectedIndex) async {
+                unawaited(
                   ref
-                      .read(AccountProviders.selectedAccount.notifier)
-                      .refreshNFTs();
+                      .read(SettingsProviders.settings.notifier)
+                      .setMainScreenCurrentPage(selectedIndex),
+                );
+                if (selectedIndex == 3) {
+                  unawaited(
+                    (await ref
+                            .read(AccountProviders.accounts.notifier)
+                            .selectedAccountNotifier)
+                        ?.refreshNFTs(),
+                  );
                 }
               },
               tabs: [
@@ -269,7 +275,9 @@ class _HomePageState extends ConsumerState<HomePage>
         .read(MessengerProviders.messengerRepository)
         .updateDiscussionLastMessage(
           discussionAddress: discussionGenesisAddress,
-          creator: (await ref.read(AccountProviders.selectedAccount.future))!,
+          creator: (await ref
+              .read(AccountProviders.accounts.future)
+              .selectedAccount)!,
           message: newMessage,
         );
 
@@ -422,9 +430,10 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
     final session = ref.watch(SessionProviders.session).loggedIn;
     final accountSelected = ref
         .watch(
-          AccountProviders.selectedAccount,
+          AccountProviders.accounts,
         )
-        .valueOrNull;
+        .valueOrNull
+        ?.selectedAccount;
     if (session == null) return const SizedBox();
     final preferences = ref.watch(SettingsProviders.settings);
 

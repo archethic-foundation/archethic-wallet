@@ -21,8 +21,11 @@ class AddTokenDetail extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
 
     final addToken = ref.watch(AddTokenFormProvider.addTokenForm);
-    final accountSelected =
-        ref.watch(AccountProviders.selectedAccount).valueOrNull;
+    final accountSelected = ref.watch(
+      AccountProviders.accounts.select(
+        (accounts) => accounts.valueOrNull?.selectedAccount,
+      ),
+    );
 
     return SizedBox(
       width: MediaQuery.of(context).size.width,

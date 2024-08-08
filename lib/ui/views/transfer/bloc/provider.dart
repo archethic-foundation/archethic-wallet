@@ -39,7 +39,7 @@ final _transferFormProvider =
   },
   dependencies: [
     TransferFormProvider.initialTransferForm,
-    AccountProviders.selectedAccount,
+    AccountProviders.accounts,
     TransferFormProvider._repository,
     PrimaryCurrencyProviders.selectedPrimaryCurrency,
     PrimaryCurrencyProviders.convertedValue,
@@ -352,9 +352,11 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     required BuildContext context,
     required TransferFormState formState,
   }) async {
-    final selectedAccount = await ref.read(
-      AccountProviders.selectedAccount.future,
-    );
+    final selectedAccount = await ref
+        .read(
+          AccountProviders.accounts.future,
+        )
+        .selectedAccount;
     final recipientAddress = formState.recipient.address;
     if (recipientAddress == null) return null;
 
@@ -718,9 +720,11 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
     final localizations = AppLocalizations.of(context)!;
 
-    final selectedAccount = await ref.read(
-      AccountProviders.selectedAccount.future,
-    );
+    final selectedAccount = await ref
+        .read(
+          AccountProviders.accounts.future,
+        )
+        .selectedAccount;
 
     var amountInUCO = state.amount;
     final primaryCurrency =

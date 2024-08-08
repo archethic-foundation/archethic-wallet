@@ -22,7 +22,7 @@ Future<List<NftCategory>> _selectedAccountNftCategories(
   required BuildContext context,
 }) async {
   final selectedAccount =
-      await ref.watch(AccountProviders.selectedAccount.future);
+      await ref.watch(AccountProviders.accounts.future).selectedAccount;
 
   if (selectedAccount == null) {
     return ref.watch(_nftCategoryRepositoryProvider).getListByDefault(context);

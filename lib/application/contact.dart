@@ -34,7 +34,7 @@ Future<List<Contact>> _fetchContacts(
 @riverpod
 Future<Contact?> _getSelectedContact(_GetSelectedContactRef ref) async {
   final selectedAccount =
-      await ref.watch(AccountProviders.selectedAccount.future);
+      await ref.watch(AccountProviders.accounts.future).selectedAccount;
   if (selectedAccount == null) {
     return null;
   }

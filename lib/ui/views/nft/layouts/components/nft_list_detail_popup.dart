@@ -72,13 +72,16 @@ class NFTListDetailPopup {
         final nftCategoryChoosen =
             await NftCategoryDialog.getDialog(context, ref, tokenId);
         final selectedAccount =
-            await ref.read(AccountProviders.selectedAccount.future);
+            await ref.read(AccountProviders.accounts.future).selectedAccount;
         await selectedAccount?.updateNftInfosOffChain(
           tokenAddress: address,
           categoryNftIndex: nftCategoryChoosen!.id,
         );
 
-        await ref.read(AccountProviders.selectedAccount.notifier).refreshNFTs();
+        await (await ref
+                .read(AccountProviders.accounts.notifier)
+                .selectedAccountNotifier)
+            ?.refreshNFTs();
         ref.invalidate(AccountProviders.getAccountNFTFiltered);
         UIUtil.showSnackbar(
           AppLocalizations.of(context)!.nftCategoryChangeCategoryOk,

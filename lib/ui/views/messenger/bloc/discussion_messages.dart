@@ -35,7 +35,7 @@ class _MessageCreationFormNotifier extends _$MessageCreationFormNotifier {
       if (session == null) throw const Failure.loggedOut();
 
       final selectedAccount =
-          await ref.watch(AccountProviders.selectedAccount.future);
+          await ref.watch(AccountProviders.accounts.future).selectedAccount;
       if (selectedAccount == null) throw const Failure.loggedOut();
 
       state = state.copyWith(isCreating: true);
@@ -81,7 +81,7 @@ Future<double> _messageCreationFees(
       if (session == null) throw const Failure.loggedOut();
 
       final selectedAccount =
-          await ref.watch(AccountProviders.selectedAccount.future);
+          await ref.watch(AccountProviders.accounts.future).selectedAccount;
       if (selectedAccount == null) throw const Failure.loggedOut();
 
       final repository = ref.watch(MessengerProviders.messengerRepository);
@@ -217,7 +217,9 @@ class _PaginatedDiscussionMessagesNotifier
         .read(MessengerProviders.messengerRepository)
         .updateDiscussionLastMessage(
           discussionAddress: discussionAddress,
-          creator: (await ref.read(AccountProviders.selectedAccount.future))!,
+          creator: (await ref
+              .read(AccountProviders.accounts.future)
+              .selectedAccount)!,
           message: message,
         );
     ref.invalidate(_discussionProvider(discussionAddress));
@@ -247,7 +249,8 @@ Future<List<DiscussionMessage>> _discussionMessages(
 ) async {
   final repository = ref.watch(MessengerProviders.messengerRepository);
 
-  final account = await ref.watch(AccountProviders.selectedAccount.future);
+  final account =
+      await ref.watch(AccountProviders.accounts.future).selectedAccount;
 
   final messages = await repository
       .getMessages(

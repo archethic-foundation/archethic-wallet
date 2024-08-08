@@ -53,8 +53,11 @@ class _TransferTextFieldAmountState
         ref.watch(TransferFormProvider.transferForm.notifier);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
-    final accountSelected =
-        ref.watch(AccountProviders.selectedAccount).valueOrNull;
+    final accountSelected = ref.watch(
+      AccountProviders.accounts.select(
+        (accounts) => accounts.valueOrNull?.selectedAccount,
+      ),
+    );
     final localCurrencyFormat = NumberFormat.currency(
       locale: CurrencyUtil.getLocale(settings.currency.name).toString(),
       symbol: CurrencyUtil.getCurrencySymbol(settings.currency.name),

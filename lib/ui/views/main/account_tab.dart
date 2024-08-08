@@ -41,9 +41,10 @@ class AccountTab extends ConsumerWidget {
           return;
         }
 
-        await ref
-            .read(AccountProviders.selectedAccount.notifier)
-            .refreshRecentTransactions();
+        await (await ref
+                .read(AccountProviders.accounts.notifier)
+                .selectedAccountNotifier)
+            ?.refreshRecentTransactions();
         ref
           ..invalidate(ContactProviders.fetchContacts)
           ..invalidate(MarketPriceProviders.currencyMarketPrice);

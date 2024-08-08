@@ -34,4 +34,26 @@ class _AccountsNotifier extends AutoDisposeAsyncNotifier<List<Account>> {
     }
     ref.invalidate(AccountProviders.account(account.name));
   }
+
+  Future<_AccountNotifier?> get selectedAccountNotifier async {
+    final accountName = (await future).selectedAccount?.name;
+    if (accountName == null) return null;
+
+    return ref.read(AccountProviders.account(accountName).notifier);
+  }
+}
+
+extension AccountsExt on List<Account> {
+  Account? get selectedAccount {
+    for (final account in this) {
+      if (account.selected == true) return account;
+    }
+    return null;
+  }
+}
+
+extension FuturteAccountsExt on Future<List<Account>> {
+  Future<Account?> get selectedAccount async {
+    return (await this).selectedAccount;
+  }
 }

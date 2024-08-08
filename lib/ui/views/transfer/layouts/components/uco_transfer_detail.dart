@@ -26,8 +26,11 @@ class UCOTransferDetail extends ConsumerWidget {
     final transfer = ref.watch(TransferFormProvider.transferForm);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
-    final accountSelected =
-        ref.watch(AccountProviders.selectedAccount).valueOrNull;
+    final accountSelected = ref.watch(
+      AccountProviders.accounts.select(
+        (accounts) => accounts.valueOrNull?.selectedAccount,
+      ),
+    );
 
     if (accountSelected == null) return const SizedBox();
 

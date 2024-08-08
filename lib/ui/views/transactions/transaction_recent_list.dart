@@ -18,8 +18,8 @@ class TxList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final recentTransactions = ref.watch(
-      AccountProviders.selectedAccount.select(
-        (account) => account.valueOrNull?.recentTransactions,
+      AccountProviders.accounts.select(
+        (accounts) => accounts.valueOrNull?.selectedAccount?.recentTransactions,
       ),
     );
 

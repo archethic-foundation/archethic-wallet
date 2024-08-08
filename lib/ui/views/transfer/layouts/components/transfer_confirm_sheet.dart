@@ -113,9 +113,11 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet>
           ],
         );
 
-        final selectedAccount = await ref.read(
-          AccountProviders.selectedAccount.future,
-        );
+        final selectedAccount = await ref
+            .read(
+              AccountProviders.accounts.future,
+            )
+            .selectedAccount;
 
         await selectedAccount!.removeftInfosOffChain(
           tokenMap[transaction.data!.ledger!.token!.transfers[0].tokenAddress!]!
@@ -123,20 +125,25 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet>
         ); // TODO(reddwarf03): we should not interact directly with data source. Use Providers instead. (3)
 
         unawaited(
-          ref.read(AccountProviders.selectedAccount.notifier).refreshNFTs(),
+          (await ref
+                  .read(AccountProviders.accounts.notifier)
+                  .selectedAccountNotifier)
+              ?.refreshNFTs(),
         );
       }
 
       unawaited(
-        ref
-            .read(AccountProviders.selectedAccount.notifier)
-            .refreshRecentTransactions(),
+        (await ref
+                .read(AccountProviders.accounts.notifier)
+                .selectedAccountNotifier)
+            ?.refreshRecentTransactions(),
       );
       if (transfer.transferType == TransferType.token) {
         unawaited(
-          ref
-              .read(AccountProviders.selectedAccount.notifier)
-              .refreshFungibleTokens(),
+          (await ref
+                  .read(AccountProviders.accounts.notifier)
+                  .selectedAccountNotifier)
+              ?.refreshFungibleTokens(),
         );
       }
     } finally {

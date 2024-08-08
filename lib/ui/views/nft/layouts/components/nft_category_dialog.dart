@@ -24,7 +24,7 @@ class NftCategoryDialog {
       ).future,
     );
     final selectedAccount =
-        ref.watch(AccountProviders.selectedAccount).valueOrNull!;
+        ref.watch(AccountProviders.accounts).valueOrNull!.selectedAccount!;
     final nftInfosOffChain = selectedAccount.getftInfosOffChain(
       // TODO(redDwarf03): we should not interact directly with Hive DTOs. Use providers instead. -> which provider / Link to NFT ? (3)
       tokenId,

@@ -34,9 +34,10 @@ class NFTListPerCategory extends ConsumerWidget
   Widget build(BuildContext context, WidgetRef ref) {
     final accountSelected = ref
         .watch(
-          AccountProviders.selectedAccount,
+          AccountProviders.accounts,
         )
-        .valueOrNull;
+        .valueOrNull
+        ?.selectedAccount;
 
     if (accountSelected == null) return const SizedBox();
 
@@ -54,9 +55,10 @@ class NFTListPerCategory extends ConsumerWidget
     final preferences = ref.watch(SettingsProviders.settings);
     final accountSelected = ref
         .watch(
-          AccountProviders.selectedAccount,
+          AccountProviders.accounts,
         )
-        .valueOrNull;
+        .valueOrNull
+        ?.selectedAccount;
 
     return Row(
       children: <Widget>[

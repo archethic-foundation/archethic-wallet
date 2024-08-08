@@ -40,7 +40,7 @@ class AuthenticationSettings with _$AuthenticationSettings {
   static final defaultValue = AuthenticationSettings(
     authenticationMethod: AuthMethod.pin,
     pinPadShuffle: false,
-    lockTimeout: LockTimeoutOption.oneMin,
+    lockTimeout: LockTimeoutOption.disabled,
     privacyMask: UniversalPlatform.isMobile
         ? PrivacyMaskOption.enabled
         : PrivacyMaskOption.disabled,

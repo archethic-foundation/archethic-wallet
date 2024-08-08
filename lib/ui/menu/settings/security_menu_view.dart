@@ -328,9 +328,11 @@ class _SyncBlockchainSettingsListItem extends ConsumerWidget {
             );
             await cache.clear();
             await TokensListHiveDatasource.clear();
-            await ref
-                .read(AccountProviders.selectedAccount.notifier)
-                .refreshRecentTransactions();
+
+            await (await ref
+                    .read(AccountProviders.accounts.notifier)
+                    .selectedAccountNotifier)
+                ?.refreshRecentTransactions();
           },
         );
       },

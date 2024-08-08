@@ -25,7 +25,7 @@ final _nftCategoryRepositoryProvider =
 typedef _NftCategoryRepositoryRef
     = AutoDisposeProviderRef<NFTCategoryRepository>;
 String _$selectedAccountNftCategoriesHash() =>
-    r'14c939211bff7bc3c39aedd5aa134a7cac928c4f';
+    r'71ab1e0ccf708e6ec32667aeb2485021db77a9bf';
 
 /// Copied from Dart SDK
 class _SystemHash {

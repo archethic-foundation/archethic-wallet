@@ -107,9 +107,11 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
       icon: Symbols.info,
     );
     await ref.read(SessionProviders.session.notifier).refresh();
-    await ref
-        .read(AccountProviders.selectedAccount.notifier)
-        .refreshRecentTransactions();
+
+    await (await ref
+            .read(AccountProviders.accounts.notifier)
+            .selectedAccountNotifier)
+        ?.refreshRecentTransactions();
 
     if (mounted) {
       context.go(HomePage.routerPage);
@@ -163,8 +165,11 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
       );
     }
 
-    final selectedAccount =
-        ref.watch(AccountProviders.selectedAccount).valueOrNull;
+    final selectedAccount = ref.watch(
+      AccountProviders.accounts.select(
+        (accounts) => accounts.valueOrNull?.selectedAccount,
+      ),
+    );
 
     final asyncFiatAmount = ref.watch(
       MarketPriceProviders.convertedToSelectedCurrency(

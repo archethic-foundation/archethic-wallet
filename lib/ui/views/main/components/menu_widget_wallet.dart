@@ -33,9 +33,10 @@ class MenuWidgetWallet extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final accountSelected = ref
         .watch(
-          AccountProviders.selectedAccount,
+          AccountProviders.accounts,
         )
-        .valueOrNull;
+        .valueOrNull
+        ?.selectedAccount;
     final preferences = ref.watch(SettingsProviders.settings);
     final contact = ref.watch(ContactProviders.getSelectedContact).valueOrNull;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
@@ -163,9 +164,10 @@ class MenuWidgetWallet extends ConsumerWidget {
                     return;
                   }
 
-                  await ref
-                      .read(AccountProviders.selectedAccount.notifier)
-                      .refreshRecentTransactions();
+                  await (await ref
+                          .read(AccountProviders.accounts.notifier)
+                          .selectedAccountNotifier)
+                      ?.refreshRecentTransactions();
 
                   if (context.mounted) {
                     ref

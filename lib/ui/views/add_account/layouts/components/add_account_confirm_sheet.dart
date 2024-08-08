@@ -93,9 +93,10 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet>
       icon: Symbols.info,
     );
     await ref.read(SessionProviders.session.notifier).refresh();
-    await ref
-        .read(AccountProviders.selectedAccount.notifier)
-        .refreshRecentTransactions();
+    await (await ref
+            .read(AccountProviders.accounts.notifier)
+            .selectedAccountNotifier)
+        ?.refreshRecentTransactions();
 
     context.go(HomePage.routerPage);
   }

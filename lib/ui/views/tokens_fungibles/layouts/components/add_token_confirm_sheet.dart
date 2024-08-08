@@ -91,14 +91,16 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet>
     );
 
     unawaited(
-      ref
-          .read(AccountProviders.selectedAccount.notifier)
-          .refreshRecentTransactions(),
+      (await ref
+              .read(AccountProviders.accounts.notifier)
+              .selectedAccountNotifier)
+          ?.refreshRecentTransactions(),
     );
     unawaited(
-      ref
-          .read(AccountProviders.selectedAccount.notifier)
-          .refreshFungibleTokens(),
+      (await ref
+              .read(AccountProviders.accounts.notifier)
+              .selectedAccountNotifier)
+          ?.refreshFungibleTokens(),
     );
 
     context.go(HomePage.routerPage);

@@ -125,8 +125,8 @@ class _BalanceIndicatorFiat extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final accountSelectedBalance = ref.watch(
-      AccountProviders.selectedAccount
-          .select((value) => value.valueOrNull?.balance),
+      AccountProviders.accounts
+          .select((value) => value.valueOrNull?.selectedAccount?.balance),
     );
 
     final currency = ref.watch(
@@ -168,8 +168,9 @@ class _BalanceIndicatorNative extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final accountSelectedBalance = ref.watch(
-      AccountProviders.selectedAccount
-          .select((value) => value.valueOrNull?.balance),
+      AccountProviders.accounts.select(
+        (value) => value.valueOrNull?.selectedAccount?.balance,
+      ),
     );
     final language = ref.watch(
       LanguageProviders.selectedLanguage,

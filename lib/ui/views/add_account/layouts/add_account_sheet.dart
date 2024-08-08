@@ -24,9 +24,10 @@ class AddAccountSheet extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedAccount = ref
         .watch(
-          AccountProviders.selectedAccount,
+          AccountProviders.accounts,
         )
-        .valueOrNull;
+        .valueOrNull
+        ?.selectedAccount;
 
     if (selectedAccount == null) return const SizedBox();
 

@@ -37,10 +37,13 @@ class BalanceInfos extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final accountSelectedBalance = ref.watch(
-      AccountProviders.selectedAccount
-          .select((value) => value.valueOrNull?.balance),
-    );
+    final accountSelectedBalance = ref
+        .watch(
+          AccountProviders.accounts,
+        )
+        .value
+        ?.selectedAccount
+        ?.balance;
     final settings = ref.watch(SettingsProviders.settings);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);

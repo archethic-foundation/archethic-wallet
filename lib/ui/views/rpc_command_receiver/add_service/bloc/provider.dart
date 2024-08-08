@@ -43,7 +43,7 @@ class AddServiceConfirmationFormNotifier extends AutoDisposeFamilyAsyncNotifier<
         data: (data) {
           final useCase = ref.read(_sendTransactionUseCaseProvider);
           final accountSelected =
-              ref.watch(AccountProviders.selectedAccount).valueOrNull;
+              ref.read(AccountProviders.accounts).valueOrNull?.selectedAccount;
           return useCase
               .run(
             SendTransactionCommand(

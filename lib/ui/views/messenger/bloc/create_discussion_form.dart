@@ -82,7 +82,7 @@ class CreateDiscussionFormNotifier
         if (session == null) throw const Failure.loggedOut();
 
         final selectedAccount =
-            await ref.read(AccountProviders.selectedAccount.future);
+            await ref.read(AccountProviders.accounts.future).selectedAccount;
         if (selectedAccount == null) throw const Failure.loggedOut();
 
         final creator = AccessRecipient.contact(

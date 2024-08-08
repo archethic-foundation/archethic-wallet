@@ -117,9 +117,10 @@ class AddContactSheetBody extends ConsumerWidget
             if (isNameOk && isAddressOk) {
               final newContact = await contactCreationNotifier.addContact();
 
-              await ref
-                  .read(AccountProviders.selectedAccount.notifier)
-                  .refreshRecentTransactions();
+              await (await ref
+                      .read(AccountProviders.accounts.notifier)
+                      .selectedAccountNotifier)
+                  ?.refreshRecentTransactions();
               UIUtil.showSnackbar(
                 localizations.contactAdded.replaceAll('%1', newContact.format),
                 context,

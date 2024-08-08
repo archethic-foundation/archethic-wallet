@@ -20,8 +20,11 @@ class AddAccountDetail extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
 
     final addAccount = ref.watch(AddAccountFormProvider.addAccountForm);
-    final accountSelected =
-        ref.watch(AccountProviders.selectedAccount).valueOrNull;
+    final accountSelected = ref.watch(
+      AccountProviders.accounts.select(
+        (accounts) => accounts.valueOrNull?.selectedAccount,
+      ),
+    );
 
     return Column(
       children: [
