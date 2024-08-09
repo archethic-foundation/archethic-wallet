@@ -21,7 +21,7 @@ class _AddAccountButtonState extends ConsumerState<AddAccountButton> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final session = ref.watch(SessionProviders.session).loggedIn;
+    final session = ref.watch(sessionNotifierProvider).loggedIn;
 
     return AppButtonTinyConnectivity(
       localizations.addAccount,

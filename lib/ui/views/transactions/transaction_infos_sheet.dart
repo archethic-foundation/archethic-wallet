@@ -97,7 +97,7 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet>
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final session = ref.watch(SessionProviders.session).loggedIn!;
+    final session = ref.watch(sessionNotifierProvider).loggedIn!;
     final selectedAccount = ref.watch(
       AccountProviders.accounts.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,

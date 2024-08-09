@@ -32,11 +32,8 @@ class RecoveryPhraseBanner extends ConsumerWidget {
                     final auth = await AuthFactory.authenticate();
                     if (!auth) return;
 
-                    final seed = ref
-                        .read(SessionProviders.session)
-                        .loggedIn
-                        ?.wallet
-                        .seed;
+                    final seed =
+                        ref.read(sessionNotifierProvider).loggedIn?.wallet.seed;
                     final mnemonic = AppMnemomics.seedToMnemonic(
                       seed!,
                       languageCode: preferences.languageSeed,

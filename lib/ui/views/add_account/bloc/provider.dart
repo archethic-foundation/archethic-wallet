@@ -33,7 +33,7 @@ final _addAccountFormProvider =
     AccountProviders.accounts,
     AddAccountFormProvider._repository,
     AccountProviders.sortedAccounts,
-    SessionProviders.session,
+    sessionNotifierProvider,
   ],
 );
 

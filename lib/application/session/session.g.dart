@@ -6,14 +6,14 @@ part of 'session.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$sessionNotifierHash() => r'31eedf6ad75a6f6aef9b160270b055c0908c1d95';
+String _$sessionNotifierHash() => r'499861aab7e72b6ede91a4feee1359f137bfa687';
 
-/// See also [_SessionNotifier].
-@ProviderFor(_SessionNotifier)
-final _sessionNotifierProvider =
-    NotifierProvider<_SessionNotifier, Session>.internal(
-  _SessionNotifier.new,
-  name: r'_sessionNotifierProvider',
+/// See also [SessionNotifier].
+@ProviderFor(SessionNotifier)
+final sessionNotifierProvider =
+    NotifierProvider<SessionNotifier, Session>.internal(
+  SessionNotifier.new,
+  name: r'sessionNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : _$sessionNotifierHash,

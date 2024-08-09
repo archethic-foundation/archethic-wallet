@@ -8,13 +8,13 @@ final migration_437 = LocalDataMigration(
     final logger = Logger('DataMigration - 437');
     // We need to reload keychain because of account's name structure change
     // https://github.com/archethic-foundation/archethic-wallet/pull/759
-    if (ref.read(SessionProviders.session).isLoggedOut) {
+    if (ref.read(sessionNotifierProvider).isLoggedOut) {
       logger.info(
         'Skipping migration 437 process : user logged out.',
       );
       return;
     }
-    await ref.read(SessionProviders.session.notifier).refresh();
+    await ref.read(sessionNotifierProvider.notifier).refresh();
     final selectedAccount =
         await ref.read(AccountProviders.accounts.future).selectedAccount;
     if (selectedAccount != null) {

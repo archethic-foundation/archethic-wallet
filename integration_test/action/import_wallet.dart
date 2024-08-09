@@ -21,7 +21,7 @@
 //     settleTimeout: const Duration(minutes: 10),
 //   );
 
-//   // TODO(reddwarf03): Reactivate this. For now it doesn't work for an unknown reason (Patrol issue ?)
+//   // `TODO`(reddwarf03): Reactivate this. For now it doesn't work for an unknown reason (Patrol issue ?)
 //   // await $(#accountNameDAVID).tap();
 
 //   await $(#accessModePIN).tap();

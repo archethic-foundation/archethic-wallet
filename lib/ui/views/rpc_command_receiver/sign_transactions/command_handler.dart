@@ -30,7 +30,7 @@ class SignTransactionsCommandHandler extends CommandHandler {
             final description = command.data.description;
 
             final seed =
-                ref.read(SessionProviders.session).loggedIn!.wallet.seed;
+                ref.read(sessionNotifierProvider).loggedIn!.wallet.seed;
 
             final keychain =
                 await sl.get<archethic.ApiService>().getKeychain(seed);

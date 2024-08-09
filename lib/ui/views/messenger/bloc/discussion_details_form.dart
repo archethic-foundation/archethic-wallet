@@ -14,6 +14,7 @@ class DiscussionDetailsFormState with _$DiscussionDetailsFormState {
     @Default('') String discussionAddress,
     @Default([]) List<String> members,
     @Default([]) List<String> admins,
+    AppLocalizations? localizations,
   }) = _DiscussionDetailsFormState;
   const DiscussionDetailsFormState._();
 }
@@ -21,8 +22,6 @@ class DiscussionDetailsFormState with _$DiscussionDetailsFormState {
 class DiscussionDetailsFormNotifier
     extends AutoDisposeNotifier<DiscussionDetailsFormState> {
   DiscussionDetailsFormNotifier();
-
-  late AppLocalizations localizations;
 
   @override
   DiscussionDetailsFormState build() => const DiscussionDetailsFormState();
@@ -85,7 +84,7 @@ class DiscussionDetailsFormNotifier
   }
 
   Future<Result<void, Failure>> leaveDiscussion() => Result.guard(() async {
-        final session = ref.read(SessionProviders.session).loggedIn;
+        final session = ref.read(sessionNotifierProvider).loggedIn;
         if (session == null) throw const Failure.loggedOut();
 
         final selectedAccount =

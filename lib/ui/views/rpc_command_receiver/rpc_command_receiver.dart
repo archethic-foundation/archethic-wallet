@@ -53,7 +53,7 @@ class _RPCCommandReceiverState extends ConsumerState<RPCCommandReceiver> {
     sl.get<CommandDispatcher>()
       ..clear()
       ..addGuard((command) async {
-        if (ref.read(SessionProviders.session).isLoggedOut) {
+        if (ref.read(sessionNotifierProvider).isLoggedOut) {
           return awc.Failure.connectivity;
         }
         return null;

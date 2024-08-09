@@ -159,7 +159,7 @@ class _CheckTransactionNotifier
       ),
     );
     final isLoggedIn = ref.watch(
-      SessionProviders.session.select((session) => session.isLoggedIn),
+      sessionNotifierProvider.select((session) => session.isLoggedIn),
     );
 
     if (!activeNotifications || !isLoggedIn) {

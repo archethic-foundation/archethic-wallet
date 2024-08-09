@@ -25,7 +25,7 @@ class KeychainDeriveAddressCommandHandler extends CommandHandler {
               phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
               websocketEndpoint: networkSettings.getWebsocketUri(),
             );
-            final session = ref.watch(SessionProviders.session).loggedIn!;
+            final session = ref.watch(sessionNotifierProvider).loggedIn!;
             final keychain = await archethicTransactionRepository.apiService
                 .getKeychain(session.wallet.seed);
 

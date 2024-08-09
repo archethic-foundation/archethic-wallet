@@ -70,7 +70,7 @@ UseCase<SendTransactionCommand,
   AutoDisposeRef ref,
 ) =>
     SendTransactionUseCase(
-      wallet: ref.watch(SessionProviders.session).loggedIn!.wallet,
+      wallet: ref.watch(sessionNotifierProvider).loggedIn!.wallet,
       apiService: sl.get<ApiService>(),
       networkSettings: ref.watch(
         SettingsProviders.settings.select((settings) => settings.network),

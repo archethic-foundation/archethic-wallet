@@ -8,7 +8,6 @@ import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/universal_platform.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class SettingsProviders {

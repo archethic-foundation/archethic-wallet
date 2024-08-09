@@ -92,7 +92,7 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet>
       duration: const Duration(milliseconds: 5000),
       icon: Symbols.info,
     );
-    await ref.read(SessionProviders.session.notifier).refresh();
+    await ref.read(sessionNotifierProvider.notifier).refresh();
     await (await ref
             .read(AccountProviders.accounts.notifier)
             .selectedAccountNotifier)

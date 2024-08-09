@@ -31,7 +31,7 @@ class _MessageCreationFormNotifier extends _$MessageCreationFormNotifier {
       final content = state.text;
 
       final repository = ref.watch(MessengerProviders.messengerRepository);
-      final session = ref.watch(SessionProviders.session).loggedIn;
+      final session = ref.watch(sessionNotifierProvider).loggedIn;
       if (session == null) throw const Failure.loggedOut();
 
       final selectedAccount =
@@ -77,7 +77,7 @@ Future<double> _messageCreationFees(
 ) async {
   final task = CancelableTask<double>(
     task: () async {
-      final session = ref.watch(SessionProviders.session).loggedIn;
+      final session = ref.watch(sessionNotifierProvider).loggedIn;
       if (session == null) throw const Failure.loggedOut();
 
       final selectedAccount =
@@ -255,7 +255,7 @@ Future<List<DiscussionMessage>> _discussionMessages(
   final messages = await repository
       .getMessages(
         reader: account!,
-        session: ref.watch(SessionProviders.session).loggedIn!,
+        session: ref.watch(sessionNotifierProvider).loggedIn!,
         discussionGenesisAddress: discussionAddress,
         pagingOffset: offset,
         limit: pageSize,

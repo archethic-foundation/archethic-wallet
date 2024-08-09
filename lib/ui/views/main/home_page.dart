@@ -427,7 +427,7 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
-    final session = ref.watch(SessionProviders.session).loggedIn;
+    final session = ref.watch(sessionNotifierProvider).loggedIn;
     final accountSelected = ref
         .watch(
           AccountProviders.accounts,

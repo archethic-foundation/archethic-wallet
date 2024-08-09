@@ -78,7 +78,7 @@ class CreateDiscussionFormNotifier
   }
 
   Future<Result<void, Failure>> createDiscussion() => Result.guard(() async {
-        final session = ref.read(SessionProviders.session).loggedIn;
+        final session = ref.read(sessionNotifierProvider).loggedIn;
         if (session == null) throw const Failure.loggedOut();
 
         final selectedAccount =

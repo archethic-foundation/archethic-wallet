@@ -282,15 +282,15 @@ class SplashState extends ConsumerState<Splash> {
       */
 
       if (FeatureFlags.forceLogout) {
-        await ref.read(SessionProviders.session.notifier).logout();
+        await ref.read(sessionNotifierProvider.notifier).logout();
 
         context.go(IntroWelcome.routerPage);
         return;
       }
 
-      await ref.read(SessionProviders.session.notifier).restore();
+      await ref.read(sessionNotifierProvider.notifier).restore();
 
-      final session = ref.read(SessionProviders.session);
+      final session = ref.read(sessionNotifierProvider);
 
       if (session.isLoggedOut) {
         context.go(IntroWelcome.routerPage);

@@ -42,7 +42,7 @@ final _nftCreationFormProvider =
     _nftCreationFormProviderArgs,
     AccountProviders.accounts,
     NftCreationFormProvider._repository,
-    SessionProviders.session,
+    sessionNotifierProvider,
   ],
 );
 
@@ -139,11 +139,8 @@ class NftCreationFormNotifier
 
     late Transaction transaction;
 
-    final keychainSecuredInfos = ref
-        .read(SessionProviders.session)
-        .loggedIn!
-        .wallet
-        .keychainSecuredInfos;
+    final keychainSecuredInfos =
+        ref.read(sessionNotifierProvider).loggedIn!.wallet.keychainSecuredInfos;
 
     transaction = Transaction.token(
       token: Token(
@@ -774,11 +771,8 @@ class NftCreationFormNotifier
 
     late Transaction transaction;
 
-    final keychainSecuredInfos = ref
-        .read(SessionProviders.session)
-        .loggedIn!
-        .wallet
-        .keychainSecuredInfos;
+    final keychainSecuredInfos =
+        ref.read(sessionNotifierProvider).loggedIn!.wallet.keychainSecuredInfos;
 
     transaction = Transaction.token(
       token: Token(

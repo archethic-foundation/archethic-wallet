@@ -191,7 +191,7 @@ Future<Discussion> _remoteDiscussion(
       .selectedAccount;
   if (selectedAccount == null) throw const Failure.loggedOut();
 
-  final session = ref.read(SessionProviders.session).loggedIn;
+  final session = ref.read(sessionNotifierProvider).loggedIn;
   if (session == null) throw const Failure.loggedOut();
 
   return ref
