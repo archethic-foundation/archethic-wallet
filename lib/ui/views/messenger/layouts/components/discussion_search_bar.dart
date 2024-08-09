@@ -57,7 +57,7 @@ class _DiscussionSearchBarState extends ConsumerState<DiscussionSearchBar> {
   Widget build(BuildContext context) {
     final preferences = ref.watch(SettingsProviders.settings);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
-    final session = ref.watch(SessionProviders.session).loggedIn!;
+    final session = ref.watch(sessionNotifierProvider).loggedIn!;
     final localizations = AppLocalizations.of(context)!;
     final discussionSearchBarNotifier = ref.watch(
       DiscussionSearchBarProvider.discussionSearchBar.notifier,

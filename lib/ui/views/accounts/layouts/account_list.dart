@@ -46,7 +46,7 @@ class AccountsListWidget extends ConsumerWidget {
             return;
           }
           ShowSendingAnimation.build(context);
-          await ref.read(SessionProviders.session.notifier).refresh();
+          await ref.read(sessionNotifierProvider.notifier).refresh();
           await (await ref
                   .read(AccountProviders.accounts.notifier)
                   .selectedAccountNotifier)

@@ -165,9 +165,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
           });
           var error = false;
           try {
-            await ref
-                .read(SessionProviders.session.notifier)
-                .createNewAppWallet(
+            await ref.read(sessionNotifierProvider.notifier).createNewAppWallet(
                   seed: widget.seed!,
                   keychainAddress: event.params!['keychainAddress']! as String,
                   keychain: event.params!['keychain']! as Keychain,

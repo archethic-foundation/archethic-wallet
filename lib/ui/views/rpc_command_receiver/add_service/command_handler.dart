@@ -47,7 +47,7 @@ class AddServiceHandler extends CommandHandler {
             );
             final originPrivateKey =
                 archethicTransactionRepository.apiService.getOriginKey();
-            final session = ref.watch(SessionProviders.session).loggedIn!;
+            final session = ref.watch(sessionNotifierProvider).loggedIn!;
             var keychain = await archethicTransactionRepository.apiService
                 .getKeychain(session.wallet.seed);
 
@@ -108,7 +108,7 @@ class AddServiceHandler extends CommandHandler {
                       if (connectivityStatusProvider ==
                           ConnectivityStatus.isConnected) {
                         await ref
-                            .read(SessionProviders.session.notifier)
+                            .read(sessionNotifierProvider.notifier)
                             .refresh();
 
                         await (await ref

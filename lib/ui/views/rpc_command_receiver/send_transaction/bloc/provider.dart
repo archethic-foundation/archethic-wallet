@@ -46,7 +46,7 @@ class SignTransactionConfirmationFormNotifier
       type: arg.data.type,
       version: arg.data.version,
     ).toArchethicTransaction(
-      wallet: ref.watch(SessionProviders.session).loggedIn!.wallet,
+      wallet: ref.watch(sessionNotifierProvider).loggedIn!.wallet,
       apiService: apiService,
       senderAccount: accountSelected,
     );
@@ -100,7 +100,7 @@ UseCase<SendTransactionCommand,
   AutoDisposeRef ref,
 ) =>
     SendTransactionUseCase(
-      wallet: ref.watch(SessionProviders.session).loggedIn!.wallet,
+      wallet: ref.watch(sessionNotifierProvider).loggedIn!.wallet,
       apiService: sl.get<ApiService>(),
       networkSettings: ref.watch(
         SettingsProviders.settings.select((settings) => settings.network),

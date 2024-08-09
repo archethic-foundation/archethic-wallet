@@ -43,7 +43,7 @@ final _transferFormProvider =
     TransferFormProvider._repository,
     PrimaryCurrencyProviders.selectedPrimaryCurrency,
     PrimaryCurrencyProviders.convertedValue,
-    SessionProviders.session,
+    sessionNotifierProvider,
   ],
 );
 
@@ -362,11 +362,8 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
     late Transaction transaction;
 
-    final keychainSecuredInfos = ref
-        .read(SessionProviders.session)
-        .loggedIn!
-        .wallet
-        .keychainSecuredInfos;
+    final keychainSecuredInfos =
+        ref.read(sessionNotifierProvider).loggedIn!.wallet.keychainSecuredInfos;
 
     switch (state.transferType) {
       case TransferType.token:
@@ -736,11 +733,8 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
     late Transaction transaction;
 
-    final keychainSecuredInfos = ref
-        .read(SessionProviders.session)
-        .loggedIn!
-        .wallet
-        .keychainSecuredInfos;
+    final keychainSecuredInfos =
+        ref.read(sessionNotifierProvider).loggedIn!.wallet.keychainSecuredInfos;
 
     switch (state.transferType) {
       case TransferType.token:

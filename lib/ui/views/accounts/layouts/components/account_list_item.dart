@@ -106,7 +106,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
       duration: const Duration(milliseconds: 5000),
       icon: Symbols.info,
     );
-    await ref.read(SessionProviders.session.notifier).refresh();
+    await ref.read(sessionNotifierProvider.notifier).refresh();
 
     await (await ref
             .read(AccountProviders.accounts.notifier)
@@ -358,7 +358,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
                             ),
                             onTap: () async {
                               final session =
-                                  ref.read(SessionProviders.session).loggedIn;
+                                  ref.read(sessionNotifierProvider).loggedIn;
                               final keychain = await sl
                                   .get<ApiService>()
                                   .getKeychain(session!.wallet.seed);

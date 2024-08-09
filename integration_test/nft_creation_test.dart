@@ -18,7 +18,7 @@
 //     await $(#nftCreationField).first.enterText('nftTest');
 //     await $(#next).tap();
 //     await $(#nftImportPhoto).tap();
-//     // TODO(reddwarf03): Add mock with a simple picture
+//     // `TODO`(reddwarf03): Add mock with a simple picture
 //     await $(#next).tap();
 //     await $(#nftName).enterText('nftTest');
 //     await $(#nftValue).enterText('10');

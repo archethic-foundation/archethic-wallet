@@ -285,7 +285,7 @@ class _BackupSecretPhraseListItem extends ConsumerWidget {
         final auth = await AuthFactory.authenticate();
         if (!auth) return;
 
-        final seed = ref.read(SessionProviders.session).loggedIn?.wallet.seed;
+        final seed = ref.read(sessionNotifierProvider).loggedIn?.wallet.seed;
         final mnemonic = AppMnemomics.seedToMnemonic(
           seed!,
           languageCode: preferences.languageSeed,
@@ -319,7 +319,7 @@ class _SyncBlockchainSettingsListItem extends ConsumerWidget {
           localizations.resyncWalletAreYouSure,
           localizations.yes,
           () async {
-            final session = ref.read(SessionProviders.session).loggedIn!;
+            final session = ref.read(sessionNotifierProvider).loggedIn!;
             for (final element in session.wallet.appKeychain.accounts) {
               await element.clearRecentTransactionsFromCache();
             }

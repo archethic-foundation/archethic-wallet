@@ -4,7 +4,7 @@ part of 'providers.dart';
 class _AccountsNotifier extends AutoDisposeAsyncNotifier<List<Account>> {
   @override
   FutureOr<List<Account>> build() async {
-    final session = ref.watch(SessionProviders.session);
+    final session = ref.watch(sessionNotifierProvider);
     if (session.isLoggedOut) {
       return [];
     }

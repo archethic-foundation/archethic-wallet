@@ -37,7 +37,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
     final hasNotifications =
         ref.watch(DeviceAbilities.hasNotificationsProvider);
     final keychain = ref.watch(
-      SessionProviders.session.select(
+      sessionNotifierProvider.select(
         (value) => value.loggedIn?.wallet.appKeychain,
       ),
     );

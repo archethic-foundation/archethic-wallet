@@ -202,6 +202,7 @@ mixin _$DiscussionDetailsFormState {
   String get discussionAddress => throw _privateConstructorUsedError;
   List<String> get members => throw _privateConstructorUsedError;
   List<String> get admins => throw _privateConstructorUsedError;
+  AppLocalizations? get localizations => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $DiscussionDetailsFormStateCopyWith<DiscussionDetailsFormState>
@@ -219,7 +220,8 @@ abstract class $DiscussionDetailsFormStateCopyWith<$Res> {
       {String name,
       String discussionAddress,
       List<String> members,
-      List<String> admins});
+      List<String> admins,
+      AppLocalizations? localizations});
 }
 
 /// @nodoc
@@ -240,6 +242,7 @@ class _$DiscussionDetailsFormStateCopyWithImpl<$Res,
     Object? discussionAddress = null,
     Object? members = null,
     Object? admins = null,
+    Object? localizations = freezed,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -258,6 +261,10 @@ class _$DiscussionDetailsFormStateCopyWithImpl<$Res,
           ? _value.admins
           : admins // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      localizations: freezed == localizations
+          ? _value.localizations
+          : localizations // ignore: cast_nullable_to_non_nullable
+              as AppLocalizations?,
     ) as $Val);
   }
 }
@@ -275,7 +282,8 @@ abstract class _$$DiscussionDetailsFormStateImplCopyWith<$Res>
       {String name,
       String discussionAddress,
       List<String> members,
-      List<String> admins});
+      List<String> admins,
+      AppLocalizations? localizations});
 }
 
 /// @nodoc
@@ -295,6 +303,7 @@ class __$$DiscussionDetailsFormStateImplCopyWithImpl<$Res>
     Object? discussionAddress = null,
     Object? members = null,
     Object? admins = null,
+    Object? localizations = freezed,
   }) {
     return _then(_$DiscussionDetailsFormStateImpl(
       name: null == name
@@ -313,6 +322,10 @@ class __$$DiscussionDetailsFormStateImplCopyWithImpl<$Res>
           ? _value._admins
           : admins // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      localizations: freezed == localizations
+          ? _value.localizations
+          : localizations // ignore: cast_nullable_to_non_nullable
+              as AppLocalizations?,
     ));
   }
 }
@@ -324,7 +337,8 @@ class _$DiscussionDetailsFormStateImpl extends _DiscussionDetailsFormState {
       {this.name = '',
       this.discussionAddress = '',
       final List<String> members = const [],
-      final List<String> admins = const []})
+      final List<String> admins = const [],
+      this.localizations})
       : _members = members,
         _admins = admins,
         super._();
@@ -354,8 +368,11 @@ class _$DiscussionDetailsFormStateImpl extends _DiscussionDetailsFormState {
   }
 
   @override
+  final AppLocalizations? localizations;
+
+  @override
   String toString() {
-    return 'DiscussionDetailsFormState(name: $name, discussionAddress: $discussionAddress, members: $members, admins: $admins)';
+    return 'DiscussionDetailsFormState(name: $name, discussionAddress: $discussionAddress, members: $members, admins: $admins, localizations: $localizations)';
   }
 
   @override
@@ -367,7 +384,9 @@ class _$DiscussionDetailsFormStateImpl extends _DiscussionDetailsFormState {
             (identical(other.discussionAddress, discussionAddress) ||
                 other.discussionAddress == discussionAddress) &&
             const DeepCollectionEquality().equals(other._members, _members) &&
-            const DeepCollectionEquality().equals(other._admins, _admins));
+            const DeepCollectionEquality().equals(other._admins, _admins) &&
+            const DeepCollectionEquality()
+                .equals(other.localizations, localizations));
   }
 
   @override
@@ -376,7 +395,8 @@ class _$DiscussionDetailsFormStateImpl extends _DiscussionDetailsFormState {
       name,
       discussionAddress,
       const DeepCollectionEquality().hash(_members),
-      const DeepCollectionEquality().hash(_admins));
+      const DeepCollectionEquality().hash(_admins),
+      const DeepCollectionEquality().hash(localizations));
 
   @JsonKey(ignore: true)
   @override
@@ -388,10 +408,12 @@ class _$DiscussionDetailsFormStateImpl extends _DiscussionDetailsFormState {
 
 abstract class _DiscussionDetailsFormState extends DiscussionDetailsFormState {
   const factory _DiscussionDetailsFormState(
-      {final String name,
-      final String discussionAddress,
-      final List<String> members,
-      final List<String> admins}) = _$DiscussionDetailsFormStateImpl;
+          {final String name,
+          final String discussionAddress,
+          final List<String> members,
+          final List<String> admins,
+          final AppLocalizations? localizations}) =
+      _$DiscussionDetailsFormStateImpl;
   const _DiscussionDetailsFormState._() : super._();
 
   @override
@@ -402,6 +424,8 @@ abstract class _DiscussionDetailsFormState extends DiscussionDetailsFormState {
   List<String> get members;
   @override
   List<String> get admins;
+  @override
+  AppLocalizations? get localizations;
   @override
   @JsonKey(ignore: true)
   _$$DiscussionDetailsFormStateImplCopyWith<_$DiscussionDetailsFormStateImpl>

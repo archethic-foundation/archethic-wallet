@@ -1,7 +1,7 @@
 part of 'session.dart';
 
 @Riverpod(keepAlive: true)
-class _SessionNotifier extends Notifier<Session> {
+class SessionNotifier extends _$SessionNotifier {
   final _appWalletDatasource = AppWalletHiveDatasource.instance();
 
   @override
@@ -160,8 +160,4 @@ class _SessionNotifier extends Notifier<Session> {
       return null;
     }
   }
-}
-
-abstract class SessionProviders {
-  static final session = _sessionNotifierProvider;
 }

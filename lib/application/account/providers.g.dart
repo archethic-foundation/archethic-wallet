@@ -224,7 +224,7 @@ class _GetAccountNFTFilteredProviderElement
   bool? get favorite => (origin as _GetAccountNFTFilteredProvider).favorite;
 }
 
-String _$accountsNotifierHash() => r'4a71704007de17bca59c91418d3de439aa41b6d5';
+String _$accountsNotifierHash() => r'8b029f252875c2b8361a81256e3c7c57c1c1f3f5';
 
 /// See also [_AccountsNotifier].
 @ProviderFor(_AccountsNotifier)

@@ -150,7 +150,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                 }
                 ShowSendingAnimation.build(context);
                 final newSession = await ref
-                    .read(SessionProviders.session.notifier)
+                    .read(sessionNotifierProvider.notifier)
                     .restoreFromMnemonics(
                       mnemonics: phrase.toList(),
                       languageCode: languageSeed,

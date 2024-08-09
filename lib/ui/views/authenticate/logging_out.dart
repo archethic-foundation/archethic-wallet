@@ -31,7 +31,7 @@ class _LoggingOutScreenState extends ConsumerState<LoggingOutScreen> {
       _logger.info('Logging out');
       await Future.wait([
         Future.delayed(const Duration(seconds: 2)),
-        ref.read(SessionProviders.session.notifier).logout(),
+        ref.read(sessionNotifierProvider.notifier).logout(),
       ]);
       _logger.info('Logged out');
       context.go(Splash.routerPage);

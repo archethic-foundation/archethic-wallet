@@ -38,7 +38,7 @@ final _addTokenFormProvider =
     AddTokenFormProvider.initialAddTokenForm,
     AccountProviders.accounts,
     AddTokenFormProvider._repository,
-    SessionProviders.session,
+    sessionNotifierProvider,
   ],
 );
 
@@ -114,11 +114,8 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
 
     late Transaction transaction;
 
-    final keychainSecuredInfos = ref
-        .read(SessionProviders.session)
-        .loggedIn!
-        .wallet
-        .keychainSecuredInfos;
+    final keychainSecuredInfos =
+        ref.read(sessionNotifierProvider).loggedIn!.wallet.keychainSecuredInfos;
 
     transaction = Transaction.token(
       token: Token(
@@ -276,11 +273,8 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
 
     late Transaction transaction;
 
-    final keychainSecuredInfos = ref
-        .read(SessionProviders.session)
-        .loggedIn!
-        .wallet
-        .keychainSecuredInfos;
+    final keychainSecuredInfos =
+        ref.read(sessionNotifierProvider).loggedIn!.wallet.keychainSecuredInfos;
 
     transaction = Transaction.token(
       token: Token(
