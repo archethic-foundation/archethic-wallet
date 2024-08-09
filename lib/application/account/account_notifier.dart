@@ -1,7 +1,6 @@
 part of 'providers.dart';
 
-class _AccountNotifier
-    extends AutoDisposeFamilyAsyncNotifier<Account?, String> {
+class _AccountNotifier extends FamilyAsyncNotifier<Account?, String> {
   final _logger = Logger('AccountNotifier');
 
   @override

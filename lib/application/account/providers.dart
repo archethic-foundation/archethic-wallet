@@ -114,8 +114,8 @@ abstract class AccountProviders {
     (ref, arg) async => (await ref.watch(account(arg).future)) != null,
     name: '_accountExistsProvider',
   );
-  static final account = AsyncNotifierProvider.autoDispose
-      .family<_AccountNotifier, Account?, String>(
+  static final account =
+      AsyncNotifierProvider.family<_AccountNotifier, Account?, String>(
     _AccountNotifier.new,
     name: '_accountNotifierProvider',
   );
