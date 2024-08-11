@@ -70,10 +70,10 @@ packages:
     dependency: "direct main"
     description:
       name: archethic_dapp_framework_flutter
-      sha256: "88e82c321c23e79bc5ea25ea6acc8b35513ed50823a075a1be2711cf8ad1b3ae"
+      sha256: "020c79df93bc5df1aefc9bf2fc37263e0fe2ef5e27c4667422e3a1f83eab50af"
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.10"
+    version: "1.2.11"
   archethic_lib_dart:
     dependency: "direct main"
     description:
@@ -1379,10 +1379,10 @@ packages:
     dependency: "direct main"
     description:
       name: material_symbols_icons
-      sha256: "43297fe7f7267b399ed6f2856ccd387775882445e9e695c427026070e3842b29"
+      sha256: "8f4abdb6bc714526ccf66e825b7391d7ca65239484ad92be71980fe73a57521c"
       url: "https://pub.dev"
     source: hosted
-    version: "4.2777.1"
+    version: "4.2780.0"
   meta:
     dependency: transitive
     description:

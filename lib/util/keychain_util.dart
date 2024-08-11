@@ -217,9 +217,8 @@ class KeychainUtil with KeychainServiceMixin {
 
   Future<HiveAppWalletDTO?> getListAccountsFromKeychain(
     Keychain keychain,
-    HiveAppWalletDTO? appWallet, {
-    bool loadBalance = true,
-  }) async {
+    HiveAppWalletDTO? appWallet,
+  ) async {
     final accounts = List<Account>.empty(growable: true);
 
     HiveAppWalletDTO currentAppWallet;
@@ -264,7 +263,7 @@ class KeychainUtil with KeychainServiceMixin {
           genesisAddress: uint8ListToHex(genesisAddress),
           name: name,
           balance: AccountBalance(
-            nativeTokenName: '',
+            nativeTokenName: 'UCO',
             nativeTokenValue: 0,
           ),
           recentTransactions: [],
@@ -337,34 +336,29 @@ class KeychainUtil with KeychainServiceMixin {
         }
       }
 
-      if (loadBalance) {
-        var balanceGetResponseMap = <String, Balance>{};
-        if (loadBalance) {
-          balanceGetResponseMap = await sl
-              .get<AppService>()
-              .getBalanceGetResponse(lastAddressAccountList);
-        }
+      final balanceGetResponseMap = await sl
+          .get<AppService>()
+          .getBalanceGetResponse(lastAddressAccountList);
 
-        for (var i = 0; i < accounts.length; i++) {
-          if (balanceGetResponseMap[accounts[i].lastAddress] != null) {
-            final balanceGetResponse =
-                balanceGetResponseMap[accounts[i].lastAddress]!;
-            final accountBalance = AccountBalance(
-              nativeTokenName: AccountBalance.cryptoCurrencyLabel,
-              nativeTokenValue: fromBigInt(balanceGetResponse.uco).toDouble(),
-            );
-            for (final token in balanceGetResponse.token) {
-              if (token.tokenId != null) {
-                if (token.tokenId == 0) {
-                  accountBalance.tokensFungiblesNb++;
-                } else {
-                  accountBalance.nftNb++;
-                }
+      for (var i = 0; i < accounts.length; i++) {
+        if (balanceGetResponseMap[accounts[i].lastAddress] != null) {
+          final balanceGetResponse =
+              balanceGetResponseMap[accounts[i].lastAddress]!;
+          final accountBalance = AccountBalance(
+            nativeTokenName: AccountBalance.cryptoCurrencyLabel,
+            nativeTokenValue: fromBigInt(balanceGetResponse.uco).toDouble(),
+          );
+          for (final token in balanceGetResponse.token) {
+            if (token.tokenId != null) {
+              if (token.tokenId == 0) {
+                accountBalance.tokensFungiblesNb++;
+              } else {
+                accountBalance.nftNb++;
               }
             }
-
-            accounts[i].balance = accountBalance;
           }
+
+          accounts[i].balance = accountBalance;
         }
       }
 

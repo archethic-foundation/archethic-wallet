@@ -45,8 +45,10 @@ class AccountListItem extends ConsumerStatefulWidget {
   const AccountListItem({
     super.key,
     required this.account,
+    this.selectedAccount,
   });
   final Account account;
+  final Account? selectedAccount;
 
   @override
   ConsumerState<AccountListItem> createState() => _AccountListItemState();
@@ -165,12 +167,6 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
       );
     }
 
-    final selectedAccount = ref.watch(
-      AccountProviders.accounts.select(
-        (accounts) => accounts.valueOrNull?.selectedAccount,
-      ),
-    );
-
     final asyncFiatAmount = ref.watch(
       MarketPriceProviders.convertedToSelectedCurrency(
         nativeAmount: widget.account.balance?.nativeTokenValue ?? 0,
@@ -198,8 +194,9 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
                   ),
                 );
 
-            if (selectedAccount == null ||
-                selectedAccount.nameDisplayed != widget.account.nameDisplayed) {
+            if (widget.selectedAccount == null ||
+                widget.selectedAccount!.nameDisplayed !=
+                    widget.account.nameDisplayed) {
               ShowSendingAnimation.build(context);
               await ref
                   .read(AccountProviders.accounts.notifier)

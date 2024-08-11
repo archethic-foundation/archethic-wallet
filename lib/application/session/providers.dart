@@ -139,7 +139,6 @@ class SessionNotifier extends _$SessionNotifier {
       final appWallet = await KeychainUtil().getListAccountsFromKeychain(
         keychain,
         null,
-        loadBalance: false,
       );
 
       if (appWallet == null) {

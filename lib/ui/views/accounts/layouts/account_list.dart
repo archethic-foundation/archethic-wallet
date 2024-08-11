@@ -32,6 +32,12 @@ class AccountsListWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(SettingsProviders.settings);
 
+    final selectedAccount = ref.read(
+      AccountProviders.accounts.select(
+        (accounts) => accounts.valueOrNull?.selectedAccount,
+      ),
+    );
+
     return Expanded(
       child: ArchethicRefreshIndicator(
         onRefresh: () => Future<void>.sync(() async {
@@ -74,6 +80,7 @@ class AccountsListWidget extends ConsumerWidget {
               itemBuilder: (BuildContext context, int index) {
                 Widget item = AccountListItem(
                   account: accountsList[index],
+                  selectedAccount: selectedAccount,
                 );
 
                 if (!kIsWeb) {
