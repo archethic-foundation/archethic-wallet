@@ -243,15 +243,15 @@ final _accountsRepositoryProvider =
 typedef _AccountsRepositoryRef
     = AutoDisposeProviderRef<AccountLocalRepositoryInterface>;
 String _$accountExistsNotifierHash() =>
-    r'f0b33a3795ff3d6db808cf7c7ea485610fdceeed';
+    r'c2ffdcd9d52b517fbb67c33972047a984928a056';
 
 abstract class _$AccountExistsNotifier
     extends BuildlessAutoDisposeAsyncNotifier<bool> {
-  late final String name;
+  late final String accountName;
 
-  FutureOr<bool> build({
-    required String name,
-  });
+  FutureOr<bool> build(
+    String accountName,
+  );
 }
 
 /// See also [_AccountExistsNotifier].
@@ -264,11 +264,11 @@ class _AccountExistsNotifierFamily extends Family<AsyncValue<bool>> {
   const _AccountExistsNotifierFamily();
 
   /// See also [_AccountExistsNotifier].
-  _AccountExistsNotifierProvider call({
-    required String name,
-  }) {
+  _AccountExistsNotifierProvider call(
+    String accountName,
+  ) {
     return _AccountExistsNotifierProvider(
-      name: name,
+      accountName,
     );
   }
 
@@ -277,7 +277,7 @@ class _AccountExistsNotifierFamily extends Family<AsyncValue<bool>> {
     covariant _AccountExistsNotifierProvider provider,
   ) {
     return call(
-      name: provider.name,
+      provider.accountName,
     );
   }
 
@@ -300,10 +300,10 @@ class _AccountExistsNotifierFamily extends Family<AsyncValue<bool>> {
 class _AccountExistsNotifierProvider
     extends AutoDisposeAsyncNotifierProviderImpl<_AccountExistsNotifier, bool> {
   /// See also [_AccountExistsNotifier].
-  _AccountExistsNotifierProvider({
-    required String name,
-  }) : this._internal(
-          () => _AccountExistsNotifier()..name = name,
+  _AccountExistsNotifierProvider(
+    String accountName,
+  ) : this._internal(
+          () => _AccountExistsNotifier()..accountName = accountName,
           from: _accountExistsNotifierProvider,
           name: r'_accountExistsNotifierProvider',
           debugGetCreateSourceHash:
@@ -313,7 +313,7 @@ class _AccountExistsNotifierProvider
           dependencies: _AccountExistsNotifierFamily._dependencies,
           allTransitiveDependencies:
               _AccountExistsNotifierFamily._allTransitiveDependencies,
-          name: name,
+          accountName: accountName,
         );
 
   _AccountExistsNotifierProvider._internal(
@@ -323,17 +323,17 @@ class _AccountExistsNotifierProvider
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.name,
+    required this.accountName,
   }) : super.internal();
 
-  final String name;
+  final String accountName;
 
   @override
   FutureOr<bool> runNotifierBuild(
     covariant _AccountExistsNotifier notifier,
   ) {
     return notifier.build(
-      name: name,
+      accountName,
     );
   }
 
@@ -342,13 +342,13 @@ class _AccountExistsNotifierProvider
     return ProviderOverride(
       origin: this,
       override: _AccountExistsNotifierProvider._internal(
-        () => create()..name = name,
+        () => create()..accountName = accountName,
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        name: name,
+        accountName: accountName,
       ),
     );
   }
@@ -361,21 +361,22 @@ class _AccountExistsNotifierProvider
 
   @override
   bool operator ==(Object other) {
-    return other is _AccountExistsNotifierProvider && other.name == name;
+    return other is _AccountExistsNotifierProvider &&
+        other.accountName == accountName;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, name.hashCode);
+    hash = _SystemHash.combine(hash, accountName.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
 mixin _AccountExistsNotifierRef on AutoDisposeAsyncNotifierProviderRef<bool> {
-  /// The parameter `name` of this provider.
-  String get name;
+  /// The parameter `accountName` of this provider.
+  String get accountName;
 }
 
 class _AccountExistsNotifierProviderElement
@@ -384,17 +385,18 @@ class _AccountExistsNotifierProviderElement
   _AccountExistsNotifierProviderElement(super.provider);
 
   @override
-  String get name => (origin as _AccountExistsNotifierProvider).name;
+  String get accountName =>
+      (origin as _AccountExistsNotifierProvider).accountName;
 }
 
-String _$accountNotifierHash() => r'c3ab8c93e137b7c9a3002dcfb240d0edcc25d751';
+String _$accountNotifierHash() => r'42327f7eba28240db0753a0c8a241aeac62f9297';
 
 abstract class _$AccountNotifier
     extends BuildlessAutoDisposeAsyncNotifier<Account?> {
-  late final String name;
+  late final String accountName;
 
   FutureOr<Account?> build(
-    String name,
+    String accountName,
   );
 }
 
@@ -409,10 +411,10 @@ class _AccountNotifierFamily extends Family<AsyncValue<Account?>> {
 
   /// See also [_AccountNotifier].
   _AccountNotifierProvider call(
-    String name,
+    String accountName,
   ) {
     return _AccountNotifierProvider(
-      name,
+      accountName,
     );
   }
 
@@ -421,7 +423,7 @@ class _AccountNotifierFamily extends Family<AsyncValue<Account?>> {
     covariant _AccountNotifierProvider provider,
   ) {
     return call(
-      provider.name,
+      provider.accountName,
     );
   }
 
@@ -445,9 +447,9 @@ class _AccountNotifierProvider
     extends AutoDisposeAsyncNotifierProviderImpl<_AccountNotifier, Account?> {
   /// See also [_AccountNotifier].
   _AccountNotifierProvider(
-    String name,
+    String accountName,
   ) : this._internal(
-          () => _AccountNotifier()..name = name,
+          () => _AccountNotifier()..accountName = accountName,
           from: _accountNotifierProvider,
           name: r'_accountNotifierProvider',
           debugGetCreateSourceHash:
@@ -457,7 +459,7 @@ class _AccountNotifierProvider
           dependencies: _AccountNotifierFamily._dependencies,
           allTransitiveDependencies:
               _AccountNotifierFamily._allTransitiveDependencies,
-          name: name,
+          accountName: accountName,
         );
 
   _AccountNotifierProvider._internal(
@@ -467,17 +469,17 @@ class _AccountNotifierProvider
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.name,
+    required this.accountName,
   }) : super.internal();
 
-  final String name;
+  final String accountName;
 
   @override
   FutureOr<Account?> runNotifierBuild(
     covariant _AccountNotifier notifier,
   ) {
     return notifier.build(
-      name,
+      accountName,
     );
   }
 
@@ -486,13 +488,13 @@ class _AccountNotifierProvider
     return ProviderOverride(
       origin: this,
       override: _AccountNotifierProvider._internal(
-        () => create()..name = name,
+        () => create()..accountName = accountName,
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        name: name,
+        accountName: accountName,
       ),
     );
   }
@@ -505,21 +507,22 @@ class _AccountNotifierProvider
 
   @override
   bool operator ==(Object other) {
-    return other is _AccountNotifierProvider && other.name == name;
+    return other is _AccountNotifierProvider &&
+        other.accountName == accountName;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, name.hashCode);
+    hash = _SystemHash.combine(hash, accountName.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
 mixin _AccountNotifierRef on AutoDisposeAsyncNotifierProviderRef<Account?> {
-  /// The parameter `name` of this provider.
-  String get name;
+  /// The parameter `accountName` of this provider.
+  String get accountName;
 }
 
 class _AccountNotifierProviderElement
@@ -528,7 +531,7 @@ class _AccountNotifierProviderElement
   _AccountNotifierProviderElement(super.provider);
 
   @override
-  String get name => (origin as _AccountNotifierProvider).name;
+  String get accountName => (origin as _AccountNotifierProvider).accountName;
 }
 
 String _$accountsNotifierHash() => r'b5f45fb504840ad2e128cbf54fb57f22332d4ddf';

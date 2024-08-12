@@ -112,8 +112,9 @@ AccountLocalRepositoryInterface _accountsRepository(
 @riverpod
 class _AccountExistsNotifier extends _$AccountExistsNotifier {
   @override
-  Future<bool> build({required String name}) async {
-    return (await ref.watch(AccountProviders.account(name).future)) != null;
+  Future<bool> build(String accountName) async {
+    return (await ref.watch(AccountProviders.account(accountName).future)) !=
+        null;
   }
 }
 

@@ -5,9 +5,9 @@ class _AccountNotifier extends _$AccountNotifier {
   final _logger = Logger('AccountNotifier');
 
   @override
-  FutureOr<Account?> build(String name) async {
+  FutureOr<Account?> build(String accountName) async {
     final repository = ref.read(AccountProviders.accountsRepository);
-    final account = await repository.getAccount(name);
+    final account = await repository.getAccount(accountName);
 
     return account;
   }
