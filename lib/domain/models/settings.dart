@@ -19,14 +19,12 @@ class Settings with _$Settings {
     required bool showBalances,
     required bool activeVibrations,
     required bool activeRPCServer,
-    required bool activeNotifications,
     required int mainScreenCurrentPage,
     required bool showPriceChart,
     required MarketPriceHistoryInterval priceChartIntervalOption,
   }) = _Settings;
 
   factory Settings.empty() => const Settings(
-        activeNotifications: true,
         activeVibrations: true,
         activeRPCServer: true,
         firstLaunch: true,

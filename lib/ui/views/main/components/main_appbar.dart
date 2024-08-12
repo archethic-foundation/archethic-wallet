@@ -3,7 +3,6 @@ import 'dart:ui';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
-import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/menu/settings/settings_sheet.dart';
@@ -34,8 +33,6 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
     final localizations = AppLocalizations.of(context)!;
 
     final preferences = ref.watch(SettingsProviders.settings);
-    final hasNotifications =
-        ref.watch(DeviceAbilities.hasNotificationsProvider);
     final keychain = ref.watch(
       sessionNotifierProvider.select(
         (value) => value.loggedIn?.wallet.appKeychain,
@@ -84,17 +81,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
               ? const MainAppBarIconBalanceShowed()
               : const MainAppBarIconBalanceNotShowed(),
         if (connectivityStatusProvider == ConnectivityStatus.isDisconnected)
-          const IconNetworkWarning()
-        else if (hasNotifications)
-          preferences.activeNotifications
-              ? const Padding(
-                  padding: EdgeInsets.only(right: 3),
-                  child: MainAppBarIconNotificationEnabled(),
-                )
-              : const Padding(
-                  padding: EdgeInsets.only(right: 3),
-                  child: MainAppBarIconNotificationDisabled(),
-                ),
+          const IconNetworkWarning(),
       ],
       title: preferences.mainScreenCurrentPage == 1
           ? InkWell(
@@ -221,60 +208,6 @@ class MainAppBarIconBalanceNotShowed extends ConsumerWidget {
         final preferencesNotifier =
             ref.read(SettingsProviders.settings.notifier);
         await preferencesNotifier.setShowBalances(true);
-      },
-    );
-  }
-}
-
-class MainAppBarIconNotificationEnabled extends ConsumerWidget {
-  const MainAppBarIconNotificationEnabled({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final preferences = ref.watch(SettingsProviders.settings);
-    return IconButton(
-      icon: const Icon(
-        Symbols.notifications,
-        weight: IconSize.weightM,
-        opticalSize: IconSize.opticalSizeM,
-        grade: IconSize.gradeM,
-      ),
-      onPressed: () async {
-        sl.get<HapticUtil>().feedback(
-              FeedbackType.light,
-              preferences.activeVibrations,
-            );
-        final preferencesNotifier = ref.read(
-          SettingsProviders.settings.notifier,
-        );
-        await preferencesNotifier.setActiveNotifications(false);
-      },
-    );
-  }
-}
-
-class MainAppBarIconNotificationDisabled extends ConsumerWidget {
-  const MainAppBarIconNotificationDisabled({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final preferences = ref.watch(SettingsProviders.settings);
-    return IconButton(
-      icon: const Icon(
-        Symbols.notifications_off,
-        weight: IconSize.weightM,
-        opticalSize: IconSize.opticalSizeM,
-        grade: IconSize.gradeM,
-      ),
-      onPressed: () async {
-        sl.get<HapticUtil>().feedback(
-              FeedbackType.light,
-              preferences.activeVibrations,
-            );
-
-        final preferencesNotifier =
-            ref.read(SettingsProviders.settings.notifier);
-        await preferencesNotifier.setActiveNotifications(true);
       },
     );
   }

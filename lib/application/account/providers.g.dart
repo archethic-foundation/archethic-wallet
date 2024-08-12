@@ -547,5 +547,25 @@ final _accountsNotifierProvider =
 );
 
 typedef _$AccountsNotifier = AutoDisposeAsyncNotifier<List<Account>>;
+<<<<<<< HEAD
+=======
+String _$selectedAccountNotifierHash() =>
+    r'8d4c9d615343723a58d40f6423653d34c589c66c';
+
+/// See also [_SelectedAccountNotifier].
+@ProviderFor(_SelectedAccountNotifier)
+final _selectedAccountNotifierProvider = AutoDisposeAsyncNotifierProvider<
+    _SelectedAccountNotifier, Account?>.internal(
+  _SelectedAccountNotifier.new,
+  name: r'_selectedAccountNotifierProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$selectedAccountNotifierHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$SelectedAccountNotifier = AutoDisposeAsyncNotifier<Account?>;
+>>>>>>> 6459a962 (chore:)
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

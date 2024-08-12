@@ -41,11 +41,9 @@ class CustomizationMenuView extends ConsumerWidget
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
-    final hasNotifications =
-        ref.watch(DeviceAbilities.hasNotificationsProvider);
+
     return DecoratedBox(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -80,14 +78,6 @@ class CustomizationMenuView extends ConsumerWidget
                       const _ShowBalancesSettingsListItem(),
                       const _SettingsListItem.spacer(),
                       const _ShowPriceChartSettingsListItem(),
-                      if (hasNotifications &&
-                          connectivityStatusProvider ==
-                              ConnectivityStatus.isConnected)
-                        const _SettingsListItem.spacer(),
-                      if (hasNotifications &&
-                          connectivityStatusProvider ==
-                              ConnectivityStatus.isConnected)
-                        const _ActiveNotificationsSettingsListItem(),
                       if (UniversalPlatform.isMobile)
                         const _SettingsListItem.spacer(),
                       if (UniversalPlatform.isMobile)
@@ -182,30 +172,6 @@ class _ShowPriceChartSettingsListItem extends ConsumerWidget {
       isSwitched: showPriceChart,
       onChanged: (showPriceChart) async {
         await preferencesNotifier.setShowPriceChart(showPriceChart);
-      },
-    );
-  }
-}
-
-class _ActiveNotificationsSettingsListItem extends ConsumerWidget {
-  const _ActiveNotificationsSettingsListItem();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-
-    final activeNotifications = ref.watch(
-      SettingsProviders.settings
-          .select((settings) => settings.activeNotifications),
-    );
-    final preferencesNotifier = ref.read(SettingsProviders.settings.notifier);
-
-    return _SettingsListItem.withSwitch(
-      heading: localizations.activateNotifications,
-      icon: Symbols.notifications,
-      isSwitched: activeNotifications,
-      onChanged: (bool isSwitched) async {
-        await preferencesNotifier.setActiveNotifications(isSwitched);
       },
     );
   }

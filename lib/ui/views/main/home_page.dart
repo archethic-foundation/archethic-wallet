@@ -25,7 +25,6 @@ import 'package:aewallet/ui/views/main/dapps_tab.dart';
 import 'package:aewallet/ui/views/main/keychain_tab.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/layouts/add_token_sheet.dart';
-import 'package:aewallet/ui/views/transactions/incoming_transactions_notifier.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/tab_item.dart';
@@ -171,26 +170,24 @@ class _HomePageState extends ConsumerState<HomePage>
           opacity: 0.7,
         ),
       ),
-      child: IncomingTransactionsNotifier(
-        child: TabBarView(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: tabController,
-          children: const [
-            AddressBookTab(),
-            KeychainTab(),
-            Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                AccountTab(),
-                Positioned(
-                  bottom: 0,
-                  child: RecoveryPhraseBanner(),
-                ),
-              ],
-            ),
-            DAppsTab(),
-          ],
-        ),
+      child: TabBarView(
+        physics: const NeverScrollableScrollPhysics(),
+        controller: tabController,
+        children: const [
+          AddressBookTab(),
+          KeychainTab(),
+          Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              AccountTab(),
+              Positioned(
+                bottom: 0,
+                child: RecoveryPhraseBanner(),
+              ),
+            ],
+          ),
+          DAppsTab(),
+        ],
       ),
     );
   }
