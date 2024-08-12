@@ -19,8 +19,8 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/number_util.dart';
 import 'package:aewallet/util/queue.dart';
+import 'package:aewallet/util/task.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
@@ -56,15 +56,16 @@ class AppService {
       }
     }
 
-    final getTokensTasks = addressesOutCache.map(
-      (address) {
-        return () => _retryOnException(
-              () => sl.get<ApiService>().getToken([address]),
-              actionDescription: 'address: $address',
-            );
-      },
-    );
-    final getTokens = await getTokensTasks.batch();
+    final getTokens = await addressesOutCache
+        .map(
+          (address) => Task(
+            name: 'GetToken - address: $address',
+            logger: _logger,
+            action: () => sl.get<ApiService>().getToken([address]),
+          ),
+        )
+        .autoRetry()
+        .batch();
 
     for (final getToken in getTokens) {
       tokenMap.addAll(getToken);
@@ -86,19 +87,20 @@ class AppService {
   }) async {
     final transactionInputs = <String, List<TransactionInput>>{};
 
-    final getTransactionInputsTasks = addresses.toSet().map(
-          (address) => () => _retryOnException(
-                () => sl.get<ApiService>().getTransactionInputs(
-                  [address],
-                  request: request,
-                  limit: limit,
-                  pagingOffset: pagingOffset,
-                ),
-                actionDescription: 'address: $address',
+    final getTransactionInputs = await addresses
+        .toSet()
+        .map((address) => Task(
+              name: 'GetTransactionInputs : address: $address',
+              logger: _logger,
+              action: () => sl.get<ApiService>().getTransactionInputs(
+                [address],
+                request: request,
+                limit: limit,
+                pagingOffset: pagingOffset,
               ),
-        );
-
-    final getTransactionInputs = await getTransactionInputsTasks.batch();
+            ))
+        .autoRetry()
+        .batch();
     for (final getTransactionInput in getTransactionInputs) {
       transactionInputs.addAll(getTransactionInput);
     }
@@ -489,17 +491,21 @@ class AppService {
 
     // Get List of ownerships
     final ownershipsMap = <String, List<Ownership>>{};
-    final getTransactionOwnershipsTasks = ownershipsAddresses.toSet().map(
-          (ownershipsAddress) => () => _retryOnException(
-                () => sl.get<ApiService>().getTransactionOwnerships(
-                  [ownershipsAddress],
-                ),
-                actionDescription: 'ownershipsAddress: $ownershipsAddress',
-              ),
-        );
 
-    final getTransactionOwnerships =
-        await getTransactionOwnershipsTasks.batch();
+    final getTransactionOwnerships = await ownershipsAddresses
+        .toSet()
+        .map(
+          (ownershipsAddress) => Task(
+            name:
+                'GetAccountRecentTransactions - ownershipsAddress: $ownershipsAddress',
+            logger: _logger,
+            action: () => sl.get<ApiService>().getTransactionOwnerships(
+              [ownershipsAddress],
+            ),
+          ),
+        )
+        .autoRetry()
+        .batch();
 
     for (final getTransactionOwnership in getTransactionOwnerships) {
       ownershipsMap.addAll(getTransactionOwnership);
@@ -547,18 +553,21 @@ class AppService {
 
     final lastAddressesMap = <String, Transaction>{};
 
-    final getLastTransactionsTasks =
-        lastTransactionAddressesToSearch.toSet().map(
-              (lastTransactionAddressToSearch) => () => _retryOnException(
-                    () => sl.get<ApiService>().getLastTransaction(
-                      [lastTransactionAddressToSearch],
-                      request: 'address',
-                    ),
-                    actionDescription:
-                        'lastTransactionAddressToSearch: $lastTransactionAddressToSearch',
-                  ),
-            );
-    final getLastTransactions = await getLastTransactionsTasks.batch();
+    final getLastTransactions = await lastTransactionAddressesToSearch
+        .toSet()
+        .map(
+          (lastTransactionAddressToSearch) => Task(
+            name:
+                'GetAccountRecentTransactions - lastTransactionAddressToSearch: $lastTransactionAddressToSearch',
+            logger: _logger,
+            action: () => sl.get<ApiService>().getLastTransaction(
+              [lastTransactionAddressToSearch],
+              request: 'address',
+            ),
+          ),
+        )
+        .autoRetry()
+        .batch();
     for (final getLastTransaction in getLastTransactions) {
       lastAddressesMap.addAll(getLastTransaction);
     }
@@ -1114,58 +1123,5 @@ class AppService {
       _logger.severe('Failed to get transaction fees', e, stack);
     }
     return fromBigInt(transactionFee.fee).toDouble();
-  }
-
-  /// Retry function with a delay for Too Many Requests errors.
-  Future<T> _retryOnException<T>(
-    Future<T> Function() action, {
-    String? actionDescription,
-  }) async {
-    const maxRetries = 3;
-    const delaySeconds = 5;
-
-    var retryCount = 0;
-    while (retryCount < maxRetries) {
-      try {
-        _logger.info('${DateTime.now()} Call $action');
-        if (actionDescription != null) {
-          _logger.info(
-            '${DateTime.now()} $actionDescription}',
-          );
-        }
-        return await action();
-      } catch (e) {
-        if (e is ArchethicTooManyRequestsException) {
-          retryCount++;
-          _logger.info('${DateTime.now()} Retry $action}');
-          if (actionDescription != null) {
-            _logger.info(
-              '${DateTime.now()} $actionDescription}',
-            );
-          }
-
-          await Future.delayed(const Duration(seconds: delaySeconds));
-        } else {
-          rethrow;
-        }
-      }
-    }
-
-    _logger.info('${DateTime.now()} Max retries exceeded $action');
-    throw Exception('Max retries exceeded');
-  }
-}
-
-extension FutureBatch<T> on Iterable<Future<T> Function()> {
-  Future<List<T>> batch({
-    int chunkSize = 10,
-    Duration restDuration = const Duration(seconds: 1),
-  }) async {
-    final results = <T>[];
-    final chunks = slices(chunkSize);
-    for (final chunk in chunks) {
-      results.addAll(await Future.wait(chunk.map((action) => action())));
-    }
-    return results;
   }
 }
