@@ -27,7 +27,6 @@ class SettingsNotifier extends StateNotifier<Settings> {
 
   Future<void> reset() => _update(
         state.copyWith(
-          activeNotifications: false,
           activeVibrations: true,
           activeRPCServer: true,
           currency: AvailableCurrencyEnum.usd,
@@ -52,10 +51,6 @@ class SettingsNotifier extends StateNotifier<Settings> {
 
   Future<void> setShowPriceChart(bool showPriceChart) => _update(
         state.copyWith(showPriceChart: showPriceChart),
-      );
-
-  Future<void> setActiveNotifications(bool activeNotifications) => _update(
-        state.copyWith(activeNotifications: activeNotifications),
       );
 
   Future<void> setActiveVibrations(bool activeVibrations) => _update(

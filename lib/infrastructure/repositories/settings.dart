@@ -15,7 +15,6 @@ class SettingsRepository implements SettingsRepositoryInterface {
     final loadedPreferences = await preferences;
 
     return Settings(
-      activeNotifications: loadedPreferences.getActiveNotifications(),
       activeVibrations: loadedPreferences.getActiveVibrations(),
       activeRPCServer: loadedPreferences.getActiveRPCServer(),
       currency: loadedPreferences.getCurrency(currentLocale).currency,
@@ -34,8 +33,6 @@ class SettingsRepository implements SettingsRepositoryInterface {
   @override
   Future<void> setSettings(Settings settings) async {
     final loadedPreferences = await preferences;
-    await loadedPreferences
-        .setActiveNotifications(settings.activeNotifications);
     await loadedPreferences.setActiveVibrations(settings.activeVibrations);
     await loadedPreferences.setActiveRPCServer(settings.activeRPCServer);
     await loadedPreferences.setCurrency(AvailableCurrency(settings.currency));

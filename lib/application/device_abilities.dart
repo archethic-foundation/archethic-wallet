@@ -25,18 +25,6 @@ class DeviceAbilities {
     },
   );
 
-  static final hasNotificationsProvider = Provider<bool>(
-    (ref) {
-      if (UniversalPlatform.isIOS ||
-          UniversalPlatform.isAndroid ||
-          UniversalPlatform.isLinux ||
-          UniversalPlatform.isMacOS) {
-        return true;
-      }
-      return false;
-    },
-  );
-
   static final hasQRCodeProvider = Provider<bool>(
     (ref) {
       if (UniversalPlatform.isMobile) {

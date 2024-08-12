@@ -49,8 +49,6 @@ class PreferencesHiveDatasource {
   static const String recoveryPhraseSaved =
       'archethic_wallet_recoveryPhraseSaved';
 
-  static const String activeNotifications =
-      'archethic_wallet_activeNotifications';
   static const String languageSeed = 'archethic_wallet_language_seed';
   static const String mainScreenCurrentPage =
       'archethic_wallet_main_screen_current_page';
@@ -174,12 +172,6 @@ class PreferencesHiveDatasource {
       _setValue(activeVibrations, value);
 
   bool getActiveVibrations() => _getValue(activeVibrations, defaultValue: true);
-
-  Future<void> setActiveNotifications(bool value) =>
-      _setValue(activeNotifications, value);
-
-  bool getActiveNotifications() =>
-      _getValue(activeNotifications, defaultValue: true);
 
   Future<void> setActiveRPCServer(bool value) =>
       _setValue(activeRPCServer, value);

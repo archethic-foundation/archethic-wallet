@@ -273,7 +273,6 @@
     "selectAccountDescSeveral": "Your keychain contains several accounts. Which account do you want to manage first in your app? You will be able to create or select other accounts at any time.",
     "activateVibrations": "Activate vibrations",
     "activeRPCServer": "Allow DApp Connections",
-    "activateNotifications": "Activate notifications",
     "addServiceCommandReceivedNotification": "The %1 application wants to create a new service in your keychain.\nWould you like to confirm this action with the %2 account?\nThis action doesn't require any fees.",
     "sign1TransactionCommandReceivedNotification": "The %1 application wants you to sign 1 transaction.\nWould you like to confirm this action with the %2 account?\n\nOnce signed, transaction processing fees are estimated at",
     "signXTransactionsCommandReceivedNotification": "The %1 application wants you to sign %2 transactions.\nWould you like to confirm this action with the %3 account?\n\nOnce signed, transaction processing fees are estimated at",
