@@ -1,6 +1,6 @@
 part of 'providers.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class _AccountNotifier extends _$AccountNotifier {
   final _logger = Logger('AccountNotifier');
 

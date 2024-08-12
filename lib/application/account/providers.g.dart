@@ -225,12 +225,12 @@ class _GetAccountNFTFilteredProviderElement
 }
 
 String _$accountsRepositoryHash() =>
-    r'2b5e9161faf46fa8c5fa28cb4b3985178f121543';
+    r'0ac516c221ac09e193165a915f4addef8c124030';
 
 /// See also [_accountsRepository].
 @ProviderFor(_accountsRepository)
 final _accountsRepositoryProvider =
-    AutoDisposeProvider<AccountLocalRepositoryInterface>.internal(
+    Provider<AccountLocalRepositoryInterface>.internal(
   _accountsRepository,
   name: r'_accountsRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -240,8 +240,7 @@ final _accountsRepositoryProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _AccountsRepositoryRef
-    = AutoDisposeProviderRef<AccountLocalRepositoryInterface>;
+typedef _AccountsRepositoryRef = ProviderRef<AccountLocalRepositoryInterface>;
 String _$accountExistsNotifierHash() =>
     r'c2ffdcd9d52b517fbb67c33972047a984928a056';
 
@@ -389,10 +388,9 @@ class _AccountExistsNotifierProviderElement
       (origin as _AccountExistsNotifierProvider).accountName;
 }
 
-String _$accountNotifierHash() => r'42327f7eba28240db0753a0c8a241aeac62f9297';
+String _$accountNotifierHash() => r'e99ff9ed62abe6ce99cee3cd3bc12410e316123f';
 
-abstract class _$AccountNotifier
-    extends BuildlessAutoDisposeAsyncNotifier<Account?> {
+abstract class _$AccountNotifier extends BuildlessAsyncNotifier<Account?> {
   late final String accountName;
 
   FutureOr<Account?> build(
@@ -444,7 +442,7 @@ class _AccountNotifierFamily extends Family<AsyncValue<Account?>> {
 
 /// See also [_AccountNotifier].
 class _AccountNotifierProvider
-    extends AutoDisposeAsyncNotifierProviderImpl<_AccountNotifier, Account?> {
+    extends AsyncNotifierProviderImpl<_AccountNotifier, Account?> {
   /// See also [_AccountNotifier].
   _AccountNotifierProvider(
     String accountName,
@@ -500,8 +498,7 @@ class _AccountNotifierProvider
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<_AccountNotifier, Account?>
-      createElement() {
+  AsyncNotifierProviderElement<_AccountNotifier, Account?> createElement() {
     return _AccountNotifierProviderElement(this);
   }
 
@@ -520,13 +517,13 @@ class _AccountNotifierProvider
   }
 }
 
-mixin _AccountNotifierRef on AutoDisposeAsyncNotifierProviderRef<Account?> {
+mixin _AccountNotifierRef on AsyncNotifierProviderRef<Account?> {
   /// The parameter `accountName` of this provider.
   String get accountName;
 }
 
 class _AccountNotifierProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<_AccountNotifier, Account?>
+    extends AsyncNotifierProviderElement<_AccountNotifier, Account?>
     with _AccountNotifierRef {
   _AccountNotifierProviderElement(super.provider);
 

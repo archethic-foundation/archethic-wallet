@@ -103,7 +103,7 @@ class AccountRepository {
   }
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 AccountLocalRepositoryInterface _accountsRepository(
   _AccountsRepositoryRef ref,
 ) =>
