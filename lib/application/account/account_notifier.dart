@@ -1,6 +1,7 @@
 part of 'providers.dart';
 
-class _AccountNotifier extends FamilyAsyncNotifier<Account?, String> {
+@riverpod
+class _AccountNotifier extends _$AccountNotifier {
   final _logger = Logger('AccountNotifier');
 
   @override

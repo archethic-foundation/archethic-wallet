@@ -1,7 +1,7 @@
 part of 'providers.dart';
 
 @riverpod
-class _AccountsNotifier extends AutoDisposeAsyncNotifier<List<Account>> {
+class _AccountsNotifier extends _$AccountsNotifier {
   @override
   FutureOr<List<Account>> build() async {
     final session = ref.watch(sessionNotifierProvider);
@@ -35,6 +35,7 @@ class _AccountsNotifier extends AutoDisposeAsyncNotifier<List<Account>> {
     ref.invalidate(AccountProviders.account(account.name));
   }
 
+  // ignore: avoid_public_notifier_properties
   Future<_AccountNotifier?> get selectedAccountNotifier async {
     final accountName = (await future).selectedAccount?.name;
     if (accountName == null) return null;
