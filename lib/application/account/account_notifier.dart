@@ -12,7 +12,7 @@ class _AccountNotifier extends FamilyAsyncNotifier<Account?, String> {
   }
 
   Future<void> _refresh(
-    Future<void> Function(Account account) doRefresh,
+    List<Future<void> Function(Account account)> doRefreshes,
   ) async {
     try {
       final account = state.valueOrNull;
@@ -20,10 +20,12 @@ class _AccountNotifier extends FamilyAsyncNotifier<Account?, String> {
       await account.updateLastAddress();
 
       ref.read(refreshInProgressProviders.notifier).setRefreshInProgress(true);
-      await doRefresh(account);
+      for (final doRefresh in doRefreshes) {
+        await doRefresh(account);
 
-      final newAccountData = account.copyWith();
-      state = AsyncData(newAccountData);
+        final newAccountData = account.copyWith();
+        state = AsyncData(newAccountData);
+      }
     } catch (e, stack) {
       _logger.severe('Refresh failed', e, stack);
     } finally {
@@ -41,7 +43,7 @@ class _AccountNotifier extends FamilyAsyncNotifier<Account?, String> {
 
   Future<void> _refreshBalance(Account account) => account.updateBalance();
 
-  Future<void> refreshRecentTransactions() => _refresh(
+  Future<void> refreshRecentTransactions() => _refresh([
         (account) async {
           _logger.fine(
             'Start method refreshRecentTransactions for ${account.nameDisplayed}',
@@ -53,15 +55,15 @@ class _AccountNotifier extends FamilyAsyncNotifier<Account?, String> {
             'End method refreshRecentTransactions for ${account.nameDisplayed}',
           );
         },
-      );
+      ]);
 
-  Future<void> refreshFungibleTokens() => _refresh(
+  Future<void> refreshFungibleTokens() => _refresh([
         (account) async {
           await account.updateFungiblesTokens();
         },
-      );
+      ]);
 
-  Future<void> refreshNFTs() => _refresh(
+  Future<void> refreshNFTs() => _refresh([
         (account) async {
           final session = ref.read(sessionNotifierProvider).loggedIn!;
           final tokenInformation = await ref.read(
@@ -78,30 +80,44 @@ class _AccountNotifier extends FamilyAsyncNotifier<Account?, String> {
             tokenInformation.$2,
           );
         },
-      );
+      ]);
 
-  Future<void> refreshBalance() => _refresh(_refreshBalance);
+  Future<void> refreshBalance() => _refresh([_refreshBalance]);
 
   Future<void> refreshAll() => _refresh(
-        (account) async {
-          _logger.fine('(${account.name}) Start method refreshAll');
-          final session = ref.read(sessionNotifierProvider).loggedIn!;
-          final tokenInformation = await ref.read(
-            NFTProviders.getNFTList(
-              account.lastAddress!,
-              account.name,
+        [
+          (account) async {
+            _logger.fine('RefreshAll - Start Balance refresh');
+            await _refreshBalance(account);
+            _logger.fine('RefreshAll - End Balance refresh');
+          },
+          (account) async {
+            _logger.fine('RefreshAll - Start recent transactions refresh');
+            await _refreshRecentTransactions(account);
+            _logger.fine('RefreshAll - End recent transactions refresh');
+          },
+          (account) async {
+            _logger.fine('RefreshAll - Start Fungible Tokens refresh');
+            await account.updateFungiblesTokens();
+            _logger.fine('RefreshAll - End Fungible Tokens refresh');
+          },
+          (account) async {
+            _logger.fine('RefreshAll - Start NFT refresh');
+            final session = ref.read(sessionNotifierProvider).loggedIn!;
+            final tokenInformation = await ref.read(
+              NFTProviders.getNFTList(
+                account.lastAddress!,
+                account.name,
+                session.wallet.keychainSecuredInfos,
+              ).future,
+            );
+            await account.updateNFT(
               session.wallet.keychainSecuredInfos,
-            ).future,
-          );
-          await _refreshBalance(account);
-          await _refreshRecentTransactions(account);
-          await account.updateFungiblesTokens();
-          await account.updateNFT(
-            session.wallet.keychainSecuredInfos,
-            tokenInformation.$1,
-            tokenInformation.$2,
-          );
-          _logger.fine('End method refreshAll');
-        },
+              tokenInformation.$1,
+              tokenInformation.$2,
+            );
+            _logger.fine('RefreshAll - End NFT refresh');
+          },
+        ],
       );
 }
