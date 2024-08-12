@@ -4,6 +4,7 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/dapps/components/card_dapps.dart';
 import 'package:aewallet/ui/views/main/nft_tab.dart';
 import 'package:aewallet/ui/views/messenger/layouts/messenger_tab.dart';
+import 'package:aewallet/ui/views/sheets/bridge_sheet.dart';
 import 'package:aewallet/ui/views/sheets/dex_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -30,6 +31,17 @@ class DAppsListState extends ConsumerState<DAppsList> {
             dAppName: 'aeSwap',
             dAppDesc: AppLocalizations.of(context)!.dappsAESwapDesc,
             dAppLink: DEXSheet.routerPage,
+            dAppBackgroundImgCard: ArchethicTheme.backgroundAESwap,
+          ),
+        );
+      }
+
+      if (BridgeSheet.isAvailable) {
+        dAppsInfoList.add(
+          DAppsInfo(
+            dAppName: 'aeBridge',
+            dAppDesc: 'test',
+            dAppLink: BridgeSheet.routerPage,
             dAppBackgroundImgCard: ArchethicTheme.backgroundAESwap,
           ),
         );

@@ -48,6 +48,7 @@ import 'package:aewallet/ui/views/nft_creation/layouts/components/import_tab/nft
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/rpc_command_receiver.dart';
 import 'package:aewallet/ui/views/settings/backupseed_sheet.dart';
+import 'package:aewallet/ui/views/sheets/bridge_sheet.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
 import 'package:aewallet/ui/views/sheets/chart_sheet.dart';
 import 'package:aewallet/ui/views/sheets/connectivity_warning.dart';
