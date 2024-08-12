@@ -26,7 +26,8 @@ class SubscribeAccountHandler extends CommandHandler {
             command as RPCCommand<awc.SubscribeAccountRequest>;
 
             final accountExists = await ref.read(
-              AccountProviders.accountExists(command.data.serviceName).future,
+              AccountProviders.accountExists(name: command.data.serviceName)
+                  .future,
             );
             if (!accountExists) {
               return const Result.failure(awc.Failure.unknownAccount);

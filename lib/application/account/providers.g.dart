@@ -224,7 +224,314 @@ class _GetAccountNFTFilteredProviderElement
   bool? get favorite => (origin as _GetAccountNFTFilteredProvider).favorite;
 }
 
-String _$accountsNotifierHash() => r'8b029f252875c2b8361a81256e3c7c57c1c1f3f5';
+String _$accountsRepositoryHash() =>
+    r'2b5e9161faf46fa8c5fa28cb4b3985178f121543';
+
+/// See also [_accountsRepository].
+@ProviderFor(_accountsRepository)
+final _accountsRepositoryProvider =
+    AutoDisposeProvider<AccountLocalRepositoryInterface>.internal(
+  _accountsRepository,
+  name: r'_accountsRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$accountsRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _AccountsRepositoryRef
+    = AutoDisposeProviderRef<AccountLocalRepositoryInterface>;
+String _$accountExistsNotifierHash() =>
+    r'f0b33a3795ff3d6db808cf7c7ea485610fdceeed';
+
+abstract class _$AccountExistsNotifier
+    extends BuildlessAutoDisposeAsyncNotifier<bool> {
+  late final String name;
+
+  FutureOr<bool> build({
+    required String name,
+  });
+}
+
+/// See also [_AccountExistsNotifier].
+@ProviderFor(_AccountExistsNotifier)
+const _accountExistsNotifierProvider = _AccountExistsNotifierFamily();
+
+/// See also [_AccountExistsNotifier].
+class _AccountExistsNotifierFamily extends Family<AsyncValue<bool>> {
+  /// See also [_AccountExistsNotifier].
+  const _AccountExistsNotifierFamily();
+
+  /// See also [_AccountExistsNotifier].
+  _AccountExistsNotifierProvider call({
+    required String name,
+  }) {
+    return _AccountExistsNotifierProvider(
+      name: name,
+    );
+  }
+
+  @override
+  _AccountExistsNotifierProvider getProviderOverride(
+    covariant _AccountExistsNotifierProvider provider,
+  ) {
+    return call(
+      name: provider.name,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_accountExistsNotifierProvider';
+}
+
+/// See also [_AccountExistsNotifier].
+class _AccountExistsNotifierProvider
+    extends AutoDisposeAsyncNotifierProviderImpl<_AccountExistsNotifier, bool> {
+  /// See also [_AccountExistsNotifier].
+  _AccountExistsNotifierProvider({
+    required String name,
+  }) : this._internal(
+          () => _AccountExistsNotifier()..name = name,
+          from: _accountExistsNotifierProvider,
+          name: r'_accountExistsNotifierProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$accountExistsNotifierHash,
+          dependencies: _AccountExistsNotifierFamily._dependencies,
+          allTransitiveDependencies:
+              _AccountExistsNotifierFamily._allTransitiveDependencies,
+          name: name,
+        );
+
+  _AccountExistsNotifierProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.name,
+  }) : super.internal();
+
+  final String name;
+
+  @override
+  FutureOr<bool> runNotifierBuild(
+    covariant _AccountExistsNotifier notifier,
+  ) {
+    return notifier.build(
+      name: name,
+    );
+  }
+
+  @override
+  Override overrideWith(_AccountExistsNotifier Function() create) {
+    return ProviderOverride(
+      origin: this,
+      override: _AccountExistsNotifierProvider._internal(
+        () => create()..name = name,
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        name: name,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeAsyncNotifierProviderElement<_AccountExistsNotifier, bool>
+      createElement() {
+    return _AccountExistsNotifierProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is _AccountExistsNotifierProvider && other.name == name;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, name.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin _AccountExistsNotifierRef on AutoDisposeAsyncNotifierProviderRef<bool> {
+  /// The parameter `name` of this provider.
+  String get name;
+}
+
+class _AccountExistsNotifierProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<_AccountExistsNotifier,
+        bool> with _AccountExistsNotifierRef {
+  _AccountExistsNotifierProviderElement(super.provider);
+
+  @override
+  String get name => (origin as _AccountExistsNotifierProvider).name;
+}
+
+String _$accountNotifierHash() => r'c3ab8c93e137b7c9a3002dcfb240d0edcc25d751';
+
+abstract class _$AccountNotifier
+    extends BuildlessAutoDisposeAsyncNotifier<Account?> {
+  late final String name;
+
+  FutureOr<Account?> build(
+    String name,
+  );
+}
+
+/// See also [_AccountNotifier].
+@ProviderFor(_AccountNotifier)
+const _accountNotifierProvider = _AccountNotifierFamily();
+
+/// See also [_AccountNotifier].
+class _AccountNotifierFamily extends Family<AsyncValue<Account?>> {
+  /// See also [_AccountNotifier].
+  const _AccountNotifierFamily();
+
+  /// See also [_AccountNotifier].
+  _AccountNotifierProvider call(
+    String name,
+  ) {
+    return _AccountNotifierProvider(
+      name,
+    );
+  }
+
+  @override
+  _AccountNotifierProvider getProviderOverride(
+    covariant _AccountNotifierProvider provider,
+  ) {
+    return call(
+      provider.name,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_accountNotifierProvider';
+}
+
+/// See also [_AccountNotifier].
+class _AccountNotifierProvider
+    extends AutoDisposeAsyncNotifierProviderImpl<_AccountNotifier, Account?> {
+  /// See also [_AccountNotifier].
+  _AccountNotifierProvider(
+    String name,
+  ) : this._internal(
+          () => _AccountNotifier()..name = name,
+          from: _accountNotifierProvider,
+          name: r'_accountNotifierProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$accountNotifierHash,
+          dependencies: _AccountNotifierFamily._dependencies,
+          allTransitiveDependencies:
+              _AccountNotifierFamily._allTransitiveDependencies,
+          name: name,
+        );
+
+  _AccountNotifierProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.name,
+  }) : super.internal();
+
+  final String name;
+
+  @override
+  FutureOr<Account?> runNotifierBuild(
+    covariant _AccountNotifier notifier,
+  ) {
+    return notifier.build(
+      name,
+    );
+  }
+
+  @override
+  Override overrideWith(_AccountNotifier Function() create) {
+    return ProviderOverride(
+      origin: this,
+      override: _AccountNotifierProvider._internal(
+        () => create()..name = name,
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        name: name,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeAsyncNotifierProviderElement<_AccountNotifier, Account?>
+      createElement() {
+    return _AccountNotifierProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is _AccountNotifierProvider && other.name == name;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, name.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin _AccountNotifierRef on AutoDisposeAsyncNotifierProviderRef<Account?> {
+  /// The parameter `name` of this provider.
+  String get name;
+}
+
+class _AccountNotifierProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<_AccountNotifier, Account?>
+    with _AccountNotifierRef {
+  _AccountNotifierProviderElement(super.provider);
+
+  @override
+  String get name => (origin as _AccountNotifierProvider).name;
+}
+
+String _$accountsNotifierHash() => r'b5f45fb504840ad2e128cbf54fb57f22332d4ddf';
 
 /// See also [_AccountsNotifier].
 @ProviderFor(_AccountsNotifier)

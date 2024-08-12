@@ -10,7 +10,6 @@ import 'package:aewallet/infrastructure/repositories/local_account.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:collection/collection.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -104,21 +103,25 @@ class AccountRepository {
   }
 }
 
+@riverpod
+AccountLocalRepositoryInterface _accountsRepository(
+  _AccountsRepositoryRef ref,
+) =>
+    AccountLocalRepository();
+
+@riverpod
+class _AccountExistsNotifier extends _$AccountExistsNotifier {
+  @override
+  Future<bool> build({required String name}) async {
+    return (await ref.watch(AccountProviders.account(name).future)) != null;
+  }
+}
+
 abstract class AccountProviders {
-  static final accountsRepository = Provider<AccountLocalRepositoryInterface>(
-    (ref) => AccountLocalRepository(),
-    name: '_accountsRepositoryProvider',
-  );
+  static final accountsRepository = _accountsRepositoryProvider;
   static final accounts = _accountsNotifierProvider;
-  static final accountExists = FutureProvider.autoDispose.family<bool, String>(
-    (ref, arg) async => (await ref.watch(account(arg).future)) != null,
-    name: '_accountExistsProvider',
-  );
-  static final account =
-      AsyncNotifierProvider.family<_AccountNotifier, Account?, String>(
-    _AccountNotifier.new,
-    name: '_accountNotifierProvider',
-  );
+  static const accountExists = _accountExistsNotifierProvider;
+  static const account = _accountNotifierProvider;
   static final sortedAccounts = _sortedAccountsProvider;
   static final accountRepository = _accountRepositoryProvider;
   static const getAccountNFTFiltered = _getAccountNFTFilteredProvider;
