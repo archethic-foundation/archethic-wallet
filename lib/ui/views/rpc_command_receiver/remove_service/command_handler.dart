@@ -27,12 +27,6 @@ class RemoveServiceHandler extends CommandHandler {
           canHandle: (command) =>
               command is RPCCommand<awc.RemoveServiceRequest>,
           handle: (command) async {
-            _showNotification(
-              context: context,
-              ref: ref,
-              command: command,
-            );
-
             if (command.data.name.isEmpty) {
               return const Result.failure(
                 awc.Failure.invalidParams,
@@ -61,6 +55,12 @@ class RemoveServiceHandler extends CommandHandler {
                 awc.Failure.serviceNotFound,
               );
             }
+
+            _showNotification(
+              context: context,
+              ref: ref,
+              command: command,
+            );
 
             final servicesRemoved = Map<String, Service>.from(keychain.services)
               ..removeWhere((key, value) => key == nameEncoded);
