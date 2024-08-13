@@ -20,22 +20,13 @@ dependencies:
       url: https://github.com/redDwarf03/app_version_update.git
       ref: main
 
-  archethic_dapp_framework_flutter: ^1.2.10
+  #archethic_dapp_framework_flutter: ^1.2.10
   #archethic_dapp_framework_flutter:
   #  git:
   #    url: https://github.com/archethic-foundation/archethic-dapp-framework-flutter.git
   #    ref: web_extension_support
-  #archethic_dapp_framework_flutter:
-  #  path: ../archethic-dapp-framework-flutter
-
-  # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
-  archethic_lib_dart: ^3.4.2
-  #archethic_lib_dart:
-  # git:
-  #  url: https://github.com/archethic-foundation/libdart.git
-  #  ref: fix_websocket_subscription_release
-  #archethic_lib_dart:
-  #  path: ../libdart-2
+  archethic_dapp_framework_flutter:
+    path: ../archethic-dapp-framework-flutter
 
   # Archethic Messaging Dart SDK
   archethic_messaging_lib_dart: ^0.0.19
