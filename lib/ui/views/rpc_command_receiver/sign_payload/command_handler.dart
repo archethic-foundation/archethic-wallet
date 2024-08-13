@@ -11,6 +11,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logging/logging.dart';
 
 const slippage = 1.01;
 
@@ -21,6 +22,7 @@ class SignPayloadsCommandHandler extends CommandHandler {
   }) : super(
           canHandle: (command) => command is RPCCommand<awc.SignPayloadRequest>,
           handle: (command) async {
+            final logger = Logger('RPCHandler - SignPayloads');
             command as RPCCommand<awc.SignPayloadRequest>;
 
             final signedPayloadsList = <awc.SignPayloadsResultDetail>[];
@@ -82,6 +84,10 @@ class SignPayloadsCommandHandler extends CommandHandler {
               serviceName,
               index: index,
               pathSuffix: pathSuffix,
+            );
+
+            logger.info(
+              'Service pubkey : ${archethic.uint8ListToHex(keypair.publicKey!)}',
             );
             for (final rpcSignPayloadCommandData in command.data.payloads) {
               final payload = rpcSignPayloadCommandData.payload;
