@@ -11,6 +11,7 @@ import 'package:aewallet/infrastructure/rpc/get_services_from_keychain/command_h
 import 'package:aewallet/infrastructure/rpc/keychain_derive_address/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/keychain_derive_keypair/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/refresh_current_account/command_handler.dart';
+import 'package:aewallet/infrastructure/rpc/remove_service/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/send_transaction/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/sign_payloads/command_handler.dart';
 import 'package:aewallet/infrastructure/rpc/sign_transactions/command_handler.dart';
@@ -67,6 +68,10 @@ class AWCJsonRPCServer {
       ..registerMethod(
         'addService',
         (params) => _handle(RPCAddServiceCommandHandler(), params),
+      )
+      ..registerMethod(
+        'removeService',
+        (params) => _handle(RPCRemoveServiceCommandHandler(), params),
       )
       ..registerMethod(
         'getServicesFromKeychain',

@@ -95,7 +95,7 @@ packages:
       path: "../../packages/archethic-wallet-client-dart"
       relative: true
     source: path
-    version: "2.0.5"
+    version: "2.0.7"
   archive:
     dependency: transitive
     description:
