@@ -268,6 +268,7 @@
     "activeRPCServer": "Connexions DApps autorisées",
     "activateNotifications": "Activer les notifications",
     "addServiceCommandReceivedNotification": "L'application %1 souhaite créer un nouveau service dans votre porte-clés.\nSouhaitez-vous confirmer cette action avec le compte %2 ?\nCette action ne requiert aucun frais.",
+    "removeServiceCommandReceivedNotification": "L'application %1 souhaite supprimer un service de votre porte-clés.\nVous n'aurez plus accès ni aux fonds, ni aux tokens associés.\nRéférez vous à l'historique de votre porte-clés afin de pouvoir accéder aux informations relatives à ce compte.\nSouhaitez-vous confirmer cette action avec le compte %2 ?\nCette action ne requiert aucun frais.",
     "sign1TransactionCommandReceivedNotification": "L'application %1 vous demande de signer 1 transaction.\nSouhaitez-vous confirmer cette action avec le compte %2 ?\n\nUne fois signée, les frais de traitement de la transaction sont estimés à",
     "signXTransactionsCommandReceivedNotification": "L'application %1 vous demande de signer %2 transactions.\nSouhaitez-vous confirmer cette action avec le compte %3 ?\n\nUne fois signées, les frais de traitement des transactions sont estimés à",
     "sign1PayloadCommandReceivedNotification": "L'application %1 vous demande de signer 1 donnée.\nSouhaitez-vous confirmer cette action avec le compte %2 ?\n\nCette action ne requiert aucun frais.",
