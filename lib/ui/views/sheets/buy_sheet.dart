@@ -1,16 +1,19 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:ui';
 
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BuySheet extends ConsumerWidget implements SheetSkeletonInterface {
   const BuySheet({super.key});
@@ -47,128 +50,204 @@ class BuySheet extends ConsumerWidget implements SheetSkeletonInterface {
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(40),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 20,
+        right: 20,
+        bottom: 20,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              InkWell(
-                onTap: () async {
-                  UIUtil.showWebview(
-                    context,
-                    'https://app.uniswap.org/#/swap?outputCurrency=0x8a3d77e9d6968b780564936d15b09805827c21fa&use=V2',
-                    'Uniswap',
-                  );
-                },
+              Expanded(
+                flex: 3,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SvgPicture.asset(
-                      'assets/buy/Ethereum.svg',
-                      height: 40,
+                    Text(
+                      'Centralized Exchanges'.toUpperCase(),
+                      style: ArchethicThemeStyles.textStyleSize14W200Primary,
                     ),
-                    const SizedBox(
-                      height: 15,
+                    const SizedBox(height: 2),
+                    Text(
+                      r'Buy with Fiats (€ or $):',
+                      style: ArchethicThemeStyles.textStyleSize14W600Primary,
                     ),
-                    SvgPicture.asset(
-                      'assets/buy/Uniswap.svg',
-                      width: 50,
-                    ),
-                  ],
-                ),
-              ),
-              InkWell(
-                onTap: () async {
-                  UIUtil.showWebview(
-                    context,
-                    'https://pancakeswap.finance/swap?inputCurrency=0xe9e7cea3dedca5984780bafc599bd69add087d56&outputCurrency=0xb001f1E7c8bda414aC7Cf7Ecba5469fE8d24B6de',
-                    'PancakeSwap',
-                  );
-                },
-                child: Column(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/buy/BSC.svg',
-                      height: 40,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    SvgPicture.asset(
-                      'assets/buy/Pancake.svg',
-                      width: 55,
-                    ),
-                  ],
-                ),
-              ),
-              InkWell(
-                onTap: () async {
-                  UIUtil.showWebview(
-                    context,
-                    'https://quickswap.exchange/#/swap',
-                    'Quick',
-                  );
-                },
-                child: Column(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/buy/Polygon.svg',
-                      height: 40,
-                    ),
-                    const SizedBox(
-                      height: 23,
-                    ),
-                    SvgPicture.asset(
-                      'assets/buy/Quickswap.svg',
-                      height: 50,
+                    const SizedBox(height: 16),
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        final maxWidth = constraints.maxWidth;
+                        final itemWidth = (maxWidth - 16) / 2;
+                        return Wrap(
+                          alignment: WrapAlignment.center,
+                          spacing: 16,
+                          runSpacing: 16,
+                          children: [
+                            SizedBox(
+                              width: itemWidth,
+                              child: _ExchangeButton(
+                                image: SvgPicture.asset(
+                                  'assets/exchanges/probit.svg',
+                                  colorFilter: const ColorFilter.mode(
+                                    Color(0xFF4231C8),
+                                    BlendMode.srcIn,
+                                  ),
+                                  height: 70,
+                                ),
+                                text: 'ProBit Exchange',
+                                url:
+                                    'https://www.probit.com/app/exchange/UCO-USDT',
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
                   ],
                 ),
               ),
             ],
           ),
-        ),
-        const SizedBox(
-          height: 50,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Divider(
-            height: 1,
-            color: ArchethicTheme.backgroundDarkest.withOpacity(0.1),
-          ),
-        ),
-        const SizedBox(
-          height: 50,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
+          const SizedBox(height: 30),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              InkWell(
-                onTap: () async {
-                  UIUtil.showWebview(
-                    context,
-                    'https://www.probit.com/en-us/',
-                    'Probit',
-                  );
-                },
-                child: Image.asset(
-                  'assets/buy/Probit.png',
-                  color: ArchethicTheme.text,
-                  height: 40,
+              Expanded(
+                flex: 9,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Decentralized exchanges'.toUpperCase(),
+                      style: ArchethicThemeStyles.textStyleSize14W200Primary,
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      'Buy with other Cryptos:',
+                      style: ArchethicThemeStyles.textStyleSize14W600Primary,
+                    ),
+                    const SizedBox(height: 16),
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        final maxWidth = constraints.maxWidth;
+                        final itemWidth = (maxWidth - 20) / 2;
+                        return Wrap(
+                          alignment: WrapAlignment.center,
+                          spacing: 16,
+                          runSpacing: 16,
+                          children: [
+                            SizedBox(
+                              width: itemWidth,
+                              child: _ExchangeButton(
+                                image: Image.asset(
+                                  'assets/exchanges/archethic.png',
+                                  height: 70,
+                                ),
+                                text: 'Archethic Chain',
+                                url: 'https://swap.archethic.net/swap',
+                              ),
+                            ),
+                            SizedBox(
+                              width: itemWidth,
+                              child: _ExchangeButton(
+                                image: Image.asset(
+                                  'assets/exchanges/polygon.png',
+                                  height: 70,
+                                ),
+                                text: 'Polygon Chain',
+                                url:
+                                    'https://swap.defillama.com/?chain=polygon&from=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&tab=swap&to=0x3c720206bfacb2d16fa3ac0ed87d2048dbc401fc',
+                              ),
+                            ),
+                            SizedBox(
+                              width: itemWidth,
+                              child: _ExchangeButton(
+                                image: Image.asset(
+                                  'assets/exchanges/ethereum.png',
+                                  height: 70,
+                                ),
+                                text: 'Ethereum Chain',
+                                url:
+                                    'https://swap.defillama.com/?chain=ethereum&from=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&tab=swap&to=0x8a3d77e9d6968b780564936d15b09805827c21fa',
+                              ),
+                            ),
+                            SizedBox(
+                              width: itemWidth,
+                              child: _ExchangeButton(
+                                image: Image.asset(
+                                  'assets/exchanges/bsc.png',
+                                  height: 70,
+                                ),
+                                text: 'Binance Chain',
+                                url:
+                                    'https://swap.defillama.com/?chain=bsc&from=0x55d398326f99059ff775485246999027b3197955&tab=swap&to=0xb001f1e7c8bda414ac7cf7ecba5469fe8d24b6de',
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ],
                 ),
-              ),
-              const SizedBox(
-                height: 50,
               ),
             ],
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ExchangeButton extends StatelessWidget {
+  const _ExchangeButton({
+    required this.image,
+    required this.text,
+    required this.url,
+  });
+  final Widget image;
+  final String text;
+  final String url;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        launchUrl(Uri.parse(url));
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: ArchethicTheme.backgroundRecentTxListCardTransferOutput,
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(
+                color: ArchethicTheme.backgroundRecentTxListCardTokenCreation
+                    .withOpacity(0.3),
+              ),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                image,
+                const SizedBox(height: 8),
+                AutoSizeText(
+                  text,
+                  maxLines: 1,
+                  textAlign: TextAlign.center,
+                  style: ArchethicThemeStyles.textStyleSize14W200Primary,
+                ),
+              ],
+            ),
+          ),
         ),
-      ],
+      ),
     );
   }
 }

@@ -198,7 +198,7 @@
     "transactionInfosKeyTimeStamp": "Timestamp",
     "transactionInfosKeyCrossValidationStamps": "Cross Validation Stamp",
     "transactionInfosKeySignature": "Signature",
-    "transactionBuyHeader": "Buy UCO",
+    "transactionBuyHeader": "Where to Buy UCO ?",
     "receive": "Receive",
     "buy": "Buy",
     "refresh": "Refresh",
