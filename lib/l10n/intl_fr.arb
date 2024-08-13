@@ -191,7 +191,7 @@
     "transactionInfosKeyTimeStamp": "Date de la génération de la transaction",
     "transactionInfosKeyCrossValidationStamps": "Estampille(s) de contre-validation",
     "transactionInfosKeySignature": "Signature",
-    "transactionBuyHeader": "Acheter des UCO",
+    "transactionBuyHeader": "Où acheter des UCO ?",
     "receive": "Recevoir",
     "buy": "Acheter",
     "refresh": "Actualiser",

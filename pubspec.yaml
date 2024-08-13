@@ -357,7 +357,7 @@ flutter:
     - assets/icons/languages/
     - assets/icons/menu/
     - assets/icons/txInfos/
-    - assets/buy/
+    - assets/exchanges/
     - assets/themes/archethic/
     - lib/model/json-schemas/nft/opensea.json
     - lib/model/json-schemas/nft/archethic.json
