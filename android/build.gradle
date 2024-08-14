@@ -5,11 +5,13 @@ allprojects {
         jcenter()
     }
 
+    // Configuration added to make the webview work with Android - start
     configurations.all {
         resolutionStrategy {
             force 'androidx.webkit:webkit:1.8.0'
         }
     }
+    // Configuration added to make the webview work with Android - end
 }
 
 rootProject.buildDir = '../build'

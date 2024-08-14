@@ -287,8 +287,10 @@ dependencies:
   # Yubico dart library for Dart/Flutter
   yubidart: ^2.0.0
 
+# Configuration added to make the webview work with Android - start
 dependency_overrides:
   webview_flutter_android: 3.16.1
+# Configuration added to make the webview work with Android - end
 
 dev_dependencies:
   build_runner: ^2.4.5
