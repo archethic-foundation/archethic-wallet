@@ -38,13 +38,13 @@ dependencies:
   # path: ../messaging_dart_sdk
 
   # RPC datastructures.
-  #archethic_wallet_client: ^2.0.7
+  archethic_wallet_client: ^2.0.8
   #archethic_wallet_client:
   #  git:
   #    url: https://github.com/archethic-foundation/archethic-wallet-client-dart.git
   #    ref: 40-add-a-description-for-each-tx-to-sign-to-explain-the-goal-of-the-tx
-  archethic_wallet_client:
-    path: ../archethic-wallet-client-dart
+  #archethic_wallet_client:
+  #  path: ../archethic-wallet-client-dart
 
   # An ASN1 parser library for Dart. Encodes / decodes from ASN1 Objects to BER bytes
   asn1lib: ^1.5.0
