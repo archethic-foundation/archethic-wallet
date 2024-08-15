@@ -60,20 +60,6 @@ final _authenticatedRoutes = [
     ),
   ),
   GoRoute(
-    path: MessengerTab.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
-      key: state.pageKey,
-      child: const MessengerTab(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
-    ),
-  ),
-  GoRoute(
     path: NFTListPerCategory.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
       transitionDuration: Duration.zero,
@@ -129,54 +115,6 @@ final _authenticatedRoutes = [
         ),
       ),
     ],
-  ),
-  GoRoute(
-    path: MessengerDiscussionPage.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
-      key: state.pageKey,
-      child: MessengerDiscussionPage(
-        discussionAddress: state.extra! as String,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
-    ),
-  ),
-  GoRoute(
-    path: DiscussionDetailsPage.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
-      key: state.pageKey,
-      child: DiscussionDetailsPage(
-        discussionAddress: state.extra! as String,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
-    ),
-  ),
-  GoRoute(
-    path: UpdateDiscussionPage.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
-      key: state.pageKey,
-      child: UpdateDiscussionPage(
-        discussion: state.extra! as Discussion,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
-    ),
   ),
   GoRoute(
     path: AddAccountSheet.routerPage,
@@ -436,17 +374,6 @@ final _authenticatedRoutes = [
     ),
   ),
   GoRoute(
-    path: CreateDiscussionSheet.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
-      key: state.pageKey,
-      child: const CreateDiscussionSheet(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(opacity: animation, child: child),
-    ),
-  ),
-  GoRoute(
     path: SettingsSheetWallet.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
       transitionDuration: Duration.zero,
@@ -455,60 +382,6 @@ final _authenticatedRoutes = [
       child: const SettingsSheetWallet(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
           FadeTransition(opacity: animation, child: child),
-    ),
-  ),
-  GoRoute(
-    path: CreateDiscussionValidationSheet.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
-      key: state.pageKey,
-      child: CreateDiscussionValidationSheet(
-        discussionCreationSuccess: (state.extra!
-            as Map<String, dynamic>)['discussionCreationSuccess'] as Function?,
-        fromRouterPage:
-            (state.extra! as Map<String, dynamic>)['fromRouterPage'] as String?,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
-    ),
-  ),
-  GoRoute(
-    path: AddDiscussionSheet.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
-      key: state.pageKey,
-      child: AddDiscussionSheet(
-        discussion: state.extra! as Discussion,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
-    ),
-  ),
-  GoRoute(
-    path: UpdateDiscussionAddMembers.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
-      key: state.pageKey,
-      child: UpdateDiscussionAddMembers(
-        listMembers: (state.extra! as Map<String, dynamic>)['listMembers']!
-            as List<String>,
-        onDisposed:
-            (state.extra! as Map<String, dynamic>)['onDisposed'] as Function?,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
     ),
   ),
 ];

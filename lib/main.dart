@@ -5,7 +5,6 @@ import 'dart:io';
 
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/migrations/migration_manager.dart';
-import 'package:aewallet/application/notification/providers.dart';
 import 'package:aewallet/application/oracle/provider.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/language.dart';
@@ -186,9 +185,6 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final language = ref.watch(LanguageProviders.selectedLanguage);
-    if (FeatureFlags.messagingActive) {
-      NotificationProviders.keepPushSettingsUpToDateWorker(ref);
-    }
 
     SystemChrome.setSystemUIOverlayStyle(
       ArchethicTheme.statusBar,
@@ -255,9 +251,6 @@ class SplashState extends ConsumerState<Splash> {
     final locale = ref.read(LanguageProviders.selectedLocale);
     await ref.read(SettingsProviders.settings.notifier).initialize(locale);
     await ref.read(AuthenticationProviders.settings.notifier).initialize();
-    if (FeatureFlags.messagingActive) {
-      await ref.read(NotificationProviders.repository).initialize();
-    }
     await ref
         .read(
           VerifiedTokensProviders.verifiedTokens.notifier,

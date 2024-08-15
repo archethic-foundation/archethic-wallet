@@ -14,7 +14,6 @@ import 'package:aewallet/util/logger.dart';
 import 'package:aewallet/util/nfc.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show AddressService, ApiService, OracleService;
-import 'package:archethic_messaging_lib_dart/archethic_messaging_lib_dart.dart';
 import 'package:coingecko_api/coingecko_api.dart';
 import 'package:ledger_dart_lib/ledger_dart_lib.dart';
 
@@ -64,11 +63,6 @@ Future<void> _setupServiceLocatorNetworkDependencies() async {
         network,
         logsActivation: false,
       ),
-    )
-    ..registerLazySingleton<MessagingService>(
-      () => MessagingService(
-        logsActivation: false,
-      ),
     );
   await LoggerSetup.instance().setup();
 }
@@ -77,8 +71,7 @@ Future<void> updateServiceLocatorNetworkDependencies() async {
   sl
     ..unregister<ApiService>()
     ..unregister<AddressService>()
-    ..unregister<OracleService>()
-    ..unregister<MessagingService>();
+    ..unregister<OracleService>();
 
   await _setupServiceLocatorNetworkDependencies();
 }
