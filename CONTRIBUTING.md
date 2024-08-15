@@ -240,7 +240,6 @@ Storage **Boxes** are split into  categories :
 - **[CacheManagerHive](./lib/util/cache_manager_hive.dart)**: Blockchain cache for various data
     - Token images data
 - **[NotificationsSetup](./lib/infrastructure/datasources/notification.vault.dart)** : [Push notification data](./lib/model/data/notification_setup_dto.dart)
-- **[MessengerDiscussion](./lib/infrastructure/datasources/discussion.vault.dart)** : [Discussions data](./lib/model/data/messenger/discussion.dart)
 
 ### Encrypted boxes
 
