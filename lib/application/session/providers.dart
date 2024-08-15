@@ -74,13 +74,9 @@ class SessionNotifier extends _$SessionNotifier {
   }
 
   Future<void> logout() async {
-    if (FeatureFlags.messagingActive) {
-      await ref.read(NotificationProviders.repository).unsubscribeAll();
-    }
     await ref.read(SettingsProviders.settings.notifier).reset();
     await AuthenticationProviders.reset(ref);
     await ContactProviders.reset(ref);
-    await MessengerProviders.reset(ref);
 
     await KeychainInfoVaultDatasource.clear();
     await _appWalletDatasource.clearAppWallet();

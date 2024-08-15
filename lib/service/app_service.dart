@@ -89,16 +89,18 @@ class AppService {
 
     final getTransactionInputs = await addresses
         .toSet()
-        .map((address) => Task(
-              name: 'GetTransactionInputs : address: $address',
-              logger: _logger,
-              action: () => sl.get<ApiService>().getTransactionInputs(
-                [address],
-                request: request,
-                limit: limit,
-                pagingOffset: pagingOffset,
-              ),
-            ))
+        .map(
+          (address) => Task(
+            name: 'GetTransactionInputs : address: $address',
+            logger: _logger,
+            action: () => sl.get<ApiService>().getTransactionInputs(
+              [address],
+              request: request,
+              limit: limit,
+              pagingOffset: pagingOffset,
+            ),
+          ),
+        )
         .autoRetry()
         .batch();
     for (final getTransactionInput in getTransactionInputs) {

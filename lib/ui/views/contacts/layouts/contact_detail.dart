@@ -5,10 +5,8 @@ import 'dart:async';
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/contact.dart';
-import 'package:aewallet/model/public_key.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
@@ -16,8 +14,6 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/layouts/components/contact_detail_tab.dart';
 import 'package:aewallet/ui/views/contacts/layouts/components/single_contact_balance.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
-import 'package:aewallet/ui/views/messenger/layouts/create_discussion_validation_sheet.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
@@ -278,9 +274,6 @@ class _ContactDetailActions extends ConsumerWidget {
       ),
     );
 
-    final selectedAccount =
-        ref.read(AccountProviders.accounts).valueOrNull?.selectedAccount;
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -330,62 +323,6 @@ class _ContactDetailActions extends ConsumerWidget {
               ],
             ),
           ),
-        if (FeatureFlags.messagingActive &&
-                readOnly == false &&
-                PublicKey(contact.publicKey)
-                    .isValid // we can create discussion only with contact with valid public keys
-                &&
-                contact.format.toUpperCase() !=
-                    selectedAccount?.nameDisplayed
-                        .toUpperCase() // we will not create a discussion with ourselves
-            )
-          IconButton(
-            key: const Key('newDiscussion'),
-            onPressed: () {
-              ref
-                  .watch(MessengerProviders.createDiscussionForm.notifier)
-                  .addMember(contact);
-              context.push(
-                CreateDiscussionValidationSheet.routerPage,
-                extra: {
-                  'discussionCreationSuccess': () {
-                    ref
-                        .read(SettingsProviders.settings.notifier)
-                        .setMainScreenCurrentPage(4);
-                  },
-                  'fromRouterPage': CreateDiscussionValidationSheet.routerPage,
-                },
-              );
-            },
-            icon: Column(
-              children: [
-                const Icon(Symbols.edit_square),
-                const SizedBox(
-                  height: 4,
-                ),
-                Text(localizations.discussion),
-              ],
-            ),
-          ),
-        IconButton(
-          key: const Key('viewExplorer'),
-          onPressed: () {
-            UIUtil.showWebview(
-              context,
-              '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/chain?address=${contact.genesisAddress}',
-              '',
-            );
-          },
-          icon: Column(
-            children: [
-              const Icon(Symbols.open_in_new),
-              const SizedBox(
-                height: 4,
-              ),
-              Text(localizations.explorer),
-            ],
-          ),
-        ),
       ],
     );
   }

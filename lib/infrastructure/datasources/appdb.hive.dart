@@ -8,10 +8,7 @@ import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/app_keychain.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
-import 'package:aewallet/model/data/messenger/discussion.dart';
-import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/model/data/nft_infos_off_chain.dart';
-import 'package:aewallet/model/data/notification_setup_dto.dart';
 import 'package:aewallet/model/data/price.dart';
 import 'package:aewallet/util/cache_manager_hive.dart';
 import 'package:flutter/foundation.dart';
@@ -29,10 +26,8 @@ class HiveTypeIds {
   static const accountToken = 8;
   static const tokenInformation = 9;
   static const nftInfosOffChain = 11;
-  static const discussion = 12;
   static const pubKeyAccessRecipient = 13;
   static const contactAccessRecipient = 14;
-  static const discussionMessage = 15;
   static const notificationsSetup = 16;
   static const cacheItem = 17;
   static const tokenCollection = 18;
@@ -61,11 +56,8 @@ class DBHelper {
       ..registerAdapter(AccountTokenAdapter())
       ..registerAdapter(TokenInformationAdapter())
       ..registerAdapter(NftInfosOffChainAdapter())
-      ..registerAdapter(DiscussionImplAdapter())
-      ..registerAdapter(DiscussionMessageImplAdapter())
       ..registerAdapter(PubKeyAccessRecipientAdapter())
       ..registerAdapter(ContactAccessRecipientAdapter())
-      ..registerAdapter(NotificationsSetupImplAdapter())
       ..registerAdapter(CacheItemHiveAdapter())
       ..registerAdapter(WalletTokenHiveDtoAdapter())
       ..registerAdapter(WalletTokenOwnershipHiveDtoAdapter())
