@@ -54,11 +54,12 @@ class TokenDetailSheet extends ConsumerWidget
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final preferences = ref.watch(SettingsProviders.settings);
-    final accountSelected = ref
-        .watch(
-          AccountProviders.selectedAccount,
-        )
-        .valueOrNull;
+    final accountSelected = ref.watch(
+      AccountProviders.accounts.select(
+        (accounts) => accounts.valueOrNull?.selectedAccount,
+      ),
+    );
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[

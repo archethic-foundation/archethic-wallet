@@ -321,6 +321,7 @@ class _$SettingsImpl extends _Settings {
 abstract class _Settings extends Settings {
   const factory _Settings(
 <<<<<<< HEAD
+<<<<<<< HEAD
           {required final AvailablePrimaryCurrency primaryCurrency,
 =======
 <<<<<<< HEAD
@@ -339,6 +340,8 @@ abstract class _Settings extends Settings {
           required final MarketPriceHistoryInterval priceChartIntervalOption}) =
       _$SettingsImpl;
 =======
+=======
+>>>>>>> 899629f5 (Fix selectedAccount provider)
       {required final AvailableCurrencyEnum currency,
       required final AvailablePrimaryCurrency primaryCurrency,
       required final AvailableLanguage language,
@@ -348,12 +351,10 @@ abstract class _Settings extends Settings {
       required final bool showBalances,
       required final bool activeVibrations,
       required final bool activeRPCServer,
-      required final bool activeNotifications,
       required final int mainScreenCurrentPage,
       required final bool showPriceChart,
       required final aedappfm.MarketPriceHistoryInterval
           priceChartIntervalOption}) = _$SettingsImpl;
->>>>>>> 9e840ffb (feat: :sparkles: Use fetch-api-service instead of coingecko)
   const _Settings._() : super._();
 
   @override
