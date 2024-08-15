@@ -43,9 +43,8 @@ class TokensListFormNotifier extends AutoDisposeNotifier<TokensListFormState> {
       cancelToken: cancelToken,
     );
 
-    final selectedAccount = await ref.read(
-      AccountProviders.selectedAccount.future,
-    );
+    final selectedAccount =
+        await ref.read(AccountProviders.accounts.future).selectedAccount;
 
     final tokensList = await ref.read(
       TokensProviders.getTokensList(selectedAccount!.genesisAddress).future,
