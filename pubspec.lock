@@ -61,82 +61,10 @@ packages:
   archethic_dapp_framework_flutter:
     dependency: "direct main"
     description:
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      name: archethic_dapp_framework_flutter
-      sha256: "50305d48c2736a313e8e239f43405e81103127db9949840d1836a2abd0d0e5fa"
-      url: "https://pub.dev"
-    source: hosted
-<<<<<<< HEAD
-    version: "1.2.12"
-=======
-<<<<<<< HEAD
-    version: "1.2.10"
-=======
-<<<<<<< HEAD
-    version: "1.2.8"
-=======
-<<<<<<< HEAD
-    version: "1.2.7"
-=======
-<<<<<<< HEAD
-    version: "1.2.4"
-=======
-    version: "1.2.3"
-=======
       path: "../archethic-dapp-framework-flutter"
       relative: true
     source: path
-    version: "1.2.0"
->>>>>>> 870f7567 (🚧 UI Adjustments)
->>>>>>> fb89ea61 (🚧 UI Adjustments)
->>>>>>> 3b0f1027 (🚧 UI Adjustments)
-<<<<<<< HEAD
->>>>>>> 849d21aa (🚧 UI Adjustments)
-<<<<<<< HEAD
->>>>>>> 3c447e76 (🚧 UI Adjustments)
-<<<<<<< HEAD
->>>>>>> 1cb80d60 (🚧 UI Adjustments)
-=======
-=======
-=======
-=======
-      path: "../archethic-dapp-framework-flutter"
-      relative: true
-    source: path
-    version: "1.2.3"
->>>>>>> f6404749 (Upgrade archethic_messaging_lib_dart)
->>>>>>> 89e66d5e (Upgrade archethic_messaging_lib_dart)
-<<<<<<< HEAD
->>>>>>> c770142b (Upgrade archethic_messaging_lib_dart)
-<<<<<<< HEAD
->>>>>>> c16ab8b8 (Upgrade archethic_messaging_lib_dart)
-=======
-=======
-=======
-=======
->>>>>>> e6d415b1 (lints)
-=======
->>>>>>> 3b989715 (fix rebase)
-      path: "../archethic-dapp-framework-flutter"
-      relative: true
-    source: path
-    version: "1.2.7"
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 73bd942e (fix rebase)
->>>>>>> cf0b2edd (fix rebase)
-<<<<<<< HEAD
->>>>>>> 13f39fee (fix rebase)
-=======
-=======
->>>>>>> e6d415b1 (lints)
->>>>>>> 6ca99974 (lints)
-=======
->>>>>>> 3b989715 (fix rebase)
+    version: "1.2.13"
   archethic_lib_dart:
     dependency: transitive
     description:
@@ -461,10 +389,10 @@ packages:
     dependency: "direct main"
     description:
       name: crypto
-      sha256: "1dceb0cf05cb63a7852c11560060e53ec2f182079a16ced6f4395c5b0875baf8"
+      sha256: ec30d999af904f33454ba22ed9a86162b35e52b44ac4807d1d93c288041d7d27
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.4"
+    version: "3.0.5"
   cryptography:
     dependency: transitive
     description:
@@ -552,38 +480,7 @@ packages:
       sha256: "282d3cf731045a2feb66abfe61bbc40870ae50a3ed10a4d3d217556c35c8c2ba"
       url: "https://pub.dev"
     source: hosted
-<<<<<<< HEAD
-<<<<<<< HEAD
     version: "7.0.1"
-  dio:
-    dependency: transitive
-    description:
-      name: dio
-      sha256: "0dfb6b6a1979dac1c1245e17cef824d7b452ea29bd33d3467269f9bef3715fb0"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.6.0"
-  dio_web_adapter:
-    dependency: transitive
-    description:
-      name: dio_web_adapter
-      sha256: "33259a9276d6cea88774a0000cfae0d861003497755969c92faa223108620dc8"
-      url: "https://pub.dev"
-    source: hosted
-<<<<<<< HEAD
-    version: "2.0.0"
-=======
-    version: "1.0.1"
-=======
-    version: "7.0.0"
->>>>>>> 73c50b32 (feat: :sparkles: Use fetch-api-service instead of coingecko)
-<<<<<<< HEAD
->>>>>>> 9e840ffb (feat: :sparkles: Use fetch-api-service instead of coingecko)
-=======
-=======
-    version: "7.0.1"
->>>>>>> 0875339a (fix rebase)
->>>>>>> 3b989715 (fix rebase)
   ecdsa:
     dependency: transitive
     description:
@@ -737,36 +634,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_cache_manager
-<<<<<<< HEAD
-<<<<<<< HEAD
       sha256: "400b6592f16a4409a7f2bb929a9a7e38c72cceb8ffb99ee57bbf2cb2cecf8386"
       url: "https://pub.dev"
     source: hosted
     version: "3.4.1"
-=======
-=======
->>>>>>> 3b989715 (fix rebase)
-<<<<<<< HEAD
-      sha256: a77f77806a790eb9ba0118a5a3a936e81c4fea2b61533033b2b0c3d50bbde5ea
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.4.0"
-=======
-      sha256: ceff65d74d907b1b772e22cf04daad60fb472461638977d9fae8b00a63e01e3d
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.3.3"
->>>>>>> 73c50b32 (feat: :sparkles: Use fetch-api-service instead of coingecko)
-<<<<<<< HEAD
->>>>>>> 9e840ffb (feat: :sparkles: Use fetch-api-service instead of coingecko)
-=======
-=======
-      sha256: a77f77806a790eb9ba0118a5a3a936e81c4fea2b61533033b2b0c3d50bbde5ea
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.4.0"
->>>>>>> 0875339a (fix rebase)
->>>>>>> 3b989715 (fix rebase)
   flutter_hooks:
     dependency: "direct main"
     description:
@@ -1218,24 +1089,10 @@ packages:
     dependency: transitive
     description:
       name: image_picker_android
-<<<<<<< HEAD
       sha256: "8c5abf0dcc24fe6e8e0b4a5c0b51a5cf30cefdf6407a3213dae61edc75a70f56"
       url: "https://pub.dev"
     source: hosted
     version: "0.8.12+12"
-=======
-<<<<<<< HEAD
-      sha256: c0e72ecd170b00a5590bb71238d57dc8ad22ee14c60c6b0d1a4e05cafbc5db4b
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.8.12+11"
-=======
-      sha256: "3fe99e3a459b969f657565a853353bdea7e3d3cae34f7dd124836267d426ec87"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.8.12+10"
->>>>>>> 0875339a (fix rebase)
->>>>>>> 3b989715 (fix rebase)
   image_picker_for_web:
     dependency: transitive
     description:
@@ -1416,37 +1273,10 @@ packages:
     dependency: transitive
     description:
       name: local_auth_android
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
       sha256: e99c44ca0bce08f26f25e2a2e07d3b443d69986e1c3acf67c1449f7d847e3625
       url: "https://pub.dev"
     source: hosted
     version: "1.0.43"
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 9ff1a22d (fix rebase)
-      sha256: "33fcebe9c3cf1bb0033bc85caed354c1e75ff7f7670918a571bd3152a2b65bf4"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.42"
-<<<<<<< HEAD
-=======
-      sha256: "6b60f9f545af5b5a11a90af3c2ab4361c47fff170134fa1c6d4c7d52e6537174"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.41"
->>>>>>> f6404749 (Upgrade archethic_messaging_lib_dart)
->>>>>>> e17b6ec8 (Upgrade archethic_messaging_lib_dart)
-=======
->>>>>>> 9ff1a22d (fix rebase)
-=======
-      sha256: e99c44ca0bce08f26f25e2a2e07d3b443d69986e1c3acf67c1449f7d847e3625
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.43"
->>>>>>> 0875339a (fix rebase)
   local_auth_darwin:
     dependency: transitive
     description:
@@ -2200,17 +2030,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_web
-<<<<<<< HEAD
       sha256: "772638d3b34c779ede05ba3d38af34657a05ac55b06279ea6edd409e323dca8e"
       url: "https://pub.dev"
     source: hosted
     version: "2.3.3"
-=======
-      sha256: a36e2d7981122fa185006b216eb6b5b97ede3f9a54b7a511bc966971ab98d049
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.2"
->>>>>>> 0875339a (fix rebase)
   url_launcher_windows:
     dependency: transitive
     description:
@@ -2319,17 +2142,10 @@ packages:
     dependency: "direct overridden"
     description:
       name: webview_flutter_android
-<<<<<<< HEAD
       sha256: dad3313c9ead95517bb1cae5e1c9d20ba83729d5a59e5e83c0a2d66203f27f91
       url: "https://pub.dev"
     source: hosted
     version: "3.16.1"
-=======
-      sha256: c66651fba15f9d7ddd31daec42da8d6bce46c85610a7127e3ebcb39a4395c3c9
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.16.6"
->>>>>>> 0875339a (fix rebase)
   webview_flutter_platform_interface:
     dependency: transitive
     description:
