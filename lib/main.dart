@@ -5,7 +5,6 @@ import 'dart:io';
 
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/migrations/migration_manager.dart';
-import 'package:aewallet/application/oracle/provider.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/settings.dart';
