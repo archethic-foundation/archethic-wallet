@@ -63,8 +63,6 @@ class CustomizationMenuView extends ConsumerWidget
                 children: <Widget>[
                   ListView(
                     children: <Widget>[
-                      const _CurrencySettingsListItem(),
-                      const _SettingsListItem.spacer(),
                       _SettingsListItem.withDefaultValue(
                         heading: localizations.primaryCurrency,
                         defaultValue: primaryCurrency,
@@ -91,27 +89,6 @@ class CustomizationMenuView extends ConsumerWidget
           ],
         ),
       ),
-    );
-  }
-}
-
-class _CurrencySettingsListItem extends ConsumerWidget {
-  const _CurrencySettingsListItem();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-    final currency = ref.watch(
-      SettingsProviders.settings.select((settings) => settings.currency),
-    );
-    return _SettingsListItem.withDefaultValueWithInfos(
-      heading: localizations.changeCurrencyHeader,
-      info: localizations.changeCurrencyDesc
-          .replaceAll('%1', AccountBalance.cryptoCurrencyLabel),
-      defaultValue: AvailableCurrency(currency),
-      icon: Symbols.euro,
-      onPressed: () => CurrencyDialog.getDialog(context, ref),
-      disabled: false,
     );
   }
 }
