@@ -8,7 +8,6 @@ import 'package:aewallet/ui/views/main/components/app_update_button.dart';
 import 'package:aewallet/ui/views/main/components/menu_widget_wallet.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/tokens_list/layouts/tokens_list_sheet.dart';
-import 'package:aewallet/ui/views/transactions/transaction_recent_list.dart';
 import 'package:aewallet/ui/widgets/balance/balance_infos.dart';
 import 'package:aewallet/ui/widgets/components/refresh_indicator.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
@@ -68,7 +67,6 @@ class AccountTab extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   children: <Widget>[
-                    /// BACKGROUND IMAGE
                     ArchethicScrollbar(
                       child: Padding(
                         padding: EdgeInsets.only(
@@ -86,7 +84,7 @@ class AccountTab extends ConsumerWidget {
                             MenuWidgetWallet(),
                             ExpandablePageView(
                               children: [
-                                TxList(),
+                                TokensListSheet(),
                                 TokensListSheet(),
                               ],
                             ),

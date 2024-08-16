@@ -342,6 +342,9 @@ flutter:
     - lib/domain/repositories/dapps/dapps.json
 
   fonts:
+    - family: Iconsax
+      fonts:
+        - asset: assets/fonts/Iconsax.ttf
     - family: Roboto
       fonts:
         - asset: assets/fonts/RobotoMono-Regular.ttf

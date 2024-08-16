@@ -6,7 +6,6 @@ import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/universal_platform.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,7 +30,7 @@ class SettingsNotifier extends StateNotifier<Settings> {
           activeVibrations: true,
           activeRPCServer: true,
           language: AvailableLanguage.english,
-          mainScreenCurrentPage: 2,
+          mainScreenCurrentPage: 0,
           primaryCurrency: const AvailablePrimaryCurrency(
             AvailablePrimaryCurrencyEnum.native,
           ),
@@ -100,7 +99,7 @@ class SettingsNotifier extends StateNotifier<Settings> {
 
   Future<void> resetMainScreenCurrentPage() => _update(
         state.copyWith(
-          mainScreenCurrentPage: 2,
+          mainScreenCurrentPage: 0,
         ),
       );
 
