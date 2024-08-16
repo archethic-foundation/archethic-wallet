@@ -2,6 +2,7 @@
 import 'package:aewallet/application/price_history/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/market_price_history.dart';
+import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
@@ -72,9 +73,6 @@ class ChartSheet extends ConsumerWidget implements SheetSkeletonInterface {
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final currency = ref.watch(
-      SettingsProviders.settings.select((settings) => settings.currency),
-    );
     final selectedInterval = ref.watch(PriceHistoryProviders.scaleOption);
     final asyncChartInfos = ref.watch(
       PriceHistoryProviders.chartData(
@@ -113,7 +111,7 @@ class ChartSheet extends ConsumerWidget implements SheetSkeletonInterface {
                   axisTextStyle:
                       ArchethicThemeStyles.textStyleSize12W100Primary,
                   optionChartSelected: selectedInterval,
-                  currency: currency.name,
+                  currency: AvailableCurrencyEnum.usd.name,
                   completeChart: true,
                 ),
                 error: (_, __) {

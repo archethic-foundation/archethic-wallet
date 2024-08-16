@@ -59,13 +59,10 @@ class _TransferTextFieldAmountState
       ),
     );
     final localCurrencyFormat = NumberFormat.currency(
-      locale: CurrencyUtil.getLocale(settings.currency.name).toString(),
-      symbol: CurrencyUtil.getCurrencySymbol(settings.currency.name),
+      locale: CurrencyUtil.getLocale().toString(),
+      symbol: CurrencyUtil.getCurrencySymbol(),
     );
 
-    final currency = ref.watch(
-      SettingsProviders.settings.select((settings) => settings.currency),
-    );
     final selectedCurrencyMarketPrice = ref
         .watch(
           MarketPriceProviders.selectedCurrencyMarketPrice,
@@ -93,7 +90,7 @@ class _TransferTextFieldAmountState
                 ? primaryCurrency.primaryCurrency ==
                         AvailablePrimaryCurrencyEnum.native
                     ? '${localizations.enterAmount} (${transfer.symbol(context)})'
-                    : '${AppLocalizations.of(context)!.enterAmount} (${settings.currency.name.toUpperCase()})'
+                    : '${AppLocalizations.of(context)!.enterAmount} (${AvailableCurrencyEnum.usd.name.toUpperCase()})'
                 : '${localizations.enterAmount} (${transfer.symbol(context)})',
           ),
         ),
@@ -185,7 +182,7 @@ class _TransferTextFieldAmountState
                         Container(
                           alignment: Alignment.centerLeft,
                           child: AutoSizeText(
-                            '1 ${transfer.symbol(context)} = ${CurrencyUtil.getAmountPlusSymbol(currency.name, selectedCurrencyMarketPrice.amount)}',
+                            '1 ${transfer.symbol(context)} = ${CurrencyUtil.getAmountPlusSymbol(selectedCurrencyMarketPrice.amount)}',
                             style:
                                 ArchethicThemeStyles.textStyleSize14W200Primary,
                           ),

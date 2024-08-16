@@ -3,7 +3,6 @@
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/primary_currency.dart';
@@ -36,9 +35,6 @@ class BalanceInfosPopup {
           ),
         )
         .valueOrNull;
-    final currency = ref.watch(
-      SettingsProviders.settings.select((settings) => settings.currency),
-    );
     if (fiatBalance == null) return const SizedBox();
 
     return showMenu(
@@ -74,7 +70,6 @@ class BalanceInfosPopup {
                     ref,
                     '2',
                     CurrencyUtil.format(
-                      currency.name,
                       fiatBalance,
                     ),
                     '',
@@ -86,7 +81,6 @@ class BalanceInfosPopup {
                     ref,
                     '2',
                     CurrencyUtil.format(
-                      currency.name,
                       fiatBalance,
                     ),
                     '',

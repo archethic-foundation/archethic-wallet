@@ -3,6 +3,7 @@ import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/market_price_history.dart';
 import 'package:aewallet/domain/repositories/market/price_history.dart';
 import 'package:aewallet/infrastructure/repositories/market/coingecko_price_history_repository.dart';
+import 'package:aewallet/model/available_currency.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -20,16 +21,13 @@ MarketPriceHistoryInterval _intervalOption(Ref ref) => ref.watch(
 
 @Riverpod(keepAlive: true)
 Future<List<PriceHistoryValue>> _priceHistory(
-  Ref ref, {
+  _PriceHistoryRef ref, {
   required MarketPriceHistoryInterval scaleOption,
 }) async {
-  final selectedCurrency = ref.watch(
-    SettingsProviders.settings.select((settings) => settings.currency),
-  );
   return ref
       .watch(_repositoryProvider)
       .getWithInterval(
-        vsCurrency: selectedCurrency,
+        vsCurrency: AvailableCurrencyEnum.usd,
         interval: scaleOption,
       )
       .valueOrThrow;

@@ -5,51 +5,38 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class CurrencyUtil {
-  static String getDisplayNameNoSymbol(String currency) {
-    switch (currency) {
-      case 'usd':
-      default:
-        return 'US Dollar';
-    }
+  static String getDisplayNameNoSymbol() {
+    return 'US Dollar';
   }
 
-  static String getCurrencySymbol(String currency) {
-    switch (currency) {
-      case 'usd':
-      default:
-        return r'$';
-    }
+  static String getCurrencySymbol() {
+    return r'$';
   }
 
-  static Locale getLocale(String currency) {
-    switch (currency) {
-      case 'usd':
-      default:
-        return const Locale('en', 'US');
-    }
+  static Locale getLocale() {
+    return const Locale('en', 'US');
   }
 
-  static String format(String currency, double amount) {
+  static String format(double amount) {
     return NumberFormat.currency(
-      locale: CurrencyUtil.getLocale(currency).toString(),
-      symbol: CurrencyUtil.getCurrencySymbol(currency),
+      locale: CurrencyUtil.getLocale().toString(),
+      symbol: CurrencyUtil.getCurrencySymbol(),
     ).format(amount);
   }
 
   static String formatWithNumberOfDigits(
-    String currency,
     double amount,
     int numberOfDigits,
   ) {
     return NumberFormat.currency(
-      locale: CurrencyUtil.getLocale(currency).toString(),
-      symbol: CurrencyUtil.getCurrencySymbol(currency),
+      locale: CurrencyUtil.getLocale().toString(),
+      symbol: CurrencyUtil.getCurrencySymbol(),
       decimalDigits: numberOfDigits,
     ).format(amount);
   }
 
-  static String getAmountPlusSymbol(String currency, double amount) {
-    return '$amount ${CurrencyUtil.getCurrencySymbol(currency)}';
+  static String getAmountPlusSymbol(double amount) {
+    return '$amount ${CurrencyUtil.getCurrencySymbol()}';
   }
 
   static double convertAmount(double price, double amount) {
@@ -58,23 +45,20 @@ class CurrencyUtil {
   }
 
   static String convertAmountFormated(
-    String currency,
     double price,
     double amount,
   ) {
     final amountConverted = convertAmount(price, amount);
-    return format(currency, amountConverted);
+    return format(amountConverted);
   }
 
   static String convertAmountFormatedWithNumberOfDigits(
-    String currency,
     double price,
     double amount,
     int numberOfDigits,
   ) {
     final amountConverted = convertAmount(price, amount);
     return formatWithNumberOfDigits(
-      currency,
       amountConverted,
       numberOfDigits,
     );

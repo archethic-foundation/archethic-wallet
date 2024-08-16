@@ -29,9 +29,6 @@ class BalanceInfosKpi extends ConsumerWidget {
           MarketPriceProviders.selectedCurrencyMarketPrice,
         )
         .valueOrNull;
-    final selectedCurrency = ref.watch(
-      SettingsProviders.settings.select((settings) => settings.currency),
-    );
     final accountSelectedBalance = ref.watch(
       AccountProviders.accounts.select(
         (value) => value.valueOrNull?.selectedAccount?.balance,
@@ -52,7 +49,7 @@ class BalanceInfosKpi extends ConsumerWidget {
         child: Row(
           children: <Widget>[
             AutoSizeText(
-              '1 ${accountSelectedBalance.nativeTokenName} = ${CurrencyUtil.getAmountPlusSymbol(selectedCurrency.name, currencyMarketPrice.amount)}',
+              '1 ${accountSelectedBalance.nativeTokenName} = ${CurrencyUtil.getAmountPlusSymbol(currencyMarketPrice.amount)}',
               style: ArchethicThemeStyles.textStyleSize12W100Primary,
             ),
             const SizedBox(

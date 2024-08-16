@@ -35,7 +35,7 @@ final _intervalOptionProvider = Provider<MarketPriceHistoryInterval>.internal(
 );
 
 typedef _IntervalOptionRef = ProviderRef<MarketPriceHistoryInterval>;
-String _$priceHistoryHash() => r'53a8fb4fa9f1089577cc2150bd23d7ff77972298';
+String _$priceHistoryHash() => r'6b820fd2086504d30bd7cd4e5c7ceb0650fc02dd';
 
 /// Copied from Dart SDK
 class _SystemHash {

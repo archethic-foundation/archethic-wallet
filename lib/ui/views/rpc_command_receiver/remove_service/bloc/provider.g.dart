@@ -7,7 +7,7 @@ part of 'provider.dart';
 // **************************************************************************
 
 String _$sendTransactionUseCaseHash() =>
-    r'ef45df8f818bb17e4ae63d7ced0833a2b8075919';
+    r'9ecc653b7a35cf51b9166042b426a37d2a6777da';
 
 /// See also [_sendTransactionUseCase].
 @ProviderFor(_sendTransactionUseCase)

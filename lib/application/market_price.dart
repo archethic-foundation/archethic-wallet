@@ -1,5 +1,4 @@
 import 'package:aewallet/application/oracle/provider.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/market_price.dart';
 import 'package:aewallet/domain/repositories/market/market.dart';
@@ -39,35 +38,13 @@ Future<MarketPrice> _currencyMarketPrice(
 Future<MarketPrice> _selectedCurrencyMarketPrice(
   _SelectedCurrencyMarketPriceRef ref,
 ) async {
-  final currency = ref.watch(
-    SettingsProviders.settings.select(
-      (settings) => settings.currency,
-    ),
+  final archethicOracleUCO =
+      ref.watch(ArchethicOracleUCOProviders.archethicOracleUCO);
+  return MarketPrice(
+    amount: archethicOracleUCO.usd,
+    lastLoading: archethicOracleUCO.timestamp,
+    useOracle: true,
   );
-
-  if (currency == AvailableCurrencyEnum.usd) {
-    final archethicOracleUCO =
-        ref.watch(ArchethicOracleUCOProviders.archethicOracleUCO);
-    return MarketPrice(
-      amount: archethicOracleUCO.usd,
-      lastLoading: archethicOracleUCO.timestamp,
-      useOracle: true,
-    );
-  } else {
-    if (currency == AvailableCurrencyEnum.eur) {
-      final archethicOracleUCO =
-          ref.watch(ArchethicOracleUCOProviders.archethicOracleUCO);
-      return MarketPrice(
-        amount: archethicOracleUCO.eur,
-        lastLoading: archethicOracleUCO.timestamp,
-        useOracle: true,
-      );
-    } else {
-      return ref.watch(
-        _currencyMarketPriceProvider(currency: currency).future,
-      );
-    }
-  }
 }
 
 @riverpod

@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:aewallet/domain/models/market_price_history.dart';
 import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/domain/repositories/settings.dart';
-import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/primary_currency.dart';
@@ -29,7 +28,6 @@ class SettingsNotifier extends StateNotifier<Settings> {
         state.copyWith(
           activeVibrations: true,
           activeRPCServer: true,
-          currency: AvailableCurrencyEnum.usd,
           language: AvailableLanguage.english,
           mainScreenCurrentPage: 2,
           primaryCurrency: const AvailablePrimaryCurrency(
@@ -71,12 +69,6 @@ class SettingsNotifier extends StateNotifier<Settings> {
             network: state.network.network,
             networkDevEndpoint: networkDevEndpoint,
           ),
-        ),
-      );
-
-  Future<void> selectCurrency(AvailableCurrency currency) => _update(
-        state.copyWith(
-          currency: currency.currency,
         ),
       );
 

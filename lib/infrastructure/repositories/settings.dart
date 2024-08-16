@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/domain/repositories/settings.dart';
 import 'package:aewallet/infrastructure/datasources/preferences.hive.dart';
-import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/available_language.dart';
 
 class SettingsRepository implements SettingsRepositoryInterface {
@@ -17,7 +16,6 @@ class SettingsRepository implements SettingsRepositoryInterface {
     return Settings(
       activeVibrations: loadedPreferences.getActiveVibrations(),
       activeRPCServer: loadedPreferences.getActiveRPCServer(),
-      currency: loadedPreferences.getCurrency(currentLocale).currency,
       firstLaunch: loadedPreferences.getFirstLaunch(),
       language: loadedPreferences.getLanguage().language,
       languageSeed: loadedPreferences.getLanguageSeed(),
@@ -35,7 +33,6 @@ class SettingsRepository implements SettingsRepositoryInterface {
     final loadedPreferences = await preferences;
     await loadedPreferences.setActiveVibrations(settings.activeVibrations);
     await loadedPreferences.setActiveRPCServer(settings.activeRPCServer);
-    await loadedPreferences.setCurrency(AvailableCurrency(settings.currency));
     await loadedPreferences.setFirstLaunch(settings.firstLaunch);
     await loadedPreferences.setLanguage(LanguageSetting(settings.language));
     await loadedPreferences.setLanguageSeed(settings.languageSeed);

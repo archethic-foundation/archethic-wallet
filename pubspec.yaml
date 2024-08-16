@@ -337,7 +337,6 @@ flutter:
     - assets/ssl/isrg-root-x1.pem
     - assets/ssl/r3.pem
     - assets/icons/
-    - assets/icons/currency/
     - assets/icons/languages/
     - assets/icons/menu/
     - assets/icons/txInfos/

@@ -58,7 +58,7 @@ class BalanceInfosChart extends ConsumerWidget {
                         axisTextStyle:
                             ArchethicThemeStyles.textStyleSize12W100Primary,
                         optionChartSelected: settings.priceChartIntervalOption,
-                        currency: settings.currency.name,
+                        currency: AvailableCurrencyEnum.usd.name,
                         completeChart: false,
                       )
                     : const SizedBox(),

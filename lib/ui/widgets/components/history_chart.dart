@@ -97,7 +97,7 @@ class HistoryChart extends StatelessWidget {
                   break;
               }
               return LineTooltipItem(
-                '$title\n${CurrencyUtil.formatWithNumberOfDigits(currency, touchedSpot.y, 5)}',
+                '$title\n${CurrencyUtil.formatWithNumberOfDigits(touchedSpot.y, 5)}',
                 tooltipText,
               );
             }).toList();
@@ -166,7 +166,6 @@ class HistoryChart extends StatelessWidget {
                             ? const SizedBox.shrink()
                             : Text(
                                 CurrencyUtil.formatWithNumberOfDigits(
-                                  currency,
                                   value,
                                   4,
                                 ),

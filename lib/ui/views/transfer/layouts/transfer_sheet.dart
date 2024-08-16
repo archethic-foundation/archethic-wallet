@@ -4,6 +4,7 @@ import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/infrastructure/datasources/contacts.hive.dart';
+import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/contact.dart';

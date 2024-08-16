@@ -173,10 +173,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem> {
       ),
     );
     final fiatAmountString = asyncFiatAmount.maybeWhen(
-      data: (fiatAmount) => CurrencyUtil.format(
-        settings.currency.name,
-        fiatAmount,
-      ),
+      data: CurrencyUtil.format,
       orElse: () => '--',
     );
 
