@@ -129,10 +129,6 @@ class _BalanceIndicatorFiat extends ConsumerWidget {
           .select((value) => value.valueOrNull?.selectedAccount?.balance),
     );
 
-    final currency = ref.watch(
-      SettingsProviders.settings.select((settings) => settings.currency),
-    );
-
     if (accountSelectedBalance == null) return const SizedBox();
 
     final fiatValue = ref
@@ -147,7 +143,6 @@ class _BalanceIndicatorFiat extends ConsumerWidget {
     return Text(
       NumberUtil.formatThousandsStr(
         CurrencyUtil.format(
-          currency.name,
           fiatValue,
         ),
       ),

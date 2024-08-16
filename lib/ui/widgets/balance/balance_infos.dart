@@ -7,6 +7,7 @@ import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/market_price_history.dart';
+import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/primary_currency.dart';
@@ -78,7 +79,7 @@ class BalanceInfos extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       AutoSizeText(
-                        settings.currency.name,
+                        AvailableCurrencyEnum.usd.name,
                         style: ArchethicThemeStyles.textStyleSize35W900Primary,
                       ),
                       if (settings.showBalances)
@@ -112,9 +113,6 @@ class _BalanceInfosNativeShowed extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currency = ref.watch(
-      SettingsProviders.settings.select((settings) => settings.currency),
-    );
     final language = ref.watch(
       LanguageProviders.selectedLanguage,
     );
@@ -141,7 +139,6 @@ class _BalanceInfosNativeShowed extends ConsumerWidget {
         ),
         AutoSizeText(
           CurrencyUtil.format(
-            currency.name,
             fiatValue,
           ),
           textAlign: TextAlign.center,
@@ -160,9 +157,6 @@ class _BalanceInfosFiatShowed extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currency = ref.watch(
-      SettingsProviders.settings.select((settings) => settings.currency),
-    );
     final language = ref.watch(
       LanguageProviders.selectedLanguage,
     );
@@ -183,7 +177,6 @@ class _BalanceInfosFiatShowed extends ConsumerWidget {
       children: [
         AutoSizeText(
           CurrencyUtil.format(
-            currency.name,
             fiatValue,
           ),
           textAlign: TextAlign.center,

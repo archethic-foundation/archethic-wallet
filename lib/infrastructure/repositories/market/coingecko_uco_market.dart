@@ -18,7 +18,6 @@ class CoingeckoUCOMarketRepository implements MarketRepositoryInterface {
 
   @override
   bool canHandleCurrency(AvailableCurrencyEnum currency) =>
-      currency != AvailableCurrencyEnum.eur &&
       currency != AvailableCurrencyEnum.usd;
 
   @override

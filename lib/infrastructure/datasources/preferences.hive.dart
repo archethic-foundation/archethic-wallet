@@ -1,12 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-import 'dart:ui';
-
 import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/domain/models/market_price_history.dart';
 import 'package:aewallet/infrastructure/datasources/hive.extension.dart';
 import 'package:aewallet/model/authentication_method.dart';
-import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
@@ -23,7 +19,6 @@ class PreferencesHiveDatasource {
 
   static const String firstLaunch = 'archethic_wallet_first_launch';
   static const String authMethod = 'archethic_wallet_auth_method';
-  static const String curCurrency = 'archethic_wallet_cur_currency';
   static const String curLanguage = 'archethic_wallet_cur_language';
   static const String curPrimarySetting =
       'archethic_wallet_cur_primary_setting';
@@ -99,17 +94,6 @@ class PreferencesHiveDatasource {
           authMethod,
           defaultValue:
               AuthenticationSettings.defaultValue.authenticationMethod.index,
-        )],
-      );
-
-  Future<void> setCurrency(AvailableCurrency currency) =>
-      _setValue(curCurrency, currency.getIndex());
-
-  AvailableCurrency getCurrency(Locale deviceLocale) => AvailableCurrency(
-        AvailableCurrencyEnum.values[_getValue(
-          curCurrency,
-          defaultValue:
-              AvailableCurrency.getBestForLocale(deviceLocale).currency.index,
         )],
       );
 

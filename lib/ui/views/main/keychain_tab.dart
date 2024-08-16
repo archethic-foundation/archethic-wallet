@@ -1,5 +1,5 @@
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/ui/views/accounts/layouts/account_list.dart';
 import 'package:aewallet/ui/views/accounts/layouts/components/add_account_button.dart';
 import 'package:flutter/gestures.dart';
@@ -11,7 +11,6 @@ class KeychainTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final settings = ref.watch(SettingsProviders.settings);
     final accountsList =
         ref.watch(AccountProviders.sortedAccounts).valueOrNull ?? [];
 
@@ -35,7 +34,7 @@ class KeychainTab extends ConsumerWidget {
                 child: Column(
                   children: <Widget>[
                     AccountsListWidget(
-                      currencyName: settings.currency.name,
+                      currencyName: AvailableCurrencyEnum.usd.name,
                       accountsList: accountsList,
                     ),
                   ],

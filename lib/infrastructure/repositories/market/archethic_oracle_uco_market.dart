@@ -13,23 +13,16 @@ class ArchethicOracleUCOMarketRepository implements MarketRepositoryInterface {
 
   @override
   bool canHandleCurrency(AvailableCurrencyEnum currency) =>
-      currency == AvailableCurrencyEnum.eur ||
       currency == AvailableCurrencyEnum.usd;
 
-  Future<double> _getConversionRatio(AvailableCurrencyEnum currency) async {
+  Future<double> _getConversionRatio() async {
     final oracleUcoPrice =
         await sl.get<archethic.OracleService>().getOracleData();
-    final eurConversionRate = oracleUcoPrice.uco?.eur;
     final usdConversionRate = oracleUcoPrice.uco?.usd;
-    if (eurConversionRate == null ||
-        eurConversionRate == 0 ||
-        usdConversionRate == null ||
-        usdConversionRate == 0) {
+    if (usdConversionRate == null || usdConversionRate == 0) {
       throw const Failure.network();
     }
-    if (currency == AvailableCurrencyEnum.eur) return eurConversionRate;
-    if (currency == AvailableCurrencyEnum.usd) return usdConversionRate;
-    throw const Failure.invalidValue();
+    return usdConversionRate;
   }
 
   // TODO(reddwarf03): Provide a way to get the last value of an oracle #451 (3)
@@ -38,7 +31,7 @@ class ArchethicOracleUCOMarketRepository implements MarketRepositoryInterface {
     AvailableCurrencyEnum currency,
   ) =>
       Result.guard(() async {
-        final price = await _getConversionRatio(currency);
+        final price = await _getConversionRatio();
 
         return MarketPrice(
           amount: price,

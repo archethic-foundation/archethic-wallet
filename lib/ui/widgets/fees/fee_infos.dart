@@ -2,7 +2,6 @@
 
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -50,12 +49,6 @@ class FeeInfos extends ConsumerWidget {
       return const _LoadingFeeInfos();
     }
 
-    final currencyName = ref
-        .watch(
-          SettingsProviders.settings.select((settings) => settings.currency),
-        )
-        .name;
-
     return SizedBox(
       height: 40,
       child: Row(
@@ -73,7 +66,6 @@ class FeeInfos extends ConsumerWidget {
                 AccountBalance.cryptoCurrencyLabel,
                 decimal: 2,
               )} / ${CurrencyUtil.formatWithNumberOfDigits(
-                currencyName,
                 fiatFeeEstimation,
                 2,
               )}',
@@ -82,7 +74,6 @@ class FeeInfos extends ConsumerWidget {
           else
             Text(
               '${CurrencyUtil.formatWithNumberOfDigits(
-                currencyName,
                 fiatFeeEstimation,
                 2,
               )} / ${AmountFormatters.standardSmallValue(

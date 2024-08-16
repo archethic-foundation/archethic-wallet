@@ -40,7 +40,6 @@ class TransfertBalance extends ConsumerWidget {
           if (settings.showBalances == true)
             Text(
               ' (${CurrencyUtil.convertAmountFormated(
-                settings.currency.name,
                 marketPrice.amount,
                 transaction.amount!,
               )})',

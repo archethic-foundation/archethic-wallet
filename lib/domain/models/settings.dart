@@ -1,5 +1,4 @@
 import 'package:aewallet/domain/models/market_price_history.dart';
-import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/primary_currency.dart';
@@ -10,7 +9,6 @@ part 'settings.freezed.dart';
 @freezed
 class Settings with _$Settings {
   const factory Settings({
-    required AvailableCurrencyEnum currency,
     required AvailablePrimaryCurrency primaryCurrency,
     required AvailableLanguage language,
     required NetworksSetting network,
@@ -28,7 +26,6 @@ class Settings with _$Settings {
         activeVibrations: true,
         activeRPCServer: true,
         firstLaunch: true,
-        currency: AvailableCurrencyEnum.usd,
         language: AvailableLanguage.english,
         languageSeed: '',
         mainScreenCurrentPage: 2,

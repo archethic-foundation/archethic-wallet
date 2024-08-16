@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/primary_currency.dart';
@@ -92,14 +91,12 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
       LanguageProviders.selectedLanguage,
     );
 
-    final settings = ref.watch(SettingsProviders.settings);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     final selectedCurrencyMarketPrice =
         ref.watch(MarketPriceProviders.selectedCurrencyMarketPrice).valueOrNull;
 
     final amountInFiat = CurrencyUtil.convertAmountFormatedWithNumberOfDigits(
-      settings.currency.name,
       selectedCurrencyMarketPrice!.amount,
       estimatedFees,
       3,

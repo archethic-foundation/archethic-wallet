@@ -54,14 +54,9 @@ String _convertedValueLabel(
 
   final primaryCurrency = ref.watch(_selectedPrimaryCurrencyProvider);
   if (primaryCurrency.primaryCurrency == AvailablePrimaryCurrencyEnum.native) {
-    final currency = ref.watch(
-      SettingsProviders.settings.select((settings) => settings.currency),
-    );
     final localCurrencyFormat = NumberFormat.currency(
-      locale: CurrencyUtil.getLocale(currency.name).toString(),
-      symbol: CurrencyUtil.getCurrencySymbol(
-        currency.name,
-      ),
+      locale: CurrencyUtil.getLocale().toString(),
+      symbol: CurrencyUtil.getCurrencySymbol(),
     );
     return localCurrencyFormat.format(amountConverted);
   } else {
@@ -106,14 +101,10 @@ abstract class PrimaryCurrencyConverter {
     if (amountEntered == 0 || tokenPriceAmount == 0) {
       return 0;
     }
-    final currency = ref.read(
-      SettingsProviders.settings.select((settings) => settings.currency),
-    );
+
     final localCurrencyFormat = NumberFormat.currency(
-      locale: CurrencyUtil.getLocale(currency.name).toString(),
-      symbol: CurrencyUtil.getCurrencySymbol(
-        currency.name,
-      ),
+      locale: CurrencyUtil.getLocale().toString(),
+      symbol: CurrencyUtil.getCurrencySymbol(),
     );
 
     final convertedAmt = NumberUtil.sanitizeNumber(

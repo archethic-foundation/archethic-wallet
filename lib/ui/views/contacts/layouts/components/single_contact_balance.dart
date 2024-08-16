@@ -44,10 +44,7 @@ class SingleContactBalance extends ConsumerWidget {
           ),
         );
         final fiatAmountString = asyncFiatAmount.maybeWhen(
-          data: (fiatAmount) => CurrencyUtil.format(
-            settings.currency.name,
-            fiatAmount,
-          ),
+          data: CurrencyUtil.format,
           orElse: () => '--',
         );
 

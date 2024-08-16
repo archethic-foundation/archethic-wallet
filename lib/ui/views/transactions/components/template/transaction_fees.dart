@@ -2,7 +2,6 @@
 
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
-
 import 'package:aewallet/domain/models/market_price.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/data/account_balance.dart';
@@ -33,7 +32,6 @@ class TransactionFees extends ConsumerWidget {
 
     final amountConverted =
         CurrencyUtil.convertAmountFormatedWithNumberOfDigits(
-      settings.currency.name,
       marketPrice.amount,
       transaction.fee!,
       3,

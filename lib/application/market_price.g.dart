@@ -7,7 +7,7 @@ part of 'market_price.dart';
 // **************************************************************************
 
 String _$remoteRepositoriesHash() =>
-    r'1ba53f6e3f0404d6fb6bb5ab12bebe74865d75bd';
+    r'362a295c805d83fbba9037ae975c2d6fca22130d';
 
 /// See also [_remoteRepositories].
 @ProviderFor(_remoteRepositories)
@@ -23,7 +23,7 @@ final _remoteRepositoriesProvider =
 );
 
 typedef _RemoteRepositoriesRef = ProviderRef<List<MarketRepositoryInterface>>;
-String _$localRepositoryHash() => r'cd558b3e8e0b1b08f356af4cd7100454e8ab670d';
+String _$localRepositoryHash() => r'7efe0044701d7e08d9349e6a071111974c3fcf94';
 
 /// See also [_localRepository].
 @ProviderFor(_localRepository)
@@ -40,7 +40,7 @@ final _localRepositoryProvider =
 
 typedef _LocalRepositoryRef = ProviderRef<MarketLocalRepositoryInterface>;
 String _$currencyMarketPriceHash() =>
-    r'efad345fa611b0debca8ea8a11fb6cf153862c40';
+    r'ca31fb7c63400231dc1b5c0e00398daf3c4d67d3';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -191,7 +191,7 @@ class _CurrencyMarketPriceProviderElement
 }
 
 String _$selectedCurrencyMarketPriceHash() =>
-    r'a2ce927331df46ff1dae128e1de6dd486a0ce6ec';
+    r'b37795bf99d0655475030698f3ad8f74af0fe105';
 
 /// See also [_selectedCurrencyMarketPrice].
 @ProviderFor(_selectedCurrencyMarketPrice)
@@ -208,7 +208,7 @@ final _selectedCurrencyMarketPriceProvider =
 
 typedef _SelectedCurrencyMarketPriceRef = FutureProviderRef<MarketPrice>;
 String _$convertedToSelectedCurrencyHash() =>
-    r'14676bcb79ec50eed6b6457e45add978ecccf121';
+    r'0914ae92d570d894e9d964b736d753f3a2bfe8fc';
 
 /// See also [_convertedToSelectedCurrency].
 @ProviderFor(_convertedToSelectedCurrency)

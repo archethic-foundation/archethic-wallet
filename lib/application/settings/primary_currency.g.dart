@@ -173,7 +173,7 @@ class _ConvertedValueProviderElement extends AutoDisposeProviderElement<double>
 }
 
 String _$convertedValueLabelHash() =>
-    r'd6786e9e48ba90083afd92be1adac47cb9034f82';
+    r'42367117477e6c1bfa11f61803a167f78a464692';
 
 /// See also [_convertedValueLabel].
 @ProviderFor(_convertedValueLabel)

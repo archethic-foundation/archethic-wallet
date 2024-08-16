@@ -16,7 +16,6 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Settings {
-  AvailableCurrencyEnum get currency => throw _privateConstructorUsedError;
   AvailablePrimaryCurrency get primaryCurrency =>
       throw _privateConstructorUsedError;
   AvailableLanguage get language => throw _privateConstructorUsedError;
@@ -42,8 +41,7 @@ abstract class $SettingsCopyWith<$Res> {
       _$SettingsCopyWithImpl<$Res, Settings>;
   @useResult
   $Res call(
-      {AvailableCurrencyEnum currency,
-      AvailablePrimaryCurrency primaryCurrency,
+      {AvailablePrimaryCurrency primaryCurrency,
       AvailableLanguage language,
       NetworksSetting network,
       String languageSeed,
@@ -69,7 +67,6 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? currency = null,
     Object? primaryCurrency = null,
     Object? language = null,
     Object? network = null,
@@ -83,10 +80,6 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
     Object? priceChartIntervalOption = null,
   }) {
     return _then(_value.copyWith(
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as AvailableCurrencyEnum,
       primaryCurrency: null == primaryCurrency
           ? _value.primaryCurrency
           : primaryCurrency // ignore: cast_nullable_to_non_nullable
@@ -144,8 +137,7 @@ abstract class _$$SettingsImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {AvailableCurrencyEnum currency,
-      AvailablePrimaryCurrency primaryCurrency,
+      {AvailablePrimaryCurrency primaryCurrency,
       AvailableLanguage language,
       NetworksSetting network,
       String languageSeed,
@@ -169,7 +161,6 @@ class __$$SettingsImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? currency = null,
     Object? primaryCurrency = null,
     Object? language = null,
     Object? network = null,
@@ -183,10 +174,6 @@ class __$$SettingsImplCopyWithImpl<$Res>
     Object? priceChartIntervalOption = null,
   }) {
     return _then(_$SettingsImpl(
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as AvailableCurrencyEnum,
       primaryCurrency: null == primaryCurrency
           ? _value.primaryCurrency
           : primaryCurrency // ignore: cast_nullable_to_non_nullable
@@ -239,8 +226,7 @@ class __$$SettingsImplCopyWithImpl<$Res>
 
 class _$SettingsImpl extends _Settings {
   const _$SettingsImpl(
-      {required this.currency,
-      required this.primaryCurrency,
+      {required this.primaryCurrency,
       required this.language,
       required this.network,
       required this.languageSeed,
@@ -253,8 +239,6 @@ class _$SettingsImpl extends _Settings {
       required this.priceChartIntervalOption})
       : super._();
 
-  @override
-  final AvailableCurrencyEnum currency;
   @override
   final AvailablePrimaryCurrency primaryCurrency;
   @override
@@ -280,7 +264,7 @@ class _$SettingsImpl extends _Settings {
 
   @override
   String toString() {
-    return 'Settings(currency: $currency, primaryCurrency: $primaryCurrency, language: $language, network: $network, languageSeed: $languageSeed, firstLaunch: $firstLaunch, showBalances: $showBalances, activeVibrations: $activeVibrations, activeRPCServer: $activeRPCServer, mainScreenCurrentPage: $mainScreenCurrentPage, showPriceChart: $showPriceChart, priceChartIntervalOption: $priceChartIntervalOption)';
+    return 'Settings(primaryCurrency: $primaryCurrency, language: $language, network: $network, languageSeed: $languageSeed, firstLaunch: $firstLaunch, showBalances: $showBalances, activeVibrations: $activeVibrations, activeRPCServer: $activeRPCServer, mainScreenCurrentPage: $mainScreenCurrentPage, showPriceChart: $showPriceChart, priceChartIntervalOption: $priceChartIntervalOption)';
   }
 
   @override
@@ -288,8 +272,6 @@ class _$SettingsImpl extends _Settings {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SettingsImpl &&
-            (identical(other.currency, currency) ||
-                other.currency == currency) &&
             (identical(other.primaryCurrency, primaryCurrency) ||
                 other.primaryCurrency == primaryCurrency) &&
             (identical(other.language, language) ||
@@ -317,7 +299,6 @@ class _$SettingsImpl extends _Settings {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      currency,
       primaryCurrency,
       language,
       network,
@@ -339,8 +320,7 @@ class _$SettingsImpl extends _Settings {
 
 abstract class _Settings extends Settings {
   const factory _Settings(
-          {required final AvailableCurrencyEnum currency,
-          required final AvailablePrimaryCurrency primaryCurrency,
+          {required final AvailablePrimaryCurrency primaryCurrency,
           required final AvailableLanguage language,
           required final NetworksSetting network,
           required final String languageSeed,
@@ -354,8 +334,6 @@ abstract class _Settings extends Settings {
       _$SettingsImpl;
   const _Settings._() : super._();
 
-  @override
-  AvailableCurrencyEnum get currency;
   @override
   AvailablePrimaryCurrency get primaryCurrency;
   @override
