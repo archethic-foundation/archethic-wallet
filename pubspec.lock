@@ -1215,14 +1215,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.1"
-  ledger_dart_lib:
-    dependency: "direct main"
-    description:
-      name: ledger_dart_lib
-      sha256: c0812a644cdc371332faac35fc099515218f125a7c3ff1b35d1c75222e22626e
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.2"
   linkify:
     dependency: transitive
     description:
@@ -2108,14 +2100,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.1"
-  web_hid:
-    dependency: transitive
-    description:
-      name: web_hid
-      sha256: "5c73785258836685c0dac2ae5b358e5cdb5e8379af4faad08379063c2159ee48"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.1+1"
   web_socket_channel:
     dependency: "direct main"
     description:

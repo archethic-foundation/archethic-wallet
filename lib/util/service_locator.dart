@@ -15,7 +15,6 @@ import 'package:aewallet/util/nfc.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
     show AddressService, ApiService, OracleService;
 import 'package:coingecko_api/coingecko_api.dart';
-import 'package:ledger_dart_lib/ledger_dart_lib.dart';
 
 Future<void> setupServiceLocator() async {
   sl
@@ -25,7 +24,6 @@ Future<void> setupServiceLocator() async {
     ..registerLazySingleton<HapticUtil>(HapticUtil.new)
     ..registerLazySingleton<BiometricUtil>(BiometricUtil.new)
     ..registerLazySingleton<NFCUtil>(NFCUtil.new)
-    ..registerLazySingleton<LedgerNanoSImpl>(LedgerNanoSImpl.new)
     ..registerLazySingleton<CommandDispatcher>(
       CommandDispatcher.new,
     )

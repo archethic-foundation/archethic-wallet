@@ -177,9 +177,6 @@ dependencies:
   # JSON Schema implementation in Dart
   json_schema: ^5.1.2
 
-  # Ledger dart library for Flutter. This library aims to provide a easy way to communicate with Ledger devices.
-  ledger_dart_lib: ^0.1.2
-
   lit_starfield: ^0.1.1
 
   # Loading animation or loading spiner or loader. It's used to show loading animation when the app is in loading state or something is processing for uncertain time.
