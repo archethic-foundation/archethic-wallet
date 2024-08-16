@@ -78,120 +78,106 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
       ),
       actions: [
         if (preferences.mainScreenCurrentPage == 0 ||
-            preferences.mainScreenCurrentPage == 1 ||
-            preferences.mainScreenCurrentPage == 2)
+            preferences.mainScreenCurrentPage == 1)
           preferences.showBalances
               ? const MainAppBarIconBalanceShowed()
               : const MainAppBarIconBalanceNotShowed(),
         if (connectivityStatusProvider == ConnectivityStatus.isDisconnected)
           const IconNetworkWarning(),
       ],
-      title: preferences.mainScreenCurrentPage == 1
-          ? InkWell(
-              onTap: () {
-                sl.get<HapticUtil>().feedback(
-                      FeedbackType.light,
-                      preferences.activeVibrations,
-                    );
-                Clipboard.setData(
-                  ClipboardData(
-                    text: keychain?.address.toUpperCase() ?? '',
-                  ),
-                );
-                UIUtil.showSnackbar(
-                  localizations.addressCopied,
-                  context,
-                  ref,
-                  ArchethicTheme.text,
-                  ArchethicTheme.snackBarShadow,
-                  icon: Symbols.info,
-                );
-              },
-              child: FittedBox(
-                fit: BoxFit.fitWidth,
-                child: AutoSizeText(
-                  localizations.keychainHeader,
-                  style: ArchethicThemeStyles.textStyleSize24W700Primary,
-                ),
-              ).animate().fade(duration: const Duration(milliseconds: 300)),
-            )
-          : preferences.mainScreenCurrentPage == 2
-              ? FittedBox(
-                  fit: BoxFit.fitWidth,
-                  child: InkWell(
-                    onTap: () {
-                      sl.get<HapticUtil>().feedback(
-                            FeedbackType.light,
-                            preferences.activeVibrations,
-                          );
-                      Clipboard.setData(
-                        ClipboardData(
-                          text: selectedAccount?.genesisAddress.toLowerCase() ??
-                              '',
-                        ),
+      title: preferences.mainScreenCurrentPage == 0
+          ? FittedBox(
+              fit: BoxFit.fitWidth,
+              child: InkWell(
+                onTap: () {
+                  sl.get<HapticUtil>().feedback(
+                        FeedbackType.light,
+                        preferences.activeVibrations,
                       );
-                      UIUtil.showSnackbar(
-                        '${localizations.addressCopied}\n${selectedAccount?.genesisAddress.toLowerCase()}',
-                        context,
-                        ref,
-                        ArchethicTheme.text,
-                        ArchethicTheme.snackBarShadow,
-                        icon: Symbols.info,
-                      );
-                    },
-                    child: Column(
+                  Clipboard.setData(
+                    ClipboardData(
+                      text: selectedAccount?.genesisAddress.toLowerCase() ?? '',
+                    ),
+                  );
+                  UIUtil.showSnackbar(
+                    '${localizations.addressCopied}\n${selectedAccount?.genesisAddress.toLowerCase()}',
+                    context,
+                    ref,
+                    ArchethicTheme.text,
+                    ArchethicTheme.snackBarShadow,
+                    icon: Symbols.info,
+                  );
+                },
+                child: Column(
+                  children: [
+                    Text(
+                      selectedAccount?.nameDisplayed ?? ' ',
+                      style: ArchethicThemeStyles.textStyleSize24W700Primary
+                          .copyWith(
+                        color: aedappfm.AppThemeBase.secondaryColor,
+                      ),
+                    ),
+                    Row(
                       children: [
                         Text(
-                          selectedAccount?.nameDisplayed ?? ' ',
-                          style: ArchethicThemeStyles.textStyleSize24W700Primary
-                              .copyWith(
-                            color: aedappfm.AppThemeBase.secondaryColor,
-                          ),
+                          AddressFormatters(
+                            selectedAccount?.genesisAddress ?? '',
+                          ).getShortString4().toLowerCase(),
+                          style:
+                              ArchethicThemeStyles.textStyleSize14W600Primary,
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              AddressFormatters(
-                                selectedAccount?.genesisAddress ?? '',
-                              ).getShortString4().toLowerCase(),
-                              style: ArchethicThemeStyles
-                                  .textStyleSize14W600Primary,
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            const Icon(
-                              Symbols.content_copy,
-                              weight: IconSize.weightM,
-                              opticalSize: IconSize.opticalSizeM,
-                              grade: IconSize.gradeM,
-                              size: 16,
-                            ),
-                          ],
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        const Icon(
+                          Symbols.content_copy,
+                          weight: IconSize.weightM,
+                          opticalSize: IconSize.opticalSizeM,
+                          grade: IconSize.gradeM,
+                          size: 16,
                         ),
                       ],
                     ),
+                  ],
+                ),
+              ),
+            ).animate().fade(duration: const Duration(milliseconds: 300))
+          : preferences.mainScreenCurrentPage == 1
+              ? InkWell(
+                  onTap: () {
+                    sl.get<HapticUtil>().feedback(
+                          FeedbackType.light,
+                          preferences.activeVibrations,
+                        );
+                    Clipboard.setData(
+                      ClipboardData(
+                        text: keychain?.address.toUpperCase() ?? '',
+                      ),
+                    );
+                    UIUtil.showSnackbar(
+                      localizations.addressCopied,
+                      context,
+                      ref,
+                      ArchethicTheme.text,
+                      ArchethicTheme.snackBarShadow,
+                      icon: Symbols.info,
+                    );
+                  },
+                  child: FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: AutoSizeText(
+                      localizations.transactionHeader,
+                      style: ArchethicThemeStyles.textStyleSize24W700Primary,
+                    ),
+                  ).animate().fade(duration: const Duration(milliseconds: 300)),
+                )
+              : FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: AutoSizeText(
+                    localizations.aeSwapHeader,
+                    style: ArchethicThemeStyles.textStyleSize24W700Primary,
                   ),
-                ).animate().fade(duration: const Duration(milliseconds: 300))
-              : preferences.mainScreenCurrentPage == 3
-                  ? FittedBox(
-                      fit: BoxFit.fitWidth,
-                      child: AutoSizeText(
-                        localizations.dAppsHeader,
-                        style: ArchethicThemeStyles.textStyleSize24W700Primary,
-                      ),
-                    )
-                      .animate()
-                      .fade(duration: const Duration(milliseconds: 300))
-                  : FittedBox(
-                      fit: BoxFit.fitWidth,
-                      child: AutoSizeText(
-                        localizations.addressBookHeader,
-                        style: ArchethicThemeStyles.textStyleSize24W700Primary,
-                      ),
-                    ).animate().fade(
-                        duration: const Duration(milliseconds: 300),
-                      ),
+                ).animate().fade(duration: const Duration(milliseconds: 300)),
       backgroundColor: Colors.transparent,
       elevation: 0,
       centerTitle: true,

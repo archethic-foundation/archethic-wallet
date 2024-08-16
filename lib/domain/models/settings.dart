@@ -30,7 +30,7 @@ class Settings with _$Settings {
         firstLaunch: true,
         language: AvailableLanguage.english,
         languageSeed: '',
-        mainScreenCurrentPage: 2,
+        mainScreenCurrentPage: 0,
         network: NetworksSetting(
           network: AvailableNetworks.archethicMainNet,
           networkDevEndpoint: '',

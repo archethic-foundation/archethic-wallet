@@ -10,15 +10,16 @@ import 'package:aewallet/local_data_migration_widget.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/main/account_tab.dart';
-import 'package:aewallet/ui/views/main/address_book_tab.dart';
 import 'package:aewallet/ui/views/main/bloc/providers.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar.dart';
 import 'package:aewallet/ui/views/main/components/recovery_phrase_banner.dart';
-import 'package:aewallet/ui/views/main/dapps_tab.dart';
-import 'package:aewallet/ui/views/main/keychain_tab.dart';
+import 'package:aewallet/ui/views/main/transactions_tab.dart';
+import 'package:aewallet/ui/views/sheets/dex_sheet.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/tab_item.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -104,21 +105,21 @@ class _HomePageState extends ConsumerState<HomePage>
               },
               tabs: [
                 TabItem(
-                  icon: Symbols.contacts,
-                  label:
-                      AppLocalizations.of(context)!.bottomMainMenuAddressBook,
-                ),
-                TabItem(
-                  icon: Symbols.account_balance_wallet,
-                  label: AppLocalizations.of(context)!.bottomMainMenuKeychain,
-                ),
-                TabItem(
                   icon: Symbols.account_box,
-                  label: AppLocalizations.of(context)!.bottomMainMenuMain,
+                  label: AppLocalizations.of(context)!.bottomMainMenuAccounts,
                 ),
                 TabItem(
-                  icon: Symbols.widgets,
-                  label: AppLocalizations.of(context)!.bottomMainMenuDApps,
+                  icon: Symbols.schedule,
+                  label:
+                      AppLocalizations.of(context)!.bottomMainMenuTransactions,
+                ),
+                TabItem(
+                  icon: aedappfm.Iconsax.arrange_circle_2,
+                  label: AppLocalizations.of(context)!.bottomMainMenuSwap,
+                ),
+                TabItem(
+                  icon: aedappfm.Iconsax.wallet_add,
+                  label: AppLocalizations.of(context)!.bottomMainMenuEarn,
                 ),
               ],
             ),
@@ -156,8 +157,6 @@ class _HomePageState extends ConsumerState<HomePage>
         physics: const NeverScrollableScrollPhysics(),
         controller: tabController,
         children: const [
-          AddressBookTab(),
-          KeychainTab(),
           Stack(
             alignment: Alignment.topCenter,
             children: [
@@ -168,7 +167,9 @@ class _HomePageState extends ConsumerState<HomePage>
               ),
             ],
           ),
-          DAppsTab(),
+          TransactionsTab(),
+          DEXSheet(),
+          DEXSheet(),
         ],
       ),
     );

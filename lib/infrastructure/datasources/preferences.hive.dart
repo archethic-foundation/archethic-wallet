@@ -173,7 +173,7 @@ class PreferencesHiveDatasource {
       _setValue(mainScreenCurrentPage, value);
 
   int getMainScreenCurrentPage() =>
-      _getValue(mainScreenCurrentPage, defaultValue: 2);
+      _getValue(mainScreenCurrentPage, defaultValue: 0);
 
   Future<void> setShowPriceChart(bool value) =>
       _setValue(showPriceChart, value);
