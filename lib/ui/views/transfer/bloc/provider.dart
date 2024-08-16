@@ -52,7 +52,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
   CancelableTask<double?>? _calculateFeesTask;
 
-  final contactsHiveDatasource = ContactsHiveDatasource.instance();
+  final _contactsHiveDatasource = ContactsHiveDatasource.instance();
 
   Future<void> _updateFees(
     BuildContext context, {
@@ -264,7 +264,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         return;
       }
 
-      final contact = await contactsHiveDatasource.getContactWithAddress(text);
+      final contact = await _contactsHiveDatasource.getContactWithAddress(text);
       if (contact != null) {
         _setRecipient(
           recipient: TransferRecipient.contact(
@@ -287,7 +287,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     }
 
     try {
-      final contact = await contactsHiveDatasource.getContactWithName(text);
+      final contact = await _contactsHiveDatasource.getContactWithName(text);
       _setRecipient(
         recipient: TransferRecipient.contact(
           contact: contact!,
@@ -325,7 +325,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     required BuildContext context,
     required archethic.Address address,
   }) async {
-    final contact = await contactsHiveDatasource.getContactWithAddress(
+    final contact = await _contactsHiveDatasource.getContactWithAddress(
       address.address!,
     );
 

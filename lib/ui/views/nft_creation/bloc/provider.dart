@@ -58,7 +58,7 @@ class NftCreationFormNotifier
   NftCreationFormNotifier();
 
   CancelableTask<double?>? _calculateFeesTask;
-  final contactsHiveDatasource = ContactsHiveDatasource.instance();
+  final _contactsHiveDatasource = ContactsHiveDatasource.instance();
 
   @override
   NftCreationFormState build() {
@@ -297,7 +297,7 @@ class NftCreationFormNotifier
   }) async {
     if (!text.startsWith('@')) {
       try {
-        final contact = await contactsHiveDatasource.getContactWithPublicKey(
+        final contact = await _contactsHiveDatasource.getContactWithPublicKey(
           text,
         );
         _setPropertyAccessRecipient(
@@ -315,7 +315,7 @@ class NftCreationFormNotifier
     }
 
     try {
-      final contact = await contactsHiveDatasource.getContactWithName(text);
+      final contact = await _contactsHiveDatasource.getContactWithName(text);
       _setPropertyAccessRecipient(
         recipient: PropertyAccessRecipient.contact(
           contact: contact!,
@@ -344,7 +344,7 @@ class NftCreationFormNotifier
     required archethic.Address address,
   }) async {
     try {
-      final contact = await contactsHiveDatasource.getContactWithAddress(
+      final contact = await _contactsHiveDatasource.getContactWithAddress(
         address.address!,
       );
 

@@ -67,7 +67,7 @@ class AddServiceConfirmationFormNotifier extends AutoDisposeFamilyAsyncNotifier<
 @riverpod
 UseCase<SendTransactionCommand,
     Result<TransactionConfirmation, TransactionError>> _sendTransactionUseCase(
-  AutoDisposeRef ref,
+  _SendTransactionUseCaseRef ref,
 ) =>
     SendTransactionUseCase(
       wallet: ref.watch(sessionNotifierProvider).loggedIn!.wallet,
