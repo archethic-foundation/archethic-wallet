@@ -36,15 +36,7 @@ final _intervalOptionProvider = Provider<MarketPriceHistoryInterval>.internal(
 );
 
 typedef _IntervalOptionRef = ProviderRef<MarketPriceHistoryInterval>;
-<<<<<<< HEAD
-<<<<<<< HEAD
-String _$priceHistoryHash() => r'6b820fd2086504d30bd7cd4e5c7ceb0650fc02dd';
-=======
-String _$priceHistoryHash() => r'54c97861c17ceb12b1d1dc6432d9f5cdfb2a6748';
->>>>>>> e4c1a772 (🚧 UI Adjustments)
-=======
-String _$priceHistoryHash() => r'1d1bd84b4617f71d3ce5ad98daf7009749689bb9';
->>>>>>> 91c6ba93 (feat: :sparkles: Use fetch-api-service instead of coingecko)
+String _$priceHistoryHash() => r'ab6ddfb6f0b39223d68a0a5ac0e907bdf6b098b6';
 
 /// Copied from Dart SDK
 class _SystemHash {
