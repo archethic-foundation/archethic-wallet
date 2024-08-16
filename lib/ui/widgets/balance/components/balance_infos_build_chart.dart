@@ -37,7 +37,7 @@ class BalanceInfosChart extends ConsumerWidget {
         tooltipText: ArchethicThemeStyles.textStyleSize12W100Primary,
         axisTextStyle: ArchethicThemeStyles.textStyleSize12W100Primary,
         optionChartSelected: settings.priceChartIntervalOption,
-        currency: settings.currency.name,
+        currency: AvailableCurrencyEnum.usd.name,
         completeChart: false,
         lineTouchEnabled: false,
       ),

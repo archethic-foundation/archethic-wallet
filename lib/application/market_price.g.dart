@@ -7,11 +7,7 @@ part of 'market_price.dart';
 // **************************************************************************
 
 String _$remoteRepositoriesHash() =>
-<<<<<<< HEAD
-    r'362a295c805d83fbba9037ae975c2d6fca22130d';
-=======
-    r'eeaffe7671b95883cedbbde55fc48eb3d51ab6c3';
->>>>>>> 91c6ba93 (feat: :sparkles: Use fetch-api-service instead of coingecko)
+    r'fe4eb85b07ba092daadcdded9e7e30b5e1572c81';
 
 /// See also [_remoteRepositories].
 @ProviderFor(_remoteRepositories)
@@ -195,15 +191,7 @@ class _CurrencyMarketPriceProviderElement
 }
 
 String _$selectedCurrencyMarketPriceHash() =>
-<<<<<<< HEAD
-<<<<<<< HEAD
-    r'b37795bf99d0655475030698f3ad8f74af0fe105';
-=======
-    r'916fbf25a847d2d714b9c5bfe2bf5a6eeb277e08';
->>>>>>> e4c1a772 (🚧 UI Adjustments)
-=======
-    r'36bc3cad954a7124b0099af5ff1c3d8107fdf5f5';
->>>>>>> 09b97206 (fix rebase)
+    r'0b97fa52351428767bf0cfa8a0fda11a58cc0519';
 
 /// See also [_selectedCurrencyMarketPrice].
 @ProviderFor(_selectedCurrencyMarketPrice)

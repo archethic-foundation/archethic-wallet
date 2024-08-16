@@ -320,30 +320,7 @@ class _$SettingsImpl extends _Settings {
 
 abstract class _Settings extends Settings {
   const factory _Settings(
-<<<<<<< HEAD
-<<<<<<< HEAD
-          {required final AvailablePrimaryCurrency primaryCurrency,
-=======
-<<<<<<< HEAD
-          {required final AvailableCurrencyEnum currency,
-          required final AvailablePrimaryCurrency primaryCurrency,
->>>>>>> 91c6ba93 (feat: :sparkles: Use fetch-api-service instead of coingecko)
-          required final AvailableLanguage language,
-          required final NetworksSetting network,
-          required final String languageSeed,
-          required final bool firstLaunch,
-          required final bool showBalances,
-          required final bool activeVibrations,
-          required final bool activeRPCServer,
-          required final int mainScreenCurrentPage,
-          required final bool showPriceChart,
-          required final MarketPriceHistoryInterval priceChartIntervalOption}) =
-      _$SettingsImpl;
-=======
-=======
->>>>>>> 899629f5 (Fix selectedAccount provider)
-      {required final AvailableCurrencyEnum currency,
-      required final AvailablePrimaryCurrency primaryCurrency,
+      {required final AvailablePrimaryCurrency primaryCurrency,
       required final AvailableLanguage language,
       required final NetworksSetting network,
       required final String languageSeed,

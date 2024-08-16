@@ -1,5 +1,5 @@
 import 'package:aewallet/application/price_history/providers.dart';
-import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/model/available_currency.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/widgets/components/history_chart.dart';
@@ -18,9 +18,6 @@ class TokenDetailChart extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currency = ref.watch(
-      SettingsProviders.settings.select((settings) => settings.currency),
-    );
     final selectedInterval = ref.watch(PriceHistoryProviders.scaleOption);
     if (chartInfos == null) {
       return const SizedBox.shrink();
@@ -49,7 +46,7 @@ class TokenDetailChart extends ConsumerWidget {
         tooltipText: ArchethicThemeStyles.textStyleSize12W100Primary,
         axisTextStyle: ArchethicThemeStyles.textStyleSize12W100Primary,
         optionChartSelected: selectedInterval,
-        currency: currency.name,
+        currency: AvailableCurrencyEnum.usd.name,
         completeChart: true,
         lineTouchEnabled: true,
       ),
