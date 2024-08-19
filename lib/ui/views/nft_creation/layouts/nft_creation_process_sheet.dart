@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/device_abilities.dart';
-import 'package:aewallet/application/nft/nft_category.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -10,7 +9,6 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
-import 'package:aewallet/ui/views/nft_creation/layouts/components/category_template_form.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/import_tab/nft_creation_process_import_tab_aeweb_form.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/import_tab/nft_creation_process_import_tab_http_form.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/import_tab/nft_creation_process_import_tab_ipfs_form.dart';
@@ -65,9 +63,7 @@ part 'nft_creation_process_sheet.g.dart';
 
 @freezed
 class NftCreationSheetParams with _$NftCreationSheetParams {
-  const factory NftCreationSheetParams({
-    required int currentNftCategoryIndex,
-  }) = _NftCreationSheetParams;
+  const factory NftCreationSheetParams() = _NftCreationSheetParams;
   const NftCreationSheetParams._();
 
   factory NftCreationSheetParams.fromJson(Map<String, dynamic> json) =>

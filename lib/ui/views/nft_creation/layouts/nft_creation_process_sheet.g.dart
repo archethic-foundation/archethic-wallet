@@ -8,12 +8,8 @@ part of 'nft_creation_process_sheet.dart';
 
 _$NftCreationSheetParamsImpl _$$NftCreationSheetParamsImplFromJson(
         Map<String, dynamic> json) =>
-    _$NftCreationSheetParamsImpl(
-      currentNftCategoryIndex: (json['currentNftCategoryIndex'] as num).toInt(),
-    );
+    _$NftCreationSheetParamsImpl();
 
 Map<String, dynamic> _$$NftCreationSheetParamsImplToJson(
         _$NftCreationSheetParamsImpl instance) =>
-    <String, dynamic>{
-      'currentNftCategoryIndex': instance.currentNftCategoryIndex,
-    };
+    <String, dynamic>{};

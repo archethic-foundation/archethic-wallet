@@ -18,7 +18,6 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$NftCreationFormState {
   NftCreationProcessStep get nftCreationProcessStep =>
       throw _privateConstructorUsedError;
-  int get currentNftCategoryIndex => throw _privateConstructorUsedError;
   int get indexTab => throw _privateConstructorUsedError;
   AsyncValue<double> get feeEstimation => throw _privateConstructorUsedError;
   AccountBalance get accountBalance => throw _privateConstructorUsedError;
@@ -57,7 +56,6 @@ abstract class $NftCreationFormStateCopyWith<$Res> {
   @useResult
   $Res call(
       {NftCreationProcessStep nftCreationProcessStep,
-      int currentNftCategoryIndex,
       int indexTab,
       AsyncValue<double> feeEstimation,
       AccountBalance accountBalance,
@@ -100,7 +98,6 @@ class _$NftCreationFormStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? nftCreationProcessStep = null,
-    Object? currentNftCategoryIndex = null,
     Object? indexTab = null,
     Object? feeEstimation = null,
     Object? accountBalance = null,
@@ -129,10 +126,6 @@ class _$NftCreationFormStateCopyWithImpl<$Res,
           ? _value.nftCreationProcessStep
           : nftCreationProcessStep // ignore: cast_nullable_to_non_nullable
               as NftCreationProcessStep,
-      currentNftCategoryIndex: null == currentNftCategoryIndex
-          ? _value.currentNftCategoryIndex
-          : currentNftCategoryIndex // ignore: cast_nullable_to_non_nullable
-              as int,
       indexTab: null == indexTab
           ? _value.indexTab
           : indexTab // ignore: cast_nullable_to_non_nullable
@@ -256,7 +249,6 @@ abstract class _$$NftCreationFormStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {NftCreationProcessStep nftCreationProcessStep,
-      int currentNftCategoryIndex,
       int indexTab,
       AsyncValue<double> feeEstimation,
       AccountBalance accountBalance,
@@ -298,7 +290,6 @@ class __$$NftCreationFormStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? nftCreationProcessStep = null,
-    Object? currentNftCategoryIndex = null,
     Object? indexTab = null,
     Object? feeEstimation = null,
     Object? accountBalance = null,
@@ -327,10 +318,6 @@ class __$$NftCreationFormStateImplCopyWithImpl<$Res>
           ? _value.nftCreationProcessStep
           : nftCreationProcessStep // ignore: cast_nullable_to_non_nullable
               as NftCreationProcessStep,
-      currentNftCategoryIndex: null == currentNftCategoryIndex
-          ? _value.currentNftCategoryIndex
-          : currentNftCategoryIndex // ignore: cast_nullable_to_non_nullable
-              as int,
       indexTab: null == indexTab
           ? _value.indexTab
           : indexTab // ignore: cast_nullable_to_non_nullable
@@ -428,7 +415,6 @@ class __$$NftCreationFormStateImplCopyWithImpl<$Res>
 class _$NftCreationFormStateImpl extends _NftCreationFormState {
   const _$NftCreationFormStateImpl(
       {this.nftCreationProcessStep = NftCreationProcessStep.form,
-      this.currentNftCategoryIndex = 0,
       this.indexTab = 0,
       required this.feeEstimation,
       required this.accountBalance,
@@ -458,9 +444,6 @@ class _$NftCreationFormStateImpl extends _NftCreationFormState {
   @override
   @JsonKey()
   final NftCreationProcessStep nftCreationProcessStep;
-  @override
-  @JsonKey()
-  final int currentNftCategoryIndex;
   @override
   @JsonKey()
   final int indexTab;
@@ -535,7 +518,7 @@ class _$NftCreationFormStateImpl extends _NftCreationFormState {
 
   @override
   String toString() {
-    return 'NftCreationFormState(nftCreationProcessStep: $nftCreationProcessStep, currentNftCategoryIndex: $currentNftCategoryIndex, indexTab: $indexTab, feeEstimation: $feeEstimation, accountBalance: $accountBalance, file: $file, fileImportType: $fileImportType, fileDecoded: $fileDecoded, fileDecodedForPreview: $fileDecodedForPreview, fileTypeMime: $fileTypeMime, fileSize: $fileSize, name: $name, description: $description, propertyName: $propertyName, propertyValue: $propertyValue, propertySearch: $propertySearch, fileURL: $fileURL, propertyAccessRecipient: $propertyAccessRecipient, properties: $properties, error: $error, symbol: $symbol, initialSupply: $initialSupply, checkPreventUserPublicInfo: $checkPreventUserPublicInfo, transaction: $transaction)';
+    return 'NftCreationFormState(nftCreationProcessStep: $nftCreationProcessStep, indexTab: $indexTab, feeEstimation: $feeEstimation, accountBalance: $accountBalance, file: $file, fileImportType: $fileImportType, fileDecoded: $fileDecoded, fileDecodedForPreview: $fileDecodedForPreview, fileTypeMime: $fileTypeMime, fileSize: $fileSize, name: $name, description: $description, propertyName: $propertyName, propertyValue: $propertyValue, propertySearch: $propertySearch, fileURL: $fileURL, propertyAccessRecipient: $propertyAccessRecipient, properties: $properties, error: $error, symbol: $symbol, initialSupply: $initialSupply, checkPreventUserPublicInfo: $checkPreventUserPublicInfo, transaction: $transaction)';
   }
 
   @override
@@ -545,9 +528,6 @@ class _$NftCreationFormStateImpl extends _NftCreationFormState {
             other is _$NftCreationFormStateImpl &&
             (identical(other.nftCreationProcessStep, nftCreationProcessStep) ||
                 other.nftCreationProcessStep == nftCreationProcessStep) &&
-            (identical(
-                    other.currentNftCategoryIndex, currentNftCategoryIndex) ||
-                other.currentNftCategoryIndex == currentNftCategoryIndex) &&
             (identical(other.indexTab, indexTab) ||
                 other.indexTab == indexTab) &&
             (identical(other.feeEstimation, feeEstimation) ||
@@ -596,7 +576,6 @@ class _$NftCreationFormStateImpl extends _NftCreationFormState {
   int get hashCode => Object.hashAll([
         runtimeType,
         nftCreationProcessStep,
-        currentNftCategoryIndex,
         indexTab,
         feeEstimation,
         accountBalance,
@@ -633,7 +612,6 @@ class _$NftCreationFormStateImpl extends _NftCreationFormState {
 abstract class _NftCreationFormState extends NftCreationFormState {
   const factory _NftCreationFormState(
       {final NftCreationProcessStep nftCreationProcessStep,
-      final int currentNftCategoryIndex,
       final int indexTab,
       required final AsyncValue<double> feeEstimation,
       required final AccountBalance accountBalance,
@@ -660,8 +638,6 @@ abstract class _NftCreationFormState extends NftCreationFormState {
 
   @override
   NftCreationProcessStep get nftCreationProcessStep;
-  @override
-  int get currentNftCategoryIndex;
   @override
   int get indexTab;
   @override

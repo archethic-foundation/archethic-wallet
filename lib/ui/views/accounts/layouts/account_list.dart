@@ -1,80 +1,54 @@
-import 'dart:async';
 import 'dart:ui';
 
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/connectivity_status.dart';
-import 'package:aewallet/application/session/session.dart';
-import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/ui/views/accounts/layouts/components/account_list_item.dart';
-import 'package:aewallet/ui/views/main/home_page.dart';
-import 'package:aewallet/ui/widgets/components/refresh_indicator.dart';
-import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:go_router/go_router.dart';
 
-class AccountsListWidget extends ConsumerWidget {
-  const AccountsListWidget({
+class AccountsList extends ConsumerStatefulWidget {
+  const AccountsList({
     super.key,
-    this.currencyName,
-    required this.accountsList,
   });
-  final String? currencyName;
-  final List<Account> accountsList;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final settings = ref.watch(SettingsProviders.settings);
+  ConsumerState<AccountsList> createState() => AccountsListState();
+}
 
-    final selectedAccount = ref.read(
+class AccountsListState extends ConsumerState<AccountsList>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+
+    final selectedAccount = ref.watch(
       AccountProviders.accounts.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
+    final accountsList =
+        ref.watch(AccountProviders.sortedAccounts).valueOrNull ?? [];
 
     return Expanded(
-      child: ArchethicRefreshIndicator(
-        onRefresh: () => Future<void>.sync(() async {
-          sl.get<HapticUtil>().feedback(
-                FeedbackType.light,
-                settings.activeVibrations,
-              );
-
-          final connectivityStatusProvider =
-              ref.read(connectivityStatusProviders);
-          if (connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
-            return;
-          }
-          ShowSendingAnimation.build(context);
-          await ref.read(sessionNotifierProvider.notifier).refresh();
-          await (await ref
-                  .read(AccountProviders.accounts.notifier)
-                  .selectedAccountNotifier)
-              ?.refreshRecentTransactions();
-          if (context.canPop()) context.pop();
-          context.go(HomePage.routerPage);
-        }),
-        child: ScrollConfiguration(
-          behavior: ScrollConfiguration.of(context).copyWith(
-            dragDevices: {
-              PointerDeviceKind.touch,
-              PointerDeviceKind.mouse,
-              PointerDeviceKind.trackpad,
-            },
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 50),
+      child: Stack(
+        children: [
+          ScrollConfiguration(
+            behavior: ScrollConfiguration.of(context).copyWith(
+              dragDevices: {
+                PointerDeviceKind.touch,
+                PointerDeviceKind.mouse,
+                PointerDeviceKind.trackpad,
+              },
+            ),
             child: ListView.builder(
               physics: const AlwaysScrollableScrollPhysics(),
               padding: EdgeInsets.only(
                 top: MediaQuery.of(context).padding.top + 20,
-                bottom: MediaQuery.of(context).padding.bottom + 40,
+                bottom: MediaQuery.of(context).padding.bottom + 70,
               ),
               itemCount: accountsList.length,
               itemBuilder: (BuildContext context, int index) {
@@ -85,8 +59,8 @@ class AccountsListWidget extends ConsumerWidget {
 
                 if (!kIsWeb) {
                   item = item
-                      .animate(delay: (100 * index).ms)
-                      .fadeIn(duration: 900.ms, delay: 200.ms)
+                      .animate(delay: 100.ms)
+                      .fadeIn(duration: 300.ms, delay: 200.ms)
                       .shimmer(
                         blendMode: BlendMode.srcOver,
                         color: Colors.white12,
@@ -106,7 +80,25 @@ class AccountsListWidget extends ConsumerWidget {
               },
             ),
           ),
-        ),
+          Positioned(
+            top: -10,
+            left: 0,
+            right: 0,
+            child: Container(
+              height: 30,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.black,
+                    Colors.black.withOpacity(0),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -5,7 +5,6 @@ import 'dart:async';
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -13,7 +12,6 @@ import 'package:aewallet/ui/util/address_formatters.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/layouts/components/contact_detail_tab.dart';
-import 'package:aewallet/ui/views/contacts/layouts/components/single_contact_balance.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
@@ -23,6 +21,7 @@ import 'package:aewallet/util/haptic_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
@@ -87,15 +86,48 @@ class ContactDetail extends ConsumerWidget implements SheetSkeletonInterface {
 
     return SheetAppBar(
       title: contact.format,
-      widgetAfterTitle: Text(
-        AddressFormatters(
-          contactAddress,
-        ).getShortString4().toLowerCase(),
-        style: ArchethicThemeStyles.textStyleSize14W600Primary,
-      ),
-      widgetRight: Padding(
-        padding: const EdgeInsets.only(right: 10, top: 10),
-        child: _ContactDetailBalance(contactAddress: contactAddress),
+      widgetAfterTitle: InkWell(
+        onTap: () {
+          final preferences = ref.watch(SettingsProviders.settings);
+
+          sl.get<HapticUtil>().feedback(
+                FeedbackType.light,
+                preferences.activeVibrations,
+              );
+          Clipboard.setData(
+            ClipboardData(
+              text: contactAddress.toLowerCase(),
+            ),
+          );
+          UIUtil.showSnackbar(
+            '${AppLocalizations.of(context)!.addressCopied}\n${contactAddress.toLowerCase()}',
+            context,
+            ref,
+            ArchethicTheme.text,
+            ArchethicTheme.snackBarShadow,
+            icon: Symbols.info,
+          );
+        },
+        child: Row(
+          children: [
+            Text(
+              AddressFormatters(
+                contactAddress,
+              ).getShortString4().toLowerCase(),
+              style: ArchethicThemeStyles.textStyleSize14W600Primary,
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            const Icon(
+              Symbols.content_copy,
+              weight: IconSize.weightM,
+              opticalSize: IconSize.opticalSizeM,
+              grade: IconSize.gradeM,
+              size: 16,
+            ),
+          ],
+        ),
       ),
       widgetLeft: BackButton(
         key: const Key('back'),
@@ -123,41 +155,6 @@ class ContactDetail extends ConsumerWidget implements SheetSkeletonInterface {
             contact: contact,
             readOnly: readOnly,
           );
-  }
-}
-
-class _ContactDetailBalance extends ConsumerWidget {
-  const _ContactDetailBalance({
-    required this.contactAddress,
-  });
-
-  final String contactAddress;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final contact = ref
-        .watch(ContactProviders.getContactWithAddress(contactAddress))
-        .valueOrNull;
-
-    if (contact == null) return const SizedBox();
-
-    final accounts = ref.watch(AccountProviders.accounts).valueOrNull;
-    final account = accounts
-        ?.where(
-          (element) => element.lastAddress == contactAddress,
-        )
-        .firstOrNull;
-    AsyncValue<AccountBalance> asyncAccountBalance;
-    if (contact.type == ContactType.keychainService.name && account != null) {
-      asyncAccountBalance = AsyncValue.data(account.balance!);
-    } else {
-      asyncAccountBalance =
-          ref.watch(ContactProviders.getBalance(address: contactAddress));
-    }
-    return SingleContactBalance(
-      contact: contact,
-      accountBalance: asyncAccountBalance,
-    );
   }
 }
 

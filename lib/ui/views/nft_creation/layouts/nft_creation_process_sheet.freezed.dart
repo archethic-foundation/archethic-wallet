@@ -21,12 +21,7 @@ NftCreationSheetParams _$NftCreationSheetParamsFromJson(
 
 /// @nodoc
 mixin _$NftCreationSheetParams {
-  int get currentNftCategoryIndex => throw _privateConstructorUsedError;
-
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $NftCreationSheetParamsCopyWith<NftCreationSheetParams> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -34,8 +29,6 @@ abstract class $NftCreationSheetParamsCopyWith<$Res> {
   factory $NftCreationSheetParamsCopyWith(NftCreationSheetParams value,
           $Res Function(NftCreationSheetParams) then) =
       _$NftCreationSheetParamsCopyWithImpl<$Res, NftCreationSheetParams>;
-  @useResult
-  $Res call({int currentNftCategoryIndex});
 }
 
 /// @nodoc
@@ -48,31 +41,14 @@ class _$NftCreationSheetParamsCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? currentNftCategoryIndex = null,
-  }) {
-    return _then(_value.copyWith(
-      currentNftCategoryIndex: null == currentNftCategoryIndex
-          ? _value.currentNftCategoryIndex
-          : currentNftCategoryIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$NftCreationSheetParamsImplCopyWith<$Res>
-    implements $NftCreationSheetParamsCopyWith<$Res> {
+abstract class _$$NftCreationSheetParamsImplCopyWith<$Res> {
   factory _$$NftCreationSheetParamsImplCopyWith(
           _$NftCreationSheetParamsImpl value,
           $Res Function(_$NftCreationSheetParamsImpl) then) =
       __$$NftCreationSheetParamsImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({int currentNftCategoryIndex});
 }
 
 /// @nodoc
@@ -84,68 +60,38 @@ class __$$NftCreationSheetParamsImplCopyWithImpl<$Res>
       _$NftCreationSheetParamsImpl _value,
       $Res Function(_$NftCreationSheetParamsImpl) _then)
       : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? currentNftCategoryIndex = null,
-  }) {
-    return _then(_$NftCreationSheetParamsImpl(
-      currentNftCategoryIndex: null == currentNftCategoryIndex
-          ? _value.currentNftCategoryIndex
-          : currentNftCategoryIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$NftCreationSheetParamsImpl extends _NftCreationSheetParams
     with DiagnosticableTreeMixin {
-  const _$NftCreationSheetParamsImpl({required this.currentNftCategoryIndex})
-      : super._();
+  const _$NftCreationSheetParamsImpl() : super._();
 
   factory _$NftCreationSheetParamsImpl.fromJson(Map<String, dynamic> json) =>
       _$$NftCreationSheetParamsImplFromJson(json);
 
   @override
-  final int currentNftCategoryIndex;
-
-  @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'NftCreationSheetParams(currentNftCategoryIndex: $currentNftCategoryIndex)';
+    return 'NftCreationSheetParams()';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'NftCreationSheetParams'))
-      ..add(DiagnosticsProperty(
-          'currentNftCategoryIndex', currentNftCategoryIndex));
+    properties.add(DiagnosticsProperty('type', 'NftCreationSheetParams'));
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$NftCreationSheetParamsImpl &&
-            (identical(
-                    other.currentNftCategoryIndex, currentNftCategoryIndex) ||
-                other.currentNftCategoryIndex == currentNftCategoryIndex));
+            other is _$NftCreationSheetParamsImpl);
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, currentNftCategoryIndex);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$NftCreationSheetParamsImplCopyWith<_$NftCreationSheetParamsImpl>
-      get copyWith => __$$NftCreationSheetParamsImplCopyWithImpl<
-          _$NftCreationSheetParamsImpl>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   Map<String, dynamic> toJson() {
@@ -156,18 +102,9 @@ class _$NftCreationSheetParamsImpl extends _NftCreationSheetParams
 }
 
 abstract class _NftCreationSheetParams extends NftCreationSheetParams {
-  const factory _NftCreationSheetParams(
-          {required final int currentNftCategoryIndex}) =
-      _$NftCreationSheetParamsImpl;
+  const factory _NftCreationSheetParams() = _$NftCreationSheetParamsImpl;
   const _NftCreationSheetParams._() : super._();
 
   factory _NftCreationSheetParams.fromJson(Map<String, dynamic> json) =
       _$NftCreationSheetParamsImpl.fromJson;
-
-  @override
-  int get currentNftCategoryIndex;
-  @override
-  @JsonKey(ignore: true)
-  _$$NftCreationSheetParamsImplCopyWith<_$NftCreationSheetParamsImpl>
-      get copyWith => throw _privateConstructorUsedError;
 }

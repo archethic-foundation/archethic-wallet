@@ -20,21 +20,21 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-class TokensListSheet extends ConsumerStatefulWidget {
-  const TokensListSheet({super.key});
+class TokensList extends ConsumerStatefulWidget {
+  const TokensList({super.key});
 
   @override
-  ConsumerState<TokensListSheet> createState() => _TokensListSheetState();
+  ConsumerState<TokensList> createState() => TokensListState();
 }
 
-class _TokensListSheetState extends ConsumerState<TokensListSheet>
+class TokensListState extends ConsumerState<TokensList>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
   final searchCriteriaController = TextEditingController();
 
   @override
-  void didChangeDependencies() {
+  void initState() {
     Future.delayed(Duration.zero, () async {
       // TODO(reddwarf03): See https://github.com/archethic-foundation/archethic-wallet/pull/988
       final ucidsTokens = ref.read(aedappfm.UcidsTokensProviders.ucidsTokens);
@@ -54,7 +54,7 @@ class _TokensListSheetState extends ConsumerState<TokensListSheet>
           );
     });
 
-    super.didChangeDependencies();
+    super.initState();
   }
 
   @override
@@ -68,6 +68,7 @@ class _TokensListSheetState extends ConsumerState<TokensListSheet>
     return Column(
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
               child: Align(
@@ -100,7 +101,6 @@ class _TokensListSheetState extends ConsumerState<TokensListSheet>
                       hintStyle:
                           ArchethicThemeStyles.textStyleSize12W100Primary,
                       filled: true,
-                      //fillColor: ArchethicTheme.text30,
                       hintText: localizations.searchField,
                     ),
                     style: ArchethicThemeStyles.textStyleSize12W100Primary,

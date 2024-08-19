@@ -1,6 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/nft/nft_category.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/responsive.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_list_detail.dart';
@@ -9,12 +8,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class NFTList extends ConsumerWidget {
-  const NFTList({super.key, required this.currentNftCategoryIndex});
-  final int currentNftCategoryIndex;
+class NFTList extends ConsumerStatefulWidget {
+  const NFTList({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<NFTList> createState() => _NFTListState();
+}
+
+class _NFTListState extends ConsumerState<NFTList>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+
     final localizations = AppLocalizations.of(context)!;
     final accountSelected = ref.watch(
       AccountProviders.accounts.select(
@@ -22,24 +31,8 @@ class NFTList extends ConsumerWidget {
       ),
     );
 
-    final nftCategories = ref
-        .watch(
-          NftCategoryProviders.selectedAccountNftCategories(
-            context: context,
-          ),
-        )
-        .valueOrNull;
-
-    if (nftCategories == null) return const SizedBox();
-
-    final nftCategory = nftCategories
-        .where(
-          (element) => element.id == currentNftCategoryIndex,
-        )
-        .first;
-
     final accountTokenList = ref.watch(
-      AccountProviders.getAccountNFTFiltered(accountSelected!, nftCategory.id),
+      AccountProviders.getAccountNFTFiltered(accountSelected!),
     );
 
     if (accountTokenList.isEmpty) {

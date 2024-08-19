@@ -16,9 +16,6 @@ class _NFTCreationProcessImportTabState
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final nftCreation = ref.watch(
-      NftCreationFormProvider.nftCreationForm,
-    );
     final bottom = MediaQuery.of(context).viewInsets.bottom;
 
     return ArchethicScrollbar(
@@ -28,19 +25,6 @@ class _NFTCreationProcessImportTabState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 20),
-              child: Text(
-                ref.watch(
-                  NftCategoryProviders.getDescriptionHeader(
-                    context: context,
-                    id: nftCreation.currentNftCategoryIndex,
-                  ),
-                ),
-                style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                textAlign: TextAlign.justify,
-              ),
-            ),
             Padding(
               padding: const EdgeInsets.only(bottom: 20),
               child: Row(

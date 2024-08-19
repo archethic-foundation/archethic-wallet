@@ -1,25 +1,20 @@
-import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/address_formatters.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/tokens_detail/layouts/components/token_detail_chart.dart';
 import 'package:aewallet/ui/views/tokens_detail/layouts/components/token_detail_chart_interval.dart';
 import 'package:aewallet/ui/views/tokens_detail/layouts/components/token_detail_info.dart';
-import 'package:aewallet/ui/views/transfer/bloc/state.dart';
-import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
+import 'package:aewallet/ui/views/tokens_detail/layouts/components/token_detail_menu.dart';
 import 'package:aewallet/ui/widgets/balance/balance_infos.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -52,63 +47,7 @@ class TokenDetailSheet extends ConsumerWidget
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-    final preferences = ref.watch(SettingsProviders.settings);
-    final accountSelected = ref.watch(
-      AccountProviders.accounts.select(
-        (accounts) => accounts.valueOrNull?.selectedAccount,
-      ),
-    );
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        Row(
-          children: [
-            AppButtonTinyConnectivity(
-              localizations.viewExplorer,
-              Dimens.buttonTopDimens,
-              key: const Key('viewExplorer'),
-              onPressed: () async {
-                UIUtil.showWebview(
-                  context,
-                  '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${aeToken.address}',
-                  '',
-                );
-              },
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            AppButtonTinyConnectivity(
-              localizations.send,
-              Dimens.buttonBottomDimens,
-              key: const Key('addAccount'),
-              onPressed: () async {
-                sl.get<HapticUtil>().feedback(
-                      FeedbackType.light,
-                      preferences.activeVibrations,
-                    );
-
-                await TransferSheet(
-                  transferType:
-                      aeToken.isUCO ? TransferType.uco : TransferType.token,
-                  recipient: const TransferRecipient.address(
-                    address: Address(address: ''),
-                  ),
-                  aeToken: aeToken,
-                ).show(
-                  context: context,
-                  ref: ref,
-                );
-              },
-              disabled: !accountSelected!.balance!.isNativeTokenValuePositive(),
-            ),
-          ],
-        ),
-      ],
-    );
+    return const SizedBox.shrink();
   }
 
   @override
@@ -196,6 +135,12 @@ class TokenDetailSheet extends ConsumerWidget
     return Column(
       children: <Widget>[
         TokenDetailInfo(
+          aeToken: aeToken,
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        TokenDetailMenu(
           aeToken: aeToken,
         ),
         if (chartInfos != null && chartInfos!.isNotEmpty)

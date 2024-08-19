@@ -12,13 +12,20 @@ TokensRepositoryImpl _tokensRepository(_TokensRepositoryRef ref) =>
 @riverpod
 Future<List<AEToken>> _getTokensList(
   _GetTokensListRef ref,
-  String userGenesisAddress,
-) async {
+  String userGenesisAddress, {
+  bool withVerified = true,
+  bool withLPToken = false,
+  bool withNotVerified = false,
+}) async {
   final apiService = sl.get<ApiService>();
 
-  return ref
-      .watch(_tokensRepositoryProvider)
-      .getTokensList(userGenesisAddress, apiService);
+  return ref.read(_tokensRepositoryProvider).getTokensList(
+        userGenesisAddress,
+        apiService,
+        withVerified: withVerified,
+        withLPToken: withLPToken,
+        withNotVerified: withNotVerified,
+      );
 }
 
 abstract class TokensProviders {

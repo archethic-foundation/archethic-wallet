@@ -4,27 +4,32 @@ import 'package:aewallet/ui/views/transactions/components/transaction_detail.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TransactionsList extends ConsumerWidget {
+class TransactionsList extends ConsumerStatefulWidget {
   const TransactionsList({super.key, required this.transactionsList});
 
   final List<RecentTransaction> transactionsList;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return ListView.separated(
-      shrinkWrap: true,
-      separatorBuilder: (context, index) => const SizedBox.shrink(),
-      physics: const AlwaysScrollableScrollPhysics(),
-      padding: EdgeInsets.only(
-        top: MediaQuery.of(context).padding.top,
-        bottom: MediaQuery.of(context).padding.bottom + 40,
-      ),
-      itemCount: transactionsList.length,
-      itemBuilder: (BuildContext context, int index) {
+  ConsumerState<TransactionsList> createState() => _TransactionsListState();
+}
+
+class _TransactionsListState extends ConsumerState<TransactionsList>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(
+    BuildContext context,
+  ) {
+    super.build(context);
+
+    return Column(
+      children: widget.transactionsList.map((transaction) {
         return TransactionDetail(
-          transaction: transactionsList[index],
+          transaction: transaction,
         );
-      },
+      }).toList(),
     );
   }
 }

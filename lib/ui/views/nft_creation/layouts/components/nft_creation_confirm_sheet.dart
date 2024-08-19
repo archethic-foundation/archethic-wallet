@@ -53,15 +53,10 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet>
       }
 
       if (event.response == 'ok') {
-        final nftCreation = ref.read(
-          NftCreationFormProvider.nftCreationForm,
-        );
-
         final selectedAccount =
             await ref.read(AccountProviders.accounts.future).selectedAccount;
         await selectedAccount?.updateNftInfosOffChain(
           tokenAddress: event.transactionAddress,
-          categoryNftIndex: nftCreation.currentNftCategoryIndex,
         );
 
         await (await ref

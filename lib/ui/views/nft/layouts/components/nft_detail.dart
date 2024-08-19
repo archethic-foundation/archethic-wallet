@@ -115,17 +115,17 @@ class _NFTDetailState extends ConsumerState<NFTDetail>
                                 preferences.activeVibrations,
                               );
                           final accountToken = getAccountToken(accountSelected);
-
-                          await TransferSheet(
-                            transferType: TransferType.nft,
-                            accountToken: accountToken,
-                            recipient: const TransferRecipient.address(
-                              address: Address(address: ''),
-                            ),
-                            tokenId: widget.tokenId,
-                          ).show(
-                            context: context,
-                            ref: ref,
+                          await context.push(
+                            TransferSheet.routerPage,
+                            extra: {
+                              'transferType': TransferType.nft.name,
+                              'accountToken': const AccountTokenConverter()
+                                  .toJson(accountToken),
+                              'recipient': const TransferRecipient.address(
+                                address: Address(address: ''),
+                              ).toJson(),
+                              'tokenId': widget.tokenId,
+                            },
                           );
                         },
                       ),

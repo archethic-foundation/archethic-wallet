@@ -46,36 +46,6 @@ final _authenticatedRoutes = [
     ),
   ),
   GoRoute(
-    path: NFTTab.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
-      key: state.pageKey,
-      child: const NFTTab(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
-    ),
-  ),
-  GoRoute(
-    path: NFTListPerCategory.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
-      key: state.pageKey,
-      child: NFTListPerCategory(
-        currentNftCategoryIndex: state.extra! as int,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
-    ),
-  ),
-  GoRoute(
     path: NftCreationProcessSheet.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
       transitionDuration: Duration.zero,
@@ -124,22 +94,6 @@ final _authenticatedRoutes = [
       key: state.pageKey,
       child: AddAccountSheet(
         seed: state.extra! as String,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
-    ),
-  ),
-  GoRoute(
-    path: AddContactSheet.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
-      key: state.pageKey,
-      child: AddContactSheet(
-        address: state.extra as String?,
       ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
           FadeTransition(
@@ -388,17 +342,6 @@ final _authenticatedRoutes = [
         opacity: animation,
         child: child,
       ),
-    ),
-  ),
-  GoRoute(
-    path: ConfigureCategoryList.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
-      key: state.pageKey,
-      child: const ConfigureCategoryList(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(opacity: animation, child: child),
     ),
   ),
   GoRoute(
