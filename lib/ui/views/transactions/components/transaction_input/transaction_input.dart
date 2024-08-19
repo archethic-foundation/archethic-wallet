@@ -5,14 +5,12 @@ import 'package:aewallet/domain/models/market_price.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/views/contacts/layouts/add_contact.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transaction_template.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transfer_balance.dart';
 import 'package:aewallet/ui/views/transactions/components/transaction_input/transaction_input_information.dart';
 import 'package:aewallet/ui/views/transactions/components/transaction_input/transfer_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 class TransactionInput extends ConsumerWidget {
   const TransactionInput({
@@ -33,15 +31,6 @@ class TransactionInput extends ConsumerWidget {
       transaction: transaction,
       borderColor: ArchethicTheme.backgroundRecentTxListCardTransferInput,
       backgroundColor: ArchethicTheme.backgroundRecentTxListCardTransferInput,
-      onLongPress: () {
-        if (transaction.contactInformation == null &&
-            transaction.from != null) {
-          context.push(
-            AddContactSheet.routerPage,
-            extra: transaction.from,
-          );
-        }
-      },
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [

@@ -7,9 +7,12 @@ import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/menu/settings/settings_sheet.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/address_formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/accounts/layouts/account_list.dart';
+import 'package:aewallet/ui/views/accounts/layouts/components/add_account_button.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -24,6 +27,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const MainAppBar({super.key});
@@ -34,19 +38,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-
     final preferences = ref.watch(SettingsProviders.settings);
-    final keychain = ref.watch(
-      sessionNotifierProvider.select(
-        (value) => value.loggedIn?.wallet.appKeychain,
-      ),
-    );
-    final selectedAccount = ref
-        .watch(
-          AccountProviders.accounts,
-        )
-        .valueOrNull
-        ?.selectedAccount;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     return AppBar(
@@ -62,115 +54,47 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
           ? SystemUiOverlayStyle.dark
           : SystemUiOverlayStyle.light,
       automaticallyImplyLeading: false,
-      leading: Padding(
-        padding: const EdgeInsets.only(left: 3),
-        child: IconButton(
-          icon: const Icon(
-            Symbols.menu,
-            weight: IconSize.weightM,
-            opticalSize: IconSize.opticalSizeM,
-            grade: IconSize.gradeM,
-          ),
-          onPressed: () {
-            context.go(SettingsSheetWallet.routerPage);
-          },
+      leading: IconButton(
+        icon: const Icon(
+          Symbols.menu,
+          weight: IconSize.weightM,
+          opticalSize: IconSize.opticalSizeM,
+          grade: IconSize.gradeM,
         ),
+        onPressed: () {
+          context.go(SettingsSheetWallet.routerPage);
+        },
       ),
       actions: [
         if (preferences.mainScreenCurrentPage == 0 ||
             preferences.mainScreenCurrentPage == 1)
-          preferences.showBalances
-              ? const MainAppBarIconBalanceShowed()
-              : const MainAppBarIconBalanceNotShowed(),
+          IconButton(
+            icon: Icon(
+              preferences.showBalances
+                  ? Symbols.visibility
+                  : Symbols.visibility_off,
+              weight: IconSize.weightM,
+              opticalSize: IconSize.opticalSizeM,
+              grade: IconSize.gradeM,
+            ),
+            onPressed: () async {
+              sl.get<HapticUtil>().feedback(
+                    FeedbackType.light,
+                    preferences.activeVibrations,
+                  );
+              final preferencesNotifier =
+                  ref.read(SettingsProviders.settings.notifier);
+              await preferencesNotifier
+                  .setShowBalances(!preferences.showBalances);
+            },
+          ),
         if (connectivityStatusProvider == ConnectivityStatus.isDisconnected)
           const IconNetworkWarning(),
       ],
       title: preferences.mainScreenCurrentPage == 0
-          ? FittedBox(
-              fit: BoxFit.fitWidth,
-              child: InkWell(
-                onTap: () {
-                  sl.get<HapticUtil>().feedback(
-                        FeedbackType.light,
-                        preferences.activeVibrations,
-                      );
-                  Clipboard.setData(
-                    ClipboardData(
-                      text: selectedAccount?.genesisAddress.toLowerCase() ?? '',
-                    ),
-                  );
-                  UIUtil.showSnackbar(
-                    '${localizations.addressCopied}\n${selectedAccount?.genesisAddress.toLowerCase()}',
-                    context,
-                    ref,
-                    ArchethicTheme.text,
-                    ArchethicTheme.snackBarShadow,
-                    icon: Symbols.info,
-                  );
-                },
-                child: Column(
-                  children: [
-                    Text(
-                      selectedAccount?.nameDisplayed ?? ' ',
-                      style: ArchethicThemeStyles.textStyleSize24W700Primary
-                          .copyWith(
-                        color: aedappfm.AppThemeBase.secondaryColor,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          AddressFormatters(
-                            selectedAccount?.genesisAddress ?? '',
-                          ).getShortString4().toLowerCase(),
-                          style:
-                              ArchethicThemeStyles.textStyleSize14W600Primary,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        const Icon(
-                          Symbols.content_copy,
-                          weight: IconSize.weightM,
-                          opticalSize: IconSize.opticalSizeM,
-                          grade: IconSize.gradeM,
-                          size: 16,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ).animate().fade(duration: const Duration(milliseconds: 300))
+          ? _accountTab(context, ref)
           : preferences.mainScreenCurrentPage == 1
-              ? InkWell(
-                  onTap: () {
-                    sl.get<HapticUtil>().feedback(
-                          FeedbackType.light,
-                          preferences.activeVibrations,
-                        );
-                    Clipboard.setData(
-                      ClipboardData(
-                        text: keychain?.address.toUpperCase() ?? '',
-                      ),
-                    );
-                    UIUtil.showSnackbar(
-                      localizations.addressCopied,
-                      context,
-                      ref,
-                      ArchethicTheme.text,
-                      ArchethicTheme.snackBarShadow,
-                      icon: Symbols.info,
-                    );
-                  },
-                  child: FittedBox(
-                    fit: BoxFit.fitWidth,
-                    child: AutoSizeText(
-                      localizations.transactionHeader,
-                      style: ArchethicThemeStyles.textStyleSize24W700Primary,
-                    ),
-                  ).animate().fade(duration: const Duration(milliseconds: 300)),
-                )
+              ? _transactionsTab(context, ref)
               : FittedBox(
                   fit: BoxFit.fitWidth,
                   child: AutoSizeText(
@@ -184,58 +108,201 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
       iconTheme: IconThemeData(color: ArchethicTheme.text),
     );
   }
-}
 
-class MainAppBarIconBalanceShowed extends ConsumerWidget {
-  const MainAppBarIconBalanceShowed({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget _accountTab(BuildContext context, WidgetRef ref) {
     final preferences = ref.watch(SettingsProviders.settings);
-
-    return IconButton(
-      icon: const Icon(
-        Symbols.visibility,
-        weight: IconSize.weightM,
-        opticalSize: IconSize.opticalSizeM,
-        grade: IconSize.gradeM,
+    final localizations = AppLocalizations.of(context)!;
+    final keychain = ref.watch(
+      sessionNotifierProvider.select(
+        (value) => value.loggedIn?.wallet.appKeychain,
       ),
-      onPressed: () async {
-        sl.get<HapticUtil>().feedback(
-              FeedbackType.light,
-              preferences.activeVibrations,
-            );
-        final preferencesNotifier =
-            ref.read(SettingsProviders.settings.notifier);
-        await preferencesNotifier.setShowBalances(false);
-      },
     );
-  }
-}
+    final selectedAccount = ref
+        .watch(
+          AccountProviders.accounts,
+        )
+        .valueOrNull
+        ?.selectedAccount;
+    return FittedBox(
+      fit: BoxFit.fitWidth,
+      child: Column(
+        children: [
+          InkWell(
+            onTap: () {
+              sl.get<HapticUtil>().feedback(
+                    FeedbackType.light,
+                    preferences.activeVibrations,
+                  );
 
-class MainAppBarIconBalanceNotShowed extends ConsumerWidget {
-  const MainAppBarIconBalanceNotShowed({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final preferences = ref.watch(SettingsProviders.settings);
-
-    return IconButton(
-      icon: const Icon(
-        Symbols.visibility_off,
-        weight: IconSize.weightM,
-        opticalSize: IconSize.opticalSizeM,
-        grade: IconSize.gradeM,
+              showBarModalBottomSheet(
+                context: context,
+                backgroundColor: Colors.black.withOpacity(0.1),
+                builder: (BuildContext context) {
+                  return FractionallySizedBox(
+                    heightFactor: 0.85,
+                    child: Stack(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 15,
+                          ),
+                          child: Column(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15),
+                                child: InkWell(
+                                  onTap: () {
+                                    sl.get<HapticUtil>().feedback(
+                                          FeedbackType.light,
+                                          preferences.activeVibrations,
+                                        );
+                                    Clipboard.setData(
+                                      ClipboardData(
+                                        text: keychain?.address.toUpperCase() ??
+                                            '',
+                                      ),
+                                    );
+                                    UIUtil.showSnackbar(
+                                      localizations.keychainAddressCopied,
+                                      context,
+                                      ref,
+                                      ArchethicTheme.text,
+                                      ArchethicTheme.snackBarShadow,
+                                      icon: Symbols.info,
+                                    );
+                                  },
+                                  child: Text(
+                                    localizations.accountHeader,
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize16W600Primary,
+                                  ),
+                                ),
+                              ),
+                              const AccountsList(),
+                            ],
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              bottom:
+                                  MediaQuery.of(context).padding.bottom + 10,
+                            ),
+                            child: const Row(
+                              children: [
+                                AddAccountButton(),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
+            child: Row(
+              children: [
+                Text(
+                  selectedAccount?.nameDisplayed ?? ' ',
+                  style:
+                      ArchethicThemeStyles.textStyleSize24W700Primary.copyWith(
+                    color: aedappfm.AppThemeBase.secondaryColor,
+                  ),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                Icon(
+                  Symbols.keyboard_arrow_down,
+                  color: ArchethicThemeBase.neutral0,
+                ),
+              ],
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              sl.get<HapticUtil>().feedback(
+                    FeedbackType.light,
+                    preferences.activeVibrations,
+                  );
+              Clipboard.setData(
+                ClipboardData(
+                  text: selectedAccount?.genesisAddress.toLowerCase() ?? '',
+                ),
+              );
+              UIUtil.showSnackbar(
+                '${localizations.addressCopied}\n${selectedAccount?.genesisAddress.toLowerCase()}',
+                context,
+                ref,
+                ArchethicTheme.text,
+                ArchethicTheme.snackBarShadow,
+                icon: Symbols.info,
+              );
+            },
+            child: Row(
+              children: [
+                Text(
+                  AddressFormatters(
+                    selectedAccount?.genesisAddress ?? '',
+                  ).getShortString4().toLowerCase(),
+                  style: ArchethicThemeStyles.textStyleSize14W600Primary,
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                const Icon(
+                  Symbols.content_copy,
+                  weight: IconSize.weightM,
+                  opticalSize: IconSize.opticalSizeM,
+                  grade: IconSize.gradeM,
+                  size: 16,
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
-      onPressed: () async {
+    ).animate().fade(duration: const Duration(milliseconds: 300));
+  }
+
+  Widget _transactionsTab(BuildContext context, WidgetRef ref) {
+    final preferences = ref.watch(SettingsProviders.settings);
+    final localizations = AppLocalizations.of(context)!;
+    final keychain = ref.watch(
+      sessionNotifierProvider.select(
+        (value) => value.loggedIn?.wallet.appKeychain,
+      ),
+    );
+
+    return InkWell(
+      onTap: () {
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,
               preferences.activeVibrations,
             );
-        final preferencesNotifier =
-            ref.read(SettingsProviders.settings.notifier);
-        await preferencesNotifier.setShowBalances(true);
+        Clipboard.setData(
+          ClipboardData(
+            text: keychain?.address.toUpperCase() ?? '',
+          ),
+        );
+        UIUtil.showSnackbar(
+          localizations.addressCopied,
+          context,
+          ref,
+          ArchethicTheme.text,
+          ArchethicTheme.snackBarShadow,
+          icon: Symbols.info,
+        );
       },
+      child: FittedBox(
+        fit: BoxFit.fitWidth,
+        child: AutoSizeText(
+          localizations.transactionHeader,
+          style: ArchethicThemeStyles.textStyleSize24W700Primary,
+        ),
+      ).animate().fade(duration: const Duration(milliseconds: 300)),
     );
   }
 }

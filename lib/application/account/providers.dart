@@ -36,28 +36,25 @@ Future<List<Account>> _sortedAccounts(_SortedAccountsRef ref) async {
 @riverpod
 List<AccountToken> _getAccountNFTFiltered(
   _GetAccountNFTFilteredRef ref,
-  Account account,
-  int categoryNftIndex, {
+  Account account, {
   bool? favorite,
 }) {
   return ref.watch(_accountRepositoryProvider).getAccountNFTFiltered(
         account,
-        categoryNftIndex,
         favorite: favorite,
       );
 }
 
 class AccountRepository {
   List<AccountToken> getAccountNFTFiltered(
-    Account account,
-    int categoryNftIndex, {
+    Account account, {
     bool? favorite,
   }) {
     final accountNFTFiltered = <AccountToken>[
-      ..._filterTokens(account, account.accountNFT, categoryNftIndex),
+      ..._filterTokens(account, account.accountNFT),
       // A collection of NFT has the same address for all the sub NFT, we only want to display one NFT in that case
       ..._getUniqueTokens(
-        _filterTokens(account, account.accountNFTCollections, categoryNftIndex),
+        _filterTokens(account, account.accountNFTCollections),
       ),
     ];
     return accountNFTFiltered;
@@ -65,8 +62,7 @@ class AccountRepository {
 
   List<AccountToken> _filterTokens(
     Account account,
-    List<AccountToken>? accountTokens,
-    int categoryNftIndex, {
+    List<AccountToken>? accountTokens, {
     bool? favorite,
   }) {
     final listTokens = <AccountToken>[];
@@ -76,9 +72,7 @@ class AccountRepository {
 
     for (final accountToken in accountTokens) {
       final nftInfoOffChain = account.nftInfosOffChainList!.firstWhereOrNull(
-        (nftInfoOff) =>
-            nftInfoOff.id == accountToken.tokenInformation!.id &&
-            nftInfoOff.categoryNftIndex == categoryNftIndex,
+        (nftInfoOff) => nftInfoOff.id == accountToken.tokenInformation!.id,
       );
       if (nftInfoOffChain == null) {
         continue;

@@ -18,7 +18,6 @@ import 'package:aewallet/ui/views/authenticate/set_biometrics_screen.dart';
 import 'package:aewallet/ui/views/authenticate/set_password_screen.dart';
 import 'package:aewallet/ui/views/authenticate/set_yubikey_screen.dart';
 import 'package:aewallet/ui/views/authenticate/yubikey_screen.dart';
-import 'package:aewallet/ui/views/contacts/layouts/add_contact.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_backup_confirm.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_backup_seed.dart';
@@ -28,10 +27,7 @@ import 'package:aewallet/ui/views/intro/layouts/intro_new_wallet_disclaimer.dart
 import 'package:aewallet/ui/views/intro/layouts/intro_new_wallet_get_first_infos.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_welcome.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
-import 'package:aewallet/ui/views/main/nft_tab.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_detail.dart';
-import 'package:aewallet/ui/views/nft/layouts/configure_category_list.dart';
-import 'package:aewallet/ui/views/nft/layouts/nft_list_per_category.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/add_address.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/import_tab/nft_creation_process_import_tab_aeweb_form.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/import_tab/nft_creation_process_import_tab_http_form.dart';

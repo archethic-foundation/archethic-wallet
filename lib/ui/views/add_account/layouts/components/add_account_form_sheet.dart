@@ -7,7 +7,6 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/add_account/bloc/provider.dart';
 import 'package:aewallet/ui/views/add_account/bloc/state.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
@@ -80,7 +79,7 @@ class AddAccountFormSheet extends ConsumerWidget
         key: const Key('back'),
         color: ArchethicTheme.text,
         onPressed: () {
-          context.go(HomePage.routerPage);
+          context.pop();
         },
       ),
     );
@@ -91,10 +90,6 @@ class AddAccountFormSheet extends ConsumerWidget
     final localizations = AppLocalizations.of(context)!;
     return Column(
       children: <Widget>[
-        Text(
-          localizations.introNewWalletGetFirstInfosNameRequest,
-          style: ArchethicThemeStyles.textStyleSize14W600Primary,
-        ),
         const Padding(
           padding: EdgeInsets.only(top: 20),
           child: AddAccountTextFieldName(),
@@ -103,7 +98,7 @@ class AddAccountFormSheet extends ConsumerWidget
           height: 20,
         ),
         AutoSizeText(
-          localizations.introNewWalletGetFirstInfosNameInfos,
+          localizations.addAccountNameWarning,
           style: ArchethicThemeStyles.textStyleSize12W100Primary,
         ),
       ],

@@ -29,35 +29,32 @@ class TokenAddBtn extends ConsumerWidget {
       return const SizedBox.shrink();
     }
 
-    return Padding(
-      padding: const EdgeInsets.only(top: 5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          InkWell(
-            child: Container(
-              height: 30,
-              width: 30,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                gradient: aedappfm.AppThemeBase.gradientBtn,
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Symbols.add,
-                size: 15,
-              ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        InkWell(
+          child: Container(
+            height: 30,
+            width: 30,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              gradient: aedappfm.AppThemeBase.gradientBtn,
+              shape: BoxShape.circle,
             ),
-            onTap: () {
-              sl.get<HapticUtil>().feedback(
-                    FeedbackType.light,
-                    preferences.activeVibrations,
-                  );
-              context.push(AddTokenSheet.routerPage);
-            },
+            child: const Icon(
+              Symbols.add,
+              size: 15,
+            ),
           ),
-        ],
-      ),
+          onTap: () {
+            sl.get<HapticUtil>().feedback(
+                  FeedbackType.light,
+                  preferences.activeVibrations,
+                );
+            context.push(AddTokenSheet.routerPage);
+          },
+        ),
+      ],
     );
   }
 }

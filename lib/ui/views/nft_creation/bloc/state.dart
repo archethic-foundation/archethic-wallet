@@ -23,7 +23,6 @@ class NftCreationFormState with _$NftCreationFormState {
   const factory NftCreationFormState({
     @Default(NftCreationProcessStep.form)
     NftCreationProcessStep nftCreationProcessStep,
-    @Default(0) int currentNftCategoryIndex,
     @Default(0) int indexTab,
     required AsyncValue<double> feeEstimation,
     required AccountBalance accountBalance,

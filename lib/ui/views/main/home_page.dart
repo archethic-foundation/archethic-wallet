@@ -239,7 +239,8 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      localizations.recentTransactionsHeader,
+                      key: const Key('fungibleTokenTab'),
+                      localizations.tokensHeader,
                       style: ArchethicThemeStyles.textStyleSize14W600Primary,
                       textAlign: TextAlign.center,
                     ),
@@ -249,8 +250,7 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      key: const Key('fungibleTokenTab'),
-                      localizations.tokensHeader,
+                      localizations.nft,
                       style: ArchethicThemeStyles.textStyleSize14W600Primary,
                       textAlign: TextAlign.center,
                     ),

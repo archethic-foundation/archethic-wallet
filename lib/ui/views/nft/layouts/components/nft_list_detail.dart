@@ -6,7 +6,6 @@ import 'package:aewallet/model/blockchain/token_information.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_detail.dart';
-import 'package:aewallet/ui/views/nft/layouts/components/nft_list_detail_popup.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail_collection/nft_thumbnail_collection.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -87,15 +86,6 @@ class NFTListDetail extends ConsumerWidget {
                   'tokenId': tokenId,
                   'detailCollection': collection.isNotEmpty,
                 },
-              );
-            },
-            onLongPressEnd: (details) {
-              NFTListDetailPopup.getPopup(
-                context,
-                ref,
-                details,
-                address,
-                tokenId,
               );
             },
             child: Card(

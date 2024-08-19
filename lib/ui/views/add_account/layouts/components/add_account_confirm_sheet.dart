@@ -13,7 +13,6 @@ import 'package:aewallet/ui/views/add_account/bloc/provider.dart';
 import 'package:aewallet/ui/views/add_account/bloc/state.dart';
 import 'package:aewallet/ui/views/add_account/layouts/components/add_account_detail.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
@@ -97,8 +96,7 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet>
             .read(AccountProviders.accounts.notifier)
             .selectedAccountNotifier)
         ?.refreshRecentTransactions();
-
-    context.go(HomePage.routerPage);
+    context.pop();
   }
 
   void _showSendFailed(

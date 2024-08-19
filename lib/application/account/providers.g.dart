@@ -39,7 +39,7 @@ final _sortedAccountsProvider =
 
 typedef _SortedAccountsRef = AutoDisposeFutureProviderRef<List<Account>>;
 String _$getAccountNFTFilteredHash() =>
-    r'3cf4cd4f6bcd093a62ec7122b2b0891de539c780';
+    r'305083dcbd8a2b948a762c0e4fc2a392ea7e767f';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -73,13 +73,11 @@ class _GetAccountNFTFilteredFamily extends Family<List<AccountToken>> {
 
   /// See also [_getAccountNFTFiltered].
   _GetAccountNFTFilteredProvider call(
-    Account account,
-    int categoryNftIndex, {
+    Account account, {
     bool? favorite,
   }) {
     return _GetAccountNFTFilteredProvider(
       account,
-      categoryNftIndex,
       favorite: favorite,
     );
   }
@@ -90,7 +88,6 @@ class _GetAccountNFTFilteredFamily extends Family<List<AccountToken>> {
   ) {
     return call(
       provider.account,
-      provider.categoryNftIndex,
       favorite: provider.favorite,
     );
   }
@@ -115,14 +112,12 @@ class _GetAccountNFTFilteredProvider
     extends AutoDisposeProvider<List<AccountToken>> {
   /// See also [_getAccountNFTFiltered].
   _GetAccountNFTFilteredProvider(
-    Account account,
-    int categoryNftIndex, {
+    Account account, {
     bool? favorite,
   }) : this._internal(
           (ref) => _getAccountNFTFiltered(
             ref as _GetAccountNFTFilteredRef,
             account,
-            categoryNftIndex,
             favorite: favorite,
           ),
           from: _getAccountNFTFilteredProvider,
@@ -135,7 +130,6 @@ class _GetAccountNFTFilteredProvider
           allTransitiveDependencies:
               _GetAccountNFTFilteredFamily._allTransitiveDependencies,
           account: account,
-          categoryNftIndex: categoryNftIndex,
           favorite: favorite,
         );
 
@@ -147,12 +141,10 @@ class _GetAccountNFTFilteredProvider
     required super.debugGetCreateSourceHash,
     required super.from,
     required this.account,
-    required this.categoryNftIndex,
     required this.favorite,
   }) : super.internal();
 
   final Account account;
-  final int categoryNftIndex;
   final bool? favorite;
 
   @override
@@ -169,7 +161,6 @@ class _GetAccountNFTFilteredProvider
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
         account: account,
-        categoryNftIndex: categoryNftIndex,
         favorite: favorite,
       ),
     );
@@ -184,7 +175,6 @@ class _GetAccountNFTFilteredProvider
   bool operator ==(Object other) {
     return other is _GetAccountNFTFilteredProvider &&
         other.account == account &&
-        other.categoryNftIndex == categoryNftIndex &&
         other.favorite == favorite;
   }
 
@@ -192,7 +182,6 @@ class _GetAccountNFTFilteredProvider
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, account.hashCode);
-    hash = _SystemHash.combine(hash, categoryNftIndex.hashCode);
     hash = _SystemHash.combine(hash, favorite.hashCode);
 
     return _SystemHash.finish(hash);
@@ -202,9 +191,6 @@ class _GetAccountNFTFilteredProvider
 mixin _GetAccountNFTFilteredRef on AutoDisposeProviderRef<List<AccountToken>> {
   /// The parameter `account` of this provider.
   Account get account;
-
-  /// The parameter `categoryNftIndex` of this provider.
-  int get categoryNftIndex;
 
   /// The parameter `favorite` of this provider.
   bool? get favorite;
@@ -217,9 +203,6 @@ class _GetAccountNFTFilteredProviderElement
 
   @override
   Account get account => (origin as _GetAccountNFTFilteredProvider).account;
-  @override
-  int get categoryNftIndex =>
-      (origin as _GetAccountNFTFilteredProvider).categoryNftIndex;
   @override
   bool? get favorite => (origin as _GetAccountNFTFilteredProvider).favorite;
 }

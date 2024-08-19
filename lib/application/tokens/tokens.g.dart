@@ -22,7 +22,7 @@ final _tokensRepositoryProvider =
 );
 
 typedef _TokensRepositoryRef = AutoDisposeProviderRef<TokensRepositoryImpl>;
-String _$getTokensListHash() => r'6828404cac5119af9b100b2ed92133a397020eb8';
+String _$getTokensListHash() => r'6e81ca1d2776e29cee6db19840ffd3ee8f498057';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -56,10 +56,16 @@ class _GetTokensListFamily extends Family<AsyncValue<List<AEToken>>> {
 
   /// See also [_getTokensList].
   _GetTokensListProvider call(
-    String userGenesisAddress,
-  ) {
+    String userGenesisAddress, {
+    bool withVerified = true,
+    bool withLPToken = false,
+    bool withNotVerified = false,
+  }) {
     return _GetTokensListProvider(
       userGenesisAddress,
+      withVerified: withVerified,
+      withLPToken: withLPToken,
+      withNotVerified: withNotVerified,
     );
   }
 
@@ -69,6 +75,9 @@ class _GetTokensListFamily extends Family<AsyncValue<List<AEToken>>> {
   ) {
     return call(
       provider.userGenesisAddress,
+      withVerified: provider.withVerified,
+      withLPToken: provider.withLPToken,
+      withNotVerified: provider.withNotVerified,
     );
   }
 
@@ -91,11 +100,17 @@ class _GetTokensListFamily extends Family<AsyncValue<List<AEToken>>> {
 class _GetTokensListProvider extends AutoDisposeFutureProvider<List<AEToken>> {
   /// See also [_getTokensList].
   _GetTokensListProvider(
-    String userGenesisAddress,
-  ) : this._internal(
+    String userGenesisAddress, {
+    bool withVerified = true,
+    bool withLPToken = false,
+    bool withNotVerified = false,
+  }) : this._internal(
           (ref) => _getTokensList(
             ref as _GetTokensListRef,
             userGenesisAddress,
+            withVerified: withVerified,
+            withLPToken: withLPToken,
+            withNotVerified: withNotVerified,
           ),
           from: _getTokensListProvider,
           name: r'_getTokensListProvider',
@@ -107,6 +122,9 @@ class _GetTokensListProvider extends AutoDisposeFutureProvider<List<AEToken>> {
           allTransitiveDependencies:
               _GetTokensListFamily._allTransitiveDependencies,
           userGenesisAddress: userGenesisAddress,
+          withVerified: withVerified,
+          withLPToken: withLPToken,
+          withNotVerified: withNotVerified,
         );
 
   _GetTokensListProvider._internal(
@@ -117,9 +135,15 @@ class _GetTokensListProvider extends AutoDisposeFutureProvider<List<AEToken>> {
     required super.debugGetCreateSourceHash,
     required super.from,
     required this.userGenesisAddress,
+    required this.withVerified,
+    required this.withLPToken,
+    required this.withNotVerified,
   }) : super.internal();
 
   final String userGenesisAddress;
+  final bool withVerified;
+  final bool withLPToken;
+  final bool withNotVerified;
 
   @override
   Override overrideWith(
@@ -135,6 +159,9 @@ class _GetTokensListProvider extends AutoDisposeFutureProvider<List<AEToken>> {
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
         userGenesisAddress: userGenesisAddress,
+        withVerified: withVerified,
+        withLPToken: withLPToken,
+        withNotVerified: withNotVerified,
       ),
     );
   }
@@ -147,13 +174,19 @@ class _GetTokensListProvider extends AutoDisposeFutureProvider<List<AEToken>> {
   @override
   bool operator ==(Object other) {
     return other is _GetTokensListProvider &&
-        other.userGenesisAddress == userGenesisAddress;
+        other.userGenesisAddress == userGenesisAddress &&
+        other.withVerified == withVerified &&
+        other.withLPToken == withLPToken &&
+        other.withNotVerified == withNotVerified;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, userGenesisAddress.hashCode);
+    hash = _SystemHash.combine(hash, withVerified.hashCode);
+    hash = _SystemHash.combine(hash, withLPToken.hashCode);
+    hash = _SystemHash.combine(hash, withNotVerified.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -162,6 +195,15 @@ class _GetTokensListProvider extends AutoDisposeFutureProvider<List<AEToken>> {
 mixin _GetTokensListRef on AutoDisposeFutureProviderRef<List<AEToken>> {
   /// The parameter `userGenesisAddress` of this provider.
   String get userGenesisAddress;
+
+  /// The parameter `withVerified` of this provider.
+  bool get withVerified;
+
+  /// The parameter `withLPToken` of this provider.
+  bool get withLPToken;
+
+  /// The parameter `withNotVerified` of this provider.
+  bool get withNotVerified;
 }
 
 class _GetTokensListProviderElement
@@ -172,6 +214,13 @@ class _GetTokensListProviderElement
   @override
   String get userGenesisAddress =>
       (origin as _GetTokensListProvider).userGenesisAddress;
+  @override
+  bool get withVerified => (origin as _GetTokensListProvider).withVerified;
+  @override
+  bool get withLPToken => (origin as _GetTokensListProvider).withLPToken;
+  @override
+  bool get withNotVerified =>
+      (origin as _GetTokensListProvider).withNotVerified;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

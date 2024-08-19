@@ -16,13 +16,11 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class NFTCreationProcessFileAccess extends ConsumerWidget {
   const NFTCreationProcessFileAccess({
-    required this.currentNftCategoryIndex,
     this.readOnly = false,
     super.key,
   });
 
   final bool readOnly;
-  final int currentNftCategoryIndex;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

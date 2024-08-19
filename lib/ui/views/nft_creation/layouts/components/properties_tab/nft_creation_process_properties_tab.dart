@@ -35,7 +35,6 @@ class NFTCreationProcessPropertiesTab extends ConsumerWidget {
                 textAlign: TextAlign.left,
               ),
             ),
-            const CategoryTemplateForm(),
             const NFTCreationProcessPropertiesTabTextfieldName(),
             const SizedBox(
               height: 30,

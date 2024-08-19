@@ -5,17 +5,16 @@ import 'dart:async';
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
-import 'package:aewallet/application/market_price.dart';
-import 'package:aewallet/application/refresh_in_progress.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/verified_tokens.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
-import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/action_button.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -25,8 +24,13 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-class MenuWidgetWallet extends ConsumerWidget {
-  const MenuWidgetWallet({super.key});
+class TokenDetailMenu extends ConsumerWidget {
+  const TokenDetailMenu({
+    super.key,
+    required this.aeToken,
+  });
+
+  final aedappfm.AEToken aeToken;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -39,7 +43,6 @@ class MenuWidgetWallet extends ConsumerWidget {
     final preferences = ref.watch(SettingsProviders.settings);
     final contact = ref.watch(ContactProviders.getSelectedContact).valueOrNull;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-    final refreshInProgress = ref.watch(refreshInProgressProviders);
 
     if (accountSelected == null) return const SizedBox();
 
@@ -59,7 +62,7 @@ class MenuWidgetWallet extends ConsumerWidget {
             if (accountSelected.balance!.isNativeTokenValuePositive() &&
                 connectivityStatusProvider == ConnectivityStatus.isConnected)
               ActionButton(
-                key: const Key('sendUCObutton'),
+                key: const Key('sendButton'),
                 text: localizations.send,
                 icon: Symbols.call_made,
                 onTap: () async {
@@ -67,14 +70,16 @@ class MenuWidgetWallet extends ConsumerWidget {
                         FeedbackType.light,
                         preferences.activeVibrations,
                       );
-
                   await context.push(
                     TransferSheet.routerPage,
                     extra: {
-                      'transferType': TransferType.uco.name,
+                      'transferType': aeToken.isUCO
+                          ? TransferType.uco.name
+                          : TransferType.token.name,
                       'recipient': const TransferRecipient.address(
                         address: Address(address: ''),
                       ).toJson(),
+                      'aeToken': aeToken.toJson(),
                     },
                   );
                 },
@@ -93,7 +98,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                   .scale(duration: const Duration(milliseconds: 200)),
             if (contact != null)
               ActionButton(
-                key: const Key('receiveUCObutton'),
+                key: const Key('receivebutton'),
                 text: localizations.receive,
                 icon: Symbols.call_received,
                 onTap: () {
@@ -123,93 +128,56 @@ class MenuWidgetWallet extends ConsumerWidget {
                   .animate()
                   .fade(duration: const Duration(milliseconds: 250))
                   .scale(duration: const Duration(milliseconds: 250)),
-            if (connectivityStatusProvider == ConnectivityStatus.isConnected)
-              ActionButton(
-                text: localizations.buy,
-                icon: Symbols.add,
-                onTap: () {
-                  sl.get<HapticUtil>().feedback(
-                        FeedbackType.light,
-                        preferences.activeVibrations,
-                      );
-                  context.go(BuySheet.routerPage);
-                },
-              )
-                  .animate()
-                  .fade(duration: const Duration(milliseconds: 300))
-                  .scale(duration: const Duration(milliseconds: 300))
-            else
-              ActionButton(
-                text: localizations.buy,
-                icon: Symbols.add,
-                enabled: false,
-              )
-                  .animate()
-                  .fade(duration: const Duration(milliseconds: 300))
-                  .scale(duration: const Duration(milliseconds: 300)),
-            if (refreshInProgress == false)
-              ActionButton(
-                text: localizations.refresh,
-                icon: Symbols.refresh,
-                onTap: () async {
-                  sl.get<HapticUtil>().feedback(
-                        FeedbackType.light,
-                        preferences.activeVibrations,
-                      );
-                  final _connectivityStatusProvider =
-                      ref.read(connectivityStatusProviders);
-                  if (_connectivityStatusProvider ==
-                      ConnectivityStatus.isDisconnected) {
-                    return;
-                  }
-
-                  await (await ref
-                          .read(AccountProviders.accounts.notifier)
-                          .selectedAccountNotifier)
-                      ?.refreshRecentTransactions();
-
-                  if (context.mounted) {
-                    ref
-                      ..invalidate(ContactProviders.fetchContacts)
-                      ..invalidate(MarketPriceProviders.currencyMarketPrice);
-                    await ref
-                        .read(
-                          VerifiedTokensProviders.verifiedTokens.notifier,
-                        )
-                        .init();
-                  }
-                },
-              )
-                  .animate()
-                  .fade(duration: const Duration(milliseconds: 350))
-                  .scale(duration: const Duration(milliseconds: 350))
-            else
-              Stack(
-                alignment: Alignment.topCenter,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    child: Opacity(
-                      opacity: 0.5,
-                      child: SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 1,
-                        ),
-                      ),
-                    ),
-                  ),
-                  ActionButton(
-                    text: localizations.refresh,
-                    icon: Symbols.refresh,
-                    enabled: false,
-                  )
-                      .animate()
-                      .fade(duration: const Duration(milliseconds: 350))
-                      .scale(duration: const Duration(milliseconds: 350)),
-                ],
-              ),
+            if (aeToken.isUCO == false)
+              if (connectivityStatusProvider == ConnectivityStatus.isConnected)
+                ActionButton(
+                  text: localizations.explorer,
+                  icon: Symbols.manage_search,
+                  onTap: () {
+                    sl.get<HapticUtil>().feedback(
+                          FeedbackType.light,
+                          preferences.activeVibrations,
+                        );
+                    UIUtil.showWebview(
+                      context,
+                      '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${aeToken.address}',
+                      '',
+                    );
+                  },
+                )
+                    .animate()
+                    .fade(duration: const Duration(milliseconds: 300))
+                    .scale(duration: const Duration(milliseconds: 300))
+              else
+                ActionButton(
+                  text: localizations.explorer,
+                  icon: Symbols.manage_search,
+                  enabled: false,
+                )
+                    .animate()
+                    .fade(duration: const Duration(milliseconds: 300))
+                    .scale(duration: const Duration(milliseconds: 300)),
+            if (aeToken.isUCO)
+              if (connectivityStatusProvider == ConnectivityStatus.isConnected)
+                ActionButton(
+                  text: localizations.tokenDetailMenuEarn,
+                  icon: aedappfm.Iconsax.wallet_add,
+                  onTap: () {
+                    // TODO
+                  },
+                )
+                    .animate()
+                    .fade(duration: const Duration(milliseconds: 300))
+                    .scale(duration: const Duration(milliseconds: 300))
+              else
+                ActionButton(
+                  text: localizations.tokenDetailMenuEarn,
+                  icon: aedappfm.Iconsax.wallet_add,
+                  enabled: false,
+                )
+                    .animate()
+                    .fade(duration: const Duration(milliseconds: 300))
+                    .scale(duration: const Duration(milliseconds: 300)),
           ],
         ),
       ),

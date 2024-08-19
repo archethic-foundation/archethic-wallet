@@ -4,7 +4,6 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/transfer/bloc/provider.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
@@ -94,7 +93,7 @@ class TransferFormSheet extends ConsumerWidget
         key: const Key('back'),
         color: ArchethicTheme.text,
         onPressed: () {
-          context.go(HomePage.routerPage);
+          context.pop();
         },
       ),
       widgetBeforeTitle: const NetworkIndicator(),

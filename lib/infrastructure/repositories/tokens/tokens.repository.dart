@@ -60,27 +60,31 @@ class TokensRepositoryImpl implements TokensRepository {
   @override
   Future<List<AEToken>> getTokensList(
     String userGenesisAddress,
-    archethic.ApiService apiService,
-  ) async {
+    archethic.ApiService apiService, {
+    bool withVerified = true,
+    bool withLPToken = false,
+    bool withNotVerified = false,
+  }) async {
     final tokensList = <AEToken>[];
     final balanceMap = await apiService.fetchBalance([userGenesisAddress]);
     if (balanceMap[userGenesisAddress] == null) {
       return tokensList;
     }
-
-    final defUCOToken =
-        await aedappfm.DefTokensRepositoryImpl().getDefToken('UCO');
-    tokensList.add(
-      ucoToken.copyWith(
-        name: defUCOToken?.name ?? '',
-        isVerified: true,
-        icon: defUCOToken?.icon,
-        ucid: defUCOToken?.ucid,
-        balance: archethic
-            .fromBigInt(balanceMap[userGenesisAddress]!.uco)
-            .toDouble(),
-      ),
-    );
+    if (withVerified) {
+      final defUCOToken =
+          await aedappfm.DefTokensRepositoryImpl().getDefToken('UCO');
+      tokensList.add(
+        ucoToken.copyWith(
+          name: defUCOToken?.name ?? '',
+          isVerified: true,
+          icon: defUCOToken?.icon,
+          ucid: defUCOToken?.ucid,
+          balance: archethic
+              .fromBigInt(balanceMap[userGenesisAddress]!.uco)
+              .toDouble(),
+        ),
+      );
+    }
 
     if (balanceMap[userGenesisAddress]!.token.isNotEmpty) {
       final tokenAddressList = <String>[];
@@ -159,7 +163,12 @@ class TokensRepositoryImpl implements TokensRepository {
                 : null,
             isVerified: verifiedTokens.contains(token.address!.toUpperCase()),
           );
-          tokensList.add(aeToken);
+
+          if (aeToken.isLpToken && withLPToken ||
+              aeToken.isVerified && withVerified ||
+              aeToken.isVerified == false && withNotVerified) {
+            tokensList.add(aeToken);
+          }
         }
       }
     }

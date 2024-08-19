@@ -36,14 +36,16 @@ class TransactionsTab extends ConsumerWidget {
       ),
     );
 
-    return Column(
-      key: const Key('recentTransactions'),
-      children: [
-        if (recentTransactions != null)
-          recentTransactions.isEmpty
-              ? const _TransactionsEmpty()
-              : _TransactionsList(recentTransactions: recentTransactions),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        key: const Key('recentTransactions'),
+        children: [
+          if (recentTransactions != null)
+            recentTransactions.isEmpty
+                ? const _TransactionsEmpty()
+                : _TransactionsList(recentTransactions: recentTransactions),
+        ],
+      ),
     );
   }
 }
@@ -111,7 +113,9 @@ class _TransactionsList extends ConsumerWidget {
                           height: 10,
                         ),
                         const MenuWidgetWallet(),
-                        TransactionsList(transactionsList: recentTransactions),
+                        TransactionsList(
+                          transactionsList: recentTransactions,
+                        ),
                       ],
                     ),
                   ),

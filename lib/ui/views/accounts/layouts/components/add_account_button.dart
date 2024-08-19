@@ -28,7 +28,10 @@ class _AddAccountButtonState extends ConsumerState<AddAccountButton> {
       Dimens.buttonBottomDimens,
       key: const Key('addAccount'),
       onPressed: () async {
-        context.go(AddAccountSheet.routerPage, extra: session!.wallet.seed);
+        await context.push(
+          AddAccountSheet.routerPage,
+          extra: session!.wallet.seed,
+        );
       },
     );
   }

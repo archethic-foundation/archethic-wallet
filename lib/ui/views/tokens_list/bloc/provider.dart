@@ -37,6 +37,9 @@ class TokensListFormNotifier extends AutoDisposeNotifier<TokensListFormState> {
 
   Future<void> getTokensList({
     required String cancelToken,
+    bool withVerified = true,
+    bool withLPToken = false,
+    bool withNotVerified = false,
   }) async {
     state = state.copyWith(
       tokensToDisplay: const AsyncValue.loading(),
@@ -47,7 +50,12 @@ class TokensListFormNotifier extends AutoDisposeNotifier<TokensListFormState> {
         await ref.read(AccountProviders.accounts.future).selectedAccount;
 
     final tokensList = await ref.read(
-      TokensProviders.getTokensList(selectedAccount!.genesisAddress).future,
+      TokensProviders.getTokensList(
+        selectedAccount!.genesisAddress,
+        withVerified: withVerified,
+        withLPToken: withLPToken,
+        withNotVerified: withNotVerified,
+      ).future,
     );
 
     final sortedTokens = tokensList.toList()

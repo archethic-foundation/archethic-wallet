@@ -47,10 +47,7 @@ final _nftCreationFormProvider =
 );
 
 class NftCreationFormNotifierParams {
-  const NftCreationFormNotifierParams({
-    required this.currentNftCategoryIndex,
-  });
-  final int currentNftCategoryIndex;
+  const NftCreationFormNotifierParams();
 }
 
 class NftCreationFormNotifier
@@ -62,7 +59,6 @@ class NftCreationFormNotifier
 
   @override
   NftCreationFormState build() {
-    final arg = ref.watch(_nftCreationFormProviderArgs)!;
     final selectedAccount = ref
         .watch(
           AccountProviders.accounts,
@@ -76,7 +72,6 @@ class NftCreationFormNotifier
         address: archethic.Address(address: ''),
       ),
       accountBalance: selectedAccount.balance!,
-      currentNftCategoryIndex: arg.currentNftCategoryIndex,
     );
   }
 

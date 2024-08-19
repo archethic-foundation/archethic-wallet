@@ -3,7 +3,6 @@
 import 'dart:async';
 
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/language.dart';
@@ -12,7 +11,6 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/account.dart';
-import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -20,9 +18,6 @@ import 'package:aewallet/ui/util/address_formatters.dart';
 import 'package:aewallet/ui/util/service_type_formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/accounts/layouts/components/account_list_item_token_info.dart';
-import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
-import 'package:aewallet/ui/views/main/bloc/providers.dart';
-import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/case_converter.dart';
@@ -121,7 +116,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
         ?.refreshRecentTransactions();
 
     if (mounted) {
-      context.go(HomePage.routerPage);
+      context.pop();
     }
   }
 
@@ -165,15 +160,6 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
       LanguageProviders.selectedLanguage,
     );
 
-    AsyncValue<Contact?>? contact;
-    if (widget.account.serviceType == 'archethicWallet') {
-      contact = ref.watch(
-        ContactProviders.getContactWithName(
-          Uri.encodeFull(widget.account.nameDisplayed),
-        ),
-      );
-    }
-
     final asyncFiatAmount = ref.watch(
       MarketPriceProviders.convertedToSelectedCurrency(
         nativeAmount: widget.account.balance?.nativeTokenValue ?? 0,
@@ -212,34 +198,10 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
                   .refreshRecentTransactions();
             }
 
-            await ref
-                .read(SettingsProviders.settings.notifier)
-                .resetMainScreenCurrentPage();
-            context.go(HomePage.routerPage);
-            ref.read(mainTabControllerProvider)!.animateTo(
-                  ref.read(SettingsProviders.settings).mainScreenCurrentPage,
-                  duration: Duration.zero,
-                );
-          }
-        },
-        onLongPress: () {
-          if (widget.account.serviceType != 'other') {
-            return contact!.map(
-              data: (data) {
-                sl.get<HapticUtil>().feedback(
-                      FeedbackType.light,
-                      settings.activeVibrations,
-                    );
-                context.push(
-                  ContactDetail.routerPage,
-                  extra: ContactDetailsRouteParams(
-                    contactAddress: data.value!.genesisAddress!,
-                  ).toJson(),
-                );
-              },
-              error: (_) {},
-              loading: (_) {},
-            );
+            context
+              ..pop()
+              ..pop()
+              ..pop();
           }
         },
         child: DecoratedBox(

@@ -4,9 +4,13 @@ import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/verified_tokens.dart';
+import 'package:aewallet/ui/views/main/bloc/nft_search_bar_provider.dart';
+import 'package:aewallet/ui/views/main/bloc/nft_search_bar_state.dart';
 import 'package:aewallet/ui/views/main/components/app_update_button.dart';
 import 'package:aewallet/ui/views/main/components/menu_widget_wallet.dart';
+import 'package:aewallet/ui/views/main/components/nft_search_bar.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
+import 'package:aewallet/ui/views/nft/layouts/components/nft_list.dart';
 import 'package:aewallet/ui/views/tokens_list/layouts/tokens_list_sheet.dart';
 import 'package:aewallet/ui/widgets/balance/balance_infos.dart';
 import 'package:aewallet/ui/widgets/components/refresh_indicator.dart';
@@ -73,22 +77,36 @@ class AccountTab extends ConsumerWidget {
                           top: MediaQuery.of(context).padding.top + 10,
                           bottom: 80,
                         ),
-                        child: const Column(
+                        child: Column(
                           children: <Widget>[
-                            /// BALANCE
-                            BalanceInfos(),
-
-                            SizedBox(
+                            const BalanceInfos(),
+                            const SizedBox(
                               height: 10,
                             ),
-                            MenuWidgetWallet(),
+                            const MenuWidgetWallet(),
                             ExpandablePageView(
                               children: [
-                                TokensListSheet(),
-                                TokensListSheet(),
+                                const TokensList(),
+                                Column(
+                                  children: [
+                                    ProviderScope(
+                                      overrides: [
+                                        NftSearchBarProvider.initialNftSearchBar
+                                            .overrideWithValue(
+                                          const NftSearchBarState(),
+                                        ),
+                                      ],
+                                      child: const NFTSearchBar(),
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    const NFTList(),
+                                  ],
+                                )
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 80,
                             ),
                           ],
