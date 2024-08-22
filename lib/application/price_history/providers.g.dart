@@ -36,7 +36,7 @@ final _intervalOptionProvider = Provider<MarketPriceHistoryInterval>.internal(
 );
 
 typedef _IntervalOptionRef = ProviderRef<MarketPriceHistoryInterval>;
-String _$priceHistoryHash() => r'ab6ddfb6f0b39223d68a0a5ac0e907bdf6b098b6';
+String _$priceHistoryHash() => r'b3438d84382c26b27b00c95f0564c86f1b9d8e08';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -64,17 +64,15 @@ class _SystemHash {
 const _priceHistoryProvider = _PriceHistoryFamily();
 
 /// See also [_priceHistory].
-class _PriceHistoryFamily extends Family<AsyncValue<List<PriceHistoryValue>>> {
+class _PriceHistoryFamily extends Family<AsyncValue<List<PriceHistoryValue>?>> {
   /// See also [_priceHistory].
   const _PriceHistoryFamily();
 
   /// See also [_priceHistory].
   _PriceHistoryProvider call({
-    required MarketPriceHistoryInterval scaleOption,
-    required int ucid,
+    int? ucid,
   }) {
     return _PriceHistoryProvider(
-      scaleOption: scaleOption,
       ucid: ucid,
     );
   }
@@ -84,7 +82,6 @@ class _PriceHistoryFamily extends Family<AsyncValue<List<PriceHistoryValue>>> {
     covariant _PriceHistoryProvider provider,
   ) {
     return call(
-      scaleOption: provider.scaleOption,
       ucid: provider.ucid,
     );
   }
@@ -105,15 +102,13 @@ class _PriceHistoryFamily extends Family<AsyncValue<List<PriceHistoryValue>>> {
 }
 
 /// See also [_priceHistory].
-class _PriceHistoryProvider extends FutureProvider<List<PriceHistoryValue>> {
+class _PriceHistoryProvider extends FutureProvider<List<PriceHistoryValue>?> {
   /// See also [_priceHistory].
   _PriceHistoryProvider({
-    required MarketPriceHistoryInterval scaleOption,
-    required int ucid,
+    int? ucid,
   }) : this._internal(
           (ref) => _priceHistory(
             ref as _PriceHistoryRef,
-            scaleOption: scaleOption,
             ucid: ucid,
           ),
           from: _priceHistoryProvider,
@@ -125,7 +120,6 @@ class _PriceHistoryProvider extends FutureProvider<List<PriceHistoryValue>> {
           dependencies: _PriceHistoryFamily._dependencies,
           allTransitiveDependencies:
               _PriceHistoryFamily._allTransitiveDependencies,
-          scaleOption: scaleOption,
           ucid: ucid,
         );
 
@@ -136,16 +130,14 @@ class _PriceHistoryProvider extends FutureProvider<List<PriceHistoryValue>> {
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.scaleOption,
     required this.ucid,
   }) : super.internal();
 
-  final MarketPriceHistoryInterval scaleOption;
-  final int ucid;
+  final int? ucid;
 
   @override
   Override overrideWith(
-    FutureOr<List<PriceHistoryValue>> Function(_PriceHistoryRef provider)
+    FutureOr<List<PriceHistoryValue>?> Function(_PriceHistoryRef provider)
         create,
   ) {
     return ProviderOverride(
@@ -157,52 +149,42 @@ class _PriceHistoryProvider extends FutureProvider<List<PriceHistoryValue>> {
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        scaleOption: scaleOption,
         ucid: ucid,
       ),
     );
   }
 
   @override
-  FutureProviderElement<List<PriceHistoryValue>> createElement() {
+  FutureProviderElement<List<PriceHistoryValue>?> createElement() {
     return _PriceHistoryProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is _PriceHistoryProvider &&
-        other.scaleOption == scaleOption &&
-        other.ucid == ucid;
+    return other is _PriceHistoryProvider && other.ucid == ucid;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, scaleOption.hashCode);
     hash = _SystemHash.combine(hash, ucid.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
-mixin _PriceHistoryRef on FutureProviderRef<List<PriceHistoryValue>> {
-  /// The parameter `scaleOption` of this provider.
-  MarketPriceHistoryInterval get scaleOption;
-
+mixin _PriceHistoryRef on FutureProviderRef<List<PriceHistoryValue>?> {
   /// The parameter `ucid` of this provider.
-  int get ucid;
+  int? get ucid;
 }
 
 class _PriceHistoryProviderElement
-    extends FutureProviderElement<List<PriceHistoryValue>>
+    extends FutureProviderElement<List<PriceHistoryValue>?>
     with _PriceHistoryRef {
   _PriceHistoryProviderElement(super.provider);
 
   @override
-  MarketPriceHistoryInterval get scaleOption =>
-      (origin as _PriceHistoryProvider).scaleOption;
-  @override
-  int get ucid => (origin as _PriceHistoryProvider).ucid;
+  int? get ucid => (origin as _PriceHistoryProvider).ucid;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -129,12 +129,10 @@ class TokensListState extends ConsumerState<TokensList>
                           FeedbackType.light,
                           settings.activeVibrations,
                         );
-
                     await context.push(
                       TokenDetailSheet.routerPage,
                       extra: {
                         'aeToken': aeToken.toJson(),
-                        'chartInfos': null,
                       },
                     );
                   },

@@ -16,11 +16,12 @@ MarketPriceHistoryInterval _intervalOption(Ref ref) => ref.watch(
     );
 
 @Riverpod(keepAlive: true)
-Future<List<PriceHistoryValue>> _priceHistory(
+Future<List<PriceHistoryValue>?> _priceHistory(
   _PriceHistoryRef ref, {
-  required MarketPriceHistoryInterval scaleOption,
-  required int ucid,
+  int? ucid,
 }) async {
+  if (ucid == null) return null;
+  final scaleOption = ref.watch(_intervalOptionProvider);
   return ref
       .watch(_repositoryProvider)
       .getWithInterval(

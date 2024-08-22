@@ -1,6 +1,4 @@
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/price_history/providers.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/tokens/tokens.dart';
 import 'package:aewallet/util/riverpod_debounce.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
@@ -61,27 +59,6 @@ Future<List<AEToken>> _tokens(
       },
     );
 
-@riverpod
-Future<List<PriceHistoryValue>?> _priceHistory(
-  _PriceHistoryRef ref, {
-  int? ucid,
-}) async {
-  List<PriceHistoryValue>? chartInfos;
-
-  if (ucid != null) {
-    final settings = ref.watch(SettingsProviders.settings);
-
-    chartInfos = await ref.watch(
-      PriceHistoryProviders.priceHistory(
-        scaleOption: settings.priceChartIntervalOption,
-        ucid: ucid,
-      ).future,
-    );
-  }
-  return chartInfos;
-}
-
 class TokensListFormProvider {
   static const tokens = _tokensProvider;
-  static const priceHistory = _priceHistoryProvider;
 }
