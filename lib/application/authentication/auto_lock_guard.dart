@@ -10,8 +10,8 @@ typedef LastInteractionDateValue = ({
   bool isStartupValue,
 });
 
-class LastInteractionDateNotifier
-    extends AsyncNotifier<LastInteractionDateValue> {
+@Riverpod(keepAlive: true)
+class _LastInteractionDateNotifier extends _$LastInteractionDateNotifier {
   static final _logger =
       Logger('AuthenticationGuard-LastInteractionDateProvider');
 
@@ -38,9 +38,6 @@ class LastInteractionDateNotifier
     final date = state.value?.date;
     if (date == null) return;
 
-    await ref
-        .read(AuthenticationProviders.authenticationRepository)
-        .setLastInteractionDate(date);
     _logger.info('persist $date');
     state = AsyncValue.data(
       (
@@ -48,14 +45,13 @@ class LastInteractionDateNotifier
         isStartupValue: true,
       ),
     );
+    await ref
+        .read(AuthenticationProviders.authenticationRepository)
+        .setLastInteractionDate(date);
   }
 
   Future<void> clear() async {
     _logger.fine('clear storage');
-
-    await ref
-        .read(AuthenticationProviders.authenticationRepository)
-        .removeLastInteractionDate();
 
     state = const AsyncValue.data(
       (
@@ -63,26 +59,23 @@ class LastInteractionDateNotifier
         isStartupValue: false,
       ),
     );
+
+    await ref
+        .read(AuthenticationProviders.authenticationRepository)
+        .removeLastInteractionDate();
   }
 }
 
-final _lastInteractionDateNotifierProvider = AsyncNotifierProvider<
-    LastInteractionDateNotifier, LastInteractionDateValue>(
-  LastInteractionDateNotifier.new,
-  name: LastInteractionDateNotifier._logger.name,
-);
-
-final _vaultLockedProvider = Provider<bool>(
-  (ref) {
-    Vault.instance().isLocked.addListener(ref.invalidateSelf);
-    ref.onDispose(
-      () {
-        Vault.instance().isLocked.removeListener(ref.invalidateSelf);
-      },
-    );
-    return Vault.instance().isLocked.value;
-  },
-);
+@Riverpod(keepAlive: true)
+bool _vaultLocked(_VaultLockedRef ref) {
+  Vault.instance().isLocked.addListener(ref.invalidateSelf);
+  ref.onDispose(
+    () {
+      Vault.instance().isLocked.removeListener(ref.invalidateSelf);
+    },
+  );
+  return Vault.instance().isLocked.value;
+}
 
 @freezed
 class AuthenticationGuardState with _$AuthenticationGuardState {
@@ -103,8 +96,7 @@ class AuthenticationGuardState with _$AuthenticationGuardState {
 }
 
 @Riverpod(keepAlive: true)
-class AuthenticationGuardNotifier
-    extends AsyncNotifier<AuthenticationGuardState> {
+class _AuthenticationGuardNotifier extends _$AuthenticationGuardNotifier {
   static final _logger = Logger('AuthenticationGuard-Provider');
 
   @override
@@ -144,11 +136,11 @@ class AuthenticationGuardNotifier
   }
 
   Future<DateTime?> get _lockDate async {
-    final lastInteractionDate = await ref.watch(
+    final lastInteractionDate = await ref.read(
       _lastInteractionDateNotifierProvider.future,
     );
 
-    final lockTimeout = ref.watch(
+    final lockTimeout = ref.read(
       AuthenticationProviders.settings.select(
         (settings) => settings.lockTimeout.duration,
       ),

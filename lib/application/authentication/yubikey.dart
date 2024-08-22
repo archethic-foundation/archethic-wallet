@@ -9,39 +9,30 @@ class YubikeyAuthenticationState with _$YubikeyAuthenticationState {
   const YubikeyAuthenticationState._();
 }
 
-class YubikeyAuthenticationNotifier
-    extends StateNotifier<YubikeyAuthenticationState> {
-  YubikeyAuthenticationNotifier(this.ref)
-      : super(
-          YubikeyAuthenticationState(
-            failedAttemptsCount: 0,
-            maxAttemptsCount: AuthenticateWithYubikey.maxFailedAttempts,
-          ),
-        ) {
-    _loadInitialState();
-  }
-
-  final Ref ref;
-
-  Future<void> _loadInitialState() async {
-    if (!mounted) return;
-    final authenticationRepository = ref.read(
+@riverpod
+class _YubikeyAuthenticationNotifier extends _$YubikeyAuthenticationNotifier {
+  @override
+  Future<YubikeyAuthenticationState> build() async {
+    final authenticationRepository = ref.watch(
       AuthenticationProviders.authenticationRepository,
     );
 
-    final maxAttemptsCount = state.maxAttemptsCount;
+    final maxAttemptsCount = AuthenticateWithYubikey.maxFailedAttempts;
     final failedPinAttempts =
         await authenticationRepository.getFailedAttempts();
 
-    if (!mounted) return;
-    state = state.copyWith(
+    return YubikeyAuthenticationState(
       failedAttemptsCount: failedPinAttempts % maxAttemptsCount,
+      maxAttemptsCount: maxAttemptsCount,
     );
   }
 
   Future<AuthenticationResult> authenticateWithYubikey(
     YubikeyCredentials otp,
   ) async {
+    final lState = state.value;
+    if (lState == null) return AuthenticationResult.notSetup();
+
     final authenticationRepository = ref.read(
       AuthenticationProviders.authenticationRepository,
     );
@@ -56,9 +47,12 @@ class YubikeyAuthenticationNotifier
       orElse: () {},
     );
 
-    state = state.copyWith(
-      failedAttemptsCount: await authenticationRepository.getFailedAttempts() %
-          state.maxAttemptsCount,
+    state = AsyncData(
+      lState.copyWith(
+        failedAttemptsCount:
+            await authenticationRepository.getFailedAttempts() %
+                lState.maxAttemptsCount,
+      ),
     );
 
     return authenticationResult;
