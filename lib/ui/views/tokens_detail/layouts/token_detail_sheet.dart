@@ -1,3 +1,4 @@
+import 'package:aewallet/application/price_history/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -28,11 +29,9 @@ class TokenDetailSheet extends ConsumerWidget
   const TokenDetailSheet({
     super.key,
     required this.aeToken,
-    this.chartInfos,
   });
 
   final aedappfm.AEToken aeToken;
-  final List<aedappfm.PriceHistoryValue>? chartInfos;
 
   static const String routerPage = '/tokenDetail';
 
@@ -132,6 +131,10 @@ class TokenDetailSheet extends ConsumerWidget
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
+    final chartInfos = ref
+        .watch(PriceHistoryProviders.priceHistory(ucid: aeToken.ucid))
+        .valueOrNull;
+
     return Column(
       children: <Widget>[
         TokenDetailInfo(
@@ -143,15 +146,14 @@ class TokenDetailSheet extends ConsumerWidget
         TokenDetailMenu(
           aeToken: aeToken,
         ),
-        if (chartInfos != null && chartInfos!.isNotEmpty)
+        if (chartInfos != null && chartInfos.isNotEmpty)
           TokenDetailChart(chartInfos: chartInfos),
-        SizedBox(
-          width: MediaQuery.of(context).size.width,
+        const SizedBox(
           height: 20,
         ),
-        if (chartInfos != null && chartInfos!.isNotEmpty)
+        if (chartInfos != null && chartInfos.isNotEmpty)
           TokenDetailChartInterval(chartInfos: chartInfos),
-        if (chartInfos != null && chartInfos!.isNotEmpty)
+        if (chartInfos != null && chartInfos.isNotEmpty)
           Padding(
             padding: const EdgeInsets.only(top: 20, left: 10),
             child: BalanceInfosKpi(

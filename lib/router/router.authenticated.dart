@@ -175,28 +175,11 @@ final _authenticatedRoutes = [
         (state.extra! as Map<String, dynamic>)['aeToken'],
       );
 
-      final chartInfosJson =
-          (state.extra! as Map<String, dynamic>)['chartInfos'];
-      final chartInfos = chartInfosJson != null
-          ? (chartInfosJson as List<dynamic>)
-              .map(
-                (item) => aedappfm.PriceHistoryValue.fromJson(
-                  item as Map<String, dynamic>,
-                ),
-              )
-              .toList()
-          : null;
-
-      return CustomTransitionPage<void>(
-        transitionDuration: Duration.zero,
-        reverseTransitionDuration: Duration.zero,
+      return NoTransitionPage<void>(
         key: state.pageKey,
         child: TokenDetailSheet(
           aeToken: aeToken,
-          chartInfos: chartInfos,
         ),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-            FadeTransition(opacity: animation, child: child),
       );
     },
   ),

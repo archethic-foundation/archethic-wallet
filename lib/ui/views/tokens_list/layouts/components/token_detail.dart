@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:aewallet/application/connectivity_status.dart';
+import 'package:aewallet/application/price_history/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/address_formatters.dart';
 import 'package:aewallet/ui/views/tokens_detail/layouts/token_detail_sheet.dart';
-import 'package:aewallet/ui/views/tokens_list/bloc/provider.dart';
 import 'package:aewallet/ui/widgets/balance/balance_infos.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -49,9 +49,7 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
         : 0.0;
 
     final priceHistory = ref
-        .watch(
-          TokensListFormProvider.priceHistory(ucid: widget.aeToken.ucid),
-        )
+        .watch(PriceHistoryProviders.priceHistory(ucid: widget.aeToken.ucid))
         .valueOrNull;
     return InkWell(
       onTap: () async {
@@ -66,7 +64,6 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
           TokenDetailSheet.routerPage,
           extra: {
             'aeToken': widget.aeToken.toJson(),
-            'chartInfos': priceHistory.map((item) => item.toJson()).toList(),
           },
         );
       },
