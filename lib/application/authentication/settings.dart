@@ -1,13 +1,11 @@
 part of 'authentication.dart';
 
-class AuthenticationSettingsNotifier
-    extends StateNotifier<AuthenticationSettings> {
-  AuthenticationSettingsNotifier(this.ref)
-      : super(
-          AuthenticationSettings.defaultValue,
-        );
-
-  final Ref ref;
+@Riverpod(keepAlive: true)
+class _AuthenticationSettingsNotifier extends _$AuthenticationSettingsNotifier {
+  @override
+  AuthenticationSettings build() {
+    return AuthenticationSettings.defaultValue;
+  }
 
   Future<void> initialize() async {
     state = await ref

@@ -49,7 +49,20 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
 
   @override
   Widget build(BuildContext context) {
-    _updateLockTimer();
+    ref.listen(AuthenticationProviders.authenticationGuard, (previous, state) {
+      final value = state.valueOrNull;
+      final lockDate = value?.lockDate;
+
+      if (value == null || lockDate == null) {
+        _unscheduleLock();
+        return;
+      }
+
+      final durationBeforeLock = lockDate.difference(DateTime.now());
+      if (value.timerEnabled && durationBeforeLock > Duration.zero) {
+        _scheduleLock(durationBeforeLock);
+      }
+    });
 
     final isLocked = ref.watch(
       AuthenticationProviders.authenticationGuard.select(
@@ -59,11 +72,13 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
 
     return InputListener(
       onInput: () {
-        ref
-            .read(
-              AuthenticationProviders.authenticationGuard.notifier,
-            )
-            .scheduleAutolock();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          ref
+              .read(
+                AuthenticationProviders.authenticationGuard.notifier,
+              )
+              .scheduleAutolock();
+        });
       },
       child: Stack(
         children: [
@@ -134,26 +149,6 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
       },
     );
   }
-
-  void _updateLockTimer() {
-    final value = ref
-        .watch(
-          AuthenticationProviders.authenticationGuard,
-        )
-        .valueOrNull;
-    final lockDate = value?.lockDate;
-
-    if (value == null || lockDate == null) {
-      _unscheduleLock();
-      return;
-    }
-
-    final durationBeforeLock = lockDate.difference(DateTime.now());
-    if (value.timerEnabled && durationBeforeLock > Duration.zero) {
-      _scheduleLock(durationBeforeLock);
-      return;
-    }
-  }
 }
 
 class InputListener extends StatelessWidget {
@@ -165,6 +160,7 @@ class InputListener extends StatelessWidget {
 
   final VoidCallback onInput;
   final Widget child;
+
   @override
   Widget build(BuildContext context) => Focus(
         onKeyEvent: (_, __) {

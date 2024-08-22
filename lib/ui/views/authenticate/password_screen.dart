@@ -13,6 +13,9 @@ import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -174,9 +177,15 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final passwordAuthentication = ref.watch(
-      AuthenticationProviders.passwordAuthentication,
-    );
+    final passwordAuthentication = ref
+        .watch(
+          AuthenticationProviders.passwordAuthentication,
+        )
+        .valueOrNull;
+
+    if (passwordAuthentication == null) {
+      return const Center(child: aedappfm.Loading());
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

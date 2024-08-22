@@ -9,32 +9,20 @@ class PasswordAuthenticationState with _$PasswordAuthenticationState {
   const PasswordAuthenticationState._();
 }
 
-class PasswordAuthenticationNotifier
-    extends StateNotifier<PasswordAuthenticationState> {
-  PasswordAuthenticationNotifier(this.ref)
-      : super(
-          PasswordAuthenticationState(
-            failedAttemptsCount: 0,
-            maxAttemptsCount: AuthenticateWithPassword.maxFailedAttempts,
-          ),
-        ) {
-    _loadInitialState();
-  }
-
-  final Ref ref;
-
-  Future<void> _loadInitialState() async {
-    if (!mounted) return;
+@riverpod
+class _PasswordAuthenticationNotifier extends _$PasswordAuthenticationNotifier {
+  @override
+  FutureOr<PasswordAuthenticationState> build() async {
     final authenticationRepository = ref.read(
       AuthenticationProviders.authenticationRepository,
     );
 
-    final maxAttemptsCount = state.maxAttemptsCount;
+    final maxAttemptsCount = AuthenticateWithPassword.maxFailedAttempts;
     final failedPinAttempts =
         await authenticationRepository.getFailedAttempts();
 
-    if (!mounted) return;
-    state = state.copyWith(
+    return PasswordAuthenticationState(
+      maxAttemptsCount: maxAttemptsCount,
       failedAttemptsCount: failedPinAttempts % maxAttemptsCount,
     );
   }
@@ -42,6 +30,9 @@ class PasswordAuthenticationNotifier
   Future<AuthenticationResult> authenticateWithPassword(
     PasswordCredentials password,
   ) async {
+    final lState = state.value;
+    if (lState == null) return const AuthenticationResult.notSetup();
+
     final authenticationRepository = ref.read(
       AuthenticationProviders.authenticationRepository,
     );
@@ -56,9 +47,12 @@ class PasswordAuthenticationNotifier
       orElse: () {},
     );
 
-    state = state.copyWith(
-      failedAttemptsCount: await authenticationRepository.getFailedAttempts() %
-          state.maxAttemptsCount,
+    state = AsyncData(
+      lState.copyWith(
+        failedAttemptsCount:
+            await authenticationRepository.getFailedAttempts() %
+                lState.maxAttemptsCount,
+      ),
     );
 
     return authenticationResult;

@@ -24,75 +24,67 @@ part 'pin.dart';
 part 'settings.dart';
 part 'yubikey.dart';
 
+@Riverpod(keepAlive: true)
+AuthenticationRepositoryInterface _authenticationRepository(
+  _AuthenticationRepositoryRef ref,
+) {
+  if (kIsWeb) return AuthenticationRepositoryWeb();
+  return AuthenticationRepositoryNonWeb();
+}
+
+@Riverpod(keepAlive: true)
+Future<bool> _isLockCountdownRunning(
+  _IsLockCountdownRunningRef ref,
+) async {
+  final lockCountDownDuration = await ref.watch(_lockCountdownProvider.future);
+  return lockCountDownDuration.inSeconds > 1;
+}
+
+@Riverpod(keepAlive: true)
+Stream<Duration> _lockCountdown(
+  _LockCountdownRef ref,
+) async* {
+  final lockDate = await ref
+      .watch(
+        AuthenticationProviders.authenticationRepository,
+      )
+      .getLockUntilDate();
+  if (lockDate == null || lockDate.isBefore(DateTime.now().toUtc())) {
+    yield Duration.zero;
+    return;
+  }
+
+  while (true) {
+    final durationToWait = lockDate.difference(DateTime.now().toUtc());
+    if (durationToWait < Duration.zero) {
+      yield Duration.zero;
+      return;
+    }
+
+    yield durationToWait;
+    await Future.delayed(const Duration(seconds: 1));
+  }
+}
+
 abstract class AuthenticationProviders {
-  static final authenticationRepository =
-      Provider<AuthenticationRepositoryInterface>(
-    (ref) {
-      if (kIsWeb) return AuthenticationRepositoryWeb();
-      return AuthenticationRepositoryNonWeb();
-    },
-  );
+  static final authenticationRepository = _authenticationRepositoryProvider;
 
   /// Whether the application is locked.
-  static final isLockCountdownRunning = FutureProvider<bool>(
-    (ref) async {
-      final lockCountDownDuration = await ref.watch(lockCountdown.future);
-      return lockCountDownDuration.inSeconds > 1;
-    },
-  );
+  static final isLockCountdownRunning = _isLockCountdownRunningProvider;
 
   /// Counts remaining lock duration.
   /// Lock occurs when authentication failed too much times.
-  static final lockCountdown = StreamProvider<Duration>(
-    (ref) async* {
-      final lockDate = await ref
-          .watch(
-            AuthenticationProviders.authenticationRepository,
-          )
-          .getLockUntilDate();
-      if (lockDate == null || lockDate.isBefore(DateTime.now().toUtc())) {
-        yield Duration.zero;
-        return;
-      }
+  static final lockCountdown = _lockCountdownProvider;
 
-      while (true) {
-        final durationToWait = lockDate.difference(DateTime.now().toUtc());
-        if (durationToWait < Duration.zero) {
-          yield Duration.zero;
-          return;
-        }
+  static final authenticationGuard = _authenticationGuardNotifierProvider;
 
-        yield durationToWait;
-        await Future.delayed(const Duration(seconds: 1));
-      }
-    },
-  );
+  static final passwordAuthentication = _passwordAuthenticationNotifierProvider;
 
-  static final authenticationGuard = AsyncNotifierProvider<
-      AuthenticationGuardNotifier, AuthenticationGuardState>(
-    AuthenticationGuardNotifier.new,
-    name: AuthenticationGuardNotifier._logger.name,
-  );
+  static final pinAuthentication = _pinAuthenticationNotifierProvider;
 
-  static final passwordAuthentication = StateNotifierProvider<
-      PasswordAuthenticationNotifier, PasswordAuthenticationState>(
-    PasswordAuthenticationNotifier.new,
-  );
+  static final yubikeyAuthentication = _yubikeyAuthenticationNotifierProvider;
 
-  static final pinAuthentication =
-      StateNotifierProvider<PinAuthenticationNotifier, PinAuthenticationState>(
-    PinAuthenticationNotifier.new,
-  );
-
-  static final yubikeyAuthentication = StateNotifierProvider<
-      YubikeyAuthenticationNotifier, YubikeyAuthenticationState>(
-    YubikeyAuthenticationNotifier.new,
-  );
-
-  static final settings = StateNotifierProvider<AuthenticationSettingsNotifier,
-      AuthenticationSettings>(
-    AuthenticationSettingsNotifier.new,
-  );
+  static final settings = _authenticationSettingsNotifierProvider;
 
   static Future<void> reset(Ref ref) async {
     await ref.read(AuthenticationProviders.settings.notifier).reset();
