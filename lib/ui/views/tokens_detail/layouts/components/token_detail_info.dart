@@ -58,7 +58,11 @@ class TokenDetailInfo extends ConsumerWidget {
               ),
               const SizedBox(width: 5),
               AutoSizeText(
-                '\$${(aeToken.balance * price).formatNumber(precision: 2)}',
+                price.maybeWhen(
+                  data: (data) =>
+                      '\$${(aeToken.balance * data).formatNumber(precision: 2)}',
+                  orElse: () => '...',
+                ),
                 style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
             ],

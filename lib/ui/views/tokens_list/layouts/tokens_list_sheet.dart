@@ -1,6 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/infrastructure/datasources/preferences.hive.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/formatters.dart';
@@ -31,38 +30,15 @@ class TokensListState extends ConsumerState<TokensList>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
-  final searchCriteriaController = TextEditingController();
-
-  @override
-  void initState() {
-    Future.delayed(Duration.zero, () async {
-      // TODO(reddwarf03): See https://github.com/archethic-foundation/archethic-wallet/pull/988
-      final ucidsTokens = ref.read(aedappfm.UcidsTokensProviders.ucidsTokens);
-      if (ucidsTokens.isEmpty) {
-        final preferences = await PreferencesHiveDatasource.getInstance();
-        final network = preferences.getNetwork().getNetworkLabel();
-        await ref
-            .read(aedappfm.UcidsTokensProviders.ucidsTokens.notifier)
-            .init(network);
-      }
-      await ref.read(aedappfm.CoinPriceProviders.coinPrice.notifier).init();
-
-      await ref
-          .read(TokensListFormProvider.tokensListForm.notifier)
-          .getTokensList(
-            cancelToken: UniqueKey().toString(),
-          );
-    });
-
-    super.initState();
-  }
+  String searchCriteria = '';
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
 
-    final asyncTokens =
-        ref.watch(TokensListFormProvider.tokensListForm).tokensToDisplay;
+    final asyncTokens = ref.watch(
+      TokensListFormProvider.tokens(searchCriteria: searchCriteria),
+    );
     final localizations = AppLocalizations.of(context)!;
     final settings = ref.watch(SettingsProviders.settings);
     return Column(
@@ -105,16 +81,17 @@ class TokensListState extends ConsumerState<TokensList>
                     ),
                     style: ArchethicThemeStyles.textStyleSize12W100Primary,
                     textAlign: TextAlign.left,
-                    controller: searchCriteriaController,
                     autocorrect: false,
                     cursorColor: ArchethicTheme.text,
                     inputFormatters: <TextInputFormatter>[
                       UpperCaseTextFormatter(),
                     ],
                     onChanged: (text) async {
-                      await ref
-                          .read(TokensListFormProvider.tokensListForm.notifier)
-                          .setSearchCriteria(text.toUpperCase());
+                      setState(
+                        () {
+                          searchCriteria = text;
+                        },
+                      );
                     },
                   ),
                 ),
@@ -145,7 +122,7 @@ class TokensListState extends ConsumerState<TokensList>
           },
           data: (tokens) {
             return Column(
-              children: tokens!.map((aeToken) {
+              children: tokens.map((aeToken) {
                 return InkWell(
                   onTap: () async {
                     sl.get<HapticUtil>().feedback(

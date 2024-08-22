@@ -16,11 +16,13 @@ class BalanceInfosKpi extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
-    final price = ref.watch(
-      aedappfm.AETokensProviders.estimateTokenInFiat(
-        aeToken,
-      ),
-    );
+    final price = ref
+        .watch(
+          aedappfm.AETokensProviders.estimateTokenInFiat(
+            aeToken,
+          ),
+        )
+        .valueOrNull;
 
     if (chartInfos == null) {
       return const SizedBox.shrink();
@@ -31,7 +33,9 @@ class BalanceInfosKpi extends ConsumerWidget {
     return Row(
       children: <Widget>[
         AutoSizeText(
-          '${localizations.price}: \$${price.formatNumber(precision: price < 1 ? 5 : 2)}',
+          price == null
+              ? '...'
+              : '${localizations.price}: \$${price.formatNumber(precision: price < 1 ? 5 : 2)}',
           style: ArchethicThemeStyles.textStyleSize12W100Primary,
         ),
         const SizedBox(
