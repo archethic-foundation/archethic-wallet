@@ -227,7 +227,7 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
 
           /// PRICE CHART
           if (settings.showPriceChart &&
-              priceHistory == null &&
+              priceHistory != null &&
               widget.aeToken.isVerified &&
               widget.aeToken.ucid != null &&
               connectivityStatusProvider == ConnectivityStatus.isConnected)
