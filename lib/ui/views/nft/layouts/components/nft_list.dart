@@ -24,29 +24,20 @@ class _NFTListState extends ConsumerState<NFTList>
   Widget build(BuildContext context) {
     super.build(context);
 
-    final localizations = AppLocalizations.of(context)!;
     final accountSelected = ref.watch(
       AccountProviders.accounts.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
 
+    if (accountSelected == null) return const _EmptyNFTList();
+
     final accountTokenList = ref.watch(
-      AccountProviders.getAccountNFTFiltered(accountSelected!),
+      AccountProviders.getAccountNFTFiltered(accountSelected),
     );
 
     if (accountTokenList.isEmpty) {
-      return Padding(
-        padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-        child: Column(
-          children: [
-            Text(
-              localizations.nftListEmptyExplanation,
-              style: ArchethicThemeStyles.textStyleSize12W100Primary,
-            ),
-          ],
-        ),
-      );
+      return const _EmptyNFTList();
     }
     return Padding(
       padding: const EdgeInsets.only(bottom: 50),
@@ -73,6 +64,27 @@ class _NFTListState extends ConsumerState<NFTList>
             roundBorder: true,
           );
         },
+      ),
+    );
+  }
+}
+
+class _EmptyNFTList extends StatelessWidget {
+  const _EmptyNFTList();
+
+  @override
+  Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+      child: Column(
+        children: [
+          Text(
+            localizations.nftListEmptyExplanation,
+            style: ArchethicThemeStyles.textStyleSize12W100Primary,
+          ),
+        ],
       ),
     );
   }
