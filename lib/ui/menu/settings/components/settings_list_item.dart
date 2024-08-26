@@ -24,17 +24,7 @@ abstract class _SettingsListItem extends ConsumerWidget {
     required SettingSelectionItem defaultValue,
     required IconData icon,
     required Function onPressed,
-    bool disabled,
   }) = _SettingsListItemWithDefaultValue;
-
-  const factory _SettingsListItem.withDefaultValueWithInfos({
-    required String heading,
-    required String info,
-    required SettingSelectionItem defaultValue,
-    required IconData icon,
-    required Function onPressed,
-    required bool disabled,
-  }) = _SettingsListItemWithDefaultValueWithInfos;
 
   const factory _SettingsListItem.singleLineWithInfos({
     required String heading,

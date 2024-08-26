@@ -103,7 +103,7 @@ class AccountTab extends ConsumerWidget {
                                     ),
                                     const NFTList(),
                                   ],
-                                )
+                                ),
                               ],
                             ),
                             const SizedBox(

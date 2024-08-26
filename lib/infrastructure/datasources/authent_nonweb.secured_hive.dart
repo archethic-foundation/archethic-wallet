@@ -113,12 +113,4 @@ extension _AuthentHiveSecuredDatasourceSecureKey
     );
     return key;
   }
-
-  static Future<void> _clearSecureKey() async {
-    const secureStorage = FlutterSecureStorage();
-
-    await secureStorage.delete(
-      key: kSecureKey,
-    );
-  }
 }

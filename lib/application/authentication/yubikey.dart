@@ -31,7 +31,7 @@ class _YubikeyAuthenticationNotifier extends _$YubikeyAuthenticationNotifier {
     YubikeyCredentials otp,
   ) async {
     final lState = state.value;
-    if (lState == null) return AuthenticationResult.notSetup();
+    if (lState == null) return const AuthenticationResult.notSetup();
 
     final authenticationRepository = ref.read(
       AuthenticationProviders.authenticationRepository,

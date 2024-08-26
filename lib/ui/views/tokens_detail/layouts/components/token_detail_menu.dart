@@ -163,7 +163,7 @@ class TokenDetailMenu extends ConsumerWidget {
                   text: localizations.tokenDetailMenuEarn,
                   icon: aedappfm.Iconsax.wallet_add,
                   onTap: () {
-                    // TODO
+                    // TODO(Reddwarf03): handle Token detail view
                   },
                 )
                     .animate()

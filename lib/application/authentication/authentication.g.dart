@@ -123,7 +123,7 @@ final _passwordAuthenticationNotifierProvider =
 typedef _$PasswordAuthenticationNotifier
     = AutoDisposeAsyncNotifier<PasswordAuthenticationState>;
 String _$pinAuthenticationNotifierHash() =>
-    r'37c4f01866b8251255cd2eb0edec55b048cac8d9';
+    r'c29c13f584bf162b43e00e3b314fcf57dc988010';
 
 /// See also [_PinAuthenticationNotifier].
 @ProviderFor(_PinAuthenticationNotifier)
@@ -158,7 +158,7 @@ final _authenticationSettingsNotifierProvider = NotifierProvider<
 
 typedef _$AuthenticationSettingsNotifier = Notifier<AuthenticationSettings>;
 String _$yubikeyAuthenticationNotifierHash() =>
-    r'45e719fee62ae10d5856a26608b5284c374bc510';
+    r'87286dd0244e5680fd079da0f7140c62b8da7462';
 
 /// See also [_YubikeyAuthenticationNotifier].
 @ProviderFor(_YubikeyAuthenticationNotifier)
