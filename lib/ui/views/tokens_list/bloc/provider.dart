@@ -3,6 +3,7 @@ import 'package:aewallet/application/tokens/tokens.dart';
 import 'package:aewallet/util/riverpod_debounce.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 part 'provider.g.dart';
 
 @riverpod
@@ -19,9 +20,11 @@ Future<List<AEToken>> _tokens(
         final selectedAccount =
             await ref.watch(AccountProviders.accounts.future).selectedAccount;
 
+        if (selectedAccount == null) return [];
+
         final tokensList = await ref.watch(
           TokensProviders.tokens(
-            selectedAccount!.genesisAddress,
+            selectedAccount.genesisAddress,
             withVerified: withVerified,
             withLPToken: withLPToken,
             withNotVerified: withNotVerified,
