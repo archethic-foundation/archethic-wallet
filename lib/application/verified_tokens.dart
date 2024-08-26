@@ -12,9 +12,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'verified_tokens.g.dart';
 
 @Riverpod(keepAlive: true)
-class _VerifiedTokensNotifier extends Notifier<List<String>> {
-  List<String>? verifiedTokensList;
-
+class _VerifiedTokensNotifier extends _$VerifiedTokensNotifier {
   static final _logger = Logger('VerifiedTokensNotifier');
 
   @override
@@ -85,7 +83,7 @@ class VerifiedTokensRepository {
     return VerifiedTokensList().getVerifiedTokens();
   }
 
-  /// TODO(Chralu): use dapp framework method
+  // TODO(Chralu): use dapp framework method
   Future<List<String>> getVerifiedTokensFromNetwork(
     AvailableNetworks network,
   ) async {

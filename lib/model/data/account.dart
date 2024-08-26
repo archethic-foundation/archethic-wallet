@@ -205,7 +205,7 @@ class Account extends HiveObject with KeychainServiceMixin {
     }
     final preferences = await PreferencesHiveDatasource.getInstance();
     final network = preferences.getNetwork().getNetworkLabel();
-    // TODO(Reddwarf03) : il faut passer par les providers dédiés
+    // TODO(Reddwarf03): il faut passer par les providers dédiés
     final ucidsTokens = await aedappfm.UcidsTokensRepositoryImpl()
         .getUcidsTokensFromNetwork(network);
     log('ucidsTokens $ucidsTokens', name: _logName);
