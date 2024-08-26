@@ -29,67 +29,65 @@ class _NFTCreationProcessSummaryTabState
 
     if (accountSelected == null) return const SizedBox();
 
-    if (nftCreation.file != null || nftCreation.fileURL != null) {
-      return ArchethicScrollbar(
-        child: Padding(
-          padding: EdgeInsets.only(bottom: bottom / 2),
-          child: SizedBox(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 20,
-                    left: 10,
-                    right: 10,
-                  ),
-                  child: FeeInfos(
-                    asyncFeeEstimation: nftCreation.feeEstimation,
-                    estimatedFeesNote: localizations.estimatedFeesAddNFTNote,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          AppButtonTinyConnectivity(
-                            AppLocalizations.of(context)!.createTheNFT,
-                            Dimens.buttonTopDimens,
-                            key: const Key('createTheNFT'),
-                            onPressed: () async {
-                              final isFileOk =
-                                  nftCreationNotifier.controlFile(context);
-                              final isUrlOk =
-                                  nftCreationNotifier.controlURL(context);
+    if (nftCreation.file == null && nftCreation.fileURL == null) {
+      return const SizedBox();
+    }
 
-                              if (isFileOk || isUrlOk) {
-                                nftCreationNotifier.setNftCreationProcessStep(
-                                  NftCreationProcessStep.confirmation,
-                                );
-                              }
-                            },
-                            disabled: !nftCreation.canCreateNFT,
-                          ),
-                        ],
+    return ArchethicScrollbar(
+      child: Padding(
+        padding: EdgeInsets.only(bottom: bottom / 2),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 20,
+                left: 10,
+                right: 10,
+              ),
+              child: FeeInfos(
+                asyncFeeEstimation: nftCreation.feeEstimation,
+                estimatedFeesNote: localizations.estimatedFeesAddNFTNote,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      AppButtonTinyConnectivity(
+                        AppLocalizations.of(context)!.createTheNFT,
+                        Dimens.buttonTopDimens,
+                        key: const Key('createTheNFT'),
+                        onPressed: () async {
+                          final isFileOk =
+                              nftCreationNotifier.controlFile(context);
+                          final isUrlOk =
+                              nftCreationNotifier.controlURL(context);
+
+                          if (isFileOk || isUrlOk) {
+                            nftCreationNotifier.setNftCreationProcessStep(
+                              NftCreationProcessStep.confirmation,
+                            );
+                          }
+                        },
+                        disabled: !nftCreation.canCreateNFT,
                       ),
                     ],
                   ),
-                ),
-                const NFTCreationProcessFilePreview(),
-                const NFTCreationProcessPropertiesList(
-                  readOnly: true,
-                ),
-                const SizedBox(
-                  height: 70,
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
+            const NFTCreationProcessFilePreview(),
+            const NFTCreationProcessPropertiesList(
+              readOnly: true,
+            ),
+            const SizedBox(
+              height: 70,
+            ),
+          ],
         ),
-      );
-    } else {
-      return const SizedBox();
-    }
+      ),
+    );
   }
 }

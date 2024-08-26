@@ -198,8 +198,7 @@ class _NftCreationFormSheetState extends ConsumerState<NftCreationFormSheet>
           opacity: 0.7,
         ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.only(top: kToolbarHeight + 20),
+      child: SafeArea(
         child: DefaultTabController(
           length: 4,
           child: TabBarView(
