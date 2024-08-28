@@ -479,5 +479,10 @@
     "dappsTabDescriptionHeader": "Accélérez l'adoption avec des services natifs",
     "dappsAESwapDesc": "Échangez des actifs on-chain, ajoutez de la liquidité et accédez au yield farming",
     "dappsNFTDesc": "Créez votre propre NFT sans coder",
-    "price": "Prix"
+    "price": "Prix",
+    "aeSwapLaunchMessage": "Veuillez lancer l'application aeSwap pour continuer. Elle s'ouvrira dans votre navigateur par défaut.",
+    "aeSwapLaunchButton": "Lancer aeSwap",
+    "receiveHeader": "Recevoir des actifs sur Archethic",
+    "receiveYourAddress": "Votre Adresse Archethic",
+    "receiveCopy": "Cliquez sur le QR Code pour copier"
 }
