@@ -158,12 +158,14 @@ class HistoryChart extends StatelessWidget {
                     final axisTitle =
                         value == titleMeta.max || value == titleMeta.min
                             ? const SizedBox.shrink()
-                            : Text(
-                                CurrencyUtil.formatWithNumberOfDigits(
-                                  value,
-                                  4,
+                            : FittedBox(
+                                child: Text(
+                                  CurrencyUtil.formatWithNumberOfDigits(
+                                    value,
+                                    value > 100 ? 2 : 4,
+                                  ),
+                                  style: axisTextStyle,
                                 ),
-                                style: axisTextStyle,
                               );
                     return SideTitleWidget(
                       axisSide: titleMeta.axisSide,
