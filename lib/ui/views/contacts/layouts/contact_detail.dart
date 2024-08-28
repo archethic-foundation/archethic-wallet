@@ -28,6 +28,7 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 part 'contact_detail.freezed.dart';
 part 'contact_detail.g.dart';
@@ -354,11 +355,12 @@ class _ContactDetailActions extends ConsumerWidget {
                   size: 20,
                 ),
               ),
-              onTap: () {
-                UIUtil.showWebview(
-                  context,
-                  '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/chain?address=${contact.genesisAddress}',
-                  '',
+              onTap: () async {
+                await launchUrl(
+                  Uri.parse(
+                    '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/chain?address=${contact.genesisAddress}',
+                  ),
+                  mode: LaunchMode.externalApplication,
                 );
               },
             ),

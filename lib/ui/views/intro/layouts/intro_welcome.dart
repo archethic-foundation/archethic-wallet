@@ -6,7 +6,6 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_import_seed.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_new_wallet_get_first_infos.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
@@ -24,6 +23,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class IntroWelcome extends ConsumerStatefulWidget {
   const IntroWelcome({super.key});
@@ -296,11 +296,12 @@ class _CGU extends ConsumerWidget {
             ),
             child: CheckboxListTile(
               title: InkWell(
-                onTap: () {
-                  UIUtil.showWebview(
-                    context,
-                    'https://www.archethic.net/privacy-policy-wallet.html',
-                    localizations.welcomeDisclaimerLink,
+                onTap: () async {
+                  await launchUrl(
+                    Uri.parse(
+                      'https://www.archethic.net/privacy-policy-wallet.html',
+                    ),
+                    mode: LaunchMode.externalApplication,
                   );
                 },
                 child: Text(

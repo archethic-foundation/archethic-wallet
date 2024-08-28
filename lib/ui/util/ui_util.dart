@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 enum ThreeLineAddressTextType { primary60, primary }
 
@@ -250,13 +249,5 @@ class UIUtil {
       dismissOtherToast: true,
       duration: duration,
     );
-  }
-
-  static void showWebview(
-    BuildContext context,
-    String url,
-    String title,
-  ) {
-    launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
   }
 }

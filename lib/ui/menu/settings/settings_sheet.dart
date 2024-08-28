@@ -17,7 +17,6 @@ import 'package:aewallet/model/setting_item.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/authenticate/logging_out.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
@@ -46,6 +45,7 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 part 'about_menu_view.dart';
 part 'components/settings_list_item.dart';

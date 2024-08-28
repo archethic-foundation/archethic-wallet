@@ -93,10 +93,11 @@ class AboutMenuView extends ConsumerWidget implements SheetSkeletonInterface {
                               ArchethicThemeStyles.textStyleSize16W600Primary,
                           icon: Symbols.policy_rounded,
                           onPressed: () async {
-                            UIUtil.showWebview(
-                              context,
-                              'https://www.archethic.net/privacy-policy-wallet.html',
-                              localizations.aboutPrivacyPolicy,
+                            await launchUrl(
+                              Uri.parse(
+                                'https://www.archethic.net/privacy-policy-wallet.html',
+                              ),
+                              mode: LaunchMode.externalApplication,
                             );
                           },
                         ),

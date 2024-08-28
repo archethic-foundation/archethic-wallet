@@ -37,6 +37,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AccountListItem extends ConsumerStatefulWidget {
   const AccountListItem({
@@ -332,10 +333,11 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
                                     FeedbackType.light,
                                     preferences.activeVibrations,
                                   );
-                              UIUtil.showWebview(
-                                context,
-                                '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.account.lastAddress}',
-                                '',
+                              await launchUrl(
+                                Uri.parse(
+                                  '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.account.lastAddress}',
+                                ),
+                                mode: LaunchMode.externalApplication,
                               );
                             },
                           ),

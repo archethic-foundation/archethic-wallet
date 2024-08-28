@@ -70,10 +70,11 @@ class MainMenuView extends ConsumerWidget {
                           info: localizations.aeWebsiteLinkDesc,
                           icon: Symbols.language,
                           onPressed: () async {
-                            UIUtil.showWebview(
-                              context,
-                              'https://www.archethic.net',
-                              localizations.aeWebsiteLinkHeader,
+                            await launchUrl(
+                              Uri.parse(
+                                'https://www.archethic.net',
+                              ),
+                              mode: LaunchMode.externalApplication,
                             );
                           },
                           background: ArchethicTheme.backgroundWelcome,
@@ -86,10 +87,11 @@ class MainMenuView extends ConsumerWidget {
                         info: localizations.mediumLinkDesc,
                         icon: Symbols.news,
                         onPressed: () async {
-                          UIUtil.showWebview(
-                            context,
-                            'https://medium.com/archethic',
-                            localizations.mediumLinkHeader,
+                          await launchUrl(
+                            Uri.parse(
+                              'https://medium.com/archethic',
+                            ),
+                            mode: LaunchMode.externalApplication,
                           );
                         },
                       ),
