@@ -9,8 +9,6 @@ import 'package:aewallet/ui/views/tokens_list/layouts/components/token_add_btn.d
 import 'package:aewallet/ui/views/tokens_list/layouts/components/token_detail.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
-import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
-    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -36,9 +34,11 @@ class TokensListState extends ConsumerState<TokensList>
   Widget build(BuildContext context) {
     super.build(context);
 
-    final asyncTokens = ref.watch(
-      TokensListFormProvider.tokens(searchCriteria: searchCriteria),
-    );
+    final tokens = ref
+        .watch(
+          TokensListFormProvider.tokens(searchCriteria: searchCriteria),
+        )
+        .value;
     final localizations = AppLocalizations.of(context)!;
     final settings = ref.watch(SettingsProviders.settings);
     return Column(
@@ -100,50 +100,28 @@ class TokensListState extends ConsumerState<TokensList>
             const TokenAddBtn(),
           ],
         ),
-        asyncTokens.when(
-          error: (error, stackTrace) => aedappfm.ErrorMessage(
-            failure: aedappfm.Failure.fromError(error),
-            failureMessage: 'Error loading',
-          ),
-          loading: () {
-            return const Stack(
-              alignment: Alignment.centerLeft,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: 10,
-                    ),
-                  ],
+        if (tokens != null)
+          Column(
+            children: tokens.map((aeToken) {
+              return InkWell(
+                onTap: () async {
+                  sl.get<HapticUtil>().feedback(
+                        FeedbackType.light,
+                        settings.activeVibrations,
+                      );
+                  await context.push(
+                    TokenDetailSheet.routerPage,
+                    extra: {
+                      'aeToken': aeToken.toJson(),
+                    },
+                  );
+                },
+                child: TokenDetail(
+                  aeToken: aeToken,
                 ),
-              ],
-            );
-          },
-          data: (tokens) {
-            return Column(
-              children: tokens.map((aeToken) {
-                return InkWell(
-                  onTap: () async {
-                    sl.get<HapticUtil>().feedback(
-                          FeedbackType.light,
-                          settings.activeVibrations,
-                        );
-                    await context.push(
-                      TokenDetailSheet.routerPage,
-                      extra: {
-                        'aeToken': aeToken.toJson(),
-                      },
-                    );
-                  },
-                  child: TokenDetail(
-                    aeToken: aeToken,
-                  ),
-                );
-              }).toList(),
-            );
-          },
-        ),
+              );
+            }).toList(),
+          ),
       ],
     );
   }
