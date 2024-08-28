@@ -37,7 +37,6 @@ import 'package:aewallet/ui/views/rpc_command_receiver/rpc_command_receiver.dart
 import 'package:aewallet/ui/views/settings/backupseed_sheet.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
 import 'package:aewallet/ui/views/sheets/connectivity_warning.dart';
-import 'package:aewallet/ui/views/sheets/dex_sheet.dart';
 import 'package:aewallet/ui/views/tokens_detail/layouts/token_detail_sheet.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/layouts/add_token_sheet.dart';
 import 'package:aewallet/ui/views/transactions/transaction_infos_sheet.dart';

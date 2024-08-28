@@ -168,8 +168,8 @@ class _HomePageState extends ConsumerState<HomePage>
             ],
           ),
           TransactionsTab(),
-          DEXSheet(),
-          DEXSheet(),
+          DEXSheet(dappKey: 'aeSwap/swap'),
+          DEXSheet(dappKey: 'aeSwap/earn'),
         ],
       ),
     );
