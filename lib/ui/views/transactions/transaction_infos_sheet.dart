@@ -11,7 +11,6 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
@@ -26,6 +25,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TransactionInfosSheet extends ConsumerStatefulWidget {
   const TransactionInfosSheet(this.notificationRecipientAddress, {super.key});
@@ -69,10 +69,11 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet>
           Dimens.buttonBottomDimens,
           key: const Key('viewExplorer'),
           onPressed: () async {
-            UIUtil.showWebview(
-              context,
-              '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.notificationRecipientAddress}',
-              '',
+            await launchUrl(
+              Uri.parse(
+                '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.notificationRecipientAddress}',
+              ),
+              mode: LaunchMode.externalApplication,
             );
           },
         ),

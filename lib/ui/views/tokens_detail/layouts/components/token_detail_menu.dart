@@ -4,7 +4,6 @@ import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/dapps.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/dapp.dart';
-import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/receive/receive_modal.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
@@ -138,15 +137,16 @@ class TokenDetailMenu extends ConsumerWidget {
                 ActionButton(
                   text: localizations.explorer,
                   icon: Symbols.manage_search,
-                  onTap: () {
+                  onTap: () async {
                     sl.get<HapticUtil>().feedback(
                           FeedbackType.light,
                           preferences.activeVibrations,
                         );
-                    UIUtil.showWebview(
-                      context,
-                      '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${aeToken.address}',
-                      '',
+                    await launchUrl(
+                      Uri.parse(
+                        '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${aeToken.address}',
+                      ),
+                      mode: LaunchMode.externalApplication,
                     );
                   },
                 )
@@ -185,8 +185,9 @@ class TokenDetailMenu extends ConsumerWidget {
                         ConnectivityStatus.isConnected) {
                       dapp = await ref.read(
                         DAppsProviders.getDApp(
-                                networkSettings.network, 'aeSwap/earn')
-                            .future,
+                          networkSettings.network,
+                          'aeSwap/earn',
+                        ).future,
                       );
                     }
 

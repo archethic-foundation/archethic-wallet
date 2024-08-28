@@ -6,7 +6,6 @@ import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_detail_collection.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_detail_properties.dart';
@@ -27,6 +26,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NFTDetail extends ConsumerStatefulWidget {
   const NFTDetail({
@@ -172,10 +172,11 @@ class _NFTDetailState extends ConsumerState<NFTDetail>
               Dimens.buttonBottomDimens,
               key: const Key('viewExplorer'),
               onPressed: () async {
-                UIUtil.showWebview(
-                  context,
-                  '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.address}',
-                  '',
+                await launchUrl(
+                  Uri.parse(
+                    '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.address}',
+                  ),
+                  mode: LaunchMode.externalApplication,
                 );
               },
             ),

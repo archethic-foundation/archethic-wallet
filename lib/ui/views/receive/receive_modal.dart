@@ -5,6 +5,7 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/receive/layouts/components/explorer_button.dart';
 import 'package:aewallet/ui/views/receive/layouts/components/share_button.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -122,6 +123,9 @@ class ReceiveModal extends ConsumerWidget {
             ),
             child: Row(
               children: [
+                ExplorerButton(
+                  address: infoQRCode,
+                ),
                 ShareButton(payload: infoQRCode),
               ],
             ),
