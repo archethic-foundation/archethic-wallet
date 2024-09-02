@@ -20,16 +20,32 @@ class TokenCreationInformation extends ConsumerWidget {
       children: [
         if (transaction.tokenInformation!.type == 'fungible')
           Expanded(
-            child: AutoSizeText(
-              '${localizations.tokenCreated} ${transaction.tokenInformation!.name}',
-              style: ArchethicThemeStyles.textStyleSize12W100Primary,
+            child: Row(
+              children: [
+                AutoSizeText(
+                  '${localizations.tokenCreated} ',
+                  style: ArchethicThemeStyles.textStyleSize12W100Primary60,
+                ),
+                AutoSizeText(
+                  transaction.tokenInformation!.name!,
+                  style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                ),
+              ],
             ),
           )
         else
           Expanded(
-            child: AutoSizeText(
-              '${localizations.nftCreated} ${transaction.tokenInformation!.name}',
-              style: ArchethicThemeStyles.textStyleSize12W100Primary,
+            child: Row(
+              children: [
+                AutoSizeText(
+                  '${localizations.nftCreated} ',
+                  style: ArchethicThemeStyles.textStyleSize12W100Primary60,
+                ),
+                AutoSizeText(
+                  transaction.tokenInformation!.name!,
+                  style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                ),
+              ],
             ),
           ),
         const SizedBox(

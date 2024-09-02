@@ -46,9 +46,17 @@ class TokenCreationBalance extends ConsumerWidget {
     return Row(
       children: [
         if (settings.showBalances)
-          AutoSizeText(
-            '${AppLocalizations.of(context)!.tokenInitialSupply} $currency $symbol',
-            style: ArchethicThemeStyles.textStyleSize12W100Primary,
+          Row(
+            children: [
+              AutoSizeText(
+                '${AppLocalizations.of(context)!.tokenInitialSupply} ',
+                style: ArchethicThemeStyles.textStyleSize12W100Primary60,
+              ),
+              AutoSizeText(
+                ' $currency $symbol',
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
+              ),
+            ],
           )
         else
           const TransactionHiddenValue(),

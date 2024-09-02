@@ -1,7 +1,9 @@
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/farm_apr.dart';
 import 'package:aewallet/application/price_history/providers.dart';
+import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/address_formatters.dart';
@@ -37,6 +39,8 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
   Widget build(BuildContext context) {
     final settings = ref.watch(SettingsProviders.settings);
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
+    final primaryCurrency =
+        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     final apr = ref.watch(FarmAPRProviders.farmAPR);
     final price = widget.aeToken.isVerified
         ? ref
@@ -74,6 +78,7 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
             width: MediaQuery.of(context).size.width,
             height: widget.aeToken.isUCO ? 110 : 80,
             borderWith: widget.aeToken.isUCO ? 2 : 1,
+            paddingEdgeInsetsClipRRect: EdgeInsets.zero,
             info: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -136,36 +141,69 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                             ),
 
                             if (settings.showBalances == true)
-                              Row(
-                                children: [
-                                  if (widget.aeToken.isLpToken)
-                                    AutoSizeText(
-                                      minFontSize: 5,
-                                      wrapWords: false,
-                                      '${widget.aeToken.balance.formatNumber(precision: 8)} ${widget.aeToken.lpTokenPair!.token1.symbol.reduceSymbol()}/${widget.aeToken.lpTokenPair!.token2.symbol.reduceSymbol()}',
-                                      style: ArchethicThemeStyles
-                                          .textStyleSize12W100Primary,
-                                    )
-                                  else
-                                    AutoSizeText(
-                                      minFontSize: 5,
-                                      wrapWords: false,
-                                      '${widget.aeToken.balance.formatNumber(precision: 8)} ${widget.aeToken.symbol.reduceSymbol(lengthMax: 10)}',
-                                      style: ArchethicThemeStyles
-                                          .textStyleSize12W100Primary,
-                                    ),
-                                  const SizedBox(width: 5),
-                                  if (price != null && price > 0)
-                                    AutoSizeText(
-                                      minFontSize: 5,
-                                      wrapWords: false,
-                                      '\$${(widget.aeToken.balance * price).formatNumber(precision: 2)}',
-                                      textAlign: TextAlign.center,
-                                      style: ArchethicThemeStyles
-                                          .textStyleSize12W100Primary,
-                                    ),
-                                ],
-                              )
+                              if (primaryCurrency.primaryCurrency ==
+                                  AvailablePrimaryCurrencyEnum.native)
+                                Row(
+                                  children: [
+                                    if (widget.aeToken.isLpToken)
+                                      AutoSizeText(
+                                        minFontSize: 5,
+                                        wrapWords: false,
+                                        '${widget.aeToken.balance.formatNumber(precision: 8)} ${widget.aeToken.lpTokenPair!.token1.symbol.reduceSymbol()}/${widget.aeToken.lpTokenPair!.token2.symbol.reduceSymbol()}',
+                                        style: ArchethicThemeStyles
+                                            .textStyleSize12W100Primary,
+                                      )
+                                    else
+                                      AutoSizeText(
+                                        minFontSize: 5,
+                                        wrapWords: false,
+                                        '${widget.aeToken.balance.formatNumber(precision: 8)} ${widget.aeToken.symbol.reduceSymbol(lengthMax: 10)}',
+                                        style: ArchethicThemeStyles
+                                            .textStyleSize12W100Primary,
+                                      ),
+                                    const SizedBox(width: 5),
+                                    if (price != null && price > 0)
+                                      AutoSizeText(
+                                        minFontSize: 5,
+                                        wrapWords: false,
+                                        '\$${(widget.aeToken.balance * price).formatNumber(precision: 2)}',
+                                        textAlign: TextAlign.center,
+                                        style: ArchethicThemeStyles
+                                            .textStyleSize12W100Primary,
+                                      ),
+                                  ],
+                                )
+                              else
+                                Row(
+                                  children: [
+                                    if (price != null && price > 0)
+                                      AutoSizeText(
+                                        minFontSize: 5,
+                                        wrapWords: false,
+                                        '\$${(widget.aeToken.balance * price).formatNumber(precision: 2)}',
+                                        textAlign: TextAlign.center,
+                                        style: ArchethicThemeStyles
+                                            .textStyleSize12W100Primary,
+                                      ),
+                                    const SizedBox(width: 5),
+                                    if (widget.aeToken.isLpToken)
+                                      AutoSizeText(
+                                        minFontSize: 5,
+                                        wrapWords: false,
+                                        '${widget.aeToken.balance.formatNumber(precision: 8)} ${widget.aeToken.lpTokenPair!.token1.symbol.reduceSymbol()}/${widget.aeToken.lpTokenPair!.token2.symbol.reduceSymbol()}',
+                                        style: ArchethicThemeStyles
+                                            .textStyleSize12W100Primary,
+                                      )
+                                    else
+                                      AutoSizeText(
+                                        minFontSize: 5,
+                                        wrapWords: false,
+                                        '${widget.aeToken.balance.formatNumber(precision: 8)} ${widget.aeToken.symbol.reduceSymbol(lengthMax: 10)}',
+                                        style: ArchethicThemeStyles
+                                            .textStyleSize12W100Primary,
+                                      ),
+                                  ],
+                                )
                             else
                               Row(
                                 children: [
