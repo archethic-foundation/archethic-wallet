@@ -116,8 +116,11 @@ class TokensListState extends ConsumerState<TokensList>
                     },
                   );
                 },
-                child: TokenDetail(
-                  aeToken: aeToken,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 13),
+                  child: TokenDetail(
+                    aeToken: aeToken,
+                  ),
                 ),
               );
             }).toList(),
