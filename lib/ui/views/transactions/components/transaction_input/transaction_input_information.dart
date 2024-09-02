@@ -19,13 +19,14 @@ class TransactionInputInformation extends ConsumerWidget {
 
     return TransactionInformation(
       isEmpty: transaction.from == null,
-      message: '${localizations.txListFrom} ${AddressFormatters(
+      prefixMessage: localizations.txListFrom,
+      message: AddressFormatters(
         transaction.contactInformation == null
             ? transaction.from == null
                 ? ''
                 : transaction.from!
             : transaction.contactInformation!.format,
-      ).getShortString4()}',
+      ).getShortString4(),
     );
   }
 }

@@ -139,6 +139,7 @@
     "notOfficialUCOWarning": "Ceci n'est pas le jeton officiel UCO.",
     "tokenInitialSupply": "Offre initiale :",
     "tokenInitialSupplyPositive": "L'offre initiale doit être > 0",
+    "txListDate": "Date :",
     "txListFrom": "De :",
     "txListAmount": "Montant :",
     "txListTo": "À :",
@@ -187,7 +188,7 @@
     "transactionInfosKeySignature": "Signature",
     "transactionBuyHeader": "Où acheter des UCO ?",
     "receive": "Recevoir",
-    "buy": "Acheter",
+    "buy": "Acheter\nUCO",
     "refresh": "Actualiser",
     "chart": "Cours",
     "share": "Partager",
@@ -372,7 +373,7 @@
     "formatLabel": "Format: ",
     "createNFT": "Créer un NFT",
     "createTheNFT": "Créer le NFT",
-    "nftListEmptyExplanation": "C'est ici que vous retrouverez vos NFT.\nMalheureusement pour le moment, aucun NFT n'est lié à ce compte.\n\nVous pouvez en créer en appuyant sur le bouton + ci-dessous.",
+    "nftListEmptyExplanation": "C'est ici que vous retrouverez vos NFT.\nMalheureusement pour le moment, aucun NFT n'est lié à ce compte.",
     "addNFTProperty": "Ajouter une propriété",
     "property": "propriété",
     "properties": "propriétés",
@@ -484,5 +485,6 @@
     "aeSwapLaunchButton": "Lancer aeSwap",
     "receiveHeader": "Recevoir des actifs sur Archethic",
     "receiveYourAddress": "Votre Adresse Archethic",
-    "receiveCopy": "Cliquez sur le QR Code pour copier"
+    "receiveCopy": "Cliquez pour copier l'adresse",
+    "earnValueLbl": "Gagner"
 }

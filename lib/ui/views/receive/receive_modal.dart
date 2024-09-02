@@ -34,35 +34,35 @@ class ReceiveModal extends ConsumerWidget {
     final infoQRCode = selectedAccount?.genesisAddress.toUpperCase() ?? '';
     return Stack(
       children: [
-        ClipRRect(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: ScrollConfiguration(
-              behavior: ScrollConfiguration.of(context).copyWith(
-                dragDevices: {
-                  PointerDeviceKind.touch,
-                  PointerDeviceKind.mouse,
-                  PointerDeviceKind.trackpad,
-                },
-              ),
-              child: GestureDetector(
-                onTap: () {
-                  sl.get<HapticUtil>().feedback(
-                        FeedbackType.light,
-                        preferences.activeVibrations,
-                      );
-                  Clipboard.setData(
-                    ClipboardData(text: infoQRCode),
-                  );
-                  UIUtil.showSnackbar(
-                    localizations.addressCopied,
-                    context,
-                    ref,
-                    ArchethicTheme.text,
-                    ArchethicTheme.snackBarShadow,
-                    icon: Symbols.info,
-                  );
-                },
+        GestureDetector(
+          onTap: () {
+            sl.get<HapticUtil>().feedback(
+                  FeedbackType.light,
+                  preferences.activeVibrations,
+                );
+            Clipboard.setData(
+              ClipboardData(text: infoQRCode),
+            );
+            UIUtil.showSnackbar(
+              localizations.addressCopied,
+              context,
+              ref,
+              ArchethicTheme.text,
+              ArchethicTheme.snackBarShadow,
+              icon: Symbols.info,
+            );
+          },
+          child: ClipRRect(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(context).copyWith(
+                  dragDevices: {
+                    PointerDeviceKind.touch,
+                    PointerDeviceKind.mouse,
+                    PointerDeviceKind.trackpad,
+                  },
+                ),
                 child: Column(
                   children: [
                     const SizedBox(
@@ -95,7 +95,7 @@ class ReceiveModal extends ConsumerWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 40),
-                      child: SelectableText(
+                      child: Text(
                         infoQRCode,
                         style: ArchethicThemeStyles.textStyleSize12W100Primary
                             .copyWith(letterSpacing: 2),
@@ -103,11 +103,28 @@ class ReceiveModal extends ConsumerWidget {
                       ),
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 14,
                     ),
-                    Text(
-                      localizations.receiveCopy,
-                      style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          localizations.receiveCopy,
+                          style:
+                              ArchethicThemeStyles.textStyleSize12W100Primary,
+                        ),
+                        const SizedBox(width: 7),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 4),
+                          child: Icon(
+                            Symbols.content_copy,
+                            weight: IconSize.weightM,
+                            opticalSize: IconSize.opticalSizeM,
+                            grade: IconSize.gradeM,
+                            size: 20,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -119,7 +136,7 @@ class ReceiveModal extends ConsumerWidget {
           alignment: Alignment.bottomCenter,
           child: Padding(
             padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).padding.bottom + 10,
+              bottom: MediaQuery.of(context).padding.bottom + 20,
             ),
             child: Row(
               children: [

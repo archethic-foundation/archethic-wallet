@@ -243,47 +243,48 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
                           ),
                         ),
                       ),
-                      InkWell(
-                        onTap: () {
-                          sl.get<HapticUtil>().feedback(
-                                FeedbackType.light,
-                                preferences.activeVibrations,
+                      Row(
+                        children: [
+                          Text(
+                            AddressFormatters(
+                              widget.account.genesisAddress,
+                            ).getShortString4().toLowerCase(),
+                            style:
+                                ArchethicThemeStyles.textStyleSize12W100Primary,
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              sl.get<HapticUtil>().feedback(
+                                    FeedbackType.light,
+                                    preferences.activeVibrations,
+                                  );
+                              Clipboard.setData(
+                                ClipboardData(
+                                  text: widget.account.genesisAddress
+                                      .toLowerCase(),
+                                ),
                               );
-                          Clipboard.setData(
-                            ClipboardData(
-                              text: widget.account.genesisAddress.toLowerCase(),
-                            ),
-                          );
-                          UIUtil.showSnackbar(
-                            '${localizations.addressCopied}\n${widget.account.genesisAddress.toLowerCase()}',
-                            context,
-                            ref,
-                            ArchethicTheme.text,
-                            ArchethicTheme.snackBarShadow,
-                            icon: Symbols.info,
-                          );
-                        },
-                        child: Row(
-                          children: [
-                            Text(
-                              AddressFormatters(
-                                widget.account.genesisAddress,
-                              ).getShortString4().toLowerCase(),
-                              style: ArchethicThemeStyles
-                                  .textStyleSize12W100Primary,
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            const Icon(
+                              UIUtil.showSnackbar(
+                                '${localizations.addressCopied}\n${widget.account.genesisAddress.toLowerCase()}',
+                                context,
+                                ref,
+                                ArchethicTheme.text,
+                                ArchethicTheme.snackBarShadow,
+                                icon: Symbols.info,
+                              );
+                            },
+                            child: const Icon(
                               Symbols.content_copy,
                               weight: IconSize.weightM,
                               opticalSize: IconSize.opticalSizeM,
                               grade: IconSize.gradeM,
                               size: 16,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                       if (widget.account.serviceType != null)
                         Row(

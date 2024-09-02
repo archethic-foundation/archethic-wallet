@@ -9,8 +9,6 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/main/bloc/nft_search_bar_provider.dart';
 import 'package:aewallet/ui/views/main/bloc/nft_search_bar_state.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_detail.dart';
-import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
-import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
 import 'package:aewallet/ui/widgets/components/paste_icon.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -252,7 +250,8 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                 ],
               ),
             ),
-            Padding(
+            // Reddwarf: Disabled for the moment
+            /*Padding(
               padding: const EdgeInsets.only(left: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -290,7 +289,7 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                   ),
                 ],
               ),
-            ),
+            ),*/
           ],
         ),
       ],

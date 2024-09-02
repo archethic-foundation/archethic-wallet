@@ -37,11 +37,19 @@ class TransferOutput extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
     return Row(
       children: [
-        AutoSizeText(
-          hasTransactionInfo
-              ? '${localizations.txListAmount} -$amountFormatted ${isCurrencyNative ? (transaction.tokenInformation!.symbol! == '' ? 'NFT' : transaction.tokenInformation!.symbol!) : transaction.tokenInformation!.symbol!}'
-              : '${localizations.txListAmount} -$amountFormatted ${AccountBalance.cryptoCurrencyLabel}',
-          style: ArchethicThemeStyles.textStyleSize12W100Primary,
+        Row(
+          children: [
+            AutoSizeText(
+              localizations.txListAmount,
+              style: ArchethicThemeStyles.textStyleSize12W100Primary60,
+            ),
+            AutoSizeText(
+              hasTransactionInfo
+                  ? '-$amountFormatted ${isCurrencyNative ? (transaction.tokenInformation!.symbol! == '' ? 'NFT' : transaction.tokenInformation!.symbol!) : transaction.tokenInformation!.symbol!}'
+                  : '-$amountFormatted ${AccountBalance.cryptoCurrencyLabel}',
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
+            ),
+          ],
         ),
         if (transaction.tokenInformation != null &&
             transaction.tokenInformation!.type == 'fungible' &&

@@ -36,8 +36,6 @@ class AddAccountConfirmSheet extends ConsumerStatefulWidget {
 
 class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet>
     implements SheetSkeletonInterface {
-  bool? animationOpen;
-
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
 
   void _registerBus() {
@@ -92,20 +90,18 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet>
       icon: Symbols.info,
     );
     await ref.read(sessionNotifierProvider.notifier).refresh();
-    await (await ref
-            .read(AccountProviders.accounts.notifier)
-            .selectedAccountNotifier)
-        ?.refreshRecentTransactions();
+    unawaited(
+      (await ref
+              .read(AccountProviders.accounts.notifier)
+              .selectedAccountNotifier)
+          ?.refreshRecentTransactions(),
+    );
     context.pop();
   }
 
   void _showSendFailed(
     TransactionSendEvent event,
   ) {
-    // Send failed
-    if (animationOpen!) {
-      context.pop();
-    }
     UIUtil.showSnackbar(
       event.response!,
       context,
@@ -121,7 +117,6 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet>
   void initState() {
     super.initState();
     _registerBus();
-    animationOpen = false;
   }
 
   @override

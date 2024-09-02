@@ -4,6 +4,10 @@ import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/verified_tokens.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/ui/util/address_formatters.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/main/bloc/nft_search_bar_provider.dart';
 import 'package:aewallet/ui/views/main/bloc/nft_search_bar_state.dart';
 import 'package:aewallet/ui/views/main/components/app_update_button.dart';
@@ -20,8 +24,11 @@ import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/universal_platform.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class AccountTab extends ConsumerWidget {
   const AccountTab({super.key});
@@ -29,7 +36,13 @@ class AccountTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final preferences = ref.watch(SettingsProviders.settings);
-
+    final selectedAccount = ref
+        .watch(
+          AccountProviders.accounts,
+        )
+        .valueOrNull
+        ?.selectedAccount;
+    final localizations = AppLocalizations.of(context)!;
     return ArchethicRefreshIndicator(
       onRefresh: () => Future<void>.sync(() async {
         sl.get<HapticUtil>().feedback(
@@ -80,6 +93,53 @@ class AccountTab extends ConsumerWidget {
                         child: Column(
                           children: <Widget>[
                             const BalanceInfos(),
+                            InkWell(
+                              onTap: () {
+                                sl.get<HapticUtil>().feedback(
+                                      FeedbackType.light,
+                                      preferences.activeVibrations,
+                                    );
+                                Clipboard.setData(
+                                  ClipboardData(
+                                    text: selectedAccount?.genesisAddress
+                                            .toLowerCase() ??
+                                        '',
+                                  ),
+                                );
+                                UIUtil.showSnackbar(
+                                  '${localizations.addressCopied}\n${selectedAccount?.genesisAddress.toUpperCase()}',
+                                  context,
+                                  ref,
+                                  ArchethicTheme.text,
+                                  ArchethicTheme.snackBarShadow,
+                                  icon: Symbols.info,
+                                );
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      AddressFormatters(
+                                        selectedAccount?.genesisAddress ?? '',
+                                      ).getShortString().toUpperCase(),
+                                      style: ArchethicThemeStyles
+                                          .textStyleSize14W600Primary,
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    const Icon(
+                                      Symbols.content_copy,
+                                      weight: IconSize.weightM,
+                                      opticalSize: IconSize.opticalSizeM,
+                                      grade: IconSize.gradeM,
+                                      size: 16,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                             const SizedBox(
                               height: 10,
                             ),

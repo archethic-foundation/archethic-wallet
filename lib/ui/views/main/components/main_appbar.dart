@@ -9,7 +9,6 @@ import 'package:aewallet/ui/menu/settings/settings_sheet.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/ui/util/address_formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/accounts/layouts/account_list.dart';
 import 'package:aewallet/ui/views/accounts/layouts/components/add_account_button.dart';
@@ -125,144 +124,96 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
         ?.selectedAccount;
     return FittedBox(
       fit: BoxFit.fitWidth,
-      child: Column(
-        children: [
-          InkWell(
-            onTap: () {
-              sl.get<HapticUtil>().feedback(
-                    FeedbackType.light,
-                    preferences.activeVibrations,
-                  );
+      child: InkWell(
+        onTap: () {
+          sl.get<HapticUtil>().feedback(
+                FeedbackType.light,
+                preferences.activeVibrations,
+              );
 
-              showBarModalBottomSheet(
-                context: context,
-                backgroundColor: Colors.black.withOpacity(0.1),
-                builder: (BuildContext context) {
-                  return FractionallySizedBox(
-                    heightFactor: 0.85,
-                    child: Stack(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 15,
-                          ),
-                          child: Column(
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(top: 15),
-                                child: InkWell(
-                                  onTap: () {
-                                    sl.get<HapticUtil>().feedback(
-                                          FeedbackType.light,
-                                          preferences.activeVibrations,
-                                        );
-                                    Clipboard.setData(
-                                      ClipboardData(
-                                        text: keychain?.address.toUpperCase() ??
-                                            '',
-                                      ),
+          showBarModalBottomSheet(
+            context: context,
+            backgroundColor: Colors.black.withOpacity(0.1),
+            builder: (BuildContext context) {
+              return FractionallySizedBox(
+                heightFactor: 0.85,
+                child: Stack(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 15,
+                      ),
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(top: 15),
+                            child: InkWell(
+                              onTap: () {
+                                sl.get<HapticUtil>().feedback(
+                                      FeedbackType.light,
+                                      preferences.activeVibrations,
                                     );
-                                    UIUtil.showSnackbar(
-                                      localizations.keychainAddressCopied,
-                                      context,
-                                      ref,
-                                      ArchethicTheme.text,
-                                      ArchethicTheme.snackBarShadow,
-                                      icon: Symbols.info,
-                                    );
-                                  },
-                                  child: Text(
-                                    localizations.accountHeader,
-                                    style: ArchethicThemeStyles
-                                        .textStyleSize16W600Primary,
+                                Clipboard.setData(
+                                  ClipboardData(
+                                    text: keychain?.address.toUpperCase() ?? '',
                                   ),
-                                ),
+                                );
+                                UIUtil.showSnackbar(
+                                  localizations.keychainAddressCopied,
+                                  context,
+                                  ref,
+                                  ArchethicTheme.text,
+                                  ArchethicTheme.snackBarShadow,
+                                  icon: Symbols.info,
+                                );
+                              },
+                              child: Text(
+                                localizations.accountHeader,
+                                style: ArchethicThemeStyles
+                                    .textStyleSize16W600Primary,
                               ),
-                              const AccountsList(),
-                            ],
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              bottom:
-                                  MediaQuery.of(context).padding.bottom + 10,
-                            ),
-                            child: const Row(
-                              children: [
-                                AddAccountButton(),
-                              ],
                             ),
                           ),
-                        ),
-                      ],
+                          const AccountsList(),
+                        ],
+                      ),
                     ),
-                  );
-                },
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).padding.bottom + 20,
+                        ),
+                        child: const Row(
+                          children: [
+                            AddAccountButton(),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               );
             },
-            child: Row(
-              children: [
-                Text(
-                  selectedAccount?.nameDisplayed ?? ' ',
-                  style:
-                      ArchethicThemeStyles.textStyleSize24W700Primary.copyWith(
-                    color: aedappfm.AppThemeBase.secondaryColor,
-                  ),
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                Icon(
-                  Symbols.keyboard_arrow_down,
-                  color: ArchethicThemeBase.neutral0,
-                ),
-              ],
+          );
+        },
+        child: Row(
+          children: [
+            Text(
+              selectedAccount?.nameDisplayed ?? ' ',
+              style: ArchethicThemeStyles.textStyleSize24W700Primary.copyWith(
+                color: aedappfm.AppThemeBase.secondaryColor,
+              ),
             ),
-          ),
-          InkWell(
-            onTap: () {
-              sl.get<HapticUtil>().feedback(
-                    FeedbackType.light,
-                    preferences.activeVibrations,
-                  );
-              Clipboard.setData(
-                ClipboardData(
-                  text: selectedAccount?.genesisAddress.toLowerCase() ?? '',
-                ),
-              );
-              UIUtil.showSnackbar(
-                '${localizations.addressCopied}\n${selectedAccount?.genesisAddress.toLowerCase()}',
-                context,
-                ref,
-                ArchethicTheme.text,
-                ArchethicTheme.snackBarShadow,
-                icon: Symbols.info,
-              );
-            },
-            child: Row(
-              children: [
-                Text(
-                  AddressFormatters(
-                    selectedAccount?.genesisAddress ?? '',
-                  ).getShortString4().toLowerCase(),
-                  style: ArchethicThemeStyles.textStyleSize14W600Primary,
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                const Icon(
-                  Symbols.content_copy,
-                  weight: IconSize.weightM,
-                  opticalSize: IconSize.opticalSizeM,
-                  grade: IconSize.gradeM,
-                  size: 16,
-                ),
-              ],
+            const SizedBox(
+              width: 5,
             ),
-          ),
-        ],
+            Icon(
+              Symbols.keyboard_arrow_down,
+              color: ArchethicThemeBase.neutral0,
+            ),
+          ],
+        ),
       ),
     ).animate().fade(duration: const Duration(milliseconds: 300));
   }

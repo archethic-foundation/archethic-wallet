@@ -8,10 +8,12 @@ class TransactionInformation extends ConsumerWidget {
     super.key,
     required this.isEmpty,
     required this.message,
+    this.prefixMessage = '',
   });
 
   final bool isEmpty;
   final String message;
+  final String prefixMessage;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,9 +25,18 @@ class TransactionInformation extends ConsumerWidget {
             style: ArchethicThemeStyles.textStyleSize12W100Primary,
           )
         else
-          Text(
-            message,
-            style: ArchethicThemeStyles.textStyleSize12W100Primary,
+          Row(
+            children: [
+              if (prefixMessage.isNotEmpty)
+                Text(
+                  '$prefixMessage ',
+                  style: ArchethicThemeStyles.textStyleSize12W100Primary60,
+                ),
+              Text(
+                message,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
+              ),
+            ],
           ),
       ],
     );

@@ -1,6 +1,5 @@
-import 'dart:convert';
-
 import 'package:aewallet/application/connectivity_status.dart';
+import 'package:aewallet/application/farm_apr.dart';
 import 'package:aewallet/application/price_history/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -14,11 +13,11 @@ import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutte
     as aedappfm;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http/http.dart' as http;
 import 'package:material_symbols_icons/symbols.dart';
 
 class TokenDetail extends ConsumerStatefulWidget {
@@ -38,6 +37,7 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
   Widget build(BuildContext context) {
     final settings = ref.watch(SettingsProviders.settings);
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
+    final apr = ref.watch(FarmAPRProviders.farmAPR);
     final price = widget.aeToken.isVerified
         ? ref
             .watch(
@@ -72,7 +72,8 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
         children: [
           aedappfm.BlockInfo(
             width: MediaQuery.of(context).size.width,
-            height: widget.aeToken.isUCO ? 95 : 80,
+            height: widget.aeToken.isUCO ? 110 : 80,
+            borderWith: widget.aeToken.isUCO ? 2 : 1,
             info: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -197,7 +198,31 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                                 aeToken: widget.aeToken,
                               ),
 
-                            if (widget.aeToken.isUCO) _farmInfo(context),
+                            if (widget.aeToken.isUCO)
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      AppLocalizations.of(context)!
+                                          .earnValueLbl,
+                                      style: ArchethicThemeStyles
+                                          .textStyleSize14W200Primary,
+                                    ),
+                                    Text(
+                                      ' $apr ',
+                                      style: ArchethicThemeStyles
+                                          .textStyleSize14W200PrimaryPositiveValue,
+                                    ),
+                                    Text(
+                                      'APR',
+                                      style: ArchethicThemeStyles
+                                          .textStyleSize14W200Primary,
+                                    ),
+                                  ],
+                                ),
+                              ),
                           ],
                         ),
                       ),
@@ -253,75 +278,5 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
         ],
       ),
     );
-  }
-
-  Widget _farmInfo(BuildContext context) {
-    return FutureBuilder<Map<String, String>>(
-      future: fetchAPRFarm(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Row(
-            children: [
-              Text(
-                'Farming - APR 3 Years: ',
-                style: ArchethicThemeStyles.textStyleSize12W100Primary,
-              ),
-              const Padding(
-                padding: EdgeInsets.only(left: 5),
-                child: SizedBox(
-                  height: 10,
-                  width: 10,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 0.5,
-                  ),
-                ),
-              ),
-            ],
-          );
-        } else if (snapshot.hasError) {
-          return const SizedBox.shrink();
-        } else if (snapshot.hasData) {
-          final data = snapshot.data!;
-          return Row(
-            children: [
-              Text(
-                'Farming - APR 3 Years: ',
-                style: ArchethicThemeStyles.textStyleSize12W100Primary,
-              ),
-              Text(
-                data['defaultAPR']!,
-                style: ArchethicThemeStyles.textStyleSize12W100PositiveValue,
-              ),
-            ],
-          );
-        } else {
-          return const SizedBox.shrink();
-        }
-      },
-    );
-  }
-
-  Future<Map<String, String>> fetchAPRFarm() async {
-    final url = Uri.parse(
-      'https://faas-lon1-917a94a7.doserverless.co/api/v1/web/fn-279bbae3-a757-4cef-ade7-a63bdaca36f7/mainnet/apr',
-    );
-
-    try {
-      final response = await http.get(url);
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        final defaultAPR = '${(data['apr'] as num).toStringAsFixed(0)}%';
-        final defaultAPRDuration = data['level'];
-        return {
-          'defaultAPR': defaultAPR,
-          'defaultAPRDuration': defaultAPRDuration,
-        };
-      } else {
-        return {'defaultAPR': '___%', 'defaultAPRDuration': ''};
-      }
-    } catch (error) {
-      return {'defaultAPR': '___%', 'defaultAPRDuration': ''};
-    }
   }
 }
