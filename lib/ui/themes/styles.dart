@@ -117,6 +117,14 @@ class ArchethicThemeStyles {
     );
   }
 
+  static TextStyle get textStyleSize14W200PrimaryPositiveValue {
+    return TextStyle(
+      fontSize: AppFontSizes.size14,
+      fontWeight: FontWeight.w200,
+      color: ArchethicTheme.positiveValue,
+    );
+  }
+
   static TextStyle get textStyleSize14W200Background {
     return TextStyle(
       fontSize: AppFontSizes.size12,

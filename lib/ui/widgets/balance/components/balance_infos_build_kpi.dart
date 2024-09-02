@@ -33,9 +33,13 @@ class BalanceInfosKpi extends ConsumerWidget {
     return Row(
       children: <Widget>[
         AutoSizeText(
+          '${localizations.price}: ',
+          style: ArchethicThemeStyles.textStyleSize12W100Primary60,
+        ),
+        AutoSizeText(
           price == null
               ? '...'
-              : '${localizations.price}: \$${price.formatNumber(precision: price < 1 ? 5 : 2)}',
+              : '\$${price.formatNumber(precision: price < 1 ? 5 : 2)}',
           style: ArchethicThemeStyles.textStyleSize12W100Primary,
         ),
         const SizedBox(

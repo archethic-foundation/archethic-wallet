@@ -50,11 +50,13 @@ class ActionButton extends ConsumerWidget {
                   if (enabled)
                     Text(
                       text,
+                      textAlign: TextAlign.center,
                       style: ArchethicThemeStyles.textStyleSize14W600Primary,
                     )
                   else
                     Text(
                       text,
+                      textAlign: TextAlign.center,
                       style: ArchethicThemeStyles
                           .textStyleSize14W600PrimaryDisabled,
                     ),

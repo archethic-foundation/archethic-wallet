@@ -1,7 +1,7 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
-import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/dapps.dart';
+import 'package:aewallet/application/farm_apr.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/dapp.dart';
 import 'package:aewallet/ui/views/receive/receive_modal.dart';
@@ -41,8 +41,8 @@ class TokenDetailMenu extends ConsumerWidget {
         .valueOrNull
         ?.selectedAccount;
     final preferences = ref.watch(SettingsProviders.settings);
-    final contact = ref.watch(ContactProviders.getSelectedContact).valueOrNull;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
+    final apr = ref.watch(FarmAPRProviders.farmAPR);
 
     if (accountSelected == null) return const SizedBox();
 
@@ -55,162 +55,184 @@ class TokenDetailMenu extends ConsumerWidget {
       color: Colors.transparent,
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            if (accountSelected.balance!.isNativeTokenValuePositive() &&
-                connectivityStatusProvider == ConnectivityStatus.isConnected)
-              ActionButton(
-                key: const Key('sendButton'),
-                text: localizations.send,
-                icon: Symbols.call_made,
-                onTap: () async {
-                  sl.get<HapticUtil>().feedback(
-                        FeedbackType.light,
-                        preferences.activeVibrations,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  width: constraints.maxWidth * 0.33,
+                  child: accountSelected.balance!
+                              .isNativeTokenValuePositive() &&
+                          connectivityStatusProvider ==
+                              ConnectivityStatus.isConnected
+                      ? ActionButton(
+                          key: const Key('sendButton'),
+                          text: localizations.send,
+                          icon: Symbols.call_made,
+                          onTap: () async {
+                            sl.get<HapticUtil>().feedback(
+                                  FeedbackType.light,
+                                  preferences.activeVibrations,
+                                );
+                            await context.push(
+                              TransferSheet.routerPage,
+                              extra: {
+                                'transferType': aeToken.isUCO
+                                    ? TransferType.uco.name
+                                    : TransferType.token.name,
+                                'recipient': const TransferRecipient.address(
+                                  address: Address(address: ''),
+                                ).toJson(),
+                                'aeToken': aeToken.toJson(),
+                              },
+                            );
+                          },
+                        )
+                          .animate()
+                          .fade(duration: const Duration(milliseconds: 200))
+                          .scale(duration: const Duration(milliseconds: 200))
+                      : ActionButton(
+                          text: localizations.send,
+                          icon: Symbols.call_made,
+                          enabled: false,
+                        )
+                          .animate()
+                          .fade(duration: const Duration(milliseconds: 200))
+                          .scale(duration: const Duration(milliseconds: 200)),
+                ),
+                SizedBox(
+                  width: constraints.maxWidth * 0.33,
+                  child: ActionButton(
+                    key: const Key('receivebutton'),
+                    text: localizations.receive,
+                    icon: Symbols.call_received,
+                    onTap: () {
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.light,
+                            preferences.activeVibrations,
+                          );
+
+                      showBarModalBottomSheet(
+                        context: context,
+                        backgroundColor: aedappfm.AppThemeBase.sheetBackground
+                            .withOpacity(0.2),
+                        builder: (BuildContext context) {
+                          return const FractionallySizedBox(
+                            heightFactor: 0.75,
+                            child: ReceiveModal(),
+                          );
+                        },
                       );
-                  await context.push(
-                    TransferSheet.routerPage,
-                    extra: {
-                      'transferType': aeToken.isUCO
-                          ? TransferType.uco.name
-                          : TransferType.token.name,
-                      'recipient': const TransferRecipient.address(
-                        address: Address(address: ''),
-                      ).toJson(),
-                      'aeToken': aeToken.toJson(),
                     },
-                  );
-                },
-              )
-                  .animate()
-                  .fade(duration: const Duration(milliseconds: 200))
-                  .scale(duration: const Duration(milliseconds: 200))
-            else
-              ActionButton(
-                text: localizations.send,
-                icon: Symbols.call_made,
-                enabled: false,
-              )
-                  .animate()
-                  .fade(duration: const Duration(milliseconds: 200))
-                  .scale(duration: const Duration(milliseconds: 200)),
-            if (contact != null)
-              ActionButton(
-                key: const Key('receivebutton'),
-                text: localizations.receive,
-                icon: Symbols.call_received,
-                onTap: () {
-                  sl.get<HapticUtil>().feedback(
-                        FeedbackType.light,
-                        preferences.activeVibrations,
-                      );
+                  )
+                      .animate()
+                      .fade(duration: const Duration(milliseconds: 250))
+                      .scale(duration: const Duration(milliseconds: 250)),
+                ),
+                SizedBox(
+                  width: constraints.maxWidth * 0.33,
+                  child: aeToken.isUCO == false
+                      ? connectivityStatusProvider ==
+                              ConnectivityStatus.isConnected
+                          ? ActionButton(
+                              text: localizations.explorer,
+                              icon: Symbols.manage_search,
+                              onTap: () async {
+                                sl.get<HapticUtil>().feedback(
+                                      FeedbackType.light,
+                                      preferences.activeVibrations,
+                                    );
+                                await launchUrl(
+                                  Uri.parse(
+                                    '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${aeToken.address}',
+                                  ),
+                                  mode: LaunchMode.externalApplication,
+                                );
+                              },
+                            )
+                              .animate()
+                              .fade(
+                                duration: const Duration(milliseconds: 300),
+                              )
+                              .scale(
+                                duration: const Duration(milliseconds: 300),
+                              )
+                          : ActionButton(
+                              text: localizations.explorer,
+                              icon: Symbols.manage_search,
+                              enabled: false,
+                            )
+                              .animate()
+                              .fade(
+                                duration: const Duration(milliseconds: 300),
+                              )
+                              .scale(
+                                duration: const Duration(milliseconds: 300),
+                              )
+                      : connectivityStatusProvider ==
+                              ConnectivityStatus.isConnected
+                          ? ActionButton(
+                              text:
+                                  '${localizations.tokenDetailMenuEarn.replaceFirst('%1', apr)}\nAPR',
+                              icon: aedappfm.Iconsax.wallet_add,
+                              onTap: () async {
+                                sl.get<HapticUtil>().feedback(
+                                      FeedbackType.light,
+                                      preferences.activeVibrations,
+                                    );
 
-                  showBarModalBottomSheet(
-                    context: context,
-                    backgroundColor:
-                        aedappfm.AppThemeBase.sheetBackground.withOpacity(0.2),
-                    builder: (BuildContext context) {
-                      return const FractionallySizedBox(
-                        heightFactor: 0.75,
-                        child: ReceiveModal(),
-                      );
-                    },
-                  );
-                },
-              )
-                  .animate()
-                  .fade(duration: const Duration(milliseconds: 250))
-                  .scale(duration: const Duration(milliseconds: 250))
-            else
-              ActionButton(
-                text: localizations.receive,
-                icon: Symbols.call_received,
-                enabled: false,
-              )
-                  .animate()
-                  .fade(duration: const Duration(milliseconds: 250))
-                  .scale(duration: const Duration(milliseconds: 250)),
-            if (aeToken.isUCO == false)
-              if (connectivityStatusProvider == ConnectivityStatus.isConnected)
-                ActionButton(
-                  text: localizations.explorer,
-                  icon: Symbols.manage_search,
-                  onTap: () async {
-                    sl.get<HapticUtil>().feedback(
-                          FeedbackType.light,
-                          preferences.activeVibrations,
-                        );
-                    await launchUrl(
-                      Uri.parse(
-                        '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${aeToken.address}',
-                      ),
-                      mode: LaunchMode.externalApplication,
-                    );
-                  },
-                )
-                    .animate()
-                    .fade(duration: const Duration(milliseconds: 300))
-                    .scale(duration: const Duration(milliseconds: 300))
-              else
-                ActionButton(
-                  text: localizations.explorer,
-                  icon: Symbols.manage_search,
-                  enabled: false,
-                )
-                    .animate()
-                    .fade(duration: const Duration(milliseconds: 300))
-                    .scale(duration: const Duration(milliseconds: 300)),
-            if (aeToken.isUCO)
-              if (connectivityStatusProvider == ConnectivityStatus.isConnected)
-                ActionButton(
-                  text: localizations.tokenDetailMenuEarn,
-                  icon: aedappfm.Iconsax.wallet_add,
-                  onTap: () async {
-                    sl.get<HapticUtil>().feedback(
-                          FeedbackType.light,
-                          preferences.activeVibrations,
-                        );
+                                final networkSettings = ref.watch(
+                                  SettingsProviders.settings.select(
+                                    (settings) => settings.network,
+                                  ),
+                                );
 
-                    final networkSettings = ref.watch(
-                      SettingsProviders.settings
-                          .select((settings) => settings.network),
-                    );
+                                final connectivityStatusProvider =
+                                    ref.watch(connectivityStatusProviders);
+                                DApp? dapp;
+                                if (connectivityStatusProvider ==
+                                    ConnectivityStatus.isConnected) {
+                                  dapp = await ref.read(
+                                    DAppsProviders.getDApp(
+                                      networkSettings.network,
+                                      'aeSwap/earn',
+                                    ).future,
+                                  );
+                                }
 
-                    final connectivityStatusProvider =
-                        ref.watch(connectivityStatusProviders);
-                    DApp? dapp;
-                    if (connectivityStatusProvider ==
-                        ConnectivityStatus.isConnected) {
-                      dapp = await ref.read(
-                        DAppsProviders.getDApp(
-                          networkSettings.network,
-                          'aeSwap/earn',
-                        ).future,
-                      );
-                    }
-
-                    if (UniversalPlatform.isDesktopOrWeb) {
-                      await launchUrl(Uri.parse(dapp!.url));
-                    } else {
-                      // TODO(Reddwarf03): Webview
-                    }
-                  },
-                )
-                    .animate()
-                    .fade(duration: const Duration(milliseconds: 300))
-                    .scale(duration: const Duration(milliseconds: 300))
-              else
-                ActionButton(
-                  text: localizations.tokenDetailMenuEarn,
-                  icon: aedappfm.Iconsax.wallet_add,
-                  enabled: false,
-                )
-                    .animate()
-                    .fade(duration: const Duration(milliseconds: 300))
-                    .scale(duration: const Duration(milliseconds: 300)),
-          ],
+                                if (UniversalPlatform.isDesktopOrWeb) {
+                                  await launchUrl(Uri.parse(dapp!.url));
+                                } else {
+                                  // TODO(Reddwarf03): Webview
+                                }
+                              },
+                            )
+                              .animate()
+                              .fade(
+                                duration: const Duration(milliseconds: 300),
+                              )
+                              .scale(
+                                duration: const Duration(milliseconds: 300),
+                              )
+                          : ActionButton(
+                              text:
+                                  '${localizations.tokenDetailMenuEarn.replaceFirst('%1', apr)}\nAPR',
+                              icon: aedappfm.Iconsax.wallet_add,
+                              enabled: false,
+                            )
+                              .animate()
+                              .fade(
+                                duration: const Duration(milliseconds: 300),
+                              )
+                              .scale(
+                                duration: const Duration(milliseconds: 300),
+                              ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

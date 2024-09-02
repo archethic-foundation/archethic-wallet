@@ -21,18 +21,19 @@ class TransactionOutputInformation extends ConsumerWidget {
             '00000000000000000000000000000000000000000000000000000000000000000000'
         ? TransactionInformation(
             isEmpty: transaction.recipient == null,
-            message:
-                '${localizations.txListTo} ${localizations.burnAddressLbl}',
+            prefixMessage: localizations.txListTo,
+            message: localizations.burnAddressLbl,
           )
         : TransactionInformation(
             isEmpty: transaction.recipient == null,
-            message: '${localizations.txListTo} ${AddressFormatters(
+            prefixMessage: localizations.txListTo,
+            message: AddressFormatters(
               transaction.contactInformation == null
                   ? transaction.recipient == null
                       ? ''
                       : transaction.recipient!
                   : transaction.contactInformation!.format,
-            ).getShortString4()}',
+            ).getShortString4(),
           );
   }
 }

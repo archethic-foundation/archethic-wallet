@@ -139,6 +139,7 @@
     "notOfficialUCOWarning": "This is not the official UCO token.",
     "tokenInitialSupply": "Initial supply :",
     "tokenInitialSupplyPositive": "The initial supply should be > 0",
+    "txListDate": "Date :",
     "txListFrom": "From :",
     "txListAmount": "Amount :",
     "txListTo": "To :",
@@ -195,7 +196,7 @@
     "transactionInfosKeySignature": "Signature",
     "transactionBuyHeader": "Where to Buy UCO ?",
     "receive": "Receive",
-    "buy": "Buy",
+    "buy": "Buy UCO",
     "refresh": "Refresh",
     "chart": "Chart",
     "share": "Share",
@@ -381,7 +382,7 @@
     "formatLabel": "Format: ",
     "createNFT": "Create a NFT",
     "createTheNFT": "Create the NFT",
-    "nftListEmptyExplanation": "This is where you will find your NFTs. \nUnfortunately, for the moment, no NFTs are stored in your account, but you can create them by press to the + button below.",
+    "nftListEmptyExplanation": "This is where you will find your NFTs. \nUnfortunately, for the moment, no NFTs are stored in your account.",
     "addNFTProperty": "Add property",
     "property": "property",
     "properties": "properties",
@@ -473,7 +474,7 @@
     "bottomMainMenuAccounts": "Accounts",
     "bottomMainMenuSwap": "Swap",
     "bottomMainMenuEarn": "Earn",
-    "tokenDetailMenuEarn": "Earn",
+    "tokenDetailMenuEarn": "Earn %1",
     "localDataMigrationMessage": "Update your current application.\nPlease wait...",
     "nftNotOwnerInfo": "You are not the owner of this NFT",
     "removeKeychainDetail": "You are about to retire the account %1 from your keychain.\nYou will no longer have access to the funds or associated tokens.\nRefer to your keychain history to access information related to this account.",
@@ -514,5 +515,6 @@
     "aeSwapLaunchButton": "Launch aeSwap",
     "receiveHeader": "Receive assets on Archethic",
     "receiveYourAddress": "Your Archethic Address",
-    "receiveCopy": "Click on the QR Code to copy"
+    "receiveCopy": "Click to copy the address",
+    "earnValueLbl": "Earn"
 }
