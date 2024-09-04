@@ -16,7 +16,7 @@ class _AccountNotifier extends _$AccountNotifier {
     List<Future<void> Function(Account account)> doRefreshes,
   ) async {
     try {
-      final account = state.valueOrNull;
+      final account = await future;
       if (account == null) return;
       await account.updateLastAddress();
 
