@@ -3,15 +3,12 @@
 import 'dart:async';
 
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/language.dart';
-import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/account.dart';
-import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/address_formatters.dart';
@@ -21,7 +18,6 @@ import 'package:aewallet/ui/views/accounts/layouts/components/account_list_item_
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/case_converter.dart';
-import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/keychain_util.dart';
@@ -153,23 +149,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
 
     final preferences = ref.watch(SettingsProviders.settings);
     final localizations = AppLocalizations.of(context)!;
-
     final settings = ref.watch(SettingsProviders.settings);
-    final primaryCurrency =
-        ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
-    final language = ref.watch(
-      LanguageProviders.selectedLanguage,
-    );
-
-    final asyncFiatAmount = ref.watch(
-      MarketPriceProviders.convertedToSelectedCurrency(
-        nativeAmount: widget.account.balance?.nativeTokenValue ?? 0,
-      ),
-    );
-    final fiatAmountString = asyncFiatAmount.maybeWhen(
-      data: CurrencyUtil.format,
-      orElse: () => '--',
-    );
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
@@ -207,10 +187,14 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
         },
         child: DecoratedBox(
           decoration: BoxDecoration(
-            color: aedappfm.AppThemeBase.sheetBackground,
+            color: widget.account.serviceType == 'archethicWallet'
+                ? aedappfm.AppThemeBase.sheetBackground
+                : aedappfm.AppThemeBase.sheetBackgroundSecondary,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: aedappfm.AppThemeBase.sheetBorder,
+              color: widget.account.serviceType == 'archethicWallet'
+                  ? aedappfm.AppThemeBase.sheetBorder
+                  : aedappfm.AppThemeBase.sheetBorderSecondary,
             ),
           ),
           child: Container(
@@ -447,56 +431,21 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
                 ),
                 if (widget.account.serviceType != 'aeweb')
                   if (settings.showBalances)
-                    primaryCurrency.primaryCurrency ==
-                            AvailablePrimaryCurrencyEnum.native
-                        ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: <Widget>[
-                              SizedBox(
-                                height: 17,
-                                child: AutoSizeText(
-                                  '${widget.account.balance!.nativeTokenValueToString(language.getLocaleStringWithoutDefault(), digits: widget.account.balance!.nativeTokenValue < 1 ? 8 : 2)} ${widget.account.balance!.nativeTokenName}',
-                                  style: ArchethicThemeStyles
-                                      .textStyleSize12W100Primary,
-                                  textAlign: TextAlign.end,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 17,
-                                child: AutoSizeText(
-                                  fiatAmountString,
-                                  textAlign: TextAlign.end,
-                                  style: ArchethicThemeStyles
-                                      .textStyleSize12W100Primary,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 7,
-                              ),
-                              AccountListItemTokenInfo(account: widget.account),
-                            ],
-                          )
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: <Widget>[
-                              AutoSizeText(
-                                fiatAmountString,
-                                textAlign: TextAlign.end,
-                                style: ArchethicThemeStyles
-                                    .textStyleSize12W100Primary,
-                              ),
-                              AutoSizeText(
-                                '${widget.account.balance!.nativeTokenValueToString(language.getLocaleStringWithoutDefault(), digits: widget.account.balance!.nativeTokenValue < 1 ? 8 : 2)} ${widget.account.balance!.nativeTokenName}',
-                                style: ArchethicThemeStyles
-                                    .textStyleSize12W100Primary,
-                                textAlign: TextAlign.end,
-                              ),
-                              const SizedBox(
-                                height: 7,
-                              ),
-                              AccountListItemTokenInfo(account: widget.account),
-                            ],
-                          )
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        SizedBox(
+                          height: 17,
+                          child: AutoSizeText(
+                            '\$${widget.account.balance!.totalUSD.formatNumber(precision: 2)}',
+                            style:
+                                ArchethicThemeStyles.textStyleSize12W100Primary,
+                            textAlign: TextAlign.end,
+                          ),
+                        ),
+                        AccountListItemTokenInfo(account: widget.account),
+                      ],
+                    )
                   else
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -505,14 +454,6 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
                           '···········',
                           style:
                               ArchethicThemeStyles.textStyleSize12W100Primary60,
-                        ),
-                        AutoSizeText(
-                          '···········',
-                          style:
-                              ArchethicThemeStyles.textStyleSize12W100Primary60,
-                        ),
-                        const SizedBox(
-                          height: 7,
                         ),
                         if (widget.account.serviceType != 'aeweb')
                           AutoSizeText(
