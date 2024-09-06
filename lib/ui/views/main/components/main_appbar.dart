@@ -168,7 +168,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                                 );
                               },
                               child: Text(
-                                localizations.accountHeader,
+                                localizations.accountsHeader,
                                 style: ArchethicThemeStyles
                                     .textStyleSize16W600Primary,
                               ),

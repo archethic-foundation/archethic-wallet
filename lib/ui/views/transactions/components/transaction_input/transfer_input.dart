@@ -56,7 +56,7 @@ class TransferInput extends ConsumerWidget {
           Row(
             children: [
               const SizedBox(
-                width: 2,
+                width: 5,
               ),
               VerifiedTokenIcon(
                 address: transaction.tokenAddress!,

@@ -177,7 +177,8 @@ class _TransferTextFieldAmountState
                                                       .decimalDigits!,
                                             ),
                                             LengthLimitingTextInputFormatter(
-                                                16),
+                                              16,
+                                            ),
                                           ],
                                           decoration: const InputDecoration(
                                             border: InputBorder.none,
@@ -208,7 +209,6 @@ class _TransferTextFieldAmountState
                   if (transfer.transferType != null)
                     if (transfer.transferType == TransferType.uco)
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
                             alignment: Alignment.centerLeft,
@@ -230,6 +230,17 @@ class _TransferTextFieldAmountState
                             )
                           else
                             const SizedBox(),
+                          if (transfer.aeToken != null)
+                            const Row(
+                              children: [
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                VerifiedTokenIcon(
+                                  address: 'UCO',
+                                ),
+                              ],
+                            ),
                         ],
                       )
                     else
@@ -243,8 +254,7 @@ class _TransferTextFieldAmountState
                                 style: ArchethicThemeStyles
                                     .textStyleSize14W200Primary,
                               ),
-                              if (transfer.aeToken != null &&
-                                  transfer.aeToken!.isVerified)
+                              if (transfer.aeToken != null)
                                 Row(
                                   children: [
                                     const SizedBox(

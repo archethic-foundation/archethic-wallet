@@ -23,9 +23,9 @@ class VerifiedTokenIcon extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-
-    final preferences = ref.watch(SettingsProviders.settings);
+    if (address == 'UCO') {
+      return _icon(context, ref);
+    }
 
     return FutureBuilder<bool>(
       future: ref.read(
@@ -34,29 +34,39 @@ class VerifiedTokenIcon extends ConsumerWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data == true) {
-            return InkWell(
-              onTap: () {
-                sl.get<HapticUtil>().feedback(
-                      FeedbackType.light,
-                      preferences.activeVibrations,
-                    );
-                AppDialogs.showInfoDialog(
-                  context,
-                  ref,
-                  localizations.information,
-                  localizations.verifiedTokenInfo,
-                );
-              },
-              child: Icon(
-                Symbols.verified,
-                color: ArchethicTheme.activeColorSwitch,
-                size: 15,
-              ),
-            );
+            return _icon(context, ref);
           }
         }
         return const SizedBox();
       },
+    );
+  }
+
+  Widget _icon(
+    BuildContext context,
+    WidgetRef ref,
+  ) {
+    final localizations = AppLocalizations.of(context)!;
+    final preferences = ref.watch(SettingsProviders.settings);
+
+    return InkWell(
+      onTap: () {
+        sl.get<HapticUtil>().feedback(
+              FeedbackType.light,
+              preferences.activeVibrations,
+            );
+        AppDialogs.showInfoDialog(
+          context,
+          ref,
+          localizations.information,
+          localizations.verifiedTokenInfo,
+        );
+      },
+      child: Icon(
+        Symbols.verified,
+        color: ArchethicTheme.activeColorSwitch,
+        size: 15,
+      ),
     );
   }
 }
