@@ -75,7 +75,7 @@ class TransferTokenSelection extends ConsumerWidget {
           );
           ref
               .read(TransferFormProvider.transferForm.notifier)
-              .setAEToken(tokenSelected);
+              .setAEToken(context, tokenSelected);
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

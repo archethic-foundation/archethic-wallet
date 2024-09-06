@@ -138,7 +138,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
         state = state.copyWith(
           feeEstimation: AsyncValue.data(fees),
-          errorAmountText: state.amount > state.accountToken!.amount!
+          errorAmountText: state.amount > state.aeToken!.balance
               ? AppLocalizations.of(context)!.insufficientBalance.replaceAll(
                     '%1',
                     state.symbol(context),
@@ -189,6 +189,9 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         );
         break;
       case null:
+        state = state.copyWith(
+          feeEstimation: const AsyncValue.data(0),
+        );
         break;
     }
   }
@@ -379,13 +382,11 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             recipientAddress: recipientAddress,
             keychainSecuredInfos: keychainSecuredInfos,
             transactionLastAddress: selectedAccount.lastAddress!,
-            tokenAddress: formState.accountToken?.tokenInformation!.address!
-                .toUpperCase(),
+            tokenAddress: formState.aeToken!.address!.toUpperCase(),
             type: 'fungible',
             aeip: [2, 9],
             tokenId: 0,
-            properties:
-                formState.accountToken?.tokenInformation!.tokenProperties ?? {},
+            properties: {},
           ),
         );
         break;
@@ -435,11 +436,9 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     required BuildContext context,
     double? tokenPrice,
   }) async {
-    if (state.transferType == TransferType.token &&
-        state.accountToken != null &&
-        state.accountToken!.amount != null) {
+    if (state.transferType == TransferType.token && state.aeToken != null) {
       state = state.copyWith(
-        amount: state.accountToken!.amount!,
+        amount: state.aeToken!.balance,
         errorAmountText: '',
       );
       unawaited(_updateFees(context));
@@ -550,13 +549,19 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     );
   }
 
-  void setAEToken(aedappfm.AEToken aeToken) {
+  void setAEToken(BuildContext context, aedappfm.AEToken aeToken) {
     if (aeToken.isUCO) {
       state = state.copyWith(aeToken: aeToken, transferType: TransferType.uco);
     } else {
       state =
           state.copyWith(aeToken: aeToken, transferType: TransferType.token);
     }
+    unawaited(
+      _updateFees(
+        context,
+        delay: Duration.zero,
+      ),
+    );
   }
 
   void setMessage({
@@ -637,7 +642,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
           return false;
         }
 
-        if (state.amount > state.accountToken!.amount!) {
+        if (state.amount > state.aeToken!.balance) {
           state = state.copyWith(
             errorAmountText:
                 AppLocalizations.of(context)!.insufficientBalance.replaceAll(
@@ -763,13 +768,11 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
             recipientAddress: state.recipient.address!,
             keychainSecuredInfos: keychainSecuredInfos,
             transactionLastAddress: selectedAccount.lastAddress!.toUpperCase(),
-            tokenAddress:
-                state.accountToken?.tokenInformation!.address!.toUpperCase(),
+            tokenAddress: state.aeToken!.address!.toUpperCase(),
             type: 'fungible',
             tokenId: 0,
             aeip: [2, 9],
-            properties:
-                state.accountToken?.tokenInformation!.tokenProperties ?? {},
+            properties: {},
           ),
         );
         break;

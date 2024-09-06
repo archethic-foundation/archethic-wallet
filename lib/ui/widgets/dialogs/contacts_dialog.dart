@@ -80,7 +80,7 @@ class ContactsDialog {
                     child: Column(
                       children: [
                         Text(
-                          localizations.addressBookHeader,
+                          localizations.accountsHeader,
                           style:
                               ArchethicThemeStyles.textStyleSize24W700Primary,
                         ),

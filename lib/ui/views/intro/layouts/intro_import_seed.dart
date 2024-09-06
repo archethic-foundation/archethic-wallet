@@ -589,7 +589,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            localizations.accountHeader,
+                            localizations.accountsHeader,
                             style:
                                 ArchethicThemeStyles.textStyleSize24W700Primary,
                           ),

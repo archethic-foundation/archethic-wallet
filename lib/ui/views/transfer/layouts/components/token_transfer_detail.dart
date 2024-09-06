@@ -144,7 +144,7 @@ class _TokenTransferDetailState extends ConsumerState<TokenTransferDetail> {
               if (transfer.transferType != TransferType.nft)
                 Text(
                   AmountFormatters.standard(
-                    transfer.accountToken!.amount! - transfer.amount,
+                    transfer.aeToken!.balance - transfer.amount,
                     transfer.symbol(context),
                   ),
                   style: ArchethicThemeStyles.textStyleSize12W100Primary,

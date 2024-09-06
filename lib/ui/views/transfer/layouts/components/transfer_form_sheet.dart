@@ -64,7 +64,7 @@ class TransferFormSheet extends ConsumerWidget
             final transferNotifier =
                 ref.read(TransferFormProvider.transferForm.notifier);
 
-            final isAddressOk = await transferNotifier.controlAddress(
+            final isAddressOk = transferNotifier.controlAddress(
               context,
               accountSelected!,
             );

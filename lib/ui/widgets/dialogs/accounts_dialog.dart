@@ -48,7 +48,7 @@ class AccountsDialog {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  localizations.accountHeader,
+                  localizations.accountsHeader,
                   style: ArchethicThemeStyles.textStyleSize24W700Primary,
                 ),
                 const SizedBox(
