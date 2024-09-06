@@ -186,7 +186,8 @@ class _AuthenticationGuardNotifier extends _$AuthenticationGuardNotifier {
       'Schedule next startup Autolock',
     );
 
-    await future;
+    final loadedState = state.valueOrNull;
+    if (loadedState == null) return;
 
     final lastInteractionDateNotifier = ref
         .read(_lastInteractionDateNotifierProvider.notifier)
@@ -194,11 +195,13 @@ class _AuthenticationGuardNotifier extends _$AuthenticationGuardNotifier {
     await lastInteractionDateNotifier.persist();
   }
 
-  Future<void> scheduleAutolock() async {
+  void scheduleAutolock() {
     _logger.info(
       'Schedule Autolock',
     );
-    await future;
+
+    final loadedState = state.valueOrNull;
+    if (loadedState == null) return;
 
     ref
         .read(_lastInteractionDateNotifierProvider.notifier)

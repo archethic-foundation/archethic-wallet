@@ -1,15 +1,16 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-class RefreshInProgressNotifier extends StateNotifier<bool> {
-  RefreshInProgressNotifier() : super(false);
+part 'refresh_in_progress.g.dart';
 
-  void setRefreshInProgress(bool refreshInProgress) {
+@riverpod
+class RefreshInProgressNotifier extends _$RefreshInProgressNotifier {
+  @override
+  bool build() {
+    return false;
+  }
+
+  // ignore: avoid_setters_without_getters
+  set refreshInProgress(bool refreshInProgress) {
     state = refreshInProgress;
   }
 }
-
-final refreshInProgressProviders =
-    StateNotifierProvider<RefreshInProgressNotifier, bool>(
-  (ref) => RefreshInProgressNotifier(),
-  name: 'refreshInProgressProvider',
-);
