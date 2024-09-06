@@ -70,7 +70,6 @@ class MenuWidgetWallet extends ConsumerWidget {
                   await context.push(
                     TransferSheet.routerPage,
                     extra: {
-                      'transferType': TransferType.uco.name,
                       'recipient': const TransferRecipient.address(
                         address: Address(address: ''),
                       ).toJson(),
@@ -95,13 +94,13 @@ class MenuWidgetWallet extends ConsumerWidget {
                 key: const Key('receiveUCObutton'),
                 text: localizations.receive,
                 icon: Symbols.call_received,
-                onTap: () {
+                onTap: () async {
                   sl.get<HapticUtil>().feedback(
                         FeedbackType.light,
                         preferences.activeVibrations,
                       );
 
-                  showBarModalBottomSheet(
+                  await showBarModalBottomSheet(
                     context: context,
                     backgroundColor:
                         aedappfm.AppThemeBase.sheetBackground.withOpacity(0.2),

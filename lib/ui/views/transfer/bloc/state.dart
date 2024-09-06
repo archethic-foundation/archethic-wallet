@@ -18,7 +18,7 @@ enum TransferProcessStep { form, confirmation }
 @freezed
 class TransferFormState with _$TransferFormState {
   const factory TransferFormState({
-    @Default(TransferType.uco) TransferType transferType,
+    TransferType? transferType,
     @Default(TransferProcessStep.form) TransferProcessStep transferProcessStep,
 
     // TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)
@@ -62,16 +62,24 @@ class TransferFormState with _$TransferFormState {
         return amount != aeToken!.balance;
       case TransferType.nft:
         return false;
+      case null:
+        return false;
     }
   }
 
   double get feeEstimationOrZero => feeEstimation.valueOrNull ?? 0;
 
-  String symbol(BuildContext context) => transferType == TransferType.uco
-      ? AccountBalance.cryptoCurrencyLabel
-      : aeToken!.isLpToken == true
-          ? 'LP Token'
-          : aeToken!.symbol;
+  String symbol(BuildContext context) {
+    if (transferType == null) {
+      return '';
+    }
+
+    return transferType == TransferType.uco
+        ? AccountBalance.cryptoCurrencyLabel
+        : aeToken!.isLpToken == true
+            ? 'LP Token'
+            : aeToken!.symbol;
+  }
 
   String symbolFees(BuildContext context) => AccountBalance.cryptoCurrencyLabel;
 }

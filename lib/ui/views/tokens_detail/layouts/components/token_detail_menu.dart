@@ -108,13 +108,13 @@ class TokenDetailMenu extends ConsumerWidget {
                     key: const Key('receivebutton'),
                     text: localizations.receive,
                     icon: Symbols.call_received,
-                    onTap: () {
+                    onTap: () async {
                       sl.get<HapticUtil>().feedback(
                             FeedbackType.light,
                             preferences.activeVibrations,
                           );
 
-                      showBarModalBottomSheet(
+                      await showBarModalBottomSheet(
                         context: context,
                         backgroundColor: aedappfm.AppThemeBase.sheetBackground
                             .withOpacity(0.2),

@@ -214,7 +214,7 @@ class _TransferTextFieldAddressState
                           await ContactsDialog.getDialog(context, ref);
                       if (contact == null) return;
 
-                      await transferNotifier.setRecipient(
+                      transferNotifier.setRecipient(
                         context: context,
                         contact: TransferRecipient.contact(contact: contact),
                       );
