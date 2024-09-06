@@ -16,6 +16,7 @@
     "noToken": "Aucun jeton",
     "noNFT": "Aucun NFT",
     "transferTokens": "Envoyer des %1",
+    "transferTitle": "Envoyer",
     "transferToken": "Transfert Jeton",
     "recentTransactionsNoTransactionYet": "Aucune transaction pour le moment",
     "transactionConfirmed1": "Transaction confirmée avec %1 réplication sur %1",
@@ -43,6 +44,7 @@
     "deleteOption": "Effacer",
     "sendError": "Une erreur s'est produite. Essayer à nouveau plus tard.",
     "enterAmount": "Entrer le montant",
+    "enterAmountIn": "Entrer le montant en %1",
     "enterAddress": "Entrer l'adresse ou le nom du contact",
     "enterAddressHelp": "Si vous saisissez un nom, veuillez le préfixer d'un @",
     "userCancelledOperation": "Opération annulée par l'utilisateur",
@@ -486,5 +488,7 @@
     "receiveHeader": "Recevoir des actifs sur Archethic",
     "receiveYourAddress": "Votre Adresse Archethic",
     "receiveCopy": "Cliquez pour copier l'adresse",
-    "earnValueLbl": "Gagner"
+    "earnValueLbl": "Gagner",
+    "btn_selectToken": "Sélect. un token",
+    "selectTokenTitle": "Sélectionner un token"
 }

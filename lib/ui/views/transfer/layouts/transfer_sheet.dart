@@ -5,7 +5,6 @@ import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/infrastructure/datasources/contacts.hive.dart';
 import 'package:aewallet/model/available_currency.dart';
-import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/primary_currency.dart';
@@ -19,6 +18,7 @@ import 'package:aewallet/ui/views/transfer/bloc/provider.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/components/transfer_confirm_sheet.dart';
 import 'package:aewallet/ui/views/transfer/layouts/components/transfer_form_sheet.dart';
+import 'package:aewallet/ui/views/transfer/layouts/components/transfer_token_selection.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/paste_icon.dart';
 import 'package:aewallet/ui/widgets/dialogs/contacts_dialog.dart';
@@ -48,7 +48,7 @@ part 'components/transfer_textfield_message.dart';
 
 class TransferSheet extends ConsumerWidget {
   const TransferSheet({
-    required this.transferType,
+    this.transferType,
     required this.recipient,
     this.actionButtonTitle,
     this.accountToken,
@@ -63,7 +63,7 @@ class TransferSheet extends ConsumerWidget {
   final String? actionButtonTitle;
   final AccountToken? accountToken;
   final aedappfm.AEToken? aeToken;
-  final TransferType transferType;
+  final TransferType? transferType;
   final String? tokenId;
 
   Future<void> show({
@@ -74,7 +74,7 @@ class TransferSheet extends ConsumerWidget {
     context.go(
       routerPage,
       extra: {
-        'transferType': transferType.name,
+        'transferType': transferType?.name,
         'recipient': recipient.toJson(),
         'actionButtonTitle': actionButtonTitle,
         'accountToken': accountToken == null
@@ -170,22 +170,7 @@ class TransferSheetBody extends ConsumerWidget {
     );
 
     String title() {
-      switch (transfer.transferType) {
-        case TransferType.uco:
-          return localizations.transferTokens.replaceAll(
-            '%1',
-            AccountBalance.cryptoCurrencyLabel,
-          );
-        case TransferType.token:
-          return localizations.transferTokens.replaceAll(
-            '%1',
-            transfer.aeToken!.isLpToken == true
-                ? 'LP Tokens'
-                : transfer.aeToken!.symbol,
-          );
-        case TransferType.nft:
-          return localizations.transferNFT;
-      }
+      return localizations.transferTitle;
     }
 
     if (transfer.transferProcessStep == TransferProcessStep.form) {

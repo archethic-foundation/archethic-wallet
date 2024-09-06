@@ -109,9 +109,12 @@ class TransferFormSheet extends ConsumerWidget
       children: <Widget>[
         const SizedBox(height: 25),
         const TransferTextFieldAddress(),
-        if (transfer.transferType != TransferType.nft)
+        if ((transfer.transferType != null &&
+                transfer.transferType != TransferType.nft) ||
+            transfer.transferType == null)
           const TransferTextFieldAmount(),
-        const BalanceIndicatorWidget(allDigits: false),
+        if (transfer.transferType != null)
+          const BalanceIndicatorWidget(allDigits: false),
         FeeInfos(
           asyncFeeEstimation: transfer.feeEstimation,
           estimatedFeesNote: transfer.transferType == TransferType.nft

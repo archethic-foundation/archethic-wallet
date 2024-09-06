@@ -218,9 +218,13 @@ final _authenticatedRoutes = [
         reverseTransitionDuration: Duration.zero,
         key: state.pageKey,
         child: TransferSheet(
-          transferType: TransferType.values.byName(
-            (state.extra! as Map<String, dynamic>)['transferType']! as String,
-          ),
+          transferType:
+              (state.extra! as Map<String, dynamic>)['transferType'] == null
+                  ? null
+                  : TransferType.values.byName(
+                      (state.extra! as Map<String, dynamic>)['transferType']!
+                          as String,
+                    ),
           recipient: TransferRecipient.fromJson(
             (state.extra! as Map<String, dynamic>)['recipient'],
           ),

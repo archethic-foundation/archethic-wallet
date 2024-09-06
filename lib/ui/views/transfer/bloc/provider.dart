@@ -19,6 +19,8 @@ import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/util/get_it_instance.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
@@ -186,6 +188,8 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
               : '',
         );
         break;
+      case null:
+        break;
     }
   }
 
@@ -306,10 +310,10 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     unawaited(_updateFees(context));
   }
 
-  Future<void> setRecipient({
+  void setRecipient({
     required BuildContext context,
     required TransferRecipient contact,
-  }) async {
+  }) {
     _setRecipient(
       recipient: contact,
     );
@@ -415,6 +419,8 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
                 formState.accountToken?.tokenInformation!.tokenProperties ?? {},
           ),
         );
+        break;
+      case null:
         break;
     }
 
@@ -536,18 +542,27 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     unawaited(_updateFees(context));
   }
 
-  Future<void> setDefineMaxAmountInProgress({
+  void setDefineMaxAmountInProgress({
     required bool defineMaxAmountInProgress,
-  }) async {
+  }) {
     state = state.copyWith(
       defineMaxAmountInProgress: defineMaxAmountInProgress,
     );
   }
 
-  Future<void> setMessage({
+  void setAEToken(aedappfm.AEToken aeToken) {
+    if (aeToken.isUCO) {
+      state = state.copyWith(aeToken: aeToken, transferType: TransferType.uco);
+    } else {
+      state =
+          state.copyWith(aeToken: aeToken, transferType: TransferType.token);
+    }
+  }
+
+  void setMessage({
     required BuildContext context,
     required String message,
-  }) async {
+  }) {
     state = state.copyWith(
       message: message.trim(),
     );
@@ -656,6 +671,8 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
           return false;
         }
         break;
+      case null:
+        break;
     }
 
     state = state.copyWith(
@@ -664,10 +681,10 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     return true;
   }
 
-  Future<bool> controlAddress(
+  bool controlAddress(
     BuildContext context,
     Account accountSelected,
-  ) async {
+  ) {
     final error = state.recipient.when(
       address: (address) {
         if (address.address == null || address.address!.isEmpty) {
@@ -786,6 +803,8 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
                 state.accountToken?.tokenInformation!.tokenProperties ?? {},
           ),
         );
+        break;
+      case null:
         break;
     }
 

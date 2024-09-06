@@ -86,12 +86,23 @@ class _TransferTextFieldAmountState
         Padding(
           padding: const EdgeInsets.only(bottom: 5),
           child: Text(
-            transfer.transferType == TransferType.uco
-                ? primaryCurrency.primaryCurrency ==
-                        AvailablePrimaryCurrencyEnum.native
-                    ? '${localizations.enterAmount} (${transfer.symbol(context)})'
-                    : '${AppLocalizations.of(context)!.enterAmount} (${AvailableCurrencyEnum.usd.name.toUpperCase()})'
-                : '${localizations.enterAmount} (${transfer.symbol(context)})',
+            transfer.transferType == null
+                ? localizations.enterAmount
+                : transfer.transferType == TransferType.uco
+                    ? primaryCurrency.primaryCurrency ==
+                            AvailablePrimaryCurrencyEnum.native
+                        ? localizations.enterAmountIn
+                            .replaceFirst('%1', transfer.symbol(context))
+                        : AppLocalizations.of(context)!
+                            .enterAmountIn
+                            .replaceFirst(
+                              '%1',
+                              AvailableCurrencyEnum.usd.name.toUpperCase(),
+                            )
+                    : localizations.enterAmountIn.replaceFirst(
+                        '%1',
+                        transfer.symbol(context),
+                      ),
           ),
         ),
         Stack(
@@ -108,63 +119,82 @@ class _TransferTextFieldAmountState
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          child: Row(
+                          child: Stack(
+                            alignment: Alignment.centerLeft,
                             children: [
-                              Expanded(
-                                child: DecoratedBox(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                      10,
-                                    ),
-                                    border: Border.all(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primaryContainer,
-                                      width: 0.5,
-                                    ),
-                                    gradient: ArchethicTheme
-                                        .gradientInputFormBackground,
-                                  ),
-                                  child: TextField(
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                    ),
-                                    autocorrect: false,
-                                    controller: sendAmountController,
-                                    onChanged: (String text) async {
-                                      await transferNotifier.setAmount(
-                                        context: context,
-                                        amount: double.tryParse(
-                                              text.replaceAll(' ', ''),
-                                            ) ??
-                                            0,
-                                      );
-                                    },
-                                    textInputAction: TextInputAction.next,
-                                    maxLines: null,
-                                    focusNode: sendAmountFocusNode,
-                                    keyboardType:
-                                        const TextInputType.numberWithOptions(
-                                      decimal: true,
-                                    ),
-                                    inputFormatters: [
-                                      AmountTextInputFormatter(
-                                        precision:
-                                            primaryCurrency.primaryCurrency ==
-                                                    AvailablePrimaryCurrencyEnum
-                                                        .native
-                                                ? 8
-                                                : localCurrencyFormat
-                                                    .decimalDigits!,
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: DecoratedBox(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                          10,
+                                        ),
+                                        border: Border.all(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primaryContainer,
+                                          width: 0.5,
+                                        ),
+                                        gradient: ArchethicTheme
+                                            .gradientInputFormBackground,
                                       ),
-                                      LengthLimitingTextInputFormatter(16),
-                                    ],
-                                    decoration: const InputDecoration(
-                                      border: InputBorder.none,
-                                      contentPadding: EdgeInsets.only(left: 10),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: 110,
+                                          right: 20,
+                                        ),
+                                        child: TextField(
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                          autocorrect: false,
+                                          controller: sendAmountController,
+                                          onChanged: (String text) async {
+                                            await transferNotifier.setAmount(
+                                              context: context,
+                                              amount: double.tryParse(
+                                                    text.replaceAll(' ', ''),
+                                                  ) ??
+                                                  0,
+                                            );
+                                          },
+                                          textInputAction: TextInputAction.next,
+                                          maxLines: null,
+                                          focusNode: sendAmountFocusNode,
+                                          keyboardType: const TextInputType
+                                              .numberWithOptions(
+                                            decimal: true,
+                                          ),
+                                          inputFormatters: [
+                                            AmountTextInputFormatter(
+                                              precision: primaryCurrency
+                                                          .primaryCurrency ==
+                                                      AvailablePrimaryCurrencyEnum
+                                                          .native
+                                                  ? 8
+                                                  : localCurrencyFormat
+                                                      .decimalDigits!,
+                                            ),
+                                            LengthLimitingTextInputFormatter(
+                                                16),
+                                          ],
+                                          decoration: const InputDecoration(
+                                            border: InputBorder.none,
+                                            contentPadding:
+                                                EdgeInsets.only(left: 10),
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
+                                ],
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.only(
+                                  left: 10,
                                 ),
+                                child: TransferTokenSelection(),
                               ),
                             ],
                           ),
@@ -175,105 +205,107 @@ class _TransferTextFieldAmountState
                   const SizedBox(
                     height: 3,
                   ),
-                  if (transfer.transferType == TransferType.uco)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: AutoSizeText(
-                            '1 ${transfer.symbol(context)} = ${CurrencyUtil.getAmountPlusSymbol(selectedCurrencyMarketPrice.amount)}',
-                            style:
-                                ArchethicThemeStyles.textStyleSize14W200Primary,
-                          ),
-                        ),
-                        if (transfer.amount != 0)
+                  if (transfer.transferType != null)
+                    if (transfer.transferType == TransferType.uco)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
                           Container(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              '= $valueLabel',
-                              textAlign: TextAlign.right,
+                            alignment: Alignment.centerLeft,
+                            child: AutoSizeText(
+                              '1 ${transfer.symbol(context)} = ${CurrencyUtil.getAmountPlusSymbol(selectedCurrencyMarketPrice.amount)}',
                               style: ArchethicThemeStyles
                                   .textStyleSize14W200Primary,
                             ),
-                          )
-                        else
-                          const SizedBox(),
-                      ],
-                    )
-                  else
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            AutoSizeText(
-                              '${NumberUtil.formatThousands(transfer.aeToken!.balance)} ${transfer.aeToken!.isLpToken == true ? '${transfer.aeToken!.lpTokenPair!.token1.symbol}/${transfer.aeToken!.lpTokenPair!.token2.symbol}' : transfer.aeToken!.symbol}',
-                              style: ArchethicThemeStyles
-                                  .textStyleSize14W200Primary,
-                            ),
-                            if (transfer.aeToken != null &&
-                                transfer.aeToken!.isVerified)
-                              Row(
-                                children: [
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  VerifiedTokenIcon(
-                                    address: transfer.aeToken!.address!,
-                                  ),
-                                ],
+                          ),
+                          if (transfer.amount != 0)
+                            Container(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                '= $valueLabel',
+                                textAlign: TextAlign.right,
+                                style: ArchethicThemeStyles
+                                    .textStyleSize14W200Primary,
                               ),
-                          ],
-                        ),
-                      ],
-                    ),
+                            )
+                          else
+                            const SizedBox(),
+                        ],
+                      )
+                    else
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              AutoSizeText(
+                                '${NumberUtil.formatThousands(transfer.aeToken!.balance)} ${transfer.aeToken!.isLpToken == true ? '${transfer.aeToken!.lpTokenPair!.token1.symbol}/${transfer.aeToken!.lpTokenPair!.token2.symbol}' : transfer.aeToken!.symbol}',
+                                style: ArchethicThemeStyles
+                                    .textStyleSize14W200Primary,
+                              ),
+                              if (transfer.aeToken != null &&
+                                  transfer.aeToken!.isVerified)
+                                Row(
+                                  children: [
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    VerifiedTokenIcon(
+                                      address: transfer.aeToken!.address!,
+                                    ),
+                                  ],
+                                ),
+                            ],
+                          ),
+                        ],
+                      ),
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(right: 10, bottom: 23),
-              child: InkWell(
-                onTap: () async {
-                  await transferNotifier.setDefineMaxAmountInProgress(
-                    defineMaxAmountInProgress: true,
-                  );
-                  sl.get<HapticUtil>().feedback(
-                        FeedbackType.light,
-                        settings.activeVibrations,
+            if (transfer.transferType != null)
+              Padding(
+                padding: const EdgeInsets.only(right: 10, bottom: 23),
+                child: InkWell(
+                  onTap: () async {
+                    transferNotifier.setDefineMaxAmountInProgress(
+                      defineMaxAmountInProgress: true,
+                    );
+                    sl.get<HapticUtil>().feedback(
+                          FeedbackType.light,
+                          settings.activeVibrations,
+                        );
+                    if (transferNotifier.controlMaxSend(context) == false) {
+                      transferNotifier.setDefineMaxAmountInProgress(
+                        defineMaxAmountInProgress: false,
                       );
-                  if (transferNotifier.controlMaxSend(context) == false) {
-                    await transferNotifier.setDefineMaxAmountInProgress(
+                      return;
+                    }
+                    final selectedCurrencyMarketPrice = await ref.read(
+                      MarketPriceProviders.selectedCurrencyMarketPrice.future,
+                    );
+
+                    await transferNotifier.setMaxAmount(
+                      context: context,
+                      tokenPrice: selectedCurrencyMarketPrice.amount,
+                    );
+                    _updateAmountTextController();
+                    transferNotifier.setDefineMaxAmountInProgress(
                       defineMaxAmountInProgress: false,
                     );
-                    return;
-                  }
-                  final selectedCurrencyMarketPrice = await ref.read(
-                    MarketPriceProviders.selectedCurrencyMarketPrice.future,
-                  );
-
-                  await transferNotifier.setMaxAmount(
-                    context: context,
-                    tokenPrice: selectedCurrencyMarketPrice.amount,
-                  );
-                  _updateAmountTextController();
-                  await transferNotifier.setDefineMaxAmountInProgress(
-                    defineMaxAmountInProgress: false,
-                  );
-                },
-                child: Text(
-                  'MAX',
-                  style: TextStyle(color: ArchethicTheme.maxButtonColor),
-                )
-                    .animate()
-                    .fade(
-                      duration: const Duration(milliseconds: 500),
-                    )
-                    .scale(
-                      duration: const Duration(milliseconds: 500),
-                    ),
+                  },
+                  child: Text(
+                    'MAX',
+                    style: TextStyle(color: ArchethicTheme.maxButtonColor),
+                  )
+                      .animate()
+                      .fade(
+                        duration: const Duration(milliseconds: 500),
+                      )
+                      .scale(
+                        duration: const Duration(milliseconds: 500),
+                      ),
+                ),
               ),
-            ),
           ],
         ),
       ],

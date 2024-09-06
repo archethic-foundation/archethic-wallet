@@ -41,9 +41,7 @@ class TransactionsTab extends ConsumerWidget {
         key: const Key('recentTransactions'),
         children: [
           if (recentTransactions != null)
-            recentTransactions.isEmpty
-                ? const _TransactionsEmpty()
-                : _TransactionsList(recentTransactions: recentTransactions),
+            _TransactionsList(recentTransactions: recentTransactions),
         ],
       ),
     );
@@ -113,61 +111,55 @@ class _TransactionsList extends ConsumerWidget {
                           height: 10,
                         ),
                         const MenuWidgetWallet(),
-                        TransactionsList(
-                          transactionsList: recentTransactions,
-                        ),
+                        if (recentTransactions.isEmpty)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(
+                                  color: ArchethicTheme
+                                      .backgroundFungiblesTokensListCard,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              elevation: 0,
+                              color: ArchethicTheme
+                                  .backgroundFungiblesTokensListCard,
+                              child: Container(
+                                padding: const EdgeInsets.all(9.5),
+                                width: MediaQuery.of(context).size.width,
+                                alignment: Alignment.center,
+                                child: Row(
+                                  children: [
+                                    const Icon(
+                                      Symbols.info,
+                                      size: 18,
+                                      weight: IconSize.weightM,
+                                      opticalSize: IconSize.opticalSizeM,
+                                      grade: IconSize.gradeM,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      AppLocalizations.of(context)!
+                                          .recentTransactionsNoTransactionYet,
+                                      style: ArchethicThemeStyles
+                                          .textStyleSize12W100Primary,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                        else
+                          TransactionsList(
+                            transactionsList: recentTransactions,
+                          ),
                       ],
                     ),
                   ),
                 ),
               ],
             ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _TransactionsEmpty extends ConsumerWidget {
-  const _TransactionsEmpty();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-      alignment: Alignment.center,
-      color: Colors.transparent,
-      width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.only(top: 6),
-      child: Card(
-        shape: RoundedRectangleBorder(
-          side: BorderSide(
-            color: ArchethicTheme.backgroundFungiblesTokensListCard,
-          ),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        elevation: 0,
-        color: ArchethicTheme.backgroundFungiblesTokensListCard,
-        child: Container(
-          padding: const EdgeInsets.all(9.5),
-          width: MediaQuery.of(context).size.width,
-          alignment: Alignment.center,
-          child: Row(
-            children: [
-              const Icon(
-                Symbols.info,
-                size: 18,
-                weight: IconSize.weightM,
-                opticalSize: IconSize.opticalSizeM,
-                grade: IconSize.gradeM,
-              ),
-              const SizedBox(width: 8),
-              Text(
-                AppLocalizations.of(context)!
-                    .recentTransactionsNoTransactionYet,
-                style: ArchethicThemeStyles.textStyleSize12W100Primary,
-              ),
-            ],
           ),
         ),
       ),

@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$TransferFormState {
-  TransferType get transferType => throw _privateConstructorUsedError;
+  TransferType? get transferType => throw _privateConstructorUsedError;
   TransferProcessStep get transferProcessStep =>
       throw _privateConstructorUsedError; // TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)
   AsyncValue<double> get feeEstimation => throw _privateConstructorUsedError;
@@ -48,7 +48,7 @@ abstract class $TransferFormStateCopyWith<$Res> {
       _$TransferFormStateCopyWithImpl<$Res, TransferFormState>;
   @useResult
   $Res call(
-      {TransferType transferType,
+      {TransferType? transferType,
       TransferProcessStep transferProcessStep,
       AsyncValue<double> feeEstimation,
       bool defineMaxAmountInProgress,
@@ -81,7 +81,7 @@ class _$TransferFormStateCopyWithImpl<$Res, $Val extends TransferFormState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? transferType = null,
+    Object? transferType = freezed,
     Object? transferProcessStep = null,
     Object? feeEstimation = null,
     Object? defineMaxAmountInProgress = null,
@@ -98,10 +98,10 @@ class _$TransferFormStateCopyWithImpl<$Res, $Val extends TransferFormState>
     Object? errorMessageText = null,
   }) {
     return _then(_value.copyWith(
-      transferType: null == transferType
+      transferType: freezed == transferType
           ? _value.transferType
           : transferType // ignore: cast_nullable_to_non_nullable
-              as TransferType,
+              as TransferType?,
       transferProcessStep: null == transferProcessStep
           ? _value.transferProcessStep
           : transferProcessStep // ignore: cast_nullable_to_non_nullable
@@ -191,7 +191,7 @@ abstract class _$$TransferFormStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {TransferType transferType,
+      {TransferType? transferType,
       TransferProcessStep transferProcessStep,
       AsyncValue<double> feeEstimation,
       bool defineMaxAmountInProgress,
@@ -224,7 +224,7 @@ class __$$TransferFormStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? transferType = null,
+    Object? transferType = freezed,
     Object? transferProcessStep = null,
     Object? feeEstimation = null,
     Object? defineMaxAmountInProgress = null,
@@ -241,10 +241,10 @@ class __$$TransferFormStateImplCopyWithImpl<$Res>
     Object? errorMessageText = null,
   }) {
     return _then(_$TransferFormStateImpl(
-      transferType: null == transferType
+      transferType: freezed == transferType
           ? _value.transferType
           : transferType // ignore: cast_nullable_to_non_nullable
-              as TransferType,
+              as TransferType?,
       transferProcessStep: null == transferProcessStep
           ? _value.transferProcessStep
           : transferProcessStep // ignore: cast_nullable_to_non_nullable
@@ -309,7 +309,7 @@ class __$$TransferFormStateImplCopyWithImpl<$Res>
 
 class _$TransferFormStateImpl extends _TransferFormState {
   const _$TransferFormStateImpl(
-      {this.transferType = TransferType.uco,
+      {this.transferType,
       this.transferProcessStep = TransferProcessStep.form,
       required this.feeEstimation,
       this.defineMaxAmountInProgress = false,
@@ -327,8 +327,7 @@ class _$TransferFormStateImpl extends _TransferFormState {
       : super._();
 
   @override
-  @JsonKey()
-  final TransferType transferType;
+  final TransferType? transferType;
   @override
   @JsonKey()
   final TransferProcessStep transferProcessStep;
@@ -439,7 +438,7 @@ class _$TransferFormStateImpl extends _TransferFormState {
 
 abstract class _TransferFormState extends TransferFormState {
   const factory _TransferFormState(
-      {final TransferType transferType,
+      {final TransferType? transferType,
       final TransferProcessStep transferProcessStep,
       required final AsyncValue<double> feeEstimation,
       final bool defineMaxAmountInProgress,
@@ -457,7 +456,7 @@ abstract class _TransferFormState extends TransferFormState {
   const _TransferFormState._() : super._();
 
   @override
-  TransferType get transferType;
+  TransferType? get transferType;
   @override
   TransferProcessStep get transferProcessStep;
   @override // TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)

@@ -83,8 +83,8 @@ class _TransferTextFieldMessageState
                               maxLines: 4,
                               autocorrect: false,
                               controller: messageController,
-                              onChanged: (text) async {
-                                await transferNotifier.setMessage(
+                              onChanged: (text) {
+                                transferNotifier.setMessage(
                                   context: context,
                                   message: text,
                                 );

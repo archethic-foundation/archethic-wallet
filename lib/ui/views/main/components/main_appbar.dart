@@ -125,13 +125,13 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
     return FittedBox(
       fit: BoxFit.fitWidth,
       child: InkWell(
-        onTap: () {
+        onTap: () async {
           sl.get<HapticUtil>().feedback(
                 FeedbackType.light,
                 preferences.activeVibrations,
               );
 
-          showBarModalBottomSheet(
+          await showBarModalBottomSheet(
             context: context,
             backgroundColor: Colors.black.withOpacity(0.1),
             builder: (BuildContext context) {
