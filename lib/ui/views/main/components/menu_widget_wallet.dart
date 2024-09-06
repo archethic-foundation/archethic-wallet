@@ -38,7 +38,7 @@ class MenuWidgetWallet extends ConsumerWidget {
     final preferences = ref.watch(SettingsProviders.settings);
     final contact = ref.watch(ContactProviders.getSelectedContact).valueOrNull;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-    final refreshInProgress = ref.watch(refreshInProgressProviders);
+    final refreshInProgress = ref.watch(refreshInProgressNotifierProvider);
 
     if (accountSelected == null) return const SizedBox();
 

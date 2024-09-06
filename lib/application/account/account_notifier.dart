@@ -20,7 +20,8 @@ class _AccountNotifier extends _$AccountNotifier {
       if (account == null) return;
       await account.updateLastAddress();
 
-      ref.read(refreshInProgressProviders.notifier).setRefreshInProgress(true);
+      ref.read(refreshInProgressNotifierProvider.notifier).refreshInProgress =
+          true;
       for (final doRefresh in doRefreshes) {
         await doRefresh(account);
 
@@ -30,7 +31,8 @@ class _AccountNotifier extends _$AccountNotifier {
     } catch (e, stack) {
       _logger.severe('Refresh failed', e, stack);
     } finally {
-      ref.read(refreshInProgressProviders.notifier).setRefreshInProgress(false);
+      ref.read(refreshInProgressNotifierProvider.notifier).refreshInProgress =
+          false;
     }
   }
 
@@ -52,6 +54,7 @@ class _AccountNotifier extends _$AccountNotifier {
           await _refreshRecentTransactions(account);
           await _refreshBalance(account);
           await account.updateFungiblesTokens();
+          await refreshNFTs();
           _logger.fine(
             'End method refreshRecentTransactions for ${account.nameDisplayed}',
           );
@@ -104,19 +107,7 @@ class _AccountNotifier extends _$AccountNotifier {
           },
           (account) async {
             _logger.fine('RefreshAll - Start NFT refresh');
-            final session = ref.read(sessionNotifierProvider).loggedIn!;
-            final tokenInformation = await ref.read(
-              NFTProviders.getNFTList(
-                account.lastAddress!,
-                account.name,
-                session.wallet.keychainSecuredInfos,
-              ).future,
-            );
-            await account.updateNFT(
-              session.wallet.keychainSecuredInfos,
-              tokenInformation.$1,
-              tokenInformation.$2,
-            );
+            await refreshNFTs();
             _logger.fine('RefreshAll - End NFT refresh');
           },
         ],

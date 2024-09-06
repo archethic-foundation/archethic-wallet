@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:core';
 import 'dart:ui';
 
-import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/migrations/migration_manager.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -94,14 +93,6 @@ class _HomePageState extends ConsumerState<HomePage>
                       .read(SettingsProviders.settings.notifier)
                       .setMainScreenCurrentPage(selectedIndex),
                 );
-                if (selectedIndex == 3) {
-                  unawaited(
-                    (await ref
-                            .read(AccountProviders.accounts.notifier)
-                            .selectedAccountNotifier)
-                        ?.refreshNFTs(),
-                  );
-                }
               },
               tabs: [
                 TabItem(

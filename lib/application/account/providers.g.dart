@@ -371,7 +371,7 @@ class _AccountExistsNotifierProviderElement
       (origin as _AccountExistsNotifierProvider).accountName;
 }
 
-String _$accountNotifierHash() => r'e99ff9ed62abe6ce99cee3cd3bc12410e316123f';
+String _$accountNotifierHash() => r'a945ace4bbe39839283bb07d2ffab34790e5442a';
 
 abstract class _$AccountNotifier extends BuildlessAsyncNotifier<Account?> {
   late final String accountName;
