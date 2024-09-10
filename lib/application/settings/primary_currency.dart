@@ -1,12 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:aewallet/util/number_util.dart';
 import 'package:decimal/decimal.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -39,32 +36,6 @@ double _convertedValue(
 }
 
 @riverpod
-String _convertedValueLabel(
-  AutoDisposeRef ref, {
-  required double amount,
-  required double tokenPrice,
-  required BuildContext context,
-}) {
-  final amountConverted = ref.watch(
-    _convertedValueProvider(
-      amount: amount,
-      tokenPrice: tokenPrice,
-    ),
-  );
-
-  final primaryCurrency = ref.watch(_selectedPrimaryCurrencyProvider);
-  if (primaryCurrency.primaryCurrency == AvailablePrimaryCurrencyEnum.native) {
-    final localCurrencyFormat = NumberFormat.currency(
-      locale: CurrencyUtil.getLocale().toString(),
-      symbol: CurrencyUtil.getCurrencySymbol(),
-    );
-    return localCurrencyFormat.format(amountConverted);
-  } else {
-    return '${amountConverted.toStringAsFixed(8)} ${AccountBalance.cryptoCurrencyLabel}';
-  }
-}
-
-@riverpod
 AvailablePrimaryCurrency _selectedPrimaryCurrency(Ref ref) => ref.watch(
       SettingsProviders.settings.select((settings) => settings.primaryCurrency),
     );
@@ -73,8 +44,6 @@ abstract class PrimaryCurrencyProviders {
   // TODO(Chralu): merge conversion providers with [MarketPriceProviders] ones. (3)
   static const convertedValue = _convertedValueProvider;
 
-  // TODO(Chralu): merge conversion providers with [MarketPriceProviders] ones. (3)
-  static const convertedValueLabel = _convertedValueLabelProvider;
   static final selectedPrimaryCurrency = _selectedPrimaryCurrencyProvider;
 }
 

@@ -1,13 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-import 'package:aewallet/application/settings/language.dart';
-import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/widgets/tokens/verified_token_icon.dart';
 import 'package:aewallet/util/number_util.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -27,12 +25,8 @@ class TransferOutput extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final hasTransactionInfo = transaction.tokenInformation != null;
 
-    final language = ref.watch(
-      LanguageProviders.selectedLanguage,
-    );
     final amountFormatted = NumberUtil.formatThousandsStr(
-      transaction.amount!
-          .formatNumber(language.getLocaleStringWithoutDefault()),
+      transaction.amount!.formatNumber(),
     );
     final localizations = AppLocalizations.of(context)!;
     return Row(
