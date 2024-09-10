@@ -4,11 +4,9 @@ import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
-import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/sign_transactions/bloc/provider.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/util/transaction_raw.dart';
@@ -16,6 +14,8 @@ import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/util/currency_util.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -87,10 +87,8 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
     final formState = ref.watch(
       SignTransactionsConfirmationProviders.form(command),
     );
-    final language = ref.watch(
-      LanguageProviders.selectedLanguage,
-    );
 
+// TODO: Bugs null
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     final selectedCurrencyMarketPrice =
@@ -160,9 +158,8 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
                               ArchethicThemeStyles.textStyleSize12W100Primary,
                         ),
                         TextSpan(
-                          text: ' ${estimatedFees.formatNumber(
-                            language.getLocaleStringWithoutDefault(),
-                          )} UCO',
+                          text:
+                              ' ${estimatedFees.formatNumber(precision: 4)} UCO',
                           style: ArchethicThemeStyles
                               .textStyleSize12W400Highlighted,
                         ),
@@ -221,9 +218,8 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
                               .textStyleSize12W400Highlighted,
                         ),
                         TextSpan(
-                          text: ' (${estimatedFees.formatNumber(
-                            language.getLocaleStringWithoutDefault(),
-                          )} UCO)',
+                          text:
+                              ' (${estimatedFees.formatNumber(precision: 4)} UCO)',
                           style:
                               ArchethicThemeStyles.textStyleSize12W100Primary,
                         ),

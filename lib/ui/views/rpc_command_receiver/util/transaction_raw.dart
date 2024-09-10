@@ -1,10 +1,9 @@
 import 'dart:convert';
 
-import 'package:aewallet/application/settings/language.dart';
-import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/util/get_it_instance.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -32,9 +31,6 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
 
   @override
   Widget build(BuildContext context) {
-    final language = ref.watch(
-      LanguageProviders.selectedLanguage,
-    );
     final transactionData = widget.data;
     final localizations = AppLocalizations.of(context)!;
 
@@ -120,10 +116,7 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
                                           TextSpan(
                                             text: fromBigInt(transfer.amount)
                                                 .toDouble()
-                                                .formatNumber(
-                                                  language
-                                                      .getLocaleStringWithoutDefault(),
-                                                ),
+                                                .formatNumber(),
                                             style: ArchethicThemeStyles
                                                 .textStyleSize12W100Primary,
                                           ),
@@ -149,10 +142,7 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
                                         TextSpan(
                                           text: fromBigInt(transfer.amount)
                                               .toDouble()
-                                              .formatNumber(
-                                                language
-                                                    .getLocaleStringWithoutDefault(),
-                                              ),
+                                              .formatNumber(precision: 8),
                                           style: ArchethicThemeStyles
                                               .textStyleSize12W100Primary,
                                         ),
@@ -217,8 +207,7 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
                                     TextSpan(
                                       text:
                                           '${fromBigInt(transfer.amount).toDouble().formatNumber(
-                                                language
-                                                    .getLocaleStringWithoutDefault(),
+                                                precision: 8,
                                               )} UCO',
                                       style: ArchethicThemeStyles
                                           .textStyleSize12W100Primary,

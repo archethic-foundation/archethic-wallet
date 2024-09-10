@@ -1,8 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
-import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/util/number_util.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 
@@ -73,7 +73,7 @@ class AccountBalance extends HiveObject {
       if (digits == null || nativeTokenValue == 0) {
         return NumberUtil.formatThousands(nativeTokenValue);
       }
-      return nativeTokenValue.formatNumber(locale, precision: digits);
+      return nativeTokenValue.formatNumber(precision: digits);
     }
   }
 

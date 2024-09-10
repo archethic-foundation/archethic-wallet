@@ -44,7 +44,11 @@ class BalanceIndicatorWidget extends ConsumerWidget {
             children: [
               Row(
                 children: [
-                  if (displayLabel) Text('${localizations.balance}: '),
+                  if (displayLabel)
+                    Text(
+                      '${localizations.balance}: ',
+                      style: ArchethicThemeStyles.textStyleSize14W200Primary,
+                    ),
                   if (displaySwitchButton == true)
                     const _BalanceIndicatorButton(),
                 ],
@@ -57,9 +61,12 @@ class BalanceIndicatorWidget extends ConsumerWidget {
                       primary: true,
                       allDigits: allDigits,
                     ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 3),
-                      child: Text('/'),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 3),
+                      child: Text(
+                        '/',
+                        style: ArchethicThemeStyles.textStyleSize14W200Primary,
+                      ),
                     ),
                     _BalanceIndicatorFiat(
                       primary: false,
@@ -74,9 +81,12 @@ class BalanceIndicatorWidget extends ConsumerWidget {
                       primary: true,
                       allDigits: allDigits,
                     ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 3),
-                      child: Text('/'),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 3),
+                      child: Text(
+                        '/',
+                        style: ArchethicThemeStyles.textStyleSize14W200Primary,
+                      ),
                     ),
                     _BalanceIndicatorNative(
                       primary: false,
