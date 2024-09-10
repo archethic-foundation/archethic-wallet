@@ -9,7 +9,6 @@ import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/balance/balance_indicator.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/network_indicator.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/fees/fee_infos.dart';
@@ -96,7 +95,6 @@ class TransferFormSheet extends ConsumerWidget
           context.pop();
         },
       ),
-      widgetBeforeTitle: const NetworkIndicator(),
     );
   }
 
