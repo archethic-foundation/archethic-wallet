@@ -156,15 +156,17 @@ class _TransferTokenDetailState extends ConsumerState<TransferTokenDetail> {
                               Row(
                                 children: [
                                   if (price != null && price > 0)
-                                    AutoSizeText(
-                                      minFontSize: 5,
-                                      wrapWords: false,
-                                      '\$${(widget.aeToken.balance * price).formatNumber(precision: 2)}',
-                                      textAlign: TextAlign.center,
-                                      style: ArchethicThemeStyles
-                                          .textStyleSize12W100Primary,
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 5),
+                                      child: AutoSizeText(
+                                        minFontSize: 5,
+                                        wrapWords: false,
+                                        '\$${(widget.aeToken.balance * price).formatNumber(precision: 2)}',
+                                        textAlign: TextAlign.center,
+                                        style: ArchethicThemeStyles
+                                            .textStyleSize12W100Primary,
+                                      ),
                                     ),
-                                  const SizedBox(width: 5),
                                   if (widget.aeToken.isLpToken)
                                     AutoSizeText(
                                       minFontSize: 5,

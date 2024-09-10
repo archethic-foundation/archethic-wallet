@@ -209,14 +209,30 @@ class _TransferTextFieldAmountState
                   if (transfer.transferType != null)
                     if (transfer.transferType == TransferType.uco)
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            child: AutoSizeText(
-                              '1 ${transfer.symbol(context)} = ${CurrencyUtil.getAmountPlusSymbol(selectedCurrencyMarketPrice.amount)}',
-                              style: ArchethicThemeStyles
-                                  .textStyleSize14W200Primary,
-                            ),
+                          Row(
+                            children: [
+                              Container(
+                                alignment: Alignment.centerLeft,
+                                child: AutoSizeText(
+                                  '1 ${transfer.symbol(context)} = ${CurrencyUtil.getAmountPlusSymbol(selectedCurrencyMarketPrice.amount)}',
+                                  style: ArchethicThemeStyles
+                                      .textStyleSize14W200Primary,
+                                ),
+                              ),
+                              if (transfer.aeToken != null)
+                                const Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    VerifiedTokenIcon(
+                                      address: 'UCO',
+                                    ),
+                                  ],
+                                ),
+                            ],
                           ),
                           if (transfer.amount != 0)
                             Container(
@@ -230,17 +246,6 @@ class _TransferTextFieldAmountState
                             )
                           else
                             const SizedBox(),
-                          if (transfer.aeToken != null)
-                            const Row(
-                              children: [
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                VerifiedTokenIcon(
-                                  address: 'UCO',
-                                ),
-                              ],
-                            ),
                         ],
                       )
                     else
