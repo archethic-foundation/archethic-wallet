@@ -18,7 +18,6 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$TokensListFormState {
   AsyncValue<List<AEToken>?> get tokensToDisplay =>
       throw _privateConstructorUsedError;
-  String? get cancelToken => throw _privateConstructorUsedError;
   String get searchCriteria => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -33,9 +32,7 @@ abstract class $TokensListFormStateCopyWith<$Res> {
       _$TokensListFormStateCopyWithImpl<$Res, TokensListFormState>;
   @useResult
   $Res call(
-      {AsyncValue<List<AEToken>?> tokensToDisplay,
-      String? cancelToken,
-      String searchCriteria});
+      {AsyncValue<List<AEToken>?> tokensToDisplay, String searchCriteria});
 }
 
 /// @nodoc
@@ -52,7 +49,6 @@ class _$TokensListFormStateCopyWithImpl<$Res, $Val extends TokensListFormState>
   @override
   $Res call({
     Object? tokensToDisplay = null,
-    Object? cancelToken = freezed,
     Object? searchCriteria = null,
   }) {
     return _then(_value.copyWith(
@@ -60,10 +56,6 @@ class _$TokensListFormStateCopyWithImpl<$Res, $Val extends TokensListFormState>
           ? _value.tokensToDisplay
           : tokensToDisplay // ignore: cast_nullable_to_non_nullable
               as AsyncValue<List<AEToken>?>,
-      cancelToken: freezed == cancelToken
-          ? _value.cancelToken
-          : cancelToken // ignore: cast_nullable_to_non_nullable
-              as String?,
       searchCriteria: null == searchCriteria
           ? _value.searchCriteria
           : searchCriteria // ignore: cast_nullable_to_non_nullable
@@ -81,9 +73,7 @@ abstract class _$$TokensListFormStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {AsyncValue<List<AEToken>?> tokensToDisplay,
-      String? cancelToken,
-      String searchCriteria});
+      {AsyncValue<List<AEToken>?> tokensToDisplay, String searchCriteria});
 }
 
 /// @nodoc
@@ -98,7 +88,6 @@ class __$$TokensListFormStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? tokensToDisplay = null,
-    Object? cancelToken = freezed,
     Object? searchCriteria = null,
   }) {
     return _then(_$TokensListFormStateImpl(
@@ -106,10 +95,6 @@ class __$$TokensListFormStateImplCopyWithImpl<$Res>
           ? _value.tokensToDisplay
           : tokensToDisplay // ignore: cast_nullable_to_non_nullable
               as AsyncValue<List<AEToken>?>,
-      cancelToken: freezed == cancelToken
-          ? _value.cancelToken
-          : cancelToken // ignore: cast_nullable_to_non_nullable
-              as String?,
       searchCriteria: null == searchCriteria
           ? _value.searchCriteria
           : searchCriteria // ignore: cast_nullable_to_non_nullable
@@ -122,22 +107,18 @@ class __$$TokensListFormStateImplCopyWithImpl<$Res>
 
 class _$TokensListFormStateImpl extends _TokensListFormState {
   const _$TokensListFormStateImpl(
-      {required this.tokensToDisplay,
-      this.cancelToken,
-      this.searchCriteria = ''})
+      {required this.tokensToDisplay, this.searchCriteria = ''})
       : super._();
 
   @override
   final AsyncValue<List<AEToken>?> tokensToDisplay;
-  @override
-  final String? cancelToken;
   @override
   @JsonKey()
   final String searchCriteria;
 
   @override
   String toString() {
-    return 'TokensListFormState(tokensToDisplay: $tokensToDisplay, cancelToken: $cancelToken, searchCriteria: $searchCriteria)';
+    return 'TokensListFormState(tokensToDisplay: $tokensToDisplay, searchCriteria: $searchCriteria)';
   }
 
   @override
@@ -147,15 +128,12 @@ class _$TokensListFormStateImpl extends _TokensListFormState {
             other is _$TokensListFormStateImpl &&
             (identical(other.tokensToDisplay, tokensToDisplay) ||
                 other.tokensToDisplay == tokensToDisplay) &&
-            (identical(other.cancelToken, cancelToken) ||
-                other.cancelToken == cancelToken) &&
             (identical(other.searchCriteria, searchCriteria) ||
                 other.searchCriteria == searchCriteria));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, tokensToDisplay, cancelToken, searchCriteria);
+  int get hashCode => Object.hash(runtimeType, tokensToDisplay, searchCriteria);
 
   @JsonKey(ignore: true)
   @override
@@ -168,14 +146,11 @@ class _$TokensListFormStateImpl extends _TokensListFormState {
 abstract class _TokensListFormState extends TokensListFormState {
   const factory _TokensListFormState(
       {required final AsyncValue<List<AEToken>?> tokensToDisplay,
-      final String? cancelToken,
       final String searchCriteria}) = _$TokensListFormStateImpl;
   const _TokensListFormState._() : super._();
 
   @override
   AsyncValue<List<AEToken>?> get tokensToDisplay;
-  @override
-  String? get cancelToken;
   @override
   String get searchCriteria;
   @override

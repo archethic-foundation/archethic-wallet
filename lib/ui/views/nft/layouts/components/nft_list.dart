@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/ui/util/responsive.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_list_detail.dart';
 import 'package:aewallet/ui/widgets/components/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
@@ -42,10 +41,7 @@ class _NFTListState extends ConsumerState<NFTList>
     return Padding(
       padding: const EdgeInsets.only(bottom: 50),
       child: DynamicHeightGridView(
-        crossAxisCount:
-            Responsive.isDesktop(context) || Responsive.isTablet(context)
-                ? 3
-                : 2,
+        crossAxisCount: 2,
         crossAxisSpacing: 20,
         mainAxisSpacing: 40,
         shrinkWrap: true,

@@ -6,8 +6,8 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/main/bloc/nft_search_bar_provider.dart';
-import 'package:aewallet/ui/views/main/bloc/nft_search_bar_state.dart';
+import 'package:aewallet/ui/views/nft_search/bloc/provider.dart';
+import 'package:aewallet/ui/views/nft_search/bloc/state.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_detail.dart';
 import 'package:aewallet/ui/widgets/components/paste_icon.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -51,7 +51,7 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
   void _updateAdressTextController() {
     searchController.text = ref
         .read(
-          NftSearchBarProvider.nftSearchBar,
+          NftSearchBarFormProvider.nftSearchBar,
         )
         .searchCriteria;
   }
@@ -63,14 +63,14 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
     final session = ref.watch(sessionNotifierProvider).loggedIn!;
     final localizations = AppLocalizations.of(context)!;
     final nftSearchBar = ref.watch(
-      NftSearchBarProvider.nftSearchBar,
+      NftSearchBarFormProvider.nftSearchBar,
     );
     final nftSearchBarNotifier = ref.watch(
-      NftSearchBarProvider.nftSearchBar.notifier,
+      NftSearchBarFormProvider.nftSearchBar.notifier,
     );
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-    ref.listen<NftSearchBarState>(
-      NftSearchBarProvider.nftSearchBar,
+    ref.listen<NftSearchBarFormState>(
+      NftSearchBarFormProvider.nftSearchBar,
       (_, nftSearchBar) {
         if (nftSearchBar.isControlsOk) {
           context.push(
@@ -103,11 +103,7 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
           duration: const Duration(seconds: 5),
         );
 
-        ref
-            .read(
-              NftSearchBarProvider.nftSearchBar.notifier,
-            )
-            .setError('');
+        nftSearchBarNotifier.setError('');
       },
     );
 
@@ -214,10 +210,11 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                 children: [
                   InkWell(
                     onTap: nftSearchBar.loading ||
-                            connectivityStatusProvider ==
+                            connectivityStatusProvider !=
                                 ConnectivityStatus.isConnected
-                        ? () {}
+                        ? null
                         : () async {
+                            print('ok');
                             sl.get<HapticUtil>().feedback(
                                   FeedbackType.light,
                                   preferences.activeVibrations,
