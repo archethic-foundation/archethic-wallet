@@ -25,7 +25,7 @@ class TransferTokenSelection extends ConsumerWidget {
     final preferences = ref.watch(SettingsProviders.settings);
 
     return Container(
-      width: aedappfm.Responsive.isMobile(context) ? 100 : 150,
+      width: 100,
       height: 30,
       decoration: BoxDecoration(
         color: aedappfm.AppThemeBase.sheetBackgroundTertiary.withOpacity(0.5),

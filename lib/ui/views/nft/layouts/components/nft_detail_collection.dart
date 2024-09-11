@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/ui/util/responsive.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_detail.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail.dart';
 import 'package:aewallet/ui/widgets/components/dynamic_height_grid_view.dart';
@@ -13,7 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 
-class NFTDetailCollection extends ConsumerWidget {
+class NFTDetailCollection extends ConsumerStatefulWidget {
   const NFTDetailCollection({
     super.key,
     required this.name,
@@ -30,7 +29,13 @@ class NFTDetailCollection extends ConsumerWidget {
   final List<dynamic> collection;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<NFTDetailCollection> createState() =>
+      _NFTDetailCollectionState();
+}
+
+class _NFTDetailCollectionState extends ConsumerState<NFTDetailCollection> {
+  @override
+  Widget build(BuildContext context) {
     final preferences = ref.watch(SettingsProviders.settings);
 
     return Padding(
@@ -47,16 +52,13 @@ class NFTDetailCollection extends ConsumerWidget {
           },
         ),
         child: DynamicHeightGridView(
-          crossAxisCount:
-              Responsive.isDesktop(context) || Responsive.isTablet(context)
-                  ? 3
-                  : 2,
+          crossAxisCount: 2,
           crossAxisSpacing: 20,
           mainAxisSpacing: 30,
           shrinkWrap: true,
-          itemCount: collection.length,
+          itemCount: widget.collection.length,
           builder: (context, index) {
-            final tokenInformation = collection[index];
+            final tokenInformation = widget.collection[index];
 
             return Column(
               children: [
@@ -77,19 +79,19 @@ class NFTDetailCollection extends ConsumerWidget {
                     context.push(
                       NFTDetail.routerPage,
                       extra: {
-                        'address': address,
-                        'name': name,
+                        'address': widget.address,
+                        'name': widget.name,
                         'nameInCollection': tokenInformation['name'],
                         'properties': tokenInformation,
                         'collection': const [],
-                        'symbol': symbol,
+                        'symbol': widget.symbol,
                         'tokenId': tokenInformation['id'] ?? index.toString(),
                         'detailCollection': true,
                       },
                     );
                   },
                   child: NFTThumbnail(
-                    address: address,
+                    address: widget.address,
                     properties: tokenInformation,
                     roundBorder: true,
                   ),

@@ -11,7 +11,6 @@ enum AddTokenProcessStep { form, confirmation }
 class TokensListFormState with _$TokensListFormState {
   const factory TokensListFormState({
     required AsyncValue<List<AEToken>?> tokensToDisplay,
-    String? cancelToken,
     @Default('') String searchCriteria,
   }) = _TokensListFormState;
   const TokensListFormState._();

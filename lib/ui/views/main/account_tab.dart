@@ -8,11 +8,9 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/address_formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/main/bloc/nft_search_bar_provider.dart';
-import 'package:aewallet/ui/views/main/bloc/nft_search_bar_state.dart';
 import 'package:aewallet/ui/views/main/components/app_update_button.dart';
 import 'package:aewallet/ui/views/main/components/menu_widget_wallet.dart';
-import 'package:aewallet/ui/views/main/components/nft_search_bar.dart';
+import 'package:aewallet/ui/views/nft_search/layouts/nft_search_bar.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_list.dart';
 import 'package:aewallet/ui/views/tokens_list/layouts/tokens_list_sheet.dart';
@@ -144,24 +142,16 @@ class AccountTab extends ConsumerWidget {
                               height: 10,
                             ),
                             const MenuWidgetWallet(),
-                            ExpandablePageView(
+                            const ExpandablePageView(
                               children: [
-                                const TokensList(),
+                                TokensList(),
                                 Column(
                                   children: [
-                                    ProviderScope(
-                                      overrides: [
-                                        NftSearchBarProvider.initialNftSearchBar
-                                            .overrideWithValue(
-                                          const NftSearchBarState(),
-                                        ),
-                                      ],
-                                      child: const NFTSearchBar(),
-                                    ),
-                                    const SizedBox(
+                                    NFTSearchBar(),
+                                    SizedBox(
                                       height: 20,
                                     ),
-                                    const NFTList(),
+                                    NFTList(),
                                   ],
                                 ),
                               ],

@@ -1,40 +1,23 @@
 import 'package:aewallet/application/nft/nft.dart';
 import 'package:aewallet/model/keychain_service_keypair.dart';
-import 'package:aewallet/ui/views/main/bloc/nft_search_bar_state.dart';
+import 'package:aewallet/ui/views/nft_search/bloc/state.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final _initialNftSearchBarProvider = Provider<NftSearchBarState>(
-  (ref) {
-    throw UnimplementedError();
-  },
-);
-
 final _nftSearchBarProvider =
-    NotifierProvider.autoDispose<NftSearchBarNotifier, NftSearchBarState>(
+    NotifierProvider.autoDispose<NftSearchBarNotifier, NftSearchBarFormState>(
   () {
     return NftSearchBarNotifier();
   },
-  dependencies: [
-    NFTProviders.getNFTInfo,
-    NftSearchBarProvider.initialNftSearchBar,
-  ],
 );
 
-abstract class NftSearchBarProvider {
-  static final nftSearchBar = _nftSearchBarProvider;
-  static final initialNftSearchBar = _initialNftSearchBarProvider;
-}
-
-class NftSearchBarNotifier extends AutoDisposeNotifier<NftSearchBarState> {
+class NftSearchBarNotifier extends AutoDisposeNotifier<NftSearchBarFormState> {
   NftSearchBarNotifier();
 
   @override
-  NftSearchBarState build() => ref.watch(
-        NftSearchBarProvider.initialNftSearchBar,
-      );
+  NftSearchBarFormState build() => const NftSearchBarFormState();
 
   void setError(String error) {
     state = state.copyWith(
@@ -98,4 +81,8 @@ class NftSearchBarNotifier extends AutoDisposeNotifier<NftSearchBarState> {
       loading: false,
     );
   }
+}
+
+abstract class NftSearchBarFormProvider {
+  static final nftSearchBar = _nftSearchBarProvider;
 }

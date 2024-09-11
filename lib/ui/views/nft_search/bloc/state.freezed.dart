@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'nft_search_bar_state.dart';
+part of 'state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,22 +15,22 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$NftSearchBarState {
+mixin _$NftSearchBarFormState {
   String get searchCriteria => throw _privateConstructorUsedError;
   bool get loading => throw _privateConstructorUsedError;
   String get error => throw _privateConstructorUsedError;
   TokenInformation? get tokenInformation => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $NftSearchBarStateCopyWith<NftSearchBarState> get copyWith =>
+  $NftSearchBarFormStateCopyWith<NftSearchBarFormState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $NftSearchBarStateCopyWith<$Res> {
-  factory $NftSearchBarStateCopyWith(
-          NftSearchBarState value, $Res Function(NftSearchBarState) then) =
-      _$NftSearchBarStateCopyWithImpl<$Res, NftSearchBarState>;
+abstract class $NftSearchBarFormStateCopyWith<$Res> {
+  factory $NftSearchBarFormStateCopyWith(NftSearchBarFormState value,
+          $Res Function(NftSearchBarFormState) then) =
+      _$NftSearchBarFormStateCopyWithImpl<$Res, NftSearchBarFormState>;
   @useResult
   $Res call(
       {String searchCriteria,
@@ -40,9 +40,10 @@ abstract class $NftSearchBarStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$NftSearchBarStateCopyWithImpl<$Res, $Val extends NftSearchBarState>
-    implements $NftSearchBarStateCopyWith<$Res> {
-  _$NftSearchBarStateCopyWithImpl(this._value, this._then);
+class _$NftSearchBarFormStateCopyWithImpl<$Res,
+        $Val extends NftSearchBarFormState>
+    implements $NftSearchBarFormStateCopyWith<$Res> {
+  _$NftSearchBarFormStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -79,11 +80,12 @@ class _$NftSearchBarStateCopyWithImpl<$Res, $Val extends NftSearchBarState>
 }
 
 /// @nodoc
-abstract class _$$NftSearchBarStateImplCopyWith<$Res>
-    implements $NftSearchBarStateCopyWith<$Res> {
-  factory _$$NftSearchBarStateImplCopyWith(_$NftSearchBarStateImpl value,
-          $Res Function(_$NftSearchBarStateImpl) then) =
-      __$$NftSearchBarStateImplCopyWithImpl<$Res>;
+abstract class _$$NftSearchBarFormStateImplCopyWith<$Res>
+    implements $NftSearchBarFormStateCopyWith<$Res> {
+  factory _$$NftSearchBarFormStateImplCopyWith(
+          _$NftSearchBarFormStateImpl value,
+          $Res Function(_$NftSearchBarFormStateImpl) then) =
+      __$$NftSearchBarFormStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -94,11 +96,12 @@ abstract class _$$NftSearchBarStateImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$NftSearchBarStateImplCopyWithImpl<$Res>
-    extends _$NftSearchBarStateCopyWithImpl<$Res, _$NftSearchBarStateImpl>
-    implements _$$NftSearchBarStateImplCopyWith<$Res> {
-  __$$NftSearchBarStateImplCopyWithImpl(_$NftSearchBarStateImpl _value,
-      $Res Function(_$NftSearchBarStateImpl) _then)
+class __$$NftSearchBarFormStateImplCopyWithImpl<$Res>
+    extends _$NftSearchBarFormStateCopyWithImpl<$Res,
+        _$NftSearchBarFormStateImpl>
+    implements _$$NftSearchBarFormStateImplCopyWith<$Res> {
+  __$$NftSearchBarFormStateImplCopyWithImpl(_$NftSearchBarFormStateImpl _value,
+      $Res Function(_$NftSearchBarFormStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -109,7 +112,7 @@ class __$$NftSearchBarStateImplCopyWithImpl<$Res>
     Object? error = null,
     Object? tokenInformation = freezed,
   }) {
-    return _then(_$NftSearchBarStateImpl(
+    return _then(_$NftSearchBarFormStateImpl(
       searchCriteria: null == searchCriteria
           ? _value.searchCriteria
           : searchCriteria // ignore: cast_nullable_to_non_nullable
@@ -132,8 +135,8 @@ class __$$NftSearchBarStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$NftSearchBarStateImpl extends _NftSearchBarState {
-  const _$NftSearchBarStateImpl(
+class _$NftSearchBarFormStateImpl extends _NftSearchBarFormState {
+  const _$NftSearchBarFormStateImpl(
       {this.searchCriteria = '',
       this.loading = false,
       this.error = '',
@@ -154,14 +157,14 @@ class _$NftSearchBarStateImpl extends _NftSearchBarState {
 
   @override
   String toString() {
-    return 'NftSearchBarState(searchCriteria: $searchCriteria, loading: $loading, error: $error, tokenInformation: $tokenInformation)';
+    return 'NftSearchBarFormState(searchCriteria: $searchCriteria, loading: $loading, error: $error, tokenInformation: $tokenInformation)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$NftSearchBarStateImpl &&
+            other is _$NftSearchBarFormStateImpl &&
             (identical(other.searchCriteria, searchCriteria) ||
                 other.searchCriteria == searchCriteria) &&
             (identical(other.loading, loading) || other.loading == loading) &&
@@ -177,18 +180,18 @@ class _$NftSearchBarStateImpl extends _NftSearchBarState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$NftSearchBarStateImplCopyWith<_$NftSearchBarStateImpl> get copyWith =>
-      __$$NftSearchBarStateImplCopyWithImpl<_$NftSearchBarStateImpl>(
-          this, _$identity);
+  _$$NftSearchBarFormStateImplCopyWith<_$NftSearchBarFormStateImpl>
+      get copyWith => __$$NftSearchBarFormStateImplCopyWithImpl<
+          _$NftSearchBarFormStateImpl>(this, _$identity);
 }
 
-abstract class _NftSearchBarState extends NftSearchBarState {
-  const factory _NftSearchBarState(
+abstract class _NftSearchBarFormState extends NftSearchBarFormState {
+  const factory _NftSearchBarFormState(
       {final String searchCriteria,
       final bool loading,
       final String error,
-      final TokenInformation? tokenInformation}) = _$NftSearchBarStateImpl;
-  const _NftSearchBarState._() : super._();
+      final TokenInformation? tokenInformation}) = _$NftSearchBarFormStateImpl;
+  const _NftSearchBarFormState._() : super._();
 
   @override
   String get searchCriteria;
@@ -200,6 +203,6 @@ abstract class _NftSearchBarState extends NftSearchBarState {
   TokenInformation? get tokenInformation;
   @override
   @JsonKey(ignore: true)
-  _$$NftSearchBarStateImplCopyWith<_$NftSearchBarStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$NftSearchBarFormStateImplCopyWith<_$NftSearchBarFormStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
