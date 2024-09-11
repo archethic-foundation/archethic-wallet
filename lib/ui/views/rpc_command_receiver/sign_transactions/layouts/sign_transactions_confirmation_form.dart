@@ -88,17 +88,18 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
       SignTransactionsConfirmationProviders.form(command),
     );
 
-// TODO: Bugs null
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
     final selectedCurrencyMarketPrice =
         ref.watch(MarketPriceProviders.selectedCurrencyMarketPrice).valueOrNull;
 
-    final amountInFiat = CurrencyUtil.convertAmountFormatedWithNumberOfDigits(
-      selectedCurrencyMarketPrice!.amount,
-      estimatedFees,
-      3,
-    );
+    final amountInFiat = selectedCurrencyMarketPrice == null
+        ? 0
+        : CurrencyUtil.convertAmountFormatedWithNumberOfDigits(
+            selectedCurrencyMarketPrice.amount,
+            estimatedFees,
+            3,
+          );
 
     return formState.map(
       error: (error) => const SizedBox(),
