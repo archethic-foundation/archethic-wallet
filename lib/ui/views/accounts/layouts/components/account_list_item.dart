@@ -177,12 +177,14 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
                     AccountProviders.account(widget.account.name).notifier,
                   )
                   .refreshRecentTransactions();
-            }
 
-            context
-              ..pop()
-              ..pop()
-              ..pop();
+              context
+                ..pop()
+                ..pop()
+                ..pop();
+            } else {
+              context.pop();
+            }
           }
         },
         child: DecoratedBox(
