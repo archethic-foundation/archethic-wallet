@@ -183,7 +183,7 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
             .read(
               aedappfm.CoinPriceProviders.coinPrices.notifier,
             )
-            .starTimer();
+            .startTimer();
         await ref
             .read(
               FarmAPRProviders.farmAPR.notifier,
