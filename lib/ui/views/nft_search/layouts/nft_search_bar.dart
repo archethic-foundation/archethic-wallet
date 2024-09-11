@@ -6,9 +6,9 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/nft/layouts/components/nft_detail.dart';
 import 'package:aewallet/ui/views/nft_search/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_search/bloc/state.dart';
-import 'package:aewallet/ui/views/nft/layouts/components/nft_detail.dart';
 import 'package:aewallet/ui/widgets/components/paste_icon.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -214,7 +214,6 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                                 ConnectivityStatus.isConnected
                         ? null
                         : () async {
-                            print('ok');
                             sl.get<HapticUtil>().feedback(
                                   FeedbackType.light,
                                   preferences.activeVibrations,
