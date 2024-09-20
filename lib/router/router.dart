@@ -4,9 +4,14 @@ import 'package:aewallet/infrastructure/rpc/deeplink_server.dart';
 import 'package:aewallet/main.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/data/account_token.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
 import 'package:aewallet/router/dialog_page.dart';
 import 'package:aewallet/ui/menu/settings/settings_sheet.dart';
 import 'package:aewallet/ui/views/add_account/layouts/add_account_sheet.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/farm_lock_deposit_sheet.dart';
+import 'package:aewallet/ui/views/aeswap_liquidity_add/layouts/liquidity_add_sheet.dart';
+import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_confirm_sheet.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/ui/views/authenticate/biometrics_screen.dart';
@@ -33,6 +38,7 @@ import 'package:aewallet/ui/views/nft_creation/layouts/components/import_tab/nft
 import 'package:aewallet/ui/views/nft_creation/layouts/components/import_tab/nft_creation_process_import_tab_http_form.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/components/import_tab/nft_creation_process_import_tab_ipfs_form.dart';
 import 'package:aewallet/ui/views/nft_creation/layouts/nft_creation_process_sheet.dart';
+import 'package:aewallet/ui/views/notifications/layouts/tasks_notification_widget.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/rpc_command_receiver.dart';
 import 'package:aewallet/ui/views/settings/backupseed_sheet.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
@@ -55,6 +61,7 @@ import 'package:go_router/go_router.dart';
 part 'router.authenticated.dart';
 part 'router.authentication.dart';
 part 'router.introduction.dart';
+part 'router.aeswap.dart';
 
 class RoutesPath {
   RoutesPath(
@@ -73,7 +80,11 @@ class RoutesPath {
       extraCodec: const JsonCodec(),
       routes: [
         ShellRoute(
-          builder: (context, state, child) => AuthFactory(child: child),
+          builder: (context, state, child) => AuthFactory(
+            child: TasksNotificationWidget(
+              child: child,
+            ),
+          ),
           routes: [
             GoRoute(
               path: Splash.routerPage,
@@ -92,6 +103,7 @@ class RoutesPath {
             ),
             ..._authenticationRoutes,
             ..._introductionRoutes,
+            ..._aeSwapRoutes,
             GoRoute(
               path: ShowSendingAnimation.routerPage,
               pageBuilder: (context, state) => CustomTransitionPage<void>(
@@ -199,4 +211,15 @@ class RPCCommandReceiverRoute extends ShellRoute {
             ),
           ),
         );
+}
+
+extension UriExtensions on Map<String, String> {
+  T? getDecodedParameter<T>(String key, T Function(String) fromJson) {
+    final encoded = this[key];
+    if (encoded != null) {
+      final json = Uri.decodeComponent(encoded);
+      return fromJson(json);
+    }
+    return null;
+  }
 }

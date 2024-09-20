@@ -4,7 +4,6 @@ import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/refresh_in_progress.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/verified_tokens.dart';
 import 'package:aewallet/ui/views/receive/receive_modal.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
@@ -174,11 +173,16 @@ class MenuWidgetWallet extends ConsumerWidget {
                     ref
                       ..invalidate(ContactProviders.fetchContacts)
                       ..invalidate(MarketPriceProviders.currencyMarketPrice);
+                    final env = ref
+                        .read(SettingsProviders.settings)
+                        .network
+                        .getNetworkLabel();
                     await ref
                         .read(
-                          VerifiedTokensProviders.verifiedTokens.notifier,
+                          aedappfm
+                              .VerifiedTokensProviders.verifiedTokens.notifier,
                         )
-                        .init();
+                        .init(env);
                   }
                 },
               )

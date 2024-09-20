@@ -8,12 +8,14 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/local_data_migration_widget.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/ui/views/aeswap_earn/layouts/earn_tab.dart';
+import 'package:aewallet/ui/views/aeswap_swap/layouts/swap_tab.dart';
 import 'package:aewallet/ui/views/main/account_tab.dart';
 import 'package:aewallet/ui/views/main/bloc/providers.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar.dart';
 import 'package:aewallet/ui/views/main/components/recovery_phrase_banner.dart';
 import 'package:aewallet/ui/views/main/transactions_tab.dart';
-import 'package:aewallet/ui/views/sheets/dex_sheet.dart';
+import 'package:aewallet/ui/views/sheets/aeBridge_sheet.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/tab_item.dart';
@@ -112,6 +114,10 @@ class _HomePageState extends ConsumerState<HomePage>
                   icon: aedappfm.Iconsax.wallet_add,
                   label: AppLocalizations.of(context)!.bottomMainMenuEarn,
                 ),
+                TabItem(
+                  icon: aedappfm.Iconsax.recovery_convert,
+                  label: AppLocalizations.of(context)!.bottomMainMenuBridge,
+                ),
               ],
             ),
           ),
@@ -159,8 +165,9 @@ class _HomePageState extends ConsumerState<HomePage>
             ],
           ),
           TransactionsTab(),
-          DEXSheet(dappKey: 'aeSwap/swap'),
-          DEXSheet(dappKey: 'aeSwap/earn'),
+          SwapTab(),
+          EarnTab(),
+          AEBridgeSheet(dappKey: 'arBridge/bridge'),
         ],
       ),
     );

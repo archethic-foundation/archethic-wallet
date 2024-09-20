@@ -5,4 +5,7 @@ class TransactionValidationRatios {
   static const transfer = 0.5;
   static const createKeychain = 0.5;
   static const createKeychainAccess = 0.5;
+  static const swap = 0.5;
+  static const addLiquidity = 0.5;
+  static const depositFarmLock = 0.5;
 }

@@ -211,7 +211,6 @@ class _NoIconButton extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (showProgressIndicator) const Spacer(),
           AutoSizeText(
             buttonText,
             textAlign: TextAlign.center,
@@ -222,14 +221,16 @@ class _NoIconButton extends ConsumerWidget {
             maxLines: 1,
             stepGranularity: 0.5,
           ),
-          if (showProgressIndicator) const Spacer(),
           if (showProgressIndicator)
-            SizedBox.square(
-              dimension: 10,
-              child: CircularProgressIndicator(
-                color: ArchethicThemeStyles
-                    .textStyleSize16W400MainButtonLabel.color,
-                strokeWidth: 2,
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: SizedBox.square(
+                dimension: 10,
+                child: CircularProgressIndicator(
+                  color: ArchethicThemeStyles
+                      .textStyleSize16W400MainButtonLabel.color,
+                  strokeWidth: 2,
+                ),
               ),
             ),
         ],

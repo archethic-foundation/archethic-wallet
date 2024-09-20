@@ -1,6 +1,6 @@
 part of 'providers.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class _AccountsNotifier extends _$AccountsNotifier {
   @override
   FutureOr<List<Account>> build() async {
@@ -9,7 +9,6 @@ class _AccountsNotifier extends _$AccountsNotifier {
       return [];
     }
 
-    // Init avec la valeur du cache
     final repository = ref.watch(AccountProviders.accountsRepository);
     final accountNames = await repository.accountNames();
 

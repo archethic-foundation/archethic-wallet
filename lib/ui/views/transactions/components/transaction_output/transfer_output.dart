@@ -34,7 +34,7 @@ class TransferOutput extends ConsumerWidget {
         Row(
           children: [
             AutoSizeText(
-              localizations.txListAmount,
+              '${localizations.txListAmount} ',
               style: ArchethicThemeStyles.textStyleSize12W100Primary60,
             ),
             AutoSizeText(

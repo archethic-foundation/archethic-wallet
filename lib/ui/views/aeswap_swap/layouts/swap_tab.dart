@@ -1,0 +1,237 @@
+import 'package:aewallet/modules/aeswap/application/dex_token.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
+import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/views/aeswap_swap/bloc/provider.dart';
+import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_infos.dart';
+import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_textfield_token_swapped_amount.dart';
+import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_textfield_token_to_swap_amount.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
+import 'package:aewallet/ui/widgets/components/scrollbar.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+class SwapTab extends ConsumerStatefulWidget {
+  const SwapTab(
+      {this.tokenToSwap,
+      this.tokenSwapped,
+      this.from,
+      this.to,
+      this.value,
+      super.key});
+
+  final DexToken? tokenToSwap;
+  final DexToken? tokenSwapped;
+  final String? from;
+  final String? to;
+  final double? value;
+
+  @override
+  ConsumerState<SwapTab> createState() => SwapTabState();
+}
+
+class SwapTabState extends ConsumerState<SwapTab> {
+  @override
+  void initState() {
+    Future.delayed(Duration.zero, () async {
+      try {
+        if (widget.value != null) {
+          ref.read(SwapFormProvider.swapForm.notifier)
+            ..setTokenFormSelected(1)
+            ..setTokenToSwapAmountWithoutCalculation(widget.value!);
+        }
+
+        if (widget.from != null) {
+          DexToken? _tokenToSwap;
+          if (widget.from != 'UCO') {
+            _tokenToSwap = await ref.read(
+              DexTokensProviders.getTokenFromAddress(widget.from).future,
+            );
+          } else {
+            _tokenToSwap = ucoToken;
+          }
+          if (_tokenToSwap != null) {
+            await ref
+                .read(SwapFormProvider.swapForm.notifier)
+                .setTokenToSwap(_tokenToSwap);
+          }
+        } else {
+          if (widget.tokenToSwap != null) {
+            await ref
+                .read(SwapFormProvider.swapForm.notifier)
+                .setTokenToSwap(widget.tokenToSwap!);
+          }
+        }
+
+        if (widget.to != null) {
+          DexToken? _tokenSwapped;
+          if (widget.to != 'UCO') {
+            _tokenSwapped = await ref.read(
+              DexTokensProviders.getTokenFromAddress(widget.to).future,
+            );
+          } else {
+            _tokenSwapped = ucoToken;
+          }
+          if (_tokenSwapped != null) {
+            await ref
+                .read(SwapFormProvider.swapForm.notifier)
+                .setTokenSwapped(_tokenSwapped);
+          }
+        } else {
+          if (widget.tokenSwapped != null) {
+            await ref
+                .read(SwapFormProvider.swapForm.notifier)
+                .setTokenSwapped(widget.tokenSwapped!);
+          }
+        }
+
+        if (widget.value != null) {
+          ref.read(SwapFormProvider.swapForm.notifier).setTokenFormSelected(2);
+        }
+        // ignore: empty_catches
+      } catch (e) {}
+    });
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final swap = ref.watch(SwapFormProvider.swapForm);
+    final localizations = AppLocalizations.of(context)!;
+    return ScrollConfiguration(
+      behavior: ScrollConfiguration.of(context).copyWith(
+        dragDevices: {
+          PointerDeviceKind.touch,
+          PointerDeviceKind.mouse,
+          PointerDeviceKind.trackpad,
+        },
+      ),
+      child: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: <Widget>[
+                  ArchethicScrollbar(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).padding.top + 10,
+                        bottom: 80,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SwapTokenToSwapAmount(),
+                                SwapTokenSwappedAmount(),
+                                SwapInfos(),
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if (swap.messageMaxHalfUCO)
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    child: SizedBox(
+                                      child: aedappfm.InfoBanner(
+                                        AppLocalizations.of(context)!
+                                            .swapMessageMaxHalfUCO
+                                            .replaceFirst(
+                                              '%1',
+                                              swap.feesEstimatedUCO
+                                                  .formatNumber(precision: 8),
+                                            ),
+                                        aedappfm.InfoBannerType.request,
+                                      ),
+                                    ),
+                                  ),
+                                aedappfm.ErrorMessage(
+                                  failure: swap.failure,
+                                  failureMessage: FailureMessage(
+                                    context: context,
+                                    failure: swap.failure,
+                                  ).getMessage(),
+                                ),
+                                if (swap.failure is aedappfm.PoolNotExists &&
+                                    swap.tokenToSwap != null &&
+                                    swap.tokenSwapped != null &&
+                                    swap.tokenToSwap!.address !=
+                                        swap.tokenSwapped!.address)
+                                  TextButton.icon(
+                                    label: Text(
+                                      AppLocalizations.of(context)!
+                                          .swapCreatePool,
+                                    ),
+                                    onPressed: () {
+                                      // TODO
+                                      /*
+                                            final token1Json = jsonEncode(swap.tokenToSwap!.toJson());
+                                            final token2Json =
+                        jsonEncode(swap.tokenSwapped!.toJson());
+                                            final token1Encoded = Uri.encodeComponent(token1Json);
+                                            final token2Encoded = Uri.encodeComponent(token2Json);
+                                           context.go(
+                      Uri(
+                        path: PoolAddSheet.routerPage,
+                        queryParameters: {
+                          'token1': token1Encoded,
+                          'token2': token2Encoded,
+                        },
+                      ).toString(),
+                                            );*/
+                                    },
+                                    icon: const Icon(Icons.add),
+                                  ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).padding.bottom + 20,
+              ),
+              child: Row(
+                children: [
+                  AppButtonTinyConnectivity(
+                    localizations.btn_swap,
+                    Dimens.buttonBottomDimens,
+                    key: const Key('swap'),
+                    onPressed: () async {
+                      await ref
+                          .read(
+                            SwapFormProvider.swapForm.notifier,
+                          )
+                          .validateForm(context);
+                    },
+                    disabled: !swap.isControlsOk,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
