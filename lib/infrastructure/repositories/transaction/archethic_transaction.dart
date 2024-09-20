@@ -232,6 +232,34 @@ class ArchethicTransactionRepository
     );
   }
 
+  Future<archethic.Transaction> buildTransactionRaw(
+    KeychainSecuredInfos keychainSecuredInfos,
+    archethic.Transaction transactionRaw,
+    String transactionLastAddress,
+    String serviceName,
+  ) async {
+    final originPrivateKey = apiService.getOriginKey();
+
+    final keychain = keychainSecuredInfos.toKeychain();
+
+    final indexMap = await apiService.getTransactionIndex(
+      [transactionLastAddress],
+    );
+
+    final index = indexMap[transactionLastAddress] ?? 0;
+
+    final transactionSigned = keychain
+        .buildTransaction(
+          transactionRaw,
+          serviceName,
+          index,
+        )
+        .transaction
+        .originSign(originPrivateKey);
+
+    return transactionSigned;
+  }
+
   Future<archethic.Transaction> _buildTransaction(
     Transaction transaction,
   ) async {
@@ -264,6 +292,33 @@ class ArchethicTransactionRepository
     await transactionSender.send(
       timeout: timeout,
       transaction: await _buildTransaction(transaction),
+      onConfirmation: (transactionConfirmation) => onConfirmation(
+        transactionSender,
+        transactionConfirmation,
+      ),
+      onError: (error) => onError(
+        transactionSender,
+        error,
+      ),
+    );
+  }
+
+  @override
+  Future<void> sendSignedRaw({
+    required archethic.Transaction transactionSignedRaw,
+    Duration timeout = const Duration(seconds: 10),
+    required TransactionConfirmationHandler onConfirmation,
+    required TransactionErrorHandler onError,
+  }) async {
+    final transactionSender = archethic.ArchethicTransactionSender(
+      phoenixHttpEndpoint: phoenixHttpEndpoint,
+      websocketEndpoint: websocketEndpoint,
+      apiService: apiService,
+    );
+
+    await transactionSender.send(
+      timeout: timeout,
+      transaction: transactionSignedRaw,
       onConfirmation: (transactionConfirmation) => onConfirmation(
         transactionSender,
         transactionConfirmation,

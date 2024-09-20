@@ -1,4 +1,3 @@
 arb-dir: lib/l10n
 template-arb-file: intl_en.arb
 output-localization-file: localizations.dart
-untranslated-messages-file: .dart_tool/flutter_gen/desiredFileName.txt

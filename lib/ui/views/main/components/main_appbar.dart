@@ -94,13 +94,37 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
           ? _accountTab(context, ref)
           : preferences.mainScreenCurrentPage == 1
               ? _transactionsTab(context, ref)
-              : FittedBox(
-                  fit: BoxFit.fitWidth,
-                  child: AutoSizeText(
-                    localizations.aeSwapHeader,
-                    style: ArchethicThemeStyles.textStyleSize24W700Primary,
-                  ),
-                ).animate().fade(duration: const Duration(milliseconds: 300)),
+              : preferences.mainScreenCurrentPage == 2
+                  ? FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: AutoSizeText(
+                        localizations.swapHeader,
+                        style: ArchethicThemeStyles.textStyleSize24W700Primary,
+                      ),
+                    )
+                      .animate()
+                      .fade(duration: const Duration(milliseconds: 300))
+                  : preferences.mainScreenCurrentPage == 3
+                      ? FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: AutoSizeText(
+                            localizations.aeSwapEarnHeader,
+                            style:
+                                ArchethicThemeStyles.textStyleSize24W700Primary,
+                          ),
+                        )
+                          .animate()
+                          .fade(duration: const Duration(milliseconds: 300))
+                      : FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: AutoSizeText(
+                            localizations.aeBridgeHeader,
+                            style:
+                                ArchethicThemeStyles.textStyleSize24W700Primary,
+                          ),
+                        )
+                          .animate()
+                          .fade(duration: const Duration(milliseconds: 300)),
       backgroundColor: Colors.transparent,
       elevation: 0,
       centerTitle: true,

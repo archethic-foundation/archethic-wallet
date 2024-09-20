@@ -1,0 +1,190 @@
+import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/consent_uri.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/provider.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_confirm_infos.dart';
+import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+class FarmLockDepositConfirmSheet extends ConsumerStatefulWidget {
+  const FarmLockDepositConfirmSheet({
+    super.key,
+  });
+
+  @override
+  ConsumerState<FarmLockDepositConfirmSheet> createState() =>
+      FarmLockDepositConfirmSheetState();
+}
+
+class FarmLockDepositConfirmSheetState
+    extends ConsumerState<FarmLockDepositConfirmSheet>
+    implements SheetSkeletonInterface {
+  bool consentChecked = false;
+  bool warningChecked = false;
+
+  @override
+  void initState() {
+    final farmLockDeposit =
+        ref.read(FarmLockDepositFormProvider.farmLockDepositForm);
+    if (farmLockDeposit.farmLockDepositDuration ==
+        FarmLockDepositDurationType.flexible) {
+      warningChecked = true;
+    }
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final accountSelected = ref.watch(
+      AccountProviders.accounts.select(
+        (accounts) => accounts.valueOrNull?.selectedAccount,
+      ),
+    );
+
+    if (accountSelected == null) return const SizedBox();
+
+    return SheetSkeleton(
+      appBar: getAppBar(context, ref),
+      floatingActionButton: getFloatingActionButton(context, ref),
+      sheetContent: getSheetContent(context, ref),
+    );
+  }
+
+  @override
+  Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
+    final farmLockDeposit =
+        ref.watch(FarmLockDepositFormProvider.farmLockDepositForm);
+    return Row(
+      children: <Widget>[
+        AppButtonTinyConnectivity(
+          AppLocalizations.of(context)!.btn_confirm_farm_add_lock,
+          Dimens.buttonBottomDimens,
+          key: const Key('farmLockDeposit'),
+          onPressed: () async {
+            final farmLockDepositNotifier = ref.read(
+              FarmLockDepositFormProvider.farmLockDepositForm.notifier,
+            );
+            await farmLockDepositNotifier.lock(context, ref);
+          },
+          disabled: (!warningChecked ||
+                  (!consentChecked &&
+                      farmLockDeposit.consentDateTime == null)) ||
+              farmLockDeposit.isProcessInProgress,
+          showProgressIndicator: farmLockDeposit.isProcessInProgress,
+        ),
+      ],
+    );
+  }
+
+  @override
+  PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    final farmLockDepositNotifier =
+        ref.watch(FarmLockDepositFormProvider.farmLockDepositForm.notifier);
+
+    return SheetAppBar(
+      title: localizations.farmLockDepositConfirmTitle,
+      widgetLeft: BackButton(
+        key: const Key('back'),
+        color: ArchethicTheme.text,
+        onPressed: () {
+          farmLockDepositNotifier.setFarmLockDepositProcessStep(
+            aedappfm.ProcessStep.form,
+          );
+        },
+      ),
+    );
+  }
+
+  @override
+  Widget getSheetContent(BuildContext context, WidgetRef ref) {
+    final farmLockDeposit =
+        ref.watch(FarmLockDepositFormProvider.farmLockDepositForm);
+    if (farmLockDeposit.pool == null) {
+      return const SizedBox.shrink();
+    }
+
+    return Expanded(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const FarmLockDepositConfirmInfos(),
+          if (farmLockDeposit.farmLockDepositDuration !=
+              FarmLockDepositDurationType.flexible)
+            Row(
+              children: [
+                Expanded(
+                  child: CheckboxListTile(
+                    title: Wrap(
+                      children: [
+                        Text(
+                          AppLocalizations.of(context)!
+                              .farmLockDepositConfirmCheckBoxUnderstand,
+                          style:
+                              Theme.of(context).textTheme.bodySmall!.copyWith(
+                                    color: aedappfm
+                                        .ArchethicThemeBase.systemWarning500,
+                                  ),
+                        ),
+                      ],
+                    ),
+                    dense: true,
+                    value: warningChecked,
+                    onChanged: (newValue) {
+                      setState(() {
+                        warningChecked = newValue!;
+                      });
+                    },
+                    controlAffinity: ListTileControlAffinity.leading,
+                    subtitle: InkWell(
+                      onTap: () async {
+                        final uri = Uri.parse(kURIFarmLockFarmTuto);
+                        if (!await canLaunchUrl(uri)) return;
+                        await launchUrl(uri);
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)!
+                            .farmLockDepositConfirmMoreInfo,
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                              decoration: TextDecoration.underline,
+                              color:
+                                  aedappfm.ArchethicThemeBase.systemWarning500,
+                            ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          if (farmLockDeposit.consentDateTime == null)
+            aedappfm.ConsentToCheck(
+              consentChecked: consentChecked,
+              onToggleConsent: (newValue) {
+                setState(() {
+                  consentChecked = newValue!;
+                });
+              },
+              uriPrivacyPolicy: kURIPrivacyPolicy,
+              uriTermsOfUse: kURITermsOfUse,
+            )
+          else
+            aedappfm.ConsentAlready(
+              consentDateTime: farmLockDeposit.consentDateTime!,
+              uriPrivacyPolicy: kURIPrivacyPolicy,
+              uriTermsOfUse: kURITermsOfUse,
+            ),
+        ],
+      ),
+    );
+  }
+}

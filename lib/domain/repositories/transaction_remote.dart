@@ -29,6 +29,20 @@ abstract class TransactionRemoteRepositoryInterface {
     required TransactionErrorHandler onError,
   });
 
+  Future<archethic.Transaction> buildTransactionRaw(
+    KeychainSecuredInfos keychainSecuredInfos,
+    archethic.Transaction transactionRaw,
+    String transactionLastAddress,
+    String serviceName,
+  );
+
+  Future<void> sendSignedRaw({
+    required archethic.Transaction transactionSignedRaw,
+    Duration timeout = const Duration(seconds: 10),
+    required TransactionConfirmationHandler onConfirmation,
+    required TransactionErrorHandler onError,
+  });
+
   Future<String?> getLastTransactionAddress({
     required String genesisAddress,
   });

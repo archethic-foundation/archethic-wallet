@@ -9,10 +9,10 @@ import 'package:aewallet/application/migrations/migration_manager.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/application/verified_tokens.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
 import 'package:aewallet/model/available_language.dart';
+import 'package:aewallet/modules/aeswap/infrastructure/hive/db_helper.hive.dart';
 import 'package:aewallet/providers_observer.dart';
 import 'package:aewallet/router/router.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -45,6 +45,7 @@ Future<void> main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await DBHelper.setupDatabase();
+  await DBHelperModuleAESwap.setupDatabase();
   await setupServiceLocator();
 
   if (UniversalPlatform.isDesktop) {
@@ -240,6 +241,7 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
             ),
             localizationsDelegates: const [
               AppLocalizations.delegate,
+              aedappfm.AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
@@ -276,11 +278,12 @@ class SplashState extends ConsumerState<Splash> {
     final locale = ref.read(LanguageProviders.selectedLocale);
     await ref.read(SettingsProviders.settings.notifier).initialize(locale);
     await ref.read(AuthenticationProviders.settings.notifier).initialize();
+    final env = ref.read(SettingsProviders.settings).network.getNetworkLabel();
     await ref
         .read(
-          VerifiedTokensProviders.verifiedTokens.notifier,
+          aedappfm.VerifiedTokensProviders.verifiedTokens.notifier,
         )
-        .init();
+        .init(env);
     await SecurityManager().checkDeviceSecurity(ref, context);
 
     AuthFactory.of(context).init();

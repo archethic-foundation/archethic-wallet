@@ -514,12 +514,12 @@ class _AccountNotifierProviderElement
   String get accountName => (origin as _AccountNotifierProvider).accountName;
 }
 
-String _$accountsNotifierHash() => r'b5f45fb504840ad2e128cbf54fb57f22332d4ddf';
+String _$accountsNotifierHash() => r'120064998f67c5334c8703934d7848a8f13ae991';
 
 /// See also [_AccountsNotifier].
 @ProviderFor(_AccountsNotifier)
 final _accountsNotifierProvider =
-    AutoDisposeAsyncNotifierProvider<_AccountsNotifier, List<Account>>.internal(
+    AsyncNotifierProvider<_AccountsNotifier, List<Account>>.internal(
   _AccountsNotifier.new,
   name: r'_accountsNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -529,6 +529,6 @@ final _accountsNotifierProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$AccountsNotifier = AutoDisposeAsyncNotifier<List<Account>>;
+typedef _$AccountsNotifier = AsyncNotifier<List<Account>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
