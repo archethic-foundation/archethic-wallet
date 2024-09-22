@@ -1,9 +1,11 @@
 import 'package:aewallet/modules/aeswap/application/dex_token.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/aeswap_swap/bloc/provider.dart';
-import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_infos.dart';
+import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_icon_info.dart';
+import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_icon_settings.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_textfield_token_swapped_amount.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_textfield_token_to_swap_amount.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
@@ -16,13 +18,14 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SwapTab extends ConsumerStatefulWidget {
-  const SwapTab(
-      {this.tokenToSwap,
-      this.tokenSwapped,
-      this.from,
-      this.to,
-      this.value,
-      super.key});
+  const SwapTab({
+    this.tokenToSwap,
+    this.tokenSwapped,
+    this.from,
+    this.to,
+    this.value,
+    super.key,
+  });
 
   final DexToken? tokenToSwap;
   final DexToken? tokenSwapped;
@@ -129,12 +132,41 @@ class SwapTabState extends ConsumerState<SwapTab> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Column(
+                            Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SwapTokenToSwapAmount(),
-                                SwapTokenSwappedAmount(),
-                                SwapInfos(),
+                                const SwapTokenToSwapAmount(),
+                                const SwapTokenSwappedAmount(),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const Row(
+                                        children: [
+                                          SwapTokenIconInfo(),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          SelectableText(
+                                            '${AppLocalizations.of(context)!.slippage_tolerance} ${swap.slippageTolerance}%',
+                                            style: AppTextStyles.bodyMedium(
+                                              context,
+                                            ),
+                                          ),
+                                          const Align(
+                                            alignment: Alignment.centerRight,
+                                            child: SwapTokenIconSettings(),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                             Column(
@@ -143,7 +175,8 @@ class SwapTabState extends ConsumerState<SwapTab> {
                                 if (swap.messageMaxHalfUCO)
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
-                                        vertical: 10),
+                                      vertical: 10,
+                                    ),
                                     child: SizedBox(
                                       child: aedappfm.InfoBanner(
                                         AppLocalizations.of(context)!
@@ -164,36 +197,6 @@ class SwapTabState extends ConsumerState<SwapTab> {
                                     failure: swap.failure,
                                   ).getMessage(),
                                 ),
-                                if (swap.failure is aedappfm.PoolNotExists &&
-                                    swap.tokenToSwap != null &&
-                                    swap.tokenSwapped != null &&
-                                    swap.tokenToSwap!.address !=
-                                        swap.tokenSwapped!.address)
-                                  TextButton.icon(
-                                    label: Text(
-                                      AppLocalizations.of(context)!
-                                          .swapCreatePool,
-                                    ),
-                                    onPressed: () {
-                                      // TODO
-                                      /*
-                                            final token1Json = jsonEncode(swap.tokenToSwap!.toJson());
-                                            final token2Json =
-                        jsonEncode(swap.tokenSwapped!.toJson());
-                                            final token1Encoded = Uri.encodeComponent(token1Json);
-                                            final token2Encoded = Uri.encodeComponent(token2Json);
-                                           context.go(
-                      Uri(
-                        path: PoolAddSheet.routerPage,
-                        queryParameters: {
-                          'token1': token1Encoded,
-                          'token2': token2Encoded,
-                        },
-                      ).toString(),
-                                            );*/
-                                    },
-                                    icon: const Icon(Icons.add),
-                                  ),
                               ],
                             ),
                           ],

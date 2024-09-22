@@ -4,8 +4,6 @@ import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_token_balan
 import 'package:aewallet/modules/aeswap/ui/views/util/components/fiat_value.dart';
 import 'package:aewallet/ui/views/aeswap_swap/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_change.dart';
-import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_icon_refresh.dart';
-import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_icon_settings.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_token_to_swap_selection.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -74,35 +72,32 @@ class _SwapTokenToSwapAmountState extends ConsumerState<SwapTokenToSwapAmount> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SelectableText(
               AppLocalizations.of(context)!.swapFromLbl,
               style: AppTextStyles.bodyMedium(context),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                SelectableText(
-                  '${AppLocalizations.of(context)!.slippage_tolerance} ${swap.slippageTolerance}%',
-                  style: AppTextStyles.bodyMedium(context),
+            if (swap.tokenToSwap != null)
+              if (swap.calculationInProgress == false)
+                FutureBuilder<String>(
+                  future: FiatValue().display(
+                    ref,
+                    swap.tokenToSwap!,
+                    swap.tokenToSwapAmount,
+                    withParenthesis: false,
+                  ),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return SelectableText(
+                        snapshot.data!,
+                        style: Theme.of(context).textTheme.bodySmall,
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
                 ),
-                const Align(
-                  alignment: Alignment.centerRight,
-                  child: SwapTokenIconSettings(),
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                const SwapTokenIconRefresh(),
-              ],
-            ),
           ],
-        ),
-        const SizedBox(
-          height: 5,
         ),
         Stack(
           alignment: Alignment.centerLeft,
@@ -148,12 +143,8 @@ class _SwapTokenToSwapAmountState extends ConsumerState<SwapTokenToSwapAmount> {
                                     ),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsets.only(
-                                      left:
-                                          aedappfm.Responsive.isMobile(context)
-                                              ? 110
-                                              : 160,
-                                      right: 70,
+                                    padding: const EdgeInsets.only(
+                                      right: 5,
                                     ),
                                     child: swap.calculateAmountToSwap
                                         ? const SizedBox(
@@ -161,8 +152,8 @@ class _SwapTokenToSwapAmountState extends ConsumerState<SwapTokenToSwapAmount> {
                                             height: 48,
                                             child: Padding(
                                               padding: EdgeInsets.only(
-                                                left: 10,
-                                                right: 330,
+                                                left: 330,
+                                                right: 10,
                                                 top: 15,
                                                 bottom: 15,
                                               ),
@@ -175,7 +166,7 @@ class _SwapTokenToSwapAmountState extends ConsumerState<SwapTokenToSwapAmount> {
                                         : TextField(
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .bodyMedium,
+                                                .bodyLarge,
                                             autocorrect: false,
                                             controller: tokenAmountController,
                                             onChanged: (text) async {
@@ -193,7 +184,7 @@ class _SwapTokenToSwapAmountState extends ConsumerState<SwapTokenToSwapAmount> {
                                               swapNotifier
                                                   .setTokenFormSelected(1);
                                             },
-                                            textAlign: TextAlign.left,
+                                            textAlign: TextAlign.right,
                                             textInputAction:
                                                 TextInputAction.done,
                                             keyboardType: const TextInputType
@@ -232,40 +223,6 @@ class _SwapTokenToSwapAmountState extends ConsumerState<SwapTokenToSwapAmount> {
                     ],
                   ),
                 ),
-                if (swap.tokenToSwap != null)
-                  if (swap.calculationInProgress == false)
-                    Positioned(
-                      top: 17,
-                      right: aedappfm.Responsive.isMobile(context) ? 5 : 10,
-                      child: FutureBuilder<String>(
-                        future: FiatValue().display(
-                          ref,
-                          swap.tokenToSwap!,
-                          swap.tokenToSwapAmount,
-                        ),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return SelectableText(
-                              snapshot.data!,
-                              style: Theme.of(context).textTheme.bodySmall,
-                            );
-                          }
-                          return const SizedBox.shrink();
-                        },
-                      ),
-                    )
-                  else
-                    Container(
-                      padding:
-                          const EdgeInsets.only(top: 10, bottom: 10, right: 15),
-                      child: const SizedBox(
-                        height: 15,
-                        width: 15,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 1,
-                        ),
-                      ),
-                    ),
               ],
             ),
             const Padding(
@@ -290,76 +247,84 @@ class _SwapTokenToSwapAmountState extends ConsumerState<SwapTokenToSwapAmount> {
                         ? 2
                         : 8,
                     fiatTextStyleMedium: true,
+                    withOpacity: false,
                   )
                 else
-                  Container(
-                    padding: const EdgeInsets.only(top: 10, bottom: 10),
-                    child: const SizedBox(
-                      height: 10,
-                      width: 10,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 1,
-                      ),
-                    ),
+                  const SizedBox(
+                    height: 30,
                   ),
                 const SwapChange(),
               ],
             ),
-            if (swap.tokenToSwapBalance > 0)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  aedappfm.ButtonHalf(
-                    balanceAmount: swap.tokenToSwapBalance,
-                    onTap: () async {
-                      tokenAmountController.value =
-                          aedappfm.AmountTextInputFormatter(
-                        precision: 8,
-                        thousandsSeparator: ',',
-                        useUnifyDecimalSeparator: false,
-                      ).formatEditUpdate(
-                        TextEditingValue.empty,
-                        TextEditingValue(
-                          text: (Decimal.parse(
-                                    swap.tokenToSwapBalance.toString(),
-                                  ) /
-                                  Decimal.fromInt(2))
-                              .toDouble()
-                              .formatNumber(),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: swap.tokenToSwapBalance > 0
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        aedappfm.ButtonHalf(
+                          balanceAmount: swap.tokenToSwapBalance,
+                          height: 40,
+                          style:
+                              AppTextStyles.bodyMediumSecondaryColor(context),
+                          onTap: () async {
+                            tokenAmountController.value =
+                                aedappfm.AmountTextInputFormatter(
+                              precision: 8,
+                              thousandsSeparator: ',',
+                              useUnifyDecimalSeparator: false,
+                            ).formatEditUpdate(
+                              TextEditingValue.empty,
+                              TextEditingValue(
+                                text: (Decimal.parse(
+                                          swap.tokenToSwapBalance.toString(),
+                                        ) /
+                                        Decimal.fromInt(2))
+                                    .toDouble()
+                                    .formatNumber(),
+                              ),
+                            );
+                            swapNotifier.setTokenFormSelected(1);
+                            await swapNotifier.setTokenToSwapAmount(
+                              (Decimal.parse(
+                                        swap.tokenToSwapBalance.toString(),
+                                      ) /
+                                      Decimal.fromInt(2))
+                                  .toDouble(),
+                            );
+                          },
                         ),
-                      );
-                      swapNotifier.setTokenFormSelected(1);
-                      await swapNotifier.setTokenToSwapAmount(
-                        (Decimal.parse(swap.tokenToSwapBalance.toString()) /
-                                Decimal.fromInt(2))
-                            .toDouble(),
-                      );
-                    },
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  aedappfm.ButtonMax(
-                    balanceAmount: swap.tokenToSwapBalance,
-                    onTap: () async {
-                      tokenAmountController.value =
-                          aedappfm.AmountTextInputFormatter(
-                        precision: 8,
-                        thousandsSeparator: ',',
-                        useUnifyDecimalSeparator: false,
-                      ).formatEditUpdate(
-                        TextEditingValue.empty,
-                        TextEditingValue(
-                          text: swap.tokenToSwapBalance.toString(),
+                        const SizedBox(
+                          width: 10,
                         ),
-                      );
-                      swapNotifier.setTokenFormSelected(1);
-                      await swapNotifier
-                          .setTokenToSwapAmount(swap.tokenToSwapBalance);
-                    },
-                  ),
-                ],
-              ),
+                        aedappfm.ButtonMax(
+                          balanceAmount: swap.tokenToSwapBalance,
+                          height: 40,
+                          style:
+                              AppTextStyles.bodyMediumSecondaryColor(context),
+                          onTap: () async {
+                            tokenAmountController.value =
+                                aedappfm.AmountTextInputFormatter(
+                              precision: 8,
+                              thousandsSeparator: ',',
+                              useUnifyDecimalSeparator: false,
+                            ).formatEditUpdate(
+                              TextEditingValue.empty,
+                              TextEditingValue(
+                                text: swap.tokenToSwapBalance.toString(),
+                              ),
+                            );
+                            swapNotifier.setTokenFormSelected(1);
+                            await swapNotifier
+                                .setTokenToSwapAmount(swap.tokenToSwapBalance);
+                          },
+                        ),
+                      ],
+                    )
+                  : const SizedBox(
+                      height: 40,
+                    ),
+            ),
           ],
         ),
       ],

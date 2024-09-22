@@ -193,6 +193,7 @@ class FarmLockDepositConfirmInfos extends ConsumerWidget {
                     digits: aedappfm.Responsive.isMobile(context) ? 2 : 8,
                     height: 20,
                     fiatTextStyleMedium: true,
+                    withOpacity: false,
                   ),
                   DexTokenBalance(
                     tokenBalance: (Decimal.parse(
@@ -207,6 +208,7 @@ class FarmLockDepositConfirmInfos extends ConsumerWidget {
                     withFiat: false,
                     height: 20,
                     fiatTextStyleMedium: true,
+                    withOpacity: false,
                   ),
                 ],
               ),

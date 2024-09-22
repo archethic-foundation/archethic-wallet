@@ -105,7 +105,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                         aedappfm.AppThemeBase.sheetBackground.withOpacity(0.2),
                     builder: (BuildContext context) {
                       return const FractionallySizedBox(
-                        heightFactor: 0.75,
+                        heightFactor: 0.90,
                         child: ReceiveModal(),
                       );
                     },

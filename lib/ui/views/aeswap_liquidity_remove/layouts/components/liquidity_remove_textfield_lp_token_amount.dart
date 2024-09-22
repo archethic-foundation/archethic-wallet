@@ -1,7 +1,5 @@
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_lp_token_fiat_value.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_token_balance.dart';
-import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/provider.dart';
+import 'package:aewallet/ui/views/aeswap_liquidity_remove/bloc/provider.dart';
 
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -9,18 +7,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FarmLockDepositAmount extends ConsumerStatefulWidget {
-  const FarmLockDepositAmount({
+class LiquidityRemoveLPTokenAmount extends ConsumerStatefulWidget {
+  const LiquidityRemoveLPTokenAmount({
     super.key,
   });
 
   @override
-  ConsumerState<FarmLockDepositAmount> createState() =>
-      _FarmLockDepositToken1AmountState();
+  ConsumerState<LiquidityRemoveLPTokenAmount> createState() =>
+      _LiquidityRemoveLPTokenAmountState();
 }
 
-class _FarmLockDepositToken1AmountState
-    extends ConsumerState<FarmLockDepositAmount> {
+class _LiquidityRemoveLPTokenAmountState
+    extends ConsumerState<LiquidityRemoveLPTokenAmount> {
   late TextEditingController tokenAmountController;
   late FocusNode tokenAmountFocusNode;
 
@@ -32,8 +30,8 @@ class _FarmLockDepositToken1AmountState
   }
 
   void _updateAmountTextController() {
-    final farmLockDeposit =
-        ref.read(FarmLockDepositFormProvider.farmLockDepositForm);
+    final liquidityRemove =
+        ref.read(LiquidityRemoveFormProvider.liquidityRemoveForm);
     tokenAmountController = TextEditingController();
     tokenAmountController.value = aedappfm.AmountTextInputFormatter(
       precision: 8,
@@ -42,9 +40,9 @@ class _FarmLockDepositToken1AmountState
     ).formatEditUpdate(
       TextEditingValue.empty,
       TextEditingValue(
-        text: farmLockDeposit.amount == 0
+        text: liquidityRemove.lpTokenAmount == 0
             ? ''
-            : farmLockDeposit.amount
+            : liquidityRemove.lpTokenAmount
                 .formatNumber(precision: 8)
                 .replaceAll(',', ''),
       ),
@@ -62,13 +60,13 @@ class _FarmLockDepositToken1AmountState
   Widget build(
     BuildContext context,
   ) {
-    final farmLockDepositNotifier =
-        ref.watch(FarmLockDepositFormProvider.farmLockDepositForm.notifier);
+    final liquidityRemoveNotifier =
+        ref.watch(LiquidityRemoveFormProvider.liquidityRemoveForm.notifier);
 
-    final farmLockDeposit =
-        ref.watch(FarmLockDepositFormProvider.farmLockDepositForm);
+    final liquidityRemove =
+        ref.watch(LiquidityRemoveFormProvider.liquidityRemoveForm);
     final textNum = double.tryParse(tokenAmountController.text);
-    if (!(farmLockDeposit.amount != 0.0 ||
+    if (!(liquidityRemove.lpTokenAmount != 0.0 ||
         tokenAmountController.text == '' ||
         (textNum != null && textNum == 0))) {
       _updateAmountTextController();
@@ -114,11 +112,11 @@ class _FarmLockDepositToken1AmountState
                             ),
                           ),
                           child: TextField(
-                            style: Theme.of(context).textTheme.titleMedium,
+                            style: Theme.of(context).textTheme.bodyMedium,
                             autocorrect: false,
                             controller: tokenAmountController,
                             onChanged: (text) async {
-                              farmLockDepositNotifier.setAmount(
+                              await liquidityRemoveNotifier.setLPTokenAmount(
                                 double.tryParse(text.replaceAll(',', '')) ?? 0,
                               );
                             },
@@ -134,15 +132,7 @@ class _FarmLockDepositToken1AmountState
                                 thousandsSeparator: ',',
                                 useUnifyDecimalSeparator: false,
                               ),
-                              LengthLimitingTextInputFormatter(
-                                farmLockDeposit.lpTokenBalance
-                                        .formatNumber(
-                                          precision: 0,
-                                        )
-                                        .length +
-                                    8 +
-                                    1,
-                              ),
+                              LengthLimitingTextInputFormatter(10),
                             ],
                             decoration: const InputDecoration(
                               border: InputBorder.none,
@@ -159,49 +149,30 @@ class _FarmLockDepositToken1AmountState
           ),
         ),
         Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                DexTokenBalance(
-                  tokenBalance: farmLockDeposit.lpTokenBalance,
-                  token: farmLockDeposit.pool!.lpToken,
-                  withFiat: false,
-                  fiatTextStyleMedium: true,
-                  withOpacity: false,
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                Opacity(
-                  opacity: AppTextStyles.kOpacityText,
-                  child: SelectableText(
-                    DEXLPTokenFiatValue().display(
-                      ref,
-                      farmLockDeposit.pool!.pair.token1,
-                      farmLockDeposit.pool!.pair.token2,
-                      farmLockDeposit.lpTokenBalance,
-                      farmLockDeposit.pool!.poolAddress,
-                    ),
-                    style: AppTextStyles.bodyMedium(context),
+            if (liquidityRemove.pool != null)
+              Row(
+                children: [
+                  DexTokenBalance(
+                    tokenBalance: liquidityRemove.lpTokenBalance,
+                    token: liquidityRemove.pool!.lpToken,
+                    pool: liquidityRemove.pool,
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 5,
-            ),
+                ],
+              ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 aedappfm.ButtonHalf(
-                  balanceAmount: farmLockDeposit.lpTokenBalance,
-                  onTap: () {
-                    ref
+                  balanceAmount: liquidityRemove.lpTokenBalance,
+                  onTap: () async {
+                    await ref
                         .read(
-                          FarmLockDepositFormProvider
-                              .farmLockDepositForm.notifier,
+                          LiquidityRemoveFormProvider
+                              .liquidityRemoveForm.notifier,
                         )
-                        .setAmountHalf();
+                        .setLpTokenAmountHalf();
                     _updateAmountTextController();
                   },
                 ),
@@ -209,14 +180,14 @@ class _FarmLockDepositToken1AmountState
                   width: 10,
                 ),
                 aedappfm.ButtonMax(
-                  balanceAmount: farmLockDeposit.lpTokenBalance,
-                  onTap: () {
-                    ref
+                  balanceAmount: liquidityRemove.lpTokenBalance,
+                  onTap: () async {
+                    await ref
                         .read(
-                          FarmLockDepositFormProvider
-                              .farmLockDepositForm.notifier,
+                          LiquidityRemoveFormProvider
+                              .liquidityRemoveForm.notifier,
                         )
-                        .setAmountMax();
+                        .setLpTokenAmountMax();
                     _updateAmountTextController();
                   },
                 ),

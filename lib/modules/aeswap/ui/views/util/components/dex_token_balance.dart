@@ -24,6 +24,7 @@ class DexTokenBalance extends ConsumerWidget {
     this.pool,
     this.digits = 8,
     this.styleResponsive = true,
+    this.withOpacity,
     super.key,
   });
 
@@ -37,6 +38,7 @@ class DexTokenBalance extends ConsumerWidget {
   final bool fiatAlignLeft;
   final bool fiatTextStyleMedium;
   final bool styleResponsive;
+  final bool? withOpacity;
 
   @override
   Widget build(
@@ -48,7 +50,9 @@ class DexTokenBalance extends ConsumerWidget {
         height: height,
       );
     }
-    var opacity = AppTextStyles.kOpacityText;
+    var opacity = withOpacity != null && withOpacity == false
+        ? 1.0
+        : AppTextStyles.kOpacityText;
     if (tokenBalance <= 0) {
       opacity = 0.5;
     }
@@ -73,9 +77,13 @@ class DexTokenBalance extends ConsumerWidget {
                     opacity: opacity,
                     child: SelectableText(
                       '${tokenBalance.formatNumber(precision: digits)} ${getSymbolDisplay(context, token!, tokenBalance)}',
-                      style: styleResponsive
-                          ? AppTextStyles.bodyLarge(context)
-                          : Theme.of(context).textTheme.bodyLarge!,
+                      style: fiatTextStyleMedium
+                          ? styleResponsive
+                              ? AppTextStyles.bodyMedium(context)
+                              : Theme.of(context).textTheme.bodyMedium!
+                          : styleResponsive
+                              ? AppTextStyles.bodyLarge(context)
+                              : Theme.of(context).textTheme.bodyLarge!,
                     ),
                   ),
                 ],

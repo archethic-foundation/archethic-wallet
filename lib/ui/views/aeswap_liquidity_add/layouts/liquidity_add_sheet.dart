@@ -67,6 +67,6 @@ class _LiquidityAddSheetState extends ConsumerState<LiquidityAddSheet> {
 
     return liquidityAddForm.processStep == ProcessStep.form
         ? const LiquidityAddFormSheet()
-        : const LiquidityConfirmFormSheet();
+        : const LiquidityAddConfirmFormSheet();
   }
 }

@@ -41,23 +41,20 @@ class LiquidityAddConfirmInfos extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Opacity(
-                opacity: AppTextStyles.kOpacityText,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SelectableText(
-                      AppLocalizations.of(context)!
-                          .liquidityAddConfirmInfosAmountTokens,
-                      style: AppTextStyles.bodyLarge(context),
-                    ),
-                    SelectableText(
-                      AppLocalizations.of(context)!
-                          .liquidityAddConfirmInfosMinAmount,
-                      style: AppTextStyles.bodyLarge(context),
-                    ),
-                  ],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SelectableText(
+                    AppLocalizations.of(context)!
+                        .liquidityAddConfirmInfosAmountTokens,
+                    style: AppTextStyles.bodyLarge(context),
+                  ),
+                  SelectableText(
+                    AppLocalizations.of(context)!
+                        .liquidityAddConfirmInfosMinAmount,
+                    style: AppTextStyles.bodyLarge(context),
+                  ),
+                ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -125,21 +122,18 @@ class LiquidityAddConfirmInfos extends ConsumerWidget {
               const SizedBox(
                 height: 10,
               ),
-              Opacity(
-                opacity: AppTextStyles.kOpacityText,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SelectableText(
-                      AppLocalizations.of(context)!.confirmBeforeLbl,
-                      style: AppTextStyles.bodyLarge(context),
-                    ),
-                    SelectableText(
-                      AppLocalizations.of(context)!.confirmAfterLbl,
-                      style: AppTextStyles.bodyLarge(context),
-                    ),
-                  ],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SelectableText(
+                    AppLocalizations.of(context)!.confirmBeforeLbl,
+                    style: AppTextStyles.bodyLarge(context),
+                  ),
+                  SelectableText(
+                    AppLocalizations.of(context)!.confirmAfterLbl,
+                    style: AppTextStyles.bodyLarge(context),
+                  ),
+                ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -219,17 +213,14 @@ class LiquidityAddConfirmInfos extends ConsumerWidget {
                   ),
                 ],
               ),
-              Opacity(
-                opacity: AppTextStyles.kOpacityText,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SelectableText(
-                      AppLocalizations.of(context)!.confirmBeforeLbl,
-                      style: AppTextStyles.bodyLarge(context),
-                    ),
-                  ],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SelectableText(
+                    AppLocalizations.of(context)!.confirmBeforeLbl,
+                    style: AppTextStyles.bodyLarge(context),
+                  ),
+                ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -243,17 +234,14 @@ class LiquidityAddConfirmInfos extends ConsumerWidget {
                   ),
                 ],
               ),
-              Opacity(
-                opacity: AppTextStyles.kOpacityText,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SelectableText(
-                      AppLocalizations.of(context)!.confirmAfterLbl,
-                      style: AppTextStyles.bodyLarge(context),
-                    ),
-                  ],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SelectableText(
+                    AppLocalizations.of(context)!.confirmAfterLbl,
+                    style: AppTextStyles.bodyLarge(context),
+                  ),
+                ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

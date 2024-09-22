@@ -1,10 +1,9 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/consent_uri.dart';
-import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/components/format_address_link_copy_big_icon.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/aeswap_swap/bloc/provider.dart';
-import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_confirm_infos.dart';
+import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_final_amount.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
@@ -16,22 +15,19 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class SwapConfirmFormSheet extends ConsumerStatefulWidget {
-  const SwapConfirmFormSheet({
+class SwapResultSheet extends ConsumerStatefulWidget {
+  const SwapResultSheet({
     super.key,
   });
 
-  static const String routerPage = '/swap_confirm';
+  static const String routerPage = '/swap_result';
 
   @override
-  ConsumerState<SwapConfirmFormSheet> createState() =>
-      SwapConfirmFormSheetState();
+  ConsumerState<SwapResultSheet> createState() => SwapResultSheetState();
 }
 
-class SwapConfirmFormSheetState extends ConsumerState<SwapConfirmFormSheet>
+class SwapResultSheetState extends ConsumerState<SwapResultSheet>
     implements SheetSkeletonInterface {
-  bool consentChecked = false;
-
   @override
   Widget build(BuildContext context) {
     final accountSelected = ref.watch(
@@ -51,21 +47,17 @@ class SwapConfirmFormSheetState extends ConsumerState<SwapConfirmFormSheet>
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    final swap = ref.watch(SwapFormProvider.swapForm);
     return Row(
       children: <Widget>[
         AppButtonTinyConnectivity(
-          AppLocalizations.of(context)!.btn_confirm_swap,
+          AppLocalizations.of(context)!.close,
           Dimens.buttonBottomDimens,
-          key: const Key('swap'),
+          key: const Key('close'),
           onPressed: () async {
-            await ref
-                .read(SwapFormProvider.swapForm.notifier)
-                .swap(context, ref);
+            context
+              ..pop()
+              ..pop();
           },
-          disabled: (!consentChecked && swap.consentDateTime == null) ||
-              swap.isProcessInProgress,
-          showProgressIndicator: swap.isProcessInProgress,
         ),
       ],
     );
@@ -77,13 +69,6 @@ class SwapConfirmFormSheetState extends ConsumerState<SwapConfirmFormSheet>
 
     return SheetAppBar(
       title: localizations.menu_swap,
-      widgetLeft: BackButton(
-        key: const Key('back'),
-        color: ArchethicTheme.text,
-        onPressed: () {
-          context.pop();
-        },
-      ),
     );
   }
 
@@ -95,33 +80,38 @@ class SwapConfirmFormSheetState extends ConsumerState<SwapConfirmFormSheet>
     }
 
     return SingleChildScrollView(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SwapConfirmInfos(),
-          const SizedBox(
-            height: 20,
-          ),
-          if (swap.consentDateTime == null)
-            aedappfm.ConsentToCheck(
-              consentChecked: consentChecked,
-              onToggleConsent: (newValue) {
-                setState(() {
-                  consentChecked = newValue!;
-                });
-              },
-              uriPrivacyPolicy: kURIPrivacyPolicy,
-              uriTermsOfUse: kURITermsOfUse,
-              style: AppTextStyles.bodyMedium(context),
-            )
-          else
-            aedappfm.ConsentAlready(
-              consentDateTime: swap.consentDateTime!,
-              uriPrivacyPolicy: kURIPrivacyPolicy,
-              uriTermsOfUse: kURITermsOfUse,
-              style: AppTextStyles.bodyMedium(context),
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              AppLocalizations.of(context)!.swapSuccessInfo,
+              style: AppTextStyles.bodyLarge(context).copyWith(
+                color: aedappfm.ArchethicThemeBase.systemPositive600,
+              ),
             ),
-        ],
+            const SizedBox(
+              height: 20,
+            ),
+            if (swap.recoveryTransactionSwap != null &&
+                swap.recoveryTransactionSwap!.address != null &&
+                swap.recoveryTransactionSwap!.address!.address != null)
+              FormatAddressLinkCopyBigIcon(
+                address: swap.recoveryTransactionSwap!.address!.address!
+                    .toUpperCase(),
+                header: AppLocalizations.of(context)!.swapInProgressTxAddresses,
+                typeAddress: TypeAddressLinkCopyBigIcon.transaction,
+                reduceAddress: true,
+                fontSize: 16,
+                iconSize: 26,
+              ),
+            const SizedBox(
+              height: 20,
+            ),
+            const SwapFinalAmount(),
+          ],
+        ),
       ),
     );
   }

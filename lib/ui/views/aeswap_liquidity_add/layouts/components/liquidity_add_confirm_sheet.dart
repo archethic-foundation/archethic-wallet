@@ -14,18 +14,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LiquidityConfirmFormSheet extends ConsumerStatefulWidget {
-  const LiquidityConfirmFormSheet({
+class LiquidityAddConfirmFormSheet extends ConsumerStatefulWidget {
+  const LiquidityAddConfirmFormSheet({
     super.key,
   });
 
   @override
-  ConsumerState<LiquidityConfirmFormSheet> createState() =>
-      LiquidityConfirmFormSheetState();
+  ConsumerState<LiquidityAddConfirmFormSheet> createState() =>
+      LiquidityAddConfirmFormSheetState();
 }
 
-class LiquidityConfirmFormSheetState
-    extends ConsumerState<LiquidityConfirmFormSheet>
+class LiquidityAddConfirmFormSheetState
+    extends ConsumerState<LiquidityAddConfirmFormSheet>
     implements SheetSkeletonInterface {
   bool consentChecked = false;
 

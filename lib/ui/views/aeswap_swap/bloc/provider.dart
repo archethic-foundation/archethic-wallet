@@ -15,6 +15,7 @@ import 'package:aewallet/modules/aeswap/util/browser_util_desktop.dart'
     if (dart.library.js) 'package:aewallet/modules/aeswap/util/browser_util_web.dart';
 import 'package:aewallet/ui/views/aeswap_swap/bloc/state.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_confirm_sheet.dart';
+import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_result_sheet.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
@@ -652,7 +653,8 @@ class SwapFormNotifier extends Notifier<SwapFormState>
   }
 
   void setRecoveryTransactionSwap(
-      archethic.Transaction? recoveryTransactionSwap) {
+    archethic.Transaction? recoveryTransactionSwap,
+  ) {
     state = state.copyWith(recoveryTransactionSwap: recoveryTransactionSwap);
   }
 
@@ -840,6 +842,7 @@ class SwapFormNotifier extends Notifier<SwapFormState>
         state.slippageTolerance,
       );
     }
+    await context.push(SwapResultSheet.routerPage);
   }
 }
 
