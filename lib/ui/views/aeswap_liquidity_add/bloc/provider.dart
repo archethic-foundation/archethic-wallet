@@ -12,6 +12,7 @@ import 'package:aewallet/modules/aeswap/infrastructure/pool_factory.repository.d
 import 'package:aewallet/modules/aeswap/util/browser_util_desktop.dart'
     if (dart.library.js) 'package:aewallet/modules/aeswap/util/browser_util_web.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/bloc/state.dart';
+import 'package:aewallet/ui/views/aeswap_liquidity_add/layouts/components/liquidity_add_result_sheet.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
@@ -19,6 +20,7 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 final _liquidityAddFormProvider = NotifierProvider.autoDispose<
     LiquidityAddFormNotifier, LiquidityAddFormState>(
@@ -108,7 +110,8 @@ class LiquidityAddFormNotifier
   }
 
   void setTransactionAddLiquidity(
-      archethic.Transaction transactionAddLiquidity) {
+    archethic.Transaction transactionAddLiquidity,
+  ) {
     state = state.copyWith(transactionAddLiquidity: transactionAddLiquidity);
   }
 
@@ -583,6 +586,8 @@ class LiquidityAddFormNotifier
         state.pool!.lpToken,
       );
     }
+
+    await context.push(LiquidityAddResultSheet.routerPage);
   }
 }
 

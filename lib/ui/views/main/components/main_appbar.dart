@@ -12,6 +12,7 @@ import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/accounts/layouts/account_list.dart';
 import 'package:aewallet/ui/views/accounts/layouts/components/add_account_button.dart';
+import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_icon_refresh.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -86,7 +87,9 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
               await preferencesNotifier
                   .setShowBalances(!preferences.showBalances);
             },
-          ),
+          )
+        else if (preferences.mainScreenCurrentPage == 2)
+          const SwapTokenIconRefresh(),
         if (connectivityStatusProvider == ConnectivityStatus.isDisconnected)
           const IconNetworkWarning(),
       ],

@@ -47,22 +47,27 @@ class _SwapTokenIconRefreshState extends ConsumerState<SwapTokenIconRefresh> {
           ),
         );
         final apiService = aedappfm.sl.get<ApiService>();
-        final balanceToSwap = await ref.read(
-          getBalanceProvider(
-            accountSelected!.genesisAddress,
-            swap.tokenToSwap!.isUCO ? 'UCO' : swap.tokenToSwap!.address!,
-            apiService,
-          ).future,
-        );
-        swapNotifier.setTokenToSwapBalance(balanceToSwap);
-        final balanceSwapped = await ref.read(
-          getBalanceProvider(
-            accountSelected.genesisAddress,
-            swap.tokenSwapped!.isUCO ? 'UCO' : swap.tokenSwapped!.address!,
-            apiService,
-          ).future,
-        );
-        swapNotifier.setTokenSwappedBalance(balanceSwapped);
+        if (swap.tokenToSwap != null) {
+          final balanceToSwap = await ref.read(
+            getBalanceProvider(
+              accountSelected!.genesisAddress,
+              swap.tokenToSwap!.isUCO ? 'UCO' : swap.tokenToSwap!.address!,
+              apiService,
+            ).future,
+          );
+          swapNotifier.setTokenToSwapBalance(balanceToSwap);
+        }
+
+        if (swap.tokenSwapped != null) {
+          final balanceSwapped = await ref.read(
+            getBalanceProvider(
+              accountSelected!.genesisAddress,
+              swap.tokenSwapped!.isUCO ? 'UCO' : swap.tokenSwapped!.address!,
+              apiService,
+            ).future,
+          );
+          swapNotifier.setTokenSwappedBalance(balanceSwapped);
+        }
 
         if (swap.tokenToSwap != null && swap.tokenSwapped != null) {
           await swapNotifier.calculateSwapInfos(
@@ -90,8 +95,10 @@ class _SwapTokenIconRefreshState extends ConsumerState<SwapTokenIconRefresh> {
           child: Card(
             shape: RoundedRectangleBorder(
               side: BorderSide(
-                color: aedappfm.ArchethicThemeBase.brightPurpleHoverBorder
-                    .withOpacity(1),
+                color: isRefreshSuccess != null && isRefreshSuccess == true
+                    ? aedappfm.ArchethicThemeBase.brightPurpleHoverBorder
+                        .withOpacity(1)
+                    : Colors.transparent,
                 width: 0.5,
               ),
               borderRadius: BorderRadius.circular(20),
@@ -99,8 +106,7 @@ class _SwapTokenIconRefreshState extends ConsumerState<SwapTokenIconRefresh> {
             elevation: 0,
             color: isRefreshSuccess != null && isRefreshSuccess == true
                 ? aedappfm.ArchethicThemeBase.systemPositive600
-                : aedappfm.ArchethicThemeBase.brightPurpleHoverBackground
-                    .withOpacity(1),
+                : Colors.transparent,
             child: Padding(
               padding: const EdgeInsets.only(
                 top: 5,

@@ -93,7 +93,7 @@ class FarmLockDepositConfirmSheetState
         ref.watch(FarmLockDepositFormProvider.farmLockDepositForm.notifier);
 
     return SheetAppBar(
-      title: localizations.farmLockDepositConfirmTitle,
+      title: localizations.farmLockDepositFormTitle,
       widgetLeft: BackButton(
         key: const Key('back'),
         color: ArchethicTheme.text,

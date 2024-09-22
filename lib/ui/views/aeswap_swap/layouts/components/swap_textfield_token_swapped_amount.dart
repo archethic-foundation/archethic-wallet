@@ -71,9 +71,38 @@ class _SwapTokenSwappedAmountState
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        SelectableText(
-          AppLocalizations.of(context)!.swapToEstimatedLbl,
-          style: AppTextStyles.bodyMedium(context),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SelectableText(
+              AppLocalizations.of(context)!.swapToEstimatedLbl,
+              style: AppTextStyles.bodyMedium(context),
+            ),
+            if (swap.tokenSwapped != null)
+              if (swap.calculationInProgress == false)
+                FutureBuilder<String>(
+                  future: FiatValue().display(
+                    ref,
+                    swap.tokenSwapped!,
+                    swap.tokenSwappedAmount,
+                    withParenthesis: false,
+                  ),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return SelectableText(
+                        snapshot.data!,
+                        style: Theme.of(context).textTheme.bodySmall,
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
+                )
+              else
+                Container(
+                  padding:
+                      const EdgeInsets.only(top: 10, bottom: 10, right: 15),
+                ),
+          ],
         ),
         Stack(
           alignment: Alignment.centerLeft,
@@ -119,12 +148,8 @@ class _SwapTokenSwappedAmountState
                                     ),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsets.only(
-                                      left:
-                                          aedappfm.Responsive.isMobile(context)
-                                              ? 110
-                                              : 160,
-                                      right: 70,
+                                    padding: const EdgeInsets.only(
+                                      right: 5,
                                     ),
                                     child: swap.calculateAmountSwapped
                                         ? const SizedBox(
@@ -146,7 +171,7 @@ class _SwapTokenSwappedAmountState
                                         : TextField(
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .bodyMedium,
+                                                .bodyLarge,
                                             autocorrect: false,
                                             controller: tokenAmountController,
                                             onChanged: (text) async {
@@ -164,7 +189,7 @@ class _SwapTokenSwappedAmountState
                                               swapNotifier
                                                   .setTokenFormSelected(2);
                                             },
-                                            textAlign: TextAlign.left,
+                                            textAlign: TextAlign.right,
                                             textInputAction:
                                                 TextInputAction.done,
                                             keyboardType: const TextInputType
@@ -203,40 +228,6 @@ class _SwapTokenSwappedAmountState
                     ],
                   ),
                 ),
-                if (swap.tokenSwapped != null)
-                  if (swap.calculationInProgress == false)
-                    Positioned(
-                      top: 17,
-                      right: aedappfm.Responsive.isMobile(context) ? 5 : 10,
-                      child: FutureBuilder<String>(
-                        future: FiatValue().display(
-                          ref,
-                          swap.tokenSwapped!,
-                          swap.tokenSwappedAmount,
-                        ),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return SelectableText(
-                              snapshot.data!,
-                              style: Theme.of(context).textTheme.bodySmall,
-                            );
-                          }
-                          return const SizedBox.shrink();
-                        },
-                      ),
-                    )
-                  else
-                    Container(
-                      padding:
-                          const EdgeInsets.only(top: 10, bottom: 10, right: 15),
-                      child: const SizedBox(
-                        height: 15,
-                        width: 15,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 1,
-                        ),
-                      ),
-                    ),
               ],
             ),
             const Padding(
@@ -259,17 +250,11 @@ class _SwapTokenSwappedAmountState
                     ? 2
                     : 8,
                 fiatTextStyleMedium: true,
+                withOpacity: false,
               )
             else
-              Container(
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
-                child: const SizedBox(
-                  height: 10,
-                  width: 10,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 1,
-                  ),
-                ),
+              const SizedBox(
+                height: 30,
               ),
             /*if (swap.tokenSwappedBalance > 0)
               Row(

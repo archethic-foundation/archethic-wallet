@@ -1,10 +1,9 @@
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/consent_uri.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/views/aeswap_swap/bloc/provider.dart';
-import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_confirm_infos.dart';
+import 'package:aewallet/ui/views/aeswap_liquidity_remove/bloc/provider.dart';
+import 'package:aewallet/ui/views/aeswap_liquidity_remove/layouts/components/liquidity_remove_confirm_infos.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
@@ -14,21 +13,19 @@ import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutte
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
-class SwapConfirmFormSheet extends ConsumerStatefulWidget {
-  const SwapConfirmFormSheet({
+class LiquidityRemoveConfirmFormSheet extends ConsumerStatefulWidget {
+  const LiquidityRemoveConfirmFormSheet({
     super.key,
   });
 
-  static const String routerPage = '/swap_confirm';
-
   @override
-  ConsumerState<SwapConfirmFormSheet> createState() =>
-      SwapConfirmFormSheetState();
+  ConsumerState<LiquidityRemoveConfirmFormSheet> createState() =>
+      LiquidityRemoveConfirmFormSheetState();
 }
 
-class SwapConfirmFormSheetState extends ConsumerState<SwapConfirmFormSheet>
+class LiquidityRemoveConfirmFormSheetState
+    extends ConsumerState<LiquidityRemoveConfirmFormSheet>
     implements SheetSkeletonInterface {
   bool consentChecked = false;
 
@@ -51,21 +48,23 @@ class SwapConfirmFormSheetState extends ConsumerState<SwapConfirmFormSheet>
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    final swap = ref.watch(SwapFormProvider.swapForm);
+    final liquidityRemove =
+        ref.watch(LiquidityRemoveFormProvider.liquidityRemoveForm);
     return Row(
       children: <Widget>[
         AppButtonTinyConnectivity(
-          AppLocalizations.of(context)!.btn_confirm_swap,
+          AppLocalizations.of(context)!.btn_confirm_liquidity_remove,
           Dimens.buttonBottomDimens,
-          key: const Key('swap'),
+          key: const Key('removeLiquidity'),
           onPressed: () async {
             await ref
-                .read(SwapFormProvider.swapForm.notifier)
-                .swap(context, ref);
+                .read(LiquidityRemoveFormProvider.liquidityRemoveForm.notifier)
+                .remove(context, ref);
           },
-          disabled: (!consentChecked && swap.consentDateTime == null) ||
-              swap.isProcessInProgress,
-          showProgressIndicator: swap.isProcessInProgress,
+          disabled:
+              (!consentChecked && liquidityRemove.consentDateTime == null) ||
+                  liquidityRemove.isProcessInProgress,
+          showProgressIndicator: liquidityRemove.isProcessInProgress,
         ),
       ],
     );
@@ -74,14 +73,18 @@ class SwapConfirmFormSheetState extends ConsumerState<SwapConfirmFormSheet>
   @override
   PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
+    final liquidityRemoveNotifier =
+        ref.watch(LiquidityRemoveFormProvider.liquidityRemoveForm.notifier);
 
     return SheetAppBar(
-      title: localizations.menu_swap,
+      title: localizations.removeLiquidity,
       widgetLeft: BackButton(
         key: const Key('back'),
         color: ArchethicTheme.text,
         onPressed: () {
-          context.pop();
+          liquidityRemoveNotifier.setLiquidityRemoveProcessStep(
+            aedappfm.ProcessStep.form,
+          );
         },
       ),
     );
@@ -89,8 +92,9 @@ class SwapConfirmFormSheetState extends ConsumerState<SwapConfirmFormSheet>
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final swap = ref.watch(SwapFormProvider.swapForm);
-    if (swap.tokenToSwap == null || swap.tokenSwapped == null) {
+    final liquidityRemove =
+        ref.watch(LiquidityRemoveFormProvider.liquidityRemoveForm);
+    if (liquidityRemove.lpToken == null) {
       return const SizedBox.shrink();
     }
 
@@ -98,11 +102,11 @@ class SwapConfirmFormSheetState extends ConsumerState<SwapConfirmFormSheet>
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const SwapConfirmInfos(),
+          const LiquidityRemoveConfirmInfos(),
           const SizedBox(
             height: 20,
           ),
-          if (swap.consentDateTime == null)
+          if (liquidityRemove.consentDateTime == null)
             aedappfm.ConsentToCheck(
               consentChecked: consentChecked,
               onToggleConsent: (newValue) {
@@ -112,14 +116,12 @@ class SwapConfirmFormSheetState extends ConsumerState<SwapConfirmFormSheet>
               },
               uriPrivacyPolicy: kURIPrivacyPolicy,
               uriTermsOfUse: kURITermsOfUse,
-              style: AppTextStyles.bodyMedium(context),
             )
           else
             aedappfm.ConsentAlready(
-              consentDateTime: swap.consentDateTime!,
+              consentDateTime: liquidityRemove.consentDateTime!,
               uriPrivacyPolicy: kURIPrivacyPolicy,
               uriTermsOfUse: kURITermsOfUse,
-              style: AppTextStyles.bodyMedium(context),
             ),
         ],
       ),

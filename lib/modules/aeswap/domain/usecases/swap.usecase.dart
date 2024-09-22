@@ -121,6 +121,8 @@ class SwapCase with aedappfm.TransactionMixin {
         selectedAccount.name,
       );
 
+      swapNotifier.setRecoveryTransactionSwap(transationSignedRaw);
+
       await transactionRepository.sendSignedRaw(
         transactionSignedRaw: transationSignedRaw,
         onConfirmation: (sender, confirmation) async {
@@ -154,6 +156,8 @@ class SwapCase with aedappfm.TransactionMixin {
               until: (amount) => amount > 0,
               timeout: const Duration(minutes: 1),
             );
+
+            swapNotifier.setFinalAmount(amount);
 
             notificationService.succeed(
               operationId,
@@ -216,11 +220,6 @@ class SwapCase with aedappfm.TransactionMixin {
         aedappfm.Failure.other(
           cause: e.toString().replaceAll('Exception: ', '').capitalize(),
         ),
-      );
-
-      notificationService.failed(
-        operationId,
-        aedappfm.Failure.fromError(e),
       );
       throw aedappfm.Failure.fromError(e);
     }

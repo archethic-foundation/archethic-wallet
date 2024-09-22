@@ -10,6 +10,7 @@ import 'package:aewallet/ui/views/aeswap_earn/layouts/components/earn_farm_lock_
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/farm_lock_block_farmed_tokens_summary.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/farm_lock_deposit_sheet.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/layouts/liquidity_add_sheet.dart';
+import 'package:aewallet/ui/views/aeswap_liquidity_remove/layouts/liquidity_remove_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -96,77 +97,96 @@ class EarnTabState extends ConsumerState<EarnTab> {
                                       ],
                                     ),
                                     if (earnForm.lpTokenBalance != 0)
-                                      InkWell(
-                                        child: Container(
-                                          height: 36,
-                                          width: 36,
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                            gradient: aedappfm
-                                                .AppThemeBase.gradientBtn,
-                                            shape: BoxShape.circle,
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          InkWell(
+                                            child: Container(
+                                              height: 36,
+                                              width: 36,
+                                              alignment: Alignment.center,
+                                              decoration: BoxDecoration(
+                                                gradient: aedappfm
+                                                    .AppThemeBase.gradientBtn,
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: const Icon(
+                                                aedappfm.Iconsax.import4,
+                                                size: 18,
+                                              ),
+                                            ),
+                                            onTap: () async {
+                                              final poolJson = jsonEncode(
+                                                earnForm.pool!.toJson(),
+                                              );
+                                              final poolEncoded =
+                                                  Uri.encodeComponent(poolJson);
+                                              await context.push(
+                                                Uri(
+                                                  path: LiquidityAddSheet
+                                                      .routerPage,
+                                                  queryParameters: {
+                                                    'pool': poolEncoded,
+                                                  },
+                                                ).toString(),
+                                              );
+                                            },
                                           ),
-                                          child: const Icon(
-                                            aedappfm.Iconsax.import4,
-                                            size: 18,
+                                          const SizedBox(
+                                            width: 10,
                                           ),
-                                        ),
-                                        onTap: () async {
-                                          final poolJson = jsonEncode(
-                                            earnForm.pool!.toJson(),
-                                          );
-                                          final poolEncoded =
-                                              Uri.encodeComponent(poolJson);
-                                          await context.push(
-                                            Uri(
-                                              path:
-                                                  LiquidityAddSheet.routerPage,
-                                              queryParameters: {
-                                                'pool': poolEncoded,
-                                              },
-                                            ).toString(),
-                                          );
-                                        },
+                                          InkWell(
+                                            child: Container(
+                                              height: 36,
+                                              width: 36,
+                                              alignment: Alignment.center,
+                                              decoration: BoxDecoration(
+                                                gradient: aedappfm
+                                                    .AppThemeBase.gradientBtn,
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: const Icon(
+                                                aedappfm.Iconsax.export4,
+                                                size: 18,
+                                              ),
+                                            ),
+                                            onTap: () async {
+                                              final poolJson = jsonEncode(
+                                                earnForm.pool!.toJson(),
+                                              );
+                                              final pairJson = jsonEncode(
+                                                earnForm.pool!.pair.toJson(),
+                                              );
+                                              final lpTokenJson = jsonEncode(
+                                                earnForm.pool!.lpToken.toJson(),
+                                              );
+                                              final poolEncoded =
+                                                  Uri.encodeComponent(poolJson);
+                                              final pairEncoded =
+                                                  Uri.encodeComponent(pairJson);
+                                              final lpTokenEncoded =
+                                                  Uri.encodeComponent(
+                                                lpTokenJson,
+                                              );
+                                              await context.push(
+                                                Uri(
+                                                  path: LiquidityRemoveSheet
+                                                      .routerPage,
+                                                  queryParameters: {
+                                                    'pool': poolEncoded,
+                                                    'pair': pairEncoded,
+                                                    'lpToken': lpTokenEncoded,
+                                                  },
+                                                ).toString(),
+                                              );
+                                            },
+                                          ),
+                                        ],
                                       ),
                                   ],
                                 ),
                               ),
-                              if (earnForm.lpTokenBalance == 0)
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      localizations.earnHeaderAddLiquidityTxt,
-                                      style: ArchethicThemeStyles
-                                          .textStyleSize14W200Primary,
-                                    ),
-                                    Row(
-                                      children: [
-                                        AppButtonTinyConnectivity(
-                                          localizations.addLiquidity,
-                                          Dimens.buttonBottomDimens,
-                                          key: const Key('addLiquidity'),
-                                          onPressed: () async {
-                                            final poolJson = jsonEncode(
-                                              earnForm.pool!.toJson(),
-                                            );
-                                            final poolEncoded =
-                                                Uri.encodeComponent(poolJson);
-                                            await context.push(
-                                              Uri(
-                                                path: LiquidityAddSheet
-                                                    .routerPage,
-                                                queryParameters: {
-                                                  'pool': poolEncoded,
-                                                },
-                                              ).toString(),
-                                            );
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
                               const SizedBox(
                                 height: 20,
                               ),

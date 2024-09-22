@@ -11,6 +11,7 @@ import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.da
 import 'package:aewallet/modules/aeswap/util/browser_util_desktop.dart'
     if (dart.library.js) 'package:aewallet/modules/aeswap/util/browser_util_web.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/state.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_result_sheet.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
@@ -18,6 +19,7 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 final _farmLockDepositFormProvider = NotifierProvider.autoDispose<
     FarmLockDepositFormNotifier, FarmLockDepositFormState>(
@@ -52,7 +54,8 @@ class FarmLockDepositFormNotifier
   }
 
   void setTransactionFarmLockDeposit(
-      archethic.Transaction transactionFarmLockDeposit) {
+    archethic.Transaction transactionFarmLockDeposit,
+  ) {
     state =
         state.copyWith(transactionFarmLockDeposit: transactionFarmLockDeposit);
   }
@@ -267,6 +270,8 @@ class FarmLockDepositFormNotifier
         state.level,
       );
     }
+
+    await context.push(FarmLockDepositResultSheet.routerPage);
   }
 }
 

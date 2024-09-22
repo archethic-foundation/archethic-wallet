@@ -11,7 +11,7 @@ import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/util/notification_service/task_notification_service.dart'
     as ns;
 import 'package:aewallet/modules/aeswap/util/string_util.dart';
-import 'package:aewallet/ui/views/aeswap_liquidity_add/bloc/provider.dart';
+import 'package:aewallet/ui/views/aeswap_liquidity_remove/bloc/provider.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
@@ -20,46 +20,47 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
-class AddLiquidityCase with aedappfm.TransactionMixin {
+const logName = 'RemoveLiquidityCase';
+
+class RemoveLiquidityCase with aedappfm.TransactionMixin {
   Future<void> run(
     TransactionRemoteRepositoryInterface transactionRepository,
+    String poolGenesisAddress,
     WidgetRef ref,
     BuildContext context,
     ns.TaskNotificationService<DexNotification, aedappfm.Failure>
         notificationService,
-    String poolGenesisAddress,
+    String lpTokenAddress,
+    double lpTokenAmount,
     DexToken token1,
-    double token1Amount,
     DexToken token2,
-    double token2Amount,
-    double slippage,
     DexToken lpToken,
   ) async {
     final operationId = const Uuid().v4();
     final archethicContract = ArchethicContract();
-    final liquidityAddNotifier =
-        ref.read(LiquidityAddFormProvider.liquidityAddForm.notifier);
+    final liquidityRemoveNotifier =
+        ref.read(LiquidityRemoveFormProvider.liquidityRemoveForm.notifier);
 
-    archethic.Transaction? transactionAddLiquidity;
-    liquidityAddNotifier.setFinalAmount(null);
+    archethic.Transaction? transactionRemoveLiquidity;
+    liquidityRemoveNotifier
+      ..setFinalAmountToken1(null)
+      ..setFinalAmountToken2(null)
+      ..setFinalAmountLPToken(null);
 
     try {
       final transactionAddLiquiditylMap =
-          await archethicContract.getAddLiquidityTx(
-        token1,
-        token1Amount,
-        token2,
-        token2Amount,
+          await archethicContract.getRemoveLiquidityTx(
+        lpTokenAddress,
+        lpTokenAmount,
         poolGenesisAddress,
-        slippage,
       );
 
       transactionAddLiquiditylMap.map(
         success: (success) {
-          transactionAddLiquidity = success;
+          transactionRemoveLiquidity = success;
         },
         failure: (failure) {
-          liquidityAddNotifier
+          liquidityRemoveNotifier
             ..setFailure(failure)
             ..setProcessInProgress(false);
           throw failure;
@@ -69,7 +70,6 @@ class AddLiquidityCase with aedappfm.TransactionMixin {
       throw aedappfm.Failure.fromError(e);
     }
 
-    liquidityAddNotifier.setCurrentStep(2);
     try {
       final keychainSecuredInfos = ref
           .read(sessionNotifierProvider)
@@ -86,12 +86,13 @@ class AddLiquidityCase with aedappfm.TransactionMixin {
       final transationSignedRaw =
           await transactionRepository.buildTransactionRaw(
         keychainSecuredInfos,
-        transactionAddLiquidity!,
+        transactionRemoveLiquidity!,
         selectedAccount!.lastAddress!,
         selectedAccount.name,
       );
 
-      liquidityAddNotifier.setTransactionAddLiquidity(transationSignedRaw);
+      liquidityRemoveNotifier
+          .setTransactionRemoveLiquidity(transationSignedRaw);
 
       await transactionRepository.sendSignedRaw(
         transactionSignedRaw: transationSignedRaw,
@@ -99,47 +100,75 @@ class AddLiquidityCase with aedappfm.TransactionMixin {
           if (archethic.TransactionConfirmation.isEnoughConfirmations(
             confirmation.nbConfirmations,
             confirmation.maxConfirmations,
-            TransactionValidationRatios.addLiquidity,
+            TransactionValidationRatios.removeLiquidity,
           )) {
             sender.close();
 
-            liquidityAddNotifier
+            liquidityRemoveNotifier
               ..setResumeProcess(false)
               ..setProcessInProgress(false)
-              ..setLiquidityAddOk(true);
+              ..setLiquidityRemoveOk(true);
 
             notificationService.start(
               operationId,
-              DexNotification.addLiquidity(
+              DexNotification.removeLiquidity(
                 txAddress: transationSignedRaw.address!.address,
               ),
             );
 
-            final amount = await aedappfm.PeriodicFuture.periodic<double>(
-              () => getAmountFromTxInput(
-                transationSignedRaw.address!.address!,
-                lpToken.address,
-                aedappfm.sl.get<archethic.ApiService>(),
-              ),
+            final amounts =
+                await aedappfm.PeriodicFuture.periodic<List<double>>(
+              () => Future.wait([
+                getAmountFromTxInput(
+                  transationSignedRaw.address!.address!,
+                  token1.address,
+                  aedappfm.sl.get<archethic.ApiService>(),
+                ),
+                getAmountFromTxInput(
+                  transationSignedRaw.address!.address!,
+                  token2.address,
+                  aedappfm.sl.get<archethic.ApiService>(),
+                ),
+                getAmountFromTx(
+                  aedappfm.sl.get<archethic.ApiService>(),
+                  transationSignedRaw.address!.address!,
+                  false,
+                  '00000000000000000000000000000000000000000000000000000000000000000000',
+                ),
+              ]),
               sleepDuration: const Duration(seconds: 3),
-              until: (amount) => amount > 0,
+              until: (amounts) {
+                final amountToken1 = amounts[0];
+                final amountToken2 = amounts[1];
+                final amountLPToken = amounts[2];
+                return amountToken1 > 0 &&
+                    amountToken2 > 0 &&
+                    amountLPToken > 0;
+              },
               timeout: const Duration(minutes: 1),
             );
 
-            liquidityAddNotifier.setFinalAmount(amount);
+            final amountToken1 = amounts[0];
+            final amountToken2 = amounts[1];
+            final amountLPToken = amounts[2];
+
+            liquidityRemoveNotifier
+              ..setFinalAmountToken1(amountToken1)
+              ..setFinalAmountToken2(amountToken2)
+              ..setFinalAmountLPToken(amountLPToken);
 
             notificationService.succeed(
               operationId,
-              DexNotification.addLiquidity(
+              DexNotification.removeLiquidity(
                 txAddress: transationSignedRaw.address!.address,
+                token1: token1,
+                token2: token2,
                 lpToken: lpToken,
-                amount: amount,
+                amountToken1: amountToken1,
+                amountToken2: amountToken2,
+                amountLPToken: amountLPToken,
               ),
             );
-
-            unawaited(() async {
-              await refreshCurrentAccountInfoWallet();
-            }());
           }
         },
         onError: (sender, error) async {
@@ -151,10 +180,10 @@ class AddLiquidityCase with aedappfm.TransactionMixin {
       );
     } catch (e) {
       if (e is aedappfm.Failure) {
-        liquidityAddNotifier.setFailure(e);
+        liquidityRemoveNotifier.setFailure(e);
         throw aedappfm.Failure.fromError(e);
       }
-      liquidityAddNotifier.setFailure(
+      liquidityRemoveNotifier.setFailure(
         aedappfm.Failure.other(
           cause: e.toString().replaceAll('Exception: ', '').capitalize(),
         ),
@@ -168,70 +197,19 @@ class AddLiquidityCase with aedappfm.TransactionMixin {
     }
   }
 
-  Future<double> estimateFees(
-    String poolGenesisAddress,
-    DexToken token1,
-    double token1Amount,
-    DexToken token2,
-    double token2Amount,
-    double slippage,
-  ) async {
-    //final apiService = aedappfm.sl.get<archethic.ApiService>();
-    final archethicContract = ArchethicContract();
-    archethic.Transaction? transactionAddLiquidity;
-
-    try {
-      final transactionAddLiquiditylMap =
-          await archethicContract.getAddLiquidityTx(
-        token1,
-        token1Amount,
-        token2,
-        token2Amount,
-        poolGenesisAddress,
-        slippage,
-      );
-
-      transactionAddLiquiditylMap.map(
-        success: (success) {
-          transactionAddLiquidity = success;
-          // Add fake signature and address to allow estimation by node
-          transactionAddLiquidity = transactionAddLiquidity!.copyWith(
-            address: const archethic.Address(
-              address:
-                  '00000000000000000000000000000000000000000000000000000000000000000000',
-            ),
-            previousPublicKey:
-                '00000000000000000000000000000000000000000000000000000000000000000000',
-          );
-        },
-        failure: (failure) {
-          return 0.0;
-        },
-      );
-    } catch (e) {
-      return 0.0;
-    }
-
-    final fees = await calculateFees(
-      transactionAddLiquidity!,
-      aedappfm.sl.get<archethic.ApiService>(),
-    );
-    return fees;
-  }
-
   String getAEStepLabel(
     BuildContext context,
     int step,
   ) {
     switch (step) {
       case 1:
-        return AppLocalizations.of(context)!.addLiquidityProcessStep1;
+        return AppLocalizations.of(context)!.removeLiquidityProcessStep1;
       case 2:
-        return AppLocalizations.of(context)!.addLiquidityProcessStep2;
+        return AppLocalizations.of(context)!.removeLiquidityProcessStep2;
       case 3:
-        return AppLocalizations.of(context)!.addLiquidityProcessStep3;
+        return AppLocalizations.of(context)!.removeLiquidityProcessStep3;
       default:
-        return AppLocalizations.of(context)!.addLiquidityProcessStep0;
+        return AppLocalizations.of(context)!.removeLiquidityProcessStep0;
     }
   }
 }

@@ -3,6 +3,7 @@ import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_price_impac
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_token_balance.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/fiat_value.dart';
 import 'package:aewallet/ui/views/aeswap_swap/bloc/provider.dart';
+import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_icon_info.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:decimal/decimal.dart';
@@ -42,23 +43,19 @@ class SwapConfirmInfos extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Opacity(
-                opacity: AppTextStyles.kOpacityText,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SelectableText(
-                      AppLocalizations.of(context)!
-                          .swapConfirmInfosAmountTokens,
-                      style: AppTextStyles.bodyMedium(context),
-                    ),
-                    SelectableText(
-                      AppLocalizations.of(context)!
-                          .swapConfirmInfosAmountMinReceived,
-                      style: AppTextStyles.bodyMedium(context),
-                    ),
-                  ],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SelectableText(
+                    AppLocalizations.of(context)!.swapConfirmInfosAmountTokens,
+                    style: AppTextStyles.bodyMedium(context),
+                  ),
+                  SelectableText(
+                    AppLocalizations.of(context)!
+                        .swapConfirmInfosAmountMinReceived,
+                    style: AppTextStyles.bodyMedium(context),
+                  ),
+                ],
               ),
               Tooltip(
                 message: swap.tokenToSwap!.symbol,
@@ -107,12 +104,9 @@ class SwapConfirmInfos extends ConsumerWidget {
                     children: [
                       Tooltip(
                         message: swap.tokenSwapped!.symbol,
-                        child: Opacity(
-                          opacity: AppTextStyles.kOpacityText,
-                          child: SelectableText(
-                            '${swap.minToReceive.formatNumber(precision: 8)} ${swap.tokenSwapped!.symbol.reduceSymbol()}',
-                            style: AppTextStyles.bodyMedium(context),
-                          ),
+                        child: SelectableText(
+                          '${swap.minToReceive.formatNumber(precision: 8)} ${swap.tokenSwapped!.symbol.reduceSymbol()}',
+                          style: AppTextStyles.bodyMedium(context),
                         ),
                       ),
                       FutureBuilder<String>(
@@ -123,12 +117,9 @@ class SwapConfirmInfos extends ConsumerWidget {
                         ),
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
-                            return Opacity(
-                              opacity: AppTextStyles.kOpacityText,
-                              child: SelectableText(
-                                snapshot.data!,
-                                style: AppTextStyles.bodyMedium(context),
-                              ),
+                            return SelectableText(
+                              snapshot.data!,
+                              style: AppTextStyles.bodyMedium(context),
                             );
                           }
                           return const SizedBox.shrink();
@@ -150,21 +141,18 @@ class SwapConfirmInfos extends ConsumerWidget {
               const SizedBox(
                 height: 10,
               ),
-              Opacity(
-                opacity: AppTextStyles.kOpacityText,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SelectableText(
-                      AppLocalizations.of(context)!.confirmBeforeLbl,
-                      style: AppTextStyles.bodyMedium(context),
-                    ),
-                    SelectableText(
-                      AppLocalizations.of(context)!.confirmAfterLbl,
-                      style: AppTextStyles.bodyMedium(context),
-                    ),
-                  ],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SelectableText(
+                    AppLocalizations.of(context)!.confirmBeforeLbl,
+                    style: AppTextStyles.bodyMedium(context),
+                  ),
+                  SelectableText(
+                    AppLocalizations.of(context)!.confirmAfterLbl,
+                    style: AppTextStyles.bodyMedium(context),
+                  ),
+                ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -176,6 +164,7 @@ class SwapConfirmInfos extends ConsumerWidget {
                     fiatAlignLeft: true,
                     fiatTextStyleMedium: true,
                     styleResponsive: false,
+                    withOpacity: false,
                     height: 20,
                     digits: aedappfm.Responsive.isMobile(context) &&
                             swap.tokenToSwapBalance > 1
@@ -190,7 +179,9 @@ class SwapConfirmInfos extends ConsumerWidget {
                         .toDouble(),
                     token: swap.tokenToSwap,
                     fiatVertical: true,
+                    styleResponsive: false,
                     fiatTextStyleMedium: true,
+                    withOpacity: false,
                     height: 20,
                     digits: aedappfm.Responsive.isMobile(context) &&
                             (Decimal.parse(
@@ -214,7 +205,9 @@ class SwapConfirmInfos extends ConsumerWidget {
                     token: swap.tokenSwapped,
                     fiatVertical: true,
                     fiatAlignLeft: true,
+                    styleResponsive: false,
                     fiatTextStyleMedium: true,
+                    withOpacity: false,
                     height: 20,
                     digits: aedappfm.Responsive.isMobile(context) &&
                             swap.tokenToSwapBalance > 1
@@ -229,7 +222,9 @@ class SwapConfirmInfos extends ConsumerWidget {
                         .toDouble(),
                     token: swap.tokenSwapped,
                     fiatVertical: true,
+                    styleResponsive: false,
                     fiatTextStyleMedium: true,
+                    withOpacity: false,
                     height: 20,
                     digits: aedappfm.Responsive.isMobile(context) &&
                             (Decimal.parse(
@@ -257,70 +252,71 @@ class SwapConfirmInfos extends ConsumerWidget {
               const SizedBox(
                 height: 10,
               ),
-              if (swap.swapTotalFees > 0 && swap.tokenToSwap != null)
-                Opacity(
-                  opacity: AppTextStyles.kOpacityText,
-                  child: Row(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Tooltip(
-                        message: swap.tokenToSwap!.symbol,
-                        child: SelectableText(
-                          '${AppLocalizations.of(context)!.swapConfirmInfosAmountMinFees} ${swap.swapTotalFees.formatNumber(
-                            precision: aedappfm.Responsive.isMobile(context) &&
-                                    swap.swapTotalFees > 1
-                                ? 2
-                                : 8,
-                          )} ${swap.tokenToSwap!.symbol.reduceSymbol()}',
-                          style: AppTextStyles.bodyMedium(context),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      FutureBuilder<String>(
-                        future: FiatValue().display(
-                          ref,
-                          swap.tokenToSwap!,
-                          swap.swapTotalFees,
-                        ),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return SelectableText(
-                              snapshot.data!,
-                              style: AppTextStyles.bodyMedium(context),
-                            );
-                          }
-                          return const SizedBox.shrink();
-                        },
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      if (swap.pool != null &&
-                          swap.pool!.infos != null &&
-                          swap.tokenToSwap != null)
-                        Tooltip(
-                          message:
-                              '${AppLocalizations.of(context)!.swapConfirmInfosFeesLP} (${swap.pool!.infos!.fees}%): ${swap.swapFees.formatNumber(precision: 8)} ${swap.tokenToSwap!.symbol.reduceSymbol()} \n${AppLocalizations.of(context)!.swapConfirmInfosFeesProtocol} (${swap.pool!.infos!.protocolFees}%): ${swap.swapProtocolFees.formatNumber(precision: 8)} ${swap.tokenToSwap!.symbol.reduceSymbol()}',
-                          child: const Padding(
-                            padding: EdgeInsets.only(bottom: 2),
-                            child: Icon(
-                              aedappfm.Iconsax.info_circle,
-                              size: 13,
+                      if (swap.swapTotalFees > 0 && swap.tokenToSwap != null)
+                        Row(
+                          children: [
+                            Tooltip(
+                              message: swap.tokenToSwap!.symbol,
+                              child: SelectableText(
+                                '${AppLocalizations.of(context)!.swapConfirmInfosAmountMinFees} ${swap.swapTotalFees.formatNumber(
+                                  precision:
+                                      aedappfm.Responsive.isMobile(context) &&
+                                              swap.swapTotalFees > 1
+                                          ? 2
+                                          : 8,
+                                )} ${swap.tokenToSwap!.symbol.reduceSymbol()}',
+                                style: AppTextStyles.bodyMedium(context),
+                              ),
                             ),
-                          ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            FutureBuilder<String>(
+                              future: FiatValue().display(
+                                ref,
+                                swap.tokenToSwap!,
+                                swap.swapTotalFees,
+                              ),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return SelectableText(
+                                    snapshot.data!,
+                                    style: AppTextStyles.bodyMedium(context),
+                                  );
+                                }
+                                return const SizedBox.shrink();
+                              },
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                          ],
+                        ),
+                      if (swap.tokenSwapped != null &&
+                          swap.tokenToSwap != null &&
+                          swap.tokenSwappedAmount > 0 &&
+                          swap.tokenToSwapAmount > 0)
+                        DexPriceImpact(
+                          priceImpact: swap.priceImpact,
+                          textStyle: AppTextStyles.bodyMedium(context),
+                          withOpacity: false,
                         ),
                     ],
                   ),
-                ),
-              if (swap.tokenSwapped != null &&
-                  swap.tokenToSwap != null &&
-                  swap.tokenSwappedAmount > 0 &&
-                  swap.tokenToSwapAmount > 0)
-                DexPriceImpact(
-                  priceImpact: swap.priceImpact,
-                  textStyle: AppTextStyles.bodyMedium(context),
-                ),
+                  if (swap.pool != null &&
+                      swap.pool!.infos != null &&
+                      swap.tokenToSwap != null)
+                    const Row(
+                      children: [SwapTokenIconInfo()],
+                    ),
+                ],
+              ),
               if (swap.messageMaxHalfUCO)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),

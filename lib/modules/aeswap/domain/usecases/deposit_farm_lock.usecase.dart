@@ -92,6 +92,8 @@ class DepositFarmLockCase with aedappfm.TransactionMixin {
         selectedAccount.name,
       );
 
+      farmDepositNotifier.setTransactionFarmLockDeposit(transationSignedRaw);
+
       await transactionRepository.sendSignedRaw(
         transactionSignedRaw: transationSignedRaw,
         onConfirmation: (sender, confirmation) async {
@@ -125,6 +127,8 @@ class DepositFarmLockCase with aedappfm.TransactionMixin {
               until: (depositOk) => depositOk == true,
               timeout: const Duration(minutes: 1),
             );
+
+            farmDepositNotifier.setFinalAmount(amount);
 
             notificationService.succeed(
               operationId,
