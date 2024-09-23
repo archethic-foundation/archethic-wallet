@@ -29,12 +29,7 @@ class FarmLockDetailsLevelSingle extends ConsumerWidget {
     WidgetRef ref,
   ) {
     final style = TextStyle(
-      fontSize: aedappfm.Responsive.fontSizeFromValue(
-        context,
-        desktopValue: 13,
-        ratioMobile: 3,
-        ratioTablet: 1,
-      ),
+      fontSize: AppTextStyles.bodyMedium(context).fontSize,
     );
     return Container(
       alignment: Alignment.centerLeft,
@@ -98,15 +93,20 @@ class FarmLockDetailsLevelSingle extends ConsumerWidget {
                   ),
                 ],
               ),
-              Row(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SelectableText(
-                    '${AppLocalizations.of(context)!.farmDetailsInfoLPDeposited}: ${farmLockStats.lpTokensDeposited.formatNumber(precision: 8)} ${farmLockStats.lpTokensDeposited > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken} ${DEXLPTokenFiatValue().display(ref, farmLock.lpTokenPair!.token1, farmLock.lpTokenPair!.token2, farmLockStats.lpTokensDeposited, farmLock.poolAddress)}',
+                    '${AppLocalizations.of(context)!.farmDetailsInfoLPDeposited}:',
+                    style: style,
+                  ),
+                  SelectableText(
+                    '${farmLockStats.lpTokensDeposited.formatNumber(precision: 8)} ${farmLockStats.lpTokensDeposited > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken} ${DEXLPTokenFiatValue().display(ref, farmLock.lpTokenPair!.token1, farmLock.lpTokenPair!.token2, farmLockStats.lpTokensDeposited, farmLock.poolAddress)}',
                     style: style,
                   ),
                 ],
               ),
-              Row(
+              Column(
                 children: [
                   if (farmLockStats.lpTokensDeposited > 0)
                     FutureBuilder<Map<String, dynamic>?>(

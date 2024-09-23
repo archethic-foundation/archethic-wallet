@@ -1,12 +1,15 @@
-import 'package:aewallet/modules/aeswap/ui/views/farm_lock/layouts/components/farm_lock_details/farm_lock_list_item.dart';
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/state.dart';
+import 'package:aewallet/ui/views/aeswap_earn/layouts/components/farm_lock_details_info.dart';
+import 'package:aewallet/util/get_it_instance.dart';
+import 'package:aewallet/util/haptic_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class EarnFarmLockInfos extends ConsumerWidget {
   const EarnFarmLockInfos({
@@ -20,48 +23,26 @@ class EarnFarmLockInfos extends ConsumerWidget {
   ) {
     final earnForm =
         ref.watch(earnFormNotifierProvider).value ?? const EarnFormState();
+    final preferences = ref.watch(SettingsProviders.settings);
 
     return InkWell(
       onTap: earnForm.farmLock == null
           ? null
           : () async {
-              return showDialog<void>(
+              sl.get<HapticUtil>().feedback(
+                    FeedbackType.light,
+                    preferences.activeVibrations,
+                  );
+
+              await showBarModalBottomSheet(
                 context: context,
-                builder: (context) {
-                  return GestureDetector(
-                    onTap: () {
-                      context.pop();
-                    },
-                    child: Scaffold(
-                      extendBodyBehindAppBar: true,
-                      extendBody: true,
-                      backgroundColor: Colors.transparent.withAlpha(120),
-                      body: Align(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: 500,
-                            child: FarmLockListItem(
-                              key: ValueKey(earnForm.pool!.poolAddress),
-                              farmLock: earnForm.farmLock!,
-                              heightCard: 440,
-                              isInPopup: true,
-                            )
-                                .animate()
-                                .fade(
-                                  duration: const Duration(
-                                    milliseconds: 300,
-                                  ),
-                                )
-                                .scale(
-                                  duration: const Duration(
-                                    milliseconds: 300,
-                                  ),
-                                ),
-                          ),
-                        ),
-                      ),
+                backgroundColor:
+                    aedappfm.AppThemeBase.sheetBackground.withOpacity(0.2),
+                builder: (BuildContext context) {
+                  return FractionallySizedBox(
+                    heightFactor: 0.90,
+                    child: FarmLockDetailsInfo(
+                      farmLock: earnForm.farmLock!,
                     ),
                   );
                 },

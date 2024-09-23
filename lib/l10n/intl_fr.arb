@@ -718,6 +718,7 @@
     "legacy": "Legacy",
     "lvl": "Lvl",
     "level": "Level",
+    "levelsInfo": "Information on levels",
     "farmDetailsInfoNbDeposit": "Holders",
     "farmDetailsInfoPeriodWillStart": "Farm will start at",
     "farmDetailsInfoPeriodStarted": "Farm started since",

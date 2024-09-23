@@ -1,6 +1,7 @@
 import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/pool_factory.repository.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -21,26 +22,22 @@ class FarmLockDetailsInfoLPDeposited extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return SheetDetailCard(
       children: [
-        Expanded(
-          child: SelectableText(
-            AppLocalizations.of(context)!.farmDetailsInfoLPDeposited,
-            style: AppTextStyles.bodyLarge(context),
-          ),
-        ),
         Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SelectableText(
+              AppLocalizations.of(context)!.farmDetailsInfoLPDeposited,
+              style: AppTextStyles.bodyMedium(context),
+            ),
+            SelectableText(
               '${farmLock.lpTokensDeposited.formatNumber(precision: 8)} ${farmLock.lpTokensDeposited > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
-              style: AppTextStyles.bodyLarge(context),
+              style: AppTextStyles.bodyMedium(context),
             ),
             SelectableText(
               '(\$${farmLock.estimateLPTokenInFiat.formatNumber(precision: 2)})',
-              style: AppTextStyles.bodyLarge(context),
+              style: AppTextStyles.bodyMedium(context),
             ),
             if (farmLock.lpTokensDeposited > 0)
               FutureBuilder<Map<String, dynamic>?>(
@@ -64,17 +61,17 @@ class FarmLockDetailsInfoLPDeposited extends ConsumerWidget {
 
                     return SelectableText(
                       '${AppLocalizations.of(context)!.poolDetailsInfoDepositedEquivalent} ${amountToken1.formatNumber(precision: amountToken1 > 1 ? 2 : 8)} ${farmLock.lpTokenPair!.token1.symbol.reduceSymbol()} / ${amountToken2.formatNumber(precision: amountToken2 > 1 ? 2 : 8)} ${farmLock.lpTokenPair!.token2.symbol.reduceSymbol()}',
-                      style: AppTextStyles.bodyMedium(context),
+                      style: AppTextStyles.bodySmall(context),
                     );
                   }
                   return SelectableText(
                     ' ',
-                    style: AppTextStyles.bodyMedium(context),
+                    style: AppTextStyles.bodySmall(context),
                   );
                 },
               )
             else
-              SelectableText(' ', style: AppTextStyles.bodyMedium(context)),
+              SelectableText(' ', style: AppTextStyles.bodySmall(context)),
           ],
         ),
       ],
