@@ -1,14 +1,16 @@
 import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/fiat_value.dart';
+import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
+
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FarmLockDetailsInfoDistributedRewards extends ConsumerWidget {
-  const FarmLockDetailsInfoDistributedRewards({
+class FarmLockDetailsInfoRemainingReward extends ConsumerWidget {
+  const FarmLockDetailsInfoRemainingReward({
     super.key,
     required this.farmLock,
   });
@@ -20,26 +22,24 @@ class FarmLockDetailsInfoDistributedRewards extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return SheetDetailCard(
       children: [
         SelectableText(
-          AppLocalizations.of(context)!.farmDetailsInfoDistributedRewards,
-          style: AppTextStyles.bodyLarge(context),
+          AppLocalizations.of(context)!.farmDetailsInfoRemainingReward,
+          style: AppTextStyles.bodyMedium(context),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             SelectableText(
-              '${farmLock.rewardDistributed.formatNumber(precision: 2)} ${farmLock.rewardToken!.symbol}',
-              style: AppTextStyles.bodyLarge(context),
+              '${farmLock.remainingReward.formatNumber()} ${farmLock.rewardToken!.symbol}',
+              style: AppTextStyles.bodyMedium(context),
             ),
             FutureBuilder<String>(
               future: FiatValue().display(
                 ref,
                 farmLock.rewardToken!,
-                farmLock.rewardDistributed,
+                farmLock.remainingReward,
               ),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
