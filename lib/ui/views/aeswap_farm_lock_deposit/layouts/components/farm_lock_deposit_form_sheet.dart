@@ -204,18 +204,20 @@ class FarmLockDepositFormSheet extends ConsumerWidget
                   children: [
                     ...farmLockDeposit.filterAvailableLevels.entries
                         .map((entry) {
-                      return FarmLockDepositDurationButton(
-                        farmLockDepositDuration:
-                            getFarmLockDepositDurationTypeFromLevel(
-                          entry.key,
-                        ),
-                        level: entry.key,
-                        aprEstimation: (farmLockDeposit.farmLock!
-                                    .stats[entry.key]?.aprEstimation ??
-                                0) *
-                            100,
-                      );
-                    }),
+                          return FarmLockDepositDurationButton(
+                            farmLockDepositDuration:
+                                getFarmLockDepositDurationTypeFromLevel(
+                              entry.key,
+                            ),
+                            level: entry.key,
+                            aprEstimation: (farmLockDeposit.farmLock!
+                                        .stats[entry.key]?.aprEstimation ??
+                                    0) *
+                                100,
+                          );
+                        })
+                        .toList()
+                        .reversed,
                   ],
                 ),
                 const SizedBox(

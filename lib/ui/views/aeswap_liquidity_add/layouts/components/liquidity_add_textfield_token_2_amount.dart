@@ -110,8 +110,8 @@ class _LiquidityAddToken2AmountState
                                   height: 48,
                                   child: Padding(
                                     padding: EdgeInsets.only(
-                                      left: 10,
-                                      right: 560,
+                                      left: 317,
+                                      right: 10,
                                       top: 15,
                                       bottom: 15,
                                     ),
@@ -122,7 +122,7 @@ class _LiquidityAddToken2AmountState
                                   ),
                                 )
                               : TextField(
-                                  style: Theme.of(context).textTheme.bodyMedium,
+                                  style: Theme.of(context).textTheme.bodyLarge,
                                   autocorrect: false,
                                   controller: tokenAmountController,
                                   onChanged: (text) async {
@@ -140,7 +140,7 @@ class _LiquidityAddToken2AmountState
                                     liquidityAddNotifier
                                         .setTokenFormSelected(2);
                                   },
-                                  textAlign: TextAlign.left,
+                                  textAlign: TextAlign.right,
                                   textInputAction: TextInputAction.done,
                                   keyboardType:
                                       const TextInputType.numberWithOptions(
@@ -162,7 +162,7 @@ class _LiquidityAddToken2AmountState
                                   ],
                                   decoration: const InputDecoration(
                                     border: InputBorder.none,
-                                    contentPadding: EdgeInsets.only(left: 10),
+                                    contentPadding: EdgeInsets.only(right: 10),
                                   ),
                                 ),
                         ),
@@ -186,58 +186,63 @@ class _LiquidityAddToken2AmountState
                 ),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                aedappfm.ButtonHalf(
-                  balanceAmount: liquidityAdd.token2Balance,
-                  onTap: () async {
-                    tokenAmountController.value = AmountTextInputFormatter(
-                      precision: 8,
-                    ).formatEditUpdate(
-                      TextEditingValue.empty,
-                      TextEditingValue(
-                        text: (Decimal.parse(
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  aedappfm.ButtonHalf(
+                    height: 40,
+                    balanceAmount: liquidityAdd.token2Balance,
+                    onTap: () async {
+                      tokenAmountController.value = AmountTextInputFormatter(
+                        precision: 8,
+                      ).formatEditUpdate(
+                        TextEditingValue.empty,
+                        TextEditingValue(
+                          text: (Decimal.parse(
+                                    liquidityAdd.token2Balance.toString(),
+                                  ) /
+                                  Decimal.fromInt(2))
+                              .toDouble()
+                              .formatNumber(),
+                        ),
+                      );
+                      liquidityAddNotifier.setTokenFormSelected(2);
+                      await liquidityAddNotifier.setToken2Amount(
+                        context,
+                        (Decimal.parse(
                                   liquidityAdd.token2Balance.toString(),
                                 ) /
                                 Decimal.fromInt(2))
-                            .toDouble()
-                            .formatNumber(),
-                      ),
-                    );
-                    liquidityAddNotifier.setTokenFormSelected(2);
-                    await liquidityAddNotifier.setToken2Amount(
-                      context,
-                      (Decimal.parse(
-                                liquidityAdd.token2Balance.toString(),
-                              ) /
-                              Decimal.fromInt(2))
-                          .toDouble(),
-                    );
-                  },
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                aedappfm.ButtonMax(
-                  balanceAmount: liquidityAdd.token2Balance,
-                  onTap: () async {
-                    tokenAmountController.value = AmountTextInputFormatter(
-                      precision: 8,
-                    ).formatEditUpdate(
-                      TextEditingValue.empty,
-                      TextEditingValue(
-                        text: liquidityAdd.token2Balance.toString(),
-                      ),
-                    );
-                    liquidityAddNotifier.setTokenFormSelected(2);
-                    await liquidityAddNotifier.setToken2Amount(
-                      context,
-                      liquidityAdd.token2Balance,
-                    );
-                  },
-                ),
-              ],
+                            .toDouble(),
+                      );
+                    },
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  aedappfm.ButtonMax(
+                    height: 40,
+                    balanceAmount: liquidityAdd.token2Balance,
+                    onTap: () async {
+                      tokenAmountController.value = AmountTextInputFormatter(
+                        precision: 8,
+                      ).formatEditUpdate(
+                        TextEditingValue.empty,
+                        TextEditingValue(
+                          text: liquidityAdd.token2Balance.toString(),
+                        ),
+                      );
+                      liquidityAddNotifier.setTokenFormSelected(2);
+                      await liquidityAddNotifier.setToken2Amount(
+                        context,
+                        liquidityAdd.token2Balance,
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ],
         ),

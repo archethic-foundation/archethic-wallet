@@ -8,6 +8,7 @@ import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_ratio.dart'
 import 'package:aewallet/modules/aeswap/ui/views/util/components/fiat_value.dart';
 import 'package:aewallet/ui/views/aeswap_swap/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_swap/bloc/state.dart';
+import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -63,13 +64,9 @@ class SwapInfos extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildRowWithFees(context, ref, swap),
-                const SizedBox(height: 20),
                 _buildRowWithPriceImpact(context, swap),
-                const SizedBox(height: 20),
                 _buildRowWithMinReceived(context, ref, swap),
-                const SizedBox(height: 20),
                 _buildRowWithTVL(context, tvlAsyncValue),
-                const SizedBox(height: 20),
                 _buildRowWithRatio(context, swap, tokenAddressRatioPrimary),
               ],
             ),
@@ -90,22 +87,18 @@ class SwapInfos extends ConsumerWidget {
             context,
             AppLocalizations.of(context)!.swapInfosFees,
           ),
-          const SizedBox(height: 20),
           _buildLoadingRow(
             context,
             AppLocalizations.of(context)!.swapInfosPriceImpact,
           ),
-          const SizedBox(height: 20),
           _buildLoadingRow(
             context,
             AppLocalizations.of(context)!.swapInfosMinimumReceived,
           ),
-          const SizedBox(height: 20),
           _buildLoadingRow(
             context,
             AppLocalizations.of(context)!.swapInfosTVL,
           ),
-          const SizedBox(height: 20),
           _buildLoadingRow(
             context,
             AppLocalizations.of(context)!.swapInfosRatio,
@@ -116,8 +109,7 @@ class SwapInfos extends ConsumerWidget {
   }
 
   Widget _buildLoadingRow(BuildContext context, String label) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return SheetDetailCard(
       children: [
         SelectableText(label, style: AppTextStyles.bodyMedium(context)),
         const SizedBox(
@@ -134,12 +126,11 @@ class SwapInfos extends ConsumerWidget {
     WidgetRef ref,
     SwapFormState swap,
   ) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return SheetDetailCard(
       children: [
         SelectableText(
           AppLocalizations.of(context)!.swapInfosFees,
-          style: AppTextStyles.bodyLarge(context),
+          style: AppTextStyles.bodyMedium(context),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -151,7 +142,7 @@ class SwapInfos extends ConsumerWidget {
                   message: swap.tokenToSwap!.symbol,
                   child: SelectableText(
                     '${swap.swapTotalFees.formatNumber(precision: 8)} ${swap.tokenToSwap!.symbol.reduceSymbol()}',
-                    style: AppTextStyles.bodyLarge(context),
+                    style: AppTextStyles.bodyMedium(context),
                   ),
                 ),
                 FutureBuilder<String>(
@@ -192,18 +183,17 @@ class SwapInfos extends ConsumerWidget {
   }
 
   Widget _buildRowWithPriceImpact(BuildContext context, SwapFormState swap) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return SheetDetailCard(
       children: [
         SelectableText(
           AppLocalizations.of(context)!.swapInfosPriceImpact,
-          style: AppTextStyles.bodyLarge(context),
+          style: AppTextStyles.bodyMedium(context),
         ),
         DexPriceImpact(
           priceImpact: swap.priceImpact,
           withLabel: false,
           withOpacity: false,
-          textStyle: AppTextStyles.bodyLarge(context),
+          textStyle: AppTextStyles.bodyMedium(context),
         ),
       ],
     );
@@ -214,12 +204,11 @@ class SwapInfos extends ConsumerWidget {
     WidgetRef ref,
     SwapFormState swap,
   ) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return SheetDetailCard(
       children: [
         SelectableText(
           AppLocalizations.of(context)!.swapInfosMinimumReceived,
-          style: AppTextStyles.bodyLarge(context),
+          style: AppTextStyles.bodyMedium(context),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -228,7 +217,7 @@ class SwapInfos extends ConsumerWidget {
               message: swap.tokenSwapped!.symbol,
               child: SelectableText(
                 '${swap.minToReceive.formatNumber(precision: 8)} ${swap.tokenSwapped!.symbol.reduceSymbol()}',
-                style: AppTextStyles.bodyLarge(context),
+                style: AppTextStyles.bodyMedium(context),
               ),
             ),
             const SizedBox(width: 5),
@@ -259,17 +248,16 @@ class SwapInfos extends ConsumerWidget {
     BuildContext context,
     AsyncValue<double> tvlAsyncValue,
   ) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return SheetDetailCard(
       children: [
         SelectableText(
           AppLocalizations.of(context)!.swapInfosTVL,
-          style: AppTextStyles.bodyLarge(context),
+          style: AppTextStyles.bodyMedium(context),
         ),
         tvlAsyncValue.when(
           data: (tvl) => SelectableText(
             '\$${tvl.formatNumber(precision: 2)}',
-            style: AppTextStyles.bodyLarge(context),
+            style: AppTextStyles.bodyMedium(context),
           ),
           loading: () => const SizedBox.shrink(),
           error: (error, stackTrace) => const SizedBox.shrink(),
@@ -283,12 +271,11 @@ class SwapInfos extends ConsumerWidget {
     SwapFormState swap,
     String tokenAddressRatioPrimary,
   ) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return SheetDetailCard(
       children: [
         SelectableText(
           AppLocalizations.of(context)!.swapInfosRatio,
-          style: AppTextStyles.bodyLarge(context),
+          style: AppTextStyles.bodyMedium(context),
         ),
         if (swap.pool != null && swap.pool!.infos != null)
           DexRatio(
@@ -304,7 +291,7 @@ class SwapInfos extends ConsumerWidget {
                     swap.pool!.pair.token1.address!.toUpperCase()
                 ? swap.pool!.pair.token2.symbol
                 : swap.pool!.pair.token1.symbol,
-            textStyle: AppTextStyles.bodyLarge(context),
+            textStyle: AppTextStyles.bodyMedium(context),
           ),
       ],
     );

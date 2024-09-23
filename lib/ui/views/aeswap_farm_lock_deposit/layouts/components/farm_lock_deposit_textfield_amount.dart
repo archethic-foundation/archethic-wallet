@@ -111,7 +111,7 @@ class _FarmLockDepositToken1AmountState
                             ),
                           ),
                           child: TextField(
-                            style: Theme.of(context).textTheme.titleMedium,
+                            style: Theme.of(context).textTheme.titleLarge,
                             autocorrect: false,
                             controller: tokenAmountController,
                             onChanged: (text) async {
@@ -120,7 +120,7 @@ class _FarmLockDepositToken1AmountState
                               );
                             },
                             focusNode: tokenAmountFocusNode,
-                            textAlign: TextAlign.left,
+                            textAlign: TextAlign.right,
                             textInputAction: TextInputAction.done,
                             keyboardType: const TextInputType.numberWithOptions(
                               decimal: true,
@@ -141,7 +141,7 @@ class _FarmLockDepositToken1AmountState
                             ],
                             decoration: const InputDecoration(
                               border: InputBorder.none,
-                              contentPadding: EdgeInsets.only(left: 10),
+                              contentPadding: EdgeInsets.only(right: 10),
                             ),
                           ),
                         ),
@@ -185,37 +185,42 @@ class _FarmLockDepositToken1AmountState
             const SizedBox(
               height: 5,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                aedappfm.ButtonHalf(
-                  balanceAmount: farmLockDeposit.lpTokenBalance,
-                  onTap: () {
-                    ref
-                        .read(
-                          FarmLockDepositFormProvider
-                              .farmLockDepositForm.notifier,
-                        )
-                        .setAmountHalf();
-                    _updateAmountTextController();
-                  },
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                aedappfm.ButtonMax(
-                  balanceAmount: farmLockDeposit.lpTokenBalance,
-                  onTap: () {
-                    ref
-                        .read(
-                          FarmLockDepositFormProvider
-                              .farmLockDepositForm.notifier,
-                        )
-                        .setAmountMax();
-                    _updateAmountTextController();
-                  },
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  aedappfm.ButtonHalf(
+                    height: 40,
+                    balanceAmount: farmLockDeposit.lpTokenBalance,
+                    onTap: () {
+                      ref
+                          .read(
+                            FarmLockDepositFormProvider
+                                .farmLockDepositForm.notifier,
+                          )
+                          .setAmountHalf();
+                      _updateAmountTextController();
+                    },
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  aedappfm.ButtonMax(
+                    height: 40,
+                    balanceAmount: farmLockDeposit.lpTokenBalance,
+                    onTap: () {
+                      ref
+                          .read(
+                            FarmLockDepositFormProvider
+                                .farmLockDepositForm.notifier,
+                          )
+                          .setAmountMax();
+                      _updateAmountTextController();
+                    },
+                  ),
+                ],
+              ),
             ),
           ],
         ),

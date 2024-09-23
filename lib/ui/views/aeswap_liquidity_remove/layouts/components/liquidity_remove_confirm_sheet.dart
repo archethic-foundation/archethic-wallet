@@ -1,11 +1,14 @@
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/consent_uri.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_remove/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_remove/layouts/components/liquidity_remove_confirm_infos.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
+import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -92,6 +95,8 @@ class LiquidityRemoveConfirmFormSheetState
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+
     final liquidityRemove =
         ref.watch(LiquidityRemoveFormProvider.liquidityRemoveForm);
     if (liquidityRemove.lpToken == null) {
@@ -123,6 +128,21 @@ class LiquidityRemoveConfirmFormSheetState
               uriPrivacyPolicy: kURIPrivacyPolicy,
               uriTermsOfUse: kURITermsOfUse,
             ),
+          SheetDetailCard(
+            children: [
+              Text(
+                localizations.estimatedTxFees,
+                style: AppTextStyles.bodyMedium(context),
+              ),
+              Text(
+                AmountFormatters.standardSmallValue(
+                  liquidityRemove.feesEstimatedUCO,
+                  'UCO',
+                ),
+                style: AppTextStyles.bodyMedium(context),
+              ),
+            ],
+          ),
         ],
       ),
     );

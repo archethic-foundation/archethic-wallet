@@ -44,26 +44,33 @@ class LiquidityRemoveFinalAmount extends ConsumerWidget {
               )
             else
               timeout == false
-                  ? Row(
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SelectableText(
                           AppLocalizations.of(context)!
                               .liquidityRemoveFinalAmountTokenObtained,
                           style: AppTextStyles.bodyLarge(context),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 10),
-                          child: SizedBox(
-                            height: 10,
-                            width: 10,
-                            child: CircularProgressIndicator(strokeWidth: 1),
-                          ),
+                        const SizedBox(
+                          height: 10,
+                          width: 10,
+                          child: CircularProgressIndicator(strokeWidth: 1),
                         ),
                       ],
                     )
-                  : SelectableText(
-                      '${AppLocalizations.of(context)!.liquidityRemoveFinalAmountTokenObtained} ${AppLocalizations.of(context)!.finalAmountNotRecovered}',
-                      style: AppTextStyles.bodyLarge(context),
+                  : Column(
+                      children: [
+                        SelectableText(
+                          AppLocalizations.of(context)!
+                              .liquidityRemoveFinalAmountTokenObtained,
+                          style: AppTextStyles.bodyLarge(context),
+                        ),
+                        SelectableText(
+                          ' ${AppLocalizations.of(context)!.finalAmountNotRecovered}',
+                          style: AppTextStyles.bodyLarge(context),
+                        ),
+                      ],
                     ),
           ],
         ),
@@ -86,26 +93,33 @@ class LiquidityRemoveFinalAmount extends ConsumerWidget {
               )
             else
               timeout == false
-                  ? Row(
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SelectableText(
                           AppLocalizations.of(context)!
                               .liquidityRemoveFinalAmountTokenObtained,
                           style: AppTextStyles.bodyLarge(context),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 10),
-                          child: SizedBox(
-                            height: 10,
-                            width: 10,
-                            child: CircularProgressIndicator(strokeWidth: 1),
-                          ),
+                        const SizedBox(
+                          height: 10,
+                          width: 10,
+                          child: CircularProgressIndicator(strokeWidth: 1),
                         ),
                       ],
                     )
-                  : SelectableText(
-                      '${AppLocalizations.of(context)!.liquidityRemoveFinalAmountTokenObtained} ${AppLocalizations.of(context)!.finalAmountNotRecovered}',
-                      style: AppTextStyles.bodyLarge(context),
+                  : Column(
+                      children: [
+                        SelectableText(
+                          AppLocalizations.of(context)!
+                              .liquidityRemoveFinalAmountTokenObtained,
+                          style: AppTextStyles.bodyLarge(context),
+                        ),
+                        SelectableText(
+                          ' ${AppLocalizations.of(context)!.finalAmountNotRecovered}',
+                          style: AppTextStyles.bodyLarge(context),
+                        ),
+                      ],
                     ),
           ],
         ),
@@ -128,26 +142,33 @@ class LiquidityRemoveFinalAmount extends ConsumerWidget {
               )
             else
               timeout == false
-                  ? Row(
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SelectableText(
                           AppLocalizations.of(context)!
                               .liquidityRemoveFinalAmountTokenBurned,
                           style: AppTextStyles.bodyLarge(context),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 10),
-                          child: SizedBox(
-                            height: 10,
-                            width: 10,
-                            child: CircularProgressIndicator(strokeWidth: 1),
-                          ),
+                        const SizedBox(
+                          height: 10,
+                          width: 10,
+                          child: CircularProgressIndicator(strokeWidth: 1),
                         ),
                       ],
                     )
-                  : SelectableText(
-                      '${AppLocalizations.of(context)!.liquidityRemoveFinalAmountTokenBurned} ${AppLocalizations.of(context)!.finalAmountNotRecovered}',
-                      style: AppTextStyles.bodyLarge(context),
+                  : Column(
+                      children: [
+                        SelectableText(
+                          AppLocalizations.of(context)!
+                              .liquidityRemoveFinalAmountTokenBurned,
+                          style: AppTextStyles.bodyLarge(context),
+                        ),
+                        SelectableText(
+                          ' ${AppLocalizations.of(context)!.finalAmountNotRecovered}',
+                          style: AppTextStyles.bodyLarge(context),
+                        ),
+                      ],
                     ),
           ],
         ),

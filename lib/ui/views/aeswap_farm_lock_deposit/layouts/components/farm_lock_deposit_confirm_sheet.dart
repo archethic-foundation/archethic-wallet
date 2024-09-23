@@ -1,12 +1,15 @@
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/consent_uri.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_confirm_infos.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
+import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -108,6 +111,7 @@ class FarmLockDepositConfirmSheetState
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
     final farmLockDeposit =
         ref.watch(FarmLockDepositFormProvider.farmLockDepositForm);
     if (farmLockDeposit.pool == null) {
@@ -183,6 +187,21 @@ class FarmLockDepositConfirmSheetState
               uriPrivacyPolicy: kURIPrivacyPolicy,
               uriTermsOfUse: kURITermsOfUse,
             ),
+          SheetDetailCard(
+            children: [
+              Text(
+                localizations.estimatedTxFees,
+                style: AppTextStyles.bodyMedium(context),
+              ),
+              Text(
+                AmountFormatters.standardSmallValue(
+                  farmLockDeposit.feesEstimatedUCO,
+                  'UCO',
+                ),
+                style: AppTextStyles.bodyMedium(context),
+              ),
+            ],
+          ),
         ],
       ),
     );

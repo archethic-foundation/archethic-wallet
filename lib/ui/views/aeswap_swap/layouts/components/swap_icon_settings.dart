@@ -1,10 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_settings_popup.dart';
+import 'package:aewallet/util/get_it_instance.dart';
+import 'package:aewallet/util/haptic_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class SwapTokenIconSettings extends ConsumerWidget {
   const SwapTokenIconSettings({
@@ -13,43 +16,36 @@ class SwapTokenIconSettings extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return InkWell(
-      onTap: () {
-        SwapSettingsPopup.getDialog(
-          context,
-        );
-      },
-      child: Tooltip(
-        message: AppLocalizations.of(context)!.swapIconSlippageTooltip,
-        child: SizedBox(
-          height: 40,
-          child: Card(
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: aedappfm.ArchethicThemeBase.brightPurpleHoverBorder
-                    .withOpacity(1),
-                width: 0.5,
-              ),
-              borderRadius: BorderRadius.circular(20),
+    final preferences = ref.watch(SettingsProviders.settings);
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        InkWell(
+          child: Container(
+            height: 30,
+            width: 30,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              gradient: aedappfm.AppThemeBase.gradientBtn,
+              shape: BoxShape.circle,
             ),
-            elevation: 0,
-            color: aedappfm.ArchethicThemeBase.brightPurpleHoverBackground
-                .withOpacity(1),
-            child: const Padding(
-              padding: EdgeInsets.only(
-                top: 5,
-                bottom: 5,
-                left: 10,
-                right: 10,
-              ),
-              child: Icon(
-                aedappfm.Iconsax.setting_2,
-                size: 16,
-              ),
+            child: const Icon(
+              aedappfm.Iconsax.setting_2,
+              size: 15,
             ),
           ),
+          onTap: () {
+            sl.get<HapticUtil>().feedback(
+                  FeedbackType.light,
+                  preferences.activeVibrations,
+                );
+            SwapSettingsPopup.getDialog(
+              context,
+            );
+          },
         ),
-      ),
+      ],
     );
   }
 }

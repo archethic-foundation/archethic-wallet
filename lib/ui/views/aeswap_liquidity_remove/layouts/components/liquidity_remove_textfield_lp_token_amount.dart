@@ -109,7 +109,7 @@ class _LiquidityRemoveLPTokenAmountState
                             ),
                           ),
                           child: TextField(
-                            style: Theme.of(context).textTheme.bodyMedium,
+                            style: Theme.of(context).textTheme.bodyLarge,
                             autocorrect: false,
                             controller: tokenAmountController,
                             onChanged: (text) async {
@@ -118,7 +118,7 @@ class _LiquidityRemoveLPTokenAmountState
                               );
                             },
                             focusNode: tokenAmountFocusNode,
-                            textAlign: TextAlign.left,
+                            textAlign: TextAlign.right,
                             textInputAction: TextInputAction.done,
                             keyboardType: const TextInputType.numberWithOptions(
                               decimal: true,
@@ -131,7 +131,7 @@ class _LiquidityRemoveLPTokenAmountState
                             ],
                             decoration: const InputDecoration(
                               border: InputBorder.none,
-                              contentPadding: EdgeInsets.only(left: 10),
+                              contentPadding: EdgeInsets.only(right: 10),
                             ),
                           ),
                         ),
@@ -156,37 +156,42 @@ class _LiquidityRemoveLPTokenAmountState
                   ),
                 ],
               ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                aedappfm.ButtonHalf(
-                  balanceAmount: liquidityRemove.lpTokenBalance,
-                  onTap: () async {
-                    await ref
-                        .read(
-                          LiquidityRemoveFormProvider
-                              .liquidityRemoveForm.notifier,
-                        )
-                        .setLpTokenAmountHalf();
-                    _updateAmountTextController();
-                  },
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                aedappfm.ButtonMax(
-                  balanceAmount: liquidityRemove.lpTokenBalance,
-                  onTap: () async {
-                    await ref
-                        .read(
-                          LiquidityRemoveFormProvider
-                              .liquidityRemoveForm.notifier,
-                        )
-                        .setLpTokenAmountMax();
-                    _updateAmountTextController();
-                  },
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  aedappfm.ButtonHalf(
+                    height: 40,
+                    balanceAmount: liquidityRemove.lpTokenBalance,
+                    onTap: () async {
+                      await ref
+                          .read(
+                            LiquidityRemoveFormProvider
+                                .liquidityRemoveForm.notifier,
+                          )
+                          .setLpTokenAmountHalf();
+                      _updateAmountTextController();
+                    },
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  aedappfm.ButtonMax(
+                    height: 40,
+                    balanceAmount: liquidityRemove.lpTokenBalance,
+                    onTap: () async {
+                      await ref
+                          .read(
+                            LiquidityRemoveFormProvider
+                                .liquidityRemoveForm.notifier,
+                          )
+                          .setLpTokenAmountMax();
+                      _updateAmountTextController();
+                    },
+                  ),
+                ],
+              ),
             ),
           ],
         ),

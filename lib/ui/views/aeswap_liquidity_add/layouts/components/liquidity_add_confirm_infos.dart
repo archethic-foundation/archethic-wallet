@@ -47,12 +47,12 @@ class LiquidityAddConfirmInfos extends ConsumerWidget {
                   SelectableText(
                     AppLocalizations.of(context)!
                         .liquidityAddConfirmInfosAmountTokens,
-                    style: AppTextStyles.bodyLarge(context),
+                    style: AppTextStyles.bodyMedium(context),
                   ),
                   SelectableText(
                     AppLocalizations.of(context)!
                         .liquidityAddConfirmInfosMinAmount,
-                    style: AppTextStyles.bodyLarge(context),
+                    style: AppTextStyles.bodyMedium(context),
                   ),
                 ],
               ),
@@ -63,23 +63,17 @@ class LiquidityAddConfirmInfos extends ConsumerWidget {
                     children: [
                       SelectableText(
                         liquidityAdd.token1Amount.formatNumber(precision: 8),
-                        style: AppTextStyles.bodyLargeSecondaryColor(context),
+                        style: AppTextStyles.bodyMediumSecondaryColor(context),
                       ),
-                      Tooltip(
-                        message: liquidityAdd.token1!.symbol,
-                        child: SelectableText(
-                          ' ${liquidityAdd.token1!.symbol.reduceSymbol()}',
-                          style: AppTextStyles.bodyLarge(context),
-                        ),
+                      SelectableText(
+                        ' ${liquidityAdd.token1!.symbol}',
+                        style: AppTextStyles.bodyMedium(context),
                       ),
                     ],
                   ),
-                  Tooltip(
-                    message: liquidityAdd.token1!.symbol,
-                    child: SelectableText(
-                      '+${liquidityAdd.token1minAmount.formatNumber()} ${liquidityAdd.token1!.symbol.reduceSymbol()}',
-                      style: AppTextStyles.bodyLarge(context),
-                    ),
+                  SelectableText(
+                    '+${liquidityAdd.token1minAmount.formatNumber()} ${liquidityAdd.token1!.symbol}',
+                    style: AppTextStyles.bodyMedium(context),
                   ),
                 ],
               ),
@@ -90,23 +84,17 @@ class LiquidityAddConfirmInfos extends ConsumerWidget {
                     children: [
                       SelectableText(
                         liquidityAdd.token2Amount.formatNumber(precision: 8),
-                        style: AppTextStyles.bodyLargeSecondaryColor(context),
+                        style: AppTextStyles.bodyMedium(context),
                       ),
-                      Tooltip(
-                        message: liquidityAdd.token2!.symbol,
-                        child: SelectableText(
-                          ' ${liquidityAdd.token2!.symbol.reduceSymbol()}',
-                          style: AppTextStyles.bodyLarge(context),
-                        ),
+                      SelectableText(
+                        ' ${liquidityAdd.token2!.symbol}',
+                        style: AppTextStyles.bodyMedium(context),
                       ),
                     ],
                   ),
-                  Tooltip(
-                    message: liquidityAdd.token2!.symbol,
-                    child: SelectableText(
-                      '+${liquidityAdd.token2minAmount.formatNumber()} ${liquidityAdd.token2!.symbol.reduceSymbol()}',
-                      style: AppTextStyles.bodyLarge(context),
-                    ),
+                  SelectableText(
+                    '+${liquidityAdd.token2minAmount.formatNumber()} ${liquidityAdd.token2!.symbol}',
+                    style: AppTextStyles.bodyMedium(context),
                   ),
                 ],
               ),
@@ -127,11 +115,11 @@ class LiquidityAddConfirmInfos extends ConsumerWidget {
                 children: [
                   SelectableText(
                     AppLocalizations.of(context)!.confirmBeforeLbl,
-                    style: AppTextStyles.bodyLarge(context),
+                    style: AppTextStyles.bodyMedium(context),
                   ),
                   SelectableText(
                     AppLocalizations.of(context)!.confirmAfterLbl,
-                    style: AppTextStyles.bodyLarge(context),
+                    style: AppTextStyles.bodyMedium(context),
                   ),
                 ],
               ),
@@ -146,6 +134,7 @@ class LiquidityAddConfirmInfos extends ConsumerWidget {
                     fiatVertical: true,
                     fiatAlignLeft: true,
                     fiatTextStyleMedium: true,
+                    withOpacity: false,
                   ),
                   DexTokenBalance(
                     tokenBalance: (Decimal.parse(
@@ -158,6 +147,7 @@ class LiquidityAddConfirmInfos extends ConsumerWidget {
                     height: 20,
                     fiatVertical: true,
                     fiatTextStyleMedium: true,
+                    withOpacity: false,
                   ),
                 ],
               ),
@@ -172,6 +162,7 @@ class LiquidityAddConfirmInfos extends ConsumerWidget {
                     fiatVertical: true,
                     fiatAlignLeft: true,
                     fiatTextStyleMedium: true,
+                    withOpacity: false,
                   ),
                   DexTokenBalance(
                     tokenBalance: (Decimal.parse(
@@ -184,6 +175,7 @@ class LiquidityAddConfirmInfos extends ConsumerWidget {
                     height: 20,
                     fiatVertical: true,
                     fiatTextStyleMedium: true,
+                    withOpacity: false,
                   ),
                 ],
               ),
@@ -203,27 +195,25 @@ class LiquidityAddConfirmInfos extends ConsumerWidget {
                 children: [
                   SelectableText(
                     '+${liquidityAdd.expectedTokenLP.formatNumber()} ',
-                    style: AppTextStyles.bodyLargeSecondaryColor(context),
+                    style: AppTextStyles.bodyMediumSecondaryColor(context),
                   ),
                   SelectableText(
                     liquidityAdd.expectedTokenLP > 1
                         ? AppLocalizations.of(context)!.lpTokensExpected
                         : AppLocalizations.of(context)!.lpTokenExpected,
-                    style: AppTextStyles.bodyLarge(context),
+                    style: AppTextStyles.bodyMedium(context),
                   ),
                 ],
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SelectableText(
                     AppLocalizations.of(context)!.confirmBeforeLbl,
-                    style: AppTextStyles.bodyLarge(context),
+                    style: AppTextStyles.bodyMedium(context),
                   ),
                 ],
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   DexTokenBalance(
                     tokenBalance: liquidityAdd.lpTokenBalance,
@@ -231,20 +221,19 @@ class LiquidityAddConfirmInfos extends ConsumerWidget {
                     withFiat: false,
                     height: 20,
                     fiatTextStyleMedium: true,
+                    withOpacity: false,
                   ),
                 ],
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SelectableText(
                     AppLocalizations.of(context)!.confirmAfterLbl,
-                    style: AppTextStyles.bodyLarge(context),
+                    style: AppTextStyles.bodyMedium(context),
                   ),
                 ],
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   DexTokenBalance(
                     tokenBalance: (Decimal.parse(
@@ -258,6 +247,7 @@ class LiquidityAddConfirmInfos extends ConsumerWidget {
                     withFiat: false,
                     height: 20,
                     fiatTextStyleMedium: true,
+                    withOpacity: false,
                   ),
                 ],
               ),

@@ -176,7 +176,6 @@ class AddLiquidityCase with aedappfm.TransactionMixin {
     double token2Amount,
     double slippage,
   ) async {
-    //final apiService = aedappfm.sl.get<archethic.ApiService>();
     final archethicContract = ArchethicContract();
     archethic.Transaction? transactionAddLiquidity;
 

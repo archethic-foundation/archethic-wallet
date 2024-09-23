@@ -25,13 +25,23 @@ class FarmLockDepositFinalAmount extends ConsumerWidget {
     return Row(
       children: [
         if (finalAmount != null)
-          SelectableText(
-            '${AppLocalizations.of(context)!.farmLockDepositFinalAmount} ${finalAmount.formatNumber(precision: 8)} ${finalAmount > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
-            style: AppTextStyles.bodyLarge(context),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SelectableText(
+                AppLocalizations.of(context)!.farmLockDepositFinalAmount,
+                style: AppTextStyles.bodyLarge(context),
+              ),
+              SelectableText(
+                '${finalAmount.formatNumber(precision: 8)} ${finalAmount > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
+                style: AppTextStyles.bodyLargeSecondaryColor(context),
+              ),
+            ],
           )
         else
           timeout == false
-              ? Row(
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SelectableText(
                       AppLocalizations.of(context)!.farmLockDepositFinalAmount,
@@ -44,9 +54,18 @@ class FarmLockDepositFinalAmount extends ConsumerWidget {
                     ),
                   ],
                 )
-              : SelectableText(
-                  '${AppLocalizations.of(context)!.farmLockDepositFinalAmount} ${AppLocalizations.of(context)!.finalAmountNotRecovered}',
-                  style: AppTextStyles.bodyLarge(context),
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SelectableText(
+                      AppLocalizations.of(context)!.farmLockDepositFinalAmount,
+                      style: AppTextStyles.bodyLarge(context),
+                    ),
+                    SelectableText(
+                      AppLocalizations.of(context)!.finalAmountNotRecovered,
+                      style: AppTextStyles.bodyLarge(context),
+                    ),
+                  ],
                 ),
       ],
     );

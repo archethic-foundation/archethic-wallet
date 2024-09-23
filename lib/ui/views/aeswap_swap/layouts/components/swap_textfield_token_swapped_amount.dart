@@ -154,8 +154,8 @@ class _SwapTokenSwappedAmountState
                                             height: 48,
                                             child: Padding(
                                               padding: EdgeInsets.only(
-                                                left: 10,
-                                                right: 330,
+                                                left: 317,
+                                                right: 10,
                                                 top: 15,
                                                 bottom: 15,
                                               ),
@@ -210,7 +210,7 @@ class _SwapTokenSwappedAmountState
                                             decoration: const InputDecoration(
                                               border: InputBorder.none,
                                               contentPadding:
-                                                  EdgeInsets.only(left: 10),
+                                                  EdgeInsets.only(right: 10),
                                             ),
                                           ),
                                   ),

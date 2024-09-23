@@ -197,6 +197,50 @@ class RemoveLiquidityCase with aedappfm.TransactionMixin {
     }
   }
 
+  Future<double> estimateFees(
+    String poolGenesisAddress,
+    String lpTokenAddress,
+    double lpTokenAmount,
+  ) async {
+    final archethicContract = ArchethicContract();
+    archethic.Transaction? transactionRemoveLiquidity;
+
+    try {
+      final transactionRemoveLiquiditylMap =
+          await archethicContract.getRemoveLiquidityTx(
+        lpTokenAddress,
+        lpTokenAmount,
+        poolGenesisAddress,
+      );
+
+      transactionRemoveLiquiditylMap.map(
+        success: (success) {
+          transactionRemoveLiquidity = success;
+          // Add fake signature and address to allow estimation by node
+          transactionRemoveLiquidity = transactionRemoveLiquidity!.copyWith(
+            address: const archethic.Address(
+              address:
+                  '00000000000000000000000000000000000000000000000000000000000000000000',
+            ),
+            previousPublicKey:
+                '00000000000000000000000000000000000000000000000000000000000000000000',
+          );
+        },
+        failure: (failure) {
+          return 0.0;
+        },
+      );
+    } catch (e) {
+      return 0.0;
+    }
+
+    final fees = await calculateFees(
+      transactionRemoveLiquidity!,
+      aedappfm.sl.get<archethic.ApiService>(),
+    );
+    return fees;
+  }
+
   String getAEStepLabel(
     BuildContext context,
     int step,
