@@ -28,6 +28,7 @@ class LiquidityRemoveFormState with _$LiquidityRemoveFormState {
     @Default(0.0) double token1Balance,
     @Default(0.0) double token2Balance,
     Transaction? transactionRemoveLiquidity,
+    @Default(0.0) double feesEstimatedUCO,
     double? finalAmountToken1,
     double? finalAmountToken2,
     double? finalAmountLPToken,

@@ -167,6 +167,54 @@ class DepositFarmLockCase with aedappfm.TransactionMixin {
     }
   }
 
+  Future<double> estimateFees(
+    String farmGenesisAddress,
+    String lpTokenAddress,
+    double amount,
+    FarmLockDepositDurationType durationType,
+    String level,
+  ) async {
+    final archethicContract = ArchethicContract();
+    archethic.Transaction? transactionDeposit;
+
+    try {
+      final transactionDepositMap =
+          await archethicContract.getFarmLockDepositTx(
+        farmGenesisAddress,
+        lpTokenAddress,
+        amount,
+        durationType,
+        level,
+      );
+
+      transactionDepositMap.map(
+        success: (success) {
+          transactionDeposit = success;
+          // Add fake signature and address to allow estimation by node
+          transactionDeposit = transactionDeposit!.copyWith(
+            address: const archethic.Address(
+              address:
+                  '00000000000000000000000000000000000000000000000000000000000000000000',
+            ),
+            previousPublicKey:
+                '00000000000000000000000000000000000000000000000000000000000000000000',
+          );
+        },
+        failure: (failure) {
+          return 0.0;
+        },
+      );
+    } catch (e) {
+      return 0.0;
+    }
+
+    final fees = await calculateFees(
+      transactionDeposit!,
+      aedappfm.sl.get<archethic.ApiService>(),
+    );
+    return fees;
+  }
+
   String getAEStepLabel(
     AppLocalizations localizations,
     int step,

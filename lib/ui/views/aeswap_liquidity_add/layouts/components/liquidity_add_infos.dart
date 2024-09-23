@@ -1,5 +1,6 @@
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/bloc/provider.dart';
+import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -30,8 +31,7 @@ class LiquidityAddInfos extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            SheetDetailCard(
               children: [
                 Tooltip(
                   message: liquidityAdd.token1!.symbol,
@@ -49,8 +49,7 @@ class LiquidityAddInfos extends ConsumerWidget {
                 ),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            SheetDetailCard(
               children: [
                 Tooltip(
                   message: liquidityAdd.token2!.symbol,
@@ -68,8 +67,7 @@ class LiquidityAddInfos extends ConsumerWidget {
                 ),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            SheetDetailCard(
               children: [
                 SelectableText(
                   AppLocalizations.of(context)!.liquidityAddInfosExpectedToken,
@@ -94,15 +92,11 @@ class LiquidityAddInfos extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          SheetDetailCard(
             children: [
-              Tooltip(
-                message: liquidityAdd.token1!.symbol,
-                child: SelectableText(
-                  '${AppLocalizations.of(context)!.liquidityAddInfosMinimumAmount} ${liquidityAdd.token1!.symbol.reduceSymbol()}',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
+              SelectableText(
+                '${AppLocalizations.of(context)!.liquidityAddInfosMinimumAmount} ${liquidityAdd.token1!.symbol}',
+                style: Theme.of(context).textTheme.bodySmall,
               ),
               Tooltip(
                 message: liquidityAdd.token1!.symbol,
@@ -113,27 +107,19 @@ class LiquidityAddInfos extends ConsumerWidget {
               ),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          SheetDetailCard(
             children: [
-              Tooltip(
-                message: liquidityAdd.token2!.symbol,
-                child: SelectableText(
-                  '${AppLocalizations.of(context)!.liquidityAddInfosMinimumAmount} ${liquidityAdd.token2!.symbol.reduceSymbol()}',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
+              SelectableText(
+                '${AppLocalizations.of(context)!.liquidityAddInfosMinimumAmount} ${liquidityAdd.token2!.symbol}',
+                style: Theme.of(context).textTheme.bodySmall,
               ),
-              Tooltip(
-                message: liquidityAdd.token2!.symbol,
-                child: SelectableText(
-                  '${liquidityAdd.token2minAmount.formatNumber()} ${liquidityAdd.token2!.symbol.reduceSymbol()}',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
+              SelectableText(
+                '${liquidityAdd.token2minAmount.formatNumber()} ${liquidityAdd.token2!.symbol}',
+                style: Theme.of(context).textTheme.bodySmall,
               ),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          SheetDetailCard(
             children: [
               SelectableText(
                 AppLocalizations.of(context)!.liquidityAddInfosExpectedToken,

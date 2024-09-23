@@ -46,42 +46,19 @@ class SwapTokenIconInfo extends ConsumerWidget {
                 },
               );
             },
-      child: SizedBox(
-        height: 40,
-        width: 45,
-        child: Card(
-          shape: RoundedRectangleBorder(
-            side: BorderSide(
-              color: aedappfm.ArchethicThemeBase.brightPurpleHoverBorder
-                  .withOpacity(1),
-              width: 0.5,
-            ),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          elevation: 0,
-          color: disabled
-              ? aedappfm.ArchethicThemeBase.neutral800
-              : aedappfm.ArchethicThemeBase.brightPurpleHoverBackground,
-          child: swap.calculationInProgress
-              ? const Padding(
-                  padding:
-                      EdgeInsets.only(top: 8, left: 11, right: 11, bottom: 8),
-                  child: CircularProgressIndicator(
-                    strokeWidth: 1,
-                  ),
-                )
-              : const Padding(
-                  padding: EdgeInsets.only(
-                    top: 5,
-                    bottom: 5,
-                    left: 10,
-                    right: 10,
-                  ),
-                  child: Icon(
-                    aedappfm.Iconsax.info_circle,
-                    size: 16,
-                  ),
-                ),
+      child: Container(
+        height: 30,
+        width: 30,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          gradient: disabled
+              ? aedappfm.AppThemeBase.gradient
+              : aedappfm.AppThemeBase.gradientBtn,
+          shape: BoxShape.circle,
+        ),
+        child: const Icon(
+          aedappfm.Iconsax.info_circle,
+          size: 15,
         ),
       ),
     );

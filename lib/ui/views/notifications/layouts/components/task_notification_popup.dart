@@ -73,6 +73,7 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
       description: Wrap(
         direction: Axis.vertical,
         children: [
+          SelectableText(AppLocalizations.of(context)!.liquidityAddDone),
           if (task.dateTask != null)
             SelectableText(
               DateFormat.yMd(
@@ -81,15 +82,15 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
                     task.dateTask!.toLocal(),
                   ),
             ),
-          addresslinkcopy.FormatAddressLinkCopy(
-            address: task.data.txAddress.toUpperCase(),
-            header:
-                '${AppLocalizations.of(context)!.liquidityAddInProgresstxAddressesShort} ',
-            typeAddress: addresslinkcopy.TypeAddressLinkCopy.transaction,
-            reduceAddress: true,
+          SelectableText(
+            AddressFormatters(task.data.txAddress.toUpperCase())
+                .getShortString(),
           ),
           SelectableText(
-            '${AppLocalizations.of(context)!.liquidityAddFinalAmount} ${amount.formatNumber(precision: 8)} ${task.data.amount! > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
+            AppLocalizations.of(context)!.liquidityAddFinalAmount,
+          ),
+          SelectableText(
+            '${amount.formatNumber(precision: 8)} ${task.data.amount! > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
           ),
         ],
       ),
@@ -116,6 +117,7 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
       description: Wrap(
         direction: Axis.vertical,
         children: [
+          SelectableText(AppLocalizations.of(context)!.liquidityRemoveDone),
           if (task.dateTask != null)
             SelectableText(
               DateFormat.yMd(
@@ -124,21 +126,21 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
                     task.dateTask!.toLocal(),
                   ),
             ),
-          addresslinkcopy.FormatAddressLinkCopy(
-            address: task.data.txAddress.toUpperCase(),
-            header:
-                '${AppLocalizations.of(context)!.liquidityRemoveInProgressTxAddressesShort} ',
-            typeAddress: addresslinkcopy.TypeAddressLinkCopy.transaction,
-            reduceAddress: true,
+          SelectableText(
+            AddressFormatters(task.data.txAddress.toUpperCase())
+                .getShortString(),
           ),
           SelectableText(
             '${AppLocalizations.of(context)!.liquidityRemoveFinalAmountTokenObtained} ${amountToken1.formatNumber(precision: 8)} ${task.data.token1!.symbol}',
+            style: AppTextStyles.bodyMedium(context),
           ),
           SelectableText(
             '${AppLocalizations.of(context)!.liquidityRemoveFinalAmountTokenObtained} ${amountToken2.formatNumber(precision: 8)} ${task.data.token2!.symbol}',
+            style: AppTextStyles.bodyMedium(context),
           ),
           SelectableText(
             '${AppLocalizations.of(context)!.liquidityRemoveFinalAmountTokenBurned} ${amountLPToken.formatNumber(precision: 8)} ${amountLPToken > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
+            style: AppTextStyles.bodyMedium(context),
           ),
         ],
       ),
@@ -283,6 +285,7 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
       description: Wrap(
         direction: Axis.vertical,
         children: [
+          SelectableText(AppLocalizations.of(context)!.depositFarmLockDone),
           if (task.dateTask != null)
             SelectableText(
               DateFormat.yMd(
@@ -291,15 +294,15 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
                     task.dateTask!.toLocal(),
                   ),
             ),
-          addresslinkcopy.FormatAddressLinkCopy(
-            address: task.data.txAddress.toUpperCase(),
-            header:
-                '${AppLocalizations.of(context)!.farmLockDepositTxAddress} ',
-            typeAddress: addresslinkcopy.TypeAddressLinkCopy.transaction,
-            reduceAddress: true,
+          SelectableText(
+            AddressFormatters(task.data.txAddress.toUpperCase())
+                .getShortString(),
           ),
           SelectableText(
-            '${AppLocalizations.of(context)!.farmLockDepositFinalAmount} ${amount.formatNumber(precision: 8)} ${amount > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
+            AppLocalizations.of(context)!.farmLockDepositFinalAmount,
+          ),
+          SelectableText(
+            '${amount.formatNumber(precision: 8)} ${amount > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
           ),
         ],
       ),
@@ -532,34 +535,34 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
         height = 130;
         break;
       case DexActionType.addLiquidity:
-        height = 80;
+        height = 130;
         break;
       case DexActionType.removeLiquidity:
         height = 160;
         break;
       case DexActionType.claimFarm:
-        height = 80;
+        height = 130;
         break;
       case DexActionType.claimFarmLock:
-        height = 80;
+        height = 130;
         break;
       case DexActionType.depositFarm:
-        height = 80;
+        height = 130;
         break;
       case DexActionType.depositFarmLock:
-        height = 80;
+        height = 130;
         break;
       case DexActionType.levelUpFarmLock:
-        height = 80;
+        height = 130;
         break;
       case DexActionType.withdrawFarm:
-        height = 120;
+        height = 130;
         break;
       case DexActionType.withdrawFarmLock:
-        height = 120;
+        height = 130;
         break;
       case DexActionType.addPool:
-        height = 80;
+        height = 130;
         break;
     }
 

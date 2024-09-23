@@ -156,6 +156,9 @@ class LiquidityAddFormSheet extends ConsumerWidget
                           '${AppLocalizations.of(context)!.slippage_tolerance} ${liquidityAdd.slippageTolerance}%',
                           style: AppTextStyles.bodyMedium(context),
                         ),
+                        const SizedBox(
+                          width: 5,
+                        ),
                         const Align(
                           alignment: Alignment.centerRight,
                           child: LiquidityAddTokenIconSettings(),
@@ -165,126 +168,96 @@ class LiquidityAddFormSheet extends ConsumerWidget
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          DexTokenIcon(
-                            tokenAddress: liquidityAdd.token1!.address == null
-                                ? 'UCO'
-                                : liquidityAdd.token1!.address!,
-                          ),
-                          Tooltip(
-                            message: liquidityAdd.token1!.symbol,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 10),
-                              child: Text(
-                                liquidityAdd.token1!.symbol.reduceSymbol(),
+                          Row(
+                            children: [
+                              DexTokenIcon(
+                                tokenAddress:
+                                    liquidityAdd.token1!.address == null
+                                        ? 'UCO'
+                                        : liquidityAdd.token1!.address!,
                               ),
-                            ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: Text(
+                                  liquidityAdd.token1!.symbol,
+                                ),
+                              ),
+                            ],
                           ),
+                          if (liquidityAdd.token1 != null &&
+                              liquidityAdd.token1Amount > 0)
+                            FutureBuilder<String>(
+                              future: FiatValue().display(
+                                ref,
+                                liquidityAdd.token1!,
+                                liquidityAdd.token1Amount,
+                                withParenthesis: false,
+                              ),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return SelectableText(
+                                    snapshot.data!,
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  );
+                                }
+                                return const SizedBox.shrink();
+                              },
+                            ),
                         ],
                       ),
                     ),
-                    Stack(
-                      alignment: Alignment.topRight,
-                      children: [
-                        const LiquidityAddToken1Amount(),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            right: 10,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              if (liquidityAdd.token1 != null &&
-                                  liquidityAdd.token1Amount > 0)
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 13),
-                                  child: FutureBuilder<String>(
-                                    future: FiatValue().display(
-                                      ref,
-                                      liquidityAdd.token1!,
-                                      liquidityAdd.token1Amount,
-                                    ),
-                                    builder: (context, snapshot) {
-                                      if (snapshot.hasData) {
-                                        return SelectableText(
-                                          snapshot.data!,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium,
-                                        );
-                                      }
-                                      return const SizedBox.shrink();
-                                    },
-                                  ),
-                                ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                    const LiquidityAddToken1Amount(),
                     const SizedBox(
                       height: 10,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          DexTokenIcon(
-                            tokenAddress: liquidityAdd.token2!.address == null
-                                ? 'UCO'
-                                : liquidityAdd.token2!.address!,
-                          ),
-                          Tooltip(
-                            message: liquidityAdd.token2!.symbol,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 10),
-                              child: Text(
-                                liquidityAdd.token2!.symbol.reduceSymbol(),
+                          Row(
+                            children: [
+                              DexTokenIcon(
+                                tokenAddress:
+                                    liquidityAdd.token2!.address == null
+                                        ? 'UCO'
+                                        : liquidityAdd.token2!.address!,
                               ),
-                            ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: Text(
+                                  liquidityAdd.token2!.symbol,
+                                ),
+                              ),
+                            ],
                           ),
+                          if (liquidityAdd.token2 != null &&
+                              liquidityAdd.token2Amount > 0)
+                            FutureBuilder<String>(
+                              future: FiatValue().display(
+                                ref,
+                                liquidityAdd.token2!,
+                                liquidityAdd.token2Amount,
+                                withParenthesis: false,
+                              ),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return SelectableText(
+                                    snapshot.data!,
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  );
+                                }
+                                return const SizedBox.shrink();
+                              },
+                            ),
                         ],
                       ),
                     ),
-                    Stack(
-                      alignment: Alignment.topRight,
-                      children: [
-                        const LiquidityAddToken2Amount(),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            right: 10,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              if (liquidityAdd.token2 != null &&
-                                  liquidityAdd.token2Amount > 0)
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 13),
-                                  child: FutureBuilder<String>(
-                                    future: FiatValue().display(
-                                      ref,
-                                      liquidityAdd.token2!,
-                                      liquidityAdd.token2Amount,
-                                    ),
-                                    builder: (context, snapshot) {
-                                      if (snapshot.hasData) {
-                                        return SelectableText(
-                                          snapshot.data!,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium,
-                                        );
-                                      }
-                                      return const SizedBox.shrink();
-                                    },
-                                  ),
-                                ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                    const LiquidityAddToken2Amount(),
                     const SizedBox(
                       height: 10,
                     ),

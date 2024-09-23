@@ -1,4 +1,6 @@
 import 'package:aewallet/modules/aeswap/application/dex_blockchain.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -6,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 enum TypeAddressLinkCopyBigIcon { address, transaction, chain }
@@ -30,6 +33,7 @@ class FormatAddressLinkCopyBigIcon extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
     return LayoutBuilder(
       builder: (context, constraints) {
         return Row(
@@ -66,60 +70,50 @@ class FormatAddressLinkCopyBigIcon extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   InkWell(
+                    child: Container(
+                      height: 40,
+                      width: 40,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        gradient: aedappfm.AppThemeBase.gradientBtn,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        aedappfm.Iconsax.copy,
+                        size: 16,
+                      ),
+                    ),
                     onTap: () async {
                       await Clipboard.setData(
                         ClipboardData(text: address),
                       );
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          backgroundColor:
-                              Theme.of(context).snackBarTheme.backgroundColor,
-                          content: SelectableText(
-                            AppLocalizations.of(context)!.addressCopied,
-                            style: Theme.of(context)
-                                .snackBarTheme
-                                .contentTextStyle,
-                          ),
-                          duration: const Duration(seconds: 3),
-                          action: SnackBarAction(
-                            label: AppLocalizations.of(context)!.ok,
-                            onPressed: () {},
-                          ),
-                        ),
+                      UIUtil.showSnackbar(
+                        localizations.addressCopied,
+                        context,
+                        ref,
+                        ArchethicTheme.text,
+                        ArchethicTheme.snackBarShadow,
+                        icon: Symbols.info,
                       );
                     },
-                    child: SizedBox(
-                      height: 40,
-                      width: 45,
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            color: aedappfm
-                                .ArchethicThemeBase.brightPurpleHoverBorder
-                                .withOpacity(1),
-                            width: 0.5,
-                          ),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        elevation: 0,
-                        color: aedappfm
-                            .ArchethicThemeBase.brightPurpleHoverBackground,
-                        child: const Padding(
-                          padding: EdgeInsets.only(
-                            top: 5,
-                            bottom: 5,
-                            left: 10,
-                            right: 10,
-                          ),
-                          child: Icon(
-                            aedappfm.Iconsax.copy,
-                            size: 16,
-                          ),
-                        ),
-                      ),
-                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
                   ),
                   InkWell(
+                    child: Container(
+                      height: 40,
+                      width: 40,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        gradient: aedappfm.AppThemeBase.gradientBtn,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        aedappfm.Iconsax.export_3,
+                        size: 16,
+                      ),
+                    ),
                     onTap: () async {
                       final blockchain = await ref.read(
                         DexBlockchainsProviders.getBlockchainFromEnv(
@@ -149,36 +143,6 @@ class FormatAddressLinkCopyBigIcon extends ConsumerWidget {
                         }
                       }
                     },
-                    child: SizedBox(
-                      height: 40,
-                      width: 45,
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            color: aedappfm
-                                .ArchethicThemeBase.brightPurpleHoverBorder
-                                .withOpacity(1),
-                            width: 0.5,
-                          ),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        elevation: 0,
-                        color: aedappfm
-                            .ArchethicThemeBase.brightPurpleHoverBackground,
-                        child: const Padding(
-                          padding: EdgeInsets.only(
-                            top: 5,
-                            bottom: 5,
-                            left: 10,
-                            right: 10,
-                          ),
-                          child: Icon(
-                            aedappfm.Iconsax.export_3,
-                            size: 16,
-                          ),
-                        ),
-                      ),
-                    ),
                   ),
                 ],
               ),

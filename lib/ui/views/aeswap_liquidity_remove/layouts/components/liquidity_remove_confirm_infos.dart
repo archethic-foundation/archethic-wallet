@@ -47,12 +47,12 @@ class LiquidityRemoveConfirmInfos extends ConsumerWidget {
                     TextSpan(
                       text: AppLocalizations.of(context)!
                           .liquidityRemovePleaseConfirm,
-                      style: AppTextStyles.bodyLarge(context),
+                      style: AppTextStyles.bodyMedium(context),
                     ),
                     TextSpan(
                       text:
                           '${liquidityRemove.lpTokenAmount.formatNumber(precision: 8)} ',
-                      style: AppTextStyles.bodyLargeSecondaryColor(context),
+                      style: AppTextStyles.bodyMediumSecondaryColor(context),
                     ),
                     TextSpan(
                       text: liquidityRemove.lpTokenAmount > 1
@@ -60,7 +60,7 @@ class LiquidityRemoveConfirmInfos extends ConsumerWidget {
                               .liquidityRemoveAmountLPTokens
                           : AppLocalizations.of(context)!
                               .liquidityRemoveAmountLPToken,
-                      style: AppTextStyles.bodyLarge(context),
+                      style: AppTextStyles.bodyMedium(context),
                     ),
                   ],
                 ),
@@ -77,21 +77,18 @@ class LiquidityRemoveConfirmInfos extends ConsumerWidget {
               const SizedBox(
                 height: 10,
               ),
-              Opacity(
-                opacity: AppTextStyles.kOpacityText,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SelectableText(
-                      AppLocalizations.of(context)!.confirmBeforeLbl,
-                      style: AppTextStyles.bodyLarge(context),
-                    ),
-                    SelectableText(
-                      AppLocalizations.of(context)!.confirmAfterLbl,
-                      style: AppTextStyles.bodyLarge(context),
-                    ),
-                  ],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SelectableText(
+                    AppLocalizations.of(context)!.confirmBeforeLbl,
+                    style: AppTextStyles.bodyMedium(context),
+                  ),
+                  SelectableText(
+                    AppLocalizations.of(context)!.confirmAfterLbl,
+                    style: AppTextStyles.bodyMedium(context),
+                  ),
+                ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -104,6 +101,7 @@ class LiquidityRemoveConfirmInfos extends ConsumerWidget {
                     fiatAlignLeft: true,
                     fiatTextStyleMedium: true,
                     fiatVertical: true,
+                    withOpacity: false,
                   ),
                   DexTokenBalance(
                     tokenBalance: (Decimal.parse(
@@ -118,6 +116,7 @@ class LiquidityRemoveConfirmInfos extends ConsumerWidget {
                     height: 20,
                     fiatTextStyleMedium: true,
                     fiatVertical: true,
+                    withOpacity: false,
                   ),
                 ],
               ),
@@ -132,6 +131,7 @@ class LiquidityRemoveConfirmInfos extends ConsumerWidget {
                     fiatAlignLeft: true,
                     fiatTextStyleMedium: true,
                     fiatVertical: true,
+                    withOpacity: false,
                   ),
                   DexTokenBalance(
                     tokenBalance: (Decimal.parse(
@@ -146,6 +146,7 @@ class LiquidityRemoveConfirmInfos extends ConsumerWidget {
                     height: 20,
                     fiatTextStyleMedium: true,
                     fiatVertical: true,
+                    withOpacity: false,
                   ),
                 ],
               ),
@@ -161,42 +162,54 @@ class LiquidityRemoveConfirmInfos extends ConsumerWidget {
               const SizedBox(
                 height: 10,
               ),
-              Opacity(
-                opacity: AppTextStyles.kOpacityText,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SelectableText(
-                      AppLocalizations.of(context)!.confirmBeforeLbl,
-                      style: AppTextStyles.bodyLarge(context),
-                    ),
-                    SelectableText(
-                      AppLocalizations.of(context)!.confirmAfterLbl,
-                      style: AppTextStyles.bodyLarge(context),
-                    ),
-                  ],
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  DexTokenBalance(
-                    tokenBalance: liquidityRemove.lpTokenBalance,
-                    token: liquidityRemove.pool!.lpToken,
-                    withFiat: false,
-                    height: 20,
+                  Row(
+                    children: [
+                      SelectableText(
+                        AppLocalizations.of(context)!.confirmBeforeLbl,
+                        style: AppTextStyles.bodyMedium(context),
+                      ),
+                    ],
                   ),
-                  DexTokenBalance(
-                    tokenBalance: (Decimal.parse(
-                              liquidityRemove.lpTokenBalance.toString(),
-                            ) -
-                            Decimal.parse(
-                              liquidityRemove.lpTokenAmount.toString(),
-                            ))
-                        .toDouble(),
-                    token: liquidityRemove.pool!.lpToken,
-                    withFiat: false,
-                    height: 20,
+                  Row(
+                    children: [
+                      DexTokenBalance(
+                        tokenBalance: liquidityRemove.lpTokenBalance,
+                        token: liquidityRemove.pool!.lpToken,
+                        withFiat: false,
+                        height: 20,
+                        withOpacity: false,
+                        fiatTextStyleMedium: true,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      SelectableText(
+                        AppLocalizations.of(context)!.confirmAfterLbl,
+                        style: AppTextStyles.bodyMedium(context),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      DexTokenBalance(
+                        tokenBalance: (Decimal.parse(
+                                  liquidityRemove.lpTokenBalance.toString(),
+                                ) -
+                                Decimal.parse(
+                                  liquidityRemove.lpTokenAmount.toString(),
+                                ))
+                            .toDouble(),
+                        token: liquidityRemove.pool!.lpToken,
+                        withFiat: false,
+                        height: 20,
+                        withOpacity: false,
+                        fiatTextStyleMedium: true,
+                      ),
+                    ],
                   ),
                 ],
               ),

@@ -174,7 +174,7 @@ class FarmLockDepositFormNotifier
   }
 
   Future<void> validateForm(BuildContext context) async {
-    if (control(context) == false) {
+    if (await control(context) == false) {
       return;
     }
 
@@ -193,7 +193,7 @@ class FarmLockDepositFormNotifier
     );
   }
 
-  bool control(BuildContext context) {
+  Future<bool> control(BuildContext context) async {
     setFailure(null);
 
     if (BrowserUtil().isEdgeBrowser() ||
@@ -232,6 +232,16 @@ class FarmLockDepositFormNotifier
       return false;
     }
 
+    var feesEstimatedUCO = 0.0;
+
+    feesEstimatedUCO = await DepositFarmLockCase().estimateFees(
+      state.farmLock!.farmAddress,
+      state.farmLock!.lpToken!.address!,
+      state.amount,
+      state.farmLockDepositDuration,
+      state.level,
+    );
+    state = state.copyWith(feesEstimatedUCO: feesEstimatedUCO);
     return true;
   }
 
@@ -239,7 +249,7 @@ class FarmLockDepositFormNotifier
     setFarmLockDepositOk(false);
     setProcessInProgress(true);
 
-    if (control(context) == false) {
+    if (await control(context) == false) {
       setProcessInProgress(false);
       return;
     }

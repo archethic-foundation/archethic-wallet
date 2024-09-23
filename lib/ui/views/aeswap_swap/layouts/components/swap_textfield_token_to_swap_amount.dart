@@ -149,7 +149,7 @@ class _SwapTokenToSwapAmountState extends ConsumerState<SwapTokenToSwapAmount> {
                                             height: 48,
                                             child: Padding(
                                               padding: EdgeInsets.only(
-                                                left: 330,
+                                                left: 317,
                                                 right: 10,
                                                 top: 15,
                                                 bottom: 15,
@@ -205,7 +205,7 @@ class _SwapTokenToSwapAmountState extends ConsumerState<SwapTokenToSwapAmount> {
                                             decoration: const InputDecoration(
                                               border: InputBorder.none,
                                               contentPadding:
-                                                  EdgeInsets.only(left: 10),
+                                                  EdgeInsets.only(right: 10),
                                             ),
                                           ),
                                   ),

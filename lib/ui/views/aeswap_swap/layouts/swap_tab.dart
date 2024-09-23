@@ -158,6 +158,9 @@ class SwapTabState extends ConsumerState<SwapTab> {
                                               context,
                                             ),
                                           ),
+                                          const SizedBox(
+                                            width: 5,
+                                          ),
                                           const Align(
                                             alignment: Alignment.centerRight,
                                             child: SwapTokenIconSettings(),

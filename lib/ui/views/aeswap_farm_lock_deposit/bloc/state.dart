@@ -27,6 +27,7 @@ class FarmLockDepositFormState with _$FarmLockDepositFormState {
     @Default(0.0) double lpTokenBalance,
     Transaction? transactionFarmLockDeposit,
     @Default({}) Map<String, int> filterAvailableLevels,
+    @Default(0.0) double feesEstimatedUCO,
     Failure? failure,
     double? finalAmount,
     DateTime? consentDateTime,

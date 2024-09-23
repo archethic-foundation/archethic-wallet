@@ -295,7 +295,7 @@ class LiquidityRemoveFormNotifier
   }
 
   Future<void> validateForm(BuildContext context) async {
-    if (control(context) == false) {
+    if (await control(context) == false) {
       return;
     }
 
@@ -314,7 +314,7 @@ class LiquidityRemoveFormNotifier
     );
   }
 
-  bool control(BuildContext context) {
+  Future<bool> control(BuildContext context) async {
     setFailure(null);
 
     if (BrowserUtil().isEdgeBrowser() ||
@@ -342,6 +342,20 @@ class LiquidityRemoveFormNotifier
       return false;
     }
 
+    var feesEstimatedUCO = 0.0;
+    if (state.lpToken != null) {
+      state = state.copyWith(calculationInProgress: true);
+      feesEstimatedUCO = await RemoveLiquidityCase().estimateFees(
+        state.pool!.poolAddress,
+        state.lpToken!.address!,
+        state.lpTokenAmount,
+      );
+      state = state.copyWith(calculationInProgress: false);
+    }
+    state = state.copyWith(
+      feesEstimatedUCO: feesEstimatedUCO,
+    );
+
     return true;
   }
 
@@ -349,7 +363,7 @@ class LiquidityRemoveFormNotifier
     setLiquidityRemoveOk(false);
     setProcessInProgress(true);
 
-    if (control(context) == false) {
+    if (await control(context) == false) {
       setProcessInProgress(false);
       return;
     }

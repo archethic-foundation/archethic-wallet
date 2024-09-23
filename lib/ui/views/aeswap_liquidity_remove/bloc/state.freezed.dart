@@ -34,6 +34,7 @@ mixin _$LiquidityRemoveFormState {
   double get token2Balance => throw _privateConstructorUsedError;
   Transaction? get transactionRemoveLiquidity =>
       throw _privateConstructorUsedError;
+  double get feesEstimatedUCO => throw _privateConstructorUsedError;
   double? get finalAmountToken1 => throw _privateConstructorUsedError;
   double? get finalAmountToken2 => throw _privateConstructorUsedError;
   double? get finalAmountLPToken => throw _privateConstructorUsedError;
@@ -70,6 +71,7 @@ abstract class $LiquidityRemoveFormStateCopyWith<$Res> {
       double token1Balance,
       double token2Balance,
       Transaction? transactionRemoveLiquidity,
+      double feesEstimatedUCO,
       double? finalAmountToken1,
       double? finalAmountToken2,
       double? finalAmountLPToken,
@@ -116,6 +118,7 @@ class _$LiquidityRemoveFormStateCopyWithImpl<$Res,
     Object? token1Balance = null,
     Object? token2Balance = null,
     Object? transactionRemoveLiquidity = freezed,
+    Object? feesEstimatedUCO = null,
     Object? finalAmountToken1 = freezed,
     Object? finalAmountToken2 = freezed,
     Object? finalAmountLPToken = freezed,
@@ -192,6 +195,10 @@ class _$LiquidityRemoveFormStateCopyWithImpl<$Res,
           ? _value.transactionRemoveLiquidity
           : transactionRemoveLiquidity // ignore: cast_nullable_to_non_nullable
               as Transaction?,
+      feesEstimatedUCO: null == feesEstimatedUCO
+          ? _value.feesEstimatedUCO
+          : feesEstimatedUCO // ignore: cast_nullable_to_non_nullable
+              as double,
       finalAmountToken1: freezed == finalAmountToken1
           ? _value.finalAmountToken1
           : finalAmountToken1 // ignore: cast_nullable_to_non_nullable
@@ -320,6 +327,7 @@ abstract class _$$LiquidityRemoveFormStateImplCopyWith<$Res>
       double token1Balance,
       double token2Balance,
       Transaction? transactionRemoveLiquidity,
+      double feesEstimatedUCO,
       double? finalAmountToken1,
       double? finalAmountToken2,
       double? finalAmountLPToken,
@@ -371,6 +379,7 @@ class __$$LiquidityRemoveFormStateImplCopyWithImpl<$Res>
     Object? token1Balance = null,
     Object? token2Balance = null,
     Object? transactionRemoveLiquidity = freezed,
+    Object? feesEstimatedUCO = null,
     Object? finalAmountToken1 = freezed,
     Object? finalAmountToken2 = freezed,
     Object? finalAmountLPToken = freezed,
@@ -447,6 +456,10 @@ class __$$LiquidityRemoveFormStateImplCopyWithImpl<$Res>
           ? _value.transactionRemoveLiquidity
           : transactionRemoveLiquidity // ignore: cast_nullable_to_non_nullable
               as Transaction?,
+      feesEstimatedUCO: null == feesEstimatedUCO
+          ? _value.feesEstimatedUCO
+          : feesEstimatedUCO // ignore: cast_nullable_to_non_nullable
+              as double,
       finalAmountToken1: freezed == finalAmountToken1
           ? _value.finalAmountToken1
           : finalAmountToken1 // ignore: cast_nullable_to_non_nullable
@@ -496,6 +509,7 @@ class _$LiquidityRemoveFormStateImpl extends _LiquidityRemoveFormState {
       this.token1Balance = 0.0,
       this.token2Balance = 0.0,
       this.transactionRemoveLiquidity,
+      this.feesEstimatedUCO = 0.0,
       this.finalAmountToken1,
       this.finalAmountToken2,
       this.finalAmountLPToken,
@@ -551,6 +565,9 @@ class _$LiquidityRemoveFormStateImpl extends _LiquidityRemoveFormState {
   @override
   final Transaction? transactionRemoveLiquidity;
   @override
+  @JsonKey()
+  final double feesEstimatedUCO;
+  @override
   final double? finalAmountToken1;
   @override
   final double? finalAmountToken2;
@@ -566,7 +583,7 @@ class _$LiquidityRemoveFormStateImpl extends _LiquidityRemoveFormState {
 
   @override
   String toString() {
-    return 'LiquidityRemoveFormState(processStep: $processStep, resumeProcess: $resumeProcess, currentStep: $currentStep, pool: $pool, isProcessInProgress: $isProcessInProgress, liquidityRemoveOk: $liquidityRemoveOk, token1: $token1, token2: $token2, lpToken: $lpToken, lpTokenBalance: $lpTokenBalance, lpTokenAmount: $lpTokenAmount, token1AmountGetBack: $token1AmountGetBack, token2AmountGetBack: $token2AmountGetBack, networkFees: $networkFees, token1Balance: $token1Balance, token2Balance: $token2Balance, transactionRemoveLiquidity: $transactionRemoveLiquidity, finalAmountToken1: $finalAmountToken1, finalAmountToken2: $finalAmountToken2, finalAmountLPToken: $finalAmountLPToken, failure: $failure, calculationInProgress: $calculationInProgress, consentDateTime: $consentDateTime)';
+    return 'LiquidityRemoveFormState(processStep: $processStep, resumeProcess: $resumeProcess, currentStep: $currentStep, pool: $pool, isProcessInProgress: $isProcessInProgress, liquidityRemoveOk: $liquidityRemoveOk, token1: $token1, token2: $token2, lpToken: $lpToken, lpTokenBalance: $lpTokenBalance, lpTokenAmount: $lpTokenAmount, token1AmountGetBack: $token1AmountGetBack, token2AmountGetBack: $token2AmountGetBack, networkFees: $networkFees, token1Balance: $token1Balance, token2Balance: $token2Balance, transactionRemoveLiquidity: $transactionRemoveLiquidity, feesEstimatedUCO: $feesEstimatedUCO, finalAmountToken1: $finalAmountToken1, finalAmountToken2: $finalAmountToken2, finalAmountLPToken: $finalAmountLPToken, failure: $failure, calculationInProgress: $calculationInProgress, consentDateTime: $consentDateTime)';
   }
 
   @override
@@ -606,6 +623,8 @@ class _$LiquidityRemoveFormStateImpl extends _LiquidityRemoveFormState {
                     transactionRemoveLiquidity) ||
                 other.transactionRemoveLiquidity ==
                     transactionRemoveLiquidity) &&
+            (identical(other.feesEstimatedUCO, feesEstimatedUCO) ||
+                other.feesEstimatedUCO == feesEstimatedUCO) &&
             (identical(other.finalAmountToken1, finalAmountToken1) ||
                 other.finalAmountToken1 == finalAmountToken1) &&
             (identical(other.finalAmountToken2, finalAmountToken2) ||
@@ -639,6 +658,7 @@ class _$LiquidityRemoveFormStateImpl extends _LiquidityRemoveFormState {
         token1Balance,
         token2Balance,
         transactionRemoveLiquidity,
+        feesEstimatedUCO,
         finalAmountToken1,
         finalAmountToken2,
         finalAmountLPToken,
@@ -674,6 +694,7 @@ abstract class _LiquidityRemoveFormState extends LiquidityRemoveFormState {
       final double token1Balance,
       final double token2Balance,
       final Transaction? transactionRemoveLiquidity,
+      final double feesEstimatedUCO,
       final double? finalAmountToken1,
       final double? finalAmountToken2,
       final double? finalAmountLPToken,
@@ -716,6 +737,8 @@ abstract class _LiquidityRemoveFormState extends LiquidityRemoveFormState {
   double get token2Balance;
   @override
   Transaction? get transactionRemoveLiquidity;
+  @override
+  double get feesEstimatedUCO;
   @override
   double? get finalAmountToken1;
   @override
