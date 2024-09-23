@@ -2,6 +2,7 @@
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_token_balance.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/fiat_value.dart';
+import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/views/aeswap_swap/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_change.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_token_to_swap_selection.dart';
@@ -35,18 +36,14 @@ class _SwapTokenToSwapAmountState extends ConsumerState<SwapTokenToSwapAmount> {
   void _updateAmountTextController() {
     final swap = ref.read(SwapFormProvider.swapForm);
     tokenAmountController = TextEditingController();
-    tokenAmountController.value = aedappfm.AmountTextInputFormatter(
+    tokenAmountController.value = AmountTextInputFormatter(
       precision: 8,
-      thousandsSeparator: ',',
-      useUnifyDecimalSeparator: false,
     ).formatEditUpdate(
       TextEditingValue.empty,
       TextEditingValue(
         text: swap.tokenToSwapAmount == 0
             ? ''
-            : swap.tokenToSwapAmount
-                .formatNumber(precision: 8)
-                .replaceAll(',', ''),
+            : swap.tokenToSwapAmount.formatNumber(precision: 8),
       ),
     );
   }
@@ -175,7 +172,7 @@ class _SwapTokenToSwapAmountState extends ConsumerState<SwapTokenToSwapAmount> {
                                               await swapNotifier
                                                   .setTokenToSwapAmount(
                                                 double.tryParse(
-                                                      text.replaceAll(',', ''),
+                                                      text.replaceAll(' ', ''),
                                                     ) ??
                                                     0,
                                               );
@@ -192,10 +189,8 @@ class _SwapTokenToSwapAmountState extends ConsumerState<SwapTokenToSwapAmount> {
                                               decimal: true,
                                             ),
                                             inputFormatters: <TextInputFormatter>[
-                                              aedappfm.AmountTextInputFormatter(
+                                              AmountTextInputFormatter(
                                                 precision: 8,
-                                                thousandsSeparator: ',',
-                                                useUnifyDecimalSeparator: false,
                                               ),
                                               LengthLimitingTextInputFormatter(
                                                 swap.tokenToSwapBalance
@@ -269,10 +264,8 @@ class _SwapTokenToSwapAmountState extends ConsumerState<SwapTokenToSwapAmount> {
                               AppTextStyles.bodyMediumSecondaryColor(context),
                           onTap: () async {
                             tokenAmountController.value =
-                                aedappfm.AmountTextInputFormatter(
+                                AmountTextInputFormatter(
                               precision: 8,
-                              thousandsSeparator: ',',
-                              useUnifyDecimalSeparator: false,
                             ).formatEditUpdate(
                               TextEditingValue.empty,
                               TextEditingValue(
@@ -304,10 +297,8 @@ class _SwapTokenToSwapAmountState extends ConsumerState<SwapTokenToSwapAmount> {
                               AppTextStyles.bodyMediumSecondaryColor(context),
                           onTap: () async {
                             tokenAmountController.value =
-                                aedappfm.AmountTextInputFormatter(
+                                AmountTextInputFormatter(
                               precision: 8,
-                              thousandsSeparator: ',',
-                              useUnifyDecimalSeparator: false,
                             ).formatEditUpdate(
                               TextEditingValue.empty,
                               TextEditingValue(

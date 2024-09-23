@@ -1,6 +1,7 @@
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_lp_token_fiat_value.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_token_balance.dart';
+import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/provider.dart';
 
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -35,18 +36,14 @@ class _FarmLockDepositToken1AmountState
     final farmLockDeposit =
         ref.read(FarmLockDepositFormProvider.farmLockDepositForm);
     tokenAmountController = TextEditingController();
-    tokenAmountController.value = aedappfm.AmountTextInputFormatter(
+    tokenAmountController.value = AmountTextInputFormatter(
       precision: 8,
-      thousandsSeparator: ',',
-      useUnifyDecimalSeparator: false,
     ).formatEditUpdate(
       TextEditingValue.empty,
       TextEditingValue(
         text: farmLockDeposit.amount == 0
             ? ''
-            : farmLockDeposit.amount
-                .formatNumber(precision: 8)
-                .replaceAll(',', ''),
+            : farmLockDeposit.amount.formatNumber(precision: 8),
       ),
     );
   }
@@ -119,7 +116,7 @@ class _FarmLockDepositToken1AmountState
                             controller: tokenAmountController,
                             onChanged: (text) async {
                               farmLockDepositNotifier.setAmount(
-                                double.tryParse(text.replaceAll(',', '')) ?? 0,
+                                double.tryParse(text.replaceAll(' ', '')) ?? 0,
                               );
                             },
                             focusNode: tokenAmountFocusNode,
@@ -129,10 +126,8 @@ class _FarmLockDepositToken1AmountState
                               decimal: true,
                             ),
                             inputFormatters: <TextInputFormatter>[
-                              aedappfm.AmountTextInputFormatter(
+                              AmountTextInputFormatter(
                                 precision: 8,
-                                thousandsSeparator: ',',
-                                useUnifyDecimalSeparator: false,
                               ),
                               LengthLimitingTextInputFormatter(
                                 farmLockDeposit.lpTokenBalance

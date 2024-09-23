@@ -1,4 +1,5 @@
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_token_balance.dart';
+import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_remove/bloc/provider.dart';
 
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -33,18 +34,14 @@ class _LiquidityRemoveLPTokenAmountState
     final liquidityRemove =
         ref.read(LiquidityRemoveFormProvider.liquidityRemoveForm);
     tokenAmountController = TextEditingController();
-    tokenAmountController.value = aedappfm.AmountTextInputFormatter(
+    tokenAmountController.value = AmountTextInputFormatter(
       precision: 8,
-      thousandsSeparator: ',',
-      useUnifyDecimalSeparator: false,
     ).formatEditUpdate(
       TextEditingValue.empty,
       TextEditingValue(
         text: liquidityRemove.lpTokenAmount == 0
             ? ''
-            : liquidityRemove.lpTokenAmount
-                .formatNumber(precision: 8)
-                .replaceAll(',', ''),
+            : liquidityRemove.lpTokenAmount.formatNumber(precision: 8),
       ),
     );
   }
@@ -117,7 +114,7 @@ class _LiquidityRemoveLPTokenAmountState
                             controller: tokenAmountController,
                             onChanged: (text) async {
                               await liquidityRemoveNotifier.setLPTokenAmount(
-                                double.tryParse(text.replaceAll(',', '')) ?? 0,
+                                double.tryParse(text.replaceAll(' ', '')) ?? 0,
                               );
                             },
                             focusNode: tokenAmountFocusNode,
@@ -127,10 +124,8 @@ class _LiquidityRemoveLPTokenAmountState
                               decimal: true,
                             ),
                             inputFormatters: <TextInputFormatter>[
-                              aedappfm.AmountTextInputFormatter(
+                              AmountTextInputFormatter(
                                 precision: 8,
-                                thousandsSeparator: ',',
-                                useUnifyDecimalSeparator: false,
                               ),
                               LengthLimitingTextInputFormatter(10),
                             ],
