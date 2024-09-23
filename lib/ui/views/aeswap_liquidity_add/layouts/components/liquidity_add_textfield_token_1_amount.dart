@@ -1,4 +1,5 @@
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_token_balance.dart';
+import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/layouts/components/liquidity_add_need_tokens.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -32,18 +33,14 @@ class _LiquidityAddToken1AmountState
   void _updateAmountTextController() {
     final liquidityAdd = ref.read(LiquidityAddFormProvider.liquidityAddForm);
     tokenAmountController = TextEditingController();
-    tokenAmountController.value = aedappfm.AmountTextInputFormatter(
+    tokenAmountController.value = AmountTextInputFormatter(
       precision: 8,
-      thousandsSeparator: ',',
-      useUnifyDecimalSeparator: false,
     ).formatEditUpdate(
       TextEditingValue.empty,
       TextEditingValue(
         text: liquidityAdd.token1Amount == 0
             ? ''
-            : liquidityAdd.token1Amount
-                .formatNumber(precision: 8)
-                .replaceAll(',', ''),
+            : liquidityAdd.token1Amount.formatNumber(precision: 8),
       ),
     );
   }
@@ -133,7 +130,7 @@ class _LiquidityAddToken1AmountState
                                     await liquidityAddNotifier.setToken1Amount(
                                       context,
                                       double.tryParse(
-                                            text.replaceAll(',', ''),
+                                            text.replaceAll(' ', ''),
                                           ) ??
                                           0,
                                     );
@@ -149,10 +146,8 @@ class _LiquidityAddToken1AmountState
                                     decimal: true,
                                   ),
                                   inputFormatters: <TextInputFormatter>[
-                                    aedappfm.AmountTextInputFormatter(
+                                    AmountTextInputFormatter(
                                       precision: 8,
-                                      thousandsSeparator: ',',
-                                      useUnifyDecimalSeparator: false,
                                     ),
                                     LengthLimitingTextInputFormatter(
                                       liquidityAdd.token1Balance
@@ -196,11 +191,8 @@ class _LiquidityAddToken1AmountState
                 aedappfm.ButtonHalf(
                   balanceAmount: liquidityAdd.token1Balance,
                   onTap: () async {
-                    tokenAmountController.value =
-                        aedappfm.AmountTextInputFormatter(
+                    tokenAmountController.value = AmountTextInputFormatter(
                       precision: 8,
-                      thousandsSeparator: ',',
-                      useUnifyDecimalSeparator: false,
                     ).formatEditUpdate(
                       TextEditingValue.empty,
                       TextEditingValue(
@@ -229,11 +221,8 @@ class _LiquidityAddToken1AmountState
                 aedappfm.ButtonMax(
                   balanceAmount: liquidityAdd.token1Balance,
                   onTap: () async {
-                    tokenAmountController.value =
-                        aedappfm.AmountTextInputFormatter(
+                    tokenAmountController.value = AmountTextInputFormatter(
                       precision: 8,
-                      thousandsSeparator: ',',
-                      useUnifyDecimalSeparator: false,
                     ).formatEditUpdate(
                       TextEditingValue.empty,
                       TextEditingValue(

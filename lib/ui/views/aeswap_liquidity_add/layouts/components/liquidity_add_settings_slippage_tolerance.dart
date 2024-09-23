@@ -2,6 +2,7 @@
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/btn_validate_mobile.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
+import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/bloc/provider.dart';
 
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -93,7 +94,9 @@ class LiquiditySettingsSlippageToleranceState
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
                   inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
+                    AmountTextInputFormatter(
+                      precision: 5,
+                    ),
                     LengthLimitingTextInputFormatter(5),
                   ],
                   onChanged: (_) {
