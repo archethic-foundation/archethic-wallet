@@ -2,7 +2,7 @@ import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_lp_token_fiat_value.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_token_balance.dart';
 import 'package:aewallet/ui/util/formatters.dart';
-import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/provider.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/bloc/provider.dart';
 
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -10,18 +10,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FarmLockDepositAmount extends ConsumerStatefulWidget {
-  const FarmLockDepositAmount({
+class FarmLockWithdrawAmount extends ConsumerStatefulWidget {
+  const FarmLockWithdrawAmount({
     super.key,
   });
 
   @override
-  ConsumerState<FarmLockDepositAmount> createState() =>
-      _FarmLockDepositToken1AmountState();
+  ConsumerState<FarmLockWithdrawAmount> createState() =>
+      _FarmLockWithdrawToken1AmountState();
 }
 
-class _FarmLockDepositToken1AmountState
-    extends ConsumerState<FarmLockDepositAmount> {
+class _FarmLockWithdrawToken1AmountState
+    extends ConsumerState<FarmLockWithdrawAmount> {
   late TextEditingController tokenAmountController;
   late FocusNode tokenAmountFocusNode;
 
@@ -33,17 +33,17 @@ class _FarmLockDepositToken1AmountState
   }
 
   void _updateAmountTextController() {
-    final farmLockDeposit =
-        ref.read(FarmLockDepositFormProvider.farmLockDepositForm);
+    final farmLockWithdraw =
+        ref.read(FarmLockWithdrawFormProvider.farmLockWithdrawForm);
     tokenAmountController = TextEditingController();
     tokenAmountController.value = AmountTextInputFormatter(
       precision: 8,
     ).formatEditUpdate(
       TextEditingValue.empty,
       TextEditingValue(
-        text: farmLockDeposit.amount == 0
+        text: farmLockWithdraw.amount == 0
             ? ''
-            : farmLockDeposit.amount.formatNumber(precision: 8),
+            : farmLockWithdraw.amount.formatNumber(precision: 8),
       ),
     );
   }
@@ -59,13 +59,13 @@ class _FarmLockDepositToken1AmountState
   Widget build(
     BuildContext context,
   ) {
-    final farmLockDepositNotifier =
-        ref.watch(FarmLockDepositFormProvider.farmLockDepositForm.notifier);
+    final farmLockWithdrawNotifier =
+        ref.watch(FarmLockWithdrawFormProvider.farmLockWithdrawForm.notifier);
 
-    final farmLockDeposit =
-        ref.watch(FarmLockDepositFormProvider.farmLockDepositForm);
+    final farmLockWithdraw =
+        ref.watch(FarmLockWithdrawFormProvider.farmLockWithdrawForm);
     final textNum = double.tryParse(tokenAmountController.text);
-    if (!(farmLockDeposit.amount != 0.0 ||
+    if (!(farmLockWithdraw.amount != 0.0 ||
         tokenAmountController.text == '' ||
         (textNum != null && textNum == 0))) {
       _updateAmountTextController();
@@ -115,7 +115,8 @@ class _FarmLockDepositToken1AmountState
                             autocorrect: false,
                             controller: tokenAmountController,
                             onChanged: (text) async {
-                              farmLockDepositNotifier.setAmount(
+                              farmLockWithdrawNotifier.setAmount(
+                                context,
                                 double.tryParse(text.replaceAll(' ', '')) ?? 0,
                               );
                             },
@@ -129,15 +130,7 @@ class _FarmLockDepositToken1AmountState
                               AmountTextInputFormatter(
                                 precision: 8,
                               ),
-                              LengthLimitingTextInputFormatter(
-                                farmLockDeposit.lpTokenBalance
-                                        .formatNumber(
-                                          precision: 0,
-                                        )
-                                        .length +
-                                    8 +
-                                    1,
-                              ),
+                              LengthLimitingTextInputFormatter(10),
                             ],
                             decoration: const InputDecoration(
                               border: InputBorder.none,
@@ -158,27 +151,22 @@ class _FarmLockDepositToken1AmountState
             Row(
               children: [
                 DexTokenBalance(
-                  tokenBalance: farmLockDeposit.lpTokenBalance,
-                  token: farmLockDeposit.pool!.lpToken,
+                  tokenBalance: farmLockWithdraw.depositedAmount!,
+                  token: farmLockWithdraw.lpToken,
                   withFiat: false,
-                  fiatTextStyleMedium: true,
-                  withOpacity: false,
                 ),
                 const SizedBox(
                   width: 5,
                 ),
-                Opacity(
-                  opacity: AppTextStyles.kOpacityText,
-                  child: SelectableText(
-                    DEXLPTokenFiatValue().display(
-                      ref,
-                      farmLockDeposit.pool!.pair.token1,
-                      farmLockDeposit.pool!.pair.token2,
-                      farmLockDeposit.lpTokenBalance,
-                      farmLockDeposit.pool!.poolAddress,
-                    ),
-                    style: AppTextStyles.bodyMedium(context),
+                SelectableText(
+                  DEXLPTokenFiatValue().display(
+                    ref,
+                    farmLockWithdraw.lpTokenPair!.token1,
+                    farmLockWithdraw.lpTokenPair!.token2,
+                    farmLockWithdraw.depositedAmount!,
+                    farmLockWithdraw.poolAddress!,
                   ),
+                  style: AppTextStyles.bodyLarge(context),
                 ),
               ],
             ),
@@ -192,14 +180,16 @@ class _FarmLockDepositToken1AmountState
                 children: [
                   aedappfm.ButtonHalf(
                     height: 40,
-                    balanceAmount: farmLockDeposit.lpTokenBalance,
+                    balanceAmount: farmLockWithdraw.depositedAmount!,
                     onTap: () {
                       ref
                           .read(
-                            FarmLockDepositFormProvider
-                                .farmLockDepositForm.notifier,
+                            FarmLockWithdrawFormProvider
+                                .farmLockWithdrawForm.notifier,
                           )
-                          .setAmountHalf();
+                          .setAmountHalf(
+                            context,
+                          );
                       _updateAmountTextController();
                     },
                   ),
@@ -208,14 +198,16 @@ class _FarmLockDepositToken1AmountState
                   ),
                   aedappfm.ButtonMax(
                     height: 40,
-                    balanceAmount: farmLockDeposit.lpTokenBalance,
+                    balanceAmount: farmLockWithdraw.depositedAmount!,
                     onTap: () {
                       ref
                           .read(
-                            FarmLockDepositFormProvider
-                                .farmLockDepositForm.notifier,
+                            FarmLockWithdrawFormProvider
+                                .farmLockWithdrawForm.notifier,
                           )
-                          .setAmountMax();
+                          .setAmountMax(
+                            context,
+                          );
                       _updateAmountTextController();
                     },
                   ),

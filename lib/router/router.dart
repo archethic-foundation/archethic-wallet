@@ -11,8 +11,11 @@ import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/router/dialog_page.dart';
 import 'package:aewallet/ui/menu/settings/settings_sheet.dart';
 import 'package:aewallet/ui/views/add_account/layouts/add_account_sheet.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_claim/layouts/farm_lock_claim_sheet.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_result_sheet.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/farm_lock_deposit_sheet.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/layouts/farm_lock_level_up_sheet.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/layouts/farm_lock_withdraw_sheet.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/layouts/components/liquidity_add_result_sheet.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/layouts/liquidity_add_sheet.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_remove/layouts/components/liquidity_remove_result_sheet.dart';
@@ -218,6 +221,14 @@ class RPCCommandReceiverRoute extends ShellRoute {
             ),
           ),
         );
+}
+
+extension RouterParamExtension on Object? {
+  String? encodeParam() {
+    if (this == null) return null;
+    final paramJson = jsonEncode(this);
+    return Uri.encodeComponent(paramJson);
+  }
 }
 
 extension UriExtensions on Map<String, String> {
