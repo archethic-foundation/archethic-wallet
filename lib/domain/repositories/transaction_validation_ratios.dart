@@ -9,4 +9,7 @@ class TransactionValidationRatios {
   static const addLiquidity = 0.5;
   static const removeLiquidity = 0.5;
   static const depositFarmLock = 0.5;
+  static const claimFarmLock = 0.5;
+  static const levelUpFarmLock = 0.5;
+  static const withdrawFarmLock = 0.5;
 }

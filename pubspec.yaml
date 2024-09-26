@@ -199,6 +199,9 @@ dependencies:
   # Create awesome and powerful modal bottom sheets. Material, Cupertino iOS 13 or create your own style
   modal_bottom_sheet: ^3.0.0
 
+  # Utilities to make working with 'Duration's easier.
+  moment_dart: ^2.1.0
+
   # Flutter plugin for accessing the NFC features on Android and iOS.
   nfc_manager: ^3.3.0
 

@@ -878,6 +878,7 @@
     "farmLockBlockEarnRewardsBtnNotAvailable": "Farm not available",
     "farmLockBlockEarnRewardsViewGuideArticle": "View the guide article",
     "farmLockBlockAprLbl": "APR 3 years",
+    "farmLockListLocksHeader": "Your farmed tokens",
     "farmLockBlockFarmedTokensSummaryHeader": "Farmed Tokens Summary",
     "farmLockBlockBalanceSummaryHeader": "Your Balances Summary",
     "farmLockBlockFarmedTokensSummaryCapitalInvestedLbl": "Capital Invested",

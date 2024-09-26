@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/modules/aeswap/ui/views/pool_list/layouts/components/pool_details_info_header.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
@@ -11,6 +10,7 @@ import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_lock_duration_btn.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_textfield_amount.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/layouts/liquidity_add_sheet.dart';
+import 'package:aewallet/ui/views/aeswap_pool_list/layouts/components/pool_details_info_header.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';

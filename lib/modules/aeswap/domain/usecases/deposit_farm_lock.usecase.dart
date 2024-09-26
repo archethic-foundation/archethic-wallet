@@ -34,7 +34,6 @@ class DepositFarmLockCase with aedappfm.TransactionMixin {
     FarmLockDepositDurationType durationType,
     String level,
   ) async {
-    //final apiService = aedappfm.sl.get<archethic.ApiService>();
     final operationId = const Uuid().v4();
     final archethicContract = ArchethicContract();
     final farmDepositNotifier =
