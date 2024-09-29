@@ -9,6 +9,7 @@ import 'package:aewallet/domain/repositories/account.dart';
 import 'package:aewallet/infrastructure/repositories/local_account.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_token.dart';
+import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

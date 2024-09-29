@@ -1,11 +1,11 @@
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/modules/aeswap/application/dex_token.dart';
+import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/modules/aeswap/application/farm/dex_farm_lock.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
+import 'package:aewallet/modules/aeswap/application/session/provider.dart';
+import 'package:aewallet/modules/aeswap/application/session/state.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/components/pool_farm_available.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/state.dart';
 import 'package:decimal/decimal.dart';
 import 'package:logging/logging.dart';
@@ -13,7 +13,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'provider.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 class EarnFormNotifier extends _$EarnFormNotifier {
   EarnFormNotifier();
 
@@ -24,10 +24,7 @@ class EarnFormNotifier extends _$EarnFormNotifier {
     try {
       var _tempState = const EarnFormState();
 
-      final env =
-          ref.read(SettingsProviders.settings).network.getNetworkLabel();
-      final contextAddresses =
-          PoolFarmAvailableState().getContextAddresses(env);
+      final environment = ref.watch(environmentProvider);
 
       final accountSelected = ref.watch(
         AccountProviders.accounts.select(
@@ -35,22 +32,25 @@ class EarnFormNotifier extends _$EarnFormNotifier {
         ),
       );
 
+      if (accountSelected == null) {
+        return const EarnFormState();
+      }
+
       final poolFuture = ref.watch(
         DexPoolProviders.getPool(
-          contextAddresses.aeETHUCOPoolAddress,
+          environment.aeETHUCOPoolAddress,
         ).future,
       );
 
       Future<DexFarmLock?>? farmLockFuture;
-      if (contextAddresses.aeETHUCOFarmLockAddress.isNotEmpty) {
+      if (environment.aeETHUCOFarmLockAddress.isNotEmpty) {
         farmLockFuture = ref.watch(
           DexFarmLockProviders.getFarmLockInfos(
-            contextAddresses.aeETHUCOFarmLockAddress,
-            contextAddresses.aeETHUCOPoolAddress,
-            accountSelected!.genesisAddress,
+            environment.aeETHUCOFarmLockAddress,
+            environment.aeETHUCOPoolAddress,
             dexFarmLockInput: DexFarmLock(
-              poolAddress: contextAddresses.aeETHUCOPoolAddress,
-              farmAddress: contextAddresses.aeETHUCOFarmLockAddress,
+              poolAddress: environment.aeETHUCOPoolAddress,
+              farmAddress: environment.aeETHUCOFarmLockAddress,
             ),
           ).future,
         );
@@ -64,11 +64,11 @@ class EarnFormNotifier extends _$EarnFormNotifier {
       final pool = results[0] as DexPool?;
       _tempState = _tempState.copyWith(pool: pool);
 
-      final lpTokenBalance = accountSelected!.accountTokens
+      final lpTokenBalance = accountSelected.accountTokens
               ?.singleWhere(
                 (token) =>
                     token.tokenInformation?.address!.toUpperCase() ==
-                    pool?.lpToken.address!.toUpperCase(),
+                    pool?.lpToken.address.toUpperCase(),
               )
               .amount ??
           0.0;
@@ -107,16 +107,17 @@ class EarnFormNotifier extends _$EarnFormNotifier {
 
     farmedTokensCapitalInFiat = await ref.watch(
       DexTokensProviders.estimateLPTokenInFiat(
-        state.farmLock!.lpTokenPair!.token1,
-        state.farmLock!.lpTokenPair!.token2,
+        state.farmLock!.lpTokenPair!.token1.address,
+        state.farmLock!.lpTokenPair!.token2.address,
         capitalInvested,
         state.farmLock!.poolAddress,
       ).future,
     );
 
     price = await ref.watch(
-      DexTokensProviders.estimateTokenInFiat(state.farmLock!.rewardToken!)
-          .future,
+      DexTokensProviders.estimateTokenInFiat(
+        state.farmLock!.rewardToken!.address,
+      ).future,
     );
 
     return state.copyWith(

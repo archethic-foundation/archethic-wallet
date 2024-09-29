@@ -45,8 +45,7 @@ class FarmLockLevelUpFormSheet extends ConsumerWidget
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final farmLockLevelUp =
-        ref.watch(FarmLockLevelUpFormProvider.farmLockLevelUpForm);
+    final farmLockLevelUp = ref.watch(farmLockLevelUpFormNotifierProvider);
     return Row(
       children: <Widget>[
         AppButtonTinyConnectivity(
@@ -56,9 +55,9 @@ class FarmLockLevelUpFormSheet extends ConsumerWidget
           onPressed: () async {
             await ref
                 .read(
-                  FarmLockLevelUpFormProvider.farmLockLevelUpForm.notifier,
+                  farmLockLevelUpFormNotifierProvider.notifier,
                 )
-                .validateForm(context);
+                .validateForm(AppLocalizations.of(context)!);
           },
           disabled: !farmLockLevelUp.isControlsOk,
         ),
@@ -83,8 +82,7 @@ class FarmLockLevelUpFormSheet extends ConsumerWidget
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final farmLockLevelUp =
-        ref.watch(FarmLockLevelUpFormProvider.farmLockLevelUpForm);
+    final farmLockLevelUp = ref.watch(farmLockLevelUpFormNotifierProvider);
 
     if (farmLockLevelUp.pool == null) {
       return const Padding(

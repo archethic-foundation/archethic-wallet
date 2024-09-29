@@ -43,8 +43,7 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final farmLockWithdraw =
-        ref.watch(FarmLockWithdrawFormProvider.farmLockWithdrawForm);
+    final farmLockWithdraw = ref.watch(farmLockWithdrawFormNotifierProvider);
     return Row(
       children: <Widget>[
         AppButtonTinyConnectivity(
@@ -54,9 +53,9 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
           onPressed: () async {
             await ref
                 .read(
-                  FarmLockWithdrawFormProvider.farmLockWithdrawForm.notifier,
+                  farmLockWithdrawFormNotifierProvider.notifier,
                 )
-                .validateForm(context);
+                .validateForm(AppLocalizations.of(context)!);
           },
           disabled: !farmLockWithdraw.isControlsOk,
         ),
@@ -81,8 +80,7 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final farmLockWithdraw =
-        ref.watch(FarmLockWithdrawFormProvider.farmLockWithdrawForm);
+    final farmLockWithdraw = ref.watch(farmLockWithdrawFormNotifierProvider);
 
     if (farmLockWithdraw.rewardToken == null ||
         farmLockWithdraw.depositedAmount == null) {

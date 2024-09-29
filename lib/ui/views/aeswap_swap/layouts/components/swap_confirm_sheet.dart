@@ -53,7 +53,7 @@ class SwapConfirmFormSheetState extends ConsumerState<SwapConfirmFormSheet>
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    final swap = ref.watch(SwapFormProvider.swapForm);
+    final swap = ref.watch(swapFormNotifierProvider);
     return Row(
       children: <Widget>[
         AppButtonTinyConnectivity(
@@ -62,8 +62,8 @@ class SwapConfirmFormSheetState extends ConsumerState<SwapConfirmFormSheet>
           key: const Key('swap'),
           onPressed: () async {
             await ref
-                .read(SwapFormProvider.swapForm.notifier)
-                .swap(context, ref);
+                .read(swapFormNotifierProvider.notifier)
+                .swap(AppLocalizations.of(context)!);
           },
           disabled: (!consentChecked && swap.consentDateTime == null) ||
               swap.isProcessInProgress,
@@ -92,7 +92,7 @@ class SwapConfirmFormSheetState extends ConsumerState<SwapConfirmFormSheet>
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final swap = ref.watch(SwapFormProvider.swapForm);
+    final swap = ref.watch(swapFormNotifierProvider);
     if (swap.tokenToSwap == null || swap.tokenSwapped == null) {
       return const SizedBox.shrink();
     }
@@ -115,14 +115,12 @@ class SwapConfirmFormSheetState extends ConsumerState<SwapConfirmFormSheet>
               },
               uriPrivacyPolicy: kURIPrivacyPolicy,
               uriTermsOfUse: kURITermsOfUse,
-              style: AppTextStyles.bodyMedium(context),
             )
           else
             aedappfm.ConsentAlready(
               consentDateTime: swap.consentDateTime!,
               uriPrivacyPolicy: kURIPrivacyPolicy,
               uriTermsOfUse: kURITermsOfUse,
-              style: AppTextStyles.bodyMedium(context),
             ),
           SheetDetailCard(
             children: [

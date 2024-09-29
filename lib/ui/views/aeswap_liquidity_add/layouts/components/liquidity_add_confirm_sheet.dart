@@ -51,7 +51,7 @@ class LiquidityAddConfirmFormSheetState
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    final liquidityAdd = ref.watch(LiquidityAddFormProvider.liquidityAddForm);
+    final liquidityAdd = ref.watch(liquidityAddFormNotifierProvider);
     return Row(
       children: <Widget>[
         AppButtonTinyConnectivity(
@@ -60,8 +60,8 @@ class LiquidityAddConfirmFormSheetState
           key: const Key('addLiquidity'),
           onPressed: () async {
             await ref
-                .read(LiquidityAddFormProvider.liquidityAddForm.notifier)
-                .add(context, ref);
+                .read(liquidityAddFormNotifierProvider.notifier)
+                .add(AppLocalizations.of(context)!);
           },
           disabled: (!consentChecked && liquidityAdd.consentDateTime == null) ||
               liquidityAdd.isProcessInProgress,
@@ -75,7 +75,7 @@ class LiquidityAddConfirmFormSheetState
   PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final liquidityAddNotifier =
-        ref.watch(LiquidityAddFormProvider.liquidityAddForm.notifier);
+        ref.watch(liquidityAddFormNotifierProvider.notifier);
 
     return SheetAppBar(
       title: localizations.addLiquidity,
@@ -94,7 +94,7 @@ class LiquidityAddConfirmFormSheetState
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final liquidityAdd = ref.watch(LiquidityAddFormProvider.liquidityAddForm);
+    final liquidityAdd = ref.watch(liquidityAddFormNotifierProvider);
     return SingleChildScrollView(
       child: Column(
         children: [

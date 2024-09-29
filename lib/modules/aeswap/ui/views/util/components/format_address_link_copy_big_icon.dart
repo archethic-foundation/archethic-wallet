@@ -116,9 +116,7 @@ class FormatAddressLinkCopyBigIcon extends ConsumerWidget {
                     ),
                     onTap: () async {
                       final blockchain = await ref.read(
-                        DexBlockchainsProviders.getBlockchainFromEnv(
-                          aedappfm.EndpointUtil.getEnvironnement(),
-                        ).future,
+                        DexBlockchainsProviders.currentBlockchain.future,
                       );
                       if (typeAddress ==
                           TypeAddressLinkCopyBigIcon.transaction) {

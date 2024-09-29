@@ -32,7 +32,7 @@ class _LiquidityAddToken2AmountState
   }
 
   void _updateAmountTextController() {
-    final liquidityAdd = ref.read(LiquidityAddFormProvider.liquidityAddForm);
+    final liquidityAdd = ref.read(liquidityAddFormNotifierProvider);
     tokenAmountController = TextEditingController();
     tokenAmountController.value = AmountTextInputFormatter(
       precision: 8,
@@ -57,9 +57,9 @@ class _LiquidityAddToken2AmountState
     BuildContext context,
   ) {
     final liquidityAddNotifier =
-        ref.watch(LiquidityAddFormProvider.liquidityAddForm.notifier);
+        ref.watch(liquidityAddFormNotifierProvider.notifier);
 
-    final liquidityAdd = ref.watch(LiquidityAddFormProvider.liquidityAddForm);
+    final liquidityAdd = ref.watch(liquidityAddFormNotifierProvider);
 
     if (liquidityAdd.tokenFormSelected != 2) {
       _updateAmountTextController();
@@ -129,7 +129,7 @@ class _LiquidityAddToken2AmountState
                                     liquidityAddNotifier
                                         .setTokenFormSelected(2);
                                     await liquidityAddNotifier.setToken2Amount(
-                                      context,
+                                      AppLocalizations.of(context)!,
                                       double.tryParse(
                                             text.replaceAll(' ', ''),
                                           ) ??
@@ -210,7 +210,7 @@ class _LiquidityAddToken2AmountState
                       );
                       liquidityAddNotifier.setTokenFormSelected(2);
                       await liquidityAddNotifier.setToken2Amount(
-                        context,
+                        AppLocalizations.of(context)!,
                         (Decimal.parse(
                                   liquidityAdd.token2Balance.toString(),
                                 ) /
@@ -236,7 +236,7 @@ class _LiquidityAddToken2AmountState
                       );
                       liquidityAddNotifier.setTokenFormSelected(2);
                       await liquidityAddNotifier.setToken2Amount(
-                        context,
+                        AppLocalizations.of(context)!,
                         liquidityAdd.token2Balance,
                       );
                     },

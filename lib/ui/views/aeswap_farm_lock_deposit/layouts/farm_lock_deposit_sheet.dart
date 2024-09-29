@@ -32,21 +32,14 @@ class _FarmLockDepositSheetState extends ConsumerState<FarmLockDepositSheet> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () async {
+    Future(() async {
       try {
-        ref.read(FarmLockDepositFormProvider.farmLockDepositForm.notifier)
+        ref.read(farmLockDepositFormNotifierProvider.notifier)
           ..setDexPool(widget.pool)
           ..setDexFarmLock(widget.farmLock)
           ..setLevel(widget.farmLock.availableLevels.entries.last.key)
-          ..setAPREstimation(widget.farmLock.apr3years * 100);
-
-        await ref
-            .read(FarmLockDepositFormProvider.farmLockDepositForm.notifier)
-            .initBalances();
-
-        ref
-            .read(FarmLockDepositFormProvider.farmLockDepositForm.notifier)
-            .filterAvailableLevels();
+          ..setAPREstimation(widget.farmLock.apr3years * 100)
+          ..filterAvailableLevels();
       } catch (e) {
         if (mounted) {
           context.pop();
@@ -66,8 +59,7 @@ class _FarmLockDepositSheetState extends ConsumerState<FarmLockDepositSheet> {
 
     if (selectedAccount == null) return const SizedBox();
 
-    final farmLockDepositForm =
-        ref.watch(FarmLockDepositFormProvider.farmLockDepositForm);
+    final farmLockDepositForm = ref.watch(farmLockDepositFormNotifierProvider);
 
     return farmLockDepositForm.processStep == ProcessStep.form
         ? const FarmLockDepositFormSheet()

@@ -173,16 +173,6 @@ class MenuWidgetWallet extends ConsumerWidget {
                     ref
                       ..invalidate(ContactProviders.fetchContacts)
                       ..invalidate(MarketPriceProviders.currencyMarketPrice);
-                    final env = ref
-                        .read(SettingsProviders.settings)
-                        .network
-                        .getNetworkLabel();
-                    await ref
-                        .read(
-                          aedappfm
-                              .VerifiedTokensProviders.verifiedTokens.notifier,
-                        )
-                        .init(env);
                   }
                 },
               )

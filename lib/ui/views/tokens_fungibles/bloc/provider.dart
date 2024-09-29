@@ -4,14 +4,12 @@ import 'dart:async';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/session/session.dart';
-import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/transaction_repository.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/token.dart';
 import 'package:aewallet/domain/models/transaction.dart';
-import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
-import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/state.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
@@ -37,7 +35,6 @@ final _addTokenFormProvider =
   dependencies: [
     AddTokenFormProvider.initialAddTokenForm,
     AccountProviders.accounts,
-    AddTokenFormProvider._repository,
     sessionNotifierProvider,
   ],
 );
@@ -132,7 +129,7 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
     );
 
     final calculateFeesResult = await CalculateFeesUsecase(
-      repository: ref.read(AddTokenFormProvider._repository),
+      repository: ref.read(archethicTransactionRepositoryProvider),
     ).run(transaction);
 
     return calculateFeesResult.valueOrNull;
@@ -261,7 +258,8 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
   }
 
   Future<void> send(BuildContext context) async {
-    final transactionRepository = ref.read(AddTokenFormProvider._repository);
+    final transactionRepository =
+        ref.read(archethicTransactionRepositoryProvider);
 
     final localizations = AppLocalizations.of(context)!;
 
@@ -386,17 +384,6 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
 }
 
 abstract class AddTokenFormProvider {
-  static final _repository = Provider<TransactionRemoteRepositoryInterface>(
-    (ref) {
-      final networkSettings = ref.watch(
-        SettingsProviders.settings.select((settings) => settings.network),
-      );
-      return ArchethicTransactionRepository(
-        phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
-        websocketEndpoint: networkSettings.getWebsocketUri(),
-      );
-    },
-  );
   static final initialAddTokenForm = _initialAddTokenFormProvider;
   static final addTokenForm = _addTokenFormProvider;
 }

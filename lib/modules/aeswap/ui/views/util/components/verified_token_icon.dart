@@ -1,4 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/modules/aeswap/application/verified_tokens.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -17,7 +19,7 @@ class VerifiedTokenIcon extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (address == 'UCO') {
+    if (address.isUCO) {
       return Padding(
         padding: const EdgeInsets.only(bottom: 3),
         child: Tooltip(
@@ -31,28 +33,27 @@ class VerifiedTokenIcon extends ConsumerWidget {
       );
     }
 
-    return FutureBuilder<bool>(
-      future: ref.read(
-        aedappfm.VerifiedTokensProviders.isVerifiedToken(address).future,
+    final isVerifiedToken = ref
+        .watch(
+          isVerifiedTokenProvider(
+            address,
+          ),
+        )
+        .value;
+
+    if (isVerifiedToken == null) return const CircularProgressIndicator();
+    if (isVerifiedToken == false) return const SizedBox();
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 3),
+      child: Tooltip(
+        message: AppLocalizations.of(context)!.verifiedTokenIconTooltip,
+        child: Icon(
+          aedappfm.Iconsax.verify,
+          color: aedappfm.ArchethicThemeBase.systemPositive500,
+          size: iconSize,
+        ),
       ),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          if (snapshot.data == true) {
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 3),
-              child: Tooltip(
-                message: AppLocalizations.of(context)!.verifiedTokenIconTooltip,
-                child: Icon(
-                  aedappfm.Iconsax.verify,
-                  color: aedappfm.ArchethicThemeBase.systemPositive500,
-                  size: iconSize,
-                ),
-              ),
-            );
-          }
-        }
-        return const SizedBox();
-      },
     );
   }
 }

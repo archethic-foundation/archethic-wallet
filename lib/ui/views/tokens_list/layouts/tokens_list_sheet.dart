@@ -36,7 +36,9 @@ class TokensListState extends ConsumerState<TokensList>
 
     final tokens = ref
         .watch(
-          TokensListFormProvider.tokens(searchCriteria: searchCriteria),
+          TokensListFormProvider.tokens(
+            searchCriteria: searchCriteria,
+          ),
         )
         .valueOrNull;
     final localizations = AppLocalizations.of(context)!;

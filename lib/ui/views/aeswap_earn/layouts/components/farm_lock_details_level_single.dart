@@ -101,7 +101,14 @@ class FarmLockDetailsLevelSingle extends ConsumerWidget {
                     style: style,
                   ),
                   SelectableText(
-                    '${farmLockStats.lpTokensDeposited.formatNumber(precision: 8)} ${farmLockStats.lpTokensDeposited > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken} ${DEXLPTokenFiatValue().display(ref, farmLock.lpTokenPair!.token1, farmLock.lpTokenPair!.token2, farmLockStats.lpTokensDeposited, farmLock.poolAddress)}',
+                    '${farmLockStats.lpTokensDeposited.formatNumber(precision: 8)} ${farmLockStats.lpTokensDeposited > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken} ${ref.watch(
+                      dexLPTokenFiatValueProvider(
+                        farmLock.lpTokenPair!.token1,
+                        farmLock.lpTokenPair!.token2,
+                        farmLockStats.lpTokensDeposited,
+                        farmLock.poolAddress,
+                      ),
+                    )}',
                     style: style,
                   ),
                 ],

@@ -9,15 +9,23 @@ import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutte
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
 class DexFarmLockRepositoryImpl implements DexFarmLockRepository {
+  DexFarmLockRepositoryImpl({
+    required this.apiService,
+    required this.verifiedTokensRepository,
+  });
+
+  final ApiService apiService;
+  final aedappfm.VerifiedTokensRepositoryInterface verifiedTokensRepository;
+
   @override
   Future<List<DexFarm>> getFarmLockList(
     String routerAddress,
-    ApiService apiService,
     List<DexPool> poolList,
   ) async =>
       RouterFactory(
         routerAddress,
         apiService,
+        verifiedTokensRepository,
       )
           .getFarmList(
             poolList,
@@ -32,7 +40,6 @@ class DexFarmLockRepositoryImpl implements DexFarmLockRepository {
     DexFarmLock farmLockInput,
     String userGenesisAddress,
   ) async {
-    final apiService = aedappfm.sl.get<ApiService>();
     final farmLockFactory = FarmLockFactory(farmGenesisAddress, apiService);
 
     return farmLockFactory

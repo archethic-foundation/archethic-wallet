@@ -1,15 +1,7 @@
-import 'package:archethic_lib_dart/archethic_lib_dart.dart'
-    show Balance, ApiService;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 
 abstract class BalanceRepository {
-  Future<double> getBalance(
+  Future<archethic.Balance?> getUserTokensBalance(
     String address,
-    String tokenAddress,
-    ApiService apiService,
-  );
-
-  Future<Balance?> getUserTokensBalance(
-    String address,
-    ApiService apiService,
   );
 }

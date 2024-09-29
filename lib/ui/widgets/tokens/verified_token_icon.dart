@@ -1,71 +1,57 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-
-import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/widgets/components/dialog.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
+import 'package:aewallet/modules/aeswap/application/verified_tokens.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:material_symbols_icons/symbols.dart';
 
 class VerifiedTokenIcon extends ConsumerWidget {
   const VerifiedTokenIcon({
     required this.address,
+    this.iconSize = 14,
     super.key,
   });
 
   final String address;
+  final double iconSize;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (address == 'UCO') {
-      return _icon(context, ref);
+    if (address.isUCO) {
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 3),
+        child: Tooltip(
+          message: AppLocalizations.of(context)!.verifiedTokenIconTooltip,
+          child: Icon(
+            aedappfm.Iconsax.verify,
+            color: aedappfm.ArchethicThemeBase.systemPositive500,
+            size: iconSize,
+          ),
+        ),
+      );
     }
 
-    return FutureBuilder<bool>(
-      future: ref.read(
-        aedappfm.VerifiedTokensProviders.isVerifiedToken(address).future,
-      ),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          if (snapshot.data == true) {
-            return _icon(context, ref);
-          }
-        }
-        return const SizedBox();
-      },
-    );
-  }
+    final isVerifiedToken = ref
+        .watch(
+          isVerifiedTokenProvider(
+            address,
+          ),
+        )
+        .value;
 
-  Widget _icon(
-    BuildContext context,
-    WidgetRef ref,
-  ) {
-    final localizations = AppLocalizations.of(context)!;
-    final preferences = ref.watch(SettingsProviders.settings);
+    if (isVerifiedToken == null) return const CircularProgressIndicator();
+    if (isVerifiedToken == false) return const SizedBox();
 
-    return InkWell(
-      onTap: () {
-        sl.get<HapticUtil>().feedback(
-              FeedbackType.light,
-              preferences.activeVibrations,
-            );
-        AppDialogs.showInfoDialog(
-          context,
-          ref,
-          localizations.information,
-          localizations.verifiedTokenInfo,
-        );
-      },
-      child: Icon(
-        Symbols.verified,
-        color: ArchethicTheme.activeColorSwitch,
-        size: 15,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 3),
+      child: Tooltip(
+        message: AppLocalizations.of(context)!.verifiedTokenIconTooltip,
+        child: Icon(
+          aedappfm.Iconsax.verify,
+          color: aedappfm.ArchethicThemeBase.systemPositive500,
+          size: iconSize,
+        ),
       ),
     );
   }

@@ -11,8 +11,8 @@ Future<List<AEToken>> _tokens(
   _TokensRef ref, {
   String searchCriteria = '',
   bool withVerified = true,
-  bool withLPToken = false,
-  bool withNotVerified = false,
+  bool withLPToken = true,
+  bool withNotVerified = true,
 }) async =>
     ref.debounce(
       shouldDebounce: searchCriteria.isNotEmpty,

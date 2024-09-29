@@ -1,4 +1,3 @@
-import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_token_balance.dart';
@@ -6,7 +5,6 @@ import 'package:aewallet/modules/aeswap/ui/views/util/components/fiat_value.dart
 import 'package:aewallet/ui/views/aeswap_farm_lock_claim/bloc/provider.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -23,18 +21,11 @@ class FarmLockClaimConfirmInfos extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
-    final farmLockClaim =
-        ref.watch(FarmLockClaimFormProvider.farmLockClaimForm);
+    final farmLockClaim = ref.watch(farmLockClaimFormNotifierProvider);
     if (farmLockClaim.rewardAmount == null) {
       return const SizedBox.shrink();
     }
 
-    final accountSelected = ref.watch(
-      AccountProviders.accounts.select(
-        (accounts) => accounts.valueOrNull?.selectedAccount,
-      ),
-    );
-    final apiService = aedappfm.sl.get<archethic.ApiService>();
     return SizedBox(
       child: DecoratedBox(
         decoration: BoxDecoration(
@@ -116,11 +107,9 @@ class FarmLockClaimConfirmInfos extends ConsumerWidget {
               FutureBuilder<double>(
                 future: ref.watch(
                   getBalanceProvider(
-                    accountSelected!.genesisAddress,
                     farmLockClaim.rewardToken!.isUCO
                         ? 'UCO'
-                        : farmLockClaim.rewardToken!.address!,
-                    apiService,
+                        : farmLockClaim.rewardToken!.address,
                   ).future,
                 ),
                 builder: (

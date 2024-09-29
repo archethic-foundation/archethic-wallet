@@ -28,9 +28,7 @@ class FarmLockDetailsInfoTokenReward extends ConsumerWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 3),
           child: DexTokenIcon(
-            tokenAddress: farmLock.rewardToken!.address == null
-                ? 'UCO'
-                : farmLock.rewardToken!.address!,
+            tokenAddress: farmLock.rewardToken!.address,
             iconSize: 22,
           ),
         ),

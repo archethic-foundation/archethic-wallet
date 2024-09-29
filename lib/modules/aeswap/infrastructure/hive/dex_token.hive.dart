@@ -61,7 +61,8 @@ class DexTokenHive extends HiveObject {
   DexToken toModel() {
     return DexToken(
       name: name,
-      address: address,
+      address: address ??
+          kUCOAddress, // Migration workaround to ensure we always have an address for a token
       icon: icon,
       symbol: symbol,
       balance: balance,

@@ -48,8 +48,7 @@ class DexTokenInfos extends StatelessWidget {
               child: Row(
                 children: [
                   DexTokenIcon(
-                    tokenAddress:
-                        token!.address == null ? 'UCO' : token!.address!,
+                    tokenAddress: token!.address,
                   ),
                   Tooltip(
                     message: token!.symbol,

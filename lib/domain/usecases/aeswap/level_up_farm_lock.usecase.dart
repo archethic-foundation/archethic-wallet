@@ -1,10 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
-import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
+import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
+import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/modules/aeswap/application/contracts/archethic_contract.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_notification.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
@@ -17,18 +17,31 @@ import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutte
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
 const logName = 'LevelUpFarmLockCase';
 
 class LevelUpFarmLockCase with aedappfm.TransactionMixin {
+  LevelUpFarmLockCase({
+    required this.apiService,
+    required this.notificationService,
+    required this.verifiedTokensRepository,
+    required this.transactionRepository,
+    required this.keychainSecuredInfos,
+    required this.selectedAccount,
+  });
+
+  final archethic.ApiService apiService;
+  final ns.TaskNotificationService<DexNotification, aedappfm.Failure>
+      notificationService;
+  final aedappfm.VerifiedTokensRepositoryInterface verifiedTokensRepository;
+  final TransactionRemoteRepositoryInterface transactionRepository;
+  final KeychainSecuredInfos keychainSecuredInfos;
+  final Account selectedAccount;
+
   Future<void> run(
-    TransactionRemoteRepositoryInterface transactionRepository,
-    WidgetRef ref,
-    BuildContext context,
-    ns.TaskNotificationService<DexNotification, aedappfm.Failure>
-        notificationService,
+    AppLocalizations localizations,
+    FarmLockLevelUpFormNotifier farmLevelUpNotifier,
     String farmGenesisAddress,
     String lpTokenAddress,
     double amount,
@@ -39,9 +52,10 @@ class LevelUpFarmLockCase with aedappfm.TransactionMixin {
     String level,
   ) async {
     final operationId = const Uuid().v4();
-    final archethicContract = ArchethicContract();
-    final farmLevelUpNotifier =
-        ref.read(FarmLockLevelUpFormProvider.farmLockLevelUpForm.notifier);
+    final archethicContract = ArchethicContract(
+      apiService: apiService,
+      verifiedTokensRepository: verifiedTokensRepository,
+    );
 
     archethic.Transaction? transactionLevelUp;
     farmLevelUpNotifier.setFinalAmount(null);
@@ -75,23 +89,11 @@ class LevelUpFarmLockCase with aedappfm.TransactionMixin {
     }
 
     try {
-      final keychainSecuredInfos = ref
-          .read(sessionNotifierProvider)
-          .loggedIn!
-          .wallet
-          .keychainSecuredInfos;
-
-      final selectedAccount = await ref
-          .read(
-            AccountProviders.accounts.future,
-          )
-          .selectedAccount;
-
       final transationSignedRaw =
           await transactionRepository.buildTransactionRaw(
         keychainSecuredInfos,
         transactionLevelUp!,
-        selectedAccount!.lastAddress!,
+        selectedAccount.lastAddress!,
         selectedAccount.name,
       );
 
@@ -123,6 +125,7 @@ class LevelUpFarmLockCase with aedappfm.TransactionMixin {
 
             await aedappfm.PeriodicFuture.periodic<bool>(
               () => isSCCallExecuted(
+                apiService,
                 farmAddress,
                 transationSignedRaw.address!.address!,
               ),

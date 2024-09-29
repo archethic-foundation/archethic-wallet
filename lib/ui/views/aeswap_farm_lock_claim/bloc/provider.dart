@@ -1,34 +1,26 @@
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/domain/repositories/transaction_remote.dart';
-import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
-import 'package:aewallet/modules/aeswap/application/notification.dart';
+import 'package:aewallet/application/aeswap/usecases.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
-import 'package:aewallet/modules/aeswap/domain/usecases/claim_farm_lock.usecase.dart';
 import 'package:aewallet/modules/aeswap/util/browser_util_desktop.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_claim/bloc/state.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final _farmLockClaimFormProvider = NotifierProvider.autoDispose<
-    FarmLockClaimFormNotifier, FarmLockClaimFormState>(
-  () {
-    return FarmLockClaimFormNotifier();
-  },
-);
+part 'provider.g.dart';
 
-class FarmLockClaimFormNotifier
-    extends AutoDisposeNotifier<FarmLockClaimFormState> {
+@riverpod
+class FarmLockClaimFormNotifier extends _$FarmLockClaimFormNotifier {
   FarmLockClaimFormNotifier();
 
   @override
   FarmLockClaimFormState build() => const FarmLockClaimFormState();
 
   void setTransactionClaimFarmLock(
-      archethic.Transaction transactionClaimFarmLock) {
+    archethic.Transaction transactionClaimFarmLock,
+  ) {
     state = state.copyWith(transactionClaimFarmLock: transactionClaimFarmLock);
   }
 
@@ -39,6 +31,12 @@ class FarmLockClaimFormNotifier
   void setFarmAddress(String farmAddress) {
     state = state.copyWith(
       farmAddress: farmAddress,
+    );
+  }
+
+  void setPoolAddress(String poolAddress) {
+    state = state.copyWith(
+      poolAddress: poolAddress,
     );
   }
 
@@ -94,8 +92,8 @@ class FarmLockClaimFormNotifier
     );
   }
 
-  Future<void> validateForm(BuildContext context) async {
-    if (control(context) == false) {
+  Future<void> validateForm() async {
+    if (control() == false) {
       return;
     }
 
@@ -114,7 +112,7 @@ class FarmLockClaimFormNotifier
     );
   }
 
-  bool control(BuildContext context) {
+  bool control() {
     setFailure(null);
 
     if (BrowserUtil().isEdgeBrowser() ||
@@ -128,11 +126,11 @@ class FarmLockClaimFormNotifier
     return true;
   }
 
-  Future<void> claim(BuildContext context, WidgetRef ref) async {
+  Future<void> claim(AppLocalizations localizations) async {
     setFarmLockClaimOk(false);
     setProcessInProgress(true);
 
-    if (control(context) == false) {
+    if (control() == false) {
       setProcessInProgress(false);
       return;
     }
@@ -145,34 +143,12 @@ class FarmLockClaimFormNotifier
     await aedappfm.ConsentRepositoryImpl()
         .addAddress(accountSelected!.genesisAddress);
 
-    final transactionRepository =
-        ref.read(FarmLockClaimFormProvider._repository);
-
-    if (context.mounted) {
-      await ClaimFarmLockCase().run(
-        transactionRepository,
-        ref,
-        context,
-        ref.watch(NotificationProviders.notificationService),
-        state.farmAddress!,
-        state.depositId!,
-        state.rewardToken!,
-      );
-    }
+    await ref.read(claimFarmLockCaseProvider).run(
+          localizations,
+          this,
+          state.farmAddress!,
+          state.depositId!,
+          state.rewardToken!,
+        );
   }
-}
-
-abstract class FarmLockClaimFormProvider {
-  static final _repository = Provider<TransactionRemoteRepositoryInterface>(
-    (ref) {
-      final networkSettings = ref.watch(
-        SettingsProviders.settings.select((settings) => settings.network),
-      );
-      return ArchethicTransactionRepository(
-        phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
-        websocketEndpoint: networkSettings.getWebsocketUri(),
-      );
-    },
-  );
-  static final farmLockClaimForm = _farmLockClaimFormProvider;
 }

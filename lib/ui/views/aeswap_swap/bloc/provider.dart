@@ -1,38 +1,28 @@
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/domain/repositories/transaction_remote.dart';
-import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
+import 'package:aewallet/application/aeswap/usecases.dart';
+import 'package:aewallet/modules/aeswap/application/api_service.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/application/dex_config.dart';
-import 'package:aewallet/modules/aeswap/application/notification.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/application/router_factory.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
-import 'package:aewallet/modules/aeswap/domain/usecases/swap.usecase.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/pool_factory.repository.dart';
 import 'package:aewallet/modules/aeswap/util/browser_util_desktop.dart'
     if (dart.library.js) 'package:aewallet/modules/aeswap/util/browser_util_web.dart';
 import 'package:aewallet/ui/views/aeswap_swap/bloc/state.dart';
-import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_confirm_sheet.dart';
-import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_result_sheet.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:decimal/decimal.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final _swapFormProvider = NotifierProvider<SwapFormNotifier, SwapFormState>(
-  () {
-    return SwapFormNotifier();
-  },
-);
+part 'provider.g.dart';
 
-class SwapFormNotifier extends Notifier<SwapFormState>
+@riverpod
+class SwapFormNotifier extends _$SwapFormNotifier
     with aedappfm.TransactionMixin {
   SwapFormNotifier();
 
@@ -51,7 +41,7 @@ class SwapFormNotifier extends Notifier<SwapFormState>
   Future<void> getPool() async {
     var pool = await ref
         .read(DexPoolProviders.getPool(state.poolGenesisAddress).future);
-    pool = await ref.read(DexPoolProviders.loadPoolCard(pool!).future);
+    pool = await ref.read(DexPoolProviders.getPool(pool!.poolAddress).future);
 
     setPool(pool);
   }
@@ -70,17 +60,9 @@ class SwapFormNotifier extends Notifier<SwapFormState>
       tokenToSwap: tokenToSwap,
     );
 
-    final apiService = aedappfm.sl.get<archethic.ApiService>();
-    final accountSelected = ref.watch(
-      AccountProviders.accounts.select(
-        (accounts) => accounts.valueOrNull?.selectedAccount,
-      ),
-    );
     final balance = await ref.read(
       getBalanceProvider(
-        accountSelected!.genesisAddress,
-        state.tokenToSwap!.isUCO ? 'UCO' : state.tokenToSwap!.address!,
-        apiService,
+        state.tokenToSwap!.isUCO ? 'UCO' : state.tokenToSwap!.address,
       ).future,
     );
     state = state.copyWith(tokenToSwapBalance: balance);
@@ -98,15 +80,16 @@ class SwapFormNotifier extends Notifier<SwapFormState>
         return;
       }
 
-      final dexConfig =
-          await ref.read(DexConfigProviders.dexConfigRepository).getDexConfig();
-      final apiService = aedappfm.sl.get<archethic.ApiService>();
+      final dexConfig = await ref.read(DexConfigProviders.dexConfig.future);
       if (state.tokenToSwap != null) {
-        final routerFactory =
-            RouterFactory(dexConfig.routerGenesisAddress, apiService);
+        final routerFactory = ref.read(
+          routerFactoryProvider(
+            dexConfig.routerGenesisAddress,
+          ),
+        );
         final poolInfosResult = await routerFactory.getPoolAddresses(
-          state.tokenToSwap!.isUCO ? 'UCO' : state.tokenToSwap!.address!,
-          state.tokenSwapped!.isUCO ? 'UCO' : state.tokenSwapped!.address!,
+          state.tokenToSwap!.isUCO ? 'UCO' : state.tokenToSwap!.address,
+          state.tokenSwapped!.isUCO ? 'UCO' : state.tokenSwapped!.address,
         );
         await poolInfosResult.map(
           success: (success) async {
@@ -157,7 +140,7 @@ class SwapFormNotifier extends Notifier<SwapFormState>
         cancel: false,
       );
     }
-    final apiService = aedappfm.sl.get<archethic.ApiService>();
+    final apiService = ref.read(apiServiceProvider);
     final ({
       double fees,
       double outputAmount,
@@ -330,7 +313,7 @@ class SwapFormNotifier extends Notifier<SwapFormState>
         calculationInProgress: true,
       );
       swapInfos = await calculateSwapInfos(
-        state.tokenToSwap!.isUCO ? 'UCO' : state.tokenToSwap!.address!,
+        state.tokenToSwap!.isUCO ? 'UCO' : state.tokenToSwap!.address,
         state.tokenToSwapAmount,
         true,
       );
@@ -357,7 +340,7 @@ class SwapFormNotifier extends Notifier<SwapFormState>
         calculationInProgress: true,
       );
       swapInfos = await calculateSwapInfos(
-        state.tokenSwapped!.isUCO ? 'UCO' : state.tokenSwapped!.address!,
+        state.tokenSwapped!.isUCO ? 'UCO' : state.tokenSwapped!.address,
         state.tokenSwappedAmount,
         false,
       );
@@ -378,7 +361,7 @@ class SwapFormNotifier extends Notifier<SwapFormState>
       );
       if (state.tokenToSwap != null) {
         swapInfos = await calculateSwapInfos(
-          state.tokenToSwap!.isUCO ? 'UCO' : state.tokenToSwap!.address!,
+          state.tokenToSwap!.isUCO ? 'UCO' : state.tokenToSwap!.address,
           state.tokenToSwapAmount,
           true,
         );
@@ -474,17 +457,9 @@ class SwapFormNotifier extends Notifier<SwapFormState>
       calculationInProgress: true,
     );
 
-    final apiService = aedappfm.sl.get<archethic.ApiService>();
-    final accountSelected = ref.watch(
-      AccountProviders.accounts.select(
-        (accounts) => accounts.valueOrNull?.selectedAccount,
-      ),
-    );
     final balance = await ref.read(
       getBalanceProvider(
-        accountSelected!.genesisAddress,
-        state.tokenSwapped!.isUCO ? 'UCO' : state.tokenSwapped!.address!,
-        apiService,
+        state.tokenSwapped!.isUCO ? 'UCO' : state.tokenSwapped!.address,
       ).future,
     );
     state = state.copyWith(tokenSwappedBalance: balance);
@@ -502,15 +477,16 @@ class SwapFormNotifier extends Notifier<SwapFormState>
         return;
       }
 
-      final dexConfig =
-          await ref.read(DexConfigProviders.dexConfigRepository).getDexConfig();
-      final apiService = aedappfm.sl.get<archethic.ApiService>();
+      final dexConfig = await ref.read(DexConfigProviders.dexConfig.future);
       if (state.tokenSwapped != null) {
-        final routerFactory =
-            RouterFactory(dexConfig.routerGenesisAddress, apiService);
+        final routerFactory = ref.read(
+          routerFactoryProvider(
+            dexConfig.routerGenesisAddress,
+          ),
+        );
         final poolInfosResult = await routerFactory.getPoolAddresses(
-          state.tokenToSwap!.isUCO ? 'UCO' : state.tokenToSwap!.address!,
-          state.tokenSwapped!.isUCO ? 'UCO' : state.tokenSwapped!.address!,
+          state.tokenToSwap!.isUCO ? 'UCO' : state.tokenToSwap!.address,
+          state.tokenSwapped!.isUCO ? 'UCO' : state.tokenSwapped!.address,
         );
         await poolInfosResult.map(
           success: (success) async {
@@ -597,7 +573,7 @@ class SwapFormNotifier extends Notifier<SwapFormState>
       return;
     }
     final swapInfos = await calculateSwapInfos(
-      state.tokenToSwap!.isUCO ? 'UCO' : state.tokenToSwap!.address!,
+      state.tokenToSwap!.isUCO ? 'UCO' : state.tokenToSwap!.address,
       state.tokenToSwapAmount,
       true,
     );
@@ -692,6 +668,14 @@ class SwapFormNotifier extends Notifier<SwapFormState>
     state = state.copyWith(isProcessInProgress: isProcessInProgress);
   }
 
+  void setSwapProcessStep(
+    aedappfm.ProcessStep swapProcessStep,
+  ) {
+    state = state.copyWith(
+      processStep: swapProcessStep,
+    );
+  }
+
   void setMessageMaxHalfUCO(
     bool messageMaxHalfUCO,
   ) {
@@ -700,25 +684,32 @@ class SwapFormNotifier extends Notifier<SwapFormState>
     );
   }
 
-  Future<void> validateForm(BuildContext context) async {
-    if (await control(context) == false) {
+  Future<void> returnToSwapForm() async {
+    setSwapProcessStep(aedappfm.ProcessStep.form);
+    await calculateOutputAmount();
+  }
+
+  Future<void> validateForm(AppLocalizations appLocalizations) async {
+    if (await control(appLocalizations) == false) {
       return;
     }
+
     final accountSelected = ref.watch(
       AccountProviders.accounts.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
-
     DateTime? consentDateTime;
-    consentDateTime = await aedappfm.ConsentRepositoryImpl().getConsentTime(
-      accountSelected!.genesisAddress,
-    );
+    consentDateTime = await aedappfm.ConsentRepositoryImpl()
+        .getConsentTime(accountSelected!.genesisAddress);
     state = state.copyWith(consentDateTime: consentDateTime);
-    await context.push(SwapConfirmFormSheet.routerPage);
+
+    setSwapProcessStep(
+      aedappfm.ProcessStep.confirmation,
+    );
   }
 
-  Future<bool> control(BuildContext context) async {
+  Future<bool> control(AppLocalizations appLocalizations) async {
     setMessageMaxHalfUCO(false);
     setFailure(null);
     if (kIsWeb &&
@@ -733,7 +724,7 @@ class SwapFormNotifier extends Notifier<SwapFormState>
     if (state.tokenToSwap == null) {
       setFailure(
         aedappfm.Failure.other(
-          cause: AppLocalizations.of(context)!.swapControlTokenToSwapEmpty,
+          cause: appLocalizations.swapControlTokenToSwapEmpty,
         ),
       );
       return false;
@@ -742,7 +733,7 @@ class SwapFormNotifier extends Notifier<SwapFormState>
     if (state.tokenSwapped == null) {
       setFailure(
         aedappfm.Failure.other(
-          cause: AppLocalizations.of(context)!.swapControlTokenSwappedEmpty,
+          cause: appLocalizations.swapControlTokenSwappedEmpty,
         ),
       );
       return false;
@@ -751,7 +742,7 @@ class SwapFormNotifier extends Notifier<SwapFormState>
     if (state.tokenToSwapAmount <= 0) {
       setFailure(
         aedappfm.Failure.other(
-          cause: AppLocalizations.of(context)!.swapControlTokenToSwapEmpty,
+          cause: appLocalizations.swapControlTokenToSwapEmpty,
         ),
       );
       return false;
@@ -760,7 +751,7 @@ class SwapFormNotifier extends Notifier<SwapFormState>
     if (state.tokenSwappedAmount <= 0) {
       setFailure(
         aedappfm.Failure.other(
-          cause: AppLocalizations.of(context)!.swapControlTokenSwappedEmpty,
+          cause: appLocalizations.swapControlTokenSwappedEmpty,
         ),
       );
       return false;
@@ -769,8 +760,7 @@ class SwapFormNotifier extends Notifier<SwapFormState>
     if (state.tokenToSwapAmount > state.tokenToSwapBalance) {
       setFailure(
         aedappfm.Failure.other(
-          cause: AppLocalizations.of(context)!
-              .swapControlTokenToSwapAmountExceedBalance,
+          cause: appLocalizations.swapControlTokenToSwapAmountExceedBalance,
         ),
       );
       return false;
@@ -779,12 +769,12 @@ class SwapFormNotifier extends Notifier<SwapFormState>
     var feesEstimatedUCO = 0.0;
     if (state.tokenToSwap != null && state.tokenToSwap!.isUCO) {
       state = state.copyWith(calculationInProgress: true);
-      feesEstimatedUCO = await SwapCase().estimateFees(
-        state.poolGenesisAddress,
-        state.tokenToSwap!,
-        state.tokenToSwapAmount,
-        state.slippageTolerance,
-      );
+      feesEstimatedUCO = await ref.read(swapCaseProvider).estimateFees(
+            state.poolGenesisAddress,
+            state.tokenToSwap!,
+            state.tokenToSwapAmount,
+            state.slippageTolerance,
+          );
       state = state.copyWith(calculationInProgress: false);
     }
     state = state.copyWith(
@@ -808,11 +798,11 @@ class SwapFormNotifier extends Notifier<SwapFormState>
     return true;
   }
 
-  Future<void> swap(BuildContext context, WidgetRef ref) async {
+  Future<void> swap(AppLocalizations appLocalizations) async {
     setSwapOk(false);
     setProcessInProgress(true);
 
-    if (await control(context) == false) {
+    if (await control(appLocalizations) == false) {
       setProcessInProgress(false);
       return;
     }
@@ -822,41 +812,20 @@ class SwapFormNotifier extends Notifier<SwapFormState>
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
+    await aedappfm.ConsentRepositoryImpl()
+        .addAddress(accountSelected!.genesisAddress);
 
-    await aedappfm.ConsentRepositoryImpl().addAddress(
-      accountSelected!.genesisAddress,
-    );
+    await ref.read(swapCaseProvider).run(
+          ref,
+          this,
+          appLocalizations,
+          state.poolGenesisAddress,
+          state.tokenToSwap!,
+          state.tokenSwapped!,
+          state.tokenToSwapAmount,
+          state.slippageTolerance,
+        );
 
-    final transactionRepository = ref.read(SwapFormProvider._repository);
-
-    if (context.mounted) {
-      await SwapCase().run(
-        transactionRepository,
-        ref,
-        context,
-        ref.watch(NotificationProviders.notificationService),
-        state.poolGenesisAddress,
-        state.tokenToSwap!,
-        state.tokenSwapped!,
-        state.tokenToSwapAmount,
-        state.slippageTolerance,
-      );
-    }
-    await context.push(SwapResultSheet.routerPage);
+    ref.invalidate(userBalanceProvider);
   }
-}
-
-abstract class SwapFormProvider {
-  static final _repository = Provider<TransactionRemoteRepositoryInterface>(
-    (ref) {
-      final networkSettings = ref.watch(
-        SettingsProviders.settings.select((settings) => settings.network),
-      );
-      return ArchethicTransactionRepository(
-        phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
-        websocketEndpoint: networkSettings.getWebsocketUri(),
-      );
-    },
-  );
-  static final swapForm = _swapFormProvider;
 }

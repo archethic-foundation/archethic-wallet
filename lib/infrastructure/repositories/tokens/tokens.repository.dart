@@ -1,5 +1,4 @@
 import 'package:aewallet/domain/repositories/tokens/tokens.repository.dart';
-import 'package:aewallet/infrastructure/datasources/preferences.hive.dart';
 import 'package:aewallet/infrastructure/datasources/tokens_list.hive.dart';
 import 'package:aewallet/infrastructure/datasources/wallet_token_dto.hive.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -60,10 +59,11 @@ class TokensRepositoryImpl implements TokensRepository {
   @override
   Future<List<AEToken>> getTokensList(
     String userGenesisAddress,
-    archethic.ApiService apiService, {
+    archethic.ApiService apiService,
+    Environment environment, {
     bool withVerified = true,
-    bool withLPToken = false,
-    bool withNotVerified = false,
+    bool withLPToken = true,
+    bool withNotVerified = true,
   }) async {
     final tokensList = <AEToken>[];
     final balanceMap = await apiService.fetchBalance([userGenesisAddress]);
@@ -71,8 +71,8 @@ class TokensRepositoryImpl implements TokensRepository {
       return tokensList;
     }
     if (withVerified) {
-      final defUCOToken =
-          await aedappfm.DefTokensRepositoryImpl().getDefToken('UCO');
+      final defUCOToken = await aedappfm.DefTokensRepositoryImpl()
+          .getDefToken(environment, 'UCO');
       tokensList.add(
         ucoToken.copyWith(
           name: defUCOToken?.name ?? '',
@@ -100,10 +100,10 @@ class TokensRepositoryImpl implements TokensRepository {
         apiService,
       );
 
-      final preferences = await PreferencesHiveDatasource.getInstance();
-      final network = preferences.getNetwork().getNetworkLabel();
-      final verifiedTokens = await aedappfm.VerifiedTokensRepositoryImpl()
-          .getVerifiedTokensFromNetwork(network);
+      final verifiedTokens = await aedappfm.VerifiedTokensRepositoryImpl(
+        apiService: apiService,
+        environment: environment,
+      ).getVerifiedTokens();
 
       for (final tokenBalance in balanceMap[userGenesisAddress]!.token) {
         String? pairSymbolToken1;
@@ -139,7 +139,7 @@ class TokensRepositoryImpl implements TokensRepository {
           }
 
           final defToken = await aedappfm.DefTokensRepositoryImpl()
-              .getDefToken(token.address!.toUpperCase());
+              .getDefToken(environment, token.address!.toUpperCase());
           final aeToken = AEToken(
             name: defToken?.name ?? '',
             address: token.address!.toUpperCase(),

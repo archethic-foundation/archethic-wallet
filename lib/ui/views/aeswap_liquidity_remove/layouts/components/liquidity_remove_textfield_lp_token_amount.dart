@@ -31,8 +31,7 @@ class _LiquidityRemoveLPTokenAmountState
   }
 
   void _updateAmountTextController() {
-    final liquidityRemove =
-        ref.read(LiquidityRemoveFormProvider.liquidityRemoveForm);
+    final liquidityRemove = ref.read(liquidityRemoveFormNotifierProvider);
     tokenAmountController = TextEditingController();
     tokenAmountController.value = AmountTextInputFormatter(
       precision: 8,
@@ -58,10 +57,9 @@ class _LiquidityRemoveLPTokenAmountState
     BuildContext context,
   ) {
     final liquidityRemoveNotifier =
-        ref.watch(LiquidityRemoveFormProvider.liquidityRemoveForm.notifier);
+        ref.watch(liquidityRemoveFormNotifierProvider.notifier);
 
-    final liquidityRemove =
-        ref.watch(LiquidityRemoveFormProvider.liquidityRemoveForm);
+    final liquidityRemove = ref.watch(liquidityRemoveFormNotifierProvider);
     final textNum = double.tryParse(tokenAmountController.text);
     if (!(liquidityRemove.lpTokenAmount != 0.0 ||
         tokenAmountController.text == '' ||
@@ -167,8 +165,7 @@ class _LiquidityRemoveLPTokenAmountState
                     onTap: () async {
                       await ref
                           .read(
-                            LiquidityRemoveFormProvider
-                                .liquidityRemoveForm.notifier,
+                            liquidityRemoveFormNotifierProvider.notifier,
                           )
                           .setLpTokenAmountHalf();
                       _updateAmountTextController();
@@ -183,8 +180,7 @@ class _LiquidityRemoveLPTokenAmountState
                     onTap: () async {
                       await ref
                           .read(
-                            LiquidityRemoveFormProvider
-                                .liquidityRemoveForm.notifier,
+                            liquidityRemoveFormNotifierProvider.notifier,
                           )
                           .setLpTokenAmountMax();
                       _updateAmountTextController();

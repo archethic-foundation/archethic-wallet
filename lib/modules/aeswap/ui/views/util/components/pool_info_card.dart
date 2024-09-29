@@ -1,15 +1,16 @@
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
+import 'package:aewallet/modules/aeswap/ui/views/aeswap_pool_list/layouts/components/pool_details_info_header.dart';
+import 'package:aewallet/modules/aeswap/ui/views/aeswap_pool_list/layouts/components/pool_details_info_protocol_fees.dart';
+import 'package:aewallet/modules/aeswap/ui/views/aeswap_pool_list/layouts/components/pool_details_info_swap_fees.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_token_icon.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/format_address_link_copy.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/verified_token_icon.dart';
-import 'package:aewallet/ui/views/aeswap_pool_list/layouts/components/pool_details_info_header.dart';
-import 'package:aewallet/ui/views/aeswap_pool_list/layouts/components/pool_details_info_protocol_fees.dart';
-import 'package:aewallet/ui/views/aeswap_pool_list/layouts/components/pool_details_info_swap_fees.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PoolInfoCard extends ConsumerStatefulWidget {
@@ -33,7 +34,7 @@ class _PoolInfoCardState extends ConsumerState<PoolInfoCard> {
 
   @override
   void initState() {
-    Future.delayed(Duration.zero, () async {
+    Future(() async {
       await loadInfo();
     });
     super.initState();
@@ -115,7 +116,7 @@ class _PoolInfoCardState extends ConsumerState<PoolInfoCard> {
                                     message: pool!.pair.token1.symbol,
                                     child: FormatAddressLinkCopy(
                                       header: pool!.pair.token1.symbol,
-                                      address: pool!.pair.token1.address!
+                                      address: pool!.pair.token1.address
                                           .toUpperCase(),
                                       typeAddress:
                                           TypeAddressLinkCopy.transaction,
@@ -130,7 +131,7 @@ class _PoolInfoCardState extends ConsumerState<PoolInfoCard> {
                                     width: 5,
                                   ),
                                   VerifiedTokenIcon(
-                                    address: pool!.pair.token1.address!,
+                                    address: pool!.pair.token1.address,
                                   ),
                                   const SizedBox(
                                     width: 10,
@@ -147,7 +148,7 @@ class _PoolInfoCardState extends ConsumerState<PoolInfoCard> {
                                     message: pool!.pair.token2.symbol,
                                     child: FormatAddressLinkCopy(
                                       header: pool!.pair.token2.symbol,
-                                      address: pool!.pair.token2.address!
+                                      address: pool!.pair.token2.address
                                           .toUpperCase(),
                                       typeAddress:
                                           TypeAddressLinkCopy.transaction,
@@ -162,7 +163,7 @@ class _PoolInfoCardState extends ConsumerState<PoolInfoCard> {
                                     width: 5,
                                   ),
                                   VerifiedTokenIcon(
-                                    address: pool!.pair.token2.address!,
+                                    address: pool!.pair.token2.address,
                                   ),
                                 ],
                               ),
@@ -243,7 +244,7 @@ class _PoolInfoCardState extends ConsumerState<PoolInfoCard> {
                                         message: pool!.pair.token1.symbol,
                                         child: FormatAddressLinkCopy(
                                           header: pool!.pair.token1.symbol,
-                                          address: pool!.pair.token1.address!
+                                          address: pool!.pair.token1.address
                                               .toUpperCase(),
                                           typeAddress:
                                               TypeAddressLinkCopy.transaction,
@@ -258,7 +259,7 @@ class _PoolInfoCardState extends ConsumerState<PoolInfoCard> {
                                         width: 5,
                                       ),
                                       VerifiedTokenIcon(
-                                        address: pool!.pair.token1.address!,
+                                        address: pool!.pair.token1.address,
                                       ),
                                       const SizedBox(
                                         width: 10,
@@ -275,7 +276,7 @@ class _PoolInfoCardState extends ConsumerState<PoolInfoCard> {
                                         message: pool!.pair.token2.symbol,
                                         child: FormatAddressLinkCopy(
                                           header: pool!.pair.token2.symbol,
-                                          address: pool!.pair.token2.address!
+                                          address: pool!.pair.token2.address
                                               .toUpperCase(),
                                           typeAddress:
                                               TypeAddressLinkCopy.transaction,
@@ -290,7 +291,7 @@ class _PoolInfoCardState extends ConsumerState<PoolInfoCard> {
                                         width: 5,
                                       ),
                                       VerifiedTokenIcon(
-                                        address: pool!.pair.token2.address!,
+                                        address: pool!.pair.token2.address,
                                       ),
                                     ],
                                   ),
@@ -305,7 +306,10 @@ class _PoolInfoCardState extends ConsumerState<PoolInfoCard> {
                 ),
               ),
             ],
-          );
+          )
+            .animate()
+            .fade(duration: const Duration(milliseconds: 200))
+            .scale(duration: const Duration(milliseconds: 200));
   }
 
   Widget _getPairName(
@@ -316,9 +320,7 @@ class _PoolInfoCardState extends ConsumerState<PoolInfoCard> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         DexTokenIcon(
-          tokenAddress: pool.pair.token1.address == null
-              ? 'UCO'
-              : pool.pair.token1.address!,
+          tokenAddress: pool.pair.token1.address,
         ),
         const SizedBox(
           width: 10,
@@ -335,9 +337,7 @@ class _PoolInfoCardState extends ConsumerState<PoolInfoCard> {
           child: SelectableText('/'),
         ),
         DexTokenIcon(
-          tokenAddress: pool.pair.token2.address == null
-              ? 'UCO'
-              : pool.pair.token2.address!,
+          tokenAddress: pool.pair.token2.address,
         ),
         const SizedBox(
           width: 10,

@@ -23,7 +23,7 @@ class FarmLockDetailsInfoAddressLP extends ConsumerWidget {
       children: [
         Expanded(
           child: FormatAddressLinkCopyBigIcon(
-            address: farmLock.lpToken!.address!.toUpperCase(),
+            address: farmLock.lpToken!.address.toUpperCase(),
             header:
                 AppLocalizations.of(context)!.farmDetailsInfoAddressesLPAddress,
             typeAddress: TypeAddressLinkCopyBigIcon.chain,

@@ -88,12 +88,13 @@ class FarmLockBlockListSingleLineLock extends ConsumerWidget {
                                   style: style,
                                 ),
                                 SelectableText(
-                                  DEXLPTokenFiatValue().display(
-                                    ref,
-                                    farmLock.lpTokenPair!.token1,
-                                    farmLock.lpTokenPair!.token2,
-                                    farmLockUserInfos.amount,
-                                    farmLock.poolAddress,
+                                  ref.watch(
+                                    dexLPTokenFiatValueProvider(
+                                      farmLock.lpTokenPair!.token1,
+                                      farmLock.lpTokenPair!.token2,
+                                      farmLockUserInfos.amount,
+                                      farmLock.poolAddress,
+                                    ),
                                   ),
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
@@ -115,7 +116,8 @@ class FarmLockBlockListSingleLineLock extends ConsumerWidget {
                                 SelectableText(
                                   '${farmLockUserInfos.rewardAmount.formatNumber(precision: farmLockUserInfos.rewardAmount < 1 ? 8 : 3)} ${farmLock.rewardToken!.symbol}',
                                   style: AppTextStyles.bodyMediumSecondaryColor(
-                                      context),
+                                    context,
+                                  ),
                                 ),
                                 FutureBuilder<String>(
                                   future: FiatValue().display(
@@ -238,8 +240,7 @@ class FarmLockBlockListSingleLineLock extends ConsumerWidget {
                                   Expanded(
                                     child: FarmLockBtnLevelUp(
                                       farmAddress: farmLock.farmAddress,
-                                      lpTokenAddress:
-                                          farmLock.lpToken!.address!,
+                                      lpTokenAddress: farmLock.lpToken!.address,
                                       lpTokenAmount: farmLockUserInfos.amount,
                                       rewardToken: farmLock.rewardToken!,
                                       depositId: farmLockUserInfos.id,
@@ -284,7 +285,7 @@ class FarmLockBlockListSingleLineLock extends ConsumerWidget {
                                       child: FarmLockBtnClaim(
                                         farmAddress: farmLock.farmAddress,
                                         lpTokenAddress:
-                                            farmLock.lpToken!.address!,
+                                            farmLock.lpToken!.address,
                                         rewardToken: farmLock.rewardToken!,
                                         depositId: farmLockUserInfos.id,
                                         rewardAmount:

@@ -16,7 +16,7 @@ class LiquidityAddInfos extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
-    final liquidityAdd = ref.watch(LiquidityAddFormProvider.liquidityAddForm);
+    final liquidityAdd = ref.watch(liquidityAddFormNotifierProvider);
     if (liquidityAdd.token1 == null ||
         liquidityAdd.token2 == null ||
         (liquidityAdd.token1minAmount == 0 &&

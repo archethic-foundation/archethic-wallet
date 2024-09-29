@@ -6,7 +6,7 @@ part of 'provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$earnFormNotifierHash() => r'827f019d07474e04131bb4a578c79c0c24e63a99';
+String _$earnFormNotifierHash() => r'7b181ad054fdd737796281c663b72eee9682d108';
 
 /// See also [EarnFormNotifier].
 @ProviderFor(EarnFormNotifier)

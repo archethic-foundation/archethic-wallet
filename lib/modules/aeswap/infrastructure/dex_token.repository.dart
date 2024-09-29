@@ -6,27 +6,31 @@ import 'package:aewallet/modules/aeswap/domain/models/util/model_parser.dart';
 import 'package:aewallet/modules/aeswap/domain/repositories/dex_token.repository.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/hive/dex_token.hive.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/hive/tokens_list.hive.dart';
-
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
+import 'package:collection/collection.dart';
 import 'package:flutter/services.dart';
 
 class DexTokenRepositoryImpl with ModelParser implements DexTokenRepository {
-  DexTokenRepositoryImpl();
+  DexTokenRepositoryImpl({required this.apiService});
+
+  final archethic.ApiService apiService;
 
   @override
-  Future<DexToken?> getTokenFromAddress(
+  Future<DexToken?> getToken(
     String address,
   ) async {
+    final environment = aedappfm.Environment.byEndpoint(apiService.endpoint);
+
     DexToken? token;
     final tokensListDatasource = await HiveTokensListDatasource.getInstance();
     final tokenHive = tokensListDatasource.getToken(
-      aedappfm.EndpointUtil.getEnvironnement(),
+      environment,
       address,
     );
     if (tokenHive == null) {
-      final tokenMap = await aedappfm.sl.get<ApiService>().getToken(
+      final tokenMap = await apiService.getToken(
         [address],
         request: 'name, symbol, type',
       );
@@ -34,7 +38,7 @@ class DexTokenRepositoryImpl with ModelParser implements DexTokenRepository {
         token = tokenSDKToModel(tokenMap[address]!, 0);
         token = token.copyWith(address: address);
         await tokensListDatasource.setToken(
-          aedappfm.EndpointUtil.getEnvironnement(),
+          environment,
           token.toHive(),
         );
       }
@@ -49,33 +53,56 @@ class DexTokenRepositoryImpl with ModelParser implements DexTokenRepository {
   Future<List<DexToken>> getTokensFromAccount(
     String accountAddress,
   ) async {
-    final dexTokens = <DexToken>[];
-    final balanceMap =
-        await aedappfm.sl.get<ApiService>().fetchBalance([accountAddress]);
+    final balanceMap = await apiService.fetchBalance([accountAddress]);
     final balance = balanceMap[accountAddress];
     if (balance == null) {
       return [];
     }
+    final dexTokens = <DexToken>[];
 
     final tokenAddressList = <String>[];
     for (final token in balance.token) {
       if (token.tokenId == 0) tokenAddressList.add(token.address!);
     }
 
-    final dexTokenUCO = ucoToken.copyWith(
-      balance: fromBigInt(balance.uco).toDouble(),
-      icon: 'Archethic.svg',
+    final dexTokenUCO = DexToken.uco(
+      balance: archethic.fromBigInt(balance.uco).toDouble(),
     );
     dexTokens.add(dexTokenUCO);
 
-    final tokenMap = await aedappfm.sl.get<ApiService>().getToken(
-          tokenAddressList,
-          request: 'name, symbol, properties',
-        );
+    final tokenMap = await apiService.getToken(
+      tokenAddressList,
+      request: 'name, symbol, properties',
+    );
 
+    // Fetch all token of pairs from API
+    final tokensAddresses = tokenMap.entries
+        .expand<String>((entry) {
+          final token1Address = entry.value.properties['token1_address'];
+          final token2Address = entry.value.properties['token2_address'];
+          if (token1Address == null || token2Address == null) return [];
+
+          return [
+            token1Address,
+            token2Address,
+          ];
+        })
+        .whereNot((address) => address == kUCOAddress)
+        .toSet()
+        .toList();
+
+    final tokensSymbolMap = await apiService.getToken(
+      tokensAddresses,
+      request: 'name, symbol',
+    );
+
+    // Build [DexToken]s with previously fetched data
     for (final entry in tokenMap.entries) {
       final key = entry.key;
       final value = entry.value;
+
+      final token1Address = value.properties['token1_address'];
+      final token2Address = value.properties['token2_address'];
 
       final _token = value.copyWith(address: key);
 
@@ -83,63 +110,39 @@ class DexTokenRepositoryImpl with ModelParser implements DexTokenRepository {
       for (final tokenBalance in balance.token) {
         if (tokenBalance.address!.toUpperCase() ==
             _token.address!.toUpperCase()) {
-          balanceAmount = fromBigInt(tokenBalance.amount).toDouble();
+          balanceAmount = archethic.fromBigInt(tokenBalance.amount).toDouble();
           break;
         }
       }
 
       var dexToken = tokenSDKToModel(_token, balanceAmount);
 
-      final tokenSymbolSearch = <String>[];
-      if (value.properties.isNotEmpty &&
-          value.properties['token1_address'] != null &&
-          value.properties['token2_address'] != null) {
-        if (value.properties['token1_address'] != 'UCO') {
-          tokenSymbolSearch.add(value.properties['token1_address']);
-        }
-        if (value.properties['token2_address'] != 'UCO') {
-          tokenSymbolSearch.add(value.properties['token2_address']);
-        }
-        final tokensSymbolMap = await aedappfm.sl.get<ApiService>().getToken(
-              tokenSymbolSearch,
-              request: 'name, symbol',
-            );
-
+      if (token1Address != null && token2Address != null) {
         dexToken = dexToken.copyWith(
           isLpToken: true,
           lpTokenPair: DexPair(
-            token1: value.properties['token1_address'] != 'UCO'
-                ? DexToken(
-                    address: value.properties['token1_address'],
-                    name: tokensSymbolMap[value.properties['token1_address']] !=
-                            null
-                        ? tokensSymbolMap[value.properties['token1_address']]!
-                            .name!
+            token1: token1Address == kUCOAddress
+                ? DexToken.uco()
+                : DexToken(
+                    address: token1Address,
+                    name: tokensSymbolMap[token1Address] != null
+                        ? tokensSymbolMap[token1Address]!.name!
                         : '',
-                    symbol: tokensSymbolMap[
-                                value.properties['token1_address']] !=
-                            null
-                        ? tokensSymbolMap[value.properties['token1_address']]!
-                            .symbol!
+                    symbol: tokensSymbolMap[token1Address] != null
+                        ? tokensSymbolMap[token1Address]!.symbol!
                         : '',
-                  )
-                : ucoToken,
-            token2: value.properties['token2_address'] != 'UCO'
-                ? DexToken(
-                    address: value.properties['token2_address'],
-                    name: tokensSymbolMap[value.properties['token2_address']] !=
-                            null
-                        ? tokensSymbolMap[value.properties['token2_address']]!
-                            .name!
+                  ),
+            token2: token2Address == kUCOAddress
+                ? DexToken.uco()
+                : DexToken(
+                    address: token2Address,
+                    name: tokensSymbolMap[token2Address] != null
+                        ? tokensSymbolMap[token2Address]!.name!
                         : '',
-                    symbol: tokensSymbolMap[
-                                value.properties['token2_address']] !=
-                            null
-                        ? tokensSymbolMap[value.properties['token2_address']]!
-                            .symbol!
+                    symbol: tokensSymbolMap[token2Address] != null
+                        ? tokensSymbolMap[token2Address]!.symbol!
                         : '',
-                  )
-                : ucoToken,
+                  ),
           ),
         );
       }
@@ -165,26 +168,18 @@ class DexTokenRepositoryImpl with ModelParser implements DexTokenRepository {
   }
 
   @override
-  Future<String?> getTokenIcon(String address) async {
+  Future<List<DexToken>> getLocalTokensDescriptions() async {
     final jsonContent = await rootBundle
         .loadString('lib/modules/aeswap/domain/repositories/common_bases.json');
 
     final jsonData = jsonDecode(jsonContent);
 
-    final currentEnvironment = aedappfm.EndpointUtil.getEnvironnement();
-    try {
-      final tokens = jsonData['tokens'][currentEnvironment] as List<dynamic>;
-      String? tokenIcon;
-      for (final token in tokens) {
-        if (token['address'].toString().toUpperCase() ==
-            address.toUpperCase()) {
-          tokenIcon = token['icon'];
-          break;
-        }
-      }
-      return tokenIcon;
-    } catch (e) {
-      return null;
-    }
+    final environment = aedappfm.Environment.byEndpoint(apiService.endpoint);
+    final jsonTokens = jsonData['tokens'][environment.name] as List<dynamic>;
+    return jsonTokens
+        .map(
+          (jsonToken) => DexToken.fromJson(jsonToken as Map<String, dynamic>),
+        )
+        .toList();
   }
 }

@@ -29,11 +29,11 @@ mixin _$FarmLockDepositFormState {
       throw _privateConstructorUsedError;
   String get level => throw _privateConstructorUsedError;
   double get lpTokenBalance => throw _privateConstructorUsedError;
+  double get feesEstimatedUCO => throw _privateConstructorUsedError;
   Transaction? get transactionFarmLockDeposit =>
       throw _privateConstructorUsedError;
   Map<String, int> get filterAvailableLevels =>
       throw _privateConstructorUsedError;
-  double get feesEstimatedUCO => throw _privateConstructorUsedError;
   Failure? get failure => throw _privateConstructorUsedError;
   double? get finalAmount => throw _privateConstructorUsedError;
   DateTime? get consentDateTime => throw _privateConstructorUsedError;
@@ -62,9 +62,9 @@ abstract class $FarmLockDepositFormStateCopyWith<$Res> {
       FarmLockDepositDurationType farmLockDepositDuration,
       String level,
       double lpTokenBalance,
+      double feesEstimatedUCO,
       Transaction? transactionFarmLockDeposit,
       Map<String, int> filterAvailableLevels,
-      double feesEstimatedUCO,
       Failure? failure,
       double? finalAmount,
       DateTime? consentDateTime});
@@ -101,9 +101,9 @@ class _$FarmLockDepositFormStateCopyWithImpl<$Res,
     Object? farmLockDepositDuration = null,
     Object? level = null,
     Object? lpTokenBalance = null,
+    Object? feesEstimatedUCO = null,
     Object? transactionFarmLockDeposit = freezed,
     Object? filterAvailableLevels = null,
-    Object? feesEstimatedUCO = null,
     Object? failure = freezed,
     Object? finalAmount = freezed,
     Object? consentDateTime = freezed,
@@ -157,6 +157,10 @@ class _$FarmLockDepositFormStateCopyWithImpl<$Res,
           ? _value.lpTokenBalance
           : lpTokenBalance // ignore: cast_nullable_to_non_nullable
               as double,
+      feesEstimatedUCO: null == feesEstimatedUCO
+          ? _value.feesEstimatedUCO
+          : feesEstimatedUCO // ignore: cast_nullable_to_non_nullable
+              as double,
       transactionFarmLockDeposit: freezed == transactionFarmLockDeposit
           ? _value.transactionFarmLockDeposit
           : transactionFarmLockDeposit // ignore: cast_nullable_to_non_nullable
@@ -165,10 +169,6 @@ class _$FarmLockDepositFormStateCopyWithImpl<$Res,
           ? _value.filterAvailableLevels
           : filterAvailableLevels // ignore: cast_nullable_to_non_nullable
               as Map<String, int>,
-      feesEstimatedUCO: null == feesEstimatedUCO
-          ? _value.feesEstimatedUCO
-          : feesEstimatedUCO // ignore: cast_nullable_to_non_nullable
-              as double,
       failure: freezed == failure
           ? _value.failure
           : failure // ignore: cast_nullable_to_non_nullable
@@ -256,9 +256,9 @@ abstract class _$$FarmLockDepositFormStateImplCopyWith<$Res>
       FarmLockDepositDurationType farmLockDepositDuration,
       String level,
       double lpTokenBalance,
+      double feesEstimatedUCO,
       Transaction? transactionFarmLockDeposit,
       Map<String, int> filterAvailableLevels,
-      double feesEstimatedUCO,
       Failure? failure,
       double? finalAmount,
       DateTime? consentDateTime});
@@ -298,9 +298,9 @@ class __$$FarmLockDepositFormStateImplCopyWithImpl<$Res>
     Object? farmLockDepositDuration = null,
     Object? level = null,
     Object? lpTokenBalance = null,
+    Object? feesEstimatedUCO = null,
     Object? transactionFarmLockDeposit = freezed,
     Object? filterAvailableLevels = null,
-    Object? feesEstimatedUCO = null,
     Object? failure = freezed,
     Object? finalAmount = freezed,
     Object? consentDateTime = freezed,
@@ -354,6 +354,10 @@ class __$$FarmLockDepositFormStateImplCopyWithImpl<$Res>
           ? _value.lpTokenBalance
           : lpTokenBalance // ignore: cast_nullable_to_non_nullable
               as double,
+      feesEstimatedUCO: null == feesEstimatedUCO
+          ? _value.feesEstimatedUCO
+          : feesEstimatedUCO // ignore: cast_nullable_to_non_nullable
+              as double,
       transactionFarmLockDeposit: freezed == transactionFarmLockDeposit
           ? _value.transactionFarmLockDeposit
           : transactionFarmLockDeposit // ignore: cast_nullable_to_non_nullable
@@ -362,10 +366,6 @@ class __$$FarmLockDepositFormStateImplCopyWithImpl<$Res>
           ? _value._filterAvailableLevels
           : filterAvailableLevels // ignore: cast_nullable_to_non_nullable
               as Map<String, int>,
-      feesEstimatedUCO: null == feesEstimatedUCO
-          ? _value.feesEstimatedUCO
-          : feesEstimatedUCO // ignore: cast_nullable_to_non_nullable
-              as double,
       failure: freezed == failure
           ? _value.failure
           : failure // ignore: cast_nullable_to_non_nullable
@@ -398,9 +398,9 @@ class _$FarmLockDepositFormStateImpl extends _FarmLockDepositFormState {
       this.farmLockDepositDuration = FarmLockDepositDurationType.threeYears,
       this.level = '',
       this.lpTokenBalance = 0.0,
+      this.feesEstimatedUCO = 0.0,
       this.transactionFarmLockDeposit,
       final Map<String, int> filterAvailableLevels = const {},
-      this.feesEstimatedUCO = 0.0,
       this.failure,
       this.finalAmount,
       this.consentDateTime})
@@ -441,6 +441,9 @@ class _$FarmLockDepositFormStateImpl extends _FarmLockDepositFormState {
   @JsonKey()
   final double lpTokenBalance;
   @override
+  @JsonKey()
+  final double feesEstimatedUCO;
+  @override
   final Transaction? transactionFarmLockDeposit;
   final Map<String, int> _filterAvailableLevels;
   @override
@@ -453,9 +456,6 @@ class _$FarmLockDepositFormStateImpl extends _FarmLockDepositFormState {
   }
 
   @override
-  @JsonKey()
-  final double feesEstimatedUCO;
-  @override
   final Failure? failure;
   @override
   final double? finalAmount;
@@ -464,7 +464,7 @@ class _$FarmLockDepositFormStateImpl extends _FarmLockDepositFormState {
 
   @override
   String toString() {
-    return 'FarmLockDepositFormState(processStep: $processStep, resumeProcess: $resumeProcess, currentStep: $currentStep, pool: $pool, farmLock: $farmLock, isProcessInProgress: $isProcessInProgress, farmLockDepositOk: $farmLockDepositOk, amount: $amount, aprEstimation: $aprEstimation, farmLockDepositDuration: $farmLockDepositDuration, level: $level, lpTokenBalance: $lpTokenBalance, transactionFarmLockDeposit: $transactionFarmLockDeposit, filterAvailableLevels: $filterAvailableLevels, feesEstimatedUCO: $feesEstimatedUCO, failure: $failure, finalAmount: $finalAmount, consentDateTime: $consentDateTime)';
+    return 'FarmLockDepositFormState(processStep: $processStep, resumeProcess: $resumeProcess, currentStep: $currentStep, pool: $pool, farmLock: $farmLock, isProcessInProgress: $isProcessInProgress, farmLockDepositOk: $farmLockDepositOk, amount: $amount, aprEstimation: $aprEstimation, farmLockDepositDuration: $farmLockDepositDuration, level: $level, lpTokenBalance: $lpTokenBalance, feesEstimatedUCO: $feesEstimatedUCO, transactionFarmLockDeposit: $transactionFarmLockDeposit, filterAvailableLevels: $filterAvailableLevels, failure: $failure, finalAmount: $finalAmount, consentDateTime: $consentDateTime)';
   }
 
   @override
@@ -494,14 +494,14 @@ class _$FarmLockDepositFormStateImpl extends _FarmLockDepositFormState {
             (identical(other.level, level) || other.level == level) &&
             (identical(other.lpTokenBalance, lpTokenBalance) ||
                 other.lpTokenBalance == lpTokenBalance) &&
+            (identical(other.feesEstimatedUCO, feesEstimatedUCO) ||
+                other.feesEstimatedUCO == feesEstimatedUCO) &&
             (identical(other.transactionFarmLockDeposit,
                     transactionFarmLockDeposit) ||
                 other.transactionFarmLockDeposit ==
                     transactionFarmLockDeposit) &&
             const DeepCollectionEquality()
                 .equals(other._filterAvailableLevels, _filterAvailableLevels) &&
-            (identical(other.feesEstimatedUCO, feesEstimatedUCO) ||
-                other.feesEstimatedUCO == feesEstimatedUCO) &&
             (identical(other.failure, failure) || other.failure == failure) &&
             (identical(other.finalAmount, finalAmount) ||
                 other.finalAmount == finalAmount) &&
@@ -524,9 +524,9 @@ class _$FarmLockDepositFormStateImpl extends _FarmLockDepositFormState {
       farmLockDepositDuration,
       level,
       lpTokenBalance,
+      feesEstimatedUCO,
       transactionFarmLockDeposit,
       const DeepCollectionEquality().hash(_filterAvailableLevels),
-      feesEstimatedUCO,
       failure,
       finalAmount,
       consentDateTime);
@@ -553,9 +553,9 @@ abstract class _FarmLockDepositFormState extends FarmLockDepositFormState {
       final FarmLockDepositDurationType farmLockDepositDuration,
       final String level,
       final double lpTokenBalance,
+      final double feesEstimatedUCO,
       final Transaction? transactionFarmLockDeposit,
       final Map<String, int> filterAvailableLevels,
-      final double feesEstimatedUCO,
       final Failure? failure,
       final double? finalAmount,
       final DateTime? consentDateTime}) = _$FarmLockDepositFormStateImpl;
@@ -586,11 +586,11 @@ abstract class _FarmLockDepositFormState extends FarmLockDepositFormState {
   @override
   double get lpTokenBalance;
   @override
+  double get feesEstimatedUCO;
+  @override
   Transaction? get transactionFarmLockDeposit;
   @override
   Map<String, int> get filterAvailableLevels;
-  @override
-  double get feesEstimatedUCO;
   @override
   Failure? get failure;
   @override

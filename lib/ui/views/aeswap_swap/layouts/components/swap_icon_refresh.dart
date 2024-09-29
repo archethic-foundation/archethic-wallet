@@ -1,10 +1,7 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/ui/views/aeswap_swap/bloc/provider.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -39,20 +36,13 @@ class _SwapTokenIconRefreshState extends ConsumerState<SwapTokenIconRefresh> {
           },
         );
 
-        final swapNotifier = ref.read(SwapFormProvider.swapForm.notifier);
-        final swap = ref.read(SwapFormProvider.swapForm);
-        final accountSelected = ref.watch(
-          AccountProviders.accounts.select(
-            (accounts) => accounts.valueOrNull?.selectedAccount,
-          ),
-        );
-        final apiService = aedappfm.sl.get<ApiService>();
+        final swapNotifier = ref.read(swapFormNotifierProvider.notifier);
+        final swap = ref.read(swapFormNotifierProvider);
+
         if (swap.tokenToSwap != null) {
           final balanceToSwap = await ref.read(
             getBalanceProvider(
-              accountSelected!.genesisAddress,
-              swap.tokenToSwap!.isUCO ? 'UCO' : swap.tokenToSwap!.address!,
-              apiService,
+              swap.tokenToSwap!.isUCO ? 'UCO' : swap.tokenToSwap!.address,
             ).future,
           );
           swapNotifier.setTokenToSwapBalance(balanceToSwap);
@@ -61,9 +51,7 @@ class _SwapTokenIconRefreshState extends ConsumerState<SwapTokenIconRefresh> {
         if (swap.tokenSwapped != null) {
           final balanceSwapped = await ref.read(
             getBalanceProvider(
-              accountSelected!.genesisAddress,
-              swap.tokenSwapped!.isUCO ? 'UCO' : swap.tokenSwapped!.address!,
-              apiService,
+              swap.tokenSwapped!.isUCO ? 'UCO' : swap.tokenSwapped!.address,
             ).future,
           );
           swapNotifier.setTokenSwappedBalance(balanceSwapped);
@@ -71,7 +59,7 @@ class _SwapTokenIconRefreshState extends ConsumerState<SwapTokenIconRefresh> {
 
         if (swap.tokenToSwap != null && swap.tokenSwapped != null) {
           await swapNotifier.calculateSwapInfos(
-            swap.tokenToSwap!.isUCO ? 'UCO' : swap.tokenToSwap!.address!,
+            swap.tokenToSwap!.isUCO ? 'UCO' : swap.tokenToSwap!.address,
             swap.tokenToSwapAmount,
             true,
           );
@@ -95,10 +83,8 @@ class _SwapTokenIconRefreshState extends ConsumerState<SwapTokenIconRefresh> {
           child: Card(
             shape: RoundedRectangleBorder(
               side: BorderSide(
-                color: isRefreshSuccess != null && isRefreshSuccess == true
-                    ? aedappfm.ArchethicThemeBase.brightPurpleHoverBorder
-                        .withOpacity(1)
-                    : Colors.transparent,
+                color: aedappfm.ArchethicThemeBase.brightPurpleHoverBorder
+                    .withOpacity(1),
                 width: 0.5,
               ),
               borderRadius: BorderRadius.circular(20),
@@ -106,7 +92,8 @@ class _SwapTokenIconRefreshState extends ConsumerState<SwapTokenIconRefresh> {
             elevation: 0,
             color: isRefreshSuccess != null && isRefreshSuccess == true
                 ? aedappfm.ArchethicThemeBase.systemPositive600
-                : Colors.transparent,
+                : aedappfm.ArchethicThemeBase.brightPurpleHoverBackground
+                    .withOpacity(1),
             child: Padding(
               padding: const EdgeInsets.only(
                 top: 5,

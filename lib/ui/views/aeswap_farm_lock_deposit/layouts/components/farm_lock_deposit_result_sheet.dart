@@ -76,8 +76,7 @@ class FarmLockDepositResultSheetState
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final farmLockDeposit =
-        ref.watch(FarmLockDepositFormProvider.farmLockDepositForm);
+    final farmLockDeposit = ref.watch(farmLockDepositFormNotifierProvider);
     if (farmLockDeposit.amount == 0) {
       return const SizedBox.shrink();
     }

@@ -37,8 +37,7 @@ class FarmLockDepositConfirmSheetState
 
   @override
   void initState() {
-    final farmLockDeposit =
-        ref.read(FarmLockDepositFormProvider.farmLockDepositForm);
+    final farmLockDeposit = ref.read(farmLockDepositFormNotifierProvider);
     if (farmLockDeposit.farmLockDepositDuration ==
         FarmLockDepositDurationType.flexible) {
       warningChecked = true;
@@ -65,8 +64,7 @@ class FarmLockDepositConfirmSheetState
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    final farmLockDeposit =
-        ref.watch(FarmLockDepositFormProvider.farmLockDepositForm);
+    final farmLockDeposit = ref.watch(farmLockDepositFormNotifierProvider);
     return Row(
       children: <Widget>[
         AppButtonTinyConnectivity(
@@ -75,9 +73,9 @@ class FarmLockDepositConfirmSheetState
           key: const Key('farmLockDeposit'),
           onPressed: () async {
             final farmLockDepositNotifier = ref.read(
-              FarmLockDepositFormProvider.farmLockDepositForm.notifier,
+              farmLockDepositFormNotifierProvider.notifier,
             );
-            await farmLockDepositNotifier.lock(context, ref);
+            await farmLockDepositNotifier.lock(AppLocalizations.of(context)!);
           },
           disabled: (!warningChecked ||
                   (!consentChecked &&
@@ -93,7 +91,7 @@ class FarmLockDepositConfirmSheetState
   PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final farmLockDepositNotifier =
-        ref.watch(FarmLockDepositFormProvider.farmLockDepositForm.notifier);
+        ref.watch(farmLockDepositFormNotifierProvider.notifier);
 
     return SheetAppBar(
       title: localizations.farmLockDepositFormTitle,
@@ -112,8 +110,7 @@ class FarmLockDepositConfirmSheetState
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final farmLockDeposit =
-        ref.watch(FarmLockDepositFormProvider.farmLockDepositForm);
+    final farmLockDeposit = ref.watch(farmLockDepositFormNotifierProvider);
     if (farmLockDeposit.pool == null) {
       return const SizedBox.shrink();
     }

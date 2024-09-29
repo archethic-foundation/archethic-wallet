@@ -17,8 +17,6 @@ import 'package:aewallet/ui/widgets/components/refresh_indicator.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
-import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
-    as aedappfm;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -80,13 +78,6 @@ class _TransactionsList extends ConsumerWidget {
         ref
           ..invalidate(ContactProviders.fetchContacts)
           ..invalidate(MarketPriceProviders.currencyMarketPrice);
-        final env =
-            ref.read(SettingsProviders.settings).network.getNetworkLabel();
-        await ref
-            .read(
-              aedappfm.VerifiedTokensProviders.verifiedTokens.notifier,
-            )
-            .init(env);
       }),
       child: ScrollConfiguration(
         behavior: ScrollConfiguration.of(context).copyWith(

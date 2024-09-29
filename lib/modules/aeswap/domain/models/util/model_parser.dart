@@ -91,118 +91,105 @@ mixin ModelParser {
     );
   }
 
+  Future<DexToken> _hiveTokenToModel({
+    required aedappfm.Environment environment,
+    required aedappfm.VerifiedTokensRepositoryInterface
+        verifiedTokensRepository,
+    required List<String> tokenVerifiedList,
+    required String tokenAddress,
+  }) async {
+    if (tokenAddress.isUCO) {
+      return DexToken.uco();
+    }
+
+    final tokensListDatasource = await HiveTokensListDatasource.getInstance();
+
+    final hiveToken = tokensListDatasource.getToken(
+      environment,
+      tokenAddress,
+    );
+    if (hiveToken != null) {
+      final tokenVerified = verifiedTokensRepository.isVerifiedToken(
+        hiveToken.address!,
+        tokenVerifiedList,
+      );
+      return DexToken(
+        address: tokenAddress,
+        name: hiveToken.name,
+        symbol: hiveToken.symbol,
+        isVerified: tokenVerified,
+      );
+    }
+
+    // TODO(Chralu): Wrong idea to act as if we had data about that token
+    return DexToken(
+      address: tokenAddress,
+    );
+  }
+
   Future<DexPool> poolListItemToModel(
+    HiveTokensListDatasource localTokensDatasource,
+    aedappfm.VerifiedTokensRepositoryInterface verifiedTokensRepository,
+    aedappfm.Environment environment,
     GetPoolListResponse getPoolListResponse,
     List<String> tokenVerifiedList,
   ) async {
-    final tokens = getPoolListResponse.tokens.split('/');
-    final tokensListDatasource = await HiveTokensListDatasource.getInstance();
+    final tokens = getPoolListResponse.tokens;
 
-    var token1Name = '';
-    var token1Symbol = '';
-    var token1Verified = false;
-    var token2Verified = false;
-    if (tokens[0] == 'UCO') {
-      token1Name = 'Universal Coin';
-      token1Symbol = 'UCO';
-      token1Verified = true;
-    } else {
-      final token1 = tokensListDatasource.getToken(
-        aedappfm.EndpointUtil.getEnvironnement(),
-        tokens[0],
-      );
-      if (token1 != null) {
-        final tokenVerified = await aedappfm.VerifiedTokensRepositoryImpl()
-            .isVerifiedToken(token1.address!, tokenVerifiedList);
-        token1Name = token1.name;
-        token1Symbol = token1.symbol;
-        token1Verified = tokenVerified;
-      }
-    }
+    final token1 = await _hiveTokenToModel(
+      environment: environment,
+      verifiedTokensRepository: verifiedTokensRepository,
+      tokenVerifiedList: tokenVerifiedList,
+      tokenAddress: tokens[0],
+    );
+    final token2 = await _hiveTokenToModel(
+      environment: environment,
+      verifiedTokensRepository: verifiedTokensRepository,
+      tokenVerifiedList: tokenVerifiedList,
+      tokenAddress: tokens[1],
+    );
 
-    var token2Name = '';
-    var token2Symbol = '';
-    if (tokens[1] == 'UCO') {
-      token2Name = 'Universal Coin';
-      token2Symbol = 'UCO';
-      token2Verified = true;
-    } else {
-      final token2 = tokensListDatasource.getToken(
-        aedappfm.EndpointUtil.getEnvironnement(),
-        tokens[1],
-      );
-      if (token2 != null) {
-        final tokenVerified = await aedappfm.VerifiedTokensRepositoryImpl()
-            .isVerifiedToken(token2.address!, tokenVerifiedList);
-        token2Name = token2.name;
-        token2Symbol = token2.symbol;
-        token2Verified = tokenVerified;
-      }
-    }
-
-    var lpTokenName = '';
-    var lpTokenSymbol = '';
-    final lpToken = tokensListDatasource.getToken(
-      aedappfm.EndpointUtil.getEnvironnement(),
+    final hiveLpToken = localTokensDatasource.getToken(
+      environment,
       getPoolListResponse.lpTokenAddress,
     );
-    if (lpToken != null) {
-      lpTokenName = lpToken.name;
-      lpTokenSymbol = lpToken.symbol;
-    }
-
-    final dexPair = DexPair(
-      token1: DexToken(
-        address: tokens[0].toUpperCase(),
-        name: token1Name,
-        symbol: token1Symbol,
-        isVerified: token1Verified,
-      ),
-      token2: DexToken(
-        address: tokens[1].toUpperCase(),
-        name: token2Name,
-        symbol: token2Symbol,
-        isVerified: token2Verified,
-      ),
+    final lpToken = DexToken(
+      address: getPoolListResponse.lpTokenAddress.toUpperCase(),
+      name: hiveLpToken?.name ?? '',
+      symbol: hiveLpToken?.symbol ?? '',
+      isLpToken: true,
     );
 
     // Check if favorite in cache
-    var _isFavorite = false;
     final poolsListDatasource = await HivePoolsListDatasource.getInstance();
-    final isPoolFavorite = poolsListDatasource.getPool(
-      aedappfm.EndpointUtil.getEnvironnement(),
+    final isPoolFavorite = poolsListDatasource.containsPool(
+      environment.name,
       getPoolListResponse.address,
     );
-    if (isPoolFavorite != null) {
-      _isFavorite = isPoolFavorite.isFavorite!;
-    }
 
     return DexPool(
       poolAddress: getPoolListResponse.address,
-      pair: dexPair,
-      lpToken: DexToken(
-        address: getPoolListResponse.lpTokenAddress.toUpperCase(),
-        name: lpTokenName,
-        symbol: lpTokenSymbol,
-        isLpToken: true,
+      pair: DexPair(
+        token1: token1,
+        token2: token2,
       ),
+      lpToken: lpToken,
       lpTokenInUserBalance: false,
-      isFavorite: _isFavorite,
+      isFavorite: isPoolFavorite,
     );
   }
 
   Future<DexFarm> farmListToModel(
+    archethic.ApiService apiService,
     GetFarmListResponse getFarmListResponse,
     DexPool pool,
   ) async {
     final adressesToSearch = <String>[getFarmListResponse.lpTokenAddress];
-    if (getFarmListResponse.rewardTokenAddress != 'UCO') {
+    if (getFarmListResponse.rewardTokenAddress.isNotUCO) {
       adressesToSearch.add(getFarmListResponse.rewardTokenAddress);
     }
 
-    final tokenResultMap = await aedappfm.sl
-        .get<archethic.ApiService>()
-        .getToken(adressesToSearch);
+    final tokenResultMap = await apiService.getToken(adressesToSearch);
     DexToken? lpToken;
     if (tokenResultMap[getFarmListResponse.lpTokenAddress] != null) {
       lpToken = DexToken(
@@ -221,8 +208,8 @@ mixin ModelParser {
         symbol: tokenResultMap[getFarmListResponse.rewardTokenAddress]!.symbol!,
       );
     } else {
-      if (getFarmListResponse.rewardTokenAddress == 'UCO') {
-        rewardToken = const DexToken(name: 'UCO', symbol: 'UCO');
+      if (getFarmListResponse.rewardTokenAddress.isUCO) {
+        rewardToken = DexToken.uco();
       }
     }
     return DexFarm(
@@ -241,6 +228,7 @@ mixin ModelParser {
   }
 
   Future<DexFarm> farmInfosToModel(
+    archethic.ApiService apiService,
     String farmGenesisAddress,
     GetFarmInfosResponse getFarmInfosResponse,
     DexPool pool,
@@ -249,18 +237,17 @@ mixin ModelParser {
   }) async {
     var remainingReward = 0.0;
     if (getFarmInfosResponse.remainingReward == null) {
-      final transactionChainMap = await aedappfm.sl
-          .get<archethic.ApiService>()
-          .getTransactionChain({farmGenesisAddress: ''});
+      final transactionChainMap =
+          await apiService.getTransactionChain({farmGenesisAddress: ''});
       if (transactionChainMap[farmGenesisAddress] != null &&
           transactionChainMap[farmGenesisAddress]!.isNotEmpty) {
         final tx = transactionChainMap[farmGenesisAddress]!.first;
 
         for (final txInput in tx.inputs) {
           if (txInput.from != tx.address!.address &&
-              (txInput.type == 'UCO' &&
-                      getFarmInfosResponse.rewardToken == 'UCO' ||
-                  txInput.type != 'UCO' &&
+              (txInput.type?.isUCO == true &&
+                      getFarmInfosResponse.rewardToken.isUCO ||
+                  txInput.type?.isNotUCO == true &&
                       getFarmInfosResponse.rewardToken ==
                           txInput.tokenAddress)) {
             remainingReward = archethic.fromBigInt(txInput.amount).toDouble();
@@ -273,7 +260,7 @@ mixin ModelParser {
 
     final farmFactory = FarmFactory(
       farmGenesisAddress,
-      aedappfm.sl.get<archethic.ApiService>(),
+      apiService,
     );
 
     var depositedAmount = 0.0;
@@ -306,9 +293,7 @@ mixin ModelParser {
     );
     if (dexFarmInput == null || dexFarmInput.lpToken == null) {
       final adressesToSearch = <String>[getFarmInfosResponse.lpTokenAddress];
-      final tokenResultMap = await aedappfm.sl
-          .get<archethic.ApiService>()
-          .getToken(adressesToSearch);
+      final tokenResultMap = await apiService.getToken(adressesToSearch);
       DexToken? lpToken;
       if (tokenResultMap[getFarmInfosResponse.lpTokenAddress] != null) {
         lpToken = DexToken(
@@ -325,14 +310,12 @@ mixin ModelParser {
 
     DexToken? rewardToken;
 
-    if (getFarmInfosResponse.rewardToken == 'UCO') {
-      rewardToken = const DexToken(name: 'UCO', symbol: 'UCO');
+    if (getFarmInfosResponse.rewardToken.isUCO) {
+      rewardToken = DexToken.uco();
       dexFarm = dexFarm.copyWith(rewardToken: rewardToken);
     } else {
       final adressesToSearch = <String>[getFarmInfosResponse.rewardToken];
-      final tokenResultMap = await aedappfm.sl
-          .get<archethic.ApiService>()
-          .getToken(adressesToSearch);
+      final tokenResultMap = await apiService.getToken(adressesToSearch);
 
       if (tokenResultMap[getFarmInfosResponse.rewardToken] != null) {
         rewardToken = DexToken(
@@ -348,6 +331,7 @@ mixin ModelParser {
   }
 
   Future<DexFarmLock> farmLockInfosToModel(
+    archethic.ApiService apiService,
     String farmGenesisAddress,
     GetFarmLockFarmInfosResponse getFarmLockInfosResponse,
     DexPool pool,
@@ -356,7 +340,7 @@ mixin ModelParser {
   }) async {
     final farmLockFactory = FarmLockFactory(
       farmGenesisAddress,
-      aedappfm.sl.get<archethic.ApiService>(),
+      apiService,
     );
 
     final farmUserInfosResult =
@@ -424,9 +408,7 @@ mixin ModelParser {
       final adressesToSearch = <String>[
         getFarmLockInfosResponse.lpTokenAddress,
       ];
-      final tokenResultMap = await aedappfm.sl
-          .get<archethic.ApiService>()
-          .getToken(adressesToSearch);
+      final tokenResultMap = await apiService.getToken(adressesToSearch);
       DexToken? lpToken;
       if (tokenResultMap[getFarmLockInfosResponse.lpTokenAddress] != null) {
         lpToken = DexToken(
@@ -444,14 +426,12 @@ mixin ModelParser {
 
     DexToken? rewardToken;
 
-    if (getFarmLockInfosResponse.rewardToken == 'UCO') {
-      rewardToken = const DexToken(name: 'UCO', symbol: 'UCO');
+    if (getFarmLockInfosResponse.rewardToken.isUCO) {
+      rewardToken = DexToken.uco();
       dexFarmLock = dexFarmLock.copyWith(rewardToken: rewardToken);
     } else {
       final adressesToSearch = <String>[getFarmLockInfosResponse.rewardToken];
-      final tokenResultMap = await aedappfm.sl
-          .get<archethic.ApiService>()
-          .getToken(adressesToSearch);
+      final tokenResultMap = await apiService.getToken(adressesToSearch);
 
       if (tokenResultMap[getFarmLockInfosResponse.rewardToken] != null) {
         rewardToken = DexToken(

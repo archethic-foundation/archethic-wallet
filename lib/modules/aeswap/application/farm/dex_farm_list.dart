@@ -5,16 +5,16 @@ part of 'dex_farm.dart';
 Future<List<DexFarm>> _getFarmList(
   _GetFarmListRef ref,
 ) async {
-  final dexConf =
-      await ref.watch(DexConfigProviders.dexConfigRepository).getDexConfig();
+  final environment = ref.watch(environmentProvider);
+  final dexConf = await ref
+      .watch(DexConfigProviders.dexConfigRepository)
+      .getDexConfig(environment);
 
-  final apiService = aedappfm.sl.get<ApiService>();
   final dexFarms = <DexFarm>[];
-  final poolList = await ref.read(DexPoolProviders.getPoolList.future);
-  final resultFarmList = await RouterFactory(
-    dexConf.routerGenesisAddress,
-    apiService,
-  ).getFarmList(poolList);
+  final poolList = await ref.watch(DexPoolProviders.getPoolList.future);
+  final resultFarmList = await ref
+      .watch(routerFactoryProvider(dexConf.routerGenesisAddress))
+      .getFarmList(poolList);
 
   await resultFarmList.map(
     success: (farmList) async {

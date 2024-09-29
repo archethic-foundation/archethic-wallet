@@ -18,10 +18,11 @@ class FarmLockClaimFormState with _$FarmLockClaimFormState {
     Failure? failure,
     double? finalAmount,
     String? farmAddress,
+    String? poolAddress,
     DexToken? rewardToken,
     String? depositId,
-    String? lpTokenAddress,
     @Default(0.0) double feesEstimatedUCO,
+    String? lpTokenAddress,
     DateTime? consentDateTime,
     double? rewardAmount,
   }) = _FarmLockClaimFormState;

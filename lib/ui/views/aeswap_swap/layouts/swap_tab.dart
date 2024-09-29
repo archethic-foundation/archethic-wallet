@@ -1,4 +1,4 @@
-import 'package:aewallet/modules/aeswap/application/dex_token.dart';
+import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
@@ -40,10 +40,10 @@ class SwapTab extends ConsumerStatefulWidget {
 class SwapTabState extends ConsumerState<SwapTab> {
   @override
   void initState() {
-    Future.delayed(Duration.zero, () async {
+    Future(() async {
       try {
         if (widget.value != null) {
-          ref.read(SwapFormProvider.swapForm.notifier)
+          ref.read(swapFormNotifierProvider.notifier)
             ..setTokenFormSelected(1)
             ..setTokenToSwapAmountWithoutCalculation(widget.value!);
         }
@@ -55,17 +55,17 @@ class SwapTabState extends ConsumerState<SwapTab> {
               DexTokensProviders.getTokenFromAddress(widget.from).future,
             );
           } else {
-            _tokenToSwap = ucoToken;
+            _tokenToSwap = DexToken.uco();
           }
           if (_tokenToSwap != null) {
             await ref
-                .read(SwapFormProvider.swapForm.notifier)
+                .read(swapFormNotifierProvider.notifier)
                 .setTokenToSwap(_tokenToSwap);
           }
         } else {
           if (widget.tokenToSwap != null) {
             await ref
-                .read(SwapFormProvider.swapForm.notifier)
+                .read(swapFormNotifierProvider.notifier)
                 .setTokenToSwap(widget.tokenToSwap!);
           }
         }
@@ -77,23 +77,23 @@ class SwapTabState extends ConsumerState<SwapTab> {
               DexTokensProviders.getTokenFromAddress(widget.to).future,
             );
           } else {
-            _tokenSwapped = ucoToken;
+            _tokenSwapped = DexToken.uco();
           }
           if (_tokenSwapped != null) {
             await ref
-                .read(SwapFormProvider.swapForm.notifier)
+                .read(swapFormNotifierProvider.notifier)
                 .setTokenSwapped(_tokenSwapped);
           }
         } else {
           if (widget.tokenSwapped != null) {
             await ref
-                .read(SwapFormProvider.swapForm.notifier)
+                .read(swapFormNotifierProvider.notifier)
                 .setTokenSwapped(widget.tokenSwapped!);
           }
         }
 
         if (widget.value != null) {
-          ref.read(SwapFormProvider.swapForm.notifier).setTokenFormSelected(2);
+          ref.read(swapFormNotifierProvider.notifier).setTokenFormSelected(2);
         }
         // ignore: empty_catches
       } catch (e) {}
@@ -104,7 +104,7 @@ class SwapTabState extends ConsumerState<SwapTab> {
 
   @override
   Widget build(BuildContext context) {
-    final swap = ref.watch(SwapFormProvider.swapForm);
+    final swap = ref.watch(swapFormNotifierProvider);
     final localizations = AppLocalizations.of(context)!;
     return ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(
@@ -226,9 +226,9 @@ class SwapTabState extends ConsumerState<SwapTab> {
                     onPressed: () async {
                       await ref
                           .read(
-                            SwapFormProvider.swapForm.notifier,
+                            swapFormNotifierProvider.notifier,
                           )
-                          .validateForm(context);
+                          .validateForm(AppLocalizations.of(context)!);
                     },
                     disabled: !swap.isControlsOk,
                   ),

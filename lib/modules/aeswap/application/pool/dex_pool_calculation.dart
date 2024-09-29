@@ -7,12 +7,12 @@ Future<double> _getRatio(
   String poolGenesisAddress,
   DexToken token,
 ) async {
-  final apiService = aedappfm.sl.get<ApiService>();
+  final apiService = ref.watch(apiServiceProvider);
   final poolRatioResult = await PoolFactoryRepositoryImpl(
     poolGenesisAddress,
     apiService,
   ).getPoolRatio(
-    token.isUCO ? 'UCO' : token.address!,
+    token.address,
   );
   var ratio = 0.0;
   poolRatioResult.map(
@@ -36,10 +36,12 @@ Future<double> _estimatePoolTVLInFiat(
   var fiatValueToken1 = 0.0;
   var fiatValueToken2 = 0.0;
   var tvl = 0.0;
-  fiatValueToken1 = await ref
-      .read(DexTokensProviders.estimateTokenInFiat(pool.pair.token1).future);
-  fiatValueToken2 = await ref
-      .read(DexTokensProviders.estimateTokenInFiat(pool.pair.token2).future);
+  fiatValueToken1 = await ref.watch(
+    DexTokensProviders.estimateTokenInFiat(pool.pair.token1.address).future,
+  );
+  fiatValueToken2 = await ref.watch(
+    DexTokensProviders.estimateTokenInFiat(pool.pair.token2.address).future,
+  );
 
   if (fiatValueToken1 > 0 && fiatValueToken2 > 0) {
     tvl = pool.pair.token1.reserve * fiatValueToken1 +
@@ -61,6 +63,9 @@ Future<DexPool> _estimateStats(
   _EstimateStatsRef ref,
   DexPool pool,
 ) async {
+  final apiService = ref.watch(apiServiceProvider);
+  final session = ref.watch(sessionAESwapNotifierProvider);
+
   var volume24h = 0.0;
   var volume7d = 0.0;
   var fee24h = 0.0;
@@ -98,15 +103,14 @@ Future<DexPool> _estimateStats(
               1000)
           .round();
 
-  final transactionFuture24h =
-      aedappfm.sl.get<ApiService>().getTransactionChain(
+  final transactionFuture24h = apiService.getTransactionChain(
     {pool.poolAddress: ''},
     request:
         ' address, previousAddress, validationStamp { ledgerOperations { unspentOutputs { state } } }',
     fromCriteria: fromCriteria24h,
   );
 
-  final transactionFuture7d = aedappfm.sl.get<ApiService>().getTransactionChain(
+  final transactionFuture7d = apiService.getTransactionChain(
     {pool.poolAddress: ''},
     request:
         ' address, previousAddress, validationStamp { ledgerOperations { unspentOutputs { state } } }',
@@ -149,11 +153,11 @@ Future<DexPool> _estimateStats(
   Map<String, Transaction>? transactionsPrevious;
 
   if (previousAddressSearchCriteria.isNotEmpty) {
-    transactionsPrevious = await aedappfm.sl.get<ApiService>().getTransaction(
-          previousAddressSearchCriteria,
-          request:
-              ' address, previousAddress, validationStamp { ledgerOperations { unspentOutputs { state } } }',
-        );
+    transactionsPrevious = await apiService.getTransaction(
+      previousAddressSearchCriteria,
+      request:
+          ' address, previousAddress, validationStamp { ledgerOperations { unspentOutputs { state } } }',
+    );
   }
 
   if (previousAddressSearchCriteria24h != null &&
@@ -242,27 +246,26 @@ Future<DexPool> _estimateStats(
   }
 
   final archethicOracleUCO =
-      ref.read(aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO);
+      ref.watch(aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO);
 
-  final env = ref.read(SettingsProviders.settings).network.getNetworkLabel();
-  if (pool.pair.token1.symbol == 'UCO') {
+  if (pool.pair.token1.isUCO) {
     priceToken1 = archethicOracleUCO.usd;
   } else {
-    priceToken1 = await ref.read(
+    priceToken1 = await ref.watch(
       aedappfm.CoinPriceProviders.coinPrice(
-        address: pool.pair.token1.address!,
-        network: env,
+        address: pool.pair.token1.address,
+        environment: session.environment,
       ).future,
     );
   }
 
-  if (pool.pair.token2.symbol == 'UCO') {
+  if (pool.pair.token2.isUCO) {
     priceToken2 = archethicOracleUCO.usd;
   } else {
-    priceToken2 = await ref.read(
+    priceToken2 = await ref.watch(
       aedappfm.CoinPriceProviders.coinPrice(
-        address: pool.pair.token2.address!,
-        network: env,
+        address: pool.pair.token2.address,
+        environment: session.environment,
       ).future,
     );
   }

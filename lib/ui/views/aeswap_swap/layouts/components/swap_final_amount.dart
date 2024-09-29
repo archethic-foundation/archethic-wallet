@@ -11,10 +11,10 @@ class SwapFinalAmount extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final swap = ref.watch(SwapFormProvider.swapForm);
+    final swap = ref.watch(swapFormNotifierProvider);
     final finalAmount = swap.finalAmount;
     final timeout = ref.watch(
-      SwapFormProvider.swapForm.select((value) => value.failure != null),
+      swapFormNotifierProvider.select((value) => value.failure != null),
     );
 
     return Row(

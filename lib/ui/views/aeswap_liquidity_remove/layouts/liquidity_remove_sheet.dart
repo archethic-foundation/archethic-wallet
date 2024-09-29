@@ -35,19 +35,19 @@ class _LiquidityRemoveSheetState extends ConsumerState<LiquidityRemoveSheet> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () async {
+    Future(() async {
       try {
-        ref.read(LiquidityRemoveFormProvider.liquidityRemoveForm.notifier)
+        ref.read(liquidityRemoveFormNotifierProvider.notifier)
           ..setToken1(widget.pair.token1)
           ..setToken2(widget.pair.token2)
           ..setLpToken(widget.lpToken);
 
         // ignore: cascade_invocations
         await ref
-            .read(LiquidityRemoveFormProvider.liquidityRemoveForm.notifier)
+            .read(liquidityRemoveFormNotifierProvider.notifier)
             .setPool(widget.pool);
         await ref
-            .read(LiquidityRemoveFormProvider.liquidityRemoveForm.notifier)
+            .read(liquidityRemoveFormNotifierProvider.notifier)
             .initBalance();
       } catch (e) {
         if (mounted) {
@@ -68,8 +68,7 @@ class _LiquidityRemoveSheetState extends ConsumerState<LiquidityRemoveSheet> {
 
     if (selectedAccount == null) return const SizedBox();
 
-    final liquidityRemoveForm =
-        ref.watch(LiquidityRemoveFormProvider.liquidityRemoveForm);
+    final liquidityRemoveForm = ref.watch(liquidityRemoveFormNotifierProvider);
 
     return liquidityRemoveForm.processStep == ProcessStep.form
         ? const LiquidityRemoveFormSheet()

@@ -6,7 +6,7 @@ part of 'provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tokensHash() => r'581ccc8746bc7ba06d002cd7bb51f8f14be2972d';
+String _$tokensHash() => r'b88793a04145e56e68cab7b5218f6a5ad4ef9c0e';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -42,8 +42,8 @@ class _TokensFamily extends Family<AsyncValue<List<AEToken>>> {
   _TokensProvider call({
     String searchCriteria = '',
     bool withVerified = true,
-    bool withLPToken = false,
-    bool withNotVerified = false,
+    bool withLPToken = true,
+    bool withNotVerified = true,
   }) {
     return _TokensProvider(
       searchCriteria: searchCriteria,
@@ -86,8 +86,8 @@ class _TokensProvider extends AutoDisposeFutureProvider<List<AEToken>> {
   _TokensProvider({
     String searchCriteria = '',
     bool withVerified = true,
-    bool withLPToken = false,
-    bool withNotVerified = false,
+    bool withLPToken = true,
+    bool withNotVerified = true,
   }) : this._internal(
           (ref) => _tokens(
             ref as _TokensRef,

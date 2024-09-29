@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/farm_apr.dart';
 import 'package:aewallet/application/migrations/migration_manager.dart';
@@ -12,11 +13,14 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
 import 'package:aewallet/model/available_language.dart';
+import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
+import 'package:aewallet/modules/aeswap/application/verified_tokens.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/hive/db_helper.hive.dart';
 import 'package:aewallet/providers_observer.dart';
 import 'package:aewallet/router/router.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_welcome.dart';
@@ -278,12 +282,13 @@ class SplashState extends ConsumerState<Splash> {
     final locale = ref.read(LanguageProviders.selectedLocale);
     await ref.read(SettingsProviders.settings.notifier).initialize(locale);
     await ref.read(AuthenticationProviders.settings.notifier).initialize();
-    final env = ref.read(SettingsProviders.settings).network.getNetworkLabel();
-    await ref
-        .read(
-          aedappfm.VerifiedTokensProviders.verifiedTokens.notifier,
-        )
-        .init(env);
+    ref
+      ..watch(DexPoolProviders.getPoolList)
+      ..watch(DexTokensProviders.tokensCommonBases)
+      ..watch(verifiedTokensProvider)
+      ..watch(DexTokensProviders.tokensFromAccount)
+      ..watch(earnFormNotifierProvider);
+
     await SecurityManager().checkDeviceSecurity(ref, context);
 
     AuthFactory.of(context).init();

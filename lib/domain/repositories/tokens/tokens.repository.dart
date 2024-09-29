@@ -9,9 +9,10 @@ abstract class TokensRepository {
 
   Future<List<AEToken>> getTokensList(
     String userGenesisAddress,
-    archethic.ApiService apiService, {
+    archethic.ApiService apiService,
+    Environment environment, {
     bool withVerified = true,
-    bool withLPToken = false,
-    bool withNotVerified = false,
+    bool withLPToken = true,
+    bool withNotVerified = true,
   });
 }

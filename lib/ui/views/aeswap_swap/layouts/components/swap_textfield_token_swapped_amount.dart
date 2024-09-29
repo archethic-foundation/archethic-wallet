@@ -33,7 +33,7 @@ class _SwapTokenSwappedAmountState
   }
 
   void _updateAmountTextController() {
-    final swap = ref.read(SwapFormProvider.swapForm);
+    final swap = ref.read(swapFormNotifierProvider);
     tokenAmountController = TextEditingController();
     tokenAmountController.value = AmountTextInputFormatter(
       precision: 8,
@@ -57,9 +57,9 @@ class _SwapTokenSwappedAmountState
   Widget build(
     BuildContext context,
   ) {
-    final swapNotifier = ref.watch(SwapFormProvider.swapForm.notifier);
+    final swapNotifier = ref.watch(swapFormNotifierProvider.notifier);
 
-    final swap = ref.watch(SwapFormProvider.swapForm);
+    final swap = ref.watch(swapFormNotifierProvider);
     if (swap.tokenFormSelected != 2) {
       _updateAmountTextController();
     }

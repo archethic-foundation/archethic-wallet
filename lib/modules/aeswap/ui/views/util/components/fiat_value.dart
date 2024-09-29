@@ -1,5 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/modules/aeswap/application/dex_token.dart';
+import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -14,7 +14,7 @@ class FiatValue {
     int precision = 2,
   }) async {
     final priceAsyncValue =
-        ref.watch(DexTokensProviders.estimateTokenInFiat(token));
+        ref.watch(DexTokensProviders.estimateTokenInFiat(token.address));
 
     return priceAsyncValue.when(
       data: (price) {

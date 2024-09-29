@@ -27,9 +27,7 @@ class FormatAddressLink extends ConsumerWidget {
     return InkWell(
       onTap: () async {
         final blockchain = await ref.read(
-          DexBlockchainsProviders.getBlockchainFromEnv(
-            aedappfm.EndpointUtil.getEnvironnement(),
-          ).future,
+          DexBlockchainsProviders.currentBlockchain.future,
         );
         if (typeAddress == TypeAddressLink.transaction) {
           await launchUrl(

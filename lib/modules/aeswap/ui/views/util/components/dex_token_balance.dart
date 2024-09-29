@@ -100,12 +100,13 @@ class DexTokenBalance extends ConsumerWidget {
                             left: 5,
                           ),
                           child: SelectableText(
-                            DEXLPTokenFiatValue().display(
-                              ref,
-                              pool!.pair.token1,
-                              pool!.pair.token2,
-                              tokenBalance,
-                              pool!.poolAddress,
+                            ref.watch(
+                              dexLPTokenFiatValueProvider(
+                                pool!.pair.token1,
+                                pool!.pair.token2,
+                                tokenBalance,
+                                pool!.poolAddress,
+                              ),
                             ),
                             style: fiatTextStyleMedium
                                 ? styleResponsive
@@ -192,12 +193,13 @@ class DexTokenBalance extends ConsumerWidget {
                           left: 5,
                         ),
                         child: SelectableText(
-                          DEXLPTokenFiatValue().display(
-                            ref,
-                            pool!.pair.token1,
-                            pool!.pair.token2,
-                            tokenBalance,
-                            pool!.poolAddress,
+                          ref.watch(
+                            dexLPTokenFiatValueProvider(
+                              pool!.pair.token1,
+                              pool!.pair.token2,
+                              tokenBalance,
+                              pool!.poolAddress,
+                            ),
                           ),
                           style: fiatTextStyleMedium
                               ? styleResponsive

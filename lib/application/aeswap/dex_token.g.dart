@@ -7,7 +7,7 @@ part of 'dex_token.dart';
 // **************************************************************************
 
 String _$dexTokenRepositoryHash() =>
-    r'06772e9d37d0b17b928e636ebe69402ca7019924';
+    r'ade02ca17b75a909abb603d932b162020132aaaf';
 
 /// See also [_dexTokenRepository].
 @ProviderFor(_dexTokenRepository)
@@ -24,7 +24,7 @@ final _dexTokenRepositoryProvider =
 
 typedef _DexTokenRepositoryRef = AutoDisposeProviderRef<DexTokenRepositoryImpl>;
 String _$getTokenFromAddressHash() =>
-    r'cf8e812a1e9ba63434814666d403198598251bc8';
+    r'a38f1bb2b33e4487c57bd5a71b45716eb0b7d34f';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -175,33 +175,64 @@ class _GetTokenFromAddressProviderElement
   dynamic get address => (origin as _GetTokenFromAddressProvider).address;
 }
 
-String _$getTokenFromAccountHash() =>
-    r'adf8602761f3b03e95f3bb285434ff6b1b97f35f';
+String _$tokensFromAccountHash() => r'ca1234c4dae785b39e81b2cb4ecb35bc62494177';
 
-/// See also [_getTokenFromAccount].
-@ProviderFor(_getTokenFromAccount)
-const _getTokenFromAccountProvider = _GetTokenFromAccountFamily();
+/// See also [_tokensFromAccount].
+@ProviderFor(_tokensFromAccount)
+final _tokensFromAccountProvider =
+    AutoDisposeFutureProvider<List<DexToken>>.internal(
+  _tokensFromAccount,
+  name: r'_tokensFromAccountProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$tokensFromAccountHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-/// See also [_getTokenFromAccount].
-class _GetTokenFromAccountFamily extends Family<AsyncValue<List<DexToken>>> {
-  /// See also [_getTokenFromAccount].
-  const _GetTokenFromAccountFamily();
+typedef _TokensFromAccountRef = AutoDisposeFutureProviderRef<List<DexToken>>;
+String _$dexTokenBasesHash() => r'95b1983bea76eb73fa66d9b963a18c8074310184';
 
-  /// See also [_getTokenFromAccount].
-  _GetTokenFromAccountProvider call(
-    dynamic accountAddress,
+/// See also [_dexTokenBases].
+@ProviderFor(_dexTokenBases)
+final _dexTokenBasesProvider =
+    AutoDisposeFutureProvider<List<DexToken>>.internal(
+  _dexTokenBases,
+  name: r'_dexTokenBasesProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$dexTokenBasesHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _DexTokenBasesRef = AutoDisposeFutureProviderRef<List<DexToken>>;
+String _$dexTokenBaseHash() => r'3bb48d518509076fb42528b294df81e32290f7d5';
+
+/// See also [_dexTokenBase].
+@ProviderFor(_dexTokenBase)
+const _dexTokenBaseProvider = _DexTokenBaseFamily();
+
+/// See also [_dexTokenBase].
+class _DexTokenBaseFamily extends Family<AsyncValue<DexToken?>> {
+  /// See also [_dexTokenBase].
+  const _DexTokenBaseFamily();
+
+  /// See also [_dexTokenBase].
+  _DexTokenBaseProvider call(
+    String address,
   ) {
-    return _GetTokenFromAccountProvider(
-      accountAddress,
+    return _DexTokenBaseProvider(
+      address,
     );
   }
 
   @override
-  _GetTokenFromAccountProvider getProviderOverride(
-    covariant _GetTokenFromAccountProvider provider,
+  _DexTokenBaseProvider getProviderOverride(
+    covariant _DexTokenBaseProvider provider,
   ) {
     return call(
-      provider.accountAddress,
+      provider.address,
     );
   }
 
@@ -217,98 +248,94 @@ class _GetTokenFromAccountFamily extends Family<AsyncValue<List<DexToken>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'_getTokenFromAccountProvider';
+  String? get name => r'_dexTokenBaseProvider';
 }
 
-/// See also [_getTokenFromAccount].
-class _GetTokenFromAccountProvider
-    extends AutoDisposeFutureProvider<List<DexToken>> {
-  /// See also [_getTokenFromAccount].
-  _GetTokenFromAccountProvider(
-    dynamic accountAddress,
+/// See also [_dexTokenBase].
+class _DexTokenBaseProvider extends AutoDisposeFutureProvider<DexToken?> {
+  /// See also [_dexTokenBase].
+  _DexTokenBaseProvider(
+    String address,
   ) : this._internal(
-          (ref) => _getTokenFromAccount(
-            ref as _GetTokenFromAccountRef,
-            accountAddress,
+          (ref) => _dexTokenBase(
+            ref as _DexTokenBaseRef,
+            address,
           ),
-          from: _getTokenFromAccountProvider,
-          name: r'_getTokenFromAccountProvider',
+          from: _dexTokenBaseProvider,
+          name: r'_dexTokenBaseProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$getTokenFromAccountHash,
-          dependencies: _GetTokenFromAccountFamily._dependencies,
+                  : _$dexTokenBaseHash,
+          dependencies: _DexTokenBaseFamily._dependencies,
           allTransitiveDependencies:
-              _GetTokenFromAccountFamily._allTransitiveDependencies,
-          accountAddress: accountAddress,
+              _DexTokenBaseFamily._allTransitiveDependencies,
+          address: address,
         );
 
-  _GetTokenFromAccountProvider._internal(
+  _DexTokenBaseProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.accountAddress,
+    required this.address,
   }) : super.internal();
 
-  final dynamic accountAddress;
+  final String address;
 
   @override
   Override overrideWith(
-    FutureOr<List<DexToken>> Function(_GetTokenFromAccountRef provider) create,
+    FutureOr<DexToken?> Function(_DexTokenBaseRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: _GetTokenFromAccountProvider._internal(
-        (ref) => create(ref as _GetTokenFromAccountRef),
+      override: _DexTokenBaseProvider._internal(
+        (ref) => create(ref as _DexTokenBaseRef),
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        accountAddress: accountAddress,
+        address: address,
       ),
     );
   }
 
   @override
-  AutoDisposeFutureProviderElement<List<DexToken>> createElement() {
-    return _GetTokenFromAccountProviderElement(this);
+  AutoDisposeFutureProviderElement<DexToken?> createElement() {
+    return _DexTokenBaseProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is _GetTokenFromAccountProvider &&
-        other.accountAddress == accountAddress;
+    return other is _DexTokenBaseProvider && other.address == address;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, accountAddress.hashCode);
+    hash = _SystemHash.combine(hash, address.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
-mixin _GetTokenFromAccountRef on AutoDisposeFutureProviderRef<List<DexToken>> {
-  /// The parameter `accountAddress` of this provider.
-  dynamic get accountAddress;
+mixin _DexTokenBaseRef on AutoDisposeFutureProviderRef<DexToken?> {
+  /// The parameter `address` of this provider.
+  String get address;
 }
 
-class _GetTokenFromAccountProviderElement
-    extends AutoDisposeFutureProviderElement<List<DexToken>>
-    with _GetTokenFromAccountRef {
-  _GetTokenFromAccountProviderElement(super.provider);
+class _DexTokenBaseProviderElement
+    extends AutoDisposeFutureProviderElement<DexToken?> with _DexTokenBaseRef {
+  _DexTokenBaseProviderElement(super.provider);
 
   @override
-  dynamic get accountAddress =>
-      (origin as _GetTokenFromAccountProvider).accountAddress;
+  String get address => (origin as _DexTokenBaseProvider).address;
 }
 
-String _$getTokenIconHash() => r'5b7dcd4fcb5c79850acf7124bcefa0a86733e921';
+String _$getTokenIconHash() => r'7f2c8ed5c91417720cc3872b943d95fb11c7e9a4';
 
 /// See also [_getTokenIcon].
 @ProviderFor(_getTokenIcon)
@@ -437,7 +464,7 @@ class _GetTokenIconProviderElement
 }
 
 String _$estimateTokenInFiatHash() =>
-    r'f2ae967df5f70c599a3b767e47cd9a36abd8d226';
+    r'a1f60d18712d338948010c72f51731a038a545fd';
 
 /// See also [_estimateTokenInFiat].
 @ProviderFor(_estimateTokenInFiat)
@@ -450,10 +477,10 @@ class _EstimateTokenInFiatFamily extends Family<AsyncValue<double>> {
 
   /// See also [_estimateTokenInFiat].
   _EstimateTokenInFiatProvider call(
-    DexToken token,
+    String tokenAddress,
   ) {
     return _EstimateTokenInFiatProvider(
-      token,
+      tokenAddress,
     );
   }
 
@@ -462,7 +489,7 @@ class _EstimateTokenInFiatFamily extends Family<AsyncValue<double>> {
     covariant _EstimateTokenInFiatProvider provider,
   ) {
     return call(
-      provider.token,
+      provider.tokenAddress,
     );
   }
 
@@ -485,11 +512,11 @@ class _EstimateTokenInFiatFamily extends Family<AsyncValue<double>> {
 class _EstimateTokenInFiatProvider extends AutoDisposeFutureProvider<double> {
   /// See also [_estimateTokenInFiat].
   _EstimateTokenInFiatProvider(
-    DexToken token,
+    String tokenAddress,
   ) : this._internal(
           (ref) => _estimateTokenInFiat(
             ref as _EstimateTokenInFiatRef,
-            token,
+            tokenAddress,
           ),
           from: _estimateTokenInFiatProvider,
           name: r'_estimateTokenInFiatProvider',
@@ -500,7 +527,7 @@ class _EstimateTokenInFiatProvider extends AutoDisposeFutureProvider<double> {
           dependencies: _EstimateTokenInFiatFamily._dependencies,
           allTransitiveDependencies:
               _EstimateTokenInFiatFamily._allTransitiveDependencies,
-          token: token,
+          tokenAddress: tokenAddress,
         );
 
   _EstimateTokenInFiatProvider._internal(
@@ -510,10 +537,10 @@ class _EstimateTokenInFiatProvider extends AutoDisposeFutureProvider<double> {
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.token,
+    required this.tokenAddress,
   }) : super.internal();
 
-  final DexToken token;
+  final String tokenAddress;
 
   @override
   Override overrideWith(
@@ -528,7 +555,7 @@ class _EstimateTokenInFiatProvider extends AutoDisposeFutureProvider<double> {
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        token: token,
+        tokenAddress: tokenAddress,
       ),
     );
   }
@@ -540,21 +567,22 @@ class _EstimateTokenInFiatProvider extends AutoDisposeFutureProvider<double> {
 
   @override
   bool operator ==(Object other) {
-    return other is _EstimateTokenInFiatProvider && other.token == token;
+    return other is _EstimateTokenInFiatProvider &&
+        other.tokenAddress == tokenAddress;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, token.hashCode);
+    hash = _SystemHash.combine(hash, tokenAddress.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
 mixin _EstimateTokenInFiatRef on AutoDisposeFutureProviderRef<double> {
-  /// The parameter `token` of this provider.
-  DexToken get token;
+  /// The parameter `tokenAddress` of this provider.
+  String get tokenAddress;
 }
 
 class _EstimateTokenInFiatProviderElement
@@ -563,11 +591,189 @@ class _EstimateTokenInFiatProviderElement
   _EstimateTokenInFiatProviderElement(super.provider);
 
   @override
-  DexToken get token => (origin as _EstimateTokenInFiatProvider).token;
+  String get tokenAddress =>
+      (origin as _EstimateTokenInFiatProvider).tokenAddress;
+}
+
+String _$getRemoveAmountsHash() => r'15015b4cebd52c2e39955493365f9125097587ba';
+
+/// This provider is used to cache request result
+/// It ensures, for example, that an oracle update won't trigger a new `getRemoveAmounts` request
+/// if `lpTokenAmount` hasn't changed.
+///
+/// Copied from [_getRemoveAmounts].
+@ProviderFor(_getRemoveAmounts)
+const _getRemoveAmountsProvider = _GetRemoveAmountsFamily();
+
+/// This provider is used to cache request result
+/// It ensures, for example, that an oracle update won't trigger a new `getRemoveAmounts` request
+/// if `lpTokenAmount` hasn't changed.
+///
+/// Copied from [_getRemoveAmounts].
+class _GetRemoveAmountsFamily
+    extends Family<AsyncValue<({double token1, double token2})>> {
+  /// This provider is used to cache request result
+  /// It ensures, for example, that an oracle update won't trigger a new `getRemoveAmounts` request
+  /// if `lpTokenAmount` hasn't changed.
+  ///
+  /// Copied from [_getRemoveAmounts].
+  const _GetRemoveAmountsFamily();
+
+  /// This provider is used to cache request result
+  /// It ensures, for example, that an oracle update won't trigger a new `getRemoveAmounts` request
+  /// if `lpTokenAmount` hasn't changed.
+  ///
+  /// Copied from [_getRemoveAmounts].
+  _GetRemoveAmountsProvider call(
+    String poolAddress,
+    double lpTokenAmount,
+  ) {
+    return _GetRemoveAmountsProvider(
+      poolAddress,
+      lpTokenAmount,
+    );
+  }
+
+  @override
+  _GetRemoveAmountsProvider getProviderOverride(
+    covariant _GetRemoveAmountsProvider provider,
+  ) {
+    return call(
+      provider.poolAddress,
+      provider.lpTokenAmount,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_getRemoveAmountsProvider';
+}
+
+/// This provider is used to cache request result
+/// It ensures, for example, that an oracle update won't trigger a new `getRemoveAmounts` request
+/// if `lpTokenAmount` hasn't changed.
+///
+/// Copied from [_getRemoveAmounts].
+class _GetRemoveAmountsProvider
+    extends AutoDisposeFutureProvider<({double token1, double token2})> {
+  /// This provider is used to cache request result
+  /// It ensures, for example, that an oracle update won't trigger a new `getRemoveAmounts` request
+  /// if `lpTokenAmount` hasn't changed.
+  ///
+  /// Copied from [_getRemoveAmounts].
+  _GetRemoveAmountsProvider(
+    String poolAddress,
+    double lpTokenAmount,
+  ) : this._internal(
+          (ref) => _getRemoveAmounts(
+            ref as _GetRemoveAmountsRef,
+            poolAddress,
+            lpTokenAmount,
+          ),
+          from: _getRemoveAmountsProvider,
+          name: r'_getRemoveAmountsProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$getRemoveAmountsHash,
+          dependencies: _GetRemoveAmountsFamily._dependencies,
+          allTransitiveDependencies:
+              _GetRemoveAmountsFamily._allTransitiveDependencies,
+          poolAddress: poolAddress,
+          lpTokenAmount: lpTokenAmount,
+        );
+
+  _GetRemoveAmountsProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.poolAddress,
+    required this.lpTokenAmount,
+  }) : super.internal();
+
+  final String poolAddress;
+  final double lpTokenAmount;
+
+  @override
+  Override overrideWith(
+    FutureOr<({double token1, double token2})> Function(
+            _GetRemoveAmountsRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _GetRemoveAmountsProvider._internal(
+        (ref) => create(ref as _GetRemoveAmountsRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        poolAddress: poolAddress,
+        lpTokenAmount: lpTokenAmount,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<({double token1, double token2})>
+      createElement() {
+    return _GetRemoveAmountsProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is _GetRemoveAmountsProvider &&
+        other.poolAddress == poolAddress &&
+        other.lpTokenAmount == lpTokenAmount;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, poolAddress.hashCode);
+    hash = _SystemHash.combine(hash, lpTokenAmount.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin _GetRemoveAmountsRef
+    on AutoDisposeFutureProviderRef<({double token1, double token2})> {
+  /// The parameter `poolAddress` of this provider.
+  String get poolAddress;
+
+  /// The parameter `lpTokenAmount` of this provider.
+  double get lpTokenAmount;
+}
+
+class _GetRemoveAmountsProviderElement
+    extends AutoDisposeFutureProviderElement<({double token1, double token2})>
+    with _GetRemoveAmountsRef {
+  _GetRemoveAmountsProviderElement(super.provider);
+
+  @override
+  String get poolAddress => (origin as _GetRemoveAmountsProvider).poolAddress;
+  @override
+  double get lpTokenAmount =>
+      (origin as _GetRemoveAmountsProvider).lpTokenAmount;
 }
 
 String _$estimateLPTokenInFiatHash() =>
-    r'9c857c000dfddf2ccc694d3ec53c5313c6baac55';
+    r'446f5d6435ccae998ec397f46aa7d22c85f46dc0';
 
 /// See also [_estimateLPTokenInFiat].
 @ProviderFor(_estimateLPTokenInFiat)
@@ -580,14 +786,14 @@ class _EstimateLPTokenInFiatFamily extends Family<AsyncValue<double>> {
 
   /// See also [_estimateLPTokenInFiat].
   _EstimateLPTokenInFiatProvider call(
-    DexToken token1,
-    DexToken token2,
+    String token1Address,
+    String token2Address,
     double lpTokenAmount,
     String poolAddress,
   ) {
     return _EstimateLPTokenInFiatProvider(
-      token1,
-      token2,
+      token1Address,
+      token2Address,
       lpTokenAmount,
       poolAddress,
     );
@@ -598,8 +804,8 @@ class _EstimateLPTokenInFiatFamily extends Family<AsyncValue<double>> {
     covariant _EstimateLPTokenInFiatProvider provider,
   ) {
     return call(
-      provider.token1,
-      provider.token2,
+      provider.token1Address,
+      provider.token2Address,
       provider.lpTokenAmount,
       provider.poolAddress,
     );
@@ -624,15 +830,15 @@ class _EstimateLPTokenInFiatFamily extends Family<AsyncValue<double>> {
 class _EstimateLPTokenInFiatProvider extends AutoDisposeFutureProvider<double> {
   /// See also [_estimateLPTokenInFiat].
   _EstimateLPTokenInFiatProvider(
-    DexToken token1,
-    DexToken token2,
+    String token1Address,
+    String token2Address,
     double lpTokenAmount,
     String poolAddress,
   ) : this._internal(
           (ref) => _estimateLPTokenInFiat(
             ref as _EstimateLPTokenInFiatRef,
-            token1,
-            token2,
+            token1Address,
+            token2Address,
             lpTokenAmount,
             poolAddress,
           ),
@@ -645,8 +851,8 @@ class _EstimateLPTokenInFiatProvider extends AutoDisposeFutureProvider<double> {
           dependencies: _EstimateLPTokenInFiatFamily._dependencies,
           allTransitiveDependencies:
               _EstimateLPTokenInFiatFamily._allTransitiveDependencies,
-          token1: token1,
-          token2: token2,
+          token1Address: token1Address,
+          token2Address: token2Address,
           lpTokenAmount: lpTokenAmount,
           poolAddress: poolAddress,
         );
@@ -658,14 +864,14 @@ class _EstimateLPTokenInFiatProvider extends AutoDisposeFutureProvider<double> {
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.token1,
-    required this.token2,
+    required this.token1Address,
+    required this.token2Address,
     required this.lpTokenAmount,
     required this.poolAddress,
   }) : super.internal();
 
-  final DexToken token1;
-  final DexToken token2;
+  final String token1Address;
+  final String token2Address;
   final double lpTokenAmount;
   final String poolAddress;
 
@@ -682,8 +888,8 @@ class _EstimateLPTokenInFiatProvider extends AutoDisposeFutureProvider<double> {
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        token1: token1,
-        token2: token2,
+        token1Address: token1Address,
+        token2Address: token2Address,
         lpTokenAmount: lpTokenAmount,
         poolAddress: poolAddress,
       ),
@@ -698,8 +904,8 @@ class _EstimateLPTokenInFiatProvider extends AutoDisposeFutureProvider<double> {
   @override
   bool operator ==(Object other) {
     return other is _EstimateLPTokenInFiatProvider &&
-        other.token1 == token1 &&
-        other.token2 == token2 &&
+        other.token1Address == token1Address &&
+        other.token2Address == token2Address &&
         other.lpTokenAmount == lpTokenAmount &&
         other.poolAddress == poolAddress;
   }
@@ -707,8 +913,8 @@ class _EstimateLPTokenInFiatProvider extends AutoDisposeFutureProvider<double> {
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, token1.hashCode);
-    hash = _SystemHash.combine(hash, token2.hashCode);
+    hash = _SystemHash.combine(hash, token1Address.hashCode);
+    hash = _SystemHash.combine(hash, token2Address.hashCode);
     hash = _SystemHash.combine(hash, lpTokenAmount.hashCode);
     hash = _SystemHash.combine(hash, poolAddress.hashCode);
 
@@ -717,11 +923,11 @@ class _EstimateLPTokenInFiatProvider extends AutoDisposeFutureProvider<double> {
 }
 
 mixin _EstimateLPTokenInFiatRef on AutoDisposeFutureProviderRef<double> {
-  /// The parameter `token1` of this provider.
-  DexToken get token1;
+  /// The parameter `token1Address` of this provider.
+  String get token1Address;
 
-  /// The parameter `token2` of this provider.
-  DexToken get token2;
+  /// The parameter `token2Address` of this provider.
+  String get token2Address;
 
   /// The parameter `lpTokenAmount` of this provider.
   double get lpTokenAmount;
@@ -736,9 +942,11 @@ class _EstimateLPTokenInFiatProviderElement
   _EstimateLPTokenInFiatProviderElement(super.provider);
 
   @override
-  DexToken get token1 => (origin as _EstimateLPTokenInFiatProvider).token1;
+  String get token1Address =>
+      (origin as _EstimateLPTokenInFiatProvider).token1Address;
   @override
-  DexToken get token2 => (origin as _EstimateLPTokenInFiatProvider).token2;
+  String get token2Address =>
+      (origin as _EstimateLPTokenInFiatProvider).token2Address;
   @override
   double get lpTokenAmount =>
       (origin as _EstimateLPTokenInFiatProvider).lpTokenAmount;

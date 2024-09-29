@@ -1,36 +1,25 @@
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/domain/repositories/transaction_remote.dart';
-import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
+import 'package:aewallet/application/aeswap/usecases.dart';
+import 'package:aewallet/modules/aeswap/application/api_service.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
-import 'package:aewallet/modules/aeswap/application/notification.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
-import 'package:aewallet/modules/aeswap/domain/usecases/remove_liquidity.usecase.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/pool_factory.repository.dart';
 import 'package:aewallet/modules/aeswap/util/browser_util_desktop.dart'
     if (dart.library.js) 'package:aewallet/modules/aeswap/util/browser_util_web.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_remove/bloc/state.dart';
-import 'package:aewallet/ui/views/aeswap_liquidity_remove/layouts/components/liquidity_remove_result_sheet.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:decimal/decimal.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final _liquidityRemoveFormProvider = NotifierProvider.autoDispose<
-    LiquidityRemoveFormNotifier, LiquidityRemoveFormState>(
-  () {
-    return LiquidityRemoveFormNotifier();
-  },
-);
+part 'provider.g.dart';
 
-class LiquidityRemoveFormNotifier
-    extends AutoDisposeNotifier<LiquidityRemoveFormState> {
+@riverpod
+class LiquidityRemoveFormNotifier extends _$LiquidityRemoveFormNotifier {
   LiquidityRemoveFormNotifier();
 
   @override
@@ -42,7 +31,7 @@ class LiquidityRemoveFormNotifier
     state = state.copyWith(pool: pool);
 
     final poolPopulated =
-        await ref.read(DexPoolProviders.loadPoolCard(pool).future);
+        await ref.read(DexPoolProviders.getPool(pool.poolAddress).future);
     state = state.copyWith(pool: poolPopulated);
   }
 
@@ -51,7 +40,7 @@ class LiquidityRemoveFormNotifier
     double lpTokenAmount, {
     Duration delay = const Duration(milliseconds: 800),
   }) async {
-    final apiService = aedappfm.sl.get<archethic.ApiService>();
+    final apiService = ref.read(apiServiceProvider);
     late final Map<String, dynamic> removeAmounts;
     try {
       removeAmounts = await Future<Map<String, dynamic>>(
@@ -106,18 +95,9 @@ class LiquidityRemoveFormNotifier
   }
 
   Future<void> initBalance() async {
-    final accountSelected = ref.watch(
-      AccountProviders.accounts.select(
-        (accounts) => accounts.valueOrNull?.selectedAccount,
-      ),
-    );
-    final apiService = aedappfm.sl.get<archethic.ApiService>();
-
     final lpTokenBalance = await ref.read(
       getBalanceProvider(
-        accountSelected!.genesisAddress,
-        state.lpToken!.address!,
-        apiService,
+        state.lpToken!.address,
       ).future,
     );
     state = state.copyWith(lpTokenBalance: lpTokenBalance);
@@ -195,26 +175,15 @@ class LiquidityRemoveFormNotifier
       token1AmountGetBack: calculateRemoveAmountsResult.removeAmountToken1,
       token2AmountGetBack: calculateRemoveAmountsResult.removeAmountToken2,
     );
-
-    final accountSelected = ref.watch(
-      AccountProviders.accounts.select(
-        (accounts) => accounts.valueOrNull?.selectedAccount,
-      ),
-    );
-    final apiService = aedappfm.sl.get<archethic.ApiService>();
     final balanceToken1 = await ref.read(
       getBalanceProvider(
-        accountSelected!.genesisAddress,
-        state.token1!.isUCO ? 'UCO' : state.token1!.address!,
-        apiService,
+        state.token1!.isUCO ? 'UCO' : state.token1!.address,
       ).future,
     );
     state = state.copyWith(token1Balance: balanceToken1);
     final balanceToken2 = await ref.read(
       getBalanceProvider(
-        accountSelected.genesisAddress,
-        state.token2!.isUCO ? 'UCO' : state.token2!.address!,
-        apiService,
+        state.token2!.isUCO ? 'UCO' : state.token2!.address,
       ).future,
     );
     state = state.copyWith(
@@ -294,8 +263,8 @@ class LiquidityRemoveFormNotifier
     );
   }
 
-  Future<void> validateForm(BuildContext context) async {
-    if (await control(context) == false) {
+  Future<void> validateForm(AppLocalizations appLocalizations) async {
+    if (control(appLocalizations) == false) {
       return;
     }
 
@@ -314,7 +283,7 @@ class LiquidityRemoveFormNotifier
     );
   }
 
-  Future<bool> control(BuildContext context) async {
+  bool control(AppLocalizations appLocalizations) {
     setFailure(null);
 
     if (BrowserUtil().isEdgeBrowser() ||
@@ -328,8 +297,7 @@ class LiquidityRemoveFormNotifier
     if (state.lpTokenAmount <= 0) {
       setFailure(
         aedappfm.Failure.other(
-          cause: AppLocalizations.of(context)!
-              .liquidityRemoveControlLPTokenAmountEmpty,
+          cause: appLocalizations.liquidityRemoveControlLPTokenAmountEmpty,
         ),
       );
       return false;
@@ -342,28 +310,14 @@ class LiquidityRemoveFormNotifier
       return false;
     }
 
-    var feesEstimatedUCO = 0.0;
-    if (state.lpToken != null) {
-      state = state.copyWith(calculationInProgress: true);
-      feesEstimatedUCO = await RemoveLiquidityCase().estimateFees(
-        state.pool!.poolAddress,
-        state.lpToken!.address!,
-        state.lpTokenAmount,
-      );
-      state = state.copyWith(calculationInProgress: false);
-    }
-    state = state.copyWith(
-      feesEstimatedUCO: feesEstimatedUCO,
-    );
-
     return true;
   }
 
-  Future<void> remove(BuildContext context, WidgetRef ref) async {
+  Future<void> remove(AppLocalizations appLocalizations) async {
     setLiquidityRemoveOk(false);
     setProcessInProgress(true);
 
-    if (await control(context) == false) {
+    if (control(appLocalizations) == false) {
       setProcessInProgress(false);
       return;
     }
@@ -373,42 +327,21 @@ class LiquidityRemoveFormNotifier
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
-
-    final transactionRepository =
-        ref.read(LiquidityRemoveFormProvider._repository);
-
     await aedappfm.ConsentRepositoryImpl()
         .addAddress(accountSelected!.genesisAddress);
-    if (context.mounted) {
-      await RemoveLiquidityCase().run(
-        transactionRepository,
-        state.pool!.poolAddress,
-        ref,
-        context,
-        ref.watch(NotificationProviders.notificationService),
-        state.lpToken!.address!,
-        state.lpTokenAmount,
-        state.token1!,
-        state.token2!,
-        state.lpToken!,
-      );
-    }
+    await ref.read(removeLiquidityCaseProvider).run(
+          appLocalizations,
+          this,
+          state.pool!.poolAddress,
+          state.lpToken!.address,
+          state.lpTokenAmount,
+          state.token1!,
+          state.token2!,
+          state.lpToken!,
+        );
 
-    await context.push(LiquidityRemoveResultSheet.routerPage);
+    ref
+      ..invalidate(userBalanceProvider)
+      ..invalidate(DexPoolProviders.getPool(state.pool!.poolAddress));
   }
-}
-
-abstract class LiquidityRemoveFormProvider {
-  static final _repository = Provider<TransactionRemoteRepositoryInterface>(
-    (ref) {
-      final networkSettings = ref.watch(
-        SettingsProviders.settings.select((settings) => settings.network),
-      );
-      return ArchethicTransactionRepository(
-        phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
-        websocketEndpoint: networkSettings.getWebsocketUri(),
-      );
-    },
-  );
-  static final liquidityRemoveForm = _liquidityRemoveFormProvider;
 }

@@ -22,7 +22,7 @@ class SwapInfos extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final swap = ref.watch(SwapFormProvider.swapForm);
+    final swap = ref.watch(swapFormNotifierProvider);
 
     if (swap.tokenToSwap == null ||
         swap.tokenSwapped == null ||
@@ -31,8 +31,7 @@ class SwapInfos extends ConsumerWidget {
       return const SizedBox.shrink();
     }
 
-    final tokenAddressRatioPrimary =
-        swap.tokenToSwap!.address == null ? 'UCO' : swap.tokenToSwap!.address!;
+    final tokenAddressRatioPrimary = swap.tokenToSwap!.address;
 
     final tvlAsyncValue =
         ref.watch(DexPoolProviders.estimatePoolTVLInFiat(swap.pool));
@@ -271,7 +270,8 @@ class SwapInfos extends ConsumerWidget {
     SwapFormState swap,
     String tokenAddressRatioPrimary,
   ) {
-    return SheetDetailCard(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         SelectableText(
           AppLocalizations.of(context)!.swapInfosRatio,
@@ -280,15 +280,15 @@ class SwapInfos extends ConsumerWidget {
         if (swap.pool != null && swap.pool!.infos != null)
           DexRatio(
             ratio: tokenAddressRatioPrimary.toUpperCase() ==
-                    swap.pool?.pair.token1.address!.toUpperCase()
+                    swap.pool?.pair.token1.address.toUpperCase()
                 ? swap.pool!.infos!.ratioToken1Token2
                 : swap.pool!.infos!.ratioToken2Token1,
             token1Symbol: tokenAddressRatioPrimary.toUpperCase() ==
-                    swap.pool!.pair.token1.address!.toUpperCase()
+                    swap.pool!.pair.token1.address.toUpperCase()
                 ? swap.pool!.pair.token1.symbol
                 : swap.pool!.pair.token2.symbol,
             token2Symbol: tokenAddressRatioPrimary.toUpperCase() ==
-                    swap.pool!.pair.token1.address!.toUpperCase()
+                    swap.pool!.pair.token1.address.toUpperCase()
                 ? swap.pool!.pair.token2.symbol
                 : swap.pool!.pair.token1.symbol,
             textStyle: AppTextStyles.bodyMedium(context),

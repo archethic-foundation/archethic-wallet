@@ -8,8 +8,8 @@ part of 'dex_token.dart';
 
 _$DexTokenImpl _$$DexTokenImplFromJson(Map<String, dynamic> json) =>
     _$DexTokenImpl(
+      address: json['address'] as String,
       name: json['name'] as String? ?? '',
-      address: json['address'] as String?,
       icon: json['icon'] as String?,
       symbol: json['symbol'] as String? ?? '',
       balance: (json['balance'] as num?)?.toDouble() ?? 0.0,
@@ -24,8 +24,8 @@ _$DexTokenImpl _$$DexTokenImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$DexTokenImplToJson(_$DexTokenImpl instance) =>
     <String, dynamic>{
-      'name': instance.name,
       'address': instance.address,
+      'name': instance.name,
       'icon': instance.icon,
       'symbol': instance.symbol,
       'balance': instance.balance,

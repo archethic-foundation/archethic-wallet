@@ -1,56 +1,47 @@
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/domain/repositories/transaction_remote.dart';
-import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
+import 'package:aewallet/application/aeswap/usecases.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
-import 'package:aewallet/modules/aeswap/application/notification.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
-import 'package:aewallet/modules/aeswap/domain/usecases/deposit_farm_lock.usecase.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
 import 'package:aewallet/modules/aeswap/util/browser_util_desktop.dart'
     if (dart.library.js) 'package:aewallet/modules/aeswap/util/browser_util_web.dart';
+import 'package:aewallet/modules/aeswap/util/riverpod.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/state.dart';
-import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_result_sheet.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:decimal/decimal.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final _farmLockDepositFormProvider = NotifierProvider.autoDispose<
-    FarmLockDepositFormNotifier, FarmLockDepositFormState>(
-  () {
-    return FarmLockDepositFormNotifier();
-  },
-);
+part 'provider.g.dart';
 
-class FarmLockDepositFormNotifier
-    extends AutoDisposeNotifier<FarmLockDepositFormState> {
+@riverpod
+class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
   FarmLockDepositFormNotifier();
 
   @override
-  FarmLockDepositFormState build() => const FarmLockDepositFormState();
+  FarmLockDepositFormState build() {
+    final lpTokenBalance = _watchLPTokenBalance();
 
-  Future<void> initBalances() async {
-    final apiService = aedappfm.sl.get<archethic.ApiService>();
+    // Reuse previous state values.
+    // If this is a first build, uses a default state.
+    return (stateOrNull ?? const FarmLockDepositFormState()).copyWith(
+      lpTokenBalance: lpTokenBalance,
+    );
+  }
 
-    final accountSelected = ref.watch(
-      AccountProviders.accounts.select(
-        (accounts) => accounts.valueOrNull?.selectedAccount,
-      ),
+  double _watchLPTokenBalance() {
+    /// Rebuilds this provider when lpTokenAddress changes
+    /// That way, it will watch the appropriate lpBalanceProvider.
+    ref.invalidateSelfOnPropertyChange(
+      (state) => state?.lpTokenAddress,
     );
-    final lpTokenBalance = await ref.read(
-      getBalanceProvider(
-        accountSelected!.genesisAddress,
-        state.pool!.lpToken.isUCO ? 'UCO' : state.pool!.lpToken.address!,
-        apiService,
-      ).future,
-    );
-    state = state.copyWith(lpTokenBalance: lpTokenBalance);
+
+    final lpTokenAddress = stateOrNull?.lpTokenAddress;
+    if (lpTokenAddress == null) return 0;
+    return ref.watch(getBalanceProvider(lpTokenAddress)).valueOrNull ?? 0.0;
   }
 
   void setTransactionFarmLockDeposit(
@@ -173,8 +164,8 @@ class FarmLockDepositFormNotifier
     state = state.copyWith(filterAvailableLevels: availableLevelsFiltered);
   }
 
-  Future<void> validateForm(BuildContext context) async {
-    if (await control(context) == false) {
+  Future<void> validateForm(AppLocalizations appLocalizations) async {
+    if (control(appLocalizations) == false) {
       return;
     }
 
@@ -193,7 +184,7 @@ class FarmLockDepositFormNotifier
     );
   }
 
-  Future<bool> control(BuildContext context) async {
+  bool control(AppLocalizations appLocalizations) {
     setFailure(null);
 
     if (BrowserUtil().isEdgeBrowser() ||
@@ -207,7 +198,7 @@ class FarmLockDepositFormNotifier
     if (state.amount <= 0) {
       setFailure(
         aedappfm.Failure.other(
-          cause: AppLocalizations.of(context)!.farmDepositControlAmountEmpty,
+          cause: appLocalizations.farmDepositControlAmountEmpty,
         ),
       );
       return false;
@@ -216,8 +207,7 @@ class FarmLockDepositFormNotifier
     if (state.amount > state.lpTokenBalance) {
       setFailure(
         aedappfm.Failure.other(
-          cause: AppLocalizations.of(context)!
-              .farmDepositControlLPTokenAmountExceedBalance,
+          cause: appLocalizations.farmDepositControlLPTokenAmountExceedBalance,
         ),
       );
       return false;
@@ -226,30 +216,20 @@ class FarmLockDepositFormNotifier
     if (state.amount < 0.00000143) {
       setFailure(
         aedappfm.Failure.other(
-          cause: AppLocalizations.of(context)!.farmDepositControlAmountMin,
+          cause: appLocalizations.farmDepositControlAmountMin,
         ),
       );
       return false;
     }
 
-    var feesEstimatedUCO = 0.0;
-
-    feesEstimatedUCO = await DepositFarmLockCase().estimateFees(
-      state.farmLock!.farmAddress,
-      state.farmLock!.lpToken!.address!,
-      state.amount,
-      state.farmLockDepositDuration,
-      state.level,
-    );
-    state = state.copyWith(feesEstimatedUCO: feesEstimatedUCO);
     return true;
   }
 
-  Future<void> lock(BuildContext context, WidgetRef ref) async {
+  Future<void> lock(AppLocalizations appLocalizations) async {
     setFarmLockDepositOk(false);
     setProcessInProgress(true);
 
-    if (await control(context) == false) {
+    if (control(appLocalizations) == false) {
       setProcessInProgress(false);
       return;
     }
@@ -262,40 +242,16 @@ class FarmLockDepositFormNotifier
     await aedappfm.ConsentRepositoryImpl()
         .addAddress(accountSelected!.genesisAddress);
 
-    final transactionRepository =
-        ref.read(FarmLockDepositFormProvider._repository);
-
-    if (context.mounted) {
-      await DepositFarmLockCase().run(
-        transactionRepository,
-        ref,
-        AppLocalizations.of(context)!,
-        ref.watch(NotificationProviders.notificationService),
-        state.farmLock!.farmAddress,
-        state.farmLock!.lpToken!.address!,
-        state.amount,
-        state.farmLock!.farmAddress,
-        false,
-        state.farmLockDepositDuration,
-        state.level,
-      );
-    }
-
-    await context.push(FarmLockDepositResultSheet.routerPage);
+    await ref.read(depositFarmLockCaseProvider).run(
+          appLocalizations,
+          this,
+          state.farmLock!.farmAddress,
+          state.farmLock!.lpToken!.address,
+          state.amount,
+          state.farmLock!.farmAddress,
+          false,
+          state.farmLockDepositDuration,
+          state.level,
+        );
   }
-}
-
-abstract class FarmLockDepositFormProvider {
-  static final _repository = Provider<TransactionRemoteRepositoryInterface>(
-    (ref) {
-      final networkSettings = ref.watch(
-        SettingsProviders.settings.select((settings) => settings.network),
-      );
-      return ArchethicTransactionRepository(
-        phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
-        websocketEndpoint: networkSettings.getWebsocketUri(),
-      );
-    },
-  );
-  static final farmLockDepositForm = _farmLockDepositFormProvider;
 }

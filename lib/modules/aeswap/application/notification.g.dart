@@ -7,7 +7,7 @@ part of 'notification.dart';
 // **************************************************************************
 
 String _$notificationServiceHash() =>
-    r'32cf09126f5267aad468484c4e1575933cfa50be';
+    r'61bde02f9a6ee116aae4075c55cf51c5c73decd3';
 
 /// See also [_notificationService].
 @ProviderFor(_notificationService)
@@ -24,7 +24,7 @@ final _notificationServiceProvider =
 
 typedef _NotificationServiceRef
     = ProviderRef<ns.TaskNotificationService<DexNotification, Failure>>;
-String _$runningTasksHash() => r'a53f77f44221e2e383bbe85b245d0df6f34f82b1';
+String _$runningTasksHash() => r'9009d556cd56fec80d7ae056b9d26d198639f38b';
 
 /// See also [_runningTasks].
 @ProviderFor(_runningTasks)
@@ -40,7 +40,7 @@ final _runningTasksProvider =
 
 typedef _RunningTasksRef
     = StreamProviderRef<Iterable<ns.Task<DexNotification, Failure>>>;
-String _$doneTasksHash() => r'df6a1139ee09306ec07da8834ddb6447ea301116';
+String _$doneTasksHash() => r'4f47c927345590eb6933aa6df6e4b68acf283b3c';
 
 /// See also [_doneTasks].
 @ProviderFor(_doneTasks)

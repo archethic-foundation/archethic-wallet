@@ -9,7 +9,7 @@ Future<void> _removePoolFromFavorite(
   final favoritePoolsDatasource =
       await HiveFavoritePoolsDatasource.getInstance();
   await favoritePoolsDatasource.removeFavoritePool(
-    aedappfm.EndpointUtil.getEnvironnement(),
+    ref.watch(environmentProvider).name,
     poolGenesisAddress,
   );
 }
@@ -22,7 +22,7 @@ Future<void> _addPoolFromFavorite(
   final favoritePoolsDatasource =
       await HiveFavoritePoolsDatasource.getInstance();
   await favoritePoolsDatasource.addFavoritePool(
-    aedappfm.EndpointUtil.getEnvironnement(),
+    ref.watch(environmentProvider).name,
     poolGenesisAddress,
   );
 }

@@ -19,8 +19,7 @@ class LiquidityRemoveConfirmInfos extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
-    final liquidityRemove =
-        ref.watch(LiquidityRemoveFormProvider.liquidityRemoveForm);
+    final liquidityRemove = ref.watch(liquidityRemoveFormNotifierProvider);
     if (liquidityRemove.token1 == null) {
       return const SizedBox.shrink();
     }

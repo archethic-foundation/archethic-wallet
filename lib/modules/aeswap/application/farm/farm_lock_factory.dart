@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
+
 import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/get_farm_lock_farm_infos_response.dart';
@@ -43,6 +44,7 @@ class FarmLockFactory with ModelParser {
         final getFarmLockInfosResponse =
             GetFarmLockFarmInfosResponse.fromJson(result);
         return farmLockInfosToModel(
+          apiService,
           factoryAddress,
           getFarmLockInfosResponse,
           pool,

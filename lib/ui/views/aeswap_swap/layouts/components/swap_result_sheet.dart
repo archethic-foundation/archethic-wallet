@@ -74,7 +74,7 @@ class SwapResultSheetState extends ConsumerState<SwapResultSheet>
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final swap = ref.watch(SwapFormProvider.swapForm);
+    final swap = ref.watch(swapFormNotifierProvider);
     if (swap.tokenToSwap == null || swap.tokenSwapped == null) {
       return const SizedBox.shrink();
     }

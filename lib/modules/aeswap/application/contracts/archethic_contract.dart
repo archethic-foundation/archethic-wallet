@@ -14,7 +14,12 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:decimal/decimal.dart';
 
 class ArchethicContract with aedappfm.TransactionMixin {
-  ArchethicContract();
+  const ArchethicContract({
+    required this.apiService,
+    required this.verifiedTokensRepository,
+  });
+  final archethic.ApiService apiService;
+  final aedappfm.VerifiedTokensRepositoryInterface verifiedTokensRepository;
 
   Future<aedappfm.Result<archethic.Transaction, aedappfm.Failure>> getAddPoolTx(
     String routerAddress,
@@ -26,11 +31,14 @@ class ArchethicContract with aedappfm.TransactionMixin {
     String lpTokenAddress,
   ) async {
     return aedappfm.Result.guard(() async {
-      final apiService = aedappfm.sl.get<archethic.ApiService>();
-      final routerFactory = RouterFactory(routerAddress, apiService);
+      final routerFactory = RouterFactory(
+        routerAddress,
+        apiService,
+        verifiedTokensRepository,
+      );
       final poolInfosResult = await routerFactory.getPoolAddresses(
-        token1.isUCO ? 'UCO' : token1.address!,
-        token2.isUCO ? 'UCO' : token2.address!,
+        token1.address,
+        token2.address,
       );
       poolInfosResult.map(
         success: (success) {
@@ -46,8 +54,8 @@ class ArchethicContract with aedappfm.TransactionMixin {
       String? poolCode;
       final factory = Factory(factoryAddress, apiService);
       final resultPoolCode = await factory.getPoolCode(
-        token1.isUCO ? 'UCO' : token1.address!,
-        token2.isUCO ? 'UCO' : token2.address!,
+        token1.address,
+        token2.address,
         poolGenesisAddress,
         lpTokenAddress,
       );
@@ -67,8 +75,8 @@ class ArchethicContract with aedappfm.TransactionMixin {
 
       String? tokenDefinition;
       final resultLPTokenDefinition = await factory.getLPTokenDefinition(
-        token1.isUCO ? 'UCO' : token1.address!,
-        token2.isUCO ? 'UCO' : token2.address!,
+        token1.address,
+        token2.address,
       );
       resultLPTokenDefinition.map(
         success: (success) {
@@ -123,7 +131,6 @@ class ArchethicContract with aedappfm.TransactionMixin {
     String poolGenesisAddress,
   ) async {
     return aedappfm.Result.guard(() async {
-      final apiService = aedappfm.sl.get<archethic.ApiService>();
       final feesToken = await calculateFees(
         transactionPool,
         apiService,
@@ -154,7 +161,6 @@ class ArchethicContract with aedappfm.TransactionMixin {
     double slippage,
   ) async {
     return aedappfm.Result.guard(() async {
-      final apiService = aedappfm.sl.get<archethic.ApiService>();
       final poolInfos = await PoolFactoryRepositoryImpl(
         poolGenesisAddress,
         apiService,
@@ -165,7 +171,7 @@ class ArchethicContract with aedappfm.TransactionMixin {
       var token2AmountSorted = 0.0;
       DexToken? token1Sorted;
       DexToken? token2Sorted;
-      if (token1.address!.toUpperCase() ==
+      if (token1.address.toUpperCase() ==
           poolInfos['token1']['address'].toString().toUpperCase()) {
         token1AmountSorted = token1Amount;
         token2AmountSorted = token2Amount;
@@ -205,8 +211,8 @@ class ArchethicContract with aedappfm.TransactionMixin {
         routerAddress,
         action: 'add_pool',
         args: [
-          if (token1Sorted.isUCO) 'UCO' else token1Sorted.address!,
-          if (token2Sorted.isUCO) 'UCO' else token2Sorted.address!,
+          token1Sorted.address,
+          token2Sorted.address,
           transactionPoolAddress.toUpperCase(),
         ],
       );
@@ -220,7 +226,7 @@ class ArchethicContract with aedappfm.TransactionMixin {
         transactionAdd.addTokenTransfer(
           poolGenesisAddress,
           archethic.toBigInt(token1AmountSorted),
-          token1Sorted.address!,
+          token1Sorted.address,
         );
       }
 
@@ -233,7 +239,7 @@ class ArchethicContract with aedappfm.TransactionMixin {
         transactionAdd.addTokenTransfer(
           poolGenesisAddress,
           archethic.toBigInt(token2AmountSorted),
-          token2Sorted.address!,
+          token2Sorted.address,
         );
       }
       return transactionAdd;
@@ -250,8 +256,6 @@ class ArchethicContract with aedappfm.TransactionMixin {
     double slippage,
   ) async {
     return aedappfm.Result.guard(() async {
-      final apiService = aedappfm.sl.get<archethic.ApiService>();
-
       var expectedTokenLP = 0.0;
       final expectedTokenLPResult = await PoolFactoryRepositoryImpl(
         poolGenesisAddress,
@@ -283,7 +287,7 @@ class ArchethicContract with aedappfm.TransactionMixin {
       var token2AmountSorted = 0.0;
       DexToken? token1Sorted;
       DexToken? token2Sorted;
-      if (token1.address!.toUpperCase() ==
+      if (token1.address.toUpperCase() ==
           poolInfos['token1']['address'].toString().toUpperCase()) {
         token1AmountSorted = token1Amount;
         token2AmountSorted = token2Amount;
@@ -330,7 +334,7 @@ class ArchethicContract with aedappfm.TransactionMixin {
         transactionLiquidity.addTokenTransfer(
           poolGenesisAddress,
           archethic.toBigInt(token1AmountSorted),
-          token1Sorted.address!,
+          token1Sorted.address,
         );
       }
 
@@ -343,7 +347,7 @@ class ArchethicContract with aedappfm.TransactionMixin {
         transactionLiquidity.addTokenTransfer(
           poolGenesisAddress,
           archethic.toBigInt(token2AmountSorted),
-          token2Sorted.address!,
+          token2Sorted.address,
         );
       }
       return transactionLiquidity;
@@ -359,7 +363,6 @@ class ArchethicContract with aedappfm.TransactionMixin {
     return aedappfm.Result.guard(() async {
       const burnAddress =
           '00000000000000000000000000000000000000000000000000000000000000000000';
-      final apiService = aedappfm.sl.get<archethic.ApiService>();
       final blockchainTxVersion = int.parse(
         (await apiService.getBlockchainVersion()).version.transaction,
       );
@@ -388,13 +391,12 @@ class ArchethicContract with aedappfm.TransactionMixin {
   ) async {
     return aedappfm.Result.guard(() async {
       const logName = 'ArchethicContract.getSwapInfos';
-      final apiService = aedappfm.sl.get<archethic.ApiService>();
 
       var outputAmount = 0.0;
       final getSwapInfosResult = await PoolFactoryRepositoryImpl(
         poolGenesisAddress,
         apiService,
-      ).getSwapInfosOutput(tokenToSwap.address!, tokenToSwapAmount);
+      ).getSwapInfosOutput(tokenToSwap.address, tokenToSwapAmount);
       getSwapInfosResult.map(
         success: (success) {
           if (success != null) {
@@ -421,7 +423,6 @@ class ArchethicContract with aedappfm.TransactionMixin {
     double outputAmount,
   ) async {
     return aedappfm.Result.guard(() async {
-      final apiService = aedappfm.sl.get<archethic.ApiService>();
       final blockchainTxVersion = int.parse(
         (await apiService.getBlockchainVersion()).version.transaction,
       );
@@ -452,7 +453,7 @@ class ArchethicContract with aedappfm.TransactionMixin {
         transactionSwap.addTokenTransfer(
           poolGenesisAddress,
           archethic.toBigInt(tokenToSwapAmount),
-          tokenToSwap.address!,
+          tokenToSwap.address,
         );
       }
 
@@ -467,7 +468,6 @@ class ArchethicContract with aedappfm.TransactionMixin {
     double amount,
   ) async {
     return aedappfm.Result.guard(() async {
-      final apiService = aedappfm.sl.get<archethic.ApiService>();
       final blockchainTxVersion = int.parse(
         (await apiService.getBlockchainVersion()).version.transaction,
       );
@@ -498,7 +498,6 @@ class ArchethicContract with aedappfm.TransactionMixin {
     double amount,
   ) async {
     return aedappfm.Result.guard(() async {
-      final apiService = aedappfm.sl.get<archethic.ApiService>();
       final blockchainTxVersion = int.parse(
         (await apiService.getBlockchainVersion()).version.transaction,
       );
@@ -526,7 +525,6 @@ class ArchethicContract with aedappfm.TransactionMixin {
     String level,
   ) async {
     return aedappfm.Result.guard(() async {
-      final apiService = aedappfm.sl.get<archethic.ApiService>();
       final blockchainTxVersion = int.parse(
         (await apiService.getBlockchainVersion()).version.transaction,
       );
@@ -568,7 +566,6 @@ class ArchethicContract with aedappfm.TransactionMixin {
     String level,
   ) async {
     return aedappfm.Result.guard(() async {
-      final apiService = aedappfm.sl.get<archethic.ApiService>();
       final blockchainTxVersion = int.parse(
         (await apiService.getBlockchainVersion()).version.transaction,
       );
@@ -600,7 +597,6 @@ class ArchethicContract with aedappfm.TransactionMixin {
     String farmGenesisAddress,
   ) async {
     return aedappfm.Result.guard(() async {
-      final apiService = aedappfm.sl.get<archethic.ApiService>();
       final blockchainTxVersion = int.parse(
         (await apiService.getBlockchainVersion()).version.transaction,
       );
@@ -626,7 +622,6 @@ class ArchethicContract with aedappfm.TransactionMixin {
     String depositId,
   ) async {
     return aedappfm.Result.guard(() async {
-      final apiService = aedappfm.sl.get<archethic.ApiService>();
       final blockchainTxVersion = int.parse(
         (await apiService.getBlockchainVersion()).version.transaction,
       );
@@ -654,7 +649,6 @@ class ArchethicContract with aedappfm.TransactionMixin {
     String depositId,
   ) async {
     return aedappfm.Result.guard(() async {
-      final apiService = aedappfm.sl.get<archethic.ApiService>();
       final blockchainTxVersion = int.parse(
         (await apiService.getBlockchainVersion()).version.transaction,
       );

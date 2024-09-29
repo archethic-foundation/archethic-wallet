@@ -7,7 +7,7 @@ part of 'dex_farm_lock.dart';
 // **************************************************************************
 
 String _$dexFarmLockRepositoryHash() =>
-    r'06c81e91f5c7e027005bdb0fffa7fc6444beeec3';
+    r'083507069f84dbdc8a4c5fd5b6fb9d5a5838f94e';
 
 /// See also [_dexFarmLockRepository].
 @ProviderFor(_dexFarmLockRepository)
@@ -24,7 +24,7 @@ final _dexFarmLockRepositoryProvider =
 
 typedef _DexFarmLockRepositoryRef
     = AutoDisposeProviderRef<DexFarmLockRepositoryImpl>;
-String _$getFarmLockInfosHash() => r'615eb31f430510c52773facc4c5be51b2f37a981';
+String _$getFarmLockInfosHash() => r'7e397a974d0033f64b9595ad0d3355c2181e437d';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -59,14 +59,12 @@ class _GetFarmLockInfosFamily extends Family<AsyncValue<DexFarmLock?>> {
   /// See also [_getFarmLockInfos].
   _GetFarmLockInfosProvider call(
     String farmGenesisAddress,
-    String poolAddress,
-    String userGenesisAddress, {
+    String poolAddress, {
     DexFarmLock? dexFarmLockInput,
   }) {
     return _GetFarmLockInfosProvider(
       farmGenesisAddress,
       poolAddress,
-      userGenesisAddress,
       dexFarmLockInput: dexFarmLockInput,
     );
   }
@@ -78,7 +76,6 @@ class _GetFarmLockInfosFamily extends Family<AsyncValue<DexFarmLock?>> {
     return call(
       provider.farmGenesisAddress,
       provider.poolAddress,
-      provider.userGenesisAddress,
       dexFarmLockInput: provider.dexFarmLockInput,
     );
   }
@@ -104,15 +101,13 @@ class _GetFarmLockInfosProvider
   /// See also [_getFarmLockInfos].
   _GetFarmLockInfosProvider(
     String farmGenesisAddress,
-    String poolAddress,
-    String userGenesisAddress, {
+    String poolAddress, {
     DexFarmLock? dexFarmLockInput,
   }) : this._internal(
           (ref) => _getFarmLockInfos(
             ref as _GetFarmLockInfosRef,
             farmGenesisAddress,
             poolAddress,
-            userGenesisAddress,
             dexFarmLockInput: dexFarmLockInput,
           ),
           from: _getFarmLockInfosProvider,
@@ -126,7 +121,6 @@ class _GetFarmLockInfosProvider
               _GetFarmLockInfosFamily._allTransitiveDependencies,
           farmGenesisAddress: farmGenesisAddress,
           poolAddress: poolAddress,
-          userGenesisAddress: userGenesisAddress,
           dexFarmLockInput: dexFarmLockInput,
         );
 
@@ -139,13 +133,11 @@ class _GetFarmLockInfosProvider
     required super.from,
     required this.farmGenesisAddress,
     required this.poolAddress,
-    required this.userGenesisAddress,
     required this.dexFarmLockInput,
   }) : super.internal();
 
   final String farmGenesisAddress;
   final String poolAddress;
-  final String userGenesisAddress;
   final DexFarmLock? dexFarmLockInput;
 
   @override
@@ -163,7 +155,6 @@ class _GetFarmLockInfosProvider
         debugGetCreateSourceHash: null,
         farmGenesisAddress: farmGenesisAddress,
         poolAddress: poolAddress,
-        userGenesisAddress: userGenesisAddress,
         dexFarmLockInput: dexFarmLockInput,
       ),
     );
@@ -179,7 +170,6 @@ class _GetFarmLockInfosProvider
     return other is _GetFarmLockInfosProvider &&
         other.farmGenesisAddress == farmGenesisAddress &&
         other.poolAddress == poolAddress &&
-        other.userGenesisAddress == userGenesisAddress &&
         other.dexFarmLockInput == dexFarmLockInput;
   }
 
@@ -188,7 +178,6 @@ class _GetFarmLockInfosProvider
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, farmGenesisAddress.hashCode);
     hash = _SystemHash.combine(hash, poolAddress.hashCode);
-    hash = _SystemHash.combine(hash, userGenesisAddress.hashCode);
     hash = _SystemHash.combine(hash, dexFarmLockInput.hashCode);
 
     return _SystemHash.finish(hash);
@@ -201,9 +190,6 @@ mixin _GetFarmLockInfosRef on AutoDisposeFutureProviderRef<DexFarmLock?> {
 
   /// The parameter `poolAddress` of this provider.
   String get poolAddress;
-
-  /// The parameter `userGenesisAddress` of this provider.
-  String get userGenesisAddress;
 
   /// The parameter `dexFarmLockInput` of this provider.
   DexFarmLock? get dexFarmLockInput;
@@ -219,9 +205,6 @@ class _GetFarmLockInfosProviderElement
       (origin as _GetFarmLockInfosProvider).farmGenesisAddress;
   @override
   String get poolAddress => (origin as _GetFarmLockInfosProvider).poolAddress;
-  @override
-  String get userGenesisAddress =>
-      (origin as _GetFarmLockInfosProvider).userGenesisAddress;
   @override
   DexFarmLock? get dexFarmLockInput =>
       (origin as _GetFarmLockInfosProvider).dexFarmLockInput;
