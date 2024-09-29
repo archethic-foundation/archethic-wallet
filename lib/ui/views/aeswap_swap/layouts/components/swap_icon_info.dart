@@ -18,7 +18,7 @@ class SwapTokenIconInfo extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final swap = ref.watch(SwapFormProvider.swapForm);
+    final swap = ref.watch(swapFormNotifierProvider);
     final disabled = swap.tokenToSwap == null ||
         swap.tokenSwapped == null ||
         swap.pool == null ||

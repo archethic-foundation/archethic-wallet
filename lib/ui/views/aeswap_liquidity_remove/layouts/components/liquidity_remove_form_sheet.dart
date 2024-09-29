@@ -43,8 +43,7 @@ class LiquidityRemoveFormSheet extends ConsumerWidget
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final liquidityRemove =
-        ref.watch(LiquidityRemoveFormProvider.liquidityRemoveForm);
+    final liquidityRemove = ref.watch(liquidityRemoveFormNotifierProvider);
     return Row(
       children: <Widget>[
         AppButtonTinyConnectivity(
@@ -54,9 +53,9 @@ class LiquidityRemoveFormSheet extends ConsumerWidget
           onPressed: () async {
             await ref
                 .read(
-                  LiquidityRemoveFormProvider.liquidityRemoveForm.notifier,
+                  liquidityRemoveFormNotifierProvider.notifier,
                 )
-                .validateForm(context);
+                .validateForm(AppLocalizations.of(context)!);
           },
           disabled: !liquidityRemove.isControlsOk,
         ),
@@ -81,8 +80,7 @@ class LiquidityRemoveFormSheet extends ConsumerWidget
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final liquidityRemove =
-        ref.watch(LiquidityRemoveFormProvider.liquidityRemoveForm);
+    final liquidityRemove = ref.watch(liquidityRemoveFormNotifierProvider);
 
     return Padding(
       padding: const EdgeInsets.only(top: 10),
@@ -93,10 +91,7 @@ class LiquidityRemoveFormSheet extends ConsumerWidget
             if (liquidityRemove.token1 != null)
               PoolInfoCard(
                 poolGenesisAddress: liquidityRemove.pool!.poolAddress,
-                tokenAddressRatioPrimary:
-                    liquidityRemove.token1!.address == null
-                        ? 'UCO'
-                        : liquidityRemove.token1!.address!,
+                tokenAddressRatioPrimary: liquidityRemove.token1!.address,
               ),
             const SizedBox(
               height: 20,

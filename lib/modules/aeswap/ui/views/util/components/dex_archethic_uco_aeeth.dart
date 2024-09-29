@@ -1,5 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/modules/aeswap/application/dex_token.dart';
+import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -20,9 +20,9 @@ class ArchethicOraclePair extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final valueToken1 =
-        ref.watch(DexTokensProviders.estimateTokenInFiat(token1));
+        ref.watch(DexTokensProviders.estimateTokenInFiat(token1.address));
     final valueToken2 =
-        ref.watch(DexTokensProviders.estimateTokenInFiat(token2));
+        ref.watch(DexTokensProviders.estimateTokenInFiat(token2.address));
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,

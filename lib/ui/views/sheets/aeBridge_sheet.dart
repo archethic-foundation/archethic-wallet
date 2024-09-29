@@ -33,7 +33,7 @@ class AEBridgeSheetState extends ConsumerState<AEBridgeSheet> {
   String? aeSwapUrl = 'https://bridge.testnet.archethic.net/bridge';
   @override
   void initState() {
-    /* Future.delayed(Duration.zero, () async {
+    /* Future(() async {
       final networkSettings = ref.watch(
         SettingsProviders.settings.select((settings) => settings.network),
       );

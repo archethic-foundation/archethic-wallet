@@ -50,8 +50,7 @@ class FarmLockWithdrawConfirmSheetState
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    final farmLockWithdraw =
-        ref.watch(FarmLockWithdrawFormProvider.farmLockWithdrawForm);
+    final farmLockWithdraw = ref.watch(farmLockWithdrawFormNotifierProvider);
 
     return Row(
       children: <Widget>[
@@ -62,9 +61,9 @@ class FarmLockWithdrawConfirmSheetState
           onPressed: () async {
             await ref
                 .read(
-                  FarmLockWithdrawFormProvider.farmLockWithdrawForm.notifier,
+                  farmLockWithdrawFormNotifierProvider.notifier,
                 )
-                .withdraw(context, ref);
+                .withdraw(AppLocalizations.of(context)!);
           },
           disabled:
               (!consentChecked && farmLockWithdraw.consentDateTime == null) ||
@@ -79,7 +78,7 @@ class FarmLockWithdrawConfirmSheetState
   PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final farmLockWithdrawNotifier =
-        ref.watch(FarmLockWithdrawFormProvider.farmLockWithdrawForm.notifier);
+        ref.watch(farmLockWithdrawFormNotifierProvider.notifier);
 
     return SheetAppBar(
       title: localizations.farmLockWithdrawFormTitle,
@@ -97,8 +96,7 @@ class FarmLockWithdrawConfirmSheetState
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final farmLockWithdraw =
-        ref.watch(FarmLockWithdrawFormProvider.farmLockWithdrawForm);
+    final farmLockWithdraw = ref.watch(farmLockWithdrawFormNotifierProvider);
 
     final localizations = AppLocalizations.of(context)!;
 

@@ -1,13 +1,13 @@
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/aeswap/dex_token.dart';
+import 'package:aewallet/modules/aeswap/application/api_service.dart';
 import 'package:aewallet/modules/aeswap/application/dex_config.dart';
-import 'package:aewallet/modules/aeswap/application/dex_token.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/application/router_factory.dart';
+import 'package:aewallet/modules/aeswap/application/session/provider.dart';
+import 'package:aewallet/modules/aeswap/application/verified_tokens.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_farm.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/dex_farm.repository.dart';
-import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
-    as aedappfm;
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:collection/collection.dart';
 import 'package:decimal/decimal.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -17,7 +17,12 @@ part 'dex_farm_list.dart';
 
 @riverpod
 DexFarmRepositoryImpl _dexFarmRepository(_DexFarmRepositoryRef ref) =>
-    DexFarmRepositoryImpl();
+    DexFarmRepositoryImpl(
+      apiService: ref.watch(apiServiceProvider),
+      verifiedTokensRepository: ref.watch(
+        verifiedTokensRepositoryProvider,
+      ),
+    );
 
 @riverpod
 Future<DexFarm?> _getFarmInfos(
@@ -26,7 +31,14 @@ Future<DexFarm?> _getFarmInfos(
   String poolAddress, {
   DexFarm? dexFarmInput,
 }) async {
-  final poolList = await ref.read(DexPoolProviders.getPoolList.future);
+  final poolList = await ref.watch(DexPoolProviders.getPoolList.future);
+  final selectedAccount = await ref
+      .read(
+        AccountProviders.accounts.future,
+      )
+      .selectedAccount;
+
+  final dexFarmRepository = ref.watch(_dexFarmRepositoryProvider);
 
   final pool = poolList.firstWhereOrNull(
     (poolSelect) =>
@@ -34,28 +46,18 @@ Future<DexFarm?> _getFarmInfos(
   );
   if (pool == null) return null;
 
-  final userGenesisAddress = ref
-          .watch(
-            AccountProviders.accounts.select(
-              (accounts) => accounts.valueOrNull?.selectedAccount,
-            ),
-          )
-          ?.genesisAddress ??
-      '';
-
-  final farmInfos =
-      await ref.watch(_dexFarmRepositoryProvider).populateFarmInfos(
-            farmGenesisAddress,
-            pool,
-            dexFarmInput!,
-            userGenesisAddress,
-          );
+  final farmInfos = await dexFarmRepository.populateFarmInfos(
+    farmGenesisAddress,
+    pool,
+    dexFarmInput!,
+    selectedAccount!.genesisAddress,
+  );
 
   var apr = 0.0;
-  final estimateLPTokenInFiat = await ref.read(
+  final estimateLPTokenInFiat = await ref.watch(
     DexTokensProviders.estimateLPTokenInFiat(
-      farmInfos.lpTokenPair!.token1,
-      farmInfos.lpTokenPair!.token2,
+      farmInfos.lpTokenPair!.token1.address,
+      farmInfos.lpTokenPair!.token2.address,
       farmInfos.lpTokenDeposited,
       dexFarmInput.poolAddress,
     ).future,
@@ -63,7 +65,8 @@ Future<DexFarm?> _getFarmInfos(
   final now = DateTime.now().toUtc();
 
   final priceTokenInFiat = await ref.read(
-    DexTokensProviders.estimateTokenInFiat(farmInfos.rewardToken!).future,
+    DexTokensProviders.estimateTokenInFiat(farmInfos.rewardToken!.address)
+        .future,
   );
 
   final remainingRewardInFiat = (Decimal.parse('$priceTokenInFiat') *

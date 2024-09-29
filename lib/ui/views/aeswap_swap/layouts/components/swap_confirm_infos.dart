@@ -22,7 +22,7 @@ class SwapConfirmInfos extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
-    final swap = ref.watch(SwapFormProvider.swapForm);
+    final swap = ref.watch(swapFormNotifierProvider);
     if (swap.tokenToSwap == null) {
       return const SizedBox.shrink();
     }

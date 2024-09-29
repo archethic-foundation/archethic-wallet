@@ -36,8 +36,7 @@ class FarmLockLevelUpConfirmSheetState
 
   @override
   void initState() {
-    final farmLockLevelUp =
-        ref.read(FarmLockLevelUpFormProvider.farmLockLevelUpForm);
+    final farmLockLevelUp = ref.read(farmLockLevelUpFormNotifierProvider);
     if (farmLockLevelUp.farmLockLevelUpDuration ==
         FarmLockDepositDurationType.flexible) {
       warningChecked = true;
@@ -47,8 +46,7 @@ class FarmLockLevelUpConfirmSheetState
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    final farmLockLevelUp =
-        ref.watch(FarmLockLevelUpFormProvider.farmLockLevelUpForm);
+    final farmLockLevelUp = ref.watch(farmLockLevelUpFormNotifierProvider);
     return Row(
       children: <Widget>[
         AppButtonTinyConnectivity(
@@ -57,9 +55,9 @@ class FarmLockLevelUpConfirmSheetState
           key: const Key('farmLockLevelUp'),
           onPressed: () async {
             final farmLockLevelUpNotifier = ref.read(
-              FarmLockLevelUpFormProvider.farmLockLevelUpForm.notifier,
+              farmLockLevelUpFormNotifierProvider.notifier,
             );
-            await farmLockLevelUpNotifier.lock(context, ref);
+            await farmLockLevelUpNotifier.lock(AppLocalizations.of(context)!);
           },
           disabled: (!warningChecked ||
                   (!consentChecked &&
@@ -75,7 +73,7 @@ class FarmLockLevelUpConfirmSheetState
   PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final farmLockLevelUpNotifier =
-        ref.watch(FarmLockLevelUpFormProvider.farmLockLevelUpForm.notifier);
+        ref.watch(farmLockLevelUpFormNotifierProvider.notifier);
 
     return SheetAppBar(
       title: localizations.farmLockLevelUpConfirmTitle,
@@ -110,8 +108,7 @@ class FarmLockLevelUpConfirmSheetState
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final farmLockLevelUp =
-        ref.watch(FarmLockLevelUpFormProvider.farmLockLevelUpForm);
+    final farmLockLevelUp = ref.watch(farmLockLevelUpFormNotifierProvider);
     if (farmLockLevelUp.pool == null) {
       return const SizedBox.shrink();
     }

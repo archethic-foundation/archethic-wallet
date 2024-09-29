@@ -6,18 +6,26 @@ import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/domain/repositories/dex_farm.repository.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 
 class DexFarmRepositoryImpl implements DexFarmRepository {
+  DexFarmRepositoryImpl({
+    required this.apiService,
+    required this.verifiedTokensRepository,
+  });
+
+  final archethic.ApiService apiService;
+  final aedappfm.VerifiedTokensRepositoryInterface verifiedTokensRepository;
+
   @override
   Future<List<DexFarm>> getFarmList(
     String routerAddress,
-    ApiService apiService,
     List<DexPool> poolList,
   ) async =>
       RouterFactory(
         routerAddress,
         apiService,
+        verifiedTokensRepository,
       )
           .getFarmList(
             poolList,
@@ -32,7 +40,6 @@ class DexFarmRepositoryImpl implements DexFarmRepository {
     DexFarm farmInput,
     String userGenesisAddress,
   ) async {
-    final apiService = aedappfm.sl.get<ApiService>();
     final farmFactory = FarmFactory(farmGenesisAddress, apiService);
 
     return farmFactory

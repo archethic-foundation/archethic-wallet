@@ -1,5 +1,8 @@
-import 'package:aewallet/modules/aeswap/application/dex_token.dart';
+import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/aeswap/dex_token.dart';
+import 'package:aewallet/modules/aeswap/application/api_service.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
+import 'package:aewallet/modules/aeswap/application/verified_tokens.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock_stats.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock_user_infos.dart';
@@ -14,17 +17,19 @@ part 'dex_farm_lock.g.dart';
 DexFarmLockRepositoryImpl _dexFarmLockRepository(
   _DexFarmLockRepositoryRef ref,
 ) =>
-    DexFarmLockRepositoryImpl();
+    DexFarmLockRepositoryImpl(
+      apiService: ref.watch(apiServiceProvider),
+      verifiedTokensRepository: ref.watch(verifiedTokensRepositoryProvider),
+    );
 
 @riverpod
 Future<DexFarmLock?> _getFarmLockInfos(
   _GetFarmLockInfosRef ref,
   String farmGenesisAddress,
-  String poolAddress,
-  String userGenesisAddress, {
+  String poolAddress, {
   DexFarmLock? dexFarmLockInput,
 }) async {
-  final poolList = await ref.read(DexPoolProviders.getPoolList.future);
+  final poolList = await ref.watch(DexPoolProviders.getPoolList.future);
 
   final pool = poolList.firstWhereOrNull(
     (poolSelect) =>
@@ -32,23 +37,30 @@ Future<DexFarmLock?> _getFarmLockInfos(
   );
   if (pool == null) return null;
 
+  final selectedAccount = await ref
+      .read(
+        AccountProviders.accounts.future,
+      )
+      .selectedAccount;
+
   try {
     final farmLockInfos =
-        await ref.read(_dexFarmLockRepositoryProvider).populateFarmLockInfos(
+        await ref.watch(_dexFarmLockRepositoryProvider).populateFarmLockInfos(
               farmGenesisAddress,
               pool,
               dexFarmLockInput!,
-              userGenesisAddress,
+              selectedAccount!.genesisAddress,
             );
 
-    final rewardTokenPriceInFiat = await ref.read(
-      DexTokensProviders.estimateTokenInFiat(farmLockInfos.rewardToken!).future,
+    final rewardTokenPriceInFiat = await ref.watch(
+      DexTokensProviders.estimateTokenInFiat(farmLockInfos.rewardToken!.address)
+          .future,
     );
 
-    final estimateLPTokenInFiat = await ref.read(
+    final estimateLPTokenInFiat = await ref.watch(
       DexTokensProviders.estimateLPTokenInFiat(
-        farmLockInfos.lpTokenPair!.token1,
-        farmLockInfos.lpTokenPair!.token2,
+        farmLockInfos.lpTokenPair!.token1.address,
+        farmLockInfos.lpTokenPair!.token2.address,
         farmLockInfos.lpTokensDeposited,
         farmLockInfos.poolAddress,
       ).future,
@@ -82,10 +94,10 @@ Future<DexFarmLock?> _getFarmLockInfos(
 
       final rewardsAllocatedInFiat = rewardsInPeriod * rewardTokenPriceInFiat;
 
-      final lpDepositedPerLevelInFiat = await ref.read(
+      final lpDepositedPerLevelInFiat = await ref.watch(
         DexTokensProviders.estimateLPTokenInFiat(
-          farmLockInfos.lpTokenPair!.token1,
-          farmLockInfos.lpTokenPair!.token2,
+          farmLockInfos.lpTokenPair!.token1.address,
+          farmLockInfos.lpTokenPair!.token2.address,
           stats.lpTokensDeposited,
           dexFarmLockInput.poolAddress,
         ).future,

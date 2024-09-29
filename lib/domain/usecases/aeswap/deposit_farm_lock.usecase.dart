@@ -1,65 +1,80 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
-import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
+import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
+import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/modules/aeswap/application/contracts/archethic_contract.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_notification.dart';
-import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
 import 'package:aewallet/modules/aeswap/util/notification_service/task_notification_service.dart'
     as ns;
 import 'package:aewallet/modules/aeswap/util/string_util.dart';
-import 'package:aewallet/ui/views/aeswap_liquidity_add/bloc/provider.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/provider.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
-import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
-class AddLiquidityCase with aedappfm.TransactionMixin {
+class DepositFarmLockCase with aedappfm.TransactionMixin {
+  DepositFarmLockCase({
+    required this.apiService,
+    required this.notificationService,
+    required this.verifiedTokensRepository,
+    required this.transactionRepository,
+    required this.keychainSecuredInfos,
+    required this.selectedAccount,
+  });
+
+  final archethic.ApiService apiService;
+  final ns.TaskNotificationService<DexNotification, aedappfm.Failure>
+      notificationService;
+  final aedappfm.VerifiedTokensRepositoryInterface verifiedTokensRepository;
+  final TransactionRemoteRepositoryInterface transactionRepository;
+  final KeychainSecuredInfos keychainSecuredInfos;
+  final Account selectedAccount;
+
   Future<void> run(
-    TransactionRemoteRepositoryInterface transactionRepository,
-    WidgetRef ref,
-    BuildContext context,
-    ns.TaskNotificationService<DexNotification, aedappfm.Failure>
-        notificationService,
-    String poolGenesisAddress,
-    DexToken token1,
-    double token1Amount,
-    DexToken token2,
-    double token2Amount,
-    double slippage,
-    DexToken lpToken,
+    AppLocalizations localizations,
+    FarmLockDepositFormNotifier farmLockDepositNotifier,
+    String farmGenesisAddress,
+    String lpTokenAddress,
+    double amount,
+    String farmAddress,
+    bool isUCO,
+    FarmLockDepositDurationType durationType,
+    String level,
   ) async {
     final operationId = const Uuid().v4();
-    final archethicContract = ArchethicContract();
-    final liquidityAddNotifier =
-        ref.read(LiquidityAddFormProvider.liquidityAddForm.notifier);
+    final archethicContract = ArchethicContract(
+      apiService: apiService,
+      verifiedTokensRepository: verifiedTokensRepository,
+    );
 
-    archethic.Transaction? transactionAddLiquidity;
-    liquidityAddNotifier.setFinalAmount(null);
+    archethic.Transaction? transactionDeposit;
+    farmLockDepositNotifier.setFinalAmount(null);
 
     try {
-      final transactionAddLiquiditylMap =
-          await archethicContract.getAddLiquidityTx(
-        token1,
-        token1Amount,
-        token2,
-        token2Amount,
-        poolGenesisAddress,
-        slippage,
+      final transactionDepositMap =
+          await archethicContract.getFarmLockDepositTx(
+        farmGenesisAddress,
+        lpTokenAddress,
+        amount,
+        durationType,
+        level,
       );
 
-      transactionAddLiquiditylMap.map(
+      transactionDepositMap.map(
         success: (success) {
-          transactionAddLiquidity = success;
+          transactionDeposit = success;
+          farmLockDepositNotifier.setTransactionFarmLockDeposit(
+            transactionDeposit!,
+          );
         },
         failure: (failure) {
-          liquidityAddNotifier
+          farmLockDepositNotifier
             ..setFailure(failure)
             ..setProcessInProgress(false);
           throw failure;
@@ -70,27 +85,16 @@ class AddLiquidityCase with aedappfm.TransactionMixin {
     }
 
     try {
-      final keychainSecuredInfos = ref
-          .read(sessionNotifierProvider)
-          .loggedIn!
-          .wallet
-          .keychainSecuredInfos;
-
-      final selectedAccount = await ref
-          .read(
-            AccountProviders.accounts.future,
-          )
-          .selectedAccount;
-
       final transationSignedRaw =
           await transactionRepository.buildTransactionRaw(
         keychainSecuredInfos,
-        transactionAddLiquidity!,
-        selectedAccount!.lastAddress!,
+        transactionDeposit!,
+        selectedAccount.lastAddress!,
         selectedAccount.name,
       );
 
-      liquidityAddNotifier.setTransactionAddLiquidity(transationSignedRaw);
+      farmLockDepositNotifier
+          .setTransactionFarmLockDeposit(transationSignedRaw);
 
       await transactionRepository.sendSignedRaw(
         transactionSignedRaw: transationSignedRaw,
@@ -98,41 +102,44 @@ class AddLiquidityCase with aedappfm.TransactionMixin {
           if (archethic.TransactionConfirmation.isEnoughConfirmations(
             confirmation.nbConfirmations,
             confirmation.maxConfirmations,
-            TransactionValidationRatios.addLiquidity,
+            TransactionValidationRatios.depositFarmLock,
           )) {
             sender.close();
 
-            liquidityAddNotifier
+            farmLockDepositNotifier
               ..setResumeProcess(false)
               ..setProcessInProgress(false)
-              ..setLiquidityAddOk(true);
+              ..setFarmLockDepositOk(true);
 
             notificationService.start(
               operationId,
-              DexNotification.addLiquidity(
+              DexNotification.depositFarmLock(
                 txAddress: transationSignedRaw.address!.address,
+                farmAddress: farmAddress,
+                isUCO: isUCO,
               ),
             );
 
-            final amount = await aedappfm.PeriodicFuture.periodic<double>(
-              () => getAmountFromTxInput(
+            await aedappfm.PeriodicFuture.periodic<bool>(
+              () => isSCCallExecuted(
+                apiService,
+                farmAddress,
                 transationSignedRaw.address!.address!,
-                lpToken.address,
-                aedappfm.sl.get<archethic.ApiService>(),
               ),
               sleepDuration: const Duration(seconds: 3),
-              until: (amount) => amount > 0,
+              until: (depositOk) => depositOk == true,
               timeout: const Duration(minutes: 1),
             );
 
-            liquidityAddNotifier.setFinalAmount(amount);
+            farmLockDepositNotifier.setFinalAmount(amount);
 
             notificationService.succeed(
               operationId,
-              DexNotification.addLiquidity(
+              DexNotification.depositFarmLock(
                 txAddress: transationSignedRaw.address!.address,
-                lpToken: lpToken,
                 amount: amount,
+                farmAddress: farmAddress,
+                isUCO: isUCO,
               ),
             );
           }
@@ -146,10 +153,10 @@ class AddLiquidityCase with aedappfm.TransactionMixin {
       );
     } catch (e) {
       if (e is aedappfm.Failure) {
-        liquidityAddNotifier.setFailure(e);
+        farmLockDepositNotifier.setFailure(e);
         throw aedappfm.Failure.fromError(e);
       }
-      liquidityAddNotifier.setFailure(
+      farmLockDepositNotifier.setFailure(
         aedappfm.Failure.other(
           cause: e.toString().replaceAll('Exception: ', '').capitalize(),
         ),
@@ -164,32 +171,33 @@ class AddLiquidityCase with aedappfm.TransactionMixin {
   }
 
   Future<double> estimateFees(
-    String poolGenesisAddress,
-    DexToken token1,
-    double token1Amount,
-    DexToken token2,
-    double token2Amount,
-    double slippage,
+    String farmGenesisAddress,
+    String lpTokenAddress,
+    double amount,
+    FarmLockDepositDurationType durationType,
+    String level,
   ) async {
-    final archethicContract = ArchethicContract();
-    archethic.Transaction? transactionAddLiquidity;
+    final archethicContract = ArchethicContract(
+      apiService: apiService,
+      verifiedTokensRepository: verifiedTokensRepository,
+    );
+    archethic.Transaction? transactionDeposit;
 
     try {
-      final transactionAddLiquiditylMap =
-          await archethicContract.getAddLiquidityTx(
-        token1,
-        token1Amount,
-        token2,
-        token2Amount,
-        poolGenesisAddress,
-        slippage,
+      final transactionDepositMap =
+          await archethicContract.getFarmLockDepositTx(
+        farmGenesisAddress,
+        lpTokenAddress,
+        amount,
+        durationType,
+        level,
       );
 
-      transactionAddLiquiditylMap.map(
+      transactionDepositMap.map(
         success: (success) {
-          transactionAddLiquidity = success;
+          transactionDeposit = success;
           // Add fake signature and address to allow estimation by node
-          transactionAddLiquidity = transactionAddLiquidity!.copyWith(
+          transactionDeposit = transactionDeposit!.copyWith(
             address: const archethic.Address(
               address:
                   '00000000000000000000000000000000000000000000000000000000000000000000',
@@ -207,25 +215,25 @@ class AddLiquidityCase with aedappfm.TransactionMixin {
     }
 
     final fees = await calculateFees(
-      transactionAddLiquidity!,
+      transactionDeposit!,
       aedappfm.sl.get<archethic.ApiService>(),
     );
     return fees;
   }
 
   String getAEStepLabel(
-    BuildContext context,
+    AppLocalizations localizations,
     int step,
   ) {
     switch (step) {
       case 1:
-        return AppLocalizations.of(context)!.addLiquidityProcessStep1;
+        return localizations.depositFarmLockProcessStep1;
       case 2:
-        return AppLocalizations.of(context)!.addLiquidityProcessStep2;
+        return localizations.depositFarmLockProcessStep2;
       case 3:
-        return AppLocalizations.of(context)!.addLiquidityProcessStep3;
+        return localizations.depositFarmLockProcessStep3;
       default:
-        return AppLocalizations.of(context)!.addLiquidityProcessStep0;
+        return localizations.depositFarmLockProcessStep0;
     }
   }
 }

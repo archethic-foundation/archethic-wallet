@@ -6,23 +6,22 @@ part of 'balance.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$balanceRepositoryHash() => r'694ad0789c371d8ff21073c2834711009024d9ae';
+String _$userBalanceHash() => r'08dd8b51316c4598d60b49a1c39851d35ac6dfd1';
 
-/// See also [_balanceRepository].
-@ProviderFor(_balanceRepository)
-final _balanceRepositoryProvider =
-    AutoDisposeProvider<BalanceRepository>.internal(
-  _balanceRepository,
-  name: r'_balanceRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$balanceRepositoryHash,
+/// See also [userBalance].
+@ProviderFor(userBalance)
+final userBalanceProvider =
+    AutoDisposeFutureProvider<archethic.Balance>.internal(
+  userBalance,
+  name: r'userBalanceProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$userBalanceHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _BalanceRepositoryRef = AutoDisposeProviderRef<BalanceRepository>;
-String _$getBalanceHash() => r'733a2d3ec1d2cce3b2eac5c5797bf752bed178cb';
+typedef UserBalanceRef = AutoDisposeFutureProviderRef<archethic.Balance>;
+String _$getBalanceHash() => r'434260970828b87135c5630cca11ea79edadc8aa';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -56,14 +55,10 @@ class GetBalanceFamily extends Family<AsyncValue<double>> {
 
   /// See also [getBalance].
   GetBalanceProvider call(
-    String address,
     String tokenAddress,
-    ApiService apiService,
   ) {
     return GetBalanceProvider(
-      address,
       tokenAddress,
-      apiService,
     );
   }
 
@@ -72,9 +67,7 @@ class GetBalanceFamily extends Family<AsyncValue<double>> {
     covariant GetBalanceProvider provider,
   ) {
     return call(
-      provider.address,
       provider.tokenAddress,
-      provider.apiService,
     );
   }
 
@@ -97,15 +90,11 @@ class GetBalanceFamily extends Family<AsyncValue<double>> {
 class GetBalanceProvider extends AutoDisposeFutureProvider<double> {
   /// See also [getBalance].
   GetBalanceProvider(
-    String address,
     String tokenAddress,
-    ApiService apiService,
   ) : this._internal(
           (ref) => getBalance(
             ref as GetBalanceRef,
-            address,
             tokenAddress,
-            apiService,
           ),
           from: getBalanceProvider,
           name: r'getBalanceProvider',
@@ -116,9 +105,7 @@ class GetBalanceProvider extends AutoDisposeFutureProvider<double> {
           dependencies: GetBalanceFamily._dependencies,
           allTransitiveDependencies:
               GetBalanceFamily._allTransitiveDependencies,
-          address: address,
           tokenAddress: tokenAddress,
-          apiService: apiService,
         );
 
   GetBalanceProvider._internal(
@@ -128,14 +115,10 @@ class GetBalanceProvider extends AutoDisposeFutureProvider<double> {
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.address,
     required this.tokenAddress,
-    required this.apiService,
   }) : super.internal();
 
-  final String address;
   final String tokenAddress;
-  final ApiService apiService;
 
   @override
   Override overrideWith(
@@ -150,9 +133,7 @@ class GetBalanceProvider extends AutoDisposeFutureProvider<double> {
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        address: address,
         tokenAddress: tokenAddress,
-        apiService: apiService,
       ),
     );
   }
@@ -164,32 +145,21 @@ class GetBalanceProvider extends AutoDisposeFutureProvider<double> {
 
   @override
   bool operator ==(Object other) {
-    return other is GetBalanceProvider &&
-        other.address == address &&
-        other.tokenAddress == tokenAddress &&
-        other.apiService == apiService;
+    return other is GetBalanceProvider && other.tokenAddress == tokenAddress;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, address.hashCode);
     hash = _SystemHash.combine(hash, tokenAddress.hashCode);
-    hash = _SystemHash.combine(hash, apiService.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
 mixin GetBalanceRef on AutoDisposeFutureProviderRef<double> {
-  /// The parameter `address` of this provider.
-  String get address;
-
   /// The parameter `tokenAddress` of this provider.
   String get tokenAddress;
-
-  /// The parameter `apiService` of this provider.
-  ApiService get apiService;
 }
 
 class _GetBalanceProviderElement
@@ -197,11 +167,7 @@ class _GetBalanceProviderElement
   _GetBalanceProviderElement(super.provider);
 
   @override
-  String get address => (origin as GetBalanceProvider).address;
-  @override
   String get tokenAddress => (origin as GetBalanceProvider).tokenAddress;
-  @override
-  ApiService get apiService => (origin as GetBalanceProvider).apiService;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

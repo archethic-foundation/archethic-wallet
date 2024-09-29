@@ -76,8 +76,7 @@ class FarmLockLevelUpResultSheetState
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final farmLockLevelUp =
-        ref.watch(FarmLockLevelUpFormProvider.farmLockLevelUpForm);
+    final farmLockLevelUp = ref.watch(farmLockLevelUpFormNotifierProvider);
     if (farmLockLevelUp.amount == 0) {
       return const SizedBox.shrink();
     }

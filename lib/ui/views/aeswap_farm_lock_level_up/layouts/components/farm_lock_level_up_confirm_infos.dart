@@ -19,8 +19,7 @@ class FarmLockLevelUpConfirmInfos extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
-    final farmLockLevelUp =
-        ref.watch(FarmLockLevelUpFormProvider.farmLockLevelUpForm);
+    final farmLockLevelUp = ref.watch(farmLockLevelUpFormNotifierProvider);
     if (farmLockLevelUp.pool == null) {
       return const SizedBox.shrink();
     }

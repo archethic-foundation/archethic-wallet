@@ -1,36 +1,25 @@
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/domain/repositories/transaction_remote.dart';
-import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
+import 'package:aewallet/application/aeswap/usecases.dart';
+import 'package:aewallet/modules/aeswap/application/api_service.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
-import 'package:aewallet/modules/aeswap/application/notification.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
-import 'package:aewallet/modules/aeswap/domain/usecases/add_liquidity.usecase.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/pool_factory.repository.dart';
 import 'package:aewallet/modules/aeswap/util/browser_util_desktop.dart'
     if (dart.library.js) 'package:aewallet/modules/aeswap/util/browser_util_web.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/bloc/state.dart';
-import 'package:aewallet/ui/views/aeswap_liquidity_add/layouts/components/liquidity_add_result_sheet.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:decimal/decimal.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final _liquidityAddFormProvider = NotifierProvider.autoDispose<
-    LiquidityAddFormNotifier, LiquidityAddFormState>(
-  () {
-    return LiquidityAddFormNotifier();
-  },
-);
+part 'provider.g.dart';
 
-class LiquidityAddFormNotifier
-    extends AutoDisposeNotifier<LiquidityAddFormState> {
+@riverpod
+class LiquidityAddFormNotifier extends _$LiquidityAddFormNotifier {
   LiquidityAddFormNotifier();
 
   @override
@@ -42,53 +31,39 @@ class LiquidityAddFormNotifier
     state = state.copyWith(pool: pool);
 
     final poolPopulated =
-        await ref.read(DexPoolProviders.loadPoolCard(pool).future);
+        await ref.read(DexPoolProviders.getPool(pool.poolAddress).future);
     state = state.copyWith(pool: poolPopulated);
   }
 
   Future<void> initBalances() async {
-    final apiService = aedappfm.sl.get<archethic.ApiService>();
-
-    final accountSelected = ref.watch(
-      AccountProviders.accounts.select(
-        (accounts) => accounts.valueOrNull?.selectedAccount,
-      ),
-    );
-
-    final token1Balance = await ref.watch(
+    final token1Balance = await ref.read(
       getBalanceProvider(
-        accountSelected!.genesisAddress,
-        state.token1!.isUCO ? 'UCO' : state.token1!.address!,
-        apiService,
+        state.token1!.isUCO ? 'UCO' : state.token1!.address,
       ).future,
     );
     state = state.copyWith(token1Balance: token1Balance);
 
-    final token2Balance = await ref.watch(
+    final token2Balance = await ref.read(
       getBalanceProvider(
-        accountSelected.genesisAddress,
-        state.token2!.isUCO ? 'UCO' : state.token2!.address!,
-        apiService,
+        state.token2!.isUCO ? 'UCO' : state.token2!.address,
       ).future,
     );
     state = state.copyWith(token2Balance: token2Balance);
 
     final lpTokenBalance = await ref.read(
       getBalanceProvider(
-        accountSelected.genesisAddress,
-        state.pool!.lpToken.address!,
-        apiService,
+        state.pool!.lpToken.address,
       ).future,
     );
     state = state.copyWith(lpTokenBalance: lpTokenBalance);
   }
 
   Future<void> initRatio() async {
-    final apiService = aedappfm.sl.get<archethic.ApiService>();
+    final apiService = ref.read(apiServiceProvider);
     final equivalentAmounResult =
         await PoolFactoryRepositoryImpl(state.pool!.poolAddress, apiService)
             .getEquivalentAmount(
-      state.token1!.isUCO ? 'UCO' : state.token1!.address!,
+      state.token1!.isUCO ? 'UCO' : state.token1!.address,
       1,
     );
     var ratio = 0.0;
@@ -153,7 +128,7 @@ class LiquidityAddFormNotifier
     if (state.token1Amount <= 0 || state.token2Amount <= 0) {
       return;
     }
-    final apiService = aedappfm.sl.get<archethic.ApiService>();
+    final apiService = ref.read(apiServiceProvider);
     final expectedTokenLPResult = await PoolFactoryRepositoryImpl(
       state.pool!.poolAddress,
       apiService,
@@ -182,7 +157,7 @@ class LiquidityAddFormNotifier
     double amount, {
     Duration delay = const Duration(milliseconds: 800),
   }) async {
-    final apiService = aedappfm.sl.get<archethic.ApiService>();
+    final apiService = ref.read(apiServiceProvider);
     late final double equivalentAmount;
     try {
       equivalentAmount = await Future<double>(
@@ -237,7 +212,7 @@ class LiquidityAddFormNotifier
         calculationInProgress: true,
       );
       final equivalentAmount = await _calculateEquivalentAmount(
-        state.token1!.isUCO ? 'UCO' : state.token1!.address!,
+        state.token1!.isUCO ? 'UCO' : state.token1!.address,
         state.token1Amount,
       );
       state = state.copyWith(
@@ -250,7 +225,7 @@ class LiquidityAddFormNotifier
         calculationInProgress: true,
       );
       final equivalentAmount = await _calculateEquivalentAmount(
-        state.token2!.isUCO ? 'UCO' : state.token2!.address!,
+        state.token2!.isUCO ? 'UCO' : state.token2!.address,
         state.token2Amount,
       );
       state = state.copyWith(
@@ -268,7 +243,7 @@ class LiquidityAddFormNotifier
   }
 
   Future<void> setToken1Amount(
-    BuildContext context,
+    AppLocalizations appLocalizations,
     double amount,
   ) async {
     state = state.copyWith(
@@ -284,8 +259,7 @@ class LiquidityAddFormNotifier
 
       setFailure(
         aedappfm.Failure.other(
-          cause: AppLocalizations.of(context)!
-              .liquidityAddControlToken1AmountExceedBalance,
+          cause: appLocalizations.liquidityAddControlToken1AmountExceedBalance,
         ),
       );
       return;
@@ -294,19 +268,16 @@ class LiquidityAddFormNotifier
     await calculateTokenInfos();
 
     if (state.token2Amount > state.token2Balance) {
-      if (context.mounted) {
-        setFailure(
-          aedappfm.Failure.other(
-            cause: AppLocalizations.of(context)!
-                .liquidityAddControlToken2AmountExceedBalance,
-          ),
-        );
-      }
+      setFailure(
+        aedappfm.Failure.other(
+          cause: appLocalizations.liquidityAddControlToken2AmountExceedBalance,
+        ),
+      );
     }
   }
 
   Future<void> setToken2Amount(
-    BuildContext context,
+    AppLocalizations appLocalizations,
     double amount,
   ) async {
     state = state.copyWith(
@@ -322,8 +293,7 @@ class LiquidityAddFormNotifier
 
       setFailure(
         aedappfm.Failure.other(
-          cause: AppLocalizations.of(context)!
-              .liquidityAddControlToken2AmountExceedBalance,
+          cause: appLocalizations.liquidityAddControlToken2AmountExceedBalance,
         ),
       );
       return;
@@ -332,14 +302,11 @@ class LiquidityAddFormNotifier
     await calculateTokenInfos();
 
     if (state.token1Amount > state.token1Balance) {
-      if (context.mounted) {
-        setFailure(
-          aedappfm.Failure.other(
-            cause: AppLocalizations.of(context)!
-                .liquidityAddControlToken1AmountExceedBalance,
-          ),
-        );
-      }
+      setFailure(
+        aedappfm.Failure.other(
+          cause: appLocalizations.liquidityAddControlToken1AmountExceedBalance,
+        ),
+      );
     }
   }
 
@@ -418,8 +385,8 @@ class LiquidityAddFormNotifier
     );
   }
 
-  Future<void> validateForm(BuildContext context) async {
-    if (await control(context) == false) {
+  Future<void> validateForm(AppLocalizations appLocalizations) async {
+    if (await control(appLocalizations) == false) {
       return;
     }
 
@@ -428,7 +395,6 @@ class LiquidityAddFormNotifier
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
-
     DateTime? consentDateTime;
     consentDateTime = await aedappfm.ConsentRepositoryImpl()
         .getConsentTime(accountSelected!.genesisAddress);
@@ -447,7 +413,7 @@ class LiquidityAddFormNotifier
     );
   }
 
-  Future<bool> control(BuildContext context) async {
+  Future<bool> control(AppLocalizations appLocalizations) async {
     setFailure(null);
     setMessageMaxHalfUCO(false);
 
@@ -462,8 +428,7 @@ class LiquidityAddFormNotifier
     if (state.token1Amount <= 0) {
       setFailure(
         aedappfm.Failure.other(
-          cause: AppLocalizations.of(context)!
-              .liquidityAddControlToken1AmountEmpty,
+          cause: appLocalizations.liquidityAddControlToken1AmountEmpty,
         ),
       );
       return false;
@@ -472,8 +437,7 @@ class LiquidityAddFormNotifier
     if (state.token2Amount <= 0) {
       setFailure(
         aedappfm.Failure.other(
-          cause: AppLocalizations.of(context)!
-              .liquidityAddControlToken2AmountEmpty,
+          cause: appLocalizations.liquidityAddControlToken2AmountEmpty,
         ),
       );
       return false;
@@ -482,8 +446,7 @@ class LiquidityAddFormNotifier
     if (state.token1Amount > state.token1Balance) {
       setFailure(
         aedappfm.Failure.other(
-          cause: AppLocalizations.of(context)!
-              .liquidityAddControlToken1AmountExceedBalance,
+          cause: appLocalizations.liquidityAddControlToken1AmountExceedBalance,
         ),
       );
       return false;
@@ -492,8 +455,7 @@ class LiquidityAddFormNotifier
     if (state.token2Amount > state.token2Balance) {
       setFailure(
         aedappfm.Failure.other(
-          cause: AppLocalizations.of(context)!
-              .liquidityAddControlToken2AmountExceedBalance,
+          cause: appLocalizations.liquidityAddControlToken2AmountExceedBalance,
         ),
       );
       return false;
@@ -502,14 +464,14 @@ class LiquidityAddFormNotifier
     var feesEstimatedUCO = 0.0;
     if (state.token1 != null && state.token1!.isUCO) {
       state = state.copyWith(calculationInProgress: true);
-      feesEstimatedUCO = await AddLiquidityCase().estimateFees(
-        state.pool!.poolAddress,
-        state.token1!,
-        state.token1Amount,
-        state.token2!,
-        state.token2Amount,
-        state.slippageTolerance,
-      );
+      feesEstimatedUCO = await ref.read(addLiquidityCaseProvider).estimateFees(
+            state.pool!.poolAddress,
+            state.token1!,
+            state.token1Amount,
+            state.token2!,
+            state.token2Amount,
+            state.slippageTolerance,
+          );
       state = state.copyWith(calculationInProgress: false);
     }
     state = state.copyWith(
@@ -523,7 +485,7 @@ class LiquidityAddFormNotifier
           setFailure(const aedappfm.Failure.insufficientFunds());
           return false;
         } else {
-          if (context.mounted) await setToken1Amount(context, adjustedAmount);
+          await setToken1Amount(appLocalizations, adjustedAmount);
           state = state.copyWith(messageMaxHalfUCO: true);
         }
       }
@@ -531,14 +493,14 @@ class LiquidityAddFormNotifier
 
     if (state.token2 != null && state.token2!.isUCO) {
       state = state.copyWith(calculationInProgress: true);
-      feesEstimatedUCO = await AddLiquidityCase().estimateFees(
-        state.pool!.poolAddress,
-        state.token1!,
-        state.token1Amount,
-        state.token2!,
-        state.token2Amount,
-        state.slippageTolerance,
-      );
+      feesEstimatedUCO = await ref.read(addLiquidityCaseProvider).estimateFees(
+            state.pool!.poolAddress,
+            state.token1!,
+            state.token1Amount,
+            state.token2!,
+            state.token2Amount,
+            state.slippageTolerance,
+          );
       state = state.copyWith(calculationInProgress: false);
     }
     state = state.copyWith(feesEstimatedUCO: feesEstimatedUCO);
@@ -550,7 +512,7 @@ class LiquidityAddFormNotifier
           setFailure(const aedappfm.Failure.insufficientFunds());
           return false;
         } else {
-          if (context.mounted) await setToken2Amount(context, adjustedAmount);
+          await setToken2Amount(appLocalizations, adjustedAmount);
           state = state.copyWith(messageMaxHalfUCO: true);
         }
       }
@@ -559,49 +521,36 @@ class LiquidityAddFormNotifier
     return true;
   }
 
-  Future<void> add(BuildContext context, WidgetRef ref) async {
+  Future<void> add(AppLocalizations appLocalizations) async {
     setLiquidityAddOk(false);
     setProcessInProgress(true);
 
-    if (await control(context) == false) {
+    if (await control(appLocalizations) == false) {
       setProcessInProgress(false);
       return;
     }
+    final accountSelected = ref.watch(
+      AccountProviders.accounts.select(
+        (accounts) => accounts.valueOrNull?.selectedAccount,
+      ),
+    );
+    await aedappfm.ConsentRepositoryImpl()
+        .addAddress(accountSelected!.genesisAddress);
 
-    final transactionRepository =
-        ref.read(LiquidityAddFormProvider._repository);
+    await ref.read(addLiquidityCaseProvider).run(
+          appLocalizations,
+          this,
+          state.pool!.poolAddress,
+          state.token1!,
+          state.token1Amount,
+          state.token2!,
+          state.token2Amount,
+          state.slippageTolerance,
+          state.pool!.lpToken,
+        );
 
-    if (context.mounted) {
-      await AddLiquidityCase().run(
-        transactionRepository,
-        ref,
-        context,
-        ref.watch(NotificationProviders.notificationService),
-        state.pool!.poolAddress,
-        state.token1!,
-        state.token1Amount,
-        state.token2!,
-        state.token2Amount,
-        state.slippageTolerance,
-        state.pool!.lpToken,
-      );
-    }
-
-    await context.push(LiquidityAddResultSheet.routerPage);
+    ref
+      ..invalidate(userBalanceProvider)
+      ..invalidate(DexPoolProviders.getPool(state.pool!.poolAddress));
   }
-}
-
-abstract class LiquidityAddFormProvider {
-  static final _repository = Provider<TransactionRemoteRepositoryInterface>(
-    (ref) {
-      final networkSettings = ref.watch(
-        SettingsProviders.settings.select((settings) => settings.network),
-      );
-      return ArchethicTransactionRepository(
-        phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
-        websocketEndpoint: networkSettings.getWebsocketUri(),
-      );
-    },
-  );
-  static final liquidityAddForm = _liquidityAddFormProvider;
 }

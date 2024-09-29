@@ -1,24 +1,44 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
+import 'package:aewallet/modules/aeswap/application/api_service.dart';
+import 'package:aewallet/modules/aeswap/application/verified_tokens.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_farm.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/get_farm_list_response.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/model_parser.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/hive/dex_token.hive.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/hive/tokens_list.hive.dart';
-
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:collection/collection.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'router_factory.g.dart';
+
+@Riverpod(keepAlive: true)
+RouterFactory routerFactory(RouterFactoryRef ref, String address) {
+  return RouterFactory(
+    address,
+    ref.watch(apiServiceProvider),
+    ref.watch(verifiedTokensRepositoryProvider),
+  );
+}
 
 /// Router is a helper factory for user to easily retrieve existing pools and create new pools.
 class RouterFactory with ModelParser {
-  RouterFactory(this.factoryAddress, this.apiService);
+  RouterFactory(
+    this.factoryAddress,
+    this.apiService,
+    this.verifiedTokensRepository,
+  );
 
   final String factoryAddress;
   final ApiService apiService;
+  final aedappfm.VerifiedTokensRepositoryInterface verifiedTokensRepository;
 
   /// Returns the info of the pool for the 2 tokens address.
   /// [token1Address] is the address of the first token
@@ -58,11 +78,15 @@ class RouterFactory with ModelParser {
 
   /// Return the infos of all the pools.
   Future<aedappfm.Result<List<DexPool>, aedappfm.Failure>> getPoolList(
+    aedappfm.Environment environment,
     List<String> tokenVerifiedList,
   ) async {
     return aedappfm.Result.guard(
       () async {
-        final results = await apiService.callSCFunction(
+        final localTokensDatasource =
+            await HiveTokensListDatasource.getInstance();
+
+        final getPooListResponseRaw = await apiService.callSCFunction(
           jsonRPCRequest: SCCallFunctionRequest(
             method: 'contract_fun',
             params: SCCallFunctionParams(
@@ -73,64 +97,56 @@ class RouterFactory with ModelParser {
           ),
           resultMap: true,
         ) as List<dynamic>;
+        final getPoolListResponse =
+            getPooListResponseRaw.map<GetPoolListResponse>((getPoolResponse) {
+          return GetPoolListResponse.fromJson(getPoolResponse);
+        });
 
-        final poolList = <DexPool>[];
+        final tokensMissingFromCache = getPoolListResponse
+            .expand(
+              (poolListResponse) => [
+                ...poolListResponse.tokens,
+                poolListResponse.lpTokenAddress,
+              ],
+            )
+            .where((tokenAddress) => tokenAddress.isNotUCO)
+            .whereNot(
+              (tokenAddress) => localTokensDatasource.containsToken(
+                environment,
+                tokenAddress,
+              ),
+            )
+            .toSet()
+            .toList();
 
-        final tokensListDatasource =
-            await HiveTokensListDatasource.getInstance();
-        final tokensAddresses = <String>[];
-        for (final result in results) {
-          final getPoolListResponse = GetPoolListResponse.fromJson(result);
-          final tokens = getPoolListResponse.tokens.split('/');
-          if (tokens[0] != 'UCO') {
-            if (tokensListDatasource.getToken(
-                  aedappfm.EndpointUtil.getEnvironnement(),
-                  tokens[0],
-                ) ==
-                null) {
-              tokensAddresses.add(tokens[0]);
-            }
-          }
-          if (tokens[1] != 'UCO') {
-            if (tokensListDatasource.getToken(
-                  aedappfm.EndpointUtil.getEnvironnement(),
-                  tokens[1],
-                ) ==
-                null) {
-              tokensAddresses.add(tokens[1]);
-            }
-          }
-          if (tokensListDatasource.getToken(
-                aedappfm.EndpointUtil.getEnvironnement(),
-                getPoolListResponse.lpTokenAddress,
-              ) ==
-              null) {
-            tokensAddresses.add(getPoolListResponse.lpTokenAddress);
-          }
-        }
-        final tokenResultMap = await aedappfm.sl.get<ApiService>().getToken(
-              tokensAddresses.toSet().toList(),
-              request: 'name, symbol',
-            );
-
-        for (final entry in tokenResultMap.entries) {
-          final address = entry.key.toUpperCase();
-          var tokenResult = tokenSDKToModel(entry.value, 0);
-          tokenResult = tokenResult.copyWith(address: address);
-          await tokensListDatasource.setToken(
-            aedappfm.EndpointUtil.getEnvironnement(),
+        final tokensFromBlockchain = await apiService.getToken(
+          tokensMissingFromCache,
+          request: 'name, symbol',
+        );
+        for (final tokenFromBlockchain in tokensFromBlockchain.entries) {
+          final address = tokenFromBlockchain.key.toUpperCase();
+          final tokenResult = tokenSDKToModel(
+            tokenFromBlockchain.value,
+            0,
+          ).copyWith(
+            address: address,
+          );
+          await localTokensDatasource.setToken(
+            environment,
             tokenResult.toHive(),
           );
         }
 
-        for (final result in results) {
-          final getPoolListResponse = GetPoolListResponse.fromJson(result);
-          poolList.add(
-            await poolListItemToModel(getPoolListResponse, tokenVerifiedList),
-          );
-        }
-
-        return poolList;
+        return [
+          for (final pool in getPoolListResponse)
+            await poolListItemToModel(
+              localTokensDatasource,
+              verifiedTokensRepository,
+              environment,
+              pool,
+              tokenVerifiedList,
+            ),
+        ];
       },
     );
   }
@@ -164,12 +180,13 @@ class RouterFactory with ModelParser {
           }
           final dexpool = poolList.singleWhere(
             (pool) =>
-                pool.lpToken.address!.toUpperCase() ==
+                pool.lpToken.address.toUpperCase() ==
                 getFarmListResponse.lpTokenAddress.toUpperCase(),
           );
 
           farmList.add(
             await farmListToModel(
+              apiService,
               getFarmListResponse,
               dexpool,
             ),

@@ -4,15 +4,13 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
-import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/transaction_repository.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction.dart';
 import 'package:aewallet/domain/models/transfer.dart';
-import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/infrastructure/datasources/contacts.hive.dart';
-import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/service/app_service.dart';
@@ -42,7 +40,6 @@ final _transferFormProvider =
   dependencies: [
     TransferFormProvider.initialTransferForm,
     AccountProviders.accounts,
-    TransferFormProvider._repository,
     PrimaryCurrencyProviders.selectedPrimaryCurrency,
     PrimaryCurrencyProviders.convertedValue,
     sessionNotifierProvider,
@@ -426,7 +423,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     }
 
     final calculateFeesResult = await CalculateFeesUsecase(
-      repository: ref.read(TransferFormProvider._repository),
+      repository: ref.read(archethicTransactionRepositoryProvider),
     ).run(transaction);
 
     return calculateFeesResult.valueOrNull;
@@ -735,7 +732,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
   }
 
   Future<void> send(BuildContext context) async {
-    final transferRepository = ref.read(TransferFormProvider._repository);
+    final transferRepository = ref.read(archethicTransactionRepositoryProvider);
 
     final localizations = AppLocalizations.of(context)!;
 
@@ -921,17 +918,6 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 }
 
 abstract class TransferFormProvider {
-  static final _repository = Provider<TransactionRemoteRepositoryInterface>(
-    (ref) {
-      final networkSettings = ref.watch(
-        SettingsProviders.settings.select((settings) => settings.network),
-      );
-      return ArchethicTransactionRepository(
-        phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
-        websocketEndpoint: networkSettings.getWebsocketUri(),
-      );
-    },
-  );
   static final initialTransferForm = _initialTransferFormProvider;
   static final transferForm = _transferFormProvider;
 }

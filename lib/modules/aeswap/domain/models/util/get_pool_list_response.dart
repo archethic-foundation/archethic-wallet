@@ -9,9 +9,13 @@ class GetPoolListResponse with _$GetPoolListResponse {
     required String address,
     // ignore: invalid_annotation_target
     @JsonKey(name: 'lp_token_address') required String lpTokenAddress,
-    required String tokens,
+    // ignore: invalid_annotation_target
+    @JsonKey(name: 'tokens') required String concatenatedTokensAddresses,
   }) = _GetPoolListResponse;
+  const GetPoolListResponse._();
 
   factory GetPoolListResponse.fromJson(Map<String, dynamic> json) =>
       _$GetPoolListResponseFromJson(json);
+
+  List<String> get tokens => concatenatedTokensAddresses.split('/').toList();
 }

@@ -42,8 +42,7 @@ class FarmLockClaimFormSheet extends ConsumerWidget
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final farmLockClaim =
-        ref.watch(FarmLockClaimFormProvider.farmLockClaimForm);
+    final farmLockClaim = ref.watch(farmLockClaimFormNotifierProvider);
     return Row(
       children: <Widget>[
         AppButtonTinyConnectivity(
@@ -53,9 +52,9 @@ class FarmLockClaimFormSheet extends ConsumerWidget
           onPressed: () async {
             await ref
                 .read(
-                  FarmLockClaimFormProvider.farmLockClaimForm.notifier,
+                  farmLockClaimFormNotifierProvider.notifier,
                 )
-                .validateForm(context);
+                .validateForm();
           },
           disabled: !farmLockClaim.isControlsOk,
         ),
@@ -80,8 +79,7 @@ class FarmLockClaimFormSheet extends ConsumerWidget
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final farmLockClaim =
-        ref.watch(FarmLockClaimFormProvider.farmLockClaimForm);
+    final farmLockClaim = ref.watch(farmLockClaimFormNotifierProvider);
     if (farmLockClaim.rewardAmount == null) {
       return const Padding(
         padding: EdgeInsets.only(top: 60, bottom: 60),
@@ -118,7 +116,8 @@ class FarmLockClaimFormSheet extends ConsumerWidget
                                 text: farmLockClaim.rewardAmount!
                                     .formatNumber(precision: 8),
                                 style: AppTextStyles.bodyLargeSecondaryColor(
-                                    context),
+                                  context,
+                                ),
                               ),
                               TextSpan(
                                 text: ' ${farmLockClaim.rewardToken!.symbol}',

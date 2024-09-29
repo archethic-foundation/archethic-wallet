@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 class HiveFavoritePoolsDatasource {
   HiveFavoritePoolsDatasource._(this._box);
 
-  static const String _favoritePoolsBox = 'aeSwapFavoritePoolsBox';
+  static const String _favoritePoolsBox = 'favoritePoolsBox';
   final Box<String> _box;
 
   bool get shouldBeReloaded => _box.isEmpty;

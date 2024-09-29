@@ -1,4 +1,5 @@
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_token_icon.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
@@ -50,7 +51,7 @@ class LiquidityAddFormSheet extends ConsumerWidget
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final liquidityAdd = ref.watch(LiquidityAddFormProvider.liquidityAddForm);
+    final liquidityAdd = ref.watch(liquidityAddFormNotifierProvider);
     return Row(
       children: <Widget>[
         AppButtonTinyConnectivity(
@@ -60,9 +61,9 @@ class LiquidityAddFormSheet extends ConsumerWidget
           onPressed: () async {
             await ref
                 .read(
-                  LiquidityAddFormProvider.liquidityAddForm.notifier,
+                  liquidityAddFormNotifierProvider.notifier,
                 )
-                .validateForm(context);
+                .validateForm(AppLocalizations.of(context)!);
           },
           disabled: !liquidityAdd.isControlsOk,
         ),
@@ -87,7 +88,7 @@ class LiquidityAddFormSheet extends ConsumerWidget
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final liquidityAdd = ref.watch(LiquidityAddFormProvider.liquidityAddForm);
+    final liquidityAdd = ref.watch(liquidityAddFormNotifierProvider);
 
     if (liquidityAdd.token1 == null || liquidityAdd.token2 == null) {
       return const SizedBox.shrink();
@@ -141,10 +142,7 @@ class LiquidityAddFormSheet extends ConsumerWidget
                     if (liquidityAdd.token1 != null)
                       PoolInfoCard(
                         poolGenesisAddress: liquidityAdd.pool!.poolAddress,
-                        tokenAddressRatioPrimary:
-                            liquidityAdd.token1!.address == null
-                                ? 'UCO'
-                                : liquidityAdd.token1!.address!,
+                        tokenAddressRatioPrimary: liquidityAdd.token1!.address,
                       ),
                     const SizedBox(
                       height: 10,
@@ -173,10 +171,9 @@ class LiquidityAddFormSheet extends ConsumerWidget
                           Row(
                             children: [
                               DexTokenIcon(
-                                tokenAddress:
-                                    liquidityAdd.token1!.address == null
-                                        ? 'UCO'
-                                        : liquidityAdd.token1!.address!,
+                                tokenAddress: liquidityAdd.token1!.address.isUCO
+                                    ? 'UCO'
+                                    : liquidityAdd.token1!.address,
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 10),
@@ -221,10 +218,9 @@ class LiquidityAddFormSheet extends ConsumerWidget
                           Row(
                             children: [
                               DexTokenIcon(
-                                tokenAddress:
-                                    liquidityAdd.token2!.address == null
-                                        ? 'UCO'
-                                        : liquidityAdd.token2!.address!,
+                                tokenAddress: liquidityAdd.token2!.address.isUCO
+                                    ? 'UCO'
+                                    : liquidityAdd.token2!.address,
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 10),

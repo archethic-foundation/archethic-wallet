@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_token_icon.dart';
 import 'package:aewallet/ui/views/aeswap_swap/bloc/provider.dart';
@@ -17,7 +18,7 @@ class SwapTokenSwappedSelection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final swap = ref.watch(SwapFormProvider.swapForm);
+    final swap = ref.watch(swapFormNotifierProvider);
 
     return Container(
       width: aedappfm.Responsive.isMobile(context) ? 100 : 150,
@@ -30,10 +31,11 @@ class SwapTokenSwappedSelection extends ConsumerWidget {
         onTap: () async {
           final token = await TokenSelectionPopup.getDialog(
             context,
+            ref.read(environmentProvider),
           );
           if (token == null) return;
           await ref
-              .read(SwapFormProvider.swapForm.notifier)
+              .read(swapFormNotifierProvider.notifier)
               .setTokenSwapped(token);
         },
         child: Row(
@@ -56,9 +58,7 @@ class SwapTokenSwappedSelection extends ConsumerWidget {
                       child: Row(
                         children: [
                           DexTokenIcon(
-                            tokenAddress: swap.tokenSwapped!.address == null
-                                ? 'UCO'
-                                : swap.tokenSwapped!.address!,
+                            tokenAddress: swap.tokenSwapped!.address,
                           ),
                           const SizedBox(
                             width: 10,

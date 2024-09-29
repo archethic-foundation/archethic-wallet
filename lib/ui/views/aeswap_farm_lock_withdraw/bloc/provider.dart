@@ -1,30 +1,20 @@
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/domain/repositories/transaction_remote.dart';
-import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
-import 'package:aewallet/modules/aeswap/application/notification.dart';
+import 'package:aewallet/application/aeswap/usecases.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pair.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
-import 'package:aewallet/modules/aeswap/domain/usecases/withdraw_farm_lock.usecase.dart';
 import 'package:aewallet/modules/aeswap/util/browser_util_desktop.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/bloc/state.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:decimal/decimal.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final _farmLockWithdrawFormProvider = NotifierProvider.autoDispose<
-    FarmLockWithdrawFormNotifier, FarmLockWithdrawFormState>(
-  () {
-    return FarmLockWithdrawFormNotifier();
-  },
-);
+part 'provider.g.dart';
 
-class FarmLockWithdrawFormNotifier
-    extends AutoDisposeNotifier<FarmLockWithdrawFormState> {
+@riverpod
+class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
   FarmLockWithdrawFormNotifier();
 
   @override
@@ -43,7 +33,7 @@ class FarmLockWithdrawFormNotifier
   }
 
   void setAmount(
-    BuildContext context,
+    AppLocalizations localizations,
     double amount,
   ) {
     state = state.copyWith(
@@ -54,8 +44,8 @@ class FarmLockWithdrawFormNotifier
     if (state.amount > state.depositedAmount!) {
       setFailure(
         aedappfm.Failure.other(
-          cause: AppLocalizations.of(context)!
-              .farmLockWithdrawControlLPTokenAmountExceedDeposited,
+          cause:
+              localizations.farmLockWithdrawControlLPTokenAmountExceedDeposited,
         ),
       );
     }
@@ -69,8 +59,8 @@ class FarmLockWithdrawFormNotifier
     state = state.copyWith(rewardAmount: rewardAmount);
   }
 
-  void setAmountMax(BuildContext context) {
-    setAmount(context, state.depositedAmount!);
+  void setAmountMax(AppLocalizations appLocalizations) {
+    setAmount(appLocalizations, state.depositedAmount!);
   }
 
   void setPoolAddress(String poolAddress) {
@@ -81,11 +71,9 @@ class FarmLockWithdrawFormNotifier
     state = state.copyWith(endDate: endDate);
   }
 
-  void setAmountHalf(
-    BuildContext context,
-  ) {
+  void setAmountHalf(AppLocalizations appLocalizations) {
     setAmount(
-      context,
+      appLocalizations,
       (Decimal.parse(state.depositedAmount.toString()) / Decimal.fromInt(2))
           .toDouble(),
     );
@@ -155,8 +143,8 @@ class FarmLockWithdrawFormNotifier
     );
   }
 
-  Future<void> validateForm(BuildContext context) async {
-    if (control(context) == false) {
+  Future<void> validateForm(AppLocalizations appLocalizations) async {
+    if (control(appLocalizations) == false) {
       return;
     }
 
@@ -175,7 +163,7 @@ class FarmLockWithdrawFormNotifier
     );
   }
 
-  bool control(BuildContext context) {
+  bool control(AppLocalizations appLocalizations) {
     setFailure(null);
 
     if (BrowserUtil().isEdgeBrowser() ||
@@ -189,8 +177,7 @@ class FarmLockWithdrawFormNotifier
     if (state.amount <= 0) {
       setFailure(
         aedappfm.Failure.other(
-          cause:
-              AppLocalizations.of(context)!.farmLockWithdrawControlAmountEmpty,
+          cause: appLocalizations.farmLockWithdrawControlAmountEmpty,
         ),
       );
       return false;
@@ -199,7 +186,7 @@ class FarmLockWithdrawFormNotifier
     if (state.amount > state.depositedAmount!) {
       setFailure(
         aedappfm.Failure.other(
-          cause: AppLocalizations.of(context)!
+          cause: appLocalizations
               .farmLockWithdrawControlLPTokenAmountExceedDeposited,
         ),
       );
@@ -209,11 +196,11 @@ class FarmLockWithdrawFormNotifier
     return true;
   }
 
-  Future<void> withdraw(BuildContext context, WidgetRef ref) async {
+  Future<void> withdraw(AppLocalizations localizations) async {
     setFarmLockWithdrawOk(false);
     setProcessInProgress(true);
 
-    if (control(context) == false) {
+    if (control(localizations) == false) {
       setProcessInProgress(false);
       return;
     }
@@ -225,37 +212,15 @@ class FarmLockWithdrawFormNotifier
     );
     await aedappfm.ConsentRepositoryImpl()
         .addAddress(accountSelected!.genesisAddress);
-
-    final transactionRepository =
-        ref.read(FarmLockWithdrawFormProvider._repository);
-
-    if (context.mounted) {
-      await WithdrawFarmLockCase().run(
-        transactionRepository,
-        ref,
-        context,
-        ref.watch(NotificationProviders.notificationService),
-        state.farmAddress!,
-        state.lpToken!.address!,
-        state.amount,
-        state.depositId,
-        state.rewardToken!,
-      );
-    }
+    await ref.read(withdrawFarmLockCaseProvider).run(
+          localizations,
+          this,
+          state.isFarmClose,
+          state.farmAddress!,
+          state.lpToken!.address,
+          state.amount,
+          state.depositId,
+          state.rewardToken!,
+        );
   }
-}
-
-abstract class FarmLockWithdrawFormProvider {
-  static final _repository = Provider<TransactionRemoteRepositoryInterface>(
-    (ref) {
-      final networkSettings = ref.watch(
-        SettingsProviders.settings.select((settings) => settings.network),
-      );
-      return ArchethicTransactionRepository(
-        phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
-        websocketEndpoint: networkSettings.getWebsocketUri(),
-      );
-    },
-  );
-  static final farmLockWithdrawForm = _farmLockWithdrawFormProvider;
 }

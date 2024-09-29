@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
+// Difference with aeSwap - Add 100 to id
 class HiveTypeIds {
   static const cacheManager = 101;
   static const dexPair = 102;

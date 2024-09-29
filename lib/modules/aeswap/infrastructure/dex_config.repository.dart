@@ -8,18 +8,19 @@ import 'package:flutter/services.dart';
 
 class DexConfigRepositoryImpl implements DexConfigRepository {
   @override
-  Future<DexConfig> getDexConfig() async {
+  Future<DexConfig> getDexConfig(
+    aedappfm.Environment? environment,
+  ) async {
     final jsonContent = await rootBundle
         .loadString('lib/modules/aeswap/domain/repositories/config.json');
 
     final jsonData = jsonDecode(jsonContent);
-    final environment = aedappfm.EndpointUtil.getEnvironnement();
-    if (environment.isEmpty) {
+    if (environment == null) {
       return const DexConfig();
     }
     final configList = List<Map<String, dynamic>>.from(jsonData['environment']);
     final configMap = configList.firstWhere(
-      (element) => element['name'] == environment,
+      (element) => element['name'] == environment.name,
     );
 
     return DexConfig.fromJson(configMap);

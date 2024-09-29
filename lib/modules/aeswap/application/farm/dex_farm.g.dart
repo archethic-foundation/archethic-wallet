@@ -6,7 +6,7 @@ part of 'dex_farm.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$dexFarmRepositoryHash() => r'f295867c279e664b85311f7001dd026c3a2be22f';
+String _$dexFarmRepositoryHash() => r'cb6f41fd164a062827be80fc63f8bff475a11bbc';
 
 /// See also [_dexFarmRepository].
 @ProviderFor(_dexFarmRepository)
@@ -22,7 +22,7 @@ final _dexFarmRepositoryProvider =
 );
 
 typedef _DexFarmRepositoryRef = AutoDisposeProviderRef<DexFarmRepositoryImpl>;
-String _$getFarmInfosHash() => r'9ac3233aeb794d08745087aa92454c3a624fc86e';
+String _$getFarmInfosHash() => r'c24002822156a8b8717cf2aad3fbc48d759f45cb';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -205,7 +205,7 @@ class _GetFarmInfosProviderElement
   DexFarm? get dexFarmInput => (origin as _GetFarmInfosProvider).dexFarmInput;
 }
 
-String _$getFarmListHash() => r'af1840e7d71223a1171be0edd0793034cc4baea0';
+String _$getFarmListHash() => r'5f5834a83f222901188948e8057e814313fdc30b';
 
 /// See also [_getFarmList].
 @ProviderFor(_getFarmList)

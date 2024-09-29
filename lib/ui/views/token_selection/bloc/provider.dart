@@ -1,4 +1,4 @@
-import 'package:aewallet/modules/aeswap/application/dex_token.dart';
+import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/ui/views/token_selection/bloc/state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

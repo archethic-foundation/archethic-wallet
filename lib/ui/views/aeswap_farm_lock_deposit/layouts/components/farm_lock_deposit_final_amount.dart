@@ -13,12 +13,11 @@ class FarmLockDepositFinalAmount extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final farmLockDeposit =
-        ref.watch(FarmLockDepositFormProvider.farmLockDepositForm);
+    final farmLockDeposit = ref.watch(farmLockDepositFormNotifierProvider);
 
     final finalAmount = farmLockDeposit.finalAmount;
     final timeout = ref.watch(
-      FarmLockDepositFormProvider.farmLockDepositForm
+      farmLockDepositFormNotifierProvider
           .select((value) => value.failure != null),
     );
 

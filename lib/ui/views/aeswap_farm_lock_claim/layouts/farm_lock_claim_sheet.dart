@@ -35,9 +35,9 @@ class _FarmLockClaimSheetState extends ConsumerState<FarmLockClaimSheet> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () async {
+    Future(() async {
       try {
-        ref.read(FarmLockClaimFormProvider.farmLockClaimForm.notifier)
+        ref.read(farmLockClaimFormNotifierProvider.notifier)
           ..setFarmAddress(widget.farmAddress)
           ..setRewardToken(widget.rewardToken)
           ..setLpTokenAddress(widget.lpTokenAddress)
@@ -62,8 +62,7 @@ class _FarmLockClaimSheetState extends ConsumerState<FarmLockClaimSheet> {
 
     if (selectedAccount == null) return const SizedBox();
 
-    final farmLockClaimForm =
-        ref.watch(FarmLockClaimFormProvider.farmLockClaimForm);
+    final farmLockClaimForm = ref.watch(farmLockClaimFormNotifierProvider);
 
     return farmLockClaimForm.processStep == ProcessStep.form
         ? const FarmLockClaimFormSheet()

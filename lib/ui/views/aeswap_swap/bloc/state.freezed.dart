@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SwapFormState {
+  ProcessStep get processStep => throw _privateConstructorUsedError;
   bool get resumeProcess => throw _privateConstructorUsedError;
   bool get calculateAmountToSwap => throw _privateConstructorUsedError;
   bool get calculateAmountSwapped => throw _privateConstructorUsedError;
@@ -59,7 +60,8 @@ abstract class $SwapFormStateCopyWith<$Res> {
       _$SwapFormStateCopyWithImpl<$Res, SwapFormState>;
   @useResult
   $Res call(
-      {bool resumeProcess,
+      {ProcessStep processStep,
+      bool resumeProcess,
       bool calculateAmountToSwap,
       bool calculateAmountSwapped,
       int currentStep,
@@ -109,6 +111,7 @@ class _$SwapFormStateCopyWithImpl<$Res, $Val extends SwapFormState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? processStep = null,
     Object? resumeProcess = null,
     Object? calculateAmountToSwap = null,
     Object? calculateAmountSwapped = null,
@@ -140,6 +143,10 @@ class _$SwapFormStateCopyWithImpl<$Res, $Val extends SwapFormState>
     Object? consentDateTime = freezed,
   }) {
     return _then(_value.copyWith(
+      processStep: null == processStep
+          ? _value.processStep
+          : processStep // ignore: cast_nullable_to_non_nullable
+              as ProcessStep,
       resumeProcess: null == resumeProcess
           ? _value.resumeProcess
           : resumeProcess // ignore: cast_nullable_to_non_nullable
@@ -329,7 +336,8 @@ abstract class _$$SwapFormStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {bool resumeProcess,
+      {ProcessStep processStep,
+      bool resumeProcess,
       bool calculateAmountToSwap,
       bool calculateAmountSwapped,
       int currentStep,
@@ -382,6 +390,7 @@ class __$$SwapFormStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? processStep = null,
     Object? resumeProcess = null,
     Object? calculateAmountToSwap = null,
     Object? calculateAmountSwapped = null,
@@ -413,6 +422,10 @@ class __$$SwapFormStateImplCopyWithImpl<$Res>
     Object? consentDateTime = freezed,
   }) {
     return _then(_$SwapFormStateImpl(
+      processStep: null == processStep
+          ? _value.processStep
+          : processStep // ignore: cast_nullable_to_non_nullable
+              as ProcessStep,
       resumeProcess: null == resumeProcess
           ? _value.resumeProcess
           : resumeProcess // ignore: cast_nullable_to_non_nullable
@@ -537,7 +550,8 @@ class __$$SwapFormStateImplCopyWithImpl<$Res>
 
 class _$SwapFormStateImpl extends _SwapFormState {
   const _$SwapFormStateImpl(
-      {this.resumeProcess = false,
+      {this.processStep = ProcessStep.form,
+      this.resumeProcess = false,
       this.calculateAmountToSwap = false,
       this.calculateAmountSwapped = false,
       this.currentStep = 0,
@@ -568,6 +582,9 @@ class _$SwapFormStateImpl extends _SwapFormState {
       this.consentDateTime})
       : super._();
 
+  @override
+  @JsonKey()
+  final ProcessStep processStep;
   @override
   @JsonKey()
   final bool resumeProcess;
@@ -651,7 +668,7 @@ class _$SwapFormStateImpl extends _SwapFormState {
 
   @override
   String toString() {
-    return 'SwapFormState(resumeProcess: $resumeProcess, calculateAmountToSwap: $calculateAmountToSwap, calculateAmountSwapped: $calculateAmountSwapped, currentStep: $currentStep, tokenFormSelected: $tokenFormSelected, poolGenesisAddress: $poolGenesisAddress, tokenToSwap: $tokenToSwap, isProcessInProgress: $isProcessInProgress, swapOk: $swapOk, messageMaxHalfUCO: $messageMaxHalfUCO, tokenToSwapBalance: $tokenToSwapBalance, tokenToSwapAmount: $tokenToSwapAmount, tokenSwapped: $tokenSwapped, tokenSwappedBalance: $tokenSwappedBalance, tokenSwappedAmount: $tokenSwappedAmount, ratio: $ratio, swapFees: $swapFees, swapProtocolFees: $swapProtocolFees, slippageTolerance: $slippageTolerance, minToReceive: $minToReceive, priceImpact: $priceImpact, estimatedReceived: $estimatedReceived, feesEstimatedUCO: $feesEstimatedUCO, finalAmount: $finalAmount, failure: $failure, recoveryTransactionSwap: $recoveryTransactionSwap, calculationInProgress: $calculationInProgress, pool: $pool, consentDateTime: $consentDateTime)';
+    return 'SwapFormState(processStep: $processStep, resumeProcess: $resumeProcess, calculateAmountToSwap: $calculateAmountToSwap, calculateAmountSwapped: $calculateAmountSwapped, currentStep: $currentStep, tokenFormSelected: $tokenFormSelected, poolGenesisAddress: $poolGenesisAddress, tokenToSwap: $tokenToSwap, isProcessInProgress: $isProcessInProgress, swapOk: $swapOk, messageMaxHalfUCO: $messageMaxHalfUCO, tokenToSwapBalance: $tokenToSwapBalance, tokenToSwapAmount: $tokenToSwapAmount, tokenSwapped: $tokenSwapped, tokenSwappedBalance: $tokenSwappedBalance, tokenSwappedAmount: $tokenSwappedAmount, ratio: $ratio, swapFees: $swapFees, swapProtocolFees: $swapProtocolFees, slippageTolerance: $slippageTolerance, minToReceive: $minToReceive, priceImpact: $priceImpact, estimatedReceived: $estimatedReceived, feesEstimatedUCO: $feesEstimatedUCO, finalAmount: $finalAmount, failure: $failure, recoveryTransactionSwap: $recoveryTransactionSwap, calculationInProgress: $calculationInProgress, pool: $pool, consentDateTime: $consentDateTime)';
   }
 
   @override
@@ -659,6 +676,8 @@ class _$SwapFormStateImpl extends _SwapFormState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SwapFormStateImpl &&
+            (identical(other.processStep, processStep) ||
+                other.processStep == processStep) &&
             (identical(other.resumeProcess, resumeProcess) ||
                 other.resumeProcess == resumeProcess) &&
             (identical(other.calculateAmountToSwap, calculateAmountToSwap) ||
@@ -719,6 +738,7 @@ class _$SwapFormStateImpl extends _SwapFormState {
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
+        processStep,
         resumeProcess,
         calculateAmountToSwap,
         calculateAmountSwapped,
@@ -759,7 +779,8 @@ class _$SwapFormStateImpl extends _SwapFormState {
 
 abstract class _SwapFormState extends SwapFormState {
   const factory _SwapFormState(
-      {final bool resumeProcess,
+      {final ProcessStep processStep,
+      final bool resumeProcess,
       final bool calculateAmountToSwap,
       final bool calculateAmountSwapped,
       final int currentStep,
@@ -790,6 +811,8 @@ abstract class _SwapFormState extends SwapFormState {
       final DateTime? consentDateTime}) = _$SwapFormStateImpl;
   const _SwapFormState._() : super._();
 
+  @override
+  ProcessStep get processStep;
   @override
   bool get resumeProcess;
   @override

@@ -21,8 +21,7 @@ class FarmLockLevelUpDurationButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final farmLockLevelUp =
-        ref.watch(FarmLockLevelUpFormProvider.farmLockLevelUpForm);
+    final farmLockLevelUp = ref.watch(farmLockLevelUpFormNotifierProvider);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 10, left: 5, right: 5),
@@ -43,7 +42,7 @@ class FarmLockLevelUpDurationButton extends ConsumerWidget {
         child: InkWell(
           onTap: () {
             ref.read(
-              FarmLockLevelUpFormProvider.farmLockLevelUpForm.notifier,
+              farmLockLevelUpFormNotifierProvider.notifier,
             )
               ..setFarmLockLevelUpDuration(farmLockLevelUpDuration)
               ..setLevel(level)

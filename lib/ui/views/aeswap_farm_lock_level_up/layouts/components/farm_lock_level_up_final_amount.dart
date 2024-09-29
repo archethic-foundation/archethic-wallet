@@ -13,12 +13,11 @@ class FarmLockLevelUpFinalAmount extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final farmLockLevelUp =
-        ref.watch(FarmLockLevelUpFormProvider.farmLockLevelUpForm);
+    final farmLockLevelUp = ref.watch(farmLockLevelUpFormNotifierProvider);
 
     final finalAmount = farmLockLevelUp.finalAmount;
     final timeout = ref.watch(
-      FarmLockLevelUpFormProvider.farmLockLevelUpForm
+      farmLockLevelUpFormNotifierProvider
           .select((value) => value.failure != null),
     );
 

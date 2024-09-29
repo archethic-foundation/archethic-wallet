@@ -51,7 +51,10 @@ class SingleTokenState extends State<SingleToken>
       ),
       child: InkWell(
         onTap: () {
-          Navigator.pop(context, widget.token);
+          Navigator.pop(
+            context,
+            widget.token,
+          );
         },
         child: Row(
           children: [
@@ -59,8 +62,7 @@ class SingleTokenState extends State<SingleToken>
               width: 10,
             ),
             DexTokenIcon(
-              tokenAddress:
-                  widget.token.address == null ? 'UCO' : widget.token.address!,
+              tokenAddress: widget.token.address,
             ),
             const SizedBox(
               width: 10,
@@ -72,13 +74,11 @@ class SingleTokenState extends State<SingleToken>
                 ..._getContent(
                   context,
                 ),
-                if (widget.token.address != null)
-                  FormatAddressLinkCopy(
-                    address: widget.token.address!,
-                    reduceAddress: true,
-                    fontSize:
-                        Theme.of(context).textTheme.titleMedium!.fontSize!,
-                  ),
+                FormatAddressLinkCopy(
+                  address: widget.token.address,
+                  reduceAddress: true,
+                  fontSize: Theme.of(context).textTheme.titleMedium!.fontSize!,
+                ),
               ],
             ),
           ],
@@ -97,7 +97,12 @@ class SingleTokenState extends State<SingleToken>
           if (widget.token.isLpToken == false)
             Text(
               widget.token.symbol,
-              style: Theme.of(context).textTheme.titleMedium,
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    fontSize: aedappfm.Responsive.fontSizeFromTextStyle(
+                      context,
+                      Theme.of(context).textTheme.titleMedium!,
+                    ),
+                  ),
             ),
           if (widget.token.isLpToken == false)
             const SizedBox(
@@ -107,7 +112,7 @@ class SingleTokenState extends State<SingleToken>
             Padding(
               padding: const EdgeInsets.only(top: 2),
               child: VerifiedTokenIcon(
-                address: widget.token.isUCO ? 'UCO' : widget.token.address!,
+                address: widget.token.isUCO ? 'UCO' : widget.token.address,
                 iconSize: 12,
               ),
             ),
@@ -117,7 +122,7 @@ class SingleTokenState extends State<SingleToken>
                   '${AppLocalizations.of(context)!.tokenSelectionSingleTokenLPTooltip} ${widget.token.lpTokenPair!.token1.isUCO ? 'UCO' : widget.token.lpTokenPair!.token1.symbol}/${widget.token.lpTokenPair!.token2.isUCO ? 'UCO' : widget.token.lpTokenPair!.token2.symbol}',
               child: Text(
                 '${AppLocalizations.of(context)!.tokenSelectionSingleTokenLPTooltip} ${widget.token.lpTokenPair!.token1.isUCO ? 'UCO' : widget.token.lpTokenPair!.token1.symbol.reduceSymbol()}/${widget.token.lpTokenPair!.token2.isUCO ? 'UCO' : widget.token.lpTokenPair!.token2.symbol.reduceSymbol()}',
-                style: AppTextStyles.bodyMedium(context),
+                style: AppTextStyles.bodyLarge(context),
               ),
             ),
         ],

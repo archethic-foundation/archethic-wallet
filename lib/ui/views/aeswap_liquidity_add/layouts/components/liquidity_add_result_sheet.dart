@@ -76,7 +76,7 @@ class LiquidityAddResultSheetState
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final liquidityAdd = ref.watch(LiquidityAddFormProvider.liquidityAddForm);
+    final liquidityAdd = ref.watch(liquidityAddFormNotifierProvider);
     if (liquidityAdd.token1 == null || liquidityAdd.token2 == null) {
       return const SizedBox.shrink();
     }

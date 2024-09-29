@@ -1,12 +1,8 @@
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/domain/repositories/transaction_remote.dart';
-import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
+import 'package:aewallet/application/aeswap/usecases.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
-import 'package:aewallet/modules/aeswap/application/notification.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
-import 'package:aewallet/modules/aeswap/domain/usecases/level_up_farm_lock.usecase.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
 import 'package:aewallet/modules/aeswap/util/browser_util_desktop.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/bloc/state.dart';
@@ -14,37 +10,22 @@ import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutte
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:decimal/decimal.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final _farmLockLevelUpFormProvider = NotifierProvider.autoDispose<
-    FarmLockLevelUpFormNotifier, FarmLockLevelUpFormState>(
-  () {
-    return FarmLockLevelUpFormNotifier();
-  },
-);
+part 'provider.g.dart';
 
-class FarmLockLevelUpFormNotifier
-    extends AutoDisposeNotifier<FarmLockLevelUpFormState> {
+@riverpod
+class FarmLockLevelUpFormNotifier extends _$FarmLockLevelUpFormNotifier {
   FarmLockLevelUpFormNotifier();
 
   @override
   FarmLockLevelUpFormState build() => const FarmLockLevelUpFormState();
 
   Future<void> initBalances() async {
-    final accountSelected = ref.watch(
-      AccountProviders.accounts.select(
-        (accounts) => accounts.valueOrNull?.selectedAccount,
-      ),
-    );
-    final apiService = aedappfm.sl.get<archethic.ApiService>();
-
     final lpTokenBalance = await ref.read(
       getBalanceProvider(
-        accountSelected!.genesisAddress,
-        state.pool!.lpToken.isUCO ? 'UCO' : state.pool!.lpToken.address!,
-        apiService,
+        state.pool!.lpToken.isUCO ? 'UCO' : state.pool!.lpToken.address,
       ).future,
     );
     state = state.copyWith(lpTokenBalance: lpTokenBalance);
@@ -55,7 +36,8 @@ class FarmLockLevelUpFormNotifier
   }
 
   void setTransactionFarmLockLevelUp(
-      archethic.Transaction transactionFarmLockLevelUp) {
+    archethic.Transaction transactionFarmLockLevelUp,
+  ) {
     state =
         state.copyWith(transactionFarmLockLevelUp: transactionFarmLockLevelUp);
   }
@@ -175,8 +157,8 @@ class FarmLockLevelUpFormNotifier
     state = state.copyWith(filterAvailableLevels: availableLevelsFiltered);
   }
 
-  Future<void> validateForm(BuildContext context) async {
-    if (control(context) == false) {
+  Future<void> validateForm(AppLocalizations appLocalizations) async {
+    if (control(appLocalizations) == false) {
       return;
     }
 
@@ -195,7 +177,7 @@ class FarmLockLevelUpFormNotifier
     );
   }
 
-  bool control(BuildContext context) {
+  bool control(AppLocalizations appLocalizations) {
     setFailure(null);
 
     if (BrowserUtil().isEdgeBrowser() ||
@@ -209,7 +191,7 @@ class FarmLockLevelUpFormNotifier
     if (state.amount <= 0) {
       setFailure(
         aedappfm.Failure.other(
-          cause: AppLocalizations.of(context)!.farmDepositControlAmountEmpty,
+          cause: appLocalizations.farmDepositControlAmountEmpty,
         ),
       );
       return false;
@@ -218,11 +200,11 @@ class FarmLockLevelUpFormNotifier
     return true;
   }
 
-  Future<void> lock(BuildContext context, WidgetRef ref) async {
+  Future<void> lock(AppLocalizations appLocalizations) async {
     setFarmLockLevelUpOk(false);
     setProcessInProgress(true);
 
-    if (control(context) == false) {
+    if (control(appLocalizations) == false) {
       setProcessInProgress(false);
       return;
     }
@@ -232,42 +214,20 @@ class FarmLockLevelUpFormNotifier
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
-
-    final transactionRepository =
-        ref.read(FarmLockLevelUpFormProvider._repository);
-
     await aedappfm.ConsentRepositoryImpl()
         .addAddress(accountSelected!.genesisAddress);
-    if (context.mounted) {
-      await LevelUpFarmLockCase().run(
-        transactionRepository,
-        ref,
-        context,
-        ref.watch(NotificationProviders.notificationService),
-        state.farmLock!.farmAddress,
-        state.farmLock!.lpToken!.address!,
-        state.amount,
-        state.depositId!,
-        state.farmLock!.farmAddress,
-        false,
-        state.farmLockLevelUpDuration,
-        state.level,
-      );
-    }
-  }
-}
 
-abstract class FarmLockLevelUpFormProvider {
-  static final _repository = Provider<TransactionRemoteRepositoryInterface>(
-    (ref) {
-      final networkSettings = ref.watch(
-        SettingsProviders.settings.select((settings) => settings.network),
-      );
-      return ArchethicTransactionRepository(
-        phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
-        websocketEndpoint: networkSettings.getWebsocketUri(),
-      );
-    },
-  );
-  static final farmLockLevelUpForm = _farmLockLevelUpFormProvider;
+    await ref.read(levelUpFarmLockCaseProvider).run(
+          appLocalizations,
+          this,
+          state.farmLock!.farmAddress,
+          state.farmLock!.lpToken!.address,
+          state.amount,
+          state.depositId!,
+          state.farmLock!.farmAddress,
+          false,
+          state.farmLockLevelUpDuration,
+          state.level,
+        );
+  }
 }

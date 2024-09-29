@@ -76,8 +76,7 @@ class LiquidityRemoveResultSheetState
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final liquidityRemove =
-        ref.watch(LiquidityRemoveFormProvider.liquidityRemoveForm);
+    final liquidityRemove = ref.watch(liquidityRemoveFormNotifierProvider);
     if (liquidityRemove.lpToken == null) {
       return const SizedBox.shrink();
     }

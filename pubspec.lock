@@ -61,9 +61,11 @@ packages:
   archethic_dapp_framework_flutter:
     dependency: "direct main"
     description:
-      path: "../archethic-dapp-framework-flutter"
-      relative: true
-    source: path
+      path: "."
+      ref: introduce_environment_type
+      resolved-ref: "892036b7d5c575408e49c97c229cb41adbaff922"
+      url: "https://github.com/archethic-foundation/archethic-dapp-framework-flutter.git"
+    source: git
     version: "1.3.1"
   archethic_lib_dart:
     dependency: transitive

@@ -35,7 +35,7 @@ class DEXSheetState extends ConsumerState<DEXSheet> {
   String? aeSwapUrl;
   @override
   void initState() {
-    Future.delayed(Duration.zero, () async {
+    Future(() async {
       final networkSettings = ref.watch(
         SettingsProviders.settings.select((settings) => settings.network),
       );

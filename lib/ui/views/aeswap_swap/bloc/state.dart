@@ -11,6 +11,7 @@ part 'state.freezed.dart';
 @freezed
 class SwapFormState with _$SwapFormState {
   const factory SwapFormState({
+    @Default(ProcessStep.form) ProcessStep processStep,
     @Default(false) bool resumeProcess,
     @Default(false) bool calculateAmountToSwap,
     @Default(false) bool calculateAmountSwapped,

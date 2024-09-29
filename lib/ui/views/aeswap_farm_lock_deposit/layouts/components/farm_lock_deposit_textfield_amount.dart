@@ -33,8 +33,7 @@ class _FarmLockDepositToken1AmountState
   }
 
   void _updateAmountTextController() {
-    final farmLockDeposit =
-        ref.read(FarmLockDepositFormProvider.farmLockDepositForm);
+    final farmLockDeposit = ref.read(farmLockDepositFormNotifierProvider);
     tokenAmountController = TextEditingController();
     tokenAmountController.value = AmountTextInputFormatter(
       precision: 8,
@@ -60,10 +59,9 @@ class _FarmLockDepositToken1AmountState
     BuildContext context,
   ) {
     final farmLockDepositNotifier =
-        ref.watch(FarmLockDepositFormProvider.farmLockDepositForm.notifier);
+        ref.watch(farmLockDepositFormNotifierProvider.notifier);
 
-    final farmLockDeposit =
-        ref.watch(FarmLockDepositFormProvider.farmLockDepositForm);
+    final farmLockDeposit = ref.watch(farmLockDepositFormNotifierProvider);
     final textNum = double.tryParse(tokenAmountController.text);
     if (!(farmLockDeposit.amount != 0.0 ||
         tokenAmountController.text == '' ||
@@ -170,12 +168,13 @@ class _FarmLockDepositToken1AmountState
                 Opacity(
                   opacity: AppTextStyles.kOpacityText,
                   child: SelectableText(
-                    DEXLPTokenFiatValue().display(
-                      ref,
-                      farmLockDeposit.pool!.pair.token1,
-                      farmLockDeposit.pool!.pair.token2,
-                      farmLockDeposit.lpTokenBalance,
-                      farmLockDeposit.pool!.poolAddress,
+                    ref.watch(
+                      dexLPTokenFiatValueProvider(
+                        farmLockDeposit.pool!.pair.token1,
+                        farmLockDeposit.pool!.pair.token2,
+                        farmLockDeposit.lpTokenBalance,
+                        farmLockDeposit.pool!.poolAddress,
+                      ),
                     ),
                     style: AppTextStyles.bodyMedium(context),
                   ),
@@ -196,8 +195,7 @@ class _FarmLockDepositToken1AmountState
                     onTap: () {
                       ref
                           .read(
-                            FarmLockDepositFormProvider
-                                .farmLockDepositForm.notifier,
+                            farmLockDepositFormNotifierProvider.notifier,
                           )
                           .setAmountHalf();
                       _updateAmountTextController();
@@ -212,8 +210,7 @@ class _FarmLockDepositToken1AmountState
                     onTap: () {
                       ref
                           .read(
-                            FarmLockDepositFormProvider
-                                .farmLockDepositForm.notifier,
+                            farmLockDepositFormNotifierProvider.notifier,
                           )
                           .setAmountMax();
                       _updateAmountTextController();

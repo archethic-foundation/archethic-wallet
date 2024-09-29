@@ -4,7 +4,6 @@ import 'dart:developer';
 
 import 'package:aewallet/infrastructure/datasources/account.hive.dart';
 import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
-import 'package:aewallet/infrastructure/datasources/preferences.hive.dart';
 import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/data/account_balance.dart';
@@ -194,7 +193,7 @@ class Account extends HiveObject with KeychainServiceMixin {
     }
   }
 
-  Future<void> updateBalance() async {
+  Future<void> updateBalance(aedappfm.Environment environment) async {
     const _logName = 'updateBalance';
     var totalUSD = 0.0;
     final balanceGetResponseMap =
@@ -203,11 +202,10 @@ class Account extends HiveObject with KeychainServiceMixin {
     if (balanceGetResponseMap[lastAddress] == null) {
       return;
     }
-    final preferences = await PreferencesHiveDatasource.getInstance();
-    final network = preferences.getNetwork().getNetworkLabel();
+
     // TODO(Reddwarf03): il faut passer par les providers dédiés
     final ucidsTokens = await aedappfm.UcidsTokensRepositoryImpl()
-        .getUcidsTokensFromNetwork(network);
+        .getUcidsTokensFromNetwork(environment);
     log('ucidsTokens $ucidsTokens', name: _logName);
 
     final cryptoPrice = await aedappfm.CoinPriceRepositoryImpl().fetchPrices();

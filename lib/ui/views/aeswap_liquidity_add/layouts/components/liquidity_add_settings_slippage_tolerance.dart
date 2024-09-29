@@ -30,7 +30,7 @@ class LiquiditySettingsSlippageToleranceState
   @override
   void initState() {
     super.initState();
-    final liquidityAdd = ref.read(LiquidityAddFormProvider.liquidityAddForm);
+    final liquidityAdd = ref.read(liquidityAddFormNotifierProvider);
     slippageToleranceFocusNode = FocusNode();
     slippageToleranceController =
         TextEditingController(text: liquidityAdd.slippageTolerance.toString());
@@ -46,7 +46,7 @@ class LiquiditySettingsSlippageToleranceState
   @override
   Widget build(BuildContext context) {
     final liquidityAddNotifier =
-        ref.read(LiquidityAddFormProvider.liquidityAddForm.notifier);
+        ref.read(liquidityAddFormNotifierProvider.notifier);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

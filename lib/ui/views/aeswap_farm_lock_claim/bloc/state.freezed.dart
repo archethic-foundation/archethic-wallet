@@ -26,10 +26,11 @@ mixin _$FarmLockClaimFormState {
   Failure? get failure => throw _privateConstructorUsedError;
   double? get finalAmount => throw _privateConstructorUsedError;
   String? get farmAddress => throw _privateConstructorUsedError;
+  String? get poolAddress => throw _privateConstructorUsedError;
   DexToken? get rewardToken => throw _privateConstructorUsedError;
   String? get depositId => throw _privateConstructorUsedError;
-  String? get lpTokenAddress => throw _privateConstructorUsedError;
   double get feesEstimatedUCO => throw _privateConstructorUsedError;
+  String? get lpTokenAddress => throw _privateConstructorUsedError;
   DateTime? get consentDateTime => throw _privateConstructorUsedError;
   double? get rewardAmount => throw _privateConstructorUsedError;
 
@@ -54,10 +55,11 @@ abstract class $FarmLockClaimFormStateCopyWith<$Res> {
       Failure? failure,
       double? finalAmount,
       String? farmAddress,
+      String? poolAddress,
       DexToken? rewardToken,
       String? depositId,
-      String? lpTokenAddress,
       double feesEstimatedUCO,
+      String? lpTokenAddress,
       DateTime? consentDateTime,
       double? rewardAmount});
 
@@ -89,10 +91,11 @@ class _$FarmLockClaimFormStateCopyWithImpl<$Res,
     Object? failure = freezed,
     Object? finalAmount = freezed,
     Object? farmAddress = freezed,
+    Object? poolAddress = freezed,
     Object? rewardToken = freezed,
     Object? depositId = freezed,
-    Object? lpTokenAddress = freezed,
     Object? feesEstimatedUCO = null,
+    Object? lpTokenAddress = freezed,
     Object? consentDateTime = freezed,
     Object? rewardAmount = freezed,
   }) {
@@ -133,6 +136,10 @@ class _$FarmLockClaimFormStateCopyWithImpl<$Res,
           ? _value.farmAddress
           : farmAddress // ignore: cast_nullable_to_non_nullable
               as String?,
+      poolAddress: freezed == poolAddress
+          ? _value.poolAddress
+          : poolAddress // ignore: cast_nullable_to_non_nullable
+              as String?,
       rewardToken: freezed == rewardToken
           ? _value.rewardToken
           : rewardToken // ignore: cast_nullable_to_non_nullable
@@ -141,14 +148,14 @@ class _$FarmLockClaimFormStateCopyWithImpl<$Res,
           ? _value.depositId
           : depositId // ignore: cast_nullable_to_non_nullable
               as String?,
-      lpTokenAddress: freezed == lpTokenAddress
-          ? _value.lpTokenAddress
-          : lpTokenAddress // ignore: cast_nullable_to_non_nullable
-              as String?,
       feesEstimatedUCO: null == feesEstimatedUCO
           ? _value.feesEstimatedUCO
           : feesEstimatedUCO // ignore: cast_nullable_to_non_nullable
               as double,
+      lpTokenAddress: freezed == lpTokenAddress
+          ? _value.lpTokenAddress
+          : lpTokenAddress // ignore: cast_nullable_to_non_nullable
+              as String?,
       consentDateTime: freezed == consentDateTime
           ? _value.consentDateTime
           : consentDateTime // ignore: cast_nullable_to_non_nullable
@@ -217,10 +224,11 @@ abstract class _$$FarmLockClaimFormStateImplCopyWith<$Res>
       Failure? failure,
       double? finalAmount,
       String? farmAddress,
+      String? poolAddress,
       DexToken? rewardToken,
       String? depositId,
-      String? lpTokenAddress,
       double feesEstimatedUCO,
+      String? lpTokenAddress,
       DateTime? consentDateTime,
       double? rewardAmount});
 
@@ -254,10 +262,11 @@ class __$$FarmLockClaimFormStateImplCopyWithImpl<$Res>
     Object? failure = freezed,
     Object? finalAmount = freezed,
     Object? farmAddress = freezed,
+    Object? poolAddress = freezed,
     Object? rewardToken = freezed,
     Object? depositId = freezed,
-    Object? lpTokenAddress = freezed,
     Object? feesEstimatedUCO = null,
+    Object? lpTokenAddress = freezed,
     Object? consentDateTime = freezed,
     Object? rewardAmount = freezed,
   }) {
@@ -298,6 +307,10 @@ class __$$FarmLockClaimFormStateImplCopyWithImpl<$Res>
           ? _value.farmAddress
           : farmAddress // ignore: cast_nullable_to_non_nullable
               as String?,
+      poolAddress: freezed == poolAddress
+          ? _value.poolAddress
+          : poolAddress // ignore: cast_nullable_to_non_nullable
+              as String?,
       rewardToken: freezed == rewardToken
           ? _value.rewardToken
           : rewardToken // ignore: cast_nullable_to_non_nullable
@@ -306,14 +319,14 @@ class __$$FarmLockClaimFormStateImplCopyWithImpl<$Res>
           ? _value.depositId
           : depositId // ignore: cast_nullable_to_non_nullable
               as String?,
-      lpTokenAddress: freezed == lpTokenAddress
-          ? _value.lpTokenAddress
-          : lpTokenAddress // ignore: cast_nullable_to_non_nullable
-              as String?,
       feesEstimatedUCO: null == feesEstimatedUCO
           ? _value.feesEstimatedUCO
           : feesEstimatedUCO // ignore: cast_nullable_to_non_nullable
               as double,
+      lpTokenAddress: freezed == lpTokenAddress
+          ? _value.lpTokenAddress
+          : lpTokenAddress // ignore: cast_nullable_to_non_nullable
+              as String?,
       consentDateTime: freezed == consentDateTime
           ? _value.consentDateTime
           : consentDateTime // ignore: cast_nullable_to_non_nullable
@@ -339,10 +352,11 @@ class _$FarmLockClaimFormStateImpl extends _FarmLockClaimFormState {
       this.failure,
       this.finalAmount,
       this.farmAddress,
+      this.poolAddress,
       this.rewardToken,
       this.depositId,
-      this.lpTokenAddress,
       this.feesEstimatedUCO = 0.0,
+      this.lpTokenAddress,
       this.consentDateTime,
       this.rewardAmount})
       : super._();
@@ -371,14 +385,16 @@ class _$FarmLockClaimFormStateImpl extends _FarmLockClaimFormState {
   @override
   final String? farmAddress;
   @override
+  final String? poolAddress;
+  @override
   final DexToken? rewardToken;
   @override
   final String? depositId;
   @override
-  final String? lpTokenAddress;
-  @override
   @JsonKey()
   final double feesEstimatedUCO;
+  @override
+  final String? lpTokenAddress;
   @override
   final DateTime? consentDateTime;
   @override
@@ -386,7 +402,7 @@ class _$FarmLockClaimFormStateImpl extends _FarmLockClaimFormState {
 
   @override
   String toString() {
-    return 'FarmLockClaimFormState(processStep: $processStep, resumeProcess: $resumeProcess, currentStep: $currentStep, isProcessInProgress: $isProcessInProgress, farmLockClaimOk: $farmLockClaimOk, transactionClaimFarmLock: $transactionClaimFarmLock, failure: $failure, finalAmount: $finalAmount, farmAddress: $farmAddress, rewardToken: $rewardToken, depositId: $depositId, lpTokenAddress: $lpTokenAddress, feesEstimatedUCO: $feesEstimatedUCO, consentDateTime: $consentDateTime, rewardAmount: $rewardAmount)';
+    return 'FarmLockClaimFormState(processStep: $processStep, resumeProcess: $resumeProcess, currentStep: $currentStep, isProcessInProgress: $isProcessInProgress, farmLockClaimOk: $farmLockClaimOk, transactionClaimFarmLock: $transactionClaimFarmLock, failure: $failure, finalAmount: $finalAmount, farmAddress: $farmAddress, poolAddress: $poolAddress, rewardToken: $rewardToken, depositId: $depositId, feesEstimatedUCO: $feesEstimatedUCO, lpTokenAddress: $lpTokenAddress, consentDateTime: $consentDateTime, rewardAmount: $rewardAmount)';
   }
 
   @override
@@ -412,14 +428,16 @@ class _$FarmLockClaimFormStateImpl extends _FarmLockClaimFormState {
                 other.finalAmount == finalAmount) &&
             (identical(other.farmAddress, farmAddress) ||
                 other.farmAddress == farmAddress) &&
+            (identical(other.poolAddress, poolAddress) ||
+                other.poolAddress == poolAddress) &&
             (identical(other.rewardToken, rewardToken) ||
                 other.rewardToken == rewardToken) &&
             (identical(other.depositId, depositId) ||
                 other.depositId == depositId) &&
-            (identical(other.lpTokenAddress, lpTokenAddress) ||
-                other.lpTokenAddress == lpTokenAddress) &&
             (identical(other.feesEstimatedUCO, feesEstimatedUCO) ||
                 other.feesEstimatedUCO == feesEstimatedUCO) &&
+            (identical(other.lpTokenAddress, lpTokenAddress) ||
+                other.lpTokenAddress == lpTokenAddress) &&
             (identical(other.consentDateTime, consentDateTime) ||
                 other.consentDateTime == consentDateTime) &&
             (identical(other.rewardAmount, rewardAmount) ||
@@ -438,10 +456,11 @@ class _$FarmLockClaimFormStateImpl extends _FarmLockClaimFormState {
       failure,
       finalAmount,
       farmAddress,
+      poolAddress,
       rewardToken,
       depositId,
-      lpTokenAddress,
       feesEstimatedUCO,
+      lpTokenAddress,
       consentDateTime,
       rewardAmount);
 
@@ -464,10 +483,11 @@ abstract class _FarmLockClaimFormState extends FarmLockClaimFormState {
       final Failure? failure,
       final double? finalAmount,
       final String? farmAddress,
+      final String? poolAddress,
       final DexToken? rewardToken,
       final String? depositId,
-      final String? lpTokenAddress,
       final double feesEstimatedUCO,
+      final String? lpTokenAddress,
       final DateTime? consentDateTime,
       final double? rewardAmount}) = _$FarmLockClaimFormStateImpl;
   const _FarmLockClaimFormState._() : super._();
@@ -491,13 +511,15 @@ abstract class _FarmLockClaimFormState extends FarmLockClaimFormState {
   @override
   String? get farmAddress;
   @override
+  String? get poolAddress;
+  @override
   DexToken? get rewardToken;
   @override
   String? get depositId;
   @override
-  String? get lpTokenAddress;
-  @override
   double get feesEstimatedUCO;
+  @override
+  String? get lpTokenAddress;
   @override
   DateTime? get consentDateTime;
   @override

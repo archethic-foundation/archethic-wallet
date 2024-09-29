@@ -57,14 +57,8 @@ class FarmLockDetailsInfo extends ConsumerWidget {
                             ),
                           ),
                           DexPairIcons(
-                            token1Address:
-                                farmLock.lpTokenPair!.token1.address == null
-                                    ? 'UCO'
-                                    : farmLock.lpTokenPair!.token1.address!,
-                            token2Address:
-                                farmLock.lpTokenPair!.token2.address == null
-                                    ? 'UCO'
-                                    : farmLock.lpTokenPair!.token2.address!,
+                            token1Address: farmLock.lpTokenPair!.token1.address,
+                            token2Address: farmLock.lpTokenPair!.token2.address,
                             iconSize: 22,
                           ),
                           const SizedBox(

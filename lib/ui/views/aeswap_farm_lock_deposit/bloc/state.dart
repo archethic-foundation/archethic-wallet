@@ -25,9 +25,9 @@ class FarmLockDepositFormState with _$FarmLockDepositFormState {
     FarmLockDepositDurationType farmLockDepositDuration,
     @Default('') String level,
     @Default(0.0) double lpTokenBalance,
+    @Default(0.0) double feesEstimatedUCO,
     Transaction? transactionFarmLockDeposit,
     @Default({}) Map<String, int> filterAvailableLevels,
-    @Default(0.0) double feesEstimatedUCO,
     Failure? failure,
     double? finalAmount,
     DateTime? consentDateTime,
@@ -35,4 +35,7 @@ class FarmLockDepositFormState with _$FarmLockDepositFormState {
   const FarmLockDepositFormState._();
 
   bool get isControlsOk => failure == null && amount > 0;
+
+  String? get lpTokenAddress =>
+      pool?.lpToken.isUCO == true ? 'UCO' : pool?.lpToken.address;
 }

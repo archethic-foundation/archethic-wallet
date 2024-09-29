@@ -3,11 +3,11 @@ import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_lp_token_fi
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_token_balance.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/bloc/provider.dart';
-
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FarmLockWithdrawAmount extends ConsumerStatefulWidget {
@@ -33,8 +33,7 @@ class _FarmLockWithdrawToken1AmountState
   }
 
   void _updateAmountTextController() {
-    final farmLockWithdraw =
-        ref.read(FarmLockWithdrawFormProvider.farmLockWithdrawForm);
+    final farmLockWithdraw = ref.read(farmLockWithdrawFormNotifierProvider);
     tokenAmountController = TextEditingController();
     tokenAmountController.value = AmountTextInputFormatter(
       precision: 8,
@@ -60,10 +59,9 @@ class _FarmLockWithdrawToken1AmountState
     BuildContext context,
   ) {
     final farmLockWithdrawNotifier =
-        ref.watch(FarmLockWithdrawFormProvider.farmLockWithdrawForm.notifier);
+        ref.watch(farmLockWithdrawFormNotifierProvider.notifier);
 
-    final farmLockWithdraw =
-        ref.watch(FarmLockWithdrawFormProvider.farmLockWithdrawForm);
+    final farmLockWithdraw = ref.watch(farmLockWithdrawFormNotifierProvider);
     final textNum = double.tryParse(tokenAmountController.text);
     if (!(farmLockWithdraw.amount != 0.0 ||
         tokenAmountController.text == '' ||
@@ -116,7 +114,7 @@ class _FarmLockWithdrawToken1AmountState
                             controller: tokenAmountController,
                             onChanged: (text) async {
                               farmLockWithdrawNotifier.setAmount(
-                                context,
+                                AppLocalizations.of(context)!,
                                 double.tryParse(text.replaceAll(' ', '')) ?? 0,
                               );
                             },
@@ -159,12 +157,13 @@ class _FarmLockWithdrawToken1AmountState
                   width: 5,
                 ),
                 SelectableText(
-                  DEXLPTokenFiatValue().display(
-                    ref,
-                    farmLockWithdraw.lpTokenPair!.token1,
-                    farmLockWithdraw.lpTokenPair!.token2,
-                    farmLockWithdraw.depositedAmount!,
-                    farmLockWithdraw.poolAddress!,
+                  ref.watch(
+                    dexLPTokenFiatValueProvider(
+                      farmLockWithdraw.lpTokenPair!.token1,
+                      farmLockWithdraw.lpTokenPair!.token2,
+                      farmLockWithdraw.depositedAmount!,
+                      farmLockWithdraw.poolAddress!,
+                    ),
                   ),
                   style: AppTextStyles.bodyLarge(context),
                 ),
@@ -184,11 +183,10 @@ class _FarmLockWithdrawToken1AmountState
                     onTap: () {
                       ref
                           .read(
-                            FarmLockWithdrawFormProvider
-                                .farmLockWithdrawForm.notifier,
+                            farmLockWithdrawFormNotifierProvider.notifier,
                           )
                           .setAmountHalf(
-                            context,
+                            AppLocalizations.of(context)!,
                           );
                       _updateAmountTextController();
                     },
@@ -202,11 +200,10 @@ class _FarmLockWithdrawToken1AmountState
                     onTap: () {
                       ref
                           .read(
-                            FarmLockWithdrawFormProvider
-                                .farmLockWithdrawForm.notifier,
+                            farmLockWithdrawFormNotifierProvider.notifier,
                           )
                           .setAmountMax(
-                            context,
+                            AppLocalizations.of(context)!,
                           );
                       _updateAmountTextController();
                     },

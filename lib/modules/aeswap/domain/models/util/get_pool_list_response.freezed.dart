@@ -23,8 +23,10 @@ mixin _$GetPoolListResponse {
   String get address =>
       throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   @JsonKey(name: 'lp_token_address')
-  String get lpTokenAddress => throw _privateConstructorUsedError;
-  String get tokens => throw _privateConstructorUsedError;
+  String get lpTokenAddress =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
+  @JsonKey(name: 'tokens')
+  String get concatenatedTokensAddresses => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -41,7 +43,7 @@ abstract class $GetPoolListResponseCopyWith<$Res> {
   $Res call(
       {String address,
       @JsonKey(name: 'lp_token_address') String lpTokenAddress,
-      String tokens});
+      @JsonKey(name: 'tokens') String concatenatedTokensAddresses});
 }
 
 /// @nodoc
@@ -59,7 +61,7 @@ class _$GetPoolListResponseCopyWithImpl<$Res, $Val extends GetPoolListResponse>
   $Res call({
     Object? address = null,
     Object? lpTokenAddress = null,
-    Object? tokens = null,
+    Object? concatenatedTokensAddresses = null,
   }) {
     return _then(_value.copyWith(
       address: null == address
@@ -70,9 +72,9 @@ class _$GetPoolListResponseCopyWithImpl<$Res, $Val extends GetPoolListResponse>
           ? _value.lpTokenAddress
           : lpTokenAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      tokens: null == tokens
-          ? _value.tokens
-          : tokens // ignore: cast_nullable_to_non_nullable
+      concatenatedTokensAddresses: null == concatenatedTokensAddresses
+          ? _value.concatenatedTokensAddresses
+          : concatenatedTokensAddresses // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -89,7 +91,7 @@ abstract class _$$GetPoolListResponseImplCopyWith<$Res>
   $Res call(
       {String address,
       @JsonKey(name: 'lp_token_address') String lpTokenAddress,
-      String tokens});
+      @JsonKey(name: 'tokens') String concatenatedTokensAddresses});
 }
 
 /// @nodoc
@@ -105,7 +107,7 @@ class __$$GetPoolListResponseImplCopyWithImpl<$Res>
   $Res call({
     Object? address = null,
     Object? lpTokenAddress = null,
-    Object? tokens = null,
+    Object? concatenatedTokensAddresses = null,
   }) {
     return _then(_$GetPoolListResponseImpl(
       address: null == address
@@ -116,9 +118,9 @@ class __$$GetPoolListResponseImplCopyWithImpl<$Res>
           ? _value.lpTokenAddress
           : lpTokenAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      tokens: null == tokens
-          ? _value.tokens
-          : tokens // ignore: cast_nullable_to_non_nullable
+      concatenatedTokensAddresses: null == concatenatedTokensAddresses
+          ? _value.concatenatedTokensAddresses
+          : concatenatedTokensAddresses // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -126,11 +128,12 @@ class __$$GetPoolListResponseImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$GetPoolListResponseImpl implements _GetPoolListResponse {
+class _$GetPoolListResponseImpl extends _GetPoolListResponse {
   const _$GetPoolListResponseImpl(
       {required this.address,
       @JsonKey(name: 'lp_token_address') required this.lpTokenAddress,
-      required this.tokens});
+      @JsonKey(name: 'tokens') required this.concatenatedTokensAddresses})
+      : super._();
 
   factory _$GetPoolListResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$GetPoolListResponseImplFromJson(json);
@@ -141,12 +144,14 @@ class _$GetPoolListResponseImpl implements _GetPoolListResponse {
   @override
   @JsonKey(name: 'lp_token_address')
   final String lpTokenAddress;
+// ignore: invalid_annotation_target
   @override
-  final String tokens;
+  @JsonKey(name: 'tokens')
+  final String concatenatedTokensAddresses;
 
   @override
   String toString() {
-    return 'GetPoolListResponse(address: $address, lpTokenAddress: $lpTokenAddress, tokens: $tokens)';
+    return 'GetPoolListResponse(address: $address, lpTokenAddress: $lpTokenAddress, concatenatedTokensAddresses: $concatenatedTokensAddresses)';
   }
 
   @override
@@ -157,12 +162,16 @@ class _$GetPoolListResponseImpl implements _GetPoolListResponse {
             (identical(other.address, address) || other.address == address) &&
             (identical(other.lpTokenAddress, lpTokenAddress) ||
                 other.lpTokenAddress == lpTokenAddress) &&
-            (identical(other.tokens, tokens) || other.tokens == tokens));
+            (identical(other.concatenatedTokensAddresses,
+                    concatenatedTokensAddresses) ||
+                other.concatenatedTokensAddresses ==
+                    concatenatedTokensAddresses));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, address, lpTokenAddress, tokens);
+  int get hashCode => Object.hash(
+      runtimeType, address, lpTokenAddress, concatenatedTokensAddresses);
 
   @JsonKey(ignore: true)
   @override
@@ -179,11 +188,14 @@ class _$GetPoolListResponseImpl implements _GetPoolListResponse {
   }
 }
 
-abstract class _GetPoolListResponse implements GetPoolListResponse {
+abstract class _GetPoolListResponse extends GetPoolListResponse {
   const factory _GetPoolListResponse(
       {required final String address,
       @JsonKey(name: 'lp_token_address') required final String lpTokenAddress,
-      required final String tokens}) = _$GetPoolListResponseImpl;
+      @JsonKey(name: 'tokens')
+      required final String
+          concatenatedTokensAddresses}) = _$GetPoolListResponseImpl;
+  const _GetPoolListResponse._() : super._();
 
   factory _GetPoolListResponse.fromJson(Map<String, dynamic> json) =
       _$GetPoolListResponseImpl.fromJson;
@@ -193,8 +205,9 @@ abstract class _GetPoolListResponse implements GetPoolListResponse {
   @override // ignore: invalid_annotation_target
   @JsonKey(name: 'lp_token_address')
   String get lpTokenAddress;
-  @override
-  String get tokens;
+  @override // ignore: invalid_annotation_target
+  @JsonKey(name: 'tokens')
+  String get concatenatedTokensAddresses;
   @override
   @JsonKey(ignore: true)
   _$$GetPoolListResponseImplCopyWith<_$GetPoolListResponseImpl> get copyWith =>

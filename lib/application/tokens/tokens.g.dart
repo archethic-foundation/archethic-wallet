@@ -22,7 +22,7 @@ final _tokensRepositoryProvider =
 );
 
 typedef _TokensRepositoryRef = AutoDisposeProviderRef<TokensRepository>;
-String _$tokensHash() => r'924931bf20962d96a0adb3b4872f40a9f5965e41';
+String _$tokensHash() => r'4a5c69c7b28420306454f7f216c54a91acadf18e';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -58,8 +58,8 @@ class _TokensFamily extends Family<AsyncValue<List<AEToken>>> {
   _TokensProvider call(
     String userGenesisAddress, {
     bool withVerified = true,
-    bool withLPToken = false,
-    bool withNotVerified = false,
+    bool withLPToken = true,
+    bool withNotVerified = true,
   }) {
     return _TokensProvider(
       userGenesisAddress,
@@ -102,8 +102,8 @@ class _TokensProvider extends AutoDisposeFutureProvider<List<AEToken>> {
   _TokensProvider(
     String userGenesisAddress, {
     bool withVerified = true,
-    bool withLPToken = false,
-    bool withNotVerified = false,
+    bool withLPToken = true,
+    bool withNotVerified = true,
   }) : this._internal(
           (ref) => _tokens(
             ref as _TokensRef,

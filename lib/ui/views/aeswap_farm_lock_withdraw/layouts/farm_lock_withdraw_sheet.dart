@@ -44,9 +44,9 @@ class _FarmLockWithdrawSheetState extends ConsumerState<FarmLockWithdrawSheet> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () async {
+    Future(() async {
       try {
-        ref.read(FarmLockWithdrawFormProvider.farmLockWithdrawForm.notifier)
+        ref.read(farmLockWithdrawFormNotifierProvider.notifier)
           ..setFarmAddress(widget.farmAddress)
           ..setRewardToken(widget.rewardToken)
           ..setDepositId(widget.depositId)
@@ -76,7 +76,7 @@ class _FarmLockWithdrawSheetState extends ConsumerState<FarmLockWithdrawSheet> {
     if (selectedAccount == null) return const SizedBox();
 
     final farmLockWithdrawForm =
-        ref.watch(FarmLockWithdrawFormProvider.farmLockWithdrawForm);
+        ref.watch(farmLockWithdrawFormNotifierProvider);
 
     return farmLockWithdrawForm.processStep == ProcessStep.form
         ? const FarmLockWithdrawFormSheet()

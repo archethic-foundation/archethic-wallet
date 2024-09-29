@@ -11,7 +11,7 @@ _$GetPoolListResponseImpl _$$GetPoolListResponseImplFromJson(
     _$GetPoolListResponseImpl(
       address: json['address'] as String,
       lpTokenAddress: json['lp_token_address'] as String,
-      tokens: json['tokens'] as String,
+      concatenatedTokensAddresses: json['tokens'] as String,
     );
 
 Map<String, dynamic> _$$GetPoolListResponseImplToJson(
@@ -19,5 +19,5 @@ Map<String, dynamic> _$$GetPoolListResponseImplToJson(
     <String, dynamic>{
       'address': instance.address,
       'lp_token_address': instance.lpTokenAddress,
-      'tokens': instance.tokens,
+      'tokens': instance.concatenatedTokensAddresses,
     };

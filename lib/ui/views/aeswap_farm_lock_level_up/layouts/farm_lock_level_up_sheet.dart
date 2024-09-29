@@ -39,9 +39,9 @@ class _FarmLockLevelUpSheetState extends ConsumerState<FarmLockLevelUpSheet> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () async {
+    Future(() async {
       try {
-        ref.read(FarmLockLevelUpFormProvider.farmLockLevelUpForm.notifier)
+        ref.read(farmLockLevelUpFormNotifierProvider.notifier)
           ..setDexPool(widget.pool)
           ..setDexFarmLock(widget.farmLock)
           ..setDepositId(widget.depositId)
@@ -51,11 +51,11 @@ class _FarmLockLevelUpSheetState extends ConsumerState<FarmLockLevelUpSheet> {
           ..setAPREstimation(widget.farmLock.apr3years * 100);
 
         await ref
-            .read(FarmLockLevelUpFormProvider.farmLockLevelUpForm.notifier)
+            .read(farmLockLevelUpFormNotifierProvider.notifier)
             .initBalances();
 
         ref
-            .read(FarmLockLevelUpFormProvider.farmLockLevelUpForm.notifier)
+            .read(farmLockLevelUpFormNotifierProvider.notifier)
             .filterAvailableLevels();
       } catch (e) {
         if (mounted) {
@@ -76,8 +76,7 @@ class _FarmLockLevelUpSheetState extends ConsumerState<FarmLockLevelUpSheet> {
 
     if (selectedAccount == null) return const SizedBox();
 
-    final farmLockLevelUpForm =
-        ref.watch(FarmLockLevelUpFormProvider.farmLockLevelUpForm);
+    final farmLockLevelUpForm = ref.watch(farmLockLevelUpFormNotifierProvider);
 
     return farmLockLevelUpForm.processStep == ProcessStep.form
         ? FarmLockLevelUpFormSheet(

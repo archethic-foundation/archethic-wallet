@@ -10,26 +10,32 @@ import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutte
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
 class DexPoolRepositoryImpl implements DexPoolRepository {
-  DexPoolRepositoryImpl({required this.apiService});
+  DexPoolRepositoryImpl({
+    required this.apiService,
+    required this.verifiedTokensRepository,
+  });
 
   final ApiService apiService;
+  final aedappfm.VerifiedTokensRepositoryInterface verifiedTokensRepository;
 
   @override
   Future<DexPool?> getPool(
     String poolAddress,
     List<String> tokenVerifiedList,
   ) async {
+    final environment = aedappfm.Environment.byEndpoint(apiService.endpoint);
     final poolsListDatasource = await HivePoolsListDatasource.getInstance();
     final poolHive = poolsListDatasource.getPool(
-      aedappfm.EndpointUtil.getEnvironnement(),
+      environment.name,
       poolAddress,
     );
     if (poolHive == null) {
-      final dexConf = await DexConfigRepositoryImpl().getDexConfig();
+      final dexConf = await DexConfigRepositoryImpl().getDexConfig(environment);
       final resultPoolList = await RouterFactory(
         dexConf.routerGenesisAddress,
         apiService,
-      ).getPoolList(tokenVerifiedList);
+        verifiedTokensRepository,
+      ).getPoolList(environment, tokenVerifiedList);
 
       return await resultPoolList.map(
         success: (poolList) async {
@@ -38,7 +44,7 @@ class DexPoolRepositoryImpl implements DexPoolRepository {
                 poolAddress.toUpperCase()) {
               final pool = await populatePoolInfos(poolInput);
               await poolsListDatasource.setPool(
-                aedappfm.EndpointUtil.getEnvironnement(),
+                environment.name,
                 pool.toHive(),
               );
               return pool;
@@ -53,7 +59,7 @@ class DexPoolRepositoryImpl implements DexPoolRepository {
     }
 
     return poolsListDatasource
-        .getPool(aedappfm.EndpointUtil.getEnvironnement(), poolAddress)
+        .getPool(environment.name, poolAddress)
         ?.toDexPool();
   }
 
@@ -61,9 +67,10 @@ class DexPoolRepositoryImpl implements DexPoolRepository {
   Future<DexPool> populatePoolInfos(
     DexPool poolInput,
   ) async {
-    final apiService = aedappfm.sl.get<ApiService>();
-    final poolFactory =
-        PoolFactoryRepositoryImpl(poolInput.poolAddress, apiService);
+    final poolFactory = PoolFactoryRepositoryImpl(
+      poolInput.poolAddress,
+      apiService,
+    );
 
     return poolFactory.populatePoolInfos(poolInput).valueOrThrow;
   }

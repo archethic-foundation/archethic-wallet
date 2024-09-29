@@ -21,8 +21,7 @@ class FarmLockDepositDurationButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final farmLockDeposit =
-        ref.watch(FarmLockDepositFormProvider.farmLockDepositForm);
+    final farmLockDeposit = ref.watch(farmLockDepositFormNotifierProvider);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 10, left: 5, right: 5),
@@ -43,7 +42,7 @@ class FarmLockDepositDurationButton extends ConsumerWidget {
         child: InkWell(
           onTap: () {
             ref.read(
-              FarmLockDepositFormProvider.farmLockDepositForm.notifier,
+              farmLockDepositFormNotifierProvider.notifier,
             )
               ..setFarmLockDepositDuration(farmLockDepositDuration)
               ..setLevel(level)

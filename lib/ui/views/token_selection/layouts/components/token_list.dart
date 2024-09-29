@@ -1,5 +1,4 @@
-import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/modules/aeswap/application/dex_token.dart';
+import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/views/token_selection/bloc/provider.dart';
@@ -15,14 +14,10 @@ class TokenList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final tokenSelectionForm =
         ref.watch(TokenSelectionFormProvider.tokenSelectionForm);
-    final accountSelected = ref.watch(
-      AccountProviders.accounts.select(
-        (accounts) => accounts.valueOrNull?.selectedAccount,
-      ),
-    );
+
     if (tokenSelectionForm.isAddress == false) {
       final tokens = ref.watch(
-        DexTokensProviders.getTokenFromAccount(accountSelected!.genesisAddress),
+        DexTokensProviders.tokensFromAccount,
       );
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,7 +26,7 @@ class TokenList extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: Text(
               AppLocalizations.of(context)!.token_selection_your_tokens_title,
-              style: AppTextStyles.bodyMedium(context),
+              style: AppTextStyles.bodyLarge(context),
             ),
           ),
           SizedBox(

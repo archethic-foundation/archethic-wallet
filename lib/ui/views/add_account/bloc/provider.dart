@@ -2,12 +2,10 @@
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/session/session.dart';
-import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/transaction_repository.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction.dart';
-import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
-import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/ui/views/add_account/bloc/state.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
@@ -31,7 +29,6 @@ final _addAccountFormProvider =
   dependencies: [
     AddAccountFormProvider.initialAddAccountForm,
     AccountProviders.accounts,
-    AddAccountFormProvider._repository,
     AccountProviders.sortedAccounts,
     sessionNotifierProvider,
   ],
@@ -98,7 +95,8 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
   }
 
   Future<void> send(BuildContext context) async {
-    final transactionRepository = ref.read(AddAccountFormProvider._repository);
+    final transactionRepository =
+        ref.read(archethicTransactionRepositoryProvider);
 
     final localizations = AppLocalizations.of(context)!;
 
@@ -192,7 +190,8 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
   }
 
   Future<void> removeAccount(BuildContext context, String account) async {
-    final transactionRepository = ref.read(AddAccountFormProvider._repository);
+    final transactionRepository =
+        ref.watch(archethicTransactionRepositoryProvider);
 
     final localizations = AppLocalizations.of(context)!;
 
@@ -287,18 +286,6 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
 }
 
 abstract class AddAccountFormProvider {
-  static final _repository = Provider<TransactionRemoteRepositoryInterface>(
-    // TODO(Chralu): factorize that repository declaration
-    (ref) {
-      final networkSettings = ref.watch(
-        SettingsProviders.settings.select((settings) => settings.network),
-      );
-      return ArchethicTransactionRepository(
-        phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
-        websocketEndpoint: networkSettings.getWebsocketUri(),
-      );
-    },
-  );
   static final initialAddAccountForm = _initialAddAccountFormProvider;
   static final addAccountForm = _addAccountFormProvider;
 }

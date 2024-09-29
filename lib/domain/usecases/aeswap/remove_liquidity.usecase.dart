@@ -1,10 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
-import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
+import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
+import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/modules/aeswap/application/contracts/archethic_contract.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_notification.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
@@ -17,19 +17,32 @@ import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutte
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
 const logName = 'RemoveLiquidityCase';
 
 class RemoveLiquidityCase with aedappfm.TransactionMixin {
+  RemoveLiquidityCase({
+    required this.apiService,
+    required this.notificationService,
+    required this.verifiedTokensRepository,
+    required this.transactionRepository,
+    required this.keychainSecuredInfos,
+    required this.selectedAccount,
+  });
+
+  final archethic.ApiService apiService;
+  final ns.TaskNotificationService<DexNotification, aedappfm.Failure>
+      notificationService;
+  final aedappfm.VerifiedTokensRepositoryInterface verifiedTokensRepository;
+  final TransactionRemoteRepositoryInterface transactionRepository;
+  final KeychainSecuredInfos keychainSecuredInfos;
+  final Account selectedAccount;
+
   Future<void> run(
-    TransactionRemoteRepositoryInterface transactionRepository,
+    AppLocalizations localizations,
+    LiquidityRemoveFormNotifier liquidityRemoveNotifier,
     String poolGenesisAddress,
-    WidgetRef ref,
-    BuildContext context,
-    ns.TaskNotificationService<DexNotification, aedappfm.Failure>
-        notificationService,
     String lpTokenAddress,
     double lpTokenAmount,
     DexToken token1,
@@ -37,9 +50,10 @@ class RemoveLiquidityCase with aedappfm.TransactionMixin {
     DexToken lpToken,
   ) async {
     final operationId = const Uuid().v4();
-    final archethicContract = ArchethicContract();
-    final liquidityRemoveNotifier =
-        ref.read(LiquidityRemoveFormProvider.liquidityRemoveForm.notifier);
+    final archethicContract = ArchethicContract(
+      apiService: apiService,
+      verifiedTokensRepository: verifiedTokensRepository,
+    );
 
     archethic.Transaction? transactionRemoveLiquidity;
     liquidityRemoveNotifier
@@ -71,23 +85,11 @@ class RemoveLiquidityCase with aedappfm.TransactionMixin {
     }
 
     try {
-      final keychainSecuredInfos = ref
-          .read(sessionNotifierProvider)
-          .loggedIn!
-          .wallet
-          .keychainSecuredInfos;
-
-      final selectedAccount = await ref
-          .read(
-            AccountProviders.accounts.future,
-          )
-          .selectedAccount;
-
       final transationSignedRaw =
           await transactionRepository.buildTransactionRaw(
         keychainSecuredInfos,
         transactionRemoveLiquidity!,
-        selectedAccount!.lastAddress!,
+        selectedAccount.lastAddress!,
         selectedAccount.name,
       );
 
@@ -202,7 +204,10 @@ class RemoveLiquidityCase with aedappfm.TransactionMixin {
     String lpTokenAddress,
     double lpTokenAmount,
   ) async {
-    final archethicContract = ArchethicContract();
+    final archethicContract = ArchethicContract(
+      apiService: apiService,
+      verifiedTokensRepository: verifiedTokensRepository,
+    );
     archethic.Transaction? transactionRemoveLiquidity;
 
     try {

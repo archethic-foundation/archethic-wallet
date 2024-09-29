@@ -45,6 +45,7 @@ class FarmFactory with ModelParser {
 
         final getFarmInfosResponse = GetFarmInfosResponse.fromJson(result);
         return farmInfosToModel(
+          apiService,
           factoryAddress,
           getFarmInfosResponse,
           pool,

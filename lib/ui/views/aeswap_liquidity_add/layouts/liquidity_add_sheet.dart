@@ -28,21 +28,19 @@ class _LiquidityAddSheetState extends ConsumerState<LiquidityAddSheet> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () async {
+    Future(() async {
       try {
-        ref.read(LiquidityAddFormProvider.liquidityAddForm.notifier)
+        ref.read(liquidityAddFormNotifierProvider.notifier)
           ..setToken1(widget.pool.pair.token1)
           ..setToken2(widget.pool.pair.token2);
 
         await ref
-            .read(LiquidityAddFormProvider.liquidityAddForm.notifier)
+            .read(liquidityAddFormNotifierProvider.notifier)
             .setPool(widget.pool);
         await ref
-            .read(LiquidityAddFormProvider.liquidityAddForm.notifier)
+            .read(liquidityAddFormNotifierProvider.notifier)
             .initBalances();
-        await ref
-            .read(LiquidityAddFormProvider.liquidityAddForm.notifier)
-            .initRatio();
+        await ref.read(liquidityAddFormNotifierProvider.notifier).initRatio();
       } catch (e) {
         if (mounted) {
           context.pop();
@@ -62,8 +60,7 @@ class _LiquidityAddSheetState extends ConsumerState<LiquidityAddSheet> {
 
     if (selectedAccount == null) return const SizedBox();
 
-    final liquidityAddForm =
-        ref.watch(LiquidityAddFormProvider.liquidityAddForm);
+    final liquidityAddForm = ref.watch(liquidityAddFormNotifierProvider);
 
     return liquidityAddForm.processStep == ProcessStep.form
         ? const LiquidityAddFormSheet()

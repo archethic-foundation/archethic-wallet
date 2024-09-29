@@ -1,7 +1,7 @@
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 
 abstract class DexTokenRepository {
-  Future<DexToken?> getTokenFromAddress(
+  Future<DexToken?> getToken(
     String address,
   );
 
@@ -9,5 +9,5 @@ abstract class DexTokenRepository {
     String accountAddress,
   );
 
-  Future<String?> getTokenIcon(String address);
+  Future<List<DexToken>> getLocalTokensDescriptions();
 }
