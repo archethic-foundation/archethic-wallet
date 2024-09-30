@@ -43,7 +43,7 @@ class _SwapTokenToSwapAmountState extends ConsumerState<SwapTokenToSwapAmount> {
       TextEditingValue(
         text: swap.tokenToSwapAmount == 0
             ? ''
-            : swap.tokenToSwapAmount.formatNumber(precision: 8),
+            : swap.tokenToSwapAmount.toString(),
       ),
     );
   }
@@ -274,7 +274,7 @@ class _SwapTokenToSwapAmountState extends ConsumerState<SwapTokenToSwapAmount> {
                                         ) /
                                         Decimal.fromInt(2))
                                     .toDouble()
-                                    .formatNumber(),
+                                    .toString(),
                               ),
                             );
                             swapNotifier.setTokenFormSelected(1);

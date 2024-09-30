@@ -42,7 +42,7 @@ class _SwapTokenSwappedAmountState
       TextEditingValue(
         text: swap.tokenSwappedAmount == 0
             ? ''
-            : swap.tokenSwappedAmount.formatNumber(precision: 8),
+            : swap.tokenSwappedAmount.toString(),
       ),
     );
   }
@@ -268,7 +268,7 @@ class _SwapTokenSwappedAmountState
                                   ) /
                                   Decimal.fromInt(2))
                               .toDouble()
-                              .formatNumber(),
+                              .toString(),
                         ),
                       );
                       swapNotifier.setTokenFormSelected(2);

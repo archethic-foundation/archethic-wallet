@@ -40,7 +40,7 @@ class _LiquidityAddToken1AmountState
       TextEditingValue(
         text: liquidityAdd.token1Amount == 0
             ? ''
-            : liquidityAdd.token1Amount.formatNumber(precision: 8),
+            : liquidityAdd.token1Amount.toString(),
       ),
     );
   }
@@ -204,7 +204,7 @@ class _LiquidityAddToken1AmountState
                                   ) /
                                   Decimal.fromInt(2))
                               .toDouble()
-                              .formatNumber(),
+                              .toString(),
                         ),
                       );
                       liquidityAddNotifier.setTokenFormSelected(1);
