@@ -175,6 +175,58 @@ class LevelUpFarmLockCase with aedappfm.TransactionMixin {
     }
   }
 
+  Future<double> estimateFees(
+    String farmGenesisAddress,
+    String lpTokenAddress,
+    double amount,
+    String depositId,
+    FarmLockDepositDurationType durationType,
+    String level,
+  ) async {
+    final archethicContract = ArchethicContract(
+      apiService: apiService,
+      verifiedTokensRepository: verifiedTokensRepository,
+    );
+    archethic.Transaction? transactionLevelUp;
+
+    try {
+      final transactionLevelUpMap = await archethicContract.getFarmLockRelockTx(
+        farmGenesisAddress,
+        lpTokenAddress,
+        amount,
+        depositId,
+        durationType,
+        level,
+      );
+
+      return transactionLevelUpMap.map(
+        success: (success) async {
+          transactionLevelUp = success;
+          // Add fake signature and address to allow estimation by node
+          transactionLevelUp = transactionLevelUp!.copyWith(
+            address: const archethic.Address(
+              address:
+                  '00000000000000000000000000000000000000000000000000000000000000000000',
+            ),
+            previousPublicKey:
+                '00000000000000000000000000000000000000000000000000000000000000000000',
+          );
+          final fees = await calculateFees(
+            transactionLevelUp!,
+            aedappfm.sl.get<archethic.ApiService>(),
+            slippage: 1.1,
+          );
+          return fees;
+        },
+        failure: (failure) {
+          return 0.0;
+        },
+      );
+    } catch (e) {
+      return 0.0;
+    }
+  }
+
   String getAEStepLabel(
     BuildContext context,
     int step,

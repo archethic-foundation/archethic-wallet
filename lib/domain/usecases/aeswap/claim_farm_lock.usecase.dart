@@ -174,6 +174,50 @@ class ClaimFarmLockCase with aedappfm.TransactionMixin {
     }
   }
 
+  Future<double> estimateFees(
+    String farmGenesisAddress,
+    String depositId,
+  ) async {
+    final archethicContract = ArchethicContract(
+      apiService: apiService,
+      verifiedTokensRepository: verifiedTokensRepository,
+    );
+    archethic.Transaction? transactionClaim;
+
+    try {
+      final transactionClaimMap = await archethicContract.getFarmLockClaimTx(
+        farmGenesisAddress,
+        depositId,
+      );
+
+      return transactionClaimMap.map(
+        success: (success) async {
+          transactionClaim = success;
+          // Add fake signature and address to allow estimation by node
+          transactionClaim = transactionClaim!.copyWith(
+            address: const archethic.Address(
+              address:
+                  '00000000000000000000000000000000000000000000000000000000000000000000',
+            ),
+            previousPublicKey:
+                '00000000000000000000000000000000000000000000000000000000000000000000',
+          );
+          final fees = await calculateFees(
+            transactionClaim!,
+            aedappfm.sl.get<archethic.ApiService>(),
+            slippage: 1.1,
+          );
+          return fees;
+        },
+        failure: (failure) {
+          return 0.0;
+        },
+      );
+    } catch (e) {
+      return 0.0;
+    }
+  }
+
   String getAEStepLabel(
     BuildContext context,
     int step,

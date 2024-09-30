@@ -1,5 +1,6 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/aeswap/usecases.dart';
+import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/util/browser_util_desktop.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_claim/bloc/state.dart';
@@ -93,7 +94,7 @@ class FarmLockClaimFormNotifier extends _$FarmLockClaimFormNotifier {
   }
 
   Future<void> validateForm() async {
-    if (control() == false) {
+    if (await control() == false) {
       return;
     }
 
@@ -112,7 +113,7 @@ class FarmLockClaimFormNotifier extends _$FarmLockClaimFormNotifier {
     );
   }
 
-  bool control() {
+  Future<bool> control() async {
     setFailure(null);
 
     if (BrowserUtil().isEdgeBrowser() ||
@@ -123,6 +124,23 @@ class FarmLockClaimFormNotifier extends _$FarmLockClaimFormNotifier {
       return false;
     }
 
+    var feesEstimatedUCO = 0.0;
+    feesEstimatedUCO = await ref.read(claimFarmLockCaseProvider).estimateFees(
+          state.farmAddress!,
+          state.depositId!,
+        );
+    state = state.copyWith(
+      feesEstimatedUCO: feesEstimatedUCO,
+    );
+
+    if (feesEstimatedUCO > 0) {
+      final userBalance = await ref.watch(userBalanceProvider.future);
+      if (feesEstimatedUCO > userBalance.uco) {
+        setFailure(const aedappfm.Failure.insufficientFunds());
+        return false;
+      }
+    }
+
     return true;
   }
 
@@ -130,7 +148,7 @@ class FarmLockClaimFormNotifier extends _$FarmLockClaimFormNotifier {
     setFarmLockClaimOk(false);
     setProcessInProgress(true);
 
-    if (control() == false) {
+    if (await control() == false) {
       setProcessInProgress(false);
       return;
     }

@@ -196,6 +196,53 @@ class WithdrawFarmLockCase with aedappfm.TransactionMixin {
     }
   }
 
+  Future<double> estimateFees(
+    String farmGenesisAddress,
+    String lpTokenAddress,
+    double amount,
+    String depositId,
+  ) async {
+    final archethicContract = ArchethicContract(
+      apiService: apiService,
+      verifiedTokensRepository: verifiedTokensRepository,
+    );
+    archethic.Transaction? transactionWithdraw;
+
+    try {
+      final transactionWithdrawMap =
+          await archethicContract.getFarmLockWithdrawTx(
+        farmGenesisAddress,
+        amount,
+        depositId,
+      );
+      return transactionWithdrawMap.map(
+        success: (success) async {
+          transactionWithdraw = success;
+          // Add fake signature and address to allow estimation by node
+          transactionWithdraw = transactionWithdraw!.copyWith(
+            address: const archethic.Address(
+              address:
+                  '00000000000000000000000000000000000000000000000000000000000000000000',
+            ),
+            previousPublicKey:
+                '00000000000000000000000000000000000000000000000000000000000000000000',
+          );
+          final fees = await calculateFees(
+            transactionWithdraw!,
+            aedappfm.sl.get<archethic.ApiService>(),
+            slippage: 1.1,
+          );
+          return fees;
+        },
+        failure: (failure) {
+          return 0.0;
+        },
+      );
+    } catch (e) {
+      return 0.0;
+    }
+  }
+
   String getAEStepLabel(
     BuildContext context,
     int step,
