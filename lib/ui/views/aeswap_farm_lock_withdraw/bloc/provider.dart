@@ -1,5 +1,6 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/aeswap/usecases.dart';
+import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pair.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/util/browser_util_desktop.dart';
@@ -144,7 +145,7 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
   }
 
   Future<void> validateForm(AppLocalizations appLocalizations) async {
-    if (control(appLocalizations) == false) {
+    if (await control(appLocalizations) == false) {
       return;
     }
 
@@ -163,7 +164,7 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
     );
   }
 
-  bool control(AppLocalizations appLocalizations) {
+  Future<bool> control(AppLocalizations appLocalizations) async {
     setFailure(null);
 
     if (BrowserUtil().isEdgeBrowser() ||
@@ -193,6 +194,26 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
       return false;
     }
 
+    var feesEstimatedUCO = 0.0;
+    feesEstimatedUCO =
+        await ref.read(withdrawFarmLockCaseProvider).estimateFees(
+              state.farmAddress!,
+              state.lpToken!.address,
+              state.amount,
+              state.depositId,
+            );
+    state = state.copyWith(
+      feesEstimatedUCO: feesEstimatedUCO,
+    );
+
+    if (feesEstimatedUCO > 0) {
+      final userBalance = await ref.watch(userBalanceProvider.future);
+      if (feesEstimatedUCO > userBalance.uco) {
+        setFailure(const aedappfm.Failure.insufficientFunds());
+        return false;
+      }
+    }
+
     return true;
   }
 
@@ -200,7 +221,7 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
     setFarmLockWithdrawOk(false);
     setProcessInProgress(true);
 
-    if (control(localizations) == false) {
+    if (await control(localizations) == false) {
       setProcessInProgress(false);
       return;
     }

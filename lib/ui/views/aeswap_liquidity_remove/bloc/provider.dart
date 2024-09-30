@@ -264,7 +264,7 @@ class LiquidityRemoveFormNotifier extends _$LiquidityRemoveFormNotifier {
   }
 
   Future<void> validateForm(AppLocalizations appLocalizations) async {
-    if (control(appLocalizations) == false) {
+    if (await control(appLocalizations) == false) {
       return;
     }
 
@@ -283,7 +283,7 @@ class LiquidityRemoveFormNotifier extends _$LiquidityRemoveFormNotifier {
     );
   }
 
-  bool control(AppLocalizations appLocalizations) {
+  Future<bool> control(AppLocalizations appLocalizations) async {
     setFailure(null);
 
     if (BrowserUtil().isEdgeBrowser() ||
@@ -310,6 +310,24 @@ class LiquidityRemoveFormNotifier extends _$LiquidityRemoveFormNotifier {
       return false;
     }
 
+    var feesEstimatedUCO = 0.0;
+    feesEstimatedUCO = await ref.read(removeLiquidityCaseProvider).estimateFees(
+          state.pool!.poolAddress,
+          state.lpToken!.address,
+          state.lpTokenAmount,
+        );
+    state = state.copyWith(
+      feesEstimatedUCO: feesEstimatedUCO,
+    );
+
+    if (feesEstimatedUCO > 0) {
+      final userBalance = await ref.watch(userBalanceProvider.future);
+      if (feesEstimatedUCO > userBalance.uco) {
+        setFailure(const aedappfm.Failure.insufficientFunds());
+        return false;
+      }
+    }
+
     return true;
   }
 
@@ -317,7 +335,7 @@ class LiquidityRemoveFormNotifier extends _$LiquidityRemoveFormNotifier {
     setLiquidityRemoveOk(false);
     setProcessInProgress(true);
 
-    if (control(appLocalizations) == false) {
+    if (await control(appLocalizations) == false) {
       setProcessInProgress(false);
       return;
     }

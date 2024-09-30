@@ -165,7 +165,7 @@ class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
   }
 
   Future<void> validateForm(AppLocalizations appLocalizations) async {
-    if (control(appLocalizations) == false) {
+    if (await control(appLocalizations) == false) {
       return;
     }
 
@@ -184,7 +184,7 @@ class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
     );
   }
 
-  bool control(AppLocalizations appLocalizations) {
+  Future<bool> control(AppLocalizations appLocalizations) async {
     setFailure(null);
 
     if (BrowserUtil().isEdgeBrowser() ||
@@ -222,6 +222,26 @@ class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
       return false;
     }
 
+    var feesEstimatedUCO = 0.0;
+    feesEstimatedUCO = await ref.read(depositFarmLockCaseProvider).estimateFees(
+          state.farmLock!.farmAddress,
+          state.farmLock!.lpToken!.address,
+          state.amount,
+          state.farmLockDepositDuration,
+          state.level,
+        );
+    state = state.copyWith(
+      feesEstimatedUCO: feesEstimatedUCO,
+    );
+
+    if (feesEstimatedUCO > 0) {
+      final userBalance = await ref.watch(userBalanceProvider.future);
+      if (feesEstimatedUCO > userBalance.uco) {
+        setFailure(const aedappfm.Failure.insufficientFunds());
+        return false;
+      }
+    }
+
     return true;
   }
 
@@ -229,7 +249,7 @@ class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
     setFarmLockDepositOk(false);
     setProcessInProgress(true);
 
-    if (control(appLocalizations) == false) {
+    if (await control(appLocalizations) == false) {
       setProcessInProgress(false);
       return;
     }
