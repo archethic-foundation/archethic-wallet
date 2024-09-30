@@ -6,6 +6,7 @@ import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/aeswap_swap/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_confirm_infos.dart';
+import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_result_sheet.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
@@ -61,9 +62,12 @@ class SwapConfirmFormSheetState extends ConsumerState<SwapConfirmFormSheet>
           Dimens.buttonBottomDimens,
           key: const Key('swap'),
           onPressed: () async {
-            await ref
+            final resultOk = await ref
                 .read(swapFormNotifierProvider.notifier)
                 .swap(AppLocalizations.of(context)!);
+            if (resultOk) {
+              await context.push(SwapResultSheet.routerPage);
+            }
           },
           disabled: (!consentChecked && swap.consentDateTime == null) ||
               swap.isProcessInProgress,

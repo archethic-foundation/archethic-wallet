@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/aeswap/usecases.dart';
 import 'package:aewallet/modules/aeswap/application/api_service.dart';
@@ -689,9 +691,11 @@ class SwapFormNotifier extends _$SwapFormNotifier
     await calculateOutputAmount();
   }
 
-  Future<void> validateForm(AppLocalizations appLocalizations) async {
+  Future<bool> validateForm(
+    AppLocalizations appLocalizations,
+  ) async {
     if (await control(appLocalizations) == false) {
-      return;
+      return false;
     }
 
     final accountSelected = ref.watch(
@@ -704,9 +708,7 @@ class SwapFormNotifier extends _$SwapFormNotifier
         .getConsentTime(accountSelected!.genesisAddress);
     state = state.copyWith(consentDateTime: consentDateTime);
 
-    setSwapProcessStep(
-      aedappfm.ProcessStep.confirmation,
-    );
+    return true;
   }
 
   Future<bool> control(AppLocalizations appLocalizations) async {
@@ -798,13 +800,13 @@ class SwapFormNotifier extends _$SwapFormNotifier
     return true;
   }
 
-  Future<void> swap(AppLocalizations appLocalizations) async {
+  Future<bool> swap(AppLocalizations appLocalizations) async {
     setSwapOk(false);
     setProcessInProgress(true);
 
     if (await control(appLocalizations) == false) {
       setProcessInProgress(false);
-      return;
+      return false;
     }
 
     final accountSelected = ref.watch(
@@ -827,5 +829,7 @@ class SwapFormNotifier extends _$SwapFormNotifier
         );
 
     ref.invalidate(userBalanceProvider);
+
+    return true;
   }
 }

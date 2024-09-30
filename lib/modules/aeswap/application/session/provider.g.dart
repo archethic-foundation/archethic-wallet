@@ -21,7 +21,7 @@ final environmentProvider = Provider<Environment>.internal(
 
 typedef EnvironmentRef = ProviderRef<Environment>;
 String _$sessionAESwapNotifierHash() =>
-    r'2caaa8028809aaef5b9d40e7857b8c195ae27617';
+    r'ac7ea8a535a9a6645d6f92e873ec48ed4b6ca038';
 
 /// See also [SessionAESwapNotifier].
 @ProviderFor(SessionAESwapNotifier)

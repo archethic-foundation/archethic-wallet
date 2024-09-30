@@ -4,6 +4,7 @@ import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/aeswap_swap/bloc/provider.dart';
+import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_confirm_sheet.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_icon_info.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_icon_settings.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_textfield_token_swapped_amount.dart';
@@ -16,6 +17,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class SwapTab extends ConsumerStatefulWidget {
   const SwapTab({
@@ -224,11 +226,15 @@ class SwapTabState extends ConsumerState<SwapTab> {
                     Dimens.buttonBottomDimens,
                     key: const Key('swap'),
                     onPressed: () async {
-                      await ref
+                      final controlOk = await ref
                           .read(
                             swapFormNotifierProvider.notifier,
                           )
                           .validateForm(AppLocalizations.of(context)!);
+
+                      if (controlOk) {
+                        await context.push(SwapConfirmFormSheet.routerPage);
+                      }
                     },
                     disabled: !swap.isControlsOk,
                   ),
