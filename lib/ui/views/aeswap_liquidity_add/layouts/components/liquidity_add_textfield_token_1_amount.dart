@@ -105,19 +105,20 @@ class _LiquidityAddToken1AmountState
                           ),
                           child: liquidityAdd.calculateToken1
                               ? const SizedBox(
-                                  width: 10,
                                   height: 48,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                      left: 317,
-                                      right: 10,
-                                      top: 15,
-                                      bottom: 15,
-                                    ),
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 1,
-                                      color: Colors.white,
-                                    ),
+                                  child: Row(
+                                    children: [
+                                      Spacer(),
+                                      SizedBox(
+                                        width: 20,
+                                        height: 20,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 1,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      SizedBox(width: 10),
+                                    ],
                                   ),
                                 )
                               : TextField(
