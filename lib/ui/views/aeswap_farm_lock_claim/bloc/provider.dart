@@ -144,13 +144,13 @@ class FarmLockClaimFormNotifier extends _$FarmLockClaimFormNotifier {
     return true;
   }
 
-  Future<void> claim(AppLocalizations localizations) async {
+  Future<bool> claim(AppLocalizations localizations) async {
     setFarmLockClaimOk(false);
     setProcessInProgress(true);
 
     if (await control() == false) {
       setProcessInProgress(false);
-      return;
+      return false;
     }
 
     final accountSelected = ref.watch(
@@ -168,5 +168,7 @@ class FarmLockClaimFormNotifier extends _$FarmLockClaimFormNotifier {
           state.depositId!,
           state.rewardToken!,
         );
+
+    return true;
   }
 }

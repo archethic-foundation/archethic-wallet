@@ -521,13 +521,13 @@ class LiquidityAddFormNotifier extends _$LiquidityAddFormNotifier {
     return true;
   }
 
-  Future<void> add(AppLocalizations appLocalizations) async {
+  Future<bool> add(AppLocalizations appLocalizations) async {
     setLiquidityAddOk(false);
     setProcessInProgress(true);
 
     if (await control(appLocalizations) == false) {
       setProcessInProgress(false);
-      return;
+      return false;
     }
     final accountSelected = ref.watch(
       AccountProviders.accounts.select(
@@ -552,5 +552,7 @@ class LiquidityAddFormNotifier extends _$LiquidityAddFormNotifier {
     ref
       ..invalidate(userBalanceProvider)
       ..invalidate(DexPoolProviders.getPool(state.pool!.poolAddress));
+
+    return true;
   }
 }

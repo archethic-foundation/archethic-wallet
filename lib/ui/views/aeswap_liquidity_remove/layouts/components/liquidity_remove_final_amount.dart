@@ -12,6 +12,8 @@ class LiquidityRemoveFinalAmount extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final liquidityRemove = ref.watch(liquidityRemoveFormNotifierProvider);
+    if (liquidityRemove.liquidityRemoveOk == false)
+      return const SizedBox.shrink();
 
     final finalAmountToken1 = liquidityRemove.finalAmountToken1;
     final finalAmountToken2 = liquidityRemove.finalAmountToken2;

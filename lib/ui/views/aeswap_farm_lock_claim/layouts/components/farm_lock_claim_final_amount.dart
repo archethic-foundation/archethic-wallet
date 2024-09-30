@@ -1,3 +1,4 @@
+import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_claim/bloc/provider.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -21,43 +22,52 @@ class FarmLockClaimFinalAmount extends ConsumerWidget {
           .select((value) => value.failure != null),
     );
 
-    return finalAmount != null
-        ? SelectableText(
-            '${AppLocalizations.of(context)!.farmLockClaimFinalAmount} ${finalAmount.formatNumber(precision: 8)} ${farmLockClaim.rewardToken!.symbol}',
-            style: TextStyle(
-              fontSize: aedappfm.Responsive.fontSizeFromValue(
-                context,
-                desktopValue: 13,
+    return Row(
+      children: [
+        if (finalAmount != null)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SelectableText(
+                AppLocalizations.of(context)!.farmLockClaimFinalAmount,
+                style: AppTextStyles.bodyLarge(context),
               ),
-            ),
+              SelectableText(
+                '${finalAmount.formatNumber(precision: 8)} ${finalAmount.formatNumber(precision: 8)} ${farmLockClaim.rewardToken!.symbol}',
+                style: AppTextStyles.bodyLargeSecondaryColor(context),
+              ),
+            ],
           )
-        : timeout == false
-            ? Row(
-                children: [
-                  SelectableText(
-                    AppLocalizations.of(context)!.farmLockClaimFinalAmount,
-                    style: TextStyle(
-                      fontSize: aedappfm.Responsive.fontSizeFromValue(
-                        context,
-                        desktopValue: 13,
-                      ),
+        else
+          timeout == false
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SelectableText(
+                      AppLocalizations.of(context)!.farmLockClaimFinalAmount,
+                      style: AppTextStyles.bodyLarge(context),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                    width: 10,
-                    child: CircularProgressIndicator(strokeWidth: 1),
-                  ),
-                ],
-              )
-            : SelectableText(
-                '${AppLocalizations.of(context)!.farmLockClaimFinalAmount} ${AppLocalizations.of(context)!.finalAmountNotRecovered}',
-                style: TextStyle(
-                  fontSize: aedappfm.Responsive.fontSizeFromValue(
-                    context,
-                    desktopValue: 13,
-                  ),
+                    const SizedBox(
+                      height: 10,
+                      width: 10,
+                      child: CircularProgressIndicator(strokeWidth: 1),
+                    ),
+                  ],
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SelectableText(
+                      AppLocalizations.of(context)!.farmLockClaimFinalAmount,
+                      style: AppTextStyles.bodyLarge(context),
+                    ),
+                    SelectableText(
+                      AppLocalizations.of(context)!.finalAmountNotRecovered,
+                      style: AppTextStyles.bodyLarge(context),
+                    ),
+                  ],
                 ),
-              );
+      ],
+    );
   }
 }

@@ -292,6 +292,9 @@ class LiquidityAddFormSheet extends ConsumerWidget
               ],
             ),
           ),
+          const SizedBox(
+            height: 80,
+          ),
         ],
       ),
     );

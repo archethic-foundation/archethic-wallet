@@ -7,7 +7,7 @@ part of 'provider.dart';
 // **************************************************************************
 
 String _$liquidityAddFormNotifierHash() =>
-    r'd4a65a6c8a1838202738335cc1b1e330bc2930f3';
+    r'b76300c920f3eb69eee5b777d7d8d01fc5e2f9e5';
 
 /// See also [LiquidityAddFormNotifier].
 @ProviderFor(LiquidityAddFormNotifier)

@@ -217,13 +217,13 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
     return true;
   }
 
-  Future<void> withdraw(AppLocalizations localizations) async {
+  Future<bool> withdraw(AppLocalizations localizations) async {
     setFarmLockWithdrawOk(false);
     setProcessInProgress(true);
 
     if (await control(localizations) == false) {
       setProcessInProgress(false);
-      return;
+      return false;
     }
 
     final accountSelected = ref.watch(
@@ -243,5 +243,7 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
           state.depositId,
           state.rewardToken!,
         );
+
+    return true;
   }
 }

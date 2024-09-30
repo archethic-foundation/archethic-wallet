@@ -221,13 +221,13 @@ class FarmLockLevelUpFormNotifier extends _$FarmLockLevelUpFormNotifier {
     return true;
   }
 
-  Future<void> lock(AppLocalizations appLocalizations) async {
+  Future<bool> lock(AppLocalizations appLocalizations) async {
     setFarmLockLevelUpOk(false);
     setProcessInProgress(true);
 
     if (await control(appLocalizations) == false) {
       setProcessInProgress(false);
-      return;
+      return false;
     }
 
     final accountSelected = ref.watch(
@@ -250,5 +250,7 @@ class FarmLockLevelUpFormNotifier extends _$FarmLockLevelUpFormNotifier {
           state.farmLockLevelUpDuration,
           state.level,
         );
+
+    return true;
   }
 }

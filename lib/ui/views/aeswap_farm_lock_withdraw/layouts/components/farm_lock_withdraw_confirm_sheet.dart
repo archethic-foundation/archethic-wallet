@@ -7,6 +7,7 @@ import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/layouts/components/farm_lock_withdraw_confirm_infos.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/layouts/components/farm_lock_withdraw_result_sheet.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
@@ -17,6 +18,7 @@ import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutte
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class FarmLockWithdrawConfirmSheet extends ConsumerStatefulWidget {
   const FarmLockWithdrawConfirmSheet({super.key});
@@ -59,11 +61,15 @@ class FarmLockWithdrawConfirmSheetState
           Dimens.buttonBottomDimens,
           key: const Key('farmLockWithdraw'),
           onPressed: () async {
-            await ref
+            final resultOk = await ref
                 .read(
                   farmLockWithdrawFormNotifierProvider.notifier,
                 )
                 .withdraw(AppLocalizations.of(context)!);
+
+            if (resultOk) {
+              await context.push(FarmLockWithdrawResultSheet.routerPage);
+            }
           },
           disabled:
               (!consentChecked && farmLockWithdraw.consentDateTime == null) ||
