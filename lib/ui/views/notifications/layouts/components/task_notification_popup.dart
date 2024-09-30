@@ -16,6 +16,7 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
   factory TaskNotificationPopup._fromSwap(
     Task task,
     BuildContext context,
+    WidgetRef ref,
   ) {
     if (task.failure != null) {
       return _getErrorNotification(
@@ -25,6 +26,14 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
       );
     }
     final amount = task.data.amountSwapped as double;
+
+    unawaited(() async {
+      await (await ref
+              .read(AccountProviders.accounts.notifier)
+              .selectedAccountNotifier)
+          ?.refreshRecentTransactions();
+    }());
+
     return TaskNotificationPopup.success(
       key: Key(task.id),
       actionType: task.data.actionType,
@@ -58,6 +67,7 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
   factory TaskNotificationPopup._fromAddLiquidity(
     Task task,
     BuildContext context,
+    WidgetRef ref,
   ) {
     if (task.failure != null) {
       return _getErrorNotification(
@@ -67,6 +77,14 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
       );
     }
     final amount = task.data.amount as double;
+
+    unawaited(() async {
+      await (await ref
+              .read(AccountProviders.accounts.notifier)
+              .selectedAccountNotifier)
+          ?.refreshRecentTransactions();
+    }());
+
     return TaskNotificationPopup.success(
       key: Key(task.id),
       actionType: task.data.actionType,
@@ -100,6 +118,7 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
   factory TaskNotificationPopup._fromRemoveLiquidity(
     Task task,
     BuildContext context,
+    WidgetRef ref,
   ) {
     if (task.failure != null) {
       return _getErrorNotification(
@@ -111,6 +130,14 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
     final amountToken1 = task.data.amountToken1 as double;
     final amountToken2 = task.data.amountToken2 as double;
     final amountLPToken = task.data.amountLPToken as double;
+
+    unawaited(() async {
+      await (await ref
+              .read(AccountProviders.accounts.notifier)
+              .selectedAccountNotifier)
+          ?.refreshRecentTransactions();
+    }());
+
     return TaskNotificationPopup.success(
       key: Key(task.id),
       actionType: task.data.actionType,
@@ -150,6 +177,7 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
   factory TaskNotificationPopup._fromClaimFarm(
     Task task,
     BuildContext context,
+    WidgetRef ref,
   ) {
     if (task.failure != null) {
       return _getErrorNotification(
@@ -158,6 +186,14 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
         context,
       );
     }
+
+    unawaited(() async {
+      await (await ref
+              .read(AccountProviders.accounts.notifier)
+              .selectedAccountNotifier)
+          ?.refreshRecentTransactions();
+    }());
+
     final amount = task.data.amount as double;
     return TaskNotificationPopup.success(
       key: Key(task.id),
@@ -190,6 +226,7 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
   factory TaskNotificationPopup._fromClaimFarmLock(
     Task task,
     BuildContext context,
+    WidgetRef ref,
   ) {
     if (task.failure != null) {
       return _getErrorNotification(
@@ -198,6 +235,14 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
         context,
       );
     }
+
+    unawaited(() async {
+      await (await ref
+              .read(AccountProviders.accounts.notifier)
+              .selectedAccountNotifier)
+          ?.refreshRecentTransactions();
+    }());
+
     final amount = task.data.amount as double;
     return TaskNotificationPopup.success(
       key: Key(task.id),
@@ -230,6 +275,7 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
   factory TaskNotificationPopup._fromDepositFarm(
     Task task,
     BuildContext context,
+    WidgetRef ref,
   ) {
     if (task.failure != null) {
       return _getErrorNotification(
@@ -239,6 +285,14 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
       );
     }
     final amount = task.data.amount as double;
+
+    unawaited(() async {
+      await (await ref
+              .read(AccountProviders.accounts.notifier)
+              .selectedAccountNotifier)
+          ?.refreshRecentTransactions();
+    }());
+
     return TaskNotificationPopup.success(
       key: Key(task.id),
       actionType: task.data.actionType,
@@ -270,6 +324,7 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
   factory TaskNotificationPopup._fromDepositFarmLock(
     Task task,
     BuildContext context,
+    WidgetRef ref,
   ) {
     if (task.failure != null) {
       return _getErrorNotification(
@@ -278,6 +333,14 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
         context,
       );
     }
+
+    unawaited(() async {
+      await (await ref
+              .read(AccountProviders.accounts.notifier)
+              .selectedAccountNotifier)
+          ?.refreshRecentTransactions();
+    }());
+
     final amount = task.data.amount as double;
     return TaskNotificationPopup.success(
       key: Key(task.id),
@@ -312,6 +375,7 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
   factory TaskNotificationPopup._fromLevelUpFarmLock(
     Task task,
     BuildContext context,
+    WidgetRef ref,
   ) {
     if (task.failure != null) {
       return _getErrorNotification(
@@ -320,6 +384,14 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
         context,
       );
     }
+
+    unawaited(() async {
+      await (await ref
+              .read(AccountProviders.accounts.notifier)
+              .selectedAccountNotifier)
+          ?.refreshRecentTransactions();
+    }());
+
     final amount = task.data.amount as double;
     return TaskNotificationPopup.success(
       key: Key(task.id),
@@ -353,6 +425,7 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
   factory TaskNotificationPopup._fromWithdrawFarm(
     Task task,
     BuildContext context,
+    WidgetRef ref,
   ) {
     if (task.failure != null) {
       return _getErrorNotification(
@@ -364,6 +437,14 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
     final amountReward = task.data.amountReward as double;
     final amountWithdraw = task.data.amountWithdraw as double;
     final isFarmClose = task.data.isFarmClose as bool;
+
+    unawaited(() async {
+      await (await ref
+              .read(AccountProviders.accounts.notifier)
+              .selectedAccountNotifier)
+          ?.refreshRecentTransactions();
+    }());
+
     return TaskNotificationPopup.success(
       key: Key(task.id),
       actionType: task.data.actionType,
@@ -399,6 +480,7 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
   factory TaskNotificationPopup._fromWithdrawFarmLock(
     Task task,
     BuildContext context,
+    WidgetRef ref,
   ) {
     if (task.failure != null) {
       return _getErrorNotification(
@@ -410,6 +492,14 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
     final amountReward = task.data.amountReward as double;
     final amountWithdraw = task.data.amountWithdraw as double;
     final isFarmClose = task.data.isFarmClose as bool;
+
+    unawaited(() async {
+      await (await ref
+              .read(AccountProviders.accounts.notifier)
+              .selectedAccountNotifier)
+          ?.refreshRecentTransactions();
+    }());
+
     return TaskNotificationPopup.success(
       key: Key(task.id),
       actionType: task.data.actionType,
@@ -492,29 +582,31 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
   factory TaskNotificationPopup.fromTask(
     Task<DexNotification, aedappfm.Failure> task,
     BuildContext context,
+    WidgetRef ref,
   ) =>
       switch (task.data.actionType) {
-        DexActionType.swap => TaskNotificationPopup._fromSwap(task, context),
+        DexActionType.swap =>
+          TaskNotificationPopup._fromSwap(task, context, ref),
         DexActionType.addLiquidity =>
-          TaskNotificationPopup._fromAddLiquidity(task, context),
+          TaskNotificationPopup._fromAddLiquidity(task, context, ref),
         DexActionType.removeLiquidity =>
-          TaskNotificationPopup._fromRemoveLiquidity(task, context),
+          TaskNotificationPopup._fromRemoveLiquidity(task, context, ref),
         DexActionType.claimFarm =>
-          TaskNotificationPopup._fromClaimFarm(task, context),
+          TaskNotificationPopup._fromClaimFarm(task, context, ref),
         DexActionType.claimFarmLock =>
-          TaskNotificationPopup._fromClaimFarmLock(task, context),
+          TaskNotificationPopup._fromClaimFarmLock(task, context, ref),
         DexActionType.depositFarm =>
-          TaskNotificationPopup._fromDepositFarm(task, context),
+          TaskNotificationPopup._fromDepositFarm(task, context, ref),
         DexActionType.depositFarmLock =>
-          TaskNotificationPopup._fromDepositFarmLock(task, context),
+          TaskNotificationPopup._fromDepositFarmLock(task, context, ref),
         DexActionType.levelUpFarmLock =>
-          TaskNotificationPopup._fromLevelUpFarmLock(task, context),
+          TaskNotificationPopup._fromLevelUpFarmLock(task, context, ref),
         DexActionType.withdrawFarm =>
-          TaskNotificationPopup._fromWithdrawFarm(task, context),
+          TaskNotificationPopup._fromWithdrawFarm(task, context, ref),
         DexActionType.withdrawFarmLock =>
-          TaskNotificationPopup._fromWithdrawFarmLock(task, context),
+          TaskNotificationPopup._fromWithdrawFarmLock(task, context, ref),
         DexActionType.addPool =>
-          TaskNotificationPopup._fromRemoveLiquidity(task, context),
+          TaskNotificationPopup._fromRemoveLiquidity(task, context, ref),
       };
 
   void show(BuildContext context) {
