@@ -270,8 +270,7 @@ class SwapInfos extends ConsumerWidget {
     SwapFormState swap,
     String tokenAddressRatioPrimary,
   ) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return SheetDetailCard(
       children: [
         SelectableText(
           AppLocalizations.of(context)!.swapInfosRatio,
