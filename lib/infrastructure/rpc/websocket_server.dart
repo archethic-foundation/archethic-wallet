@@ -35,15 +35,19 @@ class ArchethicWebsocketRPCServer {
           );
 
           httpServer.listen((HttpRequest request) async {
-            _logger.info('Received connection');
-
             final socket = await WebSocketTransformer.upgrade(request);
             final channel = IOWebSocketChannel(socket);
-
             final peerServer = AWCJsonRPCServer(channel.cast<String>());
-
             _openedSockets.add(peerServer);
+            final clientName =
+                '${request.connectionInfo?.remoteAddress}:${request.connectionInfo?.remotePort}';
+            _logger.info(
+              'Connection [${peerServer.hashCode}] opened (from $clientName)',
+            );
             await peerServer.listen();
+            _logger.info(
+              'Connection [${peerServer.hashCode}] closed (from $clientName)',
+            );
           });
           _runningHttpServer = httpServer;
         },
