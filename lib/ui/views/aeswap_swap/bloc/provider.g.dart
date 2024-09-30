@@ -6,7 +6,7 @@ part of 'provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$swapFormNotifierHash() => r'dbb090a8814b96af7fd73e45fb2ae05fe9bb9b2a';
+String _$swapFormNotifierHash() => r'ca20d4c1b0e930270799d2196ea288cc6d6b7663';
 
 /// See also [SwapFormNotifier].
 @ProviderFor(SwapFormNotifier)

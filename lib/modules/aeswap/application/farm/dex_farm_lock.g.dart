@@ -24,7 +24,7 @@ final _dexFarmLockRepositoryProvider =
 
 typedef _DexFarmLockRepositoryRef
     = AutoDisposeProviderRef<DexFarmLockRepositoryImpl>;
-String _$getFarmLockInfosHash() => r'7e397a974d0033f64b9595ad0d3355c2181e437d';
+String _$getFarmLockInfosHash() => r'cce386d8baeed964350e6eb83bb7fe4d968ef211';
 
 /// Copied from Dart SDK
 class _SystemHash {
