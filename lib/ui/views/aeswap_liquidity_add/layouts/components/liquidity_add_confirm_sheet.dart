@@ -6,6 +6,7 @@ import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/layouts/components/liquidity_add_confirm_infos.dart';
+import 'package:aewallet/ui/views/aeswap_liquidity_add/layouts/components/liquidity_add_result_sheet.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
@@ -16,6 +17,7 @@ import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutte
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class LiquidityAddConfirmFormSheet extends ConsumerStatefulWidget {
   const LiquidityAddConfirmFormSheet({
@@ -59,9 +61,12 @@ class LiquidityAddConfirmFormSheetState
           Dimens.buttonBottomDimens,
           key: const Key('addLiquidity'),
           onPressed: () async {
-            await ref
+            final resultOk = await ref
                 .read(liquidityAddFormNotifierProvider.notifier)
                 .add(AppLocalizations.of(context)!);
+            if (resultOk) {
+              await context.push(LiquidityAddResultSheet.routerPage);
+            }
           },
           disabled: (!consentChecked && liquidityAdd.consentDateTime == null) ||
               liquidityAdd.isProcessInProgress,

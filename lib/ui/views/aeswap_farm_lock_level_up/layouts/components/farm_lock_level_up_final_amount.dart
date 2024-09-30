@@ -14,6 +14,9 @@ class FarmLockLevelUpFinalAmount extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final farmLockLevelUp = ref.watch(farmLockLevelUpFormNotifierProvider);
+    if (farmLockLevelUp.farmLockLevelUpOk == false) {
+      return const SizedBox.shrink();
+    }
 
     final finalAmount = farmLockLevelUp.finalAmount;
     final timeout = ref.watch(

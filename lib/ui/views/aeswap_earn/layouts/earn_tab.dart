@@ -247,6 +247,8 @@ class EarnTabState extends ConsumerState<EarnTab> {
                     localizations.earnHeaderStartEarningBtn,
                     Dimens.buttonBottomDimens,
                     key: const Key('startEarn'),
+                    disabled:
+                        earnForm.pool == null || earnForm.farmLock == null,
                     onPressed: () async {
                       final earnForm =
                           ref.watch(earnFormNotifierProvider).value ??

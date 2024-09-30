@@ -12,6 +12,8 @@ class SwapFinalAmount extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final swap = ref.watch(swapFormNotifierProvider);
+    if (swap.swapOk == false) return const SizedBox.shrink();
+
     final finalAmount = swap.finalAmount;
     final timeout = ref.watch(
       swapFormNotifierProvider.select((value) => value.failure != null),
@@ -35,26 +37,34 @@ class SwapFinalAmount extends ConsumerWidget {
           )
         else
           timeout == false
-              ? Row(
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SelectableText(
                       AppLocalizations.of(context)!
                           .swapFinalAmountAmountSwapped,
                       style: AppTextStyles.bodyLarge(context),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 10),
-                      child: SizedBox(
-                        height: 10,
-                        width: 10,
-                        child: CircularProgressIndicator(strokeWidth: 1),
-                      ),
+                    const SizedBox(
+                      height: 10,
+                      width: 10,
+                      child: CircularProgressIndicator(strokeWidth: 1),
                     ),
                   ],
                 )
-              : SelectableText(
-                  '${AppLocalizations.of(context)!.swapFinalAmountAmountSwapped} ${AppLocalizations.of(context)!.finalAmountNotRecovered}',
-                  style: AppTextStyles.bodyLarge(context),
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SelectableText(
+                      AppLocalizations.of(context)!
+                          .swapFinalAmountAmountSwapped,
+                      style: AppTextStyles.bodyLarge(context),
+                    ),
+                    SelectableText(
+                      AppLocalizations.of(context)!.finalAmountNotRecovered,
+                      style: AppTextStyles.bodyLarge(context),
+                    ),
+                  ],
                 ),
       ],
     );

@@ -174,55 +174,6 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
     );
   }
 
-  factory TaskNotificationPopup._fromClaimFarm(
-    Task task,
-    BuildContext context,
-    WidgetRef ref,
-  ) {
-    if (task.failure != null) {
-      return _getErrorNotification(
-        '${AppLocalizations.of(context)!.farmClaimTxAddress} ',
-        task,
-        context,
-      );
-    }
-
-    unawaited(() async {
-      await (await ref
-              .read(AccountProviders.accounts.notifier)
-              .selectedAccountNotifier)
-          ?.refreshRecentTransactions();
-    }());
-
-    final amount = task.data.amount as double;
-    return TaskNotificationPopup.success(
-      key: Key(task.id),
-      actionType: task.data.actionType,
-      description: Wrap(
-        direction: Axis.vertical,
-        children: [
-          if (task.dateTask != null)
-            SelectableText(
-              DateFormat.yMd(
-                Localizations.localeOf(context).languageCode,
-              ).add_Hms().format(
-                    task.dateTask!.toLocal(),
-                  ),
-            ),
-          addresslinkcopy.FormatAddressLinkCopy(
-            address: task.data.txAddress.toUpperCase(),
-            header: '${AppLocalizations.of(context)!.farmClaimTxAddress} ',
-            typeAddress: addresslinkcopy.TypeAddressLinkCopy.transaction,
-            reduceAddress: true,
-          ),
-          SelectableText(
-            '${AppLocalizations.of(context)!.farmClaimFinalAmount} ${amount.formatNumber(precision: 8)} ${task.data.rewardToken.symbol}',
-          ),
-        ],
-      ),
-    );
-  }
-
   factory TaskNotificationPopup._fromClaimFarmLock(
     Task task,
     BuildContext context,
@@ -250,6 +201,7 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
       description: Wrap(
         direction: Axis.vertical,
         children: [
+          SelectableText(AppLocalizations.of(context)!.claimFarmLockDone),
           if (task.dateTask != null)
             SelectableText(
               DateFormat.yMd(
@@ -258,63 +210,15 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
                     task.dateTask!.toLocal(),
                   ),
             ),
-          addresslinkcopy.FormatAddressLinkCopy(
-            address: task.data.txAddress.toUpperCase(),
-            header: '${AppLocalizations.of(context)!.farmLockClaimTxAddress} ',
-            typeAddress: addresslinkcopy.TypeAddressLinkCopy.transaction,
-            reduceAddress: true,
+          SelectableText(
+            AddressFormatters(task.data.txAddress.toUpperCase())
+                .getShortString(),
           ),
           SelectableText(
-            '${AppLocalizations.of(context)!.farmLockClaimFinalAmount} ${amount.formatNumber(precision: 8)} ${task.data.rewardToken.symbol}',
-          ),
-        ],
-      ),
-    );
-  }
-
-  factory TaskNotificationPopup._fromDepositFarm(
-    Task task,
-    BuildContext context,
-    WidgetRef ref,
-  ) {
-    if (task.failure != null) {
-      return _getErrorNotification(
-        '${AppLocalizations.of(context)!.farmDepositTxAddress} ',
-        task,
-        context,
-      );
-    }
-    final amount = task.data.amount as double;
-
-    unawaited(() async {
-      await (await ref
-              .read(AccountProviders.accounts.notifier)
-              .selectedAccountNotifier)
-          ?.refreshRecentTransactions();
-    }());
-
-    return TaskNotificationPopup.success(
-      key: Key(task.id),
-      actionType: task.data.actionType,
-      description: Wrap(
-        direction: Axis.vertical,
-        children: [
-          if (task.dateTask != null)
-            SelectableText(
-              DateFormat.yMd(
-                Localizations.localeOf(context).languageCode,
-              ).add_Hms().format(
-                    task.dateTask!.toLocal(),
-                  ),
-            ),
-          addresslinkcopy.FormatAddressLinkCopy(
-            address: task.data.txAddress.toUpperCase(),
-            header: '${AppLocalizations.of(context)!.farmDepositTxAddress} ',
-            typeAddress: addresslinkcopy.TypeAddressLinkCopy.transaction,
-            reduceAddress: true,
+            AppLocalizations.of(context)!.farmLockClaimFinalAmount,
           ),
           SelectableText(
-            '${AppLocalizations.of(context)!.farmDepositFinalAmount} ${amount.formatNumber(precision: 8)} ${amount > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
+            '${amount.formatNumber(precision: 8)} ${task.data.rewardToken.symbol}',
           ),
         ],
       ),
@@ -399,6 +303,7 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
       description: Wrap(
         direction: Axis.vertical,
         children: [
+          SelectableText(AppLocalizations.of(context)!.levelUpFarmLockDone),
           if (task.dateTask != null)
             SelectableText(
               DateFormat.yMd(
@@ -407,71 +312,16 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
                     task.dateTask!.toLocal(),
                   ),
             ),
-          addresslinkcopy.FormatAddressLinkCopy(
-            address: task.data.txAddress.toUpperCase(),
-            header:
-                '${AppLocalizations.of(context)!.farmLockLevelUpTxAddress} ',
-            typeAddress: addresslinkcopy.TypeAddressLinkCopy.transaction,
-            reduceAddress: true,
+          SelectableText(
+            AddressFormatters(task.data.txAddress.toUpperCase())
+                .getShortString(),
           ),
           SelectableText(
-            '${AppLocalizations.of(context)!.farmLockLevelUpFinalAmount} ${amount.formatNumber(precision: 8)} ${amount > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
-          ),
-        ],
-      ),
-    );
-  }
-
-  factory TaskNotificationPopup._fromWithdrawFarm(
-    Task task,
-    BuildContext context,
-    WidgetRef ref,
-  ) {
-    if (task.failure != null) {
-      return _getErrorNotification(
-        '${AppLocalizations.of(context)!.farmWithdrawTxAddress} ',
-        task,
-        context,
-      );
-    }
-    final amountReward = task.data.amountReward as double;
-    final amountWithdraw = task.data.amountWithdraw as double;
-    final isFarmClose = task.data.isFarmClose as bool;
-
-    unawaited(() async {
-      await (await ref
-              .read(AccountProviders.accounts.notifier)
-              .selectedAccountNotifier)
-          ?.refreshRecentTransactions();
-    }());
-
-    return TaskNotificationPopup.success(
-      key: Key(task.id),
-      actionType: task.data.actionType,
-      description: Wrap(
-        direction: Axis.vertical,
-        children: [
-          if (task.dateTask != null)
-            SelectableText(
-              DateFormat.yMd(
-                Localizations.localeOf(context).languageCode,
-              ).add_Hms().format(
-                    task.dateTask!.toLocal(),
-                  ),
-            ),
-          addresslinkcopy.FormatAddressLinkCopy(
-            address: task.data.txAddress.toUpperCase(),
-            header: '${AppLocalizations.of(context)!.farmWithdrawTxAddress} ',
-            typeAddress: addresslinkcopy.TypeAddressLinkCopy.transaction,
-            reduceAddress: true,
+            AppLocalizations.of(context)!.farmLockLevelUpFinalAmount,
           ),
           SelectableText(
-            '${AppLocalizations.of(context)!.farmWithdrawFinalAmount} ${amountWithdraw.formatNumber(precision: 8)} ${amountWithdraw > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
+            '${amount.formatNumber(precision: 8)} ${amount > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
           ),
-          if ((isFarmClose == true && amountReward > 0) || isFarmClose == false)
-            SelectableText(
-              '${AppLocalizations.of(context)!.farmWithdrawFinalAmountReward} ${amountReward.formatNumber(precision: 8)} ${task.data.rewardToken!.symbol}',
-            ),
         ],
       ),
     );
@@ -506,6 +356,7 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
       description: Wrap(
         direction: Axis.vertical,
         children: [
+          SelectableText(AppLocalizations.of(context)!.withdrawFarmLockDone),
           if (task.dateTask != null)
             SelectableText(
               DateFormat.yMd(
@@ -514,19 +365,23 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
                     task.dateTask!.toLocal(),
                   ),
             ),
-          addresslinkcopy.FormatAddressLinkCopy(
-            address: task.data.txAddress.toUpperCase(),
-            header:
-                '${AppLocalizations.of(context)!.farmLockWithdrawTxAddress} ',
-            typeAddress: addresslinkcopy.TypeAddressLinkCopy.transaction,
-            reduceAddress: true,
+          SelectableText(
+            AddressFormatters(task.data.txAddress.toUpperCase())
+                .getShortString(),
           ),
           SelectableText(
-            '${AppLocalizations.of(context)!.farmLockWithdrawFinalAmount} ${amountWithdraw.formatNumber(precision: 8)} ${amountWithdraw > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
+            AppLocalizations.of(context)!.farmLockWithdrawFinalAmount,
+          ),
+          SelectableText(
+            '${amountWithdraw.formatNumber(precision: 8)} ${amountWithdraw > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
           ),
           if ((isFarmClose == true && amountReward > 0) || isFarmClose == false)
             SelectableText(
-              '${AppLocalizations.of(context)!.farmLockWithdrawFinalAmountReward} ${amountReward.formatNumber(precision: 8)} ${task.data.rewardToken!.symbol}',
+              AppLocalizations.of(context)!.farmLockWithdrawFinalAmountReward,
+            ),
+          if ((isFarmClose == true && amountReward > 0) || isFarmClose == false)
+            SelectableText(
+              '${amountReward.formatNumber(precision: 8)} ${task.data.rewardToken!.symbol}',
             ),
         ],
       ),
@@ -591,18 +446,12 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
           TaskNotificationPopup._fromAddLiquidity(task, context, ref),
         DexActionType.removeLiquidity =>
           TaskNotificationPopup._fromRemoveLiquidity(task, context, ref),
-        DexActionType.claimFarm =>
-          TaskNotificationPopup._fromClaimFarm(task, context, ref),
         DexActionType.claimFarmLock =>
           TaskNotificationPopup._fromClaimFarmLock(task, context, ref),
-        DexActionType.depositFarm =>
-          TaskNotificationPopup._fromDepositFarm(task, context, ref),
         DexActionType.depositFarmLock =>
           TaskNotificationPopup._fromDepositFarmLock(task, context, ref),
         DexActionType.levelUpFarmLock =>
           TaskNotificationPopup._fromLevelUpFarmLock(task, context, ref),
-        DexActionType.withdrawFarm =>
-          TaskNotificationPopup._fromWithdrawFarm(task, context, ref),
         DexActionType.withdrawFarmLock =>
           TaskNotificationPopup._fromWithdrawFarmLock(task, context, ref),
         DexActionType.addPool =>
@@ -632,13 +481,7 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
       case DexActionType.removeLiquidity:
         height = 160;
         break;
-      case DexActionType.claimFarm:
-        height = 130;
-        break;
       case DexActionType.claimFarmLock:
-        height = 130;
-        break;
-      case DexActionType.depositFarm:
         height = 130;
         break;
       case DexActionType.depositFarmLock:
@@ -647,11 +490,8 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
       case DexActionType.levelUpFarmLock:
         height = 130;
         break;
-      case DexActionType.withdrawFarm:
-        height = 130;
-        break;
       case DexActionType.withdrawFarmLock:
-        height = 130;
+        height = 160;
         break;
       case DexActionType.addPool:
         height = 130;

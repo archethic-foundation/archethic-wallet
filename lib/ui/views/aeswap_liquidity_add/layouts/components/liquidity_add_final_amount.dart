@@ -14,6 +14,7 @@ class LiquidityAddFinalAmount extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final liquidityAdd = ref.watch(liquidityAddFormNotifierProvider);
+    if (liquidityAdd.liquidityAddOk == false) return const SizedBox.shrink();
 
     final finalAmount = liquidityAdd.finalAmount;
     final timeout = ref.watch(
@@ -38,25 +39,32 @@ class LiquidityAddFinalAmount extends ConsumerWidget {
           )
         else
           timeout == false
-              ? Row(
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SelectableText(
                       AppLocalizations.of(context)!.liquidityAddFinalAmount,
                       style: AppTextStyles.bodyLarge(context),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 10),
-                      child: SizedBox(
-                        height: 10,
-                        width: 10,
-                        child: CircularProgressIndicator(strokeWidth: 1),
-                      ),
+                    const SizedBox(
+                      height: 10,
+                      width: 10,
+                      child: CircularProgressIndicator(strokeWidth: 1),
                     ),
                   ],
                 )
-              : SelectableText(
-                  '${AppLocalizations.of(context)!.liquidityAddFinalAmount} ${AppLocalizations.of(context)!.finalAmountNotRecovered}',
-                  style: AppTextStyles.bodyLarge(context),
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SelectableText(
+                      AppLocalizations.of(context)!.liquidityAddFinalAmount,
+                      style: AppTextStyles.bodyLarge(context),
+                    ),
+                    SelectableText(
+                      AppLocalizations.of(context)!.finalAmountNotRecovered,
+                      style: AppTextStyles.bodyLarge(context),
+                    ),
+                  ],
                 ),
       ],
     );

@@ -982,5 +982,8 @@
     "earnHeaderStartEarningBtn": "Commencez à gagner",
     "earnHeaderAddLiquidityTxt": "Pour obtenir des tokens LP, vous devez fournir des liquidités ici :",
     "liquidityAddDesc": "Ajoutez de la liquidité au pool et recevez des LP Tokens représentant votre part",
-    "keychainAddressCopied": "Addresse de la keychain copiée"
+    "keychainAddressCopied": "Addresse de la keychain copiée",
+    "withdrawFarmLockDone": "Withdraw successfully completed",
+    "claimFarmLockDone": "Claim successfully completed",
+    "levelUpFarmLockDone": "Level Up successfully completed"
 }

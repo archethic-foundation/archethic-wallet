@@ -331,13 +331,13 @@ class LiquidityRemoveFormNotifier extends _$LiquidityRemoveFormNotifier {
     return true;
   }
 
-  Future<void> remove(AppLocalizations appLocalizations) async {
+  Future<bool> remove(AppLocalizations appLocalizations) async {
     setLiquidityRemoveOk(false);
     setProcessInProgress(true);
 
     if (await control(appLocalizations) == false) {
       setProcessInProgress(false);
-      return;
+      return false;
     }
 
     final accountSelected = ref.watch(
@@ -361,5 +361,7 @@ class LiquidityRemoveFormNotifier extends _$LiquidityRemoveFormNotifier {
     ref
       ..invalidate(userBalanceProvider)
       ..invalidate(DexPoolProviders.getPool(state.pool!.poolAddress));
+
+    return true;
   }
 }

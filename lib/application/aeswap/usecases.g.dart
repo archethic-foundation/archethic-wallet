@@ -6,7 +6,7 @@ part of 'usecases.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$addLiquidityCaseHash() => r'9c3bf456493bd17e655daf9273058deae83f405c';
+String _$addLiquidityCaseHash() => r'88d2f9747028ff4535653e22843706ade1cbe144';
 
 /// See also [addLiquidityCase].
 @ProviderFor(addLiquidityCase)
@@ -84,7 +84,7 @@ final removeLiquidityCaseProvider = Provider<RemoveLiquidityCase>.internal(
 );
 
 typedef RemoveLiquidityCaseRef = ProviderRef<RemoveLiquidityCase>;
-String _$swapCaseHash() => r'd8cb6f797026323a42abd5e1d7e45ed790fa71c0';
+String _$swapCaseHash() => r'd138e79398ab279d4cfa481eca373cc9c3548967';
 
 /// See also [swapCase].
 @ProviderFor(swapCase)

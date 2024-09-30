@@ -150,6 +150,22 @@ final _aeSwapRoutes = [
     },
   ),
   GoRoute(
+    path: FarmLockClaimResultSheet.routerPage,
+    pageBuilder: (context, state) {
+      return CustomTransitionPage<void>(
+        transitionDuration: Duration.zero,
+        reverseTransitionDuration: Duration.zero,
+        key: state.pageKey,
+        child: const FarmLockClaimResultSheet(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(
+          opacity: animation,
+          child: child,
+        ),
+      );
+    },
+  ),
+  GoRoute(
     path: FarmLockWithdrawSheet.routerPage,
     pageBuilder: (context, state) {
       final farmAddress = state.uri.queryParameters
@@ -203,6 +219,22 @@ final _aeSwapRoutes = [
     },
   ),
   GoRoute(
+    path: FarmLockWithdrawResultSheet.routerPage,
+    pageBuilder: (context, state) {
+      return CustomTransitionPage<void>(
+        transitionDuration: Duration.zero,
+        reverseTransitionDuration: Duration.zero,
+        key: state.pageKey,
+        child: const FarmLockWithdrawResultSheet(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(
+          opacity: animation,
+          child: child,
+        ),
+      );
+    },
+  ),
+  GoRoute(
     path: LiquidityRemoveSheet.routerPage,
     pageBuilder: (context, state) {
       final pool = state.uri.queryParameters.getDecodedParameter(
@@ -223,6 +255,22 @@ final _aeSwapRoutes = [
           pool: pool!,
           pair: pair!,
           lpToken: lpToken!,
+        ),
+      );
+    },
+  ),
+  GoRoute(
+    path: LiquidityRemoveResultSheet.routerPage,
+    pageBuilder: (context, state) {
+      return CustomTransitionPage<void>(
+        transitionDuration: Duration.zero,
+        reverseTransitionDuration: Duration.zero,
+        key: state.pageKey,
+        child: const LiquidityRemoveResultSheet(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(
+          opacity: animation,
+          child: child,
         ),
       );
     },
@@ -276,13 +324,13 @@ final _aeSwapRoutes = [
     },
   ),
   GoRoute(
-    path: LiquidityRemoveResultSheet.routerPage,
+    path: FarmLockLevelUpResultSheet.routerPage,
     pageBuilder: (context, state) {
       return CustomTransitionPage<void>(
         transitionDuration: Duration.zero,
         reverseTransitionDuration: Duration.zero,
         key: state.pageKey,
-        child: const LiquidityRemoveResultSheet(),
+        child: const FarmLockLevelUpResultSheet(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) =>
             FadeTransition(
           opacity: animation,

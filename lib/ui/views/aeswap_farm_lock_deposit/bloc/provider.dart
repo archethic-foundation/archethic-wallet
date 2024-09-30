@@ -245,13 +245,13 @@ class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
     return true;
   }
 
-  Future<void> lock(AppLocalizations appLocalizations) async {
+  Future<bool> lock(AppLocalizations appLocalizations) async {
     setFarmLockDepositOk(false);
     setProcessInProgress(true);
 
     if (await control(appLocalizations) == false) {
       setProcessInProgress(false);
-      return;
+      return false;
     }
 
     final accountSelected = ref.watch(
@@ -273,5 +273,7 @@ class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
           state.farmLockDepositDuration,
           state.level,
         );
+
+    return true;
   }
 }

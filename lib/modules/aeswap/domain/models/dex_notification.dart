@@ -34,30 +34,6 @@ class DexNotification with _$DexNotification {
     DexToken? lpToken,
   }) = _DexNotificationRemoveLiquidity;
 
-  const factory DexNotification.claimFarm({
-    @Default(DexActionType.claimFarm) DexActionType actionType,
-    String? txAddress,
-    double? amount,
-    DexToken? rewardToken,
-  }) = _DexNotificationClaimFarm;
-
-  const factory DexNotification.depositFarm({
-    @Default(DexActionType.depositFarm) DexActionType actionType,
-    String? txAddress,
-    double? amount,
-    String? farmAddress,
-    bool? isUCO,
-  }) = _DexNotificationDepositFarm;
-
-  const factory DexNotification.withdrawFarm({
-    @Default(DexActionType.withdrawFarm) DexActionType actionType,
-    String? txAddress,
-    double? amountReward,
-    double? amountWithdraw,
-    bool? isFarmClose,
-    DexToken? rewardToken,
-  }) = _DexNotificationWithdrawFarm;
-
   const factory DexNotification.depositFarmLock({
     @Default(DexActionType.depositFarmLock) DexActionType actionType,
     String? txAddress,
