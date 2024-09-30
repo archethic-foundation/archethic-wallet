@@ -68,7 +68,7 @@ class _$TaskNotificationPopupCopyWithImpl<$Res,
     Object? actionType = null,
     Object? action = freezed,
     Object? onActionPressed = freezed,
-    Object? progressIndicatorColor = freezed,
+    Object? progressIndicatorColor = null,
   }) {
     return _then(_value.copyWith(
       key: freezed == key
@@ -99,7 +99,7 @@ class _$TaskNotificationPopupCopyWithImpl<$Res,
           ? _value.onActionPressed
           : onActionPressed // ignore: cast_nullable_to_non_nullable
               as VoidCallback?,
-      progressIndicatorColor: freezed == progressIndicatorColor
+      progressIndicatorColor: null == progressIndicatorColor
           ? _value.progressIndicatorColor
           : progressIndicatorColor // ignore: cast_nullable_to_non_nullable
               as Color,
@@ -146,7 +146,7 @@ class __$$TaskNotificationPopupImplCopyWithImpl<$Res>
     Object? actionType = null,
     Object? action = freezed,
     Object? onActionPressed = freezed,
-    Object? progressIndicatorColor = freezed,
+    Object? progressIndicatorColor = null,
   }) {
     return _then(_$TaskNotificationPopupImpl(
       key: freezed == key
@@ -177,7 +177,7 @@ class __$$TaskNotificationPopupImplCopyWithImpl<$Res>
           ? _value.onActionPressed
           : onActionPressed // ignore: cast_nullable_to_non_nullable
               as VoidCallback?,
-      progressIndicatorColor: freezed == progressIndicatorColor
+      progressIndicatorColor: null == progressIndicatorColor
           ? _value.progressIndicatorColor
           : progressIndicatorColor // ignore: cast_nullable_to_non_nullable
               as Color,
@@ -236,21 +236,13 @@ class _$TaskNotificationPopupImpl extends _TaskNotificationPopup {
             (identical(other.action, action) || other.action == action) &&
             (identical(other.onActionPressed, onActionPressed) ||
                 other.onActionPressed == onActionPressed) &&
-            const DeepCollectionEquality()
-                .equals(other.progressIndicatorColor, progressIndicatorColor));
+            (identical(other.progressIndicatorColor, progressIndicatorColor) ||
+                other.progressIndicatorColor == progressIndicatorColor));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      key,
-      icon,
-      title,
-      description,
-      actionType,
-      action,
-      onActionPressed,
-      const DeepCollectionEquality().hash(progressIndicatorColor));
+  int get hashCode => Object.hash(runtimeType, key, icon, title, description,
+      actionType, action, onActionPressed, progressIndicatorColor);
 
   @JsonKey(ignore: true)
   @override

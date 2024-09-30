@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/modules/aeswap/application/notification.dart';
 import 'package:aewallet/modules/aeswap/domain/enum/dex_action_type.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_notification.dart';
@@ -37,7 +40,7 @@ class TasksNotificationWidget extends ConsumerWidget {
         final doneTask = next.valueOrNull;
         if (doneTask == null) return;
 
-        TaskNotificationPopup.fromTask(doneTask, context).show(context);
+        TaskNotificationPopup.fromTask(doneTask, context, ref).show(context);
       },
     );
     return child;
