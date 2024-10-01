@@ -30,7 +30,6 @@ class AWCWebview extends StatefulWidget {
 
 class _AWCWebviewState extends State<AWCWebview> {
   AWCJsonRPCServer? peerServer;
-  bool _isMessageChannelReady = false;
 
   @override
   void initState() {
@@ -54,6 +53,7 @@ class _AWCWebviewState extends State<AWCWebview> {
         color: Colors.black,
         child: InAppWebView(
           initialSettings: InAppWebViewSettings(
+            isInspectable: kDebugMode,
             transparentBackground: true,
           ),
           onLoadStop: (controller, url) async {
@@ -77,7 +77,14 @@ class _AWCWebviewState extends State<AWCWebview> {
     InAppWebViewController controller,
     WebUri? uri,
   ) async {
-    if (_isMessageChannelReady) return;
+    final isMessageChannelReady = await controller.evaluateJavascript(
+      source: "typeof awc !== 'undefined'",
+    );
+    if (isMessageChannelReady) {
+      AWCWebview._logger.info('AWC already initialized.');
+      return;
+    }
+
     if (!await AWCWebview.isAWCSupported) {
       AWCWebview._logger.info('AWC unsupported.');
       return;
@@ -122,7 +129,6 @@ window.addEventListener('message', function(event) {
       message: WebMessage(data: 'capturePort', ports: [port2]),
       targetOrigin: WebUri('*'),
     );
-    _isMessageChannelReady = true;
     return port1;
   }
 }
