@@ -35,7 +35,7 @@ class FarmLockWithdrawConfirmSheetState
 
   @override
   Widget build(BuildContext context) {
-    final accountSelected = ref.watch(
+    final accountSelected = ref.read(
       AccountProviders.accounts.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
@@ -52,7 +52,7 @@ class FarmLockWithdrawConfirmSheetState
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    final farmLockWithdraw = ref.watch(farmLockWithdrawFormNotifierProvider);
+    final farmLockWithdraw = ref.read(farmLockWithdrawFormNotifierProvider);
 
     return Row(
       children: <Widget>[
@@ -84,7 +84,7 @@ class FarmLockWithdrawConfirmSheetState
   PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final farmLockWithdrawNotifier =
-        ref.watch(farmLockWithdrawFormNotifierProvider.notifier);
+        ref.read(farmLockWithdrawFormNotifierProvider.notifier);
 
     return SheetAppBar(
       title: localizations.farmLockWithdrawFormTitle,
@@ -102,7 +102,7 @@ class FarmLockWithdrawConfirmSheetState
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final farmLockWithdraw = ref.watch(farmLockWithdrawFormNotifierProvider);
+    final farmLockWithdraw = ref.read(farmLockWithdrawFormNotifierProvider);
 
     final localizations = AppLocalizations.of(context)!;
 

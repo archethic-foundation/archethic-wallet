@@ -37,7 +37,7 @@ class SwapConfirmFormSheetState extends ConsumerState<SwapConfirmFormSheet>
 
   @override
   Widget build(BuildContext context) {
-    final accountSelected = ref.watch(
+    final accountSelected = ref.read(
       AccountProviders.accounts.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
@@ -54,7 +54,7 @@ class SwapConfirmFormSheetState extends ConsumerState<SwapConfirmFormSheet>
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    final swap = ref.watch(swapFormNotifierProvider);
+    final swap = ref.read(swapFormNotifierProvider);
     return Row(
       children: <Widget>[
         AppButtonTinyConnectivity(
@@ -96,7 +96,7 @@ class SwapConfirmFormSheetState extends ConsumerState<SwapConfirmFormSheet>
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final swap = ref.watch(swapFormNotifierProvider);
+    final swap = ref.read(swapFormNotifierProvider);
     if (swap.tokenToSwap == null || swap.tokenSwapped == null) {
       return const SizedBox.shrink();
     }
