@@ -3,7 +3,6 @@ import 'package:aewallet/ui/views/aeswap_swap/bloc/provider.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SwapTokenIconRefresh extends ConsumerStatefulWidget {
@@ -27,8 +26,17 @@ class _SwapTokenIconRefreshState extends ConsumerState<SwapTokenIconRefresh> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () async {
+    return IconButton(
+      icon: Icon(
+        isRefreshSuccess != null && isRefreshSuccess == true
+            ? Icons.check
+            : aedappfm.Iconsax.refresh,
+        size: 16,
+        color: isRefreshSuccess != null && isRefreshSuccess == true
+            ? Colors.white
+            : null,
+      ),
+      onPressed: () async {
         if (isRefreshSuccess != null && isRefreshSuccess == true) return;
         setState(
           () {
@@ -67,7 +75,7 @@ class _SwapTokenIconRefreshState extends ConsumerState<SwapTokenIconRefresh> {
           await swapNotifier.getPool();
         }
 
-        await Future.delayed(const Duration(seconds: 3));
+        await Future.delayed(const Duration(seconds: 2));
         if (mounted) {
           setState(
             () {
@@ -76,44 +84,6 @@ class _SwapTokenIconRefreshState extends ConsumerState<SwapTokenIconRefresh> {
           );
         }
       },
-      child: Tooltip(
-        message: AppLocalizations.of(context)!.swapIconRefreshTooltip,
-        child: SizedBox(
-          height: 40,
-          child: Card(
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: aedappfm.ArchethicThemeBase.brightPurpleHoverBorder
-                    .withOpacity(1),
-                width: 0.5,
-              ),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            elevation: 0,
-            color: isRefreshSuccess != null && isRefreshSuccess == true
-                ? aedappfm.ArchethicThemeBase.systemPositive600
-                : aedappfm.ArchethicThemeBase.brightPurpleHoverBackground
-                    .withOpacity(1),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: 5,
-                bottom: 5,
-                left: 10,
-                right: 10,
-              ),
-              child: Icon(
-                isRefreshSuccess != null && isRefreshSuccess == true
-                    ? Icons.check
-                    : aedappfm.Iconsax.refresh,
-                size: 16,
-                color: isRefreshSuccess != null && isRefreshSuccess == true
-                    ? Colors.white
-                    : null,
-              ),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
