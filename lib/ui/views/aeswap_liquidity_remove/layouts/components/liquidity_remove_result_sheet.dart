@@ -56,6 +56,7 @@ class LiquidityRemoveResultSheetState
           Dimens.buttonBottomDimens,
           key: const Key('close'),
           onPressed: () async {
+            ref.invalidate(liquidityRemoveFormNotifierProvider);
             context
               ..pop()
               ..pop();

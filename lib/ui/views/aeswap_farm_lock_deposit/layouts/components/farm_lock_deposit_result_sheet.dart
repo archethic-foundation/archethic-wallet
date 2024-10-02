@@ -56,6 +56,7 @@ class FarmLockDepositResultSheetState
           Dimens.buttonBottomDimens,
           key: const Key('close'),
           onPressed: () async {
+            ref.invalidate(farmLockDepositFormNotifierProvider);
             context
               ..pop()
               ..pop();

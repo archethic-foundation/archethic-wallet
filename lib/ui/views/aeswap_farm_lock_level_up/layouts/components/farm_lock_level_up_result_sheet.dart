@@ -56,6 +56,7 @@ class FarmLockLevelUpResultSheetState
           Dimens.buttonBottomDimens,
           key: const Key('close'),
           onPressed: () async {
+            ref.invalidate(farmLockLevelUpFormNotifierProvider);
             context
               ..pop()
               ..pop();
