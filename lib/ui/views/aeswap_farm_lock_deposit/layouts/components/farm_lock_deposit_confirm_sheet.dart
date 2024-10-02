@@ -13,6 +13,7 @@ import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
+import 'package:aewallet/ui/widgets/consent_widget.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -173,23 +174,18 @@ class FarmLockDepositConfirmSheetState
                 ),
               ],
             ),
-          if (farmLockDeposit.consentDateTime == null)
-            aedappfm.ConsentToCheck(
-              consentChecked: consentChecked,
-              onToggleConsent: (newValue) {
-                setState(() {
-                  consentChecked = newValue!;
-                });
-              },
-              uriPrivacyPolicy: kURIPrivacyPolicy,
-              uriTermsOfUse: kURITermsOfUse,
-            )
-          else
-            aedappfm.ConsentAlready(
-              consentDateTime: farmLockDeposit.consentDateTime!,
-              uriPrivacyPolicy: kURIPrivacyPolicy,
-              uriTermsOfUse: kURITermsOfUse,
+          ConsentWidget(
+            consentDateTime: farmLockDeposit.consentDateTime,
+            consentChecked: consentChecked,
+            onToggleConsent: (newValue) {
+              setState(() {
+                consentChecked = newValue!;
+              });
+            },
+            textStyle: AppTextStyles.bodyMedium(
+              context,
             ),
+          ),
           SheetDetailCard(
             children: [
               Text(
