@@ -128,7 +128,7 @@ class _LoadingFeeInfos extends ConsumerWidget {
               left: 3,
               top: 10,
             ),
-            child: LoadingAnimationWidget.prograssiveDots(
+            child: LoadingAnimationWidget.progressiveDots(
               color: ArchethicTheme.text,
               size: 10,
             ),

@@ -14,13 +14,9 @@ dependencies:
   animate_do: ^3.0.2
 
   # Retrieve version and url for local app update against store app Android and iOS
-  #app_version_update: ^4.0.1
-  app_version_update:
-    git:
-      url: https://github.com/redDwarf03/app_version_update.git
-      ref: main
+  app_version_update: ^5.0.2
 
-  archethic_dapp_framework_flutter: ^2.1.1
+  archethic_dapp_framework_flutter: ^2.1.2
   #archethic_dapp_framework_flutter:
   #  git:
   #    url: https://github.com/archethic-foundation/archethic-dapp-framework-flutter.git
@@ -209,7 +205,7 @@ dependencies:
   oktoast: ^3.3.1
 
   # Flutter plugin for querying information about the application package, such as CFBundleVersion on iOS or versionCode on Android
-  package_info_plus: ^6.0.0
+  package_info_plus: ^8.0.2
 
   # A basic password strength estimator for Dart. Considers the length of the password, used characters, and whether or not the password appears in the top 10,000 most used passwords.
   password_strength: ^0.2.0
@@ -290,7 +286,6 @@ dependency_overrides:
       ref: master
       path: flutter_inappwebview_macos
   webview_flutter_android: 3.16.1
-
 # Configuration added to make the webview work with Android and ios 18 - end
 
 dev_dependencies:
