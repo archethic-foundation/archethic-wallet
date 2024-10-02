@@ -31,8 +31,12 @@ mixin _$DexToken {
   bool get isLpToken => throw _privateConstructorUsedError;
   DexPair? get lpTokenPair => throw _privateConstructorUsedError;
 
+  /// Serializes this DexToken to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of DexToken
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $DexTokenCopyWith<DexToken> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -67,6 +71,8 @@ class _$DexTokenCopyWithImpl<$Res, $Val extends DexToken>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of DexToken
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -125,6 +131,8 @@ class _$DexTokenCopyWithImpl<$Res, $Val extends DexToken>
     ) as $Val);
   }
 
+  /// Create a copy of DexToken
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DexPairCopyWith<$Res>? get lpTokenPair {
@@ -170,6 +178,8 @@ class __$$DexTokenImplCopyWithImpl<$Res>
       _$DexTokenImpl _value, $Res Function(_$DexTokenImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DexToken
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -301,12 +311,14 @@ class _$DexTokenImpl extends _DexToken {
                 other.lpTokenPair == lpTokenPair));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, address, name, icon, symbol,
       balance, reserve, supply, isVerified, isLpToken, lpTokenPair);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DexToken
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DexTokenImplCopyWith<_$DexTokenImpl> get copyWith =>
@@ -357,8 +369,11 @@ abstract class _DexToken extends DexToken {
   bool get isLpToken;
   @override
   DexPair? get lpTokenPair;
+
+  /// Create a copy of DexToken
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DexTokenImplCopyWith<_$DexTokenImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

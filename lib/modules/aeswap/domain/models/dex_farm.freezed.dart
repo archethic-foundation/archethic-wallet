@@ -38,8 +38,12 @@ mixin _$DexFarm {
   double? get depositedAmount => throw _privateConstructorUsedError;
   double? get rewardAmount => throw _privateConstructorUsedError;
 
+  /// Serializes this DexFarm to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of DexFarm
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $DexFarmCopyWith<DexFarm> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -81,6 +85,8 @@ class _$DexFarmCopyWithImpl<$Res, $Val extends DexFarm>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of DexFarm
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -169,6 +175,8 @@ class _$DexFarmCopyWithImpl<$Res, $Val extends DexFarm>
     ) as $Val);
   }
 
+  /// Create a copy of DexFarm
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DexTokenCopyWith<$Res>? get lpToken {
@@ -181,6 +189,8 @@ class _$DexFarmCopyWithImpl<$Res, $Val extends DexFarm>
     });
   }
 
+  /// Create a copy of DexFarm
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DexPairCopyWith<$Res>? get lpTokenPair {
@@ -193,6 +203,8 @@ class _$DexFarmCopyWithImpl<$Res, $Val extends DexFarm>
     });
   }
 
+  /// Create a copy of DexFarm
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DexTokenCopyWith<$Res>? get rewardToken {
@@ -247,6 +259,8 @@ class __$$DexFarmImplCopyWithImpl<$Res>
       _$DexFarmImpl _value, $Res Function(_$DexFarmImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DexFarm
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -445,7 +459,7 @@ class _$DexFarmImpl extends _DexFarm {
                 other.rewardAmount == rewardAmount));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -466,7 +480,9 @@ class _$DexFarmImpl extends _DexFarm {
       depositedAmount,
       rewardAmount);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DexFarm
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DexFarmImplCopyWith<_$DexFarmImpl> get copyWith =>
@@ -529,13 +545,16 @@ abstract class _DexFarm extends DexFarm {
   @override
   double get estimateLPTokenInFiat;
   @override
-  double get statsRewardDistributed;
-  @override // User info
+  double get statsRewardDistributed; // User info
+  @override
   double? get depositedAmount;
   @override
   double? get rewardAmount;
+
+  /// Create a copy of DexFarm
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DexFarmImplCopyWith<_$DexFarmImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -34,6 +34,9 @@ class _$TokenDetailFormStateCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of TokenDetailFormState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -50,6 +53,9 @@ class __$$TokenDetailFormStateImplCopyWithImpl<$Res>
   __$$TokenDetailFormStateImplCopyWithImpl(_$TokenDetailFormStateImpl _value,
       $Res Function(_$TokenDetailFormStateImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of TokenDetailFormState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc

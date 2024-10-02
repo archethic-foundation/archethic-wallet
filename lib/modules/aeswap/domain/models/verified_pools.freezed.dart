@@ -24,8 +24,12 @@ mixin _$VerifiedPools {
   List<String> get testnet => throw _privateConstructorUsedError;
   List<String> get devnet => throw _privateConstructorUsedError;
 
+  /// Serializes this VerifiedPools to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of VerifiedPools
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $VerifiedPoolsCopyWith<VerifiedPools> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -49,6 +53,8 @@ class _$VerifiedPoolsCopyWithImpl<$Res, $Val extends VerifiedPools>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of VerifiedPools
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -92,6 +98,8 @@ class __$$VerifiedPoolsImplCopyWithImpl<$Res>
       _$VerifiedPoolsImpl _value, $Res Function(_$VerifiedPoolsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of VerifiedPools
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -169,7 +177,7 @@ class _$VerifiedPoolsImpl implements _VerifiedPools {
             const DeepCollectionEquality().equals(other._devnet, _devnet));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -177,7 +185,9 @@ class _$VerifiedPoolsImpl implements _VerifiedPools {
       const DeepCollectionEquality().hash(_testnet),
       const DeepCollectionEquality().hash(_devnet));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of VerifiedPools
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$VerifiedPoolsImplCopyWith<_$VerifiedPoolsImpl> get copyWith =>
@@ -206,8 +216,11 @@ abstract class _VerifiedPools implements VerifiedPools {
   List<String> get testnet;
   @override
   List<String> get devnet;
+
+  /// Create a copy of VerifiedPools
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$VerifiedPoolsImplCopyWith<_$VerifiedPoolsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -27,8 +27,12 @@ mixin _$DexFarmLockStats {
   double get weight => throw _privateConstructorUsedError;
   double get aprEstimation => throw _privateConstructorUsedError;
 
+  /// Serializes this DexFarmLockStats to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of DexFarmLockStats
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $DexFarmLockStatsCopyWith<DexFarmLockStats> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -57,6 +61,8 @@ class _$DexFarmLockStatsCopyWithImpl<$Res, $Val extends DexFarmLockStats>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of DexFarmLockStats
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -115,6 +121,8 @@ class __$$DexFarmLockStatsImplCopyWithImpl<$Res>
       $Res Function(_$DexFarmLockStatsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DexFarmLockStats
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -208,7 +216,7 @@ class _$DexFarmLockStatsImpl extends _DexFarmLockStats {
                 other.aprEstimation == aprEstimation));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -218,7 +226,9 @@ class _$DexFarmLockStatsImpl extends _DexFarmLockStats {
       weight,
       aprEstimation);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DexFarmLockStats
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DexFarmLockStatsImplCopyWith<_$DexFarmLockStatsImpl> get copyWith =>
@@ -255,8 +265,11 @@ abstract class _DexFarmLockStats extends DexFarmLockStats {
   double get weight;
   @override
   double get aprEstimation;
+
+  /// Create a copy of DexFarmLockStats
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DexFarmLockStatsImplCopyWith<_$DexFarmLockStatsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

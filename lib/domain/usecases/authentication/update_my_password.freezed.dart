@@ -20,7 +20,9 @@ mixin _$UpdatePasswordCommand {
   String get passwordConfirmation => throw _privateConstructorUsedError;
   Uint8List get challenge => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UpdatePasswordCommand
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $UpdatePasswordCommandCopyWith<UpdatePasswordCommand> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -46,6 +48,8 @@ class _$UpdatePasswordCommandCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of UpdatePasswordCommand
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -92,6 +96,8 @@ class __$$UpdatePasswordCommandImplCopyWithImpl<$Res>
       $Res Function(_$UpdatePasswordCommandImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UpdatePasswordCommand
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -153,7 +159,9 @@ class _$UpdatePasswordCommandImpl extends _UpdatePasswordCommand {
   int get hashCode => Object.hash(runtimeType, password, passwordConfirmation,
       const DeepCollectionEquality().hash(challenge));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UpdatePasswordCommand
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UpdatePasswordCommandImplCopyWith<_$UpdatePasswordCommandImpl>
@@ -174,8 +182,11 @@ abstract class _UpdatePasswordCommand extends UpdatePasswordCommand {
   String get passwordConfirmation;
   @override
   Uint8List get challenge;
+
+  /// Create a copy of UpdatePasswordCommand
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UpdatePasswordCommandImplCopyWith<_$UpdatePasswordCommandImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -245,6 +256,9 @@ class _$UpdatePasswordResultCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of UpdatePasswordResult
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -266,6 +280,8 @@ class __$$UpdatePasswordSuccessImplCopyWithImpl<$Res>
       $Res Function(_$UpdatePasswordSuccessImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UpdatePasswordResult
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -307,7 +323,9 @@ class _$UpdatePasswordSuccessImpl extends _UpdatePasswordSuccess {
   int get hashCode => Object.hash(
       runtimeType, const DeepCollectionEquality().hash(encodedChallenge));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UpdatePasswordResult
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UpdatePasswordSuccessImplCopyWith<_$UpdatePasswordSuccessImpl>
@@ -390,7 +408,10 @@ abstract class _UpdatePasswordSuccess extends UpdatePasswordResult {
   const _UpdatePasswordSuccess._() : super._();
 
   Uint8List get encodedChallenge;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of UpdatePasswordResult
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UpdatePasswordSuccessImplCopyWith<_$UpdatePasswordSuccessImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -409,6 +430,9 @@ class __$$passwordsDoNotMatchImplCopyWithImpl<$Res>
   __$$passwordsDoNotMatchImplCopyWithImpl(_$passwordsDoNotMatchImpl _value,
       $Res Function(_$passwordsDoNotMatchImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of UpdatePasswordResult
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -519,6 +543,9 @@ class __$$emptyPasswordImplCopyWithImpl<$Res>
   __$$emptyPasswordImplCopyWithImpl(
       _$emptyPasswordImpl _value, $Res Function(_$emptyPasswordImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of UpdatePasswordResult
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc

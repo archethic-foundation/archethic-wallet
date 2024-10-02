@@ -20,7 +20,9 @@ mixin _$SignTransactionConfirmationFormState {
       throw _privateConstructorUsedError;
   double get feesEstimation => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SignTransactionConfirmationFormState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SignTransactionConfirmationFormStateCopyWith<
           SignTransactionConfirmationFormState>
       get copyWith => throw _privateConstructorUsedError;
@@ -52,6 +54,8 @@ class _$SignTransactionConfirmationFormStateCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of SignTransactionConfirmationFormState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -70,6 +74,8 @@ class _$SignTransactionConfirmationFormStateCopyWithImpl<$Res,
     ) as $Val);
   }
 
+  /// Create a copy of SignTransactionConfirmationFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $RPCCommandCopyWith<SendTransactionRequest, $Res> get signTransactionCommand {
@@ -107,6 +113,8 @@ class __$$SignTransactionConfirmationFormStateImplCopyWithImpl<$Res>
       $Res Function(_$SignTransactionConfirmationFormStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SignTransactionConfirmationFormState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -159,7 +167,9 @@ class _$SignTransactionConfirmationFormStateImpl
   int get hashCode =>
       Object.hash(runtimeType, signTransactionCommand, feesEstimation);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SignTransactionConfirmationFormState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SignTransactionConfirmationFormStateImplCopyWith<
@@ -180,8 +190,11 @@ abstract class _SignTransactionConfirmationFormState
   RPCCommand<SendTransactionRequest> get signTransactionCommand;
   @override
   double get feesEstimation;
+
+  /// Create a copy of SignTransactionConfirmationFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SignTransactionConfirmationFormStateImplCopyWith<
           _$SignTransactionConfirmationFormStateImpl>
       get copyWith => throw _privateConstructorUsedError;

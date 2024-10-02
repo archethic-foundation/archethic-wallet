@@ -86,6 +86,9 @@ class _$AuthenticationResultCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of AuthenticationResult
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -105,6 +108,8 @@ class __$$AuthenticationResultImplCopyWithImpl<$Res>
       $Res Function(_$AuthenticationResultImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AuthenticationResult
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -155,7 +160,9 @@ class _$AuthenticationResultImpl extends _AuthenticationResult
   int get hashCode => Object.hash(
       runtimeType, const DeepCollectionEquality().hash(decodedChallenge));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AuthenticationResult
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AuthenticationResultImplCopyWith<_$AuthenticationResultImpl>
@@ -245,7 +252,10 @@ abstract class _AuthenticationResult extends AuthenticationResult {
   const _AuthenticationResult._() : super._();
 
   Uint8List get decodedChallenge;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AuthenticationResult
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AuthenticationResultImplCopyWith<_$AuthenticationResultImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -266,6 +276,9 @@ class __$$AuthenticationFailureImplCopyWithImpl<$Res>
   __$$AuthenticationFailureImplCopyWithImpl(_$AuthenticationFailureImpl _value,
       $Res Function(_$AuthenticationFailureImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of AuthenticationResult
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -394,6 +407,9 @@ class __$$AuthenticationNotSetupImplCopyWithImpl<$Res>
       _$AuthenticationNotSetupImpl _value,
       $Res Function(_$AuthenticationNotSetupImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of AuthenticationResult
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -522,6 +538,9 @@ class __$$AuthenticationTooMuchAttemptsImplCopyWithImpl<$Res>
       _$AuthenticationTooMuchAttemptsImpl _value,
       $Res Function(_$AuthenticationTooMuchAttemptsImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of AuthenticationResult
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -692,6 +711,9 @@ class _$UpdatePinResultCopyWithImpl<$Res, $Val extends UpdatePinResult>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of UpdatePinResult
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -711,6 +733,8 @@ class __$$UpdatePinSuccessImplCopyWithImpl<$Res>
       $Res Function(_$UpdatePinSuccessImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UpdatePinResult
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -760,7 +784,9 @@ class _$UpdatePinSuccessImpl extends _UpdatePinSuccess
   int get hashCode => Object.hash(
       runtimeType, const DeepCollectionEquality().hash(encodedChallenge));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UpdatePinResult
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UpdatePinSuccessImplCopyWith<_$UpdatePinSuccessImpl> get copyWith =>
@@ -836,7 +862,10 @@ abstract class _UpdatePinSuccess extends UpdatePinResult {
   const _UpdatePinSuccess._() : super._();
 
   Uint8List get encodedChallenge;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of UpdatePinResult
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UpdatePinSuccessImplCopyWith<_$UpdatePinSuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -855,6 +884,9 @@ class __$$UpdatePinDoNotMatchImplCopyWithImpl<$Res>
   __$$UpdatePinDoNotMatchImplCopyWithImpl(_$UpdatePinDoNotMatchImpl _value,
       $Res Function(_$UpdatePinDoNotMatchImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of UpdatePinResult
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc

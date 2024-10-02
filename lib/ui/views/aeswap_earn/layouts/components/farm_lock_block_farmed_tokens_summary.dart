@@ -1,7 +1,6 @@
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/block_info.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
-import 'package:aewallet/ui/views/aeswap_earn/bloc/state.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/earn_farm_lock_list_locks.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -24,9 +23,11 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
+    final summary = ref.watch(farmLockFormSummaryProvider);
+    final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
+    final pool = ref.watch(farmLockFormPoolProvider).value;
     const opacity = AppTextStyles.kOpacityText;
-    final earnForm =
-        ref.watch(earnFormNotifierProvider).value ?? const EarnFormState();
+
     return BlockInfo(
       info: Stack(
         alignment: Alignment.bottomRight,
@@ -57,7 +58,7 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
                   Opacity(
                     opacity: opacity,
                     child: SelectableText(
-                      '\$${earnForm.farmedTokensInFiat.formatNumber(precision: 2)}',
+                      '\$${summary.farmedTokensInFiat.formatNumber(precision: 2)}',
                       style: Theme.of(context).textTheme.headlineLarge,
                     ),
                   ),
@@ -84,7 +85,7 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
                       Opacity(
                         opacity: opacity,
                         child: SelectableText(
-                          '\$${earnForm.farmedTokensCapitalInFiat.formatNumber(precision: 2)}',
+                          '\$${summary.farmedTokensCapitalInFiat.formatNumber(precision: 2)}',
                           style:
                               Theme.of(context).textTheme.bodyMedium!.copyWith(
                                     color: aedappfm.AppThemeBase.secondaryColor,
@@ -118,7 +119,7 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
                         child: Row(
                           children: [
                             SelectableText(
-                              '\$${earnForm.farmedTokensRewardsInFiat.formatNumber(precision: 2)} ',
+                              '\$${summary.farmedTokensRewardsInFiat.formatNumber(precision: 2)} ',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium!
@@ -139,7 +140,7 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
               Opacity(
                 opacity: opacity,
                 child: SelectableText(
-                  '(= ${earnForm.farmedTokensRewards.formatNumber(precision: 4)} UCO)',
+                  '(= ${summary.farmedTokensRewards.formatNumber(precision: 4)} UCO)',
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
@@ -148,10 +149,10 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
               ),
             ],
           ),
-          if (earnForm.farmLock != null && earnForm.pool != null)
+          if (farmLock != null && pool != null)
             EarnFarmLockListLocks(
-              farmLock: earnForm.farmLock,
-              pool: earnForm.pool!,
+              farmLock: farmLock,
+              pool: pool,
             ),
         ],
       ),

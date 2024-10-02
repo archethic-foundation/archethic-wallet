@@ -23,8 +23,12 @@ mixin _$NftCategory {
   int get id => throw _privateConstructorUsedError;
   dynamic get name => throw _privateConstructorUsedError;
 
+  /// Serializes this NftCategory to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of NftCategory
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $NftCategoryCopyWith<NftCategory> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -48,6 +52,8 @@ class _$NftCategoryCopyWithImpl<$Res, $Val extends NftCategory>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of NftCategory
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -86,6 +92,8 @@ class __$$NftCategoryImplCopyWithImpl<$Res>
       _$NftCategoryImpl _value, $Res Function(_$NftCategoryImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of NftCategory
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -131,12 +139,14 @@ class _$NftCategoryImpl extends _NftCategory {
             const DeepCollectionEquality().equals(other.name, name));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, id, const DeepCollectionEquality().hash(name));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of NftCategory
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$NftCategoryImplCopyWith<_$NftCategoryImpl> get copyWith =>
@@ -162,8 +172,11 @@ abstract class _NftCategory extends NftCategory {
   int get id;
   @override
   dynamic get name;
+
+  /// Create a copy of NftCategory
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$NftCategoryImplCopyWith<_$NftCategoryImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

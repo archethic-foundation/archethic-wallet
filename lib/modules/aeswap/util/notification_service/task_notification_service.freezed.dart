@@ -21,7 +21,9 @@ mixin _$Task<DataT, FailureT extends Failure> {
   DateTime? get dateTask => throw _privateConstructorUsedError;
   Result<void, FailureT>? get result => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Task
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TaskCopyWith<DataT, FailureT, Task<DataT, FailureT>> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -50,6 +52,8 @@ class _$TaskCopyWithImpl<DataT, FailureT extends Failure, $Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Task
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -103,6 +107,8 @@ class __$$TaskImplCopyWithImpl<DataT, FailureT extends Failure, $Res>
       $Res Function(_$TaskImpl<DataT, FailureT>) _then)
       : super(_value, _then);
 
+  /// Create a copy of Task
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -170,7 +176,9 @@ class _$TaskImpl<DataT, FailureT extends Failure>
   int get hashCode => Object.hash(runtimeType, id,
       const DeepCollectionEquality().hash(data), dateTask, result);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Task
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TaskImplCopyWith<DataT, FailureT, _$TaskImpl<DataT, FailureT>>
@@ -195,8 +203,11 @@ abstract class _Task<DataT, FailureT extends Failure>
   DateTime? get dateTask;
   @override
   Result<void, FailureT>? get result;
+
+  /// Create a copy of Task
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TaskImplCopyWith<DataT, FailureT, _$TaskImpl<DataT, FailureT>>
       get copyWith => throw _privateConstructorUsedError;
 }

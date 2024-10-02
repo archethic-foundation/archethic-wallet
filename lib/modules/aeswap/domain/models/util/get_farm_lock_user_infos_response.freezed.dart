@@ -23,8 +23,12 @@ GetFarmLockUserInfosResponse _$GetFarmLockUserInfosResponseFromJson(
 mixin _$GetFarmLockUserInfosResponse {
   List<Map<int, UserInfos>> get userInfos => throw _privateConstructorUsedError;
 
+  /// Serializes this GetFarmLockUserInfosResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of GetFarmLockUserInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $GetFarmLockUserInfosResponseCopyWith<GetFarmLockUserInfosResponse>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -51,6 +55,8 @@ class _$GetFarmLockUserInfosResponseCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of GetFarmLockUserInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -87,6 +93,8 @@ class __$$GetFarmLockUserInfosResponseImplCopyWithImpl<$Res>
       $Res Function(_$GetFarmLockUserInfosResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of GetFarmLockUserInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -135,12 +143,14 @@ class _$GetFarmLockUserInfosResponseImpl
                 .equals(other._userInfos, _userInfos));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(_userInfos));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GetFarmLockUserInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$GetFarmLockUserInfosResponseImplCopyWith<
@@ -167,8 +177,11 @@ abstract class _GetFarmLockUserInfosResponse
 
   @override
   List<Map<int, UserInfos>> get userInfos;
+
+  /// Create a copy of GetFarmLockUserInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GetFarmLockUserInfosResponseImplCopyWith<
           _$GetFarmLockUserInfosResponseImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -188,8 +201,12 @@ mixin _$UserInfos {
   int? get end => throw _privateConstructorUsedError;
   String get level => throw _privateConstructorUsedError;
 
+  /// Serializes this UserInfos to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of UserInfos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $UserInfosCopyWith<UserInfos> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -218,6 +235,8 @@ class _$UserInfosCopyWithImpl<$Res, $Val extends UserInfos>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of UserInfos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -282,6 +301,8 @@ class __$$UserInfosImplCopyWithImpl<$Res>
       _$UserInfosImpl _value, $Res Function(_$UserInfosImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UserInfos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -368,12 +389,14 @@ class _$UserInfosImpl implements _UserInfos {
             (identical(other.level, level) || other.level == level));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, id, amount, rewardAmount, start, end, level);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UserInfos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UserInfosImplCopyWith<_$UserInfosImpl> get copyWith =>
@@ -412,8 +435,11 @@ abstract class _UserInfos implements UserInfos {
   int? get end;
   @override
   String get level;
+
+  /// Create a copy of UserInfos
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UserInfosImplCopyWith<_$UserInfosImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

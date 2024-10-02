@@ -24,8 +24,12 @@ mixin _$UCOTransferWallet {
   String? get to => throw _privateConstructorUsedError;
   String? get toContactName => throw _privateConstructorUsedError;
 
+  /// Serializes this UCOTransferWallet to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of UCOTransferWallet
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $UCOTransferWalletCopyWith<UCOTransferWallet> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -49,6 +53,8 @@ class _$UCOTransferWalletCopyWithImpl<$Res, $Val extends UCOTransferWallet>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of UCOTransferWallet
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -92,6 +98,8 @@ class __$$UCOTransferWalletImplCopyWithImpl<$Res>
       $Res Function(_$UCOTransferWalletImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UCOTransferWallet
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -148,11 +156,13 @@ class _$UCOTransferWalletImpl extends _UCOTransferWallet {
                 other.toContactName == toContactName));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, amount, to, toContactName);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UCOTransferWallet
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UCOTransferWalletImplCopyWith<_$UCOTransferWalletImpl> get copyWith =>
@@ -183,8 +193,11 @@ abstract class _UCOTransferWallet extends UCOTransferWallet {
   String? get to;
   @override
   String? get toContactName;
+
+  /// Create a copy of UCOTransferWallet
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UCOTransferWalletImplCopyWith<_$UCOTransferWalletImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -22,8 +22,12 @@ VerifiedTokens _$VerifiedTokensFromJson(Map<String, dynamic> json) {
 mixin _$VerifiedTokens {
   List<String> get devnet => throw _privateConstructorUsedError;
 
+  /// Serializes this VerifiedTokens to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of VerifiedTokens
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $VerifiedTokensCopyWith<VerifiedTokens> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -47,6 +51,8 @@ class _$VerifiedTokensCopyWithImpl<$Res, $Val extends VerifiedTokens>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of VerifiedTokens
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -80,6 +86,8 @@ class __$$VerifiedTokensImplCopyWithImpl<$Res>
       _$VerifiedTokensImpl _value, $Res Function(_$VerifiedTokensImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of VerifiedTokens
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -124,12 +132,14 @@ class _$VerifiedTokensImpl implements _VerifiedTokens {
             const DeepCollectionEquality().equals(other._devnet, _devnet));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(_devnet));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of VerifiedTokens
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$VerifiedTokensImplCopyWith<_$VerifiedTokensImpl> get copyWith =>
@@ -153,8 +163,11 @@ abstract class _VerifiedTokens implements VerifiedTokens {
 
   @override
   List<String> get devnet;
+
+  /// Create a copy of VerifiedTokens
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$VerifiedTokensImplCopyWith<_$VerifiedTokensImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -30,8 +30,12 @@ mixin _$DexPoolTx {
   String? get addressAccount => throw _privateConstructorUsedError;
   DateTime? get time => throw _privateConstructorUsedError;
 
+  /// Serializes this DexPoolTx to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of DexPoolTx
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $DexPoolTxCopyWith<DexPoolTx> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -66,6 +70,8 @@ class _$DexPoolTxCopyWithImpl<$Res, $Val extends DexPoolTx>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of DexPoolTx
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -119,6 +125,8 @@ class _$DexPoolTxCopyWithImpl<$Res, $Val extends DexPoolTx>
     ) as $Val);
   }
 
+  /// Create a copy of DexPoolTx
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DexTokenCopyWith<$Res>? get token1 {
@@ -131,6 +139,8 @@ class _$DexPoolTxCopyWithImpl<$Res, $Val extends DexPoolTx>
     });
   }
 
+  /// Create a copy of DexPoolTx
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DexTokenCopyWith<$Res>? get token2 {
@@ -177,6 +187,8 @@ class __$$DexPoolTxImplCopyWithImpl<$Res>
       _$DexPoolTxImpl _value, $Res Function(_$DexPoolTxImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DexPoolTx
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -294,12 +306,14 @@ class _$DexPoolTxImpl extends _DexPoolTx {
             (identical(other.time, time) || other.time == time));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, addressTx, typeTx, token1,
       token2, totalValue, token1Amount, token2Amount, addressAccount, time);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DexPoolTx
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DexPoolTxImplCopyWith<_$DexPoolTxImpl> get copyWith =>
@@ -347,8 +361,11 @@ abstract class _DexPoolTx extends DexPoolTx {
   String? get addressAccount;
   @override
   DateTime? get time;
+
+  /// Create a copy of DexPoolTx
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DexPoolTxImplCopyWith<_$DexPoolTxImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

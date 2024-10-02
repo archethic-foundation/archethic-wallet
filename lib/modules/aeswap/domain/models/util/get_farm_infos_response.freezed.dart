@@ -36,8 +36,12 @@ mixin _$GetFarmInfosResponse {
   int get nbDeposit => throw _privateConstructorUsedError;
   Stats get stats => throw _privateConstructorUsedError;
 
+  /// Serializes this GetFarmInfosResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of GetFarmInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $GetFarmInfosResponseCopyWith<GetFarmInfosResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -72,6 +76,8 @@ class _$GetFarmInfosResponseCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of GetFarmInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -120,6 +126,8 @@ class _$GetFarmInfosResponseCopyWithImpl<$Res,
     ) as $Val);
   }
 
+  /// Create a copy of GetFarmInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $StatsCopyWith<$Res> get stats {
@@ -159,6 +167,8 @@ class __$$GetFarmInfosResponseImplCopyWithImpl<$Res>
       $Res Function(_$GetFarmInfosResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of GetFarmInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -274,12 +284,14 @@ class _$GetFarmInfosResponseImpl implements _GetFarmInfosResponse {
             (identical(other.stats, stats) || other.stats == stats));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, lpTokenAddress, rewardToken,
       startDate, endDate, remainingReward, lpTokenDeposited, nbDeposit, stats);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GetFarmInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$GetFarmInfosResponseImplCopyWith<_$GetFarmInfosResponseImpl>
@@ -333,8 +345,11 @@ abstract class _GetFarmInfosResponse implements GetFarmInfosResponse {
   int get nbDeposit;
   @override
   Stats get stats;
+
+  /// Create a copy of GetFarmInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GetFarmInfosResponseImplCopyWith<_$GetFarmInfosResponseImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -348,8 +363,12 @@ mixin _$Stats {
   @JsonKey(name: 'reward_distributed')
   double get rewardDistributed => throw _privateConstructorUsedError;
 
+  /// Serializes this Stats to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Stats
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $StatsCopyWith<Stats> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -371,6 +390,8 @@ class _$StatsCopyWithImpl<$Res, $Val extends Stats>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Stats
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -403,6 +424,8 @@ class __$$StatsImplCopyWithImpl<$Res>
       _$StatsImpl _value, $Res Function(_$StatsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Stats
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -444,11 +467,13 @@ class _$StatsImpl implements _Stats {
                 other.rewardDistributed == rewardDistributed));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, rewardDistributed);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Stats
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$StatsImplCopyWith<_$StatsImpl> get copyWith =>
@@ -472,8 +497,11 @@ abstract class _Stats implements Stats {
   @override
   @JsonKey(name: 'reward_distributed')
   double get rewardDistributed;
+
+  /// Create a copy of Stats
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$StatsImplCopyWith<_$StatsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

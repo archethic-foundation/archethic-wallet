@@ -24,8 +24,12 @@ mixin _$KeychainServiceKeyPair {
   List<int> get privateKey => throw _privateConstructorUsedError;
   List<int> get publicKey => throw _privateConstructorUsedError;
 
+  /// Serializes this KeychainServiceKeyPair to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of KeychainServiceKeyPair
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $KeychainServiceKeyPairCopyWith<KeychainServiceKeyPair> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -50,6 +54,8 @@ class _$KeychainServiceKeyPairCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of KeychainServiceKeyPair
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -91,6 +97,8 @@ class __$$KeychainServiceKeyPairImplCopyWithImpl<$Res>
       $Res Function(_$KeychainServiceKeyPairImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of KeychainServiceKeyPair
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -154,14 +162,16 @@ class _$KeychainServiceKeyPairImpl extends _KeychainServiceKeyPair {
                 .equals(other._publicKey, _publicKey));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_privateKey),
       const DeepCollectionEquality().hash(_publicKey));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of KeychainServiceKeyPair
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$KeychainServiceKeyPairImplCopyWith<_$KeychainServiceKeyPairImpl>
@@ -189,8 +199,11 @@ abstract class _KeychainServiceKeyPair extends KeychainServiceKeyPair {
   List<int> get privateKey;
   @override
   List<int> get publicKey;
+
+  /// Create a copy of KeychainServiceKeyPair
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$KeychainServiceKeyPairImplCopyWith<_$KeychainServiceKeyPairImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

@@ -21,7 +21,9 @@ mixin _$NftSearchBarFormState {
   String get error => throw _privateConstructorUsedError;
   TokenInformation? get tokenInformation => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of NftSearchBarFormState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $NftSearchBarFormStateCopyWith<NftSearchBarFormState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -50,6 +52,8 @@ class _$NftSearchBarFormStateCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of NftSearchBarFormState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -104,6 +108,8 @@ class __$$NftSearchBarFormStateImplCopyWithImpl<$Res>
       $Res Function(_$NftSearchBarFormStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of NftSearchBarFormState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -177,7 +183,9 @@ class _$NftSearchBarFormStateImpl extends _NftSearchBarFormState {
   int get hashCode => Object.hash(
       runtimeType, searchCriteria, loading, error, tokenInformation);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of NftSearchBarFormState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$NftSearchBarFormStateImplCopyWith<_$NftSearchBarFormStateImpl>
@@ -201,8 +209,11 @@ abstract class _NftSearchBarFormState extends NftSearchBarFormState {
   String get error;
   @override
   TokenInformation? get tokenInformation;
+
+  /// Create a copy of NftSearchBarFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$NftSearchBarFormStateImplCopyWith<_$NftSearchBarFormStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

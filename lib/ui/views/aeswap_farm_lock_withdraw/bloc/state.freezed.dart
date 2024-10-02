@@ -39,7 +39,9 @@ mixin _$FarmLockWithdrawFormState {
   String? get poolAddress => throw _privateConstructorUsedError;
   DateTime? get endDate => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FarmLockWithdrawFormState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $FarmLockWithdrawFormStateCopyWith<FarmLockWithdrawFormState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -91,6 +93,8 @@ class _$FarmLockWithdrawFormStateCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of FarmLockWithdrawFormState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -204,6 +208,8 @@ class _$FarmLockWithdrawFormStateCopyWithImpl<$Res,
     ) as $Val);
   }
 
+  /// Create a copy of FarmLockWithdrawFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TransactionCopyWith<$Res>? get transactionWithdrawFarmLock {
@@ -217,6 +223,8 @@ class _$FarmLockWithdrawFormStateCopyWithImpl<$Res,
     });
   }
 
+  /// Create a copy of FarmLockWithdrawFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $FailureCopyWith<$Res>? get failure {
@@ -229,6 +237,8 @@ class _$FarmLockWithdrawFormStateCopyWithImpl<$Res,
     });
   }
 
+  /// Create a copy of FarmLockWithdrawFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DexTokenCopyWith<$Res>? get rewardToken {
@@ -241,6 +251,8 @@ class _$FarmLockWithdrawFormStateCopyWithImpl<$Res,
     });
   }
 
+  /// Create a copy of FarmLockWithdrawFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DexTokenCopyWith<$Res>? get lpToken {
@@ -253,6 +265,8 @@ class _$FarmLockWithdrawFormStateCopyWithImpl<$Res,
     });
   }
 
+  /// Create a copy of FarmLockWithdrawFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DexPairCopyWith<$Res>? get lpTokenPair {
@@ -320,6 +334,8 @@ class __$$FarmLockWithdrawFormStateImplCopyWithImpl<$Res>
       $Res Function(_$FarmLockWithdrawFormStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of FarmLockWithdrawFormState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -590,7 +606,9 @@ class _$FarmLockWithdrawFormStateImpl extends _FarmLockWithdrawFormState {
         endDate
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FarmLockWithdrawFormState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FarmLockWithdrawFormStateImplCopyWith<_$FarmLockWithdrawFormStateImpl>
@@ -665,8 +683,11 @@ abstract class _FarmLockWithdrawFormState extends FarmLockWithdrawFormState {
   String? get poolAddress;
   @override
   DateTime? get endDate;
+
+  /// Create a copy of FarmLockWithdrawFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FarmLockWithdrawFormStateImplCopyWith<_$FarmLockWithdrawFormStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

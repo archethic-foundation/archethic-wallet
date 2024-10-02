@@ -20,7 +20,9 @@ mixin _$DexPoolAccount {
   double get token1Amount => throw _privateConstructorUsedError;
   double get token2Amount => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DexPoolAccount
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $DexPoolAccountCopyWith<DexPoolAccount> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -46,6 +48,8 @@ class _$DexPoolAccountCopyWithImpl<$Res, $Val extends DexPoolAccount>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of DexPoolAccount
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -69,6 +73,8 @@ class _$DexPoolAccountCopyWithImpl<$Res, $Val extends DexPoolAccount>
     ) as $Val);
   }
 
+  /// Create a copy of DexPoolAccount
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DexPoolCopyWith<$Res> get pool {
@@ -100,6 +106,8 @@ class __$$DexPoolAccountImplCopyWithImpl<$Res>
       _$DexPoolAccountImpl _value, $Res Function(_$DexPoolAccountImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DexPoolAccount
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -161,7 +169,9 @@ class _$DexPoolAccountImpl implements _DexPoolAccount {
   int get hashCode =>
       Object.hash(runtimeType, pool, token1Amount, token2Amount);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DexPoolAccount
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DexPoolAccountImplCopyWith<_$DexPoolAccountImpl> get copyWith =>
@@ -181,8 +191,11 @@ abstract class _DexPoolAccount implements DexPoolAccount {
   double get token1Amount;
   @override
   double get token2Amount;
+
+  /// Create a copy of DexPoolAccount
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DexPoolAccountImplCopyWith<_$DexPoolAccountImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

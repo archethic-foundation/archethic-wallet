@@ -40,7 +40,9 @@ mixin _$FarmLockLevelUpFormState {
   String? get depositId => throw _privateConstructorUsedError;
   String? get currentLevel => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FarmLockLevelUpFormState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $FarmLockLevelUpFormStateCopyWith<FarmLockLevelUpFormState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -90,6 +92,8 @@ class _$FarmLockLevelUpFormStateCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of FarmLockLevelUpFormState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -198,6 +202,8 @@ class _$FarmLockLevelUpFormStateCopyWithImpl<$Res,
     ) as $Val);
   }
 
+  /// Create a copy of FarmLockLevelUpFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DexPoolCopyWith<$Res>? get pool {
@@ -210,6 +216,8 @@ class _$FarmLockLevelUpFormStateCopyWithImpl<$Res,
     });
   }
 
+  /// Create a copy of FarmLockLevelUpFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DexFarmLockCopyWith<$Res>? get farmLock {
@@ -222,6 +230,8 @@ class _$FarmLockLevelUpFormStateCopyWithImpl<$Res,
     });
   }
 
+  /// Create a copy of FarmLockLevelUpFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TransactionCopyWith<$Res>? get transactionFarmLockLevelUp {
@@ -235,6 +245,8 @@ class _$FarmLockLevelUpFormStateCopyWithImpl<$Res,
     });
   }
 
+  /// Create a copy of FarmLockLevelUpFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $FailureCopyWith<$Res>? get failure {
@@ -299,6 +311,8 @@ class __$$FarmLockLevelUpFormStateImplCopyWithImpl<$Res>
       $Res Function(_$FarmLockLevelUpFormStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of FarmLockLevelUpFormState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -570,7 +584,9 @@ class _$FarmLockLevelUpFormStateImpl extends _FarmLockLevelUpFormState {
         currentLevel
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FarmLockLevelUpFormState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FarmLockLevelUpFormStateImplCopyWith<_$FarmLockLevelUpFormStateImpl>
@@ -642,8 +658,11 @@ abstract class _FarmLockLevelUpFormState extends FarmLockLevelUpFormState {
   String? get depositId;
   @override
   String? get currentLevel;
+
+  /// Create a copy of FarmLockLevelUpFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FarmLockLevelUpFormStateImplCopyWith<_$FarmLockLevelUpFormStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

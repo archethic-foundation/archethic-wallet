@@ -28,7 +28,9 @@ mixin _$AddTokenFormState {
   String get errorInitialSupplyText => throw _privateConstructorUsedError;
   String get errorAmountText => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AddTokenFormState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AddTokenFormStateCopyWith<AddTokenFormState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -62,6 +64,8 @@ class _$AddTokenFormStateCopyWithImpl<$Res, $Val extends AddTokenFormState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of AddTokenFormState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -150,6 +154,8 @@ class __$$AddTokenFormStateImplCopyWithImpl<$Res>
       $Res Function(_$AddTokenFormStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AddTokenFormState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -298,7 +304,9 @@ class _$AddTokenFormStateImpl extends _AddTokenFormState {
       errorInitialSupplyText,
       errorAmountText);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AddTokenFormState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AddTokenFormStateImplCopyWith<_$AddTokenFormStateImpl> get copyWith =>
@@ -340,8 +348,11 @@ abstract class _AddTokenFormState extends AddTokenFormState {
   String get errorInitialSupplyText;
   @override
   String get errorAmountText;
+
+  /// Create a copy of AddTokenFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AddTokenFormStateImplCopyWith<_$AddTokenFormStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

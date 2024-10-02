@@ -38,8 +38,12 @@ mixin _$DexFarmLock {
   Map<String, DexFarmLockUserInfos> get userInfos =>
       throw _privateConstructorUsedError;
 
+  /// Serializes this DexFarmLock to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of DexFarmLock
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $DexFarmLockCopyWith<DexFarmLock> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -83,6 +87,8 @@ class _$DexFarmLockCopyWithImpl<$Res, $Val extends DexFarmLock>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of DexFarmLock
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -171,6 +177,8 @@ class _$DexFarmLockCopyWithImpl<$Res, $Val extends DexFarmLock>
     ) as $Val);
   }
 
+  /// Create a copy of DexFarmLock
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DexTokenCopyWith<$Res>? get lpToken {
@@ -183,6 +191,8 @@ class _$DexFarmLockCopyWithImpl<$Res, $Val extends DexFarmLock>
     });
   }
 
+  /// Create a copy of DexFarmLock
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DexPairCopyWith<$Res>? get lpTokenPair {
@@ -195,6 +205,8 @@ class _$DexFarmLockCopyWithImpl<$Res, $Val extends DexFarmLock>
     });
   }
 
+  /// Create a copy of DexFarmLock
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DexTokenCopyWith<$Res>? get rewardToken {
@@ -250,6 +262,8 @@ class __$$DexFarmLockImplCopyWithImpl<$Res>
       _$DexFarmLockImpl _value, $Res Function(_$DexFarmLockImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DexFarmLock
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -468,7 +482,7 @@ class _$DexFarmLockImpl extends _DexFarmLock {
                 .equals(other._userInfos, _userInfos));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -489,7 +503,9 @@ class _$DexFarmLockImpl extends _DexFarmLock {
       const DeepCollectionEquality().hash(_stats),
       const DeepCollectionEquality().hash(_userInfos));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DexFarmLock
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DexFarmLockImplCopyWith<_$DexFarmLockImpl> get copyWith =>
@@ -558,8 +574,11 @@ abstract class _DexFarmLock extends DexFarmLock {
   Map<String, DexFarmLockStats> get stats;
   @override
   Map<String, DexFarmLockUserInfos> get userInfos;
+
+  /// Create a copy of DexFarmLock
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DexFarmLockImplCopyWith<_$DexFarmLockImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

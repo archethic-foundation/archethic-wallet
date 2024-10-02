@@ -1,6 +1,5 @@
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
-import 'package:aewallet/ui/views/aeswap_earn/bloc/state.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/farm_lock_details_info.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -21,12 +20,12 @@ class EarnFarmLockInfos extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
-    final earnForm =
-        ref.watch(earnFormNotifierProvider).value ?? const EarnFormState();
+    final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
+
     final preferences = ref.watch(SettingsProviders.settings);
 
     return InkWell(
-      onTap: earnForm.farmLock == null
+      onTap: farmLock == null
           ? null
           : () async {
               sl.get<HapticUtil>().feedback(
@@ -42,7 +41,7 @@ class EarnFarmLockInfos extends ConsumerWidget {
                   return FractionallySizedBox(
                     heightFactor: 0.90,
                     child: FarmLockDetailsInfo(
-                      farmLock: earnForm.farmLock!,
+                      farmLock: farmLock,
                     ),
                   );
                 },
@@ -53,7 +52,7 @@ class EarnFarmLockInfos extends ConsumerWidget {
         width: 36,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          gradient: earnForm.farmLock == null
+          gradient: farmLock == null
               ? aedappfm.AppThemeBase.gradient
               : aedappfm.AppThemeBase.gradientBtn,
           shape: BoxShape.circle,

@@ -27,7 +27,9 @@ mixin _$SendTransactionCommand {
   /// - Version: version of the transaction (used for backward compatiblity)
   int get version => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SendTransactionCommand
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SendTransactionCommandCopyWith<SendTransactionCommand> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -54,6 +56,8 @@ class _$SendTransactionCommandCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of SendTransactionCommand
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -82,6 +86,8 @@ class _$SendTransactionCommandCopyWithImpl<$Res,
     ) as $Val);
   }
 
+  /// Create a copy of SendTransactionCommand
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DataCopyWith<$Res> get data {
@@ -116,6 +122,8 @@ class __$$SendTransactionCommandImplCopyWithImpl<$Res>
       $Res Function(_$SendTransactionCommandImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SendTransactionCommand
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -191,7 +199,9 @@ class _$SendTransactionCommandImpl extends _SendTransactionCommand {
   int get hashCode =>
       Object.hash(runtimeType, senderAccount, data, type, version);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SendTransactionCommand
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SendTransactionCommandImplCopyWith<_$SendTransactionCommandImpl>
@@ -209,20 +219,23 @@ abstract class _SendTransactionCommand extends SendTransactionCommand {
 
   @override
   Account get senderAccount;
-  @override
 
   /// - [Data]: transaction data zone (identity, keychain, smart contract, etc.)
-  Data get data;
   @override
+  Data get data;
 
   /// - Type: transaction type
-  String get type;
   @override
+  String get type;
 
   /// - Version: version of the transaction (used for backward compatiblity)
-  int get version;
   @override
-  @JsonKey(ignore: true)
+  int get version;
+
+  /// Create a copy of SendTransactionCommand
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SendTransactionCommandImplCopyWith<_$SendTransactionCommandImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

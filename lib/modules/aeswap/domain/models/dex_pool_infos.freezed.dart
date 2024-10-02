@@ -41,8 +41,12 @@ mixin _$DexPoolInfos {
   double? get volume7d => throw _privateConstructorUsedError;
   double? get volumeAllTime => throw _privateConstructorUsedError;
 
+  /// Serializes this DexPoolInfos to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of DexPoolInfos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $DexPoolInfosCopyWith<DexPoolInfos> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -86,6 +90,8 @@ class _$DexPoolInfosCopyWithImpl<$Res, $Val extends DexPoolInfos>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of DexPoolInfos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -234,6 +240,8 @@ class __$$DexPoolInfosImplCopyWithImpl<$Res>
       _$DexPoolInfosImpl _value, $Res Function(_$DexPoolInfosImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DexPoolInfos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -462,7 +470,7 @@ class _$DexPoolInfosImpl extends _DexPoolInfos {
                 other.volumeAllTime == volumeAllTime));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
@@ -488,7 +496,9 @@ class _$DexPoolInfosImpl extends _DexPoolInfos {
         volumeAllTime
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DexPoolInfos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DexPoolInfosImplCopyWith<_$DexPoolInfosImpl> get copyWith =>
@@ -569,8 +579,11 @@ abstract class _DexPoolInfos extends DexPoolInfos {
   double? get volume7d;
   @override
   double? get volumeAllTime;
+
+  /// Create a copy of DexPoolInfos
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DexPoolInfosImplCopyWith<_$DexPoolInfosImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

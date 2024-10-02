@@ -25,7 +25,9 @@ mixin _$TaskNotificationPopup {
   VoidCallback? get onActionPressed => throw _privateConstructorUsedError;
   Color get progressIndicatorColor => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TaskNotificationPopup
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TaskNotificationPopupCopyWith<TaskNotificationPopup> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -58,6 +60,8 @@ class _$TaskNotificationPopupCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TaskNotificationPopup
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -136,6 +140,8 @@ class __$$TaskNotificationPopupImplCopyWithImpl<$Res>
       $Res Function(_$TaskNotificationPopupImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TaskNotificationPopup
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -244,7 +250,9 @@ class _$TaskNotificationPopupImpl extends _TaskNotificationPopup {
   int get hashCode => Object.hash(runtimeType, key, icon, title, description,
       actionType, action, onActionPressed, progressIndicatorColor);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TaskNotificationPopup
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TaskNotificationPopupImplCopyWith<_$TaskNotificationPopupImpl>
@@ -281,8 +289,11 @@ abstract class _TaskNotificationPopup extends TaskNotificationPopup {
   VoidCallback? get onActionPressed;
   @override
   Color get progressIndicatorColor;
+
+  /// Create a copy of TaskNotificationPopup
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TaskNotificationPopupImplCopyWith<_$TaskNotificationPopupImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

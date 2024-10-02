@@ -27,8 +27,12 @@ mixin _$KeychainSecuredInfosService {
   String get curve => throw _privateConstructorUsedError;
   String get hashAlgo => throw _privateConstructorUsedError;
 
+  /// Serializes this KeychainSecuredInfosService to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of KeychainSecuredInfosService
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $KeychainSecuredInfosServiceCopyWith<KeychainSecuredInfosService>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -62,6 +66,8 @@ class _$KeychainSecuredInfosServiceCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of KeychainSecuredInfosService
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -95,6 +101,8 @@ class _$KeychainSecuredInfosServiceCopyWithImpl<$Res,
     ) as $Val);
   }
 
+  /// Create a copy of KeychainSecuredInfosService
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $KeychainServiceKeyPairCopyWith<$Res>? get keyPair {
@@ -138,6 +146,8 @@ class __$$KeychainSecuredInfosServiceImplCopyWithImpl<$Res>
       $Res Function(_$KeychainSecuredInfosServiceImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of KeychainSecuredInfosService
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -217,12 +227,14 @@ class _$KeychainSecuredInfosServiceImpl extends _KeychainSecuredInfosService {
                 other.hashAlgo == hashAlgo));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, derivationPath, name, keyPair, curve, hashAlgo);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of KeychainSecuredInfosService
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$KeychainSecuredInfosServiceImplCopyWith<_$KeychainSecuredInfosServiceImpl>
@@ -260,8 +272,11 @@ abstract class _KeychainSecuredInfosService
   String get curve;
   @override
   String get hashAlgo;
+
+  /// Create a copy of KeychainSecuredInfosService
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$KeychainSecuredInfosServiceImplCopyWith<_$KeychainSecuredInfosServiceImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

@@ -119,7 +119,9 @@ mixin _$Transfer {
   }) =>
       throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Transfer
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TransferCopyWith<Transfer> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -151,6 +153,8 @@ class _$TransferCopyWithImpl<$Res, $Val extends Transfer>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Transfer
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -189,6 +193,8 @@ class _$TransferCopyWithImpl<$Res, $Val extends Transfer>
     ) as $Val);
   }
 
+  /// Create a copy of Transfer
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $KeychainSecuredInfosCopyWith<$Res> get keychainSecuredInfos {
@@ -198,6 +204,8 @@ class _$TransferCopyWithImpl<$Res, $Val extends Transfer>
     });
   }
 
+  /// Create a copy of Transfer
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $AddressCopyWith<$Res> get recipientAddress {
@@ -237,6 +245,8 @@ class __$$TransferUcoImplCopyWithImpl<$Res>
       _$TransferUcoImpl _value, $Res Function(_$TransferUcoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Transfer
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -334,7 +344,9 @@ class _$TransferUcoImpl extends _TransferUco {
       amount,
       recipientAddress);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Transfer
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TransferUcoImplCopyWith<_$TransferUcoImpl> get copyWith =>
@@ -482,11 +494,14 @@ abstract class _TransferUco extends Transfer {
   @override
   String get message;
   @override
-  double get amount;
-  @override // expressed in UCO
-  Address get recipientAddress;
+  double get amount; // expressed in UCO
   @override
-  @JsonKey(ignore: true)
+  Address get recipientAddress;
+
+  /// Create a copy of Transfer
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TransferUcoImplCopyWith<_$TransferUcoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -526,6 +541,8 @@ class __$$TransferTokenImplCopyWithImpl<$Res>
       _$TransferTokenImpl _value, $Res Function(_$TransferTokenImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Transfer
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -688,7 +705,9 @@ class _$TransferTokenImpl extends _TransferToken {
       const DeepCollectionEquality().hash(_properties),
       const DeepCollectionEquality().hash(_aeip));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Transfer
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TransferTokenImplCopyWith<_$TransferTokenImpl> get copyWith =>
@@ -871,16 +890,19 @@ abstract class _TransferToken extends Transfer {
   @override
   String get message;
   @override
-  double get amount;
-  @override // expressed in token
+  double get amount; // expressed in token
+  @override
   Address get recipientAddress;
   String get type;
   String? get tokenAddress;
   int? get tokenId;
   Map<String, dynamic> get properties;
   List<int> get aeip;
+
+  /// Create a copy of Transfer
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TransferTokenImplCopyWith<_$TransferTokenImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

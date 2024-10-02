@@ -22,7 +22,9 @@ mixin _$AppWallet {
   KeychainSecuredInfos get keychainSecuredInfos =>
       throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AppWallet
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AppWalletCopyWith<AppWallet> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -50,6 +52,8 @@ class _$AppWalletCopyWithImpl<$Res, $Val extends AppWallet>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of AppWallet
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -73,6 +77,8 @@ class _$AppWalletCopyWithImpl<$Res, $Val extends AppWallet>
     ) as $Val);
   }
 
+  /// Create a copy of AppWallet
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $KeychainSecuredInfosCopyWith<$Res> get keychainSecuredInfos {
@@ -108,6 +114,8 @@ class __$$AppWalletImplCopyWithImpl<$Res>
       _$AppWalletImpl _value, $Res Function(_$AppWalletImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AppWallet
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -170,7 +178,9 @@ class _$AppWalletImpl extends _AppWallet {
   int get hashCode =>
       Object.hash(runtimeType, seed, appKeychain, keychainSecuredInfos);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AppWallet
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AppWalletImplCopyWith<_$AppWalletImpl> get copyWith =>
@@ -186,13 +196,16 @@ abstract class _AppWallet extends AppWallet {
   const _AppWallet._() : super._();
 
   @override
-  String get seed;
-  @override // TODO(redddwarf03): Mutualize keychain infos
+  String get seed; // TODO(redddwarf03): Mutualize keychain infos
+  @override
   AppKeychain get appKeychain;
   @override
   KeychainSecuredInfos get keychainSecuredInfos;
+
+  /// Create a copy of AppWallet
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AppWalletImplCopyWith<_$AppWalletImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

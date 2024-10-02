@@ -21,7 +21,9 @@ mixin _$DAppsInfo {
   String? get dAppLink => throw _privateConstructorUsedError;
   String? get dAppBackgroundImgCard => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DAppsInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $DAppsInfoCopyWith<DAppsInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -48,6 +50,8 @@ class _$DAppsInfoCopyWithImpl<$Res, $Val extends DAppsInfo>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of DAppsInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -100,6 +104,8 @@ class __$$DAppsInfoImplCopyWithImpl<$Res>
       _$DAppsInfoImpl _value, $Res Function(_$DAppsInfoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DAppsInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -169,7 +175,9 @@ class _$DAppsInfoImpl extends _DAppsInfo {
   int get hashCode => Object.hash(
       runtimeType, dAppName, dAppDesc, dAppLink, dAppBackgroundImgCard);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DAppsInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DAppsInfoImplCopyWith<_$DAppsInfoImpl> get copyWith =>
@@ -192,8 +200,11 @@ abstract class _DAppsInfo extends DAppsInfo {
   String? get dAppLink;
   @override
   String? get dAppBackgroundImgCard;
+
+  /// Create a copy of DAppsInfo
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DAppsInfoImplCopyWith<_$DAppsInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

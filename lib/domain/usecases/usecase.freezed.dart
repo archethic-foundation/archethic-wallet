@@ -19,7 +19,9 @@ mixin _$UseCaseProgress {
   int get progress => throw _privateConstructorUsedError;
   int get total => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UseCaseProgress
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $UseCaseProgressCopyWith<UseCaseProgress> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -43,6 +45,8 @@ class _$UseCaseProgressCopyWithImpl<$Res, $Val extends UseCaseProgress>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of UseCaseProgress
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -81,6 +85,8 @@ class __$$UseCaseProgressImplCopyWithImpl<$Res>
       _$UseCaseProgressImpl _value, $Res Function(_$UseCaseProgressImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UseCaseProgress
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -129,7 +135,9 @@ class _$UseCaseProgressImpl extends _UseCaseProgress {
   @override
   int get hashCode => Object.hash(runtimeType, progress, total);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UseCaseProgress
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UseCaseProgressImplCopyWith<_$UseCaseProgressImpl> get copyWith =>
@@ -147,8 +155,11 @@ abstract class _UseCaseProgress extends UseCaseProgress {
   int get progress;
   @override
   int get total;
+
+  /// Create a copy of UseCaseProgress
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UseCaseProgressImplCopyWith<_$UseCaseProgressImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

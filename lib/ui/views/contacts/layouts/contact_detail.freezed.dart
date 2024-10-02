@@ -24,8 +24,12 @@ mixin _$ContactDetailsRouteParams {
   String get contactAddress => throw _privateConstructorUsedError;
   bool? get readOnly => throw _privateConstructorUsedError;
 
+  /// Serializes this ContactDetailsRouteParams to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ContactDetailsRouteParams
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ContactDetailsRouteParamsCopyWith<ContactDetailsRouteParams> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -50,6 +54,8 @@ class _$ContactDetailsRouteParamsCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ContactDetailsRouteParams
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -91,6 +97,8 @@ class __$$ContactDetailsRouteParamsImplCopyWithImpl<$Res>
       $Res Function(_$ContactDetailsRouteParamsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ContactDetailsRouteParams
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -141,11 +149,13 @@ class _$ContactDetailsRouteParamsImpl extends _ContactDetailsRouteParams {
                 other.readOnly == readOnly));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, contactAddress, readOnly);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ContactDetailsRouteParams
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ContactDetailsRouteParamsImplCopyWith<_$ContactDetailsRouteParamsImpl>
@@ -173,8 +183,11 @@ abstract class _ContactDetailsRouteParams extends ContactDetailsRouteParams {
   String get contactAddress;
   @override
   bool? get readOnly;
+
+  /// Create a copy of ContactDetailsRouteParams
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ContactDetailsRouteParamsImplCopyWith<_$ContactDetailsRouteParamsImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

@@ -24,8 +24,12 @@ mixin _$DexConfig {
   String get routerGenesisAddress => throw _privateConstructorUsedError;
   String get factoryGenesisAddress => throw _privateConstructorUsedError;
 
+  /// Serializes this DexConfig to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of DexConfig
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $DexConfigCopyWith<DexConfig> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -49,6 +53,8 @@ class _$DexConfigCopyWithImpl<$Res, $Val extends DexConfig>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of DexConfig
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -93,6 +99,8 @@ class __$$DexConfigImplCopyWithImpl<$Res>
       _$DexConfigImpl _value, $Res Function(_$DexConfigImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DexConfig
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -156,12 +164,14 @@ class _$DexConfigImpl extends _DexConfig {
                 other.factoryGenesisAddress == factoryGenesisAddress));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, name, routerGenesisAddress, factoryGenesisAddress);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DexConfig
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DexConfigImplCopyWith<_$DexConfigImpl> get copyWith =>
@@ -191,8 +201,11 @@ abstract class _DexConfig extends DexConfig {
   String get routerGenesisAddress;
   @override
   String get factoryGenesisAddress;
+
+  /// Create a copy of DexConfig
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DexConfigImplCopyWith<_$DexConfigImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

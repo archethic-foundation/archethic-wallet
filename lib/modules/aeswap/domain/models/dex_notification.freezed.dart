@@ -170,7 +170,9 @@ mixin _$DexNotification {
   }) =>
       throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $DexNotificationCopyWith<DexNotification> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -194,6 +196,8 @@ class _$DexNotificationCopyWithImpl<$Res, $Val extends DexNotification>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -238,6 +242,8 @@ class __$$DexNotificationSwapImplCopyWithImpl<$Res>
       $Res Function(_$DexNotificationSwapImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -266,6 +272,8 @@ class __$$DexNotificationSwapImplCopyWithImpl<$Res>
     ));
   }
 
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DexTokenCopyWith<$Res>? get tokenSwapped {
@@ -323,7 +331,9 @@ class _$DexNotificationSwapImpl extends _DexNotificationSwap {
   int get hashCode => Object.hash(
       runtimeType, actionType, txAddress, amountSwapped, tokenSwapped);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DexNotificationSwapImplCopyWith<_$DexNotificationSwapImpl> get copyWith =>
@@ -520,8 +530,11 @@ abstract class _DexNotificationSwap extends DexNotification {
   String? get txAddress;
   double? get amountSwapped;
   DexToken? get tokenSwapped;
+
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DexNotificationSwapImplCopyWith<_$DexNotificationSwapImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -554,6 +567,8 @@ class __$$DexNotificationAddLiquidityImplCopyWithImpl<$Res>
       $Res Function(_$DexNotificationAddLiquidityImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -582,6 +597,8 @@ class __$$DexNotificationAddLiquidityImplCopyWithImpl<$Res>
     ));
   }
 
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DexTokenCopyWith<$Res>? get lpToken {
@@ -637,7 +654,9 @@ class _$DexNotificationAddLiquidityImpl extends _DexNotificationAddLiquidity {
   int get hashCode =>
       Object.hash(runtimeType, actionType, txAddress, amount, lpToken);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DexNotificationAddLiquidityImplCopyWith<_$DexNotificationAddLiquidityImpl>
@@ -834,8 +853,11 @@ abstract class _DexNotificationAddLiquidity extends DexNotification {
   String? get txAddress;
   double? get amount;
   DexToken? get lpToken;
+
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DexNotificationAddLiquidityImplCopyWith<_$DexNotificationAddLiquidityImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -874,6 +896,8 @@ class __$$DexNotificationRemoveLiquidityImplCopyWithImpl<$Res>
       $Res Function(_$DexNotificationRemoveLiquidityImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -922,6 +946,8 @@ class __$$DexNotificationRemoveLiquidityImplCopyWithImpl<$Res>
     ));
   }
 
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DexTokenCopyWith<$Res>? get token1 {
@@ -934,6 +960,8 @@ class __$$DexNotificationRemoveLiquidityImplCopyWithImpl<$Res>
     });
   }
 
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DexTokenCopyWith<$Res>? get token2 {
@@ -946,6 +974,8 @@ class __$$DexNotificationRemoveLiquidityImplCopyWithImpl<$Res>
     });
   }
 
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DexTokenCopyWith<$Res>? get lpToken {
@@ -1021,7 +1051,9 @@ class _$DexNotificationRemoveLiquidityImpl
   int get hashCode => Object.hash(runtimeType, actionType, txAddress,
       amountToken1, amountToken2, amountLPToken, token1, token2, lpToken);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DexNotificationRemoveLiquidityImplCopyWith<
@@ -1230,8 +1262,11 @@ abstract class _DexNotificationRemoveLiquidity extends DexNotification {
   DexToken? get token1;
   DexToken? get token2;
   DexToken? get lpToken;
+
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DexNotificationRemoveLiquidityImplCopyWith<
           _$DexNotificationRemoveLiquidityImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -1264,6 +1299,8 @@ class __$$DexNotificationDepositFarmLockImplCopyWithImpl<$Res>
       $Res Function(_$DexNotificationDepositFarmLockImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1346,7 +1383,9 @@ class _$DexNotificationDepositFarmLockImpl
   int get hashCode => Object.hash(
       runtimeType, actionType, txAddress, amount, farmAddress, isUCO);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DexNotificationDepositFarmLockImplCopyWith<
@@ -1547,8 +1586,11 @@ abstract class _DexNotificationDepositFarmLock extends DexNotification {
   double? get amount;
   String? get farmAddress;
   bool? get isUCO;
+
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DexNotificationDepositFarmLockImplCopyWith<
           _$DexNotificationDepositFarmLockImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -1581,6 +1623,8 @@ class __$$DexNotificationLevelUpFarmLockImplCopyWithImpl<$Res>
       $Res Function(_$DexNotificationLevelUpFarmLockImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1663,7 +1707,9 @@ class _$DexNotificationLevelUpFarmLockImpl
   int get hashCode => Object.hash(
       runtimeType, actionType, txAddress, amount, farmAddress, isUCO);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DexNotificationLevelUpFarmLockImplCopyWith<
@@ -1864,8 +1910,11 @@ abstract class _DexNotificationLevelUpFarmLock extends DexNotification {
   double? get amount;
   String? get farmAddress;
   bool? get isUCO;
+
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DexNotificationLevelUpFarmLockImplCopyWith<
           _$DexNotificationLevelUpFarmLockImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -1899,6 +1948,8 @@ class __$$DexNotificationClaimLockFarmImplCopyWithImpl<$Res>
       $Res Function(_$DexNotificationClaimLockFarmImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1927,6 +1978,8 @@ class __$$DexNotificationClaimLockFarmImplCopyWithImpl<$Res>
     ));
   }
 
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DexTokenCopyWith<$Res>? get rewardToken {
@@ -1983,7 +2036,9 @@ class _$DexNotificationClaimLockFarmImpl extends _DexNotificationClaimLockFarm {
   int get hashCode =>
       Object.hash(runtimeType, actionType, txAddress, amount, rewardToken);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DexNotificationClaimLockFarmImplCopyWith<
@@ -2181,8 +2236,11 @@ abstract class _DexNotificationClaimLockFarm extends DexNotification {
   String? get txAddress;
   double? get amount;
   DexToken? get rewardToken;
+
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DexNotificationClaimLockFarmImplCopyWith<
           _$DexNotificationClaimLockFarmImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -2218,6 +2276,8 @@ class __$$DexNotificationWithdrawFarmLockImplCopyWithImpl<$Res>
       $Res Function(_$DexNotificationWithdrawFarmLockImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2256,6 +2316,8 @@ class __$$DexNotificationWithdrawFarmLockImplCopyWithImpl<$Res>
     ));
   }
 
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DexTokenCopyWith<$Res>? get rewardToken {
@@ -2324,7 +2386,9 @@ class _$DexNotificationWithdrawFarmLockImpl
   int get hashCode => Object.hash(runtimeType, actionType, txAddress,
       amountReward, amountWithdraw, isFarmClose, rewardToken);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DexNotificationWithdrawFarmLockImplCopyWith<
@@ -2529,8 +2593,11 @@ abstract class _DexNotificationWithdrawFarmLock extends DexNotification {
   double? get amountWithdraw;
   bool? get isFarmClose;
   DexToken? get rewardToken;
+
+  /// Create a copy of DexNotification
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DexNotificationWithdrawFarmLockImplCopyWith<
           _$DexNotificationWithdrawFarmLockImpl>
       get copyWith => throw _privateConstructorUsedError;
