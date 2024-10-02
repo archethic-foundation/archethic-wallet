@@ -48,7 +48,7 @@ class FarmLockLevelUpConfirmSheetState
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    final farmLockLevelUp = ref.watch(farmLockLevelUpFormNotifierProvider);
+    final farmLockLevelUp = ref.read(farmLockLevelUpFormNotifierProvider);
     return Row(
       children: <Widget>[
         AppButtonTinyConnectivity(
@@ -79,7 +79,7 @@ class FarmLockLevelUpConfirmSheetState
   PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final farmLockLevelUpNotifier =
-        ref.watch(farmLockLevelUpFormNotifierProvider.notifier);
+        ref.read(farmLockLevelUpFormNotifierProvider.notifier);
 
     return SheetAppBar(
       title: localizations.farmLockLevelUpConfirmTitle,
@@ -97,7 +97,7 @@ class FarmLockLevelUpConfirmSheetState
 
   @override
   Widget build(BuildContext context) {
-    final accountSelected = ref.watch(
+    final accountSelected = ref.read(
       AccountProviders.accounts.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
@@ -114,7 +114,7 @@ class FarmLockLevelUpConfirmSheetState
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final farmLockLevelUp = ref.watch(farmLockLevelUpFormNotifierProvider);
+    final farmLockLevelUp = ref.read(farmLockLevelUpFormNotifierProvider);
     if (farmLockLevelUp.pool == null) {
       return const SizedBox.shrink();
     }

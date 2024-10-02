@@ -36,7 +36,7 @@ class LiquidityRemoveConfirmFormSheetState
 
   @override
   Widget build(BuildContext context) {
-    final accountSelected = ref.watch(
+    final accountSelected = ref.read(
       AccountProviders.accounts.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
@@ -53,7 +53,7 @@ class LiquidityRemoveConfirmFormSheetState
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    final liquidityRemove = ref.watch(liquidityRemoveFormNotifierProvider);
+    final liquidityRemove = ref.read(liquidityRemoveFormNotifierProvider);
     return Row(
       children: <Widget>[
         AppButtonTinyConnectivity(
@@ -81,7 +81,7 @@ class LiquidityRemoveConfirmFormSheetState
   PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final liquidityRemoveNotifier =
-        ref.watch(liquidityRemoveFormNotifierProvider.notifier);
+        ref.read(liquidityRemoveFormNotifierProvider.notifier);
 
     return SheetAppBar(
       title: localizations.removeLiquidity,
@@ -101,7 +101,7 @@ class LiquidityRemoveConfirmFormSheetState
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
-    final liquidityRemove = ref.watch(liquidityRemoveFormNotifierProvider);
+    final liquidityRemove = ref.read(liquidityRemoveFormNotifierProvider);
     if (liquidityRemove.lpToken == null) {
       return const SizedBox.shrink();
     }

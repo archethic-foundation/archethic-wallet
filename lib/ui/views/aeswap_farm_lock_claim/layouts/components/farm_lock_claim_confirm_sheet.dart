@@ -35,7 +35,7 @@ class FarmLockClaimConfirmSheetState
 
   @override
   Widget build(BuildContext context) {
-    final accountSelected = ref.watch(
+    final accountSelected = ref.read(
       AccountProviders.accounts.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
@@ -52,7 +52,7 @@ class FarmLockClaimConfirmSheetState
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    final farmLockClaim = ref.watch(farmLockClaimFormNotifierProvider);
+    final farmLockClaim = ref.read(farmLockClaimFormNotifierProvider);
     return Row(
       children: <Widget>[
         AppButtonTinyConnectivity(
@@ -81,7 +81,7 @@ class FarmLockClaimConfirmSheetState
   PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final farmLockClaimNotifier =
-        ref.watch(farmLockClaimFormNotifierProvider.notifier);
+        ref.read(farmLockClaimFormNotifierProvider.notifier);
 
     return SheetAppBar(
       title: localizations.farmLockClaimConfirmTitle,
@@ -100,7 +100,7 @@ class FarmLockClaimConfirmSheetState
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final farmLockClaim = ref.watch(farmLockClaimFormNotifierProvider);
+    final farmLockClaim = ref.read(farmLockClaimFormNotifierProvider);
     if (farmLockClaim.rewardAmount == null) {
       return const SizedBox.shrink();
     }

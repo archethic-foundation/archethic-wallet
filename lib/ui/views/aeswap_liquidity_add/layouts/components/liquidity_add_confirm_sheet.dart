@@ -36,7 +36,7 @@ class LiquidityAddConfirmFormSheetState
 
   @override
   Widget build(BuildContext context) {
-    final accountSelected = ref.watch(
+    final accountSelected = ref.read(
       AccountProviders.accounts.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
@@ -53,7 +53,7 @@ class LiquidityAddConfirmFormSheetState
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    final liquidityAdd = ref.watch(liquidityAddFormNotifierProvider);
+    final liquidityAdd = ref.read(liquidityAddFormNotifierProvider);
     return Row(
       children: <Widget>[
         AppButtonTinyConnectivity(
@@ -80,7 +80,7 @@ class LiquidityAddConfirmFormSheetState
   PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final liquidityAddNotifier =
-        ref.watch(liquidityAddFormNotifierProvider.notifier);
+        ref.read(liquidityAddFormNotifierProvider.notifier);
 
     return SheetAppBar(
       title: localizations.addLiquidity,
@@ -99,7 +99,7 @@ class LiquidityAddConfirmFormSheetState
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final liquidityAdd = ref.watch(liquidityAddFormNotifierProvider);
+    final liquidityAdd = ref.read(liquidityAddFormNotifierProvider);
     return SingleChildScrollView(
       child: Column(
         children: [
