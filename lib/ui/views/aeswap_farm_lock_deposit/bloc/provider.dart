@@ -169,7 +169,7 @@ class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
       return;
     }
 
-    final accountSelected = ref.watch(
+    final accountSelected = ref.read(
       AccountProviders.accounts.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
@@ -254,7 +254,7 @@ class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
       return false;
     }
 
-    final accountSelected = ref.watch(
+    final accountSelected = ref.read(
       AccountProviders.accounts.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
