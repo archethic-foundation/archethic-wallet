@@ -14,8 +14,6 @@ class FarmLockClaimFinalAmount extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final farmLockClaim = ref.watch(farmLockClaimFormNotifierProvider);
-    if (farmLockClaim.farmLockClaimOk == false) return const SizedBox.shrink();
-
     final finalAmount = farmLockClaim.finalAmount;
     final timeout = ref.watch(
       farmLockClaimFormNotifierProvider
