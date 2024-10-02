@@ -56,6 +56,7 @@ class LiquidityAddResultSheetState
           Dimens.buttonBottomDimens,
           key: const Key('close'),
           onPressed: () async {
+            ref.invalidate(liquidityAddFormNotifierProvider);
             context
               ..pop()
               ..pop();

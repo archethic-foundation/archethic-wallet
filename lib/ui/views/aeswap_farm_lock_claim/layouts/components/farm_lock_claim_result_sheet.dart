@@ -56,6 +56,7 @@ class FarmLockClaimResultSheetState
           Dimens.buttonBottomDimens,
           key: const Key('close'),
           onPressed: () async {
+            ref.invalidate(farmLockClaimFormNotifierProvider);
             context
               ..pop()
               ..pop();

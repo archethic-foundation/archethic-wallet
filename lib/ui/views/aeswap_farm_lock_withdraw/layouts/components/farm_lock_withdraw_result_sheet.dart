@@ -56,6 +56,7 @@ class FarmLockWithdrawResultSheetState
           Dimens.buttonBottomDimens,
           key: const Key('close'),
           onPressed: () async {
+            ref.invalidate(farmLockWithdrawFormNotifierProvider);
             context
               ..pop()
               ..pop();
