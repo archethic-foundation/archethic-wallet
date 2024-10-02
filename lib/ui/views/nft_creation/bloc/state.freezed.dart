@@ -43,7 +43,9 @@ mixin _$NftCreationFormState {
   bool get checkPreventUserPublicInfo => throw _privateConstructorUsedError;
   Transaction? get transaction => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of NftCreationFormState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $NftCreationFormStateCopyWith<NftCreationFormState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -94,6 +96,8 @@ class _$NftCreationFormStateCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of NftCreationFormState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -217,6 +221,8 @@ class _$NftCreationFormStateCopyWithImpl<$Res,
     ) as $Val);
   }
 
+  /// Create a copy of NftCreationFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PropertyAccessRecipientCopyWith<$Res> get propertyAccessRecipient {
@@ -226,6 +232,8 @@ class _$NftCreationFormStateCopyWithImpl<$Res,
     });
   }
 
+  /// Create a copy of NftCreationFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TransactionCopyWith<$Res>? get transaction {
@@ -286,6 +294,8 @@ class __$$NftCreationFormStateImplCopyWithImpl<$Res>
       $Res Function(_$NftCreationFormStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of NftCreationFormState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -600,7 +610,9 @@ class _$NftCreationFormStateImpl extends _NftCreationFormState {
         transaction
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of NftCreationFormState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$NftCreationFormStateImplCopyWith<_$NftCreationFormStateImpl>
@@ -682,8 +694,11 @@ abstract class _NftCreationFormState extends NftCreationFormState {
   bool get checkPreventUserPublicInfo;
   @override
   Transaction? get transaction;
+
+  /// Create a copy of NftCreationFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$NftCreationFormStateImplCopyWith<_$NftCreationFormStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -695,7 +710,9 @@ mixin _$NftCreationFormStateProperty {
   List<PropertyAccessRecipient> get addresses =>
       throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of NftCreationFormStateProperty
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $NftCreationFormStatePropertyCopyWith<NftCreationFormStateProperty>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -725,6 +742,8 @@ class _$NftCreationFormStatePropertyCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of NftCreationFormStateProperty
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -774,6 +793,8 @@ class __$$NftCreationFormStatePropertyImplCopyWithImpl<$Res>
       $Res Function(_$NftCreationFormStatePropertyImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of NftCreationFormStateProperty
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -847,7 +868,9 @@ class _$NftCreationFormStatePropertyImpl extends _NftCreationFormStateProperty {
       const DeepCollectionEquality().hash(propertyValue),
       const DeepCollectionEquality().hash(_addresses));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of NftCreationFormStateProperty
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$NftCreationFormStatePropertyImplCopyWith<
@@ -871,8 +894,11 @@ abstract class _NftCreationFormStateProperty
   dynamic get propertyValue;
   @override
   List<PropertyAccessRecipient> get addresses;
+
+  /// Create a copy of NftCreationFormStateProperty
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$NftCreationFormStatePropertyImplCopyWith<
           _$NftCreationFormStatePropertyImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -944,6 +970,9 @@ class _$PropertyAccessRecipientCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of PropertyAccessRecipient
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -967,6 +996,8 @@ class __$$PropertyAccessAddressImplCopyWithImpl<$Res>
       $Res Function(_$PropertyAccessAddressImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PropertyAccessRecipient
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -980,6 +1011,8 @@ class __$$PropertyAccessAddressImplCopyWithImpl<$Res>
     ));
   }
 
+  /// Create a copy of PropertyAccessRecipient
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $AddressCopyWith<$Res> get address {
@@ -1013,7 +1046,9 @@ class _$PropertyAccessAddressImpl extends _PropertyAccessAddress {
   @override
   int get hashCode => Object.hash(runtimeType, address);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PropertyAccessRecipient
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PropertyAccessAddressImplCopyWith<_$PropertyAccessAddressImpl>
@@ -1096,7 +1131,10 @@ abstract class _PropertyAccessAddress extends PropertyAccessRecipient {
   const _PropertyAccessAddress._() : super._();
 
   Address get address;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of PropertyAccessRecipient
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PropertyAccessAddressImplCopyWith<_$PropertyAccessAddressImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -1120,6 +1158,8 @@ class __$$PropertyAccessContactImplCopyWithImpl<$Res>
       $Res Function(_$PropertyAccessContactImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PropertyAccessRecipient
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1158,7 +1198,9 @@ class _$PropertyAccessContactImpl extends _PropertyAccessContact {
   @override
   int get hashCode => Object.hash(runtimeType, contact);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PropertyAccessRecipient
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PropertyAccessContactImplCopyWith<_$PropertyAccessContactImpl>
@@ -1241,7 +1283,10 @@ abstract class _PropertyAccessContact extends PropertyAccessRecipient {
   const _PropertyAccessContact._() : super._();
 
   Contact get contact;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of PropertyAccessRecipient
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PropertyAccessContactImplCopyWith<_$PropertyAccessContactImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -1266,6 +1311,8 @@ class __$$PropertyAccessUnknownContactImplCopyWithImpl<$Res>
       $Res Function(_$PropertyAccessUnknownContactImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PropertyAccessRecipient
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1304,7 +1351,9 @@ class _$PropertyAccessUnknownContactImpl extends _PropertyAccessUnknownContact {
   @override
   int get hashCode => Object.hash(runtimeType, name);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PropertyAccessRecipient
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PropertyAccessUnknownContactImplCopyWith<
@@ -1388,7 +1437,10 @@ abstract class _PropertyAccessUnknownContact extends PropertyAccessRecipient {
   const _PropertyAccessUnknownContact._() : super._();
 
   String get name;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of PropertyAccessRecipient
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PropertyAccessUnknownContactImplCopyWith<
           _$PropertyAccessUnknownContactImpl>
       get copyWith => throw _privateConstructorUsedError;

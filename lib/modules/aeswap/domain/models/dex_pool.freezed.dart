@@ -27,8 +27,12 @@ mixin _$DexPool {
   bool get isFavorite => throw _privateConstructorUsedError;
   DexPoolInfos? get infos => throw _privateConstructorUsedError;
 
+  /// Serializes this DexPool to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of DexPool
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $DexPoolCopyWith<DexPool> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -60,6 +64,8 @@ class _$DexPoolCopyWithImpl<$Res, $Val extends DexPool>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of DexPool
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -98,6 +104,8 @@ class _$DexPoolCopyWithImpl<$Res, $Val extends DexPool>
     ) as $Val);
   }
 
+  /// Create a copy of DexPool
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DexTokenCopyWith<$Res> get lpToken {
@@ -106,6 +114,8 @@ class _$DexPoolCopyWithImpl<$Res, $Val extends DexPool>
     });
   }
 
+  /// Create a copy of DexPool
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DexPairCopyWith<$Res> get pair {
@@ -114,6 +124,8 @@ class _$DexPoolCopyWithImpl<$Res, $Val extends DexPool>
     });
   }
 
+  /// Create a copy of DexPool
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $DexPoolInfosCopyWith<$Res>? get infos {
@@ -158,6 +170,8 @@ class __$$DexPoolImplCopyWithImpl<$Res>
       _$DexPoolImpl _value, $Res Function(_$DexPoolImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DexPool
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -246,12 +260,14 @@ class _$DexPoolImpl extends _DexPool {
             (identical(other.infos, infos) || other.infos == infos));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, poolAddress, lpToken, pair,
       lpTokenInUserBalance, isFavorite, infos);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DexPool
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DexPoolImplCopyWith<_$DexPoolImpl> get copyWith =>
@@ -289,8 +305,11 @@ abstract class _DexPool extends DexPool {
   bool get isFavorite;
   @override
   DexPoolInfos? get infos;
+
+  /// Create a copy of DexPool
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DexPoolImplCopyWith<_$DexPoolImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

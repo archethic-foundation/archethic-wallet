@@ -32,8 +32,12 @@ mixin _$GetFarmListResponse {
   int? get type => throw _privateConstructorUsedError;
   String get address => throw _privateConstructorUsedError;
 
+  /// Serializes this GetFarmListResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of GetFarmListResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $GetFarmListResponseCopyWith<GetFarmListResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -63,6 +67,8 @@ class _$GetFarmListResponseCopyWithImpl<$Res, $Val extends GetFarmListResponse>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of GetFarmListResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -127,6 +133,8 @@ class __$$GetFarmListResponseImplCopyWithImpl<$Res>
       $Res Function(_$GetFarmListResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of GetFarmListResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -219,12 +227,14 @@ class _$GetFarmListResponseImpl implements _GetFarmListResponse {
             (identical(other.address, address) || other.address == address));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, lpTokenAddress, startDate,
       endDate, rewardTokenAddress, type, address);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GetFarmListResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$GetFarmListResponseImplCopyWith<_$GetFarmListResponseImpl> get copyWith =>
@@ -268,8 +278,11 @@ abstract class _GetFarmListResponse implements GetFarmListResponse {
   int? get type;
   @override
   String get address;
+
+  /// Create a copy of GetFarmListResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GetFarmListResponseImplCopyWith<_$GetFarmListResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

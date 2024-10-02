@@ -25,8 +25,12 @@ mixin _$KeychainSecuredInfos {
   Map<String, KeychainSecuredInfosService> get services =>
       throw _privateConstructorUsedError;
 
+  /// Serializes this KeychainSecuredInfos to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of KeychainSecuredInfos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $KeychainSecuredInfosCopyWith<KeychainSecuredInfos> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -54,6 +58,8 @@ class _$KeychainSecuredInfosCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of KeychainSecuredInfos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -100,6 +106,8 @@ class __$$KeychainSecuredInfosImplCopyWithImpl<$Res>
       $Res Function(_$KeychainSecuredInfosImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of KeychainSecuredInfos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -172,7 +180,7 @@ class _$KeychainSecuredInfosImpl extends _KeychainSecuredInfos {
             const DeepCollectionEquality().equals(other._services, _services));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -180,7 +188,9 @@ class _$KeychainSecuredInfosImpl extends _KeychainSecuredInfos {
       version,
       const DeepCollectionEquality().hash(_services));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of KeychainSecuredInfos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$KeychainSecuredInfosImplCopyWith<_$KeychainSecuredInfosImpl>
@@ -213,8 +223,11 @@ abstract class _KeychainSecuredInfos extends KeychainSecuredInfos {
   int get version;
   @override
   Map<String, KeychainSecuredInfosService> get services;
+
+  /// Create a copy of KeychainSecuredInfos
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$KeychainSecuredInfosImplCopyWith<_$KeychainSecuredInfosImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

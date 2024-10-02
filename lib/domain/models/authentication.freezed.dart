@@ -62,7 +62,9 @@ mixin _$Credentials {
   }) =>
       throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Credentials
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CredentialsCopyWith<Credentials> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -86,6 +88,8 @@ class _$CredentialsCopyWithImpl<$Res, $Val extends Credentials>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Credentials
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -119,6 +123,8 @@ class __$$PinCredentialsImplCopyWithImpl<$Res>
       _$PinCredentialsImpl _value, $Res Function(_$PinCredentialsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Credentials
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -176,7 +182,9 @@ class _$PinCredentialsImpl extends PinCredentials with DiagnosticableTreeMixin {
   int get hashCode => Object.hash(
       runtimeType, pin, const DeepCollectionEquality().hash(challenge));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Credentials
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PinCredentialsImplCopyWith<_$PinCredentialsImpl> get copyWith =>
@@ -261,8 +269,11 @@ abstract class PinCredentials extends Credentials {
   String get pin;
   @override
   Uint8List get challenge;
+
+  /// Create a copy of Credentials
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PinCredentialsImplCopyWith<_$PinCredentialsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -286,6 +297,8 @@ class __$$PasswordCredentialsImplCopyWithImpl<$Res>
       $Res Function(_$PasswordCredentialsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Credentials
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -346,7 +359,9 @@ class _$PasswordCredentialsImpl extends PasswordCredentials
   int get hashCode => Object.hash(
       runtimeType, password, const DeepCollectionEquality().hash(challenge));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Credentials
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PasswordCredentialsImplCopyWith<_$PasswordCredentialsImpl> get copyWith =>
@@ -431,8 +446,11 @@ abstract class PasswordCredentials extends Credentials {
   String get password;
   @override
   Uint8List get challenge;
+
+  /// Create a copy of Credentials
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PasswordCredentialsImplCopyWith<_$PasswordCredentialsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -456,6 +474,8 @@ class __$$YubikeyCredentialsImplCopyWithImpl<$Res>
       $Res Function(_$YubikeyCredentialsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Credentials
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -514,7 +534,9 @@ class _$YubikeyCredentialsImpl extends YubikeyCredentials
   int get hashCode => Object.hash(
       runtimeType, otp, const DeepCollectionEquality().hash(challenge));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Credentials
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$YubikeyCredentialsImplCopyWith<_$YubikeyCredentialsImpl> get copyWith =>
@@ -599,8 +621,11 @@ abstract class YubikeyCredentials extends Credentials {
   String get otp;
   @override
   Uint8List get challenge;
+
+  /// Create a copy of Credentials
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$YubikeyCredentialsImplCopyWith<_$YubikeyCredentialsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -612,7 +637,9 @@ mixin _$AuthenticationSettings {
   LockTimeoutOption get lockTimeout => throw _privateConstructorUsedError;
   PrivacyMaskOption get privacyMask => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AuthenticationSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AuthenticationSettingsCopyWith<AuthenticationSettings> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -641,6 +668,8 @@ class _$AuthenticationSettingsCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of AuthenticationSettings
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -696,6 +725,8 @@ class __$$AuthenticationSettingsImplCopyWithImpl<$Res>
       $Res Function(_$AuthenticationSettingsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AuthenticationSettings
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -780,7 +811,9 @@ class _$AuthenticationSettingsImpl extends _AuthenticationSettings
   int get hashCode => Object.hash(runtimeType, authenticationMethod,
       pinPadShuffle, lockTimeout, privacyMask);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AuthenticationSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AuthenticationSettingsImplCopyWith<_$AuthenticationSettingsImpl>
@@ -805,8 +838,11 @@ abstract class _AuthenticationSettings extends AuthenticationSettings {
   LockTimeoutOption get lockTimeout;
   @override
   PrivacyMaskOption get privacyMask;
+
+  /// Create a copy of AuthenticationSettings
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AuthenticationSettingsImplCopyWith<_$AuthenticationSettingsImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

@@ -20,7 +20,9 @@ mixin _$TokensListFormState {
       throw _privateConstructorUsedError;
   String get searchCriteria => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TokensListFormState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TokensListFormStateCopyWith<TokensListFormState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -45,6 +47,8 @@ class _$TokensListFormStateCopyWithImpl<$Res, $Val extends TokensListFormState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TokensListFormState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -84,6 +88,8 @@ class __$$TokensListFormStateImplCopyWithImpl<$Res>
       $Res Function(_$TokensListFormStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TokensListFormState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -135,7 +141,9 @@ class _$TokensListFormStateImpl extends _TokensListFormState {
   @override
   int get hashCode => Object.hash(runtimeType, tokensToDisplay, searchCriteria);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TokensListFormState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TokensListFormStateImplCopyWith<_$TokensListFormStateImpl> get copyWith =>
@@ -153,8 +161,11 @@ abstract class _TokensListFormState extends TokensListFormState {
   AsyncValue<List<AEToken>?> get tokensToDisplay;
   @override
   String get searchCriteria;
+
+  /// Create a copy of TokensListFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TokensListFormStateImplCopyWith<_$TokensListFormStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -39,8 +39,12 @@ mixin _$GetFarmLockFarmInfosResponse {
   double get lpTokensDeposited => throw _privateConstructorUsedError;
   Map<String, Stats> get stats => throw _privateConstructorUsedError;
 
+  /// Serializes this GetFarmLockFarmInfosResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of GetFarmLockFarmInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $GetFarmLockFarmInfosResponseCopyWith<GetFarmLockFarmInfosResponse>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -76,6 +80,8 @@ class _$GetFarmLockFarmInfosResponseCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of GetFarmLockFarmInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -161,6 +167,8 @@ class __$$GetFarmLockFarmInfosResponseImplCopyWithImpl<$Res>
       $Res Function(_$GetFarmLockFarmInfosResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of GetFarmLockFarmInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -303,7 +311,7 @@ class _$GetFarmLockFarmInfosResponseImpl
             const DeepCollectionEquality().equals(other._stats, _stats));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -317,7 +325,9 @@ class _$GetFarmLockFarmInfosResponseImpl
       lpTokensDeposited,
       const DeepCollectionEquality().hash(_stats));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GetFarmLockFarmInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$GetFarmLockFarmInfosResponseImplCopyWith<
@@ -380,8 +390,11 @@ abstract class _GetFarmLockFarmInfosResponse
   double get lpTokensDeposited;
   @override
   Map<String, Stats> get stats;
+
+  /// Create a copy of GetFarmLockFarmInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GetFarmLockFarmInfosResponseImplCopyWith<
           _$GetFarmLockFarmInfosResponseImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -402,8 +415,12 @@ mixin _$Stats {
       throw _privateConstructorUsedError;
   double get weight => throw _privateConstructorUsedError;
 
+  /// Serializes this Stats to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Stats
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $StatsCopyWith<Stats> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -430,6 +447,8 @@ class _$StatsCopyWithImpl<$Res, $Val extends Stats>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Stats
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -482,6 +501,8 @@ class __$$StatsImplCopyWithImpl<$Res>
       _$StatsImpl _value, $Res Function(_$StatsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Stats
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -563,12 +584,14 @@ class _$StatsImpl implements _Stats {
             (identical(other.weight, weight) || other.weight == weight));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, depositsCount, lpTokensDeposited,
       const DeepCollectionEquality().hash(_remainingRewards), weight);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Stats
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$StatsImplCopyWith<_$StatsImpl> get copyWith =>
@@ -604,8 +627,11 @@ abstract class _Stats implements Stats {
   List<RemainingRewards> get remainingRewards;
   @override
   double get weight;
+
+  /// Create a copy of Stats
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$StatsImplCopyWith<_$StatsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -621,8 +647,12 @@ mixin _$RemainingRewards {
   int get start => throw _privateConstructorUsedError;
   int get end => throw _privateConstructorUsedError;
 
+  /// Serializes this RemainingRewards to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of RemainingRewards
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $RemainingRewardsCopyWith<RemainingRewards> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -647,6 +677,8 @@ class _$RemainingRewardsCopyWithImpl<$Res, $Val extends RemainingRewards>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of RemainingRewards
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -691,6 +723,8 @@ class __$$RemainingRewardsImplCopyWithImpl<$Res>
       $Res Function(_$RemainingRewardsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of RemainingRewards
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -749,11 +783,13 @@ class _$RemainingRewardsImpl implements _RemainingRewards {
             (identical(other.end, end) || other.end == end));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, rewards, start, end);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RemainingRewards
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RemainingRewardsImplCopyWith<_$RemainingRewardsImpl> get copyWith =>
@@ -784,8 +820,11 @@ abstract class _RemainingRewards implements RemainingRewards {
   int get start;
   @override
   int get end;
+
+  /// Create a copy of RemainingRewards
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RemainingRewardsImplCopyWith<_$RemainingRewardsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

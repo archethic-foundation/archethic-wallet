@@ -36,7 +36,9 @@ mixin _$TransferFormState {
   String get errorAmountText => throw _privateConstructorUsedError;
   String get errorMessageText => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TransferFormState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TransferFormStateCopyWith<TransferFormState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -78,6 +80,8 @@ class _$TransferFormStateCopyWithImpl<$Res, $Val extends TransferFormState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TransferFormState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -161,6 +165,8 @@ class _$TransferFormStateCopyWithImpl<$Res, $Val extends TransferFormState>
     ) as $Val);
   }
 
+  /// Create a copy of TransferFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TransferRecipientCopyWith<$Res> get recipient {
@@ -169,6 +175,8 @@ class _$TransferFormStateCopyWithImpl<$Res, $Val extends TransferFormState>
     });
   }
 
+  /// Create a copy of TransferFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $AETokenCopyWith<$Res>? get aeToken {
@@ -221,6 +229,8 @@ class __$$TransferFormStateImplCopyWithImpl<$Res>
       $Res Function(_$TransferFormStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TransferFormState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -428,7 +438,9 @@ class _$TransferFormStateImpl extends _TransferFormState {
       errorAmountText,
       errorMessageText);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TransferFormState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TransferFormStateImplCopyWith<_$TransferFormStateImpl> get copyWith =>
@@ -458,17 +470,18 @@ abstract class _TransferFormState extends TransferFormState {
   @override
   TransferType? get transferType;
   @override
-  TransferProcessStep get transferProcessStep;
-  @override // TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)
+  TransferProcessStep
+      get transferProcessStep; // TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)
+  @override
   AsyncValue<double> get feeEstimation;
   @override
   bool get defineMaxAmountInProgress;
   @override
   double get amount;
-  @override
 
   /// Amount converted in UCO if primary currency is native. Else in fiat currency
 // TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)
+  @override
   double get amountConverted;
   @override
   AccountBalance get accountBalance;
@@ -488,8 +501,11 @@ abstract class _TransferFormState extends TransferFormState {
   String get errorAmountText;
   @override
   String get errorMessageText;
+
+  /// Create a copy of TransferFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TransferFormStateImplCopyWith<_$TransferFormStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -556,6 +572,8 @@ mixin _$TransferRecipient {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  /// Serializes this TransferRecipient to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 }
 
@@ -575,6 +593,9 @@ class _$TransferRecipientCopyWithImpl<$Res, $Val extends TransferRecipient>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of TransferRecipient
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -599,6 +620,8 @@ class __$$TransferDestinationAddressImplCopyWithImpl<$Res>
       $Res Function(_$TransferDestinationAddressImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TransferRecipient
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -612,6 +635,8 @@ class __$$TransferDestinationAddressImplCopyWithImpl<$Res>
     ));
   }
 
+  /// Create a copy of TransferRecipient
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $AddressCopyWith<$Res> get address {
@@ -653,11 +678,13 @@ class _$TransferDestinationAddressImpl extends _TransferDestinationAddress {
             (identical(other.address, address) || other.address == address));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, address);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TransferRecipient
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TransferDestinationAddressImplCopyWith<_$TransferDestinationAddressImpl>
@@ -752,7 +779,10 @@ abstract class _TransferDestinationAddress extends TransferRecipient {
 
   @AddressJsonConverter()
   Address get address;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TransferRecipient
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TransferDestinationAddressImplCopyWith<_$TransferDestinationAddressImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -777,6 +807,8 @@ class __$$TransferDestinationContactImplCopyWithImpl<$Res>
       $Res Function(_$TransferDestinationContactImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TransferRecipient
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -823,11 +855,13 @@ class _$TransferDestinationContactImpl extends _TransferDestinationContact {
             (identical(other.contact, contact) || other.contact == contact));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, contact);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TransferRecipient
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TransferDestinationContactImplCopyWith<_$TransferDestinationContactImpl>
@@ -922,7 +956,10 @@ abstract class _TransferDestinationContact extends TransferRecipient {
 
   @ContactConverter()
   Contact get contact;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TransferRecipient
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TransferDestinationContactImplCopyWith<_$TransferDestinationContactImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -947,6 +984,8 @@ class __$$TransferDestinationUnknownContactImplCopyWithImpl<$Res>
       $Res Function(_$TransferDestinationUnknownContactImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TransferRecipient
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -993,11 +1032,13 @@ class _$TransferDestinationUnknownContactImpl
             (identical(other.name, name) || other.name == name));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, name);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TransferRecipient
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TransferDestinationUnknownContactImplCopyWith<
@@ -1092,7 +1133,10 @@ abstract class _TransferDestinationUnknownContact extends TransferRecipient {
       _$TransferDestinationUnknownContactImpl.fromJson;
 
   String get name;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TransferRecipient
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TransferDestinationUnknownContactImplCopyWith<
           _$TransferDestinationUnknownContactImpl>
       get copyWith => throw _privateConstructorUsedError;

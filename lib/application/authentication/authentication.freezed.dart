@@ -27,7 +27,9 @@ mixin _$AuthenticationGuardState {
   /// [true] if application is locked
   bool get isLocked => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AuthenticationGuardState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AuthenticationGuardStateCopyWith<AuthenticationGuardState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -52,6 +54,8 @@ class _$AuthenticationGuardStateCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of AuthenticationGuardState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -98,6 +102,8 @@ class __$$AuthenticationGuardStateImplCopyWithImpl<$Res>
       $Res Function(_$AuthenticationGuardStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AuthenticationGuardState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -178,7 +184,9 @@ class _$AuthenticationGuardStateImpl extends _AuthenticationGuardState
   int get hashCode =>
       Object.hash(runtimeType, lockDate, timerEnabled, isLocked);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AuthenticationGuardState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AuthenticationGuardStateImplCopyWith<_$AuthenticationGuardStateImpl>
@@ -193,22 +201,24 @@ abstract class _AuthenticationGuardState extends AuthenticationGuardState {
       required final bool isLocked}) = _$AuthenticationGuardStateImpl;
   const _AuthenticationGuardState._() : super._();
 
-  @override
-
   /// Date at which the application should be locked
   /// [null] when application should not be locked
-  DateTime? get lockDate;
   @override
+  DateTime? get lockDate;
 
   /// [true] when a timer should be set to
   /// lock application during use.
-  bool get timerEnabled;
   @override
+  bool get timerEnabled;
 
   /// [true] if application is locked
-  bool get isLocked;
   @override
-  @JsonKey(ignore: true)
+  bool get isLocked;
+
+  /// Create a copy of AuthenticationGuardState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AuthenticationGuardStateImplCopyWith<_$AuthenticationGuardStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -218,7 +228,9 @@ mixin _$PasswordAuthenticationState {
   int get failedAttemptsCount => throw _privateConstructorUsedError;
   int get maxAttemptsCount => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PasswordAuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PasswordAuthenticationStateCopyWith<PasswordAuthenticationState>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -245,6 +257,8 @@ class _$PasswordAuthenticationStateCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PasswordAuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -286,6 +300,8 @@ class __$$PasswordAuthenticationStateImplCopyWithImpl<$Res>
       $Res Function(_$PasswordAuthenticationStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PasswordAuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -347,7 +363,9 @@ class _$PasswordAuthenticationStateImpl extends _PasswordAuthenticationState
   int get hashCode =>
       Object.hash(runtimeType, failedAttemptsCount, maxAttemptsCount);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PasswordAuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PasswordAuthenticationStateImplCopyWith<_$PasswordAuthenticationStateImpl>
@@ -366,8 +384,11 @@ abstract class _PasswordAuthenticationState
   int get failedAttemptsCount;
   @override
   int get maxAttemptsCount;
+
+  /// Create a copy of PasswordAuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PasswordAuthenticationStateImplCopyWith<_$PasswordAuthenticationStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -377,7 +398,9 @@ mixin _$PinAuthenticationState {
   int get failedAttemptsCount => throw _privateConstructorUsedError;
   int get maxAttemptsCount => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PinAuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PinAuthenticationStateCopyWith<PinAuthenticationState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -402,6 +425,8 @@ class _$PinAuthenticationStateCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PinAuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -443,6 +468,8 @@ class __$$PinAuthenticationStateImplCopyWithImpl<$Res>
       $Res Function(_$PinAuthenticationStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PinAuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -504,7 +531,9 @@ class _$PinAuthenticationStateImpl extends _PinAuthenticationState
   int get hashCode =>
       Object.hash(runtimeType, failedAttemptsCount, maxAttemptsCount);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PinAuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PinAuthenticationStateImplCopyWith<_$PinAuthenticationStateImpl>
@@ -522,8 +551,11 @@ abstract class _PinAuthenticationState extends PinAuthenticationState {
   int get failedAttemptsCount;
   @override
   int get maxAttemptsCount;
+
+  /// Create a copy of PinAuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PinAuthenticationStateImplCopyWith<_$PinAuthenticationStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -533,7 +565,9 @@ mixin _$YubikeyAuthenticationState {
   int get failedAttemptsCount => throw _privateConstructorUsedError;
   int get maxAttemptsCount => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of YubikeyAuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $YubikeyAuthenticationStateCopyWith<YubikeyAuthenticationState>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -559,6 +593,8 @@ class _$YubikeyAuthenticationStateCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of YubikeyAuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -600,6 +636,8 @@ class __$$YubikeyAuthenticationStateImplCopyWithImpl<$Res>
       $Res Function(_$YubikeyAuthenticationStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of YubikeyAuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -661,7 +699,9 @@ class _$YubikeyAuthenticationStateImpl extends _YubikeyAuthenticationState
   int get hashCode =>
       Object.hash(runtimeType, failedAttemptsCount, maxAttemptsCount);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of YubikeyAuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$YubikeyAuthenticationStateImplCopyWith<_$YubikeyAuthenticationStateImpl>
@@ -679,8 +719,11 @@ abstract class _YubikeyAuthenticationState extends YubikeyAuthenticationState {
   int get failedAttemptsCount;
   @override
   int get maxAttemptsCount;
+
+  /// Create a copy of YubikeyAuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$YubikeyAuthenticationStateImplCopyWith<_$YubikeyAuthenticationStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

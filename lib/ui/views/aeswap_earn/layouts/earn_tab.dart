@@ -5,7 +5,6 @@ import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
-import 'package:aewallet/ui/views/aeswap_earn/bloc/state.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/earn_farm_lock_infos.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/farm_lock_block_farmed_tokens_summary.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/farm_lock_deposit_sheet.dart';
@@ -31,9 +30,11 @@ class EarnTab extends ConsumerStatefulWidget {
 class EarnTabState extends ConsumerState<EarnTab> {
   @override
   Widget build(BuildContext context) {
+    final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
+    final pool = ref.watch(farmLockFormPoolProvider).value;
+    final balances = ref.watch(farmLockFormBalancesProvider);
+
     final apr = ref.watch(FarmAPRProviders.farmAPR);
-    final earnForm =
-        ref.watch(earnFormNotifierProvider).value ?? const EarnFormState();
     final localizations = AppLocalizations.of(context)!;
 
     return ScrollConfiguration(
@@ -63,7 +64,7 @@ class EarnTabState extends ConsumerState<EarnTab> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                earnForm.lpTokenBalance == 0
+                                balances.lpTokenBalance == 0
                                     ? localizations.earnHeaderBalance0
                                     : localizations.earnHeaderWithBalance,
                                 style: ArchethicThemeStyles
@@ -81,12 +82,12 @@ class EarnTabState extends ConsumerState<EarnTab> {
                                     Row(
                                       children: [
                                         Text(
-                                          '${earnForm.lpTokenBalance} ',
+                                          '${balances.lpTokenBalance} ',
                                           style: ArchethicThemeStyles
                                               .textStyleSize14W400Highlighted,
                                         ),
                                         Text(
-                                          earnForm.lpTokenBalance <= 1
+                                          balances.lpTokenBalance <= 1
                                               ? localizations
                                                   .earnHeaderLPTokenAvailable
                                               : localizations
@@ -96,7 +97,7 @@ class EarnTabState extends ConsumerState<EarnTab> {
                                         ),
                                       ],
                                     ),
-                                    if (earnForm.lpTokenBalance != 0)
+                                    if (balances.lpTokenBalance != 0)
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -118,7 +119,7 @@ class EarnTabState extends ConsumerState<EarnTab> {
                                             ),
                                             onTap: () async {
                                               final poolJson = jsonEncode(
-                                                earnForm.pool!.toJson(),
+                                                pool!.toJson(),
                                               );
                                               final poolEncoded =
                                                   Uri.encodeComponent(poolJson);
@@ -153,13 +154,13 @@ class EarnTabState extends ConsumerState<EarnTab> {
                                             ),
                                             onTap: () async {
                                               final poolJson = jsonEncode(
-                                                earnForm.pool!.toJson(),
+                                                pool!.toJson(),
                                               );
                                               final pairJson = jsonEncode(
-                                                earnForm.pool!.pair.toJson(),
+                                                pool.pair.toJson(),
                                               );
                                               final lpTokenJson = jsonEncode(
-                                                earnForm.pool!.lpToken.toJson(),
+                                                pool.lpToken.toJson(),
                                               );
                                               final poolEncoded =
                                                   Uri.encodeComponent(poolJson);
@@ -247,17 +248,11 @@ class EarnTabState extends ConsumerState<EarnTab> {
                     localizations.earnHeaderStartEarningBtn,
                     Dimens.buttonBottomDimens,
                     key: const Key('startEarn'),
-                    disabled:
-                        earnForm.pool == null || earnForm.farmLock == null,
+                    disabled: pool == null || farmLock == null,
                     onPressed: () async {
-                      final earnForm =
-                          ref.watch(earnFormNotifierProvider).value ??
-                              const EarnFormState();
-
-                      final poolJson = jsonEncode(earnForm.pool!.toJson());
+                      final poolJson = jsonEncode(pool!.toJson());
                       final poolEncoded = Uri.encodeComponent(poolJson);
-                      final farmLockJson =
-                          jsonEncode(earnForm.farmLock!.toJson());
+                      final farmLockJson = jsonEncode(farmLock!.toJson());
                       final farmLockEncoded = Uri.encodeComponent(farmLockJson);
                       await context.push(
                         Uri(

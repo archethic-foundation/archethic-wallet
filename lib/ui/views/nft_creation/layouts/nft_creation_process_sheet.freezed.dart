@@ -21,6 +21,7 @@ NftCreationSheetParams _$NftCreationSheetParamsFromJson(
 
 /// @nodoc
 mixin _$NftCreationSheetParams {
+  /// Serializes this NftCreationSheetParams to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 }
 
@@ -41,6 +42,9 @@ class _$NftCreationSheetParamsCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of NftCreationSheetParams
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -60,6 +64,9 @@ class __$$NftCreationSheetParamsImplCopyWithImpl<$Res>
       _$NftCreationSheetParamsImpl _value,
       $Res Function(_$NftCreationSheetParamsImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of NftCreationSheetParams
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -89,7 +96,7 @@ class _$NftCreationSheetParamsImpl extends _NftCreationSheetParams
             other is _$NftCreationSheetParamsImpl);
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => runtimeType.hashCode;
 

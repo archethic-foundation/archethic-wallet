@@ -28,8 +28,12 @@ mixin _$DexBlockchain {
   String get urlExplorerChain => throw _privateConstructorUsedError;
   String get nativeCurrency => throw _privateConstructorUsedError;
 
+  /// Serializes this DexBlockchain to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of DexBlockchain
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $DexBlockchainCopyWith<DexBlockchain> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -60,6 +64,8 @@ class _$DexBlockchainCopyWithImpl<$Res, $Val extends DexBlockchain>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of DexBlockchain
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -130,6 +136,8 @@ class __$$DexBlockchainImplCopyWithImpl<$Res>
       _$DexBlockchainImpl _value, $Res Function(_$DexBlockchainImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DexBlockchain
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -235,7 +243,7 @@ class _$DexBlockchainImpl extends _DexBlockchain {
                 other.nativeCurrency == nativeCurrency));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -247,7 +255,9 @@ class _$DexBlockchainImpl extends _DexBlockchain {
       urlExplorerChain,
       nativeCurrency);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DexBlockchain
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DexBlockchainImplCopyWith<_$DexBlockchainImpl> get copyWith =>
@@ -289,8 +299,11 @@ abstract class _DexBlockchain extends DexBlockchain {
   String get urlExplorerChain;
   @override
   String get nativeCurrency;
+
+  /// Create a copy of DexBlockchain
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DexBlockchainImplCopyWith<_$DexBlockchainImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

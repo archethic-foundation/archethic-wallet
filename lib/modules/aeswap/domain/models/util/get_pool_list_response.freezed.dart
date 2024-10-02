@@ -28,8 +28,12 @@ mixin _$GetPoolListResponse {
   @JsonKey(name: 'tokens')
   String get concatenatedTokensAddresses => throw _privateConstructorUsedError;
 
+  /// Serializes this GetPoolListResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of GetPoolListResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $GetPoolListResponseCopyWith<GetPoolListResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -56,6 +60,8 @@ class _$GetPoolListResponseCopyWithImpl<$Res, $Val extends GetPoolListResponse>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of GetPoolListResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -102,6 +108,8 @@ class __$$GetPoolListResponseImplCopyWithImpl<$Res>
       $Res Function(_$GetPoolListResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of GetPoolListResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -168,12 +176,14 @@ class _$GetPoolListResponseImpl extends _GetPoolListResponse {
                     concatenatedTokensAddresses));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, address, lpTokenAddress, concatenatedTokensAddresses);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GetPoolListResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$GetPoolListResponseImplCopyWith<_$GetPoolListResponseImpl> get copyWith =>
@@ -201,15 +211,18 @@ abstract class _GetPoolListResponse extends GetPoolListResponse {
       _$GetPoolListResponseImpl.fromJson;
 
   @override
-  String get address;
-  @override // ignore: invalid_annotation_target
+  String get address; // ignore: invalid_annotation_target
+  @override
   @JsonKey(name: 'lp_token_address')
-  String get lpTokenAddress;
-  @override // ignore: invalid_annotation_target
+  String get lpTokenAddress; // ignore: invalid_annotation_target
+  @override
   @JsonKey(name: 'tokens')
   String get concatenatedTokensAddresses;
+
+  /// Create a copy of GetPoolListResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GetPoolListResponseImplCopyWith<_$GetPoolListResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

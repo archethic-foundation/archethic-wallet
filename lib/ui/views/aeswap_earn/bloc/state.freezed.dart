@@ -15,73 +15,233 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$EarnFormState {
-  DexPool? get pool => throw _privateConstructorUsedError;
-  DexFarmLock? get farmLock => throw _privateConstructorUsedError;
+mixin _$FarmLockFormBalances {
+  double get token1Balance => throw _privateConstructorUsedError;
+  double get token2Balance => throw _privateConstructorUsedError;
   double get lpTokenBalance => throw _privateConstructorUsedError;
-  double get farmedTokensCapital => throw _privateConstructorUsedError;
-  double get farmedTokensCapitalInFiat => throw _privateConstructorUsedError;
-  double get farmedTokensRewards => throw _privateConstructorUsedError;
-  double get farmedTokensRewardsInFiat => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
-  $EarnFormStateCopyWith<EarnFormState> get copyWith =>
+  /// Create a copy of FarmLockFormBalances
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $FarmLockFormBalancesCopyWith<FarmLockFormBalances> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $EarnFormStateCopyWith<$Res> {
-  factory $EarnFormStateCopyWith(
-          EarnFormState value, $Res Function(EarnFormState) then) =
-      _$EarnFormStateCopyWithImpl<$Res, EarnFormState>;
+abstract class $FarmLockFormBalancesCopyWith<$Res> {
+  factory $FarmLockFormBalancesCopyWith(FarmLockFormBalances value,
+          $Res Function(FarmLockFormBalances) then) =
+      _$FarmLockFormBalancesCopyWithImpl<$Res, FarmLockFormBalances>;
   @useResult
   $Res call(
-      {DexPool? pool,
-      DexFarmLock? farmLock,
-      double lpTokenBalance,
-      double farmedTokensCapital,
-      double farmedTokensCapitalInFiat,
-      double farmedTokensRewards,
-      double farmedTokensRewardsInFiat});
-
-  $DexPoolCopyWith<$Res>? get pool;
-  $DexFarmLockCopyWith<$Res>? get farmLock;
+      {double token1Balance, double token2Balance, double lpTokenBalance});
 }
 
 /// @nodoc
-class _$EarnFormStateCopyWithImpl<$Res, $Val extends EarnFormState>
-    implements $EarnFormStateCopyWith<$Res> {
-  _$EarnFormStateCopyWithImpl(this._value, this._then);
+class _$FarmLockFormBalancesCopyWithImpl<$Res,
+        $Val extends FarmLockFormBalances>
+    implements $FarmLockFormBalancesCopyWith<$Res> {
+  _$FarmLockFormBalancesCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of FarmLockFormBalances
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? pool = freezed,
-    Object? farmLock = freezed,
+    Object? token1Balance = null,
+    Object? token2Balance = null,
     Object? lpTokenBalance = null,
+  }) {
+    return _then(_value.copyWith(
+      token1Balance: null == token1Balance
+          ? _value.token1Balance
+          : token1Balance // ignore: cast_nullable_to_non_nullable
+              as double,
+      token2Balance: null == token2Balance
+          ? _value.token2Balance
+          : token2Balance // ignore: cast_nullable_to_non_nullable
+              as double,
+      lpTokenBalance: null == lpTokenBalance
+          ? _value.lpTokenBalance
+          : lpTokenBalance // ignore: cast_nullable_to_non_nullable
+              as double,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$FarmLockFormBalancesImplCopyWith<$Res>
+    implements $FarmLockFormBalancesCopyWith<$Res> {
+  factory _$$FarmLockFormBalancesImplCopyWith(_$FarmLockFormBalancesImpl value,
+          $Res Function(_$FarmLockFormBalancesImpl) then) =
+      __$$FarmLockFormBalancesImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {double token1Balance, double token2Balance, double lpTokenBalance});
+}
+
+/// @nodoc
+class __$$FarmLockFormBalancesImplCopyWithImpl<$Res>
+    extends _$FarmLockFormBalancesCopyWithImpl<$Res, _$FarmLockFormBalancesImpl>
+    implements _$$FarmLockFormBalancesImplCopyWith<$Res> {
+  __$$FarmLockFormBalancesImplCopyWithImpl(_$FarmLockFormBalancesImpl _value,
+      $Res Function(_$FarmLockFormBalancesImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of FarmLockFormBalances
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? token1Balance = null,
+    Object? token2Balance = null,
+    Object? lpTokenBalance = null,
+  }) {
+    return _then(_$FarmLockFormBalancesImpl(
+      token1Balance: null == token1Balance
+          ? _value.token1Balance
+          : token1Balance // ignore: cast_nullable_to_non_nullable
+              as double,
+      token2Balance: null == token2Balance
+          ? _value.token2Balance
+          : token2Balance // ignore: cast_nullable_to_non_nullable
+              as double,
+      lpTokenBalance: null == lpTokenBalance
+          ? _value.lpTokenBalance
+          : lpTokenBalance // ignore: cast_nullable_to_non_nullable
+              as double,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$FarmLockFormBalancesImpl extends _FarmLockFormBalances {
+  const _$FarmLockFormBalancesImpl(
+      {this.token1Balance = 0.0,
+      this.token2Balance = 0.0,
+      this.lpTokenBalance = 0.0})
+      : super._();
+
+  @override
+  @JsonKey()
+  final double token1Balance;
+  @override
+  @JsonKey()
+  final double token2Balance;
+  @override
+  @JsonKey()
+  final double lpTokenBalance;
+
+  @override
+  String toString() {
+    return 'FarmLockFormBalances(token1Balance: $token1Balance, token2Balance: $token2Balance, lpTokenBalance: $lpTokenBalance)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FarmLockFormBalancesImpl &&
+            (identical(other.token1Balance, token1Balance) ||
+                other.token1Balance == token1Balance) &&
+            (identical(other.token2Balance, token2Balance) ||
+                other.token2Balance == token2Balance) &&
+            (identical(other.lpTokenBalance, lpTokenBalance) ||
+                other.lpTokenBalance == lpTokenBalance));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, token1Balance, token2Balance, lpTokenBalance);
+
+  /// Create a copy of FarmLockFormBalances
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FarmLockFormBalancesImplCopyWith<_$FarmLockFormBalancesImpl>
+      get copyWith =>
+          __$$FarmLockFormBalancesImplCopyWithImpl<_$FarmLockFormBalancesImpl>(
+              this, _$identity);
+}
+
+abstract class _FarmLockFormBalances extends FarmLockFormBalances {
+  const factory _FarmLockFormBalances(
+      {final double token1Balance,
+      final double token2Balance,
+      final double lpTokenBalance}) = _$FarmLockFormBalancesImpl;
+  const _FarmLockFormBalances._() : super._();
+
+  @override
+  double get token1Balance;
+  @override
+  double get token2Balance;
+  @override
+  double get lpTokenBalance;
+
+  /// Create a copy of FarmLockFormBalances
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$FarmLockFormBalancesImplCopyWith<_$FarmLockFormBalancesImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$FarmLockFormSummary {
+  double get farmedTokensCapital => throw _privateConstructorUsedError;
+  double get farmedTokensCapitalInFiat => throw _privateConstructorUsedError;
+  double get farmedTokensRewards => throw _privateConstructorUsedError;
+  double get farmedTokensRewardsInFiat => throw _privateConstructorUsedError;
+
+  /// Create a copy of FarmLockFormSummary
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $FarmLockFormSummaryCopyWith<FarmLockFormSummary> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $FarmLockFormSummaryCopyWith<$Res> {
+  factory $FarmLockFormSummaryCopyWith(
+          FarmLockFormSummary value, $Res Function(FarmLockFormSummary) then) =
+      _$FarmLockFormSummaryCopyWithImpl<$Res, FarmLockFormSummary>;
+  @useResult
+  $Res call(
+      {double farmedTokensCapital,
+      double farmedTokensCapitalInFiat,
+      double farmedTokensRewards,
+      double farmedTokensRewardsInFiat});
+}
+
+/// @nodoc
+class _$FarmLockFormSummaryCopyWithImpl<$Res, $Val extends FarmLockFormSummary>
+    implements $FarmLockFormSummaryCopyWith<$Res> {
+  _$FarmLockFormSummaryCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of FarmLockFormSummary
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
     Object? farmedTokensCapital = null,
     Object? farmedTokensCapitalInFiat = null,
     Object? farmedTokensRewards = null,
     Object? farmedTokensRewardsInFiat = null,
   }) {
     return _then(_value.copyWith(
-      pool: freezed == pool
-          ? _value.pool
-          : pool // ignore: cast_nullable_to_non_nullable
-              as DexPool?,
-      farmLock: freezed == farmLock
-          ? _value.farmLock
-          : farmLock // ignore: cast_nullable_to_non_nullable
-              as DexFarmLock?,
-      lpTokenBalance: null == lpTokenBalance
-          ? _value.lpTokenBalance
-          : lpTokenBalance // ignore: cast_nullable_to_non_nullable
-              as double,
       farmedTokensCapital: null == farmedTokensCapital
           ? _value.farmedTokensCapital
           : farmedTokensCapital // ignore: cast_nullable_to_non_nullable
@@ -100,87 +260,42 @@ class _$EarnFormStateCopyWithImpl<$Res, $Val extends EarnFormState>
               as double,
     ) as $Val);
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $DexPoolCopyWith<$Res>? get pool {
-    if (_value.pool == null) {
-      return null;
-    }
-
-    return $DexPoolCopyWith<$Res>(_value.pool!, (value) {
-      return _then(_value.copyWith(pool: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $DexFarmLockCopyWith<$Res>? get farmLock {
-    if (_value.farmLock == null) {
-      return null;
-    }
-
-    return $DexFarmLockCopyWith<$Res>(_value.farmLock!, (value) {
-      return _then(_value.copyWith(farmLock: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
-abstract class _$$EarnFormStateImplCopyWith<$Res>
-    implements $EarnFormStateCopyWith<$Res> {
-  factory _$$EarnFormStateImplCopyWith(
-          _$EarnFormStateImpl value, $Res Function(_$EarnFormStateImpl) then) =
-      __$$EarnFormStateImplCopyWithImpl<$Res>;
+abstract class _$$FarmLockFormSummaryImplCopyWith<$Res>
+    implements $FarmLockFormSummaryCopyWith<$Res> {
+  factory _$$FarmLockFormSummaryImplCopyWith(_$FarmLockFormSummaryImpl value,
+          $Res Function(_$FarmLockFormSummaryImpl) then) =
+      __$$FarmLockFormSummaryImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {DexPool? pool,
-      DexFarmLock? farmLock,
-      double lpTokenBalance,
-      double farmedTokensCapital,
+      {double farmedTokensCapital,
       double farmedTokensCapitalInFiat,
       double farmedTokensRewards,
       double farmedTokensRewardsInFiat});
-
-  @override
-  $DexPoolCopyWith<$Res>? get pool;
-  @override
-  $DexFarmLockCopyWith<$Res>? get farmLock;
 }
 
 /// @nodoc
-class __$$EarnFormStateImplCopyWithImpl<$Res>
-    extends _$EarnFormStateCopyWithImpl<$Res, _$EarnFormStateImpl>
-    implements _$$EarnFormStateImplCopyWith<$Res> {
-  __$$EarnFormStateImplCopyWithImpl(
-      _$EarnFormStateImpl _value, $Res Function(_$EarnFormStateImpl) _then)
+class __$$FarmLockFormSummaryImplCopyWithImpl<$Res>
+    extends _$FarmLockFormSummaryCopyWithImpl<$Res, _$FarmLockFormSummaryImpl>
+    implements _$$FarmLockFormSummaryImplCopyWith<$Res> {
+  __$$FarmLockFormSummaryImplCopyWithImpl(_$FarmLockFormSummaryImpl _value,
+      $Res Function(_$FarmLockFormSummaryImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of FarmLockFormSummary
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? pool = freezed,
-    Object? farmLock = freezed,
-    Object? lpTokenBalance = null,
     Object? farmedTokensCapital = null,
     Object? farmedTokensCapitalInFiat = null,
     Object? farmedTokensRewards = null,
     Object? farmedTokensRewardsInFiat = null,
   }) {
-    return _then(_$EarnFormStateImpl(
-      pool: freezed == pool
-          ? _value.pool
-          : pool // ignore: cast_nullable_to_non_nullable
-              as DexPool?,
-      farmLock: freezed == farmLock
-          ? _value.farmLock
-          : farmLock // ignore: cast_nullable_to_non_nullable
-              as DexFarmLock?,
-      lpTokenBalance: null == lpTokenBalance
-          ? _value.lpTokenBalance
-          : lpTokenBalance // ignore: cast_nullable_to_non_nullable
-              as double,
+    return _then(_$FarmLockFormSummaryImpl(
       farmedTokensCapital: null == farmedTokensCapital
           ? _value.farmedTokensCapital
           : farmedTokensCapital // ignore: cast_nullable_to_non_nullable
@@ -203,24 +318,14 @@ class __$$EarnFormStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$EarnFormStateImpl extends _EarnFormState {
-  const _$EarnFormStateImpl(
-      {this.pool,
-      this.farmLock,
-      this.lpTokenBalance = 0.0,
-      this.farmedTokensCapital = 0.0,
+class _$FarmLockFormSummaryImpl extends _FarmLockFormSummary {
+  const _$FarmLockFormSummaryImpl(
+      {this.farmedTokensCapital = 0.0,
       this.farmedTokensCapitalInFiat = 0.0,
       this.farmedTokensRewards = 0.0,
       this.farmedTokensRewardsInFiat = 0.0})
       : super._();
 
-  @override
-  final DexPool? pool;
-  @override
-  final DexFarmLock? farmLock;
-  @override
-  @JsonKey()
-  final double lpTokenBalance;
   @override
   @JsonKey()
   final double farmedTokensCapital;
@@ -236,19 +341,14 @@ class _$EarnFormStateImpl extends _EarnFormState {
 
   @override
   String toString() {
-    return 'EarnFormState(pool: $pool, farmLock: $farmLock, lpTokenBalance: $lpTokenBalance, farmedTokensCapital: $farmedTokensCapital, farmedTokensCapitalInFiat: $farmedTokensCapitalInFiat, farmedTokensRewards: $farmedTokensRewards, farmedTokensRewardsInFiat: $farmedTokensRewardsInFiat)';
+    return 'FarmLockFormSummary(farmedTokensCapital: $farmedTokensCapital, farmedTokensCapitalInFiat: $farmedTokensCapitalInFiat, farmedTokensRewards: $farmedTokensRewards, farmedTokensRewardsInFiat: $farmedTokensRewardsInFiat)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$EarnFormStateImpl &&
-            (identical(other.pool, pool) || other.pool == pool) &&
-            (identical(other.farmLock, farmLock) ||
-                other.farmLock == farmLock) &&
-            (identical(other.lpTokenBalance, lpTokenBalance) ||
-                other.lpTokenBalance == lpTokenBalance) &&
+            other is _$FarmLockFormSummaryImpl &&
             (identical(other.farmedTokensCapital, farmedTokensCapital) ||
                 other.farmedTokensCapital == farmedTokensCapital) &&
             (identical(other.farmedTokensCapitalInFiat,
@@ -264,38 +364,29 @@ class _$EarnFormStateImpl extends _EarnFormState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      pool,
-      farmLock,
-      lpTokenBalance,
       farmedTokensCapital,
       farmedTokensCapitalInFiat,
       farmedTokensRewards,
       farmedTokensRewardsInFiat);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FarmLockFormSummary
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$EarnFormStateImplCopyWith<_$EarnFormStateImpl> get copyWith =>
-      __$$EarnFormStateImplCopyWithImpl<_$EarnFormStateImpl>(this, _$identity);
+  _$$FarmLockFormSummaryImplCopyWith<_$FarmLockFormSummaryImpl> get copyWith =>
+      __$$FarmLockFormSummaryImplCopyWithImpl<_$FarmLockFormSummaryImpl>(
+          this, _$identity);
 }
 
-abstract class _EarnFormState extends EarnFormState {
-  const factory _EarnFormState(
-      {final DexPool? pool,
-      final DexFarmLock? farmLock,
-      final double lpTokenBalance,
-      final double farmedTokensCapital,
+abstract class _FarmLockFormSummary extends FarmLockFormSummary {
+  const factory _FarmLockFormSummary(
+      {final double farmedTokensCapital,
       final double farmedTokensCapitalInFiat,
       final double farmedTokensRewards,
-      final double farmedTokensRewardsInFiat}) = _$EarnFormStateImpl;
-  const _EarnFormState._() : super._();
+      final double farmedTokensRewardsInFiat}) = _$FarmLockFormSummaryImpl;
+  const _FarmLockFormSummary._() : super._();
 
-  @override
-  DexPool? get pool;
-  @override
-  DexFarmLock? get farmLock;
-  @override
-  double get lpTokenBalance;
   @override
   double get farmedTokensCapital;
   @override
@@ -304,8 +395,11 @@ abstract class _EarnFormState extends EarnFormState {
   double get farmedTokensRewards;
   @override
   double get farmedTokensRewardsInFiat;
+
+  /// Create a copy of FarmLockFormSummary
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
-  _$$EarnFormStateImplCopyWith<_$EarnFormStateImpl> get copyWith =>
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$FarmLockFormSummaryImplCopyWith<_$FarmLockFormSummaryImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

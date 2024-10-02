@@ -125,6 +125,9 @@ class _$FailureCopyWithImpl<$Res, $Val extends Failure>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -141,6 +144,9 @@ class __$$LoggedOutImplCopyWithImpl<$Res>
   __$$LoggedOutImplCopyWithImpl(
       _$LoggedOutImpl _value, $Res Function(_$LoggedOutImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -298,6 +304,9 @@ class __$$NetworkFailureImplCopyWithImpl<$Res>
   __$$NetworkFailureImplCopyWithImpl(
       _$NetworkFailureImpl _value, $Res Function(_$NetworkFailureImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -455,6 +464,9 @@ class __$$OperationCanceledImplCopyWithImpl<$Res>
   __$$OperationCanceledImplCopyWithImpl(_$OperationCanceledImpl _value,
       $Res Function(_$OperationCanceledImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -615,6 +627,8 @@ class __$$QuotaExceededFailureImplCopyWithImpl<$Res>
       $Res Function(_$QuotaExceededFailureImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -654,7 +668,9 @@ class _$QuotaExceededFailureImpl extends _QuotaExceededFailure {
   @override
   int get hashCode => Object.hash(runtimeType, cooldownEndDate);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$QuotaExceededFailureImplCopyWith<_$QuotaExceededFailureImpl>
@@ -785,7 +801,10 @@ abstract class _QuotaExceededFailure extends Failure {
   const _QuotaExceededFailure._() : super._();
 
   DateTime? get cooldownEndDate;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$QuotaExceededFailureImplCopyWith<_$QuotaExceededFailureImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -804,6 +823,9 @@ class __$$ServiceNotFoundImplCopyWithImpl<$Res>
   __$$ServiceNotFoundImplCopyWithImpl(
       _$ServiceNotFoundImpl _value, $Res Function(_$ServiceNotFoundImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -961,6 +983,9 @@ class __$$ServiceAlreadyExistsImplCopyWithImpl<$Res>
   __$$ServiceAlreadyExistsImplCopyWithImpl(_$ServiceAlreadyExistsImpl _value,
       $Res Function(_$ServiceAlreadyExistsImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1119,6 +1144,9 @@ class __$$InsuffientFundsImplCopyWithImpl<$Res>
   __$$InsuffientFundsImplCopyWithImpl(
       _$InsuffientFundsImpl _value, $Res Function(_$InsuffientFundsImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1276,6 +1304,9 @@ class __$$InauthorizedImplCopyWithImpl<$Res>
   __$$InauthorizedImplCopyWithImpl(
       _$InauthorizedImpl _value, $Res Function(_$InauthorizedImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1433,6 +1464,9 @@ class __$$InvalidValueImplCopyWithImpl<$Res>
   __$$InvalidValueImplCopyWithImpl(
       _$InvalidValueImpl _value, $Res Function(_$InvalidValueImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1590,6 +1624,9 @@ class __$$LockedApplicationImplCopyWithImpl<$Res>
   __$$LockedApplicationImplCopyWithImpl(_$LockedApplicationImpl _value,
       $Res Function(_$LockedApplicationImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1750,6 +1787,8 @@ class __$$OtherFailureImplCopyWithImpl<$Res>
       _$OtherFailureImpl _value, $Res Function(_$OtherFailureImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1794,7 +1833,9 @@ class _$OtherFailureImpl extends _OtherFailure {
   int get hashCode => Object.hash(
       runtimeType, const DeepCollectionEquality().hash(cause), stack);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$OtherFailureImplCopyWith<_$OtherFailureImpl> get copyWith =>
@@ -1924,7 +1965,10 @@ abstract class _OtherFailure extends Failure {
 
   Object? get cause;
   StackTrace? get stack;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$OtherFailureImplCopyWith<_$OtherFailureImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

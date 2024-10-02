@@ -24,8 +24,12 @@ mixin _$AddAddressParams {
   String get propertyValue => throw _privateConstructorUsedError;
   bool get readOnly => throw _privateConstructorUsedError;
 
+  /// Serializes this AddAddressParams to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AddAddressParams
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AddAddressParamsCopyWith<AddAddressParams> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -49,6 +53,8 @@ class _$AddAddressParamsCopyWithImpl<$Res, $Val extends AddAddressParams>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of AddAddressParams
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -92,6 +98,8 @@ class __$$AddAddressParamsImplCopyWithImpl<$Res>
       $Res Function(_$AddAddressParamsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AddAddressParams
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -153,12 +161,14 @@ class _$AddAddressParamsImpl extends _AddAddressParams {
                 other.readOnly == readOnly));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, propertyName, propertyValue, readOnly);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AddAddressParams
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AddAddressParamsImplCopyWith<_$AddAddressParamsImpl> get copyWith =>
@@ -189,8 +199,11 @@ abstract class _AddAddressParams extends AddAddressParams {
   String get propertyValue;
   @override
   bool get readOnly;
+
+  /// Create a copy of AddAddressParams
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AddAddressParamsImplCopyWith<_$AddAddressParamsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

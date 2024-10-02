@@ -19,7 +19,9 @@ mixin _$AddServiceConfirmationFormState {
   RPCCommand<SendTransactionRequest> get signTransactionCommand =>
       throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AddServiceConfirmationFormState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AddServiceConfirmationFormStateCopyWith<AddServiceConfirmationFormState>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -48,6 +50,8 @@ class _$AddServiceConfirmationFormStateCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of AddServiceConfirmationFormState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -61,6 +65,8 @@ class _$AddServiceConfirmationFormStateCopyWithImpl<$Res,
     ) as $Val);
   }
 
+  /// Create a copy of AddServiceConfirmationFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $RPCCommandCopyWith<SendTransactionRequest, $Res> get signTransactionCommand {
@@ -96,6 +102,8 @@ class __$$AddServiceConfirmationFormStateImplCopyWithImpl<$Res>
       $Res Function(_$AddServiceConfirmationFormStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AddServiceConfirmationFormState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -138,7 +146,9 @@ class _$AddServiceConfirmationFormStateImpl
   @override
   int get hashCode => Object.hash(runtimeType, signTransactionCommand);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AddServiceConfirmationFormState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AddServiceConfirmationFormStateImplCopyWith<
@@ -156,8 +166,11 @@ abstract class _AddServiceConfirmationFormState
 
   @override
   RPCCommand<SendTransactionRequest> get signTransactionCommand;
+
+  /// Create a copy of AddServiceConfirmationFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AddServiceConfirmationFormStateImplCopyWith<
           _$AddServiceConfirmationFormStateImpl>
       get copyWith => throw _privateConstructorUsedError;

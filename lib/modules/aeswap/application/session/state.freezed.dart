@@ -18,7 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$SessionAESwap {
   Environment get environment => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SessionAESwap
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SessionAESwapCopyWith<SessionAESwap> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -42,6 +44,8 @@ class _$SessionAESwapCopyWithImpl<$Res, $Val extends SessionAESwap>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of SessionAESwap
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -75,6 +79,8 @@ class __$$SessionAESwapImplCopyWithImpl<$Res>
       _$SessionAESwapImpl _value, $Res Function(_$SessionAESwapImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SessionAESwap
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -114,7 +120,9 @@ class _$SessionAESwapImpl extends _SessionAESwap {
   @override
   int get hashCode => Object.hash(runtimeType, environment);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SessionAESwap
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SessionAESwapImplCopyWith<_$SessionAESwapImpl> get copyWith =>
@@ -128,8 +136,11 @@ abstract class _SessionAESwap extends SessionAESwap {
 
   @override
   Environment get environment;
+
+  /// Create a copy of SessionAESwap
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SessionAESwapImplCopyWith<_$SessionAESwapImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -72,6 +72,9 @@ class _$AccessRecipientCopyWithImpl<$Res, $Val extends AccessRecipient>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of AccessRecipient
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -91,6 +94,8 @@ class __$$AccessPublicKeyImplCopyWithImpl<$Res>
       _$AccessPublicKeyImpl _value, $Res Function(_$AccessPublicKeyImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AccessRecipient
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -135,7 +140,9 @@ class _$AccessPublicKeyImpl extends _AccessPublicKey {
   @override
   int get hashCode => Object.hash(runtimeType, publicKey);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AccessRecipient
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AccessPublicKeyImplCopyWith<_$AccessPublicKeyImpl> get copyWith =>
@@ -212,7 +219,10 @@ abstract class _AccessPublicKey extends AccessRecipient {
 
   @HiveField(0)
   String get publicKey;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AccessRecipient
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AccessPublicKeyImplCopyWith<_$AccessPublicKeyImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -234,6 +244,8 @@ class __$$AccessContactImplCopyWithImpl<$Res>
       _$AccessContactImpl _value, $Res Function(_$AccessContactImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AccessRecipient
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -276,7 +288,9 @@ class _$AccessContactImpl extends _AccessContact {
   @override
   int get hashCode => Object.hash(runtimeType, contact);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AccessRecipient
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AccessContactImplCopyWith<_$AccessContactImpl> get copyWith =>
@@ -352,7 +366,10 @@ abstract class _AccessContact extends AccessRecipient {
 
   @HiveField(0)
   Contact get contact;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AccessRecipient
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AccessContactImplCopyWith<_$AccessContactImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

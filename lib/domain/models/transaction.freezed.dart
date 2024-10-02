@@ -78,6 +78,9 @@ class _$TransactionCopyWithImpl<$Res, $Val extends Transaction>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of Transaction
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -99,6 +102,8 @@ class __$$TransactionTransferImplCopyWithImpl<$Res>
       $Res Function(_$TransactionTransferImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Transaction
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -112,6 +117,8 @@ class __$$TransactionTransferImplCopyWithImpl<$Res>
     ));
   }
 
+  /// Create a copy of Transaction
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TransferCopyWith<$Res> get transfer {
@@ -146,7 +153,9 @@ class _$TransactionTransferImpl extends _TransactionTransfer {
   @override
   int get hashCode => Object.hash(runtimeType, transfer);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Transaction
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TransactionTransferImplCopyWith<_$TransactionTransferImpl> get copyWith =>
@@ -228,7 +237,10 @@ abstract class _TransactionTransfer extends Transaction {
   const _TransactionTransfer._() : super._();
 
   Transfer get transfer;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Transaction
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TransactionTransferImplCopyWith<_$TransactionTransferImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -252,6 +264,8 @@ class __$$TransactionTokenImplCopyWithImpl<$Res>
       $Res Function(_$TransactionTokenImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Transaction
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -265,6 +279,8 @@ class __$$TransactionTokenImplCopyWithImpl<$Res>
     ));
   }
 
+  /// Create a copy of Transaction
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TokenCopyWith<$Res> get token {
@@ -298,7 +314,9 @@ class _$TransactionTokenImpl extends _TransactionToken {
   @override
   int get hashCode => Object.hash(runtimeType, token);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Transaction
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TransactionTokenImplCopyWith<_$TransactionTokenImpl> get copyWith =>
@@ -380,7 +398,10 @@ abstract class _TransactionToken extends Transaction {
   const _TransactionToken._() : super._();
 
   Token get token;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Transaction
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TransactionTokenImplCopyWith<_$TransactionTokenImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -402,6 +423,8 @@ class __$$TransactionKeychainImplCopyWithImpl<$Res>
       $Res Function(_$TransactionKeychainImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Transaction
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -449,7 +472,9 @@ class _$TransactionKeychainImpl extends _TransactionKeychain {
   @override
   int get hashCode => Object.hash(runtimeType, seed, name);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Transaction
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TransactionKeychainImplCopyWith<_$TransactionKeychainImpl> get copyWith =>
@@ -533,7 +558,10 @@ abstract class _TransactionKeychain extends Transaction {
 
   String get seed;
   String get name;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Transaction
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TransactionKeychainImplCopyWith<_$TransactionKeychainImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

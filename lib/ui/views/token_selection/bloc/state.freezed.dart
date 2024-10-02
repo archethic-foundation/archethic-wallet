@@ -19,7 +19,9 @@ mixin _$TokenSelectionFormState {
   String get searchText => throw _privateConstructorUsedError;
   List<DexToken>? get result => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TokenSelectionFormState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TokenSelectionFormStateCopyWith<TokenSelectionFormState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -44,6 +46,8 @@ class _$TokenSelectionFormStateCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TokenSelectionFormState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -85,6 +89,8 @@ class __$$TokenSelectionFormStateImplCopyWithImpl<$Res>
       $Res Function(_$TokenSelectionFormStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TokenSelectionFormState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -144,7 +150,9 @@ class _$TokenSelectionFormStateImpl extends _TokenSelectionFormState {
   int get hashCode => Object.hash(
       runtimeType, searchText, const DeepCollectionEquality().hash(_result));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TokenSelectionFormState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TokenSelectionFormStateImplCopyWith<_$TokenSelectionFormStateImpl>
@@ -162,8 +170,11 @@ abstract class _TokenSelectionFormState extends TokenSelectionFormState {
   String get searchText;
   @override
   List<DexToken>? get result;
+
+  /// Create a copy of TokenSelectionFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TokenSelectionFormStateImplCopyWith<_$TokenSelectionFormStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

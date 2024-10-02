@@ -20,7 +20,9 @@ mixin _$MarketPrice {
   int get lastLoading => throw _privateConstructorUsedError;
   bool get useOracle => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MarketPrice
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $MarketPriceCopyWith<MarketPrice> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -44,6 +46,8 @@ class _$MarketPriceCopyWithImpl<$Res, $Val extends MarketPrice>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of MarketPrice
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -87,6 +91,8 @@ class __$$MarketPriceImplCopyWithImpl<$Res>
       _$MarketPriceImpl _value, $Res Function(_$MarketPriceImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of MarketPrice
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -147,7 +153,9 @@ class _$MarketPriceImpl extends _MarketPrice {
   @override
   int get hashCode => Object.hash(runtimeType, amount, lastLoading, useOracle);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MarketPrice
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$MarketPriceImplCopyWith<_$MarketPriceImpl> get copyWith =>
@@ -167,8 +175,11 @@ abstract class _MarketPrice extends MarketPrice {
   int get lastLoading;
   @override
   bool get useOracle;
+
+  /// Create a copy of MarketPrice
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$MarketPriceImplCopyWith<_$MarketPriceImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

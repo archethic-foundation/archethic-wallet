@@ -18,7 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$LocalDataMigrationState {
   bool get migrationInProgress => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of LocalDataMigrationState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $LocalDataMigrationStateCopyWith<LocalDataMigrationState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -43,6 +45,8 @@ class _$LocalDataMigrationStateCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of LocalDataMigrationState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -79,6 +83,8 @@ class __$$LocalDataMigrationStateImplCopyWithImpl<$Res>
       $Res Function(_$LocalDataMigrationStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of LocalDataMigrationState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -120,7 +126,9 @@ class _$LocalDataMigrationStateImpl extends _LocalDataMigrationState {
   @override
   int get hashCode => Object.hash(runtimeType, migrationInProgress);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of LocalDataMigrationState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$LocalDataMigrationStateImplCopyWith<_$LocalDataMigrationStateImpl>
@@ -135,8 +143,11 @@ abstract class _LocalDataMigrationState extends LocalDataMigrationState {
 
   @override
   bool get migrationInProgress;
+
+  /// Create a copy of LocalDataMigrationState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LocalDataMigrationStateImplCopyWith<_$LocalDataMigrationStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

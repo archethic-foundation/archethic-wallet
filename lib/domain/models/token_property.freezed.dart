@@ -21,7 +21,9 @@ mixin _$TokenProperty {
   List<TokenPropertyAccess> get publicKeys =>
       throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TokenProperty
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TokenPropertyCopyWith<TokenProperty> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -48,6 +50,8 @@ class _$TokenPropertyCopyWithImpl<$Res, $Val extends TokenProperty>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TokenProperty
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -94,6 +98,8 @@ class __$$TokenPropertyImplCopyWithImpl<$Res>
       _$TokenPropertyImpl _value, $Res Function(_$TokenPropertyImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TokenProperty
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -165,7 +171,9 @@ class _$TokenPropertyImpl extends _TokenProperty {
       const DeepCollectionEquality().hash(propertyValue),
       const DeepCollectionEquality().hash(_publicKeys));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TokenProperty
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TokenPropertyImplCopyWith<_$TokenPropertyImpl> get copyWith =>
@@ -186,8 +194,11 @@ abstract class _TokenProperty extends TokenProperty {
   dynamic get propertyValue;
   @override
   List<TokenPropertyAccess> get publicKeys;
+
+  /// Create a copy of TokenProperty
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TokenPropertyImplCopyWith<_$TokenPropertyImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

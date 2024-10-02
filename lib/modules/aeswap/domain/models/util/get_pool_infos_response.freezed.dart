@@ -29,8 +29,12 @@ mixin _$GetPoolInfosResponse {
   double get protocolFee => throw _privateConstructorUsedError;
   Stats get stats => throw _privateConstructorUsedError;
 
+  /// Serializes this GetPoolInfosResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of GetPoolInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $GetPoolInfosResponseCopyWith<GetPoolInfosResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -66,6 +70,8 @@ class _$GetPoolInfosResponseCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of GetPoolInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -104,6 +110,8 @@ class _$GetPoolInfosResponseCopyWithImpl<$Res,
     ) as $Val);
   }
 
+  /// Create a copy of GetPoolInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TokenCopyWith<$Res> get token1 {
@@ -112,6 +120,8 @@ class _$GetPoolInfosResponseCopyWithImpl<$Res,
     });
   }
 
+  /// Create a copy of GetPoolInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TokenCopyWith<$Res> get token2 {
@@ -120,6 +130,8 @@ class _$GetPoolInfosResponseCopyWithImpl<$Res,
     });
   }
 
+  /// Create a copy of GetPoolInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $LPTokenCopyWith<$Res> get lpToken {
@@ -128,6 +140,8 @@ class _$GetPoolInfosResponseCopyWithImpl<$Res,
     });
   }
 
+  /// Create a copy of GetPoolInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $StatsCopyWith<$Res> get stats {
@@ -171,6 +185,8 @@ class __$$GetPoolInfosResponseImplCopyWithImpl<$Res>
       $Res Function(_$GetPoolInfosResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of GetPoolInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -258,12 +274,14 @@ class _$GetPoolInfosResponseImpl implements _GetPoolInfosResponse {
             (identical(other.stats, stats) || other.stats == stats));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, token1, token2, lpToken, fee, protocolFee, stats);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GetPoolInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$GetPoolInfosResponseImplCopyWith<_$GetPoolInfosResponseImpl>
@@ -305,8 +323,11 @@ abstract class _GetPoolInfosResponse implements GetPoolInfosResponse {
   double get protocolFee;
   @override
   Stats get stats;
+
+  /// Create a copy of GetPoolInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GetPoolInfosResponseImplCopyWith<_$GetPoolInfosResponseImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -320,8 +341,12 @@ mixin _$Token {
   String get address => throw _privateConstructorUsedError;
   double get reserve => throw _privateConstructorUsedError;
 
+  /// Serializes this Token to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Token
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TokenCopyWith<Token> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -343,6 +368,8 @@ class _$TokenCopyWithImpl<$Res, $Val extends Token>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Token
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -380,6 +407,8 @@ class __$$TokenImplCopyWithImpl<$Res>
       _$TokenImpl _value, $Res Function(_$TokenImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Token
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -426,11 +455,13 @@ class _$TokenImpl implements _Token {
             (identical(other.reserve, reserve) || other.reserve == reserve));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, address, reserve);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Token
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TokenImplCopyWith<_$TokenImpl> get copyWith =>
@@ -455,8 +486,11 @@ abstract class _Token implements Token {
   String get address;
   @override
   double get reserve;
+
+  /// Create a copy of Token
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TokenImplCopyWith<_$TokenImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -470,8 +504,12 @@ mixin _$LPToken {
   String get address => throw _privateConstructorUsedError;
   double get supply => throw _privateConstructorUsedError;
 
+  /// Serializes this LPToken to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of LPToken
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $LPTokenCopyWith<LPToken> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -493,6 +531,8 @@ class _$LPTokenCopyWithImpl<$Res, $Val extends LPToken>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of LPToken
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -530,6 +570,8 @@ class __$$LPTokenImplCopyWithImpl<$Res>
       _$LPTokenImpl _value, $Res Function(_$LPTokenImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of LPToken
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -576,11 +618,13 @@ class _$LPTokenImpl implements _LPToken {
             (identical(other.supply, supply) || other.supply == supply));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, address, supply);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of LPToken
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$LPTokenImplCopyWith<_$LPTokenImpl> get copyWith =>
@@ -605,8 +649,11 @@ abstract class _LPToken implements LPToken {
   String get address;
   @override
   double get supply;
+
+  /// Create a copy of LPToken
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LPTokenImplCopyWith<_$LPTokenImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -630,8 +677,12 @@ mixin _$Stats {
   @JsonKey(name: 'token2_total_volume')
   double get token2TotalVolume => throw _privateConstructorUsedError;
 
+  /// Serializes this Stats to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Stats
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $StatsCopyWith<Stats> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -659,6 +710,8 @@ class _$StatsCopyWithImpl<$Res, $Val extends Stats>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Stats
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -722,6 +775,8 @@ class __$$StatsImplCopyWithImpl<$Res>
       _$StatsImpl _value, $Res Function(_$StatsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Stats
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -820,7 +875,7 @@ class _$StatsImpl implements _Stats {
                 other.token2TotalVolume == token2TotalVolume));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -831,7 +886,9 @@ class _$StatsImpl implements _Stats {
       token2TotalProtocolFee,
       token2TotalVolume);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Stats
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$StatsImplCopyWith<_$StatsImpl> get copyWith =>
@@ -878,8 +935,11 @@ abstract class _Stats implements Stats {
   @override
   @JsonKey(name: 'token2_total_volume')
   double get token2TotalVolume;
+
+  /// Create a copy of Stats
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$StatsImplCopyWith<_$StatsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

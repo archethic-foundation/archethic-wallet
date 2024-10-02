@@ -20,7 +20,9 @@ mixin _$RPCCommandOrigin {
   String? get url => throw _privateConstructorUsedError;
   String? get logo => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RPCCommandOrigin
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $RPCCommandOriginCopyWith<RPCCommandOrigin> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -44,6 +46,8 @@ class _$RPCCommandOriginCopyWithImpl<$Res, $Val extends RPCCommandOrigin>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of RPCCommandOrigin
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -87,6 +91,8 @@ class __$$RPCCommandOriginImplCopyWithImpl<$Res>
       $Res Function(_$RPCCommandOriginImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of RPCCommandOrigin
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -142,7 +148,9 @@ class _$RPCCommandOriginImpl extends _RPCCommandOrigin {
   @override
   int get hashCode => Object.hash(runtimeType, name, url, logo);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RPCCommandOrigin
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RPCCommandOriginImplCopyWith<_$RPCCommandOriginImpl> get copyWith =>
@@ -163,8 +171,11 @@ abstract class _RPCCommandOrigin extends RPCCommandOrigin {
   String? get url;
   @override
   String? get logo;
+
+  /// Create a copy of RPCCommandOrigin
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RPCCommandOriginImplCopyWith<_$RPCCommandOriginImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -174,7 +185,9 @@ mixin _$RPCCommand<T> {
   RPCCommandOrigin get origin => throw _privateConstructorUsedError;
   T get data => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RPCCommand
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $RPCCommandCopyWith<T, RPCCommand<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -200,6 +213,8 @@ class _$RPCCommandCopyWithImpl<T, $Res, $Val extends RPCCommand<T>>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of RPCCommand
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -218,6 +233,8 @@ class _$RPCCommandCopyWithImpl<T, $Res, $Val extends RPCCommand<T>>
     ) as $Val);
   }
 
+  /// Create a copy of RPCCommand
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $RPCCommandOriginCopyWith<$Res> get origin {
@@ -249,6 +266,8 @@ class __$$RPCCommandImplCopyWithImpl<T, $Res>
       _$RPCCommandImpl<T> _value, $Res Function(_$RPCCommandImpl<T>) _then)
       : super(_value, _then);
 
+  /// Create a copy of RPCCommand
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -297,7 +316,9 @@ class _$RPCCommandImpl<T> extends _RPCCommand<T> {
   int get hashCode => Object.hash(
       runtimeType, origin, const DeepCollectionEquality().hash(data));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RPCCommand
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RPCCommandImplCopyWith<T, _$RPCCommandImpl<T>> get copyWith =>
@@ -314,8 +335,11 @@ abstract class _RPCCommand<T> extends RPCCommand<T> {
   RPCCommandOrigin get origin;
   @override
   T get data;
+
+  /// Create a copy of RPCCommand
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RPCCommandImplCopyWith<T, _$RPCCommandImpl<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }

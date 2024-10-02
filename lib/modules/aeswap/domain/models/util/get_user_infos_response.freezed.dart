@@ -25,8 +25,12 @@ mixin _$GetUserInfosResponse {
   @JsonKey(name: 'reward_amount')
   double get rewardAmount => throw _privateConstructorUsedError;
 
+  /// Serializes this GetUserInfosResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of GetUserInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $GetUserInfosResponseCopyWith<GetUserInfosResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -53,6 +57,8 @@ class _$GetUserInfosResponseCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of GetUserInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -93,6 +99,8 @@ class __$$GetUserInfosResponseImplCopyWithImpl<$Res>
       $Res Function(_$GetUserInfosResponseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of GetUserInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -145,11 +153,13 @@ class _$GetUserInfosResponseImpl implements _GetUserInfosResponse {
                 other.rewardAmount == rewardAmount));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, depositedAmount, rewardAmount);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GetUserInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$GetUserInfosResponseImplCopyWith<_$GetUserInfosResponseImpl>
@@ -180,8 +190,11 @@ abstract class _GetUserInfosResponse implements GetUserInfosResponse {
   @override
   @JsonKey(name: 'reward_amount')
   double get rewardAmount;
+
+  /// Create a copy of GetUserInfosResponse
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GetUserInfosResponseImplCopyWith<_$GetUserInfosResponseImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

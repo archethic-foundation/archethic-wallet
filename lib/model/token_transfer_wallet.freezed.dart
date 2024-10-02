@@ -26,8 +26,12 @@ mixin _$TokenTransferWallet {
   int? get tokenId => throw _privateConstructorUsedError;
   String? get toContactName => throw _privateConstructorUsedError;
 
+  /// Serializes this TokenTransferWallet to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TokenTransferWallet
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TokenTransferWalletCopyWith<TokenTransferWallet> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -56,6 +60,8 @@ class _$TokenTransferWalletCopyWithImpl<$Res, $Val extends TokenTransferWallet>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TokenTransferWallet
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -114,6 +120,8 @@ class __$$TokenTransferWalletImplCopyWithImpl<$Res>
       $Res Function(_$TokenTransferWalletImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TokenTransferWallet
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -192,12 +200,14 @@ class _$TokenTransferWalletImpl extends _TokenTransferWallet {
                 other.toContactName == toContactName));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, amount, to, tokenAddress, tokenId, toContactName);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TokenTransferWallet
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TokenTransferWalletImplCopyWith<_$TokenTransferWalletImpl> get copyWith =>
@@ -234,8 +244,11 @@ abstract class _TokenTransferWallet extends TokenTransferWallet {
   int? get tokenId;
   @override
   String? get toContactName;
+
+  /// Create a copy of TokenTransferWallet
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TokenTransferWalletImplCopyWith<_$TokenTransferWalletImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -28,8 +28,12 @@ mixin _$DexFarmLockUserInfos {
   String get level => throw _privateConstructorUsedError;
   double get apr => throw _privateConstructorUsedError;
 
+  /// Serializes this DexFarmLockUserInfos to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of DexFarmLockUserInfos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $DexFarmLockUserInfosCopyWith<DexFarmLockUserInfos> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -61,6 +65,8 @@ class _$DexFarmLockUserInfosCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of DexFarmLockUserInfos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -131,6 +137,8 @@ class __$$DexFarmLockUserInfosImplCopyWithImpl<$Res>
       $Res Function(_$DexFarmLockUserInfosImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DexFarmLockUserInfos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -231,12 +239,14 @@ class _$DexFarmLockUserInfosImpl extends _DexFarmLockUserInfos {
             (identical(other.apr, apr) || other.apr == apr));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, id, amount, rewardAmount, start, end, level, apr);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DexFarmLockUserInfos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DexFarmLockUserInfosImplCopyWith<_$DexFarmLockUserInfosImpl>
@@ -280,8 +290,11 @@ abstract class _DexFarmLockUserInfos extends DexFarmLockUserInfos {
   String get level;
   @override
   double get apr;
+
+  /// Create a copy of DexFarmLockUserInfos
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DexFarmLockUserInfosImplCopyWith<_$DexFarmLockUserInfosImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

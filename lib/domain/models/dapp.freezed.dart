@@ -24,8 +24,12 @@ mixin _$DApp {
   String get url => throw _privateConstructorUsedError;
   String? get accessToken => throw _privateConstructorUsedError;
 
+  /// Serializes this DApp to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of DApp
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $DAppCopyWith<DApp> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -47,6 +51,8 @@ class _$DAppCopyWithImpl<$Res, $Val extends DApp>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of DApp
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -88,6 +94,8 @@ class __$$DAppImplCopyWithImpl<$Res>
   __$$DAppImplCopyWithImpl(_$DAppImpl _value, $Res Function(_$DAppImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DApp
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -143,11 +151,13 @@ class _$DAppImpl implements _DApp {
                 other.accessToken == accessToken));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, code, url, accessToken);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DApp
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DAppImplCopyWith<_$DAppImpl> get copyWith =>
@@ -175,8 +185,11 @@ abstract class _DApp implements DApp {
   String get url;
   @override
   String? get accessToken;
+
+  /// Create a copy of DApp
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DAppImplCopyWith<_$DAppImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

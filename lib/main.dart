@@ -287,7 +287,7 @@ class SplashState extends ConsumerState<Splash> {
       ..watch(DexTokensProviders.tokensCommonBases)
       ..watch(verifiedTokensProvider)
       ..watch(DexTokensProviders.tokensFromAccount)
-      ..watch(earnFormNotifierProvider);
+      ..watch(farmLockFormFarmLockProvider);
 
     await SecurityManager().checkDeviceSecurity(ref, context);
 

@@ -22,7 +22,9 @@ mixin _$AddAccountFormState {
   String get name => throw _privateConstructorUsedError;
   String get errorText => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AddAccountFormState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AddAccountFormStateCopyWith<AddAccountFormState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -50,6 +52,8 @@ class _$AddAccountFormStateCopyWithImpl<$Res, $Val extends AddAccountFormState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of AddAccountFormState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -102,6 +106,8 @@ class __$$AddAccountFormStateImplCopyWithImpl<$Res>
       $Res Function(_$AddAccountFormStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AddAccountFormState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -175,7 +181,9 @@ class _$AddAccountFormStateImpl extends _AddAccountFormState {
   int get hashCode =>
       Object.hash(runtimeType, seed, addAccountProcessStep, name, errorText);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AddAccountFormState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AddAccountFormStateImplCopyWith<_$AddAccountFormStateImpl> get copyWith =>
@@ -199,8 +207,11 @@ abstract class _AddAccountFormState extends AddAccountFormState {
   String get name;
   @override
   String get errorText;
+
+  /// Create a copy of AddAccountFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AddAccountFormStateImplCopyWith<_$AddAccountFormStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
