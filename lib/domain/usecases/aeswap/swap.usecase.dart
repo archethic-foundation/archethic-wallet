@@ -187,6 +187,27 @@ class SwapCase with aedappfm.TransactionMixin {
             );
 
             unawaited(() async {
+              // TODO: error
+              /// [ERROR:flutter/runtime/dart_vm_initializer.cc(41)] Unhandled Exception: 'package:riverpod/src/framework/element.dart': Failed assertion: line 614 pos 11: 'listenable._origin != origin': A provider cannot depend on itself
+              ///#0      _AssertionError._doThrowNew (dart:core-patch/errors_patch.dart:50:61)
+              ///errors_patch.dart:50
+              ///#1      _AssertionError._throwNew (dart:core-patch/errors_patch.dart:40:5)
+              ///errors_patch.dart:40
+              ///#2      ProviderElementBase._debugAssertCanDependOn.<anonymous closure> (package:riverpod/src/framework/element.dart:614:11)
+              ///element.dart:614
+              ///#3      ProviderElementBase._debugAssertCanDependOn (package:riverpod/src/framework/element.dart:650:8)
+              ///element.dart:650
+              ///#4      ProviderElementBase.read (package:riverpod/src/framework/element.dart:674:12)
+              ///element.dart:674
+              ///#5      SwapCase.run.<anonymous closure>.<anonymous closure> (package:aewallet/domain/usecases/aeswap/swap.usecase.dart:190:32)
+              ///swap.usecase.dart:190
+              ///#6      SwapCase.run.<anonymous closure> (package:aewallet/domain/usecases/aeswap/swap.usecase.dart:205:14)
+              ///swap.usecase.dart:205
+              ///<asynchronous suspension>
+              ///#7      ArchethicTransactionSender._listenTransactionConfirmed.<anonymous closure> (package:archethic_lib_dart/src/utils/confirmations/archethic_transaction_sender.dart:200:9)
+              ///archethic_transaction_sender.dart:200
+              ///<asynchronous suspension>
+
               final swap = ref.read(swapFormNotifierProvider);
 
               final balanceSwapped = await ref.read(

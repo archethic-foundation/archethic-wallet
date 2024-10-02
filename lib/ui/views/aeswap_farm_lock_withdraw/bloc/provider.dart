@@ -149,7 +149,7 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
       return;
     }
 
-    final accountSelected = ref.watch(
+    final accountSelected = ref.read(
       AccountProviders.accounts.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
@@ -226,7 +226,7 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
       return false;
     }
 
-    final accountSelected = ref.watch(
+    final accountSelected = ref.read(
       AccountProviders.accounts.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),

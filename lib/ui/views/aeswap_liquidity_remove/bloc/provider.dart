@@ -268,7 +268,7 @@ class LiquidityRemoveFormNotifier extends _$LiquidityRemoveFormNotifier {
       return;
     }
 
-    final accountSelected = ref.watch(
+    final accountSelected = ref.read(
       AccountProviders.accounts.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
@@ -340,7 +340,7 @@ class LiquidityRemoveFormNotifier extends _$LiquidityRemoveFormNotifier {
       return false;
     }
 
-    final accountSelected = ref.watch(
+    final accountSelected = ref.read(
       AccountProviders.accounts.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),

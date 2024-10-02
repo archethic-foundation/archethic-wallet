@@ -390,7 +390,7 @@ class LiquidityAddFormNotifier extends _$LiquidityAddFormNotifier {
       return;
     }
 
-    final accountSelected = ref.watch(
+    final accountSelected = ref.read(
       AccountProviders.accounts.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
@@ -529,7 +529,7 @@ class LiquidityAddFormNotifier extends _$LiquidityAddFormNotifier {
       setProcessInProgress(false);
       return false;
     }
-    final accountSelected = ref.watch(
+    final accountSelected = ref.read(
       AccountProviders.accounts.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),

@@ -98,7 +98,7 @@ class FarmLockClaimFormNotifier extends _$FarmLockClaimFormNotifier {
       return;
     }
 
-    final accountSelected = ref.watch(
+    final accountSelected = ref.read(
       AccountProviders.accounts.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
@@ -153,7 +153,7 @@ class FarmLockClaimFormNotifier extends _$FarmLockClaimFormNotifier {
       return false;
     }
 
-    final accountSelected = ref.watch(
+    final accountSelected = ref.read(
       AccountProviders.accounts.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
