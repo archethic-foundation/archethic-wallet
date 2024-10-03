@@ -43,7 +43,7 @@ dependencies:
   badges: ^3.0.3
 
   # A flutter plugin for scanning 2D barcodes and QRCodes via camera
-  barcode_scan2: ^4.2.3
+  barcode_scan2: ^4.3.3
 
   # Dart implementation of Bitcoin BIP39 Mnemonic code for generating deterministic keys
   bip39_mnemonic: ^3.0.6

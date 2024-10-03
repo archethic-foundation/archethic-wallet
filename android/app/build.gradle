@@ -78,6 +78,5 @@ flutter {
 }
 
 dependencies {
-    implementation "com.bottlerocketstudios:vault:1.4.2"
     implementation 'androidx.multidex:multidex:2.0.1'
 }
