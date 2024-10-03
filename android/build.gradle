@@ -2,7 +2,6 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        jcenter()
     }
 
     // Configuration added to make the webview work with Android - start
