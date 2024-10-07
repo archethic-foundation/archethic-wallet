@@ -152,8 +152,9 @@ class _TransactionInfos extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return SizedBox(
+    return Container(
       height: MediaQuery.of(context).size.height,
+      padding: const EdgeInsets.only(bottom: 80),
       child: ListView.builder(
         padding: const EdgeInsets.only(
           top: 15,

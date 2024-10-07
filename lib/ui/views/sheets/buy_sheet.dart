@@ -159,7 +159,7 @@ class BuySheet extends ConsumerWidget implements SheetSkeletonInterface {
                                 ),
                                 text: 'Polygon Chain',
                                 url:
-                                    'https://swap.defillama.com/?chain=polygon&from=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&tab=swap&to=0x3c720206bfacb2d16fa3ac0ed87d2048dbc401fc',
+                                    'https://swap.defillama.com/?chain=polygon&from=0x3c499c542cef5e3811e1192ce70d8cc03d5c3359&tab=swap&to=0xaa53B93608C88EE55fAD8db4C504Fa20E52642aD',
                               ),
                             ),
                             SizedBox(
@@ -171,7 +171,7 @@ class BuySheet extends ConsumerWidget implements SheetSkeletonInterface {
                                 ),
                                 text: 'Ethereum Chain',
                                 url:
-                                    'https://swap.defillama.com/?chain=ethereum&from=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&tab=swap&to=0x8a3d77e9d6968b780564936d15b09805827c21fa',
+                                    'https://swap.defillama.com/?chain=ethereum&from=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&tab=swap&to=0x1A688D3d294ee7BcC1f59011DE93d608Dc21c377',
                               ),
                             ),
                             SizedBox(
@@ -183,7 +183,7 @@ class BuySheet extends ConsumerWidget implements SheetSkeletonInterface {
                                 ),
                                 text: 'Binance Chain',
                                 url:
-                                    'https://swap.defillama.com/?chain=bsc&from=0x55d398326f99059ff775485246999027b3197955&tab=swap&to=0xb001f1e7c8bda414ac7cf7ecba5469fe8d24b6de',
+                                    'https://swap.defillama.com/?chain=bsc&from=0x55d398326f99059ff775485246999027b3197955&tab=swap&to=0xf1e5bbd997501a8439619266A09a54b2b499eAA3',
                               ),
                             ),
                           ],
