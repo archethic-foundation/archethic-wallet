@@ -61,12 +61,15 @@ class _AccountNotifier extends _$AccountNotifier {
           _logger.fine(
             'End method refreshRecentTransactions for ${account.nameDisplayed}',
           );
+
+          ref.invalidate(userBalanceProvider);
         },
       ]);
 
   Future<void> refreshFungibleTokens() => _refresh([
         (account) async {
           await account.updateFungiblesTokens();
+          ref.invalidate(userBalanceProvider);
         },
       ]);
 

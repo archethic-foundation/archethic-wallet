@@ -163,15 +163,15 @@ class SwapInfos extends ConsumerWidget {
                 ),
               ],
             ),
-            if (swap.pool!.infos!.fees != 0)
+            if (swap.poolInfos!.fees != 0)
               Text(
-                '${AppLocalizations.of(context)!.swapInfosLiquidityProviderFees}\n(${swap.pool!.infos!.fees}%): ${swap.swapFees.formatNumber(precision: 8)} ${swap.tokenToSwap!.symbol}',
+                '${AppLocalizations.of(context)!.swapInfosLiquidityProviderFees}\n(${swap.poolInfos!.fees}%): ${swap.swapFees.formatNumber(precision: 8)} ${swap.tokenToSwap!.symbol}',
                 style: AppTextStyles.bodyMedium(context),
                 textAlign: TextAlign.end,
               ),
-            if (swap.pool!.infos!.protocolFees != 0)
+            if (swap.poolInfos!.protocolFees != 0)
               Text(
-                '${AppLocalizations.of(context)!.swapInfosProtocolFees}\n(${swap.pool!.infos!.protocolFees}%): ${swap.swapProtocolFees.formatNumber(precision: 8)} ${swap.tokenToSwap!.symbol}',
+                '${AppLocalizations.of(context)!.swapInfosProtocolFees}\n(${swap.poolInfos!.protocolFees}%): ${swap.swapProtocolFees.formatNumber(precision: 8)} ${swap.tokenToSwap!.symbol}',
                 style: AppTextStyles.bodyMedium(context),
                 textAlign: TextAlign.end,
               ),
@@ -276,12 +276,12 @@ class SwapInfos extends ConsumerWidget {
           AppLocalizations.of(context)!.swapInfosRatio,
           style: AppTextStyles.bodyMedium(context),
         ),
-        if (swap.pool != null && swap.pool!.infos != null)
+        if (swap.pool != null && swap.poolInfos != null)
           DexRatio(
             ratio: tokenAddressRatioPrimary.toUpperCase() ==
                     swap.pool?.pair.token1.address.toUpperCase()
-                ? swap.pool!.infos!.ratioToken1Token2
-                : swap.pool!.infos!.ratioToken2Token1,
+                ? swap.poolInfos!.ratioToken1Token2
+                : swap.poolInfos!.ratioToken2Token1,
             token1Symbol: tokenAddressRatioPrimary.toUpperCase() ==
                     swap.pool!.pair.token1.address.toUpperCase()
                 ? swap.pool!.pair.token1.symbol

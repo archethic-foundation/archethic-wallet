@@ -8,6 +8,7 @@ import 'package:aewallet/modules/aeswap/application/dex_config.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/application/router_factory.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_pool_infos.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/pool_factory.repository.dart';
 import 'package:aewallet/modules/aeswap/util/browser_util_desktop.dart'
@@ -45,11 +46,18 @@ class SwapFormNotifier extends _$SwapFormNotifier
         .read(DexPoolProviders.getPool(state.poolGenesisAddress).future);
     pool = await ref.read(DexPoolProviders.getPool(pool!.poolAddress).future);
 
-    setPool(pool);
+    final poolInfos = await ref.read(
+      DexPoolProviders.poolInfos(pool!.poolAddress).future,
+    );
+
+    setPool(pool, poolInfos);
   }
 
-  void setPool(DexPool? pool) {
-    state = state.copyWith(pool: pool);
+  void setPool(DexPool? pool, DexPoolInfos poolInfos) {
+    state = state.copyWith(
+      pool: pool,
+      poolInfos: poolInfos,
+    );
   }
 
   Future<void> setTokenToSwap(

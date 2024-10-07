@@ -15,12 +15,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PoolInfoCard extends ConsumerStatefulWidget {
   const PoolInfoCard({
-    required this.poolGenesisAddress,
+    required this.pool,
     required this.tokenAddressRatioPrimary,
     super.key,
   });
 
-  final String poolGenesisAddress;
+  final DexPool pool;
   final String tokenAddressRatioPrimary;
 
   @override
@@ -29,39 +29,14 @@ class PoolInfoCard extends ConsumerStatefulWidget {
 
 class _PoolInfoCardState extends ConsumerState<PoolInfoCard> {
   bool _isExpanded = false;
-  DexPool? pool;
-  double? tvl;
-
-  @override
-  void initState() {
-    Future(() async {
-      await loadInfo();
-    });
-    super.initState();
-  }
-
-  Future<void> loadInfo({bool forceLoadFromBC = false}) async {
-    pool = await ref
-        .read(DexPoolProviders.getPool(widget.poolGenesisAddress).future);
-    pool = await ref.read(DexPoolProviders.loadPoolCard(pool!).future);
-    tvl = await ref.read(
-      DexPoolProviders.estimatePoolTVLInFiat(pool).future,
-    );
-    if (mounted) {
-      setState(() {});
-    }
-  }
 
   @override
   Widget build(
     BuildContext context,
   ) {
-    if (widget.poolGenesisAddress.isEmpty ||
-        pool == null ||
-        pool!.infos == null ||
-        tvl == null) {
-      return const SizedBox.shrink();
-    }
+    final poolInfos = ref.watch(
+      DexPoolProviders.poolInfos(widget.pool.poolAddress),
+    );
 
     return aedappfm.Responsive.isDesktop(context) ||
             aedappfm.Responsive.isTablet(context)
@@ -86,37 +61,49 @@ class _PoolInfoCardState extends ConsumerState<PoolInfoCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       PoolDetailsInfoHeader(
-                        pool: pool,
+                        pool: widget.pool,
                       ),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              PoolDetailsInfoSwapFees(
-                                poolInfos: pool?.infos,
-                                style: Theme.of(context).textTheme.bodySmall,
+                          poolInfos.when(
+                            data: (data) {
+                              return Row(
+                                children: [
+                                  PoolDetailsInfoSwapFees(
+                                    poolInfos: data,
+                                    style: AppTextStyles.bodyLarge(context),
+                                  ),
+                                  PoolDetailsInfoProtocolFees(
+                                    poolInfos: data,
+                                    style: AppTextStyles.bodyLarge(context),
+                                  ),
+                                ],
+                              );
+                            },
+                            error: (error, st) => const SizedBox.shrink(),
+                            loading: () => const SizedBox(
+                              width: 10,
+                              height: 10,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 1,
                               ),
-                              PoolDetailsInfoProtocolFees(
-                                poolInfos: pool?.infos,
-                                style: Theme.of(context).textTheme.bodySmall,
-                              ),
-                            ],
+                            ),
                           ),
                           const SizedBox(
                             width: 10,
                           ),
-                          if (pool!.pair.token1.isUCO == false)
+                          if (widget.pool.pair.token1.isUCO == false)
                             Opacity(
                               opacity: AppTextStyles.kOpacityText,
                               child: Row(
                                 children: [
                                   Tooltip(
-                                    message: pool!.pair.token1.symbol,
+                                    message: widget.pool.pair.token1.symbol,
                                     child: FormatAddressLinkCopy(
-                                      header: pool!.pair.token1.symbol,
-                                      address: pool!.pair.token1.address
+                                      header: widget.pool.pair.token1.symbol,
+                                      address: widget.pool.pair.token1.address
                                           .toUpperCase(),
                                       typeAddress:
                                           TypeAddressLinkCopy.transaction,
@@ -131,7 +118,7 @@ class _PoolInfoCardState extends ConsumerState<PoolInfoCard> {
                                     width: 5,
                                   ),
                                   VerifiedTokenIcon(
-                                    address: pool!.pair.token1.address,
+                                    address: widget.pool.pair.token1.address,
                                   ),
                                   const SizedBox(
                                     width: 10,
@@ -139,16 +126,16 @@ class _PoolInfoCardState extends ConsumerState<PoolInfoCard> {
                                 ],
                               ),
                             ),
-                          if (pool!.pair.token2.isUCO == false)
+                          if (widget.pool.pair.token2.isUCO == false)
                             Opacity(
                               opacity: AppTextStyles.kOpacityText,
                               child: Row(
                                 children: [
                                   Tooltip(
-                                    message: pool!.pair.token2.symbol,
+                                    message: widget.pool.pair.token2.symbol,
                                     child: FormatAddressLinkCopy(
-                                      header: pool!.pair.token2.symbol,
-                                      address: pool!.pair.token2.address
+                                      header: widget.pool.pair.token2.symbol,
+                                      address: widget.pool.pair.token2.address
                                           .toUpperCase(),
                                       typeAddress:
                                           TypeAddressLinkCopy.transaction,
@@ -163,7 +150,7 @@ class _PoolInfoCardState extends ConsumerState<PoolInfoCard> {
                                     width: 5,
                                   ),
                                   VerifiedTokenIcon(
-                                    address: pool!.pair.token2.address,
+                                    address: widget.pool.pair.token2.address,
                                   ),
                                 ],
                               ),
@@ -207,7 +194,7 @@ class _PoolInfoCardState extends ConsumerState<PoolInfoCard> {
                               top: 5,
                               bottom: 5,
                             ),
-                            child: _getPairName(context, pool!),
+                            child: _getPairName(context, widget.pool),
                           );
                         },
                         body: Padding(
@@ -220,31 +207,39 @@ class _PoolInfoCardState extends ConsumerState<PoolInfoCard> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
-                                children: [
-                                  PoolDetailsInfoSwapFees(
-                                    poolInfos: pool?.infos,
-                                    style: AppTextStyles.bodyLarge(context),
-                                  ),
-                                  PoolDetailsInfoProtocolFees(
-                                    poolInfos: pool?.infos,
-                                    style: AppTextStyles.bodyLarge(context),
-                                  ),
-                                ],
+                              poolInfos.when(
+                                data: (data) {
+                                  return Row(
+                                    children: [
+                                      PoolDetailsInfoSwapFees(
+                                        poolInfos: data,
+                                        style: AppTextStyles.bodyLarge(context),
+                                      ),
+                                      PoolDetailsInfoProtocolFees(
+                                        poolInfos: data,
+                                        style: AppTextStyles.bodyLarge(context),
+                                      ),
+                                    ],
+                                  );
+                                },
+                                error: (error, st) => const SizedBox.shrink(),
+                                loading: () => const SizedBox.shrink(),
                               ),
                               const SizedBox(
                                 width: 10,
                               ),
-                              if (pool!.pair.token1.isUCO == false)
+                              if (widget.pool.pair.token1.isUCO == false)
                                 Opacity(
                                   opacity: AppTextStyles.kOpacityText,
                                   child: Row(
                                     children: [
                                       Tooltip(
-                                        message: pool!.pair.token1.symbol,
+                                        message: widget.pool.pair.token1.symbol,
                                         child: FormatAddressLinkCopy(
-                                          header: pool!.pair.token1.symbol,
-                                          address: pool!.pair.token1.address
+                                          header:
+                                              widget.pool.pair.token1.symbol,
+                                          address: widget
+                                              .pool.pair.token1.address
                                               .toUpperCase(),
                                           typeAddress:
                                               TypeAddressLinkCopy.transaction,
@@ -259,7 +254,8 @@ class _PoolInfoCardState extends ConsumerState<PoolInfoCard> {
                                         width: 5,
                                       ),
                                       VerifiedTokenIcon(
-                                        address: pool!.pair.token1.address,
+                                        address:
+                                            widget.pool.pair.token1.address,
                                       ),
                                       const SizedBox(
                                         width: 10,
@@ -267,16 +263,18 @@ class _PoolInfoCardState extends ConsumerState<PoolInfoCard> {
                                     ],
                                   ),
                                 ),
-                              if (pool!.pair.token2.isUCO == false)
+                              if (widget.pool.pair.token2.isUCO == false)
                                 Opacity(
                                   opacity: AppTextStyles.kOpacityText,
                                   child: Row(
                                     children: [
                                       Tooltip(
-                                        message: pool!.pair.token2.symbol,
+                                        message: widget.pool.pair.token2.symbol,
                                         child: FormatAddressLinkCopy(
-                                          header: pool!.pair.token2.symbol,
-                                          address: pool!.pair.token2.address
+                                          header:
+                                              widget.pool.pair.token2.symbol,
+                                          address: widget
+                                              .pool.pair.token2.address
                                               .toUpperCase(),
                                           typeAddress:
                                               TypeAddressLinkCopy.transaction,
@@ -291,7 +289,8 @@ class _PoolInfoCardState extends ConsumerState<PoolInfoCard> {
                                         width: 5,
                                       ),
                                       VerifiedTokenIcon(
-                                        address: pool!.pair.token2.address,
+                                        address:
+                                            widget.pool.pair.token2.address,
                                       ),
                                     ],
                                   ),

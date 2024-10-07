@@ -164,7 +164,7 @@ class ArchethicContract with aedappfm.TransactionMixin {
       final poolInfos = await PoolFactoryRepositoryImpl(
         poolGenesisAddress,
         apiService,
-      ).getPoolInfos();
+      ).getPoolInfos().valueOrThrow;
 
       // Sort token to match pool order
       var token1AmountSorted = 0.0;
@@ -172,7 +172,7 @@ class ArchethicContract with aedappfm.TransactionMixin {
       DexToken? token1Sorted;
       DexToken? token2Sorted;
       if (token1.address.toUpperCase() ==
-          poolInfos['token1']['address'].toString().toUpperCase()) {
+          poolInfos.token1Address.toUpperCase()) {
         token1AmountSorted = token1Amount;
         token2AmountSorted = token2Amount;
         token1Sorted = token1;
@@ -280,7 +280,7 @@ class ArchethicContract with aedappfm.TransactionMixin {
       final poolInfos = await PoolFactoryRepositoryImpl(
         poolGenesisAddress,
         apiService,
-      ).getPoolInfos();
+      ).getPoolInfos().valueOrThrow;
 
       // Sort token to match pool order
       var token1AmountSorted = 0.0;
@@ -288,7 +288,7 @@ class ArchethicContract with aedappfm.TransactionMixin {
       DexToken? token1Sorted;
       DexToken? token2Sorted;
       if (token1.address.toUpperCase() ==
-          poolInfos['token1']['address'].toString().toUpperCase()) {
+          poolInfos.token1Address.toUpperCase()) {
         token1AmountSorted = token1Amount;
         token2AmountSorted = token2Amount;
         token1Sorted = token1;

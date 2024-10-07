@@ -15,7 +15,6 @@ import 'package:aewallet/modules/aeswap/domain/models/util/get_farm_lock_farm_in
 import 'package:aewallet/modules/aeswap/domain/models/util/get_farm_lock_user_infos_response.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_infos_response.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart';
-import 'package:aewallet/modules/aeswap/infrastructure/hive/pools_list.hive.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/hive/tokens_list.hive.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -44,8 +43,8 @@ mixin ModelParser {
     );
   }
 
-  Future<DexPool> poolInfoToModel(
-    DexPool poolInput,
+  Future<DexPoolInfos> poolInfoToModel(
+    String poolAddress,
     GetPoolInfosResponse getPoolInfosResponse,
   ) async {
     var ratioToken1Token2 = 0.0;
@@ -58,36 +57,21 @@ mixin ModelParser {
           getPoolInfosResponse.token2.reserve;
     }
 
-    final token1 = poolInput.pair.token1.copyWith(
-      reserve: getPoolInfosResponse.token1.reserve,
-    );
-
-    final token2 = poolInput.pair.token2.copyWith(
-      reserve: getPoolInfosResponse.token2.reserve,
-    );
-
-    final dexPair = poolInput.pair.copyWith(
-      token1: token1,
-      token2: token2,
-    );
-
-    final lpToken = poolInput.lpToken.copyWith(
-      supply: getPoolInfosResponse.lpToken.supply,
-    );
-
-    return poolInput.copyWith(
-      pair: dexPair,
-      lpToken: lpToken,
-      infos: DexPoolInfos(
-        fees: getPoolInfosResponse.fee,
-        protocolFees: getPoolInfosResponse.protocolFee,
-        ratioToken1Token2: ratioToken1Token2,
-        ratioToken2Token1: ratioToken2Token1,
-        token1TotalFee: getPoolInfosResponse.stats.token1TotalFee,
-        token1TotalVolume: getPoolInfosResponse.stats.token1TotalVolume,
-        token2TotalFee: getPoolInfosResponse.stats.token2TotalFee,
-        token2TotalVolume: getPoolInfosResponse.stats.token2TotalVolume,
-      ),
+    return DexPoolInfos(
+      poolAddress: poolAddress,
+      token1Address: getPoolInfosResponse.token1.address,
+      token2Address: getPoolInfosResponse.token2.address,
+      token1Reserve: getPoolInfosResponse.token1.reserve,
+      token2Reserve: getPoolInfosResponse.token2.reserve,
+      lpTokenSupply: getPoolInfosResponse.lpToken.supply,
+      fees: getPoolInfosResponse.fee,
+      protocolFees: getPoolInfosResponse.protocolFee,
+      ratioToken1Token2: ratioToken1Token2,
+      ratioToken2Token1: ratioToken2Token1,
+      token1TotalFee: getPoolInfosResponse.stats.token1TotalFee,
+      token1TotalVolume: getPoolInfosResponse.stats.token1TotalVolume,
+      token2TotalFee: getPoolInfosResponse.stats.token2TotalFee,
+      token2TotalVolume: getPoolInfosResponse.stats.token2TotalVolume,
     );
   }
 
@@ -160,13 +144,6 @@ mixin ModelParser {
       isLpToken: true,
     );
 
-    // Check if favorite in cache
-    final poolsListDatasource = await HivePoolsListDatasource.getInstance();
-    final isPoolFavorite = poolsListDatasource.containsPool(
-      environment.name,
-      getPoolListResponse.address,
-    );
-
     return DexPool(
       poolAddress: getPoolListResponse.address,
       pair: DexPair(
@@ -175,7 +152,6 @@ mixin ModelParser {
       ),
       lpToken: lpToken,
       lpTokenInUserBalance: false,
-      isFavorite: isPoolFavorite,
     );
   }
 

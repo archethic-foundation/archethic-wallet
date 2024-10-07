@@ -8,13 +8,12 @@ import 'package:aewallet/modules/aeswap/application/session/state.dart';
 import 'package:aewallet/modules/aeswap/application/verified_tokens.dart';
 import 'package:aewallet/modules/aeswap/domain/enum/dex_action_type.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_pool_infos.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool_tx.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/domain/repositories/dex_pool.repository.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/dex_pool.repository.dart';
-import 'package:aewallet/modules/aeswap/infrastructure/hive/dex_pool.hive.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/hive/favorite_pools.hive.dart';
-import 'package:aewallet/modules/aeswap/infrastructure/hive/pools_list.hive.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/pool_factory.repository.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -29,7 +28,7 @@ part 'dex_pool_favorite.dart';
 part 'dex_pool_list.dart';
 part 'dex_pool_tx_list.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 DexPoolRepository _dexPoolRepository(
   _DexPoolRepositoryRef ref,
 ) =>
@@ -47,8 +46,8 @@ abstract class DexPoolProviders {
   static const getPoolTxList = _getPoolTxListProvider;
 
   // Pool Detail
-  static const getPool = _getPoolProvider;
-  static const loadPoolCard = _loadPoolCardProvider;
+  static const poolInfos = _poolInfosProvider;
+  static const getPool = _poolProvider;
 
   // Calculation
   static const getRatio = _getRatioProvider;
@@ -56,6 +55,5 @@ abstract class DexPoolProviders {
   static const estimateStats = _estimateStatsProvider;
 
   // Favorite
-  static const addPoolFromFavorite = _addPoolFromFavoriteProvider;
-  static const removePoolFromFavorite = _removePoolFromFavoriteProvider;
+  static const poolFavorite = _poolFavoriteNotifierProvider;
 }

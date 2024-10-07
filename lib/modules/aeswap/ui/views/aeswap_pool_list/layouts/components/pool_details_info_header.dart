@@ -79,7 +79,7 @@ class PoolDetailsInfoHeader extends ConsumerWidget {
               lpTokenInUserBalance: pool!.lpTokenInUserBalance,
             ),
             LiquidityFavoriteIcon(
-              isFavorite: pool!.isFavorite,
+              poolAddress: pool!.poolAddress,
             ),
           ],
         ),

@@ -188,6 +188,42 @@ class EarnTabState extends ConsumerState<EarnTab> {
                                   ],
                                 ),
                               ),
+                              if (balances.lpTokenBalance == 0)
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      localizations.earnHeaderAddLiquidityTxt,
+                                      style: ArchethicThemeStyles
+                                          .textStyleSize14W200Primary,
+                                    ),
+                                    Row(
+                                      children: [
+                                        AppButtonTinyConnectivity(
+                                          localizations.addLiquidity,
+                                          Dimens.buttonBottomDimens,
+                                          key: const Key('addLiquidity'),
+                                          onPressed: () async {
+                                            final poolJson = jsonEncode(
+                                              pool!.toJson(),
+                                            );
+                                            final poolEncoded =
+                                                Uri.encodeComponent(poolJson);
+                                            await context.push(
+                                              Uri(
+                                                path: LiquidityAddSheet
+                                                    .routerPage,
+                                                queryParameters: {
+                                                  'pool': poolEncoded,
+                                                },
+                                              ).toString(),
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               const SizedBox(
                                 height: 20,
                               ),

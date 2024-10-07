@@ -1,4 +1,5 @@
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/pool_info_card.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -20,8 +21,11 @@ import 'package:go_router/go_router.dart';
 class LiquidityRemoveFormSheet extends ConsumerWidget
     implements SheetSkeletonInterface {
   const LiquidityRemoveFormSheet({
+    required this.pool,
     super.key,
   });
+
+  final DexPool pool;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -90,7 +94,7 @@ class LiquidityRemoveFormSheet extends ConsumerWidget
           children: [
             if (liquidityRemove.token1 != null)
               PoolInfoCard(
-                poolGenesisAddress: liquidityRemove.pool!.poolAddress,
+                pool: pool,
                 tokenAddressRatioPrimary: liquidityRemove.token1!.address,
               ),
             const SizedBox(

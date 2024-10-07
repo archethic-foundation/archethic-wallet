@@ -71,7 +71,7 @@ class _LiquidityRemoveSheetState extends ConsumerState<LiquidityRemoveSheet> {
     final liquidityRemoveForm = ref.watch(liquidityRemoveFormNotifierProvider);
 
     return liquidityRemoveForm.processStep == ProcessStep.form
-        ? const LiquidityRemoveFormSheet()
+        ? LiquidityRemoveFormSheet(pool: widget.pool)
         : const LiquidityRemoveConfirmFormSheet();
   }
 }

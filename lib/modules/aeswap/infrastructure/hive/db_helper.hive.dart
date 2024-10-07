@@ -26,8 +26,8 @@ class DBHelperModuleAESwap {
 
     Hive
       ..registerAdapter(DexPairHiveAdapter())
+      ..ignoreTypeId(HiveTypeIds.dexPoolInfos)
       ..registerAdapter(DexPoolHiveAdapter())
-      ..registerAdapter(DexPoolInfosHiveAdapter())
       ..registerAdapter(DexTokenHiveAdapter());
   }
 }

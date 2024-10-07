@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_pool_infos.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -40,6 +41,7 @@ class SwapFormState with _$SwapFormState {
     Transaction? recoveryTransactionSwap,
     @Default(false) bool calculationInProgress,
     DexPool? pool,
+    DexPoolInfos? poolInfos,
     DateTime? consentDateTime,
   }) = _SwapFormState;
   const SwapFormState._();

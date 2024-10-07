@@ -1,4 +1,5 @@
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_token_icon.dart';
@@ -28,8 +29,11 @@ import 'package:url_launcher/url_launcher.dart';
 class LiquidityAddFormSheet extends ConsumerWidget
     implements SheetSkeletonInterface {
   const LiquidityAddFormSheet({
+    required this.pool,
     super.key,
   });
+
+  final DexPool pool;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -141,7 +145,7 @@ class LiquidityAddFormSheet extends ConsumerWidget
                   children: [
                     if (liquidityAdd.token1 != null)
                       PoolInfoCard(
-                        poolGenesisAddress: liquidityAdd.pool!.poolAddress,
+                        pool: pool,
                         tokenAddressRatioPrimary: liquidityAdd.token1!.address,
                       ),
                     const SizedBox(

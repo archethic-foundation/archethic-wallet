@@ -1,16 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
-import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_pool_infos.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 
 abstract class PoolFactoryRepository {
-  Future<Map<String, dynamic>> getPoolInfos();
-
-  Future<aedappfm.Result<DexPool, aedappfm.Failure>> populatePoolInfos(
-    DexPool poolInput,
-  );
+  Future<aedappfm.Result<DexPoolInfos, aedappfm.Failure>> getPoolInfos();
 
   Future<aedappfm.Result<double?, aedappfm.Failure>> getEquivalentAmount(
     String tokenAddress,

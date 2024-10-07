@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 part of 'dex_pool.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 Future<List<DexPool>> _getPoolList(
   _GetPoolListRef ref,
 ) async {
@@ -25,19 +25,33 @@ Future<List<DexPool>> _getPoolList(
         tokenVerifiedList,
       );
 
+  final userBalance = await ref.watch(userBalanceProvider.future);
   return resultPoolList.map<List<DexPool>>(
-    success: (pools) => pools,
+    success: (pools) {
+      return pools.map((pool) {
+        final lpTokenInUserBalance = userBalance.token.any(
+          (token) =>
+              token.address!.toUpperCase() ==
+              pool.lpToken.address.toUpperCase(),
+        );
+        return pool.copyWith(
+          lpTokenInUserBalance: lpTokenInUserBalance,
+        );
+      }).toList()
+        ..sort((a, b) {
+          if (a.poolAddress.toUpperCase() ==
+              aeETHUCOPoolAddress.toUpperCase()) {
+            return -1;
+          } else if (b.poolAddress.toUpperCase() ==
+              aeETHUCOPoolAddress.toUpperCase()) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+    },
     failure: (failure) => [],
-  )..sort((a, b) {
-      if (a.poolAddress.toUpperCase() == aeETHUCOPoolAddress.toUpperCase()) {
-        return -1;
-      } else if (b.poolAddress.toUpperCase() ==
-          aeETHUCOPoolAddress.toUpperCase()) {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
+  );
 }
 
 @riverpod
