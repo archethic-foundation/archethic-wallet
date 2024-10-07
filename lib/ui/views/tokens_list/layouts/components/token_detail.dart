@@ -57,8 +57,6 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
         .valueOrNull;
     return InkWell(
       onTap: () async {
-        if (priceHistory == null) return;
-
         sl.get<HapticUtil>().feedback(
               FeedbackType.light,
               settings.activeVibrations,
