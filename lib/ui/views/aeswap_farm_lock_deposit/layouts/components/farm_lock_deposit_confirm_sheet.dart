@@ -67,7 +67,7 @@ class FarmLockDepositConfirmSheetState
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    final farmLockDeposit = ref.read(farmLockDepositFormNotifierProvider);
+    final farmLockDeposit = ref.watch(farmLockDepositFormNotifierProvider);
     return Row(
       children: <Widget>[
         AppButtonTinyConnectivity(
@@ -77,10 +77,11 @@ class FarmLockDepositConfirmSheetState
           onPressed: () async {
             final farmLockDepositNotifier = ref.read(
               farmLockDepositFormNotifierProvider.notifier,
-            );
+            )..setProcessInProgress(true);
             final resultOk = await farmLockDepositNotifier
                 .lock(AppLocalizations.of(context)!);
             if (resultOk) {
+              farmLockDepositNotifier.setProcessInProgress(false);
               await context.push(FarmLockDepositResultSheet.routerPage);
             }
           },

@@ -52,7 +52,7 @@ class FarmLockWithdrawConfirmSheetState
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    final farmLockWithdraw = ref.read(farmLockWithdrawFormNotifierProvider);
+    final farmLockWithdraw = ref.watch(farmLockWithdrawFormNotifierProvider);
 
     return Row(
       children: <Widget>[
@@ -61,13 +61,13 @@ class FarmLockWithdrawConfirmSheetState
           Dimens.buttonBottomDimens,
           key: const Key('farmLockWithdraw'),
           onPressed: () async {
-            final resultOk = await ref
-                .read(
-                  farmLockWithdrawFormNotifierProvider.notifier,
-                )
+            final farmLockWithdrawFormNotifier = ref.read(
+              farmLockWithdrawFormNotifierProvider.notifier,
+            )..setProcessInProgress(true);
+            final resultOk = await farmLockWithdrawFormNotifier
                 .withdraw(AppLocalizations.of(context)!);
-
             if (resultOk) {
+              farmLockWithdrawFormNotifier.setProcessInProgress(false);
               await context.push(FarmLockWithdrawResultSheet.routerPage);
             }
           },

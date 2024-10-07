@@ -31,7 +31,7 @@ class FarmLockClaimFinalAmount extends ConsumerWidget {
                 style: AppTextStyles.bodyLarge(context),
               ),
               SelectableText(
-                '${finalAmount.formatNumber(precision: 8)} ${finalAmount.formatNumber(precision: 8)} ${farmLockClaim.rewardToken!.symbol}',
+                '${finalAmount.formatNumber(precision: 8)} ${farmLockClaim.rewardToken!.symbol}',
                 style: AppTextStyles.bodyLargeSecondaryColor(context),
               ),
             ],

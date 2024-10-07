@@ -49,7 +49,7 @@ class FarmLockLevelUpConfirmSheetState
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    final farmLockLevelUp = ref.read(farmLockLevelUpFormNotifierProvider);
+    final farmLockLevelUp = ref.watch(farmLockLevelUpFormNotifierProvider);
     return Row(
       children: <Widget>[
         AppButtonTinyConnectivity(
@@ -59,10 +59,11 @@ class FarmLockLevelUpConfirmSheetState
           onPressed: () async {
             final farmLockLevelUpNotifier = ref.read(
               farmLockLevelUpFormNotifierProvider.notifier,
-            );
+            )..setProcessInProgress(true);
             final resultOk = await farmLockLevelUpNotifier
                 .lock(AppLocalizations.of(context)!);
             if (resultOk) {
+              farmLockLevelUpNotifier.setProcessInProgress(false);
               await context.push(FarmLockLevelUpResultSheet.routerPage);
             }
           },

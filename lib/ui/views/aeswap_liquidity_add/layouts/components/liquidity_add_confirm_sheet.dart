@@ -53,7 +53,7 @@ class LiquidityAddConfirmFormSheetState
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    final liquidityAdd = ref.read(liquidityAddFormNotifierProvider);
+    final liquidityAdd = ref.watch(liquidityAddFormNotifierProvider);
     return Row(
       children: <Widget>[
         AppButtonTinyConnectivity(
@@ -61,10 +61,13 @@ class LiquidityAddConfirmFormSheetState
           Dimens.buttonBottomDimens,
           key: const Key('addLiquidity'),
           onPressed: () async {
-            final resultOk = await ref
+            final liquidityAddFormNotifier = ref
                 .read(liquidityAddFormNotifierProvider.notifier)
+              ..setProcessInProgress(true);
+            final resultOk = await liquidityAddFormNotifier
                 .add(AppLocalizations.of(context)!);
             if (resultOk) {
+              liquidityAddFormNotifier.setProcessInProgress(false);
               await context.push(LiquidityAddResultSheet.routerPage);
             }
           },
