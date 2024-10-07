@@ -310,7 +310,7 @@ class SwapConfirmInfos extends ConsumerWidget {
                     ],
                   ),
                   if (swap.pool != null &&
-                      swap.pool!.infos != null &&
+                      swap.poolInfos != null &&
                       swap.tokenToSwap != null)
                     const Row(
                       children: [SwapTokenIconInfo()],

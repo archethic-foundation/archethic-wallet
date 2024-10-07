@@ -24,8 +24,6 @@ mixin _$DexPool {
   DexToken get lpToken => throw _privateConstructorUsedError;
   DexPair get pair => throw _privateConstructorUsedError;
   bool get lpTokenInUserBalance => throw _privateConstructorUsedError;
-  bool get isFavorite => throw _privateConstructorUsedError;
-  DexPoolInfos? get infos => throw _privateConstructorUsedError;
 
   /// Serializes this DexPool to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -45,13 +43,10 @@ abstract class $DexPoolCopyWith<$Res> {
       {String poolAddress,
       DexToken lpToken,
       DexPair pair,
-      bool lpTokenInUserBalance,
-      bool isFavorite,
-      DexPoolInfos? infos});
+      bool lpTokenInUserBalance});
 
   $DexTokenCopyWith<$Res> get lpToken;
   $DexPairCopyWith<$Res> get pair;
-  $DexPoolInfosCopyWith<$Res>? get infos;
 }
 
 /// @nodoc
@@ -73,8 +68,6 @@ class _$DexPoolCopyWithImpl<$Res, $Val extends DexPool>
     Object? lpToken = null,
     Object? pair = null,
     Object? lpTokenInUserBalance = null,
-    Object? isFavorite = null,
-    Object? infos = freezed,
   }) {
     return _then(_value.copyWith(
       poolAddress: null == poolAddress
@@ -93,14 +86,6 @@ class _$DexPoolCopyWithImpl<$Res, $Val extends DexPool>
           ? _value.lpTokenInUserBalance
           : lpTokenInUserBalance // ignore: cast_nullable_to_non_nullable
               as bool,
-      isFavorite: null == isFavorite
-          ? _value.isFavorite
-          : isFavorite // ignore: cast_nullable_to_non_nullable
-              as bool,
-      infos: freezed == infos
-          ? _value.infos
-          : infos // ignore: cast_nullable_to_non_nullable
-              as DexPoolInfos?,
     ) as $Val);
   }
 
@@ -123,20 +108,6 @@ class _$DexPoolCopyWithImpl<$Res, $Val extends DexPool>
       return _then(_value.copyWith(pair: value) as $Val);
     });
   }
-
-  /// Create a copy of DexPool
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $DexPoolInfosCopyWith<$Res>? get infos {
-    if (_value.infos == null) {
-      return null;
-    }
-
-    return $DexPoolInfosCopyWith<$Res>(_value.infos!, (value) {
-      return _then(_value.copyWith(infos: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -150,16 +121,12 @@ abstract class _$$DexPoolImplCopyWith<$Res> implements $DexPoolCopyWith<$Res> {
       {String poolAddress,
       DexToken lpToken,
       DexPair pair,
-      bool lpTokenInUserBalance,
-      bool isFavorite,
-      DexPoolInfos? infos});
+      bool lpTokenInUserBalance});
 
   @override
   $DexTokenCopyWith<$Res> get lpToken;
   @override
   $DexPairCopyWith<$Res> get pair;
-  @override
-  $DexPoolInfosCopyWith<$Res>? get infos;
 }
 
 /// @nodoc
@@ -179,8 +146,6 @@ class __$$DexPoolImplCopyWithImpl<$Res>
     Object? lpToken = null,
     Object? pair = null,
     Object? lpTokenInUserBalance = null,
-    Object? isFavorite = null,
-    Object? infos = freezed,
   }) {
     return _then(_$DexPoolImpl(
       poolAddress: null == poolAddress
@@ -199,14 +164,6 @@ class __$$DexPoolImplCopyWithImpl<$Res>
           ? _value.lpTokenInUserBalance
           : lpTokenInUserBalance // ignore: cast_nullable_to_non_nullable
               as bool,
-      isFavorite: null == isFavorite
-          ? _value.isFavorite
-          : isFavorite // ignore: cast_nullable_to_non_nullable
-              as bool,
-      infos: freezed == infos
-          ? _value.infos
-          : infos // ignore: cast_nullable_to_non_nullable
-              as DexPoolInfos?,
     ));
   }
 }
@@ -218,9 +175,7 @@ class _$DexPoolImpl extends _DexPool {
       {required this.poolAddress,
       required this.lpToken,
       required this.pair,
-      required this.lpTokenInUserBalance,
-      required this.isFavorite,
-      this.infos})
+      required this.lpTokenInUserBalance})
       : super._();
 
   factory _$DexPoolImpl.fromJson(Map<String, dynamic> json) =>
@@ -234,14 +189,10 @@ class _$DexPoolImpl extends _DexPool {
   final DexPair pair;
   @override
   final bool lpTokenInUserBalance;
-  @override
-  final bool isFavorite;
-  @override
-  final DexPoolInfos? infos;
 
   @override
   String toString() {
-    return 'DexPool(poolAddress: $poolAddress, lpToken: $lpToken, pair: $pair, lpTokenInUserBalance: $lpTokenInUserBalance, isFavorite: $isFavorite, infos: $infos)';
+    return 'DexPool(poolAddress: $poolAddress, lpToken: $lpToken, pair: $pair, lpTokenInUserBalance: $lpTokenInUserBalance)';
   }
 
   @override
@@ -254,16 +205,13 @@ class _$DexPoolImpl extends _DexPool {
             (identical(other.lpToken, lpToken) || other.lpToken == lpToken) &&
             (identical(other.pair, pair) || other.pair == pair) &&
             (identical(other.lpTokenInUserBalance, lpTokenInUserBalance) ||
-                other.lpTokenInUserBalance == lpTokenInUserBalance) &&
-            (identical(other.isFavorite, isFavorite) ||
-                other.isFavorite == isFavorite) &&
-            (identical(other.infos, infos) || other.infos == infos));
+                other.lpTokenInUserBalance == lpTokenInUserBalance));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, poolAddress, lpToken, pair,
-      lpTokenInUserBalance, isFavorite, infos);
+  int get hashCode => Object.hash(
+      runtimeType, poolAddress, lpToken, pair, lpTokenInUserBalance);
 
   /// Create a copy of DexPool
   /// with the given fields replaced by the non-null parameter values.
@@ -286,9 +234,7 @@ abstract class _DexPool extends DexPool {
       {required final String poolAddress,
       required final DexToken lpToken,
       required final DexPair pair,
-      required final bool lpTokenInUserBalance,
-      required final bool isFavorite,
-      final DexPoolInfos? infos}) = _$DexPoolImpl;
+      required final bool lpTokenInUserBalance}) = _$DexPoolImpl;
   const _DexPool._() : super._();
 
   factory _DexPool.fromJson(Map<String, dynamic> json) = _$DexPoolImpl.fromJson;
@@ -301,10 +247,6 @@ abstract class _DexPool extends DexPool {
   DexPair get pair;
   @override
   bool get lpTokenInUserBalance;
-  @override
-  bool get isFavorite;
-  @override
-  DexPoolInfos? get infos;
 
   /// Create a copy of DexPool
   /// with the given fields replaced by the non-null parameter values.

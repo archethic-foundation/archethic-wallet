@@ -6,8 +6,7 @@ import 'package:hive/hive.dart';
 class HiveTokensListDatasource {
   HiveTokensListDatasource._(this._box);
 
-  // TODO: Before this hive named tokenslistbox but doublon with aewallet
-  static const String _tokensListBox = 'aeSwapTokensListBox';
+  static const String _tokensListBox = 'aeswaptokensListBox';
   final Box<DexTokenHive> _box;
 
   bool get shouldBeReloaded => _box.isEmpty;

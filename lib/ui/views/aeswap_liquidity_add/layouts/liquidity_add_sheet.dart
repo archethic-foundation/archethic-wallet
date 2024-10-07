@@ -63,7 +63,7 @@ class _LiquidityAddSheetState extends ConsumerState<LiquidityAddSheet> {
     final liquidityAddForm = ref.watch(liquidityAddFormNotifierProvider);
 
     return liquidityAddForm.processStep == ProcessStep.form
-        ? const LiquidityAddFormSheet()
+        ? LiquidityAddFormSheet(pool: widget.pool)
         : const LiquidityAddConfirmFormSheet();
   }
 }

@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
-import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_pool_infos.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_infos_response.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/model_parser.dart';
 import 'package:aewallet/modules/aeswap/domain/repositories/pool_factory.repository.dart';
@@ -33,33 +33,25 @@ class PoolFactoryRepositoryImpl
   ///   },
   ///   "fee": 0.25
   /// }
-  @override
-  Future<Map<String, dynamic>> getPoolInfos() async {
-    final result = await apiService.callSCFunction(
-      jsonRPCRequest: SCCallFunctionRequest(
-        method: 'contract_fun',
-        params: SCCallFunctionParams(
-          contract: factoryAddress.toUpperCase(),
-          function: 'get_pool_infos',
-          args: [],
-        ),
-      ),
-      resultMap: true,
-    ) as Map<String, dynamic>;
-
-    return result;
-  }
 
   @override
-  Future<aedappfm.Result<DexPool, aedappfm.Failure>> populatePoolInfos(
-    DexPool poolInput,
-  ) async {
+  Future<aedappfm.Result<DexPoolInfos, aedappfm.Failure>> getPoolInfos() async {
     return aedappfm.Result.guard(
       () async {
-        final result = await getPoolInfos();
+        final result = await apiService.callSCFunction(
+          jsonRPCRequest: SCCallFunctionRequest(
+            method: 'contract_fun',
+            params: SCCallFunctionParams(
+              contract: factoryAddress.toUpperCase(),
+              function: 'get_pool_infos',
+              args: [],
+            ),
+          ),
+          resultMap: true,
+        ) as Map<String, dynamic>;
 
         final getPoolInfosResponse = GetPoolInfosResponse.fromJson(result);
-        return poolInfoToModel(poolInput, getPoolInfosResponse);
+        return poolInfoToModel(factoryAddress, getPoolInfosResponse);
       },
     );
   }

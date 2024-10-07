@@ -32,7 +32,12 @@ class LiquidityAddFormNotifier extends _$LiquidityAddFormNotifier {
 
     final poolPopulated =
         await ref.read(DexPoolProviders.getPool(pool.poolAddress).future);
-    state = state.copyWith(pool: poolPopulated);
+
+    final poolInfos = await ref.read(
+      DexPoolProviders.poolInfos(pool.poolAddress).future,
+    );
+
+    state = state.copyWith(pool: poolPopulated, poolInfos: poolInfos);
   }
 
   Future<void> initBalances() async {

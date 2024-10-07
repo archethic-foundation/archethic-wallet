@@ -5,8 +5,4 @@ abstract class DexPoolRepository {
     String poolAddress,
     List<String> tokenVerifiedList,
   );
-
-  Future<DexPool> populatePoolInfos(
-    DexPool poolInput,
-  );
 }
