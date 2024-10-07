@@ -52,7 +52,7 @@ class FarmLockClaimConfirmSheetState
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    final farmLockClaim = ref.read(farmLockClaimFormNotifierProvider);
+    final farmLockClaim = ref.watch(farmLockClaimFormNotifierProvider);
     return Row(
       children: <Widget>[
         AppButtonTinyConnectivity(
@@ -60,11 +60,14 @@ class FarmLockClaimConfirmSheetState
           Dimens.buttonBottomDimens,
           key: const Key('farmLockClaim'),
           onPressed: () async {
-            final resultOk = await ref
+            final farmLockClaimFormNotifier = ref
                 .read(farmLockClaimFormNotifierProvider.notifier)
+              ..setProcessInProgress(true);
+            final resultOk = await farmLockClaimFormNotifier
                 .claim(AppLocalizations.of(context)!);
 
             if (resultOk) {
+              farmLockClaimFormNotifier.setProcessInProgress(false);
               await context.push(FarmLockClaimResultSheet.routerPage);
             }
           },

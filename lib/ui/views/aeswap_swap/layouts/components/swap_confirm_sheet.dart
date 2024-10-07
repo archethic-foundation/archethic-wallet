@@ -52,7 +52,7 @@ class SwapConfirmFormSheetState extends ConsumerState<SwapConfirmFormSheet>
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    final swap = ref.read(swapFormNotifierProvider);
+    final swap = ref.watch(swapFormNotifierProvider);
     return Row(
       children: <Widget>[
         AppButtonTinyConnectivity(
@@ -60,10 +60,12 @@ class SwapConfirmFormSheetState extends ConsumerState<SwapConfirmFormSheet>
           Dimens.buttonBottomDimens,
           key: const Key('swap'),
           onPressed: () async {
-            final resultOk = await ref
-                .read(swapFormNotifierProvider.notifier)
-                .swap(AppLocalizations.of(context)!);
+            final swapFormNotifier = ref.read(swapFormNotifierProvider.notifier)
+              ..setProcessInProgress(true);
+            final resultOk =
+                await swapFormNotifier.swap(AppLocalizations.of(context)!);
             if (resultOk) {
+              swapFormNotifier.setProcessInProgress(false);
               await context.push(SwapResultSheet.routerPage);
             }
           },

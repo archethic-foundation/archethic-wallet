@@ -53,7 +53,7 @@ class LiquidityRemoveConfirmFormSheetState
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    final liquidityRemove = ref.read(liquidityRemoveFormNotifierProvider);
+    final liquidityRemove = ref.watch(liquidityRemoveFormNotifierProvider);
     return Row(
       children: <Widget>[
         AppButtonTinyConnectivity(
@@ -61,10 +61,13 @@ class LiquidityRemoveConfirmFormSheetState
           Dimens.buttonBottomDimens,
           key: const Key('removeLiquidity'),
           onPressed: () async {
-            final resultOk = await ref
+            final liquidityRemoveFormNotifier = ref
                 .read(liquidityRemoveFormNotifierProvider.notifier)
+              ..setProcessInProgress(true);
+            final resultOk = await liquidityRemoveFormNotifier
                 .remove(AppLocalizations.of(context)!);
             if (resultOk) {
+              liquidityRemoveFormNotifier.setProcessInProgress(false);
               await context.push(LiquidityRemoveResultSheet.routerPage);
             }
           },
