@@ -105,9 +105,6 @@ class LiquidityRemoveConfirmFormSheetState
     final localizations = AppLocalizations.of(context)!;
 
     final liquidityRemove = ref.read(liquidityRemoveFormNotifierProvider);
-    if (liquidityRemove.lpToken == null) {
-      return const SizedBox.shrink();
-    }
 
     return SingleChildScrollView(
       child: Column(

@@ -138,18 +138,11 @@ class FarmLockLevelUpConfirmSheetState
                         Text(
                           AppLocalizations.of(context)!
                               .farmLockLevelUpConfirmCheckBoxUnderstand,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(
-                                fontSize:
-                                    aedappfm.Responsive.fontSizeFromTextStyle(
-                                  context,
-                                  Theme.of(context).textTheme.bodyMedium!,
-                                ),
-                                color: aedappfm
-                                    .ArchethicThemeBase.systemWarning500,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    color: aedappfm
+                                        .ArchethicThemeBase.systemWarning500,
+                                  ),
                         ),
                       ],
                     ),
@@ -172,11 +165,6 @@ class FarmLockLevelUpConfirmSheetState
                             .farmLockLevelUpConfirmMoreInfo,
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                               decoration: TextDecoration.underline,
-                              fontSize:
-                                  aedappfm.Responsive.fontSizeFromTextStyle(
-                                context,
-                                Theme.of(context).textTheme.bodyMedium!,
-                              ),
                               color:
                                   aedappfm.ArchethicThemeBase.systemWarning500,
                             ),

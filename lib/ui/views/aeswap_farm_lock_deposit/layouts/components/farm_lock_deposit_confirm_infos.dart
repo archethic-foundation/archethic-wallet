@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 class FarmLockDepositConfirmInfos extends ConsumerWidget {
   const FarmLockDepositConfirmInfos({
@@ -117,35 +116,6 @@ class FarmLockDepositConfirmInfos extends ConsumerWidget {
                     ),
                 ],
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              if (farmLockDeposit.farmLockDepositDuration !=
-                  FarmLockDepositDurationType.flexible)
-                Row(
-                  children: [
-                    SelectableText(
-                      AppLocalizations.of(context)!
-                          .farmLockDepositUnlockDateLbl,
-                      style: AppTextStyles.bodyMedium(context),
-                    ),
-                    if (farmLockDeposit.farmLockDepositDuration !=
-                            FarmLockDepositDurationType.flexible &&
-                        farmLockDeposit.farmLock!
-                                .availableLevels[farmLockDeposit.level] !=
-                            null)
-                      SelectableText(
-                        DateFormat('yyyy-MM-dd').format(
-                          DateTime.fromMillisecondsSinceEpoch(
-                            farmLockDeposit.farmLock!
-                                    .availableLevels[farmLockDeposit.level]! *
-                                1000,
-                          ),
-                        ),
-                        style: AppTextStyles.bodyMedium(context),
-                      ),
-                  ],
-                ),
               const SizedBox(
                 height: 20,
               ),

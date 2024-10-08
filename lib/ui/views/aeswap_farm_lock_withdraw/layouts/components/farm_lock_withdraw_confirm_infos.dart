@@ -253,14 +253,14 @@ class FarmLockWithdrawConfirmInfos extends ConsumerWidget {
                                       ),
                                 ),
                                 TextSpan(
-                                    text:
-                                        ' ${farmLockWithdraw.rewardToken!.symbol} ',
-                                    style:
-                                        Theme.of(context).textTheme.bodyLarge),
+                                  text:
+                                      ' ${farmLockWithdraw.rewardToken!.symbol} ',
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
                                 TextSpan(
-                                    text: '${snapshot.data}',
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium),
+                                  text: '${snapshot.data}',
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
                               ],
                             ),
                           );

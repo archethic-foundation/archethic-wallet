@@ -8,7 +8,8 @@ class DexBlockchainsRepositoryImpl implements DexBlockchainsRepository {
   @override
   Future<List<DexBlockchain>> getBlockchainsListConf() async {
     final jsonContent = await rootBundle.loadString(
-        'lib/modules/aeswap/domain/repositories/blockchains_list.json');
+      'lib/modules/aeswap/domain/repositories/blockchains_list.json',
+    );
 
     final jsonData = jsonDecode(jsonContent);
 

@@ -108,7 +108,7 @@ class ClaimFarmLockCase with aedappfm.TransactionMixin {
 
             notificationService.start(
               operationId,
-              DexNotification.addLiquidity(
+              DexNotification.claimFarmLock(
                 txAddress: transationSignedRaw.address!.address,
               ),
             );

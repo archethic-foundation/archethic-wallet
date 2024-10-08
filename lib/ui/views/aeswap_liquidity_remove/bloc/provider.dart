@@ -358,10 +358,6 @@ class LiquidityRemoveFormNotifier extends _$LiquidityRemoveFormNotifier {
           state.lpToken!,
         );
 
-    ref
-      ..invalidate(userBalanceProvider)
-      ..invalidate(DexPoolProviders.getPool(state.pool!.poolAddress));
-
     return true;
   }
 }

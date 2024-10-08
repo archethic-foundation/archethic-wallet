@@ -99,7 +99,7 @@ class FarmLockLevelUpFormSheet extends ConsumerWidget
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 10),
+            padding: const EdgeInsets.only(top: 10, bottom: 80),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
