@@ -1,11 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/consent_uri.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/layouts/components/farm_lock_level_up_confirm_infos.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/layouts/components/farm_lock_level_up_result_sheet.dart';
@@ -62,9 +64,22 @@ class FarmLockLevelUpConfirmSheetState
             )..setProcessInProgress(true);
             final resultOk = await farmLockLevelUpNotifier
                 .lock(AppLocalizations.of(context)!);
+            farmLockLevelUpNotifier.setProcessInProgress(false);
             if (resultOk) {
-              farmLockLevelUpNotifier.setProcessInProgress(false);
               await context.push(FarmLockLevelUpResultSheet.routerPage);
+            } else {
+              UIUtil.showSnackbar(
+                FailureMessage(
+                  context: context,
+                  failure:
+                      ref.read(farmLockLevelUpFormNotifierProvider).failure,
+                ).getMessage(),
+                context,
+                ref,
+                ArchethicTheme.text,
+                ArchethicTheme.snackBarShadow,
+                duration: const Duration(seconds: 5),
+              );
             }
           },
           disabled: (!warningChecked ||
@@ -89,9 +104,11 @@ class FarmLockLevelUpConfirmSheetState
         key: const Key('back'),
         color: ArchethicTheme.text,
         onPressed: () {
-          farmLockLevelUpNotifier.setFarmLockLevelUpProcessStep(
-            aedappfm.ProcessStep.form,
-          );
+          farmLockLevelUpNotifier
+            ..setFarmLockLevelUpProcessStep(
+              aedappfm.ProcessStep.form,
+            )
+            ..setFailure(null);
         },
       ),
     );

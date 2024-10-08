@@ -148,6 +148,11 @@ class AddLiquidityCase with aedappfm.TransactionMixin {
         },
       );
     } catch (e) {
+      liquidityAddNotifier
+        ..setResumeProcess(false)
+        ..setProcessInProgress(false)
+        ..setLiquidityAddOk(false);
+
       if (e is aedappfm.Failure) {
         liquidityAddNotifier.setFailure(e);
         throw aedappfm.Failure.fromError(e);

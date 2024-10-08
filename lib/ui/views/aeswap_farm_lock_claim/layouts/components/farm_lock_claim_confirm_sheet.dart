@@ -1,9 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_claim/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_claim/layouts/components/farm_lock_claim_confirm_infos.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_claim/layouts/components/farm_lock_claim_result_sheet.dart';
@@ -65,10 +67,21 @@ class FarmLockClaimConfirmSheetState
               ..setProcessInProgress(true);
             final resultOk = await farmLockClaimFormNotifier
                 .claim(AppLocalizations.of(context)!);
-
+            farmLockClaimFormNotifier.setProcessInProgress(false);
             if (resultOk) {
-              farmLockClaimFormNotifier.setProcessInProgress(false);
               await context.push(FarmLockClaimResultSheet.routerPage);
+            } else {
+              UIUtil.showSnackbar(
+                FailureMessage(
+                  context: context,
+                  failure: ref.read(farmLockClaimFormNotifierProvider).failure,
+                ).getMessage(),
+                context,
+                ref,
+                ArchethicTheme.text,
+                ArchethicTheme.snackBarShadow,
+                duration: const Duration(seconds: 5),
+              );
             }
           },
           disabled:
@@ -92,9 +105,11 @@ class FarmLockClaimConfirmSheetState
         key: const Key('back'),
         color: ArchethicTheme.text,
         onPressed: () {
-          farmLockClaimNotifier.setFarmLockClaimProcessStep(
-            aedappfm.ProcessStep.form,
-          );
+          farmLockClaimNotifier
+            ..setFarmLockClaimProcessStep(
+              aedappfm.ProcessStep.form,
+            )
+            ..setFailure(null);
         },
       ),
     );

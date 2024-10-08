@@ -155,18 +155,19 @@ class LevelUpFarmLockCase with aedappfm.TransactionMixin {
         },
       );
     } catch (e) {
-      aedappfm.sl.get<aedappfm.LogManager>().log(
-            'TransactionFarmLevelUp sendTx failed $e',
-            level: aedappfm.LogLevel.error,
-            name: 'aedappfm.TransactionMixin - sendTransactions',
-          );
+      farmLevelUpNotifier
+        ..setResumeProcess(false)
+        ..setProcessInProgress(false)
+        ..setFarmLockLevelUpOk(false);
 
+      if (e is aedappfm.Failure) {
+        farmLevelUpNotifier.setFailure(e);
+        throw aedappfm.Failure.fromError(e);
+      }
       farmLevelUpNotifier.setFailure(
-        e is aedappfm.Timeout
-            ? e
-            : aedappfm.Failure.other(
-                cause: e.toString().replaceAll('Exception: ', '').capitalize(),
-              ),
+        aedappfm.Failure.other(
+          cause: e.toString().replaceAll('Exception: ', '').capitalize(),
+        ),
       );
 
       notificationService.failed(
