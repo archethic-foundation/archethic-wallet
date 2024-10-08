@@ -50,7 +50,6 @@ class AddLiquidityCase with aedappfm.TransactionMixin {
     DexToken lpToken,
   ) async {
     final operationId = const Uuid().v4();
-
     final archethicContract = ArchethicContract(
       apiService: apiService,
       verifiedTokensRepository: verifiedTokensRepository,

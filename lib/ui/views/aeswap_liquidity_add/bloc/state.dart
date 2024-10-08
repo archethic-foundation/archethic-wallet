@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
-import 'package:aewallet/modules/aeswap/domain/models/dex_pool_infos.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -35,7 +34,6 @@ class LiquidityAddFormState with _$LiquidityAddFormState {
     @Default(0.0) double expectedTokenLP,
     @Default(0.0) double feesEstimatedUCO,
     DexPool? pool,
-    DexPoolInfos? poolInfos,
     @Default(0.0) double lpTokenBalance,
     Transaction? transactionAddLiquidity,
     @Default(false) bool calculationInProgress,

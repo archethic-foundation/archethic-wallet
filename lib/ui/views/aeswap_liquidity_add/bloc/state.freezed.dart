@@ -39,7 +39,6 @@ mixin _$LiquidityAddFormState {
   double get expectedTokenLP => throw _privateConstructorUsedError;
   double get feesEstimatedUCO => throw _privateConstructorUsedError;
   DexPool? get pool => throw _privateConstructorUsedError;
-  DexPoolInfos? get poolInfos => throw _privateConstructorUsedError;
   double get lpTokenBalance => throw _privateConstructorUsedError;
   Transaction? get transactionAddLiquidity =>
       throw _privateConstructorUsedError;
@@ -85,7 +84,6 @@ abstract class $LiquidityAddFormStateCopyWith<$Res> {
       double expectedTokenLP,
       double feesEstimatedUCO,
       DexPool? pool,
-      DexPoolInfos? poolInfos,
       double lpTokenBalance,
       Transaction? transactionAddLiquidity,
       bool calculationInProgress,
@@ -96,7 +94,6 @@ abstract class $LiquidityAddFormStateCopyWith<$Res> {
   $DexTokenCopyWith<$Res>? get token1;
   $DexTokenCopyWith<$Res>? get token2;
   $DexPoolCopyWith<$Res>? get pool;
-  $DexPoolInfosCopyWith<$Res>? get poolInfos;
   $TransactionCopyWith<$Res>? get transactionAddLiquidity;
   $FailureCopyWith<$Res>? get failure;
 }
@@ -140,7 +137,6 @@ class _$LiquidityAddFormStateCopyWithImpl<$Res,
     Object? expectedTokenLP = null,
     Object? feesEstimatedUCO = null,
     Object? pool = freezed,
-    Object? poolInfos = freezed,
     Object? lpTokenBalance = null,
     Object? transactionAddLiquidity = freezed,
     Object? calculationInProgress = null,
@@ -241,10 +237,6 @@ class _$LiquidityAddFormStateCopyWithImpl<$Res,
           ? _value.pool
           : pool // ignore: cast_nullable_to_non_nullable
               as DexPool?,
-      poolInfos: freezed == poolInfos
-          ? _value.poolInfos
-          : poolInfos // ignore: cast_nullable_to_non_nullable
-              as DexPoolInfos?,
       lpTokenBalance: null == lpTokenBalance
           ? _value.lpTokenBalance
           : lpTokenBalance // ignore: cast_nullable_to_non_nullable
@@ -318,20 +310,6 @@ class _$LiquidityAddFormStateCopyWithImpl<$Res,
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $DexPoolInfosCopyWith<$Res>? get poolInfos {
-    if (_value.poolInfos == null) {
-      return null;
-    }
-
-    return $DexPoolInfosCopyWith<$Res>(_value.poolInfos!, (value) {
-      return _then(_value.copyWith(poolInfos: value) as $Val);
-    });
-  }
-
-  /// Create a copy of LiquidityAddFormState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
   $TransactionCopyWith<$Res>? get transactionAddLiquidity {
     if (_value.transactionAddLiquidity == null) {
       return null;
@@ -390,7 +368,6 @@ abstract class _$$LiquidityAddFormStateImplCopyWith<$Res>
       double expectedTokenLP,
       double feesEstimatedUCO,
       DexPool? pool,
-      DexPoolInfos? poolInfos,
       double lpTokenBalance,
       Transaction? transactionAddLiquidity,
       bool calculationInProgress,
@@ -404,8 +381,6 @@ abstract class _$$LiquidityAddFormStateImplCopyWith<$Res>
   $DexTokenCopyWith<$Res>? get token2;
   @override
   $DexPoolCopyWith<$Res>? get pool;
-  @override
-  $DexPoolInfosCopyWith<$Res>? get poolInfos;
   @override
   $TransactionCopyWith<$Res>? get transactionAddLiquidity;
   @override
@@ -449,7 +424,6 @@ class __$$LiquidityAddFormStateImplCopyWithImpl<$Res>
     Object? expectedTokenLP = null,
     Object? feesEstimatedUCO = null,
     Object? pool = freezed,
-    Object? poolInfos = freezed,
     Object? lpTokenBalance = null,
     Object? transactionAddLiquidity = freezed,
     Object? calculationInProgress = null,
@@ -550,10 +524,6 @@ class __$$LiquidityAddFormStateImplCopyWithImpl<$Res>
           ? _value.pool
           : pool // ignore: cast_nullable_to_non_nullable
               as DexPool?,
-      poolInfos: freezed == poolInfos
-          ? _value.poolInfos
-          : poolInfos // ignore: cast_nullable_to_non_nullable
-              as DexPoolInfos?,
       lpTokenBalance: null == lpTokenBalance
           ? _value.lpTokenBalance
           : lpTokenBalance // ignore: cast_nullable_to_non_nullable
@@ -609,7 +579,6 @@ class _$LiquidityAddFormStateImpl extends _LiquidityAddFormState {
       this.expectedTokenLP = 0.0,
       this.feesEstimatedUCO = 0.0,
       this.pool,
-      this.poolInfos,
       this.lpTokenBalance = 0.0,
       this.transactionAddLiquidity,
       this.calculationInProgress = false,
@@ -685,8 +654,6 @@ class _$LiquidityAddFormStateImpl extends _LiquidityAddFormState {
   @override
   final DexPool? pool;
   @override
-  final DexPoolInfos? poolInfos;
-  @override
   @JsonKey()
   final double lpTokenBalance;
   @override
@@ -703,7 +670,7 @@ class _$LiquidityAddFormStateImpl extends _LiquidityAddFormState {
 
   @override
   String toString() {
-    return 'LiquidityAddFormState(processStep: $processStep, resumeProcess: $resumeProcess, calculateToken1: $calculateToken1, calculateToken2: $calculateToken2, tokenFormSelected: $tokenFormSelected, currentStep: $currentStep, isProcessInProgress: $isProcessInProgress, liquidityAddOk: $liquidityAddOk, messageMaxHalfUCO: $messageMaxHalfUCO, token1: $token1, token2: $token2, ratio: $ratio, slippageTolerance: $slippageTolerance, token1Balance: $token1Balance, token1Amount: $token1Amount, token2Balance: $token2Balance, token2Amount: $token2Amount, token1minAmount: $token1minAmount, token2minAmount: $token2minAmount, networkFees: $networkFees, expectedTokenLP: $expectedTokenLP, feesEstimatedUCO: $feesEstimatedUCO, pool: $pool, poolInfos: $poolInfos, lpTokenBalance: $lpTokenBalance, transactionAddLiquidity: $transactionAddLiquidity, calculationInProgress: $calculationInProgress, finalAmount: $finalAmount, failure: $failure, consentDateTime: $consentDateTime)';
+    return 'LiquidityAddFormState(processStep: $processStep, resumeProcess: $resumeProcess, calculateToken1: $calculateToken1, calculateToken2: $calculateToken2, tokenFormSelected: $tokenFormSelected, currentStep: $currentStep, isProcessInProgress: $isProcessInProgress, liquidityAddOk: $liquidityAddOk, messageMaxHalfUCO: $messageMaxHalfUCO, token1: $token1, token2: $token2, ratio: $ratio, slippageTolerance: $slippageTolerance, token1Balance: $token1Balance, token1Amount: $token1Amount, token2Balance: $token2Balance, token2Amount: $token2Amount, token1minAmount: $token1minAmount, token2minAmount: $token2minAmount, networkFees: $networkFees, expectedTokenLP: $expectedTokenLP, feesEstimatedUCO: $feesEstimatedUCO, pool: $pool, lpTokenBalance: $lpTokenBalance, transactionAddLiquidity: $transactionAddLiquidity, calculationInProgress: $calculationInProgress, finalAmount: $finalAmount, failure: $failure, consentDateTime: $consentDateTime)';
   }
 
   @override
@@ -753,8 +720,6 @@ class _$LiquidityAddFormStateImpl extends _LiquidityAddFormState {
             (identical(other.feesEstimatedUCO, feesEstimatedUCO) ||
                 other.feesEstimatedUCO == feesEstimatedUCO) &&
             (identical(other.pool, pool) || other.pool == pool) &&
-            (identical(other.poolInfos, poolInfos) ||
-                other.poolInfos == poolInfos) &&
             (identical(other.lpTokenBalance, lpTokenBalance) ||
                 other.lpTokenBalance == lpTokenBalance) &&
             (identical(
@@ -795,7 +760,6 @@ class _$LiquidityAddFormStateImpl extends _LiquidityAddFormState {
         expectedTokenLP,
         feesEstimatedUCO,
         pool,
-        poolInfos,
         lpTokenBalance,
         transactionAddLiquidity,
         calculationInProgress,
@@ -839,7 +803,6 @@ abstract class _LiquidityAddFormState extends LiquidityAddFormState {
       final double expectedTokenLP,
       final double feesEstimatedUCO,
       final DexPool? pool,
-      final DexPoolInfos? poolInfos,
       final double lpTokenBalance,
       final Transaction? transactionAddLiquidity,
       final bool calculationInProgress,
@@ -894,8 +857,6 @@ abstract class _LiquidityAddFormState extends LiquidityAddFormState {
   double get feesEstimatedUCO;
   @override
   DexPool? get pool;
-  @override
-  DexPoolInfos? get poolInfos;
   @override
   double get lpTokenBalance;
   @override

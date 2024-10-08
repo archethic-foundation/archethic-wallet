@@ -62,14 +62,14 @@ class RemoveLiquidityCase with aedappfm.TransactionMixin {
       ..setFinalAmountLPToken(null);
 
     try {
-      final transactionAddLiquiditylMap =
+      final transactionRemoveLiquiditylMap =
           await archethicContract.getRemoveLiquidityTx(
         lpTokenAddress,
         lpTokenAmount,
         poolGenesisAddress,
       );
 
-      transactionAddLiquiditylMap.map(
+      transactionRemoveLiquiditylMap.map(
         success: (success) {
           transactionRemoveLiquidity = success;
         },

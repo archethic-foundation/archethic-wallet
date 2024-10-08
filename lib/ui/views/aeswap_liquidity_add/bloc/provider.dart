@@ -33,11 +33,7 @@ class LiquidityAddFormNotifier extends _$LiquidityAddFormNotifier {
     final poolPopulated =
         await ref.read(DexPoolProviders.getPool(pool.poolAddress).future);
 
-    final poolInfos = await ref.read(
-      DexPoolProviders.poolInfos(pool.poolAddress).future,
-    );
-
-    state = state.copyWith(pool: poolPopulated, poolInfos: poolInfos);
+    state = state.copyWith(pool: poolPopulated);
   }
 
   Future<void> initBalances() async {
@@ -541,7 +537,6 @@ class LiquidityAddFormNotifier extends _$LiquidityAddFormNotifier {
     );
     await aedappfm.ConsentRepositoryImpl()
         .addAddress(accountSelected!.genesisAddress);
-
     await ref.read(addLiquidityCaseProvider).run(
           appLocalizations,
           this,
