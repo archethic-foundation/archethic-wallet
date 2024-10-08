@@ -149,14 +149,17 @@ class WithdrawFarmLockCase with aedappfm.TransactionMixin {
               ]),
               sleepDuration: const Duration(seconds: 3),
               until: (amounts) {
-                final amountWithdraw = amounts[1];
-                return amountWithdraw > 0;
+                return amounts[1] > 0;
               },
               timeout: const Duration(minutes: 1),
             );
 
             final amountReward = amounts[0];
             final amountWithdraw = amounts[1];
+
+            farmLockWithdrawNotifier
+              ..setFinalAmountReward(amountReward)
+              ..setFinalAmountWithdraw(amountWithdraw);
 
             notificationService.succeed(
               operationId,

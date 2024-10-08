@@ -23,7 +23,7 @@ class FarmLockWithdrawFinalAmount extends ConsumerWidget {
       children: [
         Row(
           children: [
-            if (finalAmountReward != null)
+            if (finalAmountWithdraw != null)
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -32,7 +32,7 @@ class FarmLockWithdrawFinalAmount extends ConsumerWidget {
                     style: AppTextStyles.bodyLarge(context),
                   ),
                   SelectableText(
-                    '${finalAmountWithdraw!.formatNumber(precision: 8)} ${finalAmountWithdraw > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
+                    '${finalAmountWithdraw.formatNumber(precision: 8)} ${finalAmountWithdraw > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
                     style: AppTextStyles.bodyLargeSecondaryColor(context),
                   ),
                 ],
@@ -68,6 +68,10 @@ class FarmLockWithdrawFinalAmount extends ConsumerWidget {
                         ),
                       ],
                     ),
+          ],
+        ),
+        Row(
+          children: [
             if (finalAmountReward != null)
               if ((farmLockWithdraw.isFarmClose &&
                       farmLockWithdraw.rewardAmount! > 0) ||

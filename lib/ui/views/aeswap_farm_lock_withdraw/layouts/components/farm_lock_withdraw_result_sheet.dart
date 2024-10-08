@@ -78,7 +78,7 @@ class FarmLockWithdrawResultSheetState
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final farmLockWithdraw = ref.watch(farmLockWithdrawFormNotifierProvider);
-    if (farmLockWithdraw.rewardAmount == 0) {
+    if (farmLockWithdraw.finalAmountWithdraw == 0) {
       return const SizedBox.shrink();
     }
 
