@@ -244,12 +244,16 @@ class RemoveLiquidityCase with aedappfm.TransactionMixin {
       return 0.0;
     }
 
-    final fees = await calculateFees(
-      transactionRemoveLiquidity!,
-      aedappfm.sl.get<archethic.ApiService>(),
-      slippage: 1.1,
-    );
-    return fees;
+    if (transactionRemoveLiquidity != null) {
+      final fees = await calculateFees(
+        transactionRemoveLiquidity!,
+        aedappfm.sl.get<archethic.ApiService>(),
+        slippage: 1.1,
+      );
+      return fees;
+    } else {
+      return 0;
+    }
   }
 
   String getAEStepLabel(

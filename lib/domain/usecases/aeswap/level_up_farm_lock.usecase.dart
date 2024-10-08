@@ -214,12 +214,16 @@ class LevelUpFarmLockCase with aedappfm.TransactionMixin {
             previousPublicKey:
                 '00000000000000000000000000000000000000000000000000000000000000000000',
           );
-          final fees = await calculateFees(
-            transactionLevelUp!,
-            aedappfm.sl.get<archethic.ApiService>(),
-            slippage: 1.1,
-          );
-          return fees;
+          if (transactionLevelUp != null) {
+            final fees = await calculateFees(
+              transactionLevelUp!,
+              aedappfm.sl.get<archethic.ApiService>(),
+              slippage: 1.1,
+            );
+            return fees;
+          } else {
+            return 0;
+          }
         },
         failure: (failure) {
           return 0.0;

@@ -219,12 +219,16 @@ class DepositFarmLockCase with aedappfm.TransactionMixin {
       return 0.0;
     }
 
-    final fees = await calculateFees(
-      transactionDeposit!,
-      aedappfm.sl.get<archethic.ApiService>(),
-      slippage: 1.1,
-    );
-    return fees;
+    if (transactionDeposit != null) {
+      final fees = await calculateFees(
+        transactionDeposit!,
+        aedappfm.sl.get<archethic.ApiService>(),
+        slippage: 1.1,
+      );
+      return fees;
+    } else {
+      return 0.0;
+    }
   }
 
   String getAEStepLabel(
