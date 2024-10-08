@@ -97,12 +97,7 @@ class SingleTokenState extends State<SingleToken>
           if (widget.token.isLpToken == false)
             Text(
               widget.token.symbol,
-              style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    fontSize: aedappfm.Responsive.fontSizeFromTextStyle(
-                      context,
-                      Theme.of(context).textTheme.titleMedium!,
-                    ),
-                  ),
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           if (widget.token.isLpToken == false)
             const SizedBox(
