@@ -321,7 +321,7 @@ class LiquidityRemoveFormNotifier extends _$LiquidityRemoveFormNotifier {
     );
 
     if (feesEstimatedUCO > 0) {
-      final userBalance = await ref.watch(userBalanceProvider.future);
+      final userBalance = await ref.read(userBalanceProvider.future);
       if (feesEstimatedUCO > userBalance.uco) {
         setFailure(const aedappfm.Failure.insufficientFunds());
         return false;

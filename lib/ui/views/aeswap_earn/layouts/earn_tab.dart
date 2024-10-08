@@ -260,7 +260,7 @@ class EarnTabState extends ConsumerState<EarnTab> {
                               ),
                               FarmLockBlockFarmedTokensSummary(
                                 width: MediaQuery.of(context).size.width,
-                                height: 195,
+                                height: 185,
                               ),
                             ],
                           ),
