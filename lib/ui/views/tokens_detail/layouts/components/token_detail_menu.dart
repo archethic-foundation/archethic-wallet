@@ -211,7 +211,9 @@ class TokenDetailMenu extends ConsumerWidget {
                       : connectivityStatusProvider ==
                               ConnectivityStatus.isConnected
                           ? ActionButton(
-                              text: '${localizations.tokenDetailMenuEarn}\nUCO',
+                              text: farmLock != null
+                                  ? '${localizations.tokenDetailMenuEarn}\nAPR\n${(farmLock.apr3years * 100).formatNumber(precision: 2)}%'
+                                  : '${localizations.tokenDetailMenuEarn}\nUCO',
                               icon: aedappfm.Iconsax.wallet_add,
                               enabled: pool != null && farmLock != null,
                               onTap: () async {
@@ -246,7 +248,9 @@ class TokenDetailMenu extends ConsumerWidget {
                                 duration: const Duration(milliseconds: 300),
                               )
                           : ActionButton(
-                              text: '${localizations.tokenDetailMenuEarn}\nUCO',
+                              text: farmLock != null
+                                  ? '${localizations.tokenDetailMenuEarn}\nAPR\n${(farmLock.apr3years * 100).formatNumber(precision: 2)}%'
+                                  : '${localizations.tokenDetailMenuEarn}\nUCO',
                               icon: aedappfm.Iconsax.wallet_add,
                               enabled: false,
                             )
