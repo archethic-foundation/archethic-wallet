@@ -139,87 +139,83 @@ class FarmLockLevelUpConfirmSheetState
     }
 
     final localizations = AppLocalizations.of(context)!;
-    return Expanded(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const FarmLockLevelUpConfirmInfos(),
-          if (farmLockLevelUp.farmLockLevelUpDuration !=
-              FarmLockDepositDurationType.flexible)
-            Row(
-              children: [
-                Expanded(
-                  child: CheckboxListTile(
-                    title: Wrap(
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!
-                              .farmLockLevelUpConfirmCheckBoxUnderstand,
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    color: aedappfm
-                                        .ArchethicThemeBase.systemWarning500,
-                                  ),
-                        ),
-                      ],
-                    ),
-                    dense: true,
-                    value: warningChecked,
-                    onChanged: (newValue) {
-                      setState(() {
-                        warningChecked = newValue!;
-                      });
-                    },
-                    controlAffinity: ListTileControlAffinity.leading,
-                    subtitle: InkWell(
-                      onTap: () async {
-                        final uri = Uri.parse(kURIFarmLockFarmTuto);
-                        if (!await canLaunchUrl(uri)) return;
-                        await launchUrl(uri);
-                      },
-                      child: Text(
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const FarmLockLevelUpConfirmInfos(),
+        if (farmLockLevelUp.farmLockLevelUpDuration !=
+            FarmLockDepositDurationType.flexible)
+          Row(
+            children: [
+              Expanded(
+                child: CheckboxListTile(
+                  title: Wrap(
+                    children: [
+                      Text(
                         AppLocalizations.of(context)!
-                            .farmLockLevelUpConfirmMoreInfo,
+                            .farmLockLevelUpConfirmCheckBoxUnderstand,
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              decoration: TextDecoration.underline,
                               color:
                                   aedappfm.ArchethicThemeBase.systemWarning500,
                             ),
                       ),
+                    ],
+                  ),
+                  dense: true,
+                  value: warningChecked,
+                  onChanged: (newValue) {
+                    setState(() {
+                      warningChecked = newValue!;
+                    });
+                  },
+                  controlAffinity: ListTileControlAffinity.leading,
+                  subtitle: InkWell(
+                    onTap: () async {
+                      final uri = Uri.parse(kURIFarmLockFarmTuto);
+                      if (!await canLaunchUrl(uri)) return;
+                      await launchUrl(uri);
+                    },
+                    child: Text(
+                      AppLocalizations.of(context)!
+                          .farmLockLevelUpConfirmMoreInfo,
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            decoration: TextDecoration.underline,
+                            color: aedappfm.ArchethicThemeBase.systemWarning500,
+                          ),
                     ),
                   ),
                 ),
-              ],
-            ),
-          ConsentWidget(
-            consentDateTime: farmLockLevelUp.consentDateTime,
-            consentChecked: consentChecked,
-            onToggleConsent: (newValue) {
-              setState(() {
-                consentChecked = newValue!;
-              });
-            },
-            textStyle: AppTextStyles.bodyMedium(
-              context,
-            ),
-          ),
-          SheetDetailCard(
-            children: [
-              Text(
-                localizations.estimatedTxFees,
-                style: AppTextStyles.bodyMedium(context),
-              ),
-              Text(
-                AmountFormatters.standardSmallValue(
-                  farmLockLevelUp.feesEstimatedUCO,
-                  'UCO',
-                ),
-                style: AppTextStyles.bodyMedium(context),
               ),
             ],
           ),
-        ],
-      ),
+        ConsentWidget(
+          consentDateTime: farmLockLevelUp.consentDateTime,
+          consentChecked: consentChecked,
+          onToggleConsent: (newValue) {
+            setState(() {
+              consentChecked = newValue!;
+            });
+          },
+          textStyle: AppTextStyles.bodyMedium(
+            context,
+          ),
+        ),
+        SheetDetailCard(
+          children: [
+            Text(
+              localizations.estimatedTxFees,
+              style: AppTextStyles.bodyMedium(context),
+            ),
+            Text(
+              AmountFormatters.standardSmallValue(
+                farmLockLevelUp.feesEstimatedUCO,
+                'UCO',
+              ),
+              style: AppTextStyles.bodyMedium(context),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

@@ -312,12 +312,17 @@ class SwapCase with aedappfm.TransactionMixin {
             previousPublicKey:
                 '00000000000000000000000000000000000000000000000000000000000000000000',
           );
-          final fees = await calculateFees(
-            transactionSwap!,
-            aedappfm.sl.get<archethic.ApiService>(),
-            slippage: 1.1,
-          );
-          return fees;
+
+          if (transactionSwap != null) {
+            final fees = await calculateFees(
+              transactionSwap!,
+              aedappfm.sl.get<archethic.ApiService>(),
+              slippage: 1.1,
+            );
+            return fees;
+          } else {
+            return 0;
+          }
         },
         failure: (failure) {
           return 0.0;

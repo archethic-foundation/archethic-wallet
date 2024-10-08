@@ -217,12 +217,16 @@ class AddLiquidityCase with aedappfm.TransactionMixin {
       return 0.0;
     }
 
-    final fees = await calculateFees(
-      transactionAddLiquidity!,
-      aedappfm.sl.get<archethic.ApiService>(),
-      slippage: 1.1,
-    );
-    return fees;
+    if (transactionAddLiquidity != null) {
+      final fees = await calculateFees(
+        transactionAddLiquidity!,
+        aedappfm.sl.get<archethic.ApiService>(),
+        slippage: 1.1,
+      );
+      return fees;
+    } else {
+      return 0;
+    }
   }
 
   String getAEStepLabel(
