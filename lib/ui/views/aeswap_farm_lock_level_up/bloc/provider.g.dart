@@ -7,7 +7,7 @@ part of 'provider.dart';
 // **************************************************************************
 
 String _$farmLockLevelUpFormNotifierHash() =>
-    r'78a1183fe668e72980d89daa55fd64eed2e0c32d';
+    r'2aedd84ab1d706e7eadf49020bd9a3e971de98c0';
 
 /// See also [FarmLockLevelUpFormNotifier].
 @ProviderFor(FarmLockLevelUpFormNotifier)

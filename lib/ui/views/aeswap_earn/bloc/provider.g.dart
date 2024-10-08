@@ -24,12 +24,12 @@ final farmLockFormBalancesProvider =
 
 typedef FarmLockFormBalancesRef = AutoDisposeProviderRef<FarmLockFormBalances>;
 String _$farmLockFormSummaryHash() =>
-    r'e95079b9f949adbcf08d0ca80ba0b10a0abe653e';
+    r'38740f68aa8bc40c888c023d313ee20242397300';
 
 /// See also [farmLockFormSummary].
 @ProviderFor(farmLockFormSummary)
 final farmLockFormSummaryProvider =
-    AutoDisposeProvider<FarmLockFormSummary>.internal(
+    AutoDisposeFutureProvider<FarmLockFormSummary>.internal(
   farmLockFormSummary,
   name: r'farmLockFormSummaryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -39,7 +39,8 @@ final farmLockFormSummaryProvider =
   allTransitiveDependencies: null,
 );
 
-typedef FarmLockFormSummaryRef = AutoDisposeProviderRef<FarmLockFormSummary>;
+typedef FarmLockFormSummaryRef
+    = AutoDisposeFutureProviderRef<FarmLockFormSummary>;
 String _$farmLockFormPoolHash() => r'e0919af5d7966190d4c933f1d614626df7282290';
 
 /// See also [farmLockFormPool].

@@ -49,9 +49,9 @@ FarmLockFormBalances farmLockFormBalances(
 }
 
 @riverpod
-FarmLockFormSummary farmLockFormSummary(
+Future<FarmLockFormSummary> farmLockFormSummary(
   FarmLockFormSummaryRef ref,
-) {
+) async {
   final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
 
   if (farmLock == null) return const FarmLockFormSummary();
@@ -66,26 +66,28 @@ FarmLockFormSummary farmLockFormSummary(
     rewardsEarned = rewardsEarned + userInfos.rewardAmount;
   });
 
-  farmedTokensCapitalInFiat = ref
-          .watch(
-            DexTokensProviders.estimateLPTokenInFiat(
-              farmLock.lpTokenPair!.token1.address,
-              farmLock.lpTokenPair!.token2.address,
-              capitalInvested,
-              farmLock.poolAddress,
-            ),
-          )
-          .value ??
-      0;
+  final farmedTokensCapitalInFiatFuture = ref.watch(
+    DexTokensProviders.estimateLPTokenInFiat(
+      farmLock.lpTokenPair!.token1.address,
+      farmLock.lpTokenPair!.token2.address,
+      capitalInvested,
+      farmLock.poolAddress,
+    ).future,
+  );
 
-  price = ref
-          .watch(
-            DexTokensProviders.estimateTokenInFiat(
-              farmLock.rewardToken!.address,
-            ),
-          )
-          .value ??
-      0;
+  final priceFuture = ref.watch(
+    DexTokensProviders.estimateTokenInFiat(
+      farmLock.rewardToken!.address,
+    ).future,
+  );
+
+  final results = await Future.wait([
+    farmedTokensCapitalInFiatFuture,
+    priceFuture,
+  ]);
+
+  farmedTokensCapitalInFiat = results[0];
+  price = results[1];
 
   return FarmLockFormSummary(
     farmedTokensCapital: capitalInvested,

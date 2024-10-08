@@ -712,5 +712,6 @@
     "earnHeaderStartEarningBtn": "Start earning",
     "earnHeaderAddLiquidityTxt": "To get LP token you have to provide liquidity here :",
     "liquidityAddDesc": "Add liquidity to the pool and receive LP Tokens representing your share",
-    "keychainAddressCopied": "Keychain address copied"
+    "keychainAddressCopied": "Keychain address copied",
+    "farmLockTokensSummaryMoreInfo": "More info"
 }

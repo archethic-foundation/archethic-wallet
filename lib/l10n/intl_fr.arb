@@ -692,5 +692,6 @@
     "keychainAddressCopied": "Adresse de la keychain copiée",
     "withdrawFarmLockDone": "Retrait complété avec succès",
     "claimFarmLockDone": "Réclamation complétée avec succès",
-    "levelUpFarmLockDone": "Montée de niveau complétée avec succès"
+    "levelUpFarmLockDone": "Montée de niveau complétée avec succès",
+    "farmLockTokensSummaryMoreInfo": "Plus d'infos"
 }
