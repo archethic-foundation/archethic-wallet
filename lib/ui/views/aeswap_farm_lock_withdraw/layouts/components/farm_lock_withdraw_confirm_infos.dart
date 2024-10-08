@@ -239,18 +239,7 @@ class FarmLockWithdrawConfirmInfos extends ConsumerWidget {
                                 TextSpan(
                                   text: AppLocalizations.of(context)!
                                       .farmLockWithdrawConfirmYouWillReceive,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .copyWith(
-                                        fontSize: aedappfm.Responsive
-                                            .fontSizeFromTextStyle(
-                                          context,
-                                          Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge!,
-                                        ),
-                                      ),
+                                  style: Theme.of(context).textTheme.bodyLarge,
                                 ),
                                 TextSpan(
                                   text: farmLockWithdraw.rewardAmount!
@@ -261,46 +250,17 @@ class FarmLockWithdrawConfirmInfos extends ConsumerWidget {
                                       .copyWith(
                                         color: aedappfm
                                             .AppThemeBase.secondaryColor,
-                                        fontSize: aedappfm.Responsive
-                                            .fontSizeFromTextStyle(
-                                          context,
-                                          Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge!,
-                                        ),
                                       ),
                                 ),
                                 TextSpan(
-                                  text:
-                                      ' ${farmLockWithdraw.rewardToken!.symbol} ',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .copyWith(
-                                        fontSize: aedappfm.Responsive
-                                            .fontSizeFromTextStyle(
-                                          context,
-                                          Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge!,
-                                        ),
-                                      ),
-                                ),
+                                    text:
+                                        ' ${farmLockWithdraw.rewardToken!.symbol} ',
+                                    style:
+                                        Theme.of(context).textTheme.bodyLarge),
                                 TextSpan(
-                                  text: '${snapshot.data}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .copyWith(
-                                        fontSize: aedappfm.Responsive
-                                            .fontSizeFromTextStyle(
-                                          context,
-                                          Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!,
-                                        ),
-                                      ),
-                                ),
+                                    text: '${snapshot.data}',
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium),
                               ],
                             ),
                           );

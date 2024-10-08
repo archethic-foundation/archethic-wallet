@@ -15,7 +15,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'usecases.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 AddLiquidityCase addLiquidityCase(
   AddLiquidityCaseRef ref,
 ) =>
@@ -37,7 +37,7 @@ AddLiquidityCase addLiquidityCase(
           .selectedAccount!,
     );
 
-@Riverpod(keepAlive: true)
+@riverpod
 ClaimFarmLockCase claimFarmLockCase(
   ClaimFarmLockCaseRef ref,
 ) =>
@@ -59,7 +59,7 @@ ClaimFarmLockCase claimFarmLockCase(
           .selectedAccount!,
     );
 
-@Riverpod(keepAlive: true)
+@riverpod
 DepositFarmLockCase depositFarmLockCase(
   DepositFarmLockCaseRef ref,
 ) =>
@@ -81,7 +81,7 @@ DepositFarmLockCase depositFarmLockCase(
           .selectedAccount!,
     );
 
-@Riverpod(keepAlive: true)
+@riverpod
 LevelUpFarmLockCase levelUpFarmLockCase(
   LevelUpFarmLockCaseRef ref,
 ) =>
@@ -103,7 +103,7 @@ LevelUpFarmLockCase levelUpFarmLockCase(
           .selectedAccount!,
     );
 
-@Riverpod(keepAlive: true)
+@riverpod
 RemoveLiquidityCase removeLiquidityCase(
   RemoveLiquidityCaseRef ref,
 ) =>
@@ -125,7 +125,7 @@ RemoveLiquidityCase removeLiquidityCase(
           .selectedAccount!,
     );
 
-@Riverpod(keepAlive: true)
+@riverpod
 SwapCase swapCase(
   SwapCaseRef ref,
 ) =>
@@ -147,7 +147,7 @@ SwapCase swapCase(
           .selectedAccount!,
     );
 
-@Riverpod(keepAlive: true)
+@riverpod
 WithdrawFarmLockCase withdrawFarmLockCase(
   WithdrawFarmLockCaseRef ref,
 ) =>

@@ -84,7 +84,7 @@ class LiquidityAddConfirmInfos extends ConsumerWidget {
                     children: [
                       SelectableText(
                         liquidityAdd.token2Amount.formatNumber(precision: 8),
-                        style: AppTextStyles.bodyMedium(context),
+                        style: AppTextStyles.bodyMediumSecondaryColor(context),
                       ),
                       SelectableText(
                         ' ${liquidityAdd.token2!.symbol}',
