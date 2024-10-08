@@ -140,7 +140,7 @@ class FarmLockDepositConfirmSheetState
                           AppLocalizations.of(context)!
                               .farmLockDepositConfirmCheckBoxUnderstand,
                           style:
-                              Theme.of(context).textTheme.bodySmall!.copyWith(
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
                                     color: aedappfm
                                         .ArchethicThemeBase.systemWarning500,
                                   ),

@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 class FarmLockLevelUpConfirmInfos extends ConsumerWidget {
   const FarmLockLevelUpConfirmInfos({
@@ -124,33 +123,6 @@ class FarmLockLevelUpConfirmInfos extends ConsumerWidget {
                     ),
                 ],
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              if (farmLockLevelUp.farmLockLevelUpDuration !=
-                  FarmLockDepositDurationType.flexible)
-                Row(
-                  children: [
-                    SelectableText(
-                      AppLocalizations.of(context)!
-                          .farmLockLevelUpUnlockDateLbl,
-                      style: AppTextStyles.bodyLarge(context),
-                    ),
-                    if (farmLockLevelUp
-                            .farmLock!.availableLevels[farmLockLevelUp.level] !=
-                        null)
-                      SelectableText(
-                        DateFormat('yyyy-MM-dd').format(
-                          DateTime.fromMillisecondsSinceEpoch(
-                            farmLockLevelUp.farmLock!
-                                    .availableLevels[farmLockLevelUp.level]! *
-                                1000,
-                          ),
-                        ),
-                        style: AppTextStyles.bodyLargeSecondaryColor(context),
-                      ),
-                  ],
-                ),
             ],
           ),
         ),

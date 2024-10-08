@@ -134,6 +134,8 @@ class LevelUpFarmLockCase with aedappfm.TransactionMixin {
               timeout: const Duration(minutes: 1),
             );
 
+            farmLevelUpNotifier.setFinalAmount(amount);
+
             notificationService.succeed(
               operationId,
               DexNotification.levelUpFarmLock(
