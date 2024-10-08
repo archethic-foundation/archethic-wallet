@@ -244,6 +244,8 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
           state.rewardToken!,
         );
 
+    ref.invalidate(userBalanceProvider);
+
     return true;
   }
 }

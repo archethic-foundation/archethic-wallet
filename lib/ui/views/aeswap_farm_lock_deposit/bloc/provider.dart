@@ -274,6 +274,8 @@ class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
           state.level,
         );
 
+    ref.invalidate(userBalanceProvider);
+
     return true;
   }
 }
