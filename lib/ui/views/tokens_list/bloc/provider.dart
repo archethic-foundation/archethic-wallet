@@ -39,8 +39,8 @@ Future<List<AEToken>> _tokens(
             if (a.isVerified && !b.isVerified) return -1;
             if (!a.isVerified && b.isVerified) return 1;
 
-            if (!a.isLpToken && b.isLpToken) return -1;
-            if (a.isLpToken && !b.isLpToken) return 1;
+            if (a.isLpToken && !b.isLpToken) return -1;
+            if (!a.isLpToken && b.isLpToken) return 1;
 
             final symbolComparison = a.symbol.compareTo(b.symbol);
             if (symbolComparison != 0) return symbolComparison;
