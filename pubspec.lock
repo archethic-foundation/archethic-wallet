@@ -655,8 +655,8 @@ packages:
     dependency: "direct overridden"
     description:
       path: flutter_inappwebview_ios
-      ref: master
-      resolved-ref: "615214fb2fd3f830955d526cfb6698d6e20b7b7a"
+      ref: "27fd339172572fe1b16cdcdae235b2a88f432e3c"
+      resolved-ref: "27fd339172572fe1b16cdcdae235b2a88f432e3c"
       url: "https://github.com/andychucs/flutter_inappwebview.git"
     source: git
     version: "1.0.14"
@@ -664,11 +664,11 @@ packages:
     dependency: "direct overridden"
     description:
       path: flutter_inappwebview_macos
-      ref: master
-      resolved-ref: "615214fb2fd3f830955d526cfb6698d6e20b7b7a"
+      ref: "27fd339172572fe1b16cdcdae235b2a88f432e3c"
+      resolved-ref: "27fd339172572fe1b16cdcdae235b2a88f432e3c"
       url: "https://github.com/andychucs/flutter_inappwebview.git"
     source: git
-    version: "1.0.12"
+    version: "1.0.11"
   flutter_inappwebview_platform_interface:
     dependency: transitive
     description:

@@ -278,12 +278,12 @@ dependency_overrides:
   flutter_inappwebview_ios:
     git:
       url: https://github.com/andychucs/flutter_inappwebview.git
-      ref: master
+      ref: 27fd339172572fe1b16cdcdae235b2a88f432e3c
       path: flutter_inappwebview_ios
   flutter_inappwebview_macos:
     git:
       url: https://github.com/andychucs/flutter_inappwebview.git
-      ref: master
+      ref: 27fd339172572fe1b16cdcdae235b2a88f432e3c
       path: flutter_inappwebview_macos
   webview_flutter_android: 3.16.1
 # Configuration added to make the webview work with Android and ios 18 - end
