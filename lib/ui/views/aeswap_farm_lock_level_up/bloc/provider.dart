@@ -5,6 +5,7 @@ import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
 import 'package:aewallet/modules/aeswap/util/browser_util_desktop.dart';
+import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/bloc/state.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -251,7 +252,9 @@ class FarmLockLevelUpFormNotifier extends _$FarmLockLevelUpFormNotifier {
           state.level,
         );
 
-    ref.invalidate(userBalanceProvider);
+    ref
+      ..invalidate(userBalanceProvider)
+      ..invalidate(farmLockFormFarmLockProvider);
 
     return true;
   }

@@ -89,7 +89,7 @@ class FarmLockLevelUpResultSheetState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              AppLocalizations.of(context)!.farmLockDepositSuccessInfo,
+              AppLocalizations.of(context)!.levelUpFarmLockDone,
               style: AppTextStyles.bodyLarge(context).copyWith(
                 color: aedappfm.ArchethicThemeBase.systemPositive600,
               ),

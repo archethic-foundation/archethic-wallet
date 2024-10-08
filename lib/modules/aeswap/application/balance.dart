@@ -20,12 +20,16 @@ Future<archethic.Balance> userBalance(UserBalanceRef ref) async {
 
   if (genesisAddress.isEmpty) return const archethic.Balance();
 
-  return await BalanceRepositoryImpl(
-        apiService: apiService,
-      ).getUserTokensBalance(
-        genesisAddress,
-      ) ??
-      const archethic.Balance();
+  try {
+    return await BalanceRepositoryImpl(
+          apiService: apiService,
+        ).getUserTokensBalance(
+          genesisAddress,
+        ) ??
+        const archethic.Balance();
+  } catch (e) {
+    return const archethic.Balance();
+  }
 }
 
 @riverpod

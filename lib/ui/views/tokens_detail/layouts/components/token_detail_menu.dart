@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
-import 'package:aewallet/application/farm_apr.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/farm_lock_deposit_sheet.dart';
@@ -43,7 +42,6 @@ class TokenDetailMenu extends ConsumerWidget {
         ?.selectedAccount;
     final preferences = ref.watch(SettingsProviders.settings);
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-    final apr = ref.watch(FarmAPRProviders.farmAPR);
     final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
     final pool = ref.watch(farmLockFormPoolProvider).value;
 
@@ -177,8 +175,7 @@ class TokenDetailMenu extends ConsumerWidget {
                       : connectivityStatusProvider ==
                               ConnectivityStatus.isConnected
                           ? ActionButton(
-                              text:
-                                  '${localizations.tokenDetailMenuEarn.replaceFirst('%1', apr)}\nUCO',
+                              text: '${localizations.tokenDetailMenuEarn}\nUCO',
                               icon: aedappfm.Iconsax.wallet_add,
                               enabled: pool != null && farmLock != null,
                               onTap: () async {
@@ -213,8 +210,7 @@ class TokenDetailMenu extends ConsumerWidget {
                                 duration: const Duration(milliseconds: 300),
                               )
                           : ActionButton(
-                              text:
-                                  '${localizations.tokenDetailMenuEarn.replaceFirst('%1', apr)}\nAPR',
+                              text: '${localizations.tokenDetailMenuEarn}\nUCO',
                               icon: aedappfm.Iconsax.wallet_add,
                               enabled: false,
                             )
