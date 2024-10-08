@@ -825,19 +825,23 @@ class SwapFormNotifier extends _$SwapFormNotifier
     await aedappfm.ConsentRepositoryImpl()
         .addAddress(accountSelected!.genesisAddress);
 
-    await ref.read(swapCaseProvider).run(
-          ref,
-          this,
-          appLocalizations,
-          state.poolGenesisAddress,
-          state.tokenToSwap!,
-          state.tokenSwapped!,
-          state.tokenToSwapAmount,
-          state.slippageTolerance,
-        );
+    try {
+      await ref.read(swapCaseProvider).run(
+            ref,
+            this,
+            appLocalizations,
+            state.poolGenesisAddress,
+            state.tokenToSwap!,
+            state.tokenSwapped!,
+            state.tokenToSwapAmount,
+            state.slippageTolerance,
+          );
 
-    ref.invalidate(userBalanceProvider);
+      ref.invalidate(userBalanceProvider);
 
-    return true;
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

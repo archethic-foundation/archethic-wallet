@@ -155,6 +155,11 @@ class ClaimFarmLockCase with aedappfm.TransactionMixin {
         },
       );
     } catch (e) {
+      farmClaimLockNotifier
+        ..setResumeProcess(false)
+        ..setProcessInProgress(false)
+        ..setFarmLockClaimOk(false);
+
       if (e is aedappfm.Failure) {
         farmClaimLockNotifier.setFailure(e);
         throw aedappfm.Failure.fromError(e);

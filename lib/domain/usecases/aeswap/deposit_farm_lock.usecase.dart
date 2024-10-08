@@ -152,6 +152,11 @@ class DepositFarmLockCase with aedappfm.TransactionMixin {
         },
       );
     } catch (e) {
+      farmLockDepositNotifier
+        ..setResumeProcess(false)
+        ..setProcessInProgress(false)
+        ..setFarmLockDepositOk(false);
+
       if (e is aedappfm.Failure) {
         farmLockDepositNotifier.setFailure(e);
         throw aedappfm.Failure.fromError(e);

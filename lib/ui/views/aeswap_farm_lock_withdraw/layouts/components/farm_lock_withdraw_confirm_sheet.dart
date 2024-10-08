@@ -1,9 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/layouts/components/farm_lock_withdraw_confirm_infos.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/layouts/components/farm_lock_withdraw_result_sheet.dart';
@@ -66,9 +68,22 @@ class FarmLockWithdrawConfirmSheetState
             )..setProcessInProgress(true);
             final resultOk = await farmLockWithdrawFormNotifier
                 .withdraw(AppLocalizations.of(context)!);
+            farmLockWithdrawFormNotifier.setProcessInProgress(false);
             if (resultOk) {
-              farmLockWithdrawFormNotifier.setProcessInProgress(false);
               await context.push(FarmLockWithdrawResultSheet.routerPage);
+            } else {
+              UIUtil.showSnackbar(
+                FailureMessage(
+                  context: context,
+                  failure:
+                      ref.read(farmLockWithdrawFormNotifierProvider).failure,
+                ).getMessage(),
+                context,
+                ref,
+                ArchethicTheme.text,
+                ArchethicTheme.snackBarShadow,
+                duration: const Duration(seconds: 5),
+              );
             }
           },
           disabled:
@@ -92,9 +107,11 @@ class FarmLockWithdrawConfirmSheetState
         key: const Key('back'),
         color: ArchethicTheme.text,
         onPressed: () {
-          farmLockWithdrawNotifier.setFarmLockWithdrawProcessStep(
-            aedappfm.ProcessStep.form,
-          );
+          farmLockWithdrawNotifier
+            ..setFarmLockWithdrawProcessStep(
+              aedappfm.ProcessStep.form,
+            )
+            ..setFailure(null);
         },
       ),
     );

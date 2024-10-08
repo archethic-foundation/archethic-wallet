@@ -1,8 +1,10 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/layouts/components/liquidity_add_confirm_infos.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/layouts/components/liquidity_add_result_sheet.dart';
@@ -66,9 +68,21 @@ class LiquidityAddConfirmFormSheetState
               ..setProcessInProgress(true);
             final resultOk = await liquidityAddFormNotifier
                 .add(AppLocalizations.of(context)!);
+            liquidityAddFormNotifier.setProcessInProgress(false);
             if (resultOk) {
-              liquidityAddFormNotifier.setProcessInProgress(false);
               await context.push(LiquidityAddResultSheet.routerPage);
+            } else {
+              UIUtil.showSnackbar(
+                FailureMessage(
+                  context: context,
+                  failure: ref.read(liquidityAddFormNotifierProvider).failure,
+                ).getMessage(),
+                context,
+                ref,
+                ArchethicTheme.text,
+                ArchethicTheme.snackBarShadow,
+                duration: const Duration(seconds: 5),
+              );
             }
           },
           disabled: (!consentChecked && liquidityAdd.consentDateTime == null) ||
@@ -91,9 +105,11 @@ class LiquidityAddConfirmFormSheetState
         key: const Key('back'),
         color: ArchethicTheme.text,
         onPressed: () {
-          liquidityAddNotifier.setLiquidityAddProcessStep(
-            aedappfm.ProcessStep.form,
-          );
+          liquidityAddNotifier
+            ..setLiquidityAddProcessStep(
+              aedappfm.ProcessStep.form,
+            )
+            ..setFailure(null);
         },
       ),
     );

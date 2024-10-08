@@ -1,10 +1,12 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/consent_uri.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_confirm_infos.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_result_sheet.dart';
@@ -80,9 +82,22 @@ class FarmLockDepositConfirmSheetState
             )..setProcessInProgress(true);
             final resultOk = await farmLockDepositNotifier
                 .lock(AppLocalizations.of(context)!);
+            farmLockDepositNotifier.setProcessInProgress(false);
             if (resultOk) {
-              farmLockDepositNotifier.setProcessInProgress(false);
               await context.push(FarmLockDepositResultSheet.routerPage);
+            } else {
+              UIUtil.showSnackbar(
+                FailureMessage(
+                  context: context,
+                  failure:
+                      ref.read(farmLockDepositFormNotifierProvider).failure,
+                ).getMessage(),
+                context,
+                ref,
+                ArchethicTheme.text,
+                ArchethicTheme.snackBarShadow,
+                duration: const Duration(seconds: 5),
+              );
             }
           },
           disabled: (!warningChecked ||
@@ -107,9 +122,12 @@ class FarmLockDepositConfirmSheetState
         key: const Key('back'),
         color: ArchethicTheme.text,
         onPressed: () {
-          farmLockDepositNotifier.setFarmLockDepositProcessStep(
-            aedappfm.ProcessStep.form,
-          );
+          farmLockDepositNotifier
+            ..setFarmLockDepositProcessStep(
+              aedappfm.ProcessStep.form,
+            )
+            ..setFailure(null);
+          ;
         },
       ),
     );

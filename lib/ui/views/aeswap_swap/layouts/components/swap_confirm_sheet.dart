@@ -1,8 +1,10 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/aeswap_swap/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_confirm_infos.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_result_sheet.dart';
@@ -64,9 +66,21 @@ class SwapConfirmFormSheetState extends ConsumerState<SwapConfirmFormSheet>
               ..setProcessInProgress(true);
             final resultOk =
                 await swapFormNotifier.swap(AppLocalizations.of(context)!);
+            swapFormNotifier.setProcessInProgress(false);
             if (resultOk) {
-              swapFormNotifier.setProcessInProgress(false);
               await context.push(SwapResultSheet.routerPage);
+            } else {
+              UIUtil.showSnackbar(
+                FailureMessage(
+                  context: context,
+                  failure: ref.read(swapFormNotifierProvider).failure,
+                ).getMessage(),
+                context,
+                ref,
+                ArchethicTheme.text,
+                ArchethicTheme.snackBarShadow,
+                duration: const Duration(seconds: 5),
+              );
             }
           },
           disabled: (!consentChecked && swap.consentDateTime == null) ||
@@ -87,6 +101,7 @@ class SwapConfirmFormSheetState extends ConsumerState<SwapConfirmFormSheet>
         key: const Key('back'),
         color: ArchethicTheme.text,
         onPressed: () {
+          ref.read(swapFormNotifierProvider.notifier).setFailure(null);
           context.pop();
         },
       ),
