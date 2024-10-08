@@ -1,16 +1,17 @@
+import 'dart:convert';
+
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
-import 'package:aewallet/application/dapps.dart';
 import 'package:aewallet/application/farm_apr.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/domain/models/dapp.dart';
+import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/farm_lock_deposit_sheet.dart';
 import 'package:aewallet/ui/views/receive/receive_modal.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/action_button.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
-import 'package:aewallet/util/universal_platform.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -43,6 +44,8 @@ class TokenDetailMenu extends ConsumerWidget {
     final preferences = ref.watch(SettingsProviders.settings);
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     final apr = ref.watch(FarmAPRProviders.farmAPR);
+    final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
+    final pool = ref.watch(farmLockFormPoolProvider).value;
 
     if (accountSelected == null) return const SizedBox();
 
@@ -175,38 +178,31 @@ class TokenDetailMenu extends ConsumerWidget {
                               ConnectivityStatus.isConnected
                           ? ActionButton(
                               text:
-                                  '${localizations.tokenDetailMenuEarn.replaceFirst('%1', apr)}\nAPR',
+                                  '${localizations.tokenDetailMenuEarn.replaceFirst('%1', apr)}\nUCO',
                               icon: aedappfm.Iconsax.wallet_add,
+                              enabled: pool != null && farmLock != null,
                               onTap: () async {
                                 sl.get<HapticUtil>().feedback(
                                       FeedbackType.light,
                                       preferences.activeVibrations,
                                     );
 
-                                final networkSettings = ref.watch(
-                                  SettingsProviders.settings.select(
-                                    (settings) => settings.network,
-                                  ),
+                                final poolJson = jsonEncode(pool!.toJson());
+                                final poolEncoded =
+                                    Uri.encodeComponent(poolJson);
+                                final farmLockJson =
+                                    jsonEncode(farmLock!.toJson());
+                                final farmLockEncoded =
+                                    Uri.encodeComponent(farmLockJson);
+                                await context.push(
+                                  Uri(
+                                    path: FarmLockDepositSheet.routerPage,
+                                    queryParameters: {
+                                      'pool': poolEncoded,
+                                      'farmLock': farmLockEncoded,
+                                    },
+                                  ).toString(),
                                 );
-
-                                final connectivityStatusProvider =
-                                    ref.watch(connectivityStatusProviders);
-                                DApp? dapp;
-                                if (connectivityStatusProvider ==
-                                    ConnectivityStatus.isConnected) {
-                                  dapp = await ref.read(
-                                    DAppsProviders.getDApp(
-                                      networkSettings.network,
-                                      'aeSwap/earn',
-                                    ).future,
-                                  );
-                                }
-
-                                if (UniversalPlatform.isDesktopOrWeb) {
-                                  await launchUrl(Uri.parse(dapp!.url));
-                                } else {
-                                  // TODO(Reddwarf03): Webview
-                                }
                               },
                             )
                               .animate()

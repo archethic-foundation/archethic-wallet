@@ -169,6 +169,8 @@ class FarmLockClaimFormNotifier extends _$FarmLockClaimFormNotifier {
           state.rewardToken!,
         );
 
+    ref.invalidate(userBalanceProvider);
+
     return true;
   }
 }

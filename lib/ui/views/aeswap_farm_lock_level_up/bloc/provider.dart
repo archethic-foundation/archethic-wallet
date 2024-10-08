@@ -251,6 +251,8 @@ class FarmLockLevelUpFormNotifier extends _$FarmLockLevelUpFormNotifier {
           state.level,
         );
 
+    ref.invalidate(userBalanceProvider);
+
     return true;
   }
 }
