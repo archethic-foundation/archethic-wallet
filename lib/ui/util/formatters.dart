@@ -130,9 +130,14 @@ class AmountTextInputFormatter extends TextInputFormatter {
         ..write(value.decimalPart(decimalSeparator).limitLength(precision));
     }
 
+    final diff = formattedNumberBuilder.length - newValue.text.length;
+    final newOffset = newValue.selection.baseOffset + diff;
+
     return newValue.copyWith(
       text: formattedNumberBuilder.toString(),
-      selection: TextSelection.collapsed(offset: formattedNumberBuilder.length),
+      selection: TextSelection.collapsed(
+        offset: newOffset.clamp(0, formattedNumberBuilder.length),
+      ),
     );
   }
 }
