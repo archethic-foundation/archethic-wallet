@@ -415,6 +415,8 @@
     "tokenDetailMenuEarn": "Gagner",
     "localDataMigrationMessage": "Mise à jour de votre application en cours.\nVeuillez patienter...",
     "nftNotOwnerInfo": "Vous n'êtes pas propriétaire de ce NFT",
+    "accountsListWarningRemoveAccount": "Cliquez sur l'icône de la corbeille pour supprimer le compte de votre trousseau",
+    "accountsListWarningRemoveAccountConfirmRequired": "confirmation requise",
     "removeKeychainDetail": "Vous vous apprêtez à retirer de votre porte-clés le compte %1.\nVous n'aurez plus accès ni aux fonds, ni aux tokens associés.\nRéférez vous à l'historique de votre porte-clés afin de pouvoir accéder aux informations relatives à ce compte.",
     "removeKeychainAction": "Retirer le compte",
     "removeKeychainLater": "Vous pourrez retrouver votre compte si vous le récréez plus tard avec le même nom.",

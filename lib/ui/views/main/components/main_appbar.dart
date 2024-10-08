@@ -201,6 +201,33 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                               ),
                             ),
                           ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: RichText(
+                              text: TextSpan(
+                                children: [
+                                  const WidgetSpan(
+                                    child: Icon(Icons.info, size: 16),
+                                  ),
+                                  TextSpan(
+                                    text:
+                                        ' ${localizations.accountsListWarningRemoveAccount}',
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize12W100Primary,
+                                  ),
+                                  TextSpan(
+                                    text:
+                                        ' (${localizations.accountsListWarningRemoveAccountConfirmRequired})',
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize12W100Primary
+                                        .copyWith(
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                           const AccountsList(),
                         ],
                       ),
