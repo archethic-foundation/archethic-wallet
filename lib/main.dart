@@ -209,38 +209,41 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
       ArchethicTheme.statusBar,
     );
 
-    return LimitedWidthLayout(
-      child: GestureDetector(
-        onTap: () {
-          // Hide soft input keyboard after tapping outside anywhere on screen
-          FocusScope.of(context).requestFocus(FocusNode());
-        },
-        child: OKToast(
-          textStyle: ArchethicThemeStyles.textStyleSize14W700Background,
-          backgroundColor: ArchethicTheme.background,
-          child: MaterialApp.router(
-            routerConfig: router,
-            debugShowCheckedModeBanner: false,
-            title: 'Archethic Wallet',
-            theme: ThemeData(
-              brightness: Brightness.dark,
-              fontFamily: 'PPTelegraf',
-              useMaterial3: true,
+    return PopScope(
+      canPop: false,
+      child: LimitedWidthLayout(
+        child: GestureDetector(
+          onTap: () {
+            // Hide soft input keyboard after tapping outside anywhere on screen
+            FocusScope.of(context).requestFocus(FocusNode());
+          },
+          child: OKToast(
+            textStyle: ArchethicThemeStyles.textStyleSize14W700Background,
+            backgroundColor: ArchethicTheme.background,
+            child: MaterialApp.router(
+              routerConfig: router,
+              debugShowCheckedModeBanner: false,
+              title: 'Archethic Wallet',
+              theme: ThemeData(
+                brightness: Brightness.dark,
+                fontFamily: 'PPTelegraf',
+                useMaterial3: true,
+              ),
+              darkTheme: ThemeData(
+                brightness: Brightness.dark,
+                fontFamily: 'PPTelegraf',
+                useMaterial3: true,
+              ),
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                aedappfm.AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+              ],
+              locale: language.getLocale(),
+              supportedLocales: ref.read(LanguageProviders.availableLocales),
             ),
-            darkTheme: ThemeData(
-              brightness: Brightness.dark,
-              fontFamily: 'PPTelegraf',
-              useMaterial3: true,
-            ),
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              aedappfm.AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-            ],
-            locale: language.getLocale(),
-            supportedLocales: ref.read(LanguageProviders.availableLocales),
           ),
         ),
       ),

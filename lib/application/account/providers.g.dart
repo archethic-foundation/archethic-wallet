@@ -514,7 +514,7 @@ class _AccountNotifierProviderElement
   String get accountName => (origin as _AccountNotifierProvider).accountName;
 }
 
-String _$accountsNotifierHash() => r'd725e0c2d8daf46b2d01b9063d691b151ad1d473';
+String _$accountsNotifierHash() => r'120064998f67c5334c8703934d7848a8f13ae991';
 
 /// See also [_AccountsNotifier].
 @ProviderFor(_AccountsNotifier)

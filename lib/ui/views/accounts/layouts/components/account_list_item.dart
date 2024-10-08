@@ -9,6 +9,7 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/account.dart';
+import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/address_formatters.dart';
@@ -150,6 +151,8 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
     final preferences = ref.watch(SettingsProviders.settings);
     final localizations = AppLocalizations.of(context)!;
     final settings = ref.watch(SettingsProviders.settings);
+    final balanceTotalFiat = ref
+        .watch(addressBalanceTotalFiatProvider(widget.account.genesisAddress));
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
@@ -438,11 +441,26 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
                       children: <Widget>[
                         SizedBox(
                           height: 17,
-                          child: AutoSizeText(
-                            '\$${widget.account.balance!.totalUSD.formatNumber(precision: 2)}',
-                            style:
-                                ArchethicThemeStyles.textStyleSize12W100Primary,
-                            textAlign: TextAlign.end,
+                          child: balanceTotalFiat.when(
+                            data: (data) => AutoSizeText(
+                              '\$${data.formatNumber(precision: 2)}',
+                              style: ArchethicThemeStyles
+                                  .textStyleSize12W100Primary,
+                              textAlign: TextAlign.end,
+                            ),
+                            error: (_, __) => AutoSizeText(
+                              '\$${widget.account.balance!.totalUSD.formatNumber(precision: 2)}',
+                              style: ArchethicThemeStyles
+                                  .textStyleSize12W100Primary,
+                              textAlign: TextAlign.end,
+                            ),
+                            loading: () => const SizedBox(
+                              width: 10,
+                              height: 10,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 0.5,
+                              ),
+                            ),
                           ),
                         ),
                         AccountListItemTokenInfo(account: widget.account),
