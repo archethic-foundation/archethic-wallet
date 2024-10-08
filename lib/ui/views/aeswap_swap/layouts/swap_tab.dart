@@ -19,21 +19,13 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+final swapParametersProvider =
+    StateProvider<Map<String, dynamic>?>((ref) => null);
+
 class SwapTab extends ConsumerStatefulWidget {
   const SwapTab({
-    this.tokenToSwap,
-    this.tokenSwapped,
-    this.from,
-    this.to,
-    this.value,
     super.key,
   });
-
-  final DexToken? tokenToSwap;
-  final DexToken? tokenSwapped;
-  final String? from;
-  final String? to;
-  final double? value;
 
   @override
   ConsumerState<SwapTab> createState() => SwapTabState();
@@ -44,59 +36,51 @@ class SwapTabState extends ConsumerState<SwapTab> {
   void initState() {
     Future(() async {
       try {
-        if (widget.value != null) {
-          ref.read(swapFormNotifierProvider.notifier)
-            ..setTokenFormSelected(1)
-            ..setTokenToSwapAmountWithoutCalculation(widget.value!);
-        }
+        final params = ref.read(swapParametersProvider);
+        if (params != null) {
+          if (params['value'] != null) {
+            ref.read(swapFormNotifierProvider.notifier)
+              ..setTokenFormSelected(1)
+              ..setTokenToSwapAmountWithoutCalculation(params['value']);
+          }
 
-        if (widget.from != null) {
-          DexToken? _tokenToSwap;
-          if (widget.from != 'UCO') {
-            _tokenToSwap = await ref.read(
-              DexTokensProviders.getTokenFromAddress(widget.from).future,
-            );
-          } else {
-            _tokenToSwap = DexToken.uco();
+          if (params['from'] != null) {
+            DexToken? _tokenToSwap;
+            if (params['from'] != 'UCO') {
+              _tokenToSwap = await ref.read(
+                DexTokensProviders.getTokenFromAddress(params['from']).future,
+              );
+            } else {
+              _tokenToSwap = DexToken.uco();
+            }
+            if (_tokenToSwap != null) {
+              await ref
+                  .read(swapFormNotifierProvider.notifier)
+                  .setTokenToSwap(_tokenToSwap);
+            }
           }
-          if (_tokenToSwap != null) {
-            await ref
-                .read(swapFormNotifierProvider.notifier)
-                .setTokenToSwap(_tokenToSwap);
-          }
-        } else {
-          if (widget.tokenToSwap != null) {
-            await ref
-                .read(swapFormNotifierProvider.notifier)
-                .setTokenToSwap(widget.tokenToSwap!);
-          }
-        }
 
-        if (widget.to != null) {
-          DexToken? _tokenSwapped;
-          if (widget.to != 'UCO') {
-            _tokenSwapped = await ref.read(
-              DexTokensProviders.getTokenFromAddress(widget.to).future,
-            );
-          } else {
-            _tokenSwapped = DexToken.uco();
+          if (params['to'] != null) {
+            DexToken? _tokenSwapped;
+            if (params['to'] != 'UCO') {
+              _tokenSwapped = await ref.read(
+                DexTokensProviders.getTokenFromAddress(params['to']).future,
+              );
+            } else {
+              _tokenSwapped = DexToken.uco();
+            }
+            if (_tokenSwapped != null) {
+              await ref
+                  .read(swapFormNotifierProvider.notifier)
+                  .setTokenSwapped(_tokenSwapped);
+            }
           }
-          if (_tokenSwapped != null) {
-            await ref
-                .read(swapFormNotifierProvider.notifier)
-                .setTokenSwapped(_tokenSwapped);
-          }
-        } else {
-          if (widget.tokenSwapped != null) {
-            await ref
-                .read(swapFormNotifierProvider.notifier)
-                .setTokenSwapped(widget.tokenSwapped!);
+
+          if (params['value'] != null) {
+            ref.read(swapFormNotifierProvider.notifier).setTokenFormSelected(2);
           }
         }
 
-        if (widget.value != null) {
-          ref.read(swapFormNotifierProvider.notifier).setTokenFormSelected(2);
-        }
         // ignore: empty_catches
       } catch (e) {}
     });

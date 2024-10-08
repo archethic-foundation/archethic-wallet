@@ -5,6 +5,8 @@ import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/farm_lock_deposit_sheet.dart';
+import 'package:aewallet/ui/views/aeswap_swap/layouts/swap_tab.dart';
+import 'package:aewallet/ui/views/main/bloc/providers.dart';
 import 'package:aewallet/ui/views/receive/receive_modal.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
@@ -63,7 +65,7 @@ class TokenDetailMenu extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 SizedBox(
-                  width: constraints.maxWidth * 0.33,
+                  width: constraints.maxWidth * 0.25,
                   child: accountSelected.balance!
                               .isNativeTokenValuePositive() &&
                           connectivityStatusProvider ==
@@ -104,7 +106,7 @@ class TokenDetailMenu extends ConsumerWidget {
                           .scale(duration: const Duration(milliseconds: 200)),
                 ),
                 SizedBox(
-                  width: constraints.maxWidth * 0.33,
+                  width: constraints.maxWidth * 0.25,
                   child: ActionButton(
                     key: const Key('receivebutton'),
                     text: localizations.receive,
@@ -133,7 +135,41 @@ class TokenDetailMenu extends ConsumerWidget {
                       .scale(duration: const Duration(milliseconds: 250)),
                 ),
                 SizedBox(
-                  width: constraints.maxWidth * 0.33,
+                  width: constraints.maxWidth * 0.25,
+                  child: ActionButton(
+                    key: const Key('swapButton'),
+                    text: localizations.swapHeader,
+                    icon: aedappfm.Iconsax.arrange_circle_2,
+                    onTap: () async {
+                      sl.get<HapticUtil>().feedback(
+                            FeedbackType.light,
+                            preferences.activeVibrations,
+                          );
+
+                      final params = {
+                        'from': aeToken.isUCO ? 'UCO' : aeToken.address,
+                      };
+
+                      ref.read(swapParametersProvider.notifier).state = params;
+
+                      ref.read(mainTabControllerProvider)!.animateTo(
+                            2,
+                            duration: Duration.zero,
+                          );
+
+                      await ref
+                          .read(SettingsProviders.settings.notifier)
+                          .setMainScreenCurrentPage(2);
+
+                      context.pop();
+                    },
+                  )
+                      .animate()
+                      .fade(duration: const Duration(milliseconds: 250))
+                      .scale(duration: const Duration(milliseconds: 250)),
+                ),
+                SizedBox(
+                  width: constraints.maxWidth * 0.25,
                   child: aeToken.isUCO == false
                       ? connectivityStatusProvider ==
                               ConnectivityStatus.isConnected
