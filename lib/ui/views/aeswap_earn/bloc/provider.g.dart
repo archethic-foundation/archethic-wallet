@@ -7,7 +7,7 @@ part of 'provider.dart';
 // **************************************************************************
 
 String _$farmLockFormBalancesHash() =>
-    r'4a4e9a531ddb7dd26b5550fbe92de058ef74052a';
+    r'da242b7497f7b27b52bc54e12d1543e79cbf4e6c';
 
 /// See also [farmLockFormBalances].
 @ProviderFor(farmLockFormBalances)

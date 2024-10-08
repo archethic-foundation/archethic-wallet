@@ -254,10 +254,12 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
                 Opacity(
                   opacity: opacity,
                   child: summary.when(
-                    data: (data) => SelectableText(
-                      '(= ${data.farmedTokensRewardsInFiat.formatNumber(precision: 4)} UCO)',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
+                    data: (data) => data.farmedTokensRewardsInFiat > 0
+                        ? SelectableText(
+                            '(= ${data.farmedTokensRewardsInFiat.formatNumber(precision: 4)} UCO)',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          )
+                        : const SizedBox.shrink(),
                     error: (_, __) => SelectableText(
                       '(= ${0.0.formatNumber(precision: 4)} UCO)',
                       style: Theme.of(context).textTheme.bodySmall,
@@ -273,31 +275,34 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
                 ),
               ],
             ),
-            Opacity(
-              opacity: opacity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    AppLocalizations.of(
-                      context,
-                    )!
-                        .farmLockTokensSummaryMoreInfo,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  const Icon(
-                    Symbols.keyboard_arrow_right,
-                    weight: IconSize.weightM,
-                    opticalSize: IconSize.opticalSizeM,
-                    grade: IconSize.gradeM,
-                    size: 16,
-                  ),
-                ],
+            if (farmLock != null &&
+                farmLock.userInfos.entries.isNotEmpty &&
+                pool != null)
+              Opacity(
+                opacity: opacity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      AppLocalizations.of(
+                        context,
+                      )!
+                          .farmLockTokensSummaryMoreInfo,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    const Icon(
+                      Symbols.keyboard_arrow_right,
+                      weight: IconSize.weightM,
+                      opticalSize: IconSize.opticalSizeM,
+                      grade: IconSize.gradeM,
+                      size: 16,
+                    ),
+                  ],
+                ),
               ),
-            ),
           ],
         ),
         width: width,

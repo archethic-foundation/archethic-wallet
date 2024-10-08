@@ -16,8 +16,6 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$FarmLockFormBalances {
-  double get token1Balance => throw _privateConstructorUsedError;
-  double get token2Balance => throw _privateConstructorUsedError;
   double get lpTokenBalance => throw _privateConstructorUsedError;
 
   /// Create a copy of FarmLockFormBalances
@@ -33,8 +31,7 @@ abstract class $FarmLockFormBalancesCopyWith<$Res> {
           $Res Function(FarmLockFormBalances) then) =
       _$FarmLockFormBalancesCopyWithImpl<$Res, FarmLockFormBalances>;
   @useResult
-  $Res call(
-      {double token1Balance, double token2Balance, double lpTokenBalance});
+  $Res call({double lpTokenBalance});
 }
 
 /// @nodoc
@@ -53,19 +50,9 @@ class _$FarmLockFormBalancesCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? token1Balance = null,
-    Object? token2Balance = null,
     Object? lpTokenBalance = null,
   }) {
     return _then(_value.copyWith(
-      token1Balance: null == token1Balance
-          ? _value.token1Balance
-          : token1Balance // ignore: cast_nullable_to_non_nullable
-              as double,
-      token2Balance: null == token2Balance
-          ? _value.token2Balance
-          : token2Balance // ignore: cast_nullable_to_non_nullable
-              as double,
       lpTokenBalance: null == lpTokenBalance
           ? _value.lpTokenBalance
           : lpTokenBalance // ignore: cast_nullable_to_non_nullable
@@ -82,8 +69,7 @@ abstract class _$$FarmLockFormBalancesImplCopyWith<$Res>
       __$$FarmLockFormBalancesImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {double token1Balance, double token2Balance, double lpTokenBalance});
+  $Res call({double lpTokenBalance});
 }
 
 /// @nodoc
@@ -99,19 +85,9 @@ class __$$FarmLockFormBalancesImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? token1Balance = null,
-    Object? token2Balance = null,
     Object? lpTokenBalance = null,
   }) {
     return _then(_$FarmLockFormBalancesImpl(
-      token1Balance: null == token1Balance
-          ? _value.token1Balance
-          : token1Balance // ignore: cast_nullable_to_non_nullable
-              as double,
-      token2Balance: null == token2Balance
-          ? _value.token2Balance
-          : token2Balance // ignore: cast_nullable_to_non_nullable
-              as double,
       lpTokenBalance: null == lpTokenBalance
           ? _value.lpTokenBalance
           : lpTokenBalance // ignore: cast_nullable_to_non_nullable
@@ -123,25 +99,15 @@ class __$$FarmLockFormBalancesImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$FarmLockFormBalancesImpl extends _FarmLockFormBalances {
-  const _$FarmLockFormBalancesImpl(
-      {this.token1Balance = 0.0,
-      this.token2Balance = 0.0,
-      this.lpTokenBalance = 0.0})
-      : super._();
+  const _$FarmLockFormBalancesImpl({this.lpTokenBalance = 0.0}) : super._();
 
-  @override
-  @JsonKey()
-  final double token1Balance;
-  @override
-  @JsonKey()
-  final double token2Balance;
   @override
   @JsonKey()
   final double lpTokenBalance;
 
   @override
   String toString() {
-    return 'FarmLockFormBalances(token1Balance: $token1Balance, token2Balance: $token2Balance, lpTokenBalance: $lpTokenBalance)';
+    return 'FarmLockFormBalances(lpTokenBalance: $lpTokenBalance)';
   }
 
   @override
@@ -149,17 +115,12 @@ class _$FarmLockFormBalancesImpl extends _FarmLockFormBalances {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FarmLockFormBalancesImpl &&
-            (identical(other.token1Balance, token1Balance) ||
-                other.token1Balance == token1Balance) &&
-            (identical(other.token2Balance, token2Balance) ||
-                other.token2Balance == token2Balance) &&
             (identical(other.lpTokenBalance, lpTokenBalance) ||
                 other.lpTokenBalance == lpTokenBalance));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, token1Balance, token2Balance, lpTokenBalance);
+  int get hashCode => Object.hash(runtimeType, lpTokenBalance);
 
   /// Create a copy of FarmLockFormBalances
   /// with the given fields replaced by the non-null parameter values.
@@ -173,16 +134,10 @@ class _$FarmLockFormBalancesImpl extends _FarmLockFormBalances {
 }
 
 abstract class _FarmLockFormBalances extends FarmLockFormBalances {
-  const factory _FarmLockFormBalances(
-      {final double token1Balance,
-      final double token2Balance,
-      final double lpTokenBalance}) = _$FarmLockFormBalancesImpl;
+  const factory _FarmLockFormBalances({final double lpTokenBalance}) =
+      _$FarmLockFormBalancesImpl;
   const _FarmLockFormBalances._() : super._();
 
-  @override
-  double get token1Balance;
-  @override
-  double get token2Balance;
   @override
   double get lpTokenBalance;
 
