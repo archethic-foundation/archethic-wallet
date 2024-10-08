@@ -133,7 +133,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                         FeedbackType.light,
                         preferences.activeVibrations,
                       );
-                  context.go(BuySheet.routerPage);
+                  context.push(BuySheet.routerPage);
                 },
               )
                   .animate()

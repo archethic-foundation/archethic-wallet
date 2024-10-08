@@ -1,10 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:ui';
 
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/ui/views/main/bloc/providers.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -42,7 +43,7 @@ class BuySheet extends ConsumerWidget implements SheetSkeletonInterface {
         key: const Key('back'),
         color: ArchethicTheme.text,
         onPressed: () {
-          context.go(HomePage.routerPage);
+          context.pop();
         },
       ),
     );
@@ -141,13 +142,61 @@ class BuySheet extends ConsumerWidget implements SheetSkeletonInterface {
                           children: [
                             SizedBox(
                               width: itemWidth,
-                              child: _ExchangeButton(
-                                image: Image.asset(
-                                  'assets/exchanges/archethic.png',
-                                  height: 70,
+                              child: GestureDetector(
+                                onTap: () async {
+                                  ref
+                                      .read(mainTabControllerProvider)!
+                                      .animateTo(
+                                        2,
+                                        duration: Duration.zero,
+                                      );
+                                  await ref
+                                      .read(SettingsProviders.settings.notifier)
+                                      .setMainScreenCurrentPage(2);
+
+                                  context.pop();
+                                },
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: BackdropFilter(
+                                    filter: ImageFilter.blur(
+                                      sigmaX: 10,
+                                      sigmaY: 10,
+                                    ),
+                                    child: Container(
+                                      width: double.infinity,
+                                      padding: const EdgeInsets.all(16),
+                                      decoration: BoxDecoration(
+                                        color: ArchethicTheme
+                                            .backgroundRecentTxListCardTransferOutput,
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(
+                                          color: ArchethicTheme
+                                              .backgroundRecentTxListCardTokenCreation
+                                              .withOpacity(0.3),
+                                        ),
+                                      ),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Image.asset(
+                                            'assets/exchanges/archethic.png',
+                                            height: 70,
+                                          ),
+                                          const SizedBox(height: 8),
+                                          AutoSizeText(
+                                            'Archethic Chain',
+                                            maxLines: 1,
+                                            textAlign: TextAlign.center,
+                                            style: ArchethicThemeStyles
+                                                .textStyleSize14W200Primary,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                                text: 'Archethic Chain',
-                                url: 'https://swap.archethic.net/swap',
                               ),
                             ),
                             SizedBox(
