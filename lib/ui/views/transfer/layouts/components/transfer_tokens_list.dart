@@ -32,8 +32,6 @@ class TransferTokensListState extends ConsumerState<TransferTokensList>
     final tokensListAsync = ref.watch(
       TokensProviders.tokens(
         selectedAccount!.genesisAddress,
-        withNotVerified: true,
-        withLPToken: true,
       ),
     );
 

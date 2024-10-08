@@ -5,6 +5,7 @@ import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_lp_token_fiat_value.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/fiat_value.dart';
+import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/farm_lock_btn_claim.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/farm_lock_btn_level_up.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/farm_lock_btn_withdraw.dart';
@@ -20,19 +21,58 @@ import 'package:moment_dart/moment_dart.dart';
 class FarmLockBlockListSingleLineLock extends ConsumerWidget {
   const FarmLockBlockListSingleLineLock({
     super.key,
-    required this.farmLock,
-    required this.farmLockUserInfos,
-    required this.pool,
   });
-
-  final DexFarmLockUserInfos farmLockUserInfos;
-  final DexFarmLock farmLock;
-  final DexPool pool;
 
   @override
   Widget build(
     BuildContext context,
     WidgetRef ref,
+  ) {
+    final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
+    final pool = ref.watch(farmLockFormPoolProvider).value;
+    if (farmLock == null || pool == null) {
+      return const SizedBox.shrink();
+    }
+
+    final sortedUserInfos =
+        farmLock.userInfos.entries.map((entry) => entry.value).toList()
+          ..sort((a, b) {
+            return a.level.compareTo(b.level);
+          });
+
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Text(
+            AppLocalizations.of(
+              context,
+            )!
+                .farmLockListLocksHeader,
+            style: AppTextStyles.bodyLarge(context),
+          ),
+        ),
+        ...sortedUserInfos.map(
+          (userInfo) {
+            return farmLockBlockListSingleLineLock(
+              context,
+              ref,
+              userInfo,
+              farmLock,
+              pool,
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget farmLockBlockListSingleLineLock(
+    BuildContext context,
+    WidgetRef ref,
+    DexFarmLockUserInfos farmLockUserInfos,
+    DexFarmLock farmLock,
+    DexPool pool,
   ) {
     var isFlexDuration = false;
     var progressPercentage = 0.0;

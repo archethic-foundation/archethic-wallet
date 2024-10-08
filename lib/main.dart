@@ -5,7 +5,6 @@ import 'dart:io';
 
 import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/application/authentication/authentication.dart';
-import 'package:aewallet/application/farm_apr.dart';
 import 'package:aewallet/application/migrations/migration_manager.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/language.dart';
@@ -163,11 +162,6 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
               aedappfm.CoinPriceProviders.coinPrices.notifier,
             )
             .stopTimer();
-        await ref
-            .read(
-              FarmAPRProviders.farmAPR.notifier,
-            )
-            .stopTimer();
         break;
       case AppLifecycleState.resumed:
         updateDefaultLocale();
@@ -189,11 +183,6 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
               aedappfm.CoinPriceProviders.coinPrices.notifier,
             )
             .startTimer();
-        await ref
-            .read(
-              FarmAPRProviders.farmAPR.notifier,
-            )
-            .starTimer();
         break;
       case AppLifecycleState.inactive:
       case AppLifecycleState.detached:

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:aewallet/application/farm_apr.dart';
 import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -33,8 +32,6 @@ class EarnTabState extends ConsumerState<EarnTab> {
     final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
     final pool = ref.watch(farmLockFormPoolProvider).value;
     final balances = ref.watch(farmLockFormBalancesProvider);
-
-    final apr = ref.watch(FarmAPRProviders.farmAPR);
     final localizations = AppLocalizations.of(context)!;
 
     return ScrollConfiguration(
@@ -233,15 +230,17 @@ class EarnTabState extends ConsumerState<EarnTab> {
                                 children: [
                                   Row(
                                     children: [
-                                      Text(
-                                        apr,
-                                        style: ArchethicThemeStyles
-                                            .textStyleSize24W700Primary
-                                            .copyWith(
-                                          color:
-                                              ArchethicThemeBase.raspberry300,
+                                      if (farmLock != null &&
+                                          farmLock.apr3years > 0)
+                                        Text(
+                                          '${(farmLock.apr3years * 100).formatNumber(precision: 2)}%',
+                                          style: ArchethicThemeStyles
+                                              .textStyleSize24W700Primary
+                                              .copyWith(
+                                            color:
+                                                ArchethicThemeBase.raspberry300,
+                                          ),
                                         ),
-                                      ),
                                       const SizedBox(
                                         width: 10,
                                       ),

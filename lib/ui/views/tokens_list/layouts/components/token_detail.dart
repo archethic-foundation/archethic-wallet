@@ -1,5 +1,4 @@
 import 'package:aewallet/application/connectivity_status.dart';
-import 'package:aewallet/application/farm_apr.dart';
 import 'package:aewallet/application/price_history/providers.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -7,6 +6,7 @@ import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/address_formatters.dart';
+import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/tokens_detail/layouts/token_detail_sheet.dart';
 import 'package:aewallet/ui/widgets/balance/balance_infos.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -37,11 +37,11 @@ class TokenDetail extends ConsumerStatefulWidget {
 class _TokenDetailState extends ConsumerState<TokenDetail> {
   @override
   Widget build(BuildContext context) {
+    final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
     final settings = ref.watch(SettingsProviders.settings);
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
-    final apr = ref.watch(FarmAPRProviders.farmAPR);
     final price = widget.aeToken.isVerified
         ? ref
             .watch(
@@ -234,7 +234,9 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                                 aeToken: widget.aeToken,
                               ),
 
-                            if (widget.aeToken.isUCO)
+                            if (widget.aeToken.isUCO &&
+                                farmLock != null &&
+                                farmLock.apr3years > 0)
                               Padding(
                                 padding: const EdgeInsets.only(top: 10),
                                 child: Row(
@@ -247,7 +249,7 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                                           .textStyleSize14W200Primary,
                                     ),
                                     Text(
-                                      ' $apr ',
+                                      ' ${(farmLock.apr3years * 100).formatNumber(precision: 2)}% ',
                                       style: ArchethicThemeStyles
                                           .textStyleSize14W200PrimaryPositiveValue,
                                     ),

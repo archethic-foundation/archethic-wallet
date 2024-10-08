@@ -37,60 +37,30 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
     final preferences = ref.watch(SettingsProviders.settings);
 
     return InkWell(
-      onTap: farmLock == null ||
-              farmLock.userInfos.entries.isEmpty ||
-              pool == null
-          ? null
-          : () async {
-              sl.get<HapticUtil>().feedback(
-                    FeedbackType.light,
-                    preferences.activeVibrations,
-                  );
+      onTap:
+          farmLock == null || farmLock.userInfos.entries.isEmpty || pool == null
+              ? null
+              : () async {
+                  sl.get<HapticUtil>().feedback(
+                        FeedbackType.light,
+                        preferences.activeVibrations,
+                      );
 
-              final sortedUserInfos = farmLock.userInfos.entries
-                  .map((entry) => entry.value)
-                  .toList()
-                ..sort((a, b) {
-                  return a.level.compareTo(b.level);
-                });
-
-              await showBarModalBottomSheet(
-                context: context,
-                backgroundColor:
-                    aedappfm.AppThemeBase.sheetBackground.withOpacity(0.2),
-                builder: (BuildContext context) {
-                  return FractionallySizedBox(
-                    heightFactor: 0.90,
-                    child: aedappfm.ArchethicScrollbar(
-                      thumbVisibility: false,
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                              AppLocalizations.of(
-                                context,
-                              )!
-                                  .farmLockListLocksHeader,
-                              style: AppTextStyles.bodyLarge(context),
-                            ),
-                          ),
-                          ...sortedUserInfos.map(
-                            (userInfo) {
-                              return FarmLockBlockListSingleLineLock(
-                                farmLock: farmLock,
-                                farmLockUserInfos: userInfo,
-                                pool: pool,
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
+                  await showBarModalBottomSheet(
+                    context: context,
+                    backgroundColor:
+                        aedappfm.AppThemeBase.sheetBackground.withOpacity(0.2),
+                    builder: (BuildContext context) {
+                      return const FractionallySizedBox(
+                        heightFactor: 0.90,
+                        child: aedappfm.ArchethicScrollbar(
+                          thumbVisibility: false,
+                          child: FarmLockBlockListSingleLineLock(),
+                        ),
+                      );
+                    },
                   );
                 },
-              );
-            },
       child: BlockInfo(
         info: Stack(
           alignment: Alignment.bottomRight,

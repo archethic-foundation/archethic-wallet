@@ -7,6 +7,7 @@ import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.da
 import 'package:aewallet/modules/aeswap/util/browser_util_desktop.dart'
     if (dart.library.js) 'package:aewallet/modules/aeswap/util/browser_util_web.dart';
 import 'package:aewallet/modules/aeswap/util/riverpod.dart';
+import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/state.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -274,7 +275,9 @@ class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
           state.level,
         );
 
-    ref.invalidate(userBalanceProvider);
+    ref
+      ..invalidate(userBalanceProvider)
+      ..invalidate(farmLockFormFarmLockProvider);
 
     return true;
   }

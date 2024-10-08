@@ -4,6 +4,7 @@ import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pair.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/util/browser_util_desktop.dart';
+import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/bloc/state.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -244,7 +245,9 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
           state.rewardToken!,
         );
 
-    ref.invalidate(userBalanceProvider);
+    ref
+      ..invalidate(userBalanceProvider)
+      ..invalidate(farmLockFormFarmLockProvider);
 
     return true;
   }

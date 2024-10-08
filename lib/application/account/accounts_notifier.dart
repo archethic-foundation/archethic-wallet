@@ -31,9 +31,9 @@ class _AccountsNotifier extends _$AccountsNotifier {
     if (previouslySelectedAccount != null) {
       ref.invalidate(AccountProviders.account(previouslySelectedAccount.name));
     }
-    ref
-      ..invalidate(AccountProviders.account(account.name))
-      ..invalidate(userBalanceProvider);
+    ref.invalidate(
+      AccountProviders.account(account.name),
+    );
   }
 
   // ignore: avoid_public_notifier_properties
