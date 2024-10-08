@@ -12,7 +12,7 @@ part 'balance.g.dart';
 Future<archethic.Balance> userBalance(UserBalanceRef ref) async {
   final apiService = ref.watch(apiServiceProvider);
   final selectedAccount = await ref
-      .read(
+      .watch(
         AccountProviders.accounts.future,
       )
       .selectedAccount;

@@ -21,22 +21,6 @@ FarmLockFormBalances farmLockFormBalances(
   if (pool == null) return const FarmLockFormBalances();
 
   return FarmLockFormBalances(
-    token1Balance: ref
-            .watch(
-              getBalanceProvider(
-                pool.pair.token1.address,
-              ),
-            )
-            .value ??
-        0,
-    token2Balance: ref
-            .watch(
-              getBalanceProvider(
-                pool.pair.token2.address,
-              ),
-            )
-            .value ??
-        0,
     lpTokenBalance: ref
             .watch(
               getBalanceProvider(

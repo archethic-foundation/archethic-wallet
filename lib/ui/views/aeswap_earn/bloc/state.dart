@@ -5,8 +5,6 @@ part 'state.freezed.dart';
 @freezed
 class FarmLockFormBalances with _$FarmLockFormBalances {
   const factory FarmLockFormBalances({
-    @Default(0.0) double token1Balance,
-    @Default(0.0) double token2Balance,
     @Default(0.0) double lpTokenBalance,
   }) = _FarmLockFormBalances;
   const FarmLockFormBalances._();
