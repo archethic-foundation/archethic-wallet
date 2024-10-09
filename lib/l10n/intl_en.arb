@@ -724,5 +724,8 @@
     "poolDetailsInfoVolume": "Volume",
     "poolDetailsInfoFees": "Fees",
     "swapInfosDetailSwap": "Swap infos",
-    "swapInfosDetailPool": "Pool infos"
+    "swapInfosDetailPool": "Pool infos",
+    "aeBridgeInfos1": "Bridge functionality not available on mobile",
+    "aeBridgeInfos2": "The bridge is not yet available on the mobile application.\n\nTo perform bridge operations, please use a desktop computer at the following address with the Chrome extension or the desktop wallet.",
+    "aeBridgeInfos3": "The bridge will soon be available on mobile."
 }
