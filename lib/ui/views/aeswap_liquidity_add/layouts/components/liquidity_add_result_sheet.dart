@@ -6,6 +6,7 @@ import 'package:aewallet/ui/views/aeswap_liquidity_add/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/layouts/components/liquidity_add_final_amount.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
+import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -88,11 +89,15 @@ class LiquidityAddResultSheetState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              AppLocalizations.of(context)!.liquidityAddSuccessInfo,
-              style: AppTextStyles.bodyLarge(context).copyWith(
-                color: aedappfm.ArchethicThemeBase.systemPositive600,
-              ),
+            SheetDetailCard(
+              children: [
+                Text(
+                  AppLocalizations.of(context)!.liquidityAddSuccessInfo,
+                  style: AppTextStyles.bodyLarge(context).copyWith(
+                    color: aedappfm.ArchethicThemeBase.systemPositive600,
+                  ),
+                ),
+              ],
             ),
             const SizedBox(
               height: 20,
@@ -113,7 +118,11 @@ class LiquidityAddResultSheetState
             const SizedBox(
               height: 20,
             ),
-            const LiquidityAddFinalAmount(),
+            const SheetDetailCard(
+              children: [
+                LiquidityAddFinalAmount(),
+              ],
+            ),
           ],
         ),
       ),
