@@ -125,15 +125,8 @@ class SwapTabState extends ConsumerState<SwapTab> {
                                 const SwapTokenSwappedAmount(),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 10),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                  child: Column(
                                     children: [
-                                      const Row(
-                                        children: [
-                                          SwapTokenIconInfo(),
-                                        ],
-                                      ),
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
@@ -153,6 +146,35 @@ class SwapTabState extends ConsumerState<SwapTab> {
                                           ),
                                         ],
                                       ),
+                                      if (swap.tokenToSwap != null &&
+                                          swap.tokenSwapped != null &&
+                                          swap.pool != null &&
+                                          swap.pool!.poolAddress.isNotEmpty)
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 20),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              SelectableText(
+                                                AppLocalizations.of(context)!
+                                                    .swapInfoPair,
+                                                style: AppTextStyles.bodyMedium(
+                                                  context,
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              const Align(
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                child: SwapTokenIconInfo(),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                     ],
                                   ),
                                 ),

@@ -47,8 +47,8 @@ class SwapTokenIconInfo extends ConsumerWidget {
               );
             },
       child: Container(
-        height: 30,
-        width: 30,
+        height: 36,
+        width: 36,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           gradient: disabled
@@ -58,7 +58,7 @@ class SwapTokenIconInfo extends ConsumerWidget {
         ),
         child: const Icon(
           aedappfm.Iconsax.info_circle,
-          size: 15,
+          size: 18,
         ),
       ),
     );
