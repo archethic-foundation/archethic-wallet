@@ -23,8 +23,8 @@ class SwapTokenIconSettings extends ConsumerWidget {
       children: [
         InkWell(
           child: Container(
-            height: 30,
-            width: 30,
+            height: 36,
+            width: 36,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               gradient: aedappfm.AppThemeBase.gradientBtn,
@@ -32,7 +32,7 @@ class SwapTokenIconSettings extends ConsumerWidget {
             ),
             child: const Icon(
               aedappfm.Iconsax.setting_2,
-              size: 15,
+              size: 18,
             ),
           ),
           onTap: () {

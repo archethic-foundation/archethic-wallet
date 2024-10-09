@@ -696,5 +696,11 @@
     "claimFarmLockDone": "Réclamation complétée avec succès",
     "levelUpFarmLockDone": "Montée de niveau complétée avec succès",
     "farmLockTokensSummaryMoreInfo": "Plus d'infos",
-    "swapRefreshDone": "Les données liées à votre échange ont été rafraîchies."
+    "swapRefreshDone": "Les données liées à votre échange ont été rafraîchies.",
+    "swapInfoPair": "Détails de l'échange",
+    "time24h": "24h",
+    "time7d": "7j",
+    "timeAll": "total",
+    "poolDetailsInfoVolume": "Volume",
+    "poolDetailsInfoFees": "Frais"
 }

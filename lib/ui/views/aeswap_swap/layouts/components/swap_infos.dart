@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_pool_infos.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_price_impact.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_ratio.dart';
@@ -46,6 +47,9 @@ class SwapInfos extends ConsumerWidget {
       return const SizedBox.shrink();
     }
 
+    final poolStatsProvider =
+        DexPoolProviders.estimateStats(swap.pool!.poolAddress);
+
     return ClipRRect(
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
@@ -67,6 +71,21 @@ class SwapInfos extends ConsumerWidget {
                 _buildRowWithMinReceived(context, ref, swap),
                 _buildRowWithTVL(context, tvlAsyncValue),
                 _buildRowWithRatio(context, swap, tokenAddressRatioPrimary),
+                FutureBuilder<DexPoolStats>(
+                  future: ref.read(
+                    poolStatsProvider.future,
+                  ),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return _buildRowWithVolume24h(
+                        context,
+                        swap,
+                        snapshot.data!,
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
+                ),
               ],
             ),
           ),
@@ -182,18 +201,35 @@ class SwapInfos extends ConsumerWidget {
   }
 
   Widget _buildRowWithPriceImpact(BuildContext context, SwapFormState swap) {
-    return SheetDetailCard(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        SelectableText(
-          AppLocalizations.of(context)!.swapInfosPriceImpact,
-          style: AppTextStyles.bodyMedium(context),
+        SheetDetailCard(
+          children: [
+            SelectableText(
+              AppLocalizations.of(context)!.swapInfosPriceImpact,
+              style: AppTextStyles.bodyMedium(context),
+            ),
+            DexPriceImpact(
+              priceImpact: swap.priceImpact,
+              withLabel: false,
+              withOpacity: false,
+              textStyle: AppTextStyles.bodyMedium(context),
+            ),
+          ],
         ),
-        DexPriceImpact(
-          priceImpact: swap.priceImpact,
-          withLabel: false,
-          withOpacity: false,
-          textStyle: AppTextStyles.bodyMedium(context),
-        ),
+        if (swap.priceImpact > 1)
+          Padding(
+            padding: const EdgeInsets.only(right: 5, bottom: 10),
+            child: Text(
+              AppLocalizations.of(context)!.priceImpactHighTooltip,
+              style: AppTextStyles.bodyMedium(context).copyWith(
+                color: swap.priceImpact > 5
+                    ? aedappfm.ArchethicThemeBase.systemDanger500
+                    : aedappfm.ArchethicThemeBase.systemWarning600,
+              ),
+            ),
+          ),
       ],
     );
   }
@@ -292,6 +328,51 @@ class SwapInfos extends ConsumerWidget {
                 : swap.pool!.pair.token1.symbol,
             textStyle: AppTextStyles.bodyMedium(context),
           ),
+      ],
+    );
+  }
+
+  Widget _buildRowWithVolume24h(
+    BuildContext context,
+    SwapFormState swap,
+    DexPoolStats stats,
+  ) {
+    return SheetDetailCard(
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SelectableText(
+              '${AppLocalizations.of(context)!.poolDetailsInfoVolume} ${AppLocalizations.of(context)!.time24h}',
+              style: AppTextStyles.bodyMedium(context),
+            ),
+            SelectableText(
+              '${AppLocalizations.of(context)!.poolDetailsInfoVolume} ${AppLocalizations.of(context)!.time7d}',
+              style: AppTextStyles.bodyMedium(context),
+            ),
+            SelectableText(
+              '${AppLocalizations.of(context)!.poolDetailsInfoVolume} ${AppLocalizations.of(context)!.timeAll}',
+              style: AppTextStyles.bodyMedium(context),
+            ),
+          ],
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            SelectableText(
+              '\$${stats.volume24h.formatNumber(precision: stats.volume24h > 1 ? 2 : 8)}',
+              style: AppTextStyles.bodyMedium(context),
+            ),
+            SelectableText(
+              '\$${stats.volume7d.formatNumber(precision: stats.volume7d > 1 ? 2 : 8)}',
+              style: AppTextStyles.bodyMedium(context),
+            ),
+            SelectableText(
+              '\$${stats.volumeAllTime.formatNumber(precision: stats.volumeAllTime > 1 ? 2 : 8)}',
+              style: AppTextStyles.bodyMedium(context),
+            ),
+          ],
+        ),
       ],
     );
   }
