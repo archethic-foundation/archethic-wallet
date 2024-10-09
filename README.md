@@ -14,11 +14,9 @@ Archethic Wallet has implemented the following features:
 ### Main features
 - Decentralized keychain management
 - Multiple accounts' management
-- Creation of Fungible Tokens
-- Creation of NFTs
-- Support for transactions (Sending and Receiving UCO Token, Fungible Tokens and NFTs)
+- Support for transactions (Sending and Receiving UCO or Fungibles Tokens, NFTs)
+- DeFi features: swap, liquidity management, farming with lock
 - List of recent transactions
-- List of acquired tokens
 
 ### Security
 - Security access with Password, PIN, Yubicloud OTP, Face ID, Touch ID
@@ -26,26 +24,18 @@ Archethic Wallet has implemented the following features:
 
 ### Customization
 - Support for English and French Language
-- Support for multiple Currencies (view only, not meant as multiple cryptocurrencies wallet)
-- Multi themes (9 themes available)
-- UI customization
 
 ### Other features
-- Local notifications
-- Access to exchanges to buy ERC20 UCO
+- Access to CEX and DEX to buy UCO
 - Share address with QR Code or mobile share feature
-- Address book
-- UCO Price chart
+- UCO and certified tokens Price chart
 
 ## Application Initial Screen
-<img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png?v=20240312" width="300"/>
-
-## Information
-All news about wallet are available on the [Archethic Youtube Channel](https://www.youtube.com/playlist?list=PL6GQEJjcIwHChTok4CJyw3lsmlvoJLnZK)
+<img src="https://www.archethic.net/wallet_hot.e5c72284.png" width="300"/>
 
 ## How to install Archethic Wallet
 
-Available on Android, Windows, MacOS, iOS and Linux
+Available on Chrome, Android, Windows, MacOS, iOS and Linux
 [https://www.archethic.net/wallet/](https://www.archethic.net/wallet/)
 
 ## How to test the Archethic Wallet
@@ -67,8 +57,8 @@ Full patrol using on this project can be found [here](integration_test/README.md
 
 ### Pre-requisites
 
-- Flutter 3.22+
-- Dart 3.4+
+- Flutter 3.24+
+- Dart 3.5+
 
 ### Instructions
 
