@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:logging/logging.dart';
 import 'package:stream_channel/stream_channel.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AWCWebview extends StatefulWidget {
   const AWCWebview({super.key, required this.uri});
@@ -55,6 +56,7 @@ class _AWCWebviewState extends State<AWCWebview> {
           initialSettings: InAppWebViewSettings(
             isInspectable: kDebugMode,
             transparentBackground: true,
+            resourceCustomSchemes: ['metamask', 'rainbow', 'trust'],
           ),
           onLoadStop: (controller, url) async {
             await _initMessageChannelRPC(controller, url);
@@ -63,6 +65,16 @@ class _AWCWebviewState extends State<AWCWebview> {
             await controller.loadUrl(
               urlRequest: URLRequest(url: WebUri.uri(widget.uri)),
             );
+          },
+          onLoadResourceWithCustomScheme: (controller, request) async {
+            if (!await canLaunchUrl(request.url)) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Wallet not installed')),
+              );
+              return;
+            }
+            await launchUrl(request.url);
+            return null;
           },
           onReceivedServerTrustAuthRequest: (controller, challenge) async {
             // TODO(reddwarf03): WARNING: Accepting all certificates is dangerous and should only be used during development.
