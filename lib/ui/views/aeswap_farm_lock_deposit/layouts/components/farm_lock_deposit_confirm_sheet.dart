@@ -180,7 +180,7 @@ class FarmLockDepositConfirmSheetState
                     child: Text(
                       AppLocalizations.of(context)!
                           .farmLockDepositConfirmMoreInfo,
-                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                             decoration: TextDecoration.underline,
                             color: aedappfm.ArchethicThemeBase.systemWarning500,
                           ),

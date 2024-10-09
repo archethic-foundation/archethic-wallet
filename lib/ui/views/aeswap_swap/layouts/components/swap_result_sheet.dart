@@ -6,6 +6,7 @@ import 'package:aewallet/ui/views/aeswap_swap/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_final_amount.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
+import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -85,11 +86,15 @@ class SwapResultSheetState extends ConsumerState<SwapResultSheet>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              AppLocalizations.of(context)!.swapSuccessInfo,
-              style: AppTextStyles.bodyLarge(context).copyWith(
-                color: aedappfm.ArchethicThemeBase.systemPositive600,
-              ),
+            SheetDetailCard(
+              children: [
+                Text(
+                  AppLocalizations.of(context)!.swapSuccessInfo,
+                  style: AppTextStyles.bodyLarge(context).copyWith(
+                    color: aedappfm.ArchethicThemeBase.systemPositive600,
+                  ),
+                ),
+              ],
             ),
             const SizedBox(
               height: 20,
@@ -109,7 +114,11 @@ class SwapResultSheetState extends ConsumerState<SwapResultSheet>
             const SizedBox(
               height: 20,
             ),
-            const SwapFinalAmount(),
+            const SheetDetailCard(
+              children: [
+                SwapFinalAmount(),
+              ],
+            ),
           ],
         ),
       ),

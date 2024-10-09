@@ -6,6 +6,7 @@ import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_final_amount.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
+import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -88,11 +89,15 @@ class FarmLockDepositResultSheetState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              AppLocalizations.of(context)!.farmLockDepositSuccessInfo,
-              style: AppTextStyles.bodyLarge(context).copyWith(
-                color: aedappfm.ArchethicThemeBase.systemPositive600,
-              ),
+            SheetDetailCard(
+              children: [
+                Text(
+                  AppLocalizations.of(context)!.farmLockDepositSuccessInfo,
+                  style: AppTextStyles.bodyLarge(context).copyWith(
+                    color: aedappfm.ArchethicThemeBase.systemPositive600,
+                  ),
+                ),
+              ],
             ),
             const SizedBox(
               height: 20,
@@ -114,7 +119,11 @@ class FarmLockDepositResultSheetState
             const SizedBox(
               height: 20,
             ),
-            const FarmLockDepositFinalAmount(),
+            const SheetDetailCard(
+              children: [
+                FarmLockDepositFinalAmount(),
+              ],
+            ),
           ],
         ),
       ),
