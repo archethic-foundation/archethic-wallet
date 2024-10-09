@@ -238,7 +238,7 @@ class WithdrawFarmLockCase with aedappfm.TransactionMixin {
           if (transactionWithdraw != null) {
             final fees = await calculateFees(
               transactionWithdraw!,
-              aedappfm.sl.get<archethic.ApiService>(),
+              apiService,
               slippage: 1.1,
             );
             return fees;

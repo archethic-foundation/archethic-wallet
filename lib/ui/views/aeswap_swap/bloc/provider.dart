@@ -827,7 +827,6 @@ class SwapFormNotifier extends _$SwapFormNotifier
 
     try {
       await ref.read(swapCaseProvider).run(
-            ref,
             this,
             appLocalizations,
             state.poolGenesisAddress,

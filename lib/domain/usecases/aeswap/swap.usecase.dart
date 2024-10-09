@@ -1,13 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
-import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
 import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
 import 'package:aewallet/model/data/account.dart';
-import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/application/contracts/archethic_contract.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_notification.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
@@ -19,7 +16,6 @@ import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutte
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:flutter_gen/gen_l10n/localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
 const logName = 'SwapCase';
@@ -43,7 +39,6 @@ class SwapCase with aedappfm.TransactionMixin {
   final Account selectedAccount;
 
   Future<void> run(
-    Ref ref, // TODO(Chralu): usecases should not depend on riverpod
     SwapFormNotifier swapNotifier,
     AppLocalizations localizations,
     String poolGenesisAddress,
@@ -119,23 +114,11 @@ class SwapCase with aedappfm.TransactionMixin {
     }
 
     try {
-      final keychainSecuredInfos = ref
-          .read(sessionNotifierProvider)
-          .loggedIn!
-          .wallet
-          .keychainSecuredInfos;
-
-      final selectedAccount = await ref
-          .read(
-            AccountProviders.accounts.future,
-          )
-          .selectedAccount;
-
       final transationSignedRaw =
           await transactionRepository.buildTransactionRaw(
         keychainSecuredInfos,
         transactionSwap!,
-        selectedAccount!.lastAddress!,
+        selectedAccount.lastAddress!,
         selectedAccount.name,
       );
 
@@ -168,7 +151,7 @@ class SwapCase with aedappfm.TransactionMixin {
               () => getAmountFromTxInput(
                 transationSignedRaw.address!.address!,
                 tokenSwapped.address,
-                aedappfm.sl.get<archethic.ApiService>(),
+                apiService,
               ),
               sleepDuration: const Duration(seconds: 3),
               until: (amount) => amount > 0,
@@ -185,24 +168,6 @@ class SwapCase with aedappfm.TransactionMixin {
                 amountSwapped: amount,
               ),
             );
-
-            unawaited(() async {
-              final swap = ref.read(swapFormNotifierProvider);
-
-              final balanceSwapped = await ref.read(
-                getBalanceProvider(
-                  swap.tokenSwapped!.isUCO ? 'UCO' : swap.tokenSwapped!.address,
-                ).future,
-              );
-              swapNotifier.setTokenSwappedBalance(balanceSwapped);
-
-              final balanceToSwap = await ref.read(
-                getBalanceProvider(
-                  swap.tokenToSwap!.isUCO ? 'UCO' : swap.tokenToSwap!.address,
-                ).future,
-              );
-              swapNotifier.setTokenToSwapBalance(balanceToSwap);
-            }());
           }
         },
         onError: (sender, error) async {
@@ -316,7 +281,7 @@ class SwapCase with aedappfm.TransactionMixin {
           if (transactionSwap != null) {
             final fees = await calculateFees(
               transactionSwap!,
-              aedappfm.sl.get<archethic.ApiService>(),
+              apiService,
               slippage: 1.1,
             );
             return fees;

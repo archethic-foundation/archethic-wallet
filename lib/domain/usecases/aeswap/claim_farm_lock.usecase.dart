@@ -128,7 +128,7 @@ class ClaimFarmLockCase with aedappfm.TransactionMixin {
               () => getAmountFromTxInput(
                 transationSignedRaw.address!.address!,
                 rewardToken.address,
-                aedappfm.sl.get<archethic.ApiService>(),
+                apiService,
               ),
               sleepDuration: const Duration(seconds: 3),
               until: (amount) => amount > 0,
@@ -211,7 +211,7 @@ class ClaimFarmLockCase with aedappfm.TransactionMixin {
           if (transactionClaim != null) {
             final fees = await calculateFees(
               transactionClaim!,
-              aedappfm.sl.get<archethic.ApiService>(),
+              apiService,
               slippage: 1.1,
             );
             return fees;
