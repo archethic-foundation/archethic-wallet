@@ -93,6 +93,9 @@ class HistoryChart extends StatelessWidget {
                       '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
                   break;
                 case aedappfm.MarketPriceHistoryInterval.year:
+                  title =
+                      '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}/${dt.year.toString().padLeft(2, '0')}';
+                  break;
               }
               return LineTooltipItem(
                 '$title\n${CurrencyUtil.formatWithNumberOfDigits(touchedSpot.y, 5)}',
@@ -132,10 +135,10 @@ class HistoryChart extends StatelessWidget {
                         case aedappfm.MarketPriceHistoryInterval.twoWeeks:
                         case aedappfm.MarketPriceHistoryInterval.month:
                         case aedappfm.MarketPriceHistoryInterval.twoMonths:
+                        case aedappfm.MarketPriceHistoryInterval.year:
                           title =
                               '${dt.day.toString().padLeft(2, '0')}/${dt.month.toString().padLeft(2, '0')}';
                           break;
-                        case aedappfm.MarketPriceHistoryInterval.year:
                       }
                     }
                     return Padding(
