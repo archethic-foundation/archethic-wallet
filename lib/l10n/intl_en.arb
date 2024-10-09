@@ -722,5 +722,7 @@
     "time7d": "7d",
     "timeAll": "All",
     "poolDetailsInfoVolume": "Volume",
-    "poolDetailsInfoFees": "Fees"
+    "poolDetailsInfoFees": "Fees",
+    "swapInfosDetailSwap": "Swap infos",
+    "swapInfosDetailPool": "Pool infos"
 }

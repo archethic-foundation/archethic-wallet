@@ -84,7 +84,8 @@ class FarmLockDetailsInfo extends ConsumerWidget {
                     padding: const EdgeInsets.only(left: 5),
                     child: SelectableText(
                       AppLocalizations.of(context)!.levelsInfo,
-                      style: AppTextStyles.bodyLarge(context),
+                      style: AppTextStyles.bodyMedium(context)
+                          .copyWith(fontWeight: FontWeight.bold),
                     ),
                   ),
                   ...farmLock.stats.entries.map(

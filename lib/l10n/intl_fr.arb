@@ -702,5 +702,7 @@
     "time7d": "7j",
     "timeAll": "total",
     "poolDetailsInfoVolume": "Volume",
-    "poolDetailsInfoFees": "Frais"
+    "poolDetailsInfoFees": "Frais",
+    "swapInfosDetailSwap": "Informations liées à l'échange",
+    "swapInfosDetailPool": "Informations liées à la pool"
 }

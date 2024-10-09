@@ -66,9 +66,25 @@ class SwapInfos extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 5),
+                  child: Text(
+                    AppLocalizations.of(context)!.swapInfosDetailSwap,
+                    style: AppTextStyles.bodyMedium(context)
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ),
                 _buildRowWithFees(context, ref, swap),
                 _buildRowWithPriceImpact(context, swap),
                 _buildRowWithMinReceived(context, ref, swap),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 5),
+                  child: Text(
+                    AppLocalizations.of(context)!.swapInfosDetailPool,
+                    style: AppTextStyles.bodyMedium(context)
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ),
                 _buildRowWithTVL(context, tvlAsyncValue),
                 _buildRowWithRatio(context, swap, tokenAddressRatioPrimary),
                 FutureBuilder<DexPoolStats>(
