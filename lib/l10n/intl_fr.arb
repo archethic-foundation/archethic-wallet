@@ -695,5 +695,6 @@
     "withdrawFarmLockDone": "Retrait complété avec succès",
     "claimFarmLockDone": "Réclamation complétée avec succès",
     "levelUpFarmLockDone": "Montée de niveau complétée avec succès",
-    "farmLockTokensSummaryMoreInfo": "Plus d'infos"
+    "farmLockTokensSummaryMoreInfo": "Plus d'infos",
+    "swapRefreshDone": "Les données liées à votre échange ont été rafraîchies."
 }

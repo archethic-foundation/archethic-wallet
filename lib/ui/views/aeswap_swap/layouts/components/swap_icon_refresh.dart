@@ -1,9 +1,13 @@
 import 'package:aewallet/modules/aeswap/application/balance.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/aeswap_swap/bloc/provider.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class SwapTokenIconRefresh extends ConsumerStatefulWidget {
   const SwapTokenIconRefresh({
@@ -26,6 +30,7 @@ class _SwapTokenIconRefreshState extends ConsumerState<SwapTokenIconRefresh> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     return IconButton(
       icon: Icon(
         isRefreshSuccess != null && isRefreshSuccess == true
@@ -75,7 +80,16 @@ class _SwapTokenIconRefreshState extends ConsumerState<SwapTokenIconRefresh> {
           await swapNotifier.getPool();
         }
 
-        await Future.delayed(const Duration(seconds: 2));
+        UIUtil.showSnackbar(
+          localizations.swapRefreshDone,
+          context,
+          ref,
+          ArchethicTheme.text,
+          ArchethicTheme.snackBarShadow,
+          icon: Symbols.info,
+        );
+
+        await Future.delayed(const Duration(seconds: 4));
         if (mounted) {
           setState(
             () {

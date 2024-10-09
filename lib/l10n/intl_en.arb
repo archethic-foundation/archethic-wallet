@@ -715,5 +715,6 @@
     "earnHeaderAddLiquidityTxt": "To get LP token you have to provide liquidity here :",
     "liquidityAddDesc": "Add liquidity to the pool and receive LP Tokens representing your share",
     "keychainAddressCopied": "Keychain address copied",
-    "farmLockTokensSummaryMoreInfo": "More info"
+    "farmLockTokensSummaryMoreInfo": "More info",
+    "swapRefreshDone": "Your swap data has been refreshed"
 }
