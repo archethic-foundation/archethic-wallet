@@ -116,7 +116,6 @@ class RoutesPath {
             ),
             ..._authenticationRoutes,
             ..._introductionRoutes,
-            ..._aeSwapRoutes,
             GoRoute(
               path: ShowSendingAnimation.routerPage,
               pageBuilder: (context, state) => CustomTransitionPage<void>(
@@ -174,7 +173,7 @@ class RoutesPath {
             AutoLockGuardRoute(
               routes: [
                 RPCCommandReceiverRoute(
-                  routes: _authenticatedRoutes,
+                  routes: [..._authenticatedRoutes, ..._aeSwapRoutes],
                 ),
               ],
             ),

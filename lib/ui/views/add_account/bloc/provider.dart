@@ -191,7 +191,7 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
 
   Future<void> removeAccount(BuildContext context, String account) async {
     final transactionRepository =
-        ref.watch(archethicTransactionRepositoryProvider);
+        ref.read(archethicTransactionRepositoryProvider);
 
     final localizations = AppLocalizations.of(context)!;
 

@@ -222,7 +222,7 @@ class DepositFarmLockCase with aedappfm.TransactionMixin {
     if (transactionDeposit != null) {
       final fees = await calculateFees(
         transactionDeposit!,
-        aedappfm.sl.get<archethic.ApiService>(),
+        apiService,
         slippage: 1.1,
       );
       return fees;

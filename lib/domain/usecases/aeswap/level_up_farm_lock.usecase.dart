@@ -217,7 +217,7 @@ class LevelUpFarmLockCase with aedappfm.TransactionMixin {
           if (transactionLevelUp != null) {
             final fees = await calculateFees(
               transactionLevelUp!,
-              aedappfm.sl.get<archethic.ApiService>(),
+              apiService,
               slippage: 1.1,
             );
             return fees;

@@ -232,6 +232,7 @@ class ArchethicTransactionRepository
     );
   }
 
+  @override
   Future<archethic.Transaction> buildTransactionRaw(
     KeychainSecuredInfos keychainSecuredInfos,
     archethic.Transaction transactionRaw,

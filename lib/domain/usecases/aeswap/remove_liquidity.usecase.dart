@@ -124,15 +124,15 @@ class RemoveLiquidityCase with aedappfm.TransactionMixin {
                 getAmountFromTxInput(
                   transationSignedRaw.address!.address!,
                   token1.address,
-                  aedappfm.sl.get<archethic.ApiService>(),
+                  apiService,
                 ),
                 getAmountFromTxInput(
                   transationSignedRaw.address!.address!,
                   token2.address,
-                  aedappfm.sl.get<archethic.ApiService>(),
+                  apiService,
                 ),
                 getAmountFromTx(
-                  aedappfm.sl.get<archethic.ApiService>(),
+                  apiService,
                   transationSignedRaw.address!.address!,
                   false,
                   '00000000000000000000000000000000000000000000000000000000000000000000',
@@ -247,7 +247,7 @@ class RemoveLiquidityCase with aedappfm.TransactionMixin {
     if (transactionRemoveLiquidity != null) {
       final fees = await calculateFees(
         transactionRemoveLiquidity!,
-        aedappfm.sl.get<archethic.ApiService>(),
+        apiService,
         slippage: 1.1,
       );
       return fees;

@@ -121,7 +121,7 @@ class AddLiquidityCase with aedappfm.TransactionMixin {
               () => getAmountFromTxInput(
                 transationSignedRaw.address!.address!,
                 lpToken.address,
-                aedappfm.sl.get<archethic.ApiService>(),
+                apiService,
               ),
               sleepDuration: const Duration(seconds: 3),
               until: (amount) => amount > 0,
@@ -220,7 +220,7 @@ class AddLiquidityCase with aedappfm.TransactionMixin {
     if (transactionAddLiquidity != null) {
       final fees = await calculateFees(
         transactionAddLiquidity!,
-        aedappfm.sl.get<archethic.ApiService>(),
+        apiService,
         slippage: 1.1,
       );
       return fees;
