@@ -29,42 +29,40 @@ class TokenList extends ConsumerWidget {
               style: AppTextStyles.bodyLarge(context),
             ),
           ),
-          SizedBox(
-            child: tokens.map(
-              data: (data) {
-                return _TokensList(tokens: data.value);
-              },
-              error: (error) => const SizedBox(
-                height: 200,
-              ),
-              loading: (loading) => Stack(
-                children: [
-                  const SizedBox(
-                    height: 200,
-                  ),
-                  SizedBox(
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            AppLocalizations.of(context)!
-                                .token_selection_get_tokens_from_wallet,
-                            style: AppTextStyles.bodyMedium(context),
-                          ),
+          tokens.map(
+            data: (data) {
+              return Expanded(child: _TokensList(tokens: data.value));
+            },
+            error: (error) => const SizedBox(
+              height: 200,
+            ),
+            loading: (loading) => Stack(
+              children: [
+                const SizedBox(
+                  height: 200,
+                ),
+                SizedBox(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          AppLocalizations.of(context)!
+                              .token_selection_get_tokens_from_wallet,
+                          style: AppTextStyles.bodyMedium(context),
                         ),
-                        const SizedBox(width: 10),
-                        const SizedBox(
-                          height: 10,
-                          width: 10,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 1,
-                          ),
+                      ),
+                      const SizedBox(width: 10),
+                      const SizedBox(
+                        height: 10,
+                        width: 10,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 1,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],
@@ -95,18 +93,14 @@ class _TokensList extends ConsumerWidget {
       );
     }
 
-    return SizedBox(
-      height: 200,
-      child: ListView.separated(
-        separatorBuilder: (context, index) => const SizedBox(
-          height: 10,
-        ),
-        shrinkWrap: true,
-        itemCount: tokensFiltered.length,
-        itemBuilder: (BuildContext context, int index) {
-          return SingleToken(token: tokensFiltered[index]);
-        },
+    return ListView.separated(
+      separatorBuilder: (context, index) => const SizedBox(
+        height: 10,
       ),
+      itemCount: tokensFiltered.length,
+      itemBuilder: (BuildContext context, int index) {
+        return SingleToken(token: tokensFiltered[index]);
+      },
     );
   }
 }
