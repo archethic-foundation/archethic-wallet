@@ -108,6 +108,8 @@ class TokensRepositoryImpl implements TokensRepository {
       for (final tokenBalance in balanceMap[userGenesisAddress]!.token) {
         String? pairSymbolToken1;
         String? pairSymbolToken2;
+        AEToken? defPairSymbolToken1;
+        AEToken? defPairSymbolToken2;
         final token = tokenMap[tokenBalance.address];
         if (token != null && token.type == 'fungible') {
           final tokenSymbolSearch = <String>[];
@@ -140,6 +142,22 @@ class TokensRepositoryImpl implements TokensRepository {
 
           final defToken = await aedappfm.DefTokensRepositoryImpl()
               .getDefToken(environment, token.address!.toUpperCase());
+
+          if (token.properties['token1_address'] != null) {
+            defPairSymbolToken1 =
+                await aedappfm.DefTokensRepositoryImpl().getDefToken(
+              environment,
+              token.properties['token1_address'].toUpperCase(),
+            );
+          }
+
+          if (token.properties['token2_address'] != null) {
+            defPairSymbolToken2 =
+                await aedappfm.DefTokensRepositoryImpl().getDefToken(
+              environment,
+              token.properties['token2_address'].toUpperCase(),
+            );
+          }
           final aeToken = AEToken(
             name: defToken?.name ?? '',
             address: token.address!.toUpperCase(),
@@ -155,9 +173,17 @@ class TokensRepositoryImpl implements TokensRepository {
                 ? aedappfm.AETokenPair(
                     token1: AEToken(
                       symbol: pairSymbolToken1,
+                      address: token.properties['token1_address'],
+                      name: defPairSymbolToken1?.name ?? '',
+                      icon: defPairSymbolToken1?.icon,
+                      ucid: defPairSymbolToken1?.ucid,
                     ),
                     token2: AEToken(
                       symbol: pairSymbolToken2,
+                      address: token.properties['token2_address'],
+                      name: defPairSymbolToken2?.name ?? '',
+                      icon: defPairSymbolToken2?.icon,
+                      ucid: defPairSymbolToken2?.ucid,
                     ),
                   )
                 : null,
