@@ -53,10 +53,7 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
                     builder: (BuildContext context) {
                       return const FractionallySizedBox(
                         heightFactor: 0.90,
-                        child: aedappfm.ArchethicScrollbar(
-                          thumbVisibility: false,
-                          child: FarmLockBlockListSingleLineLock(),
-                        ),
+                        child: FarmLockBlockListSingleLineLock(),
                       );
                     },
                   );

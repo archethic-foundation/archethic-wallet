@@ -52,16 +52,25 @@ class FarmLockBlockListSingleLineLock extends ConsumerWidget {
             style: AppTextStyles.bodyLarge(context),
           ),
         ),
-        ...sortedUserInfos.map(
-          (userInfo) {
-            return farmLockBlockListSingleLineLock(
-              context,
-              ref,
-              userInfo,
-              farmLock,
-              pool,
-            );
-          },
+        Expanded(
+          child: aedappfm.ArchethicScrollbar(
+            thumbVisibility: false,
+            child: Column(
+              children: [
+                ...sortedUserInfos.map(
+                  (userInfo) {
+                    return farmLockBlockListSingleLineLock(
+                      context,
+                      ref,
+                      userInfo,
+                      farmLock,
+                      pool,
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
         ),
       ],
     );
