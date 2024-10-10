@@ -359,6 +359,14 @@ class ArchethicThemeStyles {
     );
   }
 
+  static TextStyle get textStyleSize14W600Highlighted {
+    return TextStyle(
+      fontSize: AppFontSizes.size14,
+      fontWeight: FontWeight.w600,
+      color: ArchethicThemeBase.raspberry300,
+    );
+  }
+
   static TextStyle get textStyleSize14W700Primary60 {
     return TextStyle(
       fontSize: AppFontSizes.size14,

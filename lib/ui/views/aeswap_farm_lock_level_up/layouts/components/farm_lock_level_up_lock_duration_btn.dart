@@ -26,7 +26,7 @@ class FarmLockLevelUpDurationButton extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10, left: 5, right: 5),
       child: Container(
-        width: 120,
+        width: 100,
         height: 80,
         decoration: BoxDecoration(
           color: farmLockLevelUp.farmLockLevelUpDuration ==
@@ -84,14 +84,12 @@ class FarmLockLevelUpDurationButton extends ConsumerWidget {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
                       '${AppLocalizations.of(context)!.farmLockLevelUpAPRLbl} ',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall!
-                          .copyWith(color: Colors.white60),
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                            fontSize: 8,
+                          ),
                     ),
                     if (aprEstimation > 0)
                       Text(

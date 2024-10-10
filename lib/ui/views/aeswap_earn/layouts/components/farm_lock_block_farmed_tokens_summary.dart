@@ -1,7 +1,6 @@
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/block_info.dart';
-import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/farm_lock_block_list_single_line_lock.dart';
 import 'package:aewallet/util/get_it_instance.dart';
@@ -12,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:material_symbols_icons/symbols.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
@@ -65,6 +63,7 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
             Column(
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       AppLocalizations.of(context)!
@@ -97,8 +96,8 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
                           style: Theme.of(context).textTheme.headlineLarge,
                         ),
                         loading: () => const SizedBox(
-                          width: 40,
-                          height: 40,
+                          width: 30,
+                          height: 30,
                           child: CircularProgressIndicator(
                             strokeWidth: 1,
                           ),
@@ -172,69 +171,60 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
                     ),
                     Row(
                       children: [
-                        Opacity(
-                          opacity: AppTextStyles.kOpacityText,
-                          child: Text(
-                            '${AppLocalizations.of(context)!.farmLockBlockFarmedTokensSummaryCapitalRewardsEarnedLbl}: ',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
+                        Text(
+                          '${AppLocalizations.of(context)!.farmLockBlockFarmedTokensSummaryCapitalRewardsEarnedLbl}: ',
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
-                        Opacity(
-                          opacity: opacity,
-                          child: summary.when(
-                            data: (data) => Text(
-                              '\$${data.farmedTokensRewardsInFiat.formatNumber(precision: 2)}',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
-                                    color: aedappfm.AppThemeBase.secondaryColor,
-                                  ),
-                            ),
-                            error: (_, __) => Text(
-                              r'$0.00',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
-                                    color: aedappfm.AppThemeBase.secondaryColor,
-                                  ),
-                            ),
-                            loading: () => Text(
-                              r'$0.00',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
-                                    color: aedappfm.AppThemeBase.secondaryColor,
-                                  ),
-                            ),
+                        summary.when(
+                          data: (data) => Text(
+                            '\$${data.farmedTokensRewardsInFiat.formatNumber(precision: 2)}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                  color: aedappfm.AppThemeBase.secondaryColor,
+                                ),
+                          ),
+                          error: (_, __) => Text(
+                            r'$0.00',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                  color: aedappfm.AppThemeBase.secondaryColor,
+                                ),
+                          ),
+                          loading: () => Text(
+                            r'$0.00',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                  color: aedappfm.AppThemeBase.secondaryColor,
+                                ),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
                   ],
                 ),
-                Opacity(
-                  opacity: opacity,
-                  child: summary.when(
-                    data: (data) => data.farmedTokensRewards > 0
-                        ? Text(
-                            '(= ${data.farmedTokensRewards.formatNumber(precision: 4)} UCO)',
-                            style: Theme.of(context).textTheme.bodySmall,
-                          )
-                        : const SizedBox.shrink(),
-                    error: (_, __) => Text(
-                      '(= ${0.0.formatNumber(precision: 4)} UCO)',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                    loading: () => Text(
-                      '(= ${0.0.formatNumber(precision: 4)} UCO)',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
+                const SizedBox(
+                  height: 3,
+                ),
+                summary.when(
+                  data: (data) => data.farmedTokensRewards > 0
+                      ? Text(
+                          '(= ${data.farmedTokensRewards.formatNumber(precision: 4)} UCO)',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        )
+                      : const SizedBox.shrink(),
+                  error: (_, __) => Text(
+                    '(= ${0.0.formatNumber(precision: 4)} UCO)',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  loading: () => Text(
+                    '(= ${0.0.formatNumber(precision: 4)} UCO)',
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
                 const SizedBox(
@@ -245,30 +235,23 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
             if (farmLock != null &&
                 farmLock.userInfos.entries.isNotEmpty &&
                 pool != null)
-              Opacity(
-                opacity: opacity,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: Text(
                       AppLocalizations.of(
                         context,
                       )!
                           .farmLockTokensSummaryMoreInfo,
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    const Icon(
-                      Symbols.keyboard_arrow_right,
-                      weight: IconSize.weightM,
-                      opticalSize: IconSize.opticalSizeM,
-                      grade: IconSize.gradeM,
-                      size: 16,
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
           ],
         ),
