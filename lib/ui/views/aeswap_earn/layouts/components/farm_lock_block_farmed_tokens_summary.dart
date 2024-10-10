@@ -69,7 +69,7 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
               children: [
                 Row(
                   children: [
-                    SelectableText(
+                    Text(
                       AppLocalizations.of(context)!
                           .farmLockBlockFarmedTokensSummaryHeader,
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
@@ -91,11 +91,11 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
                     Opacity(
                       opacity: opacity,
                       child: summary.when(
-                        data: (data) => SelectableText(
+                        data: (data) => Text(
                           '\$${data.farmedTokensInFiat.formatNumber(precision: 2)}',
                           style: Theme.of(context).textTheme.headlineLarge,
                         ),
-                        error: (_, __) => SelectableText(
+                        error: (_, __) => Text(
                           r'$0.00',
                           style: Theme.of(context).textTheme.headlineLarge,
                         ),
@@ -123,7 +123,7 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
                       children: [
                         Opacity(
                           opacity: AppTextStyles.kOpacityText,
-                          child: SelectableText(
+                          child: Text(
                             '${AppLocalizations.of(context)!.farmLockBlockFarmedTokensSummaryCapitalInvestedLbl}: ',
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
@@ -131,7 +131,7 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
                         Opacity(
                           opacity: opacity,
                           child: summary.when(
-                            data: (data) => SelectableText(
+                            data: (data) => Text(
                               '\$${data.farmedTokensCapitalInFiat.formatNumber(precision: 2)}',
                               style: Theme.of(context)
                                   .textTheme
@@ -140,7 +140,7 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
                                     color: aedappfm.AppThemeBase.secondaryColor,
                                   ),
                             ),
-                            error: (_, __) => SelectableText(
+                            error: (_, __) => Text(
                               r'$0.00',
                               style: Theme.of(context)
                                   .textTheme
@@ -149,7 +149,7 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
                                     color: aedappfm.AppThemeBase.secondaryColor,
                                   ),
                             ),
-                            loading: () => SelectableText(
+                            loading: () => Text(
                               r'$0.00',
                               style: Theme.of(context)
                                   .textTheme
@@ -177,7 +177,7 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
                       children: [
                         Opacity(
                           opacity: AppTextStyles.kOpacityText,
-                          child: SelectableText(
+                          child: Text(
                             '${AppLocalizations.of(context)!.farmLockBlockFarmedTokensSummaryCapitalRewardsEarnedLbl}: ',
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
@@ -185,7 +185,7 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
                         Opacity(
                           opacity: opacity,
                           child: summary.when(
-                            data: (data) => SelectableText(
+                            data: (data) => Text(
                               '\$${data.farmedTokensRewardsInFiat.formatNumber(precision: 2)}',
                               style: Theme.of(context)
                                   .textTheme
@@ -194,7 +194,7 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
                                     color: aedappfm.AppThemeBase.secondaryColor,
                                   ),
                             ),
-                            error: (_, __) => SelectableText(
+                            error: (_, __) => Text(
                               r'$0.00',
                               style: Theme.of(context)
                                   .textTheme
@@ -203,7 +203,7 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
                                     color: aedappfm.AppThemeBase.secondaryColor,
                                   ),
                             ),
-                            loading: () => SelectableText(
+                            loading: () => Text(
                               r'$0.00',
                               style: Theme.of(context)
                                   .textTheme
@@ -225,16 +225,16 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
                   opacity: opacity,
                   child: summary.when(
                     data: (data) => data.farmedTokensRewards > 0
-                        ? SelectableText(
+                        ? Text(
                             '(= ${data.farmedTokensRewards.formatNumber(precision: 4)} UCO)',
                             style: Theme.of(context).textTheme.bodySmall,
                           )
                         : const SizedBox.shrink(),
-                    error: (_, __) => SelectableText(
+                    error: (_, __) => Text(
                       '(= ${0.0.formatNumber(precision: 4)} UCO)',
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
-                    loading: () => SelectableText(
+                    loading: () => Text(
                       '(= ${0.0.formatNumber(precision: 4)} UCO)',
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
