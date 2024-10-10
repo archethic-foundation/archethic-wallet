@@ -224,9 +224,9 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
                 Opacity(
                   opacity: opacity,
                   child: summary.when(
-                    data: (data) => data.farmedTokensRewardsInFiat > 0
+                    data: (data) => data.farmedTokensRewards > 0
                         ? SelectableText(
-                            '(= ${data.farmedTokensRewardsInFiat.formatNumber(precision: 4)} UCO)',
+                            '(= ${data.farmedTokensRewards.formatNumber(precision: 4)} UCO)',
                             style: Theme.of(context).textTheme.bodySmall,
                           )
                         : const SizedBox.shrink(),
