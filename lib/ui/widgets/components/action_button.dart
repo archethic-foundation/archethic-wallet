@@ -1,5 +1,6 @@
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -48,17 +49,23 @@ class ActionButton extends ConsumerWidget {
                   ),
                   const SizedBox(height: 5),
                   if (enabled)
-                    Text(
-                      text,
-                      textAlign: TextAlign.center,
-                      style: ArchethicThemeStyles.textStyleSize14W600Primary,
+                    FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: AutoSizeText(
+                        text,
+                        textAlign: TextAlign.center,
+                        style: ArchethicThemeStyles.textStyleSize14W600Primary,
+                      ),
                     )
                   else
-                    Text(
-                      text,
-                      textAlign: TextAlign.center,
-                      style: ArchethicThemeStyles
-                          .textStyleSize14W600PrimaryDisabled,
+                    FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: AutoSizeText(
+                        text,
+                        textAlign: TextAlign.center,
+                        style: ArchethicThemeStyles
+                            .textStyleSize14W600PrimaryDisabled,
+                      ),
                     ),
                 ],
               ),
