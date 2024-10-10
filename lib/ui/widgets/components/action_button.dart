@@ -49,23 +49,17 @@ class ActionButton extends ConsumerWidget {
                   ),
                   const SizedBox(height: 5),
                   if (enabled)
-                    FittedBox(
-                      fit: BoxFit.fitWidth,
-                      child: AutoSizeText(
-                        text,
-                        textAlign: TextAlign.center,
-                        style: ArchethicThemeStyles.textStyleSize14W600Primary,
-                      ),
+                    AutoSizeText(
+                      text,
+                      textAlign: TextAlign.center,
+                      style: ArchethicThemeStyles.textStyleSize14W600Primary,
                     )
                   else
-                    FittedBox(
-                      fit: BoxFit.fitWidth,
-                      child: AutoSizeText(
-                        text,
-                        textAlign: TextAlign.center,
-                        style: ArchethicThemeStyles
-                            .textStyleSize14W600PrimaryDisabled,
-                      ),
+                    AutoSizeText(
+                      text,
+                      textAlign: TextAlign.center,
+                      style: ArchethicThemeStyles
+                          .textStyleSize14W600PrimaryDisabled,
                     ),
                 ],
               ),

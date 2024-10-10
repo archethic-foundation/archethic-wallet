@@ -3,6 +3,7 @@ import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/fiat_value.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/layouts/components/farm_lock_level_up_lock_duration_btn.dart';
@@ -99,17 +100,10 @@ class FarmLockLevelUpFormSheet extends ConsumerWidget
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 10, bottom: 80),
+            padding: const EdgeInsets.only(bottom: 80),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SelectableText(
-                  AppLocalizations.of(context)!.farmLockLevelUpDesc,
-                  style: AppTextStyles.bodyMedium(context),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -139,6 +133,9 @@ class FarmLockLevelUpFormSheet extends ConsumerWidget
                       const SizedBox.shrink(),
                   ],
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
                 Row(
                   children: [
                     if (rewardAmount == 0)
@@ -156,26 +153,28 @@ class FarmLockLevelUpFormSheet extends ConsumerWidget
                         ),
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
-                            return Row(
-                              children: [
-                                SelectableText(
-                                  rewardAmount.formatNumber(),
-                                  style: AppTextStyles.bodyMedium(context),
-                                ),
-                                SelectableText(
-                                  ' ${farmLockLevelUp.farmLock!.rewardToken!.symbol} ',
-                                  style: AppTextStyles.bodyMedium(context),
-                                ),
-                                SelectableText(
-                                  '${snapshot.data}',
-                                  style: AppTextStyles.bodyMedium(context),
-                                ),
-                                SelectableText(
-                                  AppLocalizations.of(context)!
-                                      .farmLockWithdrawFormTextNoRewardText2,
-                                  style: AppTextStyles.bodyMedium(context),
-                                ),
-                              ],
+                            return Expanded(
+                              child: Wrap(
+                                children: [
+                                  SelectableText(
+                                    rewardAmount.formatNumber(),
+                                    style: AppTextStyles.bodyMedium(context),
+                                  ),
+                                  SelectableText(
+                                    ' ${farmLockLevelUp.farmLock!.rewardToken!.symbol} ',
+                                    style: AppTextStyles.bodyMedium(context),
+                                  ),
+                                  SelectableText(
+                                    '${snapshot.data}',
+                                    style: AppTextStyles.bodyMedium(context),
+                                  ),
+                                  SelectableText(
+                                    AppLocalizations.of(context)!
+                                        .farmLockWithdrawFormTextNoRewardText2,
+                                    style: AppTextStyles.bodyMedium(context),
+                                  ),
+                                ],
+                              ),
                             );
                           }
                           return const SizedBox.shrink();
@@ -243,6 +242,14 @@ class FarmLockLevelUpFormSheet extends ConsumerWidget
                         ],
                       ),
                   ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                SelectableText(
+                  AppLocalizations.of(context)!.farmLockLevelUpDesc,
+                  style: ArchethicThemeStyles.textStyleSize14W200Primary
+                      .copyWith(),
                 ),
               ],
             ),

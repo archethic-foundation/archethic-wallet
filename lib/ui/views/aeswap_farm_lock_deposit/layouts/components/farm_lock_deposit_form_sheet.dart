@@ -132,59 +132,61 @@ class FarmLockDepositFormSheet extends ConsumerWidget
                     FarmLockDepositAmount(),
                   ],
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    return Row(
-                      children: [
-                        SizedBox(
-                          width: constraints.maxWidth - 50,
-                          child: Text(
-                            AppLocalizations.of(context)!
-                                .farmLockDepositGetLPToken,
-                            style: AppTextStyles.bodyMedium(context),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        InkWell(
-                          child: Container(
-                            height: 36,
-                            width: 36,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              gradient: aedappfm.AppThemeBase.gradientBtn,
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              aedappfm.Iconsax.import4,
-                              size: 18,
+                aedappfm.BlockInfo(
+                  height: 60,
+                  width: MediaQuery.of(context).size.width,
+                  paddingEdgeInsetsClipRRect:
+                      const EdgeInsets.symmetric(vertical: 10),
+                  paddingEdgeInsetsInfo:
+                      const EdgeInsets.symmetric(horizontal: 10),
+                  info: LayoutBuilder(
+                    builder: (context, constraints) {
+                      return Row(
+                        children: [
+                          SizedBox(
+                            width: constraints.maxWidth - 50,
+                            child: Text(
+                              AppLocalizations.of(context)!
+                                  .farmLockDepositGetLPToken,
+                              style: AppTextStyles.bodyMedium(context),
                             ),
                           ),
-                          onTap: () async {
-                            final poolJson = jsonEncode(
-                              farmLockDeposit.pool!.toJson(),
-                            );
-                            final poolEncoded = Uri.encodeComponent(poolJson);
-                            await context.push(
-                              Uri(
-                                path: LiquidityAddSheet.routerPage,
-                                queryParameters: {
-                                  'pool': poolEncoded,
-                                },
-                              ).toString(),
-                            );
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          InkWell(
+                            child: Container(
+                              height: 36,
+                              width: 36,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                gradient: aedappfm.AppThemeBase.gradientBtn,
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                aedappfm.Iconsax.import4,
+                                size: 18,
+                              ),
+                            ),
+                            onTap: () async {
+                              final poolJson = jsonEncode(
+                                farmLockDeposit.pool!.toJson(),
+                              );
+                              final poolEncoded = Uri.encodeComponent(poolJson);
+                              await context.push(
+                                Uri(
+                                  path: LiquidityAddSheet.routerPage,
+                                  queryParameters: {
+                                    'pool': poolEncoded,
+                                  },
+                                ).toString(),
+                              );
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                 ),
                 Row(
                   children: [

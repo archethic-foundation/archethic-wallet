@@ -65,134 +65,189 @@ class EarnTabState extends ConsumerState<EarnTab> {
                                     ? localizations.earnHeaderBalance0
                                     : localizations.earnHeaderWithBalance,
                                 style: ArchethicThemeStyles
-                                    .textStyleSize14W200Primary,
+                                    .textStyleSize14W700Primary
+                                    .copyWith(
+                                  color: aedappfm.AppThemeBase.secondaryColor,
+                                ),
                               ),
                               const SizedBox(
                                 height: 20,
                               ),
-                              SizedBox(
-                                height: 40,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          '${balances.lpTokenBalance} ',
-                                          style: ArchethicThemeStyles
-                                              .textStyleSize14W400Highlighted,
-                                        ),
-                                        Text(
-                                          balances.lpTokenBalance <= 1
-                                              ? localizations
-                                                  .earnHeaderLPTokenAvailable
-                                              : localizations
-                                                  .earnHeaderLPTokensAvailable,
-                                          style: ArchethicThemeStyles
-                                              .textStyleSize14W200Primary,
-                                        ),
-                                      ],
-                                    ),
-                                    if (balances.lpTokenBalance != 0)
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          InkWell(
-                                            child: Container(
-                                              height: 36,
-                                              width: 36,
-                                              alignment: Alignment.center,
-                                              decoration: BoxDecoration(
-                                                gradient: aedappfm
-                                                    .AppThemeBase.gradientBtn,
-                                                shape: BoxShape.circle,
-                                              ),
-                                              child: const Icon(
-                                                aedappfm.Iconsax.import4,
-                                                size: 18,
+                              aedappfm.BlockInfo(
+                                blockInfoColor: balances.lpTokenBalance == 0
+                                    ? aedappfm.BlockInfoColor.neutral
+                                    : aedappfm.BlockInfoColor.blue,
+                                height: balances.lpTokenBalance == 0 ? 30 : 70,
+                                paddingEdgeInsetsClipRRect: EdgeInsets.zero,
+                                paddingEdgeInsetsInfo:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                width: MediaQuery.of(context).size.width,
+                                info: SizedBox(
+                                  height: 40,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      if (balances.lpTokenBalance == 0)
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Opacity(
+                                              opacity:
+                                                  balances.lpTokenBalance == 0
+                                                      ? 0.4
+                                                      : 1,
+                                              child: Text(
+                                                '${balances.lpTokenBalance} ',
+                                                style: ArchethicThemeStyles
+                                                    .textStyleSize14W600Highlighted,
                                               ),
                                             ),
-                                            onTap: () async {
-                                              final poolJson = jsonEncode(
-                                                pool!.toJson(),
-                                              );
-                                              final poolEncoded =
-                                                  Uri.encodeComponent(poolJson);
-                                              await context.push(
-                                                Uri(
-                                                  path: LiquidityAddSheet
-                                                      .routerPage,
-                                                  queryParameters: {
-                                                    'pool': poolEncoded,
-                                                  },
-                                                ).toString(),
-                                              );
-                                            },
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          InkWell(
-                                            child: Container(
-                                              height: 36,
-                                              width: 36,
-                                              alignment: Alignment.center,
-                                              decoration: BoxDecoration(
-                                                gradient: aedappfm
-                                                    .AppThemeBase.gradientBtn,
-                                                shape: BoxShape.circle,
-                                              ),
-                                              child: const Icon(
-                                                aedappfm.Iconsax.export4,
-                                                size: 18,
+                                            Opacity(
+                                              opacity:
+                                                  balances.lpTokenBalance == 0
+                                                      ? 0.4
+                                                      : 1,
+                                              child: Text(
+                                                balances.lpTokenBalance <= 1
+                                                    ? localizations
+                                                        .earnHeaderLPTokenAvailable
+                                                    : localizations
+                                                        .earnHeaderLPTokensAvailable,
+                                                style: ArchethicThemeStyles
+                                                    .textStyleSize14W600Primary,
                                               ),
                                             ),
-                                            onTap: () async {
-                                              final poolJson = jsonEncode(
-                                                pool!.toJson(),
-                                              );
-                                              final pairJson = jsonEncode(
-                                                pool.pair.toJson(),
-                                              );
-                                              final lpTokenJson = jsonEncode(
-                                                pool.lpToken.toJson(),
-                                              );
-                                              final poolEncoded =
-                                                  Uri.encodeComponent(poolJson);
-                                              final pairEncoded =
-                                                  Uri.encodeComponent(pairJson);
-                                              final lpTokenEncoded =
-                                                  Uri.encodeComponent(
-                                                lpTokenJson,
-                                              );
-                                              await context.push(
-                                                Uri(
-                                                  path: LiquidityRemoveSheet
-                                                      .routerPage,
-                                                  queryParameters: {
-                                                    'pool': poolEncoded,
-                                                    'pair': pairEncoded,
-                                                    'lpToken': lpTokenEncoded,
-                                                  },
-                                                ).toString(),
-                                              );
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                  ],
+                                          ],
+                                        )
+                                      else
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              '${balances.lpTokenBalance} ',
+                                              style: ArchethicThemeStyles
+                                                  .textStyleSize14W600Highlighted,
+                                            ),
+                                            Text(
+                                              balances.lpTokenBalance <= 1
+                                                  ? localizations
+                                                      .earnHeaderLPTokenAvailable
+                                                  : localizations
+                                                      .earnHeaderLPTokensAvailable,
+                                              style: ArchethicThemeStyles
+                                                  .textStyleSize14W600Primary,
+                                            ),
+                                          ],
+                                        ),
+                                      if (balances.lpTokenBalance != 0)
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            InkWell(
+                                              child: Container(
+                                                height: 36,
+                                                width: 36,
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                  gradient: aedappfm
+                                                      .AppThemeBase.gradientBtn,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: const Icon(
+                                                  aedappfm.Iconsax.import4,
+                                                  size: 18,
+                                                ),
+                                              ),
+                                              onTap: () async {
+                                                final poolJson = jsonEncode(
+                                                  pool!.toJson(),
+                                                );
+                                                final poolEncoded =
+                                                    Uri.encodeComponent(
+                                                        poolJson);
+                                                await context.push(
+                                                  Uri(
+                                                    path: LiquidityAddSheet
+                                                        .routerPage,
+                                                    queryParameters: {
+                                                      'pool': poolEncoded,
+                                                    },
+                                                  ).toString(),
+                                                );
+                                              },
+                                            ),
+                                            const SizedBox(
+                                              width: 20,
+                                            ),
+                                            InkWell(
+                                              child: Container(
+                                                height: 36,
+                                                width: 36,
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                  gradient: aedappfm
+                                                      .AppThemeBase.gradientBtn,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: const Icon(
+                                                  aedappfm.Iconsax.export4,
+                                                  size: 18,
+                                                ),
+                                              ),
+                                              onTap: () async {
+                                                final poolJson = jsonEncode(
+                                                  pool!.toJson(),
+                                                );
+                                                final pairJson = jsonEncode(
+                                                  pool.pair.toJson(),
+                                                );
+                                                final lpTokenJson = jsonEncode(
+                                                  pool.lpToken.toJson(),
+                                                );
+                                                final poolEncoded =
+                                                    Uri.encodeComponent(
+                                                        poolJson);
+                                                final pairEncoded =
+                                                    Uri.encodeComponent(
+                                                        pairJson);
+                                                final lpTokenEncoded =
+                                                    Uri.encodeComponent(
+                                                  lpTokenJson,
+                                                );
+                                                await context.push(
+                                                  Uri(
+                                                    path: LiquidityRemoveSheet
+                                                        .routerPage,
+                                                    queryParameters: {
+                                                      'pool': poolEncoded,
+                                                      'pair': pairEncoded,
+                                                      'lpToken': lpTokenEncoded,
+                                                    },
+                                                  ).toString(),
+                                                );
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                    ],
+                                  ),
                                 ),
                               ),
                               if (balances.lpTokenBalance == 0)
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
                                     Text(
                                       localizations.earnHeaderAddLiquidityTxt,
                                       style: ArchethicThemeStyles
-                                          .textStyleSize14W200Primary,
+                                          .textStyleSize14W700Primary,
                                     ),
                                     Row(
                                       children: [
@@ -259,7 +314,7 @@ class EarnTabState extends ConsumerState<EarnTab> {
                               ),
                               FarmLockBlockFarmedTokensSummary(
                                 width: MediaQuery.of(context).size.width,
-                                height: 185,
+                                height: 195,
                               ),
                             ],
                           ),
