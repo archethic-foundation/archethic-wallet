@@ -9,6 +9,7 @@ import 'package:aewallet/ui/util/address_formatters.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/tokens_detail/layouts/token_detail_sheet.dart';
 import 'package:aewallet/ui/widgets/balance/balance_infos.dart';
+import 'package:aewallet/ui/widgets/tokens/verified_token_icon.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -103,6 +104,94 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                             ),
                           ],
                         )
+                      else if (widget.aeToken.isLpToken &&
+                          widget.aeToken.lpTokenPair != null)
+                        if ((widget.aeToken.lpTokenPair!.token1.icon == null ||
+                                widget.aeToken.lpTokenPair!.token1.icon!
+                                    .isEmpty) &&
+                            (widget.aeToken.lpTokenPair!.token2.icon == null ||
+                                widget
+                                    .aeToken.lpTokenPair!.token2.icon!.isEmpty))
+                          const SizedBox(
+                            width: 30,
+                          )
+                        else
+                          SizedBox(
+                            width: 30,
+                            child: Row(
+                              children: [
+                                if (widget.aeToken.lpTokenPair!.token1.icon !=
+                                        null &&
+                                    widget.aeToken.lpTokenPair!.token1.icon!
+                                        .isNotEmpty)
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        Container(
+                                          width: 15,
+                                          height: 15,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color:
+                                                Colors.white.withOpacity(0.2),
+                                          ),
+                                        ),
+                                        SvgPicture.asset(
+                                          'assets/bc-logos/${widget.aeToken.lpTokenPair!.token1.icon}',
+                                          width: 10,
+                                          height: 10,
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                else
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: Container(
+                                      width: 15,
+                                      height: 15,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.white.withOpacity(0.2),
+                                      ),
+                                    ),
+                                  ),
+                                if (widget.aeToken.lpTokenPair!.token2.icon !=
+                                        null &&
+                                    widget.aeToken.lpTokenPair!.token2.icon!
+                                        .isNotEmpty)
+                                  Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Container(
+                                        width: 15,
+                                        height: 15,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.white.withOpacity(0.2),
+                                        ),
+                                      ),
+                                      SvgPicture.asset(
+                                        'assets/bc-logos/${widget.aeToken.lpTokenPair!.token2.icon}',
+                                        width: 10,
+                                        height: 10,
+                                      ),
+                                    ],
+                                  )
+                                else
+                                  Container(
+                                    width: 15,
+                                    height: 15,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white.withOpacity(0.2),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          )
                       else
                         const SizedBox(
                           width: 30,
@@ -144,12 +233,61 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                                 Row(
                                   children: [
                                     if (widget.aeToken.isLpToken)
-                                      AutoSizeText(
-                                        minFontSize: 5,
-                                        wrapWords: false,
-                                        '${widget.aeToken.balance.formatNumber(precision: 8)} ${widget.aeToken.lpTokenPair!.token1.symbol.reduceSymbol()}/${widget.aeToken.lpTokenPair!.token2.symbol.reduceSymbol()}',
-                                        style: ArchethicThemeStyles
-                                            .textStyleSize12W100Primary,
+                                      Row(
+                                        children: [
+                                          AutoSizeText(
+                                            minFontSize: 5,
+                                            wrapWords: false,
+                                            '${widget.aeToken.balance.formatNumber(precision: 8)} ${widget.aeToken.lpTokenPair!.token1.symbol.reduceSymbol()}',
+                                            style: ArchethicThemeStyles
+                                                .textStyleSize12W100Primary,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 4,
+                                              top: 2,
+                                              right: 4,
+                                            ),
+                                            child: VerifiedTokenIcon(
+                                              iconSize: 12,
+                                              address: widget.aeToken
+                                                      .lpTokenPair!.token1.isUCO
+                                                  ? 'UCO'
+                                                  : widget.aeToken.lpTokenPair!
+                                                      .token1.address!,
+                                            ),
+                                          ),
+                                          AutoSizeText(
+                                            minFontSize: 5,
+                                            wrapWords: false,
+                                            '/ ',
+                                            style: ArchethicThemeStyles
+                                                .textStyleSize12W100Primary,
+                                          ),
+                                          AutoSizeText(
+                                            minFontSize: 5,
+                                            wrapWords: false,
+                                            widget.aeToken.lpTokenPair!.token2
+                                                .symbol
+                                                .reduceSymbol(),
+                                            style: ArchethicThemeStyles
+                                                .textStyleSize12W100Primary,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 4,
+                                              top: 2,
+                                            ),
+                                            child: VerifiedTokenIcon(
+                                              iconSize: 12,
+                                              address: widget.aeToken
+                                                      .lpTokenPair!.token2.isUCO
+                                                  ? 'UCO'
+                                                  : widget.aeToken.lpTokenPair!
+                                                      .token2.address!,
+                                            ),
+                                          ),
+                                        ],
                                       )
                                     else
                                       AutoSizeText(

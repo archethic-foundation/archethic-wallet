@@ -1,5 +1,6 @@
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/ui/widgets/tokens/verified_token_icon.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
@@ -26,6 +27,99 @@ class TokenDetailInfo extends ConsumerWidget {
     );
     return Column(
       children: [
+        if (aeToken.isLpToken)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (aeToken.lpTokenPair != null &&
+                  aeToken.lpTokenPair!.token1.icon != null &&
+                  aeToken.lpTokenPair!.token1.icon!.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.only(right: 5),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Container(
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white.withOpacity(0.2),
+                        ),
+                      ),
+                      SvgPicture.asset(
+                        'assets/bc-logos/${aeToken.lpTokenPair!.token1.icon}',
+                        width: 20,
+                        height: 20,
+                      ),
+                    ],
+                  ),
+                ),
+              if (aeToken.lpTokenPair != null)
+                Text(
+                  aeToken.lpTokenPair!.token1.symbol.reduceSymbol(),
+                  style: ArchethicThemeStyles.textStyleSize20W700Primary,
+                ),
+              if (aeToken.isLpToken &&
+                  aeToken.lpTokenPair != null &&
+                  aeToken.lpTokenPair!.token1.address != null)
+                Padding(
+                  padding: const EdgeInsets.only(left: 5),
+                  child: VerifiedTokenIcon(
+                    address: aeToken.lpTokenPair!.token1.isUCO
+                        ? 'UCO'
+                        : aeToken.lpTokenPair!.token1.address!,
+                  ),
+                ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: Text(
+                  '/',
+                  style: ArchethicThemeStyles.textStyleSize14W700Primary,
+                ),
+              ),
+              if (aeToken.lpTokenPair != null &&
+                  aeToken.lpTokenPair!.token2.icon != null &&
+                  aeToken.lpTokenPair!.token2.icon!.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.only(right: 5),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Container(
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white.withOpacity(0.2),
+                        ),
+                      ),
+                      SvgPicture.asset(
+                        'assets/bc-logos/${aeToken.lpTokenPair!.token2.icon}',
+                        width: 20,
+                        height: 20,
+                      ),
+                    ],
+                  ),
+                ),
+              if (aeToken.lpTokenPair != null)
+                Text(
+                  aeToken.lpTokenPair!.token2.symbol.reduceSymbol(),
+                  style: ArchethicThemeStyles.textStyleSize20W700Primary,
+                ),
+              if (aeToken.isLpToken &&
+                  aeToken.lpTokenPair != null &&
+                  aeToken.lpTokenPair!.token2.address != null)
+                Padding(
+                  padding: const EdgeInsets.only(left: 5),
+                  child: VerifiedTokenIcon(
+                    address: aeToken.lpTokenPair!.token2.isUCO
+                        ? 'UCO'
+                        : aeToken.lpTokenPair!.token2.address!,
+                  ),
+                ),
+            ],
+          ),
         if (aeToken.icon != null && aeToken.icon!.isNotEmpty)
           Stack(
             alignment: Alignment.center,
