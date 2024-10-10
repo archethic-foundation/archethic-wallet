@@ -160,7 +160,8 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
           await showBarModalBottomSheet(
             context: context,
-            backgroundColor: Colors.black.withOpacity(0.1),
+            backgroundColor:
+                aedappfm.AppThemeBase.sheetBackground.withOpacity(0.2),
             builder: (BuildContext context) {
               return FractionallySizedBox(
                 heightFactor: 0.85,
@@ -202,7 +203,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 10),
+                            padding: const EdgeInsets.only(top: 10, bottom: 5),
                             child: RichText(
                               text: TextSpan(
                                 children: [
