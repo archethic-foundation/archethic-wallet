@@ -123,7 +123,7 @@ class FarmLockClaimResultSheetState
               children: [
                 FarmLockClaimFinalAmount(),
               ],
-            )
+            ),
           ],
         ),
       ),

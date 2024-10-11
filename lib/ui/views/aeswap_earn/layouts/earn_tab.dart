@@ -169,7 +169,8 @@ class EarnTabState extends ConsumerState<EarnTab> {
                                                 );
                                                 final poolEncoded =
                                                     Uri.encodeComponent(
-                                                        poolJson);
+                                                  poolJson,
+                                                );
                                                 await context.push(
                                                   Uri(
                                                     path: LiquidityAddSheet
@@ -212,10 +213,12 @@ class EarnTabState extends ConsumerState<EarnTab> {
                                                 );
                                                 final poolEncoded =
                                                     Uri.encodeComponent(
-                                                        poolJson);
+                                                  poolJson,
+                                                );
                                                 final pairEncoded =
                                                     Uri.encodeComponent(
-                                                        pairJson);
+                                                  pairJson,
+                                                );
                                                 final lpTokenEncoded =
                                                     Uri.encodeComponent(
                                                   lpTokenJson,

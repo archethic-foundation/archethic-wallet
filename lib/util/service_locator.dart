@@ -43,22 +43,13 @@ Future<void> _setupServiceLocatorNetworkDependencies() async {
   final network = preferences.getNetwork().getLink();
   sl
     ..registerLazySingleton<ApiService>(
-      () => ApiService(
-        network,
-        logsActivation: false,
-      ),
+      () => ApiService(network),
     )
     ..registerLazySingleton<AddressService>(
-      () => AddressService(
-        network,
-        logsActivation: false,
-      ),
+      () => AddressService(network),
     )
     ..registerLazySingleton<OracleService>(
-      () => OracleService(
-        network,
-        logsActivation: false,
-      ),
+      () => OracleService(network),
     );
   await LoggerSetup.instance().setup();
 }
