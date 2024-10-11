@@ -344,7 +344,7 @@ class _MenuButton extends ConsumerWidget {
           grade: IconSize.gradeM,
         ),
         onPressed: () {
-          context.go(SettingsSheetWallet.routerPage);
+          context.push(SettingsSheetWallet.routerPage);
         },
       );
 }
