@@ -32,6 +32,7 @@ class LiquidityAddTokenIconSettings extends ConsumerWidget {
             ),
             child: const Icon(
               aedappfm.Iconsax.setting_2,
+              color: Colors.white,
               size: 15,
             ),
           ),

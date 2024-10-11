@@ -43,6 +43,7 @@ class TokenAddBtn extends ConsumerWidget {
             ),
             child: const Icon(
               Symbols.add,
+              color: Colors.white,
               size: 15,
             ),
           ),

@@ -59,8 +59,9 @@ class EarnFarmLockInfos extends ConsumerWidget {
               : aedappfm.AppThemeBase.gradientBtn,
           shape: BoxShape.circle,
         ),
-        child: const Icon(
+        child: Icon(
           aedappfm.Iconsax.search_status,
+          color: farmLock == null ? Colors.white60 : Colors.white,
           size: 18,
         ),
       ),

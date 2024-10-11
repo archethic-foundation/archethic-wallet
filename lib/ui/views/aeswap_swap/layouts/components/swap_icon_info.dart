@@ -58,8 +58,9 @@ class SwapTokenIconInfo extends ConsumerWidget {
               : aedappfm.AppThemeBase.gradientBtn,
           shape: BoxShape.circle,
         ),
-        child: const Icon(
+        child: Icon(
           aedappfm.Iconsax.info_circle,
+          color: disabled ? Colors.white60 : Colors.white,
           size: 18,
         ),
       ),

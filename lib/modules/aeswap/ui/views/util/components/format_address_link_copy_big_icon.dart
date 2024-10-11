@@ -80,6 +80,7 @@ class FormatAddressLinkCopyBigIcon extends ConsumerWidget {
                       ),
                       child: const Icon(
                         aedappfm.Iconsax.copy,
+                        color: Colors.white,
                         size: 16,
                       ),
                     ),
@@ -111,6 +112,7 @@ class FormatAddressLinkCopyBigIcon extends ConsumerWidget {
                       ),
                       child: const Icon(
                         aedappfm.Iconsax.export_3,
+                        color: Colors.white,
                         size: 16,
                       ),
                     ),
