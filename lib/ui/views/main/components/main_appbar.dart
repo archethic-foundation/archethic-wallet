@@ -292,7 +292,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
 /// AppBar containing only the menu button.
 /// Useful for webview screens.
 class _MainAppbarForWebView extends ConsumerWidget {
-  const _MainAppbarForWebView({super.key});
+  const _MainAppbarForWebView();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -311,7 +311,7 @@ class _MainAppbarForWebView extends ConsumerWidget {
 }
 
 class _MenuButton extends ConsumerWidget {
-  const _MenuButton({super.key});
+  const _MenuButton();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) => IconButton(
