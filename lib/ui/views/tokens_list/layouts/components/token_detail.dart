@@ -3,6 +3,7 @@ import 'package:aewallet/application/price_history/providers.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/primary_currency.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/address_formatters.dart';
@@ -75,7 +76,11 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
         children: [
           aedappfm.BlockInfo(
             width: MediaQuery.of(context).size.width,
-            height: widget.aeToken.isUCO ? 110 : 80,
+            height: widget.aeToken.isUCO
+                ? 115
+                : widget.aeToken.isLpToken
+                    ? 105
+                    : 85,
             borderWith: widget.aeToken.isUCO ? 2 : 1,
             paddingEdgeInsetsClipRRect: EdgeInsets.zero,
             info: Row(
@@ -233,58 +238,88 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                                 Row(
                                   children: [
                                     if (widget.aeToken.isLpToken)
-                                      Row(
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
+                                          Row(
+                                            children: [
+                                              AutoSizeText(
+                                                minFontSize: 5,
+                                                wrapWords: false,
+                                                widget.aeToken.lpTokenPair!
+                                                    .token1.symbol
+                                                    .reduceSymbol(),
+                                                style: AppTextStyles.bodyMedium(
+                                                  context,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                  left: 4,
+                                                  top: 2,
+                                                  right: 4,
+                                                ),
+                                                child: VerifiedTokenIcon(
+                                                  iconSize: 12,
+                                                  address: widget
+                                                          .aeToken
+                                                          .lpTokenPair!
+                                                          .token1
+                                                          .isUCO
+                                                      ? 'UCO'
+                                                      : widget
+                                                          .aeToken
+                                                          .lpTokenPair!
+                                                          .token1
+                                                          .address!,
+                                                ),
+                                              ),
+                                              AutoSizeText(
+                                                minFontSize: 5,
+                                                wrapWords: false,
+                                                '/ ',
+                                                style: ArchethicThemeStyles
+                                                    .textStyleSize12W100Primary,
+                                              ),
+                                              AutoSizeText(
+                                                minFontSize: 5,
+                                                wrapWords: false,
+                                                widget.aeToken.lpTokenPair!
+                                                    .token2.symbol
+                                                    .reduceSymbol(),
+                                                style: AppTextStyles.bodyMedium(
+                                                  context,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                  left: 4,
+                                                  top: 2,
+                                                ),
+                                                child: VerifiedTokenIcon(
+                                                  iconSize: 12,
+                                                  address: widget
+                                                          .aeToken
+                                                          .lpTokenPair!
+                                                          .token2
+                                                          .isUCO
+                                                      ? 'UCO'
+                                                      : widget
+                                                          .aeToken
+                                                          .lpTokenPair!
+                                                          .token2
+                                                          .address!,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                           AutoSizeText(
                                             minFontSize: 5,
                                             wrapWords: false,
-                                            '${widget.aeToken.balance.formatNumber(precision: 8)} ${widget.aeToken.lpTokenPair!.token1.symbol.reduceSymbol()}',
-                                            style: ArchethicThemeStyles
-                                                .textStyleSize12W100Primary,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                              left: 4,
-                                              top: 2,
-                                              right: 4,
-                                            ),
-                                            child: VerifiedTokenIcon(
-                                              iconSize: 12,
-                                              address: widget.aeToken
-                                                      .lpTokenPair!.token1.isUCO
-                                                  ? 'UCO'
-                                                  : widget.aeToken.lpTokenPair!
-                                                      .token1.address!,
-                                            ),
-                                          ),
-                                          AutoSizeText(
-                                            minFontSize: 5,
-                                            wrapWords: false,
-                                            '/ ',
-                                            style: ArchethicThemeStyles
-                                                .textStyleSize12W100Primary,
-                                          ),
-                                          AutoSizeText(
-                                            minFontSize: 5,
-                                            wrapWords: false,
-                                            widget.aeToken.lpTokenPair!.token2
-                                                .symbol
-                                                .reduceSymbol(),
-                                            style: ArchethicThemeStyles
-                                                .textStyleSize12W100Primary,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                              left: 4,
-                                              top: 2,
-                                            ),
-                                            child: VerifiedTokenIcon(
-                                              iconSize: 12,
-                                              address: widget.aeToken
-                                                      .lpTokenPair!.token2.isUCO
-                                                  ? 'UCO'
-                                                  : widget.aeToken.lpTokenPair!
-                                                      .token2.address!,
+                                            '${widget.aeToken.balance.formatNumber(precision: 8)} ${widget.aeToken.balance > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
+                                            style: AppTextStyles.bodyMedium(
+                                              context,
                                             ),
                                           ),
                                         ],
@@ -294,8 +329,8 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                                         minFontSize: 5,
                                         wrapWords: false,
                                         '${widget.aeToken.balance.formatNumber(precision: 8)} ${widget.aeToken.symbol.reduceSymbol(lengthMax: 10)}',
-                                        style: ArchethicThemeStyles
-                                            .textStyleSize12W100Primary,
+                                        style:
+                                            AppTextStyles.bodyMedium(context),
                                       ),
                                     const SizedBox(width: 5),
                                     if (price != null && price > 0)
@@ -304,8 +339,8 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                                         wrapWords: false,
                                         '\$${(widget.aeToken.balance * price).formatNumber(precision: 2)}',
                                         textAlign: TextAlign.center,
-                                        style: ArchethicThemeStyles
-                                            .textStyleSize12W100Primary,
+                                        style:
+                                            AppTextStyles.bodyMedium(context),
                                       ),
                                   ],
                                 )
@@ -318,8 +353,8 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                                         wrapWords: false,
                                         '\$${(widget.aeToken.balance * price).formatNumber(precision: 2)}',
                                         textAlign: TextAlign.center,
-                                        style: ArchethicThemeStyles
-                                            .textStyleSize12W100Primary,
+                                        style:
+                                            AppTextStyles.bodyMedium(context),
                                       ),
                                     const SizedBox(width: 5),
                                     if (widget.aeToken.isLpToken)
@@ -327,16 +362,16 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                                         minFontSize: 5,
                                         wrapWords: false,
                                         '${widget.aeToken.balance.formatNumber(precision: 8)} ${widget.aeToken.lpTokenPair!.token1.symbol.reduceSymbol()}/${widget.aeToken.lpTokenPair!.token2.symbol.reduceSymbol()}',
-                                        style: ArchethicThemeStyles
-                                            .textStyleSize12W100Primary,
+                                        style:
+                                            AppTextStyles.bodyMedium(context),
                                       )
                                     else
                                       AutoSizeText(
                                         minFontSize: 5,
                                         wrapWords: false,
                                         '${widget.aeToken.balance.formatNumber(precision: 8)} ${widget.aeToken.symbol.reduceSymbol(lengthMax: 10)}',
-                                        style: ArchethicThemeStyles
-                                            .textStyleSize12W100Primary,
+                                        style:
+                                            AppTextStyles.bodyMedium(context),
                                       ),
                                   ],
                                 )
@@ -345,8 +380,7 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                                 children: [
                                   Text(
                                     '···········',
-                                    style: ArchethicThemeStyles
-                                        .textStyleSize12W100Primary60,
+                                    style: AppTextStyles.bodyMedium(context),
                                   ),
                                   const SizedBox(width: 5),
                                 ],
