@@ -13,8 +13,7 @@ void setupServiceLocator() {
     ..registerLazySingleton<DBHelper>(DBHelper.new)
     ..registerLazySingleton<DBHelperModuleAESwap>(DBHelperModuleAESwap.new)
     ..registerLazySingleton<OracleService>(
-      () =>
-          OracleService('https://mainnet.archethic.net', logsActivation: false),
+      () => OracleService('https://mainnet.archethic.net'),
     )
     ..registerLazySingleton<aedappfm.LogManager>(() {
       if (Uri.base.toString().toLowerCase().contains('dex.archethic') ||
@@ -38,6 +37,6 @@ void setupServiceLocatorApiService(String endpoint) {
   }
 
   aedappfm.sl.registerLazySingleton<ApiService>(
-    () => ApiService(endpoint, logsActivation: false),
+    () => ApiService(endpoint),
   );
 }

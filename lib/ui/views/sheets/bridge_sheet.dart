@@ -17,10 +17,12 @@ class BridgeInfoWidget extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(AppLocalizations.of(context)!.aeBridgeInfos1,
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  )),
+          Text(
+            AppLocalizations.of(context)!.aeBridgeInfos1,
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
           const SizedBox(height: 8),
           Text(
             AppLocalizations.of(context)!.aeBridgeInfos2,
