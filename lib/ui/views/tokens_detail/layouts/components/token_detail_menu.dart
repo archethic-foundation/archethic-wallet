@@ -221,23 +221,15 @@ class TokenDetailMenu extends ConsumerWidget {
                                       FeedbackType.light,
                                       preferences.activeVibrations,
                                     );
+                                ref.read(mainTabControllerProvider)!.animateTo(
+                                      3,
+                                      duration: Duration.zero,
+                                    );
+                                await ref
+                                    .read(SettingsProviders.settings.notifier)
+                                    .setMainScreenCurrentPage(3);
 
-                                final poolJson = jsonEncode(pool!.toJson());
-                                final poolEncoded =
-                                    Uri.encodeComponent(poolJson);
-                                final farmLockJson =
-                                    jsonEncode(farmLock!.toJson());
-                                final farmLockEncoded =
-                                    Uri.encodeComponent(farmLockJson);
-                                await context.push(
-                                  Uri(
-                                    path: FarmLockDepositSheet.routerPage,
-                                    queryParameters: {
-                                      'pool': poolEncoded,
-                                      'farmLock': farmLockEncoded,
-                                    },
-                                  ).toString(),
-                                );
+                                context.pop();
                               },
                             )
                               .animate()
