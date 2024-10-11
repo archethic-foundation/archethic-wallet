@@ -8,6 +8,7 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/bus/otp_event.dart';
 import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/model/authentication_method.dart';
+import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -27,6 +28,7 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class YubikeyScreen extends ConsumerStatefulWidget {
   const YubikeyScreen({
@@ -160,6 +162,12 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen>
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
+    final lockTimeoutOption = ref.read(
+      AuthenticationProviders.settings.select(
+        (settings) => settings.lockTimeout,
+      ),
+    );
+
     final preferences = ref.watch(SettingsProviders.settings);
 
     return PopScope(
@@ -280,6 +288,33 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen>
                   ),
                 ),
               ],
+            ),
+          if (lockTimeoutOption != LockTimeoutOption.disabled)
+            Padding(
+              padding: const EdgeInsets.only(top: 32),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(right: 8),
+                    child: Icon(
+                      Symbols.lightbulb,
+                      //size: 16,
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      localizations.autoLockTips.replaceAll(
+                        '%0',
+                        LockTimeoutSetting(lockTimeoutOption)
+                            .getDisplayName(context)
+                            .toLowerCase(),
+                      ),
+                      style: ArchethicThemeStyles.textStyleSize12W600Primary,
+                    ),
+                  ),
+                ],
+              ),
             ),
         ],
       ),

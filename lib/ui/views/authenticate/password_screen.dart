@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/domain/models/authentication.dart';
+import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -15,7 +16,6 @@ import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -136,15 +136,54 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    return Row(
-      children: <Widget>[
-        AppButtonTiny(
-          AppButtonTinyType.primary,
-          localizations.confirm,
-          Dimens.buttonTopDimens,
-          key: const Key('confirm'),
-          onPressed: _verifyPassword,
-          disabled: !_canBeSubmitted || isProcessing,
+
+    final lockTimeoutOption = ref.read(
+      AuthenticationProviders.settings.select(
+        (settings) => settings.lockTimeout,
+      ),
+    );
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (lockTimeoutOption != LockTimeoutOption.disabled)
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(right: 8),
+                  child: Icon(
+                    Symbols.lightbulb,
+                    //size: 16,
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    localizations.autoLockTips.replaceAll(
+                      '%0',
+                      LockTimeoutSetting(lockTimeoutOption)
+                          .getDisplayName(context)
+                          .toLowerCase(),
+                    ),
+                    style: ArchethicThemeStyles.textStyleSize12W600Primary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        Row(
+          children: <Widget>[
+            AppButtonTiny(
+              AppButtonTinyType.primary,
+              localizations.confirm,
+              Dimens.buttonTopDimens,
+              key: const Key('confirm'),
+              onPressed: _verifyPassword,
+              disabled: !_canBeSubmitted || isProcessing,
+            ),
+          ],
         ),
       ],
     );
