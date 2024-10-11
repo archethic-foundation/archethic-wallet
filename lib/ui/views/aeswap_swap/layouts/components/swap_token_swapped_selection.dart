@@ -38,12 +38,14 @@ class SwapTokenSwappedSelection extends ConsumerWidget {
                 preferences.activeVibrations,
               );
 
-          final token = await showBarModalBottomSheet(
+          final token = await CupertinoScaffold.showCupertinoModalBottomSheet(
             context: context,
-            backgroundColor:
-                aedappfm.AppThemeBase.sheetBackground.withOpacity(0.2),
             builder: (BuildContext context) {
-              return const TokenSelection();
+              return Scaffold(
+                backgroundColor:
+                    aedappfm.AppThemeBase.sheetBackground.withOpacity(0.2),
+                body: const TokenSelection(),
+              );
             },
           );
 

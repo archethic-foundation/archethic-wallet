@@ -158,95 +158,99 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                 preferences.activeVibrations,
               );
 
-          await showBarModalBottomSheet(
+          await showCupertinoModalBottomSheet(
             context: context,
-            backgroundColor:
-                aedappfm.AppThemeBase.sheetBackground.withOpacity(0.2),
             builder: (BuildContext context) {
               return FractionallySizedBox(
                 heightFactor: 0.85,
-                child: Stack(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                      ),
-                      child: Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(top: 15),
-                            child: InkWell(
-                              onTap: () {
-                                sl.get<HapticUtil>().feedback(
-                                      FeedbackType.light,
-                                      preferences.activeVibrations,
-                                    );
-                                Clipboard.setData(
-                                  ClipboardData(
-                                    text: keychain?.address.toUpperCase() ?? '',
-                                  ),
-                                );
-                                UIUtil.showSnackbar(
-                                  localizations.keychainAddressCopied,
-                                  context,
-                                  ref,
-                                  ArchethicTheme.text,
-                                  ArchethicTheme.snackBarShadow,
-                                  icon: Symbols.info,
-                                );
-                              },
-                              child: Text(
-                                localizations.accountsHeader,
-                                style: ArchethicThemeStyles
-                                    .textStyleSize16W600Primary,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 5),
-                            child: RichText(
-                              text: TextSpan(
-                                children: [
-                                  const WidgetSpan(
-                                    child: Icon(Icons.info, size: 16),
-                                  ),
-                                  TextSpan(
-                                    text:
-                                        ' ${localizations.accountsListWarningRemoveAccount}',
-                                    style: ArchethicThemeStyles
-                                        .textStyleSize12W100Primary,
-                                  ),
-                                  TextSpan(
-                                    text:
-                                        ' (${localizations.accountsListWarningRemoveAccountConfirmRequired})',
-                                    style: ArchethicThemeStyles
-                                        .textStyleSize12W100Primary
-                                        .copyWith(
-                                      fontStyle: FontStyle.italic,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const AccountsList(),
-                        ],
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).padding.bottom + 20,
+                child: Scaffold(
+                  backgroundColor:
+                      aedappfm.AppThemeBase.sheetBackground.withOpacity(0.2),
+                  body: Stack(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 15,
                         ),
-                        child: const Row(
-                          children: [
-                            AddAccountButton(),
+                        child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(top: 15),
+                              child: InkWell(
+                                onTap: () {
+                                  sl.get<HapticUtil>().feedback(
+                                        FeedbackType.light,
+                                        preferences.activeVibrations,
+                                      );
+                                  Clipboard.setData(
+                                    ClipboardData(
+                                      text:
+                                          keychain?.address.toUpperCase() ?? '',
+                                    ),
+                                  );
+                                  UIUtil.showSnackbar(
+                                    localizations.keychainAddressCopied,
+                                    context,
+                                    ref,
+                                    ArchethicTheme.text,
+                                    ArchethicTheme.snackBarShadow,
+                                    icon: Symbols.info,
+                                  );
+                                },
+                                child: Text(
+                                  localizations.accountsHeader,
+                                  style: ArchethicThemeStyles
+                                      .textStyleSize16W600Primary,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 10, bottom: 5),
+                              child: RichText(
+                                text: TextSpan(
+                                  children: [
+                                    const WidgetSpan(
+                                      child: Icon(Icons.info, size: 16),
+                                    ),
+                                    TextSpan(
+                                      text:
+                                          ' ${localizations.accountsListWarningRemoveAccount}',
+                                      style: ArchethicThemeStyles
+                                          .textStyleSize12W100Primary,
+                                    ),
+                                    TextSpan(
+                                      text:
+                                          ' (${localizations.accountsListWarningRemoveAccountConfirmRequired})',
+                                      style: ArchethicThemeStyles
+                                          .textStyleSize12W100Primary
+                                          .copyWith(
+                                        fontStyle: FontStyle.italic,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const AccountsList(),
                           ],
                         ),
                       ),
-                    ),
-                  ],
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).padding.bottom + 20,
+                          ),
+                          child: const Row(
+                            children: [
+                              AddAccountButton(),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             },

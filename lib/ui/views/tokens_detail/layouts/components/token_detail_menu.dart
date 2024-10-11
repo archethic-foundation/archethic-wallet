@@ -108,20 +108,23 @@ class TokenDetailMenu extends ConsumerWidget {
                     key: const Key('receivebutton'),
                     text: localizations.receive,
                     icon: Symbols.call_received,
-                    onTap: () async {
+                    onTap: () {
                       sl.get<HapticUtil>().feedback(
                             FeedbackType.light,
                             preferences.activeVibrations,
                           );
 
-                      await showBarModalBottomSheet(
+                      CupertinoScaffold.showCupertinoModalBottomSheet(
                         context: context,
-                        backgroundColor: aedappfm.AppThemeBase.sheetBackground
-                            .withOpacity(0.2),
                         builder: (BuildContext context) {
-                          return const FractionallySizedBox(
+                          return FractionallySizedBox(
                             heightFactor: 0.75,
-                            child: ReceiveModal(),
+                            child: Scaffold(
+                              backgroundColor: aedappfm
+                                  .AppThemeBase.sheetBackground
+                                  .withOpacity(0.2),
+                              body: const ReceiveModal(),
+                            ),
                           );
                         },
                       );

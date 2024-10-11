@@ -33,15 +33,17 @@ class EarnFarmLockInfos extends ConsumerWidget {
                     preferences.activeVibrations,
                   );
 
-              await showBarModalBottomSheet(
+              await CupertinoScaffold.showCupertinoModalBottomSheet(
                 context: context,
-                backgroundColor:
-                    aedappfm.AppThemeBase.sheetBackground.withOpacity(0.2),
                 builder: (BuildContext context) {
                   return FractionallySizedBox(
                     heightFactor: 0.90,
-                    child: FarmLockDetailsInfo(
-                      farmLock: farmLock,
+                    child: Scaffold(
+                      backgroundColor: aedappfm.AppThemeBase.sheetBackground
+                          .withOpacity(0.2),
+                      body: FarmLockDetailsInfo(
+                        farmLock: farmLock,
+                      ),
                     ),
                   );
                 },
