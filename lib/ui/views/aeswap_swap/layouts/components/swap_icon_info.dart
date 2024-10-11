@@ -34,14 +34,16 @@ class SwapTokenIconInfo extends ConsumerWidget {
                     preferences.activeVibrations,
                   );
 
-              await showBarModalBottomSheet(
+              await CupertinoScaffold.showCupertinoModalBottomSheet(
                 context: context,
-                backgroundColor:
-                    aedappfm.AppThemeBase.sheetBackground.withOpacity(0.2),
                 builder: (BuildContext context) {
-                  return const FractionallySizedBox(
+                  return FractionallySizedBox(
                     heightFactor: 0.75,
-                    child: SwapInfos(),
+                    child: Scaffold(
+                      backgroundColor: aedappfm.AppThemeBase.sheetBackground
+                          .withOpacity(0.2),
+                      body: const SwapInfos(),
+                    ),
                   );
                 },
               );

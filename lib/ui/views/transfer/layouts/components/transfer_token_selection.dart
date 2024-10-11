@@ -38,36 +38,40 @@ class TransferTokenSelection extends ConsumerWidget {
                 preferences.activeVibrations,
               );
 
-          final tokenSelected = await showBarModalBottomSheet(
+          final tokenSelected =
+              await CupertinoScaffold.showCupertinoModalBottomSheet(
             context: context,
-            backgroundColor: Colors.black.withOpacity(0.1),
             builder: (BuildContext context) {
               return FractionallySizedBox(
                 heightFactor: 0.85,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 15,
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15),
-                        child: InkWell(
-                          onTap: () {
-                            aedappfm.sl.get<HapticUtil>().feedback(
-                                  FeedbackType.light,
-                                  preferences.activeVibrations,
-                                );
-                          },
-                          child: Text(
-                            localizations.selectTokenTitle,
-                            style:
-                                ArchethicThemeStyles.textStyleSize16W600Primary,
+                child: Scaffold(
+                  backgroundColor:
+                      aedappfm.AppThemeBase.sheetBackground.withOpacity(0.2),
+                  body: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 15,
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(top: 15),
+                          child: InkWell(
+                            onTap: () {
+                              aedappfm.sl.get<HapticUtil>().feedback(
+                                    FeedbackType.light,
+                                    preferences.activeVibrations,
+                                  );
+                            },
+                            child: Text(
+                              localizations.selectTokenTitle,
+                              style: ArchethicThemeStyles
+                                  .textStyleSize16W600Primary,
+                            ),
                           ),
                         ),
-                      ),
-                      const TransferTokensList(),
-                    ],
+                        const TransferTokensList(),
+                      ],
+                    ),
                   ),
                 ),
               );

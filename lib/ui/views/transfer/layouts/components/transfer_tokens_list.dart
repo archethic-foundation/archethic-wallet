@@ -58,49 +58,27 @@ class TransferTokensListState extends ConsumerState<TransferTokensList>
         });
 
         return Expanded(
-          child: Stack(
-            children: [
-              ScrollConfiguration(
-                behavior: ScrollConfiguration.of(context).copyWith(
-                  dragDevices: {
-                    PointerDeviceKind.touch,
-                    PointerDeviceKind.mouse,
-                    PointerDeviceKind.trackpad,
-                  },
-                ),
-                child: ListView.builder(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).padding.top + 20,
-                    bottom: MediaQuery.of(context).padding.bottom + 70,
-                  ),
-                  itemCount: tokensList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return TransferTokenDetail(
-                      aeToken: tokensList[index],
-                    );
-                  },
-                ),
+          child: ScrollConfiguration(
+            behavior: ScrollConfiguration.of(context).copyWith(
+              dragDevices: {
+                PointerDeviceKind.touch,
+                PointerDeviceKind.mouse,
+                PointerDeviceKind.trackpad,
+              },
+            ),
+            child: ListView.builder(
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).padding.top + 20,
+                bottom: MediaQuery.of(context).padding.bottom + 70,
               ),
-              Positioned(
-                top: -20,
-                left: 0,
-                right: 0,
-                child: Container(
-                  height: 30,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.black,
-                        Colors.black.withOpacity(0),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
+              itemCount: tokensList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return TransferTokenDetail(
+                  aeToken: tokensList[index],
+                );
+              },
+            ),
           ),
         );
       },

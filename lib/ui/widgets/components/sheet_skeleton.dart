@@ -4,6 +4,7 @@ import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class SheetSkeleton extends ConsumerWidget {
   const SheetSkeleton({
@@ -45,45 +46,49 @@ class SheetSkeleton extends ConsumerWidget {
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.black,
       appBar: appBar,
-      body: menu == false
-          ? DecoratedBox(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                    backgroundImage == null
-                        ? ArchethicTheme.backgroundSmall
-                        : backgroundImage!,
+      body: CupertinoScaffold(
+        body: menu == false
+            ? DecoratedBox(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(
+                      backgroundImage == null
+                          ? ArchethicTheme.backgroundSmall
+                          : backgroundImage!,
+                    ),
+                    fit: kIsWeb ? BoxFit.cover : BoxFit.fitHeight,
+                    alignment: Alignment.centerRight,
+                    opacity: 0.7,
                   ),
-                  fit: kIsWeb ? BoxFit.cover : BoxFit.fitHeight,
-                  alignment: Alignment.centerRight,
-                  opacity: 0.7,
                 ),
-              ),
-              child: Padding(
-                padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).viewPadding.top + kToolbarHeight,
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Expanded(
-                      child: ArchethicScrollbar(
-                        thumbVisibility: thumbVisibility,
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            top: 20,
-                            left: 15,
-                            right: 15,
-                            bottom: resizeToAvoidBottomInset ? 0 : bottom + 80,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top:
+                        MediaQuery.of(context).viewPadding.top + kToolbarHeight,
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      Expanded(
+                        child: ArchethicScrollbar(
+                          thumbVisibility: thumbVisibility,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              top: 20,
+                              left: 15,
+                              right: 15,
+                              bottom:
+                                  resizeToAvoidBottomInset ? 0 : bottom + 80,
+                            ),
+                            child: sheetContent,
                           ),
-                          child: sheetContent,
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            )
-          : sheetContent,
+              )
+            : sheetContent,
+      ),
     );
   }
 }
