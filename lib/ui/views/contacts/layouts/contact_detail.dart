@@ -352,6 +352,7 @@ class _ContactDetailActions extends ConsumerWidget {
                 ),
                 child: const Icon(
                   Symbols.open_in_new,
+                  color: Colors.white,
                   size: 20,
                 ),
               ),

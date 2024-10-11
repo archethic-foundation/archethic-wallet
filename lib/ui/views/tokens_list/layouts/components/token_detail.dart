@@ -79,7 +79,7 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
             height: widget.aeToken.isUCO
                 ? 115
                 : widget.aeToken.isLpToken
-                    ? 105
+                    ? 120
                     : 85,
             borderWith: widget.aeToken.isUCO ? 2 : 1,
             paddingEdgeInsetsClipRRect: EdgeInsets.zero,
@@ -210,12 +210,14 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                           children: [
                             Row(
                               children: [
-                                AutoSizeText(
-                                  minFontSize: 5,
-                                  wrapWords: false,
-                                  widget.aeToken.symbol,
-                                  style: ArchethicThemeStyles
-                                      .textStyleSize18W600MainButtonLabel,
+                                Expanded(
+                                  child: AutoSizeText(
+                                    minFontSize: 5,
+                                    wrapWords: false,
+                                    widget.aeToken.symbol,
+                                    style: ArchethicThemeStyles
+                                        .textStyleSize18W600MainButtonLabel,
+                                  ),
                                 ),
                                 if (widget.aeToken.isVerified)
                                   Padding(
@@ -246,7 +248,6 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                                             children: [
                                               AutoSizeText(
                                                 minFontSize: 5,
-                                                wrapWords: false,
                                                 widget.aeToken.lpTokenPair!
                                                     .token1.symbol
                                                     .reduceSymbol(),
@@ -325,12 +326,14 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                                         ],
                                       )
                                     else
-                                      AutoSizeText(
-                                        minFontSize: 5,
-                                        wrapWords: false,
-                                        '${widget.aeToken.balance.formatNumber(precision: 8)} ${widget.aeToken.symbol.reduceSymbol(lengthMax: 10)}',
-                                        style:
-                                            AppTextStyles.bodyMedium(context),
+                                      Expanded(
+                                        child: AutoSizeText(
+                                          minFontSize: 5,
+                                          overflow: TextOverflow.ellipsis,
+                                          '${widget.aeToken.balance.formatNumber(precision: 8)} ${widget.aeToken.symbol}',
+                                          style:
+                                              AppTextStyles.bodyMedium(context),
+                                        ),
                                       ),
                                     const SizedBox(width: 5),
                                     if (price != null && price > 0)

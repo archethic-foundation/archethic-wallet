@@ -104,6 +104,7 @@ class QRCodeWithOptions extends ConsumerWidget {
                 ),
                 child: const Icon(
                   Symbols.share,
+                  color: Colors.white,
                   size: 20,
                 ),
               ),
@@ -152,6 +153,7 @@ class QRCodeWithOptions extends ConsumerWidget {
                 ),
                 child: const Icon(
                   Symbols.visibility,
+                  color: Colors.white,
                   size: 20,
                 ),
               ),
@@ -200,6 +202,7 @@ class QRCodeWithOptions extends ConsumerWidget {
                 ),
                 child: const Icon(
                   Symbols.content_copy,
+                  color: Colors.white,
                   size: 20,
                 ),
               ),

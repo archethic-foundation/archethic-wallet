@@ -239,6 +239,7 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                       ),
                       child: const Icon(
                         Symbols.search,
+                        color: Colors.white,
                         size: 15,
                       ),
                     ),

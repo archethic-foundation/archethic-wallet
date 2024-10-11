@@ -159,6 +159,7 @@ class EarnTabState extends ConsumerState<EarnTab> {
                                                 ),
                                                 child: const Icon(
                                                   aedappfm.Iconsax.import4,
+                                                  color: Colors.white,
                                                   size: 18,
                                                 ),
                                               ),
@@ -195,6 +196,7 @@ class EarnTabState extends ConsumerState<EarnTab> {
                                                 ),
                                                 child: const Icon(
                                                   aedappfm.Iconsax.export4,
+                                                  color: Colors.white,
                                                   size: 18,
                                                 ),
                                               ),

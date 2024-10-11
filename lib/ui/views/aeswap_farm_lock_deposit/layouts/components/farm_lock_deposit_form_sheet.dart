@@ -165,6 +165,7 @@ class FarmLockDepositFormSheet extends ConsumerWidget
                               ),
                               child: const Icon(
                                 aedappfm.Iconsax.import4,
+                                color: Colors.white,
                                 size: 18,
                               ),
                             ),

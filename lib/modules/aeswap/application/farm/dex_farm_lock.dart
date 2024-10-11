@@ -38,10 +38,12 @@ Future<DexFarmLock?> _getFarmLockInfos(
   if (pool == null) return null;
 
   final selectedAccount = await ref
-      .read(
+      .watch(
         AccountProviders.accounts.future,
       )
       .selectedAccount;
+
+  if (selectedAccount == null) return null;
 
   try {
     final farmLockInfos =
@@ -49,7 +51,7 @@ Future<DexFarmLock?> _getFarmLockInfos(
               farmGenesisAddress,
               pool,
               dexFarmLockInput!,
-              selectedAccount!.genesisAddress,
+              selectedAccount.genesisAddress,
             );
 
     final rewardTokenPriceInFiat = await ref.watch(

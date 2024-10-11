@@ -32,6 +32,7 @@ class SwapTokenIconSettings extends ConsumerWidget {
             ),
             child: const Icon(
               aedappfm.Iconsax.setting_2,
+              color: Colors.white,
               size: 18,
             ),
           ),
