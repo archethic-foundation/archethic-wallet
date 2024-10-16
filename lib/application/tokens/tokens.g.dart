@@ -6,7 +6,7 @@ part of 'tokens.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tokensListHash() => r'930807d379873e4cbbfeee9a7a35e0407346a0e2';
+String _$tokensListHash() => r'cc3fed6c5d79da2e9c5f14671cd3daaa7878a285';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -205,7 +205,7 @@ class _TokensListProviderElement
   bool get withNotVerified => (origin as TokensListProvider).withNotVerified;
 }
 
-String _$tokensTotalUSDHash() => r'c78720b9a06587a595203d502be85df72d319435';
+String _$tokensTotalUSDHash() => r'534a6eab109c87563637c9e871b87910ca2e51aa';
 
 /// See also [tokensTotalUSD].
 @ProviderFor(tokensTotalUSD)

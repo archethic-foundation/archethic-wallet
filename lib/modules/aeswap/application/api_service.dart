@@ -8,6 +8,6 @@ part 'api_service.g.dart';
 
 @Riverpod(keepAlive: true)
 ApiService apiService(ApiServiceRef ref) {
-  final environment = ref.watch(environmentProvider);
+  final environment = ref.read(environmentProvider);
   return ref.watch(aedappfm.apiServiceProvider(environment));
 }

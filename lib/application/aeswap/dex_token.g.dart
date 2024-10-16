@@ -773,7 +773,7 @@ class _GetRemoveAmountsProviderElement
 }
 
 String _$estimateLPTokenInFiatHash() =>
-    r'446f5d6435ccae998ec397f46aa7d22c85f46dc0';
+    r'45b0b9f29fc3ca1dda0a614c39f46929198f6c6c';
 
 /// See also [_estimateLPTokenInFiat].
 @ProviderFor(_estimateLPTokenInFiat)

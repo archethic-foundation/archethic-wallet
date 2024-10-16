@@ -2,6 +2,7 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/block_info.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
+import 'package:aewallet/ui/views/aeswap_earn/bloc/state.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/farm_lock_block_list_single_line_lock.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -29,10 +30,8 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
-    final summary = ref.watch(farmLockFormSummaryProvider);
     final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
     final pool = ref.watch(farmLockFormPoolProvider).value;
-    const opacity = AppTextStyles.kOpacityText;
     final preferences = ref.watch(SettingsProviders.settings);
 
     return InkWell(
@@ -81,161 +80,19 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Opacity(
-                      opacity: opacity,
-                      child: summary.when(
-                        data: (data) => Row(
-                          children: [
-                            Text(
-                              r'$',
-                              style: Theme.of(context).textTheme.headlineLarge,
-                            ),
-                            AnimatedDigitWidget(
-                              value: data.farmedTokensInFiat,
-                              fractionDigits: 2,
-                              enableSeparator: true,
-                              textStyle:
-                                  Theme.of(context).textTheme.headlineLarge,
-                            ),
-                          ],
-                        ),
-                        error: (_, __) => Text(
-                          r'$0.00',
-                          style: Theme.of(context).textTheme.headlineLarge,
-                        ),
-                        loading: () => const SizedBox(
-                          height: 40,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        Opacity(
-                          opacity: AppTextStyles.kOpacityText,
-                          child: Text(
-                            '${AppLocalizations.of(context)!.farmLockBlockFarmedTokensSummaryCapitalInvestedLbl}: ',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ),
-                        Opacity(
-                          opacity: opacity,
-                          child: summary.when(
-                            data: (data) => Text(
-                              '\$${data.farmedTokensCapitalInFiat.formatNumber(precision: 2)}',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
-                                    color: aedappfm.AppThemeBase.secondaryColor,
-                                  ),
-                            ),
-                            error: (_, __) => Text(
-                              r'$0.00',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
-                                    color: aedappfm.AppThemeBase.secondaryColor,
-                                  ),
-                            ),
-                            loading: () => Text(
-                              r'$0.00',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
-                                    color: aedappfm.AppThemeBase.secondaryColor,
-                                  ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          '${AppLocalizations.of(context)!.farmLockBlockFarmedTokensSummaryCapitalRewardsEarnedLbl}: ',
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                        summary.when(
-                          data: (data) => Text(
-                            '\$${data.farmedTokensRewardsInFiat.formatNumber(precision: 2)}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
-                                  color: aedappfm.AppThemeBase.secondaryColor,
-                                ),
-                          ),
-                          error: (_, __) => Text(
-                            r'$0.00',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
-                                  color: aedappfm.AppThemeBase.secondaryColor,
-                                ),
-                          ),
-                          loading: () => Text(
-                            r'$0.00',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
-                                  color: aedappfm.AppThemeBase.secondaryColor,
-                                ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 3,
-                ),
-                summary.when(
-                  data: (data) => data.farmedTokensRewards > 0
-                      ? Text(
-                          '(= ${data.farmedTokensRewards.formatNumber(precision: 4)} UCO)',
-                          style: Theme.of(context).textTheme.bodySmall,
-                        )
-                      : const SizedBox.shrink(),
-                  error: (_, __) => Text(
-                    '(= ${0.0.formatNumber(precision: 4)} UCO)',
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                  loading: () => Text(
-                    '(= ${0.0.formatNumber(precision: 4)} UCO)',
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
+                FutureBuilder<FarmLockFormSummary>(
+                  future: ref.watch(farmLockFormSummaryProvider.future),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return _blockInfo(context, ref, snapshot.data);
+                    } else if (snapshot.hasError) {
+                      return Text('Error : ${snapshot.error}');
+                    } else if (snapshot.hasData) {
+                      return _blockInfo(context, ref, snapshot.data);
+                    }
+
+                    return const SizedBox.shrink();
+                  },
                 ),
                 const SizedBox(
                   height: 30,
@@ -283,6 +140,148 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _blockInfo(
+    BuildContext context,
+    WidgetRef ref,
+    FarmLockFormSummary? summary,
+  ) {
+    const opacity = AppTextStyles.kOpacityText;
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            Opacity(
+              opacity: opacity,
+              child: Row(
+                children: [
+                  Text(
+                    r'$',
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
+                  if (summary == null)
+                    const Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child: SizedBox(
+                        width: 25,
+                        height: 25,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 1,
+                        ),
+                      ),
+                    )
+                  else
+                    AnimatedDigitWidget(
+                      value: summary.farmedTokensInFiat,
+                      fractionDigits: 2,
+                      enableSeparator: true,
+                      textStyle: Theme.of(context).textTheme.headlineLarge,
+                    ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                Opacity(
+                  opacity: AppTextStyles.kOpacityText,
+                  child: Text(
+                    '${AppLocalizations.of(context)!.farmLockBlockFarmedTokensSummaryCapitalInvestedLbl}: ',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ),
+                Opacity(
+                  opacity: opacity,
+                  child: summary == null
+                      ? const Padding(
+                          padding: EdgeInsets.only(left: 5),
+                          child: SizedBox(
+                            width: 10,
+                            height: 10,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 0.5,
+                            ),
+                          ),
+                        )
+                      : Text(
+                          '\$${summary.farmedTokensCapitalInFiat.formatNumber(precision: 2)}',
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    color: aedappfm.AppThemeBase.secondaryColor,
+                                  ),
+                        ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                Text(
+                  '${AppLocalizations.of(context)!.farmLockBlockFarmedTokensSummaryCapitalRewardsEarnedLbl}: ',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                if (summary == null)
+                  const Padding(
+                    padding: EdgeInsets.only(left: 5),
+                    child: SizedBox(
+                      width: 10,
+                      height: 10,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 0.5,
+                      ),
+                    ),
+                  )
+                else
+                  Text(
+                    '\$${summary.farmedTokensRewardsInFiat.formatNumber(precision: 2)}',
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: aedappfm.AppThemeBase.secondaryColor,
+                        ),
+                  ),
+              ],
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 3,
+        ),
+        if (summary != null)
+          if (summary.farmedTokensRewards > 0)
+            Text(
+              '(= ${summary.farmedTokensRewards.formatNumber(precision: 4)} UCO)',
+              style: Theme.of(context).textTheme.bodySmall,
+            )
+          else
+            const SizedBox.shrink()
+        else
+          const SizedBox.shrink(),
+      ],
     );
   }
 }
