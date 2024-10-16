@@ -72,13 +72,11 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
 
     return InputListener(
       onInput: () {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          ref
-              .read(
-                AuthenticationProviders.authenticationGuard.notifier,
-              )
-              .scheduleAutolock();
-        });
+        ref
+            .read(
+              AuthenticationProviders.authenticationGuard.notifier,
+            )
+            .scheduleAutolock();
       },
       child: Stack(
         children: [
@@ -170,13 +168,7 @@ class InputListener extends StatelessWidget {
         child: Listener(
           onPointerDown: (_) => onInput(),
           onPointerMove: (_) => onInput(),
-          child: NotificationListener<ScrollNotification>(
-            onNotification: (ScrollNotification notification) {
-              onInput();
-              return true;
-            },
-            child: child,
-          ),
+          child: child,
         ),
       );
 }
