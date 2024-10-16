@@ -11,6 +11,7 @@ import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool_infos.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool_tx.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
+import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart';
 import 'package:aewallet/modules/aeswap/domain/repositories/dex_pool.repository.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/dex_pool.repository.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/hive/favorite_pools.hive.dart';
@@ -40,6 +41,7 @@ DexPoolRepository _dexPoolRepository(
 abstract class DexPoolProviders {
   // Pool List
   static final getPoolList = _getPoolListProvider;
+  static final getPoolListRaw = _getPoolListRawProvider;
   static const getPoolListForSearch = _getPoolListForSearchProvider;
 
   // Pool transactions list

@@ -1,3 +1,4 @@
+import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/price_history/providers.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
@@ -44,19 +45,36 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     final primaryCurrency =
         ref.watch(PrimaryCurrencyProviders.selectedPrimaryCurrency);
-    final price = widget.aeToken.isVerified
+    final priceToken =
+        widget.aeToken.isLpToken && widget.aeToken.lpTokenPair != null
+            ? ref
+                    .watch(
+                      DexTokensProviders.estimateLPTokenInFiat(
+                        widget.aeToken.lpTokenPair!.token1.address!,
+                        widget.aeToken.lpTokenPair!.token2.address!,
+                        widget.aeToken.balance,
+                        widget.aeToken.address!,
+                      ),
+                    )
+                    .valueOrNull ??
+                0
+            : ((ref
+                        .watch(
+                          aedappfm.AETokensProviders.estimateTokenInFiat(
+                            widget.aeToken,
+                          ),
+                        )
+                        .valueOrNull ??
+                    0) *
+                widget.aeToken.balance);
+
+    final priceHistory = widget.aeToken.ucid != null && widget.aeToken.ucid != 0
         ? ref
             .watch(
-              aedappfm.AETokensProviders.estimateTokenInFiat(
-                widget.aeToken,
-              ),
+              PriceHistoryProviders.priceHistory(ucid: widget.aeToken.ucid),
             )
             .valueOrNull
-        : 0.0;
-
-    final priceHistory = ref
-        .watch(PriceHistoryProviders.priceHistory(ucid: widget.aeToken.ucid))
-        .valueOrNull;
+        : null;
     return InkWell(
       onTap: () async {
         sl.get<HapticUtil>().feedback(
@@ -315,50 +333,83 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                                               ),
                                             ],
                                           ),
-                                          AutoSizeText(
-                                            minFontSize: 5,
-                                            wrapWords: false,
-                                            '${widget.aeToken.balance.formatNumber(precision: 8)} ${widget.aeToken.balance > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
-                                            style: AppTextStyles.bodyMedium(
-                                              context,
+                                          SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width -
+                                                124,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                AutoSizeText(
+                                                  minFontSize: 5,
+                                                  wrapWords: false,
+                                                  '${widget.aeToken.balance.formatNumber(precision: 8)} ${widget.aeToken.balance > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
+                                                  style:
+                                                      AppTextStyles.bodyMedium(
+                                                    context,
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 5),
+                                                AutoSizeText(
+                                                  minFontSize: 5,
+                                                  wrapWords: false,
+                                                  '\$${priceToken.formatNumber(precision: 2)}',
+                                                  textAlign: TextAlign.center,
+                                                  style:
+                                                      AppTextStyles.bodyMedium(
+                                                    context,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ],
                                       )
                                     else
-                                      Expanded(
-                                        child: AutoSizeText(
-                                          minFontSize: 5,
-                                          overflow: TextOverflow.ellipsis,
-                                          '${widget.aeToken.balance.formatNumber(precision: 8)} ${widget.aeToken.symbol}',
-                                          style:
-                                              AppTextStyles.bodyMedium(context),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width -
+                                                124,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            AutoSizeText(
+                                              minFontSize: 5,
+                                              overflow: TextOverflow.ellipsis,
+                                              '${widget.aeToken.balance.formatNumber(precision: 8)} ${widget.aeToken.symbol.reduceSymbol(lengthMax: 6)}',
+                                              style: AppTextStyles.bodyMedium(
+                                                context,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 5),
+                                            AutoSizeText(
+                                              minFontSize: 5,
+                                              wrapWords: false,
+                                              '\$${priceToken.formatNumber(precision: 2)}',
+                                              textAlign: TextAlign.center,
+                                              style: AppTextStyles.bodyMedium(
+                                                context,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                    const SizedBox(width: 5),
-                                    if (price != null && price > 0)
-                                      AutoSizeText(
-                                        minFontSize: 5,
-                                        wrapWords: false,
-                                        '\$${(widget.aeToken.balance * price).formatNumber(precision: 2)}',
-                                        textAlign: TextAlign.center,
-                                        style:
-                                            AppTextStyles.bodyMedium(context),
                                       ),
                                   ],
                                 )
                               else
                                 Row(
                                   children: [
-                                    if (price != null && price > 0)
-                                      AutoSizeText(
-                                        minFontSize: 5,
-                                        wrapWords: false,
-                                        '\$${(widget.aeToken.balance * price).formatNumber(precision: 2)}',
-                                        textAlign: TextAlign.center,
-                                        style:
-                                            AppTextStyles.bodyMedium(context),
-                                      ),
+                                    AutoSizeText(
+                                      minFontSize: 5,
+                                      wrapWords: false,
+                                      '\$${priceToken.formatNumber(precision: 2)}',
+                                      textAlign: TextAlign.center,
+                                      style: AppTextStyles.bodyMedium(context),
+                                    ),
                                     const SizedBox(width: 5),
                                     if (widget.aeToken.isLpToken)
                                       AutoSizeText(

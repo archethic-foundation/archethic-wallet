@@ -49,14 +49,17 @@ class _AccountNotifier extends _$AccountNotifier {
     return account.updateBalance(environment);
   }
 
-  Future<void> refreshRecentTransactions() => _refresh([
+  Future<void> refreshRecentTransactions(
+    List<GetPoolListResponse> poolsListRaw,
+  ) =>
+      _refresh([
         (account) async {
           _logger.fine(
             'Start method refreshRecentTransactions for ${account.nameDisplayed}',
           );
           await _refreshRecentTransactions(account);
           await _refreshBalance(account);
-          await account.updateFungiblesTokens();
+          await account.updateFungiblesTokens(poolsListRaw);
           await refreshNFTs();
           _logger.fine(
             'End method refreshRecentTransactions for ${account.nameDisplayed}',
@@ -66,9 +69,12 @@ class _AccountNotifier extends _$AccountNotifier {
         },
       ]);
 
-  Future<void> refreshFungibleTokens() => _refresh([
+  Future<void> refreshFungibleTokens(
+    List<GetPoolListResponse> poolsListRaw,
+  ) =>
+      _refresh([
         (account) async {
-          await account.updateFungiblesTokens();
+          await account.updateFungiblesTokens(poolsListRaw);
           ref.invalidate(userBalanceProvider);
         },
       ]);
@@ -94,7 +100,10 @@ class _AccountNotifier extends _$AccountNotifier {
 
   Future<void> refreshBalance() => _refresh([_refreshBalance]);
 
-  Future<void> refreshAll() => _refresh(
+  Future<void> refreshAll(
+    List<GetPoolListResponse> poolsListRaw,
+  ) =>
+      _refresh(
         [
           (account) async {
             _logger.fine('RefreshAll - Start Balance refresh');
@@ -108,7 +117,7 @@ class _AccountNotifier extends _$AccountNotifier {
           },
           (account) async {
             _logger.fine('RefreshAll - Start Fungible Tokens refresh');
-            await account.updateFungiblesTokens();
+            await account.updateFungiblesTokens(poolsListRaw);
             _logger.fine('RefreshAll - End Fungible Tokens refresh');
           },
           (account) async {

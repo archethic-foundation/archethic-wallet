@@ -131,9 +131,11 @@ class TokenDetailSheet extends ConsumerWidget
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final chartInfos = ref
-        .watch(PriceHistoryProviders.priceHistory(ucid: aeToken.ucid))
-        .valueOrNull;
+    final chartInfos = aeToken.ucid != null && aeToken.ucid != 0
+        ? ref
+            .watch(PriceHistoryProviders.priceHistory(ucid: aeToken.ucid))
+            .valueOrNull
+        : null;
 
     return Column(
       children: <Widget>[

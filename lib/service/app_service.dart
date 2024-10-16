@@ -15,12 +15,14 @@ import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/model/transaction_infos.dart';
+import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/number_util.dart';
 import 'package:aewallet/util/queue.dart';
 import 'package:aewallet/util/task.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
@@ -712,7 +714,10 @@ class AppService {
   }
 
   // TODO(reddwarf03): USE PROVIDER
-  Future<List<AccountToken>> getFungiblesTokensList(String address) async {
+  Future<List<AccountToken>> getFungiblesTokensList(
+    String address,
+    List<GetPoolListResponse> poolsListRaw,
+  ) async {
     _logger.info(
       '>> START getFungiblesTokensList : ${DateTime.now()}',
     );
@@ -739,31 +744,36 @@ class AppService {
 
     for (final tokenBalance in balance.token) {
       final token = tokenMap[tokenBalance.address];
+      String? pairSymbolToken1;
+      String? pairSymbolToken2;
+      String? token1Address;
+      String? token2Address;
       if (token != null && token.type == 'fungible') {
         var pairSymbolToken = '';
+        token1Address = null;
+        token2Address = null;
         final tokenSymbolSearch = <String>[];
-        if (token.properties.isNotEmpty &&
-            token.properties['token1_address'] != null &&
-            token.properties['token2_address'] != null) {
-          if (token.properties['token1_address'] != 'UCO') {
-            tokenSymbolSearch.add(token.properties['token1_address']);
-          }
-          if (token.properties['token2_address'] != 'UCO') {
-            tokenSymbolSearch.add(token.properties['token2_address']);
-          }
+        final poolRaw = poolsListRaw.firstWhereOrNull(
+          (item) => item.lpTokenAddress == token.address,
+        );
+        if (poolRaw != null) {
+          token1Address =
+              poolRaw.concatenatedTokensAddresses.split('/')[0].toUpperCase();
+          token2Address =
+              poolRaw.concatenatedTokensAddresses.split('/')[1].toUpperCase();
+          tokenSymbolSearch
+            ..add(token1Address)
+            ..add(token2Address);
           final tokensSymbolMap = await sl.get<AppService>().getToken(
                 tokenSymbolSearch,
               );
-          final pairSymbolToken1 = token.properties['token1_address'] != 'UCO'
-              ? tokensSymbolMap[token.properties['token1_address']] != null
-                  ? tokensSymbolMap[token.properties['token1_address']]!.symbol!
-                  : ''
+          pairSymbolToken1 = token1Address != 'UCO'
+              ? tokensSymbolMap[token1Address]!.symbol!
               : 'UCO';
-          final pairSymbolToken2 = token.properties['token2_address'] != 'UCO'
-              ? tokensSymbolMap[token.properties['token2_address']] != null
-                  ? tokensSymbolMap[token.properties['token2_address']]!.symbol!
-                  : ''
+          pairSymbolToken2 = token2Address != 'UCO'
+              ? tokensSymbolMap[token2Address]!.symbol!
               : 'UCO';
+
           pairSymbolToken = '$pairSymbolToken1/$pairSymbolToken2';
         }
 

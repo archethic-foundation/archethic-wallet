@@ -6,7 +6,7 @@ part of 'provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tokensHash() => r'b88793a04145e56e68cab7b5218f6a5ad4ef9c0e';
+String _$tokensHash() => r'dfa67751dda19dc2e149611ed148260fc5f373c2';
 
 /// Copied from Dart SDK
 class _SystemHash {

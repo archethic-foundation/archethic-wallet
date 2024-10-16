@@ -55,6 +55,30 @@ Future<List<DexPool>> _getPoolList(
 }
 
 @riverpod
+Future<List<GetPoolListResponse>> _getPoolListRaw(
+  _GetPoolListRawRef ref,
+) async {
+  final environment = ref.watch(environmentProvider);
+  final dexConf = await ref.watch(DexConfigProviders.dexConfig.future);
+
+  final resultPoolListRaw = await ref
+      .watch(
+        routerFactoryProvider(
+          dexConf.routerGenesisAddress,
+        ),
+      )
+      .getPoolListRaw(
+        environment,
+      );
+  return resultPoolListRaw.map<List<GetPoolListResponse>>(
+    success: (pools) {
+      return pools;
+    },
+    failure: (failure) => [],
+  );
+}
+
+@riverpod
 List<DexPool> _getPoolListForSearch(
   _GetPoolListForSearchRef ref,
   String searchText,

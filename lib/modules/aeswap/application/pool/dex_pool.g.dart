@@ -716,6 +716,23 @@ final _getPoolListProvider = AutoDisposeFutureProvider<List<DexPool>>.internal(
 );
 
 typedef _GetPoolListRef = AutoDisposeFutureProviderRef<List<DexPool>>;
+String _$getPoolListRawHash() => r'5219064c0f133e3d53abf33ca151424b1cc62be8';
+
+/// See also [_getPoolListRaw].
+@ProviderFor(_getPoolListRaw)
+final _getPoolListRawProvider =
+    AutoDisposeFutureProvider<List<GetPoolListResponse>>.internal(
+  _getPoolListRaw,
+  name: r'_getPoolListRawProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$getPoolListRawHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _GetPoolListRawRef
+    = AutoDisposeFutureProviderRef<List<GetPoolListResponse>>;
 String _$getPoolListForSearchHash() =>
     r'02ca24d5dcfd684c97e91f994e58210a1f326693';
 

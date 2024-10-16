@@ -30,7 +30,7 @@ class TransferTokensListState extends ConsumerState<TransferTokensList>
       ),
     );
     final tokensListAsync = ref.watch(
-      TokensProviders.tokens(
+      TokensListProvider(
         selectedAccount!.genesisAddress,
       ),
     );

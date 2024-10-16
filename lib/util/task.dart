@@ -57,7 +57,7 @@ extension TaskRetry<T> on Task<T> {
 
   /// Makes the [Task] to retry if it fails.
   Task<T> autoRetry({
-    int maxRetries = 3,
+    int maxRetries = 5,
     int Function(int retryCount) retryDelay = _taskDefaultRetryDelay,
   }) =>
       Task(

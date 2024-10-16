@@ -8,6 +8,7 @@ import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
+import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/main/components/menu_widget_wallet.dart';
@@ -70,11 +71,13 @@ class _TransactionsList extends ConsumerWidget {
         if (_connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
           return;
         }
+        final poolListRaw =
+            await ref.watch(DexPoolProviders.getPoolListRaw.future);
 
         await (await ref
                 .read(AccountProviders.accounts.notifier)
                 .selectedAccountNotifier)
-            ?.refreshRecentTransactions();
+            ?.refreshRecentTransactions(poolListRaw);
         ref
           ..invalidate(ContactProviders.fetchContacts)
           ..invalidate(MarketPriceProviders.currencyMarketPrice);

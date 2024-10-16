@@ -10,6 +10,7 @@ import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
+import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/address_formatters.dart';
@@ -107,11 +108,12 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
       icon: Symbols.info,
     );
     await ref.read(sessionNotifierProvider.notifier).refresh();
+    final poolListRaw = await ref.read(DexPoolProviders.getPoolListRaw.future);
 
     await (await ref
             .read(AccountProviders.accounts.notifier)
             .selectedAccountNotifier)
-        ?.refreshRecentTransactions();
+        ?.refreshRecentTransactions(poolListRaw);
 
     if (mounted) {
       context.pop();
@@ -175,11 +177,14 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
               await ref
                   .read(AccountProviders.accounts.notifier)
                   .selectAccount(widget.account);
+              final poolListRaw =
+                  await ref.read(DexPoolProviders.getPoolListRaw.future);
+
               await ref
                   .read(
                     AccountProviders.account(widget.account.name).notifier,
                   )
-                  .refreshRecentTransactions();
+                  .refreshRecentTransactions(poolListRaw);
 
               context
                 ..pop()

@@ -82,7 +82,7 @@ class SessionNotifier extends _$SessionNotifier {
     await _appWalletDatasource.clearAppWallet();
     await CacheManagerHive.clear();
     await Vault.instance().clearSecureKey();
-
+    ref.invalidate(environmentProvider);
     state = const Session.loggedOut();
   }
 

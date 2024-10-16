@@ -6,6 +6,7 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/address_formatters.dart';
@@ -211,6 +212,8 @@ class _ContactDetailBody extends ConsumerWidget {
                           contact: contact,
                         ),
                       );
+                      final poolListRaw = await ref
+                          .read(DexPoolProviders.getPoolListRaw.future);
 
                       unawaited(
                         (await ref
@@ -218,7 +221,7 @@ class _ContactDetailBody extends ConsumerWidget {
                                   AccountProviders.accounts.notifier,
                                 )
                                 .selectedAccountNotifier)
-                            ?.refreshRecentTransactions(),
+                            ?.refreshRecentTransactions(poolListRaw),
                       );
                       UIUtil.showSnackbar(
                         localizations.contactRemoved.replaceAll(

@@ -5,6 +5,7 @@ import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/farm_lock_block_list_single_line_lock.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
+import 'package:animated_digit/animated_digit.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -89,20 +90,27 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
                     Opacity(
                       opacity: opacity,
                       child: summary.when(
-                        data: (data) => Text(
-                          '\$${data.farmedTokensInFiat.formatNumber(precision: 2)}',
-                          style: Theme.of(context).textTheme.headlineLarge,
+                        data: (data) => Row(
+                          children: [
+                            Text(
+                              r'$',
+                              style: Theme.of(context).textTheme.headlineLarge,
+                            ),
+                            AnimatedDigitWidget(
+                              value: data.farmedTokensInFiat,
+                              fractionDigits: 2,
+                              enableSeparator: true,
+                              textStyle:
+                                  Theme.of(context).textTheme.headlineLarge,
+                            ),
+                          ],
                         ),
                         error: (_, __) => Text(
                           r'$0.00',
                           style: Theme.of(context).textTheme.headlineLarge,
                         ),
                         loading: () => const SizedBox(
-                          width: 30,
-                          height: 30,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 1,
-                          ),
+                          height: 40,
                         ),
                       ),
                     ),

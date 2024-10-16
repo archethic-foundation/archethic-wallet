@@ -6,23 +6,7 @@ part of 'tokens.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tokensRepositoryHash() => r'5cc0db4d69a3236018a99f5219f9cfb4421776d1';
-
-/// See also [_tokensRepository].
-@ProviderFor(_tokensRepository)
-final _tokensRepositoryProvider =
-    AutoDisposeProvider<TokensRepository>.internal(
-  _tokensRepository,
-  name: r'_tokensRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$tokensRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _TokensRepositoryRef = AutoDisposeProviderRef<TokensRepository>;
-String _$tokensHash() => r'4a5c69c7b28420306454f7f216c54a91acadf18e';
+String _$tokensListHash() => r'930807d379873e4cbbfeee9a7a35e0407346a0e2';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -45,23 +29,23 @@ class _SystemHash {
   }
 }
 
-/// See also [_tokens].
-@ProviderFor(_tokens)
-const _tokensProvider = _TokensFamily();
+/// See also [tokensList].
+@ProviderFor(tokensList)
+const tokensListProvider = TokensListFamily();
 
-/// See also [_tokens].
-class _TokensFamily extends Family<AsyncValue<List<AEToken>>> {
-  /// See also [_tokens].
-  const _TokensFamily();
+/// See also [tokensList].
+class TokensListFamily extends Family<AsyncValue<List<AEToken>>> {
+  /// See also [tokensList].
+  const TokensListFamily();
 
-  /// See also [_tokens].
-  _TokensProvider call(
+  /// See also [tokensList].
+  TokensListProvider call(
     String userGenesisAddress, {
     bool withVerified = true,
     bool withLPToken = true,
     bool withNotVerified = true,
   }) {
-    return _TokensProvider(
+    return TokensListProvider(
       userGenesisAddress,
       withVerified: withVerified,
       withLPToken: withLPToken,
@@ -70,8 +54,8 @@ class _TokensFamily extends Family<AsyncValue<List<AEToken>>> {
   }
 
   @override
-  _TokensProvider getProviderOverride(
-    covariant _TokensProvider provider,
+  TokensListProvider getProviderOverride(
+    covariant TokensListProvider provider,
   ) {
     return call(
       provider.userGenesisAddress,
@@ -93,40 +77,41 @@ class _TokensFamily extends Family<AsyncValue<List<AEToken>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'_tokensProvider';
+  String? get name => r'tokensListProvider';
 }
 
-/// See also [_tokens].
-class _TokensProvider extends AutoDisposeFutureProvider<List<AEToken>> {
-  /// See also [_tokens].
-  _TokensProvider(
+/// See also [tokensList].
+class TokensListProvider extends AutoDisposeFutureProvider<List<AEToken>> {
+  /// See also [tokensList].
+  TokensListProvider(
     String userGenesisAddress, {
     bool withVerified = true,
     bool withLPToken = true,
     bool withNotVerified = true,
   }) : this._internal(
-          (ref) => _tokens(
-            ref as _TokensRef,
+          (ref) => tokensList(
+            ref as TokensListRef,
             userGenesisAddress,
             withVerified: withVerified,
             withLPToken: withLPToken,
             withNotVerified: withNotVerified,
           ),
-          from: _tokensProvider,
-          name: r'_tokensProvider',
+          from: tokensListProvider,
+          name: r'tokensListProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$tokensHash,
-          dependencies: _TokensFamily._dependencies,
-          allTransitiveDependencies: _TokensFamily._allTransitiveDependencies,
+                  : _$tokensListHash,
+          dependencies: TokensListFamily._dependencies,
+          allTransitiveDependencies:
+              TokensListFamily._allTransitiveDependencies,
           userGenesisAddress: userGenesisAddress,
           withVerified: withVerified,
           withLPToken: withLPToken,
           withNotVerified: withNotVerified,
         );
 
-  _TokensProvider._internal(
+  TokensListProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -146,12 +131,12 @@ class _TokensProvider extends AutoDisposeFutureProvider<List<AEToken>> {
 
   @override
   Override overrideWith(
-    FutureOr<List<AEToken>> Function(_TokensRef provider) create,
+    FutureOr<List<AEToken>> Function(TokensListRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: _TokensProvider._internal(
-        (ref) => create(ref as _TokensRef),
+      override: TokensListProvider._internal(
+        (ref) => create(ref as TokensListRef),
         from: from,
         name: null,
         dependencies: null,
@@ -167,12 +152,12 @@ class _TokensProvider extends AutoDisposeFutureProvider<List<AEToken>> {
 
   @override
   AutoDisposeFutureProviderElement<List<AEToken>> createElement() {
-    return _TokensProviderElement(this);
+    return _TokensListProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is _TokensProvider &&
+    return other is TokensListProvider &&
         other.userGenesisAddress == userGenesisAddress &&
         other.withVerified == withVerified &&
         other.withLPToken == withLPToken &&
@@ -191,7 +176,7 @@ class _TokensProvider extends AutoDisposeFutureProvider<List<AEToken>> {
   }
 }
 
-mixin _TokensRef on AutoDisposeFutureProviderRef<List<AEToken>> {
+mixin TokensListRef on AutoDisposeFutureProviderRef<List<AEToken>> {
   /// The parameter `userGenesisAddress` of this provider.
   String get userGenesisAddress;
 
@@ -205,19 +190,149 @@ mixin _TokensRef on AutoDisposeFutureProviderRef<List<AEToken>> {
   bool get withNotVerified;
 }
 
-class _TokensProviderElement
-    extends AutoDisposeFutureProviderElement<List<AEToken>> with _TokensRef {
-  _TokensProviderElement(super.provider);
+class _TokensListProviderElement
+    extends AutoDisposeFutureProviderElement<List<AEToken>> with TokensListRef {
+  _TokensListProviderElement(super.provider);
 
   @override
   String get userGenesisAddress =>
-      (origin as _TokensProvider).userGenesisAddress;
+      (origin as TokensListProvider).userGenesisAddress;
   @override
-  bool get withVerified => (origin as _TokensProvider).withVerified;
+  bool get withVerified => (origin as TokensListProvider).withVerified;
   @override
-  bool get withLPToken => (origin as _TokensProvider).withLPToken;
+  bool get withLPToken => (origin as TokensListProvider).withLPToken;
   @override
-  bool get withNotVerified => (origin as _TokensProvider).withNotVerified;
+  bool get withNotVerified => (origin as TokensListProvider).withNotVerified;
+}
+
+String _$tokensTotalUSDHash() => r'c78720b9a06587a595203d502be85df72d319435';
+
+/// See also [tokensTotalUSD].
+@ProviderFor(tokensTotalUSD)
+const tokensTotalUSDProvider = TokensTotalUSDFamily();
+
+/// See also [tokensTotalUSD].
+class TokensTotalUSDFamily extends Family<AsyncValue<double>> {
+  /// See also [tokensTotalUSD].
+  const TokensTotalUSDFamily();
+
+  /// See also [tokensTotalUSD].
+  TokensTotalUSDProvider call(
+    String userGenesisAddress,
+  ) {
+    return TokensTotalUSDProvider(
+      userGenesisAddress,
+    );
+  }
+
+  @override
+  TokensTotalUSDProvider getProviderOverride(
+    covariant TokensTotalUSDProvider provider,
+  ) {
+    return call(
+      provider.userGenesisAddress,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'tokensTotalUSDProvider';
+}
+
+/// See also [tokensTotalUSD].
+class TokensTotalUSDProvider extends AutoDisposeFutureProvider<double> {
+  /// See also [tokensTotalUSD].
+  TokensTotalUSDProvider(
+    String userGenesisAddress,
+  ) : this._internal(
+          (ref) => tokensTotalUSD(
+            ref as TokensTotalUSDRef,
+            userGenesisAddress,
+          ),
+          from: tokensTotalUSDProvider,
+          name: r'tokensTotalUSDProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$tokensTotalUSDHash,
+          dependencies: TokensTotalUSDFamily._dependencies,
+          allTransitiveDependencies:
+              TokensTotalUSDFamily._allTransitiveDependencies,
+          userGenesisAddress: userGenesisAddress,
+        );
+
+  TokensTotalUSDProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.userGenesisAddress,
+  }) : super.internal();
+
+  final String userGenesisAddress;
+
+  @override
+  Override overrideWith(
+    FutureOr<double> Function(TokensTotalUSDRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: TokensTotalUSDProvider._internal(
+        (ref) => create(ref as TokensTotalUSDRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        userGenesisAddress: userGenesisAddress,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<double> createElement() {
+    return _TokensTotalUSDProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is TokensTotalUSDProvider &&
+        other.userGenesisAddress == userGenesisAddress;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, userGenesisAddress.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin TokensTotalUSDRef on AutoDisposeFutureProviderRef<double> {
+  /// The parameter `userGenesisAddress` of this provider.
+  String get userGenesisAddress;
+}
+
+class _TokensTotalUSDProviderElement
+    extends AutoDisposeFutureProviderElement<double> with TokensTotalUSDRef {
+  _TokensTotalUSDProviderElement(super.provider);
+
+  @override
+  String get userGenesisAddress =>
+      (origin as TokensTotalUSDProvider).userGenesisAddress;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

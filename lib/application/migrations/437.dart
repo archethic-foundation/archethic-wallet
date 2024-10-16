@@ -18,10 +18,13 @@ final migration_437 = LocalDataMigration(
     final selectedAccount =
         await ref.read(AccountProviders.accounts.future).selectedAccount;
     if (selectedAccount != null) {
+      final poolListRaw =
+          await ref.read(DexPoolProviders.getPoolListRaw.future);
+
       await (await ref
               .read(AccountProviders.accounts.notifier)
               .selectedAccountNotifier)
-          ?.refreshAll();
+          ?.refreshAll(poolListRaw);
     }
   },
 );

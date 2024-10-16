@@ -328,11 +328,12 @@ class _SyncBlockchainSettingsListItem extends ConsumerWidget {
             );
             await cache.clear();
             await TokensListHiveDatasource.clear();
-
+            final poolListRaw =
+                await ref.watch(DexPoolProviders.getPoolListRaw.future);
             await (await ref
                     .read(AccountProviders.accounts.notifier)
                     .selectedAccountNotifier)
-                ?.refreshRecentTransactions();
+                ?.refreshRecentTransactions(poolListRaw);
           },
         );
       },

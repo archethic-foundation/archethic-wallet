@@ -1,10 +1,12 @@
 import 'package:aewallet/domain/repositories/tokens/tokens.repository.dart';
 import 'package:aewallet/infrastructure/datasources/tokens_list.hive.dart';
 import 'package:aewallet/infrastructure/datasources/wallet_token_dto.hive.dart';
+import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
+import 'package:collection/collection.dart';
 
 class TokensRepositoryImpl implements TokensRepository {
   @override
@@ -60,6 +62,7 @@ class TokensRepositoryImpl implements TokensRepository {
   Future<List<AEToken>> getTokensList(
     String userGenesisAddress,
     archethic.ApiService apiService,
+    List<GetPoolListResponse> poolsListRaw,
     Environment environment, {
     bool withVerified = true,
     bool withLPToken = true,
@@ -110,54 +113,66 @@ class TokensRepositoryImpl implements TokensRepository {
         String? pairSymbolToken2;
         AEToken? defPairSymbolToken1;
         AEToken? defPairSymbolToken2;
+        String? token1Address;
+        String? token2Address;
         final token = tokenMap[tokenBalance.address];
         if (token != null && token.type == 'fungible') {
           final tokenSymbolSearch = <String>[];
-          if (token.properties.isNotEmpty &&
-              token.properties['token1_address'] != null &&
-              token.properties['token2_address'] != null) {
-            if (token.properties['token1_address'] != 'UCO') {
-              tokenSymbolSearch.add(token.properties['token1_address']);
-            }
-            if (token.properties['token2_address'] != 'UCO') {
-              tokenSymbolSearch.add(token.properties['token2_address']);
-            }
-            final tokensSymbolMap = await getToken(
-              tokenSymbolSearch,
-              apiService,
+          final isLPToken =
+              poolsListRaw.any((item) => item.lpTokenAddress == token.address);
+          token1Address = null;
+          token2Address = null;
+          if (isLPToken) {
+            final GetPoolListResponse? poolRaw = poolsListRaw.firstWhereOrNull(
+              (item) => item.lpTokenAddress == token.address,
             );
-            pairSymbolToken1 = token.properties['token1_address'] != 'UCO'
-                ? tokensSymbolMap[token.properties['token1_address']] != null
-                    ? tokensSymbolMap[token.properties['token1_address']]!
-                        .symbol!
-                    : ''
-                : 'UCO';
-            pairSymbolToken2 = token.properties['token2_address'] != 'UCO'
-                ? tokensSymbolMap[token.properties['token2_address']] != null
-                    ? tokensSymbolMap[token.properties['token2_address']]!
-                        .symbol!
-                    : ''
-                : 'UCO';
+            if (poolRaw != null) {
+              token1Address = poolRaw.concatenatedTokensAddresses
+                  .split('/')[0]
+                  .toUpperCase();
+              token2Address = poolRaw.concatenatedTokensAddresses
+                  .split('/')[1]
+                  .toUpperCase();
+              if (token1Address != 'UCO') {
+                tokenSymbolSearch.add(token1Address);
+              }
+              if (token2Address != 'UCO') {
+                tokenSymbolSearch.add(token2Address);
+              }
+
+              final tokensSymbolMap = await getToken(
+                tokenSymbolSearch,
+                apiService,
+              );
+              pairSymbolToken1 = token1Address != 'UCO'
+                  ? tokensSymbolMap[token1Address]!.symbol!
+                  : 'UCO';
+              pairSymbolToken2 = token2Address != 'UCO'
+                  ? tokensSymbolMap[token2Address]!.symbol!
+                  : 'UCO';
+
+              final futureToken1 =
+                  aedappfm.DefTokensRepositoryImpl().getDefToken(
+                environment,
+                token1Address,
+              );
+
+              final futureToken2 =
+                  aedappfm.DefTokensRepositoryImpl().getDefToken(
+                environment,
+                token2Address,
+              );
+
+              final results = await Future.wait([futureToken1, futureToken2]);
+
+              defPairSymbolToken1 = results[0];
+              defPairSymbolToken2 = results[1];
+            }
           }
 
           final defToken = await aedappfm.DefTokensRepositoryImpl()
               .getDefToken(environment, token.address!.toUpperCase());
 
-          if (token.properties['token1_address'] != null) {
-            defPairSymbolToken1 =
-                await aedappfm.DefTokensRepositoryImpl().getDefToken(
-              environment,
-              token.properties['token1_address'].toUpperCase(),
-            );
-          }
-
-          if (token.properties['token2_address'] != null) {
-            defPairSymbolToken2 =
-                await aedappfm.DefTokensRepositoryImpl().getDefToken(
-              environment,
-              token.properties['token2_address'].toUpperCase(),
-            );
-          }
           final aeToken = AEToken(
             name: defToken?.name ?? '',
             address: token.address!.toUpperCase(),
@@ -173,14 +188,14 @@ class TokensRepositoryImpl implements TokensRepository {
                 ? aedappfm.AETokenPair(
                     token1: AEToken(
                       symbol: pairSymbolToken1,
-                      address: token.properties['token1_address'],
+                      address: token1Address,
                       name: defPairSymbolToken1?.name ?? '',
                       icon: defPairSymbolToken1?.icon,
                       ucid: defPairSymbolToken1?.ucid,
                     ),
                     token2: AEToken(
                       symbol: pairSymbolToken2,
-                      address: token.properties['token2_address'],
+                      address: token2Address,
                       name: defPairSymbolToken2?.name ?? '',
                       icon: defPairSymbolToken2?.icon,
                       ucid: defPairSymbolToken2?.ucid,

@@ -23,7 +23,7 @@ Future<List<AEToken>> _tokens(
         if (selectedAccount == null) return [];
 
         final tokensList = await ref.watch(
-          TokensProviders.tokens(
+          TokensListProvider(
             selectedAccount.genesisAddress,
             withVerified: withVerified,
             withLPToken: withLPToken,

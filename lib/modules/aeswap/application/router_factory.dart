@@ -76,6 +76,32 @@ class RouterFactory with ModelParser {
     );
   }
 
+  /// Return the raw infos of the pools list.
+  Future<aedappfm.Result<List<GetPoolListResponse>, aedappfm.Failure>>
+      getPoolListRaw(
+    aedappfm.Environment environment,
+  ) async {
+    return aedappfm.Result.guard(() async {
+      final getPooListResponseRaw = await apiService.callSCFunction(
+        jsonRPCRequest: SCCallFunctionRequest(
+          method: 'contract_fun',
+          params: SCCallFunctionParams(
+            contract: factoryAddress.toUpperCase(),
+            function: 'get_pool_list',
+            args: [],
+          ),
+        ),
+        resultMap: true,
+      ) as List<dynamic>;
+      final getPoolListResponse =
+          getPooListResponseRaw.map<GetPoolListResponse>((getPoolResponse) {
+        return GetPoolListResponse.fromJson(getPoolResponse);
+      });
+
+      return getPoolListResponse.toList();
+    });
+  }
+
   /// Return the infos of all the pools.
   Future<aedappfm.Result<List<DexPool>, aedappfm.Failure>> getPoolList(
     aedappfm.Environment environment,
