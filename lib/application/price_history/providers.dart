@@ -20,7 +20,7 @@ Future<List<PriceHistoryValue>?> _priceHistory(
   _PriceHistoryRef ref, {
   int? ucid,
 }) async {
-  if (ucid == null) return null;
+  if (ucid == null || ucid == 0) return null;
   final scaleOption = ref.watch(_intervalOptionProvider);
   return ref
       .watch(_repositoryProvider)

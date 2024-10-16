@@ -4,6 +4,7 @@ import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/refresh_in_progress.dart';
 import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/ui/views/receive/receive_modal.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
@@ -165,11 +166,13 @@ class MenuWidgetWallet extends ConsumerWidget {
                       ConnectivityStatus.isDisconnected) {
                     return;
                   }
+                  final poolListRaw =
+                      await ref.read(DexPoolProviders.getPoolListRaw.future);
 
                   await (await ref
                           .read(AccountProviders.accounts.notifier)
                           .selectedAccountNotifier)
-                      ?.refreshRecentTransactions();
+                      ?.refreshRecentTransactions(poolListRaw);
 
                   if (context.mounted) {
                     ref

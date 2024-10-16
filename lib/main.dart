@@ -267,12 +267,22 @@ class SplashState extends ConsumerState<Splash> {
     await ref
         .read(LocalDataMigrationProviders.localDataMigration.notifier)
         .migrateLocalData();
-
+    await ref
+        .read(
+          aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.notifier,
+        )
+        .startSubscription();
+    await ref
+        .read(
+          aedappfm.CoinPriceProviders.coinPrices.notifier,
+        )
+        .startTimer();
     final locale = ref.read(LanguageProviders.selectedLocale);
     await ref.read(SettingsProviders.settings.notifier).initialize(locale);
     await ref.read(AuthenticationProviders.settings.notifier).initialize();
     ref
       ..watch(DexPoolProviders.getPoolList)
+      ..watch(DexPoolProviders.getPoolListRaw)
       ..watch(DexTokensProviders.tokensCommonBases)
       ..watch(verifiedTokensProvider)
       ..watch(DexTokensProviders.tokensFromAccount)

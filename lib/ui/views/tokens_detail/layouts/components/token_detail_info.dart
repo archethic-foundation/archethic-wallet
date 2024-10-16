@@ -1,3 +1,4 @@
+import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/widgets/tokens/verified_token_icon.dart';
@@ -20,11 +21,27 @@ class TokenDetailInfo extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(SettingsProviders.settings);
-    final price = ref.watch(
-      aedappfm.AETokensProviders.estimateTokenInFiat(
-        aeToken,
-      ),
-    );
+    final priceToken = aeToken.isLpToken && aeToken.lpTokenPair != null
+        ? ref
+                .watch(
+                  DexTokensProviders.estimateLPTokenInFiat(
+                    aeToken.lpTokenPair!.token1.address!,
+                    aeToken.lpTokenPair!.token2.address!,
+                    aeToken.balance,
+                    aeToken.address!,
+                  ),
+                )
+                .valueOrNull ??
+            0
+        : ((ref
+                    .watch(
+                      aedappfm.AETokensProviders.estimateTokenInFiat(
+                        aeToken,
+                      ),
+                    )
+                    .valueOrNull ??
+                0) *
+            aeToken.balance);
     return Column(
       children: [
         if (aeToken.isLpToken)
@@ -152,11 +169,7 @@ class TokenDetailInfo extends ConsumerWidget {
               ),
               const SizedBox(width: 5),
               AutoSizeText(
-                price.maybeWhen(
-                  data: (data) =>
-                      '\$${(aeToken.balance * data).formatNumber(precision: 2)}',
-                  orElse: () => '...',
-                ),
+                '\$${priceToken.formatNumber(precision: 2)}',
                 style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),
             ],

@@ -9,6 +9,7 @@ import 'package:aewallet/application/recovery_phrase_saved.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/data/account.dart';
+import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -174,11 +175,14 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                 await _accountsDialog(
                   newSession.wallet.appKeychain.accounts,
                 );
+                final poolListRaw =
+                    await ref.read(DexPoolProviders.getPoolListRaw.future);
+
                 unawaited(
                   (await ref
                           .read(AccountProviders.accounts.notifier)
                           .selectedAccountNotifier)
-                      ?.refreshAll(),
+                      ?.refreshAll(poolListRaw),
                 );
                 ref.read(
                   RecoveryPhraseSavedProvider.setRecoveryPhraseSaved(true),

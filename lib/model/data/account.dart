@@ -9,6 +9,7 @@ import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/nft_infos_off_chain.dart';
+import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -150,9 +151,13 @@ class Account extends HiveObject with KeychainServiceMixin {
     await updateAccount();
   }
 
-  Future<void> updateFungiblesTokens() async {
-    accountTokens =
-        await sl.get<AppService>().getFungiblesTokensList(lastAddress!);
+  Future<void> updateFungiblesTokens(
+    List<GetPoolListResponse> poolsListRaw,
+  ) async {
+    accountTokens = await sl.get<AppService>().getFungiblesTokensList(
+          lastAddress!,
+          poolsListRaw,
+        );
     await updateAccount();
   }
 
@@ -233,7 +238,7 @@ class Account extends HiveObject with KeychainServiceMixin {
           accountBalance.tokensFungiblesNb++;
 
           final ucidsToken = ucidsTokens[token.address];
-          if (ucidsToken != null && cryptoPrice != null) {
+          if (ucidsToken != null && ucidsToken != 0 && cryptoPrice != null) {
             final amountTokenUSD =
                 (Decimal.parse(fromBigInt(token.amount).toString()) *
                         Decimal.parse(

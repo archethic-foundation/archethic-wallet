@@ -28,10 +28,13 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
     final amount = task.data.amountSwapped as double;
 
     unawaited(() async {
+      final poolListRaw =
+          await ref.read(DexPoolProviders.getPoolListRaw.future);
+
       await (await ref
               .read(AccountProviders.accounts.notifier)
               .selectedAccountNotifier)
-          ?.refreshRecentTransactions();
+          ?.refreshRecentTransactions(poolListRaw);
     }());
 
     return TaskNotificationPopup.success(
@@ -79,10 +82,12 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
     final amount = task.data.amount as double;
 
     unawaited(() async {
+      final poolListRaw =
+          await ref.read(DexPoolProviders.getPoolListRaw.future);
       await (await ref
               .read(AccountProviders.accounts.notifier)
               .selectedAccountNotifier)
-          ?.refreshRecentTransactions();
+          ?.refreshRecentTransactions(poolListRaw);
     }());
 
     return TaskNotificationPopup.success(
@@ -132,10 +137,12 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
     final amountLPToken = task.data.amountLPToken as double;
 
     unawaited(() async {
+      final poolListRaw =
+          await ref.read(DexPoolProviders.getPoolListRaw.future);
       await (await ref
               .read(AccountProviders.accounts.notifier)
               .selectedAccountNotifier)
-          ?.refreshRecentTransactions();
+          ?.refreshRecentTransactions(poolListRaw);
     }());
 
     return TaskNotificationPopup.success(
@@ -188,10 +195,12 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
     }
 
     unawaited(() async {
+      final poolListRaw =
+          await ref.read(DexPoolProviders.getPoolListRaw.future);
       await (await ref
               .read(AccountProviders.accounts.notifier)
               .selectedAccountNotifier)
-          ?.refreshRecentTransactions();
+          ?.refreshRecentTransactions(poolListRaw);
     }());
 
     final amount = task.data.amount as double;
@@ -239,10 +248,12 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
     }
 
     unawaited(() async {
+      final poolListRaw =
+          await ref.read(DexPoolProviders.getPoolListRaw.future);
       await (await ref
               .read(AccountProviders.accounts.notifier)
               .selectedAccountNotifier)
-          ?.refreshRecentTransactions();
+          ?.refreshRecentTransactions(poolListRaw);
     }());
 
     final amount = task.data.amount as double;
@@ -290,10 +301,12 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
     }
 
     unawaited(() async {
+      final poolListRaw =
+          await ref.read(DexPoolProviders.getPoolListRaw.future);
       await (await ref
               .read(AccountProviders.accounts.notifier)
               .selectedAccountNotifier)
-          ?.refreshRecentTransactions();
+          ?.refreshRecentTransactions(poolListRaw);
     }());
 
     final amount = task.data.amount as double;
@@ -344,10 +357,12 @@ class TaskNotificationPopup with _$TaskNotificationPopup {
     final isFarmClose = task.data.isFarmClose as bool;
 
     unawaited(() async {
+      final poolListRaw =
+          await ref.read(DexPoolProviders.getPoolListRaw.future);
       await (await ref
               .read(AccountProviders.accounts.notifier)
               .selectedAccountNotifier)
-          ?.refreshRecentTransactions();
+          ?.refreshRecentTransactions(poolListRaw);
     }());
 
     return TaskNotificationPopup.success(

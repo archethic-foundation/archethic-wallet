@@ -5,6 +5,7 @@ import 'dart:async';
 // Project imports:
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
+import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -131,19 +132,20 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet>
               ?.refreshNFTs(),
         );
       }
-
+      final poolListRaw =
+          await ref.read(DexPoolProviders.getPoolListRaw.future);
       unawaited(
         (await ref
                 .read(AccountProviders.accounts.notifier)
                 .selectedAccountNotifier)
-            ?.refreshRecentTransactions(),
+            ?.refreshRecentTransactions(poolListRaw),
       );
       if (transfer.transferType == TransferType.token) {
         unawaited(
           (await ref
                   .read(AccountProviders.accounts.notifier)
                   .selectedAccountNotifier)
-              ?.refreshFungibleTokens(),
+              ?.refreshFungibleTokens(poolListRaw),
         );
       }
     } finally {

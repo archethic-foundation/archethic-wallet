@@ -8,6 +8,7 @@ import 'package:aewallet/domain/rpc/commands/command.dart';
 import 'package:aewallet/domain/rpc/failure.dart';
 import 'package:aewallet/infrastructure/repositories/transaction/archethic_transaction.dart';
 import 'package:aewallet/infrastructure/repositories/transaction/transaction_keychain_builder.dart';
+import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/window_util_desktop.dart'
     if (dart.library.js) 'package:aewallet/ui/util/window_util_web.dart';
@@ -110,11 +111,12 @@ class RemoveServiceHandler extends CommandHandler {
                         await ref
                             .read(sessionNotifierProvider.notifier)
                             .refresh();
-
+                        final poolListRaw = await ref
+                            .read(DexPoolProviders.getPoolListRaw.future);
                         await (await ref
                                 .read(AccountProviders.accounts.notifier)
                                 .selectedAccountNotifier)
-                            ?.refreshRecentTransactions();
+                            ?.refreshRecentTransactions(poolListRaw);
                       }
                     });
 

@@ -72,6 +72,7 @@ Future<String?> _getTokenIcon(
   return tokenDescription?.icon;
 }
 
+// TODO(reddwarf03): Doublon with ae_token.dart in aedappfm (ae_token is perhaps obsolete now)
 @riverpod
 Future<double> _estimateTokenInFiat(
   _EstimateTokenInFiatRef ref,
@@ -136,7 +137,7 @@ Future<double> _estimateLPTokenInFiat(
       .watch(DexTokensProviders.estimateTokenInFiat(token2Address).future);
 
   if (fiatValueToken1 == 0 && fiatValueToken2 == 0) {
-    throw Exception();
+    return 0;
   }
 
   final amounts = await ref.watch(
