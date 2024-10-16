@@ -323,10 +323,13 @@ class _PinScreenState extends ConsumerState<PinScreen>
 
   @override
   Widget build(BuildContext context) {
-    return SheetSkeleton(
-      appBar: getAppBar(context, ref),
-      floatingActionButton: getFloatingActionButton(context, ref),
-      sheetContent: getSheetContent(context, ref),
+    return PopScope(
+      canPop: widget.canNavigateBack,
+      child: SheetSkeleton(
+        appBar: getAppBar(context, ref),
+        floatingActionButton: getFloatingActionButton(context, ref),
+        sheetContent: getSheetContent(context, ref),
+      ),
     );
   }
 
