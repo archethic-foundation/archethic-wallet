@@ -213,83 +213,86 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
     Animation<double> animation,
     Animation<double> secondaryAnimation,
   ) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      drawerEdgeDragWidth: 0,
-      resizeToAvoidBottomInset: false,
-      extendBody: true,
-      extendBodyBehindAppBar: true,
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          SizedBox.expand(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                    ArchethicTheme.backgroundWelcome,
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        drawerEdgeDragWidth: 0,
+        resizeToAvoidBottomInset: false,
+        extendBody: true,
+        extendBodyBehindAppBar: true,
+        body: Stack(
+          alignment: Alignment.center,
+          children: [
+            SizedBox.expand(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(
+                      ArchethicTheme.backgroundWelcome,
+                    ),
+                    fit: kIsWeb ? BoxFit.cover : BoxFit.fitHeight,
+                    alignment: Alignment.centerRight,
                   ),
-                  fit: kIsWeb ? BoxFit.cover : BoxFit.fitHeight,
-                  alignment: Alignment.centerRight,
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 30),
-            child: SizedBox(
-              width: 180,
-              height: 180,
-              child: CircularProgressIndicator(
-                color: ArchethicTheme.text30,
-                strokeWidth: 1,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 30),
+              child: SizedBox(
+                width: 180,
+                height: 180,
+                child: CircularProgressIndicator(
+                  color: ArchethicTheme.text30,
+                  strokeWidth: 1,
+                ),
               ),
             ),
-          ),
-          /*Opacity(
-            opacity: 0.8,
-            child: LitStarfieldContainer(
-              velocity: 0.2,
-              number: 600,
-              starColor: ArchethicThemeBase.neutral0,
-              scale: 3,
-              backgroundDecoration: const BoxDecoration(
-                color: Colors.transparent,
+            /*Opacity(
+              opacity: 0.8,
+              child: LitStarfieldContainer(
+                velocity: 0.2,
+                number: 600,
+                starColor: ArchethicThemeBase.neutral0,
+                scale: 3,
+                backgroundDecoration: const BoxDecoration(
+                  color: Colors.transparent,
+                ),
               ),
             ),
-          ),
-          Opacity(
-            opacity: 0.3,
-            child: LitStarfieldContainer(
-              velocity: 0.5,
-              number: 300,
-              scale: 6,
-              starColor: ArchethicThemeBase.blue600,
-              backgroundDecoration: const BoxDecoration(
-                color: Colors.transparent,
+            Opacity(
+              opacity: 0.3,
+              child: LitStarfieldContainer(
+                velocity: 0.5,
+                number: 300,
+                scale: 6,
+                starColor: ArchethicThemeBase.blue600,
+                backgroundDecoration: const BoxDecoration(
+                  color: Colors.transparent,
+                ),
               ),
+            ),*/
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  '${ArchethicTheme.assetsFolder}logo_crystal.png',
+                  width: 200,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  title != null
+                      ? title!
+                      : AppLocalizations.of(context)!.pleaseWait,
+                  textAlign: TextAlign.center,
+                  style: ArchethicThemeStyles.textStyleSize16W600Primary,
+                ),
+              ],
             ),
-          ),*/
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                '${ArchethicTheme.assetsFolder}logo_crystal.png',
-                width: 200,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                title != null
-                    ? title!
-                    : AppLocalizations.of(context)!.pleaseWait,
-                textAlign: TextAlign.center,
-                style: ArchethicThemeStyles.textStyleSize16W600Primary,
-              ),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
