@@ -77,6 +77,39 @@ bool _vaultLocked(_VaultLockedRef ref) {
   return Vault.instance().isLocked.value;
 }
 
+@Riverpod(keepAlive: true)
+Future<DateTime?> _lockDate(_LockDateRef ref) async {
+  final lastInteractionDate = await ref.watch(
+    _lastInteractionDateNotifierProvider.future,
+  );
+
+  final lockTimeout = ref.watch(
+    AuthenticationProviders.settings.select(
+      (settings) => settings.lockTimeout.duration,
+    ),
+  );
+
+  /// Lock without delay only applies to application startup.
+  /// That lock won't be applied otherwise because it would
+  /// constantly lock screen.
+  if (!lastInteractionDate.isStartupValue && lockTimeout == Duration.zero) {
+    return null;
+  }
+
+  final date = lastInteractionDate.date;
+  if (date != null) return date.add(lockTimeout);
+
+  /// When application is just starting, and
+  /// no lastInteractionDate is set, force
+  /// lockDate to now.
+  ///
+  /// In that case, we might assume that application
+  /// has been killed before saving [lastInteractionDate]
+  if (lastInteractionDate.isStartupValue) return DateTime.now();
+
+  return null;
+}
+
 @freezed
 class AuthenticationGuardState with _$AuthenticationGuardState {
   const factory AuthenticationGuardState({
@@ -119,52 +152,13 @@ class _AuthenticationGuardNotifier extends _$AuthenticationGuardNotifier {
     );
 
     final isLocked = ref.watch(_vaultLockedProvider);
-
-    if (lockTimeoutOption == LockTimeoutOption.disabled) {
-      return AuthenticationGuardState(
-        lockDate: null,
-        timerEnabled: false,
-        isLocked: isLocked,
-      );
-    }
+    final lockDate = await ref.watch(_lockDateProvider.future);
 
     return AuthenticationGuardState(
-      lockDate: await _lockDate,
+      lockDate: lockDate,
       timerEnabled: lockTimeoutOption.duration > Duration.zero,
       isLocked: isLocked,
     );
-  }
-
-  Future<DateTime?> get _lockDate async {
-    final lastInteractionDate = await ref.read(
-      _lastInteractionDateNotifierProvider.future,
-    );
-
-    final lockTimeout = ref.read(
-      AuthenticationProviders.settings.select(
-        (settings) => settings.lockTimeout.duration,
-      ),
-    );
-
-    /// Lock without delay only applies to application startup.
-    /// That lock won't be applied otherwise because it would
-    /// constantly lock screen.
-    if (!lastInteractionDate.isStartupValue && lockTimeout == Duration.zero) {
-      return null;
-    }
-
-    final date = lastInteractionDate.date;
-    if (date != null) return date.add(lockTimeout);
-
-    /// When application is just starting, and
-    /// no lastInteractionDate is set, force
-    /// lockDate to now.
-    ///
-    /// In that case, we might assume that application
-    /// has been killed before saving [lastInteractionDate]
-    if (lastInteractionDate.isStartupValue) return DateTime.now();
-
-    return null;
   }
 
   Future<void> lock() async {
@@ -199,9 +193,6 @@ class _AuthenticationGuardNotifier extends _$AuthenticationGuardNotifier {
     _logger.info(
       'Schedule Autolock',
     );
-
-    final loadedState = state.valueOrNull;
-    if (loadedState == null) return;
 
     ref
         .read(_lastInteractionDateNotifierProvider.notifier)

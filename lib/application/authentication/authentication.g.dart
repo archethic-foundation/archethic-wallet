@@ -69,6 +69,20 @@ final _vaultLockedProvider = Provider<bool>.internal(
 );
 
 typedef _VaultLockedRef = ProviderRef<bool>;
+String _$lockDateHash() => r'bc24fa39f84db6758e437b2bd4aab1e61f9905e7';
+
+/// See also [_lockDate].
+@ProviderFor(_lockDate)
+final _lockDateProvider = FutureProvider<DateTime?>.internal(
+  _lockDate,
+  name: r'_lockDateProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$lockDateHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _LockDateRef = FutureProviderRef<DateTime?>;
 String _$lastInteractionDateNotifierHash() =>
     r'fdd8f1f1e47205aaf7128fa16ff9045fb92af836';
 
@@ -87,7 +101,7 @@ final _lastInteractionDateNotifierProvider = AsyncNotifierProvider<
 
 typedef _$LastInteractionDateNotifier = AsyncNotifier<LastInteractionDateValue>;
 String _$authenticationGuardNotifierHash() =>
-    r'616630e7a9523db11e6d83faee4d7adb9a60a8cf';
+    r'421fe518c215981dfa69f3dad513f7d483e11399';
 
 /// See also [_AuthenticationGuardNotifier].
 @ProviderFor(_AuthenticationGuardNotifier)
