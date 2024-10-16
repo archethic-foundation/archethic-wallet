@@ -51,26 +51,19 @@ Future<double> tokensTotalUSD(
       name: _logName,
     );
     final priceToken = token.isLpToken && token.lpTokenPair != null
-        ? ref
-                .watch(
-                  DexTokensProviders.estimateLPTokenInFiat(
-                    token.lpTokenPair!.token1.address!,
-                    token.lpTokenPair!.token2.address!,
-                    token.balance,
-                    token.address!,
-                  ),
-                )
-                .value ??
-            0
-        : ((ref
-                    .watch(
-                      // TODO(reddwarf03): infinite loop
-                      DexTokensProviders.estimateTokenInFiat(
-                        token.address != null ? token.address! : 'UCO',
-                      ),
-                    )
-                    .value ??
-                0) *
+        ? await ref.watch(
+            DexTokensProviders.estimateLPTokenInFiat(
+              token.lpTokenPair!.token1.address!,
+              token.lpTokenPair!.token2.address!,
+              token.balance,
+              token.address!,
+            ).future,
+          )
+        : (await ref.watch(
+              DexTokensProviders.estimateTokenInFiat(
+                token.address != null ? token.address! : 'UCO',
+              ).future,
+            ) *
             token.balance);
 
     total += priceToken;
