@@ -36,7 +36,7 @@ FarmLockFormBalances farmLockFormBalances(
 Future<FarmLockFormSummary> farmLockFormSummary(
   FarmLockFormSummaryRef ref,
 ) async {
-  final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
+  final farmLock = await ref.watch(farmLockFormFarmLockProvider.future);
 
   if (farmLock == null) return const FarmLockFormSummary();
 
@@ -83,9 +83,9 @@ Future<FarmLockFormSummary> farmLockFormSummary(
 }
 
 @riverpod
-Future<DexPool?> farmLockFormPool(FarmLockFormPoolRef ref) {
+Future<DexPool?> farmLockFormPool(FarmLockFormPoolRef ref) async {
   final environment = ref.watch(environmentProvider);
-  return ref.watch(
+  return await ref.watch(
     DexPoolProviders.getPool(
       environment.aeETHUCOPoolAddress,
     ).future,
@@ -95,10 +95,10 @@ Future<DexPool?> farmLockFormPool(FarmLockFormPoolRef ref) {
 @riverpod
 Future<DexFarmLock?> farmLockFormFarmLock(
   FarmLockFormFarmLockRef ref,
-) {
+) async {
   final environment = ref.watch(environmentProvider);
 
-  return ref.watch(
+  return await ref.watch(
     DexFarmLockProviders.getFarmLockInfos(
       environment.aeETHUCOFarmLockAddress,
       environment.aeETHUCOPoolAddress,

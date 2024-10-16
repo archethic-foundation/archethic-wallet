@@ -44,8 +44,8 @@ class _AccountNotifier extends _$AccountNotifier {
     );
   }
 
-  Future<void> _refreshBalance(Account account) {
-    final environment = ref.watch(environmentProvider);
+  Future<void> _refreshBalance(Account account) async {
+    final environment = ref.read(environmentProvider);
     return account.updateBalance(environment);
   }
 

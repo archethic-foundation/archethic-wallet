@@ -15,7 +15,7 @@ DexConfigRepository _dexConfigRepository(
 
 @Riverpod(keepAlive: true)
 Future<DexConfig> _dexConfig(_DexConfigRef ref) {
-  final environment = ref.watch(environmentProvider);
+  final environment = ref.read(environmentProvider);
   return ref.watch(_dexConfigRepositoryProvider).getDexConfig(environment);
 }
 

@@ -22,7 +22,7 @@ final _dexConfigRepositoryProvider = Provider<DexConfigRepository>.internal(
 );
 
 typedef _DexConfigRepositoryRef = ProviderRef<DexConfigRepository>;
-String _$dexConfigHash() => r'354429e3e0d0eedc808ce439253c361ce0e61efe';
+String _$dexConfigHash() => r'a738c55924fb72ecb6562609a97322173bf950ab';
 
 /// See also [_dexConfig].
 @ProviderFor(_dexConfig)

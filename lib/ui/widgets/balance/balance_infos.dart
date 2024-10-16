@@ -74,17 +74,29 @@ class _BalanceTotalUSDShowed extends ConsumerWidget {
                     r'$',
                     style: ArchethicThemeStyles.textStyleSize35W900Primary,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 7, left: 2),
-                    child: AnimatedDigitWidget(
-                      value: 0,
-                      autoSize: false,
-                      fractionDigits: 2,
-                      enableSeparator: true,
-                      textStyle:
-                          ArchethicThemeStyles.textStyleSize35W900Primary,
+                  if (snapshot.data == null)
+                    const Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child: SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                        ),
+                      ),
+                    )
+                  else
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 7, left: 2),
+                      child: AnimatedDigitWidget(
+                        value: snapshot.data,
+                        autoSize: false,
+                        fractionDigits: 2,
+                        enableSeparator: true,
+                        textStyle:
+                            ArchethicThemeStyles.textStyleSize35W900Primary,
+                      ),
                     ),
-                  ),
                 ],
               );
             } else if (snapshot.hasError) {
