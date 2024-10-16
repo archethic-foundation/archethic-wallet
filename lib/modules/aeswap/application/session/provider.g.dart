@@ -6,7 +6,7 @@ part of 'provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$environmentHash() => r'e937abb1e54bbc64ad4277219bc750938b759260';
+String _$environmentHash() => r'2b3eac9bc1e47683effa52ad86e4fc435d4f968d';
 
 /// See also [environment].
 @ProviderFor(environment)

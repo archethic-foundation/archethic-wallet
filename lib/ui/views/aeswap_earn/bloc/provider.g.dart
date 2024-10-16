@@ -24,7 +24,7 @@ final farmLockFormBalancesProvider =
 
 typedef FarmLockFormBalancesRef = AutoDisposeProviderRef<FarmLockFormBalances>;
 String _$farmLockFormSummaryHash() =>
-    r'38740f68aa8bc40c888c023d313ee20242397300';
+    r'f5359ee35f4d8d547d2c3e668c198b56f9e33f3c';
 
 /// See also [farmLockFormSummary].
 @ProviderFor(farmLockFormSummary)
@@ -41,7 +41,7 @@ final farmLockFormSummaryProvider =
 
 typedef FarmLockFormSummaryRef
     = AutoDisposeFutureProviderRef<FarmLockFormSummary>;
-String _$farmLockFormPoolHash() => r'e0919af5d7966190d4c933f1d614626df7282290';
+String _$farmLockFormPoolHash() => r'ab4d182d99d343b14b9cfa747ff1d3a47ced7654';
 
 /// See also [farmLockFormPool].
 @ProviderFor(farmLockFormPool)
@@ -57,7 +57,7 @@ final farmLockFormPoolProvider = AutoDisposeFutureProvider<DexPool?>.internal(
 
 typedef FarmLockFormPoolRef = AutoDisposeFutureProviderRef<DexPool?>;
 String _$farmLockFormFarmLockHash() =>
-    r'5818f7b1cb6eb2f5632cd5abe9167524fccefec4';
+    r'5f2c9e34e3c3f174861dd6e5886d902b13a9ac57';
 
 /// See also [farmLockFormFarmLock].
 @ProviderFor(farmLockFormFarmLock)
