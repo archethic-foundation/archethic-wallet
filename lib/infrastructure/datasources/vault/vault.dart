@@ -89,6 +89,16 @@ class Vault {
   SingletonTask<void> get _unlockTask => __unlockTask ??= SingletonTask<void>(
         name: 'Vault unlock task',
         task: () async {
+          /// If a verify operation is running, wait for it to finish.
+          /// This is to prevent stacking multiple unlock operations.
+          final verifyUnlockResult = await _verifyUnlockAbilityTask.wait;
+          if (verifyUnlockResult == true) {
+            _logger.info(
+              'Vault already unlocked',
+            );
+            return;
+          }
+
           final encryptedKey = await readEncryptedKey();
 
           if (encryptedKey == null) {
@@ -147,6 +157,19 @@ class Vault {
             _logger.info(
               'Vault ${canBeUnlocked ? 'can' : 'cannot'} be unlocked.',
             );
+
+            /// Unlocks in a preventive way.
+            /// In case a lock occured during the process.
+            if (decodedChallenge != null) {
+              _vaultCipher = VaultCipher(
+                decodedChallenge,
+              );
+
+              isLocked.value = false;
+              _logger.info(
+                'Vault unlocked',
+              );
+            }
 
             return canBeUnlocked;
           } catch (e) {
