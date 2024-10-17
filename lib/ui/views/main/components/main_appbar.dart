@@ -105,16 +105,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                         )
                           .animate()
                           .fade(duration: const Duration(milliseconds: 300))
-                      : FittedBox(
-                          fit: BoxFit.fitWidth,
-                          child: AutoSizeText(
-                            localizations.aeBridgeHeader,
-                            style:
-                                ArchethicThemeStyles.textStyleSize24W700Primary,
-                          ),
-                        )
-                          .animate()
-                          .fade(duration: const Duration(milliseconds: 300)),
+                      : const SizedBox.shrink(),
       backgroundColor: Colors.transparent,
       elevation: 0,
       centerTitle: true,
@@ -296,12 +287,22 @@ class _MainAppbarForWebView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const SafeArea(
-      child: Row(
+    final localizations = AppLocalizations.of(context)!;
+    return SafeArea(
+      child: Stack(
+        alignment: Alignment.center,
         children: [
-          Positioned(
-            left: 12,
-            top: 12,
+          SizedBox(
+            height: kToolbarHeight,
+            child: Align(
+              child: Text(
+                localizations.aeBridgeHeader,
+                style: ArchethicThemeStyles.textStyleSize24W700Primary,
+              ).animate().fade(duration: const Duration(milliseconds: 300)),
+            ),
+          ),
+          const Positioned(
+            left: 5,
             child: _MenuButton(),
           ),
         ],
