@@ -15,6 +15,7 @@ class BiometricsCipherDelegate implements VaultCipherDelegate {
   @override
   Future<Uint8List?> decode(Uint8List payload, bool userCancelable) =>
       BiometricsScreenOverlay(
+        canNavigateBack: userCancelable,
         challenge: payload,
       ).show(context);
 
