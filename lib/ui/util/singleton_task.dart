@@ -16,6 +16,10 @@ class SingletonTask<T> {
 
   late final Logger _logger;
 
+  Future<T?> get wait async {
+    return _completer?.future;
+  }
+
   Future<T> run() async {
     if (_completer != null) {
       _logger.info('Already running. Waiting for result...');
