@@ -5,7 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'verified_tokens.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 aedappfm.VerifiedTokensRepositoryInterface verifiedTokensRepository(
   VerifiedTokensRepositoryRef ref,
 ) {
@@ -15,7 +15,7 @@ aedappfm.VerifiedTokensRepositoryInterface verifiedTokensRepository(
   );
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 Future<bool> isVerifiedToken(IsVerifiedTokenRef ref, String address) async {
   final environment = ref.read(environmentProvider);
   return ref.watch(
@@ -26,7 +26,7 @@ Future<bool> isVerifiedToken(IsVerifiedTokenRef ref, String address) async {
   );
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 Future<List<String>> verifiedTokens(
   VerifiedTokensRef ref,
 ) async {

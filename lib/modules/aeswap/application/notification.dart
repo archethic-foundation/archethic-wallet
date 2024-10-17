@@ -7,13 +7,13 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'notification.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 ns.TaskNotificationService<DexNotification, Failure> _notificationService(
   _NotificationServiceRef ref,
 ) =>
     ns.TaskNotificationService();
 
-@Riverpod(keepAlive: true)
+@riverpod
 Stream<Iterable<ns.Task<DexNotification, Failure>>> _runningTasks(
   _RunningTasksRef ref,
 ) async* {
@@ -23,7 +23,7 @@ Stream<Iterable<ns.Task<DexNotification, Failure>>> _runningTasks(
   }
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 Stream<ns.Task<DexNotification, Failure>> _doneTasks(
   _DoneTasksRef ref,
 ) async* {

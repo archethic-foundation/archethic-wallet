@@ -19,7 +19,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'router_factory.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 RouterFactory routerFactory(RouterFactoryRef ref, String address) {
   return RouterFactory(
     address,
