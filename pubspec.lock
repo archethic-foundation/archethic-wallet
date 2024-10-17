@@ -106,10 +106,10 @@ packages:
     dependency: transitive
     description:
       name: args
-      sha256: "7cf60b9f0cc88203c5a190b4cd62a99feea42759a7fa695010eb5de1c0b2252a"
+      sha256: bf9f5caeea8d8fe6721a9c358dd8a5c1947b27f1cfaa18b39c301273594919e6
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.0"
+    version: "2.6.0"
   asn1lib:
     dependency: "direct main"
     description:
@@ -346,10 +346,10 @@ packages:
     dependency: "direct main"
     description:
       name: convert
-      sha256: "0f08b14755d163f6e2134cb58222dd25ea2a2ee8a195e53983d57c075324d592"
+      sha256: b30acd5944035672bc15c6b7a8b47d773e41e2f17de064350988c5d02adb1c68
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.1"
+    version: "3.1.2"
   cross_file:
     dependency: transitive
     description:
@@ -362,10 +362,10 @@ packages:
     dependency: "direct main"
     description:
       name: crypto
-      sha256: ec30d999af904f33454ba22ed9a86162b35e52b44ac4807d1d93c288041d7d27
+      sha256: "1e445881f28f22d6140f181e07737b22f1e099a5e1ff94b0af2f9e4a463f4855"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.5"
+    version: "3.0.6"
   cryptography:
     dependency: transitive
     description:
@@ -586,10 +586,10 @@ packages:
     dependency: transitive
     description:
       name: fixnum
-      sha256: "25517a4deb0c03aa0f32fd12db525856438902d9c16536311e76cdc57b31d7d1"
+      sha256: b6dc7065e46c974bc7c5f143080a6764ec7a4be6da1285ececdc37be96de53be
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0"
+    version: "1.1.1"
   fl_chart:
     dependency: "direct main"
     description:
@@ -1064,10 +1064,10 @@ packages:
     dependency: transitive
     description:
       name: image
-      sha256: "2237616a36c0d69aef7549ab439b833fb7f9fb9fc861af2cc9ac3eedddd69ca8"
+      sha256: f31d52537dc417fdcde36088fdf11d191026fd5e4fae742491ebd40e5a8bea7d
       url: "https://pub.dev"
     source: hosted
-    version: "4.2.0"
+    version: "4.3.0"
   image_picker:
     dependency: "direct main"
     description:
@@ -1080,10 +1080,10 @@ packages:
     dependency: transitive
     description:
       name: image_picker_android
-      sha256: d3e5e00fdfeca8fd4ffb3227001264d449cc8950414c2ff70b0e06b9c628e643
+      sha256: d34e0d9e024e81321b2aeed7b202ec6181cc282e6a1c0c0b4e6ad07ef1065d82
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.12+15"
+    version: "0.8.12+16"
   image_picker_for_web:
     dependency: transitive
     description:
@@ -1096,10 +1096,10 @@ packages:
     dependency: transitive
     description:
       name: image_picker_ios
-      sha256: "6703696ad49f5c3c8356d576d7ace84d1faf459afb07accbb0fae780753ff447"
+      sha256: "4f0568120c6fcc0aaa04511cb9f9f4d29fc3d0139884b1d06be88dcec7641d6b"
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.12"
+    version: "0.8.12+1"
   image_picker_linux:
     dependency: transitive
     description:
@@ -1328,10 +1328,10 @@ packages:
     dependency: "direct main"
     description:
       name: material_symbols_icons
-      sha256: fa19f3a99f280c81fe23d7f7ef1c4000511fa40ee52df43e0a3a4c91184ddb15
+      sha256: "7626ce90395bc6dc2ecb7bdd84c04a97f3f084a4e923ff73791c3c409af02804"
       url: "https://pub.dev"
     source: hosted
-    version: "4.2788.0"
+    version: "4.2789.0"
   meta:
     dependency: transitive
     description:
@@ -2267,4 +2267,4 @@ packages:
     version: "2.0.0"
 sdks:
   dart: ">=3.5.0 <4.0.0"
-  flutter: ">=3.24.0"
+  flutter: ">=3.24.3"

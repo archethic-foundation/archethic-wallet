@@ -6,8 +6,8 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 3.0.0+567
 
 environment:
-  sdk: ">=3.3.0 <4.0.0"
-  flutter: ">=3.19.0"
+  sdk: ">=3.5.0 <4.0.0"
+  flutter: ">=3.24.3"
 
 dependencies:
   # Beautiful animations inspired on Animate.css, every animation is a widget that contains default but customizable values that look attractive.
@@ -24,8 +24,8 @@ dependencies:
   #  git:
   #    url: https://github.com/archethic-foundation/archethic-dapp-framework-flutter.git
   #    ref: introduce_environment_type
-  #archethic_dapp_framework_flutter:
-  #  path: ../archethic-dapp-framework-flutter
+  # archethic_dapp_framework_flutter:
+  #   path: ../../packages/archethic-dapp-framework-flutter
 
   # RPC datastructures.
   archethic_wallet_client: ^2.1.5
@@ -33,8 +33,8 @@ dependencies:
   #  git:
   #    url: https://github.com/archethic-foundation/archethic-wallet-client-dart.git
   #    ref: 40-add-a-description-for-each-tx-to-sign-to-explain-the-goal-of-the-tx
-  #archethic_wallet_client:
-  #  path: ../archethic-wallet-client-dart
+  # archethic_wallet_client:
+  #   path: ../../packages/archethic-wallet-client-dart
 
   # An ASN1 parser library for Dart. Encodes / decodes from ASN1 Objects to BER bytes
   asn1lib: ^1.5.0
@@ -76,7 +76,9 @@ dependencies:
   decimal: ^3.0.2
 
   # A RPC-via-deeplink communication library coded in Dart. This is dedicated to Flutter mobile applications (iOS / Android).
-  deeplink_rpc: ^1.0.6
+  deeplink_rpc: ^1.1.0
+  # deeplink_rpc:
+  #   path: ../../packages/lib-deeplink-rpc
 
   # A new flutter package to display notifications on top of the screen, full customizable with built-in themes
   elegant_notification: ^2.1.0
