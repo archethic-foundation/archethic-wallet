@@ -61,8 +61,8 @@ import 'package:aewallet/ui/views/tokens_fungibles/layouts/add_token_sheet.dart'
 import 'package:aewallet/ui/views/transactions/transaction_infos_sheet.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
+import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
-import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -71,10 +71,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+part 'router.aeswap.dart';
 part 'router.authenticated.dart';
 part 'router.authentication.dart';
 part 'router.introduction.dart';
-part 'router.aeswap.dart';
 
 class RoutesPath {
   RoutesPath(
@@ -117,23 +117,6 @@ class RoutesPath {
             ..._authenticationRoutes,
             ..._introductionRoutes,
             GoRoute(
-              path: ShowSendingAnimation.routerPage,
-              pageBuilder: (context, state) => CustomTransitionPage<void>(
-                transitionDuration: Duration.zero,
-                reverseTransitionDuration: Duration.zero,
-                key: state.pageKey,
-                child: AnimationLoadingPage(
-                  title: state.extra as String?,
-                ),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) =>
-                        FadeTransition(
-                  opacity: animation,
-                  child: child,
-                ),
-              ),
-            ),
-            GoRoute(
               path: SetBiometricsScreen.routerPage,
               pageBuilder: (context, state) {
                 final extra = state.extra! as Map<String, dynamic>;
@@ -173,7 +156,10 @@ class RoutesPath {
             AutoLockGuardRoute(
               routes: [
                 RPCCommandReceiverRoute(
-                  routes: [..._authenticatedRoutes, ..._aeSwapRoutes],
+                  routes: [
+                    ..._authenticatedRoutes,
+                    ..._aeSwapRoutes,
+                  ],
                 ),
               ],
             ),
@@ -201,7 +187,13 @@ class AutoLockGuardRoute extends ShellRoute {
           pageBuilder: (context, state, child) {
             return NoTransitionPage<void>(
               key: state.pageKey,
-              child: AutoLockGuard(child: PrivacyMaskGuard(child: child)),
+              child: PrivacyMaskGuard(
+                child: AutoLockGuard(
+                  child: LoadingOverlay(
+                    child: child,
+                  ),
+                ),
+              ),
             );
           },
         );
@@ -210,17 +202,9 @@ class AutoLockGuardRoute extends ShellRoute {
 class RPCCommandReceiverRoute extends ShellRoute {
   RPCCommandReceiverRoute({required super.routes})
       : super(
-          pageBuilder: (context, state, child) => CustomTransitionPage<void>(
-            transitionDuration: Duration.zero,
-            reverseTransitionDuration: Duration.zero,
+          pageBuilder: (context, state, child) => NoTransitionPage<void>(
             key: state.pageKey,
             child: RPCCommandReceiver(child: child),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) =>
-                    FadeTransition(
-              opacity: animation,
-              child: child,
-            ),
           ),
         );
 }

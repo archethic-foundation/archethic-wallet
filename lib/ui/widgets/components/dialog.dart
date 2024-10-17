@@ -7,12 +7,10 @@ import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:go_router/go_router.dart';
 
 class AppDialogs {
   static Future showConfirmDialog(
@@ -74,7 +72,7 @@ class AppDialogs {
                             FeedbackType.light,
                             preferences.activeVibrations,
                           );
-                      context.pop();
+                      Navigator.of(context).pop();
                       if (cancelAction != null) {
                         cancelAction();
                       }
@@ -91,7 +89,7 @@ class AppDialogs {
                             FeedbackType.light,
                             preferences.activeVibrations,
                           );
-                      context.pop();
+                      Navigator.of(context).pop();
                       onPressed();
                     },
                   ),
@@ -149,7 +147,7 @@ class AppDialogs {
                           FeedbackType.light,
                           preferences.activeVibrations,
                         );
-                    context.pop();
+                    Navigator.of(context).pop();
                   },
                 ),
               ),
@@ -162,57 +160,92 @@ class AppDialogs {
   }
 }
 
-enum AnimationType {
-  send,
+extension ContextLoadingOverlay on BuildContext {
+  LoadingOverlay get loadingOverlay => LoadingOverlay.of(this);
 }
 
-class AnimationLoadingOverlay extends ModalRoute<void> {
-  AnimationLoadingOverlay(
-    this.type,
-    this.overlay70, {
-    this.onPoppedCallback,
+class LoadingOverlay extends InheritedWidget {
+  LoadingOverlay({
+    super.key,
+    required Widget child,
+  }) : super(
+          child: _LoadingOverlay(
+            key: _loadingOverlayKey,
+            child: child,
+          ),
+        );
+
+  static final _loadingOverlayKey = GlobalKey<_LoadingOverlayState>();
+
+  static LoadingOverlay? maybeOf(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<LoadingOverlay>();
+
+  static LoadingOverlay of(BuildContext context) {
+    final result = maybeOf(context);
+    assert(result != null, 'No AnimationOverlay found in context');
+    return result!;
+  }
+
+  @override
+  bool updateShouldNotify(LoadingOverlay oldWidget) => false;
+
+  void show({String? title}) {
+    _loadingOverlayKey.currentState!.show(title: title);
+  }
+
+  void hide() {
+    _loadingOverlayKey.currentState!.hide();
+  }
+}
+
+class _LoadingOverlay extends StatefulWidget {
+  const _LoadingOverlay({
+    super.key,
+    required this.child,
+  });
+
+  final Widget child;
+
+  @override
+  State<_LoadingOverlay> createState() => _LoadingOverlayState();
+}
+
+class _LoadingOverlayState extends State<_LoadingOverlay> {
+  bool visible = false;
+  String? title;
+
+  void show({String? title}) {
+    setState(() {
+      this.title = title;
+      visible = true;
+    });
+  }
+
+  void hide() {
+    setState(() {
+      visible = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) => Stack(
+        children: [
+          widget.child,
+          if (visible) LoadingAnimationPage(title: title),
+        ],
+      );
+}
+
+class LoadingAnimationPage extends StatelessWidget {
+  const LoadingAnimationPage({
+    super.key,
     this.title,
   });
 
-  AnimationType type;
-  Function? onPoppedCallback;
-  Color overlay70;
-  String? title;
+  final String? title;
 
   @override
-  Duration get transitionDuration => Duration.zero;
-
-  @override
-  bool get opaque => false;
-
-  @override
-  bool get barrierDismissible => false;
-
-  @override
-  Color get barrierColor {
-    return overlay70;
-  }
-
-  @override
-  String? get barrierLabel => null;
-
-  @override
-  bool get maintainState => false;
-
-  @override
-  void didComplete(void result) {
-    if (onPoppedCallback != null) {
-      onPoppedCallback?.call();
-    }
-    super.didComplete(result);
-  }
-
-  @override
-  Widget buildPage(
-    BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-  ) {
+  Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -231,7 +264,7 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
                     image: AssetImage(
                       ArchethicTheme.backgroundWelcome,
                     ),
-                    fit: kIsWeb ? BoxFit.cover : BoxFit.fitHeight,
+                    fit: BoxFit.cover,
                     alignment: Alignment.centerRight,
                   ),
                 ),
@@ -295,15 +328,5 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
         ),
       ),
     );
-  }
-
-  @override
-  Widget buildTransitions(
-    BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-    Widget child,
-  ) {
-    return child;
   }
 }

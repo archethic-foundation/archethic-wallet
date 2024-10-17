@@ -19,7 +19,6 @@ import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
-import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/mnemonics.dart';
@@ -511,11 +510,8 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
 
   Future<void> createKeychain() async {
     final localizations = AppLocalizations.of(context)!;
-    unawaited(
-      context.push(
-        ShowSendingAnimation.routerPage,
-        extra: localizations.appWalletInitInProgress,
-      ),
+    context.loadingOverlay.show(
+      title: localizations.appWalletInitInProgress,
     );
 
     try {
@@ -546,6 +542,8 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
           extra: widget.name,
         );
       }
+    } finally {
+      context.loadingOverlay.hide();
     }
   }
 }

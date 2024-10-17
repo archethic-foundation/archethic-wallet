@@ -2,7 +2,7 @@
 
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/main.dart';
-import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
+import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -41,7 +41,7 @@ class _LoggingOutScreenState extends ConsumerState<LoggingOutScreen> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    return AnimationLoadingPage(
+    return LoadingAnimationPage(
       title: localizations.loggingOutWaitMessage,
     );
   }

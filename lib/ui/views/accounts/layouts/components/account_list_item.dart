@@ -18,7 +18,6 @@ import 'package:aewallet/ui/util/service_type_formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/accounts/layouts/components/account_list_item_token_info.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
-import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/case_converter.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
@@ -160,40 +159,37 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
       padding: const EdgeInsets.only(bottom: 8),
       child: GestureDetector(
         onTap: () async {
-          if (widget.account.serviceType == 'archethicWallet') {
-            sl.get<HapticUtil>().feedback(
-                  FeedbackType.light,
-                  ref.read(
-                    SettingsProviders.settings.select(
-                      (value) => value.activeVibrations,
-                    ),
+          if (widget.account.serviceType != 'archethicWallet') return;
+
+          sl.get<HapticUtil>().feedback(
+                FeedbackType.light,
+                ref.read(
+                  SettingsProviders.settings.select(
+                    (value) => value.activeVibrations,
                   ),
-                );
+                ),
+              );
 
-            if (widget.selectedAccount == null ||
-                widget.selectedAccount!.nameDisplayed !=
-                    widget.account.nameDisplayed) {
-              ShowSendingAnimation.build(context);
-              await ref
-                  .read(AccountProviders.accounts.notifier)
-                  .selectAccount(widget.account);
-              final poolListRaw =
-                  await ref.read(DexPoolProviders.getPoolListRaw.future);
-
-              await ref
-                  .read(
-                    AccountProviders.account(widget.account.name).notifier,
-                  )
-                  .refreshRecentTransactions(poolListRaw);
-
-              context
-                ..pop()
-                ..pop()
-                ..pop();
-            } else {
-              context.pop();
-            }
+          if (widget.selectedAccount?.nameDisplayed ==
+              widget.account.nameDisplayed) {
+            Navigator.of(context).pop();
+            return;
           }
+          context.loadingOverlay.show();
+          await ref
+              .read(AccountProviders.accounts.notifier)
+              .selectAccount(widget.account);
+          final poolListRaw =
+              await ref.read(DexPoolProviders.getPoolListRaw.future);
+
+          await ref
+              .read(
+                AccountProviders.account(widget.account.name).notifier,
+              )
+              .refreshRecentTransactions(poolListRaw);
+
+          context.loadingOverlay.hide();
+          context.pop();
         },
         child: DecoratedBox(
           decoration: BoxDecoration(
@@ -417,9 +413,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
                                     localizations.removeKeychainLater,
                                     localizations.yes,
                                     () async {
-                                      ShowSendingAnimation.build(
-                                        context,
-                                      );
+                                      context.loadingOverlay.show();
 
                                       await KeychainUtil().removeService(
                                         ref
@@ -428,6 +422,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
                                         widget.account.name,
                                         keychain,
                                       );
+                                      context.loadingOverlay.hide();
                                     },
                                   );
                                 }),

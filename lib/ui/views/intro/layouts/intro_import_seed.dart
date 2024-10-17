@@ -20,11 +20,11 @@ import 'package:aewallet/ui/views/intro/layouts/intro_welcome.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
+import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
-import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/mnemonics.dart';
@@ -149,7 +149,10 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                   });
                   return;
                 }
-                ShowSendingAnimation.build(context);
+                context.loadingOverlay.show(
+                  title: localizations.pleaseWait,
+                );
+
                 final newSession = await ref
                     .read(sessionNotifierProvider.notifier)
                     .restoreFromMnemonics(
@@ -169,6 +172,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                     ArchethicTheme.text,
                     ArchethicTheme.snackBarShadow,
                   );
+                  context.loadingOverlay.hide();
                   context.go(IntroImportSeedPage.routerPage);
                   return;
                 }
@@ -187,7 +191,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                 ref.read(
                   RecoveryPhraseSavedProvider.setRecoveryPhraseSaved(true),
                 );
-
+                context.loadingOverlay.hide();
                 context.go(HomePage.routerPage);
 
                 setState(() {
