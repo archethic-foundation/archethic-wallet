@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 
+// TODO(reddwarf03): Use aeDappfm's ProvidersLogger and delete this one
 class ProvidersLogger extends ProviderObserver {
   @override
   void didAddProvider(
