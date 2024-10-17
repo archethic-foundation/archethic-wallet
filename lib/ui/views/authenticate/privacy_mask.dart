@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Listens to app state changes and displays
-/// [LockMaskOverlay] accordingly.
+/// [LockMask] on top of screen accordingly.
 /// Checks if lock is required on startup.
 class PrivacyMaskGuard extends ConsumerStatefulWidget {
   const PrivacyMaskGuard({
@@ -18,15 +18,22 @@ class PrivacyMaskGuard extends ConsumerStatefulWidget {
   final Widget child;
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _AutoLockGuardState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _PrivacyMaskGuardState();
 }
 
-class _AutoLockGuardState extends ConsumerState<PrivacyMaskGuard>
+class _PrivacyMaskGuardState extends ConsumerState<PrivacyMaskGuard>
     with WidgetsBindingObserver {
   static const _logName = 'PrivacyMask-Widget';
+  bool maskVisible = false;
 
   @override
-  Widget build(BuildContext context) => widget.child;
+  Widget build(BuildContext context) => Stack(
+        children: [
+          widget.child,
+          if (maskVisible) const LockMask(),
+        ],
+      );
 
   @override
   void initState() {
@@ -42,7 +49,6 @@ class _AutoLockGuardState extends ConsumerState<PrivacyMaskGuard>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    _hideMask();
     super.dispose();
   }
 
@@ -54,10 +60,20 @@ class _AutoLockGuardState extends ConsumerState<PrivacyMaskGuard>
     );
     switch (state) {
       case AppLifecycleState.resumed:
-        _hideMask();
+        setState(
+          () {
+            maskVisible = false;
+          },
+        );
         break;
       case AppLifecycleState.inactive:
-        _showMask();
+        if (_isMaskDisabled) return;
+
+        setState(
+          () {
+            maskVisible = true;
+          },
+        );
         break;
       case AppLifecycleState.paused:
       case AppLifecycleState.detached:
@@ -73,26 +89,4 @@ class _AutoLockGuardState extends ConsumerState<PrivacyMaskGuard>
               authSettings.privacyMask == PrivacyMaskOption.disabled,
         ),
       );
-
-  void _showMask() {
-    if (_isMaskDisabled) return;
-
-    log(
-      'Show lock mask',
-      name: _logName,
-    );
-
-    LockMaskOverlay.instance().show(context);
-  }
-
-  void _hideMask() {
-    // Do not use `ref` here. This would cause an error
-    // when widget is disposed.
-    log(
-      'Hide lock mask',
-      name: _logName,
-    );
-
-    LockMaskOverlay.instance().hide();
-  }
 }

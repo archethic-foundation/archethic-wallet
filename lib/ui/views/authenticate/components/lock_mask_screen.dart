@@ -1,18 +1,5 @@
 part of '../auto_lock_guard.dart';
 
-/// Manages a singleton overlay
-/// It is used to easily lock screen.
-class LockMaskOverlay with LockOverlayMixin {
-  factory LockMaskOverlay.instance() =>
-      _instance ?? (_instance = LockMaskOverlay._());
-  LockMaskOverlay._();
-
-  static LockMaskOverlay? _instance;
-
-  @override
-  Widget get child => const LockMask();
-}
-
 class LockMask extends StatelessWidget {
   const LockMask({super.key});
 

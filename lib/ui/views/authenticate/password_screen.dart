@@ -7,6 +7,7 @@ import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/views/authenticate/auth_screen_overlay.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
@@ -15,34 +16,45 @@ import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-class PasswordScreen extends ConsumerStatefulWidget {
-  const PasswordScreen({
+class PasswordAuthScreenOverlay extends AuthScreenOverlay {
+  PasswordAuthScreenOverlay({
+    required bool canNavigateBack,
+    required Uint8List challenge,
+  }) : super(
+          name: 'PasswordScreenOverlay',
+          widgetBuilder: (context, onDone) => _PasswordScreen(
+            canNavigateBack: canNavigateBack,
+            challenge: challenge,
+            onDone: onDone,
+          ),
+        );
+}
+
+class _PasswordScreen extends ConsumerStatefulWidget {
+  const _PasswordScreen({
     super.key,
     required this.canNavigateBack,
     required this.challenge,
+    required this.onDone,
   });
-
-  static const name = 'PasswordScreen';
-  static const routerPage = '/password';
 
   final bool canNavigateBack;
   final Uint8List challenge;
+  final void Function(Uint8List? result) onDone;
 
   @override
-  ConsumerState<PasswordScreen> createState() => _PasswordScreenState();
+  ConsumerState<_PasswordScreen> createState() => _PasswordScreenState();
 }
 
-class _PasswordScreenState extends ConsumerState<PasswordScreen>
+class _PasswordScreenState extends ConsumerState<_PasswordScreen>
     with CountdownLockMixin
     implements SheetSkeletonInterface {
   FocusNode? enterPasswordFocusNode;
@@ -99,7 +111,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
 
     await result.maybeMap(
       success: (value) async {
-        context.pop(value.decodedChallenge);
+        widget.onDone(value.decodedChallenge);
         return;
       },
       orElse: () async {
@@ -119,6 +131,11 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
   Widget build(BuildContext context) {
     return PopScope(
       canPop: widget.canNavigateBack,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) {
+          widget.onDone(null);
+        }
+      },
       child: GestureDetector(
         onTap: _focusTextField,
         child: SheetSkeleton(
@@ -160,7 +177,7 @@ class _PasswordScreenState extends ConsumerState<PasswordScreen>
               key: const Key('back'),
               color: ArchethicTheme.text,
               onPressed: () {
-                context.pop();
+                widget.onDone(null);
               },
             )
           : const SizedBox(),

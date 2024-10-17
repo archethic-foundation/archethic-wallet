@@ -161,14 +161,8 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet>
           Dimens.buttonBottomDimens,
           key: const Key('confirm'),
           onPressed: () async {
-            unawaited(
-              Navigator.of(context).push(
-                AnimationLoadingOverlay(
-                  AnimationType.send,
-                  ArchethicTheme.animationOverlayStrong,
-                  title: AppLocalizations.of(context)!.pleaseWait,
-                ),
-              ),
+            context.loadingOverlay.show(
+              title: AppLocalizations.of(context)!.pleaseWait,
             );
 
             await ref
@@ -176,6 +170,7 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet>
                   NftCreationFormProvider.nftCreationForm.notifier,
                 )
                 .send(context);
+            context.loadingOverlay.hide();
           },
           disabled: nftCreation.canConfirmNFTCreation == false,
         ),

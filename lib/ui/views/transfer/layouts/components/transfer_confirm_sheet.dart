@@ -46,8 +46,6 @@ class TransferConfirmSheet extends ConsumerStatefulWidget {
 
 class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet>
     implements SheetSkeletonInterface {
-  bool? animationOpen;
-
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
 
   void _registerBus() {
@@ -157,9 +155,6 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet>
     TransactionSendEvent event,
   ) {
     // Send failed
-    if (animationOpen!) {
-      context.pop();
-    }
     UIUtil.showSnackbar(
       event.response!,
       context,
@@ -175,7 +170,6 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet>
   void initState() {
     super.initState();
     _registerBus();
-    animationOpen = false;
   }
 
   @override
@@ -203,20 +197,17 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet>
           Dimens.buttonBottomDimens,
           key: const Key('confirm'),
           onPressed: () async {
-            unawaited(
-              Navigator.of(context).push(
-                AnimationLoadingOverlay(
-                  AnimationType.send,
-                  ArchethicTheme.animationOverlayStrong,
-                  title: AppLocalizations.of(context)!.pleaseWait,
-                ),
-              ),
+            context.loadingOverlay.show(
+              title: AppLocalizations.of(context)!.pleaseWait,
             );
+
             await ref
                 .read(
                   TransferFormProvider.transferForm.notifier,
                 )
                 .send(context);
+
+            context.loadingOverlay.hide();
           },
         ),
       ],

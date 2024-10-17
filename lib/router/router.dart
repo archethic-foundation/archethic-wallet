@@ -27,15 +27,11 @@ import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_confirm_sh
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_result_sheet.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
-import 'package:aewallet/ui/views/authenticate/biometrics_screen.dart';
 import 'package:aewallet/ui/views/authenticate/logging_out.dart';
-import 'package:aewallet/ui/views/authenticate/password_screen.dart';
-import 'package:aewallet/ui/views/authenticate/pin_screen.dart';
 import 'package:aewallet/ui/views/authenticate/privacy_mask.dart';
 import 'package:aewallet/ui/views/authenticate/set_biometrics_screen.dart';
 import 'package:aewallet/ui/views/authenticate/set_password_screen.dart';
 import 'package:aewallet/ui/views/authenticate/set_yubikey_screen.dart';
-import 'package:aewallet/ui/views/authenticate/yubikey_screen.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_backup_confirm.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_backup_seed.dart';
@@ -61,8 +57,8 @@ import 'package:aewallet/ui/views/tokens_fungibles/layouts/add_token_sheet.dart'
 import 'package:aewallet/ui/views/transactions/transaction_infos_sheet.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
+import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
-import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -71,10 +67,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+part 'router.aeswap.dart';
 part 'router.authenticated.dart';
 part 'router.authentication.dart';
 part 'router.introduction.dart';
-part 'router.aeswap.dart';
 
 class RoutesPath {
   RoutesPath(
@@ -93,9 +89,13 @@ class RoutesPath {
       extraCodec: const JsonCodec(),
       routes: [
         ShellRoute(
-          builder: (context, state, child) => AuthFactory(
-            child: TasksNotificationWidget(
-              child: child,
+          builder: (context, state, child) => GuardInputListener(
+            child: AuthFactory(
+              child: TasksNotificationWidget(
+                child: LoadingOverlay(
+                  child: child,
+                ),
+              ),
             ),
           ),
           routes: [
@@ -116,64 +116,13 @@ class RoutesPath {
             ),
             ..._authenticationRoutes,
             ..._introductionRoutes,
-            GoRoute(
-              path: ShowSendingAnimation.routerPage,
-              pageBuilder: (context, state) => CustomTransitionPage<void>(
-                transitionDuration: Duration.zero,
-                reverseTransitionDuration: Duration.zero,
-                key: state.pageKey,
-                child: AnimationLoadingPage(
-                  title: state.extra as String?,
-                ),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) =>
-                        FadeTransition(
-                  opacity: animation,
-                  child: child,
-                ),
-              ),
-            ),
-            GoRoute(
-              path: SetBiometricsScreen.routerPage,
-              pageBuilder: (context, state) {
-                final extra = state.extra! as Map<String, dynamic>;
-                return NoTransitionPage<Uint8List>(
-                  child: SetBiometricsScreen(
-                    challenge: extra['challenge'] as Uint8List,
-                  ),
-                );
-              },
-            ),
-            GoRoute(
-              path: SetPassword.routerPage,
-              pageBuilder: (context, state) {
-                final extra = state.extra! as Map<String, dynamic>;
-                return NoTransitionPage<Uint8List>(
-                  key: state.pageKey,
-                  child: SetPassword(
-                    header: extra['header'] as String?,
-                    description: extra['description'] as String?,
-                    challenge: extra['challenge'] as Uint8List,
-                  ),
-                );
-              },
-            ),
-            GoRoute(
-              path: SetYubikey.routerPage,
-              pageBuilder: (context, state) {
-                final extra = state.extra! as Map<String, dynamic>;
-                return NoTransitionPage<void>(
-                  key: state.pageKey,
-                  child: SetYubikey(
-                    challenge: extra['challenge'] as Uint8List,
-                  ),
-                );
-              },
-            ),
             AutoLockGuardRoute(
               routes: [
                 RPCCommandReceiverRoute(
-                  routes: [..._authenticatedRoutes, ..._aeSwapRoutes],
+                  routes: [
+                    ..._authenticatedRoutes,
+                    ..._aeSwapRoutes,
+                  ],
                 ),
               ],
             ),
@@ -201,7 +150,11 @@ class AutoLockGuardRoute extends ShellRoute {
           pageBuilder: (context, state, child) {
             return NoTransitionPage<void>(
               key: state.pageKey,
-              child: AutoLockGuard(child: PrivacyMaskGuard(child: child)),
+              child: PrivacyMaskGuard(
+                child: AutoLockGuard(
+                  child: child,
+                ),
+              ),
             );
           },
         );
@@ -210,17 +163,9 @@ class AutoLockGuardRoute extends ShellRoute {
 class RPCCommandReceiverRoute extends ShellRoute {
   RPCCommandReceiverRoute({required super.routes})
       : super(
-          pageBuilder: (context, state, child) => CustomTransitionPage<void>(
-            transitionDuration: Duration.zero,
-            reverseTransitionDuration: Duration.zero,
+          pageBuilder: (context, state, child) => NoTransitionPage<void>(
             key: state.pageKey,
             child: RPCCommandReceiver(child: child),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) =>
-                    FadeTransition(
-              opacity: animation,
-              child: child,
-            ),
           ),
         );
 }

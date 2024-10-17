@@ -15,9 +15,9 @@ import 'package:aewallet/ui/views/add_account/bloc/state.dart';
 import 'package:aewallet/ui/views/add_account/layouts/components/add_account_detail.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
+import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
-import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -67,7 +67,7 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet>
       ArchethicTheme.snackBarShadow,
       icon: Symbols.info,
     );
-    context.pop();
+    Navigator.of(context).pop();
   }
 
   Future<void> _showSendSucceed(
@@ -148,14 +148,16 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet>
           Dimens.buttonBottomDimens,
           key: const Key('confirm'),
           onPressed: () async {
-            ShowSendingAnimation.build(
-              context,
+            context.loadingOverlay.show(
+              title: AppLocalizations.of(context)!.pleaseWait,
             );
+
             await ref
                 .read(
                   AddAccountFormProvider.addAccountForm.notifier,
                 )
                 .send(context);
+            context.loadingOverlay.hide();
           },
         ),
       ],

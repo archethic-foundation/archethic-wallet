@@ -69,7 +69,7 @@ final _vaultLockedProvider = Provider<bool>.internal(
 );
 
 typedef _VaultLockedRef = ProviderRef<bool>;
-String _$lockDateHash() => r'bc24fa39f84db6758e437b2bd4aab1e61f9905e7';
+String _$lockDateHash() => r'b18dade9f4f5fea308d738ea46ee58aadf314a6a';
 
 /// See also [_lockDate].
 @ProviderFor(_lockDate)
@@ -101,7 +101,7 @@ final _lastInteractionDateNotifierProvider = AsyncNotifierProvider<
 
 typedef _$LastInteractionDateNotifier = AsyncNotifier<LastInteractionDateValue>;
 String _$authenticationGuardNotifierHash() =>
-    r'421fe518c215981dfa69f3dad513f7d483e11399';
+    r'0da140b54e1093617e220a78b59f89f61c44acfd';
 
 /// See also [_AuthenticationGuardNotifier].
 @ProviderFor(_AuthenticationGuardNotifier)
