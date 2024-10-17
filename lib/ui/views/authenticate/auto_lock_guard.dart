@@ -64,27 +64,7 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
       }
     });
 
-    final isLocked = ref.watch(
-      AuthenticationProviders.authenticationGuard.select(
-        (value) => value.value?.isLocked ?? true,
-      ),
-    );
-
-    return InputListener(
-      onInput: () {
-        ref
-            .read(
-              AuthenticationProviders.authenticationGuard.notifier,
-            )
-            .scheduleAutolock();
-      },
-      child: Stack(
-        children: [
-          widget.child,
-          if (isLocked) const LockMask(),
-        ],
-      ),
-    );
+    return widget.child;
   }
 
   @override
@@ -147,6 +127,27 @@ class _AutoLockGuardState extends ConsumerState<AutoLockGuard>
       },
     );
   }
+}
+
+/// Listens to user input and schedules autoLock accordingly.
+class GuardInputListener extends ConsumerWidget {
+  const GuardInputListener({
+    super.key,
+    required this.child,
+  });
+
+  final Widget child;
+  @override
+  Widget build(BuildContext context, WidgetRef ref) => InputListener(
+        onInput: () {
+          ref
+              .read(
+                AuthenticationProviders.authenticationGuard.notifier,
+              )
+              .scheduleAutolock();
+        },
+        child: child,
+      );
 }
 
 class InputListener extends StatelessWidget {

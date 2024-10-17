@@ -1,29 +1,41 @@
 import 'dart:typed_data';
 
+import 'package:aewallet/ui/views/authenticate/auth_screen_overlay.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
-class BiometricsScreen extends ConsumerStatefulWidget {
-  const BiometricsScreen({
+class BiometricsScreenOverlay extends AuthScreenOverlay {
+  BiometricsScreenOverlay({
+    required Uint8List challenge,
+  }) : super(
+          name: 'BiometricsScreenOverlay',
+          widgetBuilder: (context, onDone) => _BiometricsScreen(
+            challenge: challenge,
+            onDone: onDone,
+          ),
+        );
+}
+
+class _BiometricsScreen extends ConsumerStatefulWidget {
+  const _BiometricsScreen({
     super.key,
     required this.challenge,
+    required this.onDone,
   });
 
-  static const routerPage = '/biometrics';
-
   final Uint8List challenge;
+  final void Function(Uint8List? result) onDone;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
       _BiometricsScreenState();
 }
 
-class _BiometricsScreenState extends ConsumerState<BiometricsScreen> {
+class _BiometricsScreenState extends ConsumerState<_BiometricsScreen> {
   @override
   Widget build(BuildContext context) => const LockMask();
 
@@ -35,11 +47,11 @@ class _BiometricsScreenState extends ConsumerState<BiometricsScreen> {
             AppLocalizations.of(context)!.unlockBiometrics,
           );
       if (!auth) {
-        context.pop();
+        widget.onDone(null);
         return;
       }
 
-      context.pop(widget.challenge);
+      widget.onDone(widget.challenge);
     });
 
     super.initState();

@@ -13,13 +13,10 @@ class YubikeyOTPCipherDelegate implements VaultCipherDelegate {
 
   @override
   Future<Uint8List?> decode(Uint8List payload, bool userCancelable) =>
-      context.push<Uint8List>(
-        YubikeyScreen.routerPage,
-        extra: {
-          'canNavigateBack': userCancelable,
-          'challenge': payload,
-        },
-      );
+      YubikeyAuthScreenOverlay(
+        canNavigateBack: userCancelable,
+        challenge: payload,
+      ).show(context);
 
   @override
   Future<Uint8List?> encode(Uint8List payload, bool userCancelable) =>
