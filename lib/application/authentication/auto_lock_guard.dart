@@ -89,10 +89,7 @@ Future<DateTime?> _lockDate(_LockDateRef ref) async {
     ),
   );
 
-  /// Lock without delay only applies to application startup.
-  /// That lock won't be applied otherwise because it would
-  /// constantly lock screen.
-  if (!lastInteractionDate.isStartupValue && lockTimeout == Duration.zero) {
+  if (lockTimeout == Duration.zero) {
     return null;
   }
 
@@ -173,6 +170,21 @@ class _AuthenticationGuardNotifier extends _$AuthenticationGuardNotifier {
     final vault = Vault.instance();
     await vault.applyAutolock();
     await vault.ensureVaultIsUnlocked();
+    ref
+        .read(_lastInteractionDateNotifierProvider.notifier)
+        .updateLastInteractionDate();
+  }
+
+  /// Challenge the verify users ability to unlock device.
+  Future<bool> verifyUnlockAbility() async {
+    final vault = Vault.instance();
+    final result = await vault.verifyUnlockAbility();
+    if (result) {
+      ref
+          .read(_lastInteractionDateNotifierProvider.notifier)
+          .updateLastInteractionDate();
+    }
+    return result;
   }
 
   Future<void> scheduleNextStartupAutolock() async {

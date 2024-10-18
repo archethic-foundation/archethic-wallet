@@ -29,7 +29,7 @@ class RecoveryPhraseBanner extends ConsumerWidget {
                   onTap: () async {
                     final preferences = ref.read(SettingsProviders.settings);
 
-                    final auth = await AuthFactory.authenticate();
+                    final auth = await AuthFactory.of(context).authenticate();
                     if (!auth) return;
 
                     final seed =
