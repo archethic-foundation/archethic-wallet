@@ -20,9 +20,8 @@ class DexTokenRepositoryImpl with ModelParser implements DexTokenRepository {
   @override
   Future<DexToken?> getToken(
     String address,
+    aedappfm.Environment environment,
   ) async {
-    final environment = aedappfm.Environment.byEndpoint(apiService.endpoint);
-
     DexToken? token;
     final tokensListDatasource = await HiveTokensListDatasource.getInstance();
     final tokenHive = tokensListDatasource.getToken(
@@ -168,13 +167,14 @@ class DexTokenRepositoryImpl with ModelParser implements DexTokenRepository {
   }
 
   @override
-  Future<List<DexToken>> getLocalTokensDescriptions() async {
+  Future<List<DexToken>> getLocalTokensDescriptions(
+    aedappfm.Environment environment,
+  ) async {
     final jsonContent = await rootBundle
         .loadString('lib/modules/aeswap/domain/repositories/common_bases.json');
 
     final jsonData = jsonDecode(jsonContent);
 
-    final environment = aedappfm.Environment.byEndpoint(apiService.endpoint);
     final jsonTokens = jsonData['tokens'][environment.name] as List<dynamic>;
     return jsonTokens
         .map(

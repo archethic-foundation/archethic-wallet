@@ -77,11 +77,6 @@ class SessionNotifier extends _$SessionNotifier {
     await ref.read(SettingsProviders.settings.notifier).reset();
     await AuthenticationProviders.reset(ref);
     await ContactProviders.reset(ref);
-    final environment = ref.read(environmentProvider);
-    ref
-      ..invalidate(aedappfm.apiServiceProvider(environment))
-      ..invalidate(apiServiceProvider)
-      ..invalidate(environmentProvider);
     await KeychainInfoVaultDatasource.clear();
     await _appWalletDatasource.clearAppWallet();
     await CacheManagerHive.clear();

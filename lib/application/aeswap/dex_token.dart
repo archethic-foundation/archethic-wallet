@@ -21,7 +21,8 @@ Future<DexToken?> _getTokenFromAddress(
   _GetTokenFromAddressRef ref,
   address,
 ) async {
-  return ref.watch(_dexTokenRepositoryProvider).getToken(address);
+  final environment = ref.read(environmentProvider);
+  return ref.watch(_dexTokenRepositoryProvider).getToken(address, environment);
 }
 
 @riverpod
@@ -47,7 +48,8 @@ Future<List<DexToken>> _dexTokenBases(
   _DexTokenBasesRef ref,
 ) async {
   final repository = ref.watch(_dexTokenRepositoryProvider);
-  return repository.getLocalTokensDescriptions();
+  final environment = ref.read(environmentProvider);
+  return repository.getLocalTokensDescriptions(environment);
 }
 
 @riverpod

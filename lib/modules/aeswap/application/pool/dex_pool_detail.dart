@@ -10,10 +10,12 @@ Future<DexPool?> _pool(
   final tokenVerifiedList = await ref.watch(
     verifiedTokensProvider.future,
   );
+  final environment = ref.read(environmentProvider);
 
   final pool = await dexPoolRepository.getPool(
     poolAddress,
     tokenVerifiedList,
+    environment,
   );
 
   if (pool == null) return null;

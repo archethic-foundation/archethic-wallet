@@ -22,8 +22,8 @@ class DexPoolRepositoryImpl with ModelParser implements DexPoolRepository {
   Future<DexPool?> getPool(
     String poolAddress,
     List<String> tokenVerifiedList,
+    aedappfm.Environment environment,
   ) async {
-    final environment = aedappfm.Environment.byEndpoint(apiService.endpoint);
     final poolsLocalDatasource = await HivePoolsListDatasource.getInstance();
     final poolHive = poolsLocalDatasource.getPool(
       environment.name,
