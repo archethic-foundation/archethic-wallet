@@ -9,59 +9,37 @@ List<GoRoute> get _authenticationRoutes => [
         ),
       ),
       GoRoute(
-        path: BiometricsScreen.routerPage,
+        path: SetBiometricsScreen.routerPage,
         pageBuilder: (context, state) {
           final extra = state.extra! as Map<String, dynamic>;
-
-          return NoTransitionPage<void>(
-            key: state.pageKey,
-            child: BiometricsScreen(
+          return NoTransitionPage<Uint8List>(
+            child: SetBiometricsScreen(
               challenge: extra['challenge'] as Uint8List,
             ),
           );
         },
       ),
       GoRoute(
-        path: PasswordScreen.routerPage,
+        path: SetPassword.routerPage,
         pageBuilder: (context, state) {
           final extra = state.extra! as Map<String, dynamic>;
-          return NoTransitionPage<void>(
+          return NoTransitionPage<Uint8List>(
             key: state.pageKey,
-            child: PasswordScreen(
-              canNavigateBack: extra['canNavigateBack'] as bool,
+            child: SetPassword(
+              header: extra['header'] as String?,
+              description: extra['description'] as String?,
               challenge: extra['challenge'] as Uint8List,
             ),
           );
         },
       ),
       GoRoute(
-        path: PinScreen.routerPage,
-        pageBuilder: (context, state) {
-          final extra = state.extra! as Map<String, dynamic>;
-
-          return NoTransitionPage<void>(
-            key: state.pageKey,
-            child: PinScreen(
-              PinOverlayType.values.byName(
-                extra['type']! as String,
-              ),
-              canNavigateBack: extra['canNavigateBack'] == null ||
-                  extra['canNavigateBack']! as bool,
-              description: extra['description'] as String? ?? '',
-              action: CipherDelegateAction.values.byName(extra['action']),
-              challenge: extra['challenge'],
-            ),
-          );
-        },
-      ),
-      GoRoute(
-        path: YubikeyScreen.routerPage,
+        path: SetYubikey.routerPage,
         pageBuilder: (context, state) {
           final extra = state.extra! as Map<String, dynamic>;
           return NoTransitionPage<void>(
             key: state.pageKey,
-            child: YubikeyScreen(
-              canNavigateBack: extra['canNavigateBack']! as bool,
+            child: SetYubikey(
               challenge: extra['challenge'] as Uint8List,
             ),
           );

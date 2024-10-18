@@ -8,11 +8,11 @@ import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/ui/views/authenticate/auth_screen_overlay.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
-
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:auto_size_text/auto_size_text.dart';
@@ -20,15 +20,57 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
+
+/// Used to unlock the app with a pin.
+class PinAuthScreenOverlay extends AuthScreenOverlay {
+  PinAuthScreenOverlay({
+    required bool canNavigateBack,
+    required Uint8List challenge,
+    required CipherDelegateAction action,
+    required PinOverlayType type,
+    String? description,
+  }) : super(
+          name: 'UnlockPinScreenOverlay',
+          widgetBuilder: (context, onDone) => _PinScreen(
+            type,
+            canNavigateBack: canNavigateBack,
+            challenge: challenge,
+            action: action,
+            onDone: onDone,
+            description: description ?? '',
+          ),
+        );
+}
+
+/// Used to set a new pin.
+class SetPinScreenOverlay extends AuthScreenOverlay {
+  SetPinScreenOverlay({
+    required bool canNavigateBack,
+    required Uint8List challenge,
+    required CipherDelegateAction action,
+    required PinOverlayType type,
+    String? description,
+  }) : super(
+          name: 'SetPinScreenOverlay',
+          widgetBuilder: (context, onDone) => GuardInputListener(
+            child: _PinScreen(
+              type,
+              canNavigateBack: canNavigateBack,
+              challenge: challenge,
+              action: action,
+              onDone: onDone,
+              description: description ?? '',
+            ),
+          ),
+        );
+}
 
 enum CipherDelegateAction { encode, decode }
 
 enum PinOverlayType { newPin, enterPin }
 
-class ShakeCurve extends Curve {
+class _ShakeCurve extends Curve {
   @override
   double transform(double t) {
     //t from 0.0 to 1.0
@@ -36,30 +78,29 @@ class ShakeCurve extends Curve {
   }
 }
 
-class PinScreen extends ConsumerStatefulWidget {
-  const PinScreen(
+class _PinScreen extends ConsumerStatefulWidget {
+  const _PinScreen(
     this.type, {
     required this.action,
     required this.challenge,
     this.description = '',
     this.canNavigateBack = true,
+    required this.onDone,
     super.key,
   });
-
-  static const name = 'PinScreen';
-  static const routerPage = '/pin';
 
   final bool canNavigateBack;
   final CipherDelegateAction action;
   final Uint8List challenge;
   final PinOverlayType type;
   final String description;
+  final void Function(Uint8List? result) onDone;
 
   @override
-  ConsumerState<PinScreen> createState() => _PinScreenState();
+  ConsumerState<_PinScreen> createState() => _PinScreenState();
 }
 
-class _PinScreenState extends ConsumerState<PinScreen>
+class _PinScreenState extends ConsumerState<_PinScreen>
     with SingleTickerProviderStateMixin, CountdownLockMixin
     implements SheetSkeletonInterface {
   static const int _pinLength = 6;
@@ -112,7 +153,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
     );
     final Animation<double> curve = CurvedAnimation(
       parent: _controller,
-      curve: ShakeCurve(),
+      curve: _ShakeCurve(),
     );
     _animation = Tween<double>(begin: 0, end: 25).animate(curve);
 
@@ -260,7 +301,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
               AuthenticationProviders.settings.notifier,
             )
             .setAuthMethod(AuthMethod.pin);
-        context.pop(value.encodedChallenge);
+        widget.onDone(value.encodedChallenge);
       },
     );
   }
@@ -280,7 +321,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
 
     await result.maybeMap(
       success: (success) async {
-        context.pop(success.decodedChallenge);
+        widget.onDone(success.decodedChallenge);
         return;
       },
       orElse: () {
@@ -312,6 +353,11 @@ class _PinScreenState extends ConsumerState<PinScreen>
   Widget build(BuildContext context) {
     return PopScope(
       canPop: widget.canNavigateBack,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) {
+          widget.onDone(null);
+        }
+      },
       child: SheetSkeleton(
         appBar: getAppBar(context, ref),
         floatingActionButton: getFloatingActionButton(context, ref),
@@ -466,7 +512,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
               key: const Key('back'),
               color: ArchethicTheme.text,
               onPressed: () {
-                context.pop();
+                widget.onDone(null);
               },
             )
           : const SizedBox(),

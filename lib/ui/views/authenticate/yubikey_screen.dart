@@ -10,13 +10,13 @@ import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/authenticate/auth_screen_overlay.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/paste_icon.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-
 import 'package:aewallet/util/nfc.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
@@ -25,25 +25,37 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:go_router/go_router.dart';
+class YubikeyAuthScreenOverlay extends AuthScreenOverlay {
+  YubikeyAuthScreenOverlay({
+    required bool canNavigateBack,
+    required Uint8List challenge,
+  }) : super(
+          name: 'YubikeyScreenOverlay',
+          widgetBuilder: (context, onDone) => _YubikeyScreen(
+            canNavigateBack: canNavigateBack,
+            challenge: challenge,
+            onDone: onDone,
+          ),
+        );
+}
 
-class YubikeyScreen extends ConsumerStatefulWidget {
-  const YubikeyScreen({
+class _YubikeyScreen extends ConsumerStatefulWidget {
+  const _YubikeyScreen({
     super.key,
     required this.canNavigateBack,
     required this.challenge,
+    required this.onDone,
   });
 
-  static const name = 'YubikeyScreen';
-  static const routerPage = '/yubikey';
+  final void Function(Uint8List? result) onDone;
   final bool canNavigateBack;
   final Uint8List challenge;
 
   @override
-  ConsumerState<YubikeyScreen> createState() => _YubikeyScreenState();
+  ConsumerState<_YubikeyScreen> createState() => _YubikeyScreenState();
 }
 
-class _YubikeyScreenState extends ConsumerState<YubikeyScreen>
+class _YubikeyScreenState extends ConsumerState<_YubikeyScreen>
     with CountdownLockMixin
     implements SheetSkeletonInterface {
   StreamSubscription<OTPReceiveEvent>? _otpReceiveSub;
@@ -107,7 +119,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen>
               AuthenticationProviders.settings.notifier,
             )
             .setAuthMethod(AuthMethod.yubikeyWithYubicloud);
-        context.pop(widget.challenge);
+        widget.onDone(widget.challenge);
         return;
       },
       orElse: () async {
@@ -118,7 +130,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen>
           ArchethicTheme.text,
           ArchethicTheme.snackBarShadow,
         );
-        context.pop();
+        widget.onDone(null);
       },
     );
 
@@ -148,7 +160,7 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen>
               key: const Key('back'),
               color: ArchethicTheme.text,
               onPressed: () {
-                context.pop();
+                widget.onDone(null);
               },
             )
           : const SizedBox(),
@@ -161,6 +173,11 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen>
 
     return PopScope(
       canPop: widget.canNavigateBack,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) {
+          widget.onDone(null);
+        }
+      },
       child: Column(
         children: <Widget>[
           if (isNFCAvailable)
