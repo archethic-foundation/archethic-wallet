@@ -115,16 +115,17 @@ class TokensRepositoryImpl implements TokensRepository {
         AEToken? defPairSymbolToken2;
         String? token1Address;
         String? token2Address;
-        final token = tokenMap[tokenBalance.address];
+        var token = tokenMap[tokenBalance.address];
         if (token != null && token.type == 'fungible') {
+          token = token.copyWith(address: tokenBalance.address);
           final tokenSymbolSearch = <String>[];
           final isLPToken =
-              poolsListRaw.any((item) => item.lpTokenAddress == token.address);
+              poolsListRaw.any((item) => item.lpTokenAddress == token!.address);
           token1Address = null;
           token2Address = null;
           if (isLPToken) {
-            final GetPoolListResponse? poolRaw = poolsListRaw.firstWhereOrNull(
-              (item) => item.lpTokenAddress == token.address,
+            final poolRaw = poolsListRaw.firstWhereOrNull(
+              (item) => item.lpTokenAddress == token!.address!,
             );
             if (poolRaw != null) {
               token1Address = poolRaw.concatenatedTokensAddresses
