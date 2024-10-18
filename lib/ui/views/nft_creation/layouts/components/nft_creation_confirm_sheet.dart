@@ -36,8 +36,6 @@ class NftCreationConfirmSheet extends ConsumerStatefulWidget {
 
 class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet>
     implements SheetSkeletonInterface {
-  bool? animationOpen;
-
   StreamSubscription<TransactionSendEvent>? _sendTxSub;
 
   void _registerBus() {
@@ -81,6 +79,7 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet>
       ArchethicTheme.snackBarShadow,
     );
     context.pop();
+    context.loadingOverlay.hide();
   }
 
   Future<void> _showSendSucceed(
@@ -105,15 +104,13 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet>
     );
 
     context.go(HomePage.routerPage);
+    context.loadingOverlay.hide();
   }
 
   void _showSendFailed(
     TransactionSendEvent event,
   ) {
     // Send failed
-    if (animationOpen!) {
-      context.pop();
-    }
     UIUtil.showSnackbar(
       event.response!,
       context,
@@ -123,13 +120,13 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet>
       duration: const Duration(seconds: 5),
     );
     context.pop();
+    context.loadingOverlay.hide();
   }
 
   @override
   void initState() {
     super.initState();
     _registerBus();
-    animationOpen = false;
   }
 
   @override
@@ -170,7 +167,6 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet>
                   NftCreationFormProvider.nftCreationForm.notifier,
                 )
                 .send(context);
-            context.loadingOverlay.hide();
           },
           disabled: nftCreation.canConfirmNFTCreation == false,
         ),

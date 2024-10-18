@@ -87,6 +87,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
             extra: widget.name,
           );
         }
+        context.loadingOverlay.hide();
         return;
       }
 
@@ -106,6 +107,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
             extra: widget.name,
           );
         }
+        context.loadingOverlay.hide();
         return;
       }
 
@@ -192,6 +194,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
               );
             }
           }
+          context.loadingOverlay.hide();
           break;
         case TransactionSendEventType.transfer:
           break;
@@ -542,8 +545,6 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
           extra: widget.name,
         );
       }
-    } finally {
-      context.loadingOverlay.hide();
     }
   }
 }
