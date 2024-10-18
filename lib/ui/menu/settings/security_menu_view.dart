@@ -122,7 +122,8 @@ class SecurityMenuView extends ConsumerWidget
                               localizations.removeWalletReassurance,
                               localizations.yes,
                               () async {
-                                final auth = await AuthFactory.authenticate();
+                                final auth = await AuthFactory.of(context)
+                                    .authenticate();
                                 if (!auth) return;
 
                                 context.go(LoggingOutScreen.routerPage);
@@ -162,7 +163,7 @@ class _AuthMethodSettingsListItem extends ConsumerWidget {
       defaultValue: AuthenticationMethod(authenticationMethod),
       icon: Symbols.fingerprint,
       onPressed: () async {
-        final auth = await AuthFactory.authenticate();
+        final auth = await AuthFactory.of(context).authenticate();
         if (!auth) return;
 
         await AuthentificationMethodDialog.getDialog(
@@ -282,7 +283,7 @@ class _BackupSecretPhraseListItem extends ConsumerWidget {
       onPressed: () async {
         final preferences = ref.read(SettingsProviders.settings);
 
-        final auth = await AuthFactory.authenticate();
+        final auth = await AuthFactory.of(context).authenticate();
         if (!auth) return;
 
         final seed = ref.read(sessionNotifierProvider).loggedIn?.wallet.seed;

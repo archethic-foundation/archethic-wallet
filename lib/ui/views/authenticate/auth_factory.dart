@@ -52,8 +52,8 @@ class AuthFactory extends InheritedWidget {
   Future<bool> shouldBeLocked() async =>
       _authFactoryKey.currentState!.shouldBeLocked();
 
-  static Future<bool> authenticate() async =>
-      Vault.instance().verifyUnlockAbility();
+  Future<bool> authenticate() async =>
+      _authFactoryKey.currentState!.authenticate();
 }
 
 class _AuthFactory extends ConsumerStatefulWidget {
@@ -110,6 +110,14 @@ class __AuthFactoryState extends ConsumerState<_AuthFactory> {
       'Duration before lock : $durationBeforeLock',
     );
     return durationBeforeLock <= Duration.zero;
+  }
+
+  Future<bool> authenticate() async {
+    return ref
+        .read(
+          AuthenticationProviders.authenticationGuard.notifier,
+        )
+        .verifyUnlockAbility();
   }
 
   @override
