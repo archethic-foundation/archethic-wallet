@@ -2,15 +2,10 @@
 
 import 'dart:async';
 import 'dart:ui';
-
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class PickerItem<T> {
@@ -76,7 +71,6 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final preferences = ref.watch(SettingsProviders.settings);
     return SizedBox(
       width: double.maxFinite,
       height: widget.height,
@@ -91,10 +85,6 @@ class _PickerWidgetState extends ConsumerState<PickerWidget> {
             return InkWell(
               onTap: () async {
                 if (widget.pickerItems[index].enabled) {
-                  sl.get<HapticUtil>().feedback(
-                        FeedbackType.light,
-                        preferences.activeVibrations,
-                      );
                   if (widget.multipleSelectionsAllowed == false) {
                     selectedIndexes.clear();
                   }

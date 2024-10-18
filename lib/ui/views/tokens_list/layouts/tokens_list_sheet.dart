@@ -1,5 +1,3 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -8,13 +6,10 @@ import 'package:aewallet/ui/views/tokens_detail/layouts/token_detail_sheet.dart'
 import 'package:aewallet/ui/views/tokens_list/bloc/provider.dart';
 import 'package:aewallet/ui/views/tokens_list/layouts/components/token_add_btn.dart';
 import 'package:aewallet/ui/views/tokens_list/layouts/components/token_detail.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
@@ -43,7 +38,6 @@ class TokensListState extends ConsumerState<TokensList>
         )
         .valueOrNull;
     final localizations = AppLocalizations.of(context)!;
-    final settings = ref.watch(SettingsProviders.settings);
     return Column(
       children: [
         Row(
@@ -102,10 +96,6 @@ class TokensListState extends ConsumerState<TokensList>
             children: tokens.map((aeToken) {
               return InkWell(
                 onTap: () async {
-                  sl.get<HapticUtil>().feedback(
-                        FeedbackType.light,
-                        settings.activeVibrations,
-                      );
                   await context.push(
                     TokenDetailSheet.routerPage,
                     extra: {

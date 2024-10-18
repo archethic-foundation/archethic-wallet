@@ -14,8 +14,6 @@ import 'package:aewallet/ui/views/accounts/layouts/account_list.dart';
 import 'package:aewallet/ui/views/accounts/layouts/components/add_account_button.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_icon_refresh.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:auto_size_text/auto_size_text.dart';
@@ -24,7 +22,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -78,10 +75,6 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
               grade: IconSize.gradeM,
             ),
             onPressed: () async {
-              sl.get<HapticUtil>().feedback(
-                    FeedbackType.light,
-                    preferences.activeVibrations,
-                  );
               final preferencesNotifier =
                   ref.read(SettingsProviders.settings.notifier);
               await preferencesNotifier
@@ -136,7 +129,6 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
   }
 
   Widget _accountTab(BuildContext context, WidgetRef ref) {
-    final preferences = ref.watch(SettingsProviders.settings);
     final localizations = AppLocalizations.of(context)!;
     final keychain = ref.watch(
       sessionNotifierProvider.select(
@@ -153,11 +145,6 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
       fit: BoxFit.fitWidth,
       child: InkWell(
         onTap: () async {
-          sl.get<HapticUtil>().feedback(
-                FeedbackType.light,
-                preferences.activeVibrations,
-              );
-
           await showCupertinoModalBottomSheet(
             context: context,
             builder: (BuildContext context) {
@@ -178,10 +165,6 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                               padding: const EdgeInsets.only(top: 15),
                               child: InkWell(
                                 onTap: () {
-                                  sl.get<HapticUtil>().feedback(
-                                        FeedbackType.light,
-                                        preferences.activeVibrations,
-                                      );
                                   Clipboard.setData(
                                     ClipboardData(
                                       text:
@@ -278,7 +261,6 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
   }
 
   Widget _transactionsTab(BuildContext context, WidgetRef ref) {
-    final preferences = ref.watch(SettingsProviders.settings);
     final localizations = AppLocalizations.of(context)!;
     final keychain = ref.watch(
       sessionNotifierProvider.select(
@@ -288,10 +270,6 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
     return InkWell(
       onTap: () {
-        sl.get<HapticUtil>().feedback(
-              FeedbackType.light,
-              preferences.activeVibrations,
-            );
         Clipboard.setData(
           ClipboardData(
             text: keychain?.address.toUpperCase() ?? '',

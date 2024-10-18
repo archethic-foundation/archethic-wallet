@@ -8,8 +8,6 @@ import 'package:aewallet/ui/views/receive/receive_modal.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/action_button.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -17,7 +15,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -39,7 +36,6 @@ class TokenDetailMenu extends ConsumerWidget {
         )
         .valueOrNull
         ?.selectedAccount;
-    final preferences = ref.watch(SettingsProviders.settings);
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
     final pool = ref.watch(farmLockFormPoolProvider).value;
@@ -72,10 +68,6 @@ class TokenDetailMenu extends ConsumerWidget {
                           text: localizations.send,
                           icon: Symbols.call_made,
                           onTap: () async {
-                            sl.get<HapticUtil>().feedback(
-                                  FeedbackType.light,
-                                  preferences.activeVibrations,
-                                );
                             await context.push(
                               TransferSheet.routerPage,
                               extra: {
@@ -109,11 +101,6 @@ class TokenDetailMenu extends ConsumerWidget {
                     text: localizations.receive,
                     icon: Symbols.call_received,
                     onTap: () {
-                      sl.get<HapticUtil>().feedback(
-                            FeedbackType.light,
-                            preferences.activeVibrations,
-                          );
-
                       CupertinoScaffold.showCupertinoModalBottomSheet(
                         context: context,
                         builder: (BuildContext context) {
@@ -141,11 +128,6 @@ class TokenDetailMenu extends ConsumerWidget {
                     text: localizations.swapHeader,
                     icon: aedappfm.Iconsax.arrange_circle_2,
                     onTap: () async {
-                      sl.get<HapticUtil>().feedback(
-                            FeedbackType.light,
-                            preferences.activeVibrations,
-                          );
-
                       final params = {
                         'from': aeToken.isUCO ? 'UCO' : aeToken.address,
                       };
@@ -177,10 +159,6 @@ class TokenDetailMenu extends ConsumerWidget {
                               text: localizations.explorer,
                               icon: Symbols.manage_search,
                               onTap: () async {
-                                sl.get<HapticUtil>().feedback(
-                                      FeedbackType.light,
-                                      preferences.activeVibrations,
-                                    );
                                 await launchUrl(
                                   Uri.parse(
                                     '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${aeToken.address}',
@@ -217,10 +195,6 @@ class TokenDetailMenu extends ConsumerWidget {
                               icon: aedappfm.Iconsax.wallet_add,
                               enabled: pool != null && farmLock != null,
                               onTap: () async {
-                                sl.get<HapticUtil>().feedback(
-                                      FeedbackType.light,
-                                      preferences.activeVibrations,
-                                    );
                                 ref.read(mainTabControllerProvider)!.animateTo(
                                       3,
                                       duration: Duration.zero,

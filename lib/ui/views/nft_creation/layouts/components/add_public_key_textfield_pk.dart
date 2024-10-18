@@ -65,7 +65,6 @@ class _AddPublicKeyTextFieldPkState
   Widget build(
     BuildContext context,
   ) {
-    final preferences = ref.watch(SettingsProviders.settings);
     final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
     final nftCreationNotifier = ref.watch(
       NftCreationFormProvider.nftCreationForm.notifier,
@@ -170,10 +169,6 @@ class _AddPublicKeyTextFieldPkState
                     TextFieldButton(
                       icon: Symbols.qr_code_scanner,
                       onPressed: () async {
-                        sl.get<HapticUtil>().feedback(
-                              FeedbackType.light,
-                              preferences.activeVibrations,
-                            );
                         final scanResult = await UserDataUtil.getQRData(
                           DataType.address,
                           context,
@@ -219,10 +214,6 @@ class _AddPublicKeyTextFieldPkState
                   TextFieldButton(
                     icon: Symbols.contacts,
                     onPressed: () async {
-                      sl.get<HapticUtil>().feedback(
-                            FeedbackType.light,
-                            preferences.activeVibrations,
-                          );
                       final contact =
                           await ContactsDialog.getDialog(context, ref);
                       if (contact == null) return;

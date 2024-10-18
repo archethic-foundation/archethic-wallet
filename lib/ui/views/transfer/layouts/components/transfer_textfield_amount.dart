@@ -308,7 +308,6 @@ class _TransferTextFieldAmountState
     final transfer = ref.watch(TransferFormProvider.transferForm);
     if (transfer.transferType == null) return const SizedBox.shrink();
 
-    final settings = ref.watch(SettingsProviders.settings);
     final transferNotifier =
         ref.watch(TransferFormProvider.transferForm.notifier);
 
@@ -319,10 +318,6 @@ class _TransferTextFieldAmountState
           transferNotifier.setDefineMaxAmountInProgress(
             defineMaxAmountInProgress: true,
           );
-          sl.get<HapticUtil>().feedback(
-                FeedbackType.light,
-                settings.activeVibrations,
-              );
           if (transferNotifier.controlMaxSend(context) == false) {
             transferNotifier.setDefineMaxAmountInProgress(
               defineMaxAmountInProgress: false,

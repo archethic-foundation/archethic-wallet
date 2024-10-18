@@ -1,18 +1,12 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/raw_info_popup.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
@@ -86,8 +80,6 @@ class QRCodeWithOptions extends ConsumerWidget {
   }
 
   Widget _btnShare(BuildContext context, WidgetRef ref) {
-    final preferences = ref.watch(SettingsProviders.settings);
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -109,10 +101,6 @@ class QRCodeWithOptions extends ConsumerWidget {
                 ),
               ),
               onTap: () async {
-                sl.get<HapticUtil>().feedback(
-                      FeedbackType.light,
-                      preferences.activeVibrations,
-                    );
                 final box = context.findRenderObject() as RenderBox?;
                 await Share.share(
                   infoQRCode,
@@ -135,8 +123,6 @@ class QRCodeWithOptions extends ConsumerWidget {
   }
 
   Widget _btnView(BuildContext context, WidgetRef ref) {
-    final preferences = ref.watch(SettingsProviders.settings);
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -158,10 +144,6 @@ class QRCodeWithOptions extends ConsumerWidget {
                 ),
               ),
               onTap: () async {
-                sl.get<HapticUtil>().feedback(
-                      FeedbackType.light,
-                      preferences.activeVibrations,
-                    );
                 await RawInfoPopup.getPopup(
                   context,
                   ref,
@@ -184,8 +166,6 @@ class QRCodeWithOptions extends ConsumerWidget {
   }
 
   Widget _btnCopy(BuildContext context, WidgetRef ref) {
-    final preferences = ref.watch(SettingsProviders.settings);
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -207,10 +187,6 @@ class QRCodeWithOptions extends ConsumerWidget {
                 ),
               ),
               onTap: () async {
-                sl.get<HapticUtil>().feedback(
-                      FeedbackType.light,
-                      preferences.activeVibrations,
-                    );
                 await Clipboard.setData(
                   ClipboardData(text: infoQRCode),
                 );

@@ -2,7 +2,6 @@
 
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/device_abilities.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:aewallet/model/authentication_method.dart';
@@ -10,15 +9,12 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/ui/widgets/dialogs/authentification_method_dialog_help.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
@@ -48,8 +44,6 @@ class AuthentificationMethodDialog {
     final settingsNotifier = ref.read(
       AuthenticationProviders.settings.notifier,
     );
-    final preferences = ref.read(SettingsProviders.settings);
-
     final pickerItemsList = await Future.wait(
       AuthMethod.values.map(
         (method) async => PickerItem<AuthMethod>(
@@ -106,10 +100,6 @@ class AuthentificationMethodDialog {
                 padding: const EdgeInsets.only(left: 8),
                 child: InkWell(
                   onTap: () async {
-                    sl.get<HapticUtil>().feedback(
-                          FeedbackType.light,
-                          preferences.activeVibrations,
-                        );
                     return AuthentificationMethodDialogHelp.getDialog(
                       context,
                       ref,

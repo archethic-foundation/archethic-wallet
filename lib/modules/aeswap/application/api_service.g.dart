@@ -6,11 +6,11 @@ part of 'api_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$apiServiceHash() => r'14f4e9e6aedb61de43db5c8b137ec93dcbab3e3d';
+String _$apiServiceHash() => r'7cc6001cacacb14b9acb89ed3f81709eba5b9b26';
 
 /// See also [apiService].
 @ProviderFor(apiService)
-final apiServiceProvider = Provider<ApiService>.internal(
+final apiServiceProvider = AutoDisposeProvider<ApiService>.internal(
   apiService,
   name: r'apiServiceProvider',
   debugGetCreateSourceHash:
@@ -19,6 +19,6 @@ final apiServiceProvider = Provider<ApiService>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef ApiServiceRef = ProviderRef<ApiService>;
+typedef ApiServiceRef = AutoDisposeProviderRef<ApiService>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

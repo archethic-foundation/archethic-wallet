@@ -2,7 +2,6 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/market_price.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -17,15 +16,12 @@ import 'package:aewallet/ui/views/tokens_list/layouts/tokens_list_sheet.dart';
 import 'package:aewallet/ui/widgets/balance/balance_infos.dart';
 import 'package:aewallet/ui/widgets/components/refresh_indicator.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/universal_platform.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class AccountTab extends ConsumerWidget {
@@ -33,7 +29,6 @@ class AccountTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final preferences = ref.watch(SettingsProviders.settings);
     final selectedAccount = ref
         .watch(
           AccountProviders.accounts,
@@ -43,11 +38,6 @@ class AccountTab extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
     return ArchethicRefreshIndicator(
       onRefresh: () => Future<void>.sync(() async {
-        sl.get<HapticUtil>().feedback(
-              FeedbackType.light,
-              preferences.activeVibrations,
-            );
-
         final _connectivityStatusProvider =
             ref.read(connectivityStatusProviders);
         if (_connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
@@ -90,10 +80,6 @@ class AccountTab extends ConsumerWidget {
                             const BalanceInfos(),
                             InkWell(
                               onTap: () {
-                                sl.get<HapticUtil>().feedback(
-                                      FeedbackType.light,
-                                      preferences.activeVibrations,
-                                    );
                                 Clipboard.setData(
                                   ClipboardData(
                                     text: selectedAccount?.genesisAddress

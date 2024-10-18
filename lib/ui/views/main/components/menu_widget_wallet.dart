@@ -3,15 +3,12 @@ import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/refresh_in_progress.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/ui/views/receive/receive_modal.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
 import 'package:aewallet/ui/widgets/components/action_button.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -19,7 +16,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -35,7 +31,6 @@ class MenuWidgetWallet extends ConsumerWidget {
         )
         .valueOrNull
         ?.selectedAccount;
-    final preferences = ref.watch(SettingsProviders.settings);
     final contact = ref.watch(ContactProviders.getSelectedContact).valueOrNull;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     final refreshInProgress = ref.watch(refreshInProgressNotifierProvider);
@@ -62,11 +57,6 @@ class MenuWidgetWallet extends ConsumerWidget {
                 text: localizations.send,
                 icon: Symbols.call_made,
                 onTap: () async {
-                  sl.get<HapticUtil>().feedback(
-                        FeedbackType.light,
-                        preferences.activeVibrations,
-                      );
-
                   await context.push(
                     TransferSheet.routerPage,
                     extra: {
@@ -95,11 +85,6 @@ class MenuWidgetWallet extends ConsumerWidget {
                 text: localizations.receive,
                 icon: Symbols.call_received,
                 onTap: () async {
-                  sl.get<HapticUtil>().feedback(
-                        FeedbackType.light,
-                        preferences.activeVibrations,
-                      );
-
                   await CupertinoScaffold.showCupertinoModalBottomSheet(
                     context: context,
                     builder: (BuildContext context) {
@@ -132,10 +117,6 @@ class MenuWidgetWallet extends ConsumerWidget {
                 text: localizations.buy,
                 icon: Symbols.add,
                 onTap: () {
-                  sl.get<HapticUtil>().feedback(
-                        FeedbackType.light,
-                        preferences.activeVibrations,
-                      );
                   context.push(BuySheet.routerPage);
                 },
               )
@@ -156,10 +137,6 @@ class MenuWidgetWallet extends ConsumerWidget {
                 text: localizations.refresh,
                 icon: Symbols.refresh,
                 onTap: () async {
-                  sl.get<HapticUtil>().feedback(
-                        FeedbackType.light,
-                        preferences.activeVibrations,
-                      );
                   final _connectivityStatusProvider =
                       ref.read(connectivityStatusProviders);
                   if (_connectivityStatusProvider ==

@@ -1,15 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:aewallet/application/connectivity_status.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 enum AppButtonTinyType { primary, primaryOutline }
 
@@ -120,14 +116,8 @@ class AppButtonTinyWithoutExpanded extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
-    final preferences = ref.watch(SettingsProviders.settings);
-
     void handlePressed() {
       if (!disabled) {
-        sl.get<HapticUtil>().feedback(
-              FeedbackType.light,
-              preferences.activeVibrations,
-            );
         onPressed!();
       }
       return;

@@ -1,7 +1,6 @@
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/session/session.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/formatters.dart';
@@ -10,8 +9,6 @@ import 'package:aewallet/ui/views/nft/layouts/components/nft_detail.dart';
 import 'package:aewallet/ui/views/nft_search/bloc/provider.dart';
 import 'package:aewallet/ui/views/nft_search/bloc/state.dart';
 import 'package:aewallet/ui/widgets/components/paste_icon.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/user_data_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -20,7 +17,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
@@ -58,7 +54,6 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    final preferences = ref.watch(SettingsProviders.settings);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
     final session = ref.watch(sessionNotifierProvider).loggedIn!;
     final localizations = AppLocalizations.of(context)!;
@@ -128,10 +123,6 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                             grade: IconSize.gradeM,
                           ),
                           onTap: () async {
-                            sl.get<HapticUtil>().feedback(
-                                  FeedbackType.light,
-                                  preferences.activeVibrations,
-                                );
                             final scanResult = await UserDataUtil.getQRData(
                               DataType.address,
                               context,
@@ -214,11 +205,6 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                                 ConnectivityStatus.isConnected
                         ? null
                         : () async {
-                            sl.get<HapticUtil>().feedback(
-                                  FeedbackType.light,
-                                  preferences.activeVibrations,
-                                );
-
                             final selectedAccount = await session
                                 .wallet.appKeychain
                                 .getAccountSelected();
@@ -255,11 +241,7 @@ class _NFTSearchBarState extends ConsumerState<NFTSearchBar> {
                 children: [
                   InkWell(
                     onTap: () async {
-                      sl.get<HapticUtil>().feedback(
-                            FeedbackType.light,
-                            preferences.activeVibrations,
-                          );
-
+                     
                       ref
                           .read(
                             NftCreationFormProvider

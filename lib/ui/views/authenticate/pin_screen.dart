@@ -12,8 +12,7 @@ import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
+
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:auto_size_text/auto_size_text.dart';
@@ -21,7 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
+
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
@@ -179,10 +178,6 @@ class _PinScreenState extends ConsumerState<PinScreen>
         splashColor: ArchethicTheme.text30,
         onTap: () {},
         onTapDown: (TapDownDetails details) {
-          sl.get<HapticUtil>().feedback(
-                FeedbackType.light,
-                preferences.activeVibrations,
-              );
           if (_controller.status == AnimationStatus.forward ||
               _controller.status == AnimationStatus.reverse) {
             return;
@@ -249,10 +244,6 @@ class _PinScreenState extends ConsumerState<PinScreen>
 
     await updatePinResult.map(
       pinsDoNotMatch: (value) {
-        sl.get<HapticUtil>().feedback(
-              FeedbackType.error,
-              preferences.activeVibrations,
-            );
         _controller.forward().then((_) {
           setState(() {
             _awaitingConfirmation = false;
@@ -294,10 +285,6 @@ class _PinScreenState extends ConsumerState<PinScreen>
       },
       orElse: () {
         showLockCountdownScreenIfNeeded(context, ref);
-        sl.get<HapticUtil>().feedback(
-              FeedbackType.error,
-              preferences.activeVibrations,
-            );
         _controller.forward().then((_) async {
           final isLocked = await ref.read(
             AuthenticationProviders.isLockCountdownRunning.future,
@@ -335,8 +322,6 @@ class _PinScreenState extends ConsumerState<PinScreen>
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    final preferences = ref.watch(SettingsProviders.settings);
-
     return Container(
       margin: EdgeInsets.only(
         left: MediaQuery.of(context).size.width * 0.07,
@@ -439,10 +424,6 @@ class _PinScreenState extends ConsumerState<PinScreen>
                     splashColor: ArchethicTheme.text30,
                     onTap: () {},
                     onTapDown: (TapDownDetails details) {
-                      sl.get<HapticUtil>().feedback(
-                            FeedbackType.light,
-                            preferences.activeVibrations,
-                          );
                       _backSpace();
                     },
                     child: Container(

@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:aewallet/application/device_abilities.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/infrastructure/datasources/contacts.hive.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -20,8 +19,6 @@ import 'package:aewallet/ui/widgets/components/paste_icon.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/dialogs/contacts_dialog.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/user_data_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +26,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
@@ -99,7 +95,6 @@ class _AddAddressState extends ConsumerState<AddAddress>
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
-    final preferences = ref.watch(SettingsProviders.settings);
     final nftCreation = ref.watch(
       NftCreationFormProvider.nftCreationForm,
     );
@@ -113,11 +108,6 @@ class _AddAddressState extends ConsumerState<AddAddress>
                 Dimens.buttonBottomDimens,
                 key: const Key('addAddress'),
                 onPressed: () async {
-                  sl.get<HapticUtil>().feedback(
-                        FeedbackType.light,
-                        preferences.activeVibrations,
-                      );
-
                   await ref
                       .read(
                         NftCreationFormProvider.nftCreationForm.notifier,

@@ -6,7 +6,7 @@ part of 'router_factory.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$routerFactoryHash() => r'73edac7f8881bda63e4ce08d2aa43299973000c6';
+String _$routerFactoryHash() => r'aa33ca7cfdf5b4af52add7bba12c89122c185103';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -72,7 +72,7 @@ class RouterFactoryFamily extends Family<RouterFactory> {
 }
 
 /// See also [routerFactory].
-class RouterFactoryProvider extends Provider<RouterFactory> {
+class RouterFactoryProvider extends AutoDisposeProvider<RouterFactory> {
   /// See also [routerFactory].
   RouterFactoryProvider(
     String address,
@@ -124,7 +124,7 @@ class RouterFactoryProvider extends Provider<RouterFactory> {
   }
 
   @override
-  ProviderElement<RouterFactory> createElement() {
+  AutoDisposeProviderElement<RouterFactory> createElement() {
     return _RouterFactoryProviderElement(this);
   }
 
@@ -142,13 +142,13 @@ class RouterFactoryProvider extends Provider<RouterFactory> {
   }
 }
 
-mixin RouterFactoryRef on ProviderRef<RouterFactory> {
+mixin RouterFactoryRef on AutoDisposeProviderRef<RouterFactory> {
   /// The parameter `address` of this provider.
   String get address;
 }
 
-class _RouterFactoryProviderElement extends ProviderElement<RouterFactory>
-    with RouterFactoryRef {
+class _RouterFactoryProviderElement
+    extends AutoDisposeProviderElement<RouterFactory> with RouterFactoryRef {
   _RouterFactoryProviderElement(super.provider);
 
   @override

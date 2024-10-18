@@ -1,6 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/provider.dart';
@@ -8,14 +6,11 @@ import 'package:aewallet/ui/views/nft_creation/layouts/components/properties_acc
 import 'package:aewallet/ui/views/nft_creation/layouts/components/properties_access/nft_creation_process_file_access_add_button.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/item_remove_button.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/string_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class NFTCreationProcessPropertyAccess extends ConsumerWidget {
   const NFTCreationProcessPropertyAccess({
@@ -38,8 +33,6 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
     }
 
     final localizations = AppLocalizations.of(context)!;
-
-    final preferences = ref.watch(SettingsProviders.settings);
     final nftCreation = ref.watch(NftCreationFormProvider.nftCreationForm);
     final nftCreationNotifier = ref.watch(
       NftCreationFormProvider.nftCreationForm.notifier,
@@ -124,10 +117,6 @@ class NFTCreationProcessPropertyAccess extends ConsumerWidget {
                               localizations.deleteProperty,
                               localizations.areYouSure,
                               AppLocalizations.of(context)!.deleteOption, () {
-                            sl.get<HapticUtil>().feedback(
-                                  FeedbackType.light,
-                                  preferences.activeVibrations,
-                                );
                             nftCreationNotifier.removeProperty(
                               propertyName,
                             );

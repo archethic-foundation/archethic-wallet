@@ -135,9 +135,6 @@ dependencies:
   # An SVG rendering and widget library for Flutter, which allows painting and displaying Scalable Vector Graphics 1.1 files
   flutter_svg: ^2.0.6
 
-  # A Flutter plugin to vibrate the device
-  flutter_vibrate: ^1.3.0
-
   # Annotations for freezed
   freezed_annotation: ^2.4.1
 

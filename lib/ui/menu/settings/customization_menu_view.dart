@@ -76,10 +76,6 @@ class CustomizationMenuView extends ConsumerWidget
                       const _ShowBalancesSettingsListItem(),
                       const _SettingsListItem.spacer(),
                       const _ShowPriceChartSettingsListItem(),
-                      if (UniversalPlatform.isMobile)
-                        const _SettingsListItem.spacer(),
-                      if (UniversalPlatform.isMobile)
-                        const _ActiveVibrationsSettingsListItem(),
                       const _SettingsListItem.spacer(),
                     ],
                   ),
@@ -149,30 +145,6 @@ class _ShowPriceChartSettingsListItem extends ConsumerWidget {
       isSwitched: showPriceChart,
       onChanged: (showPriceChart) async {
         await preferencesNotifier.setShowPriceChart(showPriceChart);
-      },
-    );
-  }
-}
-
-class _ActiveVibrationsSettingsListItem extends ConsumerWidget {
-  const _ActiveVibrationsSettingsListItem();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-
-    final activeVibrations = ref.watch(
-      SettingsProviders.settings
-          .select((settings) => settings.activeVibrations),
-    );
-    final preferencesNotifier = ref.read(SettingsProviders.settings.notifier);
-
-    return _SettingsListItem.withSwitch(
-      heading: localizations.activateVibrations,
-      icon: Symbols.vibration,
-      isSwitched: activeVibrations,
-      onChanged: (bool isSwitched) async {
-        await preferencesNotifier.setActiveVibrations(isSwitched);
       },
     );
   }

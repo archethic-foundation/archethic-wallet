@@ -1,18 +1,14 @@
 import 'dart:ui';
 
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 
 class AuthentificationMethodDialogHelp {
@@ -24,7 +20,6 @@ class AuthentificationMethodDialogHelp {
       context: context,
       useRootNavigator: false,
       builder: (BuildContext context) {
-        final preferences = ref.watch(SettingsProviders.settings);
         return AlertDialog(
           insetPadding: EdgeInsets.zero,
           backgroundColor: Colors.transparent,
@@ -162,10 +157,6 @@ class AuthentificationMethodDialogHelp {
                       )!
                           .close,
                       onPressed: () async {
-                        sl.get<HapticUtil>().feedback(
-                              FeedbackType.light,
-                              preferences.activeVibrations,
-                            );
                         context.pop();
                       },
                     ),

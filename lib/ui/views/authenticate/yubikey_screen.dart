@@ -4,7 +4,6 @@ import 'dart:async';
 
 // Project imports:
 import 'package:aewallet/application/authentication/authentication.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/bus/otp_event.dart';
 import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/model/authentication_method.dart';
@@ -17,7 +16,7 @@ import 'package:aewallet/ui/widgets/components/paste_icon.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
+
 import 'package:aewallet/util/nfc.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
@@ -25,7 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
+
 import 'package:go_router/go_router.dart';
 
 class YubikeyScreen extends ConsumerStatefulWidget {
@@ -160,8 +159,6 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen>
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
-    final preferences = ref.watch(SettingsProviders.settings);
-
     return PopScope(
       canPop: widget.canNavigateBack,
       child: Column(
@@ -173,10 +170,6 @@ class _YubikeyScreenState extends ConsumerState<YubikeyScreen>
                 style: ArchethicThemeStyles.textStyleSize16W100Primary,
               ),
               onPressed: () async {
-                sl.get<HapticUtil>().feedback(
-                      FeedbackType.light,
-                      preferences.activeVibrations,
-                    );
                 setState(() {
                   buttonNFCLabel = localizations.yubikeyConnectHoldNearDevice;
                 });

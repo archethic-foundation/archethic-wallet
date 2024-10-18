@@ -25,14 +25,11 @@ import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/mnemonics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart';
 import 'package:unorm_dart/unorm_dart.dart' as unorm;
@@ -285,7 +282,6 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final preferences = ref.watch(SettingsProviders.settings);
     final languageSeed = ref.watch(
       SettingsProviders.settings.select(
         (settings) => settings.languageSeed,
@@ -340,11 +336,6 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                   width: 50,
                   child: TextButton(
                     onPressed: () async {
-                      sl.get<HapticUtil>().feedback(
-                            FeedbackType.light,
-                            preferences.activeVibrations,
-                          );
-
                       await ref
                           .read(SettingsProviders.settings.notifier)
                           .setLanguageSeed('en');
@@ -369,11 +360,6 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                   width: 50,
                   child: TextButton(
                     onPressed: () async {
-                      sl.get<HapticUtil>().feedback(
-                            FeedbackType.light,
-                            preferences.activeVibrations,
-                          );
-
                       await ref
                           .read(SettingsProviders.settings.notifier)
                           .setLanguageSeed('fr');

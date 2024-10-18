@@ -14,7 +14,6 @@ class SettingsRepository implements SettingsRepositoryInterface {
     final loadedPreferences = await preferences;
 
     return Settings(
-      activeVibrations: loadedPreferences.getActiveVibrations(),
       activeRPCServer: loadedPreferences.getActiveRPCServer(),
       firstLaunch: loadedPreferences.getFirstLaunch(),
       language: loadedPreferences.getLanguage().language,
@@ -31,7 +30,6 @@ class SettingsRepository implements SettingsRepositoryInterface {
   @override
   Future<void> setSettings(Settings settings) async {
     final loadedPreferences = await preferences;
-    await loadedPreferences.setActiveVibrations(settings.activeVibrations);
     await loadedPreferences.setActiveRPCServer(settings.activeRPCServer);
     await loadedPreferences.setFirstLaunch(settings.firstLaunch);
     await loadedPreferences.setLanguage(LanguageSetting(settings.language));

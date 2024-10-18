@@ -17,15 +17,14 @@ import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
+
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
@@ -90,12 +89,6 @@ class ContactDetail extends ConsumerWidget implements SheetSkeletonInterface {
       title: contact.format,
       widgetAfterTitle: InkWell(
         onTap: () {
-          final preferences = ref.watch(SettingsProviders.settings);
-
-          sl.get<HapticUtil>().feedback(
-                FeedbackType.light,
-                preferences.activeVibrations,
-              );
           Clipboard.setData(
             ClipboardData(
               text: contactAddress.toLowerCase(),
@@ -173,8 +166,6 @@ class _ContactDetailBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
-    final preferences = ref.watch(SettingsProviders.settings);
-
     return Column(
       children: <Widget>[
         _ContactDetailActions(contact: contact, readOnly: readOnly),
@@ -193,10 +184,6 @@ class _ContactDetailBody extends ConsumerWidget {
               TextButton(
                 key: const Key('removeContact'),
                 onPressed: () {
-                  sl.get<HapticUtil>().feedback(
-                        FeedbackType.light,
-                        preferences.activeVibrations,
-                      );
                   AppDialogs.showConfirmDialog(
                     context,
                     ref,
@@ -277,7 +264,6 @@ class _ContactDetailActions extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final preferences = ref.watch(SettingsProviders.settings);
     final _contact = ref.watch(
       ContactProviders.getContactWithName(
         contact.format,
@@ -292,10 +278,6 @@ class _ContactDetailActions extends ConsumerWidget {
           IconButton(
             key: const Key('favorite'),
             onPressed: () {
-              sl.get<HapticUtil>().feedback(
-                    FeedbackType.light,
-                    preferences.activeVibrations,
-                  );
               final updatedContact = contact;
               if (contact.favorite == null) {
                 updatedContact.favorite = true;

@@ -16,7 +16,6 @@ class _SettingsListItemSwitch extends _SettingsListItem {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final preferences = ref.watch(SettingsProviders.settings);
     final thumbIcon = WidgetStateProperty.resolveWith<Icon?>(
       (Set<WidgetState> states) {
         if (states.contains(WidgetState.selected)) {
@@ -31,12 +30,7 @@ class _SettingsListItemSwitch extends _SettingsListItem {
           const RoundedRectangleBorder(),
         ),
       ),
-      onPressed: () {
-        sl.get<HapticUtil>().feedback(
-              FeedbackType.light,
-              preferences.activeVibrations,
-            );
-      },
+      onPressed: () {},
       child: Container(
         height: 50,
         margin: const EdgeInsetsDirectional.only(start: 10, end: 10),
@@ -69,10 +63,6 @@ class _SettingsListItemSwitch extends _SettingsListItem {
                   thumbIcon: thumbIcon,
                   onChanged: (bool value) {
                     if (onChanged == null) return;
-                    sl.get<HapticUtil>().feedback(
-                          FeedbackType.light,
-                          preferences.activeVibrations,
-                        );
                     onChanged?.call(value);
                   },
                   inactiveTrackColor: ArchethicTheme.inactiveTrackColorSwitch,
