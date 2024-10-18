@@ -68,6 +68,7 @@ packages:
       name: archethic_dapp_framework_flutter
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       sha256: "4eb55668b506d4b49e5e6b15dc2c9381eb5a0fa1877dea5b7e389a843ef63ab8"
       url: "https://pub.dev"
     source: hosted
@@ -76,10 +77,13 @@ packages:
 =======
 >>>>>>> fadbe4ef (chore: Rebase: update pubspec)
 <<<<<<< HEAD
+=======
+>>>>>>> ad7fbf04 (rebase: update pubspec.lock)
       sha256: "71ae3c60cb11dc63651e3f114e2c23752b9505abf5679b023b41aaf872c4150d"
       url: "https://pub.dev"
     source: hosted
     version: "3.0.3"
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 =======
@@ -102,6 +106,8 @@ packages:
 =======
 >>>>>>> e2c6c743 (chore: Rebase: update pubspec)
 >>>>>>> fadbe4ef (chore: Rebase: update pubspec)
+=======
+>>>>>>> ad7fbf04 (rebase: update pubspec.lock)
   archethic_lib_dart:
     dependency: transitive
     description:
