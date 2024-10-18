@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:ui';
 
 import 'package:aewallet/application/account/providers.dart';
@@ -70,14 +69,8 @@ class SendTransactionConfirmationForm extends ConsumerWidget
           localizations.confirm,
           Dimens.buttonBottomDimens,
           onPressed: () async {
-            unawaited(
-              Navigator.of(context).push(
-                AnimationLoadingOverlay(
-                  AnimationType.send,
-                  ArchethicTheme.animationOverlayStrong,
-                  title: AppLocalizations.of(context)!.pleaseWait,
-                ),
-              ),
+            context.loadingOverlay.show(
+              title: AppLocalizations.of(context)!.pleaseWait,
             );
 
             final result = await formNotifier.send(
@@ -101,9 +94,8 @@ class SendTransactionConfirmationForm extends ConsumerWidget
               },
             );
 
-            Navigator.of(context)
-              ..pop() // Hide SendingAnimation
-              ..pop(result);
+            context.loadingOverlay.hide();
+            Navigator.of(context).pop(result);
           },
         ),
       ],

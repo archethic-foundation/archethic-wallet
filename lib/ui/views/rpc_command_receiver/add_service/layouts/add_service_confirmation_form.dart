@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
@@ -67,14 +65,8 @@ class AddServiceConfirmationForm extends ConsumerWidget
           localizations.confirm,
           Dimens.buttonBottomDimens,
           onPressed: () async {
-            unawaited(
-              Navigator.of(context).push(
-                AnimationLoadingOverlay(
-                  AnimationType.send,
-                  ArchethicTheme.animationOverlayStrong,
-                  title: AppLocalizations.of(context)!.pleaseWait,
-                ),
-              ),
+            context.loadingOverlay.show(
+              title: AppLocalizations.of(context)!.pleaseWait,
             );
 
             final formNotifier = ref.read(
@@ -101,9 +93,8 @@ class AddServiceConfirmationForm extends ConsumerWidget
               },
             );
 
-            Navigator.of(context)
-              ..pop() // Hide SendingAnimation
-              ..pop(result);
+            context.loadingOverlay.hide();
+            Navigator.of(context).pop(result);
           },
         ),
       ],
