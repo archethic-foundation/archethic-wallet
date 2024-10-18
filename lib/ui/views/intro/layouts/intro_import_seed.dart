@@ -157,6 +157,8 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                       languageCode: languageSeed,
                     );
 
+                context.loadingOverlay.hide();
+
                 if (newSession == null) {
                   setState(() {
                     _mnemonicIsValid = false;
@@ -169,7 +171,6 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                     ArchethicTheme.text,
                     ArchethicTheme.snackBarShadow,
                   );
-                  context.loadingOverlay.hide();
                   context.go(IntroImportSeedPage.routerPage);
                   return;
                 }
@@ -188,7 +189,6 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                 ref.read(
                   RecoveryPhraseSavedProvider.setRecoveryPhraseSaved(true),
                 );
-                context.loadingOverlay.hide();
                 context.go(HomePage.routerPage);
 
                 setState(() {

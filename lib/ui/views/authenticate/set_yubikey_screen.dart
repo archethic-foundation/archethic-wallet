@@ -336,12 +336,11 @@ class _SetYubikeyState extends ConsumerState<SetYubikey>
       return;
     }
 
-    final auth = await context.push<Uint8List>(
-      YubikeyScreen.routerPage,
-      extra: {
-        'canNavigateBack': true,
-        'challenge': widget.challenge,
-      },
+    final auth = await YubikeyAuthScreenOverlay(
+      canNavigateBack: true,
+      challenge: widget.challenge,
+    ).show(
+      context,
     );
     if (auth == null) return;
 

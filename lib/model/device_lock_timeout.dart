@@ -21,7 +21,7 @@ extension LockTimeoutToDurationExt on LockTimeoutOption {
       case LockTimeoutOption.disabled:
         return Duration.zero;
       case LockTimeoutOption.tenSec:
-        return const Duration(seconds: 5);
+        return const Duration(seconds: 10);
       case LockTimeoutOption.thirtySec:
         return const Duration(seconds: 30);
       case LockTimeoutOption.oneMin:

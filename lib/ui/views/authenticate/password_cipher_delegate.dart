@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
@@ -14,13 +15,10 @@ class PasswordCipherDelegate implements VaultCipherDelegate {
 
   @override
   Future<Uint8List?> decode(Uint8List payload, bool userCancelable) =>
-      context.push<Uint8List>(
-        PasswordScreen.routerPage,
-        extra: {
-          'canNavigateBack': userCancelable,
-          'challenge': payload,
-        },
-      );
+      PasswordAuthScreenOverlay(
+        canNavigateBack: userCancelable,
+        challenge: payload,
+      ).show(context);
 
   @override
   Future<Uint8List?> encode(Uint8List payload, bool userCancelable) {
