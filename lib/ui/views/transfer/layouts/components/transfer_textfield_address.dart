@@ -61,7 +61,6 @@ class _TransferTextFieldAddressState
   Widget build(
     BuildContext context,
   ) {
-    final preferences = ref.watch(SettingsProviders.settings);
     final transfer = ref.watch(TransferFormProvider.transferForm);
     final transferNotifier =
         ref.watch(TransferFormProvider.transferForm.notifier);
@@ -157,10 +156,6 @@ class _TransferTextFieldAddressState
                     TextFieldButton(
                       icon: Symbols.qr_code_scanner,
                       onPressed: () async {
-                        sl.get<HapticUtil>().feedback(
-                              FeedbackType.light,
-                              preferences.activeVibrations,
-                            );
                         final scanResult = await UserDataUtil.getQRData(
                           DataType.address,
                           context,
@@ -206,10 +201,6 @@ class _TransferTextFieldAddressState
                   TextFieldButton(
                     icon: Symbols.contacts,
                     onPressed: () async {
-                      sl.get<HapticUtil>().feedback(
-                            FeedbackType.light,
-                            preferences.activeVibrations,
-                          );
                       final contact =
                           await ContactsDialog.getDialog(context, ref);
                       if (contact == null) return;

@@ -9,7 +9,7 @@ import 'package:aewallet/infrastructure/rpc/websocket_server.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
+
 import 'package:aewallet/util/logger.dart';
 import 'package:aewallet/util/nfc.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart'
@@ -19,7 +19,6 @@ Future<void> setupServiceLocator() async {
   sl
     ..registerLazySingleton<AppService>(AppService.new)
     ..registerLazySingleton<DBHelper>(DBHelper.new)
-    ..registerLazySingleton<HapticUtil>(HapticUtil.new)
     ..registerLazySingleton<BiometricUtil>(BiometricUtil.new)
     ..registerLazySingleton<NFCUtil>(NFCUtil.new)
     ..registerLazySingleton<CommandDispatcher>(

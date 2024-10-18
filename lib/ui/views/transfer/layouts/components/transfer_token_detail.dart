@@ -4,15 +4,13 @@ import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/address_formatters.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
+
 import 'package:material_symbols_icons/symbols.dart';
 
 class TransferTokenDetail extends ConsumerStatefulWidget {
@@ -48,11 +46,6 @@ class _TransferTokenDetailState extends ConsumerState<TransferTokenDetail> {
       padding: const EdgeInsets.only(bottom: 8),
       child: InkWell(
         onTap: () async {
-          sl.get<HapticUtil>().feedback(
-                FeedbackType.light,
-                settings.activeVibrations,
-              );
-
           Navigator.pop(context, widget.aeToken);
         },
         child: aedappfm.BlockInfo(

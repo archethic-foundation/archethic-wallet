@@ -1,13 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/layouts/components/liquidity_add_settings_popup.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class LiquidityAddTokenIconSettings extends ConsumerWidget {
   const LiquidityAddTokenIconSettings({
@@ -16,8 +12,6 @@ class LiquidityAddTokenIconSettings extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final preferences = ref.watch(SettingsProviders.settings);
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -37,10 +31,6 @@ class LiquidityAddTokenIconSettings extends ConsumerWidget {
             ),
           ),
           onTap: () {
-            sl.get<HapticUtil>().feedback(
-                  FeedbackType.light,
-                  preferences.activeVibrations,
-                );
             LiquidityAddSettingsPopup.getDialog(
               context,
             );

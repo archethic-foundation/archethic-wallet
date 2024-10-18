@@ -1,5 +1,4 @@
 import 'package:aewallet/application/price_history/providers.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/address_formatters.dart';
@@ -12,15 +11,12 @@ import 'package:aewallet/ui/views/tokens_detail/layouts/components/token_detail_
 import 'package:aewallet/ui/widgets/balance/balance_infos.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
@@ -52,7 +48,6 @@ class TokenDetailSheet extends ConsumerWidget
   @override
   PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final preferences = ref.watch(SettingsProviders.settings);
     return SheetAppBar(
       title: '',
       widgetBeforeTitle: Row(
@@ -79,10 +74,6 @@ class TokenDetailSheet extends ConsumerWidget
       widgetAfterTitle: aeToken.address != null && aeToken.address!.isNotEmpty
           ? InkWell(
               onTap: () {
-                sl.get<HapticUtil>().feedback(
-                      FeedbackType.light,
-                      preferences.activeVibrations,
-                    );
                 Clipboard.setData(
                   ClipboardData(
                     text: aeToken.address ?? '',

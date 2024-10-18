@@ -71,10 +71,6 @@ class _CountdownLockScreen extends ConsumerWidget
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-
-    final activeVibrations = ref.watch(
-      SettingsProviders.settings.select((value) => value.activeVibrations),
-    );
     final isLocked =
         ref.watch(AuthenticationProviders.isLockCountdownRunning).valueOrNull ??
             true;
@@ -94,11 +90,6 @@ class _CountdownLockScreen extends ConsumerWidget
           key: const Key('unlock'),
           onPressed: () {
             if (isLocked) return;
-
-            sl.get<HapticUtil>().feedback(
-                  FeedbackType.light,
-                  activeVibrations,
-                );
             CountdownLockOverlay.instance().hide();
           },
           disabled: isLocked,

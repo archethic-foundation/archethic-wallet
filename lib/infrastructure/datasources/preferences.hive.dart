@@ -40,7 +40,6 @@ class PreferencesHiveDatasource {
   static const String showBalances = 'archethic_wallet_showBalances';
   static const String showPriceChart = 'archethic_wallet_showPriceChart';
   static const String priceChartScale = 'archethic_wallet_priceChartScale';
-  static const String activeVibrations = 'archethic_wallet_activeVibrations';
   static const String activeRPCServer = 'archethic_wallet_activeRPCServer';
   static const String recoveryPhraseSaved =
       'archethic_wallet_recoveryPhraseSaved';
@@ -152,11 +151,6 @@ class PreferencesHiveDatasource {
   Future<void> setShowBalances(bool value) => _setValue(showBalances, value);
 
   bool getShowBalances() => _getValue(showBalances, defaultValue: true);
-
-  Future<void> setActiveVibrations(bool value) =>
-      _setValue(activeVibrations, value);
-
-  bool getActiveVibrations() => _getValue(activeVibrations, defaultValue: true);
 
   Future<void> setActiveRPCServer(bool value) =>
       _setValue(activeRPCServer, value);

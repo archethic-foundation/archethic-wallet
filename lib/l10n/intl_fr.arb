@@ -251,7 +251,6 @@
     "addAccountExists": "Ce nom existe déjà dans votre porte-clés.",
     "selectAccountDescOne": "Votre porte-clés contient un compte. Vous pourrez en créer d'autres quand vous le souhaitez.",
     "selectAccountDescSeveral": "Votre porte-clés contient plusieurs comptes. Quel compte souhaitez-vous gérer en premier dans l'application ? Vous pourrez en créer ou sélectionner d'autres quand vous le souhaitez.",
-    "activateVibrations": "Activer les vibrations",
     "activeRPCServer": "Connexions DApps autorisées",
     "addServiceCommandReceivedNotification": "L'application %1 souhaite créer un nouveau service dans votre porte-clés.\nSouhaitez-vous confirmer cette action avec le compte %2 ?\nCette action ne requiert aucun frais.",
     "removeServiceCommandReceivedNotification": "L'application %1 souhaite supprimer un service de votre porte-clés.\nVous n'aurez plus accès ni aux fonds, ni aux tokens associés.\nRéférez vous à l'historique de votre porte-clés afin de pouvoir accéder aux informations relatives à ce compte.\nSouhaitez-vous confirmer cette action avec le compte %2 ?\nCette action ne requiert aucun frais.",

@@ -39,7 +39,6 @@ class _NFTCreationProcessPropertiesTabTextfieldValueState
   Widget build(
     BuildContext context,
   ) {
-    final preferences = ref.watch(SettingsProviders.settings);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
     final nftCreationNotifier = ref.watch(
       NftCreationFormProvider.nftCreationForm.notifier,
@@ -122,10 +121,6 @@ class _NFTCreationProcessPropertiesTabTextfieldValueState
                         TextFieldButton(
                           icon: Symbols.qr_code_scanner,
                           onPressed: () async {
-                            sl.get<HapticUtil>().feedback(
-                                  FeedbackType.light,
-                                  preferences.activeVibrations,
-                                );
                             final scanResult = await UserDataUtil.getQRData(
                               DataType.raw,
                               context,

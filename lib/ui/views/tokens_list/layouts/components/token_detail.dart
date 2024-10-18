@@ -12,8 +12,6 @@ import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/tokens_detail/layouts/token_detail_sheet.dart';
 import 'package:aewallet/ui/widgets/balance/balance_infos.dart';
 import 'package:aewallet/ui/widgets/tokens/verified_token_icon.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:auto_size_text/auto_size_text.dart';
@@ -21,7 +19,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
@@ -77,11 +74,6 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
         : null;
     return InkWell(
       onTap: () async {
-        sl.get<HapticUtil>().feedback(
-              FeedbackType.light,
-              settings.activeVibrations,
-            );
-
         await context.push(
           TokenDetailSheet.routerPage,
           extra: {

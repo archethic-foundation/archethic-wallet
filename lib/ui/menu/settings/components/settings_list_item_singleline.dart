@@ -42,7 +42,6 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
   }
 
   Widget _detail(BuildContext context, WidgetRef ref) {
-    final preferences = ref.watch(SettingsProviders.settings);
     return TextButton(
       style: ButtonStyle(
         shape: WidgetStateProperty.all<RoundedRectangleBorder>(
@@ -51,10 +50,6 @@ class _SettingsListItemSingleLineWithInfos extends _SettingsListItem {
       ),
       onPressed: () {
         if (onPressed == null) return;
-        sl.get<HapticUtil>().feedback(
-              FeedbackType.light,
-              preferences.activeVibrations,
-            );
         onPressed?.call();
       },
       child: Container(
@@ -131,8 +126,6 @@ class _SettingsListItemSingleLine extends _SettingsListItem {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final preferences = ref.watch(SettingsProviders.settings);
-
     return TextButton(
       style: ButtonStyle(
         shape: WidgetStateProperty.all<RoundedRectangleBorder>(
@@ -141,11 +134,6 @@ class _SettingsListItemSingleLine extends _SettingsListItem {
       ),
       onPressed: () {
         if (onPressed == null) return;
-
-        sl.get<HapticUtil>().feedback(
-              FeedbackType.light,
-              preferences.activeVibrations,
-            );
         onPressed?.call();
       },
       child: Container(

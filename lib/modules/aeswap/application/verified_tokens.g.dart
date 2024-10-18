@@ -7,12 +7,12 @@ part of 'verified_tokens.dart';
 // **************************************************************************
 
 String _$verifiedTokensRepositoryHash() =>
-    r'ed9dca98db437735489075aa51cf3cf790066f1a';
+    r'3cfc14e9cb80f4e8d2c078de8b5144a013a44849';
 
 /// See also [verifiedTokensRepository].
 @ProviderFor(verifiedTokensRepository)
 final verifiedTokensRepositoryProvider =
-    Provider<aedappfm.VerifiedTokensRepositoryInterface>.internal(
+    AutoDisposeProvider<aedappfm.VerifiedTokensRepositoryInterface>.internal(
   verifiedTokensRepository,
   name: r'verifiedTokensRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -23,8 +23,8 @@ final verifiedTokensRepositoryProvider =
 );
 
 typedef VerifiedTokensRepositoryRef
-    = ProviderRef<aedappfm.VerifiedTokensRepositoryInterface>;
-String _$isVerifiedTokenHash() => r'c7d7efa9d25e86fd937ed8dc15f2dda949a53f1c';
+    = AutoDisposeProviderRef<aedappfm.VerifiedTokensRepositoryInterface>;
+String _$isVerifiedTokenHash() => r'53a1c3bdd11100e8b07de1dd74e1241a3a61e3f7';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -90,7 +90,7 @@ class IsVerifiedTokenFamily extends Family<AsyncValue<bool>> {
 }
 
 /// See also [isVerifiedToken].
-class IsVerifiedTokenProvider extends FutureProvider<bool> {
+class IsVerifiedTokenProvider extends AutoDisposeFutureProvider<bool> {
   /// See also [isVerifiedToken].
   IsVerifiedTokenProvider(
     String address,
@@ -142,7 +142,7 @@ class IsVerifiedTokenProvider extends FutureProvider<bool> {
   }
 
   @override
-  FutureProviderElement<bool> createElement() {
+  AutoDisposeFutureProviderElement<bool> createElement() {
     return _IsVerifiedTokenProviderElement(this);
   }
 
@@ -160,24 +160,24 @@ class IsVerifiedTokenProvider extends FutureProvider<bool> {
   }
 }
 
-mixin IsVerifiedTokenRef on FutureProviderRef<bool> {
+mixin IsVerifiedTokenRef on AutoDisposeFutureProviderRef<bool> {
   /// The parameter `address` of this provider.
   String get address;
 }
 
-class _IsVerifiedTokenProviderElement extends FutureProviderElement<bool>
-    with IsVerifiedTokenRef {
+class _IsVerifiedTokenProviderElement
+    extends AutoDisposeFutureProviderElement<bool> with IsVerifiedTokenRef {
   _IsVerifiedTokenProviderElement(super.provider);
 
   @override
   String get address => (origin as IsVerifiedTokenProvider).address;
 }
 
-String _$verifiedTokensHash() => r'30f3b7639f954e68598d7be38e78ab5272c7acab';
+String _$verifiedTokensHash() => r'5f601c8e32c97ba916313e4b32868c4a94f51aa2';
 
 /// See also [verifiedTokens].
 @ProviderFor(verifiedTokens)
-final verifiedTokensProvider = FutureProvider<List<String>>.internal(
+final verifiedTokensProvider = AutoDisposeFutureProvider<List<String>>.internal(
   verifiedTokens,
   name: r'verifiedTokensProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -187,6 +187,6 @@ final verifiedTokensProvider = FutureProvider<List<String>>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef VerifiedTokensRef = FutureProviderRef<List<String>>;
+typedef VerifiedTokensRef = AutoDisposeFutureProviderRef<List<String>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

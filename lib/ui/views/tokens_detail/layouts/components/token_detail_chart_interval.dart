@@ -4,14 +4,11 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/chart_option_label.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:bottom_bar/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class TokenDetailChartInterval extends ConsumerWidget {
   const TokenDetailChartInterval({
@@ -52,12 +49,6 @@ class TokenDetailChartInterval extends ConsumerWidget {
           itemPadding: const EdgeInsets.all(10),
           padding: const EdgeInsets.only(right: 10, left: 10),
           onTap: (int index) async {
-            final settings = ref.read(SettingsProviders.settings);
-
-            sl.get<HapticUtil>().feedback(
-                  FeedbackType.light,
-                  settings.activeVibrations,
-                );
             await ref
                 .read(SettingsProviders.settings.notifier)
                 .setPriceChartInterval(_chartIntervalOptions[index]);

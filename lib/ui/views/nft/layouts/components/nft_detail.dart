@@ -17,13 +17,10 @@ import 'package:aewallet/ui/widgets/components/qr_code_with_options.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -79,7 +76,6 @@ class _NFTDetailState extends ConsumerState<NFTDetail>
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final preferences = ref.watch(SettingsProviders.settings);
     final accountSelected = ref.watch(
       AccountProviders.accounts.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
@@ -110,10 +106,6 @@ class _NFTDetailState extends ConsumerState<NFTDetail>
                         Dimens.buttonTopDimens,
                         key: const Key('sendNFT'),
                         onPressed: () async {
-                          sl.get<HapticUtil>().feedback(
-                                FeedbackType.light,
-                                preferences.activeVibrations,
-                              );
                           final accountToken = getAccountToken(accountSelected);
                           await context.push(
                             TransferSheet.routerPage,

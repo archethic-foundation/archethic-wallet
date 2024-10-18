@@ -13,15 +13,13 @@ import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:aewallet/util/mnemonics.dart';
 import 'package:aewallet/util/seeds.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
+
 import 'package:go_router/go_router.dart';
 
 class IntroBackupSeedPage extends ConsumerStatefulWidget {
@@ -85,7 +83,6 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage>
   PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-    final preferences = ref.watch(SettingsProviders.settings);
     final language = ref.watch(
       SettingsProviders.settings.select(
         (settings) => settings.languageSeed,
@@ -113,10 +110,6 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage>
                   width: 50,
                   child: TextButton(
                     onPressed: () async {
-                      sl.get<HapticUtil>().feedback(
-                            FeedbackType.light,
-                            preferences.activeVibrations,
-                          );
                       seed = AppSeeds.generateSeed();
                       mnemonic = AppMnemomics.seedToMnemonic(
                         seed!,
@@ -144,10 +137,6 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage>
                   width: 50,
                   child: TextButton(
                     onPressed: () async {
-                      sl.get<HapticUtil>().feedback(
-                            FeedbackType.light,
-                            preferences.activeVibrations,
-                          );
                       seed = AppSeeds.generateSeed();
                       mnemonic = AppMnemomics.seedToMnemonic(
                         seed!,

@@ -1,6 +1,5 @@
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/connectivity_status.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
@@ -15,14 +14,12 @@ import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/dialogs/authentification_method_dialog_help.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
+
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
@@ -69,7 +66,6 @@ class _IntroConfigureSecurityState extends ConsumerState<IntroConfigureSecurity>
   @override
   PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final preferences = ref.watch(SettingsProviders.settings);
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     return SheetAppBar(
       title: localizations.securityHeader,
@@ -95,10 +91,6 @@ class _IntroConfigureSecurityState extends ConsumerState<IntroConfigureSecurity>
                   padding: const EdgeInsets.only(right: 15),
                   child: InkWell(
                     onTap: () async {
-                      sl.get<HapticUtil>().feedback(
-                            FeedbackType.light,
-                            preferences.activeVibrations,
-                          );
                       return AuthentificationMethodDialogHelp.getDialog(
                         context,
                         ref,

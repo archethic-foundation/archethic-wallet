@@ -23,7 +23,6 @@ mixin _$Settings {
   String get languageSeed => throw _privateConstructorUsedError;
   bool get firstLaunch => throw _privateConstructorUsedError;
   bool get showBalances => throw _privateConstructorUsedError;
-  bool get activeVibrations => throw _privateConstructorUsedError;
   bool get activeRPCServer => throw _privateConstructorUsedError;
   int get mainScreenCurrentPage => throw _privateConstructorUsedError;
   bool get showPriceChart => throw _privateConstructorUsedError;
@@ -49,7 +48,6 @@ abstract class $SettingsCopyWith<$Res> {
       String languageSeed,
       bool firstLaunch,
       bool showBalances,
-      bool activeVibrations,
       bool activeRPCServer,
       int mainScreenCurrentPage,
       bool showPriceChart,
@@ -77,7 +75,6 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
     Object? languageSeed = null,
     Object? firstLaunch = null,
     Object? showBalances = null,
-    Object? activeVibrations = null,
     Object? activeRPCServer = null,
     Object? mainScreenCurrentPage = null,
     Object? showPriceChart = null,
@@ -107,10 +104,6 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
       showBalances: null == showBalances
           ? _value.showBalances
           : showBalances // ignore: cast_nullable_to_non_nullable
-              as bool,
-      activeVibrations: null == activeVibrations
-          ? _value.activeVibrations
-          : activeVibrations // ignore: cast_nullable_to_non_nullable
               as bool,
       activeRPCServer: null == activeRPCServer
           ? _value.activeRPCServer
@@ -147,7 +140,6 @@ abstract class _$$SettingsImplCopyWith<$Res>
       String languageSeed,
       bool firstLaunch,
       bool showBalances,
-      bool activeVibrations,
       bool activeRPCServer,
       int mainScreenCurrentPage,
       bool showPriceChart,
@@ -173,7 +165,6 @@ class __$$SettingsImplCopyWithImpl<$Res>
     Object? languageSeed = null,
     Object? firstLaunch = null,
     Object? showBalances = null,
-    Object? activeVibrations = null,
     Object? activeRPCServer = null,
     Object? mainScreenCurrentPage = null,
     Object? showPriceChart = null,
@@ -203,10 +194,6 @@ class __$$SettingsImplCopyWithImpl<$Res>
       showBalances: null == showBalances
           ? _value.showBalances
           : showBalances // ignore: cast_nullable_to_non_nullable
-              as bool,
-      activeVibrations: null == activeVibrations
-          ? _value.activeVibrations
-          : activeVibrations // ignore: cast_nullable_to_non_nullable
               as bool,
       activeRPCServer: null == activeRPCServer
           ? _value.activeRPCServer
@@ -238,7 +225,6 @@ class _$SettingsImpl extends _Settings {
       required this.languageSeed,
       required this.firstLaunch,
       required this.showBalances,
-      required this.activeVibrations,
       required this.activeRPCServer,
       required this.mainScreenCurrentPage,
       required this.showPriceChart,
@@ -258,8 +244,6 @@ class _$SettingsImpl extends _Settings {
   @override
   final bool showBalances;
   @override
-  final bool activeVibrations;
-  @override
   final bool activeRPCServer;
   @override
   final int mainScreenCurrentPage;
@@ -270,7 +254,7 @@ class _$SettingsImpl extends _Settings {
 
   @override
   String toString() {
-    return 'Settings(primaryCurrency: $primaryCurrency, language: $language, network: $network, languageSeed: $languageSeed, firstLaunch: $firstLaunch, showBalances: $showBalances, activeVibrations: $activeVibrations, activeRPCServer: $activeRPCServer, mainScreenCurrentPage: $mainScreenCurrentPage, showPriceChart: $showPriceChart, priceChartIntervalOption: $priceChartIntervalOption)';
+    return 'Settings(primaryCurrency: $primaryCurrency, language: $language, network: $network, languageSeed: $languageSeed, firstLaunch: $firstLaunch, showBalances: $showBalances, activeRPCServer: $activeRPCServer, mainScreenCurrentPage: $mainScreenCurrentPage, showPriceChart: $showPriceChart, priceChartIntervalOption: $priceChartIntervalOption)';
   }
 
   @override
@@ -289,8 +273,6 @@ class _$SettingsImpl extends _Settings {
                 other.firstLaunch == firstLaunch) &&
             (identical(other.showBalances, showBalances) ||
                 other.showBalances == showBalances) &&
-            (identical(other.activeVibrations, activeVibrations) ||
-                other.activeVibrations == activeVibrations) &&
             (identical(other.activeRPCServer, activeRPCServer) ||
                 other.activeRPCServer == activeRPCServer) &&
             (identical(other.mainScreenCurrentPage, mainScreenCurrentPage) ||
@@ -311,7 +293,6 @@ class _$SettingsImpl extends _Settings {
       languageSeed,
       firstLaunch,
       showBalances,
-      activeVibrations,
       activeRPCServer,
       mainScreenCurrentPage,
       showPriceChart,
@@ -334,7 +315,6 @@ abstract class _Settings extends Settings {
       required final String languageSeed,
       required final bool firstLaunch,
       required final bool showBalances,
-      required final bool activeVibrations,
       required final bool activeRPCServer,
       required final int mainScreenCurrentPage,
       required final bool showPriceChart,
@@ -354,8 +334,6 @@ abstract class _Settings extends Settings {
   bool get firstLaunch;
   @override
   bool get showBalances;
-  @override
-  bool get activeVibrations;
   @override
   bool get activeRPCServer;
   @override

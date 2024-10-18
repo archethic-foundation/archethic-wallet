@@ -1,19 +1,15 @@
 import 'dart:ui';
 
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/receive/layouts/components/explorer_button.dart';
 import 'package:aewallet/ui/views/receive/layouts/components/share_button.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -30,16 +26,11 @@ class ReceiveModal extends ConsumerWidget {
       ),
     );
     final localizations = AppLocalizations.of(context)!;
-    final preferences = ref.watch(SettingsProviders.settings);
     final infoQRCode = selectedAccount?.genesisAddress.toUpperCase() ?? '';
     return Stack(
       children: [
         GestureDetector(
           onTap: () {
-            sl.get<HapticUtil>().feedback(
-                  FeedbackType.light,
-                  preferences.activeVibrations,
-                );
             Clipboard.setData(
               ClipboardData(text: infoQRCode),
             );

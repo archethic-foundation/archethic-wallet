@@ -27,7 +27,6 @@ class SettingsNotifier extends StateNotifier<Settings> {
 
   Future<void> reset() => _update(
         state.copyWith(
-          activeVibrations: true,
           activeRPCServer: true,
           language: AvailableLanguage.english,
           mainScreenCurrentPage: 0,
@@ -50,10 +49,6 @@ class SettingsNotifier extends StateNotifier<Settings> {
 
   Future<void> setShowPriceChart(bool showPriceChart) => _update(
         state.copyWith(showPriceChart: showPriceChart),
-      );
-
-  Future<void> setActiveVibrations(bool activeVibrations) => _update(
-        state.copyWith(activeVibrations: activeVibrations),
       );
 
   Future<void> setActiveRPCServer(bool activeRPCServer) => _update(

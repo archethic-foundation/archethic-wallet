@@ -2,16 +2,12 @@
 
 import 'dart:ui';
 
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 /// A widget for displaying a mnemonic phrase
 class MnemonicDisplay extends ConsumerStatefulWidget {
@@ -46,16 +42,11 @@ class _MnemonicDisplayState extends ConsumerState<MnemonicDisplay> {
 
   @override
   Widget build(BuildContext context) {
-    final preferences = ref.watch(SettingsProviders.settings);
     return Column(
       children: <Widget>[
         GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () {
-            sl.get<HapticUtil>().feedback(
-                  FeedbackType.light,
-                  preferences.activeVibrations,
-                );
             if (widget.obscureSeed) {
               setState(() {
                 _seedObscured = !_seedObscured;

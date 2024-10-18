@@ -21,7 +21,7 @@ import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/show_sending_animation.dart';
 import 'package:aewallet/util/case_converter.dart';
 import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
+
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -32,7 +32,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
+
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -150,7 +150,6 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
   Widget build(BuildContext context) {
     super.build(context);
 
-    final preferences = ref.watch(SettingsProviders.settings);
     final localizations = AppLocalizations.of(context)!;
     final settings = ref.watch(SettingsProviders.settings);
     final balanceTotalFiat = ref
@@ -161,15 +160,6 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
       child: GestureDetector(
         onTap: () async {
           if (widget.account.serviceType == 'archethicWallet') {
-            sl.get<HapticUtil>().feedback(
-                  FeedbackType.light,
-                  ref.read(
-                    SettingsProviders.settings.select(
-                      (value) => value.activeVibrations,
-                    ),
-                  ),
-                );
-
             if (widget.selectedAccount == null ||
                 widget.selectedAccount!.nameDisplayed !=
                     widget.account.nameDisplayed) {
@@ -251,10 +241,6 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
                           ),
                           InkWell(
                             onTap: () {
-                              sl.get<HapticUtil>().feedback(
-                                    FeedbackType.light,
-                                    preferences.activeVibrations,
-                                  );
                               Clipboard.setData(
                                 ClipboardData(
                                   text: widget.account.genesisAddress
@@ -324,10 +310,6 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
                               ),
                             ),
                             onTap: () async {
-                              sl.get<HapticUtil>().feedback(
-                                    FeedbackType.light,
-                                    preferences.activeVibrations,
-                                  );
                               await launchUrl(
                                 Uri.parse(
                                   '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/transaction/${widget.account.lastAddress}',
@@ -391,10 +373,6 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
                                 LanguageProviders.selectedLanguage,
                               );
 
-                              sl.get<HapticUtil>().feedback(
-                                    FeedbackType.light,
-                                    preferences.activeVibrations,
-                                  );
                               unawaited(
                                 AppDialogs.showConfirmDialog(
                                     context,

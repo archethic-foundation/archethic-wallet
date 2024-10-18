@@ -2,7 +2,6 @@
 
 import 'dart:ui';
 
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/token.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transaction_comment.dart';
@@ -11,12 +10,11 @@ import 'package:aewallet/ui/views/transactions/components/template/transaction_w
 import 'package:aewallet/ui/views/transactions/components/transaction_input/transaction_input_icon.dart';
 import 'package:aewallet/ui/views/transactions/components/transaction_output/transaction_output_icon.dart';
 import 'package:aewallet/ui/views/transactions/transaction_infos_sheet.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
+
 import 'package:go_router/go_router.dart';
 
 class TransactionTemplate extends ConsumerWidget {
@@ -41,7 +39,6 @@ class TransactionTemplate extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final settings = ref.watch(SettingsProviders.settings);
     final localizations = AppLocalizations.of(context)!;
 
     final hasWarning = transaction.tokenInformation != null &&
@@ -54,10 +51,6 @@ class TransactionTemplate extends ConsumerWidget {
 
     return GestureDetector(
       onTap: () {
-        sl.get<HapticUtil>().feedback(
-              FeedbackType.light,
-              settings.activeVibrations,
-            );
         context.go(
           TransactionInfosSheet.routerPage,
           extra: transaction.address,

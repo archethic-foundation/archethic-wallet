@@ -1,14 +1,10 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/views/aeswap_swap/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_infos.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
+
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class SwapTokenIconInfo extends ConsumerWidget {
@@ -24,16 +20,10 @@ class SwapTokenIconInfo extends ConsumerWidget {
         swap.pool == null ||
         swap.pool!.poolAddress.isEmpty;
 
-    final preferences = ref.watch(SettingsProviders.settings);
     return InkWell(
       onTap: disabled || swap.calculationInProgress
           ? null
           : () async {
-              sl.get<HapticUtil>().feedback(
-                    FeedbackType.light,
-                    preferences.activeVibrations,
-                  );
-
               await CupertinoScaffold.showCupertinoModalBottomSheet(
                 context: context,
                 builder: (BuildContext context) {

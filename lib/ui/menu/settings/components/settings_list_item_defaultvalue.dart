@@ -18,8 +18,6 @@ class _SettingsListItemWithDefaultValue extends _SettingsListItem {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final preferences = ref.watch(SettingsProviders.settings);
-
     return IgnorePointer(
       ignoring: disabled,
       child: TextButton(
@@ -28,11 +26,8 @@ class _SettingsListItemWithDefaultValue extends _SettingsListItem {
             const RoundedRectangleBorder(),
           ),
         ),
+        // ignore: unnecessary_lambdas
         onPressed: () {
-          sl.get<HapticUtil>().feedback(
-                FeedbackType.light,
-                preferences.activeVibrations,
-              );
           onPressed();
         },
         child: Container(
@@ -98,19 +93,14 @@ class _SettingsListItemWithDefaultValueWithInfos extends _SettingsListItem {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final preferences = ref.watch(SettingsProviders.settings);
-
     return TextButton(
       style: ButtonStyle(
         shape: WidgetStateProperty.all<RoundedRectangleBorder>(
           const RoundedRectangleBorder(),
         ),
       ),
+      // ignore: unnecessary_lambdas
       onPressed: () {
-        sl.get<HapticUtil>().feedback(
-              FeedbackType.light,
-              preferences.activeVibrations,
-            );
         onPressed();
       },
       child: Container(

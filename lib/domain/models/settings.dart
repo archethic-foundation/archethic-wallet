@@ -16,7 +16,6 @@ class Settings with _$Settings {
     required String languageSeed,
     required bool firstLaunch,
     required bool showBalances,
-    required bool activeVibrations,
     required bool activeRPCServer,
     required int mainScreenCurrentPage,
     required bool showPriceChart,
@@ -24,7 +23,6 @@ class Settings with _$Settings {
   }) = _Settings;
 
   factory Settings.empty() => const Settings(
-        activeVibrations: true,
         activeRPCServer: true,
         firstLaunch: true,
         language: AvailableLanguage.english,

@@ -1,19 +1,15 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/blockchain/token_information.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_detail.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail/nft_thumbnail.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/thumbnail_collection/nft_thumbnail_collection.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:aewallet/util/haptic_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
@@ -41,8 +37,6 @@ class NFTListDetail extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final preferences = ref.watch(SettingsProviders.settings);
-
     var propertiesToCount = 0;
 
     properties.forEach((key, value) {
@@ -70,11 +64,6 @@ class NFTListDetail extends ConsumerWidget {
 
           GestureDetector(
             onTap: () {
-              sl.get<HapticUtil>().feedback(
-                    FeedbackType.light,
-                    preferences.activeVibrations,
-                  );
-
               context.push(
                 NFTDetail.routerPage,
                 extra: {
@@ -136,7 +125,6 @@ class NFTCardBottom extends ConsumerWidget {
       // TODO(redDwarf03): we should not interact directly with Hive DTOs. Use providers instead. -> which provider / Link to NFT ? (3)
       tokenInformation.id,
     );
-    final preferences = ref.watch(SettingsProviders.settings);
     return Column(
       children: <Widget>[
         Padding(
@@ -148,8 +136,6 @@ class NFTCardBottom extends ConsumerWidget {
               children: [
                 /*InkWell(
                   onTap: (() async {
-                    sl.get<HapticUtil>().feedback(FeedbackType.light,
-                        StateContainer.of(context).activeVibrations);
                     await accountSelected
                         .updateNftInfosOffChain(
                             tokenAddress: widget.tokenInformation.address,
@@ -166,11 +152,6 @@ class NFTCardBottom extends ConsumerWidget {
                 ),*/
                 InkWell(
                   onTap: () async {
-                    sl.get<HapticUtil>().feedback(
-                          FeedbackType.light,
-                          preferences.activeVibrations,
-                        );
-
                     await selectedAccount.updateNftInfosOffChainFavorite(
                       tokenInformation.id,
                     );
