@@ -27,16 +27,14 @@ class PinAuthScreenOverlay extends AuthScreenOverlay {
   PinAuthScreenOverlay({
     required bool canNavigateBack,
     required Uint8List challenge,
-    required CipherDelegateAction action,
-    required PinOverlayType type,
     String? description,
   }) : super(
           name: 'UnlockPinScreenOverlay',
           widgetBuilder: (context, onDone) => _PinScreen(
-            type,
+            PinOverlayType.enterPin,
             canNavigateBack: canNavigateBack,
             challenge: challenge,
-            action: action,
+            action: CipherDelegateAction.decode,
             onDone: onDone,
             description: description ?? '',
           ),
@@ -48,17 +46,15 @@ class SetPinScreenOverlay extends AuthScreenOverlay {
   SetPinScreenOverlay({
     required bool canNavigateBack,
     required Uint8List challenge,
-    required CipherDelegateAction action,
-    required PinOverlayType type,
     String? description,
   }) : super(
           name: 'SetPinScreenOverlay',
           widgetBuilder: (context, onDone) => GuardInputListener(
             child: _PinScreen(
-              type,
+              PinOverlayType.newPin,
               canNavigateBack: canNavigateBack,
               challenge: challenge,
-              action: action,
+              action: CipherDelegateAction.encode,
               onDone: onDone,
               description: description ?? '',
             ),

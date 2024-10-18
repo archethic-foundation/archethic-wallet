@@ -16,8 +16,6 @@ class PinCipherDelegate implements VaultCipherDelegate {
       PinAuthScreenOverlay(
         canNavigateBack: userCancelable,
         challenge: payload,
-        action: CipherDelegateAction.decode,
-        type: PinOverlayType.enterPin,
       ).show(context);
 
   @override
@@ -25,7 +23,5 @@ class PinCipherDelegate implements VaultCipherDelegate {
       SetPinScreenOverlay(
         canNavigateBack: userCancelable,
         challenge: payload,
-        action: CipherDelegateAction.decode,
-        type: PinOverlayType.enterPin,
       ).show(context);
 }
