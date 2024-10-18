@@ -76,6 +76,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet>
       ArchethicTheme.snackBarShadow,
     );
     context.pop();
+    context.loadingOverlay.hide();
   }
 
   Future<void> _showSendSucceed(
@@ -148,6 +149,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet>
       }
     } finally {
       context.go(HomePage.routerPage);
+      context.loadingOverlay.hide();
     }
   }
 
@@ -164,6 +166,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet>
       duration: const Duration(seconds: 5),
     );
     context.pop();
+    context.loadingOverlay.hide();
   }
 
   @override
@@ -206,8 +209,6 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet>
                   TransferFormProvider.transferForm.notifier,
                 )
                 .send(context);
-
-            context.loadingOverlay.hide();
           },
         ),
       ],

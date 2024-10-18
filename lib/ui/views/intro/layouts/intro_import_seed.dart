@@ -177,6 +177,10 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                 await _accountsDialog(
                   newSession.wallet.appKeychain.accounts,
                 );
+                context.loadingOverlay.show(
+                  title: localizations.pleaseWait,
+                );
+
                 final poolListRaw =
                     await ref.read(DexPoolProviders.getPoolListRaw.future);
 
@@ -190,6 +194,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                   RecoveryPhraseSavedProvider.setRecoveryPhraseSaved(true),
                 );
                 context.go(HomePage.routerPage);
+                context.loadingOverlay.hide();
 
                 setState(() {
                   isPressed = false;
