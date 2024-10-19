@@ -36,35 +36,20 @@ class FarmLockDepositFinalAmount extends ConsumerWidget {
               ),
             ],
           )
-        else
-          timeout == false
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SelectableText(
-                      AppLocalizations.of(context)!.farmLockDepositFinalAmount,
-                      style: AppTextStyles.bodyLarge(context),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                      width: 10,
-                      child: CircularProgressIndicator(strokeWidth: 1),
-                    ),
-                  ],
-                )
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SelectableText(
-                      AppLocalizations.of(context)!.farmLockDepositFinalAmount,
-                      style: AppTextStyles.bodyLarge(context),
-                    ),
-                    SelectableText(
-                      AppLocalizations.of(context)!.finalAmountNotRecovered,
-                      style: AppTextStyles.bodyLarge(context),
-                    ),
-                  ],
-                ),
+        else if (timeout)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SelectableText(
+                AppLocalizations.of(context)!.farmLockDepositFinalAmount,
+                style: AppTextStyles.bodyLarge(context),
+              ),
+              SelectableText(
+                AppLocalizations.of(context)!.finalAmountNotRecovered,
+                style: AppTextStyles.bodyLarge(context),
+              ),
+            ],
+          ),
       ],
     );
   }

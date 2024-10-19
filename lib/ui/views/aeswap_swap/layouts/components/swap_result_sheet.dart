@@ -80,6 +80,10 @@ class SwapResultSheetState extends ConsumerState<SwapResultSheet>
     if (swap.tokenToSwap == null || swap.tokenSwapped == null) {
       return const SizedBox.shrink();
     }
+    final finalAmount = swap.finalAmount;
+    final timeout = ref.watch(
+      swapFormNotifierProvider.select((value) => value.failure != null),
+    );
 
     return SingleChildScrollView(
       child: Padding(
@@ -89,12 +93,33 @@ class SwapResultSheetState extends ConsumerState<SwapResultSheet>
           children: [
             SheetDetailCard(
               children: [
-                AutoSizeText(
-                  AppLocalizations.of(context)!.swapSuccessInfo,
-                  style: AppTextStyles.bodyLarge(context).copyWith(
-                    color: aedappfm.ArchethicThemeBase.systemPositive600,
+                if (finalAmount == null)
+                  if (timeout == false)
+                    Row(
+                      children: [
+                        AutoSizeText(
+                          AppLocalizations.of(context)!.processingInProgress,
+                          style: AppTextStyles.bodyLarge(context),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                          width: 10,
+                          child: CircularProgressIndicator(strokeWidth: 1),
+                        ),
+                      ],
+                    )
+                  else
+                    const SizedBox.shrink()
+                else
+                  AutoSizeText(
+                    AppLocalizations.of(context)!.swapSuccessInfo,
+                    style: AppTextStyles.bodyLarge(context).copyWith(
+                      color: aedappfm.ArchethicThemeBase.systemPositive600,
+                    ),
                   ),
-                ),
               ],
             ),
             const SizedBox(
@@ -115,11 +140,12 @@ class SwapResultSheetState extends ConsumerState<SwapResultSheet>
             const SizedBox(
               height: 20,
             ),
-            const SheetDetailCard(
-              children: [
-                SwapFinalAmount(),
-              ],
-            ),
+            if (finalAmount != null || timeout)
+              const SheetDetailCard(
+                children: [
+                  SwapFinalAmount(),
+                ],
+              ),
           ],
         ),
       ),

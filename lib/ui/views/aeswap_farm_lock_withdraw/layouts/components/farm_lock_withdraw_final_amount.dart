@@ -20,6 +20,7 @@ class FarmLockWithdrawFinalAmount extends ConsumerWidget {
     );
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
@@ -37,37 +38,20 @@ class FarmLockWithdrawFinalAmount extends ConsumerWidget {
                   ),
                 ],
               )
-            else
-              timeout == false
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SelectableText(
-                          AppLocalizations.of(context)!
-                              .farmLockWithdrawFinalAmount,
-                          style: AppTextStyles.bodyLarge(context),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                          width: 10,
-                          child: CircularProgressIndicator(strokeWidth: 1),
-                        ),
-                      ],
-                    )
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SelectableText(
-                          AppLocalizations.of(context)!
-                              .farmLockWithdrawFinalAmount,
-                          style: AppTextStyles.bodyLarge(context),
-                        ),
-                        SelectableText(
-                          AppLocalizations.of(context)!.finalAmountNotRecovered,
-                          style: AppTextStyles.bodyLarge(context),
-                        ),
-                      ],
-                    ),
+            else if (timeout)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SelectableText(
+                    AppLocalizations.of(context)!.farmLockWithdrawFinalAmount,
+                    style: AppTextStyles.bodyLarge(context),
+                  ),
+                  SelectableText(
+                    AppLocalizations.of(context)!.finalAmountNotRecovered,
+                    style: AppTextStyles.bodyLarge(context),
+                  ),
+                ],
+              ),
           ],
         ),
         Row(
@@ -90,41 +74,21 @@ class FarmLockWithdrawFinalAmount extends ConsumerWidget {
                     ),
                   ],
                 )
-              else
-                timeout == false
-                    ? farmLockWithdraw.rewardAmount! > 0
-                        ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SelectableText(
-                                AppLocalizations.of(context)!
-                                    .farmLockWithdrawFinalAmount,
-                                style: AppTextStyles.bodyLarge(context),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                                width: 10,
-                                child:
-                                    CircularProgressIndicator(strokeWidth: 1),
-                              ),
-                            ],
-                          )
-                        : const SizedBox.shrink()
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SelectableText(
-                            AppLocalizations.of(context)!
-                                .farmLockWithdrawFinalAmountReward,
-                            style: AppTextStyles.bodyLarge(context),
-                          ),
-                          SelectableText(
-                            AppLocalizations.of(context)!
-                                .finalAmountNotRecovered,
-                            style: AppTextStyles.bodyLarge(context),
-                          ),
-                        ],
-                      ),
+              else if (timeout)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SelectableText(
+                      AppLocalizations.of(context)!
+                          .farmLockWithdrawFinalAmountReward,
+                      style: AppTextStyles.bodyLarge(context),
+                    ),
+                    SelectableText(
+                      AppLocalizations.of(context)!.finalAmountNotRecovered,
+                      style: AppTextStyles.bodyLarge(context),
+                    ),
+                  ],
+                ),
           ],
         ),
       ],
