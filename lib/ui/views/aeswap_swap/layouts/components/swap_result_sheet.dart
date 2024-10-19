@@ -1,5 +1,6 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/format_address_link_copy_big_icon.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/aeswap_swap/bloc/provider.dart';
@@ -112,7 +113,15 @@ class SwapResultSheetState extends ConsumerState<SwapResultSheet>
                       ],
                     )
                   else
-                    const SizedBox.shrink()
+                    Text(
+                      FailureMessage(
+                        context: context,
+                        failure: swap.failure,
+                      ).getMessage(),
+                      style: AppTextStyles.bodyLarge(context).copyWith(
+                        color: aedappfm.ArchethicThemeBase.systemDanger500,
+                      ),
+                    )
                 else
                   AutoSizeText(
                     AppLocalizations.of(context)!.swapSuccessInfo,
@@ -127,19 +136,25 @@ class SwapResultSheetState extends ConsumerState<SwapResultSheet>
             ),
             if (swap.recoveryTransactionSwap != null &&
                 swap.recoveryTransactionSwap!.address != null &&
-                swap.recoveryTransactionSwap!.address!.address != null)
-              FormatAddressLinkCopyBigIcon(
-                address: swap.recoveryTransactionSwap!.address!.address!
-                    .toUpperCase(),
-                header: AppLocalizations.of(context)!.swapInProgressTxAddresses,
-                typeAddress: TypeAddressLinkCopyBigIcon.transaction,
-                reduceAddress: true,
-                fontSize: 16,
-                iconSize: 26,
+                swap.recoveryTransactionSwap!.address!.address != null &&
+                finalAmount != null)
+              Column(
+                children: [
+                  FormatAddressLinkCopyBigIcon(
+                    address: swap.recoveryTransactionSwap!.address!.address!
+                        .toUpperCase(),
+                    header:
+                        AppLocalizations.of(context)!.swapInProgressTxAddresses,
+                    typeAddress: TypeAddressLinkCopyBigIcon.transaction,
+                    reduceAddress: true,
+                    fontSize: 16,
+                    iconSize: 26,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
               ),
-            const SizedBox(
-              height: 20,
-            ),
             if (finalAmount != null || timeout)
               const SheetDetailCard(
                 children: [

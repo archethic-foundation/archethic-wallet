@@ -1,5 +1,6 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/format_address_link_copy_big_icon.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_remove/bloc/provider.dart';
@@ -120,7 +121,15 @@ class LiquidityRemoveResultSheetState
                       ],
                     )
                   else
-                    const SizedBox.shrink()
+                    Text(
+                      FailureMessage(
+                        context: context,
+                        failure: liquidityRemove.failure,
+                      ).getMessage(),
+                      style: AppTextStyles.bodyLarge(context).copyWith(
+                        color: aedappfm.ArchethicThemeBase.systemDanger500,
+                      ),
+                    )
                 else
                   Text(
                     AppLocalizations.of(context)!.liquidityRemoveSuccessInfo,
@@ -136,21 +145,28 @@ class LiquidityRemoveResultSheetState
             if (liquidityRemove.transactionRemoveLiquidity != null &&
                 liquidityRemove.transactionRemoveLiquidity!.address != null &&
                 liquidityRemove.transactionRemoveLiquidity!.address!.address !=
-                    null)
-              FormatAddressLinkCopyBigIcon(
-                address: liquidityRemove
-                    .transactionRemoveLiquidity!.address!.address!
-                    .toUpperCase(),
-                header: AppLocalizations.of(context)!
-                    .liquidityRemoveInProgressTxAddresses,
-                typeAddress: TypeAddressLinkCopyBigIcon.transaction,
-                reduceAddress: true,
-                fontSize: 16,
-                iconSize: 26,
+                    null &&
+                finalAmountToken1 != null &&
+                finalAmountToken2 != null &&
+                finalAmountLPToken != null)
+              Column(
+                children: [
+                  FormatAddressLinkCopyBigIcon(
+                    address: liquidityRemove
+                        .transactionRemoveLiquidity!.address!.address!
+                        .toUpperCase(),
+                    header: AppLocalizations.of(context)!
+                        .liquidityRemoveInProgressTxAddresses,
+                    typeAddress: TypeAddressLinkCopyBigIcon.transaction,
+                    reduceAddress: true,
+                    fontSize: 16,
+                    iconSize: 26,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
               ),
-            const SizedBox(
-              height: 20,
-            ),
             if ((finalAmountToken1 != null &&
                     finalAmountToken2 != null &&
                     finalAmountLPToken != null) ||

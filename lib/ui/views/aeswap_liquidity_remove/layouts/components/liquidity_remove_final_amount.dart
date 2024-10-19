@@ -42,6 +42,7 @@ class LiquidityRemoveFinalAmount extends ConsumerWidget {
               )
             else if (timeout)
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SelectableText(
                     AppLocalizations.of(context)!
@@ -49,7 +50,7 @@ class LiquidityRemoveFinalAmount extends ConsumerWidget {
                     style: AppTextStyles.bodyLarge(context),
                   ),
                   SelectableText(
-                    ' ${AppLocalizations.of(context)!.finalAmountNotRecovered}',
+                    AppLocalizations.of(context)!.finalAmountNotRecovered,
                     style: AppTextStyles.bodyLarge(context),
                   ),
                 ],
@@ -83,7 +84,7 @@ class LiquidityRemoveFinalAmount extends ConsumerWidget {
                     style: AppTextStyles.bodyLarge(context),
                   ),
                   SelectableText(
-                    ' ${AppLocalizations.of(context)!.finalAmountNotRecovered}',
+                    AppLocalizations.of(context)!.finalAmountNotRecovered,
                     style: AppTextStyles.bodyLarge(context),
                   ),
                 ],
@@ -117,7 +118,7 @@ class LiquidityRemoveFinalAmount extends ConsumerWidget {
                     style: AppTextStyles.bodyLarge(context),
                   ),
                   SelectableText(
-                    ' ${AppLocalizations.of(context)!.finalAmountNotRecovered}',
+                    AppLocalizations.of(context)!.finalAmountNotRecovered,
                     style: AppTextStyles.bodyLarge(context),
                   ),
                 ],

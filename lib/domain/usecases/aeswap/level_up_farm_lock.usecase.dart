@@ -152,6 +152,15 @@ class LevelUpFarmLockCase with aedappfm.TransactionMixin {
             operationId,
             aedappfm.Failure.fromError(error.messageLabel),
           );
+          farmLevelUpNotifier
+            ..setResumeProcess(false)
+            ..setProcessInProgress(false)
+            ..setFarmLockLevelUpOk(false)
+            ..setFailure(
+              aedappfm.Failure.other(
+                cause: error.messageLabel.capitalize(),
+              ),
+            );
         },
       );
     } catch (e) {

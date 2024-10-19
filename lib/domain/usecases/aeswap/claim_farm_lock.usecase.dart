@@ -152,6 +152,15 @@ class ClaimFarmLockCase with aedappfm.TransactionMixin {
             operationId,
             aedappfm.Failure.fromError(error.messageLabel),
           );
+          farmClaimLockNotifier
+            ..setResumeProcess(false)
+            ..setProcessInProgress(false)
+            ..setFarmLockClaimOk(false)
+            ..setFailure(
+              aedappfm.Failure.other(
+                cause: error.messageLabel.capitalize(),
+              ),
+            );
         },
       );
     } catch (e) {
