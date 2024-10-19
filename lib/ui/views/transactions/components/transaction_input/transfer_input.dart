@@ -7,9 +7,9 @@ import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutte
     as aedappfm;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// TODO(reddwarf03): Same widget as transfer_output.dart except + or - in AutoSizeText
 class TransferInput extends ConsumerWidget {
   const TransferInput({
     super.key,
@@ -26,22 +26,13 @@ class TransferInput extends ConsumerWidget {
     final amountFormatted = NumberUtil.formatThousandsStr(
       transaction.amount!.formatNumber(),
     );
-    final localizations = AppLocalizations.of(context)!;
     return Row(
       children: [
-        Row(
-          children: [
-            AutoSizeText(
-              '${localizations.txListAmount} ',
-              style: ArchethicThemeStyles.textStyleSize12W100Primary60,
-            ),
-            AutoSizeText(
-              hasTransactionInfo
-                  ? '$amountFormatted ${isCurrencyNative ? (transaction.tokenInformation!.symbol! == '' ? 'NFT' : transaction.tokenInformation!.symbol!) : transaction.tokenInformation!.symbol!}'
-                  : '$amountFormatted ${AccountBalance.cryptoCurrencyLabel}',
-              style: ArchethicThemeStyles.textStyleSize12W100Primary,
-            ),
-          ],
+        AutoSizeText(
+          hasTransactionInfo
+              ? '$amountFormatted ${isCurrencyNative ? (transaction.tokenInformation!.symbol! == '' ? 'NFT' : transaction.tokenInformation!.symbol!) : transaction.tokenInformation!.symbol!}'
+              : '$amountFormatted ${AccountBalance.cryptoCurrencyLabel}',
+          style: ArchethicThemeStyles.textStyleSize12W100Primary,
         ),
         if (transaction.tokenInformation != null &&
             transaction.tokenInformation!.type == 'fungible' &&

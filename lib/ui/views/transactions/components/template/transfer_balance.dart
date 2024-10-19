@@ -6,7 +6,9 @@ import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transaction_hidden_value.dart';
 import 'package:aewallet/util/currency_util.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TransfertBalance extends ConsumerWidget {
@@ -31,6 +33,10 @@ class TransfertBalance extends ConsumerWidget {
       verticalDirection:
           isCurrencyNative ? VerticalDirection.down : VerticalDirection.up,
       children: [
+        AutoSizeText(
+          '${AppLocalizations.of(context)!.txListAmount} ',
+          style: ArchethicThemeStyles.textStyleSize12W100Primary60,
+        ),
         if (transaction.amount != null)
           if (settings.showBalances == true)
             child
@@ -44,9 +50,7 @@ class TransfertBalance extends ConsumerWidget {
                 transaction.amount!,
               )})',
               style: ArchethicThemeStyles.textStyleSize12W100Primary,
-            )
-          else
-            const TransactionHiddenValue(),
+            ),
       ],
     );
   }
