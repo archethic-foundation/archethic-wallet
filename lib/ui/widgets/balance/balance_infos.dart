@@ -10,7 +10,6 @@ import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/chart_option_label.dart';
 import 'package:aewallet/ui/widgets/balance/components/price_evolution_indicator.dart';
 import 'package:aewallet/ui/widgets/components/history_chart.dart';
-import 'package:animated_digit/animated_digit.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:auto_size_text/auto_size_text.dart';
@@ -70,10 +69,6 @@ class _BalanceTotalUSDShowed extends ConsumerWidget {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Row(
                 children: [
-                  Text(
-                    r'$',
-                    style: ArchethicThemeStyles.textStyleSize35W900Primary,
-                  ),
                   if (snapshot.data == null)
                     const Padding(
                       padding: EdgeInsets.only(left: 10),
@@ -86,16 +81,9 @@ class _BalanceTotalUSDShowed extends ConsumerWidget {
                       ),
                     )
                   else
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 7, left: 2),
-                      child: AnimatedDigitWidget(
-                        value: snapshot.data,
-                        autoSize: false,
-                        fractionDigits: 2,
-                        enableSeparator: true,
-                        textStyle:
-                            ArchethicThemeStyles.textStyleSize35W900Primary,
-                      ),
+                    Text(
+                      '\$${snapshot.data!.formatNumber(precision: 2)}',
+                      style: ArchethicThemeStyles.textStyleSize35W900Primary,
                     ),
                 ],
               );
@@ -105,19 +93,8 @@ class _BalanceTotalUSDShowed extends ConsumerWidget {
               return Row(
                 children: [
                   Text(
-                    r'$',
+                    '\$${snapshot.data!.formatNumber(precision: 2)}',
                     style: ArchethicThemeStyles.textStyleSize35W900Primary,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 7, left: 2),
-                    child: AnimatedDigitWidget(
-                      value: snapshot.data,
-                      autoSize: false,
-                      fractionDigits: 2,
-                      enableSeparator: true,
-                      textStyle:
-                          ArchethicThemeStyles.textStyleSize35W900Primary,
-                    ),
                   ),
                 ],
               );

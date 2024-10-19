@@ -3,7 +3,6 @@ import 'package:aewallet/modules/aeswap/ui/views/util/components/block_info.dart
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/state.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/farm_lock_block_list_single_line_lock.dart';
-import 'package:animated_digit/animated_digit.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -167,11 +166,9 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
                       ),
                     )
                   else
-                    AnimatedDigitWidget(
-                      value: summary.farmedTokensInFiat,
-                      fractionDigits: 2,
-                      enableSeparator: true,
-                      textStyle: Theme.of(context).textTheme.headlineLarge,
+                    Text(
+                      summary.farmedTokensInFiat.formatNumber(precision: 2),
+                      style: Theme.of(context).textTheme.headlineLarge,
                     ),
                 ],
               ),
