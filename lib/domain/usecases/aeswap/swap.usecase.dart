@@ -175,6 +175,15 @@ class SwapCase with aedappfm.TransactionMixin {
             operationId,
             aedappfm.Failure.fromError(error.messageLabel),
           );
+          swapNotifier
+            ..setResumeProcess(false)
+            ..setProcessInProgress(false)
+            ..setSwapOk(false)
+            ..setFailure(
+              aedappfm.Failure.other(
+                cause: error.messageLabel.capitalize(),
+              ),
+            );
         },
       );
     } catch (e) {

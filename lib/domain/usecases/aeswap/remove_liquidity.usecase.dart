@@ -178,6 +178,15 @@ class RemoveLiquidityCase with aedappfm.TransactionMixin {
             operationId,
             aedappfm.Failure.fromError(error.messageLabel),
           );
+          liquidityRemoveNotifier
+            ..setResumeProcess(false)
+            ..setProcessInProgress(false)
+            ..setLiquidityRemoveOk(false)
+            ..setFailure(
+              aedappfm.Failure.other(
+                cause: error.messageLabel.capitalize(),
+              ),
+            );
         },
       );
     } catch (e) {

@@ -149,6 +149,15 @@ class DepositFarmLockCase with aedappfm.TransactionMixin {
             operationId,
             aedappfm.Failure.fromError(error.messageLabel),
           );
+          farmLockDepositNotifier
+            ..setResumeProcess(false)
+            ..setProcessInProgress(false)
+            ..setFarmLockDepositOk(false)
+            ..setFailure(
+              aedappfm.Failure.other(
+                cause: error.messageLabel.capitalize(),
+              ),
+            );
         },
       );
     } catch (e) {

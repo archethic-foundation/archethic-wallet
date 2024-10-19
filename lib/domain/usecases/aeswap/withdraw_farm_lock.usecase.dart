@@ -178,6 +178,15 @@ class WithdrawFarmLockCase with aedappfm.TransactionMixin {
             operationId,
             aedappfm.Failure.fromError(error.messageLabel),
           );
+          farmLockWithdrawNotifier
+            ..setResumeProcess(false)
+            ..setProcessInProgress(false)
+            ..setFarmLockWithdrawOk(false)
+            ..setFailure(
+              aedappfm.Failure.other(
+                cause: error.messageLabel.capitalize(),
+              ),
+            );
         },
       );
     } catch (e) {

@@ -1,5 +1,6 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/format_address_link_copy_big_icon.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/bloc/provider.dart';
@@ -116,7 +117,15 @@ class FarmLockLevelUpResultSheetState
                       ],
                     )
                   else
-                    const SizedBox.shrink()
+                    Text(
+                      FailureMessage(
+                        context: context,
+                        failure: farmLockLevelUp.failure,
+                      ).getMessage(),
+                      style: AppTextStyles.bodyLarge(context).copyWith(
+                        color: aedappfm.ArchethicThemeBase.systemDanger500,
+                      ),
+                    )
                 else
                   AutoSizeText(
                     AppLocalizations.of(context)!.levelUpFarmLockDone,
@@ -132,20 +141,26 @@ class FarmLockLevelUpResultSheetState
             if (farmLockLevelUp.transactionFarmLockLevelUp != null &&
                 farmLockLevelUp.transactionFarmLockLevelUp!.address != null &&
                 farmLockLevelUp.transactionFarmLockLevelUp!.address!.address !=
-                    null)
-              FormatAddressLinkCopyBigIcon(
-                address: farmLockLevelUp
-                    .transactionFarmLockLevelUp!.address!.address!
-                    .toUpperCase(),
-                header: AppLocalizations.of(context)!.farmLockLevelUpTxAddress,
-                typeAddress: TypeAddressLinkCopyBigIcon.transaction,
-                reduceAddress: true,
-                fontSize: 16,
-                iconSize: 26,
+                    null &&
+                finalAmount != null)
+              Column(
+                children: [
+                  FormatAddressLinkCopyBigIcon(
+                    address: farmLockLevelUp
+                        .transactionFarmLockLevelUp!.address!.address!
+                        .toUpperCase(),
+                    header:
+                        AppLocalizations.of(context)!.farmLockLevelUpTxAddress,
+                    typeAddress: TypeAddressLinkCopyBigIcon.transaction,
+                    reduceAddress: true,
+                    fontSize: 16,
+                    iconSize: 26,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
               ),
-            const SizedBox(
-              height: 20,
-            ),
             if (finalAmount != null || timeout)
               const SheetDetailCard(
                 children: [

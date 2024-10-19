@@ -145,6 +145,15 @@ class AddLiquidityCase with aedappfm.TransactionMixin {
             operationId,
             aedappfm.Failure.fromError(error.messageLabel),
           );
+          liquidityAddNotifier
+            ..setResumeProcess(false)
+            ..setProcessInProgress(false)
+            ..setLiquidityAddOk(false)
+            ..setFailure(
+              aedappfm.Failure.other(
+                cause: error.messageLabel.capitalize(),
+              ),
+            );
         },
       );
     } catch (e) {
