@@ -40,36 +40,20 @@ class LiquidityRemoveFinalAmount extends ConsumerWidget {
                   ),
                 ],
               )
-            else
-              timeout == false
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SelectableText(
-                          AppLocalizations.of(context)!
-                              .liquidityRemoveFinalAmountTokenObtained,
-                          style: AppTextStyles.bodyLarge(context),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                          width: 10,
-                          child: CircularProgressIndicator(strokeWidth: 1),
-                        ),
-                      ],
-                    )
-                  : Column(
-                      children: [
-                        SelectableText(
-                          AppLocalizations.of(context)!
-                              .liquidityRemoveFinalAmountTokenObtained,
-                          style: AppTextStyles.bodyLarge(context),
-                        ),
-                        SelectableText(
-                          ' ${AppLocalizations.of(context)!.finalAmountNotRecovered}',
-                          style: AppTextStyles.bodyLarge(context),
-                        ),
-                      ],
-                    ),
+            else if (timeout)
+              Column(
+                children: [
+                  SelectableText(
+                    AppLocalizations.of(context)!
+                        .liquidityRemoveFinalAmountTokenObtained,
+                    style: AppTextStyles.bodyLarge(context),
+                  ),
+                  SelectableText(
+                    ' ${AppLocalizations.of(context)!.finalAmountNotRecovered}',
+                    style: AppTextStyles.bodyLarge(context),
+                  ),
+                ],
+              ),
           ],
         ),
         Row(
@@ -89,36 +73,21 @@ class LiquidityRemoveFinalAmount extends ConsumerWidget {
                   ),
                 ],
               )
-            else
-              timeout == false
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SelectableText(
-                          AppLocalizations.of(context)!
-                              .liquidityRemoveFinalAmountTokenObtained,
-                          style: AppTextStyles.bodyLarge(context),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                          width: 10,
-                          child: CircularProgressIndicator(strokeWidth: 1),
-                        ),
-                      ],
-                    )
-                  : Column(
-                      children: [
-                        SelectableText(
-                          AppLocalizations.of(context)!
-                              .liquidityRemoveFinalAmountTokenObtained,
-                          style: AppTextStyles.bodyLarge(context),
-                        ),
-                        SelectableText(
-                          ' ${AppLocalizations.of(context)!.finalAmountNotRecovered}',
-                          style: AppTextStyles.bodyLarge(context),
-                        ),
-                      ],
-                    ),
+            else if (timeout)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SelectableText(
+                    AppLocalizations.of(context)!
+                        .liquidityRemoveFinalAmountTokenObtained,
+                    style: AppTextStyles.bodyLarge(context),
+                  ),
+                  SelectableText(
+                    ' ${AppLocalizations.of(context)!.finalAmountNotRecovered}',
+                    style: AppTextStyles.bodyLarge(context),
+                  ),
+                ],
+              ),
           ],
         ),
         Row(
@@ -138,36 +107,21 @@ class LiquidityRemoveFinalAmount extends ConsumerWidget {
                   ),
                 ],
               )
-            else
-              timeout == false
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SelectableText(
-                          AppLocalizations.of(context)!
-                              .liquidityRemoveFinalAmountTokenBurned,
-                          style: AppTextStyles.bodyLarge(context),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                          width: 10,
-                          child: CircularProgressIndicator(strokeWidth: 1),
-                        ),
-                      ],
-                    )
-                  : Column(
-                      children: [
-                        SelectableText(
-                          AppLocalizations.of(context)!
-                              .liquidityRemoveFinalAmountTokenBurned,
-                          style: AppTextStyles.bodyLarge(context),
-                        ),
-                        SelectableText(
-                          ' ${AppLocalizations.of(context)!.finalAmountNotRecovered}',
-                          style: AppTextStyles.bodyLarge(context),
-                        ),
-                      ],
-                    ),
+            else if (timeout)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SelectableText(
+                    AppLocalizations.of(context)!
+                        .liquidityRemoveFinalAmountTokenBurned,
+                    style: AppTextStyles.bodyLarge(context),
+                  ),
+                  SelectableText(
+                    ' ${AppLocalizations.of(context)!.finalAmountNotRecovered}',
+                    style: AppTextStyles.bodyLarge(context),
+                  ),
+                ],
+              ),
           ],
         ),
       ],

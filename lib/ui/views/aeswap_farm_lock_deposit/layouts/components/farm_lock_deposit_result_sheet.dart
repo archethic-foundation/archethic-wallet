@@ -11,6 +11,7 @@ import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -82,6 +83,11 @@ class FarmLockDepositResultSheetState
     if (farmLockDeposit.amount == 0) {
       return const SizedBox.shrink();
     }
+    final finalAmount = farmLockDeposit.finalAmount;
+    final timeout = ref.watch(
+      farmLockDepositFormNotifierProvider
+          .select((value) => value.failure != null),
+    );
 
     return SingleChildScrollView(
       child: Padding(
@@ -91,12 +97,33 @@ class FarmLockDepositResultSheetState
           children: [
             SheetDetailCard(
               children: [
-                Text(
-                  AppLocalizations.of(context)!.farmLockDepositSuccessInfo,
-                  style: AppTextStyles.bodyLarge(context).copyWith(
-                    color: aedappfm.ArchethicThemeBase.systemPositive600,
+                if (finalAmount == null)
+                  if (timeout == false)
+                    Row(
+                      children: [
+                        AutoSizeText(
+                          AppLocalizations.of(context)!.processingInProgress,
+                          style: AppTextStyles.bodyLarge(context),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                          width: 10,
+                          child: CircularProgressIndicator(strokeWidth: 1),
+                        ),
+                      ],
+                    )
+                  else
+                    const SizedBox.shrink()
+                else
+                  Text(
+                    AppLocalizations.of(context)!.farmLockDepositSuccessInfo,
+                    style: AppTextStyles.bodyLarge(context).copyWith(
+                      color: aedappfm.ArchethicThemeBase.systemPositive600,
+                    ),
                   ),
-                ),
               ],
             ),
             const SizedBox(
@@ -119,11 +146,12 @@ class FarmLockDepositResultSheetState
             const SizedBox(
               height: 20,
             ),
-            const SheetDetailCard(
-              children: [
-                FarmLockDepositFinalAmount(),
-              ],
-            ),
+            if (finalAmount != null || timeout)
+              const SheetDetailCard(
+                children: [
+                  FarmLockDepositFinalAmount(),
+                ],
+              ),
           ],
         ),
       ),

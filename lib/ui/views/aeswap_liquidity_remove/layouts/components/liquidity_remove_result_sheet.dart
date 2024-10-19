@@ -11,6 +11,7 @@ import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -82,6 +83,13 @@ class LiquidityRemoveResultSheetState
     if (liquidityRemove.lpToken == null) {
       return const SizedBox.shrink();
     }
+    final finalAmountToken1 = liquidityRemove.finalAmountToken1;
+    final finalAmountToken2 = liquidityRemove.finalAmountToken2;
+    final finalAmountLPToken = liquidityRemove.finalAmountLPToken;
+    final timeout = ref.watch(
+      liquidityRemoveFormNotifierProvider
+          .select((value) => value.failure != null),
+    );
 
     return SingleChildScrollView(
       child: Padding(
@@ -91,12 +99,35 @@ class LiquidityRemoveResultSheetState
           children: [
             SheetDetailCard(
               children: [
-                Text(
-                  AppLocalizations.of(context)!.liquidityRemoveSuccessInfo,
-                  style: AppTextStyles.bodyLarge(context).copyWith(
-                    color: aedappfm.ArchethicThemeBase.systemPositive600,
+                if (finalAmountToken1 == null &&
+                    finalAmountToken2 == null &&
+                    finalAmountLPToken == null)
+                  if (timeout == false)
+                    Row(
+                      children: [
+                        AutoSizeText(
+                          AppLocalizations.of(context)!.processingInProgress,
+                          style: AppTextStyles.bodyLarge(context),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                          width: 10,
+                          child: CircularProgressIndicator(strokeWidth: 1),
+                        ),
+                      ],
+                    )
+                  else
+                    const SizedBox.shrink()
+                else
+                  Text(
+                    AppLocalizations.of(context)!.liquidityRemoveSuccessInfo,
+                    style: AppTextStyles.bodyLarge(context).copyWith(
+                      color: aedappfm.ArchethicThemeBase.systemPositive600,
+                    ),
                   ),
-                ),
               ],
             ),
             const SizedBox(
@@ -120,11 +151,15 @@ class LiquidityRemoveResultSheetState
             const SizedBox(
               height: 20,
             ),
-            const SheetDetailCard(
-              children: [
-                LiquidityRemoveFinalAmount(),
-              ],
-            ),
+            if ((finalAmountToken1 != null &&
+                    finalAmountToken2 != null &&
+                    finalAmountLPToken != null) ||
+                timeout)
+              const SheetDetailCard(
+                children: [
+                  LiquidityRemoveFinalAmount(),
+                ],
+              ),
           ],
         ),
       ),
