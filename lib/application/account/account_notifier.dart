@@ -65,7 +65,19 @@ class _AccountNotifier extends _$AccountNotifier {
             'End method refreshRecentTransactions for ${account.nameDisplayed}',
           );
 
-          ref.invalidate(userBalanceProvider);
+          final accountSelected = ref
+              .read(
+                AccountProviders.accounts,
+              )
+              .valueOrNull
+              ?.selectedAccount;
+
+          ref
+            ..invalidate(userBalanceProvider)
+            ..invalidate(
+              tokensListProvider(accountSelected!.genesisAddress),
+            );
+          ;
         },
       ]);
 
