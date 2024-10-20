@@ -66,6 +66,7 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet>
       ArchethicTheme.text,
       ArchethicTheme.snackBarShadow,
     );
+    context.loadingOverlay.hide();
     context.pop();
   }
 
@@ -102,6 +103,7 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet>
               .selectedAccountNotifier)
           ?.refreshFungibleTokens(poolListRaw),
     );
+    context.loadingOverlay.hide();
     context.pop();
   }
 
@@ -162,8 +164,6 @@ class _AddTokenConfirmState extends ConsumerState<AddTokenConfirmSheet>
             await ref
                 .read(AddTokenFormProvider.addTokenForm.notifier)
                 .send(context);
-
-            context.loadingOverlay.hide();
           },
         ),
       ],
