@@ -89,6 +89,7 @@ class NetworkDialog extends ConsumerWidget {
             ..invalidate(verifiedTokensProvider)
             ..invalidate(DexTokensProviders.tokensFromAccount)
             ..invalidate(farmLockFormFarmLockProvider);
+          await updateServiceLocatorNetworkDependencies();
           // If selected network is DevNet
           // Show a dialog to enter a custom network
           // else use the network selected
@@ -167,7 +168,7 @@ class NetworkDialog extends ConsumerWidget {
                           ..invalidate(verifiedTokensProvider)
                           ..invalidate(DexTokensProviders.tokensFromAccount)
                           ..invalidate(farmLockFormFarmLockProvider);
-
+                        await updateServiceLocatorNetworkDependencies();
                         context.pop();
                       },
                     );
@@ -176,7 +177,6 @@ class NetworkDialog extends ConsumerWidget {
               },
             );
           }
-          await updateServiceLocatorNetworkDependencies();
 
           context.pop(selectedNetworkSettings);
         },

@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool_infos.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_infos_response.dart';
@@ -205,6 +206,7 @@ class PoolFactoryRepositoryImpl
   Future<Map<String, dynamic>?> getRemoveAmounts(
     double lpTokenAmount,
   ) async {
+    log('apiService ${apiService.endpoint}', name: 'getRemoveAmounts');
     final result = await apiService.callSCFunction(
       jsonRPCRequest: SCCallFunctionRequest(
         method: 'contract_fun',

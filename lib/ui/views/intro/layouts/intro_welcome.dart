@@ -21,6 +21,7 @@ import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/dialogs/language_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
+import 'package:aewallet/util/service_locator.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:auto_size_text/auto_size_text.dart';
@@ -398,6 +399,7 @@ class _ButtonNewWallet extends ConsumerWidget {
                 ..invalidate(verifiedTokensProvider)
                 ..invalidate(DexTokensProviders.tokensFromAccount)
                 ..invalidate(farmLockFormFarmLockProvider);
+              await updateServiceLocatorNetworkDependencies();
               context.go(
                 IntroNewWalletGetFirstInfos.routerPage,
               );
