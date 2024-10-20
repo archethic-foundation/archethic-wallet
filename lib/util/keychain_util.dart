@@ -348,6 +348,9 @@ class KeychainUtil with KeychainServiceMixin {
             nativeTokenName: AccountBalance.cryptoCurrencyLabel,
             nativeTokenValue: fromBigInt(balanceGetResponse.uco).toDouble(),
           );
+          if (balanceGetResponse.uco > 0) {
+            accountBalance.tokensFungiblesNb++;
+          }
           for (final token in balanceGetResponse.token) {
             if (token.tokenId != null) {
               if (token.tokenId == 0) {

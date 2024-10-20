@@ -224,6 +224,7 @@ class Account extends HiveObject with KeychainServiceMixin {
     );
 
     if (balanceGetResponse.uco > 0) {
+      accountBalance.tokensFungiblesNb++;
       final oracleUcoPrice = await sl.get<OracleService>().getOracleData();
       totalUSD = (Decimal.parse(totalUSD.toString()) +
               Decimal.parse(ucoAmount.toString()) *
