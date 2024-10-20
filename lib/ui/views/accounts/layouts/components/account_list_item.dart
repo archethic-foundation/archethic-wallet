@@ -81,6 +81,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
       ArchethicTheme.snackBarShadow,
       icon: Symbols.info,
     );
+    context.loadingOverlay.hide();
     context.pop();
   }
 
@@ -111,7 +112,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
             .read(AccountProviders.accounts.notifier)
             .selectedAccountNotifier)
         ?.refreshRecentTransactions(poolListRaw);
-
+    context.loadingOverlay.hide();
     if (mounted) {
       context.pop();
     }
@@ -398,7 +399,6 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
                                         widget.account.name,
                                         keychain,
                                       );
-                                      context.loadingOverlay.hide();
                                     },
                                   );
                                 }),

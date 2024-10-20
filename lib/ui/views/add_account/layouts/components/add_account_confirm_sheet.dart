@@ -67,6 +67,7 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet>
       ArchethicTheme.snackBarShadow,
       icon: Symbols.info,
     );
+    context.loadingOverlay.hide();
     Navigator.of(context).pop();
   }
 
@@ -99,6 +100,7 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet>
               .selectedAccountNotifier)
           ?.refreshRecentTransactions(poolListRaw),
     );
+    context.loadingOverlay.hide();
     context.pop();
   }
 
@@ -157,7 +159,6 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet>
                   AddAccountFormProvider.addAccountForm.notifier,
                 )
                 .send(context);
-            context.loadingOverlay.hide();
           },
         ),
       ],
