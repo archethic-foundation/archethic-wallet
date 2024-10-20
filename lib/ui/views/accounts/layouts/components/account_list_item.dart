@@ -152,6 +152,11 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
     final settings = ref.watch(SettingsProviders.settings);
     final balanceTotalFiat = ref
         .watch(addressBalanceTotalFiatProvider(widget.account.genesisAddress));
+    final selectedAccount = ref.watch(
+      AccountProviders.accounts.select(
+        (accounts) => accounts.valueOrNull?.selectedAccount,
+      ),
+    );
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
@@ -316,95 +321,98 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
                           const SizedBox(
                             width: 10,
                           ),
-                          InkWell(
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: ArchethicTheme.backgroundDark
-                                    .withOpacity(0.3),
-                                border: Border.all(
-                                  color: ArchethicTheme.backgroundDarkest
-                                      .withOpacity(0.2),
+                          if (selectedAccount != null &&
+                              widget.account.genesisAddress.toUpperCase() !=
+                                  selectedAccount.genesisAddress.toUpperCase())
+                            InkWell(
+                              child: Container(
+                                alignment: Alignment.center,
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: ArchethicTheme.backgroundDark
+                                      .withOpacity(0.3),
+                                  border: Border.all(
+                                    color: ArchethicTheme.backgroundDarkest
+                                        .withOpacity(0.2),
+                                  ),
+                                ),
+                                child: Icon(
+                                  Symbols.delete,
+                                  color: ArchethicTheme.backgroundDarkest,
+                                  size: 20,
                                 ),
                               ),
-                              child: Icon(
-                                Symbols.delete,
-                                color: ArchethicTheme.backgroundDarkest,
-                                size: 20,
-                              ),
-                            ),
-                            onTap: () async {
-                              final session =
-                                  ref.read(sessionNotifierProvider).loggedIn;
-                              final keychain = await sl
-                                  .get<ApiService>()
-                                  .getKeychain(session!.wallet.seed);
+                              onTap: () async {
+                                final session =
+                                    ref.read(sessionNotifierProvider).loggedIn;
+                                final keychain = await sl
+                                    .get<ApiService>()
+                                    .getKeychain(session!.wallet.seed);
 
-                              var nbOfAccounts = 0;
-                              keychain.services.forEach((key, value) {
-                                if (key.startsWith('archethic-wallet')) {
-                                  nbOfAccounts++;
-                                }
-                              });
-                              if (nbOfAccounts <= 1 &&
-                                  widget.account.name
-                                      .startsWith('archethic-wallet')) {
-                                UIUtil.showSnackbar(
-                                  AppLocalizations.of(context)!
-                                      .removeKeychainAtLeast1,
-                                  context,
-                                  ref,
-                                  ArchethicTheme.text,
-                                  ArchethicTheme.snackBarShadow,
-                                  icon: Symbols.info,
-                                );
-                                return;
-                              }
-
-                              final language = ref.read(
-                                LanguageProviders.selectedLanguage,
-                              );
-
-                              unawaited(
-                                AppDialogs.showConfirmDialog(
+                                var nbOfAccounts = 0;
+                                keychain.services.forEach((key, value) {
+                                  if (key.startsWith('archethic-wallet')) {
+                                    nbOfAccounts++;
+                                  }
+                                });
+                                if (nbOfAccounts <= 1 &&
+                                    widget.account.name
+                                        .startsWith('archethic-wallet')) {
+                                  UIUtil.showSnackbar(
+                                    AppLocalizations.of(context)!
+                                        .removeKeychainAtLeast1,
                                     context,
                                     ref,
-                                    CaseChange.toUpperCase(
-                                      localizations.warning,
-                                      language.getLocaleString(),
-                                    ),
-                                    localizations.removeKeychainDetail
-                                        .replaceAll(
-                                      '%1',
-                                      widget.account.nameDisplayed,
-                                    ),
-                                    localizations.removeKeychainAction, () {
-                                  // Show another confirm dialog
-                                  AppDialogs.showConfirmDialog(
-                                    context,
-                                    ref,
-                                    localizations.areYouSure,
-                                    localizations.removeKeychainLater,
-                                    localizations.yes,
-                                    () async {
-                                      context.loadingOverlay.show();
-
-                                      await KeychainUtil().removeService(
-                                        ref
-                                            .read(SettingsProviders.settings)
-                                            .network,
-                                        widget.account.name,
-                                        keychain,
-                                      );
-                                    },
+                                    ArchethicTheme.text,
+                                    ArchethicTheme.snackBarShadow,
+                                    icon: Symbols.info,
                                   );
-                                }),
-                              );
-                            },
-                          ),
+                                  return;
+                                }
+
+                                final language = ref.read(
+                                  LanguageProviders.selectedLanguage,
+                                );
+
+                                unawaited(
+                                  AppDialogs.showConfirmDialog(
+                                      context,
+                                      ref,
+                                      CaseChange.toUpperCase(
+                                        localizations.warning,
+                                        language.getLocaleString(),
+                                      ),
+                                      localizations.removeKeychainDetail
+                                          .replaceAll(
+                                        '%1',
+                                        widget.account.nameDisplayed,
+                                      ),
+                                      localizations.removeKeychainAction, () {
+                                    // Show another confirm dialog
+                                    AppDialogs.showConfirmDialog(
+                                      context,
+                                      ref,
+                                      localizations.areYouSure,
+                                      localizations.removeKeychainLater,
+                                      localizations.yes,
+                                      () async {
+                                        context.loadingOverlay.show();
+
+                                        await KeychainUtil().removeService(
+                                          ref
+                                              .read(SettingsProviders.settings)
+                                              .network,
+                                          widget.account.name,
+                                          keychain,
+                                        );
+                                      },
+                                    );
+                                  }),
+                                );
+                              },
+                            ),
                         ],
                       ),
                     ],
