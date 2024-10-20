@@ -1,4 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:developer';
+
 import 'package:aewallet/domain/repositories/settings.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
@@ -40,6 +42,7 @@ Future<void> setupServiceLocator() async {
 Future<void> _setupServiceLocatorNetworkDependencies() async {
   final preferences = await PreferencesHiveDatasource.getInstance();
   final network = preferences.getNetwork().getLink();
+  log('network: $network', name: '_setupServiceLocatorNetworkDependencies');
   sl
     ..registerLazySingleton<ApiService>(
       () => ApiService(network),

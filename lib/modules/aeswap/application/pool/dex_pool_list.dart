@@ -6,6 +6,7 @@ Future<List<DexPool>> _getPoolList(
   _GetPoolListRef ref,
 ) async {
   final environment = ref.watch(environmentProvider);
+  log('environment ${environment.endpoint}', name: '_getPoolList');
   final aeETHUCOPoolAddress = environment.aeETHUCOPoolAddress;
 
   final dexConf = await ref.watch(DexConfigProviders.dexConfig.future);

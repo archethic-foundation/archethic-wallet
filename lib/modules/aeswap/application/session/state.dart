@@ -1,15 +1,4 @@
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-part 'state.freezed.dart';
-
-@freezed
-class SessionAESwap with _$SessionAESwap {
-  const factory SessionAESwap({
-    required Environment environment,
-  }) = _SessionAESwap;
-  const SessionAESwap._();
-}
 
 extension EnvironmentAddressesExt on Environment {
   String get aeETHUCOPoolAddress => switch (this) {
