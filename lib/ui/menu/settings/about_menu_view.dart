@@ -31,7 +31,7 @@ class AboutMenuView extends ConsumerWidget implements SheetSkeletonInterface {
         key: const Key('back'),
         color: ArchethicTheme.text,
         onPressed: () {
-          context.pop(SettingsSheetWallet.routerPage);
+          context.pop();
         },
       ),
     );

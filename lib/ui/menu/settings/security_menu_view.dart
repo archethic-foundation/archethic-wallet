@@ -33,7 +33,7 @@ class SecurityMenuView extends ConsumerWidget
         key: const Key('back'),
         color: ArchethicTheme.text,
         onPressed: () {
-          context.pop(SettingsSheetWallet.routerPage);
+          context.pop();
         },
       ),
     );
