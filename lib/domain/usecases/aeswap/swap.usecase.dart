@@ -47,7 +47,7 @@ class SwapCase with aedappfm.TransactionMixin {
     DexToken tokenSwapped,
     double tokenToSwapAmount,
     double slippage,
-    VoidCallback onSuccess,
+    VoidCallback onDone,
   ) async {
     final operationId = const Uuid().v4();
     final archethicContract = ArchethicContract(
@@ -170,7 +170,7 @@ class SwapCase with aedappfm.TransactionMixin {
                 amountSwapped: amount,
               ),
             );
-            onSuccess();
+            onDone();
           }
         },
         onError: (sender, error) async {
@@ -187,6 +187,7 @@ class SwapCase with aedappfm.TransactionMixin {
                 cause: error.messageLabel.capitalize(),
               ),
             );
+          onDone();
         },
       );
     } catch (e) {
