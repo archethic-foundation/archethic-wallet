@@ -304,7 +304,6 @@ class FarmLockBlockListSingleLineLock extends ConsumerWidget {
                                       rewardAmount:
                                           farmLockUserInfos.rewardAmount,
                                       pool: pool,
-                                      farmLock: farmLock,
                                     ),
                                   ),
                                   Expanded(

@@ -1,6 +1,6 @@
-import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/format_address_link_copy_big_icon.dart';
+import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -9,16 +9,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class FarmLockDetailsInfoAddressFarm extends ConsumerWidget {
   const FarmLockDetailsInfoAddressFarm({
     super.key,
-    required this.farmLock,
   });
-
-  final DexFarmLock farmLock;
 
   @override
   Widget build(
     BuildContext context,
     WidgetRef ref,
   ) {
+    final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
+    if (farmLock == null) return const SizedBox.shrink();
+
     return SheetDetailCard(
       children: [
         Expanded(

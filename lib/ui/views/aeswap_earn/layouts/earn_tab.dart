@@ -347,14 +347,11 @@ class EarnTabState extends ConsumerState<EarnTab> {
                     onPressed: () async {
                       final poolJson = jsonEncode(pool!.toJson());
                       final poolEncoded = Uri.encodeComponent(poolJson);
-                      final farmLockJson = jsonEncode(farmLock!.toJson());
-                      final farmLockEncoded = Uri.encodeComponent(farmLockJson);
                       await context.push(
                         Uri(
                           path: FarmLockDepositSheet.routerPage,
                           queryParameters: {
                             'pool': poolEncoded,
-                            'farmLock': farmLockEncoded,
                           },
                         ).toString(),
                       );

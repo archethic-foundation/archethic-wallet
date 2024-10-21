@@ -78,17 +78,12 @@ final _aeSwapRoutes = [
         'pool',
         (json) => DexPool.fromJson(jsonDecode(json)),
       );
-      final farmLock = state.uri.queryParameters.getDecodedParameter(
-        'farmLock',
-        (json) => DexFarmLock.fromJson(jsonDecode(json)),
-      );
       return CustomTransitionPage<void>(
         transitionDuration: Duration.zero,
         reverseTransitionDuration: Duration.zero,
         key: state.pageKey,
         child: FarmLockDepositSheet(
           pool: pool!,
-          farmLock: farmLock!,
         ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) =>
             FadeTransition(
@@ -282,10 +277,6 @@ final _aeSwapRoutes = [
         'pool',
         (json) => DexPool.fromJson(jsonDecode(json)),
       );
-      final farmLock = state.uri.queryParameters.getDecodedParameter(
-        'farmLock',
-        (json) => DexFarmLock.fromJson(jsonDecode(json)),
-      );
       final depositId = state.uri.queryParameters.getDecodedParameter(
         'depositId',
         jsonDecode,
@@ -309,7 +300,6 @@ final _aeSwapRoutes = [
         key: state.pageKey,
         child: FarmLockLevelUpSheet(
           pool: pool!,
-          farmLock: farmLock!,
           depositId: depositId,
           currentLevel: currentLevel,
           lpAmount: lpAmount,

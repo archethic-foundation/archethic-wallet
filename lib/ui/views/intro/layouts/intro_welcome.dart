@@ -1,17 +1,11 @@
-import 'package:aewallet/application/aeswap/dex_token.dart';
-import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/version.dart';
 import 'package:aewallet/model/available_networks.dart';
-import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
-import 'package:aewallet/modules/aeswap/application/session/provider.dart';
-import 'package:aewallet/modules/aeswap/application/verified_tokens.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
-import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_import_seed.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_new_wallet_get_first_infos.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
@@ -21,8 +15,6 @@ import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/dialogs/language_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
-import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
-    as aedappfm;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -386,18 +378,6 @@ class _ButtonNewWallet extends ConsumerWidget {
                       networkDevEndpoint: '',
                     ),
                   );
-              ref
-                ..invalidate(environmentProvider)
-                ..invalidate(
-                  aedappfm.apiServiceProvider(ref.read(environmentProvider)),
-                )
-                ..invalidate(apiServiceProvider)
-                ..invalidate(DexPoolProviders.getPoolList)
-                ..invalidate(DexPoolProviders.getPoolListRaw)
-                ..invalidate(DexTokensProviders.tokensCommonBases)
-                ..invalidate(verifiedTokensProvider)
-                ..invalidate(DexTokensProviders.tokensFromAccount)
-                ..invalidate(farmLockFormFarmLockProvider);
               context.go(
                 IntroNewWalletGetFirstInfos.routerPage,
               );

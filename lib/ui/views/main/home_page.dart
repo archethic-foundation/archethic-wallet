@@ -2,12 +2,16 @@ import 'dart:async';
 import 'dart:core';
 import 'dart:ui';
 
+import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/application/migrations/migration_manager.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/local_data_migration_widget.dart';
+import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
+import 'package:aewallet/modules/aeswap/application/verified_tokens.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/earn_tab.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/swap_tab.dart';
 import 'package:aewallet/ui/views/main/account_tab.dart';
@@ -45,6 +49,14 @@ class _HomePageState extends ConsumerState<HomePage>
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      ref
+        ..watch(DexPoolProviders.getPoolList)
+        ..watch(DexPoolProviders.getPoolListRaw)
+        ..watch(DexTokensProviders.tokensCommonBases)
+        ..watch(verifiedTokensProvider)
+        ..watch(DexTokensProviders.tokensFromAccount)
+        ..watch(farmLockFormFarmLockProvider);
+
       ref.read(mainTabControllerProvider.notifier).initState(this);
 
       ref.read(mainTabControllerProvider)!.animateTo(

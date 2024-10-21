@@ -12,7 +12,7 @@ part 'primary_currency.g.dart';
 
 @riverpod
 double _convertedValue(
-  AutoDisposeRef ref, {
+  Ref ref, {
   required double amount,
   required double tokenPrice,
 }) {

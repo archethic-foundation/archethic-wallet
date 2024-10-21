@@ -1,7 +1,7 @@
 import 'package:aewallet/application/api_service.dart';
-import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/pool_factory.repository.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -12,16 +12,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class FarmLockDetailsInfoLPDeposited extends ConsumerWidget {
   const FarmLockDetailsInfoLPDeposited({
     super.key,
-    required this.farmLock,
   });
-
-  final DexFarmLock farmLock;
 
   @override
   Widget build(
     BuildContext context,
     WidgetRef ref,
   ) {
+    final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
+    if (farmLock == null) return const SizedBox.shrink();
+
     final apiService = ref.watch(apiServiceProvider);
     return SheetDetailCard(
       children: [

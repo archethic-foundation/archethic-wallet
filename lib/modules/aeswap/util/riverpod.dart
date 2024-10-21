@@ -16,7 +16,7 @@ extension RefListenSelectExtension<State extends Object?, T> on Ref<State> {
   }
 }
 
-extension PeriodicReloadExtension on AutoDisposeRef<Object?> {
+extension PeriodicReloadExtension on Ref<Object?> {
   /// Updates periodically the provider.
   void periodicReload(Duration duration) {
     final timer = Timer(

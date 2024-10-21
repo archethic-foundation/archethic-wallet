@@ -30,9 +30,7 @@ class EarnFarmLockInfos extends ConsumerWidget {
                     child: Scaffold(
                       backgroundColor: aedappfm.AppThemeBase.sheetBackground
                           .withOpacity(0.2),
-                      body: FarmLockDetailsInfo(
-                        farmLock: farmLock,
-                      ),
+                      body: const FarmLockDetailsInfo(),
                     ),
                   );
                 },
