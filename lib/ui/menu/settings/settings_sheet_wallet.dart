@@ -9,15 +9,15 @@ class SettingsSheetWallet extends ConsumerWidget {
   bool notNull(Object? o) => o != null;
 
   void showSecurity(BuildContext context) {
-    context.go(SecurityMenuView.routerPage);
+    context.push(SecurityMenuView.routerPage);
   }
 
   void showCustom(BuildContext context) {
-    context.go(CustomizationMenuView.routerPage);
+    context.push(CustomizationMenuView.routerPage);
   }
 
   void showAbout(BuildContext context) {
-    context.go(AboutMenuView.routerPage);
+    context.push(AboutMenuView.routerPage);
   }
 
   @override

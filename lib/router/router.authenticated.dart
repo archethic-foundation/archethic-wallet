@@ -13,39 +13,6 @@ final _authenticatedRoutes = [
     ),
   ),
   GoRoute(
-    path: SecurityMenuView.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
-      key: state.pageKey,
-      child: const SecurityMenuView(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(opacity: animation, child: child),
-    ),
-  ),
-  GoRoute(
-    path: CustomizationMenuView.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
-      key: state.pageKey,
-      child: const CustomizationMenuView(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(opacity: animation, child: child),
-    ),
-  ),
-  GoRoute(
-    path: AboutMenuView.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
-      key: state.pageKey,
-      child: const AboutMenuView(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(opacity: animation, child: child),
-    ),
-  ),
-  GoRoute(
     path: NftCreationProcessSheet.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
       transitionDuration: Duration.zero,
@@ -171,28 +138,6 @@ final _authenticatedRoutes = [
         ),
       );
     },
-  ),
-  GoRoute(
-    path: AppSeedBackupSheet.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
-      key: state.pageKey,
-      child: AppSeedBackupSheet(
-        (state.extra! as Map<String, dynamic>)['mnemonic'] == null
-            ? <String>[]
-            : (state.extra! as Map<String, dynamic>)['mnemonic']!
-                as List<String>,
-        (state.extra! as Map<String, dynamic>)['seed'] == null
-            ? ''
-            : (state.extra! as Map<String, dynamic>)['seed']! as String,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
-    ),
   ),
   GoRoute(
     path: TransactionInfosSheet.routerPage,
@@ -322,13 +267,45 @@ final _authenticatedRoutes = [
   ),
   GoRoute(
     path: SettingsSheetWallet.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
+    pageBuilder: (context, state) => NoTransitionPage<void>(
       key: state.pageKey,
       child: const SettingsSheetWallet(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(opacity: animation, child: child),
     ),
+  ),
+  GoRoute(
+    path: SecurityMenuView.routerPage,
+    pageBuilder: (context, state) => NoTransitionPage<void>(
+      key: state.pageKey,
+      child: const SecurityMenuView(),
+    ),
+  ),
+  GoRoute(
+    path: CustomizationMenuView.routerPage,
+    pageBuilder: (context, state) => NoTransitionPage<void>(
+      key: state.pageKey,
+      child: const CustomizationMenuView(),
+    ),
+  ),
+  GoRoute(
+    path: AboutMenuView.routerPage,
+    pageBuilder: (context, state) => NoTransitionPage<void>(
+      key: state.pageKey,
+      child: const AboutMenuView(),
+    ),
+  ),
+  GoRoute(
+    path: AppSeedBackupSheet.routerPage,
+    pageBuilder: (context, state) {
+      final extra = state.extra! as Map<String, dynamic>;
+      final mnemonic = extra['mnemonic'] as List?;
+      final seed = extra['seed'] as String?;
+      return NoTransitionPage<void>(
+        key: state.pageKey,
+        child: AppSeedBackupSheet(
+          mnemonic == null ? <String>[] : mnemonic.cast<String>().toList(),
+          seed ?? '',
+        ),
+      );
+    },
   ),
 ];

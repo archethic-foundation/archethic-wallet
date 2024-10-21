@@ -59,7 +59,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
           grade: IconSize.gradeM,
         ),
         onPressed: () {
-          context.go(SettingsSheetWallet.routerPage);
+          context.push(SettingsSheetWallet.routerPage);
         },
       ),
       actions: [

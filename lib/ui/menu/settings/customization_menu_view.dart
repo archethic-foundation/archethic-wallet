@@ -32,7 +32,7 @@ class CustomizationMenuView extends ConsumerWidget
         key: const Key('back'),
         color: ArchethicTheme.text,
         onPressed: () {
-          context.go(SettingsSheetWallet.routerPage);
+          context.pop(SettingsSheetWallet.routerPage);
         },
       ),
     );
