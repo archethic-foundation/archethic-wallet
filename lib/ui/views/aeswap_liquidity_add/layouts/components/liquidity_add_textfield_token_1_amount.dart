@@ -40,7 +40,7 @@ class _LiquidityAddToken1AmountState
       TextEditingValue(
         text: liquidityAdd.token1Amount == 0
             ? ''
-            : liquidityAdd.token1Amount.toString(),
+            : liquidityAdd.token1Amount.formatNumber(precision: 8),
       ),
     );
   }

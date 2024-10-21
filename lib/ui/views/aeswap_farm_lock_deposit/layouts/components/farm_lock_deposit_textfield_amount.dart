@@ -42,7 +42,7 @@ class _FarmLockDepositToken1AmountState
       TextEditingValue(
         text: farmLockDeposit.amount == 0
             ? ''
-            : farmLockDeposit.amount.toString(),
+            : farmLockDeposit.amount.formatNumber(precision: 8),
       ),
     );
   }
