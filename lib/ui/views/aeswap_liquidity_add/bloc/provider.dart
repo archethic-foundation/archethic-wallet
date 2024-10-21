@@ -473,11 +473,12 @@ class LiquidityAddFormNotifier extends _$LiquidityAddFormNotifier {
             state.token2Amount,
             state.slippageTolerance,
           );
-      state = state.copyWith(calculationInProgress: false);
+      state = state.copyWith(
+        calculationInProgress: false,
+        feesEstimatedUCO: feesEstimatedUCO,
+      );
     }
-    state = state.copyWith(
-      feesEstimatedUCO: feesEstimatedUCO,
-    );
+
     if (feesEstimatedUCO > 0) {
       if (state.token1Amount + feesEstimatedUCO > state.token1Balance) {
         final adjustedAmount = state.token1Balance - feesEstimatedUCO;
@@ -502,9 +503,12 @@ class LiquidityAddFormNotifier extends _$LiquidityAddFormNotifier {
             state.token2Amount,
             state.slippageTolerance,
           );
-      state = state.copyWith(calculationInProgress: false);
+      state = state.copyWith(
+        calculationInProgress: false,
+        feesEstimatedUCO: feesEstimatedUCO,
+      );
     }
-    state = state.copyWith(feesEstimatedUCO: feesEstimatedUCO);
+
     if (feesEstimatedUCO > 0) {
       if (state.token2Amount + feesEstimatedUCO > state.token2Balance) {
         final adjustedAmount = state.token2Balance - feesEstimatedUCO;

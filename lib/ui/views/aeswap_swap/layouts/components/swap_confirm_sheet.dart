@@ -146,6 +146,7 @@ class SwapConfirmFormSheetState extends ConsumerState<SwapConfirmFormSheet>
                 AmountFormatters.standardSmallValue(
                   swap.feesEstimatedUCO,
                   'UCO',
+                  decimal: 3,
                 ),
                 style: AppTextStyles.bodyMedium(context),
               ),

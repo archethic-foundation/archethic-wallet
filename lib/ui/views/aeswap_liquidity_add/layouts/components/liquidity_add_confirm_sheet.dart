@@ -149,6 +149,7 @@ class LiquidityAddConfirmFormSheetState
                 AmountFormatters.standardSmallValue(
                   liquidityAdd.feesEstimatedUCO,
                   'UCO',
+                  decimal: 3,
                 ),
                 style: AppTextStyles.bodyMedium(context),
               ),

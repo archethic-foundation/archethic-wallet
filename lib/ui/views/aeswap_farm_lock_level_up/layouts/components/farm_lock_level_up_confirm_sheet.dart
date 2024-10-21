@@ -210,6 +210,7 @@ class FarmLockLevelUpConfirmSheetState
               AmountFormatters.standardSmallValue(
                 farmLockLevelUp.feesEstimatedUCO,
                 'UCO',
+                decimal: 3,
               ),
               style: AppTextStyles.bodyMedium(context),
             ),

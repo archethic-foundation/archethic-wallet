@@ -152,6 +152,7 @@ class FarmLockClaimConfirmSheetState
               AmountFormatters.standardSmallValue(
                 farmLockClaim.feesEstimatedUCO,
                 'UCO',
+                decimal: 3,
               ),
               style: AppTextStyles.bodyMedium(context),
             ),
