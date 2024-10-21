@@ -66,48 +66,10 @@ packages:
     dependency: "direct main"
     description:
       name: archethic_dapp_framework_flutter
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
       sha256: "4eb55668b506d4b49e5e6b15dc2c9381eb5a0fa1877dea5b7e389a843ef63ab8"
       url: "https://pub.dev"
     source: hosted
     version: "3.1.0"
-=======
-=======
->>>>>>> fadbe4ef (chore: Rebase: update pubspec)
-<<<<<<< HEAD
-=======
->>>>>>> ad7fbf04 (rebase: update pubspec.lock)
-      sha256: "71ae3c60cb11dc63651e3f114e2c23752b9505abf5679b023b41aaf872c4150d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.3"
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> e2c6c743 (chore: Rebase: update pubspec)
-      sha256: f015b6dd948780e05c486ce2323ea9c84cb745bb958befa68ef79c3d18a15008
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.2"
-<<<<<<< HEAD
-=======
-      sha256: "917323c6363efe404bd09f9380d9f946c2821ce95ecce1cd2e90bf46941fa195"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.1"
->>>>>>> 5ca6de01 (build: :arrow_up: Upgrade awc & aedappfm)
->>>>>>> c5f05339 (build: :arrow_up: Upgrade awc & aedappfm)
-<<<<<<< HEAD
->>>>>>> d06d726f (build: :arrow_up: Upgrade awc & aedappfm)
-=======
-=======
->>>>>>> e2c6c743 (chore: Rebase: update pubspec)
->>>>>>> fadbe4ef (chore: Rebase: update pubspec)
-=======
->>>>>>> ad7fbf04 (rebase: update pubspec.lock)
   archethic_lib_dart:
     dependency: transitive
     description:
