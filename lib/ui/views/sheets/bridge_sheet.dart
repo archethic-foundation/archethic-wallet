@@ -1,3 +1,4 @@
+import 'package:aewallet/util/universal_platform.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -18,14 +19,22 @@ class BridgeInfoWidget extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            AppLocalizations.of(context)!.aeBridgeInfos1,
+            UniversalPlatform.isMobile
+                ? AppLocalizations.of(context)!.aeBridgeInfosTitleMobile
+                : UniversalPlatform.isWeb
+                    ? AppLocalizations.of(context)!.aeBridgeInfosTitleWeb
+                    : AppLocalizations.of(context)!.aeBridgeInfosTitleDesktop,
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
           ),
           const SizedBox(height: 8),
           Text(
-            AppLocalizations.of(context)!.aeBridgeInfos2,
+            UniversalPlatform.isMobile
+                ? AppLocalizations.of(context)!.aeBridgeInfosDetail1Mobile
+                : UniversalPlatform.isWeb
+                    ? AppLocalizations.of(context)!.aeBridgeInfosDetail1Web
+                    : AppLocalizations.of(context)!.aeBridgeInfosDetail1Desktop,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           const SizedBox(height: 20),
@@ -43,7 +52,11 @@ class BridgeInfoWidget extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           Text(
-            AppLocalizations.of(context)!.aeBridgeInfos3,
+            UniversalPlatform.isMobile
+                ? AppLocalizations.of(context)!.aeBridgeInfosDetail2Mobile
+                : UniversalPlatform.isWeb
+                    ? AppLocalizations.of(context)!.aeBridgeInfosDetail2Web
+                    : AppLocalizations.of(context)!.aeBridgeInfosDetail2Desktop,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
         ],
