@@ -1,9 +1,9 @@
 import 'package:aewallet/application/aeswap/dex_token.dart';
+import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/version.dart';
 import 'package:aewallet/model/available_networks.dart';
-import 'package:aewallet/modules/aeswap/application/api_service.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/application/verified_tokens.dart';
@@ -21,7 +21,6 @@ import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/dialogs/language_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/network_dialog.dart';
-import 'package:aewallet/util/service_locator.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:auto_size_text/auto_size_text.dart';
@@ -399,7 +398,6 @@ class _ButtonNewWallet extends ConsumerWidget {
                 ..invalidate(verifiedTokensProvider)
                 ..invalidate(DexTokensProviders.tokensFromAccount)
                 ..invalidate(farmLockFormFarmLockProvider);
-              await updateServiceLocatorNetworkDependencies();
               context.go(
                 IntroNewWalletGetFirstInfos.routerPage,
               );

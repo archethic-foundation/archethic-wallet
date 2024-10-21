@@ -1,4 +1,5 @@
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/transaction_repository.dart';
 import 'package:aewallet/domain/usecases/aeswap/add_liquidity.usecase.dart';
@@ -8,7 +9,6 @@ import 'package:aewallet/domain/usecases/aeswap/level_up_farm_lock.usecase.dart'
 import 'package:aewallet/domain/usecases/aeswap/remove_liquidity.usecase.dart';
 import 'package:aewallet/domain/usecases/aeswap/swap.usecase.dart';
 import 'package:aewallet/domain/usecases/aeswap/withdraw_farm_lock.usecase.dart';
-import 'package:aewallet/modules/aeswap/application/api_service.dart';
 import 'package:aewallet/modules/aeswap/application/notification.dart';
 import 'package:aewallet/modules/aeswap/application/verified_tokens.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

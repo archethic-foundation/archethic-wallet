@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/app_service.dart';
 import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
@@ -13,10 +14,9 @@ import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/infrastructure/datasources/contacts.hive.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/primary_currency.dart';
-import 'package:aewallet/service/app_service.dart';
+
 import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
@@ -235,8 +235,9 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         state.recipient.isAddressValid == false) {
       return true;
     }
-    final transactionTypeMap = await sl
-        .get<AppService>()
+
+    final appService = ref.read(appServiceProvider);
+    final transactionTypeMap = await appService
         .getTransaction([state.recipient.address!.address!], request: 'type');
     if (transactionTypeMap[state.recipient.address!.address] == null) {
       return true;
@@ -257,6 +258,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
   Future<void> setRecipientNameOrAddress({
     required BuildContext context,
     required String text,
+    required archethic.ApiService apiService,
   }) async {
     if (!text.startsWith('@')) {
       if (!archethic.Address(address: text).isValid()) {
@@ -268,7 +270,8 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         return;
       }
 
-      final contact = await _contactsHiveDatasource.getContactWithAddress(text);
+      final contact =
+          await _contactsHiveDatasource.getContactWithAddress(text, apiService);
       if (contact != null) {
         _setRecipient(
           recipient: TransferRecipient.contact(
@@ -328,9 +331,11 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
   Future<void> setContactAddress({
     required BuildContext context,
     required archethic.Address address,
+    required archethic.ApiService apiService,
   }) async {
     final contact = await _contactsHiveDatasource.getContactWithAddress(
       address.address!,
+      apiService,
     );
 
     if (contact != null) {

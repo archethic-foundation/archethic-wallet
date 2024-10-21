@@ -1,5 +1,5 @@
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/modules/aeswap/application/api_service.dart';
+import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/dex_token.repository.dart';

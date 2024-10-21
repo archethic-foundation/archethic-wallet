@@ -1,4 +1,7 @@
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/address_service.dart';
+import 'package:aewallet/application/api_service.dart';
+import 'package:aewallet/application/app_service.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -41,10 +44,17 @@ class AddServiceHandler extends CommandHandler {
             final networkSettings = ref.watch(
               SettingsProviders.settings.select((settings) => settings.network),
             );
+            final appService = ref.watch(appServiceProvider);
+            final apiService = ref.watch(apiServiceProvider);
+            final addressService = ref.watch(addressServiceProvider);
+
             final archethicTransactionRepository =
                 ArchethicTransactionRepository(
               phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
               websocketEndpoint: networkSettings.getWebsocketUri(),
+              apiService: apiService,
+              appService: appService,
+              addressService: addressService,
             );
             final originPrivateKey =
                 archethicTransactionRepository.apiService.getOriginKey();
@@ -69,6 +79,7 @@ class AddServiceHandler extends CommandHandler {
             final keychainTransaction = await KeychainTransactionBuilder.build(
               keychain: keychain,
               originPrivateKey: originPrivateKey,
+              apiService: apiService,
             );
 
             final newCommand = RPCCommand<awc.SendTransactionRequest>(

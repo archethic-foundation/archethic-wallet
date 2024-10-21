@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
-import 'package:aewallet/modules/aeswap/application/api_service.dart';
+import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/modules/aeswap/application/verified_tokens.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_farm.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';

@@ -1,7 +1,6 @@
 import 'package:aewallet/infrastructure/datasources/hive.extension.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:hive/hive.dart';
 import 'package:logging/logging.dart';
@@ -41,7 +40,10 @@ class ContactsHiveDatasource {
     return contactsListSelected;
   }
 
-  Future<Contact?> getContactWithAddress(String address) async {
+  Future<Contact?> getContactWithAddress(
+    String address,
+    ApiService apiService,
+  ) async {
     final box = await Hive.openBox<Contact>(contactsTable);
     final contactsList = box.values.toList();
     final addressContact = <String>[];
@@ -53,7 +55,7 @@ class ContactsHiveDatasource {
       addressContact.add(contact.address);
     }
 
-    final lastTransactionMap = await sl.get<ApiService>().getLastTransaction(
+    final lastTransactionMap = await apiService.getLastTransaction(
       [address, ...addressContact],
       request: 'address',
     );
@@ -88,12 +90,16 @@ class ContactsHiveDatasource {
     return contactSelected;
   }
 
-  Future<Contact> getContactWithPublicKey(String publicKey) async {
+  Future<Contact> getContactWithPublicKey(
+    String publicKey,
+    ApiService apiService,
+  ) async {
     Contact? contactSelected;
 
     final address = hash(publicKey);
     _logger.info('address contact: ${uint8ListToHex(address)}');
-    contactSelected = await getContactWithAddress(uint8ListToHex(address));
+    contactSelected =
+        await getContactWithAddress(uint8ListToHex(address), apiService);
 
     if (contactSelected == null) {
       throw Exception();
@@ -142,9 +148,15 @@ class ContactsHiveDatasource {
     return await getContactWithName(contactName) != null;
   }
 
-  Future<bool> contactExistsWithAddress(String address) async {
+  Future<bool> contactExistsWithAddress(
+    String address,
+    ApiService apiService,
+  ) async {
     // TODO(reddwarf03): Create similar behaviour with contactExistsWithName (3)
-    final _contact = await getContactWithAddress(address);
+    final _contact = await getContactWithAddress(
+      address,
+      apiService,
+    );
     if (_contact == null) {
       return false;
     }

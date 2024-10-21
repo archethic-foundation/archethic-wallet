@@ -1,9 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
 import 'dart:convert';
 import 'dart:math';
-
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:flutter/foundation.dart';
 
@@ -12,12 +9,12 @@ extension KeychainTransactionBuilder on archethic.Transaction {
   static Future<archethic.Transaction> build({
     required archethic.Keychain keychain,
     required String originPrivateKey,
+    required archethic.ApiService apiService,
   }) async {
     final genesisAddressKeychain =
         archethic.deriveAddress(archethic.uint8ListToHex(keychain.seed!), 0);
 
-    final lastTransactionKeychainMap =
-        await sl.get<archethic.ApiService>().getLastTransaction(
+    final lastTransactionKeychainMap = await apiService.getLastTransaction(
       [genesisAddressKeychain],
       request:
           'chainLength, data { content, ownerships { authorizedPublicKeys { publicKey } } }',
@@ -30,9 +27,7 @@ extension KeychainTransactionBuilder on archethic.Transaction {
     );
 
     final blockchainTxVersion = int.parse(
-      (await sl.get<archethic.ApiService>().getBlockchainVersion())
-          .version
-          .transaction,
+      (await apiService.getBlockchainVersion()).version.transaction,
     );
 
     final keychainTransaction = archethic.Transaction(

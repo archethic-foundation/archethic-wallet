@@ -13,7 +13,7 @@ final migration_512 = LocalDataMigration(
     );
     for (final contact in contacts) {
       final genesisAddress =
-          await sl.get<ApiService>().getGenesisAddress(contact.address);
+          await ref.read(apiServiceProvider).getGenesisAddress(contact.address);
       contact.genesisAddress = genesisAddress.address;
       await contact.save();
     }

@@ -7,7 +7,6 @@ import 'package:aewallet/model/blockchain/token_information.dart';
 import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/service/app_service.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:logging/logging.dart';
 
@@ -19,9 +18,10 @@ class NFTRepositoryImpl implements NFTRepository {
     String accountAddress,
     String tokenAddress,
     String tokenId,
+    ApiService apiService,
   ) async {
     final accountLastAddressMap =
-        await sl.get<ApiService>().getLastTransaction([accountAddress]);
+        await apiService.getLastTransaction([accountAddress]);
     var accounLastAddress = '';
     if (accountLastAddressMap[accountAddress] == null ||
         accountLastAddressMap[accountAddress]!.address == null ||
@@ -32,8 +32,7 @@ class NFTRepositoryImpl implements NFTRepository {
           accountLastAddressMap[accountAddress]!.address!.address!;
     }
 
-    final accountLastInputsMap =
-        await sl.get<ApiService>().getTransactionInputs(
+    final accountLastInputsMap = await apiService.getTransactionInputs(
       [accounLastAddress],
       request: 'amount, from, tokenAddress, spent, timestamp, type, tokenId',
     );
@@ -64,8 +63,9 @@ class NFTRepositoryImpl implements NFTRepository {
   Future<TokenInformation?> getNFTInfo(
     String address,
     KeychainServiceKeyPair keychainServiceKeyPair,
+    AppService appService,
   ) async {
-    final tokenMap = await sl.get<AppService>().getToken(
+    final tokenMap = await appService.getToken(
       [address],
     );
 
@@ -106,8 +106,10 @@ class NFTRepositoryImpl implements NFTRepository {
     String address,
     String nameAccount,
     KeychainSecuredInfos keychainSecuredInfos,
+    AppService appService,
+    ApiService apiService,
   ) async {
-    final balanceMap = await sl.get<ApiService>().fetchBalance([address]);
+    final balanceMap = await apiService.fetchBalance([address]);
     final balance = balanceMap[address];
     final nftList = <AccountToken>[];
     final nftCollectionList = <AccountToken>[];
@@ -123,17 +125,17 @@ class NFTRepositoryImpl implements NFTRepository {
       }
     }
 
-    final tokenMap = await sl.get<AppService>().getToken(
-          tokenAddressList.toSet().toList(),
-        );
+    final tokenMap = await appService.getToken(
+      tokenAddressList.toSet().toList(),
+    );
 
     // TODO(reddwarf03): temporaly section -> need https://github.com/archethic-foundation/archethic-node/issues/714
 
-    final secretMap = await sl.get<ApiService>().getTransaction(
-          tokenAddressList.toSet().toList(),
-          request:
-              'data { ownerships { authorizedPublicKeys { encryptedSecretKey, publicKey } secret }  }',
-        );
+    final secretMap = await apiService.getTransaction(
+      tokenAddressList.toSet().toList(),
+      request:
+          'data { ownerships { authorizedPublicKeys { encryptedSecretKey, publicKey } secret }  }',
+    );
 
     for (final tokenBalance in balance.token) {
       final token = tokenMap[tokenBalance.address];

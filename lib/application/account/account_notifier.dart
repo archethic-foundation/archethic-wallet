@@ -18,7 +18,10 @@ class _AccountNotifier extends _$AccountNotifier {
     try {
       final account = await future;
       if (account == null) return;
-      await account.updateLastAddress();
+      final addressService = ref.read(addressServiceProvider);
+      await account.updateLastAddress(
+        addressService,
+      );
 
       ref.read(refreshInProgressNotifierProvider.notifier).refreshInProgress =
           true;
@@ -38,15 +41,24 @@ class _AccountNotifier extends _$AccountNotifier {
 
   Future<void> _refreshRecentTransactions(Account account) async {
     final session = ref.read(sessionNotifierProvider).loggedIn!;
+    final appService = ref.read(appServiceProvider);
     await account.updateRecentTransactions(
       account.name,
       session.wallet.keychainSecuredInfos,
+      appService,
     );
   }
 
   Future<void> _refreshBalance(Account account) async {
     final environment = ref.read(environmentProvider);
-    return account.updateBalance(environment);
+    final appService = ref.read(appServiceProvider);
+    final oracleService = ref.read(oracleServiceProvider);
+
+    return account.updateBalance(
+      environment,
+      appService,
+      oracleService,
+    );
   }
 
   Future<void> refreshRecentTransactions(
@@ -57,9 +69,13 @@ class _AccountNotifier extends _$AccountNotifier {
           _logger.fine(
             'Start method refreshRecentTransactions for ${account.nameDisplayed}',
           );
+          final appService = ref.read(appServiceProvider);
           await _refreshRecentTransactions(account);
           await _refreshBalance(account);
-          await account.updateFungiblesTokens(poolsListRaw);
+          await account.updateFungiblesTokens(
+            poolsListRaw,
+            appService,
+          );
           await refreshNFTs();
           _logger.fine(
             'End method refreshRecentTransactions for ${account.nameDisplayed}',
@@ -77,7 +93,6 @@ class _AccountNotifier extends _$AccountNotifier {
             ..invalidate(
               tokensListProvider(accountSelected!.genesisAddress),
             );
-          ;
         },
       ]);
 
@@ -86,7 +101,11 @@ class _AccountNotifier extends _$AccountNotifier {
   ) =>
       _refresh([
         (account) async {
-          await account.updateFungiblesTokens(poolsListRaw);
+          final appService = ref.read(appServiceProvider);
+          await account.updateFungiblesTokens(
+            poolsListRaw,
+            appService,
+          );
           ref.invalidate(userBalanceProvider);
         },
       ]);
@@ -114,29 +133,31 @@ class _AccountNotifier extends _$AccountNotifier {
 
   Future<void> refreshAll(
     List<GetPoolListResponse> poolsListRaw,
-  ) =>
-      _refresh(
-        [
-          (account) async {
-            _logger.fine('RefreshAll - Start Balance refresh');
-            await _refreshBalance(account);
-            _logger.fine('RefreshAll - End Balance refresh');
-          },
-          (account) async {
-            _logger.fine('RefreshAll - Start recent transactions refresh');
-            await _refreshRecentTransactions(account);
-            _logger.fine('RefreshAll - End recent transactions refresh');
-          },
-          (account) async {
-            _logger.fine('RefreshAll - Start Fungible Tokens refresh');
-            await account.updateFungiblesTokens(poolsListRaw);
-            _logger.fine('RefreshAll - End Fungible Tokens refresh');
-          },
-          (account) async {
-            _logger.fine('RefreshAll - Start NFT refresh');
-            await refreshNFTs();
-            _logger.fine('RefreshAll - End NFT refresh');
-          },
-        ],
-      );
+  ) {
+    final appService = ref.read(appServiceProvider);
+    return _refresh(
+      [
+        (account) async {
+          _logger.fine('RefreshAll - Start Balance refresh');
+          await _refreshBalance(account);
+          _logger.fine('RefreshAll - End Balance refresh');
+        },
+        (account) async {
+          _logger.fine('RefreshAll - Start recent transactions refresh');
+          await _refreshRecentTransactions(account);
+          _logger.fine('RefreshAll - End recent transactions refresh');
+        },
+        (account) async {
+          _logger.fine('RefreshAll - Start Fungible Tokens refresh');
+          await account.updateFungiblesTokens(poolsListRaw, appService);
+          _logger.fine('RefreshAll - End Fungible Tokens refresh');
+        },
+        (account) async {
+          _logger.fine('RefreshAll - Start NFT refresh');
+          await refreshNFTs();
+          _logger.fine('RefreshAll - End NFT refresh');
+        },
+      ],
+    );
+  }
 }

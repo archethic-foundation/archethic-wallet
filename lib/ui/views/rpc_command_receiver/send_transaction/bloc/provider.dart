@@ -1,11 +1,11 @@
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
 import 'package:aewallet/domain/usecases/transaction/send_transaction.dart';
 import 'package:aewallet/domain/usecases/usecase.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart'
     show SendTransactionRequest;
@@ -39,7 +39,7 @@ class SignTransactionConfirmationFormNotifier
       ),
     );
 
-    final apiService = sl.get<ApiService>();
+    final apiService = ref.watch(apiServiceProvider);
     final transactionBuilt = await SendTransactionCommand(
       senderAccount: accountSelected!,
       data: arg.data.data,
@@ -101,7 +101,7 @@ UseCase<SendTransactionCommand,
 ) =>
     SendTransactionUseCase(
       wallet: ref.watch(sessionNotifierProvider).loggedIn!.wallet,
-      apiService: sl.get<ApiService>(),
+      apiService: ref.watch(apiServiceProvider),
       networkSettings: ref.watch(
         SettingsProviders.settings.select((settings) => settings.network),
       ),

@@ -2,13 +2,12 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/infrastructure/datasources/preferences.hive.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/string_encryption.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

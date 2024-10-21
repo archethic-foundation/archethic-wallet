@@ -11,7 +11,6 @@ import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/nft_infos_off_chain.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart';
 import 'package:aewallet/service/app_service.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -141,9 +140,11 @@ class Account extends HiveObject with KeychainServiceMixin {
   @HiveField(14)
   List<AccountToken>? accountNFTCollections;
 
-  Future<void> updateLastAddress() async {
+  Future<void> updateLastAddress(
+    AddressService addressService,
+  ) async {
     final lastAddressFromAddressMap =
-        await sl.get<AddressService>().lastAddressFromAddress([genesisAddress]);
+        await addressService.lastAddressFromAddress([genesisAddress]);
     lastAddress = lastAddressFromAddressMap.isEmpty ||
             lastAddressFromAddressMap[genesisAddress] == null
         ? genesisAddress
@@ -153,11 +154,12 @@ class Account extends HiveObject with KeychainServiceMixin {
 
   Future<void> updateFungiblesTokens(
     List<GetPoolListResponse> poolsListRaw,
+    AppService appService,
   ) async {
-    accountTokens = await sl.get<AppService>().getFungiblesTokensList(
-          lastAddress!,
-          poolsListRaw,
-        );
+    accountTokens = await appService.getFungiblesTokensList(
+      lastAddress!,
+      poolsListRaw,
+    );
     await updateAccount();
   }
 
@@ -198,11 +200,15 @@ class Account extends HiveObject with KeychainServiceMixin {
     }
   }
 
-  Future<void> updateBalance(aedappfm.Environment environment) async {
+  Future<void> updateBalance(
+    aedappfm.Environment environment,
+    AppService appService,
+    OracleService oracleService,
+  ) async {
     const _logName = 'updateBalance';
     var totalUSD = 0.0;
     final balanceGetResponseMap =
-        await sl.get<AppService>().getBalanceGetResponse([lastAddress!]);
+        await appService.getBalanceGetResponse([lastAddress!]);
 
     if (balanceGetResponseMap[lastAddress] == null) {
       return;
@@ -225,7 +231,7 @@ class Account extends HiveObject with KeychainServiceMixin {
 
     if (balanceGetResponse.uco > 0) {
       accountBalance.tokensFungiblesNb++;
-      final oracleUcoPrice = await sl.get<OracleService>().getOracleData();
+      final oracleUcoPrice = await oracleService.getOracleData();
       totalUSD = (Decimal.parse(totalUSD.toString()) +
               Decimal.parse(ucoAmount.toString()) *
                   Decimal.parse(oracleUcoPrice.uco!.usd!.toString()))
@@ -271,15 +277,15 @@ class Account extends HiveObject with KeychainServiceMixin {
   Future<void> updateRecentTransactions(
     String name,
     KeychainSecuredInfos keychainSecuredInfos,
+    AppService appService,
   ) async {
-    recentTransactions =
-        await sl.get<AppService>().getAccountRecentTransactions(
-              genesisAddress,
-              lastAddress!,
-              name,
-              keychainSecuredInfos,
-              recentTransactions ?? [],
-            );
+    recentTransactions = await appService.getAccountRecentTransactions(
+      genesisAddress,
+      lastAddress!,
+      name,
+      keychainSecuredInfos,
+      recentTransactions ?? [],
+    );
     await updateLastLoadingTransactionInputs();
     await updateAccount();
   }
@@ -342,10 +348,10 @@ class Account extends HiveObject with KeychainServiceMixin {
     String? tokenId,
     int? categoryNftIndex,
     bool? favorite = false,
+    required AppService appService,
   }) async {
     final localOrRemoteToken = tokenId ??
-        (await sl.get<AppService>().getToken([tokenAddress!]))[tokenAddress]!
-            .id;
+        (await appService.getToken([tokenAddress!]))[tokenAddress]!.id;
 
     nftInfosOffChainList ??= List<NftInfosOffChain>.empty(growable: true);
     if (nftInfosOffChainList!

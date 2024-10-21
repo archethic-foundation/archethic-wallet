@@ -2,7 +2,6 @@ import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/hive/db_helper.hive.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
 void setupServiceLocator() {
   if (aedappfm.sl.isRegistered<aedappfm.LogManager>()) {
@@ -12,9 +11,6 @@ void setupServiceLocator() {
   aedappfm.sl
     ..registerLazySingleton<DBHelper>(DBHelper.new)
     ..registerLazySingleton<DBHelperModuleAESwap>(DBHelperModuleAESwap.new)
-    ..registerLazySingleton<OracleService>(
-      () => OracleService('https://mainnet.archethic.net'),
-    )
     ..registerLazySingleton<aedappfm.LogManager>(() {
       if (Uri.base.toString().toLowerCase().contains('dex.archethic') ||
           Uri.base.toString().toLowerCase().contains('swap.archethic')) {
@@ -29,14 +25,4 @@ void setupServiceLocator() {
         );
       }
     });
-}
-
-void setupServiceLocatorApiService(String endpoint) {
-  if (aedappfm.sl.isRegistered<ApiService>()) {
-    aedappfm.sl.unregister<ApiService>();
-  }
-
-  aedappfm.sl.registerLazySingleton<ApiService>(
-    () => ApiService(endpoint),
-  );
 }

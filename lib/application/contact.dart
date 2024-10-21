@@ -1,12 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/api_service.dart';
+import 'package:aewallet/application/app_service.dart';
 import 'package:aewallet/infrastructure/datasources/contacts.hive.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -64,9 +65,11 @@ Future<Contact?> _getContactWithAddress(
   _GetContactWithAddressRef ref,
   String address,
 ) async {
-  final searchedContact = await ref
-      .watch(_contactRepositoryProvider)
-      .getContactWithAddress(address);
+  final searchedContact =
+      await ref.watch(_contactRepositoryProvider).getContactWithAddress(
+            address,
+            ref.watch(apiServiceProvider),
+          );
   return searchedContact;
 }
 
@@ -76,9 +79,11 @@ Future<Contact?> _getContactWithPublicKey(
   String publicKey,
 ) async {
   try {
-    final searchedContact = await ref
-        .watch(_contactRepositoryProvider)
-        .getContactWithPublicKey(publicKey);
+    final searchedContact =
+        await ref.watch(_contactRepositoryProvider).getContactWithPublicKey(
+              publicKey,
+              ref.watch(apiServiceProvider),
+            );
     return searchedContact;
   } catch (e) {
     return null;
@@ -145,9 +150,10 @@ Future<bool> _isContactExistsWithAddress(
   if (address == null) {
     throw Exception('Address is null');
   }
-  return ref
-      .watch(_contactRepositoryProvider)
-      .isContactExistsWithAddress(address);
+  return ref.watch(_contactRepositoryProvider).isContactExistsWithAddress(
+        address,
+        ref.watch(apiServiceProvider),
+      );
 }
 
 @riverpod
@@ -158,7 +164,11 @@ Future<AccountBalance> _getBalance(
   if (address == null) {
     throw Exception('Address is null');
   }
-  return ref.watch(_contactRepositoryProvider).getBalance(address);
+  final appService = ref.watch(appServiceProvider);
+  return ref.watch(_contactRepositoryProvider).getBalance(
+        address,
+        appService,
+      );
 }
 
 class ContactRepository {
@@ -178,9 +188,12 @@ class ContactRepository {
         .toList();
   }
 
-  Future<AccountBalance> getBalance(String addressContact) async {
+  Future<AccountBalance> getBalance(
+    String addressContact,
+    AppService appService,
+  ) async {
     final balanceGetResponseMap =
-        await sl.get<AppService>().getBalanceGetResponse([addressContact]);
+        await appService.getBalanceGetResponse([addressContact]);
 
     if (balanceGetResponseMap[addressContact] == null) {
       return AccountBalance(
@@ -225,16 +238,25 @@ class ContactRepository {
     return hiveDatasource.getContactWithName(contactName);
   }
 
-  Future<Contact?> getContactWithAddress(String address) async {
-    return hiveDatasource.getContactWithAddress(address);
+  Future<Contact?> getContactWithAddress(
+    String address,
+    ApiService apiService,
+  ) async {
+    return hiveDatasource.getContactWithAddress(address, apiService);
   }
 
-  Future<bool> isContactExistsWithAddress(String address) async {
-    return hiveDatasource.contactExistsWithAddress(address);
+  Future<bool> isContactExistsWithAddress(
+    String address,
+    ApiService apiService,
+  ) async {
+    return hiveDatasource.contactExistsWithAddress(address, apiService);
   }
 
-  Future<Contact> getContactWithPublicKey(String publicKey) async {
-    return hiveDatasource.getContactWithPublicKey(publicKey);
+  Future<Contact> getContactWithPublicKey(
+    String publicKey,
+    ApiService apiService,
+  ) async {
+    return hiveDatasource.getContactWithPublicKey(publicKey, apiService);
   }
 
   Future<Contact> getContactWithGenesisPublicKey(

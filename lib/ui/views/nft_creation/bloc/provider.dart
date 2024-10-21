@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/transaction_repository.dart';
@@ -17,7 +18,6 @@ import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/infrastructure/datasources/contacts.hive.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/nft_creation/bloc/state.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/mime_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:event_taxi/event_taxi.dart';
@@ -198,10 +198,9 @@ class NftCreationFormNotifier
       );
       return;
     }
-
-    final genesisAddress = await sl
-        .get<archethic.ApiService>()
-        .getGenesisAddress(address.address!.address!);
+    final apiService = ref.watch(apiServiceProvider);
+    final genesisAddress =
+        await apiService.getGenesisAddress(address.address!.address!);
     if (genesisAddress.address != null &&
         genesisAddress.address!.toUpperCase() ==
             address.address!.address!.toUpperCase()) {
@@ -219,8 +218,7 @@ class NftCreationFormNotifier
           if (property.propertyName != propertyName) return property;
 
           for (final otherAddress in property.addresses) {
-            final _genesisAddress = await sl
-                .get<archethic.ApiService>()
+            final _genesisAddress = await apiService
                 .getGenesisAddress(otherAddress.address!.address!);
 
             if (otherAddress.address!.address!.toUpperCase() ==
@@ -286,11 +284,13 @@ class NftCreationFormNotifier
   Future<void> setPropertyAccessRecipientNameOrPublicKey({
     required BuildContext context,
     required String text,
+    required archethic.ApiService apiService,
   }) async {
     if (!text.startsWith('@')) {
       try {
         final contact = await _contactsHiveDatasource.getContactWithPublicKey(
           text,
+          apiService,
         );
         _setPropertyAccessRecipient(
           recipient: PropertyAccessRecipient.contact(contact: contact),
@@ -334,10 +334,12 @@ class NftCreationFormNotifier
   Future<void> setContactAddress({
     required BuildContext context,
     required archethic.Address address,
+    required archethic.ApiService apiService,
   }) async {
     try {
       final contact = await _contactsHiveDatasource.getContactWithAddress(
         address.address!,
+        apiService,
       );
 
       _setPropertyAccessRecipient(
@@ -710,8 +712,8 @@ class NftCreationFormNotifier
       return '';
     }
 
-    final publicKeyMap =
-        await sl.get<archethic.ApiService>().getTransactionChain(
+    final apiService = ref.watch(apiServiceProvider);
+    final publicKeyMap = await apiService.getTransactionChain(
       {address: ''},
       request: 'previousPublicKey',
     );

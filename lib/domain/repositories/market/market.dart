@@ -4,6 +4,7 @@ import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/market_price.dart';
 import 'package:aewallet/model/available_currency.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 
 abstract class MarketRepositoryInterface {
   MarketRepositoryInterface();
@@ -12,6 +13,7 @@ abstract class MarketRepositoryInterface {
 
   Future<Result<MarketPrice, Failure>> getUCOMarketPrice(
     AvailableCurrencyEnum currency,
+    archethic.OracleService oracleService,
   );
 }
 

@@ -16,7 +16,6 @@ import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/model/transaction_infos.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/number_util.dart';
 import 'package:aewallet/util/queue.dart';
@@ -28,16 +27,22 @@ import 'package:intl/intl.dart';
 import 'package:logging/logging.dart';
 
 class AppService {
+  AppService({
+    required this.apiService,
+  });
+
   static final _logger = Logger('AppService');
+
+  final ApiService apiService;
 
   Future<Map<String, List<Transaction>>> getTransactionChain(
     Map<String, String> addresses,
     String? request,
   ) async {
-    final transactionChainMap = await sl.get<ApiService>().getTransactionChain(
-          addresses,
-          request: request!,
-        );
+    final transactionChainMap = await apiService.getTransactionChain(
+      addresses,
+      request: request!,
+    );
     return transactionChainMap;
   }
 
@@ -64,7 +69,7 @@ class AppService {
           (address) => Task(
             name: 'GetToken - address: $address',
             logger: _logger,
-            action: () => sl.get<ApiService>().getToken([address]),
+            action: () => apiService.getToken([address]),
           ),
         )
         .autoRetry()
@@ -96,7 +101,7 @@ class AppService {
           (address) => Task(
             name: 'GetTransactionInputs : address: $address',
             logger: _logger,
-            action: () => sl.get<ApiService>().getTransactionInputs(
+            action: () => apiService.getTransactionInputs(
               [address],
               request: request,
               limit: limit,
@@ -274,7 +279,7 @@ class AppService {
 
     var newRecentTransactionList = recentTransactionList;
     _logger.info('>> START getTransaction : ${DateTime.now()}');
-    final transaction = await sl.get<ApiService>().getTransaction(
+    final transaction = await apiService.getTransaction(
       [address],
       request:
           'address, type, chainLength, validationStamp { timestamp, ledgerOperations { fee } }, data { actionRecipients { action, address, args } ledger { uco { transfers { amount, to } } token {transfers {amount, to, tokenAddress, tokenId } } } }',
@@ -283,7 +288,7 @@ class AppService {
       ..info('$transaction')
       ..info('>> END getTransaction : ${DateTime.now()}')
       ..info('>> START getTransactionInputs : ${DateTime.now()}');
-    final transactionInputs = await sl.get<ApiService>().getTransactionInputs(
+    final transactionInputs = await apiService.getTransactionInputs(
       [address],
       request: 'from, spent, tokenAddress, tokenId, amount, timestamp',
       limit: 10,
@@ -354,7 +359,7 @@ class AppService {
 
     final keychain = keychainSecuredInfos.toKeychain();
 
-    final lastIndex = await sl.get<ApiService>().getTransactionIndex(
+    final lastIndex = await apiService.getTransactionIndex(
       [lastAddress],
     );
     _logger.info('lastAddress : $lastAddress -> lastIndex: $lastIndex');
@@ -451,9 +456,9 @@ class AppService {
     final ownershipsAddresses = <String>[];
 
     // Search token Information
-    final tokensAddressMap = await sl.get<AppService>().getToken(
-          tokensAddresses.toSet().toList(),
-        );
+    final tokensAddressMap = await getToken(
+      tokensAddresses.toSet().toList(),
+    );
 
     for (final recentTransaction in recentTransactions) {
       // Get token Information
@@ -504,7 +509,7 @@ class AppService {
             name:
                 'GetAccountRecentTransactions - ownershipsAddress: $ownershipsAddress',
             logger: _logger,
-            action: () => sl.get<ApiService>().getTransactionOwnerships(
+            action: () => apiService.getTransactionOwnerships(
               [ownershipsAddress],
             ),
           ),
@@ -565,7 +570,7 @@ class AppService {
             name:
                 'GetAccountRecentTransactions - lastTransactionAddressToSearch: $lastTransactionAddressToSearch',
             logger: _logger,
-            action: () => sl.get<ApiService>().getLastTransaction(
+            action: () => apiService.getLastTransaction(
               [lastTransactionAddressToSearch],
               request: 'address',
             ),
@@ -722,7 +727,7 @@ class AppService {
       '>> START getFungiblesTokensList : ${DateTime.now()}',
     );
 
-    final balanceMap = await sl.get<ApiService>().fetchBalance([address]);
+    final balanceMap = await apiService.fetchBalance([address]);
     final balance = balanceMap[address];
     final fungiblesTokensList = List<AccountToken>.empty(growable: true);
 
@@ -738,9 +743,9 @@ class AppService {
     }
 
     // Search token Information
-    final tokenMap = await sl.get<AppService>().getToken(
-          tokenAddressList.toSet().toList(),
-        );
+    final tokenMap = await getToken(
+      tokenAddressList.toSet().toList(),
+    );
 
     for (final tokenBalance in balance.token) {
       final token = tokenMap[tokenBalance.address];
@@ -764,9 +769,9 @@ class AppService {
           tokenSymbolSearch
             ..add(token1Address)
             ..add(token2Address);
-          final tokensSymbolMap = await sl.get<AppService>().getToken(
-                tokenSymbolSearch,
-              );
+          final tokensSymbolMap = await getToken(
+            tokenSymbolSearch,
+          );
           pairSymbolToken1 = token1Address != 'UCO'
               ? tokensSymbolMap[token1Address]!.symbol!
               : 'UCO';
@@ -810,7 +815,7 @@ class AppService {
     List<String> addresses,
   ) async {
     final tasks = addresses.toSet().map(
-          (address) => () => sl.get<ApiService>().fetchBalance(
+          (address) => () => apiService.fetchBalance(
                 [address],
               ),
         );
@@ -840,10 +845,10 @@ class AppService {
     List<String> addresses, {
     String request = Transaction.kTransactionQueryAllFields,
   }) async {
-    final transactionMap = await sl.get<ApiService>().getTransaction(
-          addresses.toSet().toList(),
-          request: request,
-        );
+    final transactionMap = await apiService.getTransaction(
+      addresses.toSet().toList(),
+      request: request,
+    );
     return transactionMap;
   }
 
@@ -856,7 +861,7 @@ class AppService {
   ) async {
     final transactionsInfos = List<TransactionInfos>.empty(growable: true);
 
-    final transactionMap = await sl.get<ApiService>().getTransaction(
+    final transactionMap = await apiService.getTransaction(
       [address],
       request:
           ' address, data { content,  ownerships {  authorizedPublicKeys { encryptedSecretKey, publicKey } secret } ledger { uco { transfers { amount, to } }, token { transfers { amount, to, tokenAddress, tokenId } } } recipients }, type ',
@@ -1005,7 +1010,7 @@ class AppService {
             );
           }
           if (transaction.data!.ledger!.token!.transfers[i].amount != null) {
-            final tokenMap = await sl.get<AppService>().getToken(
+            final tokenMap = await getToken(
               [transaction.data!.ledger!.token!.transfers[i].tokenAddress!],
             );
             var tokenSymbol = '';
@@ -1041,11 +1046,10 @@ class AppService {
     String message,
     KeychainServiceKeyPair keychainServiceKeyPair,
   ) async {
-    final lastTransactionMap = await sl
-        .get<ApiService>()
-        .getLastTransaction([address], request: 'chainLength');
+    final lastTransactionMap =
+        await apiService.getLastTransaction([address], request: 'chainLength');
     final blockchainTxVersion = int.parse(
-      (await sl.get<ApiService>().getBlockchainVersion()).version.transaction,
+      (await apiService.getBlockchainVersion()).version.transaction,
     );
 
     final transaction = Transaction(
@@ -1079,8 +1083,7 @@ class AppService {
         );
 
       for (final transfer in listUcoTransfer) {
-        final firstTxListRecipientMap =
-            await sl.get<ApiService>().getTransactionChain(
+        final firstTxListRecipientMap = await apiService.getTransactionChain(
           {transfer.to!: ''},
           request: 'previousPublicKey',
         );
@@ -1094,8 +1097,7 @@ class AppService {
       }
 
       for (final transfer in listTokenTransfer) {
-        final firstTxListRecipientMap =
-            await sl.get<ApiService>().getTransactionChain(
+        final firstTxListRecipientMap = await apiService.getTransactionChain(
           {transfer.to!: ''},
           request: 'previousPublicKey',
         );
@@ -1131,8 +1133,7 @@ class AppService {
         .transaction
         .originSign(originPrivateKey);
     try {
-      transactionFee =
-          await sl.get<ApiService>().getTransactionFee(transaction);
+      transactionFee = await apiService.getTransactionFee(transaction);
     } catch (e, stack) {
       _logger.severe('Failed to get transaction fees', e, stack);
     }

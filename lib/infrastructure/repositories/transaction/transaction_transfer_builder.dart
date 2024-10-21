@@ -1,10 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
 import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
-
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 
 extension TransferTransactionBuilder on archethic.Transaction {
@@ -19,6 +16,7 @@ extension TransferTransactionBuilder on archethic.Transaction {
     required int index,
     required String originPrivateKey,
     required int txVersion,
+    required archethic.ApiService apiService,
   }) async {
     final transaction = archethic.Transaction(
       type: 'transfer',
@@ -48,8 +46,7 @@ extension TransferTransactionBuilder on archethic.Transaction {
         ..add(archethic.uint8ListToHex(keyPair.publicKey!));
 
       for (final transfer in ucoTransferList) {
-        final firstTxListRecipientMap =
-            await sl.get<archethic.ApiService>().getTransactionChain(
+        final firstTxListRecipientMap = await apiService.getTransactionChain(
           {transfer.to!: ''},
           request: 'previousPublicKey',
         );
@@ -64,8 +61,7 @@ extension TransferTransactionBuilder on archethic.Transaction {
       }
 
       for (final transfer in tokenTransferList) {
-        final firstTxListRecipientMap =
-            await sl.get<archethic.ApiService>().getTransactionChain(
+        final firstTxListRecipientMap = await apiService.getTransactionChain(
           {transfer.to!: ''},
           request: 'previousPublicKey',
         );

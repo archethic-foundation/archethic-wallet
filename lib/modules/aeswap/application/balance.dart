@@ -1,6 +1,6 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/aeswap/dex_token.dart';
-import 'package:aewallet/modules/aeswap/application/api_service.dart';
+import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/balance.repository.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;

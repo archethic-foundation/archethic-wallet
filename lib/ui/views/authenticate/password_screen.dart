@@ -40,7 +40,6 @@ class PasswordAuthScreenOverlay extends AuthScreenOverlay {
 
 class _PasswordScreen extends ConsumerStatefulWidget {
   const _PasswordScreen({
-    super.key,
     required this.canNavigateBack,
     required this.challenge,
     required this.onDone,

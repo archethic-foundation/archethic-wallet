@@ -2,7 +2,10 @@
 
 import 'dart:async';
 
+import 'package:aewallet/application/address_service.dart';
+import 'package:aewallet/application/app_service.dart';
 import 'package:aewallet/application/nft/nft.dart';
+import 'package:aewallet/application/oracle_service.dart';
 import 'package:aewallet/application/refresh_in_progress.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/tokens/tokens.dart';

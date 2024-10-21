@@ -321,7 +321,7 @@ class _GetContactWithNameProviderElement
 }
 
 String _$getContactWithAddressHash() =>
-    r'5d7e119dd654939aebe4963994fc8b0888a944c4';
+    r'5287403a44fecf7f4fbc3a6a0a4cc067070d78d5';
 
 /// See also [_getContactWithAddress].
 @ProviderFor(_getContactWithAddress)
@@ -452,7 +452,7 @@ class _GetContactWithAddressProviderElement
 }
 
 String _$getContactWithPublicKeyHash() =>
-    r'9f398d381eb5fedeba4fa599ebdee44f8f405d03';
+    r'651135f8f6f3bb80494850d3e95cafa08b343890';
 
 /// See also [_getContactWithPublicKey].
 @ProviderFor(_getContactWithPublicKey)
@@ -1110,7 +1110,7 @@ class _IsContactExistsWithNameProviderElement
 }
 
 String _$isContactExistsWithAddressHash() =>
-    r'4a2281e577a2bfa9fee0005c51763af7ad2b687b';
+    r'a8e9166d665314454ad8b48bf7a02c6978d0947d';
 
 /// See also [_isContactExistsWithAddress].
 @ProviderFor(_isContactExistsWithAddress)
@@ -1242,7 +1242,7 @@ class _IsContactExistsWithAddressProviderElement
       (origin as _IsContactExistsWithAddressProvider).address;
 }
 
-String _$getBalanceHash() => r'6db260cee3bd0bcbe6222c6da8836d88feba18db';
+String _$getBalanceHash() => r'0abe8363d715114562677c7b761f752f9b0c420b';
 
 /// See also [_getBalance].
 @ProviderFor(_getBalance)

@@ -1,3 +1,5 @@
+import 'package:aewallet/application/api_service.dart';
+import 'package:aewallet/application/app_service.dart';
 import 'package:aewallet/infrastructure/repositories/nft/nft.repository.dart';
 import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
 import 'package:aewallet/model/blockchain/token_information.dart';
@@ -16,9 +18,10 @@ Future<TokenInformation?> _getNFTInfo(
   String address,
   KeychainServiceKeyPair keychainServiceKeyPair,
 ) async {
+  final appService = ref.watch(appServiceProvider);
   return ref
       .watch(_nftRepositoryProvider)
-      .getNFTInfo(address, keychainServiceKeyPair);
+      .getNFTInfo(address, keychainServiceKeyPair, appService);
 }
 
 @riverpod
@@ -28,9 +31,13 @@ Future<bool> _isAccountOwner(
   String tokenAddress,
   String tokenId,
 ) async {
-  return ref
-      .watch(_nftRepositoryProvider)
-      .isAccountOwner(accountAddress, tokenAddress, tokenId);
+  final apiService = ref.watch(apiServiceProvider);
+  return ref.watch(_nftRepositoryProvider).isAccountOwner(
+        accountAddress,
+        tokenAddress,
+        tokenId,
+        apiService,
+      );
 }
 
 @riverpod
@@ -40,9 +47,15 @@ Future<(List<AccountToken>, List<AccountToken>)> _getNFTList(
   String nameAccount,
   KeychainSecuredInfos keychainSecuredInfos,
 ) async {
-  return ref
-      .watch(_nftRepositoryProvider)
-      .getNFTList(address, nameAccount, keychainSecuredInfos);
+  final appService = ref.watch(appServiceProvider);
+  final apiService = ref.watch(apiServiceProvider);
+  return ref.watch(_nftRepositoryProvider).getNFTList(
+        address,
+        nameAccount,
+        keychainSecuredInfos,
+        appService,
+        apiService,
+      );
 }
 
 abstract class NFTProviders {

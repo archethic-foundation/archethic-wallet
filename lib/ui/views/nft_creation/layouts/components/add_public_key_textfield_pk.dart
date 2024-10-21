@@ -70,6 +70,7 @@ class _AddPublicKeyTextFieldPkState
       NftCreationFormProvider.nftCreationForm.notifier,
     );
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
+    final apiService = ref.watch(apiServiceProvider);
 
     ref.listen<NftCreationFormState>(
       NftCreationFormProvider.nftCreationForm,
@@ -136,6 +137,7 @@ class _AddPublicKeyTextFieldPkState
                                           .setPropertyAccessRecipientNameOrPublicKey(
                                         context: context,
                                         text: text,
+                                        apiService: apiService,
                                       );
                                     },
                                     focusNode: publicKeyFocusNode,
@@ -196,6 +198,7 @@ class _AddPublicKeyTextFieldPkState
                           await nftCreationNotifier.setContactAddress(
                             context: context,
                             address: address,
+                            apiService: apiService,
                           );
                           _updatePublicKeyTextController();
                         }
@@ -208,6 +211,7 @@ class _AddPublicKeyTextFieldPkState
                           .setPropertyAccessRecipientNameOrPublicKey(
                         context: context,
                         text: value,
+                        apiService: apiService,
                       );
                     },
                   ),

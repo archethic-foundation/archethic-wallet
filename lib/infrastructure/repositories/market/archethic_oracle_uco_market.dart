@@ -5,7 +5,6 @@ import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/models/market_price.dart';
 import 'package:aewallet/domain/repositories/market/market.dart';
 import 'package:aewallet/model/available_currency.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 
 class ArchethicOracleUCOMarketRepository implements MarketRepositoryInterface {
@@ -15,9 +14,10 @@ class ArchethicOracleUCOMarketRepository implements MarketRepositoryInterface {
   bool canHandleCurrency(AvailableCurrencyEnum currency) =>
       currency == AvailableCurrencyEnum.usd;
 
-  Future<double> _getConversionRatio() async {
-    final oracleUcoPrice =
-        await sl.get<archethic.OracleService>().getOracleData();
+  Future<double> _getConversionRatio(
+    archethic.OracleService oracleService,
+  ) async {
+    final oracleUcoPrice = await oracleService.getOracleData();
     final usdConversionRate = oracleUcoPrice.uco?.usd;
     if (usdConversionRate == null || usdConversionRate == 0) {
       throw const Failure.network();
@@ -29,9 +29,10 @@ class ArchethicOracleUCOMarketRepository implements MarketRepositoryInterface {
   @override
   Future<Result<MarketPrice, Failure>> getUCOMarketPrice(
     AvailableCurrencyEnum currency,
+    archethic.OracleService oracleService,
   ) =>
       Result.guard(() async {
-        final price = await _getConversionRatio();
+        final price = await _getConversionRatio(oracleService);
 
         return MarketPrice(
           amount: price,

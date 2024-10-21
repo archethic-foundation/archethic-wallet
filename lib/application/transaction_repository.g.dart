@@ -7,12 +7,12 @@ part of 'transaction_repository.dart';
 // **************************************************************************
 
 String _$archethicTransactionRepositoryHash() =>
-    r'b3470d73f83e2e4193a8406f2b979acedc25a015';
+    r'71cb48b7b655e1e0ad04ce44b2a275c6a477c6ee';
 
 /// See also [archethicTransactionRepository].
 @ProviderFor(archethicTransactionRepository)
 final archethicTransactionRepositoryProvider =
-    Provider<ArchethicTransactionRepository>.internal(
+    AutoDisposeProvider<ArchethicTransactionRepository>.internal(
   archethicTransactionRepository,
   name: r'archethicTransactionRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -23,6 +23,6 @@ final archethicTransactionRepositoryProvider =
 );
 
 typedef ArchethicTransactionRepositoryRef
-    = ProviderRef<ArchethicTransactionRepository>;
+    = AutoDisposeProviderRef<ArchethicTransactionRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
