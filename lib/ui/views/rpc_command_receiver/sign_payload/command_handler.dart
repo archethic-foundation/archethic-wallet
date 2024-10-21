@@ -1,3 +1,4 @@
+import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
@@ -6,7 +7,6 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/window_util_desktop.dart'
     if (dart.library.js) 'package:aewallet/ui/util/window_util_web.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/sign_payload/layouts/sign_payload_confirmation_form.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:flutter/material.dart';
@@ -33,8 +33,8 @@ class SignPayloadsCommandHandler extends CommandHandler {
             final seed =
                 ref.read(sessionNotifierProvider).loggedIn!.wallet.seed;
 
-            final keychain =
-                await sl.get<archethic.ApiService>().getKeychain(seed);
+            final apiService = ref.watch(apiServiceProvider);
+            final keychain = await apiService.getKeychain(seed);
 
             var addressGenesis = '';
             try {
@@ -50,8 +50,7 @@ class SignPayloadsCommandHandler extends CommandHandler {
               );
             }
 
-            final indexMap =
-                await sl.get<archethic.ApiService>().getTransactionIndex(
+            final indexMap = await apiService.getTransactionIndex(
               [addressGenesis],
             );
 

@@ -65,7 +65,7 @@ class _TransferTextFieldAddressState
     final transferNotifier =
         ref.watch(TransferFormProvider.transferForm.notifier);
     final hasQRCode = ref.watch(DeviceAbilities.hasQRCodeProvider);
-
+    final apiService = ref.watch(apiServiceProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -122,6 +122,7 @@ class _TransferTextFieldAddressState
                                           .setRecipientNameOrAddress(
                                         context: context,
                                         text: text,
+                                        apiService: apiService,
                                       );
                                     },
                                     focusNode: sendAddressFocusNode,
@@ -184,6 +185,7 @@ class _TransferTextFieldAddressState
                           await transferNotifier.setContactAddress(
                             context: context,
                             address: address,
+                            apiService: apiService,
                           );
                           _updateAdressTextController();
                         }
@@ -195,6 +197,7 @@ class _TransferTextFieldAddressState
                       transferNotifier.setRecipientNameOrAddress(
                         context: context,
                         text: value,
+                        apiService: apiService,
                       );
                     },
                   ),

@@ -1,3 +1,4 @@
+import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/domain/models/dapp.dart';
 import 'package:aewallet/infrastructure/repositories/dapps_repository.dart';
 import 'package:aewallet/model/available_networks.dart';
@@ -17,7 +18,8 @@ Future<DApp?> _getDApp(
   AvailableNetworks network,
   String code,
 ) async {
-  return ref.watch(_dAppsRepositoryProvider).getDApp(network, code);
+  final apiService = ref.watch(apiServiceProvider);
+  return ref.watch(_dAppsRepositoryProvider).getDApp(network, code, apiService);
 }
 
 @riverpod
@@ -25,8 +27,10 @@ Future<List<DApp>> _getDAppsFromNetwork(
   _GetDAppsFromNetworkRef ref,
   AvailableNetworks network,
 ) async {
-  final dAppsFromNetwork =
-      await ref.read(_dAppsRepositoryProvider).getDAppsFromNetwork(network);
+  final apiService = ref.watch(apiServiceProvider);
+  final dAppsFromNetwork = await ref
+      .read(_dAppsRepositoryProvider)
+      .getDAppsFromNetwork(network, apiService);
   return dAppsFromNetwork;
 }
 

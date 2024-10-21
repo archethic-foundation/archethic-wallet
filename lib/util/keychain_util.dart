@@ -18,7 +18,6 @@ import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
 import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/service/app_service.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:logging/logging.dart';
@@ -34,24 +33,25 @@ class KeychainUtil with KeychainServiceMixin {
     String keychainAddress,
     String originPrivateKey,
     Keychain keychain,
+    ApiService apiService,
   ) async {
     final blockchainTxVersion = int.parse(
-      (await sl.get<ApiService>().getBlockchainVersion()).version.transaction,
+      (await apiService.getBlockchainVersion()).version.transaction,
     );
 
     /// Create Keychain Access for wallet
-    final accessKeychainTx = sl.get<ApiService>().newAccessKeychainTransaction(
-          seed!,
-          hexToUint8List(keychainAddress),
-          hexToUint8List(originPrivateKey),
-          blockchainTxVersion,
-        );
+    final accessKeychainTx = apiService.newAccessKeychainTransaction(
+      seed!,
+      hexToUint8List(keychainAddress),
+      hexToUint8List(originPrivateKey),
+      blockchainTxVersion,
+    );
 
     final TransactionSenderInterface transactionSender =
         ArchethicTransactionSender(
       phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
       websocketEndpoint: networkSettings.getWebsocketUri(),
-      apiService: sl.get<ApiService>(),
+      apiService: apiService,
     );
 
     _logger.info('>>> Create access <<< ${accessKeychainTx.address}');
@@ -90,6 +90,7 @@ class KeychainUtil with KeychainServiceMixin {
     String? seed,
     String? name,
     String originPrivateKey,
+    ApiService apiService,
   ) async {
     /// Get Wallet KeyPair
     final walletKeyPair = deriveKeyPair(seed!, 0);
@@ -111,24 +112,24 @@ class KeychainUtil with KeychainServiceMixin {
         .copyWithService(kServiceName, kDerivationPath);
 
     final blockchainTxVersion = int.parse(
-      (await sl.get<ApiService>().getBlockchainVersion()).version.transaction,
+      (await apiService.getBlockchainVersion()).version.transaction,
     );
 
     /// Create Keychain from keyChain seed and wallet public key to encrypt secret
-    final keychainTransaction = sl.get<ApiService>().newKeychainTransaction(
-          keychainSeed,
-          <String>[uint8ListToHex(walletKeyPair.publicKey!)],
-          hexToUint8List(originPrivateKey),
-          blockchainTxVersion,
-          serviceName: kServiceName,
-          derivationPath: kDerivationPath,
-        );
+    final keychainTransaction = apiService.newKeychainTransaction(
+      keychainSeed,
+      <String>[uint8ListToHex(walletKeyPair.publicKey!)],
+      hexToUint8List(originPrivateKey),
+      blockchainTxVersion,
+      serviceName: kServiceName,
+      derivationPath: kDerivationPath,
+    );
 
     final TransactionSenderInterface transactionSender =
         ArchethicTransactionSender(
       phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
       websocketEndpoint: networkSettings.getWebsocketUri(),
-      apiService: sl.get<ApiService>(),
+      apiService: apiService,
     );
 
     _logger.info('>>> Create keychain <<< ${keychainTransaction.address}');
@@ -168,20 +169,22 @@ class KeychainUtil with KeychainServiceMixin {
     NetworksSetting networkSettings,
     String service,
     Keychain keychain,
+    ApiService apiService,
   ) async {
-    final originPrivateKey = sl.get<ApiService>().getOriginKey();
+    final originPrivateKey = apiService.getOriginKey();
     final servicesRemoved = Map<String, Service>.from(keychain.services)
       ..removeWhere((key, value) => key == service);
     final transaction = await KeychainTransactionBuilder.build(
       keychain: keychain.copyWith(services: servicesRemoved),
       originPrivateKey: originPrivateKey,
+      apiService: apiService,
     );
 
     final TransactionSenderInterface transactionSender =
         ArchethicTransactionSender(
       phoenixHttpEndpoint: networkSettings.getPhoenixHttpLink(),
       websocketEndpoint: networkSettings.getWebsocketUri(),
-      apiService: sl.get<ApiService>(),
+      apiService: apiService,
     );
 
     await transactionSender.send(
@@ -218,6 +221,8 @@ class KeychainUtil with KeychainServiceMixin {
   Future<HiveAppWalletDTO?> getListAccountsFromKeychain(
     Keychain keychain,
     HiveAppWalletDTO? appWallet,
+    AppService appService,
+    ApiService apiService,
   ) async {
     final accounts = List<Account>.empty(growable: true);
 
@@ -228,7 +233,7 @@ class KeychainUtil with KeychainServiceMixin {
         final addressKeychain =
             deriveAddress(uint8ListToHex(keychain.seed!), 0);
         final lastTransactionMap =
-            await sl.get<ApiService>().getLastTransaction([addressKeychain]);
+            await apiService.getLastTransaction([addressKeychain]);
 
         currentAppWallet = await appWalletDatasource.createAppWallet(
           lastTransactionMap[addressKeychain]!.address!.address!,
@@ -307,8 +312,7 @@ class KeychainUtil with KeychainServiceMixin {
       final genesisAddressKeychain =
           deriveAddress(uint8ListToHex(keychain.seed!), 0);
 
-      final lastTransactionKeychainMap =
-          await sl.get<ApiService>().getLastTransaction(
+      final lastTransactionKeychainMap = await apiService.getLastTransaction(
         [genesisAddressKeychain, ...genesisAddressAccountList],
         request: 'address',
       );
@@ -336,9 +340,8 @@ class KeychainUtil with KeychainServiceMixin {
         }
       }
 
-      final balanceGetResponseMap = await sl
-          .get<AppService>()
-          .getBalanceGetResponse(lastAddressAccountList);
+      final balanceGetResponseMap =
+          await appService.getBalanceGetResponse(lastAddressAccountList);
 
       for (var i = 0; i < accounts.length; i++) {
         if (balanceGetResponseMap[accounts[i].lastAddress] != null) {

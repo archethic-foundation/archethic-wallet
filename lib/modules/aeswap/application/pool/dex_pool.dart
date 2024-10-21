@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:aewallet/application/aeswap/dex_token.dart';
-import 'package:aewallet/modules/aeswap/application/api_service.dart';
+import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/application/dex_config.dart';
 import 'package:aewallet/modules/aeswap/application/router_factory.dart';

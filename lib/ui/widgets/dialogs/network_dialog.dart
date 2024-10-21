@@ -1,10 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:aewallet/application/aeswap/dex_token.dart';
+import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/network/provider.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/available_networks.dart';
-import 'package:aewallet/modules/aeswap/application/api_service.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/application/verified_tokens.dart';
@@ -17,7 +17,6 @@ import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/ui/widgets/components/popup_dialog.dart';
-import 'package:aewallet/util/service_locator.dart';
 import 'package:aewallet/util/url_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -89,7 +88,6 @@ class NetworkDialog extends ConsumerWidget {
             ..invalidate(verifiedTokensProvider)
             ..invalidate(DexTokensProviders.tokensFromAccount)
             ..invalidate(farmLockFormFarmLockProvider);
-          await updateServiceLocatorNetworkDependencies();
           // If selected network is DevNet
           // Show a dialog to enter a custom network
           // else use the network selected
@@ -168,7 +166,6 @@ class NetworkDialog extends ConsumerWidget {
                           ..invalidate(verifiedTokensProvider)
                           ..invalidate(DexTokensProviders.tokensFromAccount)
                           ..invalidate(farmLockFormFarmLockProvider);
-                        await updateServiceLocatorNetworkDependencies();
                         context.pop();
                       },
                     );

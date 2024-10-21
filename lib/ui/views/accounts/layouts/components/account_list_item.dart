@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -19,11 +20,9 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/accounts/layouts/components/account_list_item_token_info.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/util/case_converter.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
@@ -157,6 +156,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
+    final apiService = ref.watch(apiServiceProvider);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
@@ -347,8 +347,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
                               onTap: () async {
                                 final session =
                                     ref.read(sessionNotifierProvider).loggedIn;
-                                final keychain = await sl
-                                    .get<ApiService>()
+                                final keychain = await apiService
                                     .getKeychain(session!.wallet.seed);
 
                                 var nbOfAccounts = 0;
@@ -406,6 +405,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
                                               .network,
                                           widget.account.name,
                                           keychain,
+                                          apiService,
                                         );
                                       },
                                     );

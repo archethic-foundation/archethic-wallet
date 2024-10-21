@@ -4,6 +4,8 @@ import 'dart:async';
 
 // Project imports:
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/api_service.dart';
+import 'package:aewallet/application/app_service.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/service/app_service.dart';
@@ -20,8 +22,6 @@ import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -59,7 +59,8 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet>
       }
 
       if (event.response == 'ok') {
-        await _showSendSucceed(event);
+        final appService = ref.read(appServiceProvider);
+        await _showSendSucceed(event, appService);
         return;
       }
 
@@ -81,6 +82,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet>
 
   Future<void> _showSendSucceed(
     TransactionSendEvent event,
+    AppService appService,
   ) async {
     UIUtil.showSnackbar(
       event.nbConfirmations == 1
@@ -103,11 +105,11 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet>
     try {
       final transfer = ref.read(TransferFormProvider.transferForm);
       if (transfer.transferType == TransferType.nft) {
-        final transactionMap = await sl
-            .get<ApiService>()
-            .getLastTransaction([event.transactionAddress!]);
+        final apiService = ref.read(apiServiceProvider);
+        final transactionMap =
+            await apiService.getLastTransaction([event.transactionAddress!]);
         final transaction = transactionMap[event.transactionAddress!];
-        final tokenMap = await sl.get<AppService>().getToken(
+        final tokenMap = await appService.getToken(
           [
             transaction!.data!.ledger!.token!.transfers[0].tokenAddress!,
           ],

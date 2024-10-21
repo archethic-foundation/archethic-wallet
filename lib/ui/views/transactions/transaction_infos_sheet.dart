@@ -1,12 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/app_service.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/transaction_infos.dart';
-import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
@@ -17,7 +17,6 @@ import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -104,15 +103,16 @@ class _TransactionInfosSheetState extends ConsumerState<TransactionInfosSheet>
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
+    final appService = ref.watch(appServiceProvider);
     return FutureBuilder<List<TransactionInfos>>(
-      future: sl.get<AppService>().getTransactionAllInfos(
-            widget.notificationRecipientAddress,
-            DateFormat.yMEd(Localizations.localeOf(context).languageCode),
-            AccountBalance.cryptoCurrencyLabel,
-            context,
-            session.wallet.keychainSecuredInfos.services[selectedAccount!.name]!
-                .keyPair!,
-          ),
+      future: appService.getTransactionAllInfos(
+        widget.notificationRecipientAddress,
+        DateFormat.yMEd(Localizations.localeOf(context).languageCode),
+        AccountBalance.cryptoCurrencyLabel,
+        context,
+        session.wallet.keychainSecuredInfos.services[selectedAccount!.name]!
+            .keyPair!,
+      ),
       builder: (
         BuildContext context,
         AsyncSnapshot<List<TransactionInfos>> list,

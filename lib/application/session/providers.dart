@@ -20,7 +20,9 @@ class SessionNotifier extends _$SessionNotifier {
     var keychainSecuredInfos = vault.getKeychainSecuredInfos();
     if (keychainSecuredInfos == null && seed != null) {
       // Create manually Keychain
-      final keychain = await sl.get<ApiService>().getKeychain(seed);
+      final apiService = ref.read(apiServiceProvider);
+
+      final keychain = await apiService.getKeychain(seed);
       keychainSecuredInfos = keychain.toKeychainSecuredInfos();
       await vault.setKeychainSecuredInfos(keychainSecuredInfos);
     }
@@ -49,17 +51,21 @@ class SessionNotifier extends _$SessionNotifier {
     final loggedInState = state.loggedIn!;
 
     try {
-      final keychain =
-          await sl.get<ApiService>().getKeychain(loggedInState.wallet.seed);
+      final apiService = ref.read(apiServiceProvider);
+      final keychain = await apiService.getKeychain(loggedInState.wallet.seed);
 
       final keychainSecuredInfos = keychain.toKeychainSecuredInfos();
 
       final vault = await KeychainInfoVaultDatasource.getInstance();
       await vault.setKeychainSecuredInfos(keychainSecuredInfos);
 
+      final appService = ref.read(appServiceProvider);
+
       final newWalletDTO = await KeychainUtil().getListAccountsFromKeychain(
         keychain,
         HiveAppWalletDTO.fromModel(loggedInState.wallet),
+        appService,
+        apiService,
       );
       if (newWalletDTO == null) return;
 
@@ -128,11 +134,15 @@ class SessionNotifier extends _$SessionNotifier {
     await vault.setSeed(seed);
 
     try {
-      final keychain = await sl.get<ApiService>().getKeychain(seed);
+      final apiService = ref.read(apiServiceProvider);
+      final appService = ref.read(appServiceProvider);
+      final keychain = await apiService.getKeychain(seed);
 
       final appWallet = await KeychainUtil().getListAccountsFromKeychain(
         keychain,
         null,
+        appService,
+        apiService,
       );
 
       if (appWallet == null) {

@@ -22,7 +22,7 @@ final _dAppsRepositoryProvider =
 );
 
 typedef _DAppsRepositoryRef = AutoDisposeProviderRef<DAppsRepositoryImpl>;
-String _$getDAppHash() => r'5aedf446d4b47a1cfd409e7237a32618d2a8412d';
+String _$getDAppHash() => r'6bab3f96fab16d9989efb24fb4bb35a0644e8984';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -188,7 +188,7 @@ class _GetDAppProviderElement extends AutoDisposeFutureProviderElement<DApp?>
 }
 
 String _$getDAppsFromNetworkHash() =>
-    r'7515f15dd0b528f5a82a7a19dc8afcad3486cf84';
+    r'8c7c760516c9dd278b63b8cc3529132368dc9d9e';
 
 /// See also [_getDAppsFromNetwork].
 @ProviderFor(_getDAppsFromNetwork)

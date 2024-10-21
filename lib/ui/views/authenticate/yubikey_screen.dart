@@ -41,7 +41,6 @@ class YubikeyAuthScreenOverlay extends AuthScreenOverlay {
 
 class _YubikeyScreen extends ConsumerStatefulWidget {
   const _YubikeyScreen({
-    super.key,
     required this.canNavigateBack,
     required this.challenge,
     required this.onDone,

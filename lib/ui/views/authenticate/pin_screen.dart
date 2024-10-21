@@ -82,7 +82,6 @@ class _PinScreen extends ConsumerStatefulWidget {
     this.description = '',
     this.canNavigateBack = true,
     required this.onDone,
-    super.key,
   });
 
   final bool canNavigateBack;

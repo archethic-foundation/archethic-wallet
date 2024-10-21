@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/app_service.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -53,8 +54,10 @@ class _NftCreationConfirmState extends ConsumerState<NftCreationConfirmSheet>
       if (event.response == 'ok') {
         final selectedAccount =
             await ref.read(AccountProviders.accounts.future).selectedAccount;
+        final appService = ref.read(appServiceProvider);
         await selectedAccount?.updateNftInfosOffChain(
           tokenAddress: event.transactionAddress,
+          appService: appService,
         );
 
         await (await ref

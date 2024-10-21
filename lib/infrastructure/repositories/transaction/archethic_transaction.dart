@@ -15,7 +15,6 @@ import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/service/app_service.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 
@@ -24,27 +23,23 @@ class ArchethicTransactionRepository
   ArchethicTransactionRepository({
     required this.phoenixHttpEndpoint,
     required this.websocketEndpoint,
+    required this.appService,
+    required this.apiService,
+    required this.addressService,
   });
-
-  archethic.ApiService? _apiService;
-  archethic.ApiService get apiService =>
-      _apiService ??= sl.get<archethic.ApiService>();
-
-  archethic.AddressService? __addressService;
-  archethic.AddressService get _addressService =>
-      __addressService ??= sl.get<archethic.AddressService>();
-
-  final AppService _appService = sl.get<AppService>();
 
   final String phoenixHttpEndpoint;
   final String websocketEndpoint;
+  final AppService appService;
+  final archethic.ApiService apiService;
+  final archethic.AddressService addressService;
 
   @override
   Future<String> getLastTransactionAddress({
     required String genesisAddress,
   }) async {
     final lastAddressFromAddressMap =
-        await _addressService.lastAddressFromAddress(
+        await addressService.lastAddressFromAddress(
       [genesisAddress],
     );
     return (lastAddressFromAddressMap.isEmpty ||
@@ -61,7 +56,7 @@ class ArchethicTransactionRepository
   }) async {
     return Result.guard(
       () async {
-        return _appService.getAccountRecentTransactions(
+        return appService.getAccountRecentTransactions(
           account.genesisAddress,
           account.lastAddress!,
           account.name,
@@ -121,9 +116,7 @@ class ArchethicTransactionRepository
     final index = indexMap[transfer.transactionLastAddress] ?? 0;
 
     final blockchainTxVersion = int.parse(
-      (await sl.get<archethic.ApiService>().getBlockchainVersion())
-          .version
-          .transaction,
+      (await apiService.getBlockchainVersion()).version.transaction,
     );
 
     var tokenTransferList = <archethic.TokenTransfer>[];
@@ -169,6 +162,7 @@ class ArchethicTransactionRepository
       ucoTransferList: ucoTransferList,
       message: transfer.message,
       txVersion: blockchainTxVersion,
+      apiService: apiService,
     );
   }
 
@@ -185,9 +179,7 @@ class ArchethicTransactionRepository
     final index = indexMap[token.transactionLastAddress] ?? 0;
 
     final blockchainTxVersion = int.parse(
-      (await sl.get<archethic.ApiService>().getBlockchainVersion())
-          .version
-          .transaction,
+      (await apiService.getBlockchainVersion()).version.transaction,
     );
 
     return AddTokenTransactionBuilder.build(
@@ -229,6 +221,7 @@ class ArchethicTransactionRepository
     return KeychainTransactionBuilder.build(
       keychain: keychain.copyWithService(nameAccount, kDerivationPath),
       originPrivateKey: originPrivateKey,
+      apiService: apiService,
     );
   }
 

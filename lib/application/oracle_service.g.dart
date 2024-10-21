@@ -1,26 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'session.dart';
+part of 'oracle_service.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$sessionNotifierHash() => r'c244f6b1fe87f8298e747b7eefcbef6012a0c872';
+String _$oracleServiceHash() => r'9aa0a6b659697dc1ace986470deda219ce86472c';
 
-/// See also [SessionNotifier].
-@ProviderFor(SessionNotifier)
-final sessionNotifierProvider =
-    NotifierProvider<SessionNotifier, Session>.internal(
-  SessionNotifier.new,
-  name: r'sessionNotifierProvider',
+/// See also [oracleService].
+@ProviderFor(oracleService)
+final oracleServiceProvider = AutoDisposeProvider<OracleService>.internal(
+  oracleService,
+  name: r'oracleServiceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$sessionNotifierHash,
+      : _$oracleServiceHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$SessionNotifier = Notifier<Session>;
+typedef OracleServiceRef = AutoDisposeProviderRef<OracleService>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

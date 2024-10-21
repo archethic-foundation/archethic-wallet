@@ -1,8 +1,8 @@
+import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/views/contacts/bloc/state.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -55,7 +55,8 @@ class ContactCreationFormNotifier
       return '';
     }
 
-    final publicKeyMap = await sl.get<ApiService>().getTransactionChain(
+    final apiService = ref.read(apiServiceProvider);
+    final publicKeyMap = await apiService.getTransactionChain(
       {address: ''},
       request: 'previousPublicKey',
     );
@@ -134,9 +135,8 @@ class ContactCreationFormNotifier
 
   Future<Contact> addContact() async {
     final publicKey = await _getGenesisPublicKey(state.address);
-
-    final genesisAddress =
-        await sl.get<ApiService>().getGenesisAddress(state.address);
+    final apiService = ref.read(apiServiceProvider);
+    final genesisAddress = await apiService.getGenesisAddress(state.address);
 
     final newContact = Contact(
       name: '@${Uri.encodeFull(state.name)}',

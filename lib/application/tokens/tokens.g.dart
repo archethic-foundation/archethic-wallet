@@ -6,7 +6,7 @@ part of 'tokens.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tokensListHash() => r'cc3fed6c5d79da2e9c5f14671cd3daaa7878a285';
+String _$tokensListHash() => r'592d79722bc09485e5c8747441ca8ffe63d34502';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -34,7 +34,7 @@ class _SystemHash {
 const tokensListProvider = TokensListFamily();
 
 /// See also [tokensList].
-class TokensListFamily extends Family<AsyncValue<List<AEToken>>> {
+class TokensListFamily extends Family<AsyncValue<List<aedappfm.AEToken>>> {
   /// See also [tokensList].
   const TokensListFamily();
 
@@ -81,7 +81,8 @@ class TokensListFamily extends Family<AsyncValue<List<AEToken>>> {
 }
 
 /// See also [tokensList].
-class TokensListProvider extends AutoDisposeFutureProvider<List<AEToken>> {
+class TokensListProvider
+    extends AutoDisposeFutureProvider<List<aedappfm.AEToken>> {
   /// See also [tokensList].
   TokensListProvider(
     String userGenesisAddress, {
@@ -131,7 +132,7 @@ class TokensListProvider extends AutoDisposeFutureProvider<List<AEToken>> {
 
   @override
   Override overrideWith(
-    FutureOr<List<AEToken>> Function(TokensListRef provider) create,
+    FutureOr<List<aedappfm.AEToken>> Function(TokensListRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -151,7 +152,7 @@ class TokensListProvider extends AutoDisposeFutureProvider<List<AEToken>> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<List<AEToken>> createElement() {
+  AutoDisposeFutureProviderElement<List<aedappfm.AEToken>> createElement() {
     return _TokensListProviderElement(this);
   }
 
@@ -176,7 +177,7 @@ class TokensListProvider extends AutoDisposeFutureProvider<List<AEToken>> {
   }
 }
 
-mixin TokensListRef on AutoDisposeFutureProviderRef<List<AEToken>> {
+mixin TokensListRef on AutoDisposeFutureProviderRef<List<aedappfm.AEToken>> {
   /// The parameter `userGenesisAddress` of this provider.
   String get userGenesisAddress;
 
@@ -191,7 +192,8 @@ mixin TokensListRef on AutoDisposeFutureProviderRef<List<AEToken>> {
 }
 
 class _TokensListProviderElement
-    extends AutoDisposeFutureProviderElement<List<AEToken>> with TokensListRef {
+    extends AutoDisposeFutureProviderElement<List<aedappfm.AEToken>>
+    with TokensListRef {
   _TokensListProviderElement(super.provider);
 
   @override

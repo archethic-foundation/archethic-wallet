@@ -1,24 +1,25 @@
 import 'dart:developer';
 
 import 'package:aewallet/application/aeswap/dex_token.dart';
+import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/infrastructure/repositories/tokens/tokens.repository.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
-import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'tokens.g.dart';
 
 @riverpod
-Future<List<AEToken>> tokensList(
+Future<List<aedappfm.AEToken>> tokensList(
   TokensListRef ref,
   String userGenesisAddress, {
   bool withVerified = true,
   bool withLPToken = true,
   bool withNotVerified = true,
 }) async {
-  final apiService = sl.get<ApiService>();
+  final apiService = ref.watch(apiServiceProvider);
 
   final environment = ref.watch(environmentProvider);
   final poolListRaw = await ref.watch(DexPoolProviders.getPoolListRaw.future);

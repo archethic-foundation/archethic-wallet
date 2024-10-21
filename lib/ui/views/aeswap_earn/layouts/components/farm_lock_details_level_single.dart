@@ -1,3 +1,4 @@
+import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock_stats.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/pool_factory.repository.dart';
@@ -5,7 +6,6 @@ import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_lp_token_fiat_value.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,6 +31,7 @@ class FarmLockDetailsLevelSingle extends ConsumerWidget {
     final style = TextStyle(
       fontSize: AppTextStyles.bodyMedium(context).fontSize,
     );
+    final apiService = ref.watch(apiServiceProvider);
     return Container(
       alignment: Alignment.centerLeft,
       decoration: BoxDecoration(
@@ -119,7 +120,7 @@ class FarmLockDetailsLevelSingle extends ConsumerWidget {
                     FutureBuilder<Map<String, dynamic>?>(
                       future: PoolFactoryRepositoryImpl(
                         farmLock.poolAddress,
-                        aedappfm.sl.get<ApiService>(),
+                        apiService,
                       ).getRemoveAmounts(
                         farmLockStats.lpTokensDeposited,
                       ),

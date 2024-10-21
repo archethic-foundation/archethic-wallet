@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/recovery_phrase_saved.dart';
 import 'package:aewallet/application/session/session.dart';
@@ -19,7 +20,6 @@ import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/mnemonics.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -59,7 +59,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
   bool keychainAccessRequested = false;
   bool newWalletRequested = false;
 
-  void _registerBus() {
+  void _registerBus(ApiService apiService) {
     _authSub = EventTaxiImpl.singleton()
         .registerTo<AuthenticatedEvent>()
         .listen((AuthenticatedEvent event) async {
@@ -140,6 +140,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
             event.params!['keychainAddress']! as String,
             event.params!['originPrivateKey']! as String,
             event.params!['keychain']! as Keychain,
+            apiService,
           );
           break;
         case TransactionSendEventType.keychainAccess:
@@ -218,7 +219,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
   @override
   void initState() {
     super.initState();
-    _registerBus();
+    _registerBus(ref.read(apiServiceProvider));
     // TODO(reddwarf03): LanguageSeed seems to be local to "import wallet" and "create wallet" screens. Maybe it should not be stored in preferences ? (3)
     final languageSeed = ref.read(
       SettingsProviders.settings.select((settings) => settings.languageSeed),
@@ -518,13 +519,15 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
     );
 
     try {
-      final originPrivateKey = sl.get<ApiService>().getOriginKey();
+      final apiService = ref.read(apiServiceProvider);
+      final originPrivateKey = apiService.getOriginKey();
 
       await KeychainUtil().createKeyChain(
         ref.read(SettingsProviders.settings).network,
         widget.seed,
         widget.name,
         originPrivateKey,
+        apiService,
       );
     } catch (e) {
       final localizations = AppLocalizations.of(context)!;

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -33,6 +33,7 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
   Widget build(BuildContext context) {
     final transactionData = widget.data;
     final localizations = AppLocalizations.of(context)!;
+    final apiService = ref.watch(apiServiceProvider);
 
     List<Widget> buildTransactionData() {
       final widgets = <Widget>[
@@ -96,7 +97,7 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
                             ),
                             SelectionArea(
                               child: FutureBuilder<Map<String, Token>>(
-                                future: sl.get<ApiService>().getToken(
+                                future: apiService.getToken(
                                   [transfer.tokenAddress!],
                                   request: 'symbol',
                                 ),
@@ -320,7 +321,7 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
                               actionRecipient.args!.isNotEmpty)
                             SelectionArea(
                               child: FutureBuilder<Map<String, Transaction>>(
-                                future: sl.get<ApiService>().getLastTransaction(
+                                future: apiService.getLastTransaction(
                                   [actionRecipient.address!],
                                   request: 'data { code }',
                                 ),

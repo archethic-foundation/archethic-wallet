@@ -127,7 +127,6 @@ class FarmLockDepositConfirmSheetState
               aedappfm.ProcessStep.form,
             )
             ..setFailure(null);
-          ;
         },
       ),
     );
