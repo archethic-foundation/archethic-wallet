@@ -6,7 +6,39 @@ part of 'provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$swapFormNotifierHash() => r'9f86e253cc2d11139e1c2f334f57b07f1cba7d57';
+String _$tokenToSwapBalanceHash() =>
+    r'43a205ec62f689663ecef516f3484f810166de25';
+
+/// See also [tokenToSwapBalance].
+@ProviderFor(tokenToSwapBalance)
+final tokenToSwapBalanceProvider = AutoDisposeFutureProvider<double>.internal(
+  tokenToSwapBalance,
+  name: r'tokenToSwapBalanceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$tokenToSwapBalanceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef TokenToSwapBalanceRef = AutoDisposeFutureProviderRef<double>;
+String _$tokenSwappedBalanceHash() =>
+    r'a82bee4c9edd271a8b3f0337fb40cdf7e27d7843';
+
+/// See also [tokenSwappedBalance].
+@ProviderFor(tokenSwappedBalance)
+final tokenSwappedBalanceProvider = AutoDisposeFutureProvider<double>.internal(
+  tokenSwappedBalance,
+  name: r'tokenSwappedBalanceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$tokenSwappedBalanceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef TokenSwappedBalanceRef = AutoDisposeFutureProviderRef<double>;
+String _$swapFormNotifierHash() => r'a66d29c151617f5abeef3ee6a581671516c4798e';
 
 /// See also [SwapFormNotifier].
 @ProviderFor(SwapFormNotifier)

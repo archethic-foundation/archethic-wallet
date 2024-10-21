@@ -27,10 +27,8 @@ mixin _$SwapFormState {
   bool get isProcessInProgress => throw _privateConstructorUsedError;
   bool get swapOk => throw _privateConstructorUsedError;
   bool get messageMaxHalfUCO => throw _privateConstructorUsedError;
-  double get tokenToSwapBalance => throw _privateConstructorUsedError;
   double get tokenToSwapAmount => throw _privateConstructorUsedError;
   DexToken? get tokenSwapped => throw _privateConstructorUsedError;
-  double get tokenSwappedBalance => throw _privateConstructorUsedError;
   double get tokenSwappedAmount => throw _privateConstructorUsedError;
   double get ratio => throw _privateConstructorUsedError;
   double get swapFees => throw _privateConstructorUsedError;
@@ -74,10 +72,8 @@ abstract class $SwapFormStateCopyWith<$Res> {
       bool isProcessInProgress,
       bool swapOk,
       bool messageMaxHalfUCO,
-      double tokenToSwapBalance,
       double tokenToSwapAmount,
       DexToken? tokenSwapped,
-      double tokenSwappedBalance,
       double tokenSwappedAmount,
       double ratio,
       double swapFees,
@@ -129,10 +125,8 @@ class _$SwapFormStateCopyWithImpl<$Res, $Val extends SwapFormState>
     Object? isProcessInProgress = null,
     Object? swapOk = null,
     Object? messageMaxHalfUCO = null,
-    Object? tokenToSwapBalance = null,
     Object? tokenToSwapAmount = null,
     Object? tokenSwapped = freezed,
-    Object? tokenSwappedBalance = null,
     Object? tokenSwappedAmount = null,
     Object? ratio = null,
     Object? swapFees = null,
@@ -195,10 +189,6 @@ class _$SwapFormStateCopyWithImpl<$Res, $Val extends SwapFormState>
           ? _value.messageMaxHalfUCO
           : messageMaxHalfUCO // ignore: cast_nullable_to_non_nullable
               as bool,
-      tokenToSwapBalance: null == tokenToSwapBalance
-          ? _value.tokenToSwapBalance
-          : tokenToSwapBalance // ignore: cast_nullable_to_non_nullable
-              as double,
       tokenToSwapAmount: null == tokenToSwapAmount
           ? _value.tokenToSwapAmount
           : tokenToSwapAmount // ignore: cast_nullable_to_non_nullable
@@ -207,10 +197,6 @@ class _$SwapFormStateCopyWithImpl<$Res, $Val extends SwapFormState>
           ? _value.tokenSwapped
           : tokenSwapped // ignore: cast_nullable_to_non_nullable
               as DexToken?,
-      tokenSwappedBalance: null == tokenSwappedBalance
-          ? _value.tokenSwappedBalance
-          : tokenSwappedBalance // ignore: cast_nullable_to_non_nullable
-              as double,
       tokenSwappedAmount: null == tokenSwappedAmount
           ? _value.tokenSwappedAmount
           : tokenSwappedAmount // ignore: cast_nullable_to_non_nullable
@@ -383,10 +369,8 @@ abstract class _$$SwapFormStateImplCopyWith<$Res>
       bool isProcessInProgress,
       bool swapOk,
       bool messageMaxHalfUCO,
-      double tokenToSwapBalance,
       double tokenToSwapAmount,
       DexToken? tokenSwapped,
-      double tokenSwappedBalance,
       double tokenSwappedAmount,
       double ratio,
       double swapFees,
@@ -442,10 +426,8 @@ class __$$SwapFormStateImplCopyWithImpl<$Res>
     Object? isProcessInProgress = null,
     Object? swapOk = null,
     Object? messageMaxHalfUCO = null,
-    Object? tokenToSwapBalance = null,
     Object? tokenToSwapAmount = null,
     Object? tokenSwapped = freezed,
-    Object? tokenSwappedBalance = null,
     Object? tokenSwappedAmount = null,
     Object? ratio = null,
     Object? swapFees = null,
@@ -508,10 +490,6 @@ class __$$SwapFormStateImplCopyWithImpl<$Res>
           ? _value.messageMaxHalfUCO
           : messageMaxHalfUCO // ignore: cast_nullable_to_non_nullable
               as bool,
-      tokenToSwapBalance: null == tokenToSwapBalance
-          ? _value.tokenToSwapBalance
-          : tokenToSwapBalance // ignore: cast_nullable_to_non_nullable
-              as double,
       tokenToSwapAmount: null == tokenToSwapAmount
           ? _value.tokenToSwapAmount
           : tokenToSwapAmount // ignore: cast_nullable_to_non_nullable
@@ -520,10 +498,6 @@ class __$$SwapFormStateImplCopyWithImpl<$Res>
           ? _value.tokenSwapped
           : tokenSwapped // ignore: cast_nullable_to_non_nullable
               as DexToken?,
-      tokenSwappedBalance: null == tokenSwappedBalance
-          ? _value.tokenSwappedBalance
-          : tokenSwappedBalance // ignore: cast_nullable_to_non_nullable
-              as double,
       tokenSwappedAmount: null == tokenSwappedAmount
           ? _value.tokenSwappedAmount
           : tokenSwappedAmount // ignore: cast_nullable_to_non_nullable
@@ -607,10 +581,8 @@ class _$SwapFormStateImpl extends _SwapFormState {
       this.isProcessInProgress = false,
       this.swapOk = false,
       this.messageMaxHalfUCO = false,
-      this.tokenToSwapBalance = 0,
       this.tokenToSwapAmount = 0,
       this.tokenSwapped,
-      this.tokenSwappedBalance = 0,
       this.tokenSwappedAmount = 0,
       this.ratio = 0.0,
       this.swapFees = 0.0,
@@ -663,15 +635,9 @@ class _$SwapFormStateImpl extends _SwapFormState {
   final bool messageMaxHalfUCO;
   @override
   @JsonKey()
-  final double tokenToSwapBalance;
-  @override
-  @JsonKey()
   final double tokenToSwapAmount;
   @override
   final DexToken? tokenSwapped;
-  @override
-  @JsonKey()
-  final double tokenSwappedBalance;
   @override
   @JsonKey()
   final double tokenSwappedAmount;
@@ -717,7 +683,7 @@ class _$SwapFormStateImpl extends _SwapFormState {
 
   @override
   String toString() {
-    return 'SwapFormState(processStep: $processStep, resumeProcess: $resumeProcess, calculateAmountToSwap: $calculateAmountToSwap, calculateAmountSwapped: $calculateAmountSwapped, currentStep: $currentStep, tokenFormSelected: $tokenFormSelected, poolGenesisAddress: $poolGenesisAddress, tokenToSwap: $tokenToSwap, isProcessInProgress: $isProcessInProgress, swapOk: $swapOk, messageMaxHalfUCO: $messageMaxHalfUCO, tokenToSwapBalance: $tokenToSwapBalance, tokenToSwapAmount: $tokenToSwapAmount, tokenSwapped: $tokenSwapped, tokenSwappedBalance: $tokenSwappedBalance, tokenSwappedAmount: $tokenSwappedAmount, ratio: $ratio, swapFees: $swapFees, swapProtocolFees: $swapProtocolFees, slippageTolerance: $slippageTolerance, minToReceive: $minToReceive, priceImpact: $priceImpact, estimatedReceived: $estimatedReceived, feesEstimatedUCO: $feesEstimatedUCO, finalAmount: $finalAmount, failure: $failure, recoveryTransactionSwap: $recoveryTransactionSwap, calculationInProgress: $calculationInProgress, pool: $pool, poolInfos: $poolInfos, consentDateTime: $consentDateTime)';
+    return 'SwapFormState(processStep: $processStep, resumeProcess: $resumeProcess, calculateAmountToSwap: $calculateAmountToSwap, calculateAmountSwapped: $calculateAmountSwapped, currentStep: $currentStep, tokenFormSelected: $tokenFormSelected, poolGenesisAddress: $poolGenesisAddress, tokenToSwap: $tokenToSwap, isProcessInProgress: $isProcessInProgress, swapOk: $swapOk, messageMaxHalfUCO: $messageMaxHalfUCO, tokenToSwapAmount: $tokenToSwapAmount, tokenSwapped: $tokenSwapped, tokenSwappedAmount: $tokenSwappedAmount, ratio: $ratio, swapFees: $swapFees, swapProtocolFees: $swapProtocolFees, slippageTolerance: $slippageTolerance, minToReceive: $minToReceive, priceImpact: $priceImpact, estimatedReceived: $estimatedReceived, feesEstimatedUCO: $feesEstimatedUCO, finalAmount: $finalAmount, failure: $failure, recoveryTransactionSwap: $recoveryTransactionSwap, calculationInProgress: $calculationInProgress, pool: $pool, poolInfos: $poolInfos, consentDateTime: $consentDateTime)';
   }
 
   @override
@@ -746,14 +712,10 @@ class _$SwapFormStateImpl extends _SwapFormState {
             (identical(other.swapOk, swapOk) || other.swapOk == swapOk) &&
             (identical(other.messageMaxHalfUCO, messageMaxHalfUCO) ||
                 other.messageMaxHalfUCO == messageMaxHalfUCO) &&
-            (identical(other.tokenToSwapBalance, tokenToSwapBalance) ||
-                other.tokenToSwapBalance == tokenToSwapBalance) &&
             (identical(other.tokenToSwapAmount, tokenToSwapAmount) ||
                 other.tokenToSwapAmount == tokenToSwapAmount) &&
             (identical(other.tokenSwapped, tokenSwapped) ||
                 other.tokenSwapped == tokenSwapped) &&
-            (identical(other.tokenSwappedBalance, tokenSwappedBalance) ||
-                other.tokenSwappedBalance == tokenSwappedBalance) &&
             (identical(other.tokenSwappedAmount, tokenSwappedAmount) ||
                 other.tokenSwappedAmount == tokenSwappedAmount) &&
             (identical(other.ratio, ratio) || other.ratio == ratio) &&
@@ -800,10 +762,8 @@ class _$SwapFormStateImpl extends _SwapFormState {
         isProcessInProgress,
         swapOk,
         messageMaxHalfUCO,
-        tokenToSwapBalance,
         tokenToSwapAmount,
         tokenSwapped,
-        tokenSwappedBalance,
         tokenSwappedAmount,
         ratio,
         swapFees,
@@ -844,10 +804,8 @@ abstract class _SwapFormState extends SwapFormState {
       final bool isProcessInProgress,
       final bool swapOk,
       final bool messageMaxHalfUCO,
-      final double tokenToSwapBalance,
       final double tokenToSwapAmount,
       final DexToken? tokenSwapped,
-      final double tokenSwappedBalance,
       final double tokenSwappedAmount,
       final double ratio,
       final double swapFees,
@@ -889,13 +847,9 @@ abstract class _SwapFormState extends SwapFormState {
   @override
   bool get messageMaxHalfUCO;
   @override
-  double get tokenToSwapBalance;
-  @override
   double get tokenToSwapAmount;
   @override
   DexToken? get tokenSwapped;
-  @override
-  double get tokenSwappedBalance;
   @override
   double get tokenSwappedAmount;
   @override

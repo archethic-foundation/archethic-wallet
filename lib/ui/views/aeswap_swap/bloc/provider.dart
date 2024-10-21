@@ -25,6 +25,32 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'provider.g.dart';
 
 @riverpod
+Future<double> tokenToSwapBalance(TokenToSwapBalanceRef ref) async {
+  final token =
+      ref.watch(swapFormNotifierProvider.select((state) => state.tokenToSwap));
+  if (token == null) return 0;
+
+  return ref.watch(
+    getBalanceProvider(
+      token.isUCO ? kUCOAddress : token.address,
+    ).future,
+  );
+}
+
+@riverpod
+Future<double> tokenSwappedBalance(TokenSwappedBalanceRef ref) async {
+  final token =
+      ref.watch(swapFormNotifierProvider.select((state) => state.tokenSwapped));
+  if (token == null) return 0;
+
+  return ref.watch(
+    getBalanceProvider(
+      token.isUCO ? kUCOAddress : token.address,
+    ).future,
+  );
+}
+
+@riverpod
 class SwapFormNotifier extends _$SwapFormNotifier
     with aedappfm.TransactionMixin {
   SwapFormNotifier();
@@ -69,13 +95,6 @@ class SwapFormNotifier extends _$SwapFormNotifier
       calculationInProgress: true,
       tokenToSwap: tokenToSwap,
     );
-
-    final balance = await ref.read(
-      getBalanceProvider(
-        state.tokenToSwap!.isUCO ? 'UCO' : state.tokenToSwap!.address,
-      ).future,
-    );
-    state = state.copyWith(tokenToSwapBalance: balance);
 
     if (state.tokenSwapped != null) {
       if (state.tokenToSwap!.address == state.tokenSwapped!.address) {
@@ -398,7 +417,10 @@ class SwapFormNotifier extends _$SwapFormNotifier
                 .toDecimal()))
         .toDouble();
 
-    if (state.tokenToSwapAmount > state.tokenToSwapBalance) {
+    final tokenToSwapBalance = await ref.read(
+      tokenToSwapBalanceProvider.future,
+    );
+    if (state.tokenToSwapAmount > tokenToSwapBalance) {
       setFailure(const aedappfm.Failure.insufficientFunds());
     }
 
@@ -466,13 +488,6 @@ class SwapFormNotifier extends _$SwapFormNotifier
       tokenSwapped: tokenSwapped,
       calculationInProgress: true,
     );
-
-    final balance = await ref.read(
-      getBalanceProvider(
-        state.tokenSwapped!.isUCO ? 'UCO' : state.tokenSwapped!.address,
-      ).future,
-    );
-    state = state.copyWith(tokenSwappedBalance: balance);
 
     if (state.tokenToSwap != null) {
       if (state.tokenToSwap!.address == state.tokenSwapped!.address) {
@@ -604,14 +619,6 @@ class SwapFormNotifier extends _$SwapFormNotifier
       swapProtocolFees: swapInfos.protocolFees,
       minToReceive: minToReceive,
     );
-  }
-
-  void setTokenToSwapBalance(double tokenToSwapBalance) {
-    state = state.copyWith(tokenToSwapBalance: tokenToSwapBalance);
-  }
-
-  void setTokenSwappedBalance(double tokenSwappedBalance) {
-    state = state.copyWith(tokenSwappedBalance: tokenSwappedBalance);
   }
 
   void setMinimumReceived(
@@ -767,7 +774,10 @@ class SwapFormNotifier extends _$SwapFormNotifier
       return false;
     }
 
-    if (state.tokenToSwapAmount > state.tokenToSwapBalance) {
+    final tokenToSwapBalance = await ref.read(
+      tokenToSwapBalanceProvider.future,
+    );
+    if (state.tokenToSwapAmount > tokenToSwapBalance) {
       setFailure(
         aedappfm.Failure.other(
           cause: appLocalizations.swapControlTokenToSwapAmountExceedBalance,
@@ -791,9 +801,8 @@ class SwapFormNotifier extends _$SwapFormNotifier
       feesEstimatedUCO: feesEstimatedUCO,
     );
     if (feesEstimatedUCO > 0) {
-      if (state.tokenToSwapAmount + feesEstimatedUCO >
-          state.tokenToSwapBalance) {
-        final adjustedAmount = state.tokenToSwapBalance - feesEstimatedUCO;
+      if (state.tokenToSwapAmount + feesEstimatedUCO > tokenToSwapBalance) {
+        final adjustedAmount = tokenToSwapBalance - feesEstimatedUCO;
         if (adjustedAmount < 0) {
           state = state.copyWith(messageMaxHalfUCO: true);
           setFailure(const aedappfm.Failure.insufficientFunds());
@@ -827,16 +836,17 @@ class SwapFormNotifier extends _$SwapFormNotifier
 
     try {
       await ref.read(swapCaseProvider).run(
-            this,
-            appLocalizations,
-            state.poolGenesisAddress,
-            state.tokenToSwap!,
-            state.tokenSwapped!,
-            state.tokenToSwapAmount,
-            state.slippageTolerance,
-          );
-
-      ref.invalidate(userBalanceProvider);
+        this,
+        appLocalizations,
+        state.poolGenesisAddress,
+        state.tokenToSwap!,
+        state.tokenSwapped!,
+        state.tokenToSwapAmount,
+        state.slippageTolerance,
+        () {
+          ref.invalidate(userBalanceProvider);
+        },
+      );
 
       return true;
     } catch (e) {

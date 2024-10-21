@@ -23,10 +23,8 @@ class SwapFormState with _$SwapFormState {
     @Default(false) bool isProcessInProgress,
     @Default(false) bool swapOk,
     @Default(false) bool messageMaxHalfUCO,
-    @Default(0) double tokenToSwapBalance,
     @Default(0) double tokenToSwapAmount,
     DexToken? tokenSwapped,
-    @Default(0) double tokenSwappedBalance,
     @Default(0) double tokenSwappedAmount,
     @Default(0.0) double ratio,
     @Default(0.0) double swapFees,
@@ -51,12 +49,8 @@ class SwapFormState with _$SwapFormState {
   bool get isControlsOk =>
       tokenToSwap != null &&
       tokenSwapped != null &&
-      tokenToSwapBalance > 0 &&
       tokenToSwapAmount > 0 &&
       tokenSwappedAmount > 0 &&
       calculationInProgress == false &&
       tokenToSwap!.address != tokenSwapped!.address;
-
-  @override
-  double get tokenToSwapBalance => tokenToSwap!.balance;
 }

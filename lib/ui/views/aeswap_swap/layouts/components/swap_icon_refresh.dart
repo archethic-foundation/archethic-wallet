@@ -1,4 +1,3 @@
-import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/aeswap_swap/bloc/provider.dart';
@@ -51,24 +50,6 @@ class _SwapTokenIconRefreshState extends ConsumerState<SwapTokenIconRefresh> {
 
         final swapNotifier = ref.read(swapFormNotifierProvider.notifier);
         final swap = ref.read(swapFormNotifierProvider);
-
-        if (swap.tokenToSwap != null) {
-          final balanceToSwap = await ref.read(
-            getBalanceProvider(
-              swap.tokenToSwap!.isUCO ? 'UCO' : swap.tokenToSwap!.address,
-            ).future,
-          );
-          swapNotifier.setTokenToSwapBalance(balanceToSwap);
-        }
-
-        if (swap.tokenSwapped != null) {
-          final balanceSwapped = await ref.read(
-            getBalanceProvider(
-              swap.tokenSwapped!.isUCO ? 'UCO' : swap.tokenSwapped!.address,
-            ).future,
-          );
-          swapNotifier.setTokenSwappedBalance(balanceSwapped);
-        }
 
         if (swap.tokenToSwap != null && swap.tokenSwapped != null) {
           await swapNotifier.calculateSwapInfos(
