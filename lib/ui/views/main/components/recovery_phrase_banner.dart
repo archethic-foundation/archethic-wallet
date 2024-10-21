@@ -38,7 +38,7 @@ class RecoveryPhraseBanner extends ConsumerWidget {
                       seed!,
                       languageCode: preferences.languageSeed,
                     );
-                    context.go(
+                    await context.push(
                       AppSeedBackupSheet.routerPage,
                       extra: {'mnemonic': mnemonic, 'seed': seed},
                     );

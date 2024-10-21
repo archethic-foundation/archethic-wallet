@@ -7,7 +7,6 @@ import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_backup_confirm.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/settings/mnemonic_display.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
@@ -88,7 +87,7 @@ class AppSeedBackupSheet extends ConsumerWidget
         key: const Key('back'),
         color: ArchethicTheme.text,
         onPressed: () {
-          context.go(HomePage.routerPage);
+          context.pop();
         },
       ),
     );

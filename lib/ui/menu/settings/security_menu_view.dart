@@ -33,7 +33,7 @@ class SecurityMenuView extends ConsumerWidget
         key: const Key('back'),
         color: ArchethicTheme.text,
         onPressed: () {
-          context.go(SettingsSheetWallet.routerPage);
+          context.pop(SettingsSheetWallet.routerPage);
         },
       ),
     );
@@ -292,10 +292,11 @@ class _BackupSecretPhraseListItem extends ConsumerWidget {
           languageCode: preferences.languageSeed,
         );
 
-        context.go(
+        await context.push(
           AppSeedBackupSheet.routerPage,
           extra: {'mnemonic': mnemonic, 'seed': seed},
         );
+        context.go(HomePage.routerPage);
       },
     );
   }
