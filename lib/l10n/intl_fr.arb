@@ -90,6 +90,7 @@
     "aeWebsiteLinkHeader": "Site web d'Archethic",
     "aeWebsiteLinkDesc": "Visitez le site web d'Archethic",
     "autoLockHeader": "Verrouillage automatique",
+    "autoLockTips": "Votre application se verrouille automatiquement %0. Vous pouvez le modifier dans le menu de sécurité du portefeuille, propriété de verrouillage automatique.",
     "xMinutes": "Après %1 minutes",
     "xMinute": "Après %1 minute",
     "xSecondes": "Après %1 secondes",

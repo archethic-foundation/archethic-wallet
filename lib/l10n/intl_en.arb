@@ -90,6 +90,7 @@
     "aeWebsiteLinkHeader": "Archethic Website",
     "aeWebsiteLinkDesc": "Visit the Archethic website",
     "autoLockHeader": "Auto Lock",
+    "autoLockTips": "Your app is auto locking %0. You can change it in the wallet security menu, auto lock property.",
     "xMinutes": "After %1 minutes",
     "xMinute": "After %1 minute",
     "xSecondes": "After %1 secondes",

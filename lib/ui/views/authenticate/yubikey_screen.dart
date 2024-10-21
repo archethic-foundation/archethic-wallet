@@ -7,6 +7,7 @@ import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/bus/otp_event.dart';
 import 'package:aewallet/domain/models/authentication.dart';
 import 'package:aewallet/model/authentication_method.dart';
+import 'package:aewallet/model/device_lock_timeout.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -24,6 +25,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class YubikeyAuthScreenOverlay extends AuthScreenOverlay {
   YubikeyAuthScreenOverlay({
@@ -170,6 +172,12 @@ class _YubikeyScreenState extends ConsumerState<_YubikeyScreen>
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
+    final lockTimeoutOption = ref.watch(
+      AuthenticationProviders.settings.select(
+        (settings) => settings.lockTimeout,
+      ),
+    );
+
     return PopScope(
       canPop: widget.canNavigateBack,
       onPopInvokedWithResult: (didPop, result) {
@@ -289,6 +297,33 @@ class _YubikeyScreenState extends ConsumerState<_YubikeyScreen>
                   ),
                 ),
               ],
+            ),
+          if (lockTimeoutOption != LockTimeoutOption.disabled)
+            Padding(
+              padding: const EdgeInsets.only(top: 32),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(right: 8),
+                    child: Icon(
+                      Symbols.lightbulb,
+                      //size: 16,
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      localizations.autoLockTips.replaceAll(
+                        '%0',
+                        LockTimeoutSetting(lockTimeoutOption)
+                            .getDisplayName(context)
+                            .toLowerCase(),
+                      ),
+                      style: ArchethicThemeStyles.textStyleSize12W600Primary,
+                    ),
+                  ),
+                ],
+              ),
             ),
         ],
       ),
