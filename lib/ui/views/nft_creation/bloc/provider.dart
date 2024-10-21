@@ -198,7 +198,7 @@ class NftCreationFormNotifier
       );
       return;
     }
-    final apiService = ref.watch(apiServiceProvider);
+    final apiService = ref.read(apiServiceProvider);
     final genesisAddress =
         await apiService.getGenesisAddress(address.address!.address!);
     if (genesisAddress.address != null &&

@@ -39,7 +39,7 @@ class RemoveServiceHandler extends CommandHandler {
             final networkSettings = ref.watch(
               SettingsProviders.settings.select((settings) => settings.network),
             );
-            final appService = ref.watch(appServiceProvider);
+            final appService = ref.read(appServiceProvider);
             final apiService = ref.watch(apiServiceProvider);
             final addressService = ref.watch(addressServiceProvider);
 

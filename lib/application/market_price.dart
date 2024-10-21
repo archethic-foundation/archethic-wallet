@@ -32,7 +32,7 @@ Future<MarketPrice> _currencyMarketPrice(
     GetUCOMarketPriceUsecases(
       remoteRepositories: ref.watch(_remoteRepositoriesProvider),
       localRepository: ref.watch(_localRepositoryProvider),
-      oracleService: ref.read(oracleServiceProvider),
+      oracleService: ref.watch(oracleServiceProvider),
     ).updateFromRemoteUseCase.run(currency).valueOrThrow;
 
 @Riverpod(keepAlive: true)
