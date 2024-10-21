@@ -12,6 +12,7 @@
     "send": "Send",
     "add": "Add",
     "update": "Update",
+    "retry": "Retry",
     "previewNotAvailable": "Preview not available",
     "noToken": "No token",
     "noNFT": "No NFT",
@@ -727,5 +728,9 @@
     "aeBridgeInfos1": "Bridge functionality not available on mobile",
     "aeBridgeInfos2": "The bridge is not yet available on the mobile application.\n\nTo perform bridge operations, please use a desktop computer at the following address with the Chrome extension or the desktop wallet.",
     "aeBridgeInfos3": "The bridge will soon be available on mobile.",
-    "processingInProgress": "Processing in progress..."
+    "processingInProgress": "Processing in progress...",
+    "restoreFailedTitle": "Archethic Wallet",
+    "restoreFailedSubtitle": "Failed to open your wallet.",
+    "restoreFailedInfo1": "Don't panic! Your data is still there, safe and secure.",
+    "restoreFailedInfo2": "This could be due to a network issue.\nYou can try again by clicking the button below, or restart the app manually."
 }

@@ -101,17 +101,9 @@ class RoutesPath {
           routes: [
             GoRoute(
               path: Splash.routerPage,
-              pageBuilder: (context, state) => CustomTransitionPage<void>(
-                transitionDuration: Duration.zero,
-                reverseTransitionDuration: Duration.zero,
+              pageBuilder: (context, state) => NoTransitionPage<void>(
                 key: state.pageKey,
                 child: const Splash(),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) =>
-                        FadeTransition(
-                  opacity: animation,
-                  child: child,
-                ),
               ),
             ),
             ..._authenticationRoutes,

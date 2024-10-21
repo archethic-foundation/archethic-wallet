@@ -11,6 +11,7 @@ import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
+import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/application/verified_tokens.dart';
@@ -19,11 +20,14 @@ import 'package:aewallet/providers_observer.dart';
 import 'package:aewallet/router/router.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_welcome.dart';
+import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/limited_width_layout.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/window_size.dart';
@@ -262,6 +266,7 @@ class Splash extends ConsumerStatefulWidget {
 
 class SplashState extends ConsumerState<Splash> {
   final _logger = Logger('SplashState');
+  bool restorationFailed = false;
 
   Future<void> initializeProviders() async {
     await ref
@@ -305,7 +310,6 @@ class SplashState extends ConsumerState<Splash> {
       }
       await preferences.setFirstLaunch(false);
       */
-
       if (FeatureFlags.forceLogout) {
         await ref.read(sessionNotifierProvider.notifier).logout();
 
@@ -323,8 +327,18 @@ class SplashState extends ConsumerState<Splash> {
       }
       context.go(HomePage.routerPage);
     } catch (e, stack) {
-      _logger.severe(e.toString(), e, stack);
-      context.go(IntroWelcome.routerPage);
+      _logger.severe(
+        'Failed to restore session',
+        e,
+        stack,
+      );
+
+      /// Relock storage if restoration failed
+      await Vault.instance().lock();
+
+      setState(() {
+        restorationFailed = true;
+      });
     }
   }
 
@@ -340,12 +354,78 @@ class SplashState extends ConsumerState<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return AutoLockGuard(
-      child: SheetSkeleton(
-        appBar: AppBar(),
+    final localizations = AppLocalizations.of(context)!;
+    if (restorationFailed) {
+      return SheetSkeleton(
+        appBar: SheetAppBar(
+          title: localizations.restoreFailedTitle,
+          widgetAfterTitle: Text(
+            localizations.restoreFailedSubtitle,
+            style: ArchethicThemeStyles.textStyleSize14W600Primary,
+            textAlign: TextAlign.center,
+          ),
+        ),
         menu: true,
-        sheetContent: const SizedBox.shrink(),
-      ),
-    );
+        sheetContent: DecoratedBox(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                ArchethicTheme.backgroundSmall,
+              ),
+              fit: BoxFit.cover,
+              alignment: Alignment.centerRight,
+              opacity: 0.7,
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 32,
+              right: 32,
+              bottom: 32,
+            ),
+            child: SafeArea(
+              child: Column(
+                children: [
+                  const Spacer(),
+                  Text(
+                    localizations.restoreFailedInfo1,
+                    style: ArchethicThemeStyles.textStyleSize16W700Primary,
+                    textAlign: TextAlign.start,
+                  ),
+                  const SizedBox(
+                    height: 32,
+                  ),
+                  Text(
+                    localizations.restoreFailedInfo2,
+                    style: ArchethicThemeStyles.textStyleSize14W400Highlighted,
+                    textAlign: TextAlign.start,
+                  ),
+                  const Spacer(),
+                ],
+              ),
+            ),
+          ),
+        ),
+        floatingActionButton: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            AppButtonTiny(
+              AppButtonTinyType.primary,
+              localizations.retry,
+              Dimens.buttonBottomDimens,
+              key: const Key('unlock'),
+              onPressed: () {
+                setState(() {
+                  restorationFailed = false;
+                });
+                checkLoggedIn();
+              },
+              // disabled: isLocked,
+            ),
+          ],
+        ),
+      );
+    }
+    return const LockMask();
   }
 }
