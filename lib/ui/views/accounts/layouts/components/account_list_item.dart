@@ -156,7 +156,7 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
-    final apiService = ref.watch(apiServiceProvider);
+    final apiService = ref.read(apiServiceProvider);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),

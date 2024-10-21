@@ -3,7 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'oracle_service.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 OracleService oracleService(OracleServiceRef ref) {
   // We use always mainnet values
   return OracleService('https://mainnet.archethic.net');

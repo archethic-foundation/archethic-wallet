@@ -32,7 +32,7 @@ class SignTransactionsCommandHandler extends CommandHandler {
             final seed =
                 ref.read(sessionNotifierProvider).loggedIn!.wallet.seed;
 
-            final apiService = ref.watch(apiServiceProvider);
+            final apiService = ref.read(apiServiceProvider);
             final keychain = await apiService.getKeychain(seed);
 
             var addressGenesis = '';

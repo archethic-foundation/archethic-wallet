@@ -1,3 +1,4 @@
+import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
@@ -9,11 +10,12 @@ import 'package:aewallet/ui/views/rpc_command_receiver/send_transaction/layouts/
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SendTransactionHandler extends CommandHandler {
   SendTransactionHandler({
     required BuildContext context,
-    required ApiService apiService,
+    required WidgetRef ref,
   }) : super(
           canHandle: (command) =>
               command is RPCCommand<awc.SendTransactionRequest>,
@@ -28,7 +30,7 @@ class SendTransactionHandler extends CommandHandler {
                   awc.Failure.invalidTransaction,
                 );
               }
-
+              final apiService = ref.read(apiServiceProvider);
               final storageNoncePublicKey =
                   await apiService.getStorageNoncePublicKey();
               final seedSC = generateRandomSeed();

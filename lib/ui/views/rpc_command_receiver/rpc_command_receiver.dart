@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/domain/repositories/settings.dart';
 import 'package:aewallet/domain/rpc/command_dispatcher.dart';
@@ -62,10 +61,7 @@ class _RPCCommandReceiverState extends ConsumerState<RPCCommandReceiver> {
         return null;
       })
       ..addHandler(
-        SendTransactionHandler(
-          context: context,
-          apiService: ref.read(apiServiceProvider),
-        ),
+        SendTransactionHandler(context: context, ref: ref),
       )
       ..addHandler(
         GetEndpointHandler(),
