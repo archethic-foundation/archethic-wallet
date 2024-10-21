@@ -1,8 +1,8 @@
-import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/btn_validate_mobile.dart';
 import 'package:aewallet/router/router.dart';
+import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/layouts/farm_lock_level_up_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -20,7 +20,6 @@ class FarmLockBtnLevelUp extends ConsumerWidget {
     required this.currentLevel,
     required this.rewardAmount,
     required this.pool,
-    required this.farmLock,
     this.enabled = true,
     super.key,
   });
@@ -34,13 +33,15 @@ class FarmLockBtnLevelUp extends ConsumerWidget {
   final bool enabled;
   final double rewardAmount;
   final DexPool pool;
-  final DexFarmLock farmLock;
 
   @override
   Widget build(
     BuildContext context,
     WidgetRef ref,
   ) {
+    final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
+    if (farmLock == null) return const SizedBox.shrink();
+
     return ButtonValidateMobile(
       controlOk: enabled,
       labelBtn: AppLocalizations.of(context)!.farmLockBtnLevelUp,
@@ -51,7 +52,6 @@ class FarmLockBtnLevelUp extends ConsumerWidget {
               path: FarmLockLevelUpSheet.routerPage,
               queryParameters: {
                 'pool': pool.toJson().encodeParam(),
-                'farmLock': farmLock.toJson().encodeParam(),
                 'depositId': depositId.encodeParam(),
                 'currentLevel': currentLevel.encodeParam(),
                 'lpAmount': lpTokenAmount.encodeParam(),

@@ -4,7 +4,6 @@ import 'package:aewallet/infrastructure/rpc/deeplink_server.dart';
 import 'package:aewallet/main.dart';
 import 'package:aewallet/model/available_networks.dart';
 import 'package:aewallet/model/data/account_token.dart';
-import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pair.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';

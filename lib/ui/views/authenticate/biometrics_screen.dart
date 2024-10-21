@@ -24,7 +24,6 @@ class BiometricsScreenOverlay extends AuthScreenOverlay {
 
 class _BiometricsScreen extends ConsumerStatefulWidget {
   const _BiometricsScreen({
-    super.key,
     required this.challenge,
     required this.canNavigateBack,
     required this.onDone,

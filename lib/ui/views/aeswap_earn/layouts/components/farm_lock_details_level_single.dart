@@ -1,9 +1,9 @@
 import 'package:aewallet/application/api_service.dart';
-import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock_stats.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/pool_factory.repository.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_lp_token_fiat_value.dart';
+import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -14,12 +14,10 @@ import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 class FarmLockDetailsLevelSingle extends ConsumerWidget {
   const FarmLockDetailsLevelSingle({
     super.key,
-    required this.farmLock,
     required this.level,
     required this.farmLockStats,
   });
 
-  final DexFarmLock farmLock;
   final String level;
   final DexFarmLockStats farmLockStats;
 
@@ -32,6 +30,8 @@ class FarmLockDetailsLevelSingle extends ConsumerWidget {
       fontSize: AppTextStyles.bodyMedium(context).fontSize,
     );
     final apiService = ref.watch(apiServiceProvider);
+    final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
+    if (farmLock == null) return const SizedBox.shrink();
     return Container(
       alignment: Alignment.centerLeft,
       decoration: BoxDecoration(

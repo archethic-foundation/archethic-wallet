@@ -1,8 +1,8 @@
 import 'dart:ui';
 
-import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_pair_icons.dart';
+import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/farm_lock_details_info_address_farm.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/farm_lock_details_info_address_lp.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/farm_lock_details_info_distributed_rewards.dart';
@@ -19,14 +19,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FarmLockDetailsInfo extends ConsumerWidget {
   const FarmLockDetailsInfo({
-    required this.farmLock,
     super.key,
   });
 
-  final DexFarmLock farmLock;
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
+    if (farmLock == null) return const SizedBox.shrink();
+
     return ClipRRect(
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
@@ -68,15 +68,13 @@ class FarmLockDetailsInfo extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  FarmLockDetailsInfoTokenReward(farmLock: farmLock),
-                  FarmLockDetailsInfoAddressFarm(farmLock: farmLock),
-                  FarmLockDetailsInfoAddressLP(farmLock: farmLock),
-                  FarmLockDetailsInfoPeriod(farmLock: farmLock),
-                  FarmLockDetailsInfoRemainingReward(farmLock: farmLock),
-                  FarmLockDetailsInfoDistributedRewards(farmLock: farmLock),
-                  FarmLockDetailsInfoLPDeposited(
-                    farmLock: farmLock,
-                  ),
+                  const FarmLockDetailsInfoTokenReward(),
+                  const FarmLockDetailsInfoAddressFarm(),
+                  const FarmLockDetailsInfoAddressLP(),
+                  const FarmLockDetailsInfoPeriod(),
+                  const FarmLockDetailsInfoRemainingReward(),
+                  const FarmLockDetailsInfoDistributedRewards(),
+                  const FarmLockDetailsInfoLPDeposited(),
                   const SizedBox(
                     height: 30,
                   ),
@@ -93,7 +91,6 @@ class FarmLockDetailsInfo extends ConsumerWidget {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),
                         child: FarmLockDetailsLevelSingle(
-                          farmLock: farmLock,
                           level: entry.key,
                           farmLockStats: entry.value,
                         ),

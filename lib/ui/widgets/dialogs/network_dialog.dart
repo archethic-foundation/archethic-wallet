@@ -1,25 +1,15 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-
-import 'package:aewallet/application/aeswap/dex_token.dart';
-import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/network/provider.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/available_networks.dart';
-import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
-import 'package:aewallet/modules/aeswap/application/session/provider.dart';
-import 'package:aewallet/modules/aeswap/application/verified_tokens.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/ui/widgets/components/popup_dialog.dart';
 import 'package:aewallet/util/url_util.dart';
-import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
-    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -75,19 +65,6 @@ class NetworkDialog extends ConsumerWidget {
           await ref
               .read(SettingsProviders.settings.notifier)
               .setNetwork(selectedNetworkSettings);
-
-          ref
-            ..invalidate(environmentProvider)
-            ..invalidate(
-              aedappfm.apiServiceProvider(ref.read(environmentProvider)),
-            )
-            ..invalidate(apiServiceProvider)
-            ..invalidate(DexPoolProviders.getPoolList)
-            ..invalidate(DexPoolProviders.getPoolListRaw)
-            ..invalidate(DexTokensProviders.tokensCommonBases)
-            ..invalidate(verifiedTokensProvider)
-            ..invalidate(DexTokensProviders.tokensFromAccount)
-            ..invalidate(farmLockFormFarmLockProvider);
           // If selected network is DevNet
           // Show a dialog to enter a custom network
           // else use the network selected
@@ -151,21 +128,6 @@ class NetworkDialog extends ConsumerWidget {
                                 networkDevEndpoint: uriInput.toString(),
                               ),
                             );
-
-                        ref
-                          ..invalidate(environmentProvider)
-                          ..invalidate(
-                            aedappfm.apiServiceProvider(
-                              ref.read(environmentProvider),
-                            ),
-                          )
-                          ..invalidate(apiServiceProvider)
-                          ..invalidate(DexPoolProviders.getPoolList)
-                          ..invalidate(DexPoolProviders.getPoolListRaw)
-                          ..invalidate(DexTokensProviders.tokensCommonBases)
-                          ..invalidate(verifiedTokensProvider)
-                          ..invalidate(DexTokensProviders.tokensFromAccount)
-                          ..invalidate(farmLockFormFarmLockProvider);
                         context.pop();
                       },
                     );
