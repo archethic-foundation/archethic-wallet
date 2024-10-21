@@ -27,6 +27,9 @@ class SwapConfirmInfos extends ConsumerWidget {
       return const SizedBox.shrink();
     }
 
+    final tokenSwappedBalance =
+        ref.watch(tokenSwappedBalanceProvider).value ?? 0;
+    final tokenToSwapBalance = ref.watch(tokenToSwapBalanceProvider).value ?? 0;
     return SizedBox(
       child: DecoratedBox(
         decoration: BoxDecoration(
@@ -158,7 +161,7 @@ class SwapConfirmInfos extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   DexTokenBalance(
-                    tokenBalance: swap.tokenToSwapBalance,
+                    tokenBalance: tokenToSwapBalance,
                     token: swap.tokenToSwap,
                     fiatVertical: true,
                     fiatAlignLeft: true,
@@ -167,13 +170,13 @@ class SwapConfirmInfos extends ConsumerWidget {
                     withOpacity: false,
                     height: 20,
                     digits: aedappfm.Responsive.isMobile(context) &&
-                            swap.tokenToSwapBalance > 1
+                            tokenToSwapBalance > 1
                         ? 2
                         : 8,
                   ),
                   DexTokenBalance(
                     tokenBalance: (Decimal.parse(
-                              swap.tokenToSwapBalance.toString(),
+                              tokenToSwapBalance.toString(),
                             ) -
                             Decimal.parse(swap.tokenToSwapAmount.toString()))
                         .toDouble(),
@@ -185,7 +188,7 @@ class SwapConfirmInfos extends ConsumerWidget {
                     height: 20,
                     digits: aedappfm.Responsive.isMobile(context) &&
                             (Decimal.parse(
-                                          swap.tokenToSwapBalance.toString(),
+                                          tokenToSwapBalance.toString(),
                                         ) -
                                         Decimal.parse(
                                           swap.tokenToSwapAmount.toString(),
@@ -201,7 +204,7 @@ class SwapConfirmInfos extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   DexTokenBalance(
-                    tokenBalance: swap.tokenSwappedBalance,
+                    tokenBalance: tokenSwappedBalance,
                     token: swap.tokenSwapped,
                     fiatVertical: true,
                     fiatAlignLeft: true,
@@ -210,13 +213,13 @@ class SwapConfirmInfos extends ConsumerWidget {
                     withOpacity: false,
                     height: 20,
                     digits: aedappfm.Responsive.isMobile(context) &&
-                            swap.tokenToSwapBalance > 1
+                            tokenToSwapBalance > 1
                         ? 2
                         : 8,
                   ),
                   DexTokenBalance(
                     tokenBalance: (Decimal.parse(
-                              swap.tokenSwappedBalance.toString(),
+                              tokenSwappedBalance.toString(),
                             ) +
                             Decimal.parse(swap.tokenSwappedAmount.toString()))
                         .toDouble(),
@@ -228,7 +231,7 @@ class SwapConfirmInfos extends ConsumerWidget {
                     height: 20,
                     digits: aedappfm.Responsive.isMobile(context) &&
                             (Decimal.parse(
-                                          swap.tokenSwappedBalance.toString(),
+                                          tokenSwappedBalance.toString(),
                                         ) +
                                         Decimal.parse(
                                           swap.tokenSwappedAmount.toString(),

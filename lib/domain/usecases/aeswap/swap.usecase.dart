@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/domain/repositories/transaction_validation_ratios.dart';
@@ -46,6 +47,7 @@ class SwapCase with aedappfm.TransactionMixin {
     DexToken tokenSwapped,
     double tokenToSwapAmount,
     double slippage,
+    VoidCallback onSuccess,
   ) async {
     final operationId = const Uuid().v4();
     final archethicContract = ArchethicContract(
@@ -168,6 +170,7 @@ class SwapCase with aedappfm.TransactionMixin {
                 amountSwapped: amount,
               ),
             );
+            onSuccess();
           }
         },
         onError: (sender, error) async {

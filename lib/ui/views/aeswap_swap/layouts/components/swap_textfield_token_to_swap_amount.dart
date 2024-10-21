@@ -59,7 +59,7 @@ class _SwapTokenToSwapAmountState extends ConsumerState<SwapTokenToSwapAmount> {
     BuildContext context,
   ) {
     final swapNotifier = ref.watch(swapFormNotifierProvider.notifier);
-
+    final tokenToSwapBalance = ref.watch(tokenToSwapBalanceProvider).value ?? 0;
     final swap = ref.watch(swapFormNotifierProvider);
     if (swap.tokenFormSelected != 1) {
       _updateAmountTextController();
@@ -195,7 +195,7 @@ class _SwapTokenToSwapAmountState extends ConsumerState<SwapTokenToSwapAmount> {
                                                 precision: 8,
                                               ),
                                               LengthLimitingTextInputFormatter(
-                                                swap.tokenToSwapBalance
+                                                tokenToSwapBalance
                                                         .formatNumber(
                                                           precision: 0,
                                                         )
@@ -237,10 +237,10 @@ class _SwapTokenToSwapAmountState extends ConsumerState<SwapTokenToSwapAmount> {
               children: [
                 if (swap.calculationInProgress == false)
                   DexTokenBalance(
-                    tokenBalance: swap.tokenToSwapBalance,
+                    tokenBalance: tokenToSwapBalance,
                     token: swap.tokenToSwap,
                     digits: aedappfm.Responsive.isMobile(context) &&
-                            swap.tokenToSwapBalance > 1
+                            tokenToSwapBalance > 1
                         ? 2
                         : 8,
                     fiatTextStyleMedium: true,
@@ -255,12 +255,12 @@ class _SwapTokenToSwapAmountState extends ConsumerState<SwapTokenToSwapAmount> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
-              child: swap.tokenToSwapBalance > 0
+              child: tokenToSwapBalance > 0
                   ? Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         aedappfm.ButtonHalf(
-                          balanceAmount: swap.tokenToSwapBalance,
+                          balanceAmount: tokenToSwapBalance,
                           height: 40,
                           style:
                               AppTextStyles.bodyMediumSecondaryColor(context),
@@ -272,7 +272,7 @@ class _SwapTokenToSwapAmountState extends ConsumerState<SwapTokenToSwapAmount> {
                               TextEditingValue.empty,
                               TextEditingValue(
                                 text: (Decimal.parse(
-                                          swap.tokenToSwapBalance.toString(),
+                                          tokenToSwapBalance.toString(),
                                         ) /
                                         Decimal.fromInt(2))
                                     .toDouble()
@@ -282,7 +282,7 @@ class _SwapTokenToSwapAmountState extends ConsumerState<SwapTokenToSwapAmount> {
                             swapNotifier.setTokenFormSelected(1);
                             await swapNotifier.setTokenToSwapAmount(
                               (Decimal.parse(
-                                        swap.tokenToSwapBalance.toString(),
+                                        tokenToSwapBalance.toString(),
                                       ) /
                                       Decimal.fromInt(2))
                                   .toDouble(),
@@ -293,7 +293,7 @@ class _SwapTokenToSwapAmountState extends ConsumerState<SwapTokenToSwapAmount> {
                           width: 10,
                         ),
                         aedappfm.ButtonMax(
-                          balanceAmount: swap.tokenToSwapBalance,
+                          balanceAmount: tokenToSwapBalance,
                           height: 40,
                           style:
                               AppTextStyles.bodyMediumSecondaryColor(context),
@@ -304,12 +304,12 @@ class _SwapTokenToSwapAmountState extends ConsumerState<SwapTokenToSwapAmount> {
                             ).formatEditUpdate(
                               TextEditingValue.empty,
                               TextEditingValue(
-                                text: swap.tokenToSwapBalance.toString(),
+                                text: tokenToSwapBalance.toString(),
                               ),
                             );
                             swapNotifier.setTokenFormSelected(1);
                             await swapNotifier
-                                .setTokenToSwapAmount(swap.tokenToSwapBalance);
+                                .setTokenToSwapAmount(tokenToSwapBalance);
                           },
                         ),
                       ],

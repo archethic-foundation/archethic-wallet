@@ -58,7 +58,8 @@ class _SwapTokenSwappedAmountState
     BuildContext context,
   ) {
     final swapNotifier = ref.watch(swapFormNotifierProvider.notifier);
-
+    final tokenSwappedBalance =
+        ref.watch(tokenSwappedBalanceProvider).value ?? 0;
     final swap = ref.watch(swapFormNotifierProvider);
     if (swap.tokenFormSelected != 2) {
       _updateAmountTextController();
@@ -200,7 +201,7 @@ class _SwapTokenSwappedAmountState
                                                 precision: 8,
                                               ),
                                               LengthLimitingTextInputFormatter(
-                                                swap.tokenSwappedBalance
+                                                tokenSwappedBalance
                                                         .formatNumber(
                                                           precision: 0,
                                                         )
@@ -240,10 +241,10 @@ class _SwapTokenSwappedAmountState
           children: [
             if (swap.calculationInProgress == false)
               DexTokenBalance(
-                tokenBalance: swap.tokenSwappedBalance,
+                tokenBalance: tokenSwappedBalance,
                 token: swap.tokenSwapped,
                 digits: aedappfm.Responsive.isMobile(context) &&
-                        swap.tokenSwappedBalance > 1
+                        tokenSwappedBalance > 1
                     ? 2
                     : 8,
                 fiatTextStyleMedium: true,
