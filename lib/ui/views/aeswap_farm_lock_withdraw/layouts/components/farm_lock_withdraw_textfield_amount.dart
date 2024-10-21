@@ -42,7 +42,7 @@ class _FarmLockWithdrawToken1AmountState
       TextEditingValue(
         text: farmLockWithdraw.amount == 0
             ? ''
-            : farmLockWithdraw.amount.toString(),
+            : farmLockWithdraw.amount.formatNumber(precision: 8),
       ),
     );
   }
