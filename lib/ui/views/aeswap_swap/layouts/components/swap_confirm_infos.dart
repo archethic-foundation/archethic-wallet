@@ -67,7 +67,7 @@ class SwapConfirmInfos extends ConsumerWidget {
                     children: [
                       TextSpan(
                         text:
-                            '    - ${swap.tokenToSwapAmount.formatNumber(precision: 8)}',
+                            '    - ${swap.tokenToSwapAmount.formatNumber(precision: 4)}',
                         style: AppTextStyles.bodyMediumSecondaryColor(context),
                       ),
                       TextSpan(
@@ -89,7 +89,7 @@ class SwapConfirmInfos extends ConsumerWidget {
                         children: [
                           TextSpan(
                             text:
-                                '≈ + ${swap.tokenSwappedAmount.formatNumber(precision: 8)}',
+                                '≈ + ${swap.tokenSwappedAmount.formatNumber(precision: 4)}',
                             style:
                                 AppTextStyles.bodyMediumSecondaryColor(context),
                           ),
@@ -108,7 +108,7 @@ class SwapConfirmInfos extends ConsumerWidget {
                       Tooltip(
                         message: swap.tokenSwapped!.symbol,
                         child: SelectableText(
-                          '${swap.minToReceive.formatNumber(precision: 8)} ${swap.tokenSwapped!.symbol.reduceSymbol()}',
+                          '${swap.minToReceive.formatNumber(precision: 4)} ${swap.tokenSwapped!.symbol.reduceSymbol()}',
                           style: AppTextStyles.bodyMedium(context),
                         ),
                       ),
