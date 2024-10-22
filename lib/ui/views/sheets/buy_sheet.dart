@@ -81,12 +81,24 @@ class BuySheet extends ConsumerWidget implements SheetSkeletonInterface {
                     LayoutBuilder(
                       builder: (context, constraints) {
                         final maxWidth = constraints.maxWidth;
-                        final itemWidth = (maxWidth - 16) / 2;
+                        final itemWidth = (maxWidth - 20) / 2;
                         return Wrap(
                           alignment: WrapAlignment.center,
                           spacing: 16,
                           runSpacing: 16,
                           children: [
+                            SizedBox(
+                              width: itemWidth,
+                              child: _ExchangeButton(
+                                image: Image.asset(
+                                  'assets/exchanges/mexc.png',
+                                  height: 70,
+                                ),
+                                text: 'MEXC Exchange',
+                                url:
+                                    'https://www.mexc.com/exchange/UCO_USDT?_from=search_spot_trade',
+                              ),
+                            ),
                             SizedBox(
                               width: itemWidth,
                               child: _ExchangeButton(
