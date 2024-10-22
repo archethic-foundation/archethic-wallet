@@ -42,7 +42,9 @@ class _SwapTokenSwappedAmountState
       TextEditingValue(
         text: swap.tokenSwappedAmount == 0
             ? ''
-            : swap.tokenSwappedAmount.formatNumber(precision: 8),
+            : swap.tokenSwappedAmount
+                .formatNumber(precision: 8)
+                .replaceAll(',', ' '),
       ),
     );
   }
