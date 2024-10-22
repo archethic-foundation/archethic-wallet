@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:aewallet/application/aeswap/dex_token.dart';
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/application/verified_tokens.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
@@ -36,22 +37,47 @@ Future<void> homePage(HomePageRef ref) async {
     ..watch(DexTokensProviders.tokensCommonBases)
     ..watch(verifiedTokensProvider)
     ..watch(DexTokensProviders.tokensFromAccount)
-    ..watch(farmLockFormFarmLockProvider);
+    ..watch(farmLockFormFarmLockProvider)
+    ..watch(
+      aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.notifier,
+    )
+    ..watch(aedappfm.CoinPriceProviders.coinPrices)
+    ..listen(
+      connectivityStatusProviders,
+      (previous, next) {
+        if (next == ConnectivityStatus.isDisconnected) {
+          /// When network becomes offline, start the subscriptions again
 
-  /// This is unawaited to avoid blocking the startup
-  /// in case internet is not available
-  unawaited(
-    ref
-        .watch(
-          aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.notifier,
-        )
-        .startSubscription(),
-  );
-  await ref
-      .watch(
-        aedappfm.CoinPriceProviders.coinPrices.notifier,
-      )
-      .startTimer();
+          ref
+              .read(
+                aedappfm
+                    .ArchethicOracleUCOProviders.archethicOracleUCO.notifier,
+              )
+              .stopSubscription();
+
+          ref
+              .read(
+                aedappfm.CoinPriceProviders.coinPrices.notifier,
+              )
+              .stopTimer();
+
+          return;
+        }
+
+        /// When network becomes online, start the subscriptions again
+        ref
+            .read(
+              aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.notifier,
+            )
+            .startSubscription();
+
+        ref
+            .read(
+              aedappfm.CoinPriceProviders.coinPrices.notifier,
+            )
+            .startTimer();
+      },
+    );
 }
 
 final mainTabControllerProvider =
