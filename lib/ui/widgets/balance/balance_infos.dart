@@ -88,7 +88,10 @@ class _BalanceTotalUSDShowed extends ConsumerWidget {
                 ],
               );
             } else if (snapshot.hasError) {
-              return Text('Error : ${snapshot.error}');
+              return Text(
+                r'$--.--',
+                style: ArchethicThemeStyles.textStyleSize35W900Primary,
+              );
             } else if (snapshot.hasData) {
               return Row(
                 children: [
