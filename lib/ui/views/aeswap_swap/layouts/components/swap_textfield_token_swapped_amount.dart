@@ -185,6 +185,7 @@ class _SwapTokenSwappedAmountState
                                                       text.replaceAll(' ', ''),
                                                     ) ??
                                                     0,
+                                                AppLocalizations.of(context)!,
                                               );
                                             },
                                             onTap: () {

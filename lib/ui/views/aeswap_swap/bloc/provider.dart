@@ -461,6 +461,7 @@ class SwapFormNotifier extends _$SwapFormNotifier
 
   Future<void> setTokenSwappedAmount(
     double tokenSwappedAmount,
+    AppLocalizations appLocalizations,
   ) async {
     state = state.copyWith(
       failure: null,
@@ -469,6 +470,40 @@ class SwapFormNotifier extends _$SwapFormNotifier
 
     if (state.tokenSwapped == null) {
       return;
+    }
+
+    if (state.pool != null &&
+        state.poolInfos != null &&
+        state.tokenSwapped != null &&
+        state.pool!.pair.token1.address == state.tokenSwapped!.address &&
+        state.tokenSwappedAmount > state.poolInfos!.token1Reserve) {
+      setFailure(
+        aedappfm.Failure.other(
+          cause:
+              '${appLocalizations.swapControlTokenSwappedAmountExceedReserve}(${state.poolInfos!.token1Reserve.formatNumber(precision: 2)} ${state.pool!.pair.token1.symbol})',
+        ),
+      );
+      state = state.copyWith(
+        tokenToSwapAmount: 0,
+      );
+      return;
+    } else {
+      if (state.pool != null &&
+          state.poolInfos != null &&
+          state.tokenSwapped != null &&
+          state.pool!.pair.token2.address == state.tokenSwapped!.address &&
+          state.tokenSwappedAmount > state.poolInfos!.token2Reserve) {
+        setFailure(
+          aedappfm.Failure.other(
+            cause:
+                '${appLocalizations.swapControlTokenSwappedAmountExceedReserve}(${state.poolInfos!.token2Reserve.formatNumber(precision: 2)} ${state.pool!.pair.token2.symbol})',
+          ),
+        );
+        state = state.copyWith(
+          tokenToSwapAmount: 0,
+        );
+        return;
+      }
     }
 
     await calculateOutputAmount();
@@ -482,6 +517,7 @@ class SwapFormNotifier extends _$SwapFormNotifier
 
   Future<void> setTokenSwapped(
     DexToken tokenSwapped,
+    AppLocalizations appLocalizations,
   ) async {
     state = state.copyWith(
       failure: null,
@@ -517,7 +553,10 @@ class SwapFormNotifier extends _$SwapFormNotifier
           success: (success) async {
             if (success != null && success['address'] != null) {
               setPoolAddress(success['address']);
-              await setTokenSwappedAmount(state.tokenSwappedAmount);
+              await setTokenSwappedAmount(
+                state.tokenSwappedAmount,
+                appLocalizations,
+              );
               await getRatio();
               await getPool();
             } else {
@@ -540,7 +579,9 @@ class SwapFormNotifier extends _$SwapFormNotifier
     return;
   }
 
-  Future<void> swapDirections() async {
+  Future<void> swapDirections(
+    AppLocalizations appLocalizations,
+  ) async {
     final oldToken1 = state.tokenToSwap;
     final oldToken2 = state.tokenSwapped;
     final oldToken2Amount = state.tokenSwappedAmount;
@@ -553,7 +594,10 @@ class SwapFormNotifier extends _$SwapFormNotifier
     }
 
     if (oldToken1 != null) {
-      await setTokenSwapped(oldToken1);
+      await setTokenSwapped(
+        oldToken1,
+        appLocalizations,
+      );
     }
     setTokenFormSelected(2);
   }
@@ -811,6 +855,28 @@ class SwapFormNotifier extends _$SwapFormNotifier
           await setTokenToSwapAmount(adjustedAmount);
           state = state.copyWith(messageMaxHalfUCO: true);
         }
+      }
+    }
+
+    if (state.pool!.pair.token1.address == state.tokenSwapped!.address &&
+        state.tokenSwappedAmount > state.poolInfos!.token1Reserve) {
+      setFailure(
+        aedappfm.Failure.other(
+          cause:
+              '${appLocalizations.swapControlTokenSwappedAmountExceedReserve}(${state.poolInfos!.token1Reserve.formatNumber(precision: 2)} ${state.pool!.pair.token1.symbol})',
+        ),
+      );
+      return false;
+    } else {
+      if (state.pool!.pair.token2.address == state.tokenSwapped!.address &&
+          state.tokenSwappedAmount > state.poolInfos!.token2Reserve) {
+        setFailure(
+          aedappfm.Failure.other(
+            cause:
+                '${appLocalizations.swapControlTokenSwappedAmountExceedReserve}(${state.poolInfos!.token2Reserve.formatNumber(precision: 2)} ${state.pool!.pair.token2.symbol})',
+          ),
+        );
+        return false;
       }
     }
 
