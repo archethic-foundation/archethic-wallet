@@ -16,7 +16,7 @@ part 'provider.g.dart';
 FarmLockFormBalances farmLockFormBalances(
   FarmLockFormBalancesRef ref,
 ) {
-  final pool = ref.watch(farmLockFormPoolProvider).value;
+  final pool = ref.watch(farmLockFormPoolProvider).valueOrNull;
 
   if (pool == null) return const FarmLockFormBalances();
 

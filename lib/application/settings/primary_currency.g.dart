@@ -6,7 +6,7 @@ part of 'primary_currency.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$convertedValueHash() => r'95ca331144d703ff515b6ec618c8a18d7b18e25e';
+String _$convertedValueHash() => r'c2e62285c8b42364128ee4b3c42723e68703da96';
 
 /// Copied from Dart SDK
 class _SystemHash {

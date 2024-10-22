@@ -29,8 +29,8 @@ class EarnTab extends ConsumerStatefulWidget {
 class EarnTabState extends ConsumerState<EarnTab> {
   @override
   Widget build(BuildContext context) {
-    final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
-    final pool = ref.watch(farmLockFormPoolProvider).value;
+    final farmLock = ref.watch(farmLockFormFarmLockProvider).valueOrNull;
+    final pool = ref.watch(farmLockFormPoolProvider).valueOrNull;
     final balances = ref.watch(farmLockFormBalancesProvider);
     final localizations = AppLocalizations.of(context)!;
 

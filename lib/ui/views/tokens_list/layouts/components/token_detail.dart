@@ -37,7 +37,7 @@ class TokenDetail extends ConsumerStatefulWidget {
 class _TokenDetailState extends ConsumerState<TokenDetail> {
   @override
   Widget build(BuildContext context) {
-    final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
+    final farmLock = ref.watch(farmLockFormFarmLockProvider).valueOrNull;
     final settings = ref.watch(SettingsProviders.settings);
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     final primaryCurrency =
