@@ -1,6 +1,6 @@
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-extension FutureRefDebounce<T> on FutureProviderRef<T> {
+extension FutureRefDebounce<T> on Ref<AsyncValue<T>> {
   Future<T> debounce({
     bool shouldDebounce = true,
     Duration delay = const Duration(milliseconds: 500),
