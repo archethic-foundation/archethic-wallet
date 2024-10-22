@@ -269,20 +269,6 @@ class SplashState extends ConsumerState<Splash> {
         .read(LocalDataMigrationProviders.localDataMigration.notifier)
         .migrateLocalData();
 
-    /// This is unawaited to avoid blocking the startup
-    /// in case internet is not available
-    unawaited(
-      ref
-          .read(
-            aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.notifier,
-          )
-          .startSubscription(),
-    );
-    await ref
-        .read(
-          aedappfm.CoinPriceProviders.coinPrices.notifier,
-        )
-        .startTimer();
     final locale = ref.read(LanguageProviders.selectedLocale);
     await ref.read(SettingsProviders.settings.notifier).initialize(locale);
     await ref.read(AuthenticationProviders.settings.notifier).initialize();
