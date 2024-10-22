@@ -1,5 +1,58 @@
+import 'dart:async';
+
+import 'package:aewallet/application/aeswap/dex_token.dart';
+import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
+import 'package:aewallet/modules/aeswap/application/verified_tokens.dart';
+import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'providers.g.dart';
+
+/// Eagerly initializes providers (https://riverpod.dev/docs/essentials/eager_initialization).
+///
+/// Add Watch here for any provider you want to init when app is displayed.
+/// Those providers will be kept alive during application lifetime.
+@riverpod
+Future<void> homePage(HomePageRef ref) async {
+  ref
+    ..onCancel(() {
+      ref
+          .read(
+            aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.notifier,
+          )
+          .stopSubscription();
+      ref
+          .read(
+            aedappfm.CoinPriceProviders.coinPrices.notifier,
+          )
+          .stopTimer();
+    })
+    ..watch(DexPoolProviders.getPoolList)
+    ..watch(DexPoolProviders.getPoolListRaw)
+    ..watch(DexTokensProviders.tokensCommonBases)
+    ..watch(verifiedTokensProvider)
+    ..watch(DexTokensProviders.tokensFromAccount)
+    ..watch(farmLockFormFarmLockProvider);
+
+  /// This is unawaited to avoid blocking the startup
+  /// in case internet is not available
+  unawaited(
+    ref
+        .watch(
+          aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.notifier,
+        )
+        .startSubscription(),
+  );
+  await ref
+      .watch(
+        aedappfm.CoinPriceProviders.coinPrices.notifier,
+      )
+      .startTimer();
+}
 
 final mainTabControllerProvider =
     StateNotifierProvider.autoDispose<TabControllerNotifier, TabController?>(
