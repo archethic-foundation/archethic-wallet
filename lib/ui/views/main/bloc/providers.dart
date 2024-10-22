@@ -48,12 +48,13 @@ Future<void> homePage(HomePageRef ref) async {
         if (next == ConnectivityStatus.isDisconnected) {
           /// When network becomes offline, start the subscriptions again
 
-          ref
-              .read(
-                aedappfm
-                    .ArchethicOracleUCOProviders.archethicOracleUCO.notifier,
-              )
-              .stopSubscription();
+          // TODO(Chralu): Uncomment when https://github.com/archethic-foundation/libdart/issues/155 is fixed
+          // ref
+          //     .read(
+          //       aedappfm
+          //           .ArchethicOracleUCOProviders.archethicOracleUCO.notifier,
+          //     )
+          //     .stopSubscription();
 
           ref
               .read(
