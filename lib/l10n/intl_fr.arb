@@ -540,6 +540,7 @@
     "swapControlTokenToSwapEmpty": "Veuillez entrer le jeton à échanger",
     "swapControlTokenSwappedEmpty": "Veuillez entrer le jeton échangé",
     "swapControlTokenToSwapAmountExceedBalance": "Le montant saisi pour le jeton à échanger dépasse votre solde.",
+    "swapControlTokenSwappedAmountExceedReserve": "Le montant échangé dépasse la réserve disponible du pool.",
     "swapProcessStep0": "Processus non démarré",
     "swapProcessStep1": "Calcul en cours",
     "swapProcessStep2": "Récupération des informations pour l'échange",

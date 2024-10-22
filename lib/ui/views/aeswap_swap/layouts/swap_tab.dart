@@ -70,9 +70,10 @@ class SwapTabState extends ConsumerState<SwapTab> {
               _tokenSwapped = DexToken.uco();
             }
             if (_tokenSwapped != null) {
-              await ref
-                  .read(swapFormNotifierProvider.notifier)
-                  .setTokenSwapped(_tokenSwapped);
+              await ref.read(swapFormNotifierProvider.notifier).setTokenSwapped(
+                    _tokenSwapped,
+                    AppLocalizations.of(context)!,
+                  );
             }
           }
 

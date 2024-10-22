@@ -560,6 +560,7 @@
     "swapControlTokenToSwapEmpty": "Please enter the token to swap",
     "swapControlTokenSwappedEmpty": "Please enter the token swapped",
     "swapControlTokenToSwapAmountExceedBalance": "The amount entered for token to swap exceeds your balance.",
+    "swapControlTokenSwappedAmountExceedReserve": "The swapped amount exceeds the available reserve in the pool.",
     "swapProcessStep0": "Process not started",
     "swapProcessStep1": "Calculating",
     "swapProcessStep2": "Retrieving information to swap",
