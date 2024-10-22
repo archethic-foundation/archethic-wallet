@@ -7,7 +7,7 @@ part of 'provider.dart';
 // **************************************************************************
 
 String _$tokenToSwapBalanceHash() =>
-    r'43a205ec62f689663ecef516f3484f810166de25';
+    r'523dcd8fdb8c9e77f45a9faea0fa820b097ddbcf';
 
 /// See also [tokenToSwapBalance].
 @ProviderFor(tokenToSwapBalance)
@@ -23,7 +23,7 @@ final tokenToSwapBalanceProvider = AutoDisposeFutureProvider<double>.internal(
 
 typedef TokenToSwapBalanceRef = AutoDisposeFutureProviderRef<double>;
 String _$tokenSwappedBalanceHash() =>
-    r'a82bee4c9edd271a8b3f0337fb40cdf7e27d7843';
+    r'ae1c4ca36bd6d0a50780e89f4179aba17c9736c1';
 
 /// See also [tokenSwappedBalance].
 @ProviderFor(tokenSwappedBalance)
@@ -38,7 +38,7 @@ final tokenSwappedBalanceProvider = AutoDisposeFutureProvider<double>.internal(
 );
 
 typedef TokenSwappedBalanceRef = AutoDisposeFutureProviderRef<double>;
-String _$swapFormNotifierHash() => r'a66d29c151617f5abeef3ee6a581671516c4798e';
+String _$swapFormNotifierHash() => r'c56ef27f412962f9c95e7ae05cd89ca2a483dc27';
 
 /// See also [SwapFormNotifier].
 @ProviderFor(SwapFormNotifier)

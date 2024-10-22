@@ -16,7 +16,7 @@ class EarnFarmLockInfos extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
-    final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
+    final farmLock = ref.watch(farmLockFormFarmLockProvider).valueOrNull;
 
     return InkWell(
       onTap: farmLock == null

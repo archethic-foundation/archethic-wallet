@@ -25,8 +25,8 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
-    final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
-    final pool = ref.watch(farmLockFormPoolProvider).value;
+    final farmLock = ref.watch(farmLockFormFarmLockProvider).valueOrNull;
+    final pool = ref.watch(farmLockFormPoolProvider).valueOrNull;
 
     return InkWell(
       onTap:
