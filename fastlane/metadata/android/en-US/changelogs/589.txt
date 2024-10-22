@@ -1,0 +1,4 @@
+Version 3.0.7
+
+- Add MEXC External Link
+- Fix bugs
