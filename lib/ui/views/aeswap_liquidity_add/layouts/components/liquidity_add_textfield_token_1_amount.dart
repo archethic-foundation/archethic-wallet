@@ -40,7 +40,9 @@ class _LiquidityAddToken1AmountState
       TextEditingValue(
         text: liquidityAdd.token1Amount == 0
             ? ''
-            : liquidityAdd.token1Amount.formatNumber(precision: 8),
+            : liquidityAdd.token1Amount
+                .formatNumber(precision: 8)
+                .replaceAll(',', ' '),
       ),
     );
   }
