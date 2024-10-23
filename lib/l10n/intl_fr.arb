@@ -720,5 +720,9 @@
     "restoreFailedTitle": "Archethic Wallet",
     "restoreFailedSubtitle": "Échec lors de l’ouverture de votre wallet.",
     "restoreFailedInfo1": "Pas de panique ! Vos données sont toujours là, en sécurité.",
-    "restoreFailedInfo2": "Cela peut être dû à un problème réseau.\nVous pouvez réessayer en cliquant sur le bouton ci-dessous, ou relancer l'application manuellement."
+    "restoreFailedInfo2": "Cela peut être dû à un problème réseau.\nVous pouvez réessayer en cliquant sur le bouton ci-dessous, ou relancer l'application manuellement.",
+    "logsDialogTitle": "Journal",
+    "logsDesc": "Si vous rencontrez des problèmes, vous pouvez copier et envoyer les informations ci-dessous à l'équipe support d'Archethic.\nCes informations ne contiennent aucune donnée sensible ou privée qui pourrait affecter la sécurité de vos fonds.",
+    "logsCopied": "Informations copiées",
+    "getSomeHelp": "Contactez nous"
 }
