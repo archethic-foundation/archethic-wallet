@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ class LogsDialog {
   static Future<void> getDialog(
     BuildContext context,
     WidgetRef ref,
-    String? logs,
+    String logs,
   ) async {
     return showDialog<void>(
       context: context,
@@ -19,33 +20,34 @@ class LogsDialog {
           popupTitle: AppLocalizations.of(context)!.logsDialogTitle,
           popupHeight: 500,
           popupContent: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SelectableText(
                 AppLocalizations.of(context)!.logsDesc,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: AppTextStyles.bodyMediumSecondaryColor(context),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              SelectableText(
+                '${AppLocalizations.of(context)!.logsDialogTitle}:',
+                style: AppTextStyles.bodyMediumSecondaryColor(context),
               ),
               Expanded(
                 child: Container(
                   width: aedappfm.AppThemeBase.sizeBoxComponentWidth,
                   color: Colors.transparent,
-                  padding: const EdgeInsets.all(30),
+                  padding: const EdgeInsets.only(
+                    bottom: 20,
+                  ),
                   child: aedappfm.ArchethicScrollbar(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         SelectableText(
-                          logs!,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(
-                                fontSize:
-                                    aedappfm.Responsive.fontSizeFromTextStyle(
-                                  context,
-                                  Theme.of(context).textTheme.bodyMedium!,
-                                ),
-                              ),
+                          logs,
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         const SizedBox(
                           height: 20,
