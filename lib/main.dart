@@ -26,6 +26,7 @@ import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/limited_width_layout.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/window_size.dart';
+import 'package:aewallet/ui/widgets/dialogs/logs_dialog.dart';
 import 'package:aewallet/util/security_manager.dart';
 import 'package:aewallet/util/service_locator.dart';
 import 'package:aewallet/util/universal_platform.dart';
@@ -262,13 +263,12 @@ class Splash extends ConsumerStatefulWidget {
 
 class SplashState extends ConsumerState<Splash> {
   final _logger = Logger('SplashState');
-  bool restorationFailed = false;
+  Object? restorationFailure;
 
   Future<void> initializeProviders() async {
     await ref
         .read(LocalDataMigrationProviders.localDataMigration.notifier)
         .migrateLocalData();
-
     final locale = ref.read(LanguageProviders.selectedLocale);
     await ref.read(SettingsProviders.settings.notifier).initialize(locale);
     await ref.read(AuthenticationProviders.settings.notifier).initialize();
@@ -316,7 +316,7 @@ class SplashState extends ConsumerState<Splash> {
       await Vault.instance().lock();
 
       setState(() {
-        restorationFailed = true;
+        restorationFailure = e;
       });
     }
   }
@@ -334,7 +334,7 @@ class SplashState extends ConsumerState<Splash> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    if (restorationFailed) {
+    if (restorationFailure != null) {
       return SheetSkeleton(
         appBar: SheetAppBar(
           title: localizations.restoreFailedTitle,
@@ -385,21 +385,36 @@ class SplashState extends ConsumerState<Splash> {
             ),
           ),
         ),
-        floatingActionButton: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            AppButtonTiny(
-              AppButtonTinyType.primary,
-              localizations.retry,
-              Dimens.buttonBottomDimens,
-              key: const Key('unlock'),
+        floatingActionButton: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextButton(
               onPressed: () {
-                setState(() {
-                  restorationFailed = false;
-                });
-                checkLoggedIn();
+                LogsDialog.getDialog(
+                  context,
+                  ref,
+                  restorationFailure.toString(),
+                );
               },
-              // disabled: isLocked,
+              child: Text(
+                localizations.getSomeHelp,
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                AppButtonTiny(
+                  AppButtonTinyType.primary,
+                  localizations.retry,
+                  Dimens.buttonBottomDimens,
+                  onPressed: () {
+                    setState(() {
+                      restorationFailure = null;
+                    });
+                    checkLoggedIn();
+                  },
+                ),
+              ],
             ),
           ],
         ),
