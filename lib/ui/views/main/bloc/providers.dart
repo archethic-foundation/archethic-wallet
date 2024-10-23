@@ -1,8 +1,12 @@
 import 'dart:async';
 
+import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/application/connectivity_status.dart';
+import 'package:aewallet/application/contact.dart';
+import 'package:aewallet/application/market_price.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
+import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/application/verified_tokens.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -44,7 +48,21 @@ Future<void> homePage(HomePageRef ref) async {
     ..watch(aedappfm.CoinPriceProviders.coinPrices)
     ..listen(
       connectivityStatusProviders,
-      (previous, next) {
+      (previous, next) async {
+        if (previous != next && next == ConnectivityStatus.isConnected) {
+          ref
+            ..invalidate(environmentProvider)
+            ..invalidate(ContactProviders.fetchContacts)
+            ..invalidate(MarketPriceProviders.currencyMarketPrice);
+
+          final poolListRaw =
+              await ref.read(DexPoolProviders.getPoolListRaw.future);
+
+          await (await ref
+                  .read(AccountProviders.accounts.notifier)
+                  .selectedAccountNotifier)
+              ?.refreshRecentTransactions(poolListRaw);
+        }
         if (next == ConnectivityStatus.isDisconnected) {
           /// When network becomes offline, start the subscriptions again
 
@@ -56,7 +74,7 @@ Future<void> homePage(HomePageRef ref) async {
           //     )
           //     .stopSubscription();
 
-          ref
+          await ref
               .read(
                 aedappfm.CoinPriceProviders.coinPrices.notifier,
               )
@@ -66,17 +84,21 @@ Future<void> homePage(HomePageRef ref) async {
         }
 
         /// When network becomes online, start the subscriptions again
-        ref
+        await ref
             .read(
               aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.notifier,
             )
             .startSubscription();
 
-        ref
+        ref.invalidate(aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO);
+
+        await ref
             .read(
               aedappfm.CoinPriceProviders.coinPrices.notifier,
             )
             .startTimer();
+
+        ref.invalidate(aedappfm.CoinPriceProviders.coinPrices);
       },
     );
 }
