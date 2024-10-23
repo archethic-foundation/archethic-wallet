@@ -23,8 +23,6 @@ class MainMenuView extends ConsumerWidget {
       ),
     );
 
-    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-
     if (selectedAccount == null) return const SizedBox();
 
     return DecoratedBox(
@@ -63,25 +61,21 @@ class MainMenuView extends ConsumerWidget {
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.title(text: localizations.information),
                       const _SettingsListItem.spacer(),
-                      if (connectivityStatusProvider ==
-                          ConnectivityStatus.isConnected)
-                        _SettingsListItem.singleLineWithInfos(
-                          heading: localizations.aeWebsiteLinkHeader,
-                          info: localizations.aeWebsiteLinkDesc,
-                          icon: Symbols.language,
-                          onPressed: () async {
-                            await launchUrl(
-                              Uri.parse(
-                                'https://www.archethic.net',
-                              ),
-                              mode: LaunchMode.externalApplication,
-                            );
-                          },
-                          background: ArchethicTheme.backgroundWelcome,
-                        ),
-                      if (connectivityStatusProvider ==
-                          ConnectivityStatus.isConnected)
-                        const _SettingsListItem.spacer(),
+                      _SettingsListItem.singleLineWithInfos(
+                        heading: localizations.aeWebsiteLinkHeader,
+                        info: localizations.aeWebsiteLinkDesc,
+                        icon: Symbols.language,
+                        onPressed: () async {
+                          await launchUrl(
+                            Uri.parse(
+                              'https://www.archethic.net',
+                            ),
+                            mode: LaunchMode.externalApplication,
+                          );
+                        },
+                        background: ArchethicTheme.backgroundWelcome,
+                      ),
+                      const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLineWithInfos(
                         heading: localizations.mediumLinkHeader,
                         info: localizations.mediumLinkDesc,

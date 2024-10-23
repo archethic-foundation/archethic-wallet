@@ -510,8 +510,7 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
           if (settings.showPriceChart &&
               priceHistory != null &&
               widget.aeToken.isVerified &&
-              widget.aeToken.ucid != null &&
-              connectivityStatusProvider == ConnectivityStatus.isConnected)
+              widget.aeToken.ucid != null)
             Positioned(
               child: Column(
                 children: [

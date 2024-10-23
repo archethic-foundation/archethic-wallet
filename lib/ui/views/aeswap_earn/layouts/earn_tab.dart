@@ -260,6 +260,8 @@ class EarnTabState extends ConsumerState<EarnTab> {
                                           localizations.addLiquidity,
                                           Dimens.buttonBottomDimens,
                                           key: const Key('addLiquidity'),
+                                          disabled:
+                                              pool == null || farmLock == null,
                                           onPressed: () async {
                                             final poolJson = jsonEncode(
                                               pool!.toJson(),
