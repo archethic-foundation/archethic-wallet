@@ -40,7 +40,6 @@ class AboutMenuView extends ConsumerWidget implements SheetSkeletonInterface {
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -85,39 +84,35 @@ class AboutMenuView extends ConsumerWidget implements SheetSkeletonInterface {
                         ),
                       ),
                       const _SettingsListItem.spacer(),
-                      if (connectivityStatusProvider ==
-                          ConnectivityStatus.isConnected)
-                        _SettingsListItem.singleLine(
-                          heading: localizations.aboutPrivacyPolicy,
-                          headingStyle:
-                              ArchethicThemeStyles.textStyleSize16W600Primary,
-                          icon: Symbols.policy,
-                          onPressed: () async {
-                            await launchUrl(
-                              Uri.parse(
-                                'https://www.archethic.net/privacy-policy-wallet.html',
-                              ),
-                              mode: LaunchMode.externalApplication,
-                            );
-                          },
-                        ),
+                      _SettingsListItem.singleLine(
+                        heading: localizations.aboutPrivacyPolicy,
+                        headingStyle:
+                            ArchethicThemeStyles.textStyleSize16W600Primary,
+                        icon: Symbols.policy,
+                        onPressed: () async {
+                          await launchUrl(
+                            Uri.parse(
+                              'https://www.archethic.net/privacy-policy-wallet.html',
+                            ),
+                            mode: LaunchMode.externalApplication,
+                          );
+                        },
+                      ),
                       const _SettingsListItem.spacer(),
-                      if (connectivityStatusProvider ==
-                          ConnectivityStatus.isConnected)
-                        _SettingsListItem.singleLine(
-                          heading: localizations.aboutTermsOfUseDefi,
-                          headingStyle:
-                              ArchethicThemeStyles.textStyleSize16W600Primary,
-                          icon: Symbols.quick_reference_all,
-                          onPressed: () async {
-                            await launchUrl(
-                              Uri.parse(
-                                'https://www.archethic.net/terms-of-use-defi.html',
-                              ),
-                              mode: LaunchMode.externalApplication,
-                            );
-                          },
-                        ),
+                      _SettingsListItem.singleLine(
+                        heading: localizations.aboutTermsOfUseDefi,
+                        headingStyle:
+                            ArchethicThemeStyles.textStyleSize16W600Primary,
+                        icon: Symbols.quick_reference_all,
+                        onPressed: () async {
+                          await launchUrl(
+                            Uri.parse(
+                              'https://www.archethic.net/terms-of-use-defi.html',
+                            ),
+                            mode: LaunchMode.externalApplication,
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ],

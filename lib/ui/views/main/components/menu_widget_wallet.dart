@@ -89,7 +89,7 @@ class MenuWidgetWallet extends ConsumerWidget {
                     context: context,
                     builder: (BuildContext context) {
                       return FractionallySizedBox(
-                        heightFactor: 0.90,
+                        heightFactor: 1,
                         child: Scaffold(
                           backgroundColor: aedappfm.AppThemeBase.sheetBackground
                               .withOpacity(0.2),
@@ -133,34 +133,44 @@ class MenuWidgetWallet extends ConsumerWidget {
                   .fade(duration: const Duration(milliseconds: 300))
                   .scale(duration: const Duration(milliseconds: 300)),
             if (refreshInProgress == false)
-              ActionButton(
-                text: localizations.refresh,
-                icon: Symbols.refresh,
-                onTap: () async {
-                  final _connectivityStatusProvider =
-                      ref.read(connectivityStatusProviders);
-                  if (_connectivityStatusProvider ==
-                      ConnectivityStatus.isDisconnected) {
-                    return;
-                  }
-                  final poolListRaw =
-                      await ref.read(DexPoolProviders.getPoolListRaw.future);
+              if (connectivityStatusProvider == ConnectivityStatus.isConnected)
+                ActionButton(
+                  text: localizations.refresh,
+                  icon: Symbols.refresh,
+                  onTap: () async {
+                    final _connectivityStatusProvider =
+                        ref.read(connectivityStatusProviders);
+                    if (_connectivityStatusProvider ==
+                        ConnectivityStatus.isDisconnected) {
+                      return;
+                    }
+                    final poolListRaw =
+                        await ref.read(DexPoolProviders.getPoolListRaw.future);
 
-                  await (await ref
-                          .read(AccountProviders.accounts.notifier)
-                          .selectedAccountNotifier)
-                      ?.refreshRecentTransactions(poolListRaw);
+                    await (await ref
+                            .read(AccountProviders.accounts.notifier)
+                            .selectedAccountNotifier)
+                        ?.refreshRecentTransactions(poolListRaw);
 
-                  if (context.mounted) {
-                    ref
-                      ..invalidate(ContactProviders.fetchContacts)
-                      ..invalidate(MarketPriceProviders.currencyMarketPrice);
-                  }
-                },
-              )
-                  .animate()
-                  .fade(duration: const Duration(milliseconds: 350))
-                  .scale(duration: const Duration(milliseconds: 350))
+                    if (context.mounted) {
+                      ref
+                        ..invalidate(ContactProviders.fetchContacts)
+                        ..invalidate(MarketPriceProviders.currencyMarketPrice);
+                    }
+                  },
+                )
+                    .animate()
+                    .fade(duration: const Duration(milliseconds: 350))
+                    .scale(duration: const Duration(milliseconds: 350))
+              else
+                ActionButton(
+                  text: localizations.refresh,
+                  icon: Symbols.refresh,
+                  enabled: false,
+                )
+                    .animate()
+                    .fade(duration: const Duration(milliseconds: 300))
+                    .scale(duration: const Duration(milliseconds: 300))
             else
               Stack(
                 alignment: Alignment.topCenter,

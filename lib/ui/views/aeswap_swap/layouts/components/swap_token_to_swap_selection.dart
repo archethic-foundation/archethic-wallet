@@ -1,3 +1,4 @@
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_token_icon.dart';
 import 'package:aewallet/ui/views/aeswap_swap/bloc/provider.dart';
@@ -18,6 +19,7 @@ class SwapTokenToSwapSelection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final swap = ref.watch(swapFormNotifierProvider);
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     return Container(
       width: aedappfm.Responsive.isMobile(context) ? 100 : 150,
       height: 30,
@@ -26,67 +28,76 @@ class SwapTokenToSwapSelection extends ConsumerWidget {
         borderRadius: BorderRadius.circular(6),
       ),
       child: InkWell(
-        onTap: () async {
-          final token = await CupertinoScaffold.showCupertinoModalBottomSheet(
-            context: context,
-            builder: (BuildContext context) {
-              return Scaffold(
-                backgroundColor:
-                    aedappfm.AppThemeBase.sheetBackground.withOpacity(0.2),
-                body: const TokenSelection(),
-              );
-            },
-          );
+        onTap: connectivityStatusProvider == ConnectivityStatus.isDisconnected
+            ? null
+            : () async {
+                final token =
+                    await CupertinoScaffold.showCupertinoModalBottomSheet(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Scaffold(
+                      backgroundColor: aedappfm.AppThemeBase.sheetBackground
+                          .withOpacity(0.2),
+                      body: const TokenSelection(),
+                    );
+                  },
+                );
 
-          if (token == null) return;
-          await ref
-              .read(swapFormNotifierProvider.notifier)
-              .setTokenToSwap(token);
-        },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Row(
-              children: [
-                if (swap.tokenToSwap == null)
-                  Text(
-                    AppLocalizations.of(context)!.btn_selectToken,
-                    style: AppTextStyles.bodySmall(context),
-                  )
-                else
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 10,
-                    ),
-                    child: SizedBox(
-                      width: aedappfm.Responsive.isMobile(context) ? 90 : 100,
-                      child: Row(
-                        children: [
-                          DexTokenIcon(
-                            tokenAddress: swap.tokenToSwap!.address,
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            child: Text(
-                              swap.tokenToSwap!.symbol,
-                              style: AppTextStyles.bodyMedium(context),
-                              overflow: TextOverflow.fade,
+                if (token == null) return;
+                await ref
+                    .read(swapFormNotifierProvider.notifier)
+                    .setTokenToSwap(token);
+              },
+        child: Opacity(
+          opacity:
+              connectivityStatusProvider == ConnectivityStatus.isDisconnected
+                  ? 0.5
+                  : 1,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Row(
+                children: [
+                  if (swap.tokenToSwap == null)
+                    Text(
+                      AppLocalizations.of(context)!.btn_selectToken,
+                      style: AppTextStyles.bodySmall(context),
+                    )
+                  else
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 10,
+                      ),
+                      child: SizedBox(
+                        width: aedappfm.Responsive.isMobile(context) ? 90 : 100,
+                        child: Row(
+                          children: [
+                            DexTokenIcon(
+                              tokenAddress: swap.tokenToSwap!.address,
                             ),
-                          ),
-                        ],
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Text(
+                                swap.tokenToSwap!.symbol,
+                                style: AppTextStyles.bodyMedium(context),
+                                overflow: TextOverflow.fade,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-              ],
-            ),
-            if (aedappfm.Responsive.isMobile(context) == false)
-              const Icon(
-                aedappfm.Iconsax.search_normal,
-                size: 12,
+                ],
               ),
-          ],
+              if (aedappfm.Responsive.isMobile(context) == false)
+                const Icon(
+                  aedappfm.Iconsax.search_normal,
+                  size: 12,
+                ),
+            ],
+          ),
         ),
       ),
     );

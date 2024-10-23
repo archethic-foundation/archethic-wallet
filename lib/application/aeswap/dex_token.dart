@@ -1,5 +1,6 @@
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/api_service.dart';
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/dex_token.repository.dart';
@@ -106,6 +107,14 @@ Future<({double token1, double token2})> _getRemoveAmounts(
   double lpTokenAmount,
 ) async {
   ref.periodicReload(const Duration(minutes: 1));
+
+  final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
+  if (connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
+    return (
+      token1: 0.0,
+      token2: 0.0,
+    );
+  }
 
   final apiService = ref.watch(apiServiceProvider);
   final amounts = await PoolFactoryRepositoryImpl(poolAddress, apiService)

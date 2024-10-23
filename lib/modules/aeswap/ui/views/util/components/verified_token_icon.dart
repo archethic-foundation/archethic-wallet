@@ -41,7 +41,18 @@ class VerifiedTokenIcon extends ConsumerWidget {
         )
         .valueOrNull;
 
-    if (isVerifiedToken == null) return const CircularProgressIndicator();
+    if (isVerifiedToken == null) {
+      return const SizedBox(
+        width: 10,
+        height: 10,
+        child: Padding(
+          padding: EdgeInsets.only(bottom: 2, left: 2),
+          child: CircularProgressIndicator(
+            strokeWidth: 0.5,
+          ),
+        ),
+      );
+    }
     if (isVerifiedToken == false) return const SizedBox();
 
     return Padding(
