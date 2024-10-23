@@ -15,15 +15,6 @@ public class MainActivityArchethicWallet extends FlutterFragmentActivity {
     private static final String CHANNEL = "fappchannel";
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // Hides application preview (e.g. when switching between applications)
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-    }
-
-
-    @Override
     public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
         GeneratedPluginRegistrant.registerWith(flutterEngine);
         new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNEL)
