@@ -13,7 +13,6 @@ import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
 import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/hive/db_helper.hive.dart';
-import 'package:aewallet/providers_observer.dart';
 import 'package:aewallet/router/router.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -46,6 +45,7 @@ import 'package:window_manager/window_manager.dart';
 
 Future<void> main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  aedappfm.LoggerOutput.setup();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await DBHelper.setupDatabase();
   await DBHelperModuleAESwap.setupDatabase();
@@ -107,7 +107,7 @@ Future<void> main() async {
   runApp(
     ProviderScope(
       observers: [
-        ProvidersLogger(),
+        aedappfm.ProvidersLogger(),
       ],
       child: const App(),
     ),
