@@ -117,15 +117,15 @@ abstract class Result<ValueT, FailureT extends Exception> {
   ///    - expected error type is [Failure].
   ///    - you don't need to handle specific error cases.
   static Future<Result<ValueT, Failure>> guard<ValueT>(
-    Future<ValueT> Function() run,
-  ) async {
+    Future<ValueT> Function() run, {
+    String? failureMessage,
+  }) async {
     try {
       return Result.success(await run());
-    } on Failure catch (e) {
-      return Result.failure(e);
     } catch (e, stack) {
       return Result.failure(
         Failure.other(
+          message: failureMessage,
           cause: e,
           stack: stack,
         ),

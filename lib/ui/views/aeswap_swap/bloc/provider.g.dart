@@ -38,7 +38,7 @@ final tokenSwappedBalanceProvider = AutoDisposeFutureProvider<double>.internal(
 );
 
 typedef TokenSwappedBalanceRef = AutoDisposeFutureProviderRef<double>;
-String _$swapFormNotifierHash() => r'c56ef27f412962f9c95e7ae05cd89ca2a483dc27';
+String _$swapFormNotifierHash() => r'40cbafe8ef97e62afe196e6c565baea18d19f2a9';
 
 /// See also [SwapFormNotifier].
 @ProviderFor(SwapFormNotifier)

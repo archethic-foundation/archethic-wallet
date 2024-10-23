@@ -27,8 +27,8 @@ class KeychainInfoVaultDatasource {
   static Future<bool> get boxExists => Vault.instance().boxExists(_vaultBox);
   static Future<void> clear() => Vault.instance().clear(_vaultBox);
 
-  T _getValue<T>(dynamic key, {T? defaultValue}) =>
-      _box.get(key, defaultValue: defaultValue) as T;
+  T? _getValue<T>(dynamic key, {T? defaultValue}) =>
+      _box.get(key, defaultValue: defaultValue) as T?;
 
   Future<void> _setValue<T>(dynamic key, T value) => _box.put(key, value);
 
@@ -45,22 +45,17 @@ class KeychainInfoVaultDatasource {
   Future<void> setKeychainSecuredInfos(
     KeychainSecuredInfos v,
   ) {
-    try {
-      return _setValue(
-        _keychainSecuredInfos,
-        json.encode(v),
-      );
-    } catch (e) {
-      throw Exception(e);
-    }
+    return _setValue(
+      _keychainSecuredInfos,
+      json.encode(v),
+    );
   }
 
   KeychainSecuredInfos? getKeychainSecuredInfos() {
-    try {
-      final map = json.decode(_getValue(_keychainSecuredInfos));
-      return KeychainSecuredInfos.fromJson(map);
-    } catch (e) {
-      return null;
-    }
+    final value = _getValue(_keychainSecuredInfos);
+    if (value == null) return null;
+
+    final map = json.decode(value);
+    return KeychainSecuredInfos.fromJson(map);
   }
 }
