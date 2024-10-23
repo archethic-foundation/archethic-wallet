@@ -16,49 +16,53 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Failure {
+  String? get message => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loggedOut,
-    required TResult Function() network,
-    required TResult Function() operationCanceled,
-    required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
-    required TResult Function() serviceNotFound,
-    required TResult Function() serviceAlreadyExists,
-    required TResult Function() insufficientFunds,
-    required TResult Function() unauthorized,
-    required TResult Function() invalidValue,
-    required TResult Function() locked,
-    required TResult Function(Object? cause, StackTrace? stack) other,
+    required TResult Function(String? message) loggedOut,
+    required TResult Function(String? message) network,
+    required TResult Function(String? message) operationCanceled,
+    required TResult Function(String? message, DateTime? cooldownEndDate)
+        quotaExceeded,
+    required TResult Function(String? message) serviceNotFound,
+    required TResult Function(String? message) serviceAlreadyExists,
+    required TResult Function(String? message) insufficientFunds,
+    required TResult Function(String? message) unauthorized,
+    required TResult Function(String? message) invalidValue,
+    required TResult Function(String? message) locked,
+    required TResult Function(String? message, Object? cause, StackTrace? stack)
+        other,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loggedOut,
-    TResult? Function()? network,
-    TResult? Function()? operationCanceled,
-    TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult? Function()? serviceNotFound,
-    TResult? Function()? serviceAlreadyExists,
-    TResult? Function()? insufficientFunds,
-    TResult? Function()? unauthorized,
-    TResult? Function()? invalidValue,
-    TResult? Function()? locked,
-    TResult? Function(Object? cause, StackTrace? stack)? other,
+    TResult? Function(String? message)? loggedOut,
+    TResult? Function(String? message)? network,
+    TResult? Function(String? message)? operationCanceled,
+    TResult? Function(String? message, DateTime? cooldownEndDate)?
+        quotaExceeded,
+    TResult? Function(String? message)? serviceNotFound,
+    TResult? Function(String? message)? serviceAlreadyExists,
+    TResult? Function(String? message)? insufficientFunds,
+    TResult? Function(String? message)? unauthorized,
+    TResult? Function(String? message)? invalidValue,
+    TResult? Function(String? message)? locked,
+    TResult? Function(String? message, Object? cause, StackTrace? stack)? other,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loggedOut,
-    TResult Function()? network,
-    TResult Function()? operationCanceled,
-    TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult Function()? serviceNotFound,
-    TResult Function()? serviceAlreadyExists,
-    TResult Function()? insufficientFunds,
-    TResult Function()? unauthorized,
-    TResult Function()? invalidValue,
-    TResult Function()? locked,
-    TResult Function(Object? cause, StackTrace? stack)? other,
+    TResult Function(String? message)? loggedOut,
+    TResult Function(String? message)? network,
+    TResult Function(String? message)? operationCanceled,
+    TResult Function(String? message, DateTime? cooldownEndDate)? quotaExceeded,
+    TResult Function(String? message)? serviceNotFound,
+    TResult Function(String? message)? serviceAlreadyExists,
+    TResult Function(String? message)? insufficientFunds,
+    TResult Function(String? message)? unauthorized,
+    TResult Function(String? message)? invalidValue,
+    TResult Function(String? message)? locked,
+    TResult Function(String? message, Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -108,12 +112,19 @@ mixin _$Failure {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $FailureCopyWith<Failure> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $FailureCopyWith<$Res> {
   factory $FailureCopyWith(Failure value, $Res Function(Failure) then) =
       _$FailureCopyWithImpl<$Res, Failure>;
+  @useResult
+  $Res call({String? message});
 }
 
 /// @nodoc
@@ -128,13 +139,29 @@ class _$FailureCopyWithImpl<$Res, $Val extends Failure>
 
   /// Create a copy of Failure
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = freezed,
+  }) {
+    return _then(_value.copyWith(
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$LoggedOutImplCopyWith<$Res> {
+abstract class _$$LoggedOutImplCopyWith<$Res>
+    implements $FailureCopyWith<$Res> {
   factory _$$LoggedOutImplCopyWith(
           _$LoggedOutImpl value, $Res Function(_$LoggedOutImpl) then) =
       __$$LoggedOutImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? message});
 }
 
 /// @nodoc
@@ -147,81 +174,109 @@ class __$$LoggedOutImplCopyWithImpl<$Res>
 
   /// Create a copy of Failure
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = freezed,
+  }) {
+    return _then(_$LoggedOutImpl(
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$LoggedOutImpl extends _LoggedOut {
-  const _$LoggedOutImpl() : super._();
+  const _$LoggedOutImpl({this.message}) : super._();
+
+  @override
+  final String? message;
 
   @override
   String toString() {
-    return 'Failure.loggedOut()';
+    return 'Failure.loggedOut(message: $message)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoggedOutImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$LoggedOutImpl &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, message);
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LoggedOutImplCopyWith<_$LoggedOutImpl> get copyWith =>
+      __$$LoggedOutImplCopyWithImpl<_$LoggedOutImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loggedOut,
-    required TResult Function() network,
-    required TResult Function() operationCanceled,
-    required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
-    required TResult Function() serviceNotFound,
-    required TResult Function() serviceAlreadyExists,
-    required TResult Function() insufficientFunds,
-    required TResult Function() unauthorized,
-    required TResult Function() invalidValue,
-    required TResult Function() locked,
-    required TResult Function(Object? cause, StackTrace? stack) other,
+    required TResult Function(String? message) loggedOut,
+    required TResult Function(String? message) network,
+    required TResult Function(String? message) operationCanceled,
+    required TResult Function(String? message, DateTime? cooldownEndDate)
+        quotaExceeded,
+    required TResult Function(String? message) serviceNotFound,
+    required TResult Function(String? message) serviceAlreadyExists,
+    required TResult Function(String? message) insufficientFunds,
+    required TResult Function(String? message) unauthorized,
+    required TResult Function(String? message) invalidValue,
+    required TResult Function(String? message) locked,
+    required TResult Function(String? message, Object? cause, StackTrace? stack)
+        other,
   }) {
-    return loggedOut();
+    return loggedOut(message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loggedOut,
-    TResult? Function()? network,
-    TResult? Function()? operationCanceled,
-    TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult? Function()? serviceNotFound,
-    TResult? Function()? serviceAlreadyExists,
-    TResult? Function()? insufficientFunds,
-    TResult? Function()? unauthorized,
-    TResult? Function()? invalidValue,
-    TResult? Function()? locked,
-    TResult? Function(Object? cause, StackTrace? stack)? other,
+    TResult? Function(String? message)? loggedOut,
+    TResult? Function(String? message)? network,
+    TResult? Function(String? message)? operationCanceled,
+    TResult? Function(String? message, DateTime? cooldownEndDate)?
+        quotaExceeded,
+    TResult? Function(String? message)? serviceNotFound,
+    TResult? Function(String? message)? serviceAlreadyExists,
+    TResult? Function(String? message)? insufficientFunds,
+    TResult? Function(String? message)? unauthorized,
+    TResult? Function(String? message)? invalidValue,
+    TResult? Function(String? message)? locked,
+    TResult? Function(String? message, Object? cause, StackTrace? stack)? other,
   }) {
-    return loggedOut?.call();
+    return loggedOut?.call(message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loggedOut,
-    TResult Function()? network,
-    TResult Function()? operationCanceled,
-    TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult Function()? serviceNotFound,
-    TResult Function()? serviceAlreadyExists,
-    TResult Function()? insufficientFunds,
-    TResult Function()? unauthorized,
-    TResult Function()? invalidValue,
-    TResult Function()? locked,
-    TResult Function(Object? cause, StackTrace? stack)? other,
+    TResult Function(String? message)? loggedOut,
+    TResult Function(String? message)? network,
+    TResult Function(String? message)? operationCanceled,
+    TResult Function(String? message, DateTime? cooldownEndDate)? quotaExceeded,
+    TResult Function(String? message)? serviceNotFound,
+    TResult Function(String? message)? serviceAlreadyExists,
+    TResult Function(String? message)? insufficientFunds,
+    TResult Function(String? message)? unauthorized,
+    TResult Function(String? message)? invalidValue,
+    TResult Function(String? message)? locked,
+    TResult Function(String? message, Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
   }) {
     if (loggedOut != null) {
-      return loggedOut();
+      return loggedOut(message);
     }
     return orElse();
   }
@@ -286,15 +341,29 @@ class _$LoggedOutImpl extends _LoggedOut {
 }
 
 abstract class _LoggedOut extends Failure {
-  const factory _LoggedOut() = _$LoggedOutImpl;
+  const factory _LoggedOut({final String? message}) = _$LoggedOutImpl;
   const _LoggedOut._() : super._();
+
+  @override
+  String? get message;
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LoggedOutImplCopyWith<_$LoggedOutImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$NetworkFailureImplCopyWith<$Res> {
+abstract class _$$NetworkFailureImplCopyWith<$Res>
+    implements $FailureCopyWith<$Res> {
   factory _$$NetworkFailureImplCopyWith(_$NetworkFailureImpl value,
           $Res Function(_$NetworkFailureImpl) then) =
       __$$NetworkFailureImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? message});
 }
 
 /// @nodoc
@@ -307,81 +376,110 @@ class __$$NetworkFailureImplCopyWithImpl<$Res>
 
   /// Create a copy of Failure
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = freezed,
+  }) {
+    return _then(_$NetworkFailureImpl(
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$NetworkFailureImpl extends _NetworkFailure {
-  const _$NetworkFailureImpl() : super._();
+  const _$NetworkFailureImpl({this.message}) : super._();
+
+  @override
+  final String? message;
 
   @override
   String toString() {
-    return 'Failure.network()';
+    return 'Failure.network(message: $message)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$NetworkFailureImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$NetworkFailureImpl &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, message);
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$NetworkFailureImplCopyWith<_$NetworkFailureImpl> get copyWith =>
+      __$$NetworkFailureImplCopyWithImpl<_$NetworkFailureImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loggedOut,
-    required TResult Function() network,
-    required TResult Function() operationCanceled,
-    required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
-    required TResult Function() serviceNotFound,
-    required TResult Function() serviceAlreadyExists,
-    required TResult Function() insufficientFunds,
-    required TResult Function() unauthorized,
-    required TResult Function() invalidValue,
-    required TResult Function() locked,
-    required TResult Function(Object? cause, StackTrace? stack) other,
+    required TResult Function(String? message) loggedOut,
+    required TResult Function(String? message) network,
+    required TResult Function(String? message) operationCanceled,
+    required TResult Function(String? message, DateTime? cooldownEndDate)
+        quotaExceeded,
+    required TResult Function(String? message) serviceNotFound,
+    required TResult Function(String? message) serviceAlreadyExists,
+    required TResult Function(String? message) insufficientFunds,
+    required TResult Function(String? message) unauthorized,
+    required TResult Function(String? message) invalidValue,
+    required TResult Function(String? message) locked,
+    required TResult Function(String? message, Object? cause, StackTrace? stack)
+        other,
   }) {
-    return network();
+    return network(message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loggedOut,
-    TResult? Function()? network,
-    TResult? Function()? operationCanceled,
-    TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult? Function()? serviceNotFound,
-    TResult? Function()? serviceAlreadyExists,
-    TResult? Function()? insufficientFunds,
-    TResult? Function()? unauthorized,
-    TResult? Function()? invalidValue,
-    TResult? Function()? locked,
-    TResult? Function(Object? cause, StackTrace? stack)? other,
+    TResult? Function(String? message)? loggedOut,
+    TResult? Function(String? message)? network,
+    TResult? Function(String? message)? operationCanceled,
+    TResult? Function(String? message, DateTime? cooldownEndDate)?
+        quotaExceeded,
+    TResult? Function(String? message)? serviceNotFound,
+    TResult? Function(String? message)? serviceAlreadyExists,
+    TResult? Function(String? message)? insufficientFunds,
+    TResult? Function(String? message)? unauthorized,
+    TResult? Function(String? message)? invalidValue,
+    TResult? Function(String? message)? locked,
+    TResult? Function(String? message, Object? cause, StackTrace? stack)? other,
   }) {
-    return network?.call();
+    return network?.call(message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loggedOut,
-    TResult Function()? network,
-    TResult Function()? operationCanceled,
-    TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult Function()? serviceNotFound,
-    TResult Function()? serviceAlreadyExists,
-    TResult Function()? insufficientFunds,
-    TResult Function()? unauthorized,
-    TResult Function()? invalidValue,
-    TResult Function()? locked,
-    TResult Function(Object? cause, StackTrace? stack)? other,
+    TResult Function(String? message)? loggedOut,
+    TResult Function(String? message)? network,
+    TResult Function(String? message)? operationCanceled,
+    TResult Function(String? message, DateTime? cooldownEndDate)? quotaExceeded,
+    TResult Function(String? message)? serviceNotFound,
+    TResult Function(String? message)? serviceAlreadyExists,
+    TResult Function(String? message)? insufficientFunds,
+    TResult Function(String? message)? unauthorized,
+    TResult Function(String? message)? invalidValue,
+    TResult Function(String? message)? locked,
+    TResult Function(String? message, Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
   }) {
     if (network != null) {
-      return network();
+      return network(message);
     }
     return orElse();
   }
@@ -446,15 +544,29 @@ class _$NetworkFailureImpl extends _NetworkFailure {
 }
 
 abstract class _NetworkFailure extends Failure {
-  const factory _NetworkFailure() = _$NetworkFailureImpl;
+  const factory _NetworkFailure({final String? message}) = _$NetworkFailureImpl;
   const _NetworkFailure._() : super._();
+
+  @override
+  String? get message;
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$NetworkFailureImplCopyWith<_$NetworkFailureImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$OperationCanceledImplCopyWith<$Res> {
+abstract class _$$OperationCanceledImplCopyWith<$Res>
+    implements $FailureCopyWith<$Res> {
   factory _$$OperationCanceledImplCopyWith(_$OperationCanceledImpl value,
           $Res Function(_$OperationCanceledImpl) then) =
       __$$OperationCanceledImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? message});
 }
 
 /// @nodoc
@@ -467,81 +579,110 @@ class __$$OperationCanceledImplCopyWithImpl<$Res>
 
   /// Create a copy of Failure
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = freezed,
+  }) {
+    return _then(_$OperationCanceledImpl(
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$OperationCanceledImpl extends _OperationCanceled {
-  const _$OperationCanceledImpl() : super._();
+  const _$OperationCanceledImpl({this.message}) : super._();
+
+  @override
+  final String? message;
 
   @override
   String toString() {
-    return 'Failure.operationCanceled()';
+    return 'Failure.operationCanceled(message: $message)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$OperationCanceledImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$OperationCanceledImpl &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, message);
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OperationCanceledImplCopyWith<_$OperationCanceledImpl> get copyWith =>
+      __$$OperationCanceledImplCopyWithImpl<_$OperationCanceledImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loggedOut,
-    required TResult Function() network,
-    required TResult Function() operationCanceled,
-    required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
-    required TResult Function() serviceNotFound,
-    required TResult Function() serviceAlreadyExists,
-    required TResult Function() insufficientFunds,
-    required TResult Function() unauthorized,
-    required TResult Function() invalidValue,
-    required TResult Function() locked,
-    required TResult Function(Object? cause, StackTrace? stack) other,
+    required TResult Function(String? message) loggedOut,
+    required TResult Function(String? message) network,
+    required TResult Function(String? message) operationCanceled,
+    required TResult Function(String? message, DateTime? cooldownEndDate)
+        quotaExceeded,
+    required TResult Function(String? message) serviceNotFound,
+    required TResult Function(String? message) serviceAlreadyExists,
+    required TResult Function(String? message) insufficientFunds,
+    required TResult Function(String? message) unauthorized,
+    required TResult Function(String? message) invalidValue,
+    required TResult Function(String? message) locked,
+    required TResult Function(String? message, Object? cause, StackTrace? stack)
+        other,
   }) {
-    return operationCanceled();
+    return operationCanceled(message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loggedOut,
-    TResult? Function()? network,
-    TResult? Function()? operationCanceled,
-    TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult? Function()? serviceNotFound,
-    TResult? Function()? serviceAlreadyExists,
-    TResult? Function()? insufficientFunds,
-    TResult? Function()? unauthorized,
-    TResult? Function()? invalidValue,
-    TResult? Function()? locked,
-    TResult? Function(Object? cause, StackTrace? stack)? other,
+    TResult? Function(String? message)? loggedOut,
+    TResult? Function(String? message)? network,
+    TResult? Function(String? message)? operationCanceled,
+    TResult? Function(String? message, DateTime? cooldownEndDate)?
+        quotaExceeded,
+    TResult? Function(String? message)? serviceNotFound,
+    TResult? Function(String? message)? serviceAlreadyExists,
+    TResult? Function(String? message)? insufficientFunds,
+    TResult? Function(String? message)? unauthorized,
+    TResult? Function(String? message)? invalidValue,
+    TResult? Function(String? message)? locked,
+    TResult? Function(String? message, Object? cause, StackTrace? stack)? other,
   }) {
-    return operationCanceled?.call();
+    return operationCanceled?.call(message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loggedOut,
-    TResult Function()? network,
-    TResult Function()? operationCanceled,
-    TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult Function()? serviceNotFound,
-    TResult Function()? serviceAlreadyExists,
-    TResult Function()? insufficientFunds,
-    TResult Function()? unauthorized,
-    TResult Function()? invalidValue,
-    TResult Function()? locked,
-    TResult Function(Object? cause, StackTrace? stack)? other,
+    TResult Function(String? message)? loggedOut,
+    TResult Function(String? message)? network,
+    TResult Function(String? message)? operationCanceled,
+    TResult Function(String? message, DateTime? cooldownEndDate)? quotaExceeded,
+    TResult Function(String? message)? serviceNotFound,
+    TResult Function(String? message)? serviceAlreadyExists,
+    TResult Function(String? message)? insufficientFunds,
+    TResult Function(String? message)? unauthorized,
+    TResult Function(String? message)? invalidValue,
+    TResult Function(String? message)? locked,
+    TResult Function(String? message, Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
   }) {
     if (operationCanceled != null) {
-      return operationCanceled();
+      return operationCanceled(message);
     }
     return orElse();
   }
@@ -606,17 +747,30 @@ class _$OperationCanceledImpl extends _OperationCanceled {
 }
 
 abstract class _OperationCanceled extends Failure {
-  const factory _OperationCanceled() = _$OperationCanceledImpl;
+  const factory _OperationCanceled({final String? message}) =
+      _$OperationCanceledImpl;
   const _OperationCanceled._() : super._();
+
+  @override
+  String? get message;
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$OperationCanceledImplCopyWith<_$OperationCanceledImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$QuotaExceededFailureImplCopyWith<$Res> {
+abstract class _$$QuotaExceededFailureImplCopyWith<$Res>
+    implements $FailureCopyWith<$Res> {
   factory _$$QuotaExceededFailureImplCopyWith(_$QuotaExceededFailureImpl value,
           $Res Function(_$QuotaExceededFailureImpl) then) =
       __$$QuotaExceededFailureImplCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call({DateTime? cooldownEndDate});
+  $Res call({String? message, DateTime? cooldownEndDate});
 }
 
 /// @nodoc
@@ -632,9 +786,14 @@ class __$$QuotaExceededFailureImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? message = freezed,
     Object? cooldownEndDate = freezed,
   }) {
     return _then(_$QuotaExceededFailureImpl(
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
       cooldownEndDate: freezed == cooldownEndDate
           ? _value.cooldownEndDate
           : cooldownEndDate // ignore: cast_nullable_to_non_nullable
@@ -646,14 +805,17 @@ class __$$QuotaExceededFailureImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$QuotaExceededFailureImpl extends _QuotaExceededFailure {
-  const _$QuotaExceededFailureImpl({this.cooldownEndDate}) : super._();
+  const _$QuotaExceededFailureImpl({this.message, this.cooldownEndDate})
+      : super._();
 
+  @override
+  final String? message;
   @override
   final DateTime? cooldownEndDate;
 
   @override
   String toString() {
-    return 'Failure.quotaExceeded(cooldownEndDate: $cooldownEndDate)';
+    return 'Failure.quotaExceeded(message: $message, cooldownEndDate: $cooldownEndDate)';
   }
 
   @override
@@ -661,12 +823,13 @@ class _$QuotaExceededFailureImpl extends _QuotaExceededFailure {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$QuotaExceededFailureImpl &&
+            (identical(other.message, message) || other.message == message) &&
             (identical(other.cooldownEndDate, cooldownEndDate) ||
                 other.cooldownEndDate == cooldownEndDate));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, cooldownEndDate);
+  int get hashCode => Object.hash(runtimeType, message, cooldownEndDate);
 
   /// Create a copy of Failure
   /// with the given fields replaced by the non-null parameter values.
@@ -681,57 +844,60 @@ class _$QuotaExceededFailureImpl extends _QuotaExceededFailure {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loggedOut,
-    required TResult Function() network,
-    required TResult Function() operationCanceled,
-    required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
-    required TResult Function() serviceNotFound,
-    required TResult Function() serviceAlreadyExists,
-    required TResult Function() insufficientFunds,
-    required TResult Function() unauthorized,
-    required TResult Function() invalidValue,
-    required TResult Function() locked,
-    required TResult Function(Object? cause, StackTrace? stack) other,
+    required TResult Function(String? message) loggedOut,
+    required TResult Function(String? message) network,
+    required TResult Function(String? message) operationCanceled,
+    required TResult Function(String? message, DateTime? cooldownEndDate)
+        quotaExceeded,
+    required TResult Function(String? message) serviceNotFound,
+    required TResult Function(String? message) serviceAlreadyExists,
+    required TResult Function(String? message) insufficientFunds,
+    required TResult Function(String? message) unauthorized,
+    required TResult Function(String? message) invalidValue,
+    required TResult Function(String? message) locked,
+    required TResult Function(String? message, Object? cause, StackTrace? stack)
+        other,
   }) {
-    return quotaExceeded(cooldownEndDate);
+    return quotaExceeded(message, cooldownEndDate);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loggedOut,
-    TResult? Function()? network,
-    TResult? Function()? operationCanceled,
-    TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult? Function()? serviceNotFound,
-    TResult? Function()? serviceAlreadyExists,
-    TResult? Function()? insufficientFunds,
-    TResult? Function()? unauthorized,
-    TResult? Function()? invalidValue,
-    TResult? Function()? locked,
-    TResult? Function(Object? cause, StackTrace? stack)? other,
+    TResult? Function(String? message)? loggedOut,
+    TResult? Function(String? message)? network,
+    TResult? Function(String? message)? operationCanceled,
+    TResult? Function(String? message, DateTime? cooldownEndDate)?
+        quotaExceeded,
+    TResult? Function(String? message)? serviceNotFound,
+    TResult? Function(String? message)? serviceAlreadyExists,
+    TResult? Function(String? message)? insufficientFunds,
+    TResult? Function(String? message)? unauthorized,
+    TResult? Function(String? message)? invalidValue,
+    TResult? Function(String? message)? locked,
+    TResult? Function(String? message, Object? cause, StackTrace? stack)? other,
   }) {
-    return quotaExceeded?.call(cooldownEndDate);
+    return quotaExceeded?.call(message, cooldownEndDate);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loggedOut,
-    TResult Function()? network,
-    TResult Function()? operationCanceled,
-    TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult Function()? serviceNotFound,
-    TResult Function()? serviceAlreadyExists,
-    TResult Function()? insufficientFunds,
-    TResult Function()? unauthorized,
-    TResult Function()? invalidValue,
-    TResult Function()? locked,
-    TResult Function(Object? cause, StackTrace? stack)? other,
+    TResult Function(String? message)? loggedOut,
+    TResult Function(String? message)? network,
+    TResult Function(String? message)? operationCanceled,
+    TResult Function(String? message, DateTime? cooldownEndDate)? quotaExceeded,
+    TResult Function(String? message)? serviceNotFound,
+    TResult Function(String? message)? serviceAlreadyExists,
+    TResult Function(String? message)? insufficientFunds,
+    TResult Function(String? message)? unauthorized,
+    TResult Function(String? message)? invalidValue,
+    TResult Function(String? message)? locked,
+    TResult Function(String? message, Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
   }) {
     if (quotaExceeded != null) {
-      return quotaExceeded(cooldownEndDate);
+      return quotaExceeded(message, cooldownEndDate);
     }
     return orElse();
   }
@@ -796,24 +962,32 @@ class _$QuotaExceededFailureImpl extends _QuotaExceededFailure {
 }
 
 abstract class _QuotaExceededFailure extends Failure {
-  const factory _QuotaExceededFailure({final DateTime? cooldownEndDate}) =
-      _$QuotaExceededFailureImpl;
+  const factory _QuotaExceededFailure(
+      {final String? message,
+      final DateTime? cooldownEndDate}) = _$QuotaExceededFailureImpl;
   const _QuotaExceededFailure._() : super._();
 
+  @override
+  String? get message;
   DateTime? get cooldownEndDate;
 
   /// Create a copy of Failure
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$QuotaExceededFailureImplCopyWith<_$QuotaExceededFailureImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ServiceNotFoundImplCopyWith<$Res> {
+abstract class _$$ServiceNotFoundImplCopyWith<$Res>
+    implements $FailureCopyWith<$Res> {
   factory _$$ServiceNotFoundImplCopyWith(_$ServiceNotFoundImpl value,
           $Res Function(_$ServiceNotFoundImpl) then) =
       __$$ServiceNotFoundImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? message});
 }
 
 /// @nodoc
@@ -826,81 +1000,110 @@ class __$$ServiceNotFoundImplCopyWithImpl<$Res>
 
   /// Create a copy of Failure
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = freezed,
+  }) {
+    return _then(_$ServiceNotFoundImpl(
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$ServiceNotFoundImpl extends _ServiceNotFound {
-  const _$ServiceNotFoundImpl() : super._();
+  const _$ServiceNotFoundImpl({this.message}) : super._();
+
+  @override
+  final String? message;
 
   @override
   String toString() {
-    return 'Failure.serviceNotFound()';
+    return 'Failure.serviceNotFound(message: $message)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$ServiceNotFoundImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$ServiceNotFoundImpl &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, message);
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ServiceNotFoundImplCopyWith<_$ServiceNotFoundImpl> get copyWith =>
+      __$$ServiceNotFoundImplCopyWithImpl<_$ServiceNotFoundImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loggedOut,
-    required TResult Function() network,
-    required TResult Function() operationCanceled,
-    required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
-    required TResult Function() serviceNotFound,
-    required TResult Function() serviceAlreadyExists,
-    required TResult Function() insufficientFunds,
-    required TResult Function() unauthorized,
-    required TResult Function() invalidValue,
-    required TResult Function() locked,
-    required TResult Function(Object? cause, StackTrace? stack) other,
+    required TResult Function(String? message) loggedOut,
+    required TResult Function(String? message) network,
+    required TResult Function(String? message) operationCanceled,
+    required TResult Function(String? message, DateTime? cooldownEndDate)
+        quotaExceeded,
+    required TResult Function(String? message) serviceNotFound,
+    required TResult Function(String? message) serviceAlreadyExists,
+    required TResult Function(String? message) insufficientFunds,
+    required TResult Function(String? message) unauthorized,
+    required TResult Function(String? message) invalidValue,
+    required TResult Function(String? message) locked,
+    required TResult Function(String? message, Object? cause, StackTrace? stack)
+        other,
   }) {
-    return serviceNotFound();
+    return serviceNotFound(message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loggedOut,
-    TResult? Function()? network,
-    TResult? Function()? operationCanceled,
-    TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult? Function()? serviceNotFound,
-    TResult? Function()? serviceAlreadyExists,
-    TResult? Function()? insufficientFunds,
-    TResult? Function()? unauthorized,
-    TResult? Function()? invalidValue,
-    TResult? Function()? locked,
-    TResult? Function(Object? cause, StackTrace? stack)? other,
+    TResult? Function(String? message)? loggedOut,
+    TResult? Function(String? message)? network,
+    TResult? Function(String? message)? operationCanceled,
+    TResult? Function(String? message, DateTime? cooldownEndDate)?
+        quotaExceeded,
+    TResult? Function(String? message)? serviceNotFound,
+    TResult? Function(String? message)? serviceAlreadyExists,
+    TResult? Function(String? message)? insufficientFunds,
+    TResult? Function(String? message)? unauthorized,
+    TResult? Function(String? message)? invalidValue,
+    TResult? Function(String? message)? locked,
+    TResult? Function(String? message, Object? cause, StackTrace? stack)? other,
   }) {
-    return serviceNotFound?.call();
+    return serviceNotFound?.call(message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loggedOut,
-    TResult Function()? network,
-    TResult Function()? operationCanceled,
-    TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult Function()? serviceNotFound,
-    TResult Function()? serviceAlreadyExists,
-    TResult Function()? insufficientFunds,
-    TResult Function()? unauthorized,
-    TResult Function()? invalidValue,
-    TResult Function()? locked,
-    TResult Function(Object? cause, StackTrace? stack)? other,
+    TResult Function(String? message)? loggedOut,
+    TResult Function(String? message)? network,
+    TResult Function(String? message)? operationCanceled,
+    TResult Function(String? message, DateTime? cooldownEndDate)? quotaExceeded,
+    TResult Function(String? message)? serviceNotFound,
+    TResult Function(String? message)? serviceAlreadyExists,
+    TResult Function(String? message)? insufficientFunds,
+    TResult Function(String? message)? unauthorized,
+    TResult Function(String? message)? invalidValue,
+    TResult Function(String? message)? locked,
+    TResult Function(String? message, Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
   }) {
     if (serviceNotFound != null) {
-      return serviceNotFound();
+      return serviceNotFound(message);
     }
     return orElse();
   }
@@ -965,15 +1168,30 @@ class _$ServiceNotFoundImpl extends _ServiceNotFound {
 }
 
 abstract class _ServiceNotFound extends Failure {
-  const factory _ServiceNotFound() = _$ServiceNotFoundImpl;
+  const factory _ServiceNotFound({final String? message}) =
+      _$ServiceNotFoundImpl;
   const _ServiceNotFound._() : super._();
+
+  @override
+  String? get message;
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ServiceNotFoundImplCopyWith<_$ServiceNotFoundImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ServiceAlreadyExistsImplCopyWith<$Res> {
+abstract class _$$ServiceAlreadyExistsImplCopyWith<$Res>
+    implements $FailureCopyWith<$Res> {
   factory _$$ServiceAlreadyExistsImplCopyWith(_$ServiceAlreadyExistsImpl value,
           $Res Function(_$ServiceAlreadyExistsImpl) then) =
       __$$ServiceAlreadyExistsImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? message});
 }
 
 /// @nodoc
@@ -986,82 +1204,111 @@ class __$$ServiceAlreadyExistsImplCopyWithImpl<$Res>
 
   /// Create a copy of Failure
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = freezed,
+  }) {
+    return _then(_$ServiceAlreadyExistsImpl(
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$ServiceAlreadyExistsImpl extends _ServiceAlreadyExists {
-  const _$ServiceAlreadyExistsImpl() : super._();
+  const _$ServiceAlreadyExistsImpl({this.message}) : super._();
+
+  @override
+  final String? message;
 
   @override
   String toString() {
-    return 'Failure.serviceAlreadyExists()';
+    return 'Failure.serviceAlreadyExists(message: $message)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ServiceAlreadyExistsImpl);
+            other is _$ServiceAlreadyExistsImpl &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, message);
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ServiceAlreadyExistsImplCopyWith<_$ServiceAlreadyExistsImpl>
+      get copyWith =>
+          __$$ServiceAlreadyExistsImplCopyWithImpl<_$ServiceAlreadyExistsImpl>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loggedOut,
-    required TResult Function() network,
-    required TResult Function() operationCanceled,
-    required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
-    required TResult Function() serviceNotFound,
-    required TResult Function() serviceAlreadyExists,
-    required TResult Function() insufficientFunds,
-    required TResult Function() unauthorized,
-    required TResult Function() invalidValue,
-    required TResult Function() locked,
-    required TResult Function(Object? cause, StackTrace? stack) other,
+    required TResult Function(String? message) loggedOut,
+    required TResult Function(String? message) network,
+    required TResult Function(String? message) operationCanceled,
+    required TResult Function(String? message, DateTime? cooldownEndDate)
+        quotaExceeded,
+    required TResult Function(String? message) serviceNotFound,
+    required TResult Function(String? message) serviceAlreadyExists,
+    required TResult Function(String? message) insufficientFunds,
+    required TResult Function(String? message) unauthorized,
+    required TResult Function(String? message) invalidValue,
+    required TResult Function(String? message) locked,
+    required TResult Function(String? message, Object? cause, StackTrace? stack)
+        other,
   }) {
-    return serviceAlreadyExists();
+    return serviceAlreadyExists(message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loggedOut,
-    TResult? Function()? network,
-    TResult? Function()? operationCanceled,
-    TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult? Function()? serviceNotFound,
-    TResult? Function()? serviceAlreadyExists,
-    TResult? Function()? insufficientFunds,
-    TResult? Function()? unauthorized,
-    TResult? Function()? invalidValue,
-    TResult? Function()? locked,
-    TResult? Function(Object? cause, StackTrace? stack)? other,
+    TResult? Function(String? message)? loggedOut,
+    TResult? Function(String? message)? network,
+    TResult? Function(String? message)? operationCanceled,
+    TResult? Function(String? message, DateTime? cooldownEndDate)?
+        quotaExceeded,
+    TResult? Function(String? message)? serviceNotFound,
+    TResult? Function(String? message)? serviceAlreadyExists,
+    TResult? Function(String? message)? insufficientFunds,
+    TResult? Function(String? message)? unauthorized,
+    TResult? Function(String? message)? invalidValue,
+    TResult? Function(String? message)? locked,
+    TResult? Function(String? message, Object? cause, StackTrace? stack)? other,
   }) {
-    return serviceAlreadyExists?.call();
+    return serviceAlreadyExists?.call(message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loggedOut,
-    TResult Function()? network,
-    TResult Function()? operationCanceled,
-    TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult Function()? serviceNotFound,
-    TResult Function()? serviceAlreadyExists,
-    TResult Function()? insufficientFunds,
-    TResult Function()? unauthorized,
-    TResult Function()? invalidValue,
-    TResult Function()? locked,
-    TResult Function(Object? cause, StackTrace? stack)? other,
+    TResult Function(String? message)? loggedOut,
+    TResult Function(String? message)? network,
+    TResult Function(String? message)? operationCanceled,
+    TResult Function(String? message, DateTime? cooldownEndDate)? quotaExceeded,
+    TResult Function(String? message)? serviceNotFound,
+    TResult Function(String? message)? serviceAlreadyExists,
+    TResult Function(String? message)? insufficientFunds,
+    TResult Function(String? message)? unauthorized,
+    TResult Function(String? message)? invalidValue,
+    TResult Function(String? message)? locked,
+    TResult Function(String? message, Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
   }) {
     if (serviceAlreadyExists != null) {
-      return serviceAlreadyExists();
+      return serviceAlreadyExists(message);
     }
     return orElse();
   }
@@ -1126,15 +1373,30 @@ class _$ServiceAlreadyExistsImpl extends _ServiceAlreadyExists {
 }
 
 abstract class _ServiceAlreadyExists extends Failure {
-  const factory _ServiceAlreadyExists() = _$ServiceAlreadyExistsImpl;
+  const factory _ServiceAlreadyExists({final String? message}) =
+      _$ServiceAlreadyExistsImpl;
   const _ServiceAlreadyExists._() : super._();
+
+  @override
+  String? get message;
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ServiceAlreadyExistsImplCopyWith<_$ServiceAlreadyExistsImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$InsuffientFundsImplCopyWith<$Res> {
+abstract class _$$InsuffientFundsImplCopyWith<$Res>
+    implements $FailureCopyWith<$Res> {
   factory _$$InsuffientFundsImplCopyWith(_$InsuffientFundsImpl value,
           $Res Function(_$InsuffientFundsImpl) then) =
       __$$InsuffientFundsImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? message});
 }
 
 /// @nodoc
@@ -1147,81 +1409,110 @@ class __$$InsuffientFundsImplCopyWithImpl<$Res>
 
   /// Create a copy of Failure
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = freezed,
+  }) {
+    return _then(_$InsuffientFundsImpl(
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$InsuffientFundsImpl extends _InsuffientFunds {
-  const _$InsuffientFundsImpl() : super._();
+  const _$InsuffientFundsImpl({this.message}) : super._();
+
+  @override
+  final String? message;
 
   @override
   String toString() {
-    return 'Failure.insufficientFunds()';
+    return 'Failure.insufficientFunds(message: $message)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$InsuffientFundsImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$InsuffientFundsImpl &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, message);
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$InsuffientFundsImplCopyWith<_$InsuffientFundsImpl> get copyWith =>
+      __$$InsuffientFundsImplCopyWithImpl<_$InsuffientFundsImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loggedOut,
-    required TResult Function() network,
-    required TResult Function() operationCanceled,
-    required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
-    required TResult Function() serviceNotFound,
-    required TResult Function() serviceAlreadyExists,
-    required TResult Function() insufficientFunds,
-    required TResult Function() unauthorized,
-    required TResult Function() invalidValue,
-    required TResult Function() locked,
-    required TResult Function(Object? cause, StackTrace? stack) other,
+    required TResult Function(String? message) loggedOut,
+    required TResult Function(String? message) network,
+    required TResult Function(String? message) operationCanceled,
+    required TResult Function(String? message, DateTime? cooldownEndDate)
+        quotaExceeded,
+    required TResult Function(String? message) serviceNotFound,
+    required TResult Function(String? message) serviceAlreadyExists,
+    required TResult Function(String? message) insufficientFunds,
+    required TResult Function(String? message) unauthorized,
+    required TResult Function(String? message) invalidValue,
+    required TResult Function(String? message) locked,
+    required TResult Function(String? message, Object? cause, StackTrace? stack)
+        other,
   }) {
-    return insufficientFunds();
+    return insufficientFunds(message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loggedOut,
-    TResult? Function()? network,
-    TResult? Function()? operationCanceled,
-    TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult? Function()? serviceNotFound,
-    TResult? Function()? serviceAlreadyExists,
-    TResult? Function()? insufficientFunds,
-    TResult? Function()? unauthorized,
-    TResult? Function()? invalidValue,
-    TResult? Function()? locked,
-    TResult? Function(Object? cause, StackTrace? stack)? other,
+    TResult? Function(String? message)? loggedOut,
+    TResult? Function(String? message)? network,
+    TResult? Function(String? message)? operationCanceled,
+    TResult? Function(String? message, DateTime? cooldownEndDate)?
+        quotaExceeded,
+    TResult? Function(String? message)? serviceNotFound,
+    TResult? Function(String? message)? serviceAlreadyExists,
+    TResult? Function(String? message)? insufficientFunds,
+    TResult? Function(String? message)? unauthorized,
+    TResult? Function(String? message)? invalidValue,
+    TResult? Function(String? message)? locked,
+    TResult? Function(String? message, Object? cause, StackTrace? stack)? other,
   }) {
-    return insufficientFunds?.call();
+    return insufficientFunds?.call(message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loggedOut,
-    TResult Function()? network,
-    TResult Function()? operationCanceled,
-    TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult Function()? serviceNotFound,
-    TResult Function()? serviceAlreadyExists,
-    TResult Function()? insufficientFunds,
-    TResult Function()? unauthorized,
-    TResult Function()? invalidValue,
-    TResult Function()? locked,
-    TResult Function(Object? cause, StackTrace? stack)? other,
+    TResult Function(String? message)? loggedOut,
+    TResult Function(String? message)? network,
+    TResult Function(String? message)? operationCanceled,
+    TResult Function(String? message, DateTime? cooldownEndDate)? quotaExceeded,
+    TResult Function(String? message)? serviceNotFound,
+    TResult Function(String? message)? serviceAlreadyExists,
+    TResult Function(String? message)? insufficientFunds,
+    TResult Function(String? message)? unauthorized,
+    TResult Function(String? message)? invalidValue,
+    TResult Function(String? message)? locked,
+    TResult Function(String? message, Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
   }) {
     if (insufficientFunds != null) {
-      return insufficientFunds();
+      return insufficientFunds(message);
     }
     return orElse();
   }
@@ -1286,15 +1577,30 @@ class _$InsuffientFundsImpl extends _InsuffientFunds {
 }
 
 abstract class _InsuffientFunds extends Failure {
-  const factory _InsuffientFunds() = _$InsuffientFundsImpl;
+  const factory _InsuffientFunds({final String? message}) =
+      _$InsuffientFundsImpl;
   const _InsuffientFunds._() : super._();
+
+  @override
+  String? get message;
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$InsuffientFundsImplCopyWith<_$InsuffientFundsImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$InauthorizedImplCopyWith<$Res> {
+abstract class _$$InauthorizedImplCopyWith<$Res>
+    implements $FailureCopyWith<$Res> {
   factory _$$InauthorizedImplCopyWith(
           _$InauthorizedImpl value, $Res Function(_$InauthorizedImpl) then) =
       __$$InauthorizedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? message});
 }
 
 /// @nodoc
@@ -1307,81 +1613,109 @@ class __$$InauthorizedImplCopyWithImpl<$Res>
 
   /// Create a copy of Failure
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = freezed,
+  }) {
+    return _then(_$InauthorizedImpl(
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$InauthorizedImpl extends _Inauthorized {
-  const _$InauthorizedImpl() : super._();
+  const _$InauthorizedImpl({this.message}) : super._();
+
+  @override
+  final String? message;
 
   @override
   String toString() {
-    return 'Failure.unauthorized()';
+    return 'Failure.unauthorized(message: $message)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$InauthorizedImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$InauthorizedImpl &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, message);
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$InauthorizedImplCopyWith<_$InauthorizedImpl> get copyWith =>
+      __$$InauthorizedImplCopyWithImpl<_$InauthorizedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loggedOut,
-    required TResult Function() network,
-    required TResult Function() operationCanceled,
-    required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
-    required TResult Function() serviceNotFound,
-    required TResult Function() serviceAlreadyExists,
-    required TResult Function() insufficientFunds,
-    required TResult Function() unauthorized,
-    required TResult Function() invalidValue,
-    required TResult Function() locked,
-    required TResult Function(Object? cause, StackTrace? stack) other,
+    required TResult Function(String? message) loggedOut,
+    required TResult Function(String? message) network,
+    required TResult Function(String? message) operationCanceled,
+    required TResult Function(String? message, DateTime? cooldownEndDate)
+        quotaExceeded,
+    required TResult Function(String? message) serviceNotFound,
+    required TResult Function(String? message) serviceAlreadyExists,
+    required TResult Function(String? message) insufficientFunds,
+    required TResult Function(String? message) unauthorized,
+    required TResult Function(String? message) invalidValue,
+    required TResult Function(String? message) locked,
+    required TResult Function(String? message, Object? cause, StackTrace? stack)
+        other,
   }) {
-    return unauthorized();
+    return unauthorized(message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loggedOut,
-    TResult? Function()? network,
-    TResult? Function()? operationCanceled,
-    TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult? Function()? serviceNotFound,
-    TResult? Function()? serviceAlreadyExists,
-    TResult? Function()? insufficientFunds,
-    TResult? Function()? unauthorized,
-    TResult? Function()? invalidValue,
-    TResult? Function()? locked,
-    TResult? Function(Object? cause, StackTrace? stack)? other,
+    TResult? Function(String? message)? loggedOut,
+    TResult? Function(String? message)? network,
+    TResult? Function(String? message)? operationCanceled,
+    TResult? Function(String? message, DateTime? cooldownEndDate)?
+        quotaExceeded,
+    TResult? Function(String? message)? serviceNotFound,
+    TResult? Function(String? message)? serviceAlreadyExists,
+    TResult? Function(String? message)? insufficientFunds,
+    TResult? Function(String? message)? unauthorized,
+    TResult? Function(String? message)? invalidValue,
+    TResult? Function(String? message)? locked,
+    TResult? Function(String? message, Object? cause, StackTrace? stack)? other,
   }) {
-    return unauthorized?.call();
+    return unauthorized?.call(message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loggedOut,
-    TResult Function()? network,
-    TResult Function()? operationCanceled,
-    TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult Function()? serviceNotFound,
-    TResult Function()? serviceAlreadyExists,
-    TResult Function()? insufficientFunds,
-    TResult Function()? unauthorized,
-    TResult Function()? invalidValue,
-    TResult Function()? locked,
-    TResult Function(Object? cause, StackTrace? stack)? other,
+    TResult Function(String? message)? loggedOut,
+    TResult Function(String? message)? network,
+    TResult Function(String? message)? operationCanceled,
+    TResult Function(String? message, DateTime? cooldownEndDate)? quotaExceeded,
+    TResult Function(String? message)? serviceNotFound,
+    TResult Function(String? message)? serviceAlreadyExists,
+    TResult Function(String? message)? insufficientFunds,
+    TResult Function(String? message)? unauthorized,
+    TResult Function(String? message)? invalidValue,
+    TResult Function(String? message)? locked,
+    TResult Function(String? message, Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
   }) {
     if (unauthorized != null) {
-      return unauthorized();
+      return unauthorized(message);
     }
     return orElse();
   }
@@ -1446,15 +1780,29 @@ class _$InauthorizedImpl extends _Inauthorized {
 }
 
 abstract class _Inauthorized extends Failure {
-  const factory _Inauthorized() = _$InauthorizedImpl;
+  const factory _Inauthorized({final String? message}) = _$InauthorizedImpl;
   const _Inauthorized._() : super._();
+
+  @override
+  String? get message;
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$InauthorizedImplCopyWith<_$InauthorizedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$InvalidValueImplCopyWith<$Res> {
+abstract class _$$InvalidValueImplCopyWith<$Res>
+    implements $FailureCopyWith<$Res> {
   factory _$$InvalidValueImplCopyWith(
           _$InvalidValueImpl value, $Res Function(_$InvalidValueImpl) then) =
       __$$InvalidValueImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? message});
 }
 
 /// @nodoc
@@ -1467,81 +1815,109 @@ class __$$InvalidValueImplCopyWithImpl<$Res>
 
   /// Create a copy of Failure
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = freezed,
+  }) {
+    return _then(_$InvalidValueImpl(
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$InvalidValueImpl extends _InvalidValue {
-  const _$InvalidValueImpl() : super._();
+  const _$InvalidValueImpl({this.message}) : super._();
+
+  @override
+  final String? message;
 
   @override
   String toString() {
-    return 'Failure.invalidValue()';
+    return 'Failure.invalidValue(message: $message)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$InvalidValueImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$InvalidValueImpl &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, message);
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$InvalidValueImplCopyWith<_$InvalidValueImpl> get copyWith =>
+      __$$InvalidValueImplCopyWithImpl<_$InvalidValueImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loggedOut,
-    required TResult Function() network,
-    required TResult Function() operationCanceled,
-    required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
-    required TResult Function() serviceNotFound,
-    required TResult Function() serviceAlreadyExists,
-    required TResult Function() insufficientFunds,
-    required TResult Function() unauthorized,
-    required TResult Function() invalidValue,
-    required TResult Function() locked,
-    required TResult Function(Object? cause, StackTrace? stack) other,
+    required TResult Function(String? message) loggedOut,
+    required TResult Function(String? message) network,
+    required TResult Function(String? message) operationCanceled,
+    required TResult Function(String? message, DateTime? cooldownEndDate)
+        quotaExceeded,
+    required TResult Function(String? message) serviceNotFound,
+    required TResult Function(String? message) serviceAlreadyExists,
+    required TResult Function(String? message) insufficientFunds,
+    required TResult Function(String? message) unauthorized,
+    required TResult Function(String? message) invalidValue,
+    required TResult Function(String? message) locked,
+    required TResult Function(String? message, Object? cause, StackTrace? stack)
+        other,
   }) {
-    return invalidValue();
+    return invalidValue(message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loggedOut,
-    TResult? Function()? network,
-    TResult? Function()? operationCanceled,
-    TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult? Function()? serviceNotFound,
-    TResult? Function()? serviceAlreadyExists,
-    TResult? Function()? insufficientFunds,
-    TResult? Function()? unauthorized,
-    TResult? Function()? invalidValue,
-    TResult? Function()? locked,
-    TResult? Function(Object? cause, StackTrace? stack)? other,
+    TResult? Function(String? message)? loggedOut,
+    TResult? Function(String? message)? network,
+    TResult? Function(String? message)? operationCanceled,
+    TResult? Function(String? message, DateTime? cooldownEndDate)?
+        quotaExceeded,
+    TResult? Function(String? message)? serviceNotFound,
+    TResult? Function(String? message)? serviceAlreadyExists,
+    TResult? Function(String? message)? insufficientFunds,
+    TResult? Function(String? message)? unauthorized,
+    TResult? Function(String? message)? invalidValue,
+    TResult? Function(String? message)? locked,
+    TResult? Function(String? message, Object? cause, StackTrace? stack)? other,
   }) {
-    return invalidValue?.call();
+    return invalidValue?.call(message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loggedOut,
-    TResult Function()? network,
-    TResult Function()? operationCanceled,
-    TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult Function()? serviceNotFound,
-    TResult Function()? serviceAlreadyExists,
-    TResult Function()? insufficientFunds,
-    TResult Function()? unauthorized,
-    TResult Function()? invalidValue,
-    TResult Function()? locked,
-    TResult Function(Object? cause, StackTrace? stack)? other,
+    TResult Function(String? message)? loggedOut,
+    TResult Function(String? message)? network,
+    TResult Function(String? message)? operationCanceled,
+    TResult Function(String? message, DateTime? cooldownEndDate)? quotaExceeded,
+    TResult Function(String? message)? serviceNotFound,
+    TResult Function(String? message)? serviceAlreadyExists,
+    TResult Function(String? message)? insufficientFunds,
+    TResult Function(String? message)? unauthorized,
+    TResult Function(String? message)? invalidValue,
+    TResult Function(String? message)? locked,
+    TResult Function(String? message, Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
   }) {
     if (invalidValue != null) {
-      return invalidValue();
+      return invalidValue(message);
     }
     return orElse();
   }
@@ -1606,15 +1982,29 @@ class _$InvalidValueImpl extends _InvalidValue {
 }
 
 abstract class _InvalidValue extends Failure {
-  const factory _InvalidValue() = _$InvalidValueImpl;
+  const factory _InvalidValue({final String? message}) = _$InvalidValueImpl;
   const _InvalidValue._() : super._();
+
+  @override
+  String? get message;
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$InvalidValueImplCopyWith<_$InvalidValueImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$LockedApplicationImplCopyWith<$Res> {
+abstract class _$$LockedApplicationImplCopyWith<$Res>
+    implements $FailureCopyWith<$Res> {
   factory _$$LockedApplicationImplCopyWith(_$LockedApplicationImpl value,
           $Res Function(_$LockedApplicationImpl) then) =
       __$$LockedApplicationImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? message});
 }
 
 /// @nodoc
@@ -1627,81 +2017,110 @@ class __$$LockedApplicationImplCopyWithImpl<$Res>
 
   /// Create a copy of Failure
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = freezed,
+  }) {
+    return _then(_$LockedApplicationImpl(
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$LockedApplicationImpl extends _LockedApplication {
-  const _$LockedApplicationImpl() : super._();
+  const _$LockedApplicationImpl({this.message}) : super._();
+
+  @override
+  final String? message;
 
   @override
   String toString() {
-    return 'Failure.locked()';
+    return 'Failure.locked(message: $message)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LockedApplicationImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$LockedApplicationImpl &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, message);
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LockedApplicationImplCopyWith<_$LockedApplicationImpl> get copyWith =>
+      __$$LockedApplicationImplCopyWithImpl<_$LockedApplicationImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loggedOut,
-    required TResult Function() network,
-    required TResult Function() operationCanceled,
-    required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
-    required TResult Function() serviceNotFound,
-    required TResult Function() serviceAlreadyExists,
-    required TResult Function() insufficientFunds,
-    required TResult Function() unauthorized,
-    required TResult Function() invalidValue,
-    required TResult Function() locked,
-    required TResult Function(Object? cause, StackTrace? stack) other,
+    required TResult Function(String? message) loggedOut,
+    required TResult Function(String? message) network,
+    required TResult Function(String? message) operationCanceled,
+    required TResult Function(String? message, DateTime? cooldownEndDate)
+        quotaExceeded,
+    required TResult Function(String? message) serviceNotFound,
+    required TResult Function(String? message) serviceAlreadyExists,
+    required TResult Function(String? message) insufficientFunds,
+    required TResult Function(String? message) unauthorized,
+    required TResult Function(String? message) invalidValue,
+    required TResult Function(String? message) locked,
+    required TResult Function(String? message, Object? cause, StackTrace? stack)
+        other,
   }) {
-    return locked();
+    return locked(message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loggedOut,
-    TResult? Function()? network,
-    TResult? Function()? operationCanceled,
-    TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult? Function()? serviceNotFound,
-    TResult? Function()? serviceAlreadyExists,
-    TResult? Function()? insufficientFunds,
-    TResult? Function()? unauthorized,
-    TResult? Function()? invalidValue,
-    TResult? Function()? locked,
-    TResult? Function(Object? cause, StackTrace? stack)? other,
+    TResult? Function(String? message)? loggedOut,
+    TResult? Function(String? message)? network,
+    TResult? Function(String? message)? operationCanceled,
+    TResult? Function(String? message, DateTime? cooldownEndDate)?
+        quotaExceeded,
+    TResult? Function(String? message)? serviceNotFound,
+    TResult? Function(String? message)? serviceAlreadyExists,
+    TResult? Function(String? message)? insufficientFunds,
+    TResult? Function(String? message)? unauthorized,
+    TResult? Function(String? message)? invalidValue,
+    TResult? Function(String? message)? locked,
+    TResult? Function(String? message, Object? cause, StackTrace? stack)? other,
   }) {
-    return locked?.call();
+    return locked?.call(message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loggedOut,
-    TResult Function()? network,
-    TResult Function()? operationCanceled,
-    TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult Function()? serviceNotFound,
-    TResult Function()? serviceAlreadyExists,
-    TResult Function()? insufficientFunds,
-    TResult Function()? unauthorized,
-    TResult Function()? invalidValue,
-    TResult Function()? locked,
-    TResult Function(Object? cause, StackTrace? stack)? other,
+    TResult Function(String? message)? loggedOut,
+    TResult Function(String? message)? network,
+    TResult Function(String? message)? operationCanceled,
+    TResult Function(String? message, DateTime? cooldownEndDate)? quotaExceeded,
+    TResult Function(String? message)? serviceNotFound,
+    TResult Function(String? message)? serviceAlreadyExists,
+    TResult Function(String? message)? insufficientFunds,
+    TResult Function(String? message)? unauthorized,
+    TResult Function(String? message)? invalidValue,
+    TResult Function(String? message)? locked,
+    TResult Function(String? message, Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
   }) {
     if (locked != null) {
-      return locked();
+      return locked(message);
     }
     return orElse();
   }
@@ -1766,17 +2185,30 @@ class _$LockedApplicationImpl extends _LockedApplication {
 }
 
 abstract class _LockedApplication extends Failure {
-  const factory _LockedApplication() = _$LockedApplicationImpl;
+  const factory _LockedApplication({final String? message}) =
+      _$LockedApplicationImpl;
   const _LockedApplication._() : super._();
+
+  @override
+  String? get message;
+
+  /// Create a copy of Failure
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LockedApplicationImplCopyWith<_$LockedApplicationImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$OtherFailureImplCopyWith<$Res> {
+abstract class _$$OtherFailureImplCopyWith<$Res>
+    implements $FailureCopyWith<$Res> {
   factory _$$OtherFailureImplCopyWith(
           _$OtherFailureImpl value, $Res Function(_$OtherFailureImpl) then) =
       __$$OtherFailureImplCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call({Object? cause, StackTrace? stack});
+  $Res call({String? message, Object? cause, StackTrace? stack});
 }
 
 /// @nodoc
@@ -1792,10 +2224,15 @@ class __$$OtherFailureImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? message = freezed,
     Object? cause = freezed,
     Object? stack = freezed,
   }) {
     return _then(_$OtherFailureImpl(
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
       cause: freezed == cause ? _value.cause : cause,
       stack: freezed == stack
           ? _value.stack
@@ -1808,8 +2245,10 @@ class __$$OtherFailureImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$OtherFailureImpl extends _OtherFailure {
-  const _$OtherFailureImpl({this.cause, this.stack}) : super._();
+  const _$OtherFailureImpl({this.message, this.cause, this.stack}) : super._();
 
+  @override
+  final String? message;
   @override
   final Object? cause;
   @override
@@ -1817,7 +2256,7 @@ class _$OtherFailureImpl extends _OtherFailure {
 
   @override
   String toString() {
-    return 'Failure.other(cause: $cause, stack: $stack)';
+    return 'Failure.other(message: $message, cause: $cause, stack: $stack)';
   }
 
   @override
@@ -1825,13 +2264,14 @@ class _$OtherFailureImpl extends _OtherFailure {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OtherFailureImpl &&
+            (identical(other.message, message) || other.message == message) &&
             const DeepCollectionEquality().equals(other.cause, cause) &&
             (identical(other.stack, stack) || other.stack == stack));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(cause), stack);
+      runtimeType, message, const DeepCollectionEquality().hash(cause), stack);
 
   /// Create a copy of Failure
   /// with the given fields replaced by the non-null parameter values.
@@ -1844,57 +2284,60 @@ class _$OtherFailureImpl extends _OtherFailure {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loggedOut,
-    required TResult Function() network,
-    required TResult Function() operationCanceled,
-    required TResult Function(DateTime? cooldownEndDate) quotaExceeded,
-    required TResult Function() serviceNotFound,
-    required TResult Function() serviceAlreadyExists,
-    required TResult Function() insufficientFunds,
-    required TResult Function() unauthorized,
-    required TResult Function() invalidValue,
-    required TResult Function() locked,
-    required TResult Function(Object? cause, StackTrace? stack) other,
+    required TResult Function(String? message) loggedOut,
+    required TResult Function(String? message) network,
+    required TResult Function(String? message) operationCanceled,
+    required TResult Function(String? message, DateTime? cooldownEndDate)
+        quotaExceeded,
+    required TResult Function(String? message) serviceNotFound,
+    required TResult Function(String? message) serviceAlreadyExists,
+    required TResult Function(String? message) insufficientFunds,
+    required TResult Function(String? message) unauthorized,
+    required TResult Function(String? message) invalidValue,
+    required TResult Function(String? message) locked,
+    required TResult Function(String? message, Object? cause, StackTrace? stack)
+        other,
   }) {
-    return other(cause, stack);
+    return other(message, cause, stack);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loggedOut,
-    TResult? Function()? network,
-    TResult? Function()? operationCanceled,
-    TResult? Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult? Function()? serviceNotFound,
-    TResult? Function()? serviceAlreadyExists,
-    TResult? Function()? insufficientFunds,
-    TResult? Function()? unauthorized,
-    TResult? Function()? invalidValue,
-    TResult? Function()? locked,
-    TResult? Function(Object? cause, StackTrace? stack)? other,
+    TResult? Function(String? message)? loggedOut,
+    TResult? Function(String? message)? network,
+    TResult? Function(String? message)? operationCanceled,
+    TResult? Function(String? message, DateTime? cooldownEndDate)?
+        quotaExceeded,
+    TResult? Function(String? message)? serviceNotFound,
+    TResult? Function(String? message)? serviceAlreadyExists,
+    TResult? Function(String? message)? insufficientFunds,
+    TResult? Function(String? message)? unauthorized,
+    TResult? Function(String? message)? invalidValue,
+    TResult? Function(String? message)? locked,
+    TResult? Function(String? message, Object? cause, StackTrace? stack)? other,
   }) {
-    return other?.call(cause, stack);
+    return other?.call(message, cause, stack);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loggedOut,
-    TResult Function()? network,
-    TResult Function()? operationCanceled,
-    TResult Function(DateTime? cooldownEndDate)? quotaExceeded,
-    TResult Function()? serviceNotFound,
-    TResult Function()? serviceAlreadyExists,
-    TResult Function()? insufficientFunds,
-    TResult Function()? unauthorized,
-    TResult Function()? invalidValue,
-    TResult Function()? locked,
-    TResult Function(Object? cause, StackTrace? stack)? other,
+    TResult Function(String? message)? loggedOut,
+    TResult Function(String? message)? network,
+    TResult Function(String? message)? operationCanceled,
+    TResult Function(String? message, DateTime? cooldownEndDate)? quotaExceeded,
+    TResult Function(String? message)? serviceNotFound,
+    TResult Function(String? message)? serviceAlreadyExists,
+    TResult Function(String? message)? insufficientFunds,
+    TResult Function(String? message)? unauthorized,
+    TResult Function(String? message)? invalidValue,
+    TResult Function(String? message)? locked,
+    TResult Function(String? message, Object? cause, StackTrace? stack)? other,
     required TResult orElse(),
   }) {
     if (other != null) {
-      return other(cause, stack);
+      return other(message, cause, stack);
     }
     return orElse();
   }
@@ -1959,15 +2402,20 @@ class _$OtherFailureImpl extends _OtherFailure {
 }
 
 abstract class _OtherFailure extends Failure {
-  const factory _OtherFailure({final Object? cause, final StackTrace? stack}) =
-      _$OtherFailureImpl;
+  const factory _OtherFailure(
+      {final String? message,
+      final Object? cause,
+      final StackTrace? stack}) = _$OtherFailureImpl;
   const _OtherFailure._() : super._();
 
+  @override
+  String? get message;
   Object? get cause;
   StackTrace? get stack;
 
   /// Create a copy of Failure
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$OtherFailureImplCopyWith<_$OtherFailureImpl> get copyWith =>
       throw _privateConstructorUsedError;

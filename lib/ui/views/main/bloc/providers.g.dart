@@ -6,9 +6,12 @@ part of 'providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$homePageHash() => r'46e478c4633d46c0007dbe2c6bd54be4c64506f6';
+String _$homePageHash() => r'bc3d115439c137e59ef68db7480175e3b37b54ce';
 
-/// Used to retain/release all the resources used by the home page.
+/// Eagerly initializes providers (https://riverpod.dev/docs/essentials/eager_initialization).
+///
+/// Add Watch here for any provider you want to init when app is displayed.
+/// Those providers will be kept alive during application lifetime.
 ///
 /// Copied from [homePage].
 @ProviderFor(homePage)

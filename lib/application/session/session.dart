@@ -7,6 +7,8 @@ import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/app_wallet.dart';
+import 'package:aewallet/domain/models/core/failures.dart';
+import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/infrastructure/datasources/appwallet.hive.dart';
 import 'package:aewallet/infrastructure/datasources/keychain_info.vault.dart';
 import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
@@ -15,7 +17,7 @@ import 'package:aewallet/util/cache_manager_hive.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:aewallet/util/mnemonics.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'providers.dart';

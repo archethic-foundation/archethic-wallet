@@ -9,37 +9,45 @@ class SessionNotifier extends _$SessionNotifier {
     return const Session.loggedOut();
   }
 
-  Future<void> restore() async {
-    if (!await KeychainInfoVaultDatasource.boxExists) {
-      await logout();
-      return;
-    }
+  Future<Result<void, Failure>> restore() => Result.guard(() async {
+        if (!await KeychainInfoVaultDatasource.boxExists) {
+          await logout();
+          return;
+        }
 
-    final vault = await KeychainInfoVaultDatasource.getInstance();
-    final seed = vault.getSeed();
-    var keychainSecuredInfos = vault.getKeychainSecuredInfos();
-    if (keychainSecuredInfos == null && seed != null) {
-      // Create manually Keychain
-      final apiService = ref.read(apiServiceProvider);
+        final vault = await KeychainInfoVaultDatasource.getInstance()
+            .guard('Failed to open KeychainInfoVault.');
 
-      final keychain = await apiService.getKeychain(seed);
-      keychainSecuredInfos = keychain.toKeychainSecuredInfos();
-      await vault.setKeychainSecuredInfos(keychainSecuredInfos);
-    }
-    final appWalletDTO = await _appWalletDatasource.getAppWallet();
+        final seed = vault.getSeed();
 
-    if (seed == null || appWalletDTO == null) {
-      await logout();
-      return;
-    }
+        var keychainSecuredInfos = vault.getKeychainSecuredInfos
+            .guard('Failed to read keychain secured infos from Vault.');
+        if (keychainSecuredInfos == null && seed != null) {
+          // Create manually Keychain
+          final apiService = ref.read(apiServiceProvider);
 
-    state = Session.loggedIn(
-      wallet: appWalletDTO.toModel(
-        seed: seed,
-        keychainSecuredInfos: keychainSecuredInfos!,
-      ),
-    );
-  }
+          final keychain = await apiService
+              .getKeychain(seed)
+              .guard('Failed to read keychain from ApiService.');
+          keychainSecuredInfos = keychain.toKeychainSecuredInfos();
+          await vault.setKeychainSecuredInfos(keychainSecuredInfos);
+        }
+        final appWalletDTO = await _appWalletDatasource
+            .getAppWallet()
+            .guard('Failed to read app wallet from Hive.');
+
+        if (seed == null || appWalletDTO == null) {
+          await logout();
+          return;
+        }
+
+        state = Session.loggedIn(
+          wallet: appWalletDTO.toModel(
+            seed: seed,
+            keychainSecuredInfos: keychainSecuredInfos!,
+          ),
+        );
+      });
 
   Future<void> refresh() async {
     if (state.isLoggedOut) return;
