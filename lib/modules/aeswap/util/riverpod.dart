@@ -28,7 +28,9 @@ extension PeriodicReloadExtension on Ref<Object?> {
     final timer = Timer(
       duration,
       () {
-        if (!shouldReload()) return;
+        if (!shouldReload()) {
+          return;
+        }
         invalidateSelf();
       },
     );
