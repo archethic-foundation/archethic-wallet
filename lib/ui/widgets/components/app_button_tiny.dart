@@ -3,6 +3,7 @@
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/ui/util/dimens.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,7 +23,7 @@ class AppButtonTinyConnectivity extends ConsumerWidget {
 
   final bool showProgressIndicator;
   final String buttonText;
-  final List<double> dimens;
+  final Dimens dimens;
   final Function onPressed;
   final bool disabled;
   final double? width;
@@ -67,7 +68,7 @@ class AppButtonTiny extends ConsumerWidget {
   final bool showProgressIndicator;
   final AppButtonTinyType type;
   final String buttonText;
-  final List<double> dimens;
+  final Dimens dimens;
   final Function? onPressed;
   final bool disabled;
   final double? width;
@@ -106,7 +107,7 @@ class AppButtonTinyWithoutExpanded extends ConsumerWidget {
   final bool showProgressIndicator;
   final AppButtonTinyType type;
   final String buttonText;
-  final List<double> dimens;
+  final Dimens dimens;
   final Function? onPressed;
   final bool disabled;
   final double? width;
@@ -140,12 +141,7 @@ class AppButtonTinyWithoutExpanded extends ConsumerWidget {
             ],
           ),
           height: 50,
-          margin: EdgeInsetsDirectional.fromSTEB(
-            dimens[0],
-            dimens[1],
-            dimens[2],
-            dimens[3],
-          ),
+          margin: dimens.edgeInsetsDirectional,
           child: _NoIconButton(
             showProgressIndicator: showProgressIndicator,
             buttonText: buttonText,
@@ -160,12 +156,7 @@ class AppButtonTinyWithoutExpanded extends ConsumerWidget {
             shape: const StadiumBorder(),
           ),
           height: 50,
-          margin: EdgeInsetsDirectional.fromSTEB(
-            dimens[0],
-            dimens[1],
-            dimens[2],
-            dimens[3],
-          ),
+          margin: dimens.edgeInsetsDirectional,
           child: _NoIconButton(
             showProgressIndicator: showProgressIndicator,
             buttonText: buttonText,

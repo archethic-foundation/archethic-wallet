@@ -8,6 +8,7 @@ import 'package:aewallet/application/migrations/migration_manager.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
 import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
@@ -27,6 +28,7 @@ import 'package:aewallet/ui/widgets/components/limited_width_layout.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/window_size.dart';
 import 'package:aewallet/ui/widgets/dialogs/logs_dialog.dart';
+import 'package:aewallet/ui/widgets/dialogs/remove_wallet_dialog.dart';
 import 'package:aewallet/util/security_manager.dart';
 import 'package:aewallet/util/service_locator.dart';
 import 'package:aewallet/util/universal_platform.dart';
@@ -41,6 +43,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logging/logging.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -296,7 +299,7 @@ class SplashState extends ConsumerState<Splash> {
         return;
       }
 
-      await ref.read(sessionNotifierProvider.notifier).restore();
+      await ref.read(sessionNotifierProvider.notifier).restore().valueOrThrow;
 
       final session = ref.read(sessionNotifierProvider);
 
@@ -415,6 +418,39 @@ class SplashState extends ConsumerState<Splash> {
                   },
                 ),
               ],
+            ),
+            const SizedBox(
+              height: 12,
+            ),
+            Container(
+              height: 50,
+              margin: Dimens.buttonBottomDimens.edgeInsetsDirectional,
+              child: FilledButton(
+                onPressed: () {
+                  RemoveWalletDialog.show(
+                    context,
+                    ref,
+                    authRequired: false,
+                  );
+                },
+                style: FilledButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  foregroundColor: ArchethicThemeStyles
+                      .textStyleSize16W400MainButtonLabel.color,
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Symbols.delete),
+                    const Spacer(),
+                    Text(
+                      'Remove wallet',
+                      style: ArchethicThemeStyles
+                          .textStyleSize16W400MainButtonLabel,
+                    ),
+                    const Spacer(),
+                  ],
+                ),
+              ),
             ),
           ],
         ),

@@ -19,7 +19,6 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
-import 'package:aewallet/ui/views/authenticate/logging_out.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/settings/backupseed_sheet.dart';
@@ -31,8 +30,8 @@ import 'package:aewallet/ui/widgets/dialogs/authentification_method_dialog.dart'
 import 'package:aewallet/ui/widgets/dialogs/language_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/lock_timeout_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/primary_currency_dialog.dart';
+import 'package:aewallet/ui/widgets/dialogs/remove_wallet_dialog.dart';
 import 'package:aewallet/util/cache_manager_hive.dart';
-import 'package:aewallet/util/case_converter.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/mnemonics.dart';
 import 'package:auto_size_text/auto_size_text.dart';
