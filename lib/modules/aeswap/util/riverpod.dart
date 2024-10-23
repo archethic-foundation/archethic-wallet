@@ -16,12 +16,21 @@ extension RefListenSelectExtension<State extends Object?, T> on Ref<State> {
   }
 }
 
+bool _alwaysTrue() => true;
+
 extension PeriodicReloadExtension on Ref<Object?> {
   /// Updates periodically the provider.
-  void periodicReload(Duration duration) {
+  /// [shouldReload] : a function that returns true if the provider should be reloaded.
+  void periodicReload(
+    Duration duration, {
+    bool Function() shouldReload = _alwaysTrue,
+  }) {
     final timer = Timer(
       duration,
-      invalidateSelf,
+      () {
+        if (!shouldReload()) return;
+        invalidateSelf();
+      },
     );
     onDispose(timer.cancel);
   }
