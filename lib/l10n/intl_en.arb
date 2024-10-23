@@ -742,7 +742,7 @@
     "restoreFailedInfo1": "Don't panic! Your data is still there, safe and secure.",
     "restoreFailedInfo2": "This could be due to a network issue.\nYou can try again by clicking the button below, or restart the app manually.",
     "logsDialogTitle": "Logs",
-    "logsDesc": "In the event of difficulty, you can copy and forward this information to the archethic support team.\nThis information does not contain any sensitive data that could affect the security of your funds.",
+    "logsDesc": "If you encounter any problems, you can copy and send the information below to the Archethic support team.\nEnsure that no sensitive or private information that could affect the security of your funds is shared.",
     "logsCopied": "Logs copied",
     "getSomeHelp": "Get some help"
 }
