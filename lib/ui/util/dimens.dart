@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 enum Dimens {
   buttonTopDimens(
-    EdgeInsetsDirectional.fromSTEB(28, 0, 28, 0),
+    EdgeInsetsDirectional.fromSTEB(28, 0, 28, 8),
   ),
   buttonBottomDimens(
     EdgeInsetsDirectional.fromSTEB(28, 8, 28, 0),
