@@ -149,7 +149,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
             context: context,
             builder: (BuildContext context) {
               return FractionallySizedBox(
-                heightFactor: 0.85,
+                heightFactor: 1,
                 child: Scaffold(
                   backgroundColor:
                       aedappfm.AppThemeBase.sheetBackground.withOpacity(0.2),

@@ -26,7 +26,7 @@ class EarnFarmLockInfos extends ConsumerWidget {
                 context: context,
                 builder: (BuildContext context) {
                   return FractionallySizedBox(
-                    heightFactor: 0.90,
+                    heightFactor: 1,
                     child: Scaffold(
                       backgroundColor: aedappfm.AppThemeBase.sheetBackground
                           .withOpacity(0.2),

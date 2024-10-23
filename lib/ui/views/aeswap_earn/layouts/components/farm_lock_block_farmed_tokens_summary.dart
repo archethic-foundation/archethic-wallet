@@ -37,7 +37,7 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
                     context: context,
                     builder: (BuildContext context) {
                       return FractionallySizedBox(
-                        heightFactor: 0.90,
+                        heightFactor: 1,
                         child: Scaffold(
                           backgroundColor: aedappfm.AppThemeBase.sheetBackground
                               .withOpacity(0.2),
@@ -75,7 +75,9 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return _blockInfo(context, ref, snapshot.data);
                     } else if (snapshot.hasError) {
-                      return Text('Error : ${snapshot.error}');
+                      return const Text(
+                        r'$--.--',
+                      );
                     } else if (snapshot.hasData) {
                       return _blockInfo(context, ref, snapshot.data);
                     }

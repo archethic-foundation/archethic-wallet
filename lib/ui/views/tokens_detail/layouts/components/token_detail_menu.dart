@@ -105,7 +105,7 @@ class TokenDetailMenu extends ConsumerWidget {
                         context: context,
                         builder: (BuildContext context) {
                           return FractionallySizedBox(
-                            heightFactor: 0.75,
+                            heightFactor: 1,
                             child: Scaffold(
                               backgroundColor: aedappfm
                                   .AppThemeBase.sheetBackground

@@ -14,7 +14,7 @@ class TokenSelection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FractionallySizedBox(
-      heightFactor: 0.90,
+      heightFactor: 1,
       child: Padding(
         padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
         child: Column(

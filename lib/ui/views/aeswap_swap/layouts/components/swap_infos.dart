@@ -51,59 +51,57 @@ class SwapInfos extends ConsumerWidget {
         DexPoolProviders.estimateStats(swap.pool!.poolAddress);
 
     return ClipRRect(
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-        child: ScrollConfiguration(
-          behavior: ScrollConfiguration.of(context).copyWith(
-            dragDevices: {
-              PointerDeviceKind.touch,
-              PointerDeviceKind.mouse,
-              PointerDeviceKind.trackpad,
-            },
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 5),
-                  child: Text(
-                    AppLocalizations.of(context)!.swapInfosDetailSwap,
-                    style: AppTextStyles.bodyMedium(context)
-                        .copyWith(fontWeight: FontWeight.bold),
-                  ),
+      child: ScrollConfiguration(
+        behavior: ScrollConfiguration.of(context).copyWith(
+          dragDevices: {
+            PointerDeviceKind.touch,
+            PointerDeviceKind.mouse,
+            PointerDeviceKind.trackpad,
+          },
+        ),
+        child: Padding(
+          padding:
+              const EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 40),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: Text(
+                  AppLocalizations.of(context)!.swapInfosDetailSwap,
+                  style: AppTextStyles.bodyMedium(context)
+                      .copyWith(fontWeight: FontWeight.bold),
                 ),
-                _buildRowWithFees(context, ref, swap),
-                _buildRowWithPriceImpact(context, swap),
-                _buildRowWithMinReceived(context, ref, swap),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 5),
-                  child: Text(
-                    AppLocalizations.of(context)!.swapInfosDetailPool,
-                    style: AppTextStyles.bodyMedium(context)
-                        .copyWith(fontWeight: FontWeight.bold),
-                  ),
+              ),
+              _buildRowWithFees(context, ref, swap),
+              _buildRowWithPriceImpact(context, swap),
+              _buildRowWithMinReceived(context, ref, swap),
+              Padding(
+                padding: const EdgeInsets.only(top: 10, left: 5),
+                child: Text(
+                  AppLocalizations.of(context)!.swapInfosDetailPool,
+                  style: AppTextStyles.bodyMedium(context)
+                      .copyWith(fontWeight: FontWeight.bold),
                 ),
-                _buildRowWithTVL(context, tvlAsyncValue),
-                _buildRowWithRatio(context, swap, tokenAddressRatioPrimary),
-                FutureBuilder<DexPoolStats>(
-                  future: ref.read(
-                    poolStatsProvider.future,
-                  ),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return _buildRowWithVolume24h(
-                        context,
-                        swap,
-                        snapshot.data!,
-                      );
-                    }
-                    return const SizedBox.shrink();
-                  },
+              ),
+              _buildRowWithTVL(context, tvlAsyncValue),
+              _buildRowWithRatio(context, swap, tokenAddressRatioPrimary),
+              FutureBuilder<DexPoolStats>(
+                future: ref.read(
+                  poolStatsProvider.future,
                 ),
-              ],
-            ),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return _buildRowWithVolume24h(
+                      context,
+                      swap,
+                      snapshot.data!,
+                    );
+                  }
+                  return const SizedBox.shrink();
+                },
+              ),
+            ],
           ),
         ),
       ),
