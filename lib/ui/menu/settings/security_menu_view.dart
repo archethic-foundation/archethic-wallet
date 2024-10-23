@@ -101,35 +101,7 @@ class SecurityMenuView extends ConsumerWidget
                             ArchethicThemeStyles.textStyleSize16W600Red,
                         icon: Symbols.delete,
                         onPressed: () {
-                          final language = ref.read(
-                            LanguageProviders.selectedLanguage,
-                          );
-
-                          AppDialogs.showConfirmDialog(
-                              context,
-                              ref,
-                              CaseChange.toUpperCase(
-                                localizations.warning,
-                                language.getLocaleString(),
-                              ),
-                              localizations.removeWalletDetail,
-                              localizations.removeWalletAction, () {
-                            // Show another confirm dialog
-                            AppDialogs.showConfirmDialog(
-                              context,
-                              ref,
-                              localizations.areYouSure,
-                              localizations.removeWalletReassurance,
-                              localizations.yes,
-                              () async {
-                                final auth = await AuthFactory.of(context)
-                                    .authenticate();
-                                if (!auth) return;
-
-                                context.go(LoggingOutScreen.routerPage);
-                              },
-                            );
-                          });
+                          RemoveWalletDialog.show(context, ref);
                         },
                       ),
                       const _SettingsListItem.spacer(),
