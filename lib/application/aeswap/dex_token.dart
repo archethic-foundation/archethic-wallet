@@ -106,15 +106,13 @@ Future<({double token1, double token2})> _getRemoveAmounts(
   String poolAddress,
   double lpTokenAmount,
 ) async {
-  ref.periodicReload(const Duration(minutes: 1));
-
-  final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-  if (connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
-    return (
-      token1: 0.0,
-      token2: 0.0,
-    );
-  }
+  ref.periodicReload(
+    const Duration(minutes: 1),
+    shouldReload: () {
+      return ref.read(connectivityStatusProviders) ==
+          ConnectivityStatus.isConnected;
+    },
+  );
 
   final apiService = ref.watch(apiServiceProvider);
   final amounts = await PoolFactoryRepositoryImpl(poolAddress, apiService)
