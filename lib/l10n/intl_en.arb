@@ -739,7 +739,7 @@
     "processingInProgress": "Processing in progress...",
     "restoreFailedTitle": "Archethic Wallet",
     "restoreFailedSubtitle": "Failed to open your wallet.",
-    "restoreFailedInfo1": "Don't panic! Your data is still there, safe and secure.",
+    "restoreFailedInfo1": "Don't panic! Your data is still on the Archethic Blockchain, safe and secure.",
     "restoreFailedInfo2": "This could be due to a network issue.\nYou can try again by clicking the button below, or restart the app manually.",
     "logsDialogTitle": "Logs",
     "logsDesc": "If you encounter any problems, you can copy and send the information below to the Archethic support team.\nEnsure that no sensitive or private information that could affect the security of your funds is shared.",
