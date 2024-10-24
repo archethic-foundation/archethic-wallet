@@ -44,7 +44,7 @@ class BalanceIndicatorWidget extends ConsumerWidget {
                 children: [
                   if (displayLabel)
                     Text(
-                      '${localizations.balance}: ',
+                      '${localizations.ucoBalance}: ',
                       style: ArchethicThemeStyles.textStyleSize14W200Primary,
                     ),
                   if (displaySwitchButton == true)
