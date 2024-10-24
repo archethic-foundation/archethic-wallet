@@ -6,13 +6,16 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/market_price.dart';
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/main/components/menu_widget_wallet.dart';
 import 'package:aewallet/ui/views/transactions/transactions_list.dart';
 import 'package:aewallet/ui/widgets/balance/balance_infos.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/refresh_indicator.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:flutter/gestures.dart';
@@ -20,6 +23,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TransactionsTab extends ConsumerWidget {
   const TransactionsTab({super.key});
@@ -32,14 +36,49 @@ class TransactionsTab extends ConsumerWidget {
       ),
     );
 
-    return SingleChildScrollView(
-      child: Column(
-        key: const Key('recentTransactions'),
-        children: [
-          if (recentTransactions != null)
-            _TransactionsList(recentTransactions: recentTransactions),
-        ],
+    final accountSelected = ref.watch(
+      AccountProviders.accounts.select(
+        (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
+    );
+    return Stack(
+      children: [
+        SingleChildScrollView(
+          child: Column(
+            key: const Key('recentTransactions'),
+            children: [
+              if (recentTransactions != null)
+                _TransactionsList(recentTransactions: recentTransactions),
+            ],
+          ),
+        ),
+        if (accountSelected != null)
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).padding.bottom + 20,
+              ),
+              child: Row(
+                children: [
+                  AppButtonTinyConnectivity(
+                    AppLocalizations.of(context)!.viewExplorer,
+                    Dimens.buttonBottomDimens,
+                    key: const Key('viewExplorer'),
+                    onPressed: () async {
+                      await launchUrl(
+                        Uri.parse(
+                          '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/chain?address=${accountSelected.genesisAddress}',
+                        ),
+                        mode: LaunchMode.externalApplication,
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+      ],
     );
   }
 }
@@ -88,7 +127,7 @@ class _TransactionsList extends ConsumerWidget {
                   child: Padding(
                     padding: EdgeInsets.only(
                       top: MediaQuery.of(context).padding.top + 10,
-                      bottom: 80,
+                      bottom: 160,
                     ),
                     child: Column(
                       children: <Widget>[
