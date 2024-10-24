@@ -38,6 +38,10 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
     final preferences = ref.watch(SettingsProviders.settings);
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
+    if (preferences.mainScreenCurrentPage == 4) {
+      return const _MainAppbarForWebView();
+    }
+
     return AppBar(
       flexibleSpace: ClipRRect(
         child: BackdropFilter(
@@ -51,17 +55,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
           ? SystemUiOverlayStyle.dark
           : SystemUiOverlayStyle.light,
       automaticallyImplyLeading: false,
-      leading: IconButton(
-        icon: const Icon(
-          Symbols.menu,
-          weight: IconSize.weightM,
-          opticalSize: IconSize.opticalSizeM,
-          grade: IconSize.gradeM,
-        ),
-        onPressed: () {
-          context.push(SettingsSheetWallet.routerPage);
-        },
-      ),
+      leading: const _MenuButton(),
       actions: [
         if (preferences.mainScreenCurrentPage == 0 ||
             preferences.mainScreenCurrentPage == 1)
@@ -111,16 +105,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
                         )
                           .animate()
                           .fade(duration: const Duration(milliseconds: 300))
-                      : FittedBox(
-                          fit: BoxFit.fitWidth,
-                          child: AutoSizeText(
-                            localizations.aeBridgeHeader,
-                            style:
-                                ArchethicThemeStyles.textStyleSize24W700Primary,
-                          ),
-                        )
-                          .animate()
-                          .fade(duration: const Duration(milliseconds: 300)),
+                      : const SizedBox.shrink(),
       backgroundColor: Colors.transparent,
       elevation: 0,
       centerTitle: true,
@@ -293,4 +278,52 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
       ).animate().fade(duration: const Duration(milliseconds: 300)),
     );
   }
+}
+
+/// AppBar containing only the menu button.
+/// Useful for webview screens.
+class _MainAppbarForWebView extends ConsumerWidget {
+  const _MainAppbarForWebView();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    return SafeArea(
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          SizedBox(
+            height: kToolbarHeight,
+            child: Align(
+              child: Text(
+                localizations.aeBridgeHeader,
+                style: ArchethicThemeStyles.textStyleSize24W700Primary,
+              ).animate().fade(duration: const Duration(milliseconds: 300)),
+            ),
+          ),
+          const Positioned(
+            left: 5,
+            child: _MenuButton(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _MenuButton extends ConsumerWidget {
+  const _MenuButton();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) => IconButton(
+        icon: const Icon(
+          Symbols.menu,
+          weight: IconSize.weightM,
+          opticalSize: IconSize.opticalSizeM,
+          grade: IconSize.gradeM,
+        ),
+        onPressed: () {
+          context.push(SettingsSheetWallet.routerPage);
+        },
+      );
 }
