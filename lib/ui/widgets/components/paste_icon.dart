@@ -17,7 +17,7 @@ class PasteIcon extends TextFieldButton {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return TextFieldButton(
-      icon: Symbols.content_copy,
+      icon: Symbols.content_paste,
       onPressed: () {
         Clipboard.getData('text/plain').then((ClipboardData? data) async {
           if (data == null || data.text == null) {

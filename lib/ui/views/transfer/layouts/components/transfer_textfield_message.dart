@@ -110,6 +110,13 @@ class _TransferTextFieldMessageState
             ],
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.only(top: 5, bottom: 10),
+          child: Text(
+            AppLocalizations.of(context)!.enterMessageInfo,
+            style: ArchethicThemeStyles.textStyleSize10W100Primary,
+          ),
+        ),
       ],
     )
         .animate()

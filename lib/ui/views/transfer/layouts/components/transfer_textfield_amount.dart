@@ -277,7 +277,7 @@ class _TransferTextFieldAmountState
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           AutoSizeText(
-            '${localizations.balance}:',
+            '${localizations.tokenBalance}:',
             style: ArchethicThemeStyles.textStyleSize14W200Primary,
           ),
           Row(
