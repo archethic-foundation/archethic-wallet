@@ -24,6 +24,7 @@ mixin _$AirdropFormState {
       throw _privateConstructorUsedError;
   bool get confirmPrivacyPolicy => throw _privateConstructorUsedError;
   bool get joinWaitlistInProgress => throw _privateConstructorUsedError;
+  double get personalLP => throw _privateConstructorUsedError;
   Failure? get failure => throw _privateConstructorUsedError;
 
   /// Create a copy of AirdropFormState
@@ -46,6 +47,7 @@ abstract class $AirdropFormStateCopyWith<$Res> {
       bool confirmNotMultipleRegistrations,
       bool confirmPrivacyPolicy,
       bool joinWaitlistInProgress,
+      double personalLP,
       Failure? failure});
 
   $FailureCopyWith<$Res>? get failure;
@@ -72,6 +74,7 @@ class _$AirdropFormStateCopyWithImpl<$Res, $Val extends AirdropFormState>
     Object? confirmNotMultipleRegistrations = null,
     Object? confirmPrivacyPolicy = null,
     Object? joinWaitlistInProgress = null,
+    Object? personalLP = null,
     Object? failure = freezed,
   }) {
     return _then(_value.copyWith(
@@ -99,6 +102,10 @@ class _$AirdropFormStateCopyWithImpl<$Res, $Val extends AirdropFormState>
           ? _value.joinWaitlistInProgress
           : joinWaitlistInProgress // ignore: cast_nullable_to_non_nullable
               as bool,
+      personalLP: null == personalLP
+          ? _value.personalLP
+          : personalLP // ignore: cast_nullable_to_non_nullable
+              as double,
       failure: freezed == failure
           ? _value.failure
           : failure // ignore: cast_nullable_to_non_nullable
@@ -136,6 +143,7 @@ abstract class _$$AirdropFormStateImplCopyWith<$Res>
       bool confirmNotMultipleRegistrations,
       bool confirmPrivacyPolicy,
       bool joinWaitlistInProgress,
+      double personalLP,
       Failure? failure});
 
   @override
@@ -161,6 +169,7 @@ class __$$AirdropFormStateImplCopyWithImpl<$Res>
     Object? confirmNotMultipleRegistrations = null,
     Object? confirmPrivacyPolicy = null,
     Object? joinWaitlistInProgress = null,
+    Object? personalLP = null,
     Object? failure = freezed,
   }) {
     return _then(_$AirdropFormStateImpl(
@@ -188,6 +197,10 @@ class __$$AirdropFormStateImplCopyWithImpl<$Res>
           ? _value.joinWaitlistInProgress
           : joinWaitlistInProgress // ignore: cast_nullable_to_non_nullable
               as bool,
+      personalLP: null == personalLP
+          ? _value.personalLP
+          : personalLP // ignore: cast_nullable_to_non_nullable
+              as double,
       failure: freezed == failure
           ? _value.failure
           : failure // ignore: cast_nullable_to_non_nullable
@@ -206,6 +219,7 @@ class _$AirdropFormStateImpl extends _AirdropFormState {
       this.confirmNotMultipleRegistrations = false,
       this.confirmPrivacyPolicy = false,
       this.joinWaitlistInProgress = false,
+      this.personalLP = 0.0,
       this.failure})
       : super._();
 
@@ -227,11 +241,14 @@ class _$AirdropFormStateImpl extends _AirdropFormState {
   @JsonKey()
   final bool joinWaitlistInProgress;
   @override
+  @JsonKey()
+  final double personalLP;
+  @override
   final Failure? failure;
 
   @override
   String toString() {
-    return 'AirdropFormState(airdropProcessStep: $airdropProcessStep, mailAddress: $mailAddress, confirmOnlyOneAirdrop: $confirmOnlyOneAirdrop, confirmNotMultipleRegistrations: $confirmNotMultipleRegistrations, confirmPrivacyPolicy: $confirmPrivacyPolicy, joinWaitlistInProgress: $joinWaitlistInProgress, failure: $failure)';
+    return 'AirdropFormState(airdropProcessStep: $airdropProcessStep, mailAddress: $mailAddress, confirmOnlyOneAirdrop: $confirmOnlyOneAirdrop, confirmNotMultipleRegistrations: $confirmNotMultipleRegistrations, confirmPrivacyPolicy: $confirmPrivacyPolicy, joinWaitlistInProgress: $joinWaitlistInProgress, personalLP: $personalLP, failure: $failure)';
   }
 
   @override
@@ -253,6 +270,8 @@ class _$AirdropFormStateImpl extends _AirdropFormState {
                 other.confirmPrivacyPolicy == confirmPrivacyPolicy) &&
             (identical(other.joinWaitlistInProgress, joinWaitlistInProgress) ||
                 other.joinWaitlistInProgress == joinWaitlistInProgress) &&
+            (identical(other.personalLP, personalLP) ||
+                other.personalLP == personalLP) &&
             (identical(other.failure, failure) || other.failure == failure));
   }
 
@@ -265,6 +284,7 @@ class _$AirdropFormStateImpl extends _AirdropFormState {
       confirmNotMultipleRegistrations,
       confirmPrivacyPolicy,
       joinWaitlistInProgress,
+      personalLP,
       failure);
 
   /// Create a copy of AirdropFormState
@@ -285,6 +305,7 @@ abstract class _AirdropFormState extends AirdropFormState {
       final bool confirmNotMultipleRegistrations,
       final bool confirmPrivacyPolicy,
       final bool joinWaitlistInProgress,
+      final double personalLP,
       final Failure? failure}) = _$AirdropFormStateImpl;
   const _AirdropFormState._() : super._();
 
@@ -300,6 +321,8 @@ abstract class _AirdropFormState extends AirdropFormState {
   bool get confirmPrivacyPolicy;
   @override
   bool get joinWaitlistInProgress;
+  @override
+  double get personalLP;
   @override
   Failure? get failure;
 

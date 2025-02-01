@@ -4,11 +4,7 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/state.dart';
-import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_checkbox_confirm_not_multiple_registrations.dart';
-import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_checkbox_confirm_only_one_airdrop.dart';
-import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_checkbox_confirm_privacy_policy.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_stepper.dart';
-import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_textfield_mail.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
@@ -17,18 +13,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AirdropParticipateStepJoinWaitlistSheet extends ConsumerStatefulWidget {
-  const AirdropParticipateStepJoinWaitlistSheet({
+class AirdropParticipateStepConfirmEmailSheet extends ConsumerStatefulWidget {
+  const AirdropParticipateStepConfirmEmailSheet({
     super.key,
   });
 
   @override
-  ConsumerState<AirdropParticipateStepJoinWaitlistSheet> createState() =>
+  ConsumerState<AirdropParticipateStepConfirmEmailSheet> createState() =>
       _AirdropParticipateStepJoinWaitlistSheetState();
 }
 
 class _AirdropParticipateStepJoinWaitlistSheetState
-    extends ConsumerState<AirdropParticipateStepJoinWaitlistSheet>
+    extends ConsumerState<AirdropParticipateStepConfirmEmailSheet>
     implements SheetSkeletonInterface {
   @override
   Widget build(
@@ -61,7 +57,7 @@ class _AirdropParticipateStepJoinWaitlistSheetState
           onPressed: () async {
             ref
                 .read(airdropFormNotifierProvider.notifier)
-                .setAirdropProcessStep(AirdropProcessStep.confirmEmail);
+                .setAirdropProcessStep(AirdropProcessStep.sign);
           },
           disabled: !airdropForm.isItemsConfirmed,
         ),
@@ -80,7 +76,7 @@ class _AirdropParticipateStepJoinWaitlistSheetState
         onPressed: () {
           ref
               .read(airdropFormNotifierProvider.notifier)
-              .setAirdropProcessStep(AirdropProcessStep.welcome);
+              .setAirdropProcessStep(AirdropProcessStep.joinWaitlist);
         },
       ),
     );
@@ -89,29 +85,65 @@ class _AirdropParticipateStepJoinWaitlistSheetState
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
+    final airdropForm = ref.read(airdropFormNotifierProvider);
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const AirdropStepper(),
           Text(
-            localizations.airdropParticipateStepWaitlistTitle,
+            localizations.airdropParticipateStepConfirmEmailTitle,
             style: AppTextStyles.bodyLarge(context)
                 .copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 20),
           Text(
-            localizations.airdropParticipateStepWaitlistDesc2,
+            localizations.airdropParticipateStepConfirmEmailDesc1,
             style: AppTextStyles.bodyMediumWithOpacity(context),
           ),
           const SizedBox(height: 20),
-          const AirdropTextFieldMail(),
-          const SizedBox(height: 20),
-          const AirdropCheckboxConfirmOnlyOneAirdrop(),
-          const SizedBox(height: 20),
-          const AirdropCheckboxConfirmNotMultipleRegistrations(),
-          const SizedBox(height: 20),
-          const AirdropCheckboxConfirmPrivacyPolicy(),
+          Text(
+            airdropForm.mailAddress ?? '?',
+            style: AppTextStyles.bodyMedium(context)
+                .copyWith(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 30),
+          Text(
+            localizations.airdropParticipateStepConfirmEmailDesc2,
+            style: AppTextStyles.bodyMediumWithOpacity(context),
+          ),
+          InkWell(
+            child: Text(
+              localizations.airdropParticipateStepConfirmEmailDesc3,
+              style: AppTextStyles.bodyMedium(context)
+                  .copyWith(decoration: TextDecoration.underline),
+            ),
+          ),
+          const SizedBox(height: 30),
+          Row(
+            children: [
+              Text(
+                '${localizations.airdropParticipateStepConfirmEmailDesc4} ',
+                style: AppTextStyles.bodyMediumWithOpacity(context),
+              ),
+              InkWell(
+                onTap: () => ref
+                    .read(airdropFormNotifierProvider.notifier)
+                    .setAirdropProcessStep(AirdropProcessStep.joinWaitlist),
+                child: Text(
+                  localizations.airdropParticipateStepConfirmEmailDesc5,
+                  style: AppTextStyles.bodyMedium(context)
+                      .copyWith(decoration: TextDecoration.underline),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 30),
+          Text(
+            localizations.airdropParticipateStepConfirmEmailDesc6,
+            style: AppTextStyles.bodyMediumWithOpacity(context)
+                .copyWith(fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: 20),
         ],
       ),

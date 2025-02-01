@@ -1,9 +1,12 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
+import 'package:aewallet/application/airdrop/airdrop.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_lp_current_value.dart';
+import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_personal_multiplier.dart';
+import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_personal_rewards.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_step_tab.dart';
 import 'package:aewallet/ui/views/main/bloc/providers.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
@@ -89,6 +92,17 @@ class _AirdropDashboardSheetState extends ConsumerState<AirdropDashboardSheet>
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
+    final airdropPersonalMultiplierAsync =
+        ref.watch(airdropPersonalMultiplierProvider);
+    int? personalMultiplier;
+    airdropPersonalMultiplierAsync.when(
+      data: (data) {
+        personalMultiplier = data;
+      },
+      error: (_, __) {},
+      loading: () {},
+    );
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,9 +113,19 @@ class _AirdropDashboardSheetState extends ConsumerState<AirdropDashboardSheet>
                 .copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              AirdropPersonalMultiplier(
+                personalMultiplier: personalMultiplier,
+              ),
+              const AirdropPersonalRewards(),
+            ],
+          ),
+          const SizedBox(height: 20),
           const AirdropLPCurrentValue(),
           const SizedBox(height: 10),
-          const AirdropStepTab(),
+          AirdropStepTab(personalMultiplier: personalMultiplier),
           const SizedBox(height: 20),
         ],
       ),

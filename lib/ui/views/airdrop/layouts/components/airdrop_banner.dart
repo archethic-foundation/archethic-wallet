@@ -4,6 +4,7 @@ import 'package:aewallet/main.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/airdrop_dashboard_sheet.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/airdrop_participate_sheet.dart';
+import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_participants_count.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -34,34 +35,39 @@ class AirdropBanner extends ConsumerWidget {
 
   Widget _buildAirdropOk(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final bannerTextStyle =
-        AppTextStyles.bodyLarge(context).copyWith(fontSize: 14);
+    final titleTextStyle = AppTextStyles.bodyLarge(context).copyWith(
+      fontWeight: FontWeight.bold,
+      fontSize: 18,
+    );
 
     return Padding(
       padding: const EdgeInsets.only(top: 20),
-      child: _buildBannerContainer(
-        context,
-        height: 40,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              localizations.airdropBannerTitle,
-              style: bannerTextStyle,
-              textAlign: TextAlign.center,
+      child: InkWell(
+        onTap: () async {
+          await context.push(AirdropDashboardSheet.routerPage);
+        },
+        child: _buildBannerContainer(
+          context,
+          height: 60,
+          child: SizedBox(
+            height: 60,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  localizations.airdropBannerTitle,
+                  style: titleTextStyle,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(width: 10),
+                const Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.white70,
+                  size: 14,
+                ),
+              ],
             ),
-            const SizedBox(width: 10),
-            InkWell(
-              onTap: () async {
-                await context.push(AirdropDashboardSheet.routerPage);
-              },
-              child: const Icon(
-                Icons.arrow_forward_ios,
-                color: Colors.white70,
-                size: 14,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -81,13 +87,17 @@ class AirdropBanner extends ConsumerWidget {
       padding: const EdgeInsets.only(top: 20),
       child: _buildBannerContainer(
         context,
-        height: 190,
+        height: 230,
         child: Stack(
           alignment: Alignment.topRight,
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                const AirdropParticipantsCount(),
+                const SizedBox(
+                  height: 10,
+                ),
                 Text(
                   localizations.airdropBannerNewTitle,
                   style: titleTextStyle,

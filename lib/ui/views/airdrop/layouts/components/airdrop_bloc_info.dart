@@ -1,5 +1,5 @@
-import 'package:aewallet/application/airdrop/airdrop.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_participants_count.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -14,7 +14,6 @@ class AirdropBlocInfo extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final airdropCountAsync = ref.watch(airdropCountProvider);
 
     final boldBodyLarge = AppTextStyles.bodyLarge(context).copyWith(
       fontWeight: FontWeight.bold,
@@ -23,7 +22,6 @@ class AirdropBlocInfo extends ConsumerWidget {
         AppTextStyles.bodyLargeSecondaryColor(context).copyWith(
       fontWeight: FontWeight.bold,
     );
-    final bodyMedium = AppTextStyles.bodyMedium(context);
     final bodyMediumSecondary = AppTextStyles.bodyMediumSecondaryColor(context);
 
     return LayoutBuilder(
@@ -74,30 +72,7 @@ class AirdropBlocInfo extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        localizations
-                            .airdropParticipateStepWelcomeCardParticipantsCount,
-                        style: bodyMedium,
-                      ),
-                      airdropCountAsync.when(
-                        data: (data) => Text(
-                          data != null ? '$data' : '?',
-                          style: bodyMediumSecondary,
-                        ),
-                        error: (_, __) => Text(
-                          '?',
-                          style: bodyMediumSecondary,
-                        ),
-                        loading: () => Text(
-                          '',
-                          style: bodyMediumSecondary,
-                        ),
-                      ),
-                    ],
-                  ),
+                  const AirdropParticipantsCount(),
                 ],
               ),
             ],

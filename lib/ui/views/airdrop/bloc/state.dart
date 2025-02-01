@@ -7,6 +7,7 @@ part 'state.freezed.dart';
 enum AirdropProcessStep {
   welcome,
   joinWaitlist,
+  confirmEmail,
   supportEcosystem,
   sign,
   congrats
@@ -21,6 +22,7 @@ class AirdropFormState with _$AirdropFormState {
     @Default(false) bool confirmNotMultipleRegistrations,
     @Default(false) bool confirmPrivacyPolicy,
     @Default(false) bool joinWaitlistInProgress,
+    @Default(0.0) double personalLP,
     Failure? failure,
   }) = _AirdropFormState;
   const AirdropFormState._();

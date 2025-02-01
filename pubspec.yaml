@@ -72,6 +72,9 @@ dependencies:
   # Get infos about the device
   device_info_plus: ^10.1.2
 
+  # A fully customizable, beautiful and easy to use stepper widget. It help you to show or collect information from users using organized steps.
+  easy_stepper: ^0.8.5+1
+
   # A new flutter package to display notifications on top of the screen, full customizable with built-in themes
   elegant_notification: ^2.1.0
 

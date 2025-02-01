@@ -4,6 +4,7 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/state.dart';
+import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_stepper.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
@@ -92,6 +93,7 @@ class _AirdropParticipateStepSignSheetState
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const AirdropStepper(),
           Text(
             localizations.airdropParticipateStepSignTitle,
             style: AppTextStyles.bodyLarge(context)

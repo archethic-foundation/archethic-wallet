@@ -18,7 +18,9 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
   AirdropFormNotifier();
 
   @override
-  AirdropFormState build() => const AirdropFormState();
+  AirdropFormState build() {
+    return const AirdropFormState();
+  }
 
   void setConfirmOnlyOneAirdrop(bool confirmOnlyOneAirdrop) {
     state = state.copyWith(
@@ -63,7 +65,7 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
       if (!state.isItemsConfirmed) {
         state = state.copyWith(
           failure: const Failure.other(
-            message: 'Formulaire invalide',
+            message: 'Invalid Forms',
           ),
           joinWaitlistInProgress: false,
         );

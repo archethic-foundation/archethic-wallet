@@ -5,6 +5,7 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/state.dart';
+import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_participate_step_confirm_email.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_participate_step_congrats.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_participate_step_join_waitlist.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_participate_step_sign.dart';
@@ -64,11 +65,13 @@ class _AirdropParticipateSheetState
         ? const AirdropParticipateStepWelcomeSheet()
         : airdropForm.airdropProcessStep == AirdropProcessStep.joinWaitlist
             ? const AirdropParticipateStepJoinWaitlistSheet()
-            : airdropForm.airdropProcessStep == AirdropProcessStep.sign
-                ? const AirdropParticipateStepSignSheet()
-                : airdropForm.airdropProcessStep ==
-                        AirdropProcessStep.supportEcosystem
-                    ? const AirdropParticipateStepSupportEcosystemSheet()
-                    : const AirdropParticipateStepCongratsSheet();
+            : airdropForm.airdropProcessStep == AirdropProcessStep.confirmEmail
+                ? const AirdropParticipateStepConfirmEmailSheet()
+                : airdropForm.airdropProcessStep == AirdropProcessStep.sign
+                    ? const AirdropParticipateStepSignSheet()
+                    : airdropForm.airdropProcessStep ==
+                            AirdropProcessStep.supportEcosystem
+                        ? const AirdropParticipateStepSupportEcosystemSheet()
+                        : const AirdropParticipateStepCongratsSheet();
   }
 }

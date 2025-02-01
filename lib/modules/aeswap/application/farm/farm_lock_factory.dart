@@ -76,4 +76,40 @@ class FarmLockFactory with ModelParser {
 
     return results;
   }
+
+  /// Returns the informations of multiple addresses who has deposited and locked lp token in the farm
+  Future<List<dynamic>> getUserInfosFromMultipleAddresses(
+    List<String> userGenesisAddresses,
+  ) async {
+    if (userGenesisAddresses.isEmpty) {
+      return [];
+    }
+
+    final scCallFunctionRequestList = <SCCallFunctionRequest>[];
+    for (final userGenesisAddress in userGenesisAddresses) {
+      scCallFunctionRequestList.add(
+        SCCallFunctionRequest(
+          method: 'contract_fun',
+          params: SCCallFunctionParams(
+            contract: factoryAddress.toUpperCase(),
+            function: 'get_user_infos',
+            args: [userGenesisAddress],
+          ),
+        ),
+      );
+    }
+
+    final results = await apiService.callSCFunctionMulti(
+      jsonRPCRequests: scCallFunctionRequestList,
+    );
+
+    final userinfos = [];
+    for (final result in results) {
+      if (result['result'] != null && (result['result'] as List).isNotEmpty) {
+        userinfos.add(result['result']);
+      }
+    }
+
+    return userinfos;
+  }
 }

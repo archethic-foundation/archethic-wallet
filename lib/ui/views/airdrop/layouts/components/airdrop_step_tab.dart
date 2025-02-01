@@ -5,9 +5,9 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AirdropStepTab extends ConsumerWidget {
-  const AirdropStepTab({this.currentStep, super.key});
+  const AirdropStepTab({required this.personalMultiplier, super.key});
 
-  final int? currentStep;
+  final int? personalMultiplier;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -70,7 +70,8 @@ class AirdropStepTab extends ConsumerWidget {
                 for (final row in data)
                   TableRow(
                     decoration: BoxDecoration(
-                      color: currentStep != null && currentStep == row['Step']
+                      color: personalMultiplier != null &&
+                              '${personalMultiplier}x' == row['Multiplier']
                           ? ArchethicThemeBase.raspberry500.withOpacity(0.5)
                           : row['Step'] % 2 == 0
                               ? ArchethicThemeBase.palePurpleBackground
