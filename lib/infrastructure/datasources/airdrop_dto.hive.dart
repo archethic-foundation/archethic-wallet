@@ -7,55 +7,41 @@ part 'airdrop_dto.hive.g.dart';
 @HiveType(typeId: HiveTypeIds.airdrop)
 class AirdropHiveDto extends HiveObject {
   AirdropHiveDto({
-    required this.isFarming,
+    required this.personalLPAmount,
     required this.isMailFilled,
-    this.currentStep,
-    this.personalMultiplier,
-    required this.currentAirdropValue,
+    required this.isMailConfirmed,
   });
 
   factory AirdropHiveDto.fromModel(Airdrop airdrop) {
     return AirdropHiveDto(
-      isFarming: airdrop.isFarming,
       isMailFilled: airdrop.isMailFilled,
-      currentStep: airdrop.currentStep,
-      personalMultiplier: airdrop.personalMultiplier,
-      currentAirdropValue: airdrop.currentAirdropValue,
+      personalLPAmount: airdrop.personalLPAmount,
+      isMailConfirmed: airdrop.isMailConfirmed,
     );
   }
 
   @HiveField(0)
-  bool isFarming;
+  double personalLPAmount;
 
   @HiveField(1)
   bool isMailFilled;
 
   @HiveField(2)
-  int? currentStep;
-
-  @HiveField(3)
-  int? personalMultiplier;
-
-  @HiveField(4)
-  double currentAirdropValue;
+  bool isMailConfirmed;
 
   Airdrop toModel() {
     return Airdrop(
-      isFarming: isFarming,
+      personalLPAmount: personalLPAmount,
       isMailFilled: isMailFilled,
-      currentStep: currentStep,
-      personalMultiplier: personalMultiplier,
-      currentAirdropValue: currentAirdropValue,
+      isMailConfirmed: isMailConfirmed,
     );
   }
 }
 
 extension AirdropHiveConversionExt on Airdrop {
   AirdropHiveDto toHive() => AirdropHiveDto(
-        isFarming: isFarming,
+        personalLPAmount: personalLPAmount,
         isMailFilled: isMailFilled,
-        currentStep: currentStep,
-        personalMultiplier: personalMultiplier,
-        currentAirdropValue: currentAirdropValue,
+        isMailConfirmed: isMailConfirmed,
       );
 }

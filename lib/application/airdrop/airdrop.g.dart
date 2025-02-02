@@ -22,8 +22,24 @@ final airdropCountProvider = AutoDisposeFutureProvider<int?>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef AirdropCountRef = AutoDisposeFutureProviderRef<int?>;
+String _$airdropCheckHash() => r'4c1221a4b78f157c3308204dbd47f4d47e6ac4d4';
+
+/// See also [airdropCheck].
+@ProviderFor(airdropCheck)
+final airdropCheckProvider = AutoDisposeFutureProvider<bool>.internal(
+  airdropCheck,
+  name: r'airdropCheckProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$airdropCheckHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef AirdropCheckRef = AutoDisposeFutureProviderRef<bool>;
 String _$airdropPersonalRewardsHash() =>
-    r'ac78a325d8787fab435946970bc369d3a3cd297b';
+    r'3defd9e0650e97299be6fe6392a9a22e3c08bc5c';
 
 /// See also [airdropPersonalRewards].
 @ProviderFor(airdropPersonalRewards)
@@ -41,24 +57,5 @@ final airdropPersonalRewardsProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef AirdropPersonalRewardsRef = AutoDisposeFutureProviderRef<double>;
-String _$airdropPersonalMultiplierHash() =>
-    r'15549af92c8eb0e4820ffca218cd29c8f47bb899';
-
-/// See also [airdropPersonalMultiplier].
-@ProviderFor(airdropPersonalMultiplier)
-final airdropPersonalMultiplierProvider =
-    AutoDisposeFutureProvider<int?>.internal(
-  airdropPersonalMultiplier,
-  name: r'airdropPersonalMultiplierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$airdropPersonalMultiplierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef AirdropPersonalMultiplierRef = AutoDisposeFutureProviderRef<int?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

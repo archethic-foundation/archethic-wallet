@@ -1,3 +1,4 @@
+import 'package:aewallet/application/airdrop/airdrop_notifier.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:flutter/material.dart';
@@ -6,18 +7,27 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AirdropPersonalMultiplier extends ConsumerWidget {
   const AirdropPersonalMultiplier({
-    required this.personalMultiplier,
     super.key,
   });
-
-  final int? personalMultiplier;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
+    final airdropAsync = ref.watch(airdropNotifierProvider);
+    var personalMultiplier = 0;
+
+    airdropAsync.when(
+      data: (airdrop) {
+        if (airdrop != null) {
+          personalMultiplier = airdrop.personalMultiplier;
+        }
+      },
+      loading: () {},
+      error: (error, stack) {},
+    );
 
     return Container(
-      height: 100,
+      height: 105,
       padding: const EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
       decoration: BoxDecoration(
         border: Border.all(
@@ -30,7 +40,7 @@ class AirdropPersonalMultiplier extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            '${personalMultiplier ?? 0}x',
+            '${personalMultiplier}x',
             style: AppTextStyles.bodyLarge(context).copyWith(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -42,6 +52,7 @@ class AirdropPersonalMultiplier extends ConsumerWidget {
           Text(
             localizations.airdropPersonalMultiplier,
             style: AppTextStyles.bodyMediumWithOpacity(context),
+            textAlign: TextAlign.center,
           ),
         ],
       ),

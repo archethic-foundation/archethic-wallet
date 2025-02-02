@@ -12,7 +12,7 @@ class AirdropPersonalRewards extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
 
     return Container(
-      height: 100,
+      height: 105,
       padding: const EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
       decoration: BoxDecoration(
         border: Border.all(
@@ -37,6 +37,7 @@ class AirdropPersonalRewards extends ConsumerWidget {
           Text(
             localizations.airdropPersonalValue,
             style: AppTextStyles.bodyMediumWithOpacity(context),
+            textAlign: TextAlign.center,
           ),
         ],
       ),

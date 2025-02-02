@@ -1,3 +1,4 @@
+import 'package:aewallet/application/airdrop/airdrop_notifier.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:flutter/material.dart';
@@ -5,9 +6,7 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AirdropStepTab extends ConsumerWidget {
-  const AirdropStepTab({required this.personalMultiplier, super.key});
-
-  final int? personalMultiplier;
+  const AirdropStepTab({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,6 +22,18 @@ class AirdropStepTab extends ConsumerWidget {
       {'Step': 9, 'LP Required': '1000', 'Multiplier': '55x'},
     ];
     final localizations = AppLocalizations.of(context)!;
+    final airdropAsync = ref.watch(airdropNotifierProvider);
+    var personalMultiplier = 0;
+
+    airdropAsync.when(
+      data: (airdrop) {
+        if (airdrop != null) {
+          personalMultiplier = airdrop.personalMultiplier;
+        }
+      },
+      loading: () {},
+      error: (error, stack) {},
+    );
 
     return Column(
       children: [
@@ -70,8 +81,7 @@ class AirdropStepTab extends ConsumerWidget {
                 for (final row in data)
                   TableRow(
                     decoration: BoxDecoration(
-                      color: personalMultiplier != null &&
-                              '${personalMultiplier}x' == row['Multiplier']
+                      color: '${personalMultiplier}x' == row['Multiplier']
                           ? ArchethicThemeBase.raspberry500.withOpacity(0.5)
                           : row['Step'] % 2 == 0
                               ? ArchethicThemeBase.palePurpleBackground

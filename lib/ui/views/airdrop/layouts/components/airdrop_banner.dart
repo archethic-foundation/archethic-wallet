@@ -2,7 +2,7 @@ import 'package:aewallet/application/airdrop/airdrop_notifier.dart';
 import 'package:aewallet/application/feature_flags.dart';
 import 'package:aewallet/main.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
-import 'package:aewallet/ui/views/airdrop/layouts/airdrop_dashboard_sheet.dart';
+import 'package:aewallet/ui/views/airddrop_dashboard/layouts/airdrop_dashboard_sheet.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/airdrop_participate_sheet.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_participants_count.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -24,9 +24,11 @@ class AirdropBanner extends ConsumerWidget {
     return flag.when(
       data: (data) {
         if (data == null || data == false) return const SizedBox.shrink();
-        return airdrop == null
+        return airdrop == null || airdrop.isMailFilled == false
             ? _buildAirdropNew(context)
-            : _buildAirdropOk(context);
+            : airdrop.personalMultiplier > 0
+                ? _buildAirdropOk(context)
+                : _buildAirdropCompleteParticipation(context);
       },
       error: (_, __) => const SizedBox(),
       loading: () => const SizedBox(),
@@ -111,19 +113,100 @@ class AirdropBanner extends ConsumerWidget {
                   onTap: () async {
                     await context.push(AirdropParticipateSheet.routerPage);
                   },
-                  child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    width: 220,
-                    height: 35,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(25),
+                  child: IntrinsicWidth(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 5),
+                      height: 35,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: Text(
+                        localizations.airdropBannerNewBtn,
+                        style: buttonTextStyle,
+                      ),
                     ),
-                    child: Text(
-                      localizations.airdropBannerNewBtn,
-                      style: buttonTextStyle,
+                  ),
+                ),
+              ],
+            ),
+            Positioned(
+              child: IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Symbols.close,
+                  color: Colors.white,
+                  size: 16,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAirdropCompleteParticipation(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    final titleTextStyle = AppTextStyles.bodyLarge(context).copyWith(
+      fontWeight: FontWeight.bold,
+      fontSize: 22,
+    );
+    final buttonTextStyle = AppTextStyles.bodyMedium(context).copyWith(
+      fontWeight: FontWeight.bold,
+    );
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 20),
+      child: _buildBannerContainer(
+        context,
+        height: 230,
+        child: Stack(
+          alignment: Alignment.topRight,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const AirdropParticipantsCount(),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  localizations.airdropBannerCompleteParticipationTitle,
+                  style: titleTextStyle,
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  localizations.airdropBannerCompleteParticipationDesc,
+                  style: AppTextStyles.bodySmallWithOpacity(context),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 20,
+                  width: MediaQuery.of(context).size.width,
+                ),
+                InkWell(
+                  onTap: () async {
+                    await context.push(AirdropDashboardSheet.routerPage);
+                  },
+                  child: IntrinsicWidth(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 5,
+                      ),
+                      height: 35,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: Text(
+                        localizations.airdropBannerCompleteParticipationBtn,
+                        style: buttonTextStyle,
+                      ),
                     ),
                   ),
                 ),

@@ -23,6 +23,7 @@ class AirdropNotifier extends _$AirdropNotifier {
   ) async {
     final airdropHiveDatasource = await AirdropHiveDatasource.getInstance();
     await airdropHiveDatasource.removeAirdrop();
+    state = const AsyncValue.data(null);
   }
 
   Future<void> setAirdrop(Airdrop airdrop) async {
@@ -35,6 +36,36 @@ class AirdropNotifier extends _$AirdropNotifier {
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);
       rethrow;
+    }
+  }
+
+  Future<void> updatePersonalLPAmount(double personalLPAmount) async {
+    final currentAirdrop = state.valueOrNull;
+    if (currentAirdrop != null) {
+      final updatedAirdrop =
+          currentAirdrop.copyWith(personalLPAmount: personalLPAmount);
+      await setAirdrop(updatedAirdrop);
+    } else {
+      await setAirdrop(
+        Airdrop(
+          personalLPAmount: personalLPAmount,
+        ),
+      );
+    }
+  }
+
+  Future<void> updateMailFilled(bool isMailFilled) async {
+    final currentAirdrop = state.valueOrNull;
+    if (currentAirdrop != null) {
+      final updatedAirdrop =
+          currentAirdrop.copyWith(isMailFilled: isMailFilled);
+      await setAirdrop(updatedAirdrop);
+    } else {
+      await setAirdrop(
+        Airdrop(
+          isMailFilled: isMailFilled,
+        ),
+      );
     }
   }
 }

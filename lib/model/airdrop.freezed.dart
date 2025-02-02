@@ -16,11 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Airdrop {
-  dynamic get isFarming => throw _privateConstructorUsedError;
-  dynamic get isMailFilled => throw _privateConstructorUsedError;
-  int? get currentStep => throw _privateConstructorUsedError;
-  int? get personalMultiplier => throw _privateConstructorUsedError;
-  double get currentAirdropValue => throw _privateConstructorUsedError;
+  double get personalLPAmount => throw _privateConstructorUsedError;
+  bool get isMailFilled => throw _privateConstructorUsedError;
+  bool get isMailConfirmed => throw _privateConstructorUsedError;
 
   /// Create a copy of Airdrop
   /// with the given fields replaced by the non-null parameter values.
@@ -33,12 +31,7 @@ abstract class $AirdropCopyWith<$Res> {
   factory $AirdropCopyWith(Airdrop value, $Res Function(Airdrop) then) =
       _$AirdropCopyWithImpl<$Res, Airdrop>;
   @useResult
-  $Res call(
-      {dynamic isFarming,
-      dynamic isMailFilled,
-      int? currentStep,
-      int? personalMultiplier,
-      double currentAirdropValue});
+  $Res call({double personalLPAmount, bool isMailFilled, bool isMailConfirmed});
 }
 
 /// @nodoc
@@ -56,33 +49,23 @@ class _$AirdropCopyWithImpl<$Res, $Val extends Airdrop>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isFarming = freezed,
-    Object? isMailFilled = freezed,
-    Object? currentStep = freezed,
-    Object? personalMultiplier = freezed,
-    Object? currentAirdropValue = null,
+    Object? personalLPAmount = null,
+    Object? isMailFilled = null,
+    Object? isMailConfirmed = null,
   }) {
     return _then(_value.copyWith(
-      isFarming: freezed == isFarming
-          ? _value.isFarming
-          : isFarming // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      isMailFilled: freezed == isMailFilled
+      personalLPAmount: null == personalLPAmount
+          ? _value.personalLPAmount
+          : personalLPAmount // ignore: cast_nullable_to_non_nullable
+              as double,
+      isMailFilled: null == isMailFilled
           ? _value.isMailFilled
           : isMailFilled // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      currentStep: freezed == currentStep
-          ? _value.currentStep
-          : currentStep // ignore: cast_nullable_to_non_nullable
-              as int?,
-      personalMultiplier: freezed == personalMultiplier
-          ? _value.personalMultiplier
-          : personalMultiplier // ignore: cast_nullable_to_non_nullable
-              as int?,
-      currentAirdropValue: null == currentAirdropValue
-          ? _value.currentAirdropValue
-          : currentAirdropValue // ignore: cast_nullable_to_non_nullable
-              as double,
+              as bool,
+      isMailConfirmed: null == isMailConfirmed
+          ? _value.isMailConfirmed
+          : isMailConfirmed // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -94,12 +77,7 @@ abstract class _$$AirdropImplCopyWith<$Res> implements $AirdropCopyWith<$Res> {
       __$$AirdropImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {dynamic isFarming,
-      dynamic isMailFilled,
-      int? currentStep,
-      int? personalMultiplier,
-      double currentAirdropValue});
+  $Res call({double personalLPAmount, bool isMailFilled, bool isMailConfirmed});
 }
 
 /// @nodoc
@@ -115,28 +93,23 @@ class __$$AirdropImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isFarming = freezed,
-    Object? isMailFilled = freezed,
-    Object? currentStep = freezed,
-    Object? personalMultiplier = freezed,
-    Object? currentAirdropValue = null,
+    Object? personalLPAmount = null,
+    Object? isMailFilled = null,
+    Object? isMailConfirmed = null,
   }) {
     return _then(_$AirdropImpl(
-      isFarming: freezed == isFarming ? _value.isFarming! : isFarming,
-      isMailFilled:
-          freezed == isMailFilled ? _value.isMailFilled! : isMailFilled,
-      currentStep: freezed == currentStep
-          ? _value.currentStep
-          : currentStep // ignore: cast_nullable_to_non_nullable
-              as int?,
-      personalMultiplier: freezed == personalMultiplier
-          ? _value.personalMultiplier
-          : personalMultiplier // ignore: cast_nullable_to_non_nullable
-              as int?,
-      currentAirdropValue: null == currentAirdropValue
-          ? _value.currentAirdropValue
-          : currentAirdropValue // ignore: cast_nullable_to_non_nullable
+      personalLPAmount: null == personalLPAmount
+          ? _value.personalLPAmount
+          : personalLPAmount // ignore: cast_nullable_to_non_nullable
               as double,
+      isMailFilled: null == isMailFilled
+          ? _value.isMailFilled
+          : isMailFilled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isMailConfirmed: null == isMailConfirmed
+          ? _value.isMailConfirmed
+          : isMailConfirmed // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -145,30 +118,24 @@ class __$$AirdropImplCopyWithImpl<$Res>
 
 class _$AirdropImpl extends _Airdrop {
   const _$AirdropImpl(
-      {this.isFarming = false,
+      {this.personalLPAmount = 0.0,
       this.isMailFilled = false,
-      this.currentStep,
-      this.personalMultiplier,
-      this.currentAirdropValue = 0})
+      this.isMailConfirmed = false})
       : super._();
 
   @override
   @JsonKey()
-  final dynamic isFarming;
+  final double personalLPAmount;
   @override
   @JsonKey()
-  final dynamic isMailFilled;
-  @override
-  final int? currentStep;
-  @override
-  final int? personalMultiplier;
+  final bool isMailFilled;
   @override
   @JsonKey()
-  final double currentAirdropValue;
+  final bool isMailConfirmed;
 
   @override
   String toString() {
-    return 'Airdrop(isFarming: $isFarming, isMailFilled: $isMailFilled, currentStep: $currentStep, personalMultiplier: $personalMultiplier, currentAirdropValue: $currentAirdropValue)';
+    return 'Airdrop(personalLPAmount: $personalLPAmount, isMailFilled: $isMailFilled, isMailConfirmed: $isMailConfirmed)';
   }
 
   @override
@@ -176,25 +143,17 @@ class _$AirdropImpl extends _Airdrop {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AirdropImpl &&
-            const DeepCollectionEquality().equals(other.isFarming, isFarming) &&
-            const DeepCollectionEquality()
-                .equals(other.isMailFilled, isMailFilled) &&
-            (identical(other.currentStep, currentStep) ||
-                other.currentStep == currentStep) &&
-            (identical(other.personalMultiplier, personalMultiplier) ||
-                other.personalMultiplier == personalMultiplier) &&
-            (identical(other.currentAirdropValue, currentAirdropValue) ||
-                other.currentAirdropValue == currentAirdropValue));
+            (identical(other.personalLPAmount, personalLPAmount) ||
+                other.personalLPAmount == personalLPAmount) &&
+            (identical(other.isMailFilled, isMailFilled) ||
+                other.isMailFilled == isMailFilled) &&
+            (identical(other.isMailConfirmed, isMailConfirmed) ||
+                other.isMailConfirmed == isMailConfirmed));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(isFarming),
-      const DeepCollectionEquality().hash(isMailFilled),
-      currentStep,
-      personalMultiplier,
-      currentAirdropValue);
+  int get hashCode =>
+      Object.hash(runtimeType, personalLPAmount, isMailFilled, isMailConfirmed);
 
   /// Create a copy of Airdrop
   /// with the given fields replaced by the non-null parameter values.
@@ -207,23 +166,17 @@ class _$AirdropImpl extends _Airdrop {
 
 abstract class _Airdrop extends Airdrop {
   const factory _Airdrop(
-      {final dynamic isFarming,
-      final dynamic isMailFilled,
-      final int? currentStep,
-      final int? personalMultiplier,
-      final double currentAirdropValue}) = _$AirdropImpl;
+      {final double personalLPAmount,
+      final bool isMailFilled,
+      final bool isMailConfirmed}) = _$AirdropImpl;
   const _Airdrop._() : super._();
 
   @override
-  dynamic get isFarming;
+  double get personalLPAmount;
   @override
-  dynamic get isMailFilled;
+  bool get isMailFilled;
   @override
-  int? get currentStep;
-  @override
-  int? get personalMultiplier;
-  @override
-  double get currentAirdropValue;
+  bool get isMailConfirmed;
 
   /// Create a copy of Airdrop
   /// with the given fields replaced by the non-null parameter values.

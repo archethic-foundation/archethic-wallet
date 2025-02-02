@@ -15,28 +15,33 @@ class AirdropParticipantsCount extends ConsumerWidget {
     final airdropCountAsync = ref.watch(airdropCountProvider);
     final bodyMedium = AppTextStyles.bodyMedium(context);
     final bodyMediumSecondary = AppTextStyles.bodyMediumSecondaryColor(context);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          localizations.airdropParticipateStepWelcomeCardParticipantsCount,
-          style: bodyMedium,
-        ),
-        airdropCountAsync.when(
-          data: (data) => Text(
-            data != null ? '$data' : '?',
-            style: bodyMediumSecondary,
+
+    return Text.rich(
+      textAlign: TextAlign.center,
+      TextSpan(
+        text: '',
+        children: <InlineSpan>[
+          TextSpan(
+            text: localizations
+                .airdropParticipateStepWelcomeCardParticipantsCount,
+            style: bodyMedium,
           ),
-          error: (_, __) => Text(
-            '?',
-            style: bodyMediumSecondary,
+          airdropCountAsync.when(
+            data: (data) => TextSpan(
+              text: data != null ? '$data' : '?',
+              style: bodyMediumSecondary,
+            ),
+            error: (_, __) => TextSpan(
+              text: '?',
+              style: bodyMediumSecondary,
+            ),
+            loading: () => TextSpan(
+              text: '',
+              style: bodyMediumSecondary,
+            ),
           ),
-          loading: () => Text(
-            '',
-            style: bodyMediumSecondary,
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

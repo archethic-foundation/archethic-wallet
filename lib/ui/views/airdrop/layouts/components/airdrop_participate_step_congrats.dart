@@ -1,5 +1,4 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
-import 'package:aewallet/application/airdrop/airdrop.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -91,16 +90,6 @@ class _AirdropParticipateStepCongratsSheetState
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final airdropPersonalMultiplierAsync =
-        ref.watch(airdropPersonalMultiplierProvider);
-    int? personalMultiplier;
-    airdropPersonalMultiplierAsync.when(
-      data: (data) {
-        personalMultiplier = data;
-      },
-      error: (_, __) {},
-      loading: () {},
-    );
 
     return SingleChildScrollView(
       child: Column(
@@ -112,19 +101,22 @@ class _AirdropParticipateStepCongratsSheetState
                 .copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 20),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              AirdropPersonalMultiplier(
-                personalMultiplier: personalMultiplier,
+              Flexible(
+                child: AirdropPersonalMultiplier(),
               ),
-              const AirdropPersonalRewards(),
+              SizedBox(width: 10),
+              Flexible(
+                child: AirdropPersonalRewards(),
+              ),
             ],
           ),
           const SizedBox(height: 20),
           const AirdropLPCurrentValue(),
           const SizedBox(height: 10),
-          AirdropStepTab(personalMultiplier: personalMultiplier),
+          const AirdropStepTab(),
           const SizedBox(height: 20),
         ],
       ),

@@ -141,7 +141,7 @@ class _AirdropParticipateStepJoinWaitlistSheetState
           const SizedBox(height: 30),
           Text(
             localizations.airdropParticipateStepConfirmEmailDesc6,
-            style: AppTextStyles.bodyMediumWithOpacity(context)
+            style: AppTextStyles.bodyMedium(context)
                 .copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 20),
