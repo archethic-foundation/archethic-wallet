@@ -1,5 +1,7 @@
+import 'package:aewallet/application/airdrop/airdrop.dart';
 import 'package:aewallet/application/airdrop/airdrop_notifier.dart';
 import 'package:aewallet/application/feature_flags.dart';
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/main.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/views/airddrop_dashboard/layouts/airdrop_dashboard_sheet.dart';
@@ -18,6 +20,13 @@ class AirdropBanner extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final activeAirdrop = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.activeAirdrop),
+    );
+    if (activeAirdrop == false) {
+      return const SizedBox();
+    }
+
     final flag = ref.watch(getFeatureFlagProvider(kApplicationCode, 'airdrop'));
     final airdrop = ref.watch(airdropNotifierProvider).value;
 
@@ -25,17 +34,17 @@ class AirdropBanner extends ConsumerWidget {
       data: (data) {
         if (data == null || data == false) return const SizedBox.shrink();
         return airdrop == null || airdrop.isMailFilled == false
-            ? _buildAirdropNew(context)
+            ? _buildAirdropNew(context, ref)
             : airdrop.personalMultiplier > 0
-                ? _buildAirdropOk(context)
-                : _buildAirdropCompleteParticipation(context);
+                ? _buildAirdropOk(context, ref)
+                : _buildAirdropCompleteParticipation(context, ref);
       },
       error: (_, __) => const SizedBox(),
       loading: () => const SizedBox(),
     );
   }
 
-  Widget _buildAirdropOk(BuildContext context) {
+  Widget _buildAirdropOk(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final titleTextStyle = AppTextStyles.bodyLarge(context).copyWith(
       fontWeight: FontWeight.bold,
@@ -46,6 +55,7 @@ class AirdropBanner extends ConsumerWidget {
       padding: const EdgeInsets.only(top: 20),
       child: InkWell(
         onTap: () async {
+          ref.read(airdropPersonalLPProvider);
           await context.push(AirdropDashboardSheet.routerPage);
         },
         child: _buildBannerContainer(
@@ -75,7 +85,10 @@ class AirdropBanner extends ConsumerWidget {
     );
   }
 
-  Widget _buildAirdropNew(BuildContext context) {
+  Widget _buildAirdropNew(
+    BuildContext context,
+    WidgetRef ref,
+  ) {
     final localizations = AppLocalizations.of(context)!;
     final titleTextStyle = AppTextStyles.bodyLarge(context).copyWith(
       fontWeight: FontWeight.bold,
@@ -116,7 +129,9 @@ class AirdropBanner extends ConsumerWidget {
                   child: IntrinsicWidth(
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 5),
+                        horizontal: 15,
+                        vertical: 5,
+                      ),
                       height: 35,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
@@ -134,7 +149,11 @@ class AirdropBanner extends ConsumerWidget {
             ),
             Positioned(
               child: IconButton(
-                onPressed: () {},
+                onPressed: () async {
+                  await ref
+                      .read(SettingsProviders.settings.notifier)
+                      .setActiveAirdrop(false);
+                },
                 icon: const Icon(
                   Symbols.close,
                   color: Colors.white,
@@ -148,7 +167,10 @@ class AirdropBanner extends ConsumerWidget {
     );
   }
 
-  Widget _buildAirdropCompleteParticipation(BuildContext context) {
+  Widget _buildAirdropCompleteParticipation(
+    BuildContext context,
+    WidgetRef ref,
+  ) {
     final localizations = AppLocalizations.of(context)!;
     final titleTextStyle = AppTextStyles.bodyLarge(context).copyWith(
       fontWeight: FontWeight.bold,
@@ -189,6 +211,7 @@ class AirdropBanner extends ConsumerWidget {
                 ),
                 InkWell(
                   onTap: () async {
+                    ref.read(airdropPersonalLPProvider);
                     await context.push(AirdropDashboardSheet.routerPage);
                   },
                   child: IntrinsicWidth(
@@ -214,7 +237,11 @@ class AirdropBanner extends ConsumerWidget {
             ),
             Positioned(
               child: IconButton(
-                onPressed: () {},
+                onPressed: () async {
+                  await ref
+                      .read(SettingsProviders.settings.notifier)
+                      .setActiveAirdrop(false);
+                },
                 icon: const Icon(
                   Symbols.close,
                   color: Colors.white,

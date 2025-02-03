@@ -6,7 +6,7 @@ part of 'airdrop_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$airdropNotifierHash() => r'2d843ede4880b0343462d8efa1be4238be796a45';
+String _$airdropNotifierHash() => r'8c2ca845b1282ab824609cef359751da27d6c214';
 
 /// See also [AirdropNotifier].
 @ProviderFor(AirdropNotifier)

@@ -24,6 +24,7 @@ mixin _$Settings {
   bool get firstLaunch => throw _privateConstructorUsedError;
   bool get showBalances => throw _privateConstructorUsedError;
   bool get activeRPCServer => throw _privateConstructorUsedError;
+  bool get activeAirdrop => throw _privateConstructorUsedError;
   int get mainScreenCurrentPage => throw _privateConstructorUsedError;
   bool get showPriceChart => throw _privateConstructorUsedError;
   aedappfm.MarketPriceHistoryInterval get priceChartIntervalOption =>
@@ -49,6 +50,7 @@ abstract class $SettingsCopyWith<$Res> {
       bool firstLaunch,
       bool showBalances,
       bool activeRPCServer,
+      bool activeAirdrop,
       int mainScreenCurrentPage,
       bool showPriceChart,
       aedappfm.MarketPriceHistoryInterval priceChartIntervalOption});
@@ -76,6 +78,7 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
     Object? firstLaunch = null,
     Object? showBalances = null,
     Object? activeRPCServer = null,
+    Object? activeAirdrop = null,
     Object? mainScreenCurrentPage = null,
     Object? showPriceChart = null,
     Object? priceChartIntervalOption = null,
@@ -109,6 +112,10 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
           ? _value.activeRPCServer
           : activeRPCServer // ignore: cast_nullable_to_non_nullable
               as bool,
+      activeAirdrop: null == activeAirdrop
+          ? _value.activeAirdrop
+          : activeAirdrop // ignore: cast_nullable_to_non_nullable
+              as bool,
       mainScreenCurrentPage: null == mainScreenCurrentPage
           ? _value.mainScreenCurrentPage
           : mainScreenCurrentPage // ignore: cast_nullable_to_non_nullable
@@ -141,6 +148,7 @@ abstract class _$$SettingsImplCopyWith<$Res>
       bool firstLaunch,
       bool showBalances,
       bool activeRPCServer,
+      bool activeAirdrop,
       int mainScreenCurrentPage,
       bool showPriceChart,
       aedappfm.MarketPriceHistoryInterval priceChartIntervalOption});
@@ -166,6 +174,7 @@ class __$$SettingsImplCopyWithImpl<$Res>
     Object? firstLaunch = null,
     Object? showBalances = null,
     Object? activeRPCServer = null,
+    Object? activeAirdrop = null,
     Object? mainScreenCurrentPage = null,
     Object? showPriceChart = null,
     Object? priceChartIntervalOption = null,
@@ -199,6 +208,10 @@ class __$$SettingsImplCopyWithImpl<$Res>
           ? _value.activeRPCServer
           : activeRPCServer // ignore: cast_nullable_to_non_nullable
               as bool,
+      activeAirdrop: null == activeAirdrop
+          ? _value.activeAirdrop
+          : activeAirdrop // ignore: cast_nullable_to_non_nullable
+              as bool,
       mainScreenCurrentPage: null == mainScreenCurrentPage
           ? _value.mainScreenCurrentPage
           : mainScreenCurrentPage // ignore: cast_nullable_to_non_nullable
@@ -226,6 +239,7 @@ class _$SettingsImpl extends _Settings {
       required this.firstLaunch,
       required this.showBalances,
       required this.activeRPCServer,
+      required this.activeAirdrop,
       required this.mainScreenCurrentPage,
       required this.showPriceChart,
       required this.priceChartIntervalOption})
@@ -246,6 +260,8 @@ class _$SettingsImpl extends _Settings {
   @override
   final bool activeRPCServer;
   @override
+  final bool activeAirdrop;
+  @override
   final int mainScreenCurrentPage;
   @override
   final bool showPriceChart;
@@ -254,7 +270,7 @@ class _$SettingsImpl extends _Settings {
 
   @override
   String toString() {
-    return 'Settings(primaryCurrency: $primaryCurrency, language: $language, environment: $environment, languageSeed: $languageSeed, firstLaunch: $firstLaunch, showBalances: $showBalances, activeRPCServer: $activeRPCServer, mainScreenCurrentPage: $mainScreenCurrentPage, showPriceChart: $showPriceChart, priceChartIntervalOption: $priceChartIntervalOption)';
+    return 'Settings(primaryCurrency: $primaryCurrency, language: $language, environment: $environment, languageSeed: $languageSeed, firstLaunch: $firstLaunch, showBalances: $showBalances, activeRPCServer: $activeRPCServer, activeAirdrop: $activeAirdrop, mainScreenCurrentPage: $mainScreenCurrentPage, showPriceChart: $showPriceChart, priceChartIntervalOption: $priceChartIntervalOption)';
   }
 
   @override
@@ -276,6 +292,8 @@ class _$SettingsImpl extends _Settings {
                 other.showBalances == showBalances) &&
             (identical(other.activeRPCServer, activeRPCServer) ||
                 other.activeRPCServer == activeRPCServer) &&
+            (identical(other.activeAirdrop, activeAirdrop) ||
+                other.activeAirdrop == activeAirdrop) &&
             (identical(other.mainScreenCurrentPage, mainScreenCurrentPage) ||
                 other.mainScreenCurrentPage == mainScreenCurrentPage) &&
             (identical(other.showPriceChart, showPriceChart) ||
@@ -295,6 +313,7 @@ class _$SettingsImpl extends _Settings {
       firstLaunch,
       showBalances,
       activeRPCServer,
+      activeAirdrop,
       mainScreenCurrentPage,
       showPriceChart,
       priceChartIntervalOption);
@@ -317,6 +336,7 @@ abstract class _Settings extends Settings {
       required final bool firstLaunch,
       required final bool showBalances,
       required final bool activeRPCServer,
+      required final bool activeAirdrop,
       required final int mainScreenCurrentPage,
       required final bool showPriceChart,
       required final aedappfm.MarketPriceHistoryInterval
@@ -337,6 +357,8 @@ abstract class _Settings extends Settings {
   bool get showBalances;
   @override
   bool get activeRPCServer;
+  @override
+  bool get activeAirdrop;
   @override
   int get mainScreenCurrentPage;
   @override

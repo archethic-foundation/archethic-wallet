@@ -24,6 +24,7 @@ class Settings with _$Settings {
     required bool firstLaunch,
     required bool showBalances,
     required bool activeRPCServer,
+    required bool activeAirdrop,
     required int mainScreenCurrentPage,
     required bool showPriceChart,
     required aedappfm.MarketPriceHistoryInterval priceChartIntervalOption,
@@ -31,6 +32,7 @@ class Settings with _$Settings {
 
   factory Settings.empty() => const Settings(
         activeRPCServer: true,
+        activeAirdrop: true,
         firstLaunch: true,
         language: AvailableLanguage.english,
         languageSeed: '',

@@ -44,6 +44,9 @@ jobs:
           jq '.name += " (Beta)"' web_chrome_extension/public/manifest.json > web_chrome_extension/public/manifest_tmp.json
           mv web_chrome_extension/public/manifest_tmp.json web_chrome_extension/public/manifest.json
   
+      - name: Generate .env file
+        run: |
+          echo "AIRDROP_API_SECRET=${{ secrets.AIRDROP_API_SECRET }}" > .env
 
       - name: Build Chrome Extension
         run: bash ./scripts/build_chrome_extension.sh

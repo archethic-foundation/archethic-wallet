@@ -99,6 +99,8 @@ class ArchethicTheme {
       'assets/themes/archethic/background_welcome.png';
   static String backgroundAESwap =
       'assets/themes/archethic/background_aeSwap.png';
+  static String backgroundAirdrop =
+      'assets/themes/archethic/background-airdrop.png';
 
   // Animation Overlay
   static Color animationOverlayMedium =

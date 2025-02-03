@@ -34,6 +34,7 @@ class SettingsNotifier extends StateNotifier<Settings> {
           ),
           showBalances: true,
           showPriceChart: true,
+          activeAirdrop: true,
         ),
       );
 
@@ -52,6 +53,10 @@ class SettingsNotifier extends StateNotifier<Settings> {
 
   Future<void> setActiveRPCServer(bool activeRPCServer) => _update(
         state.copyWith(activeRPCServer: activeRPCServer),
+      );
+
+  Future<void> setActiveAirdrop(bool activeAirdrop) => _update(
+        state.copyWith(activeAirdrop: activeAirdrop),
       );
 
   Future<void> setEnvironment(aedappfm.Environment environment) => _update(

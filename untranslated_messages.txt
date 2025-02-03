@@ -39,6 +39,8 @@
     "airdropDashboardCongratsTitle",
     "airdropDashboardCompleteParticipationTitle",
     "airdropDashboardCompleteParticipationDesc",
+    "airdropDashboardLPTokenAvailable",
+    "airdropDashboardLPTokensAvailable",
     "airdropParticipateStepSignTitle",
     "airdropParticipateStepSignDesc",
     "airdropParticipateStepSignWarn",
@@ -63,6 +65,8 @@
     "airdropBackendInvalidEmail",
     "airdropBackendInvalidPubKey",
     "airdropBackendInvalidSignature",
-    "airdropBackendUnknownError"
+    "airdropBackendUnknownError",
+    "airdropLinkHeader",
+    "airdropLinkDesc"
   ]
 }

@@ -26,6 +26,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libsecret-1-dev libjsoncpp-dev fuse libgtk-3-0 python3-pip libgtkmm-3.0-1v5 libnotify4 gstreamer1.0-tools
 
+      - name: Generate .env file
+        run: |
+          echo "AIRDROP_API_SECRET=${{ secrets.AIRDROP_API_SECRET }}" > .env
+
       - name: Build Flutter Application
         run: flutter build linux --release
 

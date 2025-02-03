@@ -39,16 +39,22 @@ class AirdropNotifier extends _$AirdropNotifier {
     }
   }
 
-  Future<void> updatePersonalLPAmount(double personalLPAmount) async {
+  Future<void> updatePersonalLPAmount(
+    double personalLPAmount,
+    double personalLPFlexibleAmount,
+  ) async {
     final currentAirdrop = state.valueOrNull;
     if (currentAirdrop != null) {
-      final updatedAirdrop =
-          currentAirdrop.copyWith(personalLPAmount: personalLPAmount);
+      final updatedAirdrop = currentAirdrop.copyWith(
+        personalLPAmount: personalLPAmount,
+        personalLPFlexibleAmount: personalLPFlexibleAmount,
+      );
       await setAirdrop(updatedAirdrop);
     } else {
       await setAirdrop(
         Airdrop(
           personalLPAmount: personalLPAmount,
+          personalLPFlexibleAmount: personalLPFlexibleAmount,
         ),
       );
     }

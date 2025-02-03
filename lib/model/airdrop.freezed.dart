@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Airdrop {
   double get personalLPAmount => throw _privateConstructorUsedError;
+  double get personalLPFlexibleAmount => throw _privateConstructorUsedError;
   bool get isMailFilled => throw _privateConstructorUsedError;
   bool get isMailConfirmed => throw _privateConstructorUsedError;
 
@@ -31,7 +32,11 @@ abstract class $AirdropCopyWith<$Res> {
   factory $AirdropCopyWith(Airdrop value, $Res Function(Airdrop) then) =
       _$AirdropCopyWithImpl<$Res, Airdrop>;
   @useResult
-  $Res call({double personalLPAmount, bool isMailFilled, bool isMailConfirmed});
+  $Res call(
+      {double personalLPAmount,
+      double personalLPFlexibleAmount,
+      bool isMailFilled,
+      bool isMailConfirmed});
 }
 
 /// @nodoc
@@ -50,6 +55,7 @@ class _$AirdropCopyWithImpl<$Res, $Val extends Airdrop>
   @override
   $Res call({
     Object? personalLPAmount = null,
+    Object? personalLPFlexibleAmount = null,
     Object? isMailFilled = null,
     Object? isMailConfirmed = null,
   }) {
@@ -57,6 +63,10 @@ class _$AirdropCopyWithImpl<$Res, $Val extends Airdrop>
       personalLPAmount: null == personalLPAmount
           ? _value.personalLPAmount
           : personalLPAmount // ignore: cast_nullable_to_non_nullable
+              as double,
+      personalLPFlexibleAmount: null == personalLPFlexibleAmount
+          ? _value.personalLPFlexibleAmount
+          : personalLPFlexibleAmount // ignore: cast_nullable_to_non_nullable
               as double,
       isMailFilled: null == isMailFilled
           ? _value.isMailFilled
@@ -77,7 +87,11 @@ abstract class _$$AirdropImplCopyWith<$Res> implements $AirdropCopyWith<$Res> {
       __$$AirdropImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({double personalLPAmount, bool isMailFilled, bool isMailConfirmed});
+  $Res call(
+      {double personalLPAmount,
+      double personalLPFlexibleAmount,
+      bool isMailFilled,
+      bool isMailConfirmed});
 }
 
 /// @nodoc
@@ -94,6 +108,7 @@ class __$$AirdropImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? personalLPAmount = null,
+    Object? personalLPFlexibleAmount = null,
     Object? isMailFilled = null,
     Object? isMailConfirmed = null,
   }) {
@@ -101,6 +116,10 @@ class __$$AirdropImplCopyWithImpl<$Res>
       personalLPAmount: null == personalLPAmount
           ? _value.personalLPAmount
           : personalLPAmount // ignore: cast_nullable_to_non_nullable
+              as double,
+      personalLPFlexibleAmount: null == personalLPFlexibleAmount
+          ? _value.personalLPFlexibleAmount
+          : personalLPFlexibleAmount // ignore: cast_nullable_to_non_nullable
               as double,
       isMailFilled: null == isMailFilled
           ? _value.isMailFilled
@@ -119,6 +138,7 @@ class __$$AirdropImplCopyWithImpl<$Res>
 class _$AirdropImpl extends _Airdrop {
   const _$AirdropImpl(
       {this.personalLPAmount = 0.0,
+      this.personalLPFlexibleAmount = 0.0,
       this.isMailFilled = false,
       this.isMailConfirmed = false})
       : super._();
@@ -128,6 +148,9 @@ class _$AirdropImpl extends _Airdrop {
   final double personalLPAmount;
   @override
   @JsonKey()
+  final double personalLPFlexibleAmount;
+  @override
+  @JsonKey()
   final bool isMailFilled;
   @override
   @JsonKey()
@@ -135,7 +158,7 @@ class _$AirdropImpl extends _Airdrop {
 
   @override
   String toString() {
-    return 'Airdrop(personalLPAmount: $personalLPAmount, isMailFilled: $isMailFilled, isMailConfirmed: $isMailConfirmed)';
+    return 'Airdrop(personalLPAmount: $personalLPAmount, personalLPFlexibleAmount: $personalLPFlexibleAmount, isMailFilled: $isMailFilled, isMailConfirmed: $isMailConfirmed)';
   }
 
   @override
@@ -145,6 +168,9 @@ class _$AirdropImpl extends _Airdrop {
             other is _$AirdropImpl &&
             (identical(other.personalLPAmount, personalLPAmount) ||
                 other.personalLPAmount == personalLPAmount) &&
+            (identical(
+                    other.personalLPFlexibleAmount, personalLPFlexibleAmount) ||
+                other.personalLPFlexibleAmount == personalLPFlexibleAmount) &&
             (identical(other.isMailFilled, isMailFilled) ||
                 other.isMailFilled == isMailFilled) &&
             (identical(other.isMailConfirmed, isMailConfirmed) ||
@@ -152,8 +178,8 @@ class _$AirdropImpl extends _Airdrop {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, personalLPAmount, isMailFilled, isMailConfirmed);
+  int get hashCode => Object.hash(runtimeType, personalLPAmount,
+      personalLPFlexibleAmount, isMailFilled, isMailConfirmed);
 
   /// Create a copy of Airdrop
   /// with the given fields replaced by the non-null parameter values.
@@ -167,12 +193,15 @@ class _$AirdropImpl extends _Airdrop {
 abstract class _Airdrop extends Airdrop {
   const factory _Airdrop(
       {final double personalLPAmount,
+      final double personalLPFlexibleAmount,
       final bool isMailFilled,
       final bool isMailConfirmed}) = _$AirdropImpl;
   const _Airdrop._() : super._();
 
   @override
   double get personalLPAmount;
+  @override
+  double get personalLPFlexibleAmount;
   @override
   bool get isMailFilled;
   @override

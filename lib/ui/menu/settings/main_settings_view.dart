@@ -15,6 +15,9 @@ class MainMenuView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final flag = ref
+        .watch(getFeatureFlagProvider(kApplicationCode, 'airdrop'))
+        .valueOrNull;
     final localizations = AppLocalizations.of(context)!;
     final selectedAccount = ref.watch(
       accountsNotifierProvider.select(
@@ -103,6 +106,10 @@ class MainMenuView extends ConsumerWidget {
                             );
                           },
                         ),
+                      if (flag != null && flag == true)
+                        const _SettingsListItem.spacer(),
+                      if (flag != null && flag == true)
+                        const _ActiveAirdropSettingsListItem(),
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLineWithInfos(
                         heading: localizations.mediumLinkHeader,
@@ -169,6 +176,31 @@ class MainMenuView extends ConsumerWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _ActiveAirdropSettingsListItem extends ConsumerWidget {
+  const _ActiveAirdropSettingsListItem();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+
+    final activeAirdrop = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.activeAirdrop),
+    );
+    final preferencesNotifier = ref.read(SettingsProviders.settings.notifier);
+
+    return _SettingsListItem.withSwitch(
+      heading: localizations.airdropLinkHeader,
+      info: localizations.airdropLinkDesc,
+      background: ArchethicTheme.backgroundAirdrop,
+      icon: Symbols.monetization_on,
+      isSwitched: activeAirdrop,
+      onChanged: (bool isSwitched) async {
+        await preferencesNotifier.setActiveAirdrop(isSwitched);
+      },
     );
   }
 }

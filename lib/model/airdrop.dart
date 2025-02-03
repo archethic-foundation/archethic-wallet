@@ -6,6 +6,7 @@ part 'airdrop.freezed.dart';
 class Airdrop with _$Airdrop {
   const factory Airdrop({
     @Default(0.0) double personalLPAmount,
+    @Default(0.0) double personalLPFlexibleAmount,
     @Default(false) bool isMailFilled,
     @Default(false) bool isMailConfirmed,
   }) = _Airdrop;
@@ -19,22 +20,25 @@ class Airdrop with _$Airdrop {
 }
 
 int? _airdropPersonalMultiplier(double x) {
-  const multiplierRanges = {
-    1: 1,
-    5: 2,
-    20: 3,
-    60: 5,
-    150: 8,
-    300: 13,
-    500: 21,
-    750: 34,
-    1000: 55,
-  };
-
-  for (final threshold in multiplierRanges.keys) {
-    if (x >= threshold) {
-      return multiplierRanges[threshold];
-    }
+  if (1 <= x && x < 5) {
+    return 1;
+  } else if (5 <= x && x < 20) {
+    return 2;
+  } else if (20 <= x && x < 60) {
+    return 3;
+  } else if (60 <= x && x < 150) {
+    return 5;
+  } else if (150 <= x && x < 300) {
+    return 8;
+  } else if (300 <= x && x < 500) {
+    return 13;
+  } else if (500 <= x && x < 750) {
+    return 21;
+  } else if (750 <= x && x < 1000) {
+    return 34;
+  } else if (x >= 1000) {
+    return 55;
+  } else {
+    return null;
   }
-  return null;
 }

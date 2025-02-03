@@ -38,24 +38,24 @@ final airdropCheckProvider = AutoDisposeFutureProvider<bool>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef AirdropCheckRef = AutoDisposeFutureProviderRef<bool>;
-String _$airdropPersonalRewardsHash() =>
-    r'3defd9e0650e97299be6fe6392a9a22e3c08bc5c';
+String _$airdropPersonalLPHash() => r'a70f7c11a7972ee2e651119875526cc0b288923b';
 
-/// See also [airdropPersonalRewards].
-@ProviderFor(airdropPersonalRewards)
-final airdropPersonalRewardsProvider =
-    AutoDisposeFutureProvider<double>.internal(
-  airdropPersonalRewards,
-  name: r'airdropPersonalRewardsProvider',
+/// See also [airdropPersonalLP].
+@ProviderFor(airdropPersonalLP)
+final airdropPersonalLPProvider = AutoDisposeFutureProvider<
+    ({double personalLP, double personalLPFlexible})>.internal(
+  airdropPersonalLP,
+  name: r'airdropPersonalLPProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$airdropPersonalRewardsHash,
+      : _$airdropPersonalLPHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef AirdropPersonalRewardsRef = AutoDisposeFutureProviderRef<double>;
+typedef AirdropPersonalLPRef = AutoDisposeFutureProviderRef<
+    ({double personalLP, double personalLPFlexible})>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

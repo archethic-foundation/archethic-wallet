@@ -27,6 +27,10 @@ jobs:
           choco install cmake ninja python3
           choco install -y visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64"
 
+      - name: Generate .env file
+        run: |
+          echo "AIRDROP_API_SECRET=${{ secrets.AIRDROP_API_SECRET }}" > .env
+
       - name: Build Flutter Application
         run: flutter build windows --release
 

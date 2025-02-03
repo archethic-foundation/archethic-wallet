@@ -7,6 +7,7 @@ import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/model/airdrop.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/state.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:http/http.dart' as http;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -89,9 +90,12 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
         'signedPayload': base64Url.encode(signedPayload),
       };
 
+      final airdropAPISecret = dotenv.env['AIRDROP_API_SECRET'];
+
       final response = await http.post(
         Uri.parse('https://airdrop-backend.archethic.net/airdrop-subscription'),
         headers: {
+          'Authorization': 'Bearer $airdropAPISecret',
           'Content-Type': 'application/json',
         },
         body: jsonEncode(payload),
@@ -138,11 +142,19 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
           ),
         );
       } else {
-        state = state.copyWith(
-          failure: Failure.other(
-            message: 'Server error: ${response.statusCode}',
-          ),
-        );
+        if (response.statusCode == 401) {
+          state = state.copyWith(
+            failure: const Failure.other(
+              message: 'Error 401 - Unauthorized access',
+            ),
+          );
+        } else {
+          state = state.copyWith(
+            failure: Failure.other(
+              message: 'Server error: ${response.statusCode}',
+            ),
+          );
+        }
       }
     } catch (e) {
       state = state.copyWith(

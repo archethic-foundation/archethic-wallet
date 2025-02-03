@@ -6,16 +6,40 @@ class _SettingsListItemSwitch extends _SettingsListItem {
     required this.heading,
     required this.icon,
     required this.isSwitched,
+    this.info,
     this.onChanged,
+    this.background,
   });
 
   final String heading;
+  final String? info;
   final IconData icon;
   final bool isSwitched;
   final Function? onChanged;
+  final String? background;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    if (background != null) {
+      return DecoratedBox(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              background!,
+            ),
+            fit: BoxFit.fitWidth,
+            alignment: Alignment.centerRight,
+            opacity: 0.5,
+          ),
+        ),
+        child: _detail(context, ref),
+      );
+    } else {
+      return _detail(context, ref);
+    }
+  }
+
+  Widget _detail(BuildContext context, WidgetRef ref) {
     final thumbIcon = WidgetStateProperty.resolveWith<Icon?>(
       (Set<WidgetState> states) {
         if (states.contains(WidgetState.selected)) {
@@ -24,6 +48,7 @@ class _SettingsListItemSwitch extends _SettingsListItem {
         return const Icon(Symbols.close);
       },
     );
+
     return TextButton(
       style: ButtonStyle(
         shape: WidgetStateProperty.all<RoundedRectangleBorder>(
@@ -32,7 +57,7 @@ class _SettingsListItemSwitch extends _SettingsListItem {
       ),
       onPressed: () {},
       child: Container(
-        height: 50,
+        height: info == null ? 50 : 100,
         margin: const EdgeInsetsDirectional.only(start: 10, end: 10),
         child: Row(
           children: <Widget>[
@@ -45,9 +70,26 @@ class _SettingsListItemSwitch extends _SettingsListItem {
               ),
             ),
             Expanded(
-              child: Text(
-                heading,
-                style: ArchethicThemeStyles.textStyleSize16W600Primary,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  AutoSizeText(
+                    heading,
+                    style: ArchethicThemeStyles.textStyleSize16W600Primary,
+                  ),
+                  if (info != null)
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 250),
+                      child: AutoSizeText(
+                        info!,
+                        maxLines: 5,
+                        stepGranularity: 0.1,
+                        minFontSize: 8,
+                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                      ),
+                    ),
+                ],
               ),
             ),
             const SizedBox(

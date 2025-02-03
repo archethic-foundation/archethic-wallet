@@ -721,6 +721,22 @@
     "airdropDashboardCongratsTitle": "Congratulations! You are participating to the airdrop",
     "airdropDashboardCompleteParticipationTitle": "Complete Your Airdrop Participation!",
     "airdropDashboardCompleteParticipationDesc": "You’ve registered, but to fully activate your participation, you need to lock LP tokens.",
+    "airdropDashboardLPTokenAvailable": "You currently have {lpTokenAvailable} LP Token available at level 0. To increase your multiplier, you can relock them in the farm.",
+    "@airdropDashboardLPTokenAvailable": {
+        "placeholders": {
+            "lpTokenAvailable": {
+                "type": "String"
+            }
+        }
+    },
+    "airdropDashboardLPTokensAvailable": "You currently have {lpTokenAvailable} LP Tokens available at level 0. To increase your multiplier, you can relock them in the farm.",
+    "@airdropDashboardLPTokensAvailable": {
+        "placeholders": {
+            "lpTokenAvailable": {
+                "type": "String"
+            }
+        }
+    },
     "airdropParticipateStepSignTitle": "Airdrop Participation Confirmation",
     "airdropParticipateStepSignDesc": "The application requests your signature to confirm your participation in the airdrop.\n\nI confirm that I am participating in the Archethic UCO airdrop. This signature is solely used to verify my participation and does not authorize the transfer of funds or any other actions involving my wallet.",
     "airdropParticipateStepSignWarn": "This action is secure and does not affect your funds.",
@@ -745,5 +761,7 @@
     "airdropBackendInvalidEmail": "Please enter a valid email address.",
     "airdropBackendInvalidPubKey": "The wallet you are using is not valid. Please check and try again.",
     "airdropBackendInvalidSignature": "The signature is invalid. Please verify and try again.",
-    "airdropBackendUnknownError": "An unknown error occurred. Please try again or contact support if the issue persists."
+    "airdropBackendUnknownError": "An unknown error occurred. Please try again or contact support if the issue persists.",
+    "airdropLinkHeader": "Follow the $100M Airdrop",
+    "airdropLinkDesc": "Track your airdrop status on the main page."
 }

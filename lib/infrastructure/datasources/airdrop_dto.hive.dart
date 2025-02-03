@@ -8,6 +8,7 @@ part 'airdrop_dto.hive.g.dart';
 class AirdropHiveDto extends HiveObject {
   AirdropHiveDto({
     required this.personalLPAmount,
+    required this.personalLPFlexibleAmount,
     required this.isMailFilled,
     required this.isMailConfirmed,
   });
@@ -16,6 +17,7 @@ class AirdropHiveDto extends HiveObject {
     return AirdropHiveDto(
       isMailFilled: airdrop.isMailFilled,
       personalLPAmount: airdrop.personalLPAmount,
+      personalLPFlexibleAmount: airdrop.personalLPFlexibleAmount,
       isMailConfirmed: airdrop.isMailConfirmed,
     );
   }
@@ -29,9 +31,13 @@ class AirdropHiveDto extends HiveObject {
   @HiveField(2)
   bool isMailConfirmed;
 
+  @HiveField(3)
+  double personalLPFlexibleAmount;
+
   Airdrop toModel() {
     return Airdrop(
       personalLPAmount: personalLPAmount,
+      personalLPFlexibleAmount: personalLPFlexibleAmount,
       isMailFilled: isMailFilled,
       isMailConfirmed: isMailConfirmed,
     );
@@ -41,6 +47,7 @@ class AirdropHiveDto extends HiveObject {
 extension AirdropHiveConversionExt on Airdrop {
   AirdropHiveDto toHive() => AirdropHiveDto(
         personalLPAmount: personalLPAmount,
+        personalLPFlexibleAmount: personalLPFlexibleAmount,
         isMailFilled: isMailFilled,
         isMailConfirmed: isMailConfirmed,
       );

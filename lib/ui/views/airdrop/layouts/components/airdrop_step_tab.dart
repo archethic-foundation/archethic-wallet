@@ -53,7 +53,7 @@ class AirdropStepTab extends ConsumerWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.only(top: 20, bottom: 50),
           child: DecoratedBox(
             decoration: BoxDecoration(
               border: Border.all(

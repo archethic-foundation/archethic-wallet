@@ -93,6 +93,9 @@ dependencies:
   # Add beautiful animated effects & builders in Flutter, via an easy, customizable, unified API.
   flutter_animate: ^4.2.0+1
 
+  # Load configuration at runtime from a .env file which can be used throughout the application.
+  flutter_dotenv: ^5.2.1
+
   # A flutter implementation of React hooks. It adds a new kind of widget with enhanced code reuse
   flutter_hooks: ^0.20.0
 
@@ -301,6 +304,7 @@ flutter:
   generate: true
 
   assets:
+    - .env
     - assets/ssl/
     - assets/bc-logos/
     - assets/icons/

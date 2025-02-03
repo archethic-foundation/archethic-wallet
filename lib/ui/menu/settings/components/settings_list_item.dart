@@ -40,7 +40,9 @@ abstract class _SettingsListItem extends ConsumerWidget {
     required String heading,
     required IconData icon,
     required bool isSwitched,
+    String info,
     Function? onChanged,
+    String? background,
   }) = _SettingsListItemSwitch;
 }
 
