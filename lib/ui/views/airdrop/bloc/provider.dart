@@ -148,6 +148,16 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
               message: 'Error 401 - Unauthorized access',
             ),
           );
+        } else if (response.statusCode == 500) {
+          final responseBody = jsonDecode(response.body);
+          final errorMessage =
+              (responseBody['error'] ?? '') + ' - ' + responseBody['details'] ??
+                  'Unknown error';
+          state = state.copyWith(
+            failure: Failure.other(
+              message: 'Error 500 - $errorMessage',
+            ),
+          );
         } else {
           state = state.copyWith(
             failure: Failure.other(
