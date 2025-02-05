@@ -137,3 +137,44 @@ Future<({double personalLP, double personalLPFlexible})> airdropPersonalLP(
 
   return (personalLP: personalLP, personalLPFlexible: personalLPFlexible);
 }
+
+@riverpod
+Future<bool> airdropEmailConfirmedCheck(
+  Ref ref,
+) async {
+  try {
+    final session = ref.watch(sessionNotifierProvider).loggedIn;
+    final keychainKeypair = archethic.deriveKeyPair(
+      archethic.uint8ListToHex(
+        Uint8List.fromList(session!.wallet.keychainSecuredInfos.seed),
+      ),
+      0,
+    );
+
+    final payload = {
+      'pubkey': archethic.uint8ListToHex(keychainKeypair.publicKey!),
+    };
+
+    final response = await http.post(
+      Uri.parse(
+          'https://airdrop-backend.archethic.net/check-confirmation-email'),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(payload),
+    );
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+
+      final airdropNotifier = ref.read(airdropNotifierProvider.notifier);
+      await airdropNotifier.updateMailConfirmed(json['confirmed']);
+      return json['confirmed'];
+    }
+  } catch (e) {
+    _logger.severe('airdropCheck error : $e');
+  }
+  final airdropNotifier = ref.read(airdropNotifierProvider.notifier);
+  await airdropNotifier.updateMailConfirmed(false);
+  return false;
+}

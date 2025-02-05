@@ -61,7 +61,7 @@ class _AirdropParticipateStepJoinWaitlistSheetState
           onPressed: () async {
             ref
                 .read(airdropFormNotifierProvider.notifier)
-                .setAirdropProcessStep(AirdropProcessStep.confirmEmail);
+                .setAirdropProcessStep(AirdropProcessStep.sign);
           },
           disabled: !airdropForm.isItemsConfirmed,
         ),

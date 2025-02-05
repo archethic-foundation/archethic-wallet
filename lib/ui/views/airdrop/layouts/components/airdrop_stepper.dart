@@ -15,18 +15,22 @@ class AirdropStepper extends ConsumerWidget {
     final activeStep = airdropForm.airdropProcessStep ==
             AirdropProcessStep.joinWaitlist
         ? 1
-        : airdropForm.airdropProcessStep == AirdropProcessStep.confirmEmail ||
-                airdropForm.airdropProcessStep == AirdropProcessStep.sign
+        : airdropForm.airdropProcessStep == AirdropProcessStep.sign
             ? 2
-            : 3;
+            : airdropForm.airdropProcessStep == AirdropProcessStep.confirmEmail
+                ? 3
+                : 4;
     return SizedBox(
       height: 90,
       child: EasyStepper(
         activeStep: activeStep,
         internalPadding: 0,
         borderThickness: 0,
+        activeStepBorderColor: Colors.transparent,
+        unreachedStepBorderColor: Colors.transparent,
+        finishedStepBorderColor: Colors.transparent,
         lineStyle: LineStyle(
-          lineLength: 50,
+          lineLength: 20,
           lineType: LineType.normal,
           lineSpace: 0,
           lineWidth: 20,
@@ -64,6 +68,15 @@ class AirdropStepper extends ConsumerWidget {
                   ? ArchethicThemeBase.blue400
                   : ArchethicThemeBase.neutral800,
               child: Text('3', style: AppTextStyles.bodyLarge(context)),
+            ),
+          ),
+          EasyStep(
+            customStep: CircleAvatar(
+              radius: 20,
+              backgroundColor: activeStep >= 4
+                  ? ArchethicThemeBase.blue400
+                  : ArchethicThemeBase.neutral800,
+              child: Text('4', style: AppTextStyles.bodyLarge(context)),
             ),
           ),
         ],

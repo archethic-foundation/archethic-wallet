@@ -4,6 +4,7 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/state.dart';
+import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_info_popup.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_stepper.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
@@ -12,6 +13,7 @@ import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class AirdropParticipateStepConfirmEmailSheet extends ConsumerStatefulWidget {
   const AirdropParticipateStepConfirmEmailSheet({
@@ -55,9 +57,24 @@ class _AirdropParticipateStepJoinWaitlistSheetState
           localizations.airdropParticipateStepWaitlistBtn,
           Dimens.buttonBottomDimens,
           onPressed: () async {
-            ref
+            final checkConfirmation = await ref
                 .read(airdropFormNotifierProvider.notifier)
-                .setAirdropProcessStep(AirdropProcessStep.sign);
+                .checkConfirmation();
+            if (checkConfirmation) {
+              ref
+                  .read(airdropFormNotifierProvider.notifier)
+                  .setAirdropProcessStep(AirdropProcessStep.supportEcosystem);
+              return;
+            }
+
+            await showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AirdropInfoPopup(
+                  message: localizations.airdropBackendEmailNotConfirmed,
+                );
+              },
+            );
           },
           disabled: !airdropForm.isItemsConfirmed,
         ),
@@ -70,13 +87,11 @@ class _AirdropParticipateStepJoinWaitlistSheetState
     final localizations = AppLocalizations.of(context)!;
     return SheetAppBar(
       title: localizations.airdropParticipateTitle,
-      widgetLeft: BackButton(
-        key: const Key('back'),
+      widgetLeft: CloseButton(
+        key: const Key('close'),
         color: ArchethicTheme.text,
         onPressed: () {
-          ref
-              .read(airdropFormNotifierProvider.notifier)
-              .setAirdropProcessStep(AirdropProcessStep.joinWaitlist);
+          context.pop();
         },
       ),
     );
@@ -113,6 +128,20 @@ class _AirdropParticipateStepJoinWaitlistSheetState
             style: AppTextStyles.bodyMediumWithOpacity(context),
           ),
           InkWell(
+            onTap: () async {
+              await ref
+                  .read(airdropFormNotifierProvider.notifier)
+                  .resendConfirmationMail(localizations);
+              final airdrop = ref.read(airdropFormNotifierProvider);
+              await showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AirdropInfoPopup(
+                    message: airdrop.resendConfirmationEmailInfo,
+                  );
+                },
+              );
+            },
             child: Text(
               localizations.airdropParticipateStepConfirmEmailDesc3,
               style: AppTextStyles.bodyMedium(context)

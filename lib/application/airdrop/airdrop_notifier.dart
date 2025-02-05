@@ -74,4 +74,19 @@ class AirdropNotifier extends _$AirdropNotifier {
       );
     }
   }
+
+  Future<void> updateMailConfirmed(bool isMailConfirmed) async {
+    final currentAirdrop = state.valueOrNull;
+    if (currentAirdrop != null) {
+      final updatedAirdrop =
+          currentAirdrop.copyWith(isMailConfirmed: isMailConfirmed);
+      await setAirdrop(updatedAirdrop);
+    } else {
+      await setAirdrop(
+        Airdrop(
+          isMailConfirmed: isMailConfirmed,
+        ),
+      );
+    }
+  }
 }

@@ -57,5 +57,24 @@ final airdropPersonalLPProvider = AutoDisposeFutureProvider<
 // ignore: unused_element
 typedef AirdropPersonalLPRef = AutoDisposeFutureProviderRef<
     ({double personalLP, double personalLPFlexible})>;
+String _$airdropEmailConfirmedCheckHash() =>
+    r'8b01344ac4f1ee8b9ffa153362a1d7e6d98d54eb';
+
+/// See also [airdropEmailConfirmedCheck].
+@ProviderFor(airdropEmailConfirmedCheck)
+final airdropEmailConfirmedCheckProvider =
+    AutoDisposeFutureProvider<bool>.internal(
+  airdropEmailConfirmedCheck,
+  name: r'airdropEmailConfirmedCheckProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$airdropEmailConfirmedCheckHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef AirdropEmailConfirmedCheckRef = AutoDisposeFutureProviderRef<bool>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

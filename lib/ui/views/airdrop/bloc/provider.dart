@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:aewallet/application/airdrop/airdrop.dart';
 import 'package:aewallet/application/airdrop/airdrop_notifier.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
@@ -58,6 +59,78 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
   void setMailAddress(String mailAddress) {
     state =
         state.copyWith(mailAddress: mailAddress.toLowerCase(), failure: null);
+  }
+
+  Future<void> resendConfirmationMail(AppLocalizations localizations) async {
+    state = state.copyWith(resendConfirmationEmailInfo: null, failure: null);
+    try {
+      final payload = {
+        'email': state.mailAddress,
+      };
+      final response = await http.post(
+        Uri.parse(
+          'https://airdrop-backend.archethic.net/resend-confirmation-email',
+        ),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(payload),
+      );
+
+      //
+      if (response.statusCode == 200) {
+        state = state.copyWith(
+          resendConfirmationEmailInfo: localizations.airdropBackendEmailSent,
+        );
+      } else if (response.statusCode == 400) {
+        final responseBody = jsonDecode(response.body);
+        var errorMessage = responseBody['error'] ?? 'Unknown error';
+        switch (errorMessage) {
+          case 'Email parameter is missing':
+            errorMessage = localizations.airdropBackendMissingParameters;
+            break;
+          case 'Email not found':
+            errorMessage = localizations.airdropBackendEmailNotFound;
+            break;
+          case 'Email already confirmed':
+            errorMessage = localizations.airdropBackendEmailAlreadyConfirmed;
+            break;
+          default:
+            errorMessage = localizations.airdropBackendUnknownError;
+        }
+
+        state = state.copyWith(
+          failure: Failure.other(
+            message: errorMessage,
+          ),
+          resendConfirmationEmailInfo: errorMessage,
+        );
+      } else {
+        if (response.statusCode == 500) {
+          final responseBody = jsonDecode(response.body);
+          final errorMessage =
+              (responseBody['error'] ?? '') + ' - ' + responseBody['details'] ??
+                  'Unknown error';
+          state = state.copyWith(
+            failure: Failure.other(
+              message: 'Error 500 - $errorMessage',
+            ),
+            resendConfirmationEmailInfo: errorMessage,
+          );
+        }
+      }
+    } catch (e) {
+      state = state.copyWith(
+        failure: Failure.network(
+          message: 'Network error: $e',
+        ),
+        resendConfirmationEmailInfo: 'Network error: $e',
+      );
+    }
+  }
+
+  Future<bool> checkConfirmation() async {
+    return await ref.read(airdropEmailConfirmedCheckProvider.future);
   }
 
   Future<void> joinWaitlist(AppLocalizations localizations) async {
@@ -175,5 +248,8 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
     }
 
     state = state.copyWith(joinWaitlistInProgress: false);
+    if (state.failure == null) {
+      setAirdropProcessStep(AirdropProcessStep.confirmEmail);
+    }
   }
 }
