@@ -1,3 +1,4 @@
+import 'package:aewallet/infrastructure/datasources/airdrop_dto.hive.dart';
 import 'package:aewallet/infrastructure/datasources/dapp_dto.hive.dart';
 import 'package:aewallet/infrastructure/datasources/wallet_token_dto.hive.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
@@ -34,6 +35,7 @@ class HiveTypeIds {
   static const walletTokenOwnership = 20;
   static const walletTokenOwnershipAuthorizedKey = 21;
   static const myDApps = 22;
+  static const airdrop = 23;
 }
 
 class DBHelper {
@@ -64,6 +66,7 @@ class DBHelper {
       ..registerAdapter(WalletTokenHiveDtoAdapter())
       ..registerAdapter(WalletTokenOwnershipHiveDtoAdapter())
       ..registerAdapter(WalletTokenOwnershipAuthorizedKeyHiveDtoAdapter())
-      ..registerAdapter(DAppHiveDtoAdapter());
+      ..registerAdapter(DAppHiveDtoAdapter())
+      ..registerAdapter(AirdropHiveDtoAdapter());
   }
 }

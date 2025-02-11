@@ -409,13 +409,14 @@ class RecentTransactionsRepositoryImpl
     var updatedTransaction =
         recentTransaction.copyWith(decryptedSecret: <String>[]);
 
+    final publicKeyHex = archethic
+        .uint8ListToHex(Uint8List.fromList(keyPair.publicKey))
+        .toUpperCase();
+
     for (final ownership in ownerships) {
       final authorizedPublicKey = ownership.authorizedPublicKeys.firstWhere(
         (archethic.AuthorizedKey authKey) =>
-            authKey.publicKey!.toUpperCase() ==
-            archethic
-                .uint8ListToHex(Uint8List.fromList(keypair.publicKey))
-                .toUpperCase(),
+            authKey.publicKey!.toUpperCase() == publicKeyHex,
         orElse: archethic.AuthorizedKey.new,
       );
       if (authorizedPublicKey.encryptedSecretKey != null) {

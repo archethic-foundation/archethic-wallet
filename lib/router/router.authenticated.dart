@@ -187,4 +187,18 @@ final _authenticatedRoutes = [
       );
     },
   ),
+  GoRoute(
+    path: AirdropParticipateSheet.routerPage,
+    pageBuilder: (context, state) => NoTransitionPage<void>(
+      key: state.pageKey,
+      child: const AirdropParticipateSheet(),
+    ),
+  ),
+  GoRoute(
+    path: AirdropDashboardSheet.routerPage,
+    pageBuilder: (context, state) => NoTransitionPage<void>(
+      key: state.pageKey,
+      child: const AirdropDashboardSheet(),
+    ),
+  ),
 ];

@@ -23,6 +23,8 @@ import 'package:aewallet/ui/views/aeswap_liquidity_remove/layouts/components/liq
 import 'package:aewallet/ui/views/aeswap_liquidity_remove/layouts/liquidity_remove_sheet.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_confirm_sheet.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_result_sheet.dart';
+import 'package:aewallet/ui/views/airdrop/layouts/airdrop_dashboard_sheet.dart';
+import 'package:aewallet/ui/views/airdrop/layouts/airdrop_participate_sheet.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/ui/views/authenticate/lock_icon_updater.dart';
