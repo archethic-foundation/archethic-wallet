@@ -598,7 +598,7 @@
     "aeBridgeInfosTitleMobile": "Fonctionnalité de Bridge indisponible sur mobile",
     "aeBridgeInfosDetail1Mobile": "Le bridge n'est pas encore disponible sur l'application mobile.\n\nPour effectuer des opérations de bridge, veuillez utiliser un ordinateur de bureau à l'adresse suivante avec l'extension Chrome ou le wallet en version desktop",
     "aeBridgeInfosDetail2Mobile": "Le bridge sera bientôt disponible sur mobile.",
-    "aeBridgeInfosTitleWeb": "nalité de Bridge non disponible sur l'extension Chrome",
+    "aeBridgeInfosTitleWeb": "Fonctionnalité de bridge non disponible sur l'extension Chrome",
     "aeBridgeInfosDetail1Web": "Le bridge n'est pas directement disponible sur l'extension Chrome.\n\nPour effectuer des opérations de bridge, veuillez utiliser votre navigateur internet à l'adresse suivante avec cette extension Chrome.",
     "aeBridgeInfosDetail2Web": "",
     "aeBridgeInfosTitleDesktop": "Fonctionnalité de bridge non disponible.",
