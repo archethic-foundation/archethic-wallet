@@ -22,23 +22,7 @@ final airdropCountProvider = AutoDisposeFutureProvider<int?>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef AirdropCountRef = AutoDisposeFutureProviderRef<int?>;
-String _$airdropCheckHash() => r'4c1221a4b78f157c3308204dbd47f4d47e6ac4d4';
-
-/// See also [airdropCheck].
-@ProviderFor(airdropCheck)
-final airdropCheckProvider = AutoDisposeFutureProvider<bool>.internal(
-  airdropCheck,
-  name: r'airdropCheckProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$airdropCheckHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef AirdropCheckRef = AutoDisposeFutureProviderRef<bool>;
-String _$airdropPersonalLPHash() => r'a70f7c11a7972ee2e651119875526cc0b288923b';
+String _$airdropPersonalLPHash() => r'231310563288346e246d292cef15b1aa0576d2dd';
 
 /// See also [airdropPersonalLP].
 @ProviderFor(airdropPersonalLP)
@@ -57,24 +41,22 @@ final airdropPersonalLPProvider = AutoDisposeFutureProvider<
 // ignore: unused_element
 typedef AirdropPersonalLPRef = AutoDisposeFutureProviderRef<
     ({double personalLP, double personalLPFlexible})>;
-String _$airdropEmailConfirmedCheckHash() =>
-    r'8b01344ac4f1ee8b9ffa153362a1d7e6d98d54eb';
+String _$airdropUserInfoHash() => r'b4a4ca704e60171f956a2e1fe2526a98fc76ac91';
 
-/// See also [airdropEmailConfirmedCheck].
-@ProviderFor(airdropEmailConfirmedCheck)
-final airdropEmailConfirmedCheckProvider =
-    AutoDisposeFutureProvider<bool>.internal(
-  airdropEmailConfirmedCheck,
-  name: r'airdropEmailConfirmedCheckProvider',
+/// See also [airdropUserInfo].
+@ProviderFor(airdropUserInfo)
+final airdropUserInfoProvider = AutoDisposeFutureProvider<void>.internal(
+  airdropUserInfo,
+  name: r'airdropUserInfoProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$airdropEmailConfirmedCheckHash,
+      : _$airdropUserInfoHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef AirdropEmailConfirmedCheckRef = AutoDisposeFutureProviderRef<bool>;
+typedef AirdropUserInfoRef = AutoDisposeFutureProviderRef<void>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

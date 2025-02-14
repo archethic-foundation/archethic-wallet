@@ -4,13 +4,10 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:aewallet/application/account/accounts_notifier.dart';
-import 'package:aewallet/application/airdrop/airdrop.dart';
 import 'package:aewallet/application/connectivity_status.dart';
-import 'package:aewallet/application/feature_flags.dart';
 import 'package:aewallet/application/recovery_phrase_saved.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/main.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -194,13 +191,6 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                   ref.read(
                     RecoveryPhraseSavedProvider.setRecoveryPhraseSaved(true),
                   );
-
-                  final flag = await ref.read(
-                    getFeatureFlagProvider(kApplicationCode, 'airdrop').future,
-                  );
-                  if (flag != null && flag == true) {
-                    ref.read(airdropCheckProvider);
-                  }
 
                   context.go(HomePage.routerPage);
                   context.loadingOverlay.hide();

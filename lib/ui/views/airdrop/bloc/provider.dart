@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:aewallet/application/airdrop/airdrop.dart';
 import 'package:aewallet/application/airdrop/airdrop_notifier.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
@@ -127,10 +126,6 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
         resendConfirmationEmailInfo: 'Network error: $e',
       );
     }
-  }
-
-  Future<bool> checkConfirmation() async {
-    return await ref.read(airdropEmailConfirmedCheckProvider.future);
   }
 
   Future<void> joinWaitlist(AppLocalizations localizations) async {

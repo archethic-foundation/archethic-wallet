@@ -1,21 +1,49 @@
+import 'dart:async';
+
+import 'package:aewallet/application/airdrop/airdrop.dart';
 import 'package:aewallet/infrastructure/datasources/airdrop_datasource.hive.dart';
 import 'package:aewallet/infrastructure/datasources/airdrop_dto.hive.dart';
 import 'package:aewallet/model/airdrop.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logging/logging.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'airdrop_notifier.g.dart';
 
 @riverpod
 class AirdropNotifier extends _$AirdropNotifier {
+  Timer? _timer;
+  static final _logger = Logger('AirdropNotifier');
+
   @override
   FutureOr<Airdrop?> build() async {
+    ref.onDispose(stopTimer);
+    startTimer();
     final airdropHiveDatasource = await AirdropHiveDatasource.getInstance();
     final _airdropDto = airdropHiveDatasource.getAirdrop();
     if (_airdropDto != null) {
       return _airdropDto.toModel();
     }
+
     return null;
+  }
+
+  void startTimer() {
+    if (_timer != null) return;
+
+    _logger.info('Start timer');
+    ref.read(airdropUserInfoProvider);
+    // Backend refreshs datas all hours
+    _timer = Timer.periodic(const Duration(hours: 1), (_) {
+      ref.read(airdropUserInfoProvider);
+    });
+  }
+
+  Future<void> stopTimer() async {
+    _logger.info('Stop timer');
+    if (_timer == null) return;
+    _timer?.cancel();
+    _timer = null;
   }
 
   Future<void> deleteAirdrop(
@@ -39,54 +67,51 @@ class AirdropNotifier extends _$AirdropNotifier {
     }
   }
 
-  Future<void> updatePersonalLPAmount(
+  Future<void> updateUserInfo(
+    int personalMultiplier,
     double personalLPAmount,
-    double personalLPFlexibleAmount,
-  ) async {
+    double personalLPFlexibleAmount, {
+    bool? isMailConfirmed,
+  }) async {
     final currentAirdrop = state.valueOrNull;
     if (currentAirdrop != null) {
-      final updatedAirdrop = currentAirdrop.copyWith(
-        personalLPAmount: personalLPAmount,
-        personalLPFlexibleAmount: personalLPFlexibleAmount,
-      );
-      await setAirdrop(updatedAirdrop);
+      if (isMailConfirmed != null) {
+        await setAirdrop(
+          currentAirdrop.copyWith(
+            personalMultiplier: personalMultiplier,
+            personalLPAmount: personalLPAmount,
+            personalLPFlexibleAmount: personalLPFlexibleAmount,
+            isMailConfirmed: isMailConfirmed,
+          ),
+        );
+      } else {
+        await setAirdrop(
+          currentAirdrop.copyWith(
+            personalMultiplier: personalMultiplier,
+            personalLPAmount: personalLPAmount,
+            personalLPFlexibleAmount: personalLPFlexibleAmount,
+          ),
+        );
+      }
     } else {
-      await setAirdrop(
-        Airdrop(
-          personalLPAmount: personalLPAmount,
-          personalLPFlexibleAmount: personalLPFlexibleAmount,
-        ),
-      );
-    }
-  }
-
-  Future<void> updateMailFilled(bool isMailFilled) async {
-    final currentAirdrop = state.valueOrNull;
-    if (currentAirdrop != null) {
-      final updatedAirdrop =
-          currentAirdrop.copyWith(isMailFilled: isMailFilled);
-      await setAirdrop(updatedAirdrop);
-    } else {
-      await setAirdrop(
-        Airdrop(
-          isMailFilled: isMailFilled,
-        ),
-      );
-    }
-  }
-
-  Future<void> updateMailConfirmed(bool isMailConfirmed) async {
-    final currentAirdrop = state.valueOrNull;
-    if (currentAirdrop != null) {
-      final updatedAirdrop =
-          currentAirdrop.copyWith(isMailConfirmed: isMailConfirmed);
-      await setAirdrop(updatedAirdrop);
-    } else {
-      await setAirdrop(
-        Airdrop(
-          isMailConfirmed: isMailConfirmed,
-        ),
-      );
+      if (isMailConfirmed != null) {
+        await setAirdrop(
+          Airdrop(
+            personalMultiplier: personalMultiplier,
+            personalLPAmount: personalLPAmount,
+            personalLPFlexibleAmount: personalLPFlexibleAmount,
+            isMailConfirmed: isMailConfirmed,
+          ),
+        );
+      } else {
+        await setAirdrop(
+          Airdrop(
+            personalMultiplier: personalMultiplier,
+            personalLPAmount: personalLPAmount,
+            personalLPFlexibleAmount: personalLPFlexibleAmount,
+          ),
+        );
+      }
     }
   }
 }

@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:aewallet/application/airdrop/airdrop_notifier.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/session/session.dart';
+import 'package:aewallet/model/airdrop.dart';
 import 'package:aewallet/modules/aeswap/application/farm/farm_lock_factory.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/get_farm_lock_user_infos_response.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
@@ -38,47 +39,7 @@ Future<int?> airdropCount(
   return null;
 }
 
-@riverpod
-Future<bool> airdropCheck(
-  Ref ref,
-) async {
-  try {
-    final session = ref.watch(sessionNotifierProvider).loggedIn;
-    final keychainKeypair = archethic.deriveKeyPair(
-      archethic.uint8ListToHex(
-        Uint8List.fromList(session!.wallet.keychainSecuredInfos.seed),
-      ),
-      0,
-    );
-
-    final payload = {
-      'pubkey': archethic.uint8ListToHex(keychainKeypair.publicKey!),
-    };
-
-    final response = await http.post(
-      Uri.parse('https://airdrop-backend.archethic.net/check-email'),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode(payload),
-    );
-
-    if (response.statusCode == 200) {
-      final json = jsonDecode(response.body);
-      if (json['exists'] == true) {
-        final airdropNotifier = ref.read(airdropNotifierProvider.notifier);
-        await airdropNotifier.updateMailFilled(true);
-        return true;
-      }
-    }
-  } catch (e) {
-    _logger.severe('airdropCheck error : $e');
-  }
-  final airdropNotifier = ref.read(airdropNotifierProvider.notifier);
-  await airdropNotifier.updateMailFilled(false);
-  return false;
-}
-
+// TODO(reddwarf03) - Perhaps not necessary because of backend calculation - See airdropUserInfo
 @riverpod
 Future<({double personalLP, double personalLPFlexible})> airdropPersonalLP(
   Ref ref,
@@ -133,13 +94,17 @@ Future<({double personalLP, double personalLPFlexible})> airdropPersonalLP(
   }
 
   final airdropNotifier = ref.read(airdropNotifierProvider.notifier);
-  await airdropNotifier.updatePersonalLPAmount(personalLP, personalLPFlexible);
+  await airdropNotifier.updateUserInfo(
+    Airdrop.airdropPersonalMultiplier(personalLP) ?? 0,
+    personalLP,
+    personalLPFlexible,
+  );
 
   return (personalLP: personalLP, personalLPFlexible: personalLPFlexible);
 }
 
 @riverpod
-Future<bool> airdropEmailConfirmedCheck(
+Future<void> airdropUserInfo(
   Ref ref,
 ) async {
   try {
@@ -156,8 +121,7 @@ Future<bool> airdropEmailConfirmedCheck(
     };
 
     final response = await http.post(
-      Uri.parse(
-          'https://airdrop-backend.archethic.net/check-confirmation-email'),
+      Uri.parse('https://airdrop-backend.archethic.net/airdrop-user-info'),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -166,15 +130,15 @@ Future<bool> airdropEmailConfirmedCheck(
 
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
-
       final airdropNotifier = ref.read(airdropNotifierProvider.notifier);
-      await airdropNotifier.updateMailConfirmed(json['confirmed']);
-      return json['confirmed'];
+      await airdropNotifier.updateUserInfo(
+        json['personal_multiplier'] ?? 0,
+        json['personal_lp'] ?? 0.0,
+        json['personal_lp_flexible'] ?? 0.0,
+        isMailConfirmed: json['confirmed'],
+      );
     }
   } catch (e) {
-    _logger.severe('airdropCheck error : $e');
+    _logger.severe('airdropUserInfo error : $e');
   }
-  final airdropNotifier = ref.read(airdropNotifierProvider.notifier);
-  await airdropNotifier.updateMailConfirmed(false);
-  return false;
 }
