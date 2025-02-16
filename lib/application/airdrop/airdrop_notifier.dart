@@ -67,51 +67,39 @@ class AirdropNotifier extends _$AirdropNotifier {
     }
   }
 
-  Future<void> updateUserInfo(
-    int personalMultiplier,
-    double personalLPAmount,
-    double personalLPFlexibleAmount, {
+  Future<void> updateUserInfo({
+    int? personalMultiplier,
+    double? personalLPAmount,
+    double? personalLPFlexibleAmount,
     bool? isMailConfirmed,
+    String? email,
+    String? referralCode,
   }) async {
     final currentAirdrop = state.valueOrNull;
     if (currentAirdrop != null) {
-      if (isMailConfirmed != null) {
-        await setAirdrop(
-          currentAirdrop.copyWith(
-            personalMultiplier: personalMultiplier,
-            personalLPAmount: personalLPAmount,
-            personalLPFlexibleAmount: personalLPFlexibleAmount,
-            isMailConfirmed: isMailConfirmed,
-          ),
-        );
-      } else {
-        await setAirdrop(
-          currentAirdrop.copyWith(
-            personalMultiplier: personalMultiplier,
-            personalLPAmount: personalLPAmount,
-            personalLPFlexibleAmount: personalLPFlexibleAmount,
-          ),
-        );
-      }
+      await setAirdrop(
+        currentAirdrop.copyWith(
+          personalMultiplier:
+              personalMultiplier ?? currentAirdrop.personalMultiplier,
+          personalLPAmount: personalLPAmount ?? currentAirdrop.personalLPAmount,
+          personalLPFlexibleAmount: personalLPFlexibleAmount ??
+              currentAirdrop.personalLPFlexibleAmount,
+          isMailConfirmed: isMailConfirmed ?? currentAirdrop.isMailConfirmed,
+          email: email ?? currentAirdrop.email,
+          referralCode: referralCode ?? currentAirdrop.referralCode,
+        ),
+      );
     } else {
-      if (isMailConfirmed != null) {
-        await setAirdrop(
-          Airdrop(
-            personalMultiplier: personalMultiplier,
-            personalLPAmount: personalLPAmount,
-            personalLPFlexibleAmount: personalLPFlexibleAmount,
-            isMailConfirmed: isMailConfirmed,
-          ),
-        );
-      } else {
-        await setAirdrop(
-          Airdrop(
-            personalMultiplier: personalMultiplier,
-            personalLPAmount: personalLPAmount,
-            personalLPFlexibleAmount: personalLPFlexibleAmount,
-          ),
-        );
-      }
+      await setAirdrop(
+        Airdrop(
+          personalMultiplier: personalMultiplier,
+          personalLPAmount: personalLPAmount,
+          personalLPFlexibleAmount: personalLPFlexibleAmount,
+          isMailConfirmed: isMailConfirmed,
+          email: email,
+          referralCode: referralCode,
+        ),
+      );
     }
   }
 }

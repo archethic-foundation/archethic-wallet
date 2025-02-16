@@ -19,7 +19,7 @@ part 'airdrop.g.dart';
 final _logger = Logger('airDropProvider');
 
 @riverpod
-Future<int?> airdropCount(
+Future<({int? participantCount, int? totalMultiplier})> airdropCount(
   Ref ref,
 ) async {
   try {
@@ -31,15 +31,21 @@ Future<int?> airdropCount(
 
     if (response.statusCode == 200) {
       final bodyJson = jsonDecode(response.body);
-      return bodyJson['count'];
+      return (
+        participantCount: bodyJson['participant_count'] as int?,
+        totalMultiplier: bodyJson['total_multiplier'] as int?,
+      );
     }
   } catch (e) {
     _logger.severe('airdropCount error : $e');
   }
-  return null;
+  return (
+    participantCount: null,
+    totalMultiplier: null,
+  );
 }
 
-// TODO(reddwarf03) - Perhaps not necessary because of backend calculation - See airdropUserInfo
+// TODO(reddwarf03): Perhaps not necessary because of backend calculation - See airdropUserInfo
 @riverpod
 Future<({double personalLP, double personalLPFlexible})> airdropPersonalLP(
   Ref ref,
@@ -95,11 +101,10 @@ Future<({double personalLP, double personalLPFlexible})> airdropPersonalLP(
 
   final airdropNotifier = ref.read(airdropNotifierProvider.notifier);
   await airdropNotifier.updateUserInfo(
-    Airdrop.airdropPersonalMultiplier(personalLP) ?? 0,
-    personalLP,
-    personalLPFlexible,
+    personalMultiplier: Airdrop.airdropPersonalMultiplier(personalLP) ?? 0,
+    personalLPAmount: personalLP,
+    personalLPFlexibleAmount: personalLPFlexible,
   );
-
   return (personalLP: personalLP, personalLPFlexible: personalLPFlexible);
 }
 
@@ -116,29 +121,68 @@ Future<void> airdropUserInfo(
       0,
     );
 
-    final payload = {
-      'pubkey': archethic.uint8ListToHex(keychainKeypair.publicKey!),
-    };
+    final timestamp =
+        (DateTime.now().millisecondsSinceEpoch ~/ 1000).toString();
+    final publicKey = archethic.uint8ListToHex(keychainKeypair.publicKey!);
+    final signedPayload = archethic.sign(
+      '$publicKey$timestamp',
+      keychainKeypair.privateKey,
+      isDataHexa: false,
+    );
 
-    final response = await http.post(
-      Uri.parse('https://airdrop-backend.archethic.net/airdrop-user-info'),
+    final response = await http.get(
+      Uri.parse(
+        'https://airdrop-backend.archethic.net/airdrop-user-info?pubkey=$publicKey',
+      ),
       headers: {
-        'Content-Type': 'application/json',
+        'x-public-key': base64Encode(utf8.encode(publicKey)),
+        'x-timestamp': timestamp,
+        'x-signature': base64Url.encode(signedPayload),
       },
-      body: jsonEncode(payload),
     );
 
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
       final airdropNotifier = ref.read(airdropNotifierProvider.notifier);
       await airdropNotifier.updateUserInfo(
-        json['personal_multiplier'] ?? 0,
-        json['personal_lp'] ?? 0.0,
-        json['personal_lp_flexible'] ?? 0.0,
+        personalMultiplier: json['personal_multiplier'] ?? 0,
+        personalLPAmount: json['personal_lp'] ?? 0.0,
+        personalLPFlexibleAmount: json['personal_lp_flexible'] ?? 0.0,
         isMailConfirmed: json['confirmed'],
+        email: json['email'],
+        referralCode: json['referralCode'],
       );
+    } else if (response.statusCode == 400) {
+      _logger.severe('Bad Request: Missing headers or invalid timestamp');
+    } else if (response.statusCode == 401) {
+      _logger.severe('Unauthorized: Invalid signature');
     }
   } catch (e) {
     _logger.severe('airdropUserInfo error : $e');
+  }
+}
+
+@riverpod
+Future<http.Response?> resendConfirmationMail(
+  Ref ref,
+  String mailAddress,
+) async {
+  try {
+    final payload = {
+      'email': mailAddress,
+    };
+    final response = await http.post(
+      Uri.parse(
+        'https://airdrop-backend.archethic.net/resend-confirmation-email',
+      ),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(payload),
+    );
+
+    return response;
+  } catch (e) {
+    return null;
   }
 }

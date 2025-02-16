@@ -9,37 +9,43 @@ class AirdropHiveDto extends HiveObject {
   AirdropHiveDto({
     required this.personalLPAmount,
     required this.personalLPFlexibleAmount,
-    required this.isMailFilled,
     required this.isMailConfirmed,
+    this.email,
+    this.referralCode,
   });
 
   factory AirdropHiveDto.fromModel(Airdrop airdrop) {
     return AirdropHiveDto(
-      isMailFilled: airdrop.isMailFilled,
       personalLPAmount: airdrop.personalLPAmount,
       personalLPFlexibleAmount: airdrop.personalLPFlexibleAmount,
       isMailConfirmed: airdrop.isMailConfirmed,
+      email: airdrop.email,
+      referralCode: airdrop.referralCode,
     );
   }
 
   @HiveField(0)
-  double personalLPAmount;
-
-  @HiveField(1)
-  bool isMailFilled;
+  double? personalLPAmount;
 
   @HiveField(2)
-  bool isMailConfirmed;
+  bool? isMailConfirmed;
 
   @HiveField(3)
-  double personalLPFlexibleAmount;
+  double? personalLPFlexibleAmount;
+
+  @HiveField(4)
+  String? email;
+
+  @HiveField(5)
+  String? referralCode;
 
   Airdrop toModel() {
     return Airdrop(
       personalLPAmount: personalLPAmount,
       personalLPFlexibleAmount: personalLPFlexibleAmount,
-      isMailFilled: isMailFilled,
       isMailConfirmed: isMailConfirmed,
+      email: email,
+      referralCode: referralCode,
     );
   }
 }
@@ -48,7 +54,6 @@ extension AirdropHiveConversionExt on Airdrop {
   AirdropHiveDto toHive() => AirdropHiveDto(
         personalLPAmount: personalLPAmount,
         personalLPFlexibleAmount: personalLPFlexibleAmount,
-        isMailFilled: isMailFilled,
         isMailConfirmed: isMailConfirmed,
       );
 }

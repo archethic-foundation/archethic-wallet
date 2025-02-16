@@ -21,7 +21,7 @@ class AirdropAvailable extends ConsumerWidget {
 
     return ref.watch(airdropNotifierProvider).when(
       data: (airdrop) {
-        if (airdrop != null && airdrop.personalLPFlexibleAmount > 0) {
+        if (airdrop != null && airdrop.personalLPFlexibleAmount! > 0) {
           return Container(
             padding:
                 const EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
@@ -34,7 +34,7 @@ class AirdropAvailable extends ConsumerWidget {
             ),
             child: Text(
               localizations.airdropDashboardLPTokenAvailable(
-                airdrop.personalLPFlexibleAmount.formatNumber(precision: 2),
+                airdrop.personalLPFlexibleAmount!.formatNumber(precision: 2),
               ),
               style: bodyMedium,
             ),

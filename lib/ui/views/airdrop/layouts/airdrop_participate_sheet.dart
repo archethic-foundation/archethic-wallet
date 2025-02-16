@@ -16,8 +16,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AirdropParticipateSheet extends ConsumerStatefulWidget {
   const AirdropParticipateSheet({
+    this.airdropProcessStep,
+    this.airdropMailAddress,
     super.key,
   });
+
+  final AirdropProcessStep? airdropProcessStep;
+  final String? airdropMailAddress;
 
   static const String routerPage = '/airdrop_participate';
 
@@ -28,6 +33,25 @@ class AirdropParticipateSheet extends ConsumerStatefulWidget {
 
 class _AirdropParticipateSheetState
     extends ConsumerState<AirdropParticipateSheet> {
+  @override
+  void initState() {
+    Future(() async {
+      if (widget.airdropMailAddress != null) {
+        ref.read(airdropFormNotifierProvider.notifier)
+          ..setMailAddress(widget.airdropMailAddress!)
+          ..setConfirmNotMultipleRegistrations(true)
+          ..setConfirmOnlyOneAirdrop(true)
+          ..setConfirmPrivacyPolicy(true);
+      }
+      if (widget.airdropProcessStep != null) {
+        ref
+            .read(airdropFormNotifierProvider.notifier)
+            .setAirdropProcessStep(widget.airdropProcessStep!);
+      }
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final selectedAccount = ref

@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:aewallet/application/account/accounts_notifier.dart';
+import 'package:aewallet/application/airdrop/airdrop_notifier.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/recovery_phrase_saved.dart';
 import 'package:aewallet/application/session/session.dart';
@@ -188,10 +189,11 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                             .selectedAccountNotifier)
                         ?.refreshAll(),
                   );
-                  ref.read(
-                    RecoveryPhraseSavedProvider.setRecoveryPhraseSaved(true),
-                  );
-
+                  ref
+                    ..read(
+                      RecoveryPhraseSavedProvider.setRecoveryPhraseSaved(true),
+                    )
+                    ..invalidate(airdropNotifierProvider);
                   context.go(HomePage.routerPage);
                   context.loadingOverlay.hide();
 

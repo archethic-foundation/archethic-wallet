@@ -51,7 +51,7 @@ class _AirdropDashboardSheetState extends ConsumerState<AirdropDashboardSheet>
     ref.watch(airdropNotifierProvider).when(
           data: (airdrop) {
             if (airdrop != null) {
-              personalMultiplier = airdrop.personalMultiplier;
+              personalMultiplier = airdrop.personalMultiplier ?? 0;
             }
           },
           loading: () {},

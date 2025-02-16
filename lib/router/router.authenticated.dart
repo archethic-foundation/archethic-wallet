@@ -189,10 +189,27 @@ final _authenticatedRoutes = [
   ),
   GoRoute(
     path: AirdropParticipateSheet.routerPage,
-    pageBuilder: (context, state) => NoTransitionPage<void>(
-      key: state.pageKey,
-      child: const AirdropParticipateSheet(),
-    ),
+    pageBuilder: (context, state) {
+      int? airdropProcessStepIndex;
+      if (state.uri.queryParameters['airdropProcessStepIndex'] != null &&
+          (int.tryParse(
+                state.uri.queryParameters['airdropProcessStepIndex']!,
+              ) !=
+              null)) {
+        airdropProcessStepIndex =
+            int.tryParse(state.uri.queryParameters['airdropProcessStepIndex']!);
+      }
+
+      return NoTransitionPage<void>(
+        key: state.pageKey,
+        child: AirdropParticipateSheet(
+          airdropMailAddress: state.uri.queryParameters['airdropMailAddress'],
+          airdropProcessStep: airdropProcessStepIndex == null
+              ? null
+              : AirdropProcessStep.values[airdropProcessStepIndex],
+        ),
+      );
+    },
   ),
   GoRoute(
     path: AirdropDashboardSheet.routerPage,

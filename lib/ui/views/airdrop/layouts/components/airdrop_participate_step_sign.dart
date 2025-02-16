@@ -101,8 +101,15 @@ class _AirdropParticipateStepSignSheetState
           ),
           const SizedBox(height: 10),
           Text(
-            localizations.airdropParticipateStepSignDesc,
+            localizations.airdropParticipateStepSignDesc1,
             style: AppTextStyles.bodyMediumWithOpacity(context),
+          ),
+          const SizedBox(height: 20),
+          Text(
+            localizations.airdropParticipateStepSignDesc2,
+            style: AppTextStyles.bodyMediumWithOpacity(context).copyWith(
+              fontStyle: FontStyle.italic,
+            ),
           ),
           const SizedBox(height: 20),
           Text.rich(

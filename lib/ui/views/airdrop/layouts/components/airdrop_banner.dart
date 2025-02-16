@@ -3,12 +3,15 @@ import 'package:aewallet/application/airdrop/airdrop_notifier.dart';
 import 'package:aewallet/application/feature_flags.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/main.dart';
+import 'package:aewallet/model/airdrop.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/views/airddrop_dashboard/layouts/airdrop_dashboard_sheet.dart';
+import 'package:aewallet/ui/views/airdrop/bloc/state.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/airdrop_participate_sheet.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_participants_count.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,319 +26,230 @@ class AirdropBanner extends ConsumerWidget {
     final activeAirdrop = ref.watch(
       SettingsProviders.settings.select((settings) => settings.activeAirdrop),
     );
-    if (activeAirdrop == false) {
-      return const SizedBox();
-    }
+    if (!activeAirdrop) return const SizedBox();
 
     final flag = ref.watch(getFeatureFlagProvider(kApplicationCode, 'airdrop'));
     final airdrop = ref.watch(airdropNotifierProvider).value;
 
-    // _buildAirdropNew -> No Mail and No Farmed LP
-    // _buildAirdropShouldAddMail -> No Mail and Farmed LP
-    // _buildAirdropShouldFarm -> Mail confirmed and No Farmed LP
-    // _buildAirdropOk -> Mail confirmed and Farmed LP
-
     return flag.when(
       data: (data) {
-        if (data == null || data == false) return const SizedBox.shrink();
-        if (airdrop == null ||
-            (airdrop.isMailFilled && airdrop.personalLPAmount == 0)) {
-          return _buildAirdropNew(context, ref);
+        if (data != true) return const SizedBox.shrink();
+        if (airdrop == null) {
+          return _buildAirdropContent(
+            context,
+            ref,
+            AirdropState.newParticipation,
+          );
         }
-        if (airdrop.isMailFilled == false && airdrop.personalLPAmount > 0) {
-          return _buildAirdropShouldAddMail(context, ref);
-        }
-        if (airdrop.isMailConfirmed && airdrop.personalLPAmount == 0) {
-          return _buildAirdropShouldFarm(context, ref);
-        }
-        if (airdrop.isMailConfirmed && airdrop.personalLPAmount > 0) {
-          return _buildAirdropOk(context, ref);
-        }
-        return const SizedBox.shrink();
+
+        return _determineAirdropState(context, ref, airdrop);
       },
       error: (_, __) => const SizedBox.shrink(),
       loading: () => const SizedBox.shrink(),
     );
   }
 
-  Widget _buildAirdropOk(BuildContext context, WidgetRef ref) {
+  Widget _determineAirdropState(
+    BuildContext context,
+    WidgetRef ref,
+    Airdrop airdrop,
+  ) {
+    final isMailConfirmed = airdrop.isMailConfirmed;
+    final personalLPAmount = airdrop.personalLPAmount;
+
+    if (isMailConfirmed == null) {
+      if (personalLPAmount == null || personalLPAmount == 0) {
+        return _buildAirdropContent(
+          context,
+          ref,
+          AirdropState.newParticipation,
+        );
+      } else if (personalLPAmount > 0) {
+        return _buildAirdropContent(context, ref, AirdropState.shouldAddMail);
+      }
+    }
+
+    if (isMailConfirmed != null) {
+      if (!isMailConfirmed) {
+        if (personalLPAmount! > 0) {
+          return _buildAirdropContent(
+            context,
+            ref,
+            AirdropState.shouldConfirmMail,
+          );
+        } else if (personalLPAmount == 0) {
+          return _buildAirdropContent(
+            context,
+            ref,
+            AirdropState.shouldConfirmMailAndFarm,
+          );
+        }
+      } else if (isMailConfirmed) {
+        if (personalLPAmount == 0) {
+          return _buildAirdropContent(context, ref, AirdropState.shouldFarm);
+        } else if (personalLPAmount! > 0) {
+          return _buildAirdropContent(context, ref, AirdropState.ok);
+        }
+      }
+    }
+
+    return _buildAirdropContent(context, ref, AirdropState.newParticipation);
+  }
+
+  Widget _buildAirdropContent(
+    BuildContext context,
+    WidgetRef ref,
+    AirdropState state,
+  ) {
     final localizations = AppLocalizations.of(context)!;
     final titleTextStyle = AppTextStyles.bodyLarge(context).copyWith(
       fontWeight: FontWeight.bold,
-      fontSize: 18,
+      fontSize: state == AirdropState.newParticipation ? 26 : 22,
+    );
+    final buttonTextStyle = AppTextStyles.bodyMedium(context).copyWith(
+      fontWeight: FontWeight.bold,
     );
 
-    return Padding(
-      padding: const EdgeInsets.only(top: 20),
-      child: InkWell(
-        onTap: () async {
+    String title;
+    String? description;
+    String? buttonText;
+    VoidCallback? onButtonPressed;
+
+    switch (state) {
+      case AirdropState.newParticipation:
+        title = localizations.airdropBannerNewParticipationTitle;
+        buttonText = localizations.airdropBannerNewParticipationBtn;
+        onButtonPressed = () async {
+          await context.push(AirdropParticipateSheet.routerPage);
+        };
+        break;
+      case AirdropState.shouldAddMail:
+        title = localizations.airdropBannerShouldAddMailTitle;
+        description = localizations.airdropBannerShouldAddMailDesc;
+        buttonText = localizations.airdropBannerShouldAddMailBtn;
+        onButtonPressed = () async {
           ref.read(airdropPersonalLPProvider);
           await context.push(AirdropDashboardSheet.routerPage);
-        },
-        child: _buildBannerContainer(
-          context,
-          height: 60,
-          child: SizedBox(
-            height: 60,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  localizations.airdropBannerTitle,
-                  style: titleTextStyle,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(width: 10),
-                const Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.white70,
-                  size: 14,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildAirdropNew(
-    BuildContext context,
-    WidgetRef ref,
-  ) {
-    final localizations = AppLocalizations.of(context)!;
-    final titleTextStyle = AppTextStyles.bodyLarge(context).copyWith(
-      fontWeight: FontWeight.bold,
-      fontSize: 26,
-    );
-    final buttonTextStyle = AppTextStyles.bodyMedium(context).copyWith(
-      fontWeight: FontWeight.bold,
-    );
+        };
+        break;
+      case AirdropState.shouldFarm:
+        title = localizations.airdropBannerShouldFarmTitle;
+        description = localizations.airdropBannerShouldFarmDesc;
+        buttonText = localizations.airdropBannerShouldFarmBtn;
+        onButtonPressed = () async {
+          ref.read(airdropPersonalLPProvider);
+          await context.push(AirdropDashboardSheet.routerPage);
+        };
+        break;
+      case AirdropState.shouldConfirmMailAndFarm:
+        title = localizations.airdropBannerShouldConfirmMailAndFarmTitle;
+        description = localizations.airdropBannerShouldConfirmMailAndFarmDesc;
+        buttonText = localizations.airdropBannerShouldConfirmMailAndFarmBtn;
+        onButtonPressed = () async {
+          ref.read(airdropPersonalLPProvider);
+          final airdrop = await ref.read(airdropNotifierProvider.future);
+          await context.push(
+            Uri(
+              path: AirdropParticipateSheet.routerPage,
+              queryParameters: {
+                'airdropMailAddress': airdrop?.email,
+                'airdropProcessStepIndex':
+                    AirdropProcessStep.confirmEmail.index.toString(),
+              },
+            ).toString(),
+          );
+        };
+        break;
+      case AirdropState.shouldConfirmMail:
+        title = localizations.airdropBannerShouldConfirmMailTitle;
+        description = localizations.airdropBannerShouldConfirmMailDesc;
+        buttonText = localizations.airdropBannerShouldConfirmMailBtn;
+        onButtonPressed = () async {
+          ref.read(airdropPersonalLPProvider);
+          final airdrop = await ref.read(airdropNotifierProvider.future);
+          await context.push(
+            Uri(
+              path: AirdropParticipateSheet.routerPage,
+              queryParameters: {
+                'airdropMailAddress': airdrop?.email,
+                'airdropProcessStepIndex':
+                    AirdropProcessStep.confirmEmail.index.toString(),
+              },
+            ).toString(),
+          );
+        };
+        break;
+      case AirdropState.ok:
+        title = localizations.airdropBannerTitle;
+        onButtonPressed = () async {
+          ref.read(airdropPersonalLPProvider);
+          await context.push(AirdropDashboardSheet.routerPage);
+        };
+        break;
+    }
 
     return Padding(
       padding: const EdgeInsets.only(top: 20),
       child: _buildBannerContainer(
         context,
-        height: 230,
+        height: state == AirdropState.ok ? 90 : 235,
         child: Stack(
           alignment: Alignment.topRight,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const AirdropParticipantsCount(),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  localizations.airdropBannerNewTitle,
-                  style: titleTextStyle,
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  height: 20,
-                  width: MediaQuery.of(context).size.width,
-                ),
-                InkWell(
-                  onTap: () async {
-                    await context.push(AirdropParticipateSheet.routerPage);
-                  },
-                  child: IntrinsicWidth(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 5,
-                      ),
-                      height: 35,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      child: Text(
-                        localizations.airdropBannerNewBtn,
-                        style: buttonTextStyle,
-                      ),
+            InkWell(
+              onTap: buttonText == null ? onButtonPressed : null,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (state != AirdropState.ok)
+                    const AirdropParticipantsCount(),
+                  if (state != AirdropState.ok) const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: AutoSizeText(
+                      title,
+                      style: titleTextStyle,
+                      textAlign: TextAlign.center,
                     ),
                   ),
-                ),
-              ],
-            ),
-            Positioned(
-              child: IconButton(
-                onPressed: () async {
-                  await ref
-                      .read(SettingsProviders.settings.notifier)
-                      .setActiveAirdrop(false);
-                },
-                icon: const Icon(
-                  Symbols.close,
-                  color: Colors.white,
-                  size: 16,
-                ),
+                  if (description != null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: AutoSizeText(
+                        description,
+                        style: AppTextStyles.bodySmallWithOpacity(context),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  if (buttonText != null)
+                    SizedBox(
+                      height: 10,
+                      width: MediaQuery.of(context).size.width,
+                    ),
+                  if (buttonText != null)
+                    InkWell(
+                      onTap: onButtonPressed,
+                      child: IntrinsicWidth(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 15,
+                            vertical: 5,
+                          ),
+                          height: 35,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          child: Text(
+                            buttonText,
+                            style: buttonTextStyle,
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
               ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildAirdropShouldFarm(
-    BuildContext context,
-    WidgetRef ref,
-  ) {
-    final localizations = AppLocalizations.of(context)!;
-    final titleTextStyle = AppTextStyles.bodyLarge(context).copyWith(
-      fontWeight: FontWeight.bold,
-      fontSize: 22,
-    );
-    final buttonTextStyle = AppTextStyles.bodyMedium(context).copyWith(
-      fontWeight: FontWeight.bold,
-    );
-
-    return Padding(
-      padding: const EdgeInsets.only(top: 20),
-      child: _buildBannerContainer(
-        context,
-        height: 230,
-        child: Stack(
-          alignment: Alignment.topRight,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const AirdropParticipantsCount(),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  localizations.airdropBannerShouldFarmTitle,
-                  style: titleTextStyle,
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  localizations.airdropBannerShouldFarmDesc,
-                  style: AppTextStyles.bodySmallWithOpacity(context),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  height: 20,
-                  width: MediaQuery.of(context).size.width,
-                ),
-                InkWell(
-                  onTap: () async {
-                    ref.read(airdropPersonalLPProvider);
-                    await context.push(AirdropDashboardSheet.routerPage);
-                  },
-                  child: IntrinsicWidth(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 5,
-                      ),
-                      height: 35,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      child: Text(
-                        localizations.airdropBannerShouldFarmBtn,
-                        style: buttonTextStyle,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Positioned(
-              child: IconButton(
-                onPressed: () async {
-                  await ref
-                      .read(SettingsProviders.settings.notifier)
-                      .setActiveAirdrop(false);
-                },
-                icon: const Icon(
-                  Symbols.close,
-                  color: Colors.white,
-                  size: 16,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildAirdropShouldAddMail(
-    BuildContext context,
-    WidgetRef ref,
-  ) {
-    final localizations = AppLocalizations.of(context)!;
-    final titleTextStyle = AppTextStyles.bodyLarge(context).copyWith(
-      fontWeight: FontWeight.bold,
-      fontSize: 22,
-    );
-    final buttonTextStyle = AppTextStyles.bodyMedium(context).copyWith(
-      fontWeight: FontWeight.bold,
-    );
-
-    return Padding(
-      padding: const EdgeInsets.only(top: 20),
-      child: _buildBannerContainer(
-        context,
-        height: 230,
-        child: Stack(
-          alignment: Alignment.topRight,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const AirdropParticipantsCount(),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  localizations.airdropBannerShouldAddMailTitle,
-                  style: titleTextStyle,
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  localizations.airdropBannerShouldAddMailDesc,
-                  style: AppTextStyles.bodySmallWithOpacity(context),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  height: 20,
-                  width: MediaQuery.of(context).size.width,
-                ),
-                InkWell(
-                  onTap: () async {
-                    ref.read(airdropPersonalLPProvider);
-                    await context.push(AirdropDashboardSheet.routerPage);
-                  },
-                  child: IntrinsicWidth(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 5,
-                      ),
-                      height: 35,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      child: Text(
-                        localizations.airdropBannerShouldAddMailBtn,
-                        style: buttonTextStyle,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
             ),
             Positioned(
               child: IconButton(
@@ -413,4 +327,13 @@ class AirdropBanner extends ConsumerWidget {
       ),
     );
   }
+}
+
+enum AirdropState {
+  newParticipation,
+  shouldConfirmMail,
+  shouldConfirmMailAndFarm,
+  shouldAddMail,
+  shouldFarm,
+  ok,
 }

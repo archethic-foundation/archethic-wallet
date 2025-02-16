@@ -5,11 +5,12 @@ part 'airdrop.freezed.dart';
 @freezed
 class Airdrop with _$Airdrop {
   const factory Airdrop({
-    @Default(0) int personalMultiplier,
-    @Default(0.0) double personalLPAmount,
-    @Default(0.0) double personalLPFlexibleAmount,
-    @Default(false) bool isMailFilled,
-    @Default(false) bool isMailConfirmed,
+    int? personalMultiplier,
+    double? personalLPAmount,
+    double? personalLPFlexibleAmount,
+    bool? isMailConfirmed,
+    String? email,
+    String? referralCode,
   }) = _Airdrop;
   const Airdrop._();
 

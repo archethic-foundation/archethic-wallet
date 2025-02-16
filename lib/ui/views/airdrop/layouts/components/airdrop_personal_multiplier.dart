@@ -19,7 +19,7 @@ class AirdropPersonalMultiplier extends ConsumerWidget {
     airdropAsync.when(
       data: (airdrop) {
         if (airdrop != null) {
-          personalMultiplier = airdrop.personalMultiplier;
+          personalMultiplier = airdrop.personalMultiplier ?? 0;
         }
       },
       loading: () {},

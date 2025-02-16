@@ -184,6 +184,9 @@ dependencies:
   # Flutter plugin for accessing the NFC features on Android and iOS.
   nfc_manager: ^3.3.0
 
+  # A Dart library for Format number into beautiful string, Format the number into a beautiful, readable and short string.
+  numeral: ^3.0.0
+
   # A pure flutter toast library Support custom style/widget. Easy to use. You can use this library to achieve the same effect as Android toast
   oktoast: ^3.3.1
 

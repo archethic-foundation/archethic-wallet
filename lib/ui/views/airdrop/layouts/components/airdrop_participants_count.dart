@@ -28,7 +28,9 @@ class AirdropParticipantsCount extends ConsumerWidget {
           ),
           airdropCountAsync.when(
             data: (data) => TextSpan(
-              text: data != null ? '$data' : '?',
+              text: data.participantCount != null
+                  ? '${data.participantCount}'
+                  : '?',
               style: bodyMediumSecondary,
             ),
             error: (_, __) => TextSpan(

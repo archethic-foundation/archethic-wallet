@@ -57,10 +57,24 @@ class _AirdropParticipateStepJoinWaitlistSheetState
           localizations.airdropParticipateStepWaitlistBtn,
           Dimens.buttonBottomDimens,
           onPressed: () async {
-            ref
+            final checkConfirmation = await ref
                 .read(airdropFormNotifierProvider.notifier)
-                .setAirdropProcessStep(AirdropProcessStep.supportEcosystem);
-            return;
+                .checkConfirmation();
+            if (checkConfirmation) {
+              ref
+                  .read(airdropFormNotifierProvider.notifier)
+                  .setAirdropProcessStep(AirdropProcessStep.supportEcosystem);
+              return;
+            }
+
+            await showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AirdropInfoPopup(
+                  message: localizations.airdropBackendEmailNotConfirmed,
+                );
+              },
+            );
           },
           disabled: !airdropForm.isItemsConfirmed,
         ),

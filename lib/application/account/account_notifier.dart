@@ -243,7 +243,7 @@ class AccountNotifier extends _$AccountNotifier {
   _RefreshOperation get _updateRecentTransactionsOperation => (
         name: 'Recent Transactions',
         operation: (Account account) async {
-          // TODO:(reddwarf03)
+          // TODO(reddwarf03): Supp ?
           /* ref.invalidate(
             recentTransactionsProvider(
               account.genesisAddress,

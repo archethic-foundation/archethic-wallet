@@ -16,11 +16,12 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Airdrop {
-  int get personalMultiplier => throw _privateConstructorUsedError;
-  double get personalLPAmount => throw _privateConstructorUsedError;
-  double get personalLPFlexibleAmount => throw _privateConstructorUsedError;
-  bool get isMailFilled => throw _privateConstructorUsedError;
-  bool get isMailConfirmed => throw _privateConstructorUsedError;
+  int? get personalMultiplier => throw _privateConstructorUsedError;
+  double? get personalLPAmount => throw _privateConstructorUsedError;
+  double? get personalLPFlexibleAmount => throw _privateConstructorUsedError;
+  bool? get isMailConfirmed => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
+  String? get referralCode => throw _privateConstructorUsedError;
 
   /// Create a copy of Airdrop
   /// with the given fields replaced by the non-null parameter values.
@@ -34,11 +35,12 @@ abstract class $AirdropCopyWith<$Res> {
       _$AirdropCopyWithImpl<$Res, Airdrop>;
   @useResult
   $Res call(
-      {int personalMultiplier,
-      double personalLPAmount,
-      double personalLPFlexibleAmount,
-      bool isMailFilled,
-      bool isMailConfirmed});
+      {int? personalMultiplier,
+      double? personalLPAmount,
+      double? personalLPFlexibleAmount,
+      bool? isMailConfirmed,
+      String? email,
+      String? referralCode});
 }
 
 /// @nodoc
@@ -56,33 +58,38 @@ class _$AirdropCopyWithImpl<$Res, $Val extends Airdrop>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? personalMultiplier = null,
-    Object? personalLPAmount = null,
-    Object? personalLPFlexibleAmount = null,
-    Object? isMailFilled = null,
-    Object? isMailConfirmed = null,
+    Object? personalMultiplier = freezed,
+    Object? personalLPAmount = freezed,
+    Object? personalLPFlexibleAmount = freezed,
+    Object? isMailConfirmed = freezed,
+    Object? email = freezed,
+    Object? referralCode = freezed,
   }) {
     return _then(_value.copyWith(
-      personalMultiplier: null == personalMultiplier
+      personalMultiplier: freezed == personalMultiplier
           ? _value.personalMultiplier
           : personalMultiplier // ignore: cast_nullable_to_non_nullable
-              as int,
-      personalLPAmount: null == personalLPAmount
+              as int?,
+      personalLPAmount: freezed == personalLPAmount
           ? _value.personalLPAmount
           : personalLPAmount // ignore: cast_nullable_to_non_nullable
-              as double,
-      personalLPFlexibleAmount: null == personalLPFlexibleAmount
+              as double?,
+      personalLPFlexibleAmount: freezed == personalLPFlexibleAmount
           ? _value.personalLPFlexibleAmount
           : personalLPFlexibleAmount // ignore: cast_nullable_to_non_nullable
-              as double,
-      isMailFilled: null == isMailFilled
-          ? _value.isMailFilled
-          : isMailFilled // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isMailConfirmed: null == isMailConfirmed
+              as double?,
+      isMailConfirmed: freezed == isMailConfirmed
           ? _value.isMailConfirmed
           : isMailConfirmed // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      referralCode: freezed == referralCode
+          ? _value.referralCode
+          : referralCode // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -95,11 +102,12 @@ abstract class _$$AirdropImplCopyWith<$Res> implements $AirdropCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int personalMultiplier,
-      double personalLPAmount,
-      double personalLPFlexibleAmount,
-      bool isMailFilled,
-      bool isMailConfirmed});
+      {int? personalMultiplier,
+      double? personalLPAmount,
+      double? personalLPFlexibleAmount,
+      bool? isMailConfirmed,
+      String? email,
+      String? referralCode});
 }
 
 /// @nodoc
@@ -115,33 +123,38 @@ class __$$AirdropImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? personalMultiplier = null,
-    Object? personalLPAmount = null,
-    Object? personalLPFlexibleAmount = null,
-    Object? isMailFilled = null,
-    Object? isMailConfirmed = null,
+    Object? personalMultiplier = freezed,
+    Object? personalLPAmount = freezed,
+    Object? personalLPFlexibleAmount = freezed,
+    Object? isMailConfirmed = freezed,
+    Object? email = freezed,
+    Object? referralCode = freezed,
   }) {
     return _then(_$AirdropImpl(
-      personalMultiplier: null == personalMultiplier
+      personalMultiplier: freezed == personalMultiplier
           ? _value.personalMultiplier
           : personalMultiplier // ignore: cast_nullable_to_non_nullable
-              as int,
-      personalLPAmount: null == personalLPAmount
+              as int?,
+      personalLPAmount: freezed == personalLPAmount
           ? _value.personalLPAmount
           : personalLPAmount // ignore: cast_nullable_to_non_nullable
-              as double,
-      personalLPFlexibleAmount: null == personalLPFlexibleAmount
+              as double?,
+      personalLPFlexibleAmount: freezed == personalLPFlexibleAmount
           ? _value.personalLPFlexibleAmount
           : personalLPFlexibleAmount // ignore: cast_nullable_to_non_nullable
-              as double,
-      isMailFilled: null == isMailFilled
-          ? _value.isMailFilled
-          : isMailFilled // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isMailConfirmed: null == isMailConfirmed
+              as double?,
+      isMailConfirmed: freezed == isMailConfirmed
           ? _value.isMailConfirmed
           : isMailConfirmed // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      referralCode: freezed == referralCode
+          ? _value.referralCode
+          : referralCode // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -150,32 +163,30 @@ class __$$AirdropImplCopyWithImpl<$Res>
 
 class _$AirdropImpl extends _Airdrop {
   const _$AirdropImpl(
-      {this.personalMultiplier = 0,
-      this.personalLPAmount = 0.0,
-      this.personalLPFlexibleAmount = 0.0,
-      this.isMailFilled = false,
-      this.isMailConfirmed = false})
+      {this.personalMultiplier,
+      this.personalLPAmount,
+      this.personalLPFlexibleAmount,
+      this.isMailConfirmed,
+      this.email,
+      this.referralCode})
       : super._();
 
   @override
-  @JsonKey()
-  final int personalMultiplier;
+  final int? personalMultiplier;
   @override
-  @JsonKey()
-  final double personalLPAmount;
+  final double? personalLPAmount;
   @override
-  @JsonKey()
-  final double personalLPFlexibleAmount;
+  final double? personalLPFlexibleAmount;
   @override
-  @JsonKey()
-  final bool isMailFilled;
+  final bool? isMailConfirmed;
   @override
-  @JsonKey()
-  final bool isMailConfirmed;
+  final String? email;
+  @override
+  final String? referralCode;
 
   @override
   String toString() {
-    return 'Airdrop(personalMultiplier: $personalMultiplier, personalLPAmount: $personalLPAmount, personalLPFlexibleAmount: $personalLPFlexibleAmount, isMailFilled: $isMailFilled, isMailConfirmed: $isMailConfirmed)';
+    return 'Airdrop(personalMultiplier: $personalMultiplier, personalLPAmount: $personalLPAmount, personalLPFlexibleAmount: $personalLPFlexibleAmount, isMailConfirmed: $isMailConfirmed, email: $email, referralCode: $referralCode)';
   }
 
   @override
@@ -190,10 +201,11 @@ class _$AirdropImpl extends _Airdrop {
             (identical(
                     other.personalLPFlexibleAmount, personalLPFlexibleAmount) ||
                 other.personalLPFlexibleAmount == personalLPFlexibleAmount) &&
-            (identical(other.isMailFilled, isMailFilled) ||
-                other.isMailFilled == isMailFilled) &&
             (identical(other.isMailConfirmed, isMailConfirmed) ||
-                other.isMailConfirmed == isMailConfirmed));
+                other.isMailConfirmed == isMailConfirmed) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.referralCode, referralCode) ||
+                other.referralCode == referralCode));
   }
 
   @override
@@ -202,8 +214,9 @@ class _$AirdropImpl extends _Airdrop {
       personalMultiplier,
       personalLPAmount,
       personalLPFlexibleAmount,
-      isMailFilled,
-      isMailConfirmed);
+      isMailConfirmed,
+      email,
+      referralCode);
 
   /// Create a copy of Airdrop
   /// with the given fields replaced by the non-null parameter values.
@@ -216,23 +229,26 @@ class _$AirdropImpl extends _Airdrop {
 
 abstract class _Airdrop extends Airdrop {
   const factory _Airdrop(
-      {final int personalMultiplier,
-      final double personalLPAmount,
-      final double personalLPFlexibleAmount,
-      final bool isMailFilled,
-      final bool isMailConfirmed}) = _$AirdropImpl;
+      {final int? personalMultiplier,
+      final double? personalLPAmount,
+      final double? personalLPFlexibleAmount,
+      final bool? isMailConfirmed,
+      final String? email,
+      final String? referralCode}) = _$AirdropImpl;
   const _Airdrop._() : super._();
 
   @override
-  int get personalMultiplier;
+  int? get personalMultiplier;
   @override
-  double get personalLPAmount;
+  double? get personalLPAmount;
   @override
-  double get personalLPFlexibleAmount;
+  double? get personalLPFlexibleAmount;
   @override
-  bool get isMailFilled;
+  bool? get isMailConfirmed;
   @override
-  bool get isMailConfirmed;
+  String? get email;
+  @override
+  String? get referralCode;
 
   /// Create a copy of Airdrop
   /// with the given fields replaced by the non-null parameter values.

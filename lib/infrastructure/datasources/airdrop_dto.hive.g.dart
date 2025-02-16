@@ -17,25 +17,28 @@ class AirdropHiveDtoAdapter extends TypeAdapter<AirdropHiveDto> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return AirdropHiveDto(
-      personalLPAmount: fields[0] as double,
-      personalLPFlexibleAmount: fields[3] as double,
-      isMailFilled: fields[1] as bool,
-      isMailConfirmed: fields[2] as bool,
+      personalLPAmount: fields[0] as double?,
+      personalLPFlexibleAmount: fields[3] as double?,
+      isMailConfirmed: fields[2] as bool?,
+      email: fields[4] as String?,
+      referralCode: fields[5] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, AirdropHiveDto obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.personalLPAmount)
-      ..writeByte(1)
-      ..write(obj.isMailFilled)
       ..writeByte(2)
       ..write(obj.isMailConfirmed)
       ..writeByte(3)
-      ..write(obj.personalLPFlexibleAmount);
+      ..write(obj.personalLPFlexibleAmount)
+      ..writeByte(4)
+      ..write(obj.email)
+      ..writeByte(5)
+      ..write(obj.referralCode);
   }
 
   @override
