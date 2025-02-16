@@ -151,6 +151,7 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
         keychainKeypair.privateKey,
         isDataHexa: false,
       );
+
       final payload = {
         'email': state.mailAddress,
         'pubkey': archethic.uint8ListToHex(keychainKeypair.publicKey!),
@@ -158,12 +159,23 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
       };
 
       final airdropAPISecret = dotenv.env['AIRDROP_API_SECRET'];
+      final timestamp =
+          (DateTime.now().millisecondsSinceEpoch ~/ 1000).toString();
+      final publicKey = archethic.uint8ListToHex(keychainKeypair.publicKey!);
+      final signedPayloadHeader = archethic.sign(
+        '$publicKey$timestamp',
+        keychainKeypair.privateKey,
+        isDataHexa: false,
+      );
 
       final response = await http.post(
         Uri.parse('https://airdrop-backend.archethic.net/airdrop-subscription'),
         headers: {
           'Authorization': 'Bearer $airdropAPISecret',
           'Content-Type': 'application/json',
+          'x-public-key': base64Encode(utf8.encode(publicKey)),
+          'x-timestamp': timestamp,
+          'x-signature': base64Url.encode(signedPayloadHeader),
         },
         body: jsonEncode(payload),
       );
@@ -185,6 +197,8 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
         var errorMessage = responseBody['error'] ?? 'Unknown error';
         switch (errorMessage) {
           case 'Missing parameters':
+          case 'Missing required headers':
+          case 'Invalid timestamp':
             errorMessage = localizations.airdropBackendMissingParameters;
             break;
           case 'Invalid email':
@@ -194,6 +208,7 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
             errorMessage = localizations.airdropBackendInvalidPubKey;
             break;
           case 'Invalid signature':
+          case 'Malformed signature':
             errorMessage = localizations.airdropBackendInvalidSignature;
             break;
           case 'Email or public key already exists':

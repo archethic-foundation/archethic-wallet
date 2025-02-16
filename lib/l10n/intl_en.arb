@@ -750,6 +750,7 @@
     "airdropStepsNoteDesc": "To keep your multiplier and secure your airdrop participation, your LP tokens must remain locked at least at Level 1 until the airdrop date.",
     "airdropPersonalMultiplier": "Personal Multiplier",
     "airdropPersonalValue": "Your airdrop in UCO",
+    "airdropPersonalValueInfo": "(Recalculated hourly)",
     "airdropBannerTitle": "Your Airdrop Spot is Reserved!",
     "airdropBannerBtn": "Go to airdrop dashboard",
     "airdropBackendAlreadySubscribe": "Sorry but there is already a subscription for this wallet or this e-mail address.",
