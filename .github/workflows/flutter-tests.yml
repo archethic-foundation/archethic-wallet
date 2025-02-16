@@ -19,6 +19,10 @@ jobs:
           channel: "stable"
           flutter-version: "3.24.4"
 
+      - name: Generate .env file
+        run: |
+          echo "tests" > .env
+
       - name: Install dependencies
         run: flutter pub get
 
