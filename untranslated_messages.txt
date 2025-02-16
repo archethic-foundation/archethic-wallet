@@ -54,6 +54,7 @@
     "airdropStepsNoteDesc",
     "airdropPersonalMultiplier",
     "airdropPersonalValue",
+    "airdropPersonalValueInfo",
     "airdropBannerTitle",
     "airdropBannerBtn",
     "airdropBackendAlreadySubscribe",

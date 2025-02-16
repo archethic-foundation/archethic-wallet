@@ -27,7 +27,7 @@ class AirdropPersonalMultiplier extends ConsumerWidget {
     );
 
     return Container(
-      height: 105,
+      height: 120,
       padding: const EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
       decoration: BoxDecoration(
         border: Border.all(
@@ -37,7 +37,6 @@ class AirdropPersonalMultiplier extends ConsumerWidget {
         color: Colors.black,
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             '${personalMultiplier}x',

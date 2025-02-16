@@ -54,7 +54,7 @@ class AirdropPersonalRewards extends ConsumerWidget {
     );
 
     return Container(
-      height: 105,
+      height: 120,
       padding: const EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
       decoration: BoxDecoration(
         border: Border.all(
@@ -64,7 +64,6 @@ class AirdropPersonalRewards extends ConsumerWidget {
         color: Colors.black,
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             '\$${personalRewards.numeral(digits: 2)}',
@@ -79,6 +78,12 @@ class AirdropPersonalRewards extends ConsumerWidget {
           Text(
             localizations.airdropPersonalValue,
             style: AppTextStyles.bodyMediumWithOpacity(context),
+            textAlign: TextAlign.center,
+          ),
+          Text(
+            localizations.airdropPersonalValueInfo,
+            style: AppTextStyles.bodySmallWithOpacity(context)
+                .copyWith(fontSize: 8),
             textAlign: TextAlign.center,
           ),
         ],

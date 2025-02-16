@@ -3,6 +3,7 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_lp_available.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_lp_current_value.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_personal_multiplier.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_personal_rewards.dart';
@@ -115,6 +116,8 @@ class _AirdropParticipateStepCongratsSheetState
           ),
           const SizedBox(height: 20),
           const AirdropLPCurrentValue(),
+          const SizedBox(height: 10),
+          const AirdropAvailable(),
           const SizedBox(height: 10),
           const AirdropStepTab(),
           const SizedBox(height: 20),

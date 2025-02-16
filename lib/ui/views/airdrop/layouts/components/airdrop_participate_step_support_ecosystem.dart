@@ -5,6 +5,7 @@ import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/state.dart';
+import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_lp_available.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_lp_current_value.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_step_tab.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_stepper.dart';
@@ -125,6 +126,8 @@ class _AirdropParticipateStepSupportEcosystemSheetState
           ),
           const SizedBox(height: 20),
           const AirdropLPCurrentValue(),
+          const SizedBox(height: 10),
+          const AirdropAvailable(),
           const SizedBox(height: 10),
           const AirdropStepTab(),
           const SizedBox(height: 90),
