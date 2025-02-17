@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+enum LineType { header, current, beforeCurrent, afterCurrent }
+
 class AirdropStepTab extends ConsumerWidget {
   const AirdropStepTab({super.key});
 
@@ -47,42 +49,112 @@ class AirdropStepTab extends ConsumerWidget {
               border: Border.all(
                 color: ArchethicThemeBase.palePurpleBackground,
               ),
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(10),
             ),
-            child: Table(
-              columnWidths: const {
-                0: FlexColumnWidth(),
-                1: FlexColumnWidth(2),
-                2: FlexColumnWidth(2),
-              },
-              children: [
-                TableRow(
-                  decoration: const BoxDecoration(
-                    color: Colors.black,
-                  ),
-                  children: [
-                    tableCell(context, 'Step', title: true),
-                    tableCell(context, 'LP Required (aeETH/UCO)', title: true),
-                    tableCell(context, 'Multiplier', title: true),
-                  ],
-                ),
-                for (final row in data)
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Table(
+                columnWidths: const {
+                  0: FlexColumnWidth(),
+                  1: FlexColumnWidth(2),
+                  2: FlexColumnWidth(2),
+                },
+                children: [
                   TableRow(
-                    decoration: BoxDecoration(
-                      color: '${airdropForm.personalMultiplier}x' ==
-                              row['Multiplier']
-                          ? ArchethicThemeBase.raspberry500.withOpacity(0.5)
-                          : row['Step'] % 2 == 0
-                              ? ArchethicThemeBase.palePurpleBackground
-                              : Colors.transparent,
+                    decoration: const BoxDecoration(
+                      color: Colors.black,
                     ),
                     children: [
-                      tableCell(context, row['Step'].toString()),
-                      tableCell(context, row['LP Required']),
-                      tableCell(context, row['Multiplier']),
+                      tableCell(context, 'Step', LineType.header),
+                      tableCell(
+                        context,
+                        'LP Required (aeETH/UCO)',
+                        LineType.header,
+                      ),
+                      tableCell(context, 'Multiplier', LineType.header),
                     ],
                   ),
-              ],
+                  for (final row in data)
+                    '${airdropForm.personalMultiplier}x' == row['Multiplier']
+                        ? TableRow(
+                            decoration: BoxDecoration(
+                              color: ArchethicThemeBase.raspberry500
+                                  .withOpacity(0.5),
+                            ),
+                            children: [
+                              tableCell(
+                                context,
+                                row['Step'].toString(),
+                                LineType.current,
+                              ),
+                              tableCell(
+                                context,
+                                row['LP Required'],
+                                LineType.current,
+                              ),
+                              tableCell(
+                                context,
+                                row['Multiplier'],
+                                LineType.current,
+                              ),
+                            ],
+                          )
+                        : airdropForm.personalMultiplier <
+                                int.parse(
+                                  row['Multiplier']
+                                      .toString()
+                                      .replaceAll('x', ''),
+                                )
+                            ? TableRow(
+                                decoration: BoxDecoration(
+                                  color: row['Step'] % 2 == 0
+                                      ? ArchethicThemeBase.palePurpleBackground
+                                      : Colors.transparent,
+                                ),
+                                children: [
+                                  tableCell(
+                                    context,
+                                    row['Step'].toString(),
+                                    LineType.beforeCurrent,
+                                  ),
+                                  tableCell(
+                                    context,
+                                    row['LP Required'],
+                                    LineType.beforeCurrent,
+                                  ),
+                                  tableCell(
+                                    context,
+                                    row['Multiplier'],
+                                    LineType.beforeCurrent,
+                                  ),
+                                ],
+                              )
+                            : TableRow(
+                                decoration: BoxDecoration(
+                                  color: row['Step'] % 2 == 0
+                                      ? ArchethicThemeBase.palePurpleBackground
+                                      : Colors.transparent,
+                                ),
+                                children: [
+                                  tableCell(
+                                    context,
+                                    row['Step'].toString(),
+                                    LineType.afterCurrent,
+                                  ),
+                                  tableCell(
+                                    context,
+                                    row['LP Required'],
+                                    LineType.afterCurrent,
+                                  ),
+                                  tableCell(
+                                    context,
+                                    row['Multiplier'],
+                                    LineType.afterCurrent,
+                                  ),
+                                ],
+                              ),
+                ],
+              ),
             ),
           ),
         ),
@@ -90,15 +162,26 @@ class AirdropStepTab extends ConsumerWidget {
     );
   }
 
-  Widget tableCell(BuildContext context, String text, {bool title = false}) {
+  Widget tableCell(BuildContext context, String text, LineType lineType) {
     return Padding(
       padding: const EdgeInsets.only(left: 20, top: 8, bottom: 8, right: 8),
       child: Text(
-        title ? text : '  $text',
-        style: title
+        lineType == LineType.header ? text : '  $text',
+        style: lineType == LineType.header
             ? AppTextStyles.bodySmall(context)
                 .copyWith(fontWeight: FontWeight.bold)
-            : AppTextStyles.bodySmallWithOpacity(context),
+            : lineType == LineType.beforeCurrent
+                ? AppTextStyles.bodySmall(context)
+                : lineType == LineType.afterCurrent
+                    ? AppTextStyles.bodySmall(context).copyWith(
+                        color: Theme.of(context)
+                            .textTheme
+                            .bodySmall!
+                            .color
+                            ?.withOpacity(0.5),
+                      )
+                    : AppTextStyles.bodySmall(context)
+                        .copyWith(fontWeight: FontWeight.bold),
       ),
     );
   }

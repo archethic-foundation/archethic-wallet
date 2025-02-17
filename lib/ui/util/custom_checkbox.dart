@@ -15,8 +15,8 @@ class CustomCheckbox extends StatelessWidget {
     return GestureDetector(
       onTap: () => onChanged(!value),
       child: Container(
-        width: 24,
-        height: 24,
+        width: 18,
+        height: 18,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: Colors.transparent,
@@ -27,13 +27,13 @@ class CustomCheckbox extends StatelessWidget {
         ),
         child: value
             ? Container(
-                width: 20,
-                height: 20,
+                width: 16,
+                height: 16,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: ArchethicThemeBase.blue400,
                   border: Border.all(
-                    width: 4,
+                    width: 3,
                   ),
                 ),
               )

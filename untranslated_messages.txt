@@ -78,6 +78,7 @@
     "airdropBannerShouldFarmDesc",
     "airdropBannerShouldFarmBtn",
     "airdropBannerOkTitle",
+    "airdropBannerOkBtn",
     "airdropBannerShouldConfirmMailTitle",
     "airdropBannerShouldConfirmMailDesc",
     "airdropBannerShouldConfirmMailBtn",

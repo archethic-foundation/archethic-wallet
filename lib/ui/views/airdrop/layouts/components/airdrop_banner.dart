@@ -211,6 +211,7 @@ class AirdropBanner extends ConsumerWidget {
         break;
       case AirdropState.ok:
         title = localizations.airdropBannerTitle;
+        buttonText = localizations.airdropBannerOkBtn;
         onButtonPressed = () async {
           await context.push(AirdropDashboardSheet.routerPage);
         };
@@ -221,12 +222,12 @@ class AirdropBanner extends ConsumerWidget {
       padding: const EdgeInsets.only(top: 20),
       child: _buildBannerContainer(
         context,
-        height: state == AirdropState.ok ? 90 : 235,
+        height: state == AirdropState.ok ? 150 : 260,
         child: Stack(
           alignment: Alignment.topRight,
           children: [
             InkWell(
-              onTap: buttonText == null ? onButtonPressed : null,
+              onTap: onButtonPressed,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -250,33 +251,31 @@ class AirdropBanner extends ConsumerWidget {
                         textAlign: TextAlign.center,
                       ),
                     ),
-                  if (buttonText != null)
-                    SizedBox(
-                      height: 10,
-                      width: MediaQuery.of(context).size.width,
-                    ),
-                  if (buttonText != null)
-                    InkWell(
-                      onTap: onButtonPressed,
-                      child: IntrinsicWidth(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 15,
-                            vertical: 5,
-                          ),
-                          height: 35,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          child: Text(
-                            buttonText,
-                            style: buttonTextStyle,
-                          ),
+                  SizedBox(
+                    height: 10,
+                    width: MediaQuery.of(context).size.width,
+                  ),
+                  InkWell(
+                    onTap: onButtonPressed,
+                    child: IntrinsicWidth(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 15,
+                          vertical: 5,
+                        ),
+                        height: 35,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        child: Text(
+                          buttonText,
+                          style: buttonTextStyle,
                         ),
                       ),
                     ),
+                  ),
                 ],
               ),
             ),

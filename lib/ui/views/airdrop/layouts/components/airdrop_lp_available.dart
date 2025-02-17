@@ -5,6 +5,7 @@ import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutte
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class AirdropLPAvailable extends ConsumerWidget {
   const AirdropLPAvailable({
@@ -18,7 +19,6 @@ class AirdropLPAvailable extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     ref.watch(airdropCountProvider);
-    final bodyMedium = AppTextStyles.bodyMedium(context);
     AppTextStyles.bodyMediumSecondaryColor(context);
 
     if (personalLPFlexibleAmount > 0) {
@@ -28,14 +28,26 @@ class AirdropLPAvailable extends ConsumerWidget {
           border: Border.all(
             color: aedappfm.ArchethicThemeBase.systemPositive300,
           ),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(10),
           color: Colors.black,
         ),
-        child: Text(
-          localizations.airdropDashboardLPTokenAvailable(
-            personalLPFlexibleAmount.formatNumber(precision: 2),
-          ),
-          style: bodyMedium,
+        child: Stack(
+          children: [
+            Icon(
+              Symbols.done_all,
+              color: aedappfm.ArchethicThemeBase.systemPositive300,
+              size: 14,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 25),
+              child: Text(
+                localizations.airdropDashboardLPTokenAvailable(
+                  personalLPFlexibleAmount.formatNumber(precision: 2),
+                ),
+                style: AppTextStyles.bodySmall(context),
+              ),
+            ),
+          ],
         ),
       );
     }

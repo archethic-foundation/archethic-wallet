@@ -774,6 +774,7 @@
     "airdropBannerShouldFarmDesc": "You've registered your email, but you must lock LP tokens to be eligible for the $100M airdrop.",
     "airdropBannerShouldFarmBtn": "Lock LP Tokens",
     "airdropBannerOkTitle": "Congratulations! Your $100M Airdrop Spot Is Reserved!",
+    "airdropBannerOkBtn": "Go to my dashboard",
     "airdropBannerShouldConfirmMailTitle": "Don’t Miss Out on the $100M Airdrop—Confirm Your Email!",
     "airdropBannerShouldConfirmMailDesc": "You've locked LP tokens, but your eligibility isn’t confirmed. Verify your email now to secure your spot.",
     "airdropBannerShouldConfirmMailBtn": "Resend the confirmation",
