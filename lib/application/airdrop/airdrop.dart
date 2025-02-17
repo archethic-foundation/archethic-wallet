@@ -67,7 +67,7 @@ Future<({int personalMultiplier, double personalLP, double personalLPFlexible})>
   }
 
   final apiService = ref.watch(apiServiceProvider);
-  final farmLock = ref.watch(farmLockFormFarmLockProvider).valueOrNull;
+  final farmLock = await ref.watch(farmLockFormFarmLockProvider.future);
 
   if (farmLock == null) {
     return (
