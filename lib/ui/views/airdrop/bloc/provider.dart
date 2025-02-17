@@ -61,6 +61,16 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
         state.copyWith(mailAddress: mailAddress.toLowerCase(), failure: null);
   }
 
+  void setPersonalLP(double personalLP) {
+    state = state.copyWith(
+        personalLP: personalLP,
+        personalMultiplier: Airdrop.airdropPersonalMultiplier(personalLP) ?? 0);
+  }
+
+  void setPersonalLPFlexible(double personalLPFlexible) {
+    state = state.copyWith(personalLPFlexible: personalLPFlexible);
+  }
+
   Future<void> resendConfirmationMail(AppLocalizations localizations) async {
     state = state.copyWith(resendConfirmationEmailInfo: null, failure: null);
 
@@ -122,7 +132,11 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
 
   Future<bool> checkConfirmation() async {
     await ref.read(airdropUserInfoProvider.future);
+    await ref.read(airdropPersonalLPProvider.future);
     final userInfo = await ref.read(airdropNotifierProvider.future);
+    setPersonalLP(userInfo?.personalLPAmount ?? 0);
+    setPersonalLPFlexible(userInfo?.personalLPFlexibleAmount ?? 0);
+
     return userInfo?.isMailConfirmed ?? false;
   }
 

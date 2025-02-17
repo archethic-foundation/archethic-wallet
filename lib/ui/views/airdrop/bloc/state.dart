@@ -23,6 +23,8 @@ class AirdropFormState with _$AirdropFormState {
     @Default(false) bool confirmPrivacyPolicy,
     @Default(false) bool joinWaitlistInProgress,
     @Default(0.0) double personalLP,
+    @Default(0.0) double personalLPFlexible,
+    @Default(0) int personalMultiplier,
     String? resendConfirmationEmailInfo,
     Failure? failure,
   }) = _AirdropFormState;
