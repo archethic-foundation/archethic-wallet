@@ -7,7 +7,7 @@ part of 'provider.dart';
 // **************************************************************************
 
 String _$airdropFormNotifierHash() =>
-    r'9ab14269cac9fd6f235e17f43ad2ca60aa3753a9';
+    r'dab7c84751a2e2f286214020b399104ef8efab9a';
 
 /// See also [AirdropFormNotifier].
 @ProviderFor(AirdropFormNotifier)

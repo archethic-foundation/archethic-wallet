@@ -24,12 +24,11 @@ final airdropCountProvider = AutoDisposeFutureProvider<
 // ignore: unused_element
 typedef AirdropCountRef = AutoDisposeFutureProviderRef<
     ({int? participantCount, int? totalMultiplier})>;
-String _$airdropPersonalLPHash() => r'63c4b9218433fa8e05dc8e7d1704224f1c634bd2';
+String _$airdropPersonalLPHash() => r'0ac3d40556bf25ed9f2c52dee5d444d900128cfd';
 
 /// See also [airdropPersonalLP].
 @ProviderFor(airdropPersonalLP)
-final airdropPersonalLPProvider = AutoDisposeFutureProvider<
-    ({double personalLP, double personalLPFlexible})>.internal(
+final airdropPersonalLPProvider = AutoDisposeFutureProvider<void>.internal(
   airdropPersonalLP,
   name: r'airdropPersonalLPProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -41,9 +40,8 @@ final airdropPersonalLPProvider = AutoDisposeFutureProvider<
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef AirdropPersonalLPRef = AutoDisposeFutureProviderRef<
-    ({double personalLP, double personalLPFlexible})>;
-String _$airdropUserInfoHash() => r'cd7a29733f105380c5e876d8497693c94976866d';
+typedef AirdropPersonalLPRef = AutoDisposeFutureProviderRef<void>;
+String _$airdropUserInfoHash() => r'6251cf5fe7292065158a63b179cdb4094cfd665d';
 
 /// See also [airdropUserInfo].
 @ProviderFor(airdropUserInfo)

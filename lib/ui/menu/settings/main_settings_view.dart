@@ -18,6 +18,7 @@ class MainMenuView extends ConsumerWidget {
     final flag = ref
         .watch(getFeatureFlagProvider(kApplicationCode, 'airdrop'))
         .valueOrNull;
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     final localizations = AppLocalizations.of(context)!;
     final selectedAccount = ref.watch(
       accountsNotifierProvider.select(
@@ -106,9 +107,15 @@ class MainMenuView extends ConsumerWidget {
                             );
                           },
                         ),
-                      if (flag != null && flag == true)
+                      if (connectivityStatusProvider ==
+                              ConnectivityStatus.isConnected &&
+                          flag != null &&
+                          flag == true)
                         const _SettingsListItem.spacer(),
-                      if (flag != null && flag == true)
+                      if (connectivityStatusProvider ==
+                              ConnectivityStatus.isConnected &&
+                          flag != null &&
+                          flag == true)
                         const _ActiveAirdropSettingsListItem(),
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLineWithInfos(

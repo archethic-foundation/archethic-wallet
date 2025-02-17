@@ -47,7 +47,7 @@ Future<({int? participantCount, int? totalMultiplier})> airdropCount(
 
 // TODO(reddwarf03): Perhaps not necessary because of backend calculation - See airdropUserInfo
 @riverpod
-Future<({double personalLP, double personalLPFlexible})> airdropPersonalLP(
+Future<void> airdropPersonalLP(
   Ref ref,
 ) async {
   var personalLP = 0.0;
@@ -60,14 +60,14 @@ Future<({double personalLP, double personalLPFlexible})> airdropPersonalLP(
   );
 
   if (keychain == null) {
-    return (personalLP: personalLP, personalLPFlexible: personalLPFlexible);
+    return;
   }
 
   final apiService = ref.watch(apiServiceProvider);
   final farmLock = ref.watch(farmLockFormFarmLockProvider).valueOrNull;
 
   if (farmLock == null) {
-    return (personalLP: personalLP, personalLPFlexible: personalLPFlexible);
+    return;
   }
 
   final farmFactory = FarmLockFactory(farmLock.farmAddress, apiService);
@@ -99,13 +99,12 @@ Future<({double personalLP, double personalLPFlexible})> airdropPersonalLP(
     }
   }
 
-  final airdropNotifier = ref.read(airdropNotifierProvider.notifier);
-  await airdropNotifier.updateUserInfo(
-    personalMultiplier: Airdrop.airdropPersonalMultiplier(personalLP) ?? 0,
-    personalLPAmount: personalLP,
-    personalLPFlexibleAmount: personalLPFlexible,
-  );
-  return (personalLP: personalLP, personalLPFlexible: personalLPFlexible);
+  await ref.read(airdropNotifierProvider.notifier).updateUserInfo(
+        personalMultiplier: Airdrop.airdropPersonalMultiplier(personalLP) ?? 0,
+        personalLPAmount: personalLP,
+        personalLPFlexibleAmount: personalLPFlexible,
+      );
+  return;
 }
 
 @riverpod
@@ -145,9 +144,6 @@ Future<void> airdropUserInfo(
       final json = jsonDecode(response.body);
       final airdropNotifier = ref.read(airdropNotifierProvider.notifier);
       await airdropNotifier.updateUserInfo(
-        personalMultiplier: json['personal_multiplier'] ?? 0,
-        personalLPAmount: json['personal_lp'] ?? 0.0,
-        personalLPFlexibleAmount: json['personal_lp_flexible'] ?? 0.0,
         isMailConfirmed: json['confirmed'],
         email: json['email'],
         referralCode: json['referralCode'],

@@ -1,11 +1,12 @@
 import 'package:aewallet/application/airdrop/airdrop.dart';
 import 'package:aewallet/application/airdrop/airdrop_notifier.dart';
+import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/feature_flags.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/main.dart';
 import 'package:aewallet/model/airdrop.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
-import 'package:aewallet/ui/views/airddrop_dashboard/layouts/airdrop_dashboard_sheet.dart';
+import 'package:aewallet/ui/views/airdrop/layouts/airdrop_dashboard_sheet.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/state.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/airdrop_participate_sheet.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_participants_count.dart';
@@ -29,6 +30,10 @@ class AirdropBanner extends ConsumerWidget {
     if (!activeAirdrop) return const SizedBox();
 
     final flag = ref.watch(getFeatureFlagProvider(kApplicationCode, 'airdrop'));
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
+    if (connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
+      return const SizedBox.shrink();
+    }
     final airdrop = ref.watch(airdropNotifierProvider).value;
 
     return flag.when(
