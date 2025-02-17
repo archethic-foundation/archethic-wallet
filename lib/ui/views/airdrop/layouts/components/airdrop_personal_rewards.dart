@@ -16,7 +16,7 @@ class AirdropPersonalRewards extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final airdropForm = ref.read(airdropFormNotifierProvider);
+    final airdropForm = ref.watch(airdropFormNotifierProvider);
     var personalRewards = 0.0;
 
     ref.watch(airdropCountProvider).when(
@@ -25,7 +25,8 @@ class AirdropPersonalRewards extends ConsumerWidget {
                 airdropCount.totalMultiplier! > 0) {
               final archethicOracleUCO = ref
                   .watch(
-                      aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO)
+                    aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO,
+                  )
                   .valueOrNull;
 
               if (archethicOracleUCO?.usd != null) {

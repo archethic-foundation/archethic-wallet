@@ -58,7 +58,7 @@ class _AirdropParticipateStepJoinWaitlistSheetState
         AppButtonTinyConnectivity(
           localizations.airdropParticipateStepWaitlistBtn,
           Dimens.buttonBottomDimens,
-          onPressed: () async {
+          onPressed: () {
             ref
                 .read(airdropFormNotifierProvider.notifier)
                 .setAirdropProcessStep(AirdropProcessStep.sign);

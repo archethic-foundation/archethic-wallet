@@ -24,11 +24,16 @@ final airdropCountProvider = AutoDisposeFutureProvider<
 // ignore: unused_element
 typedef AirdropCountRef = AutoDisposeFutureProviderRef<
     ({int? participantCount, int? totalMultiplier})>;
-String _$airdropPersonalLPHash() => r'0ac3d40556bf25ed9f2c52dee5d444d900128cfd';
+String _$airdropPersonalLPHash() => r'ae0739981950bd5fd688e5faf10b191b53f41520';
 
 /// See also [airdropPersonalLP].
 @ProviderFor(airdropPersonalLP)
-final airdropPersonalLPProvider = AutoDisposeFutureProvider<void>.internal(
+final airdropPersonalLPProvider = AutoDisposeFutureProvider<
+    ({
+      int personalMultiplier,
+      double personalLP,
+      double personalLPFlexible
+    })>.internal(
   airdropPersonalLP,
   name: r'airdropPersonalLPProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -40,12 +45,14 @@ final airdropPersonalLPProvider = AutoDisposeFutureProvider<void>.internal(
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef AirdropPersonalLPRef = AutoDisposeFutureProviderRef<void>;
-String _$airdropUserInfoHash() => r'6251cf5fe7292065158a63b179cdb4094cfd665d';
+typedef AirdropPersonalLPRef = AutoDisposeFutureProviderRef<
+    ({int personalMultiplier, double personalLP, double personalLPFlexible})>;
+String _$airdropUserInfoHash() => r'fc0c3aca91899b4bfd6ab099b46a67fccd3844a2';
 
 /// See also [airdropUserInfo].
 @ProviderFor(airdropUserInfo)
-final airdropUserInfoProvider = AutoDisposeFutureProvider<void>.internal(
+final airdropUserInfoProvider = AutoDisposeFutureProvider<
+    ({bool? isMailConfirmed, String? email, String? referralCode})>.internal(
   airdropUserInfo,
   name: r'airdropUserInfoProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -57,7 +64,8 @@ final airdropUserInfoProvider = AutoDisposeFutureProvider<void>.internal(
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef AirdropUserInfoRef = AutoDisposeFutureProviderRef<void>;
+typedef AirdropUserInfoRef = AutoDisposeFutureProviderRef<
+    ({bool? isMailConfirmed, String? email, String? referralCode})>;
 String _$resendConfirmationMailHash() =>
     r'940e298edc7fe9debbc79faf2bb8f9fbbc32895d';
 

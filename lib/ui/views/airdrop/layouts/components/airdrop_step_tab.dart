@@ -22,7 +22,7 @@ class AirdropStepTab extends ConsumerWidget {
       {'Step': 9, 'LP Required': '1000', 'Multiplier': '55x'},
     ];
     final localizations = AppLocalizations.of(context)!;
-    final airdropForm = ref.read(airdropFormNotifierProvider);
+    final airdropForm = ref.watch(airdropFormNotifierProvider);
     return Column(
       children: [
         Text.rich(

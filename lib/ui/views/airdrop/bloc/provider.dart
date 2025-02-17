@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:aewallet/application/airdrop/airdrop.dart';
-import 'package:aewallet/application/airdrop/airdrop_notifier.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/model/airdrop.dart';
@@ -63,8 +62,9 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
 
   void setPersonalLP(double personalLP) {
     state = state.copyWith(
-        personalLP: personalLP,
-        personalMultiplier: Airdrop.airdropPersonalMultiplier(personalLP) ?? 0);
+      personalLP: personalLP,
+      personalMultiplier: Airdrop.airdropPersonalMultiplier(personalLP) ?? 0,
+    );
   }
 
   void setPersonalLPFlexible(double personalLPFlexible) {
@@ -131,13 +131,15 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
   }
 
   Future<bool> checkConfirmation() async {
-    await ref.read(airdropUserInfoProvider.future);
-    await ref.read(airdropPersonalLPProvider.future);
-    final userInfo = await ref.read(airdropNotifierProvider.future);
-    setPersonalLP(userInfo?.personalLPAmount ?? 0);
-    setPersonalLPFlexible(userInfo?.personalLPFlexibleAmount ?? 0);
+    final airdropUserInfo = await ref.read(airdropUserInfoProvider.future);
+    if (airdropUserInfo.email != null) {
+      final airdropPersonalLP =
+          await ref.read(airdropPersonalLPProvider.future);
+      setPersonalLP(airdropPersonalLP.personalLP);
+      setPersonalLPFlexible(airdropPersonalLP.personalLPFlexible);
+    }
 
-    return userInfo?.isMailConfirmed ?? false;
+    return airdropUserInfo.isMailConfirmed ?? false;
   }
 
   Future<void> joinWaitlist(AppLocalizations localizations) async {
@@ -197,15 +199,7 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
       //
 
       if (response.statusCode == 201) {
-        await ref.read(airdropUserInfoProvider.future);
-        final userInfo = await ref.read(airdropNotifierProvider.future);
-        if (userInfo != null) {
-          await ref.read(airdropNotifierProvider.notifier).setAirdrop(userInfo);
-        } else {
-          failure = Failure.other(
-            message: localizations.airdropBackendUnknownError,
-          );
-        }
+        setAirdropProcessStep(AirdropProcessStep.confirmEmail);
       } else if (response.statusCode == 400) {
         final responseBody = jsonDecode(response.body);
         var errorMessage = responseBody['error'] ?? 'Unknown error';
@@ -263,8 +257,5 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
       joinWaitlistInProgress: false,
       failure: failure,
     );
-    if (failure == null) {
-      setAirdropProcessStep(AirdropProcessStep.confirmEmail);
-    }
   }
 }

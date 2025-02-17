@@ -1,9 +1,10 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
-import 'package:aewallet/application/airdrop/airdrop_notifier.dart';
+import 'package:aewallet/application/airdrop/airdrop.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_lp_available.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_lp_current_value.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_participants_count.dart';
@@ -34,7 +35,19 @@ class AirdropDashboardSheet extends ConsumerStatefulWidget {
 
 class _AirdropDashboardSheetState extends ConsumerState<AirdropDashboardSheet>
     implements SheetSkeletonInterface {
-  int personalMultiplier = 0;
+  @override
+  void initState() {
+    Future(() async {
+      final airdropUserInfo = await ref.read(airdropUserInfoProvider.future);
+      final airdropPersonalLP =
+          await ref.read(airdropPersonalLPProvider.future);
+      ref.read(airdropFormNotifierProvider.notifier)
+        ..setMailAddress(airdropUserInfo.email ?? '')
+        ..setPersonalLP(airdropPersonalLP.personalLP)
+        ..setPersonalLPFlexible(airdropPersonalLP.personalLPFlexible);
+    });
+    super.initState();
+  }
 
   @override
   Widget build(
@@ -48,16 +61,6 @@ class _AirdropDashboardSheetState extends ConsumerState<AirdropDashboardSheet>
 
     if (accountSelected == null) return const SizedBox();
 
-    ref.watch(airdropNotifierProvider).when(
-          data: (airdrop) {
-            if (airdrop != null) {
-              personalMultiplier = airdrop.personalMultiplier ?? 0;
-            }
-          },
-          loading: () {},
-          error: (error, stack) {},
-        );
-
     return SheetSkeleton(
       appBar: getAppBar(context, ref),
       floatingActionButton: getFloatingActionButton(context, ref),
@@ -68,11 +71,11 @@ class _AirdropDashboardSheetState extends ConsumerState<AirdropDashboardSheet>
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-
+    final airdropForm = ref.watch(airdropFormNotifierProvider);
     return Row(
       children: <Widget>[
         AppButtonTinyConnectivity(
-          personalMultiplier > 0
+          airdropForm.personalMultiplier > 0
               ? localizations.airdropDashboardIncreaseLevelBtn
               : localizations.airdropDashboardNoLPBtn,
           Dimens.buttonBottomDimens,
@@ -109,7 +112,7 @@ class _AirdropDashboardSheetState extends ConsumerState<AirdropDashboardSheet>
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-
+    final airdropForm = ref.watch(airdropFormNotifierProvider);
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,13 +122,13 @@ class _AirdropDashboardSheetState extends ConsumerState<AirdropDashboardSheet>
             child: AirdropParticipantsCount(),
           ),
           Text(
-            personalMultiplier > 0
+            airdropForm.personalMultiplier > 0
                 ? localizations.airdropDashboardCongratsTitle
                 : localizations.airdropDashboardCompleteParticipationTitle,
             style: AppTextStyles.bodyLarge(context)
                 .copyWith(fontWeight: FontWeight.bold),
           ),
-          if (personalMultiplier == 0)
+          if (airdropForm.personalMultiplier == 0)
             Padding(
               padding: const EdgeInsets.only(top: 10),
               child: Text(
@@ -149,7 +152,9 @@ class _AirdropDashboardSheetState extends ConsumerState<AirdropDashboardSheet>
           const SizedBox(height: 20),
           const AirdropLPCurrentValue(),
           const SizedBox(height: 10),
-          const AirdropAvailable(),
+          AirdropLPAvailable(
+            personalLPFlexibleAmount: airdropForm.personalLPFlexible,
+          ),
           const SizedBox(height: 10),
           const AirdropStepTab(),
           const SizedBox(height: 20),

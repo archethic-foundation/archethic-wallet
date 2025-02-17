@@ -1,13 +1,11 @@
 import 'package:aewallet/application/airdrop/airdrop.dart';
-import 'package:aewallet/application/airdrop/airdrop_notifier.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/feature_flags.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/main.dart';
-import 'package:aewallet/model/airdrop.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
-import 'package:aewallet/ui/views/airdrop/layouts/airdrop_dashboard_sheet.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/state.dart';
+import 'package:aewallet/ui/views/airdrop/layouts/airdrop_dashboard_sheet.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/airdrop_participate_sheet.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_participants_count.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -34,20 +32,26 @@ class AirdropBanner extends ConsumerWidget {
     if (connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
       return const SizedBox.shrink();
     }
-    final airdrop = ref.watch(airdropNotifierProvider).value;
+    final airdrop = ref.watch(airdropUserInfoProvider).value;
 
     return flag.when(
       data: (data) {
         if (data != true) return const SizedBox.shrink();
-        if (airdrop == null) {
+        if (airdrop == null || airdrop.email == null) {
           return _buildAirdropContent(
             context,
             ref,
             AirdropState.newParticipation,
+            airdrop?.email,
           );
         }
 
-        return _determineAirdropState(context, ref, airdrop);
+        return _determineAirdropState(
+          context,
+          ref,
+          airdrop.isMailConfirmed,
+          airdrop.email,
+        );
       },
       error: (_, __) => const SizedBox.shrink(),
       loading: () => const SizedBox.shrink(),
@@ -57,54 +61,81 @@ class AirdropBanner extends ConsumerWidget {
   Widget _determineAirdropState(
     BuildContext context,
     WidgetRef ref,
-    Airdrop airdrop,
+    bool? isMailConfirmed,
+    String? email,
   ) {
-    final isMailConfirmed = airdrop.isMailConfirmed;
-    final personalLPAmount = airdrop.personalLPAmount;
+    return ref.watch(airdropPersonalLPProvider).when(
+          data: (data) {
+            final personalLPAmount = data.personalLP;
+            if (isMailConfirmed == null) {
+              if (personalLPAmount == 0) {
+                return _buildAirdropContent(
+                  context,
+                  ref,
+                  AirdropState.newParticipation,
+                  email,
+                );
+              } else if (personalLPAmount > 0) {
+                return _buildAirdropContent(
+                  context,
+                  ref,
+                  AirdropState.shouldAddMail,
+                  email,
+                );
+              }
+            } else {
+              if (!isMailConfirmed) {
+                if (personalLPAmount > 0) {
+                  return _buildAirdropContent(
+                    context,
+                    ref,
+                    AirdropState.shouldConfirmMail,
+                    email,
+                  );
+                } else if (personalLPAmount == 0) {
+                  return _buildAirdropContent(
+                    context,
+                    ref,
+                    AirdropState.shouldConfirmMailAndFarm,
+                    email,
+                  );
+                }
+              } else if (isMailConfirmed) {
+                if (personalLPAmount == 0) {
+                  return _buildAirdropContent(
+                    context,
+                    ref,
+                    AirdropState.shouldFarm,
+                    email,
+                  );
+                } else if (personalLPAmount > 0) {
+                  return _buildAirdropContent(
+                    context,
+                    ref,
+                    AirdropState.ok,
+                    email,
+                  );
+                }
+              }
+            }
 
-    if (isMailConfirmed == null) {
-      if (personalLPAmount == null || personalLPAmount == 0) {
-        return _buildAirdropContent(
-          context,
-          ref,
-          AirdropState.newParticipation,
+            return _buildAirdropContent(
+              context,
+              ref,
+              AirdropState.newParticipation,
+              email,
+            );
+          },
+          error: (_, __) => const SizedBox.shrink(),
+          loading: () => const SizedBox.shrink(),
         );
-      } else if (personalLPAmount > 0) {
-        return _buildAirdropContent(context, ref, AirdropState.shouldAddMail);
-      }
-    }
-
-    if (isMailConfirmed != null) {
-      if (!isMailConfirmed) {
-        if (personalLPAmount! > 0) {
-          return _buildAirdropContent(
-            context,
-            ref,
-            AirdropState.shouldConfirmMail,
-          );
-        } else if (personalLPAmount == 0) {
-          return _buildAirdropContent(
-            context,
-            ref,
-            AirdropState.shouldConfirmMailAndFarm,
-          );
-        }
-      } else if (isMailConfirmed) {
-        if (personalLPAmount == 0) {
-          return _buildAirdropContent(context, ref, AirdropState.shouldFarm);
-        } else if (personalLPAmount! > 0) {
-          return _buildAirdropContent(context, ref, AirdropState.ok);
-        }
-      }
-    }
-
-    return _buildAirdropContent(context, ref, AirdropState.newParticipation);
   }
 
   Widget _buildAirdropContent(
     BuildContext context,
     WidgetRef ref,
     AirdropState state,
+    String? email,
   ) {
     final localizations = AppLocalizations.of(context)!;
     final titleTextStyle = AppTextStyles.bodyLarge(context).copyWith(
@@ -133,7 +164,6 @@ class AirdropBanner extends ConsumerWidget {
         description = localizations.airdropBannerShouldAddMailDesc;
         buttonText = localizations.airdropBannerShouldAddMailBtn;
         onButtonPressed = () async {
-          ref.read(airdropPersonalLPProvider);
           await context.push(AirdropDashboardSheet.routerPage);
         };
         break;
@@ -142,7 +172,6 @@ class AirdropBanner extends ConsumerWidget {
         description = localizations.airdropBannerShouldFarmDesc;
         buttonText = localizations.airdropBannerShouldFarmBtn;
         onButtonPressed = () async {
-          ref.read(airdropPersonalLPProvider);
           await context.push(AirdropDashboardSheet.routerPage);
         };
         break;
@@ -151,13 +180,11 @@ class AirdropBanner extends ConsumerWidget {
         description = localizations.airdropBannerShouldConfirmMailAndFarmDesc;
         buttonText = localizations.airdropBannerShouldConfirmMailAndFarmBtn;
         onButtonPressed = () async {
-          ref.read(airdropPersonalLPProvider);
-          final airdrop = await ref.read(airdropNotifierProvider.future);
           await context.push(
             Uri(
               path: AirdropParticipateSheet.routerPage,
               queryParameters: {
-                'airdropMailAddress': airdrop?.email,
+                'airdropMailAddress': email,
                 'airdropProcessStepIndex':
                     AirdropProcessStep.confirmEmail.index.toString(),
               },
@@ -170,13 +197,11 @@ class AirdropBanner extends ConsumerWidget {
         description = localizations.airdropBannerShouldConfirmMailDesc;
         buttonText = localizations.airdropBannerShouldConfirmMailBtn;
         onButtonPressed = () async {
-          ref.read(airdropPersonalLPProvider);
-          final airdrop = await ref.read(airdropNotifierProvider.future);
           await context.push(
             Uri(
               path: AirdropParticipateSheet.routerPage,
               queryParameters: {
-                'airdropMailAddress': airdrop?.email,
+                'airdropMailAddress': email,
                 'airdropProcessStepIndex':
                     AirdropProcessStep.confirmEmail.index.toString(),
               },
@@ -187,7 +212,6 @@ class AirdropBanner extends ConsumerWidget {
       case AirdropState.ok:
         title = localizations.airdropBannerTitle;
         onButtonPressed = () async {
-          ref.read(airdropPersonalLPProvider);
           await context.push(AirdropDashboardSheet.routerPage);
         };
         break;

@@ -92,7 +92,6 @@ class SessionNotifier extends _$SessionNotifier with KeychainServiceMixin {
     await AuthenticationProviders.reset(ref);
     await KeychainInfoVaultDatasource.clear();
     await TokensListHiveDatasource.clear();
-    await AirdropHiveDatasource.clear();
     await _appWalletDatasource.clearAppWallet();
     await CacheManagerHive.clear();
     await Vault.instance().clearSecureKey();

@@ -1,8 +1,10 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
+import 'package:aewallet/application/airdrop/airdrop.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_lp_available.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_lp_current_value.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_personal_multiplier.dart';
@@ -82,6 +84,9 @@ class _AirdropParticipateStepCongratsSheetState
         key: const Key('close'),
         color: ArchethicTheme.text,
         onPressed: () {
+          ref
+            ..invalidate(airdropUserInfoProvider)
+            ..invalidate(airdropPersonalLPProvider);
           context.pop();
         },
       ),
@@ -91,7 +96,7 @@ class _AirdropParticipateStepCongratsSheetState
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-
+    final airdropForm = ref.watch(airdropFormNotifierProvider);
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,7 +122,9 @@ class _AirdropParticipateStepCongratsSheetState
           const SizedBox(height: 20),
           const AirdropLPCurrentValue(),
           const SizedBox(height: 10),
-          const AirdropAvailable(),
+          AirdropLPAvailable(
+            personalLPFlexibleAmount: airdropForm.personalLPFlexible,
+          ),
           const SizedBox(height: 10),
           const AirdropStepTab(),
           const SizedBox(height: 20),
