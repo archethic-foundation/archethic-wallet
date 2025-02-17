@@ -1,9 +1,9 @@
-import 'package:aewallet/application/airdrop/airdrop.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/feature_flags.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/main.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/state.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/airdrop_dashboard_sheet.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/airdrop_participate_sheet.dart';
@@ -25,109 +25,29 @@ class AirdropBanner extends ConsumerWidget {
     final activeAirdrop = ref.watch(
       SettingsProviders.settings.select((settings) => settings.activeAirdrop),
     );
-    if (!activeAirdrop) return const SizedBox();
+    if (!activeAirdrop) {
+      return const SizedBox();
+    }
 
-    final flag = ref.watch(getFeatureFlagProvider(kApplicationCode, 'airdrop'));
+    final flag = ref
+        .watch(getFeatureFlagProvider(kApplicationCode, 'airdrop'))
+        .valueOrNull;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-    if (connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
+    if (flag != true ||
+        connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
       return const SizedBox.shrink();
     }
-    final airdrop = ref.watch(airdropUserInfoProvider).value;
 
-    return flag.when(
-      data: (data) {
-        if (data != true) return const SizedBox.shrink();
-        if (airdrop == null || airdrop.email == null) {
-          return _buildAirdropContent(
+    return ref.watch(airdropBannerStatusProvider).when(
+          skipLoadingOnReload: true,
+          error: (error, stackTrace) => const SizedBox.shrink(),
+          loading: () => const SizedBox.shrink(),
+          data: (bannerStatus) => _buildAirdropContent(
             context,
             ref,
-            AirdropState.newParticipation,
-            airdrop?.email,
-          );
-        }
-
-        return _determineAirdropState(
-          context,
-          ref,
-          airdrop.isMailConfirmed,
-          airdrop.email,
-        );
-      },
-      error: (_, __) => const SizedBox.shrink(),
-      loading: () => const SizedBox.shrink(),
-    );
-  }
-
-  Widget _determineAirdropState(
-    BuildContext context,
-    WidgetRef ref,
-    bool? isMailConfirmed,
-    String? email,
-  ) {
-    return ref.watch(airdropPersonalLPProvider).when(
-          data: (data) {
-            final personalLPAmount = data.personalLP;
-            if (isMailConfirmed == null) {
-              if (personalLPAmount == 0) {
-                return _buildAirdropContent(
-                  context,
-                  ref,
-                  AirdropState.newParticipation,
-                  email,
-                );
-              } else if (personalLPAmount > 0) {
-                return _buildAirdropContent(
-                  context,
-                  ref,
-                  AirdropState.shouldAddMail,
-                  email,
-                );
-              }
-            } else {
-              if (!isMailConfirmed) {
-                if (personalLPAmount > 0) {
-                  return _buildAirdropContent(
-                    context,
-                    ref,
-                    AirdropState.shouldConfirmMail,
-                    email,
-                  );
-                } else if (personalLPAmount == 0) {
-                  return _buildAirdropContent(
-                    context,
-                    ref,
-                    AirdropState.shouldConfirmMailAndFarm,
-                    email,
-                  );
-                }
-              } else if (isMailConfirmed) {
-                if (personalLPAmount == 0) {
-                  return _buildAirdropContent(
-                    context,
-                    ref,
-                    AirdropState.shouldFarm,
-                    email,
-                  );
-                } else if (personalLPAmount > 0) {
-                  return _buildAirdropContent(
-                    context,
-                    ref,
-                    AirdropState.ok,
-                    email,
-                  );
-                }
-              }
-            }
-
-            return _buildAirdropContent(
-              context,
-              ref,
-              AirdropState.newParticipation,
-              email,
-            );
-          },
-          error: (_, __) => const SizedBox.shrink(),
-          loading: () => const SizedBox.shrink(),
+            bannerStatus.state,
+            bannerStatus.email,
+          ),
         );
   }
 

@@ -6,13 +6,51 @@ import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/model/airdrop.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/state.dart';
+import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_banner.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'provider.g.dart';
+
+@riverpod
+Future<({AirdropState state, String? email})> airdropBannerStatus(
+  Ref ref,
+) async {
+  final userInfo = await ref.watch(airdropUserInfoProvider.future);
+  final personalLP = await ref.watch(airdropPersonalLPProvider.future);
+
+  if (userInfo.email == null) {
+    return (state: AirdropState.newParticipation, email: null);
+  }
+
+  if (userInfo.isMailConfirmed == null) {
+    if (personalLP.personalLP == 0) {
+      return (state: AirdropState.newParticipation, email: userInfo.email);
+    }
+
+    return (state: AirdropState.shouldAddMail, email: userInfo.email);
+  }
+
+  if (userInfo.isMailConfirmed == false) {
+    if (personalLP.personalLP > 0) {
+      return (state: AirdropState.shouldConfirmMail, email: userInfo.email);
+    }
+    return (
+      state: AirdropState.shouldConfirmMailAndFarm,
+      email: userInfo.email
+    );
+  }
+
+  //userInfo.isMailConfirmed == true
+  if (personalLP.personalLP > 0) {
+    return (state: AirdropState.ok, email: userInfo.email);
+  }
+  return (state: AirdropState.shouldFarm, email: userInfo.email);
+}
 
 @riverpod
 class AirdropFormNotifier extends _$AirdropFormNotifier {
@@ -186,6 +224,7 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
 
       final response = await http.post(
         Uri.parse('https://airdrop-backend.archethic.net/airdrop-subscription'),
+        // Uri.parse('http://localhost:4000/airdrop-subscription'),
         headers: {
           'Authorization': 'Bearer $airdropAPISecret',
           'Content-Type': 'application/json',
