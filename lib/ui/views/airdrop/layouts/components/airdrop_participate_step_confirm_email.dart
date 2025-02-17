@@ -1,4 +1,5 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
+import 'package:aewallet/application/airdrop/airdrop.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -57,6 +58,9 @@ class _AirdropParticipateStepJoinWaitlistSheetState
           localizations.airdropParticipateStepWaitlistBtn,
           Dimens.buttonBottomDimens,
           onPressed: () async {
+            ref
+              ..invalidate(airdropUserInfoProvider)
+              ..invalidate(airdropPersonalLPProvider);
             final checkConfirmation = await ref
                 .read(airdropFormNotifierProvider.notifier)
                 .checkConfirmation();
@@ -91,6 +95,9 @@ class _AirdropParticipateStepJoinWaitlistSheetState
         key: const Key('close'),
         color: ArchethicTheme.text,
         onPressed: () {
+          ref
+            ..invalidate(airdropUserInfoProvider)
+            ..invalidate(airdropPersonalLPProvider);
           context.pop();
         },
       ),

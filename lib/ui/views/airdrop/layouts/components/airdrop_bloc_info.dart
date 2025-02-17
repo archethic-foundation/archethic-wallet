@@ -34,7 +34,8 @@ class AirdropBlocInfo extends ConsumerWidget {
                 airdropCount.totalMultiplier! > 0) {
               final archethicOracleUCO = ref
                   .watch(
-                      aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO)
+                    aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO,
+                  )
                   .valueOrNull;
 
               ucoPerParticipant = ((Decimal.parse('100000000') /

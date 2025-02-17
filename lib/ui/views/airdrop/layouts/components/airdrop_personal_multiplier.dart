@@ -13,7 +13,7 @@ class AirdropPersonalMultiplier extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final airdropForm = ref.read(airdropFormNotifierProvider);
+    final airdropForm = ref.watch(airdropFormNotifierProvider);
 
     return Container(
       height: 120,

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:aewallet/application/airdrop/airdrop_notifier.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/model/airdrop.dart';
@@ -45,9 +44,9 @@ Future<({int? participantCount, int? totalMultiplier})> airdropCount(
   );
 }
 
-// TODO(reddwarf03): Perhaps not necessary because of backend calculation - See airdropUserInfo
 @riverpod
-Future<void> airdropPersonalLP(
+Future<({int personalMultiplier, double personalLP, double personalLPFlexible})>
+    airdropPersonalLP(
   Ref ref,
 ) async {
   var personalLP = 0.0;
@@ -60,14 +59,22 @@ Future<void> airdropPersonalLP(
   );
 
   if (keychain == null) {
-    return;
+    return (
+      personalMultiplier: 0,
+      personalLP: personalLP,
+      personalLPFlexible: personalLPFlexible
+    );
   }
 
   final apiService = ref.watch(apiServiceProvider);
   final farmLock = ref.watch(farmLockFormFarmLockProvider).valueOrNull;
 
   if (farmLock == null) {
-    return;
+    return (
+      personalMultiplier: 0,
+      personalLP: personalLP,
+      personalLPFlexible: personalLPFlexible
+    );
   }
 
   final farmFactory = FarmLockFactory(farmLock.farmAddress, apiService);
@@ -99,18 +106,21 @@ Future<void> airdropPersonalLP(
     }
   }
 
-  await ref.read(airdropNotifierProvider.notifier).updateUserInfo(
-        personalMultiplier: Airdrop.airdropPersonalMultiplier(personalLP) ?? 0,
-        personalLPAmount: personalLP,
-        personalLPFlexibleAmount: personalLPFlexible,
-      );
-  return;
+  return (
+    personalMultiplier: Airdrop.airdropPersonalMultiplier(personalLP) ?? 0,
+    personalLP: personalLP,
+    personalLPFlexible: personalLPFlexible,
+  );
 }
 
 @riverpod
-Future<void> airdropUserInfo(
+Future<({bool? isMailConfirmed, String? email, String? referralCode})>
+    airdropUserInfo(
   Ref ref,
 ) async {
+  bool? isMailConfirmed;
+  String? email;
+  String? referralCode;
   try {
     final session = ref.watch(sessionNotifierProvider).loggedIn;
     final keychainKeypair = archethic.deriveKeyPair(
@@ -142,12 +152,9 @@ Future<void> airdropUserInfo(
 
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
-      final airdropNotifier = ref.read(airdropNotifierProvider.notifier);
-      await airdropNotifier.updateUserInfo(
-        isMailConfirmed: json['confirmed'],
-        email: json['email'],
-        referralCode: json['referralCode'],
-      );
+      isMailConfirmed = json['confirmed'];
+      email = json['email'];
+      referralCode = json['referralCode'];
     } else if (response.statusCode == 400) {
       _logger.severe('Bad Request: Missing headers or invalid timestamp');
     } else if (response.statusCode == 401) {
@@ -156,6 +163,12 @@ Future<void> airdropUserInfo(
   } catch (e) {
     _logger.severe('airdropUserInfo error : $e');
   }
+
+  return (
+    isMailConfirmed: isMailConfirmed,
+    email: email,
+    referralCode: referralCode,
+  );
 }
 
 @riverpod

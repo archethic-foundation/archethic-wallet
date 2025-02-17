@@ -1,5 +1,6 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/aeswap/usecases.dart';
+import 'package:aewallet/application/airdrop/airdrop.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/util/browser_util_desktop.dart';
@@ -172,7 +173,9 @@ class FarmLockClaimFormNotifier extends _$FarmLockClaimFormNotifier {
 
     ref
       ..invalidate(userBalanceProvider)
-      ..invalidate(farmLockFormFarmLockProvider);
+      ..invalidate(farmLockFormFarmLockProvider)
+      ..invalidate(airdropUserInfoProvider)
+      ..invalidate(airdropPersonalLPProvider);
 
     return true;
   }

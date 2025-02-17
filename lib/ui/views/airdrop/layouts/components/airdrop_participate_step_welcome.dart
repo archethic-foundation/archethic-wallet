@@ -53,7 +53,7 @@ class _AirdropParticipateStepWelcomeSheetState
         AppButtonTinyConnectivity(
           localizations.airdropParticipateStepWelcomeBtn,
           Dimens.buttonBottomDimens,
-          onPressed: () async {
+          onPressed: () {
             ref
                 .read(airdropFormNotifierProvider.notifier)
                 .setAirdropProcessStep(AirdropProcessStep.joinWaitlist);
