@@ -16,13 +16,13 @@ class AirdropPersonalMultiplier extends ConsumerWidget {
     final airdropForm = ref.watch(airdropFormNotifierProvider);
 
     return Container(
-      height: 120,
-      padding: const EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
+      width: MediaQuery.sizeOf(context).width,
+      padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
       decoration: BoxDecoration(
         border: Border.all(
-          color: ArchethicThemeBase.palePurpleBorder,
+          color: ArchethicThemeBase.blue700.withOpacity(0.8),
         ),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(10),
         color: Colors.black,
       ),
       child: Column(
@@ -41,6 +41,9 @@ class AirdropPersonalMultiplier extends ConsumerWidget {
             localizations.airdropPersonalMultiplier,
             style: AppTextStyles.bodyMediumWithOpacity(context),
             textAlign: TextAlign.center,
+          ),
+          const SizedBox(
+            height: 16,
           ),
         ],
       ),

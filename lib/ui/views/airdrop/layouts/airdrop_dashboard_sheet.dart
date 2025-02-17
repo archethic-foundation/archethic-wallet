@@ -138,13 +138,14 @@ class _AirdropDashboardSheetState extends ConsumerState<AirdropDashboardSheet>
             ),
           const SizedBox(height: 20),
           const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Flexible(
+                flex: 45,
                 child: AirdropPersonalMultiplier(),
               ),
               SizedBox(width: 10),
               Flexible(
+                flex: 45,
                 child: AirdropPersonalRewards(),
               ),
             ],
