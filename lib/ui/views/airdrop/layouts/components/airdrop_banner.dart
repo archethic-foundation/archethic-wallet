@@ -22,18 +22,16 @@ class AirdropBanner extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final activeAirdrop = ref.watch(
+    final userEnabled = ref.watch(
       SettingsProviders.settings.select((settings) => settings.activeAirdrop),
     );
-    if (!activeAirdrop) {
-      return const SizedBox();
-    }
 
     final flag = ref
         .watch(getFeatureFlagProvider(kApplicationCode, 'airdrop'))
         .valueOrNull;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-    if (flag != true ||
+    if (userEnabled == false ||
+        flag != true ||
         connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
       return const SizedBox.shrink();
     }

@@ -15,7 +15,7 @@ class MainMenuView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final flag = ref
+    final airdropFeatureFlag = ref
         .watch(getFeatureFlagProvider(kApplicationCode, 'airdrop'))
         .valueOrNull;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
@@ -109,13 +109,11 @@ class MainMenuView extends ConsumerWidget {
                         ),
                       if (connectivityStatusProvider ==
                               ConnectivityStatus.isConnected &&
-                          flag != null &&
-                          flag == true)
+                          airdropFeatureFlag == true)
                         const _SettingsListItem.spacer(),
                       if (connectivityStatusProvider ==
                               ConnectivityStatus.isConnected &&
-                          flag != null &&
-                          flag == true)
+                          airdropFeatureFlag == true)
                         const _ActiveAirdropSettingsListItem(),
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLineWithInfos(
