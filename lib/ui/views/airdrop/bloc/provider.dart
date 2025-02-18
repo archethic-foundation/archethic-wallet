@@ -91,7 +91,15 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
 
   @override
   AirdropFormState build() {
+    ref.onDispose(_dispose);
+
     return const AirdropFormState();
+  }
+
+  void _dispose() {
+    ref
+      ..invalidate(airdropUserInfoProvider)
+      ..invalidate(airdropPersonalLPProvider);
   }
 
   void setLoading(bool loading) {

@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AirdropFormState {
-  AirdropProcessStep get airdropProcessStep =>
+  AirdropProcessStep? get airdropProcessStep =>
       throw _privateConstructorUsedError;
   String? get mailAddress => throw _privateConstructorUsedError;
   bool get confirmOnlyOneAirdrop => throw _privateConstructorUsedError;
@@ -46,7 +46,7 @@ abstract class $AirdropFormStateCopyWith<$Res> {
       _$AirdropFormStateCopyWithImpl<$Res, AirdropFormState>;
   @useResult
   $Res call(
-      {AirdropProcessStep airdropProcessStep,
+      {AirdropProcessStep? airdropProcessStep,
       String? mailAddress,
       bool confirmOnlyOneAirdrop,
       bool confirmNotMultipleRegistrations,
@@ -78,7 +78,7 @@ class _$AirdropFormStateCopyWithImpl<$Res, $Val extends AirdropFormState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? airdropProcessStep = null,
+    Object? airdropProcessStep = freezed,
     Object? mailAddress = freezed,
     Object? confirmOnlyOneAirdrop = null,
     Object? confirmNotMultipleRegistrations = null,
@@ -93,10 +93,10 @@ class _$AirdropFormStateCopyWithImpl<$Res, $Val extends AirdropFormState>
     Object? failure = freezed,
   }) {
     return _then(_value.copyWith(
-      airdropProcessStep: null == airdropProcessStep
+      airdropProcessStep: freezed == airdropProcessStep
           ? _value.airdropProcessStep
           : airdropProcessStep // ignore: cast_nullable_to_non_nullable
-              as AirdropProcessStep,
+              as AirdropProcessStep?,
       mailAddress: freezed == mailAddress
           ? _value.mailAddress
           : mailAddress // ignore: cast_nullable_to_non_nullable
@@ -172,7 +172,7 @@ abstract class _$$AirdropFormStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {AirdropProcessStep airdropProcessStep,
+      {AirdropProcessStep? airdropProcessStep,
       String? mailAddress,
       bool confirmOnlyOneAirdrop,
       bool confirmNotMultipleRegistrations,
@@ -203,7 +203,7 @@ class __$$AirdropFormStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? airdropProcessStep = null,
+    Object? airdropProcessStep = freezed,
     Object? mailAddress = freezed,
     Object? confirmOnlyOneAirdrop = null,
     Object? confirmNotMultipleRegistrations = null,
@@ -218,10 +218,10 @@ class __$$AirdropFormStateImplCopyWithImpl<$Res>
     Object? failure = freezed,
   }) {
     return _then(_$AirdropFormStateImpl(
-      airdropProcessStep: null == airdropProcessStep
+      airdropProcessStep: freezed == airdropProcessStep
           ? _value.airdropProcessStep
           : airdropProcessStep // ignore: cast_nullable_to_non_nullable
-              as AirdropProcessStep,
+              as AirdropProcessStep?,
       mailAddress: freezed == mailAddress
           ? _value.mailAddress
           : mailAddress // ignore: cast_nullable_to_non_nullable
@@ -278,7 +278,7 @@ class __$$AirdropFormStateImplCopyWithImpl<$Res>
 
 class _$AirdropFormStateImpl extends _AirdropFormState {
   const _$AirdropFormStateImpl(
-      {this.airdropProcessStep = AirdropProcessStep.welcome,
+      {this.airdropProcessStep,
       this.mailAddress,
       this.confirmOnlyOneAirdrop = false,
       this.confirmNotMultipleRegistrations = false,
@@ -294,8 +294,7 @@ class _$AirdropFormStateImpl extends _AirdropFormState {
       : super._();
 
   @override
-  @JsonKey()
-  final AirdropProcessStep airdropProcessStep;
+  final AirdropProcessStep? airdropProcessStep;
   @override
   final String? mailAddress;
   @override
@@ -399,7 +398,7 @@ class _$AirdropFormStateImpl extends _AirdropFormState {
 
 abstract class _AirdropFormState extends AirdropFormState {
   const factory _AirdropFormState(
-      {final AirdropProcessStep airdropProcessStep,
+      {final AirdropProcessStep? airdropProcessStep,
       final String? mailAddress,
       final bool confirmOnlyOneAirdrop,
       final bool confirmNotMultipleRegistrations,
@@ -415,7 +414,7 @@ abstract class _AirdropFormState extends AirdropFormState {
   const _AirdropFormState._() : super._();
 
   @override
-  AirdropProcessStep get airdropProcessStep;
+  AirdropProcessStep? get airdropProcessStep;
   @override
   String? get mailAddress;
   @override

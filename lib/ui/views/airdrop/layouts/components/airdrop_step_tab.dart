@@ -21,7 +21,12 @@ class AirdropStepData {
 }
 
 class AirdropStepTab extends ConsumerWidget {
-  const AirdropStepTab({super.key});
+  const AirdropStepTab({
+    this.displayNoteMultiplier = true,
+    super.key,
+  });
+
+  final bool displayNoteMultiplier;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -72,7 +77,7 @@ class AirdropStepTab extends ConsumerWidget {
                       context,
                       localizations.airdropStepDataMultiplierHeader,
                       LineType.header,
-                      asterisque: true,
+                      asterisque: displayNoteMultiplier,
                     ),
                     tableCell(
                       context,
