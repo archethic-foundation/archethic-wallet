@@ -1,13 +1,13 @@
 {
   "fr": [
+    "airdropMenu",
     "airdropParticipateTitle",
     "airdropParticipateStepWelcomeTitle",
     "airdropParticipateStepWelcomeDesc1",
-    "airdropParticipateStepWelcomeDesc2",
-    "airdropParticipateStepWelcomeDesc3",
     "airdropParticipateStepWelcomeCardTitle",
     "airdropParticipateStepWelcomeCardAmount",
     "airdropParticipateStepWelcomeCardParticipantsCount",
+    "airdropPerParticipant",
     "airdropParticipateStepWelcomeCardUCOValuePerParticipant",
     "airdropParticipateStepWelcomeConfirmTitle",
     "airdropParticipateStepWelcomeConfirmItem1",
@@ -35,7 +35,7 @@
     "airdropParticipateStepCompleteAirdTitle",
     "airdropParticipateStepCongratsBtn",
     "airdropDashboardNoLPBtn",
-    "airdropDashboardIncreaseLevelBtn",
+    "airdropDashboardIncreaseAirdropBtn",
     "airdropDashboardCongratsTitle",
     "airdropDashboardCompleteParticipationTitle",
     "airdropDashboardCompleteParticipationDesc",
@@ -84,6 +84,10 @@
     "airdropBannerShouldConfirmMailBtn",
     "airdropBannerShouldConfirmMailAndFarmTitle",
     "airdropBannerShouldConfirmMailAndFarmDesc",
-    "airdropBannerShouldConfirmMailAndFarmBtn"
+    "airdropBannerShouldConfirmMailAndFarmBtn",
+    "airdropInfoNoLPDesc",
+    "airdropStepDataLPDepositHeader",
+    "airdropStepDataMultiplierHeader",
+    "airdropStepDataActualValueHeader"
   ]
 }

@@ -94,7 +94,7 @@ class _AirdropParticipateStepSupportEcosystemSheetState
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final farmLock = ref.watch(farmLockFormFarmLockProvider).valueOrNull;
-    final airdropForm = ref.watch(airdropFormNotifierProvider);
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -131,9 +131,7 @@ class _AirdropParticipateStepSupportEcosystemSheetState
           const SizedBox(height: 20),
           const AirdropLPCurrentValue(),
           const SizedBox(height: 10),
-          AirdropLPAvailable(
-            personalLPFlexibleAmount: airdropForm.personalLPFlexible,
-          ),
+          const AirdropLPAvailable(),
           const SizedBox(height: 10),
           const AirdropStepTab(),
           const SizedBox(height: 90),

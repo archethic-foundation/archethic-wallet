@@ -5,9 +5,9 @@ import 'package:aewallet/main.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/state.dart';
-import 'package:aewallet/ui/views/airdrop/layouts/airdrop_dashboard_sheet.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/airdrop_participate_sheet.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_participants_count.dart';
+import 'package:aewallet/ui/views/main/bloc/providers.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:auto_size_text/auto_size_text.dart';
@@ -16,13 +16,14 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:numeral/numeral.dart';
 
 class AirdropBanner extends ConsumerWidget {
   const AirdropBanner({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userEnabled = ref.watch(
+    final activeAirdrop = ref.watch(
       SettingsProviders.settings.select((settings) => settings.activeAirdrop),
     );
 
@@ -30,7 +31,7 @@ class AirdropBanner extends ConsumerWidget {
         .watch(getFeatureFlagProvider(kApplicationCode, 'airdrop'))
         .valueOrNull;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-    if (userEnabled == false ||
+    if (activeAirdrop == false ||
         flag != true ||
         connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
       return const SizedBox.shrink();
@@ -74,7 +75,11 @@ class AirdropBanner extends ConsumerWidget {
         title = localizations.airdropBannerNewParticipationTitle;
         buttonText = localizations.airdropBannerNewParticipationBtn;
         onButtonPressed = () async {
-          await context.push(AirdropParticipateSheet.routerPage);
+          await context.push(
+            Uri(
+              path: AirdropParticipateSheet.routerPage,
+            ).toString(),
+          );
         };
         break;
       case AirdropState.shouldAddMail:
@@ -82,7 +87,13 @@ class AirdropBanner extends ConsumerWidget {
         description = localizations.airdropBannerShouldAddMailDesc;
         buttonText = localizations.airdropBannerShouldAddMailBtn;
         onButtonPressed = () async {
-          await context.push(AirdropDashboardSheet.routerPage);
+          await ref
+              .read(SettingsProviders.settings.notifier)
+              .setMainScreenCurrentPage(4);
+          ref.read(mainTabControllerProvider)!.animateTo(
+                4,
+                duration: Duration.zero,
+              );
         };
         break;
       case AirdropState.shouldFarm:
@@ -90,7 +101,13 @@ class AirdropBanner extends ConsumerWidget {
         description = localizations.airdropBannerShouldFarmDesc;
         buttonText = localizations.airdropBannerShouldFarmBtn;
         onButtonPressed = () async {
-          await context.push(AirdropDashboardSheet.routerPage);
+          await ref
+              .read(SettingsProviders.settings.notifier)
+              .setMainScreenCurrentPage(3);
+          ref.read(mainTabControllerProvider)!.animateTo(
+                3,
+                duration: Duration.zero,
+              );
         };
         break;
       case AirdropState.shouldConfirmMailAndFarm:
@@ -131,10 +148,25 @@ class AirdropBanner extends ConsumerWidget {
         title = localizations.airdropBannerTitle;
         buttonText = localizations.airdropBannerOkBtn;
         onButtonPressed = () async {
-          await context.push(AirdropDashboardSheet.routerPage);
+          await ref
+              .read(SettingsProviders.settings.notifier)
+              .setMainScreenCurrentPage(4);
+          ref.read(mainTabControllerProvider)!.animateTo(
+                4,
+                duration: Duration.zero,
+              );
         };
         break;
     }
+
+    double? ucoPerParticipant;
+    ref.watch(airdropUCOPerParticipantFiatValueProvider).when(
+          data: (airdropUCOPerParticipantFiatValue) {
+            ucoPerParticipant = airdropUCOPerParticipantFiatValue;
+          },
+          loading: () {},
+          error: (error, stack) {},
+        );
 
     return Padding(
       padding: const EdgeInsets.only(top: 20),
@@ -151,6 +183,25 @@ class AirdropBanner extends ConsumerWidget {
                 children: [
                   if (state != AirdropState.ok)
                     const AirdropParticipantsCount(),
+                  if (state != AirdropState.ok)
+                    Text.rich(
+                      textAlign: TextAlign.center,
+                      TextSpan(
+                        text: '',
+                        children: <InlineSpan>[
+                          TextSpan(
+                            text:
+                                '\$${ucoPerParticipant?.numeral(digits: 2) ?? ''} ',
+                            style:
+                                AppTextStyles.bodySmallSecondaryColor(context),
+                          ),
+                          TextSpan(
+                            text: localizations.airdropPerParticipant,
+                            style: AppTextStyles.bodyMedium(context),
+                          ),
+                        ],
+                      ),
+                    ),
                   if (state != AirdropState.ok) const SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),

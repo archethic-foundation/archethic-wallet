@@ -1,8 +1,8 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/connectivity_status.dart';
-import 'package:aewallet/application/refresh_in_progress.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/ui/views/receive/receive_modal.dart';
+import 'package:aewallet/ui/views/sheets/bridge_sheet.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/transfer_sheet.dart';
@@ -31,7 +31,6 @@ class MenuWidgetWallet extends ConsumerWidget {
         .valueOrNull
         ?.selectedAccount;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-    final refreshInProgress = ref.watch(refreshInProgressNotifierProvider);
     final environment = ref.watch(environmentProvider);
 
     if (accountSelected == null) return const SizedBox();
@@ -93,6 +92,18 @@ class MenuWidgetWallet extends ConsumerWidget {
                 .fade(duration: const Duration(milliseconds: 250))
                 .scale(duration: const Duration(milliseconds: 250)),
             ActionButton(
+              text: localizations.aeBridgeHeader,
+              icon: aedappfm.Iconsax.recovery_convert,
+              enabled:
+                  connectivityStatusProvider == ConnectivityStatus.isConnected,
+              onTap: () async {
+                await context.push(BridgeSheet.routerPage);
+              },
+            )
+                .animate()
+                .fade(duration: const Duration(milliseconds: 300))
+                .scale(duration: const Duration(milliseconds: 300)),
+            ActionButton(
               text: environment == aedappfm.Environment.mainnet
                   ? localizations.buy
                   : localizations.faucet,
@@ -113,58 +124,8 @@ class MenuWidgetWallet extends ConsumerWidget {
                   connectivityStatusProvider == ConnectivityStatus.isConnected,
             )
                 .animate()
-                .fade(duration: const Duration(milliseconds: 300))
-                .scale(duration: const Duration(milliseconds: 300)),
-            if (refreshInProgress == false)
-              ActionButton(
-                text: localizations.refresh,
-                icon: Symbols.refresh,
-                enabled: connectivityStatusProvider ==
-                    ConnectivityStatus.isConnected,
-                onTap: () async {
-                  final _connectivityStatusProvider =
-                      ref.read(connectivityStatusProviders);
-                  if (_connectivityStatusProvider ==
-                      ConnectivityStatus.isDisconnected) {
-                    return;
-                  }
-
-                  await (await ref
-                          .read(accountsNotifierProvider.notifier)
-                          .selectedAccountNotifier)
-                      ?.refreshAll();
-                },
-              )
-                  .animate()
-                  .fade(duration: const Duration(milliseconds: 350))
-                  .scale(duration: const Duration(milliseconds: 350))
-            else
-              Stack(
-                alignment: Alignment.topCenter,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    child: Opacity(
-                      opacity: 0.5,
-                      child: SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 1,
-                        ),
-                      ),
-                    ),
-                  ),
-                  ActionButton(
-                    text: localizations.refresh,
-                    icon: Symbols.refresh,
-                    enabled: false,
-                  )
-                      .animate()
-                      .fade(duration: const Duration(milliseconds: 350))
-                      .scale(duration: const Duration(milliseconds: 350)),
-                ],
-              ),
+                .fade(duration: const Duration(milliseconds: 350))
+                .scale(duration: const Duration(milliseconds: 350)),
           ],
         ),
       ),

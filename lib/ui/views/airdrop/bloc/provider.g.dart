@@ -7,7 +7,7 @@ part of 'provider.dart';
 // **************************************************************************
 
 String _$airdropBannerStatusHash() =>
-    r'753df7ced7f7ce2f9a2c8b1e9a13d2462ce7849c';
+    r'009278ce2f8b08c06be44b5b6e13c0810ec1b6c1';
 
 /// See also [airdropBannerStatus].
 @ProviderFor(airdropBannerStatus)
@@ -26,8 +26,28 @@ final airdropBannerStatusProvider =
 // ignore: unused_element
 typedef AirdropBannerStatusRef
     = AutoDisposeFutureProviderRef<({AirdropState state, String? email})>;
+String _$airdropUCOPerParticipantFiatValueHash() =>
+    r'1130707e96a446ed406289f37ededccd5bd8715e';
+
+/// See also [airdropUCOPerParticipantFiatValue].
+@ProviderFor(airdropUCOPerParticipantFiatValue)
+final airdropUCOPerParticipantFiatValueProvider =
+    AutoDisposeFutureProvider<double>.internal(
+  airdropUCOPerParticipantFiatValue,
+  name: r'airdropUCOPerParticipantFiatValueProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$airdropUCOPerParticipantFiatValueHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef AirdropUCOPerParticipantFiatValueRef
+    = AutoDisposeFutureProviderRef<double>;
 String _$airdropFormNotifierHash() =>
-    r'6b0de5d9c4243be35e5b401a26d52022ca423b77';
+    r'a1fd921d84ec12d4d80dbe06be69263d8ad3443f';
 
 /// See also [AirdropFormNotifier].
 @ProviderFor(AirdropFormNotifier)

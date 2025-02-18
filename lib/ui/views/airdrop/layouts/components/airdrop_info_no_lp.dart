@@ -7,26 +7,26 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-class AirdropLPAvailable extends ConsumerWidget {
-  const AirdropLPAvailable({
+class AirdropInfoNoLP extends ConsumerWidget {
+  const AirdropInfoNoLP({
     super.key,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
     final airdropForm = ref.watch(airdropFormNotifierProvider);
-    if (airdropForm.personalLPFlexible == 0) {
+    if (airdropForm.personalLP > 0) {
       return const SizedBox.shrink();
     }
 
-    final localizations = AppLocalizations.of(context)!;
     AppTextStyles.bodyMediumSecondaryColor(context);
 
     return Container(
       padding: const EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
       decoration: BoxDecoration(
         border: Border.all(
-          color: aedappfm.ArchethicThemeBase.systemPositive300,
+          color: aedappfm.ArchethicThemeBase.systemDanger500,
         ),
         borderRadius: BorderRadius.circular(10),
         color: Colors.black,
@@ -34,16 +34,14 @@ class AirdropLPAvailable extends ConsumerWidget {
       child: Stack(
         children: [
           Icon(
-            Symbols.done_all,
-            color: aedappfm.ArchethicThemeBase.systemPositive300,
+            Symbols.report,
+            color: aedappfm.ArchethicThemeBase.systemDanger500,
             size: 14,
           ),
           Padding(
             padding: const EdgeInsets.only(left: 25),
             child: Text(
-              localizations.airdropDashboardLPTokenAvailable(
-                airdropForm.personalLPFlexible.formatNumber(precision: 2),
-              ),
+              localizations.airdropInfoNoLPDesc,
               style: AppTextStyles.bodySmall(context),
             ),
           ),

@@ -26,6 +26,8 @@ class AirdropFormState with _$AirdropFormState {
     @Default(0.0) double personalLPFlexible,
     @Default(0) int personalMultiplier,
     String? resendConfirmationEmailInfo,
+    @Default(0.0) double actualLPFiatValue,
+    @Default(false) bool loading,
     Failure? failure,
   }) = _AirdropFormState;
   const AirdropFormState._();

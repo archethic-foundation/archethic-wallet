@@ -1,9 +1,8 @@
-import 'package:aewallet/application/airdrop/airdrop.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_participants_count.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
-import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,24 +27,9 @@ class AirdropBlocInfo extends ConsumerWidget {
     final bodyMediumSecondary = AppTextStyles.bodyMediumSecondaryColor(context);
 
     double? ucoPerParticipant;
-    ref.watch(airdropCountProvider).when(
-          data: (airdropCount) {
-            if (airdropCount.totalMultiplier != null &&
-                airdropCount.totalMultiplier! > 0) {
-              final archethicOracleUCO = ref
-                  .watch(
-                    aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO,
-                  )
-                  .valueOrNull;
-
-              ucoPerParticipant = ((Decimal.parse('100000000') /
-                              Decimal.fromInt(
-                                airdropCount.totalMultiplier!,
-                              ))
-                          .toDecimal() *
-                      Decimal.parse('${archethicOracleUCO?.usd ?? 0}'))
-                  .toDouble();
-            }
+    ref.watch(airdropUCOPerParticipantFiatValueProvider).when(
+          data: (airdropUCOPerParticipantFiatValue) {
+            ucoPerParticipant = airdropUCOPerParticipantFiatValue;
           },
           loading: () {},
           error: (error, stack) {},

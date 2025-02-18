@@ -21,26 +21,26 @@ class AirdropParticipantsCount extends ConsumerWidget {
       TextSpan(
         text: '',
         children: <InlineSpan>[
-          TextSpan(
-            text: localizations
-                .airdropParticipateStepWelcomeCardParticipantsCount,
-            style: bodyMedium,
-          ),
           airdropCountAsync.when(
             data: (data) => TextSpan(
               text: data.participantCount != null
-                  ? '${data.participantCount}'
-                  : '?',
+                  ? '${data.participantCount} '
+                  : '? ',
               style: bodyMediumSecondary,
             ),
             error: (_, __) => TextSpan(
-              text: '?',
+              text: '? ',
               style: bodyMediumSecondary,
             ),
             loading: () => TextSpan(
               text: '',
               style: bodyMediumSecondary,
             ),
+          ),
+          TextSpan(
+            text: localizations
+                .airdropParticipateStepWelcomeCardParticipantsCount,
+            style: bodyMedium,
           ),
         ],
       ),
