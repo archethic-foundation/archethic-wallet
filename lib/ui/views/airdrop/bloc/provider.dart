@@ -288,8 +288,9 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
         isDataHexa: false,
       );
 
+      final airdropBackendUrl = ref.watch(airdropBackendUrlProvider);
       final response = await http.post(
-        Uri.parse('https://airdrop-backend.archethic.net/airdrop-subscription'),
+        Uri.parse('$airdropBackendUrl/airdrop-subscription'),
         // Uri.parse('http://localhost:4000/airdrop-subscription'),
         headers: {
           'Authorization': 'Bearer $airdropAPISecret',

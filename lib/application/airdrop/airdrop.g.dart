@@ -6,7 +6,24 @@ part of 'airdrop.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$airdropCountHash() => r'47f3b31f19c232b01edf74cd11212c43fa1ce636';
+String _$airdropBackendUrlHash() => r'949c7096f881c2de5da0b5c007e9ba4b037199db';
+
+/// See also [airdropBackendUrl].
+@ProviderFor(airdropBackendUrl)
+final airdropBackendUrlProvider = AutoDisposeProvider<String>.internal(
+  airdropBackendUrl,
+  name: r'airdropBackendUrlProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$airdropBackendUrlHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef AirdropBackendUrlRef = AutoDisposeProviderRef<String>;
+String _$airdropCountHash() => r'e835d084199b586f7ee2115de4a7bca59211acf1';
 
 /// See also [airdropCount].
 @ProviderFor(airdropCount)
@@ -47,7 +64,7 @@ final airdropPersonalLPProvider = AutoDisposeFutureProvider<
 // ignore: unused_element
 typedef AirdropPersonalLPRef = AutoDisposeFutureProviderRef<
     ({int personalMultiplier, double personalLP, double personalLPFlexible})>;
-String _$airdropUserInfoHash() => r'fc0c3aca91899b4bfd6ab099b46a67fccd3844a2';
+String _$airdropUserInfoHash() => r'18ed0770c602d061c6d888fcf8554163a74291df';
 
 /// See also [airdropUserInfo].
 @ProviderFor(airdropUserInfo)
