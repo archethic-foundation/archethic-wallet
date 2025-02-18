@@ -120,16 +120,31 @@ class _AirdropParticipateStepJoinWaitlistSheetState
           ),
           const SizedBox(height: 20),
           Text(
-            localizations.airdropParticipateStepConfirmEmailDesc1,
+            localizations.airdropParticipateStepConfirmEmailDesc1(
+              airdropForm.mailAddress ?? '',
+            ),
             style: AppTextStyles.bodyMediumWithOpacity(context),
           ),
-          const SizedBox(height: 20),
-          Text(
-            airdropForm.mailAddress ?? '?',
-            style: AppTextStyles.bodyMedium(context)
-                .copyWith(fontWeight: FontWeight.bold),
+          const SizedBox(height: 40),
+          Row(
+            children: [
+              Text(
+                '${localizations.airdropParticipateStepConfirmEmailDesc4} ',
+                style: AppTextStyles.bodyMediumWithOpacity(context),
+              ),
+              InkWell(
+                onTap: () => ref
+                    .read(airdropFormNotifierProvider.notifier)
+                    .setAirdropProcessStep(AirdropProcessStep.joinWaitlist),
+                child: Text(
+                  localizations.airdropParticipateStepConfirmEmailDesc5,
+                  style: AppTextStyles.bodyMedium(context)
+                      .copyWith(decoration: TextDecoration.underline),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 20),
           Text(
             localizations.airdropParticipateStepConfirmEmailDesc2,
             style: AppTextStyles.bodyMediumWithOpacity(context),
@@ -154,25 +169,6 @@ class _AirdropParticipateStepJoinWaitlistSheetState
               style: AppTextStyles.bodyMedium(context)
                   .copyWith(decoration: TextDecoration.underline),
             ),
-          ),
-          const SizedBox(height: 30),
-          Row(
-            children: [
-              Text(
-                '${localizations.airdropParticipateStepConfirmEmailDesc4} ',
-                style: AppTextStyles.bodyMediumWithOpacity(context),
-              ),
-              InkWell(
-                onTap: () => ref
-                    .read(airdropFormNotifierProvider.notifier)
-                    .setAirdropProcessStep(AirdropProcessStep.joinWaitlist),
-                child: Text(
-                  localizations.airdropParticipateStepConfirmEmailDesc5,
-                  style: AppTextStyles.bodyMedium(context)
-                      .copyWith(decoration: TextDecoration.underline),
-                ),
-              ),
-            ],
           ),
           const SizedBox(height: 30),
           Text(

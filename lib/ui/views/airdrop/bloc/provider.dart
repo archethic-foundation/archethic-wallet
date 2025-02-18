@@ -1,13 +1,20 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/application/airdrop/airdrop.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/model/airdrop.dart';
+import 'package:aewallet/modules/aeswap/application/session/provider.dart';
+import 'package:aewallet/modules/aeswap/application/session/state.dart';
+import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/state.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_banner.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
+import 'package:decimal/decimal.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -53,12 +60,44 @@ Future<({AirdropState state, String? email})> airdropBannerStatus(
 }
 
 @riverpod
+Future<double> airdropUCOPerParticipantFiatValue(
+  Ref ref,
+) async {
+  var ucoPerParticipant = 0.0;
+  final airdropCount = await ref.watch(airdropCountProvider.future);
+  if (airdropCount.totalMultiplier != null &&
+      airdropCount.totalMultiplier! > 0) {
+    final archethicOracleUCO = ref
+        .watch(
+          aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO,
+        )
+        .valueOrNull;
+
+    ucoPerParticipant = ((Decimal.parse('100000000') /
+                    Decimal.fromInt(
+                      airdropCount.totalMultiplier!,
+                    ))
+                .toDecimal() *
+            Decimal.parse('${archethicOracleUCO?.usd ?? 0}'))
+        .toDouble();
+  }
+
+  return ucoPerParticipant;
+}
+
+@riverpod
 class AirdropFormNotifier extends _$AirdropFormNotifier {
   AirdropFormNotifier();
 
   @override
   AirdropFormState build() {
     return const AirdropFormState();
+  }
+
+  void setLoading(bool loading) {
+    state = state.copyWith(
+      loading: loading,
+    );
   }
 
   void setConfirmOnlyOneAirdrop(bool confirmOnlyOneAirdrop) {
@@ -107,6 +146,10 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
 
   void setPersonalLPFlexible(double personalLPFlexible) {
     state = state.copyWith(personalLPFlexible: personalLPFlexible);
+  }
+
+  void setActualLPFiatValue(double actualLPFiatValue) {
+    state = state.copyWith(actualLPFiatValue: actualLPFiatValue);
   }
 
   Future<void> resendConfirmationMail(AppLocalizations localizations) async {
@@ -176,6 +219,21 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
       setPersonalLP(airdropPersonalLP.personalLP);
       setPersonalLPFlexible(airdropPersonalLP.personalLPFlexible);
     }
+
+    var actualLPFiatValue = 0.0;
+    final environment = ref.read(environmentProvider);
+    final farmLock = ref.read(farmLockFormFarmLockProvider).value;
+    if (farmLock != null && farmLock.lpTokenPair != null) {
+      actualLPFiatValue = await ref.read(
+        DexTokensProviders.estimateLPTokenInFiat(
+          farmLock.lpTokenPair!.token1.address,
+          farmLock.lpTokenPair!.token2.address,
+          1,
+          environment.aeETHUCOPoolAddress,
+        ).future,
+      );
+    }
+    setActualLPFiatValue(actualLPFiatValue);
 
     return airdropUserInfo.isMailConfirmed ?? false;
   }

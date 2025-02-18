@@ -1,7 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:ui';
 
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/connectivity_status.dart';
+import 'package:aewallet/application/refresh_in_progress.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
@@ -13,7 +15,6 @@ import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_icon_refre
 import 'package:aewallet/ui/views/main/components/main_appbar_account.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar_basic.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar_transactions.dart';
-import 'package:aewallet/ui/views/sheets/dapp_sheet_icon_refresh.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -36,74 +37,93 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
     final preferences = ref.watch(SettingsProviders.settings);
 
     final tab = preferences.mainScreenTab;
-
     return switch (tab) {
-      MainScreenTab.accountTab => _MainAppBar(
-          key: const Key('account'),
+      MainScreenTab.accountTab => const MainAppBarDetail(
+          key: Key('account'),
           actions: [
-            _BalanceVisibilityButton(preferences: preferences),
+            _RefreshButton(),
           ],
-          title: const MainAppBarAccount(),
+          title: MainAppBarAccount(),
         ),
-      MainScreenTab.transactionTab => _MainAppBar(
-          key: const Key('transaction'),
+      MainScreenTab.transactionTab => const MainAppBarDetail(
+          key: Key('transaction'),
           actions: [
-            _BalanceVisibilityButton(preferences: preferences),
+            _RefreshButton(),
           ],
-          title: const MainAppBarTransactions(),
+          title: MainAppBarTransactions(),
         ),
-      MainScreenTab.swapTab => _MainAppBar(
+      MainScreenTab.swapTab => MainAppBarDetail(
           key: const Key('swap'),
           actions: const [
             SwapTokenIconRefresh(),
           ],
           title: MainAppBarBasic(header: localizations.swapHeader),
         ),
-      MainScreenTab.earnTab => _MainAppBar(
+      MainScreenTab.earnTab => MainAppBarDetail(
           key: const Key('earn'),
           actions: const [],
           title: MainAppBarBasic(header: localizations.aeSwapEarnHeader),
         ),
-      MainScreenTab.bridgeTab => _MainAppBar(
-          key: const Key('bridge'),
-          actions: [
-            DAppSheetIconRefresh(dappKey: 'aeBridge'),
+      MainScreenTab.airdropTab => MainAppBarDetail(
+          key: const Key('airdrop'),
+          actions: const [
+            _RefreshButton(),
           ],
           title: MainAppBarBasic(
-            header: localizations.aeBridgeHeader,
+            header: localizations.airdropMenu,
           ),
         ),
     };
   }
 }
 
-class _BalanceVisibilityButton extends ConsumerWidget {
-  const _BalanceVisibilityButton({
-    required this.preferences,
-  });
-
-  final Settings preferences;
+class _RefreshButton extends ConsumerWidget {
+  const _RefreshButton();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return IconButton(
-      icon: Icon(
-        preferences.showBalances ? Symbols.visibility : Symbols.visibility_off,
-        weight: IconSize.weightM,
-        opticalSize: IconSize.opticalSizeM,
-        grade: IconSize.gradeM,
-      ),
-      onPressed: () async {
-        final preferencesNotifier =
-            ref.read(SettingsProviders.settings.notifier);
-        await preferencesNotifier.setShowBalances(!preferences.showBalances);
-      },
-    );
+    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
+    if (connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
+      return const SizedBox.shrink();
+    }
+
+    final refreshInProgress = ref.watch(refreshInProgressNotifierProvider);
+    return refreshInProgress == false
+        ? IconButton(
+            icon: const Icon(
+              aedappfm.Iconsax.refresh,
+              size: 16,
+              color: Colors.white,
+            ),
+            onPressed: () async {
+              final _connectivityStatusProvider =
+                  ref.read(connectivityStatusProviders);
+              if (_connectivityStatusProvider ==
+                  ConnectivityStatus.isDisconnected) {
+                return;
+              }
+
+              await (await ref
+                      .read(accountsNotifierProvider.notifier)
+                      .selectedAccountNotifier)
+                  ?.refreshAll();
+            },
+          )
+        : const Padding(
+            padding: EdgeInsets.only(left: 10, right: 12),
+            child: SizedBox(
+              width: 15,
+              height: 15,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+              ),
+            ),
+          );
   }
 }
 
-class _MainAppBar extends ConsumerWidget {
-  const _MainAppBar({
+class MainAppBarDetail extends ConsumerWidget {
+  const MainAppBarDetail({
     super.key,
     required this.actions,
     required this.title,

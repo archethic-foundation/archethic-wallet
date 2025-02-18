@@ -10,14 +10,13 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/earn_tab.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/swap_tab.dart';
+import 'package:aewallet/ui/views/airdrop/layouts/airdrop_tab.dart';
 import 'package:aewallet/ui/views/main/account_tab.dart';
 import 'package:aewallet/ui/views/main/bloc/providers.dart';
 import 'package:aewallet/ui/views/main/components/home_providers_keepalive.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar.dart';
 import 'package:aewallet/ui/views/main/components/recovery_phrase_banner.dart';
 import 'package:aewallet/ui/views/main/transactions_tab.dart';
-import 'package:aewallet/ui/views/sheets/bridge_sheet_feature_flag_false.dart';
-import 'package:aewallet/ui/views/sheets/dapp_sheet.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/tab_item.dart';
@@ -119,8 +118,8 @@ class _HomePageState extends ConsumerState<HomePage>
                   label: AppLocalizations.of(context)!.bottomMainMenuEarn,
                 ),
                 TabItem(
-                  icon: aedappfm.Iconsax.recovery_convert,
-                  label: AppLocalizations.of(context)!.bottomMainMenuBridge,
+                  icon: Symbols.paragliding,
+                  label: AppLocalizations.of(context)!.bottomMainMenuAirdrop,
                 ),
               ],
             ),
@@ -157,8 +156,8 @@ class _HomePageState extends ConsumerState<HomePage>
       child: TabBarView(
         physics: const NeverScrollableScrollPhysics(),
         controller: tabController,
-        children: [
-          const Stack(
+        children: const [
+          Stack(
             alignment: Alignment.topCenter,
             children: [
               AccountTab(),
@@ -168,21 +167,10 @@ class _HomePageState extends ConsumerState<HomePage>
               ),
             ],
           ),
-          const TransactionsTab(),
-          const SwapTab(),
-          const EarnTab(),
-          DAppSheet.withFeatureFlag(
-            dappKey: 'aeBridge',
-            launchMessage: AppLocalizations.of(context)!.aeBridgeLaunchMessage,
-            launchButtonLabel:
-                AppLocalizations.of(context)!.aeBridgeLaunchButton,
-            featureCode: 'bridge',
-            featureUnavailableBuilder: (cause, dapp) =>
-                BridgeSheetFeatureFlagFalse(
-              cause: cause,
-              dapp: dapp,
-            ),
-          ),
+          TransactionsTab(),
+          SwapTab(),
+          EarnTab(),
+          AirdropTab(),
         ],
       ),
     );

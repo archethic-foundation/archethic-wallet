@@ -4,7 +4,9 @@ import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/price_history/providers.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/tokens/tokens.dart';
+import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/model/available_currency.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/chart_option_label.dart';
@@ -16,6 +18,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 part 'components/balance_infos_build_chart.dart';
 part 'components/balance_infos_build_kpi.dart';
@@ -30,11 +33,15 @@ class BalanceInfos extends ConsumerWidget {
       height: 60,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: preferences.showBalances == true
-              ? const _BalanceTotalUSDShowed()
-              : const _BalanceTotalUSDNotShowed(),
+        child: Row(
+          children: [
+            SizedBox(
+              child: preferences.showBalances == true
+                  ? const _BalanceTotalUSDShowed()
+                  : const _BalanceTotalUSDNotShowed(),
+            ),
+            _BalanceVisibilityButton(preferences: preferences),
+          ],
         ),
       ),
     );
@@ -124,6 +131,38 @@ class _BalanceTotalUSDNotShowed extends ConsumerWidget {
           style: ArchethicThemeStyles.textStyleSize35W900Primary,
         ),
       ],
+    );
+  }
+}
+
+class _BalanceVisibilityButton extends ConsumerWidget {
+  const _BalanceVisibilityButton({
+    required this.preferences,
+  });
+
+  final Settings preferences;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 10),
+      child: IconButton(
+        icon: Icon(
+          preferences.showBalances
+              ? Symbols.visibility
+              : Symbols.visibility_off,
+          weight: IconSize.weightM,
+          opticalSize: IconSize.opticalSizeM,
+          grade: IconSize.gradeM,
+          size: 24,
+          color: Colors.white.withOpacity(AppTextStyles.kOpacityText),
+        ),
+        onPressed: () async {
+          final preferencesNotifier =
+              ref.read(SettingsProviders.settings.notifier);
+          await preferencesNotifier.setShowBalances(!preferences.showBalances);
+        },
+      ),
     );
   }
 }

@@ -28,6 +28,8 @@ mixin _$AirdropFormState {
   double get personalLPFlexible => throw _privateConstructorUsedError;
   int get personalMultiplier => throw _privateConstructorUsedError;
   String? get resendConfirmationEmailInfo => throw _privateConstructorUsedError;
+  double get actualLPFiatValue => throw _privateConstructorUsedError;
+  bool get loading => throw _privateConstructorUsedError;
   Failure? get failure => throw _privateConstructorUsedError;
 
   /// Create a copy of AirdropFormState
@@ -54,6 +56,8 @@ abstract class $AirdropFormStateCopyWith<$Res> {
       double personalLPFlexible,
       int personalMultiplier,
       String? resendConfirmationEmailInfo,
+      double actualLPFiatValue,
+      bool loading,
       Failure? failure});
 
   $FailureCopyWith<$Res>? get failure;
@@ -84,6 +88,8 @@ class _$AirdropFormStateCopyWithImpl<$Res, $Val extends AirdropFormState>
     Object? personalLPFlexible = null,
     Object? personalMultiplier = null,
     Object? resendConfirmationEmailInfo = freezed,
+    Object? actualLPFiatValue = null,
+    Object? loading = null,
     Object? failure = freezed,
   }) {
     return _then(_value.copyWith(
@@ -127,6 +133,14 @@ class _$AirdropFormStateCopyWithImpl<$Res, $Val extends AirdropFormState>
           ? _value.resendConfirmationEmailInfo
           : resendConfirmationEmailInfo // ignore: cast_nullable_to_non_nullable
               as String?,
+      actualLPFiatValue: null == actualLPFiatValue
+          ? _value.actualLPFiatValue
+          : actualLPFiatValue // ignore: cast_nullable_to_non_nullable
+              as double,
+      loading: null == loading
+          ? _value.loading
+          : loading // ignore: cast_nullable_to_non_nullable
+              as bool,
       failure: freezed == failure
           ? _value.failure
           : failure // ignore: cast_nullable_to_non_nullable
@@ -168,6 +182,8 @@ abstract class _$$AirdropFormStateImplCopyWith<$Res>
       double personalLPFlexible,
       int personalMultiplier,
       String? resendConfirmationEmailInfo,
+      double actualLPFiatValue,
+      bool loading,
       Failure? failure});
 
   @override
@@ -197,6 +213,8 @@ class __$$AirdropFormStateImplCopyWithImpl<$Res>
     Object? personalLPFlexible = null,
     Object? personalMultiplier = null,
     Object? resendConfirmationEmailInfo = freezed,
+    Object? actualLPFiatValue = null,
+    Object? loading = null,
     Object? failure = freezed,
   }) {
     return _then(_$AirdropFormStateImpl(
@@ -240,6 +258,14 @@ class __$$AirdropFormStateImplCopyWithImpl<$Res>
           ? _value.resendConfirmationEmailInfo
           : resendConfirmationEmailInfo // ignore: cast_nullable_to_non_nullable
               as String?,
+      actualLPFiatValue: null == actualLPFiatValue
+          ? _value.actualLPFiatValue
+          : actualLPFiatValue // ignore: cast_nullable_to_non_nullable
+              as double,
+      loading: null == loading
+          ? _value.loading
+          : loading // ignore: cast_nullable_to_non_nullable
+              as bool,
       failure: freezed == failure
           ? _value.failure
           : failure // ignore: cast_nullable_to_non_nullable
@@ -262,6 +288,8 @@ class _$AirdropFormStateImpl extends _AirdropFormState {
       this.personalLPFlexible = 0.0,
       this.personalMultiplier = 0,
       this.resendConfirmationEmailInfo,
+      this.actualLPFiatValue = 0.0,
+      this.loading = false,
       this.failure})
       : super._();
 
@@ -294,11 +322,17 @@ class _$AirdropFormStateImpl extends _AirdropFormState {
   @override
   final String? resendConfirmationEmailInfo;
   @override
+  @JsonKey()
+  final double actualLPFiatValue;
+  @override
+  @JsonKey()
+  final bool loading;
+  @override
   final Failure? failure;
 
   @override
   String toString() {
-    return 'AirdropFormState(airdropProcessStep: $airdropProcessStep, mailAddress: $mailAddress, confirmOnlyOneAirdrop: $confirmOnlyOneAirdrop, confirmNotMultipleRegistrations: $confirmNotMultipleRegistrations, confirmPrivacyPolicy: $confirmPrivacyPolicy, joinWaitlistInProgress: $joinWaitlistInProgress, personalLP: $personalLP, personalLPFlexible: $personalLPFlexible, personalMultiplier: $personalMultiplier, resendConfirmationEmailInfo: $resendConfirmationEmailInfo, failure: $failure)';
+    return 'AirdropFormState(airdropProcessStep: $airdropProcessStep, mailAddress: $mailAddress, confirmOnlyOneAirdrop: $confirmOnlyOneAirdrop, confirmNotMultipleRegistrations: $confirmNotMultipleRegistrations, confirmPrivacyPolicy: $confirmPrivacyPolicy, joinWaitlistInProgress: $joinWaitlistInProgress, personalLP: $personalLP, personalLPFlexible: $personalLPFlexible, personalMultiplier: $personalMultiplier, resendConfirmationEmailInfo: $resendConfirmationEmailInfo, actualLPFiatValue: $actualLPFiatValue, loading: $loading, failure: $failure)';
   }
 
   @override
@@ -330,6 +364,9 @@ class _$AirdropFormStateImpl extends _AirdropFormState {
                     resendConfirmationEmailInfo) ||
                 other.resendConfirmationEmailInfo ==
                     resendConfirmationEmailInfo) &&
+            (identical(other.actualLPFiatValue, actualLPFiatValue) ||
+                other.actualLPFiatValue == actualLPFiatValue) &&
+            (identical(other.loading, loading) || other.loading == loading) &&
             (identical(other.failure, failure) || other.failure == failure));
   }
 
@@ -346,6 +383,8 @@ class _$AirdropFormStateImpl extends _AirdropFormState {
       personalLPFlexible,
       personalMultiplier,
       resendConfirmationEmailInfo,
+      actualLPFiatValue,
+      loading,
       failure);
 
   /// Create a copy of AirdropFormState
@@ -370,6 +409,8 @@ abstract class _AirdropFormState extends AirdropFormState {
       final double personalLPFlexible,
       final int personalMultiplier,
       final String? resendConfirmationEmailInfo,
+      final double actualLPFiatValue,
+      final bool loading,
       final Failure? failure}) = _$AirdropFormStateImpl;
   const _AirdropFormState._() : super._();
 
@@ -393,6 +434,10 @@ abstract class _AirdropFormState extends AirdropFormState {
   int get personalMultiplier;
   @override
   String? get resendConfirmationEmailInfo;
+  @override
+  double get actualLPFiatValue;
+  @override
+  bool get loading;
   @override
   Failure? get failure;
 

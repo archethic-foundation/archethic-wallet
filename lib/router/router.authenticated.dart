@@ -212,10 +212,10 @@ final _authenticatedRoutes = [
     },
   ),
   GoRoute(
-    path: AirdropDashboardSheet.routerPage,
+    path: BridgeSheet.routerPage,
     pageBuilder: (context, state) => NoTransitionPage<void>(
       key: state.pageKey,
-      child: const AirdropDashboardSheet(),
+      child: const BridgeSheet(),
     ),
   ),
 ];

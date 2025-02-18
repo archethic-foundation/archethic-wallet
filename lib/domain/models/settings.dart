@@ -11,7 +11,7 @@ enum MainScreenTab {
   transactionTab,
   swapTab,
   earnTab,
-  bridgeTab,
+  airdropTab,
 }
 
 @freezed
