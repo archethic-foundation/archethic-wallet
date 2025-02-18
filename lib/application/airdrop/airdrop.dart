@@ -5,8 +5,11 @@ import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/model/airdrop.dart';
 import 'package:aewallet/modules/aeswap/application/farm/farm_lock_factory.dart';
+import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/get_farm_lock_user_infos_response.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
@@ -18,13 +21,31 @@ part 'airdrop.g.dart';
 final _logger = Logger('airDropProvider');
 
 @riverpod
+String airdropBackendUrl(
+  Ref ref,
+) {
+  final environment = ref.watch(environmentProvider);
+  switch (environment) {
+    // TODO(reddwarf03): Configure url NGINX
+    case aedappfm.Environment.mainnet:
+    case aedappfm.Environment.testnet:
+      return 'https://airdrop-backend.archethic.net';
+
+    //return 'https://airdrop-backend.testnet.archethic.net';
+    case aedappfm.Environment.devnet:
+      return 'http://localhost:4000';
+  }
+}
+
+@riverpod
 Future<({int? participantCount, int? totalMultiplier})> airdropCount(
   Ref ref,
 ) async {
   try {
+    final airdropBackendUrl = ref.watch(airdropBackendUrlProvider);
     final response = await http.get(
       Uri.parse(
-        'https://airdrop-backend.archethic.net/airdrop-count',
+        '$airdropBackendUrl/airdrop-count',
       ),
     );
 
@@ -139,9 +160,10 @@ Future<({bool? isMailConfirmed, String? email, String? referralCode})>
       isDataHexa: false,
     );
 
+    final airdropBackendUrl = ref.watch(airdropBackendUrlProvider);
     final response = await http.get(
       Uri.parse(
-        'https://airdrop-backend.archethic.net/airdrop-user-info?pubkey=$publicKey',
+        '$airdropBackendUrl/airdrop-user-info?pubkey=$publicKey',
       ),
       headers: {
         'x-public-key': base64Encode(utf8.encode(publicKey)),
