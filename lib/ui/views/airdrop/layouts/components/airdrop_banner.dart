@@ -4,8 +4,6 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/main.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
-import 'package:aewallet/ui/views/airdrop/bloc/state.dart';
-import 'package:aewallet/ui/views/airdrop/layouts/airdrop_participate_sheet.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_participants_count.dart';
 import 'package:aewallet/ui/views/main/bloc/providers.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -14,7 +12,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:numeral/numeral.dart';
 
@@ -75,11 +72,13 @@ class AirdropBanner extends ConsumerWidget {
         title = localizations.airdropBannerNewParticipationTitle;
         buttonText = localizations.airdropBannerNewParticipationBtn;
         onButtonPressed = () async {
-          await context.push(
-            Uri(
-              path: AirdropParticipateSheet.routerPage,
-            ).toString(),
-          );
+          await ref
+              .read(SettingsProviders.settings.notifier)
+              .setMainScreenCurrentPage(4);
+          ref.read(mainTabControllerProvider)!.animateTo(
+                4,
+                duration: Duration.zero,
+              );
         };
         break;
       case AirdropState.shouldAddMail:
@@ -115,16 +114,13 @@ class AirdropBanner extends ConsumerWidget {
         description = localizations.airdropBannerShouldConfirmMailAndFarmDesc;
         buttonText = localizations.airdropBannerShouldConfirmMailAndFarmBtn;
         onButtonPressed = () async {
-          await context.push(
-            Uri(
-              path: AirdropParticipateSheet.routerPage,
-              queryParameters: {
-                'airdropMailAddress': email,
-                'airdropProcessStepIndex':
-                    AirdropProcessStep.confirmEmail.index.toString(),
-              },
-            ).toString(),
-          );
+          await ref
+              .read(SettingsProviders.settings.notifier)
+              .setMainScreenCurrentPage(4);
+          ref.read(mainTabControllerProvider)!.animateTo(
+                4,
+                duration: Duration.zero,
+              );
         };
         break;
       case AirdropState.shouldConfirmMail:
@@ -132,16 +128,13 @@ class AirdropBanner extends ConsumerWidget {
         description = localizations.airdropBannerShouldConfirmMailDesc;
         buttonText = localizations.airdropBannerShouldConfirmMailBtn;
         onButtonPressed = () async {
-          await context.push(
-            Uri(
-              path: AirdropParticipateSheet.routerPage,
-              queryParameters: {
-                'airdropMailAddress': email,
-                'airdropProcessStepIndex':
-                    AirdropProcessStep.confirmEmail.index.toString(),
-              },
-            ).toString(),
-          );
+          await ref
+              .read(SettingsProviders.settings.notifier)
+              .setMainScreenCurrentPage(4);
+          ref.read(mainTabControllerProvider)!.animateTo(
+                4,
+                duration: Duration.zero,
+              );
         };
         break;
       case AirdropState.ok:

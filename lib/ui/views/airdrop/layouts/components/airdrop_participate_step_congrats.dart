@@ -1,9 +1,9 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
-import 'package:aewallet/application/airdrop/airdrop.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
-import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_banner.dart';
+import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_info_no_lp.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_lp_available.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_lp_current_value.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_note_farm_level.dart';
@@ -11,10 +11,8 @@ import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_personal_mu
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_personal_rewards.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_step_tab.dart';
 import 'package:aewallet/ui/views/main/bloc/providers.dart';
-import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
-import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
+import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,8 +20,13 @@ import 'package:go_router/go_router.dart';
 
 class AirdropParticipateStepCongratsSheet extends ConsumerStatefulWidget {
   const AirdropParticipateStepCongratsSheet({
+    required this.airdropState,
+    required this.personalMultiplier,
     super.key,
   });
+
+  final AirdropState? airdropState;
+  final int personalMultiplier;
 
   @override
   ConsumerState<AirdropParticipateStepCongratsSheet> createState() =>
@@ -31,8 +34,7 @@ class AirdropParticipateStepCongratsSheet extends ConsumerStatefulWidget {
 }
 
 class _AirdropParticipateStepCongratsSheetState
-    extends ConsumerState<AirdropParticipateStepCongratsSheet>
-    implements SheetSkeletonInterface {
+    extends ConsumerState<AirdropParticipateStepCongratsSheet> {
   @override
   Widget build(
     BuildContext context,
@@ -45,89 +47,89 @@ class _AirdropParticipateStepCongratsSheetState
 
     if (accountSelected == null) return const SizedBox();
 
-    return SheetSkeleton(
-      appBar: getAppBar(context, ref),
-      floatingActionButton: getFloatingActionButton(context, ref),
-      sheetContent: getSheetContent(context, ref),
-    );
-  }
-
-  @override
-  Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    return Row(
-      children: <Widget>[
-        AppButtonTinyConnectivity(
-          localizations.airdropParticipateStepCongratsBtn,
-          Dimens.buttonBottomDimens,
-          onPressed: () async {
-            await ref
-                .read(SettingsProviders.settings.notifier)
-                .setMainScreenCurrentPage(3);
-            ref.read(mainTabControllerProvider)!.animateTo(
-                  3,
-                  duration: Duration.zero,
-                );
-            context.pop();
-          },
+    return Stack(
+      children: [
+        SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: ArchethicScrollbar(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).padding.top + 10,
+                  bottom: 120,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.airdropState != null &&
+                              widget.airdropState == AirdropState.ok
+                          ? localizations.airdropDashboardCongratsTitle
+                          : localizations
+                              .airdropDashboardCompleteParticipationTitle,
+                      style: AppTextStyles.bodyLarge(context)
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 20),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Flexible(
+                          child: AirdropPersonalMultiplier(),
+                        ),
+                        SizedBox(width: 10),
+                        Flexible(
+                          child: AirdropPersonalRewards(),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    const AirdropInfoNoLP(),
+                    const SizedBox(height: 10),
+                    const AirdropLPCurrentValue(),
+                    const SizedBox(height: 10),
+                    const AirdropLPAvailable(),
+                    const SizedBox(height: 10),
+                    const AirdropStepTab(),
+                    const SizedBox(height: 20),
+                    const AirdropNoteFarmLevel(),
+                    const SizedBox(height: 80),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Padding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).padding.bottom + 20,
+            ),
+            child: Row(
+              children: <Widget>[
+                AppButtonTinyConnectivity(
+                  widget.personalMultiplier > 0
+                      ? localizations.airdropDashboardIncreaseAirdropBtn
+                      : localizations.airdropDashboardNoLPBtn,
+                  Dimens.buttonBottomDimens,
+                  onPressed: () async {
+                    await ref
+                        .read(SettingsProviders.settings.notifier)
+                        .setMainScreenCurrentPage(3);
+                    ref.read(mainTabControllerProvider)!.animateTo(
+                          3,
+                          duration: Duration.zero,
+                        );
+                    context.pop();
+                  },
+                ),
+              ],
+            ),
+          ),
         ),
       ],
-    );
-  }
-
-  @override
-  PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-    return SheetAppBar(
-      title: localizations.airdropParticipateTitle,
-      widgetLeft: CloseButton(
-        key: const Key('close'),
-        color: ArchethicTheme.text,
-        onPressed: () {
-          ref
-            ..invalidate(airdropUserInfoProvider)
-            ..invalidate(airdropPersonalLPProvider);
-          context.pop();
-        },
-      ),
-    );
-  }
-
-  @override
-  Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            localizations.airdropParticipateStepCongratsTitle,
-            style: AppTextStyles.bodyLarge(context)
-                .copyWith(fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 20),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Flexible(
-                child: AirdropPersonalMultiplier(),
-              ),
-              SizedBox(width: 10),
-              Flexible(
-                child: AirdropPersonalRewards(),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          const AirdropLPCurrentValue(),
-          const SizedBox(height: 10),
-          const AirdropLPAvailable(),
-          const SizedBox(height: 10),
-          const AirdropStepTab(),
-          const SizedBox(height: 20),
-          const AirdropNoteFarmLevel(),
-        ],
-      ),
     );
   }
 }

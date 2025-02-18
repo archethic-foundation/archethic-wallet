@@ -16,7 +16,7 @@ enum AirdropProcessStep {
 @freezed
 class AirdropFormState with _$AirdropFormState {
   const factory AirdropFormState({
-    @Default(AirdropProcessStep.welcome) AirdropProcessStep airdropProcessStep,
+    AirdropProcessStep? airdropProcessStep,
     String? mailAddress,
     @Default(false) bool confirmOnlyOneAirdrop,
     @Default(false) bool confirmNotMultipleRegistrations,

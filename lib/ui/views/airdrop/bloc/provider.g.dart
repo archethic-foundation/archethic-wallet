@@ -47,7 +47,7 @@ final airdropUCOPerParticipantFiatValueProvider =
 typedef AirdropUCOPerParticipantFiatValueRef
     = AutoDisposeFutureProviderRef<double>;
 String _$airdropFormNotifierHash() =>
-    r'a1fd921d84ec12d4d80dbe06be69263d8ad3443f';
+    r'149daaf28846c712f07b769925d85f6e170b6f35';
 
 /// See also [AirdropFormNotifier].
 @ProviderFor(AirdropFormNotifier)
