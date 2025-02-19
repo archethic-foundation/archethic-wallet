@@ -30,6 +30,7 @@
     "airdropParticipateStepSupportEcosystemTitle",
     "airdropParticipateStepSupportEcosystemDesc1",
     "airdropParticipateStepSupportEcosystemDesc2",
+    "airdropParticipateStepSupportEcosystemDesc3",
     "airdropParticipateStepSupportEcosystemBtn",
     "airdropParticipateStepCongratsTitle",
     "airdropParticipateStepCompleteAirdTitle",

@@ -13,8 +13,7 @@ class AirdropParticipantsCount extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final airdropCountAsync = ref.watch(airdropCountProvider);
-    final bodyMedium = AppTextStyles.bodyMedium(context);
-    final bodyMediumSecondary = AppTextStyles.bodyMediumSecondaryColor(context);
+    final bodyMedium = AppTextStyles.bodyMediumWithOpacity(context);
 
     return Text.rich(
       textAlign: TextAlign.center,
@@ -26,15 +25,15 @@ class AirdropParticipantsCount extends ConsumerWidget {
               text: data.participantCount != null
                   ? '${data.participantCount} '
                   : '? ',
-              style: bodyMediumSecondary,
+              style: bodyMedium,
             ),
             error: (_, __) => TextSpan(
               text: '? ',
-              style: bodyMediumSecondary,
+              style: bodyMedium,
             ),
             loading: () => TextSpan(
               text: '',
-              style: bodyMediumSecondary,
+              style: bodyMedium,
             ),
           ),
           TextSpan(

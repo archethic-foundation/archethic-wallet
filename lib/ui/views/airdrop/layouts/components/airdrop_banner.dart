@@ -177,23 +177,9 @@ class AirdropBanner extends ConsumerWidget {
                   if (state != AirdropState.ok)
                     const AirdropParticipantsCount(),
                   if (state != AirdropState.ok)
-                    Text.rich(
-                      textAlign: TextAlign.center,
-                      TextSpan(
-                        text: '',
-                        children: <InlineSpan>[
-                          TextSpan(
-                            text:
-                                '\$${ucoPerParticipant?.numeral(digits: 2) ?? ''} ',
-                            style:
-                                AppTextStyles.bodySmallSecondaryColor(context),
-                          ),
-                          TextSpan(
-                            text: localizations.airdropPerParticipant,
-                            style: AppTextStyles.bodyMedium(context),
-                          ),
-                        ],
-                      ),
+                    Text(
+                      '\$${ucoPerParticipant?.numeral(digits: 2) ?? ''} ${localizations.airdropPerParticipant}',
+                      style: AppTextStyles.bodyMediumWithOpacity(context),
                     ),
                   if (state != AirdropState.ok) const SizedBox(height: 10),
                   Padding(

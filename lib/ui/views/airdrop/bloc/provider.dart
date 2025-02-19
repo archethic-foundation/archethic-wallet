@@ -77,7 +77,7 @@ Future<double> airdropUCOPerParticipantFiatValue(
                     Decimal.fromInt(
                       airdropCount.totalMultiplier!,
                     ))
-                .toDecimal() *
+                .toDecimal(scaleOnInfinitePrecision: 8) *
             Decimal.parse('${archethicOracleUCO?.usd ?? 0}'))
         .toDouble();
   }
@@ -219,7 +219,8 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
     }
   }
 
-  Future<bool> checkConfirmation() async {
+  Future<({bool mailConfirmed, bool havePersonalLP})>
+      checkConfirmation() async {
     final airdropUserInfo = await ref.read(airdropUserInfoProvider.future);
     if (airdropUserInfo.email != null) {
       final airdropPersonalLP =
@@ -243,7 +244,10 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
     }
     setActualLPFiatValue(actualLPFiatValue);
 
-    return airdropUserInfo.isMailConfirmed ?? false;
+    return (
+      mailConfirmed: airdropUserInfo.isMailConfirmed ?? false,
+      havePersonalLP: state.personalLP > 0
+    );
   }
 
   Future<void> joinWaitlist(AppLocalizations localizations) async {
@@ -259,7 +263,7 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
         );
         return;
       }
-      final session = ref.watch(sessionNotifierProvider).loggedIn;
+      final session = ref.read(sessionNotifierProvider).loggedIn;
       final keychainKeypair = archethic.deriveKeyPair(
         archethic.uint8ListToHex(
           Uint8List.fromList(session!.wallet.keychainSecuredInfos.seed),
@@ -288,7 +292,7 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
         isDataHexa: false,
       );
 
-      final airdropBackendUrl = ref.watch(airdropBackendUrlProvider);
+      final airdropBackendUrl = ref.read(airdropBackendUrlProvider);
       final response = await http.post(
         Uri.parse('$airdropBackendUrl/airdrop-subscription'),
         // Uri.parse('http://localhost:4000/airdrop-subscription'),
