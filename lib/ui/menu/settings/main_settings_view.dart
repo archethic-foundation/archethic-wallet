@@ -201,7 +201,7 @@ class _ActiveAirdropSettingsListItem extends ConsumerWidget {
       heading: localizations.airdropLinkHeader,
       info: localizations.airdropLinkDesc,
       background: ArchethicTheme.backgroundAirdrop,
-      icon: Symbols.universal_currency_alt,
+      icon: Symbols.paragliding,
       isSwitched: activeAirdrop,
       onChanged: (bool isSwitched) async {
         await preferencesNotifier.setActiveAirdrop(isSwitched);

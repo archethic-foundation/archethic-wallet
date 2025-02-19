@@ -1,4 +1,3 @@
-import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -39,14 +38,6 @@ class _AirdropParticipateStepCongratsSheetState
   Widget build(
     BuildContext context,
   ) {
-    final accountSelected = ref.watch(
-      accountsNotifierProvider.select(
-        (accounts) => accounts.valueOrNull?.selectedAccount,
-      ),
-    );
-
-    if (accountSelected == null) return const SizedBox();
-
     final localizations = AppLocalizations.of(context)!;
     return Stack(
       children: [
