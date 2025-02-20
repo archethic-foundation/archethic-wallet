@@ -5,8 +5,6 @@ import 'package:aewallet/application/price_history/providers.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/ui/util/address_formatters.dart';
-import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/tokens_detail/layouts/components/token_detail_chart.dart';
 import 'package:aewallet/ui/views/tokens_detail/layouts/components/token_detail_chart_interval.dart';
@@ -19,7 +17,6 @@ import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -76,45 +73,6 @@ class TokenDetailSheet extends ConsumerWidget
             ),
         ],
       ),
-      widgetAfterTitle: aeToken.address != null && aeToken.address!.isNotEmpty
-          ? InkWell(
-              onTap: () {
-                Clipboard.setData(
-                  ClipboardData(
-                    text: aeToken.address ?? '',
-                  ),
-                );
-                UIUtil.showSnackbar(
-                  '${localizations.addressCopied}\n${aeToken.address!.toLowerCase()}',
-                  context,
-                  ref,
-                  ArchethicTheme.text,
-                  ArchethicTheme.snackBarShadow,
-                  icon: Symbols.info,
-                );
-              },
-              child: Row(
-                children: [
-                  Text(
-                    AddressFormatters(
-                      aeToken.address ?? '',
-                    ).getShortString4().toLowerCase(),
-                    style: ArchethicThemeStyles.textStyleSize14W600Primary,
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  const Icon(
-                    Symbols.content_copy,
-                    weight: IconSize.weightM,
-                    opticalSize: IconSize.opticalSizeM,
-                    grade: IconSize.gradeM,
-                    size: 16,
-                  ),
-                ],
-              ),
-            )
-          : const SizedBox.shrink(),
       widgetLeft: BackButton(
         key: const Key('back'),
         color: ArchethicTheme.text,

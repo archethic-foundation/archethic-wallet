@@ -176,7 +176,8 @@ class LiquidityAddFormSheet extends ConsumerWidget
                                   return SelectableText(
                                     snapshot.data!,
                                     style: AppTextStyles.bodyMediumWithOpacity(
-                                        context),
+                                      context,
+                                    ),
                                   );
                                 }
                                 return const SizedBox.shrink();
@@ -225,7 +226,8 @@ class LiquidityAddFormSheet extends ConsumerWidget
                                   return SelectableText(
                                     snapshot.data!,
                                     style: AppTextStyles.bodyMediumWithOpacity(
-                                        context),
+                                      context,
+                                    ),
                                   );
                                 }
                                 return const SizedBox.shrink();

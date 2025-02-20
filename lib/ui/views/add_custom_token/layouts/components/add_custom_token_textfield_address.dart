@@ -161,8 +161,9 @@ class _AddCustomTokenTextFieldAddressState
                                 ),
                               );
                             },
-                          ) as aedappfm.AEToken;
-                          if (tokenSelected.address != null) {
+                          ) as aedappfm.AEToken?;
+                          if (tokenSelected != null &&
+                              tokenSelected.address != null) {
                             addressController.text = tokenSelected.address!;
                             await ref
                                 .read(

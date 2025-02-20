@@ -25,29 +25,32 @@ class TokenDetailChart extends ConsumerWidget {
     return aedappfm.BlockInfo(
       paddingEdgeInsetsInfo: const EdgeInsets.only(top: 15, right: 15),
       width: MediaQuery.of(context).size.width,
-      info: HistoryChart(
-        intervals: chartInfos!,
-        gradientColors: LinearGradient(
-          colors: <Color>[
-            ArchethicTheme.text20,
-            ArchethicTheme.text,
-          ],
+      info: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.3,
+        child: HistoryChart(
+          intervals: chartInfos!,
+          gradientColors: LinearGradient(
+            colors: <Color>[
+              ArchethicTheme.text20,
+              ArchethicTheme.text,
+            ],
+          ),
+          gradientColorsBar: LinearGradient(
+            colors: <Color>[
+              ArchethicTheme.text.withOpacity(0.9),
+              ArchethicTheme.text.withOpacity(0.1),
+            ],
+            begin: Alignment.center,
+            end: Alignment.bottomCenter,
+          ),
+          tooltipBg: ArchethicTheme.backgroundDark,
+          tooltipText: ArchethicThemeStyles.textStyleSize12W100Primary,
+          axisTextStyle: ArchethicThemeStyles.textStyleSize12W100Primary,
+          optionChartSelected: selectedInterval,
+          currency: AvailableCurrencyEnum.usd.name,
+          completeChart: true,
+          lineTouchEnabled: true,
         ),
-        gradientColorsBar: LinearGradient(
-          colors: <Color>[
-            ArchethicTheme.text.withOpacity(0.9),
-            ArchethicTheme.text.withOpacity(0.1),
-          ],
-          begin: Alignment.center,
-          end: Alignment.bottomCenter,
-        ),
-        tooltipBg: ArchethicTheme.backgroundDark,
-        tooltipText: ArchethicThemeStyles.textStyleSize12W100Primary,
-        axisTextStyle: ArchethicThemeStyles.textStyleSize12W100Primary,
-        optionChartSelected: selectedInterval,
-        currency: AvailableCurrencyEnum.usd.name,
-        completeChart: true,
-        lineTouchEnabled: true,
       ),
     );
   }

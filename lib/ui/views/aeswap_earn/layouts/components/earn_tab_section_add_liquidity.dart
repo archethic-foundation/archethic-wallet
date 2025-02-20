@@ -57,7 +57,7 @@ class EarnSectionAddLiquidity extends ConsumerWidget {
         blockInfoColor: aedappfm.BlockInfoColor.grey,
         borderWidth: 2,
         paddingEdgeInsetsInfo:
-            const EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
+            const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
         width: MediaQuery.of(context).size.width,
         info: Row(
           children: [
