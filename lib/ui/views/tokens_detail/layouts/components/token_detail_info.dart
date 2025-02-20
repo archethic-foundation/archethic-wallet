@@ -1,15 +1,20 @@
 import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/ui/util/address_formatters.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/tokens/verified_token_icon.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
-import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class TokenDetailInfo extends ConsumerWidget {
   const TokenDetailInfo({
@@ -17,7 +22,7 @@ class TokenDetailInfo extends ConsumerWidget {
     required this.aeToken,
   });
 
-  final AEToken aeToken;
+  final aedappfm.AEToken aeToken;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -157,6 +162,56 @@ class TokenDetailInfo extends ConsumerWidget {
               ),
             ],
           ),
+        if (aeToken.address != null && aeToken.address!.isNotEmpty)
+          const SizedBox(
+            height: 10,
+          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (aeToken.address != null && aeToken.address!.isNotEmpty)
+              InkWell(
+                onTap: () {
+                  Clipboard.setData(
+                    ClipboardData(
+                      text: aeToken.address ?? '',
+                    ),
+                  );
+                  UIUtil.showSnackbar(
+                    '${AppLocalizations.of(context)!.addressCopied}\n${aeToken.address!.toLowerCase()}',
+                    context,
+                    ref,
+                    ArchethicTheme.text,
+                    ArchethicTheme.snackBarShadow,
+                    icon: Symbols.info,
+                  );
+                },
+                child: Row(
+                  children: [
+                    Text(
+                      AddressFormatters(
+                        aeToken.address ?? '',
+                      ).getShortString4().toLowerCase(),
+                      style: ArchethicThemeStyles.textStyleSize14W600Primary,
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    const Icon(
+                      Symbols.content_copy,
+                      weight: IconSize.weightM,
+                      opticalSize: IconSize.opticalSizeM,
+                      grade: IconSize.gradeM,
+                      color: Colors.white,
+                      size: 16,
+                    ),
+                  ],
+                ),
+              )
+            else
+              const SizedBox.shrink(),
+          ],
+        ),
         const SizedBox(
           height: 10,
         ),

@@ -37,6 +37,10 @@ class SheetAppBar extends ConsumerWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final environment = ref.watch(environmentProvider);
+    final hasContent = widgetBeforeTitle != null ||
+        title.trim().isNotEmpty ||
+        widgetAfterTitle != null ||
+        (environment != Environment.mainnet && title.trim().isNotEmpty);
 
     return AppBar(
       flexibleSpace: ClipRRect(
@@ -57,7 +61,7 @@ class SheetAppBar extends ConsumerWidget implements PreferredSizeWidget {
           : [
               widgetRight!,
             ],
-      title: title.trim().isNotEmpty
+      title: hasContent
           ? FittedBox(
               fit: BoxFit.fitWidth,
               child: Column(
@@ -70,7 +74,8 @@ class SheetAppBar extends ConsumerWidget implements PreferredSizeWidget {
                           ArchethicThemeStyles.textStyleSize24W700Primary,
                     ),
                   if (widgetAfterTitle != null) widgetAfterTitle!,
-                  if (environment != Environment.mainnet)
+                  if (environment != Environment.mainnet &&
+                      title.trim().isNotEmpty)
                     Text(
                       environment.label,
                       style: AppTextStyles.bodySmallSecondaryColor(context),

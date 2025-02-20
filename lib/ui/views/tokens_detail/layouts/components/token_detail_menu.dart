@@ -33,12 +33,11 @@ class TokenDetailMenu extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final accountSelected = ref
-        .watch(
-          accountsNotifierProvider,
-        )
-        .valueOrNull
-        ?.selectedAccount;
+    final accountSelected = ref.watch(
+      accountsNotifierProvider.select(
+        (accounts) => accounts.valueOrNull?.selectedAccount,
+      ),
+    );
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
     final pool = ref.watch(farmLockFormPoolProvider).value;
@@ -193,7 +192,7 @@ class TokenDetailMenu extends ConsumerWidget {
                               ConnectivityStatus.isConnected
                           ? ActionButton(
                               text: farmLock != null
-                                  ? '${localizations.tokenDetailMenuEarn}\nAPR\n${(farmLock.apr3years * 100).formatNumber(precision: 2)}%'
+                                  ? '${localizations.tokenDetailMenuEarn}\nAPR\n${(farmLock.apr3years * 100).formatNumber(precision: 0).replaceAll('.', '')}%'
                                   : '${localizations.tokenDetailMenuEarn}\nUCO',
                               icon: aedappfm.Iconsax.wallet_add,
                               enabled: pool != null && farmLock != null,

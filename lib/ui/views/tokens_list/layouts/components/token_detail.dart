@@ -425,7 +425,7 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                                   const SizedBox(width: 5),
                                 ],
                               ),
-                            if (widget.aeToken.isVerified == false)
+                            if (widget.aeToken.isUCO == false)
                               AutoSizeText(
                                 AddressFormatters(
                                   widget.aeToken.address ?? '',

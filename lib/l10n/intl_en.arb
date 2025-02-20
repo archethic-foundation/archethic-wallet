@@ -584,9 +584,9 @@
     "farmLockBtnClaim": "Claim",
     "farmLockDetailsLevelSingleWeight": "Weight",
     "liquidityAddTitle": "How does it work?",
-    "liquidityAddDesc": "Normally, you’d need to add equal amounts of UCO tokens and Ethereum to the liquidity pool. To make things easier, you can deposit an uneven amount, and we'll automatically swap part of your deposit to balance it out for you.",
+    "liquidityAddDesc": "Normally, you’d need to add equal amounts of UCO tokens and Ether to the liquidity pool. To make things easier, you can deposit an uneven amount, and we'll automatically swap part of your deposit to balance it out for you.",
     "liquidityAddTextFieldUCOLabel": "Amount of UCO to add ?",
-    "liquidityAddTextFieldETHLabel": "Amount of Ethereum to add ?",
+    "liquidityAddTextFieldETHLabel": "Amount of Ether to add ?",
     "keychainAddressCopied": "Keychain address copied",
     "farmLockTokensSummaryMoreInfo": "More info",
     "swapRefreshDone": "Your swap data has been refreshed",
@@ -720,7 +720,7 @@
     "airdropDashboardIncreaseAirdropBtn": "Increase my airdrop",
     "airdropDashboardCongratsTitle": "Congratulations! You are participating to the airdrop",
     "airdropDashboardCompleteParticipationTitle": "Complete Your Airdrop Participation!",
-    "airdropDashboardLPTokenAvailable": "You currently have {lpTokenAvailable} LP Token available at level 0. To increase your multiplier, you can relock them in the farm.",
+    "airdropDashboardLPTokenAvailable": "You currently have {lpTokenAvailable} LP Token available in the farm at level 0. To increase your multiplier, you can relock them in the farm.",
     "@airdropDashboardLPTokenAvailable": {
         "placeholders": {
             "lpTokenAvailable": {
@@ -772,7 +772,7 @@
     "airdropStepDataMultiplierHeader": "Multiplier",
     "airdropStepDataActualValueHeader": "Actual Value",
     "earnTabTitle": "Earn passive income",
-    "earnTabDesc": "To support the growth of our ecosystem, we reward generously those who deposit liquidity in ETH (Ethereum) or in UCO token (Official Archethic crypto).",
+    "earnTabDesc": "To support the growth of our ecosystem, we reward generously those who deposit liquidity in ETH (Ethereum) or in UCO token (Official Archethic coin).",
     "earnTotalDeposited": "Total deposited",
     "earnTotalYearlyInterest": "Yearly interest (max)",
     "earnSectionDepositFundsV1Title1": "Buy UCO Token Directly",

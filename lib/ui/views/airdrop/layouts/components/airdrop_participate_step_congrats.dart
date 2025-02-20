@@ -79,7 +79,6 @@ class _AirdropParticipateStepCongratsSheetState
                     const AirdropInfoNoLP(),
                     const SizedBox(height: 10),
                     const AirdropLPCurrentValue(),
-                    const SizedBox(height: 10),
                     const AirdropLPAvailable(),
                     const SizedBox(height: 10),
                     const AirdropStepTab(),
