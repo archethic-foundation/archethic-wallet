@@ -25,7 +25,6 @@ class TokenDetailChart extends ConsumerWidget {
     return aedappfm.BlockInfo(
       paddingEdgeInsetsInfo: const EdgeInsets.only(top: 15, right: 15),
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.35,
       info: HistoryChart(
         intervals: chartInfos!,
         gradientColors: LinearGradient(

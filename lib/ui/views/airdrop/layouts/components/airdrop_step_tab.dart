@@ -1,5 +1,4 @@
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
-import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -50,7 +49,7 @@ class AirdropStepTab extends ConsumerWidget {
         DecoratedBox(
           decoration: BoxDecoration(
             border: Border.all(
-              color: ArchethicThemeBase.palePurpleBackground,
+              color: aedappfm.ArchethicThemeBase.palePurpleBackground,
             ),
             borderRadius: BorderRadius.circular(10),
           ),
@@ -90,7 +89,7 @@ class AirdropStepTab extends ConsumerWidget {
                   '${airdropForm.personalMultiplier}x' == row.multiplier
                       ? TableRow(
                           decoration: BoxDecoration(
-                            color: ArchethicThemeBase.raspberry500
+                            color: aedappfm.ArchethicThemeBase.raspberry500
                                 .withOpacity(0.5),
                           ),
                           children: [
@@ -118,7 +117,8 @@ class AirdropStepTab extends ConsumerWidget {
                           ? TableRow(
                               decoration: BoxDecoration(
                                 color: row.actualValue.isEven
-                                    ? ArchethicThemeBase.palePurpleBackground
+                                    ? aedappfm
+                                        .ArchethicThemeBase.palePurpleBackground
                                     : Colors.transparent,
                               ),
                               children: [
@@ -142,7 +142,8 @@ class AirdropStepTab extends ConsumerWidget {
                           : TableRow(
                               decoration: BoxDecoration(
                                 color: row.actualValue.isEven
-                                    ? ArchethicThemeBase.palePurpleBackground
+                                    ? aedappfm
+                                        .ArchethicThemeBase.palePurpleBackground
                                     : Colors.transparent,
                               ),
                               children: [

@@ -1,5 +1,6 @@
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/themes/archethic_theme_base.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 
 class ArchethicThemeStyles {
@@ -338,7 +339,7 @@ class ArchethicThemeStyles {
     return TextStyle(
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w400,
-      color: ArchethicThemeBase.raspberry300,
+      color: aedappfm.ArchethicThemeBase.raspberry300,
     );
   }
 
@@ -354,7 +355,7 @@ class ArchethicThemeStyles {
     return TextStyle(
       fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w400,
-      color: ArchethicThemeBase.raspberry300,
+      color: aedappfm.ArchethicThemeBase.raspberry300,
     );
   }
 
@@ -362,7 +363,7 @@ class ArchethicThemeStyles {
     return TextStyle(
       fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w600,
-      color: ArchethicThemeBase.raspberry300,
+      color: aedappfm.ArchethicThemeBase.raspberry300,
     );
   }
 

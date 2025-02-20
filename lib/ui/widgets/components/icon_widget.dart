@@ -104,8 +104,7 @@ class _IconDataWidgetEnabled extends ConsumerWidget {
         shape: BoxShape.circle,
         boxShadow: <BoxShadow>[
           BoxShadow(
-            color:
-                ArchethicTheme.iconDataWidgetIconBackground.withOpacity(0.1),
+            color: ArchethicTheme.iconDataWidgetIconBackground.withOpacity(0.1),
           ),
         ],
       ),
@@ -149,6 +148,23 @@ class _IconDataWidgetDisabled extends ConsumerWidget {
           weight: 200,
         ),
       ),
+    );
+  }
+}
+
+class GradientIcon extends StatelessWidget {
+  const GradientIcon({required this.icon, super.key});
+
+  final Icon icon;
+  @override
+  Widget build(
+    BuildContext context,
+  ) {
+    return ShaderMask(
+      shaderCallback: (Rect bounds) {
+        return ArchethicTheme.gradientMainButton.createShader(bounds);
+      },
+      child: icon,
     );
   }
 }

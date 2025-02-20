@@ -153,6 +153,7 @@ class _LiquidityRemoveLPTokenAmountState
                     tokenBalance: liquidityRemove.lpTokenBalance,
                     token: liquidityRemove.pool!.lpToken,
                     pool: liquidityRemove.pool,
+                    fiatTextStyleMedium: true,
                   ),
                 ],
               ),

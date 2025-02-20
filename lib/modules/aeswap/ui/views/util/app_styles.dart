@@ -6,11 +6,14 @@ class AppTextStyles {
   static const kOpacityText = 0.8;
 
   static TextStyle bodyLarge(BuildContext context) {
-    return Theme.of(context).textTheme.bodyLarge!;
+    return Theme.of(context).textTheme.bodyLarge!.copyWith(
+          fontWeight: FontWeight.w300,
+        );
   }
 
   static TextStyle bodyLargeWithOpacity(BuildContext context) {
     return Theme.of(context).textTheme.bodyLarge!.copyWith(
+          fontWeight: FontWeight.w300,
           color: Theme.of(context)
               .textTheme
               .bodyLarge!
@@ -21,16 +24,20 @@ class AppTextStyles {
 
   static TextStyle bodyLargeSecondaryColor(BuildContext context) {
     return Theme.of(context).textTheme.bodyLarge!.copyWith(
+          fontWeight: FontWeight.w300,
           color: aedappfm.AppThemeBase.secondaryColor,
         );
   }
 
   static TextStyle bodyMedium(BuildContext context) {
-    return Theme.of(context).textTheme.bodyMedium!;
+    return Theme.of(context).textTheme.bodyMedium!.copyWith(
+          fontWeight: FontWeight.w300,
+        );
   }
 
   static TextStyle bodyMediumWithOpacity(BuildContext context) {
     return Theme.of(context).textTheme.bodyMedium!.copyWith(
+          fontWeight: FontWeight.w300,
           color: Theme.of(context)
               .textTheme
               .bodyMedium!
@@ -41,16 +48,20 @@ class AppTextStyles {
 
   static TextStyle bodyMediumSecondaryColor(BuildContext context) {
     return Theme.of(context).textTheme.bodyMedium!.copyWith(
+          fontWeight: FontWeight.w300,
           color: aedappfm.AppThemeBase.secondaryColor,
         );
   }
 
   static TextStyle bodySmall(BuildContext context) {
-    return Theme.of(context).textTheme.bodySmall!;
+    return Theme.of(context).textTheme.bodySmall!.copyWith(
+          fontWeight: FontWeight.w300,
+        );
   }
 
   static TextStyle bodySmallWithOpacity(BuildContext context) {
     return Theme.of(context).textTheme.bodySmall!.copyWith(
+          fontWeight: FontWeight.w300,
           color: Theme.of(context)
               .textTheme
               .bodySmall!
@@ -61,6 +72,7 @@ class AppTextStyles {
 
   static TextStyle bodySmallSecondaryColor(BuildContext context) {
     return Theme.of(context).textTheme.bodySmall!.copyWith(
+          fontWeight: FontWeight.w300,
           color: aedappfm.AppThemeBase.secondaryColor,
         );
   }

@@ -165,66 +165,68 @@ class AirdropBanner extends ConsumerWidget {
       padding: const EdgeInsets.only(top: 20),
       child: _buildBannerContainer(
         context,
-        height: state == AirdropState.ok ? 150 : 260,
         child: Stack(
           alignment: Alignment.topRight,
           children: [
-            InkWell(
-              onTap: onButtonPressed,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (state != AirdropState.ok)
-                    const AirdropParticipantsCount(),
-                  if (state != AirdropState.ok)
-                    Text(
-                      '\$${ucoPerParticipant?.numeral(digits: 2) ?? ''} ${localizations.airdropPerParticipant}',
-                      style: AppTextStyles.bodyMediumWithOpacity(context),
-                    ),
-                  if (state != AirdropState.ok) const SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: AutoSizeText(
-                      title,
-                      style: titleTextStyle,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  if (description != null)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: InkWell(
+                onTap: onButtonPressed,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (state != AirdropState.ok)
+                      const AirdropParticipantsCount(),
+                    if (state != AirdropState.ok)
+                      Text(
+                        '\$${ucoPerParticipant?.numeral(digits: 2) ?? ''} ${localizations.airdropPerParticipant}',
+                        style: AppTextStyles.bodyMediumWithOpacity(context),
+                      ),
+                    if (state != AirdropState.ok) const SizedBox(height: 10),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: AutoSizeText(
-                        description,
-                        style: AppTextStyles.bodySmallWithOpacity(context),
+                        title,
+                        style: titleTextStyle,
                         textAlign: TextAlign.center,
                       ),
                     ),
-                  SizedBox(
-                    height: 10,
-                    width: MediaQuery.of(context).size.width,
-                  ),
-                  InkWell(
-                    onTap: onButtonPressed,
-                    child: IntrinsicWidth(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 5,
+                    if (description != null)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: AutoSizeText(
+                          description,
+                          style: AppTextStyles.bodySmallWithOpacity(context),
+                          textAlign: TextAlign.center,
                         ),
-                        height: 35,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                        child: Text(
-                          buttonText,
-                          style: buttonTextStyle,
+                      ),
+                    SizedBox(
+                      height: 10,
+                      width: MediaQuery.of(context).size.width,
+                    ),
+                    InkWell(
+                      onTap: onButtonPressed,
+                      child: IntrinsicWidth(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 15,
+                            vertical: 5,
+                          ),
+                          height: 35,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          child: Text(
+                            buttonText,
+                            style: buttonTextStyle,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             Positioned(
@@ -249,14 +251,12 @@ class AirdropBanner extends ConsumerWidget {
 
   Widget _buildBannerContainer(
     BuildContext context, {
-    required double height,
     required Widget child,
   }) {
     return aedappfm.BlockInfo(
-      borderWith: 0,
+      borderWidth: 0,
       paddingEdgeInsetsClipRRect: EdgeInsets.zero,
       paddingEdgeInsetsInfo: EdgeInsets.zero,
-      height: height,
       width: MediaQuery.of(context).size.width,
       info: Stack(
         children: [

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:aewallet/application/account/accounts_notifier.dart';
-import 'package:aewallet/modules/aeswap/ui/views/aeswap_pool_list/layouts/components/pool_details_info_header.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
@@ -98,12 +97,25 @@ class FarmLockDepositFormSheet extends ConsumerWidget
       );
     }
 
+    final localizations = AppLocalizations.of(context)!;
+    final boldBodyLarge =
+        AppTextStyles.bodyLarge(context).copyWith(fontWeight: FontWeight.bold);
+    final bodyMediumWithOpacity = AppTextStyles.bodyMediumWithOpacity(context);
+
     return SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          PoolDetailsInfoHeader(
-            pool: farmLockDeposit.pool,
+          Text(
+            localizations.farmLockDepositTitle,
+            style: boldBodyLarge,
           ),
+          const SizedBox(height: 10),
+          Text(
+            localizations.farmLockDepositDesc,
+            style: bodyMediumWithOpacity,
+          ),
+          const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.only(top: 10),
             child: Column(
@@ -114,13 +126,15 @@ class FarmLockDepositFormSheet extends ConsumerWidget
                   children: [
                     SelectableText(
                       AppLocalizations.of(context)!
-                          .farmLockDepositFormAmountLbl,
-                      style: AppTextStyles.bodyMedium(context),
+                          .farmLockDepositTextFieldLPLabel,
+                      style: AppTextStyles.bodyMedium(context).copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     if (farmLockDeposit.aprEstimation != null)
                       SelectableText(
-                        '${AppLocalizations.of(context)!.farmLockDepositAPREstimationLbl} ${farmLockDeposit.aprEstimation!.formatNumber(precision: 2)}%',
-                        style: AppTextStyles.bodyMedium(context),
+                        '${AppLocalizations.of(context)!.farmLockDepositAPREstimationLbl} ${farmLockDeposit.aprEstimation!.formatNumber(precision: 0).replaceAll('.', '')}%',
+                        style: AppTextStyles.bodyMediumWithOpacity(context),
                       )
                     else
                       const SizedBox.shrink(),
@@ -133,7 +147,6 @@ class FarmLockDepositFormSheet extends ConsumerWidget
                   ],
                 ),
                 aedappfm.BlockInfo(
-                  height: 60,
                   width: MediaQuery.of(context).size.width,
                   paddingEdgeInsetsClipRRect:
                       const EdgeInsets.symmetric(vertical: 10),
@@ -189,18 +202,22 @@ class FarmLockDepositFormSheet extends ConsumerWidget
                     },
                   ),
                 ),
-                Row(
+                const SizedBox(height: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SelectableText(
-                      AppLocalizations.of(context)!
-                          .farmLockDepositFormLockDurationLbl,
-                      style: AppTextStyles.bodyMedium(context),
+                    Text(
+                      localizations.farmLockDepositTitle2,
+                      style: boldBodyLarge,
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      localizations.farmLockDepositDesc2,
+                      style: bodyMediumWithOpacity,
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 20),
                 Wrap(
                   children: [
                     ...farmLockDeposit.filterAvailableLevels.entries

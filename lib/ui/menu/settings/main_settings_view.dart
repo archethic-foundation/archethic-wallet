@@ -45,8 +45,8 @@ class MainMenuView extends ConsumerWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: <Color>[
-            ArchethicThemeBase.blue700.withOpacity(0.4),
-            ArchethicThemeBase.blue700.withOpacity(1),
+            aedappfm.ArchethicThemeBase.blue700.withOpacity(0.4),
+            aedappfm.ArchethicThemeBase.blue700.withOpacity(1),
           ],
           begin: Alignment.topLeft,
           end: const Alignment(5, 0),
@@ -200,7 +200,7 @@ class _ActiveAirdropSettingsListItem extends ConsumerWidget {
     return _SettingsListItem.withSwitch(
       heading: localizations.airdropLinkHeader,
       info: localizations.airdropLinkDesc,
-      background: ArchethicTheme.backgroundAirdrop,
+      background: ArchethicTheme.backgroundBlocLogo,
       icon: Symbols.paragliding,
       isSwitched: activeAirdrop,
       onChanged: (bool isSwitched) async {

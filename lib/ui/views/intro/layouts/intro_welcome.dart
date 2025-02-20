@@ -2,7 +2,6 @@ import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/version.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_import_seed.dart';
@@ -102,7 +101,7 @@ class _Language extends ConsumerWidget {
           width: 30,
           height: 30,
           decoration: BoxDecoration(
-            color: ArchethicThemeBase.blue600,
+            color: aedappfm.ArchethicThemeBase.blue600,
             shape: BoxShape.circle,
           ),
           child: Icon(

@@ -3,7 +3,6 @@ import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/fiat_value.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/layouts/components/farm_lock_level_up_lock_duration_btn.dart';
@@ -96,9 +95,25 @@ class FarmLockLevelUpFormSheet extends ConsumerWidget
       );
     }
 
+    final localizations = AppLocalizations.of(context)!;
+    final boldBodyLarge =
+        AppTextStyles.bodyLarge(context).copyWith(fontWeight: FontWeight.bold);
+    final bodyMediumWithOpacity = AppTextStyles.bodyMediumWithOpacity(context);
+
     return SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(
+            localizations.farmLockLevelUpTitle,
+            style: boldBodyLarge,
+          ),
+          const SizedBox(height: 10),
+          Text(
+            localizations.farmLockLevelUpDesc,
+            style: bodyMediumWithOpacity,
+          ),
+          const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.only(bottom: 80),
             child: Column(
@@ -126,7 +141,7 @@ class FarmLockLevelUpFormSheet extends ConsumerWidget
                     ),
                     if (farmLockLevelUp.aprEstimation != null)
                       SelectableText(
-                        '${AppLocalizations.of(context)!.farmLockLevelUpAPREstimationLbl} ${farmLockLevelUp.aprEstimation!.formatNumber(precision: 2)}%',
+                        '${AppLocalizations.of(context)!.farmLockLevelUpAPREstimationLbl} ${farmLockLevelUp.aprEstimation!.formatNumber(precision: 0).replaceAll('.', '')}%',
                         style: AppTextStyles.bodyMedium(context),
                       )
                     else
@@ -182,18 +197,22 @@ class FarmLockLevelUpFormSheet extends ConsumerWidget
                       ),
                   ],
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
+                const SizedBox(height: 30),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SelectableText(
-                      AppLocalizations.of(context)!
-                          .farmLockLevelUpFormLockDurationLbl,
-                      style: AppTextStyles.bodyMedium(context),
+                    Text(
+                      localizations.farmLockLevelUpTitle2,
+                      style: boldBodyLarge,
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      localizations.farmLockLevelUpDesc2,
+                      style: bodyMediumWithOpacity,
                     ),
                   ],
                 ),
+                const SizedBox(height: 20),
                 Wrap(
                   children: [
                     ...farmLockLevelUp.filterAvailableLevels.entries
@@ -219,25 +238,25 @@ class FarmLockLevelUpFormSheet extends ConsumerWidget
                     SelectableText(
                       AppLocalizations.of(context)!
                           .farmLockLevelUpCurrentLvlLbl,
-                      style: AppTextStyles.bodyLarge(context),
+                      style: AppTextStyles.bodyMediumWithOpacity(context),
                     ),
                     if (farmLockLevelUp.currentLevel != null)
                       Row(
                         children: [
                           SelectableText(
                             farmLockLevelUp.currentLevel!,
-                            style: AppTextStyles.bodyLargeSecondaryColor(
+                            style: AppTextStyles.bodyMediumSecondaryColor(
                               context,
                             ),
                           ),
                           SelectableText(
                             '/',
-                            style: AppTextStyles.bodyLarge(context),
+                            style: AppTextStyles.bodyMediumWithOpacity(context),
                           ),
                           SelectableText(
                             farmLockLevelUp
                                 .farmLock!.availableLevels.entries.last.key,
-                            style: AppTextStyles.bodyLarge(context),
+                            style: AppTextStyles.bodyMediumWithOpacity(context),
                           ),
                         ],
                       ),
@@ -245,11 +264,6 @@ class FarmLockLevelUpFormSheet extends ConsumerWidget
                 ),
                 const SizedBox(
                   height: 10,
-                ),
-                SelectableText(
-                  AppLocalizations.of(context)!.farmLockLevelUpDesc,
-                  style: ArchethicThemeStyles.textStyleSize14W200Primary
-                      .copyWith(),
                 ),
               ],
             ),

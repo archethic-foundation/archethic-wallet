@@ -1,7 +1,8 @@
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
-import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/state.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,10 +35,10 @@ class AirdropStepper extends ConsumerWidget {
           lineType: LineType.normal,
           lineSpace: 0,
           lineWidth: 20,
-          activeLineColor: ArchethicThemeBase.neutral800,
-          defaultLineColor: ArchethicThemeBase.neutral800,
-          unreachedLineColor: ArchethicThemeBase.neutral800,
-          finishedLineColor: ArchethicThemeBase.blue400,
+          activeLineColor: aedappfm.ArchethicThemeBase.neutral800,
+          defaultLineColor: aedappfm.ArchethicThemeBase.neutral800,
+          unreachedLineColor: aedappfm.ArchethicThemeBase.neutral800,
+          finishedLineColor: aedappfm.ArchethicThemeBase.blue400,
         ),
         stepRadius: 28,
         finishedStepBackgroundColor: Colors.transparent,
@@ -47,8 +48,8 @@ class AirdropStepper extends ConsumerWidget {
             customStep: CircleAvatar(
               radius: 20,
               backgroundColor: activeStep >= 1
-                  ? ArchethicThemeBase.blue400
-                  : ArchethicThemeBase.neutral800,
+                  ? aedappfm.ArchethicThemeBase.blue400
+                  : aedappfm.ArchethicThemeBase.neutral800,
               child: Text('1', style: AppTextStyles.bodyLarge(context)),
             ),
           ),
@@ -56,8 +57,8 @@ class AirdropStepper extends ConsumerWidget {
             customStep: CircleAvatar(
               radius: 20,
               backgroundColor: activeStep >= 2
-                  ? ArchethicThemeBase.blue400
-                  : ArchethicThemeBase.neutral800,
+                  ? aedappfm.ArchethicThemeBase.blue400
+                  : aedappfm.ArchethicThemeBase.neutral800,
               child: Text('2', style: AppTextStyles.bodyLarge(context)),
             ),
           ),
@@ -65,8 +66,8 @@ class AirdropStepper extends ConsumerWidget {
             customStep: CircleAvatar(
               radius: 20,
               backgroundColor: activeStep >= 3
-                  ? ArchethicThemeBase.blue400
-                  : ArchethicThemeBase.neutral800,
+                  ? aedappfm.ArchethicThemeBase.blue400
+                  : aedappfm.ArchethicThemeBase.neutral800,
               child: Text('3', style: AppTextStyles.bodyLarge(context)),
             ),
           ),
@@ -74,8 +75,8 @@ class AirdropStepper extends ConsumerWidget {
             customStep: CircleAvatar(
               radius: 20,
               backgroundColor: activeStep >= 4
-                  ? ArchethicThemeBase.blue400
-                  : ArchethicThemeBase.neutral800,
+                  ? aedappfm.ArchethicThemeBase.blue400
+                  : aedappfm.ArchethicThemeBase.neutral800,
               child: Text('4', style: AppTextStyles.bodyLarge(context)),
             ),
           ),

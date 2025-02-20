@@ -1,7 +1,7 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/components/pool_info_card.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_remove/bloc/provider.dart';
@@ -90,15 +90,15 @@ class LiquidityRemoveFormSheet extends ConsumerWidget
       padding: const EdgeInsets.only(top: 10),
       child: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (liquidityRemove.token1 != null)
-              PoolInfoCard(
-                pool: pool,
-                tokenAddressRatioPrimary: liquidityRemove.token1!.address,
-              ),
+            Text(
+              AppLocalizations.of(context)!.liquidityRemoveTextFieldLPLabel,
+              style: AppTextStyles.bodyMedium(context)
+                  .copyWith(fontWeight: FontWeight.bold),
+            ),
             const SizedBox(
-              height: 20,
+              height: 5,
             ),
             const LiquidityRemoveLPTokenAmount(),
             const SizedBox(

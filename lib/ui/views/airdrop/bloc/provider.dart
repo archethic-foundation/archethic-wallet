@@ -35,7 +35,7 @@ Future<({AirdropState state, String? email})> airdropBannerStatus(
   }
 
   if (userInfo.isMailConfirmed == null) {
-    if (personalLP.personalLP == 0) {
+    if (personalLP.personalLP < 1) {
       return (state: AirdropState.newParticipation, email: userInfo.email);
     }
 
@@ -43,7 +43,7 @@ Future<({AirdropState state, String? email})> airdropBannerStatus(
   }
 
   if (userInfo.isMailConfirmed == false) {
-    if (personalLP.personalLP > 0) {
+    if (personalLP.personalLP >= 1) {
       return (state: AirdropState.shouldConfirmMail, email: userInfo.email);
     }
     return (
@@ -53,7 +53,7 @@ Future<({AirdropState state, String? email})> airdropBannerStatus(
   }
 
   //userInfo.isMailConfirmed == true
-  if (personalLP.personalLP > 0) {
+  if (personalLP.personalLP >= 1) {
     return (state: AirdropState.ok, email: userInfo.email);
   }
   return (state: AirdropState.shouldFarm, email: userInfo.email);

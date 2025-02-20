@@ -1,9 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:aewallet/application/connectivity_status.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -216,6 +219,50 @@ class _NoIconButton extends ConsumerWidget {
             ),
         ],
       ),
+    );
+  }
+}
+
+class CustomSmallBtn extends ConsumerWidget {
+  const CustomSmallBtn({
+    required this.buttonText,
+    required this.onPressed,
+    this.icon,
+    super.key,
+  });
+  final String buttonText;
+  final Function()? onPressed;
+  final Icon? icon;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        InkWell(
+          onTap: onPressed,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              gradient: aedappfm.AppThemeBase.gradientBtn,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (icon != null) icon!,
+                if (icon != null) const SizedBox(width: 5),
+                Text(
+                  buttonText,
+                  style: AppTextStyles.bodySmall(context)
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

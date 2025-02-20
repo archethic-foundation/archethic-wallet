@@ -86,12 +86,6 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
         children: [
           aedappfm.BlockInfo(
             width: MediaQuery.of(context).size.width,
-            height: widget.aeToken.isUCO
-                ? 115
-                : widget.aeToken.isLpToken
-                    ? 120
-                    : 85,
-            borderWith: widget.aeToken.isUCO ? 2 : 1,
             paddingEdgeInsetsClipRRect: EdgeInsets.zero,
             info: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
