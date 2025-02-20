@@ -26,12 +26,10 @@ String airdropBackendUrl(
 ) {
   final environment = ref.watch(environmentProvider);
   switch (environment) {
-    // TODO(reddwarf03): Configure url NGINX
     case aedappfm.Environment.mainnet:
-    case aedappfm.Environment.testnet:
       return 'https://airdrop-backend.archethic.net';
-
-    //return 'https://airdrop-backend.testnet.archethic.net';
+    case aedappfm.Environment.testnet:
+      return 'https://airdrop-backend.testnet.archethic.net';
     case aedappfm.Environment.devnet:
       return 'http://localhost:4000';
   }
