@@ -1,5 +1,5 @@
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/views/add_custom_token/layouts/add_custom_token_sheet.dart';
+import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -20,53 +20,30 @@ class CustomTokenAddBtn extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.only(left: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          InkWell(
-            onTap: () async {
-              await CupertinoScaffold.showCupertinoModalBottomSheet(
-                context: context,
-                builder: (BuildContext context) {
-                  return FractionallySizedBox(
-                    heightFactor: 1,
-                    child: Scaffold(
-                      backgroundColor: aedappfm.AppThemeBase.sheetBackground
-                          .withOpacity(0.2),
-                      body: AddCustomTokenSheet(
-                        myTokens: myTokens,
-                      ),
-                    ),
-                  );
-                },
+      child: CustomSmallBtn(
+        buttonText: AppLocalizations.of(context)!.token,
+        icon: const Icon(
+          Symbols.add,
+          color: Colors.white,
+          size: 17,
+        ),
+        onPressed: () async {
+          await CupertinoScaffold.showCupertinoModalBottomSheet(
+            context: context,
+            builder: (BuildContext context) {
+              return FractionallySizedBox(
+                heightFactor: 1,
+                child: Scaffold(
+                  backgroundColor:
+                      aedappfm.AppThemeBase.sheetBackground.withOpacity(0.2),
+                  body: AddCustomTokenSheet(
+                    myTokens: myTokens,
+                  ),
+                ),
               );
             },
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                gradient: aedappfm.AppThemeBase.gradientBtn,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(
-                    Symbols.add,
-                    color: Colors.white,
-                    size: 17,
-                  ),
-                  const SizedBox(width: 5),
-                  Text(
-                    AppLocalizations.of(context)!.token,
-                    style: AppTextStyles.bodyMedium(context),
-                  ),
-                  const SizedBox(width: 5),
-                ],
-              ),
-            ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }

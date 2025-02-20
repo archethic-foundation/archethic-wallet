@@ -5,9 +5,7 @@ import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_token_icon.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/fiat_value.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/components/pool_info_card.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/layouts/components/liquidity_add_icon_settings.dart';
@@ -24,7 +22,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class LiquidityAddFormSheet extends ConsumerWidget
     implements SheetSkeletonInterface {
@@ -98,43 +95,24 @@ class LiquidityAddFormSheet extends ConsumerWidget
       return const SizedBox.shrink();
     }
     final localizations = AppLocalizations.of(context)!;
+    final boldBodyLarge =
+        AppTextStyles.bodyLarge(context).copyWith(fontWeight: FontWeight.bold);
+    final bodyMediumWithOpacity = AppTextStyles.bodyMediumWithOpacity(context);
+
     return SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          InkWell(
-            onTap: () {
-              launchUrl(
-                Uri.parse(
-                  'https://wiki.archethic.net/participate/dex/Guide_Usage/liquidity_pool#add-liquidity',
-                ),
-              );
-            },
-            child: Row(
-              children: [
-                Expanded(
-                  child: RichText(
-                    text: TextSpan(
-                      style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                      children: [
-                        TextSpan(
-                          text: localizations.liquidityAddDesc,
-                        ),
-                        const WidgetSpan(
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 5, left: 7),
-                            child: Icon(
-                              Icons.help,
-                              size: 16,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          Text(
+            localizations.liquidityAddTitle,
+            style: boldBodyLarge,
           ),
+          const SizedBox(height: 10),
+          Text(
+            localizations.liquidityAddDesc,
+            style: bodyMediumWithOpacity,
+          ),
+          const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.only(top: 10),
             child: Column(
@@ -143,20 +121,12 @@ class LiquidityAddFormSheet extends ConsumerWidget
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (liquidityAdd.token1 != null)
-                      PoolInfoCard(
-                        pool: pool,
-                        tokenAddressRatioPrimary: liquidityAdd.token1!.address,
-                      ),
-                    const SizedBox(
-                      height: 10,
-                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         SelectableText(
-                          '${AppLocalizations.of(context)!.slippage_tolerance} ${liquidityAdd.slippageTolerance}%',
-                          style: AppTextStyles.bodyMedium(context),
+                          '${localizations.slippage_tolerance} ${liquidityAdd.slippageTolerance}%',
+                          style: AppTextStyles.bodyMediumWithOpacity(context),
                         ),
                         const SizedBox(
                           width: 5,
@@ -167,52 +137,8 @@ class LiquidityAddFormSheet extends ConsumerWidget
                         ),
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              DexTokenIcon(
-                                tokenAddress: liquidityAdd.token1!.address.isUCO
-                                    ? kUCOAddress
-                                    : liquidityAdd.token1!.address,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 10),
-                                child: Text(
-                                  liquidityAdd.token1!.symbol,
-                                ),
-                              ),
-                            ],
-                          ),
-                          if (liquidityAdd.token1 != null &&
-                              liquidityAdd.token1Amount > 0)
-                            FutureBuilder<String>(
-                              future: FiatValue().display(
-                                ref,
-                                liquidityAdd.token1!,
-                                liquidityAdd.token1Amount,
-                                withParenthesis: false,
-                              ),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  return SelectableText(
-                                    snapshot.data!,
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                  );
-                                }
-                                return const SizedBox.shrink();
-                              },
-                            ),
-                        ],
-                      ),
-                    ),
-                    const LiquidityAddToken1Amount(),
                     const SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5),
@@ -229,7 +155,9 @@ class LiquidityAddFormSheet extends ConsumerWidget
                               Padding(
                                 padding: const EdgeInsets.only(left: 10),
                                 child: Text(
-                                  liquidityAdd.token2!.symbol,
+                                  localizations.liquidityAddTextFieldUCOLabel,
+                                  style: AppTextStyles.bodyMedium(context)
+                                      .copyWith(fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ],
@@ -247,8 +175,8 @@ class LiquidityAddFormSheet extends ConsumerWidget
                                 if (snapshot.hasData) {
                                   return SelectableText(
                                     snapshot.data!,
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
+                                    style: AppTextStyles.bodyMediumWithOpacity(
+                                        context),
                                   );
                                 }
                                 return const SizedBox.shrink();
@@ -258,6 +186,55 @@ class LiquidityAddFormSheet extends ConsumerWidget
                       ),
                     ),
                     const LiquidityAddToken2Amount(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              DexTokenIcon(
+                                tokenAddress: liquidityAdd.token1!.address.isUCO
+                                    ? kUCOAddress
+                                    : liquidityAdd.token1!.address,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: Text(
+                                  localizations.liquidityAddTextFieldETHLabel,
+                                  style: AppTextStyles.bodyMedium(context)
+                                      .copyWith(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
+                          ),
+                          if (liquidityAdd.token1 != null &&
+                              liquidityAdd.token1Amount > 0)
+                            FutureBuilder<String>(
+                              future: FiatValue().display(
+                                ref,
+                                liquidityAdd.token1!,
+                                liquidityAdd.token1Amount,
+                                withParenthesis: false,
+                              ),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return SelectableText(
+                                    snapshot.data!,
+                                    style: AppTextStyles.bodyMediumWithOpacity(
+                                        context),
+                                  );
+                                }
+                                return const SizedBox.shrink();
+                              },
+                            ),
+                        ],
+                      ),
+                    ),
+                    const LiquidityAddToken1Amount(),
                     const SizedBox(
                       height: 10,
                     ),
@@ -273,13 +250,12 @@ class LiquidityAddFormSheet extends ConsumerWidget
                         child: SizedBox(
                           height: 40,
                           child: aedappfm.InfoBanner(
-                            AppLocalizations.of(context)!
-                                .liquidityAddMessageMaxHalfUCO
+                            localizations.liquidityAddMessageMaxHalfUCO
                                 .replaceFirst(
-                                  '%1',
-                                  liquidityAdd.feesEstimatedUCO
-                                      .formatNumber(precision: 8),
-                                ),
+                              '%1',
+                              liquidityAdd.feesEstimatedUCO
+                                  .formatNumber(precision: 8),
+                            ),
                             aedappfm.InfoBannerType.request,
                           ),
                         ),

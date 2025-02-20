@@ -40,7 +40,6 @@ class AirdropBlocInfo extends ConsumerWidget {
         return aedappfm.BlockInfo(
           paddingEdgeInsetsClipRRect: EdgeInsets.zero,
           paddingEdgeInsetsInfo: EdgeInsets.zero,
-          height: 190,
           width: constraints.maxWidth,
           info: Stack(
             children: [
@@ -60,6 +59,7 @@ class AirdropBlocInfo extends ConsumerWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  const SizedBox(height: 20),
                   Text(
                     localizations.airdropParticipateStepWelcomeCardTitle,
                     style: boldBodyLargeSecondary,
@@ -86,6 +86,7 @@ class AirdropBlocInfo extends ConsumerWidget {
                   ),
                   const SizedBox(height: 10),
                   const AirdropParticipantsCount(),
+                  const SizedBox(height: 20),
                 ],
               ),
             ],

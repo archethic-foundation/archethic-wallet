@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -29,6 +30,19 @@ class ReceiveModal extends ConsumerWidget {
     final infoQRCode = selectedAccount?.genesisAddress.toUpperCase() ?? '';
     return Stack(
       children: [
+        Positioned(
+          right: 0,
+          child: IconButton(
+            onPressed: () async {
+              context.pop();
+            },
+            icon: const Icon(
+              Symbols.close,
+              color: Colors.white,
+              size: 16,
+            ),
+          ),
+        ),
         GestureDetector(
           onTap: () {
             Clipboard.setData(

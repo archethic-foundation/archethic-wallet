@@ -1,6 +1,5 @@
 import 'package:aewallet/application/airdrop/airdrop.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
-import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -43,28 +42,16 @@ class AirdropPersonalRewards extends ConsumerWidget {
           error: (error, stack) {},
         );
 
-    return Container(
-      width: MediaQuery.sizeOf(context).width,
-      padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: ArchethicThemeBase.blue700.withOpacity(0.8),
+    return aedappfm.BlackBoxInfo(
+      textWidget: Text(
+        '\$${personalRewards.numeral(digits: 2)}',
+        style: AppTextStyles.bodyLarge(context).copyWith(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
         ),
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.black,
       ),
-      child: Column(
+      additionalWidget: Column(
         children: [
-          Text(
-            '\$${personalRewards.numeral(digits: 2)}',
-            style: AppTextStyles.bodyLarge(context).copyWith(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(
-            height: 5,
-          ),
           Text(
             localizations.airdropPersonalValue,
             style: AppTextStyles.bodyMediumWithOpacity(context),
@@ -75,9 +62,6 @@ class AirdropPersonalRewards extends ConsumerWidget {
             style: AppTextStyles.bodySmallWithOpacity(context)
                 .copyWith(fontSize: 8),
             textAlign: TextAlign.center,
-          ),
-          const SizedBox(
-            height: 5,
           ),
         ],
       ),

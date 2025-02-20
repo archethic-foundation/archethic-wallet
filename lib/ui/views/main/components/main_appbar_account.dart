@@ -1,7 +1,6 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/themes/archethic_theme_base.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/accounts/layouts/account_list.dart';
@@ -145,7 +144,7 @@ class MainAppBarAccount extends ConsumerWidget {
             ),
             Icon(
               Symbols.keyboard_arrow_down,
-              color: ArchethicThemeBase.neutral0,
+              color: aedappfm.ArchethicThemeBase.neutral0,
             ),
           ],
         ),

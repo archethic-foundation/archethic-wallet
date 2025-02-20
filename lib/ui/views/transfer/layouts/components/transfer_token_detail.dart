@@ -49,7 +49,6 @@ class _TransferTokenDetailState extends ConsumerState<TransferTokenDetail> {
         },
         child: aedappfm.BlockInfo(
           width: MediaQuery.of(context).size.width,
-          height: 80,
           paddingEdgeInsetsClipRRect: EdgeInsets.zero,
           info: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
