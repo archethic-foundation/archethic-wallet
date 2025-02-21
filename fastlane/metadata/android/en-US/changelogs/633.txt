@@ -1,0 +1,4 @@
+Version 4.7.2
+
+- UX/UI Updates
+- Fix Bugs

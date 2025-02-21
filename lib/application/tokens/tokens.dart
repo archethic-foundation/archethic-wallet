@@ -63,7 +63,7 @@ Future<List<aedappfm.AEToken>> tokensFromUserBalance(
 
 // TODO(reddwarf03): Hardcoded aeETH & LP (aeETH/UCO)...
   final customTokenAddressListWithDefaultValue =
-      selectedAccount.customTokenAddressList ?? <String>[];
+      List<String>.from(selectedAccount.customTokenAddressList ?? <String>[]);
   switch (environment) {
     case aedappfm.Environment.testnet:
       customTokenAddressListWithDefaultValue
@@ -87,7 +87,8 @@ Future<List<aedappfm.AEToken>> tokensFromUserBalance(
       break;
   }
 
-  customTokenAddressListWithDefaultValue.toSet().toList();
+  final uniqueTokenAddresses =
+      customTokenAddressListWithDefaultValue.toSet().toList();
 
   return ref
       .watch(
@@ -95,7 +96,7 @@ Future<List<aedappfm.AEToken>> tokensFromUserBalance(
       )
       .getTokensFromUserBalance(
         selectedAccount.genesisAddress,
-        customTokenAddressListWithDefaultValue,
+        uniqueTokenAddresses,
         poolListRaw,
         environment,
         withUCO: withUCO,
