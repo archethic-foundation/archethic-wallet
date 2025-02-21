@@ -200,9 +200,10 @@ Future<http.Response?> resendConfirmationMail(
     final payload = {
       'email': mailAddress,
     };
+    final airdropBackendUrl = ref.watch(airdropBackendUrlProvider);
     final response = await http.post(
       Uri.parse(
-        'https://airdrop-backend.archethic.net/resend-confirmation-email',
+        '$airdropBackendUrl/resend-confirmation-email',
       ),
       headers: {
         'Content-Type': 'application/json',
