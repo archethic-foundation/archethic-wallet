@@ -8,6 +8,15 @@ extension CustomTextStyles on TextTheme {
   TextStyle get bodyMediumlWithOpacity => bodyMedium!.copyWith(
         color: bodyMedium!.color?.withOpacity(0.8),
       );
+
+  TextStyle get titleSmallSemiBold => titleSmall!.copyWith(
+        fontWeight: FontWeight.w600,
+      );
+
+  TextStyle get bodySmallLink => bodySmallWithOpacity.copyWith(
+        decoration: TextDecoration.underline,
+        color: const Color(0xFF8A40BF),
+      );
 }
 
 extension ArchethicGradients on LinearGradient {

@@ -1,4 +1,4 @@
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/state.dart';
@@ -47,21 +47,22 @@ class _AirdropParticipateStepSignSheetState
                     const AirdropStepper(),
                     Text(
                       localizations.airdropParticipateStepSignTitle,
-                      style: AppTextStyles.bodyLarge(context)
-                          .copyWith(fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
                     const SizedBox(height: 10),
                     Text(
                       localizations.airdropParticipateStepSignDesc1,
-                      style: AppTextStyles.bodyMediumWithOpacity(context),
+                      style: Theme.of(context).textTheme.bodySmallWithOpacity,
                     ),
                     const SizedBox(height: 20),
                     Text(
                       localizations.airdropParticipateStepSignDesc2,
-                      style:
-                          AppTextStyles.bodyMediumWithOpacity(context).copyWith(
-                        fontStyle: FontStyle.italic,
-                      ),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmallWithOpacity
+                          .copyWith(
+                            fontStyle: FontStyle.italic,
+                          ),
                     ),
                     const SizedBox(height: 20),
                     Text.rich(
@@ -86,7 +87,7 @@ class _AirdropParticipateStepSignSheetState
                           TextSpan(
                             text:
                                 '  ${localizations.airdropParticipateStepSignWarn}',
-                            style: AppTextStyles.bodyMedium(context),
+                            style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ],
                       ),
@@ -110,7 +111,9 @@ class _AirdropParticipateStepSignSheetState
                           const SizedBox(width: 5),
                           Text(
                             localizations.back,
-                            style: AppTextStyles.bodyMediumWithOpacity(context),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmallWithOpacity,
                           ),
                         ],
                       ),

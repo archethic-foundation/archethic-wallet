@@ -1,8 +1,7 @@
 import 'package:aewallet/application/airdrop/airdrop.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/figma_components/box/box_dark.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
-import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
-    as aedappfm;
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -34,7 +33,7 @@ class AirdropPersonalRewards extends ConsumerWidget {
           error: (error, stack) {},
         );
 
-    return aedappfm.BlackBoxInfo(
+    return BoxDark(
       textWidget: Text(
         '\$${personalRewards.numeral(digits: 2)}',
         style: AppTextStyles.bodyLarge(context).copyWith(

@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:flutter/material.dart';
@@ -162,7 +163,7 @@ class GradientIcon extends StatelessWidget {
   ) {
     return ShaderMask(
       shaderCallback: (Rect bounds) {
-        return ArchethicTheme.gradientMainButton.createShader(bounds);
+        return ArchethicGradients.gradientArchethic.createShader(bounds);
       },
       child: icon,
     );

@@ -159,8 +159,13 @@ class PreferencesHiveDatasource {
   Future<void> setEarnUserLevel(EarnUserLevelType value) =>
       _setValue(earnUserLevel, value);
 
-  EarnUserLevelType getEarnUserLevel() =>
-      _getValue(earnUserLevel, defaultValue: EarnUserLevelType.beginner);
+  EarnUserLevelType getEarnUserLevel() {
+    final value = _getValue(earnUserLevel);
+    if (value == null) {
+      return EarnUserLevelType.beginner;
+    }
+    return value as EarnUserLevelType;
+  }
 
   Future<void> setRecoveryPhraseSaved(bool value) =>
       _setValue(recoveryPhraseSaved, value);

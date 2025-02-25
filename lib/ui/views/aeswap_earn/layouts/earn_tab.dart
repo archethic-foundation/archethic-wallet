@@ -3,7 +3,6 @@ import 'package:aewallet/ui/views/aeswap_earn/layouts/components/earn_tab_sectio
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/earn_tab_section_deposit_funds.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/earn_tab_section_start_earning.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/earn_total_deposited.dart';
-import 'package:aewallet/ui/views/aeswap_earn/layouts/components/earn_user_level_switch.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/earn_yearly_interest.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/farm_lock_block_farmed_tokens_summary.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
@@ -63,14 +62,11 @@ class EarnTabState extends ConsumerState<EarnTab> {
                           ),
                         ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: FarmLockBlockFarmedTokensSummary(
-                          width: MediaQuery.of(context).size.width,
-                        ),
+                      FarmLockBlockFarmedTokensSummary(
+                        width: MediaQuery.of(context).size.width,
                       ),
                       const SizedBox(height: 10),
-                      const EarnUserLevelSwitch(),
+                      //const EarnUserLevelSwitch(),
                       const SizedBox(height: 10),
                       const EarnSectionDepositFunds(),
                       const SizedBox(height: 10),

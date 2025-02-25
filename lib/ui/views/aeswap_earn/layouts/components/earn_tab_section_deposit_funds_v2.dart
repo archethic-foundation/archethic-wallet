@@ -1,4 +1,5 @@
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/views/sheets/bridge_sheet.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
@@ -28,10 +29,7 @@ class EarnSectionDepositFundsV2 extends ConsumerWidget {
         children: [
           Text(
             '1. ${localizations.earnSectionDepositFundsTitle}',
-            style: AppTextStyles.bodyLargeSecondaryColor(context).copyWith(
-              fontWeight: FontWeight.bold,
-              decoration: TextDecoration.underline,
-            ),
+            style: Theme.of(context).textTheme.titleSmall,
           ),
           const SizedBox(height: 20),
           subSection(
@@ -91,9 +89,7 @@ class EarnSectionDepositFundsV2 extends ConsumerWidget {
                 children: <InlineSpan>[
                   TextSpan(
                     text: '$descriptionTitle - ',
-                    style: AppTextStyles.bodySmall(context).copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context).textTheme.titleSmallSemiBold,
                   ),
                   TextSpan(
                     text: description,

@@ -33,81 +33,84 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
       return const SizedBox.shrink();
     }
 
-    return aedappfm.BlockInfo(
-      paddingEdgeInsetsInfo: const EdgeInsets.all(20),
-      info: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                AppLocalizations.of(context)!
-                    .farmLockBlockFarmedTokensSummaryHeader,
-                style: AppTextStyles.bodyLargeSecondaryColor(context),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          FutureBuilder<FarmLockFormSummary>(
-            future: ref.watch(farmLockFormSummaryProvider.future),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return _blockInfo(context, ref, snapshot.data);
-              } else if (snapshot.hasError) {
-                return const Text(
-                  r'$--.--',
-                );
-              } else if (snapshot.hasData) {
-                return _blockInfo(context, ref, snapshot.data);
-              }
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: aedappfm.BlockInfo(
+        paddingEdgeInsetsInfo: const EdgeInsets.all(20),
+        info: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  AppLocalizations.of(context)!
+                      .farmLockBlockFarmedTokensSummaryHeader,
+                  style: AppTextStyles.bodyLargeSecondaryColor(context),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            FutureBuilder<FarmLockFormSummary>(
+              future: ref.watch(farmLockFormSummaryProvider.future),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return _blockInfo(context, ref, snapshot.data);
+                } else if (snapshot.hasError) {
+                  return const Text(
+                    r'$--.--',
+                  );
+                } else if (snapshot.hasData) {
+                  return _blockInfo(context, ref, snapshot.data);
+                }
 
-              return const SizedBox.shrink();
-            },
-          ),
-          const SizedBox(height: 10),
-          if (farmLock != null &&
-              farmLock.userInfos.entries.isNotEmpty &&
-              pool != null)
-            CustomSmallBtn(
-              buttonText:
-                  AppLocalizations.of(context)!.farmLockTokensSummaryMoreInfo,
-              onPressed: farmLock.userInfos.entries.isEmpty
-                  ? null
-                  : () async {
-                      await CupertinoScaffold.showCupertinoModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return FractionallySizedBox(
-                            heightFactor: 1,
-                            child: Scaffold(
-                              backgroundColor: aedappfm
-                                  .AppThemeBase.sheetBackground
-                                  .withOpacity(0.2),
-                              body: const FarmLockBlockListSingleLineLock(),
-                            ),
-                          );
-                        },
-                      );
-                    },
+                return const SizedBox.shrink();
+              },
             ),
-        ],
-      ),
-      width: width,
-      backgroundWidget: Positioned.fill(
-        top: -60,
-        left: -300,
-        child: Transform.rotate(
-          angle: -10 * 3.14 / 180,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Opacity(
-              opacity: 0.2,
-              child: Image.asset(
-                'assets/themes/archethic/logo_crystal.png',
+            const SizedBox(height: 10),
+            if (farmLock != null &&
+                farmLock.userInfos.entries.isNotEmpty &&
+                pool != null)
+              CustomSmallBtn(
+                buttonText:
+                    AppLocalizations.of(context)!.farmLockTokensSummaryMoreInfo,
+                onPressed: farmLock.userInfos.entries.isEmpty
+                    ? null
+                    : () async {
+                        await CupertinoScaffold.showCupertinoModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return FractionallySizedBox(
+                              heightFactor: 1,
+                              child: Scaffold(
+                                backgroundColor: aedappfm
+                                    .AppThemeBase.sheetBackground
+                                    .withOpacity(0.2),
+                                body: const FarmLockBlockListSingleLineLock(),
+                              ),
+                            );
+                          },
+                        );
+                      },
+              ),
+          ],
+        ),
+        width: width,
+        backgroundWidget: Positioned.fill(
+          top: -60,
+          left: -300,
+          child: Transform.rotate(
+            angle: -10 * 3.14 / 180,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Opacity(
+                opacity: 0.2,
+                child: Image.asset(
+                  'assets/themes/archethic/logo_crystal.png',
+                ),
               ),
             ),
           ),

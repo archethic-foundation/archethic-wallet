@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:aewallet/domain/models/core/failures.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/state.dart';
@@ -53,13 +53,12 @@ class _AirdropParticipateStepJoinWaitlistSheetState
                     const AirdropStepper(),
                     Text(
                       localizations.airdropParticipateStepWaitlistTitle,
-                      style: AppTextStyles.bodyLarge(context)
-                          .copyWith(fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
                     const SizedBox(height: 20),
                     Text(
                       localizations.airdropParticipateStepWaitlistDesc2,
-                      style: AppTextStyles.bodyMediumWithOpacity(context),
+                      style: Theme.of(context).textTheme.bodySmallWithOpacity,
                     ),
                     const SizedBox(height: 20),
                     const AirdropTextFieldMail(),

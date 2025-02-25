@@ -1,7 +1,6 @@
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/figma_components/box/box_dark.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
-import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
-    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,7 +15,7 @@ class AirdropPersonalMultiplier extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
     final airdropForm = ref.watch(airdropFormNotifierProvider);
 
-    return aedappfm.BlackBoxInfo(
+    return BoxDark(
       textWidget: Text(
         '${airdropForm.personalMultiplier}x',
         style: AppTextStyles.bodyLarge(context).copyWith(

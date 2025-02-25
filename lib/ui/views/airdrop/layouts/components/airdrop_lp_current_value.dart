@@ -1,4 +1,5 @@
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
+import 'package:aewallet/ui/figma_components/text/gradient_text.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -22,14 +23,16 @@ class AirdropLPCurrentValue extends ConsumerWidget {
     return Text.rich(
       TextSpan(
         children: [
-          TextSpan(
-            text:
-                '\$${airdropForm.actualLPFiatValue.formatNumber(precision: 2)} ',
-            style: AppTextStyles.bodyMediumSecondaryColor(context),
+          WidgetSpan(
+            child: GradientText(
+              '\$${airdropForm.actualLPFiatValue.formatNumber(precision: 2)} ',
+              style: Theme.of(context).textTheme.bodySmallWithOpacity,
+              gradient: ArchethicGradients.gradientArchethic,
+            ),
           ),
           TextSpan(
             text: localizations.airdropLPValue,
-            style: AppTextStyles.bodyMedium(context),
+            style: Theme.of(context).textTheme.bodySmallWithOpacity,
           ),
         ],
       ),

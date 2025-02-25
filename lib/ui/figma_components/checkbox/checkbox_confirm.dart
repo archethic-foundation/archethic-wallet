@@ -1,5 +1,4 @@
 import 'package:aewallet/ui/figma_components/checkbox/checkbox_custom.dart';
-import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:flutter/material.dart';
 
 class CheckboxConfirm extends StatelessWidget {
@@ -12,7 +11,7 @@ class CheckboxConfirm extends StatelessWidget {
 
   final bool value;
   final void Function(bool value) onChanged;
-  final String text;
+  final Widget text;
 
   @override
   Widget build(BuildContext context) => GestureDetector(
@@ -28,10 +27,7 @@ class CheckboxConfirm extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(top: 1),
-                child: Text(
-                  text,
-                  style: Theme.of(context).textTheme.bodySmallWithOpacity,
-                ),
+                child: text,
               ),
             ),
           ],

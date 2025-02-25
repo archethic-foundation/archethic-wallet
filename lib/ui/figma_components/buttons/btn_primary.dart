@@ -32,7 +32,7 @@ class BtnPrimary extends StatelessWidget {
                   buttonText,
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         color: Colors.white,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
                       ),
                 ),
               ],

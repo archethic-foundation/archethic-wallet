@@ -212,18 +212,20 @@ class AirdropStepTab extends ConsumerWidget {
                   ? TextAlign.center
                   : TextAlign.end,
               style: lineType == LineType.header
-                  ? AppTextStyles.bodySmall(context)
+                  ? Theme.of(context)
+                      .textTheme
+                      .bodySmall!
                       .copyWith(fontWeight: FontWeight.bold)
                   : lineType == LineType.beforeCurrent ||
                           lineType == LineType.current
-                      ? AppTextStyles.bodySmall(context)
-                      : AppTextStyles.bodySmall(context).copyWith(
-                          color: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .color
-                              ?.withOpacity(0.5),
-                        ),
+                      ? Theme.of(context).textTheme.bodySmall
+                      : Theme.of(context).textTheme.bodySmall!.copyWith(
+                            color: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .color
+                                ?.withOpacity(0.5),
+                          ),
             ),
     );
   }
