@@ -27,11 +27,7 @@ final airdropBannerStatusProvider =
 typedef AirdropBannerStatusRef
     = AutoDisposeFutureProviderRef<({AirdropState state, String? email})>;
 String _$airdropUCOPerParticipantFiatValueHash() =>
-<<<<<<< HEAD
     r'820c4c2f64164fc699bd661afc58dbb4a4f1cea0';
-=======
-    r'1dd01f5cc3cfd4944ed9531503db39aa27db78fd';
->>>>>>> e634988c3 (chore: :lipstick: Improve Earn tab's UX/UI)
 
 /// See also [airdropUCOPerParticipantFiatValue].
 @ProviderFor(airdropUCOPerParticipantFiatValue)
@@ -51,11 +47,7 @@ final airdropUCOPerParticipantFiatValueProvider =
 typedef AirdropUCOPerParticipantFiatValueRef
     = AutoDisposeFutureProviderRef<double>;
 String _$airdropFormNotifierHash() =>
-<<<<<<< HEAD
     r'14d83577c43ca0883bb8a25a067a656cd1a6fcc5';
-=======
-    r'ef9dba7bd45f99734b3f0a3ddab96825530fe42a';
->>>>>>> e634988c3 (chore: :lipstick: Improve Earn tab's UX/UI)
 
 /// See also [AirdropFormNotifier].
 @ProviderFor(AirdropFormNotifier)
