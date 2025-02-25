@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -39,28 +40,36 @@ String airdropBackendUrl(
 Future<({int? participantCount, int? totalMultiplier})> airdropCount(
   Ref ref,
 ) async {
-  try {
-    final airdropBackendUrl = ref.watch(airdropBackendUrlProvider);
-    final response = await http.get(
-      Uri.parse(
-        '$airdropBackendUrl/airdrop-count',
-      ),
-    );
-
-    if (response.statusCode == 200) {
-      final bodyJson = jsonDecode(response.body);
-      return (
-        participantCount: bodyJson['participant_count'] as int?,
-        totalMultiplier: bodyJson['total_multiplier'] as int?,
+  Future<({int? participantCount, int? totalMultiplier})> fetchData() async {
+    try {
+      final airdropBackendUrl = ref.watch(airdropBackendUrlProvider);
+      final response = await http.get(
+        Uri.parse('$airdropBackendUrl/airdrop-count'),
       );
+
+      if (response.statusCode == 200) {
+        final bodyJson = jsonDecode(response.body);
+        return (
+          participantCount: bodyJson['participant_count'] as int?,
+          totalMultiplier: bodyJson['total_multiplier'] as int?,
+        );
+      }
+    } catch (e) {
+      _logger.severe('airdropCount error : $e');
     }
-  } catch (e) {
-    _logger.severe('airdropCount error : $e');
+    return (
+      participantCount: null,
+      totalMultiplier: null,
+    );
   }
-  return (
-    participantCount: null,
-    totalMultiplier: null,
-  );
+
+  final timer = Timer.periodic(const Duration(minutes: 5), (_) {
+    ref.invalidateSelf();
+  });
+
+  ref.onDispose(timer.cancel);
+
+  return fetchData();
 }
 
 @riverpod
