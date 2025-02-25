@@ -25,6 +25,7 @@ mixin _$Settings {
   bool get showBalances => throw _privateConstructorUsedError;
   bool get activeRPCServer => throw _privateConstructorUsedError;
   bool get activeAirdrop => throw _privateConstructorUsedError;
+  EarnUserLevelType get earnUserLevel => throw _privateConstructorUsedError;
   int get mainScreenCurrentPage => throw _privateConstructorUsedError;
   bool get showPriceChart => throw _privateConstructorUsedError;
   aedappfm.MarketPriceHistoryInterval get priceChartIntervalOption =>
@@ -51,6 +52,7 @@ abstract class $SettingsCopyWith<$Res> {
       bool showBalances,
       bool activeRPCServer,
       bool activeAirdrop,
+      EarnUserLevelType earnUserLevel,
       int mainScreenCurrentPage,
       bool showPriceChart,
       aedappfm.MarketPriceHistoryInterval priceChartIntervalOption});
@@ -79,6 +81,7 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
     Object? showBalances = null,
     Object? activeRPCServer = null,
     Object? activeAirdrop = null,
+    Object? earnUserLevel = null,
     Object? mainScreenCurrentPage = null,
     Object? showPriceChart = null,
     Object? priceChartIntervalOption = null,
@@ -116,6 +119,10 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
           ? _value.activeAirdrop
           : activeAirdrop // ignore: cast_nullable_to_non_nullable
               as bool,
+      earnUserLevel: null == earnUserLevel
+          ? _value.earnUserLevel
+          : earnUserLevel // ignore: cast_nullable_to_non_nullable
+              as EarnUserLevelType,
       mainScreenCurrentPage: null == mainScreenCurrentPage
           ? _value.mainScreenCurrentPage
           : mainScreenCurrentPage // ignore: cast_nullable_to_non_nullable
@@ -149,6 +156,7 @@ abstract class _$$SettingsImplCopyWith<$Res>
       bool showBalances,
       bool activeRPCServer,
       bool activeAirdrop,
+      EarnUserLevelType earnUserLevel,
       int mainScreenCurrentPage,
       bool showPriceChart,
       aedappfm.MarketPriceHistoryInterval priceChartIntervalOption});
@@ -175,6 +183,7 @@ class __$$SettingsImplCopyWithImpl<$Res>
     Object? showBalances = null,
     Object? activeRPCServer = null,
     Object? activeAirdrop = null,
+    Object? earnUserLevel = null,
     Object? mainScreenCurrentPage = null,
     Object? showPriceChart = null,
     Object? priceChartIntervalOption = null,
@@ -212,6 +221,10 @@ class __$$SettingsImplCopyWithImpl<$Res>
           ? _value.activeAirdrop
           : activeAirdrop // ignore: cast_nullable_to_non_nullable
               as bool,
+      earnUserLevel: null == earnUserLevel
+          ? _value.earnUserLevel
+          : earnUserLevel // ignore: cast_nullable_to_non_nullable
+              as EarnUserLevelType,
       mainScreenCurrentPage: null == mainScreenCurrentPage
           ? _value.mainScreenCurrentPage
           : mainScreenCurrentPage // ignore: cast_nullable_to_non_nullable
@@ -240,6 +253,7 @@ class _$SettingsImpl extends _Settings {
       required this.showBalances,
       required this.activeRPCServer,
       required this.activeAirdrop,
+      required this.earnUserLevel,
       required this.mainScreenCurrentPage,
       required this.showPriceChart,
       required this.priceChartIntervalOption})
@@ -262,6 +276,8 @@ class _$SettingsImpl extends _Settings {
   @override
   final bool activeAirdrop;
   @override
+  final EarnUserLevelType earnUserLevel;
+  @override
   final int mainScreenCurrentPage;
   @override
   final bool showPriceChart;
@@ -270,7 +286,7 @@ class _$SettingsImpl extends _Settings {
 
   @override
   String toString() {
-    return 'Settings(primaryCurrency: $primaryCurrency, language: $language, environment: $environment, languageSeed: $languageSeed, firstLaunch: $firstLaunch, showBalances: $showBalances, activeRPCServer: $activeRPCServer, activeAirdrop: $activeAirdrop, mainScreenCurrentPage: $mainScreenCurrentPage, showPriceChart: $showPriceChart, priceChartIntervalOption: $priceChartIntervalOption)';
+    return 'Settings(primaryCurrency: $primaryCurrency, language: $language, environment: $environment, languageSeed: $languageSeed, firstLaunch: $firstLaunch, showBalances: $showBalances, activeRPCServer: $activeRPCServer, activeAirdrop: $activeAirdrop, earnUserLevel: $earnUserLevel, mainScreenCurrentPage: $mainScreenCurrentPage, showPriceChart: $showPriceChart, priceChartIntervalOption: $priceChartIntervalOption)';
   }
 
   @override
@@ -294,6 +310,8 @@ class _$SettingsImpl extends _Settings {
                 other.activeRPCServer == activeRPCServer) &&
             (identical(other.activeAirdrop, activeAirdrop) ||
                 other.activeAirdrop == activeAirdrop) &&
+            (identical(other.earnUserLevel, earnUserLevel) ||
+                other.earnUserLevel == earnUserLevel) &&
             (identical(other.mainScreenCurrentPage, mainScreenCurrentPage) ||
                 other.mainScreenCurrentPage == mainScreenCurrentPage) &&
             (identical(other.showPriceChart, showPriceChart) ||
@@ -314,6 +332,7 @@ class _$SettingsImpl extends _Settings {
       showBalances,
       activeRPCServer,
       activeAirdrop,
+      earnUserLevel,
       mainScreenCurrentPage,
       showPriceChart,
       priceChartIntervalOption);
@@ -337,6 +356,7 @@ abstract class _Settings extends Settings {
       required final bool showBalances,
       required final bool activeRPCServer,
       required final bool activeAirdrop,
+      required final EarnUserLevelType earnUserLevel,
       required final int mainScreenCurrentPage,
       required final bool showPriceChart,
       required final aedappfm.MarketPriceHistoryInterval
@@ -359,6 +379,8 @@ abstract class _Settings extends Settings {
   bool get activeRPCServer;
   @override
   bool get activeAirdrop;
+  @override
+  EarnUserLevelType get earnUserLevel;
   @override
   int get mainScreenCurrentPage;
   @override

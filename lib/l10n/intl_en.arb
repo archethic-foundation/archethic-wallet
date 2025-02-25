@@ -338,7 +338,7 @@
     "transactionRawFormattedOption": "Formatted",
     "swapHeader": "Swap",
     "aeBridgeHeader": "Bridge",
-    "aeSwapEarnHeader": "Earn UCO token",
+    "aeSwapEarnHeader": "Earn passive income",
     "price": "Price",
     "aeBridgeLaunchMessage": "Please launch the aeBridge application to proceed. It will open in your default browser.",
     "aeBridgeLaunchButton": "Launch aeBridge",
@@ -813,5 +813,8 @@
     "farmLockDepositDesc": "When you add liquidity, you receive LP tokens as proof of your contribution. By locking these tokens, you're directly supporting the Archethic network. The longer you lock them, the more rewards you earn over time—all while helping to strengthen our community.",
     "farmLockDepositTextFieldLPLabel": "How many LP to deposit?",
     "farmLockDepositTitle2": "Choose your earning plan",
-    "farmLockDepositDesc2": "The longer you lock your LP tokens, the more rewards you receive from Archethic."
+    "farmLockDepositDesc2": "The longer you lock your LP tokens, the more rewards you receive from Archethic.",
+    "earnUserLevelSwitchBeginner": "Beginner",
+    "earnUserLevelSwitchAdvanced": "Advanced",
+    "earnUserLevelSwitchLabel": "Switch mode: "
 }
