@@ -25,19 +25,9 @@ class EarnSectionAddLiquidity extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
     final pool = ref.watch(farmLockFormPoolProvider).valueOrNull;
     final farmLock = ref.watch(farmLockFormFarmLockProvider).valueOrNull;
-    double? token1Balance;
     double? token2Balance;
 
     if (farmLock != null && farmLock.lpTokenPair != null) {
-      token1Balance = ref
-          .watch(
-            getBalanceProvider(
-              farmLock.lpTokenPair!.token1.isUCO
-                  ? kUCOAddress
-                  : farmLock.lpTokenPair!.token1.address,
-            ),
-          )
-          .valueOrNull;
       token2Balance = ref
           .watch(
             getBalanceProvider(
@@ -49,10 +39,7 @@ class EarnSectionAddLiquidity extends ConsumerWidget {
           .valueOrNull;
     }
 
-    if (token1Balance == null ||
-        token1Balance == 0 ||
-        token2Balance == null ||
-        token2Balance == 0) {
+    if (token2Balance == null || token2Balance == 0) {
       return aedappfm.BlockInfo(
         blockInfoColor: aedappfm.BlockInfoColor.grey,
         borderWidth: 2,

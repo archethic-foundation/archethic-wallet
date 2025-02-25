@@ -21,21 +21,13 @@ class AirdropPersonalRewards extends ConsumerWidget {
     ref.watch(airdropCountProvider).when(
           data: (airdropCount) {
             if (airdropCount.totalMultiplier != null &&
-                airdropCount.totalMultiplier! > 0) {
-              final archethicOracleUCO = ref
-                  .watch(
-                    aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO,
-                  )
-                  .valueOrNull;
-
-              if (archethicOracleUCO?.usd != null) {
-                final result = (Decimal.parse('100000000') /
-                            Decimal.fromInt(airdropCount.totalMultiplier!))
-                        .toDecimal(scaleOnInfinitePrecision: 8) *
-                    Decimal.fromInt(airdropForm.personalMultiplier) *
-                    Decimal.parse('${archethicOracleUCO?.usd}');
-                personalRewards = result.toDouble();
-              }
+                airdropCount.totalMultiplier! > 0 &&
+                airdropForm.personalMultiplier > 0) {
+              final result = (Decimal.parse('100000000') /
+                          Decimal.fromInt(airdropCount.totalMultiplier!))
+                      .toDecimal(scaleOnInfinitePrecision: 8) *
+                  Decimal.fromInt(airdropForm.personalMultiplier);
+              personalRewards = result.toDouble();
             }
           },
           loading: () {},
