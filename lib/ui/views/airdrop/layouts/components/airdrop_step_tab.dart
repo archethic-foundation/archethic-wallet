@@ -15,7 +15,7 @@ class AirdropStepData {
     required this.multiplier,
   });
   final int actualValue;
-  final String numberOfLP;
+  final int numberOfLP;
   final String multiplier;
 }
 
@@ -30,16 +30,16 @@ class AirdropStepTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final data = <AirdropStepData>[
-      AirdropStepData(actualValue: 0, numberOfLP: '0', multiplier: '0x'),
-      AirdropStepData(actualValue: 1, numberOfLP: '1', multiplier: '1x'),
-      AirdropStepData(actualValue: 2, numberOfLP: '5', multiplier: '2x'),
-      AirdropStepData(actualValue: 3, numberOfLP: '20', multiplier: '3x'),
-      AirdropStepData(actualValue: 4, numberOfLP: '60', multiplier: '5x'),
-      AirdropStepData(actualValue: 5, numberOfLP: '150', multiplier: '8x'),
-      AirdropStepData(actualValue: 6, numberOfLP: '300', multiplier: '13x'),
-      AirdropStepData(actualValue: 7, numberOfLP: '500', multiplier: '21x'),
-      AirdropStepData(actualValue: 8, numberOfLP: '750', multiplier: '34x'),
-      AirdropStepData(actualValue: 9, numberOfLP: '1000', multiplier: '55x'),
+      AirdropStepData(actualValue: 0, numberOfLP: 0, multiplier: '0x'),
+      AirdropStepData(actualValue: 1, numberOfLP: 1, multiplier: '1x'),
+      AirdropStepData(actualValue: 2, numberOfLP: 5, multiplier: '2x'),
+      AirdropStepData(actualValue: 3, numberOfLP: 20, multiplier: '3x'),
+      AirdropStepData(actualValue: 4, numberOfLP: 60, multiplier: '5x'),
+      AirdropStepData(actualValue: 5, numberOfLP: 150, multiplier: '8x'),
+      AirdropStepData(actualValue: 6, numberOfLP: 300, multiplier: '13x'),
+      AirdropStepData(actualValue: 7, numberOfLP: 500, multiplier: '21x'),
+      AirdropStepData(actualValue: 8, numberOfLP: 750, multiplier: '34x'),
+      AirdropStepData(actualValue: 9, numberOfLP: 1000, multiplier: '55x'),
     ];
     final airdropForm = ref.watch(airdropFormNotifierProvider);
     final localizations = AppLocalizations.of(context)!;
@@ -95,7 +95,7 @@ class AirdropStepTab extends ConsumerWidget {
                           children: [
                             tableCell(
                               context,
-                              row.numberOfLP,
+                              row.numberOfLP.toString(),
                               LineType.current,
                             ),
                             tableCell(
@@ -105,7 +105,7 @@ class AirdropStepTab extends ConsumerWidget {
                             ),
                             tableCell(
                               context,
-                              '\$${(row.actualValue * airdropForm.actualLPFiatValue).formatNumber(precision: 2)}',
+                              '\$${(row.numberOfLP * airdropForm.actualLPFiatValue).formatNumber(precision: 0).replaceAll('.', '')}',
                               LineType.current,
                             ),
                           ],
@@ -124,7 +124,7 @@ class AirdropStepTab extends ConsumerWidget {
                               children: [
                                 tableCell(
                                   context,
-                                  row.numberOfLP,
+                                  row.numberOfLP.toString(),
                                   LineType.beforeCurrent,
                                 ),
                                 tableCell(
@@ -134,7 +134,7 @@ class AirdropStepTab extends ConsumerWidget {
                                 ),
                                 tableCell(
                                   context,
-                                  '\$${(row.actualValue * airdropForm.actualLPFiatValue).formatNumber(precision: 2)}',
+                                  '\$${(row.numberOfLP * airdropForm.actualLPFiatValue).formatNumber(precision: 0).replaceAll('.', '')}',
                                   LineType.beforeCurrent,
                                 ),
                               ],
@@ -149,7 +149,7 @@ class AirdropStepTab extends ConsumerWidget {
                               children: [
                                 tableCell(
                                   context,
-                                  row.numberOfLP,
+                                  row.numberOfLP.toString(),
                                   LineType.afterCurrent,
                                 ),
                                 tableCell(
@@ -159,7 +159,7 @@ class AirdropStepTab extends ConsumerWidget {
                                 ),
                                 tableCell(
                                   context,
-                                  '\$${(row.actualValue * airdropForm.actualLPFiatValue).formatNumber(precision: 2)}',
+                                  '\$${(row.numberOfLP * airdropForm.actualLPFiatValue).formatNumber(precision: 0).replaceAll('.', '')}',
                                   LineType.afterCurrent,
                                 ),
                               ],

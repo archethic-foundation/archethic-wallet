@@ -11,8 +11,6 @@ import 'package:aewallet/modules/aeswap/application/session/state.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/state.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_banner.dart';
-import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
-    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:decimal/decimal.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -67,18 +65,11 @@ Future<double> airdropUCOPerParticipantFiatValue(
   final airdropCount = await ref.watch(airdropCountProvider.future);
   if (airdropCount.totalMultiplier != null &&
       airdropCount.totalMultiplier! > 0) {
-    final archethicOracleUCO = ref
-        .watch(
-          aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO,
-        )
-        .valueOrNull;
-
-    ucoPerParticipant = ((Decimal.parse('100000000') /
-                    Decimal.fromInt(
-                      airdropCount.totalMultiplier!,
-                    ))
-                .toDecimal(scaleOnInfinitePrecision: 8) *
-            Decimal.parse('${archethicOracleUCO?.usd ?? 0}'))
+    ucoPerParticipant = (Decimal.parse('100000000') /
+            Decimal.fromInt(
+              airdropCount.totalMultiplier!,
+            ))
+        .toDecimal(scaleOnInfinitePrecision: 8)
         .toDouble();
   }
 
