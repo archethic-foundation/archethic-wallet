@@ -39,5 +39,6 @@ class AirdropFormState with _$AirdropFormState {
       failure == null &&
       mailAddress != null &&
       mailAddress!.isNotEmpty &&
-      EmailValidator.validate(mailAddress!);
+      EmailValidator.validate(mailAddress!) &&
+      !mailAddress!.contains('+');
 }

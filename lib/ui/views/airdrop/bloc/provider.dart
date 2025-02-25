@@ -50,7 +50,6 @@ Future<({AirdropState state, String? email})> airdropBannerStatus(
     );
   }
 
-  //userInfo.isMailConfirmed == true
   if (personalLP.personalLP >= 1) {
     return (state: AirdropState.ok, email: userInfo.email);
   }

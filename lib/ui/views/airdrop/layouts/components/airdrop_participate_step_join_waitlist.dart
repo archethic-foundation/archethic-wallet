@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
@@ -9,6 +12,8 @@ import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_stepper.dar
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_textfield_mail.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
+import 'package:email_validator/email_validator.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -82,7 +87,54 @@ class _AirdropParticipateStepJoinWaitlistSheetState
                 AppButtonTinyConnectivity(
                   localizations.airdropParticipateStepWaitlistBtn,
                   Dimens.buttonBottomDimens,
-                  onPressed: () {
+                  onPressed: () async {
+                    final airdropInfo = ref.read(airdropFormNotifierProvider);
+                    if (!EmailValidator.validate(airdropInfo.mailAddress!)) {
+                      ref.read(airdropFormNotifierProvider.notifier).setFailure(
+                            const Failure.other(
+                              message: 'Email not valid.',
+                            ),
+                          );
+                      return;
+                    }
+
+                    final localPart = airdropInfo.mailAddress!.split('@').first;
+                    if (localPart.contains('+')) {
+                      ref.read(airdropFormNotifierProvider.notifier).setFailure(
+                            const Failure.other(
+                              message:
+                                  'Emails containing an alias are not accepted.',
+                            ),
+                          );
+                      return;
+                    }
+                    if (!kIsWeb) {
+                      final domain = airdropInfo.mailAddress!.split('@').last;
+                      try {
+                        final addresses = await InternetAddress.lookup(domain);
+                        if (addresses.isEmpty) {
+                          ref
+                              .read(airdropFormNotifierProvider.notifier)
+                              .setFailure(
+                                const Failure.other(
+                                  message: 'Email domain name not accepted',
+                                ),
+                              );
+
+                          return;
+                        }
+                      } on SocketException catch (_) {
+                        ref
+                            .read(airdropFormNotifierProvider.notifier)
+                            .setFailure(
+                              const Failure.other(
+                                message: 'Email domain name not accepted',
+                              ),
+                            );
+                        return;
+                      }
+                    }
+
                     ref
                         .read(airdropFormNotifierProvider.notifier)
                         .setAirdropProcessStep(AirdropProcessStep.sign);
