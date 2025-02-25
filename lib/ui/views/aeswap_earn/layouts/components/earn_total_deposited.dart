@@ -1,7 +1,6 @@
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/figma_components/box/box_dark.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
-import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
-    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,25 +16,25 @@ class EarnTotalDeposited extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
     final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
 
-    return aedappfm.BlackBoxInfo(
+    return BoxDark(
       textWidget: farmLock == null
           ? Text(
               r'$__',
-              style: AppTextStyles.bodyLarge(context).copyWith(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                  ),
             )
           : Text(
               '\$${farmLock.estimateLPTokenInFiat.numeral(digits: 0)}',
-              style: AppTextStyles.bodyLarge(context).copyWith(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                  ),
             ),
       additionalWidget: Text(
         localizations.earnTotalDeposited,
-        style: AppTextStyles.bodySmallWithOpacity(context),
+        style: Theme.of(context).textTheme.bodySmallWithOpacity,
         textAlign: TextAlign.center,
       ),
     );

@@ -1,5 +1,5 @@
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_stepper.dart';
 import 'package:aewallet/ui/views/main/bloc/providers.dart';
@@ -45,23 +45,22 @@ class _AirdropParticipateStepSupportEcosystemSheetState
                     const AirdropStepper(),
                     Text(
                       localizations.airdropParticipateStepSupportEcosystemTitle,
-                      style: AppTextStyles.bodyLarge(context)
-                          .copyWith(fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
                     const SizedBox(height: 20),
                     Text(
                       localizations.airdropParticipateStepSupportEcosystemDesc1,
-                      style: AppTextStyles.bodyMediumWithOpacity(context),
+                      style: Theme.of(context).textTheme.bodySmallWithOpacity,
                     ),
                     const SizedBox(height: 20),
                     Text(
                       localizations.airdropParticipateStepSupportEcosystemDesc2,
-                      style: AppTextStyles.bodyMediumWithOpacity(context),
+                      style: Theme.of(context).textTheme.bodySmallWithOpacity,
                     ),
                     const SizedBox(height: 20),
                     Text(
                       localizations.airdropParticipateStepSupportEcosystemDesc3,
-                      style: AppTextStyles.bodyMediumWithOpacity(context),
+                      style: Theme.of(context).textTheme.bodySmallWithOpacity,
                     ),
                     const SizedBox(height: 80),
                   ],

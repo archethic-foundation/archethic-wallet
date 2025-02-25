@@ -1,6 +1,8 @@
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+// TODO(reddwarf03): Update locked
 enum MessageBoxType { success, warning, locked }
 
 class MessageBox extends StatelessWidget {
@@ -57,19 +59,19 @@ class MessageBox extends StatelessWidget {
           child: Text(
             text,
             style: messageBoxType == MessageBoxType.warning
-                ? Theme.of(context).textTheme.bodyMedium
-                : Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: Theme.of(context)
-                          .textTheme
-                          .bodyMedium!
-                          .color!
-                          .withOpacity(0.8),
-                    ),
+                ? Theme.of(context).textTheme.bodySmall
+                : Theme.of(context).textTheme.bodySmallWithOpacity,
           ),
         ),
-        trailing: messageBoxType != MessageBoxType.locked
-            ? const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 14)
-            : null,
+        trailing: onTap == null
+            ? null
+            : messageBoxType != MessageBoxType.locked
+                ? const Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.white,
+                    size: 14,
+                  )
+                : null,
       ),
     );
   }

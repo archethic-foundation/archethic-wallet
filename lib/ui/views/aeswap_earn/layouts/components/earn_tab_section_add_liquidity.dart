@@ -3,10 +3,11 @@ import 'dart:convert';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_primary.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/layouts/liquidity_add_sheet.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_remove/layouts/liquidity_remove_sheet.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -77,29 +78,28 @@ class EarnSectionAddLiquidity extends ConsumerWidget {
         children: [
           Text(
             '2. ${localizations.earnSectionAddLiquidityTitle}',
-            style: AppTextStyles.bodyLargeSecondaryColor(context).copyWith(
-              fontWeight: FontWeight.bold,
-              decoration: TextDecoration.underline,
-            ),
+            style: Theme.of(context).textTheme.titleSmallSemiBold,
           ),
           const SizedBox(height: 20),
           Text(
             localizations.earnSectionAddLiquidityDesc1,
-            style: AppTextStyles.bodySmall(context),
+            style: Theme.of(context).textTheme.bodySmallWithOpacity,
           ),
           const SizedBox(height: 20),
           Text(
             localizations.earnSectionAddLiquidityDesc2,
-            style: AppTextStyles.bodySmall(context)
+            style: Theme.of(context)
+                .textTheme
+                .bodySmallWithOpacity
                 .copyWith(fontStyle: FontStyle.italic),
           ),
           const SizedBox(height: 30),
           Row(
             children: [
-              CustomSmallBtn(
+              BtnPrimary(
                 buttonText:
                     localizations.earnSectionAddLiquidityAddLiquidityBtn,
-                onPressed: () async {
+                onTap: () async {
                   final poolJson = jsonEncode(
                     pool!.toJson(),
                   );
@@ -119,10 +119,10 @@ class EarnSectionAddLiquidity extends ConsumerWidget {
           const SizedBox(height: 20),
           Row(
             children: [
-              CustomSmallBtn(
+              BtnPrimary(
                 buttonText:
                     localizations.earnSectionAddLiquidityWithdrawLiquidityBtn,
-                onPressed: () async {
+                onTap: () async {
                   final poolJson = jsonEncode(
                     pool!.toJson(),
                   );
@@ -152,6 +152,7 @@ class EarnSectionAddLiquidity extends ConsumerWidget {
                     ).toString(),
                   );
                 },
+                btnPrimaryType: BtnPrimaryType.outlinePrimary,
               ),
             ],
           ),

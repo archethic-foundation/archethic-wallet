@@ -176,10 +176,13 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
       case AppLifecycleState.resumed:
         // Value changed since last time we came in pause state
         if (isDeviceSecured != await SecurityManager().isDeviceSecured()) {
-          await SecurityManager().checkDeviceSecurity(
-            ref,
-            rootNavigatorKey.currentState!.overlay!.context,
-          );
+          final navigatorState = rootNavigatorKey.currentState;
+          if (navigatorState != null && navigatorState.overlay != null) {
+            await SecurityManager().checkDeviceSecurity(
+              ref,
+              navigatorState.overlay!.context,
+            );
+          }
         }
         break;
       case AppLifecycleState.inactive:

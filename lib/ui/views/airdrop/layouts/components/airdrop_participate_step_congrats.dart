@@ -1,5 +1,4 @@
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_banner.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_info_no_lp.dart';
@@ -59,8 +58,7 @@ class _AirdropParticipateStepCongratsSheetState
                           ? localizations.airdropDashboardCongratsTitle
                           : localizations
                               .airdropDashboardCompleteParticipationTitle,
-                      style: AppTextStyles.bodyLarge(context)
-                          .copyWith(fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
                     const SizedBox(height: 20),
                     const Row(

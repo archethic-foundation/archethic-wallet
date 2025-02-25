@@ -1,4 +1,4 @@
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/state.dart';
@@ -22,9 +22,6 @@ class _AirdropParticipateStepWelcomeSheetState
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    final boldBodyLarge =
-        AppTextStyles.bodyLarge(context).copyWith(fontWeight: FontWeight.bold);
-    final bodyMediumWithOpacity = AppTextStyles.bodyMediumWithOpacity(context);
 
     return Stack(
       children: [
@@ -42,12 +39,12 @@ class _AirdropParticipateStepWelcomeSheetState
                   children: [
                     Text(
                       localizations.airdropParticipateStepWelcomeTitle,
-                      style: boldBodyLarge,
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
                     const SizedBox(height: 10),
                     Text(
                       localizations.airdropParticipateStepWelcomeDesc1,
-                      style: bodyMediumWithOpacity,
+                      style: Theme.of(context).textTheme.bodySmallWithOpacity,
                     ),
                     const SizedBox(height: 40),
                     const AirdropBlocInfo(),

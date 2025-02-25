@@ -1,4 +1,5 @@
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/figma_components/box/box_dark.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/farm_lock_details_info.dart';
 import 'package:aewallet/ui/widgets/components/icon_widget.dart';
@@ -20,25 +21,25 @@ class EarnYearlyInterest extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
     final farmLock = ref.watch(farmLockFormFarmLockProvider).valueOrNull;
 
-    return aedappfm.BlackBoxInfo(
+    return BoxDark(
       textWidget: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (farmLock != null && farmLock.apr3years > 0)
             Text(
               '${(farmLock.apr3years * 100).toInt()}%',
-              style: AppTextStyles.bodyLarge(context).copyWith(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                  ),
             )
           else
             Text(
               '__%',
-              style: AppTextStyles.bodyLarge(context).copyWith(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                  ),
             ),
           const Padding(
             padding: EdgeInsets.only(left: 5, bottom: 10),
@@ -54,7 +55,7 @@ class EarnYearlyInterest extends ConsumerWidget {
       ),
       additionalWidget: Text(
         localizations.earnTotalYearlyInterest,
-        style: AppTextStyles.bodySmallWithOpacity(context),
+        style: Theme.of(context).textTheme.bodySmallWithOpacity,
         textAlign: TextAlign.center,
       ),
       onTap: () async {
