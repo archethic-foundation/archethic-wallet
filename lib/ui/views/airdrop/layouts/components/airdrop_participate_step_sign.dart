@@ -1,6 +1,7 @@
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
+import 'package:aewallet/ui/views/airdrop/bloc/state.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_stepper.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
@@ -84,8 +85,32 @@ class _AirdropParticipateStepSignSheetState
                           ),
                           TextSpan(
                             text:
-                                ' ${localizations.airdropParticipateStepSignWarn}',
+                                '  ${localizations.airdropParticipateStepSignWarn}',
                             style: AppTextStyles.bodyMedium(context),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    InkWell(
+                      onTap: () {
+                        ref
+                            .read(airdropFormNotifierProvider.notifier)
+                            .setAirdropProcessStep(
+                              AirdropProcessStep.joinWaitlist,
+                            );
+                      },
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.arrow_back_ios,
+                            color: Colors.white,
+                            size: 14,
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            localizations.back,
+                            style: AppTextStyles.bodyMediumWithOpacity(context),
                           ),
                         ],
                       ),
