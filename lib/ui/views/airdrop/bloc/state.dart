@@ -22,6 +22,7 @@ class AirdropFormState with _$AirdropFormState {
     @Default(false) bool confirmNotMultipleRegistrations,
     @Default(false) bool confirmPrivacyPolicy,
     @Default(false) bool joinWaitlistInProgress,
+    @Default(false) bool checkConfirmInProgress,
     @Default(0.0) double personalLP,
     @Default(0.0) double personalLPFlexible,
     @Default(0) int personalMultiplier,

@@ -1,4 +1,3 @@
-import 'package:aewallet/application/airdrop/airdrop.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
@@ -28,7 +27,7 @@ class _AirdropParticipateStepJoinWaitlistSheetState
     BuildContext context,
   ) {
     final localizations = AppLocalizations.of(context)!;
-    final airdropForm = ref.read(airdropFormNotifierProvider);
+    final airdropForm = ref.watch(airdropFormNotifierProvider);
     return Stack(
       children: [
         SingleChildScrollView(
@@ -129,9 +128,6 @@ class _AirdropParticipateStepJoinWaitlistSheetState
                   localizations.airdropParticipateStepWaitlistBtn,
                   Dimens.buttonBottomDimens,
                   onPressed: () async {
-                    ref
-                      ..invalidate(airdropUserInfoProvider)
-                      ..invalidate(airdropPersonalLPProvider);
                     final resultCheckConfirmation = await ref
                         .read(airdropFormNotifierProvider.notifier)
                         .checkConfirmation();
@@ -162,7 +158,9 @@ class _AirdropParticipateStepJoinWaitlistSheetState
                       },
                     );
                   },
-                  disabled: !airdropForm.isItemsConfirmed,
+                  disabled: !airdropForm.isItemsConfirmed ||
+                      airdropForm.checkConfirmInProgress,
+                  showProgressIndicator: airdropForm.checkConfirmInProgress,
                 ),
               ],
             ),
