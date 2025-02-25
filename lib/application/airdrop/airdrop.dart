@@ -7,8 +7,8 @@ import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/model/airdrop.dart';
 import 'package:aewallet/modules/aeswap/application/farm/farm_lock_factory.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
+import 'package:aewallet/modules/aeswap/application/session/state.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/get_farm_lock_user_infos_response.dart';
-import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
@@ -85,7 +85,6 @@ Future<({int personalMultiplier, double personalLP, double personalLPFlexible})>
       (value) => value.loggedIn?.wallet.appKeychain,
     ),
   );
-
   if (keychain == null) {
     return (
       personalMultiplier: 0,
@@ -93,25 +92,16 @@ Future<({int personalMultiplier, double personalLP, double personalLPFlexible})>
       personalLPFlexible: personalLPFlexible
     );
   }
-
   final apiService = ref.watch(apiServiceProvider);
-  final farmLock = await ref.watch(farmLockFormFarmLockProvider.future);
+  final environment = ref.watch(environmentProvider);
 
-  if (farmLock == null) {
-    return (
-      personalMultiplier: 0,
-      personalLP: personalLP,
-      personalLPFlexible: personalLPFlexible
-    );
-  }
-
-  final farmFactory = FarmLockFactory(farmLock.farmAddress, apiService);
+  final farmFactory =
+      FarmLockFactory(environment.aeETHUCOFarmLockAddress, apiService);
 
   final userGenesisAddresses =
       keychain.accounts.map((account) => account.genesisAddress).toList();
 
   const batchSize = 20;
-
   for (var i = 0; i < userGenesisAddresses.length; i += batchSize) {
     final batch = userGenesisAddresses.sublist(
       i,
@@ -133,7 +123,6 @@ Future<({int personalMultiplier, double personalLP, double personalLPFlexible})>
       }
     }
   }
-
   return (
     personalMultiplier: Airdrop.airdropPersonalMultiplier(personalLP) ?? 0,
     personalLP: personalLP,

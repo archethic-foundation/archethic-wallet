@@ -27,6 +27,14 @@ extension EnvironmentAddressesExt on Environment {
           '00007338a899446b8d211bb82b653dfd134cc351dd4060bb926d7d9c7028cf0273bf',
       };
 
+  String get aeETHAddress => switch (this) {
+        Environment.mainnet =>
+          '0000457EACA7FBAA96DB4A8D506A0B69684F546166FBF3C55391B1461907EFA58EAF',
+        Environment.testnet =>
+          '00003DF600E329199BF3EE8FBE2B8223413D70BCDD97E15089E6A74D94DE3F1173B4',
+        Environment.devnet => 'none',
+      };
+
   String get nodeRewardsChain => switch (this) {
         Environment.mainnet =>
           '000088CCDFB1DAC2B12C0BBD41A7AC0308693AF9DA0DE045FD2A11E3CE0BA9A49CA2',

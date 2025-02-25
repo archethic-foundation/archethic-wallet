@@ -6,8 +6,8 @@ import 'package:aewallet/application/feature_flags.dart';
 import 'package:aewallet/main.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/application/session/state.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
-import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/state.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/airdrop_participate_sheet.dart';
@@ -31,26 +31,41 @@ class _AirdropTabState extends ConsumerState<AirdropTab> {
   @override
   void initState() {
     Future(() async {
-      ref.read(airdropFormNotifierProvider.notifier).setLoading(true);
-      airdropState = (await ref.read(airdropBannerStatusProvider.future)).state;
+      final airdropStateFuture = ref.read(airdropBannerStatusProvider.future);
+      final airdropUserInfoFuture = ref.read(airdropUserInfoProvider.future);
+      final airdropPersonalLPFuture =
+          ref.read(airdropPersonalLPProvider.future);
 
-      final airdropUserInfo = await ref.read(airdropUserInfoProvider.future);
-      final airdropPersonalLP =
-          await ref.read(airdropPersonalLPProvider.future);
+      final results = await Future.wait([
+        airdropStateFuture,
+        airdropUserInfoFuture,
+        airdropPersonalLPFuture,
+      ]);
+
+      airdropState =
+          (results[0] as ({AirdropState state, String? email})).state;
+      final airdropUserInfo = results[1] as ({
+        bool? isMailConfirmed,
+        String? email,
+        String? referralCode
+      });
+      final airdropPersonalLP = results[2] as ({
+        int personalMultiplier,
+        double personalLP,
+        double personalLPFlexible
+      });
 
       var actualLPFiatValue = 0.0;
       final environment = ref.read(environmentProvider);
-      final farmLock = await ref.read(farmLockFormFarmLockProvider.future);
-      if (farmLock != null && farmLock.lpTokenPair != null) {
-        actualLPFiatValue = await ref.read(
-          DexTokensProviders.estimateLPTokenInFiat(
-            farmLock.lpTokenPair!.token1.address,
-            farmLock.lpTokenPair!.token2.address,
-            1,
-            environment.aeETHUCOPoolAddress,
-          ).future,
-        );
-      }
+
+      actualLPFiatValue = await ref.read(
+        DexTokensProviders.estimateLPTokenInFiat(
+          environment.aeETHAddress,
+          kUCOAddress,
+          1,
+          environment.aeETHUCOPoolAddress,
+        ).future,
+      );
 
       if (airdropState != null) {
         switch (airdropState) {
