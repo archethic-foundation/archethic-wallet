@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/domain/models/authentication.dart';
+import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/infrastructure/datasources/hive.extension.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/available_language.dart';
@@ -40,6 +41,7 @@ class PreferencesHiveDatasource {
   static const String priceChartScale = 'archethic_wallet_priceChartScale';
   static const String activeRPCServer = 'archethic_wallet_activeRPCServer';
   static const String activeAirdrop = 'archethic_wallet_activeAirdrop';
+  static const String earnUserLevel = 'archethic_wallet_earnUserLevel';
   static const String recoveryPhraseSaved =
       'archethic_wallet_recoveryPhraseSaved';
 
@@ -153,6 +155,12 @@ class PreferencesHiveDatasource {
   Future<void> setActiveAirdrop(bool value) => _setValue(activeAirdrop, value);
 
   bool getActiveAirdrop() => _getValue(activeAirdrop, defaultValue: true);
+
+  Future<void> setEarnUserLevel(EarnUserLevelType value) =>
+      _setValue(earnUserLevel, value);
+
+  EarnUserLevelType getEarnUserLevel() =>
+      _getValue(earnUserLevel, defaultValue: EarnUserLevelType.beginner);
 
   Future<void> setRecoveryPhraseSaved(bool value) =>
       _setValue(recoveryPhraseSaved, value);

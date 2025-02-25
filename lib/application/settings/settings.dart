@@ -35,6 +35,7 @@ class SettingsNotifier extends StateNotifier<Settings> {
           showBalances: true,
           showPriceChart: true,
           activeAirdrop: true,
+          earnUserLevel: EarnUserLevelType.beginner,
         ),
       );
 
@@ -57,6 +58,10 @@ class SettingsNotifier extends StateNotifier<Settings> {
 
   Future<void> setActiveAirdrop(bool activeAirdrop) => _update(
         state.copyWith(activeAirdrop: activeAirdrop),
+      );
+
+  Future<void> setEarnUserLevel(EarnUserLevelType earnUserLevel) => _update(
+        state.copyWith(earnUserLevel: earnUserLevel),
       );
 
   Future<void> setEnvironment(aedappfm.Environment environment) => _update(

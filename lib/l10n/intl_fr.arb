@@ -334,7 +334,7 @@
     "transactionRawFormattedOption": "Formaté",
     "swapHeader": "Échanger",
     "aeBridgeHeader": "Bridge",
-    "aeSwapEarnHeader": "Gagner des UCO",
+    "aeSwapEarnHeader": "Gagner un revenu passif",
     "price": "Prix",
     "aeBridgeLaunchMessage": "Veuillez lancer l'application aeBridge pour continuer. Elle s'ouvrira dans votre navigateur par défaut.",
     "aeBridgeLaunchButton": "Lancer aeBridge",

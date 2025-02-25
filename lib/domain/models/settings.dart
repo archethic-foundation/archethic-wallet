@@ -14,6 +14,8 @@ enum MainScreenTab {
   airdropTab,
 }
 
+enum EarnUserLevelType { beginner, advanced }
+
 @freezed
 class Settings with _$Settings {
   const factory Settings({
@@ -25,6 +27,7 @@ class Settings with _$Settings {
     required bool showBalances,
     required bool activeRPCServer,
     required bool activeAirdrop,
+    required EarnUserLevelType earnUserLevel,
     required int mainScreenCurrentPage,
     required bool showPriceChart,
     required aedappfm.MarketPriceHistoryInterval priceChartIntervalOption,
@@ -43,6 +46,7 @@ class Settings with _$Settings {
         showBalances: true,
         showPriceChart: true,
         priceChartIntervalOption: aedappfm.MarketPriceHistoryInterval.hour,
+        earnUserLevel: EarnUserLevelType.beginner,
       );
 
   const Settings._();

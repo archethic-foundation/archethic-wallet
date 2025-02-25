@@ -25,6 +25,7 @@ class SettingsRepository implements SettingsRepositoryInterface {
       showBalances: loadedPreferences.getShowBalances(),
       showPriceChart: loadedPreferences.getShowPriceChart(),
       priceChartIntervalOption: loadedPreferences.getPriceChartIntervalOption(),
+      earnUserLevel: loadedPreferences.getEarnUserLevel(),
     );
   }
 
@@ -44,5 +45,6 @@ class SettingsRepository implements SettingsRepositoryInterface {
     await loadedPreferences.setShowPriceChart(settings.showPriceChart);
     await loadedPreferences
         .setPriceChartIntervalOption(settings.priceChartIntervalOption);
+    await loadedPreferences.setEarnUserLevel(settings.earnUserLevel);
   }
 }
