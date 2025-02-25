@@ -24,6 +24,7 @@ mixin _$AirdropFormState {
       throw _privateConstructorUsedError;
   bool get confirmPrivacyPolicy => throw _privateConstructorUsedError;
   bool get joinWaitlistInProgress => throw _privateConstructorUsedError;
+  bool get checkConfirmInProgress => throw _privateConstructorUsedError;
   double get personalLP => throw _privateConstructorUsedError;
   double get personalLPFlexible => throw _privateConstructorUsedError;
   int get personalMultiplier => throw _privateConstructorUsedError;
@@ -52,6 +53,7 @@ abstract class $AirdropFormStateCopyWith<$Res> {
       bool confirmNotMultipleRegistrations,
       bool confirmPrivacyPolicy,
       bool joinWaitlistInProgress,
+      bool checkConfirmInProgress,
       double personalLP,
       double personalLPFlexible,
       int personalMultiplier,
@@ -84,6 +86,7 @@ class _$AirdropFormStateCopyWithImpl<$Res, $Val extends AirdropFormState>
     Object? confirmNotMultipleRegistrations = null,
     Object? confirmPrivacyPolicy = null,
     Object? joinWaitlistInProgress = null,
+    Object? checkConfirmInProgress = null,
     Object? personalLP = null,
     Object? personalLPFlexible = null,
     Object? personalMultiplier = null,
@@ -116,6 +119,10 @@ class _$AirdropFormStateCopyWithImpl<$Res, $Val extends AirdropFormState>
       joinWaitlistInProgress: null == joinWaitlistInProgress
           ? _value.joinWaitlistInProgress
           : joinWaitlistInProgress // ignore: cast_nullable_to_non_nullable
+              as bool,
+      checkConfirmInProgress: null == checkConfirmInProgress
+          ? _value.checkConfirmInProgress
+          : checkConfirmInProgress // ignore: cast_nullable_to_non_nullable
               as bool,
       personalLP: null == personalLP
           ? _value.personalLP
@@ -178,6 +185,7 @@ abstract class _$$AirdropFormStateImplCopyWith<$Res>
       bool confirmNotMultipleRegistrations,
       bool confirmPrivacyPolicy,
       bool joinWaitlistInProgress,
+      bool checkConfirmInProgress,
       double personalLP,
       double personalLPFlexible,
       int personalMultiplier,
@@ -209,6 +217,7 @@ class __$$AirdropFormStateImplCopyWithImpl<$Res>
     Object? confirmNotMultipleRegistrations = null,
     Object? confirmPrivacyPolicy = null,
     Object? joinWaitlistInProgress = null,
+    Object? checkConfirmInProgress = null,
     Object? personalLP = null,
     Object? personalLPFlexible = null,
     Object? personalMultiplier = null,
@@ -241,6 +250,10 @@ class __$$AirdropFormStateImplCopyWithImpl<$Res>
       joinWaitlistInProgress: null == joinWaitlistInProgress
           ? _value.joinWaitlistInProgress
           : joinWaitlistInProgress // ignore: cast_nullable_to_non_nullable
+              as bool,
+      checkConfirmInProgress: null == checkConfirmInProgress
+          ? _value.checkConfirmInProgress
+          : checkConfirmInProgress // ignore: cast_nullable_to_non_nullable
               as bool,
       personalLP: null == personalLP
           ? _value.personalLP
@@ -284,6 +297,7 @@ class _$AirdropFormStateImpl extends _AirdropFormState {
       this.confirmNotMultipleRegistrations = false,
       this.confirmPrivacyPolicy = false,
       this.joinWaitlistInProgress = false,
+      this.checkConfirmInProgress = false,
       this.personalLP = 0.0,
       this.personalLPFlexible = 0.0,
       this.personalMultiplier = 0,
@@ -311,6 +325,9 @@ class _$AirdropFormStateImpl extends _AirdropFormState {
   final bool joinWaitlistInProgress;
   @override
   @JsonKey()
+  final bool checkConfirmInProgress;
+  @override
+  @JsonKey()
   final double personalLP;
   @override
   @JsonKey()
@@ -331,7 +348,7 @@ class _$AirdropFormStateImpl extends _AirdropFormState {
 
   @override
   String toString() {
-    return 'AirdropFormState(airdropProcessStep: $airdropProcessStep, mailAddress: $mailAddress, confirmOnlyOneAirdrop: $confirmOnlyOneAirdrop, confirmNotMultipleRegistrations: $confirmNotMultipleRegistrations, confirmPrivacyPolicy: $confirmPrivacyPolicy, joinWaitlistInProgress: $joinWaitlistInProgress, personalLP: $personalLP, personalLPFlexible: $personalLPFlexible, personalMultiplier: $personalMultiplier, resendConfirmationEmailInfo: $resendConfirmationEmailInfo, actualLPFiatValue: $actualLPFiatValue, loading: $loading, failure: $failure)';
+    return 'AirdropFormState(airdropProcessStep: $airdropProcessStep, mailAddress: $mailAddress, confirmOnlyOneAirdrop: $confirmOnlyOneAirdrop, confirmNotMultipleRegistrations: $confirmNotMultipleRegistrations, confirmPrivacyPolicy: $confirmPrivacyPolicy, joinWaitlistInProgress: $joinWaitlistInProgress, checkConfirmInProgress: $checkConfirmInProgress, personalLP: $personalLP, personalLPFlexible: $personalLPFlexible, personalMultiplier: $personalMultiplier, resendConfirmationEmailInfo: $resendConfirmationEmailInfo, actualLPFiatValue: $actualLPFiatValue, loading: $loading, failure: $failure)';
   }
 
   @override
@@ -353,6 +370,8 @@ class _$AirdropFormStateImpl extends _AirdropFormState {
                 other.confirmPrivacyPolicy == confirmPrivacyPolicy) &&
             (identical(other.joinWaitlistInProgress, joinWaitlistInProgress) ||
                 other.joinWaitlistInProgress == joinWaitlistInProgress) &&
+            (identical(other.checkConfirmInProgress, checkConfirmInProgress) ||
+                other.checkConfirmInProgress == checkConfirmInProgress) &&
             (identical(other.personalLP, personalLP) ||
                 other.personalLP == personalLP) &&
             (identical(other.personalLPFlexible, personalLPFlexible) ||
@@ -378,6 +397,7 @@ class _$AirdropFormStateImpl extends _AirdropFormState {
       confirmNotMultipleRegistrations,
       confirmPrivacyPolicy,
       joinWaitlistInProgress,
+      checkConfirmInProgress,
       personalLP,
       personalLPFlexible,
       personalMultiplier,
@@ -404,6 +424,7 @@ abstract class _AirdropFormState extends AirdropFormState {
       final bool confirmNotMultipleRegistrations,
       final bool confirmPrivacyPolicy,
       final bool joinWaitlistInProgress,
+      final bool checkConfirmInProgress,
       final double personalLP,
       final double personalLPFlexible,
       final int personalMultiplier,
@@ -425,6 +446,8 @@ abstract class _AirdropFormState extends AirdropFormState {
   bool get confirmPrivacyPolicy;
   @override
   bool get joinWaitlistInProgress;
+  @override
+  bool get checkConfirmInProgress;
   @override
   double get personalLP;
   @override

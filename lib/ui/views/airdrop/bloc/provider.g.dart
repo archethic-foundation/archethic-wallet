@@ -7,7 +7,7 @@ part of 'provider.dart';
 // **************************************************************************
 
 String _$airdropBannerStatusHash() =>
-    r'009278ce2f8b08c06be44b5b6e13c0810ec1b6c1';
+    r'bd6641fd85ae59d9db03e05263bedb3bf424d66f';
 
 /// See also [airdropBannerStatus].
 @ProviderFor(airdropBannerStatus)
@@ -27,7 +27,7 @@ final airdropBannerStatusProvider =
 typedef AirdropBannerStatusRef
     = AutoDisposeFutureProviderRef<({AirdropState state, String? email})>;
 String _$airdropUCOPerParticipantFiatValueHash() =>
-    r'1130707e96a446ed406289f37ededccd5bd8715e';
+    r'820c4c2f64164fc699bd661afc58dbb4a4f1cea0';
 
 /// See also [airdropUCOPerParticipantFiatValue].
 @ProviderFor(airdropUCOPerParticipantFiatValue)
@@ -47,7 +47,7 @@ final airdropUCOPerParticipantFiatValueProvider =
 typedef AirdropUCOPerParticipantFiatValueRef
     = AutoDisposeFutureProviderRef<double>;
 String _$airdropFormNotifierHash() =>
-    r'f021dc35bada58c1bfa11c2da8f05c7c581736c0';
+    r'14d83577c43ca0883bb8a25a067a656cd1a6fcc5';
 
 /// See also [AirdropFormNotifier].
 @ProviderFor(AirdropFormNotifier)

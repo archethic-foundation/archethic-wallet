@@ -211,10 +211,11 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
 
   Future<({bool mailConfirmed, bool havePersonalLP})>
       checkConfirmation() async {
-    final airdropUserInfo = await ref.read(airdropUserInfoProvider.future);
+    state = state.copyWith(checkConfirmInProgress: true, failure: null);
+    final airdropUserInfo = await ref.refresh(airdropUserInfoProvider.future);
     if (airdropUserInfo.email != null) {
       final airdropPersonalLP =
-          await ref.read(airdropPersonalLPProvider.future);
+          await ref.refresh(airdropPersonalLPProvider.future);
       setPersonalLP(airdropPersonalLP.personalLP);
       setPersonalLPFlexible(airdropPersonalLP.personalLPFlexible);
     }
@@ -233,6 +234,7 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
       );
     }
     setActualLPFiatValue(actualLPFiatValue);
+    state = state.copyWith(checkConfirmInProgress: false, failure: null);
 
     return (
       mailConfirmed: airdropUserInfo.isMailConfirmed ?? false,

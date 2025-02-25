@@ -6,7 +6,7 @@ part of 'airdrop.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$airdropBackendUrlHash() => r'949c7096f881c2de5da0b5c007e9ba4b037199db';
+String _$airdropBackendUrlHash() => r'2fd644bbc1766c2c4dba8173a1196b029e34b683';
 
 /// See also [airdropBackendUrl].
 @ProviderFor(airdropBackendUrl)
@@ -23,7 +23,7 @@ final airdropBackendUrlProvider = AutoDisposeProvider<String>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef AirdropBackendUrlRef = AutoDisposeProviderRef<String>;
-String _$airdropCountHash() => r'e835d084199b586f7ee2115de4a7bca59211acf1';
+String _$airdropCountHash() => r'83721ca39c85398060a3a4d912fd588ae28b9888';
 
 /// See also [airdropCount].
 @ProviderFor(airdropCount)
@@ -84,7 +84,7 @@ final airdropUserInfoProvider = AutoDisposeFutureProvider<
 typedef AirdropUserInfoRef = AutoDisposeFutureProviderRef<
     ({bool? isMailConfirmed, String? email, String? referralCode})>;
 String _$resendConfirmationMailHash() =>
-    r'940e298edc7fe9debbc79faf2bb8f9fbbc32895d';
+    r'45c817013de6fc6ec3a74600c3671646ee189d55';
 
 /// Copied from Dart SDK
 class _SystemHash {
