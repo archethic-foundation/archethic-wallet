@@ -15,6 +15,8 @@ import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutte
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class SwapInfos extends ConsumerWidget {
   const SwapInfos({
@@ -59,50 +61,67 @@ class SwapInfos extends ConsumerWidget {
             PointerDeviceKind.trackpad,
           },
         ),
-        child: Padding(
-          padding:
-              const EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 40),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 5),
-                child: Text(
-                  AppLocalizations.of(context)!.swapInfosDetailSwap,
-                  style: AppTextStyles.bodyMedium(context)
-                      .copyWith(fontWeight: FontWeight.bold),
-                ),
-              ),
-              _buildRowWithFees(context, ref, swap),
-              _buildRowWithPriceImpact(context, swap),
-              _buildRowWithMinReceived(context, ref, swap),
-              Padding(
-                padding: const EdgeInsets.only(top: 10, left: 5),
-                child: Text(
-                  AppLocalizations.of(context)!.swapInfosDetailPool,
-                  style: AppTextStyles.bodyMedium(context)
-                      .copyWith(fontWeight: FontWeight.bold),
-                ),
-              ),
-              _buildRowWithTVL(context, tvlAsyncValue),
-              _buildRowWithRatio(context, swap, tokenAddressRatioPrimary),
-              FutureBuilder<DexPoolStats>(
-                future: ref.read(
-                  poolStatsProvider.future,
-                ),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return _buildRowWithVolume24h(
-                      context,
-                      swap,
-                      snapshot.data!,
-                    );
-                  }
-                  return const SizedBox.shrink();
+        child: Stack(
+          children: [
+            Positioned(
+              right: 0,
+              child: IconButton(
+                onPressed: () async {
+                  context.pop();
                 },
+                icon: const Icon(
+                  Symbols.close,
+                  color: Colors.white,
+                  size: 16,
+                ),
               ),
-            ],
-          ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 20, right: 20, bottom: 20, top: 40),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5),
+                    child: Text(
+                      AppLocalizations.of(context)!.swapInfosDetailSwap,
+                      style: AppTextStyles.bodyMedium(context)
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  _buildRowWithFees(context, ref, swap),
+                  _buildRowWithPriceImpact(context, swap),
+                  _buildRowWithMinReceived(context, ref, swap),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, left: 5),
+                    child: Text(
+                      AppLocalizations.of(context)!.swapInfosDetailPool,
+                      style: AppTextStyles.bodyMedium(context)
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  _buildRowWithTVL(context, tvlAsyncValue),
+                  _buildRowWithRatio(context, swap, tokenAddressRatioPrimary),
+                  FutureBuilder<DexPoolStats>(
+                    future: ref.read(
+                      poolStatsProvider.future,
+                    ),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return _buildRowWithVolume24h(
+                          context,
+                          swap,
+                          snapshot.data!,
+                        );
+                      }
+                      return const SizedBox.shrink();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

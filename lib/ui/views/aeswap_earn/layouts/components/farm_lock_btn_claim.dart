@@ -1,9 +1,8 @@
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/components/btn_validate_mobile.dart';
 import 'package:aewallet/router/router.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_primary.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_claim/layouts/farm_lock_claim_sheet.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -31,20 +30,16 @@ class FarmLockBtnClaim extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
-    return ButtonValidateMobile(
-      fontSize: 14,
-      controlOk: enabled,
-      labelBtn: AppLocalizations.of(context)!.farmLockBtnClaim,
-      onPressed: () async {
-        await _validate(context);
-      },
-      displayWalletConnect: true,
-      isConnected: true,
-      displayWalletConnectOnPressed: () {},
-    )
-        .animate()
-        .fade(duration: const Duration(milliseconds: 400))
-        .scale(duration: const Duration(milliseconds: 400));
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      child: BtnPrimary(
+        buttonText: AppLocalizations.of(context)!.farmLockBtnClaim,
+        isLocked: enabled,
+        onTap: () async {
+          await _validate(context);
+        },
+      ),
+    );
   }
 
   Future<void> _validate(BuildContext context) async {

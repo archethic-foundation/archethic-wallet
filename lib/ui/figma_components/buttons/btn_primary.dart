@@ -9,16 +9,18 @@ class BtnPrimary extends StatelessWidget {
     required this.buttonText,
     required this.onTap,
     this.btnPrimaryType = BtnPrimaryType.primary,
+    this.isLocked = false,
     super.key,
   });
   final String buttonText;
   final Function()? onTap;
   final BtnPrimaryType btnPrimaryType;
+  final bool isLocked;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: isLocked ? null : onTap,
       child: IntrinsicWidth(
         child: IntrinsicHeight(
           child: Container(
@@ -30,10 +32,15 @@ class BtnPrimary extends StatelessWidget {
               children: [
                 Text(
                   buttonText,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                      ),
+                  style: isLocked
+                      ? Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: Colors.white.withOpacity(0.2),
+                            fontWeight: FontWeight.w600,
+                          )
+                      : Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
                 ),
               ],
             ),
