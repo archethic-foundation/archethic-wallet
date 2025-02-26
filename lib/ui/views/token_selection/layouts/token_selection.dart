@@ -5,6 +5,8 @@ import 'package:aewallet/ui/views/token_selection/layouts/components/token_selec
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class TokenSelection extends StatelessWidget {
   const TokenSelection({
@@ -13,32 +15,49 @@ class TokenSelection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FractionallySizedBox(
-      heightFactor: 1,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            const TokenSelectionSearchBar(),
-            const TokenSelectionCommonBases(),
-            Padding(
-              padding: const EdgeInsets.only(top: 10, bottom: 10),
-              child: SizedBox(
-                width: 600,
-                height: 1,
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: aedappfm.AppThemeBase.gradient,
+    return Stack(
+      children: [
+        Positioned(
+          right: 0,
+          child: IconButton(
+            onPressed: () async {
+              context.pop();
+            },
+            icon: const Icon(
+              Symbols.close,
+              color: Colors.white,
+              size: 16,
+            ),
+          ),
+        ),
+        FractionallySizedBox(
+          heightFactor: 1,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10, right: 10, top: 50),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                const TokenSelectionSearchBar(),
+                const TokenSelectionCommonBases(),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
+                  child: SizedBox(
+                    width: 600,
+                    height: 1,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: aedappfm.AppThemeBase.gradient,
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                const Expanded(child: TokenList()),
+              ],
             ),
-            const Expanded(child: TokenList()),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }

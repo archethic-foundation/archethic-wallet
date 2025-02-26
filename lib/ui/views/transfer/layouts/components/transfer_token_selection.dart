@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class TransferTokenSelection extends ConsumerWidget {
@@ -38,26 +40,43 @@ class TransferTokenSelection extends ConsumerWidget {
                 child: Scaffold(
                   backgroundColor:
                       aedappfm.AppThemeBase.sheetBackground.withOpacity(0.2),
-                  body: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 15,
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(top: 15),
-                          child: InkWell(
-                            onTap: () {},
-                            child: Text(
-                              localizations.selectTokenTitle,
-                              style: ArchethicThemeStyles
-                                  .textStyleSize16W600Primary,
-                            ),
+                  body: Stack(
+                    children: [
+                      Positioned(
+                        right: 0,
+                        child: IconButton(
+                          onPressed: () async {
+                            context.pop();
+                          },
+                          icon: const Icon(
+                            Symbols.close,
+                            color: Colors.white,
+                            size: 16,
                           ),
                         ),
-                        const TransferTokensList(),
-                      ],
-                    ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 15,
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(top: 15),
+                              child: InkWell(
+                                onTap: () {},
+                                child: Text(
+                                  localizations.selectTokenTitle,
+                                  style: ArchethicThemeStyles
+                                      .textStyleSize16W600Primary,
+                                ),
+                              ),
+                            ),
+                            const TransferTokensList(),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               );

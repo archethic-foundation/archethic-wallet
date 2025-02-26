@@ -4,6 +4,7 @@ import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_lp_token_fiat_value.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/fiat_value.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/farm_lock_btn_claim.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/farm_lock_btn_level_up.dart';
@@ -14,7 +15,9 @@ import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutte
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:moment_dart/moment_dart.dart';
 
 class FarmLockBlockListSingleLineLock extends ConsumerWidget {
@@ -39,37 +42,54 @@ class FarmLockBlockListSingleLineLock extends ConsumerWidget {
             return a.level.compareTo(b.level);
           });
 
-    return Column(
+    return Stack(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 30, bottom: 20),
-          child: Text(
-            AppLocalizations.of(
-              context,
-            )!
-                .farmLockListLocksHeader,
-            style: AppTextStyles.bodyLarge(context),
-          ),
-        ),
-        Expanded(
-          child: aedappfm.ArchethicScrollbar(
-            thumbVisibility: false,
-            child: Column(
-              children: [
-                ...sortedUserInfos.map(
-                  (userInfo) {
-                    return farmLockBlockListSingleLineLock(
-                      context,
-                      ref,
-                      userInfo,
-                      farmLock,
-                      pool,
-                    );
-                  },
-                ),
-              ],
+        Positioned(
+          right: 0,
+          child: IconButton(
+            onPressed: () async {
+              context.pop();
+            },
+            icon: const Icon(
+              Symbols.close,
+              color: Colors.white,
+              size: 16,
             ),
           ),
+        ),
+        Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 30, bottom: 20),
+              child: Text(
+                AppLocalizations.of(
+                  context,
+                )!
+                    .farmLockListLocksHeader,
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+            ),
+            Expanded(
+              child: aedappfm.ArchethicScrollbar(
+                thumbVisibility: false,
+                child: Column(
+                  children: [
+                    ...sortedUserInfos.map(
+                      (userInfo) {
+                        return farmLockBlockListSingleLineLock(
+                          context,
+                          ref,
+                          userInfo,
+                          farmLock,
+                          pool,
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     );
@@ -99,7 +119,7 @@ class FarmLockBlockListSingleLineLock extends ConsumerWidget {
       progressPercentage = progressPercentage.clamp(0, 1);
     }
 
-    final style = AppTextStyles.bodyMedium(context);
+    final style = Theme.of(context).textTheme.bodySmallWithOpacity;
 
     return Padding(
       padding: const EdgeInsets.only(
@@ -142,7 +162,7 @@ class FarmLockBlockListSingleLineLock extends ConsumerWidget {
                                     farmLock.poolAddress,
                                   ),
                                 ),
-                                style: Theme.of(context).textTheme.bodySmall,
+                                style: style,
                               ),
                             ],
                           ),
@@ -161,7 +181,7 @@ class FarmLockBlockListSingleLineLock extends ConsumerWidget {
                             children: [
                               SelectableText(
                                 '${farmLockUserInfos.rewardAmount.formatNumber(precision: farmLockUserInfos.rewardAmount < 1 ? 8 : 3)} ${farmLock.rewardToken!.symbol}',
-                                style: AppTextStyles.bodyMediumSecondaryColor(
+                                style: AppTextStyles.bodySmallSecondaryColor(
                                   context,
                                 ),
                               ),
@@ -175,8 +195,7 @@ class FarmLockBlockListSingleLineLock extends ConsumerWidget {
                                   if (snapshot.hasData) {
                                     return SelectableText(
                                       snapshot.data!,
-                                      style:
-                                          Theme.of(context).textTheme.bodySmall,
+                                      style: style,
                                     );
                                   }
                                   return const SizedBox.shrink();
@@ -235,7 +254,7 @@ class FarmLockBlockListSingleLineLock extends ConsumerWidget {
                                       farmLockUserInfos.end! * 1000,
                                     ),
                                   ),
-                                  style: Theme.of(context).textTheme.bodySmall,
+                                  style: style,
                                 ),
                               ],
                             ),
