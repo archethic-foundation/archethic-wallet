@@ -682,7 +682,9 @@
     },
     "airdropMenu": "$100M Airdrop",
     "airdropParticipateStepWelcomeTitle": "Participate in the Airdrop Today!",
-    "airdropParticipateStepWelcomeDesc1": "When will the airdrop happen? As soon as the price of the UCO token reaches $1, a total of $100M worth of UCO tokens will be distributed to all the participants.",
+    "airdropParticipateStepWelcomeDesc1": "When will the airdrop happen? As soon as the price of the UCO token reaches $1, a total of ",
+    "airdropParticipateStepWelcomeDesc2": "$100M worth of UCO tokens",
+    "airdropParticipateStepWelcomeDesc3": " will be distributed to all the participants.",
     "airdropParticipateStepWelcomeCardTitle": "Worth of UCO token",
     "airdropParticipateStepWelcomeCardAmount": "$100,000,000",
     "airdropParticipateStepWelcomeCardParticipantsCount": "participants",
@@ -817,5 +819,6 @@
     "farmLockDepositDesc2": "The longer you lock your LP tokens, the more rewards you receive from Archethic.",
     "earnUserLevelSwitchBeginner": "Beginner",
     "earnUserLevelSwitchAdvanced": "Advanced",
-    "earnUserLevelSwitchLabel": "Switch mode: "
+    "earnUserLevelSwitchLabel": "Switch mode: ",
+    "airdropPersonalLPCurrentValue": "Current amount of LP tokens locked: "
 }
