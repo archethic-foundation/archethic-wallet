@@ -1,4 +1,4 @@
-import 'package:aewallet/application/onramp/onramp.dart';
+import 'package:aewallet/domain/models/onramp.dart';
 import 'package:aewallet/ui/views/buy/bloc/buy_with_crypto_form_provider.dart';
 import 'package:aewallet/ui/views/buy/layouts/components/chain_selection_sheet.dart';
 import 'package:aewallet/ui/views/buy/layouts/components/dropdown.dart';

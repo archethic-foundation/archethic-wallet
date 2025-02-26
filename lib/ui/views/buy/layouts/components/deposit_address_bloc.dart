@@ -64,9 +64,12 @@ class DepositAddressBloc extends ConsumerWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        address ?? '0x---',
-                        style: AppTextStyles.bodyMedium(context),
+                      Expanded(
+                        child: Text(
+                          address ?? '0x---',
+                          style: AppTextStyles.bodyMedium(context),
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                       Icon(
                         Symbols.copy_all,
