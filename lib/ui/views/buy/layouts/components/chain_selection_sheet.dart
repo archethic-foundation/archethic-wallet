@@ -1,4 +1,5 @@
 import 'package:aewallet/application/onramp/onramp.dart';
+import 'package:aewallet/domain/models/onramp.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/views/buy/bloc/buy_with_crypto_form_provider.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'

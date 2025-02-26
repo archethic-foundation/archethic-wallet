@@ -1,3 +1,19 @@
+typedef OnRampChain = ({
+  String id,
+  String name,
+  String iconUrl,
+  List<OnRampToken> tokens,
+});
+
+typedef OnRampToken = ({
+  String id,
+  String symbol,
+  String name,
+  double feeRate,
+  String address,
+  String iconUrl,
+});
+
 enum OnRampTransferState {
   rebalancing,
   processing,
@@ -28,4 +44,10 @@ sealed class OnRampEvent {
 class OnRampTransferUpdateEvent extends OnRampEvent {
   const OnRampTransferUpdateEvent(this.transfer);
   final OnRampTransfer transfer;
+}
+
+class OnRampTransfersSnapshotEvent extends OnRampEvent {
+  OnRampTransfersSnapshotEvent({required this.transfers});
+
+  final List<OnRampTransfer> transfers;
 }

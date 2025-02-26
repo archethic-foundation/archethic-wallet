@@ -1,36 +1,34 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:core';
-import 'dart:typed_data';
 
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/domain/models/onramp.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
+import 'package:aewallet/domain/repositories/on_ramp.dart';
+import 'package:aewallet/infrastructure/repositories/on_ramp.repository.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart' as http;
-import 'package:phoenix_socket/phoenix_socket.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:rxdart/rxdart.dart';
 
 part 'onramp.g.dart';
-part 'onramp.private.dart';
 
-typedef OnRampChain = ({
-  String id,
-  String name,
-  String iconUrl,
-  List<OnRampToken> tokens,
-});
+@riverpod
+Future<OnRampRepository> _onRampRepository(Ref ref) async {
+  late OnRampRepository? repository;
 
-typedef OnRampToken = ({
-  String id,
-  String symbol,
-  String name,
-  double feeRate,
-  String address,
-  String iconUrl,
-});
+  ref.onDispose(() {
+    repository?.dispose();
+  });
+
+  final session = ref.watch(sessionNotifierProvider).loggedIn!;
+
+  repository = OnRampRepositoryImpl(
+    httpBaseUrl: 'http://localhost:4100/api/v1',
+    wsBaseUrl: 'ws://localhost:4100/ws/websocket',
+    wallet: session.wallet,
+  );
+  await repository.connect();
+  return repository;
+}
 
 @riverpod
 Future<({List<OnRampChain> chains})> onrampSetup(
@@ -155,56 +153,80 @@ Future<OnRampToken?> onrampToken(Ref ref, String id) async {
 }
 
 @riverpod
-Future<double> onrampMaxAmount(Ref ref) async {
-  return 12;
+Future<num> onrampMaxAmount(Ref ref) async {
+  final repository = await ref.watch(_onRampRepositoryProvider.future);
+  return repository.maxAmount;
 }
 
 @riverpod
 Future<String> onrampDepositAddress(Ref ref) async {
-  return ref.watch(_onRampEVMAddressProvider.future);
+  final repository = await ref.watch(_onRampRepositoryProvider.future);
+  return repository.evmAddress;
 }
 
 @riverpod
-Future<List<OnRampTransfer>> onrampTransfers(Ref ref) async {
+Stream<List<OnRampTransfer>> onrampTransfers(Ref ref) async* {
+  final repository = await ref.watch(_onRampRepositoryProvider.future);
+
+  var transfers = <OnRampTransfer>[];
+  await for (final event in repository.events) {
+    switch (event) {
+      case OnRampTransfersSnapshotEvent(transfers: final newTransfers):
+        transfers = newTransfers;
+        break;
+      case OnRampTransferUpdateEvent(transfer: final updatedTransfer):
+        var found = false;
+        transfers = transfers.map((transfer) {
+          if (transfer.id == updatedTransfer.id) {
+            found = true;
+            return updatedTransfer;
+          }
+          return transfer;
+        }).toList();
+        if (!found) transfers = [updatedTransfer, ...transfers];
+        break;
+    }
+    yield transfers;
+  }
   // unawaited(
   //   channel.messages.forEach((message) {
   //     message.
   //   }),
   // );
-  await Future.delayed(const Duration(seconds: 3));
-  return [
-    (
-      id: 'cc',
-      depositDate: DateTime.now().subtract(const Duration(minutes: 2)),
-      depositChainId: 'polygon',
-      depositTokenId: 'poly_eth',
-      depositAmount: 1234567890.1,
-      feeAmount: 1.02,
-      remainingAmount: 1234567889.08,
-      transferedUcoAmount: 0,
-      state: OnRampTransferState.rebalancing,
-    ),
-    (
-      id: 'bb',
-      depositDate: DateTime.now().subtract(const Duration(hours: 1)),
-      depositChainId: 'polygon',
-      depositTokenId: 'poly_eth',
-      depositAmount: 102.05,
-      feeAmount: 1.02,
-      remainingAmount: 25.53, //effectué 75.5
-      transferedUcoAmount: 123213445434343.45343,
-      state: OnRampTransferState.rebalancing,
-    ),
-    (
-      id: 'aa',
-      depositDate: DateTime.now().subtract(const Duration(hours: 2)),
-      depositChainId: 'polygon',
-      depositTokenId: 'poly_eth',
-      depositAmount: 100.05,
-      feeAmount: 1.02,
-      remainingAmount: 0,
-      transferedUcoAmount: 123213.45343,
-      state: OnRampTransferState.completed,
-    ),
-  ];
+  // await Future.delayed(const Duration(seconds: 3));
+  // return [
+  //   (
+  //     id: 'cc',
+  //     depositDate: DateTime.now().subtract(const Duration(minutes: 2)),
+  //     depositChainId: 'polygon',
+  //     depositTokenId: 'poly_eth',
+  //     depositAmount: 1234567890.1,
+  //     feeAmount: 1.02,
+  //     remainingAmount: 1234567889.08,
+  //     transferedUcoAmount: 0,
+  //     state: OnRampTransferState.rebalancing,
+  //   ),
+  //   (
+  //     id: 'bb',
+  //     depositDate: DateTime.now().subtract(const Duration(hours: 1)),
+  //     depositChainId: 'polygon',
+  //     depositTokenId: 'poly_eth',
+  //     depositAmount: 102.05,
+  //     feeAmount: 1.02,
+  //     remainingAmount: 25.53, //effectué 75.5
+  //     transferedUcoAmount: 123213445434343.45343,
+  //     state: OnRampTransferState.rebalancing,
+  //   ),
+  //   (
+  //     id: 'aa',
+  //     depositDate: DateTime.now().subtract(const Duration(hours: 2)),
+  //     depositChainId: 'polygon',
+  //     depositTokenId: 'poly_eth',
+  //     depositAmount: 100.05,
+  //     feeAmount: 1.02,
+  //     remainingAmount: 0,
+  //     transferedUcoAmount: 123213.45343,
+  //     state: OnRampTransferState.completed,
+  //   ),
+  // ];
 }

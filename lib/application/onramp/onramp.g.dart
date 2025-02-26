@@ -6,6 +6,24 @@ part of 'onramp.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+String _$onRampRepositoryHash() => r'b80651db185aa6c54ad6917dc79658245d4f0fd9';
+
+/// See also [_onRampRepository].
+@ProviderFor(_onRampRepository)
+final _onRampRepositoryProvider =
+    AutoDisposeFutureProvider<OnRampRepository>.internal(
+  _onRampRepository,
+  name: r'_onRampRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$onRampRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef _OnRampRepositoryRef = AutoDisposeFutureProviderRef<OnRampRepository>;
 String _$onrampSetupHash() => r'a1d1c7cf18e50bc7444cc0c47262101f546ec5a8';
 
 /// See also [onrampSetup].
@@ -346,11 +364,11 @@ class _OnrampTokenProviderElement
   String get id => (origin as OnrampTokenProvider).id;
 }
 
-String _$onrampMaxAmountHash() => r'6cce78cabac3a76a0aa24d1bbcde4acb31a4485c';
+String _$onrampMaxAmountHash() => r'947d22bd1a39591b7e2048250088636c19baa0e4';
 
 /// See also [onrampMaxAmount].
 @ProviderFor(onrampMaxAmount)
-final onrampMaxAmountProvider = AutoDisposeFutureProvider<double>.internal(
+final onrampMaxAmountProvider = AutoDisposeFutureProvider<num>.internal(
   onrampMaxAmount,
   name: r'onrampMaxAmountProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -362,9 +380,9 @@ final onrampMaxAmountProvider = AutoDisposeFutureProvider<double>.internal(
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef OnrampMaxAmountRef = AutoDisposeFutureProviderRef<double>;
+typedef OnrampMaxAmountRef = AutoDisposeFutureProviderRef<num>;
 String _$onrampDepositAddressHash() =>
-    r'80b01f2536099b7420edd514c90fac61d17ccaa4';
+    r'b1b94d3b7cdf2cc4c4cc3200d0171bfc1e498f26';
 
 /// See also [onrampDepositAddress].
 @ProviderFor(onrampDepositAddress)
@@ -381,12 +399,12 @@ final onrampDepositAddressProvider = AutoDisposeFutureProvider<String>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef OnrampDepositAddressRef = AutoDisposeFutureProviderRef<String>;
-String _$onrampTransfersHash() => r'41ee2bb10e3b8bd27e9197a39ed85eebd91e0993';
+String _$onrampTransfersHash() => r'f1438a897518042f99358023b7562cbaf0a8fd27';
 
 /// See also [onrampTransfers].
 @ProviderFor(onrampTransfers)
 final onrampTransfersProvider =
-    AutoDisposeFutureProvider<List<OnRampTransfer>>.internal(
+    AutoDisposeStreamProvider<List<OnRampTransfer>>.internal(
   onrampTransfers,
   name: r'onrampTransfersProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -398,75 +416,6 @@ final onrampTransfersProvider =
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef OnrampTransfersRef = AutoDisposeFutureProviderRef<List<OnRampTransfer>>;
-String _$onRampBackendSetupHash() =>
-    r'7a2e62e26be5f53b70b344d0f29b63a4281e8444';
-
-/// See also [_onRampBackendSetup].
-@ProviderFor(_onRampBackendSetup)
-final _onRampBackendSetupProvider =
-    AutoDisposeProvider<({String httpBaseUrl, String wsBaseUrl})>.internal(
-  _onRampBackendSetup,
-  name: r'_onRampBackendSetupProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$onRampBackendSetupHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef _OnRampBackendSetupRef
-    = AutoDisposeProviderRef<({String httpBaseUrl, String wsBaseUrl})>;
-String _$onRampSocketHash() => r'ac442b522076155be045e5cdf0cef9f00fc043a5';
-
-/// See also [_onRampSocket].
-@ProviderFor(_onRampSocket)
-final _onRampSocketProvider = AutoDisposeFutureProvider<PhoenixSocket>.internal(
-  _onRampSocket,
-  name: r'_onRampSocketProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$onRampSocketHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef _OnRampSocketRef = AutoDisposeFutureProviderRef<PhoenixSocket>;
-String _$onRampEventsHash() => r'8333f41abe11f5e715aae4fc0e38ca47cccb9d2a';
-
-/// See also [_onRampEvents].
-@ProviderFor(_onRampEvents)
-final _onRampEventsProvider = AutoDisposeStreamProvider<OnRampEvent>.internal(
-  _onRampEvents,
-  name: r'_onRampEventsProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$onRampEventsHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef _OnRampEventsRef = AutoDisposeStreamProviderRef<OnRampEvent>;
-String _$onRampEVMAddressHash() => r'5d9acb03b203792189237c4eb9c56dbfc9264569';
-
-/// See also [_onRampEVMAddress].
-@ProviderFor(_onRampEVMAddress)
-final _onRampEVMAddressProvider = AutoDisposeFutureProvider<String>.internal(
-  _onRampEVMAddress,
-  name: r'_onRampEVMAddressProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$onRampEVMAddressHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef _OnRampEVMAddressRef = AutoDisposeFutureProviderRef<String>;
+typedef OnrampTransfersRef = AutoDisposeStreamProviderRef<List<OnRampTransfer>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
