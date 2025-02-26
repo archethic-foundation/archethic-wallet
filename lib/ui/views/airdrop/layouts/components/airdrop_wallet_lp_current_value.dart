@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AirdropLPCurrentValue extends ConsumerWidget {
-  const AirdropLPCurrentValue({super.key});
+class AirdropWalletLPCurrentValue extends ConsumerWidget {
+  const AirdropWalletLPCurrentValue({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,16 +23,16 @@ class AirdropLPCurrentValue extends ConsumerWidget {
     return Text.rich(
       TextSpan(
         children: [
+          TextSpan(
+            text: localizations.airdropPersonalLPCurrentValue,
+            style: Theme.of(context).textTheme.bodySmallWithOpacity,
+          ),
           WidgetSpan(
             child: GradientText(
-              '\$${airdropForm.actualLPFiatValue.formatNumber(precision: 2)} ',
+              airdropForm.personalLP.formatNumber(precision: 2),
               style: Theme.of(context).textTheme.bodySmallWithOpacity,
               gradient: ArchethicGradients.gradientArchethic,
             ),
-          ),
-          TextSpan(
-            text: localizations.airdropLPValue,
-            style: Theme.of(context).textTheme.bodySmallWithOpacity,
           ),
         ],
       ),

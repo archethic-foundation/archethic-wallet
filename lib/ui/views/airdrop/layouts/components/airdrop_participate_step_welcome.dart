@@ -42,9 +42,34 @@ class _AirdropParticipateStepWelcomeSheetState
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                     const SizedBox(height: 10),
-                    Text(
-                      localizations.airdropParticipateStepWelcomeDesc1,
-                      style: Theme.of(context).textTheme.bodySmallWithOpacity,
+                    Text.rich(
+                      TextSpan(
+                        text: '',
+                        children: <InlineSpan>[
+                          TextSpan(
+                            text: localizations
+                                .airdropParticipateStepWelcomeDesc1,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmallWithOpacity,
+                          ),
+                          TextSpan(
+                            text: localizations
+                                .airdropParticipateStepWelcomeDesc2,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmallWithOpacity
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
+                          TextSpan(
+                            text: localizations
+                                .airdropParticipateStepWelcomeDesc3,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmallWithOpacity,
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 40),
                     const AirdropBlocInfo(),

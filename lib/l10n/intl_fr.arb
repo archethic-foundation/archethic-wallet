@@ -671,7 +671,9 @@
     },
     "airdropMenu": "Airdrop de 100M$",
     "airdropParticipateStepWelcomeTitle": "Participez à l'Airdrop dès aujourd'hui !",
-    "airdropParticipateStepWelcomeDesc1": "Quand aura lieu l'airdrop ? Dès que le prix du token UCO atteindra 1$, un total de 100 millions de dollars en tokens UCO sera distribué à tous les participants.",
+    "airdropParticipateStepWelcomeDesc1": "Quand aura lieu l'airdrop ? Dès que le prix du token UCO atteindra 1$, un total de ",
+    "airdropParticipateStepWelcomeDesc2": "100 millions de dollars en tokens UCO",
+    "airdropParticipateStepWelcomeDesc3": " sera distribué à tous les participants.",
     "airdropParticipateStepWelcomeCardTitle": "Valeur du token UCO",
     "airdropParticipateStepWelcomeCardAmount": "100 000 000 $",
     "airdropParticipateStepWelcomeCardParticipantsCount": "participants",
@@ -810,5 +812,6 @@
     "farmLockLevelUpDesc2": "Plus vous verrouillez vos tokens LP longtemps, plus vous recevez de récompenses de la part d'Archethic.",
     "liquidityAddTitle": "Comment ça marche ?",
     "liquidityAddTextFieldUCOLabel": "Montant d'UCO à ajouter ?",
-    "liquidityAddTextFieldETHLabel": "Montant d'Ether à ajouter ?"
+    "liquidityAddTextFieldETHLabel": "Montant d'Ether à ajouter ?",
+    "airdropPersonalLPCurrentValue": "Montant actuel de jetons LP verrouillés: "
 }
