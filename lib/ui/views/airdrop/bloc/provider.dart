@@ -13,7 +13,6 @@ import 'package:aewallet/ui/views/airdrop/bloc/state.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_banner.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:decimal/decimal.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
@@ -274,7 +273,7 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
         'signedPayload': base64Url.encode(signedPayload),
       };
 
-      final airdropAPISecret = dotenv.env['AIRDROP_API_SECRET'];
+      const airdropAPISecret = String.fromEnvironment('AIRDROP_API_SECRET');
       final timestamp =
           (DateTime.now().millisecondsSinceEpoch ~/ 1000).toString();
       final publicKey = archethic.uint8ListToHex(keychainKeypair.publicKey!);

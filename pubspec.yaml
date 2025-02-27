@@ -307,7 +307,6 @@ flutter:
   generate: true
 
   assets:
-    - .env
     - assets/ssl/
     - assets/bc-logos/
     - assets/icons/
