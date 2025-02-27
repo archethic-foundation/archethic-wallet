@@ -35,7 +35,6 @@ import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutte
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -55,7 +54,6 @@ Future<void> main() async {
   await DBHelperModuleAESwap.setupDatabase();
   await setupServiceLocator();
   await DeviceInfo.init();
-  await dotenv.load();
 
   if (UniversalPlatform.isDesktop) {
     await windowManager.ensureInitialized();
