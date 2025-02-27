@@ -399,12 +399,12 @@ final onrampDepositAddressProvider = AutoDisposeFutureProvider<String>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef OnrampDepositAddressRef = AutoDisposeFutureProviderRef<String>;
-String _$onrampTransfersHash() => r'f1438a897518042f99358023b7562cbaf0a8fd27';
+String _$onrampTransfersHash() => r'90964aba38b06839cdb8a310cd121481da9161d3';
 
 /// See also [onrampTransfers].
 @ProviderFor(onrampTransfers)
 final onrampTransfersProvider =
-    AutoDisposeStreamProvider<List<OnRampTransfer>>.internal(
+    AutoDisposeStreamProvider<List<OnRampDeposit>>.internal(
   onrampTransfers,
   name: r'onrampTransfersProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -416,6 +416,6 @@ final onrampTransfersProvider =
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef OnrampTransfersRef = AutoDisposeStreamProviderRef<List<OnRampTransfer>>;
+typedef OnrampTransfersRef = AutoDisposeStreamProviderRef<List<OnRampDeposit>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
