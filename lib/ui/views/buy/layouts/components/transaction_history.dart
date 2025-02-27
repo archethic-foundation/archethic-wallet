@@ -84,7 +84,7 @@ class _OnRampTransactionHistoryTable extends ConsumerWidget {
               .mapIndexed(
                 (index, transfer) => _OnRampTransactionHistoryTableRow(
                   key: Key(transfer.id),
-                  transfer: transfer,
+                  deposit: transfer,
                   isEven: index.isEven,
                 ),
               )
@@ -98,22 +98,22 @@ class _OnRampTransactionHistoryTable extends ConsumerWidget {
 class _OnRampTransactionHistoryTableRow extends ConsumerWidget {
   const _OnRampTransactionHistoryTableRow({
     super.key,
-    required this.transfer,
+    required this.deposit,
     required this.isEven,
   });
-  final OnRampTransfer transfer;
+  final OnRampDeposit deposit;
   final bool isEven;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final depositSymbol = ref
             .watch(
-              onrampTokenProvider(transfer.depositTokenId),
+              onrampTokenProvider(deposit.depositTokenId),
             )
             .valueOrNull
             ?.symbol ??
         '--';
-    final isReceived = transfer.transferedUcoAmount != 0;
+    final isReceived = deposit.transferedUcoAmount != 0;
     return DecoratedBox(
       decoration: BoxDecoration(
         color: isEven
@@ -134,7 +134,7 @@ class _OnRampTransactionHistoryTableRow extends ConsumerWidget {
                     children: [
                       Flexible(
                         child: Text(
-                          '+${transfer.depositAmount.numeral()} ',
+                          '+${deposit.depositAmount.numeral()} ',
                           style: AppTextStyles.bodyLarge(context).copyWith(
                             fontWeight: FontWeight.w700,
                             fontSize: 13,
@@ -162,7 +162,7 @@ class _OnRampTransactionHistoryTableRow extends ConsumerWidget {
                     ],
                   ),
                   Text(
-                    DateFormat.yMd().add_Hms().format(transfer.depositDate),
+                    DateFormat.yMd().add_Hms().format(deposit.depositDate),
                     style: AppTextStyles.bodySmall(context),
                   ),
                 ],
@@ -177,7 +177,7 @@ class _OnRampTransactionHistoryTableRow extends ConsumerWidget {
                     children: [
                       Flexible(
                         child: Text(
-                          '+${transfer.transferedUcoAmount.numeral()} ',
+                          '+${deposit.transferedUcoAmount.numeral()} ',
                           style: AppTextStyles.bodyLarge(context).copyWith(
                             fontWeight: FontWeight.w700,
                             fontSize: 13,
@@ -209,7 +209,7 @@ class _OnRampTransactionHistoryTableRow extends ConsumerWidget {
                   Text(
                     isReceived
                         ? localizations.onrampHistoryTransferStatusCompleted(
-                            (transfer.completedRatio * 100).round(),
+                            (deposit.completedRatio * 100).round(),
                           )
                         : localizations.onrampHistoryTransferStatusInitiated,
                     style: AppTextStyles.bodySmall(context),

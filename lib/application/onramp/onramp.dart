@@ -165,16 +165,16 @@ Future<String> onrampDepositAddress(Ref ref) async {
 }
 
 @riverpod
-Stream<List<OnRampTransfer>> onrampTransfers(Ref ref) async* {
+Stream<List<OnRampDeposit>> onrampTransfers(Ref ref) async* {
   final repository = await ref.watch(_onRampRepositoryProvider.future);
 
-  var transfers = <OnRampTransfer>[];
+  var transfers = <OnRampDeposit>[];
   await for (final event in repository.events) {
     switch (event) {
       case OnRampTransfersSnapshotEvent(transfers: final newTransfers):
         transfers = newTransfers;
         break;
-      case OnRampTransferUpdateEvent(transfer: final updatedTransfer):
+      case OnRampDepositUpdateEvent(transfer: final updatedTransfer):
         var found = false;
         transfers = transfers.map((transfer) {
           if (transfer.id == updatedTransfer.id) {
