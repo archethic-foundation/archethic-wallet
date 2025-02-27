@@ -175,8 +175,7 @@ class AirdropBanner extends ConsumerWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    if (state != AirdropState.ok)
-                      const AirdropParticipantsCount(),
+                    const AirdropParticipantsCount(),
                     if (state != AirdropState.ok)
                       Text(
                         '\$${ucoPerParticipant?.numeral(digits: 2) ?? ''} ${localizations.airdropPerParticipant}',

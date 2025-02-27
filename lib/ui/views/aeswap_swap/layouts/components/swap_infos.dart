@@ -78,7 +78,11 @@ class SwapInfos extends ConsumerWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(
-                  left: 20, right: 20, bottom: 20, top: 40),
+                left: 20,
+                right: 20,
+                bottom: 20,
+                top: 40,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

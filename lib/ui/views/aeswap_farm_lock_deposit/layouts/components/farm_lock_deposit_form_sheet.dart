@@ -1,21 +1,17 @@
-import 'dart:convert';
-
 import 'package:aewallet/application/account/accounts_notifier.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
+import 'package:aewallet/ui/figma_components/message_box/message_box.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_lock_duration_btn.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_textfield_amount.dart';
-import 'package:aewallet/ui/views/aeswap_liquidity_add/layouts/liquidity_add_sheet.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
-import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
-    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -98,22 +94,14 @@ class FarmLockDepositFormSheet extends ConsumerWidget
     }
 
     final localizations = AppLocalizations.of(context)!;
-    final boldBodyLarge =
-        AppTextStyles.bodyLarge(context).copyWith(fontWeight: FontWeight.bold);
-    final bodyMediumWithOpacity = AppTextStyles.bodyMediumWithOpacity(context);
 
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            localizations.farmLockDepositTitle,
-            style: boldBodyLarge,
-          ),
-          const SizedBox(height: 10),
-          Text(
             localizations.farmLockDepositDesc,
-            style: bodyMediumWithOpacity,
+            style: Theme.of(context).textTheme.bodySmallWithOpacity,
           ),
           const SizedBox(height: 20),
           Padding(
@@ -121,99 +109,27 @@ class FarmLockDepositFormSheet extends ConsumerWidget
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SelectableText(
-                      AppLocalizations.of(context)!
-                          .farmLockDepositTextFieldLPLabel,
-                      style: AppTextStyles.bodyMedium(context).copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    if (farmLockDeposit.aprEstimation != null)
-                      SelectableText(
-                        '${AppLocalizations.of(context)!.farmLockDepositAPREstimationLbl} ${farmLockDeposit.aprEstimation!.formatNumber(precision: 0).replaceAll('.', '')}%',
-                        style: AppTextStyles.bodyMediumWithOpacity(context),
-                      )
-                    else
-                      const SizedBox.shrink(),
-                  ],
-                ),
-                const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    FarmLockDepositAmount(),
-                  ],
-                ),
-                aedappfm.BlockInfo(
-                  width: MediaQuery.of(context).size.width,
-                  paddingEdgeInsetsClipRRect:
-                      const EdgeInsets.symmetric(vertical: 10),
-                  paddingEdgeInsetsInfo:
-                      const EdgeInsets.symmetric(horizontal: 10),
-                  info: LayoutBuilder(
-                    builder: (context, constraints) {
-                      return Row(
-                        children: [
-                          SizedBox(
-                            width: constraints.maxWidth - 50,
-                            child: Text(
-                              AppLocalizations.of(context)!
-                                  .farmLockDepositGetLPToken,
-                              style: AppTextStyles.bodyMedium(context),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          InkWell(
-                            child: Container(
-                              height: 36,
-                              width: 36,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                gradient: aedappfm.AppThemeBase.gradientBtn,
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Icon(
-                                aedappfm.Iconsax.import4,
-                                color: Colors.white,
-                                size: 18,
-                              ),
-                            ),
-                            onTap: () async {
-                              final poolJson = jsonEncode(
-                                farmLockDeposit.pool!.toJson(),
-                              );
-                              final poolEncoded = Uri.encodeComponent(poolJson);
-                              await context.push(
-                                Uri(
-                                  path: LiquidityAddSheet.routerPage,
-                                  queryParameters: {
-                                    'pool': poolEncoded,
-                                  },
-                                ).toString(),
-                              );
-                            },
-                          ),
-                        ],
-                      );
-                    },
+                const FarmLockDepositLPAmount(),
+                if (farmLockDeposit.failure != null)
+                  MessageBox(
+                    messageBoxType: MessageBoxType.warning,
+                    text: FailureMessage(
+                      context: context,
+                      failure: farmLockDeposit.failure,
+                    ).getMessage(),
                   ),
-                ),
                 const SizedBox(height: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       localizations.farmLockDepositTitle2,
-                      style: boldBodyLarge,
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
                     const SizedBox(height: 10),
                     Text(
                       localizations.farmLockDepositDesc2,
-                      style: bodyMediumWithOpacity,
+                      style: Theme.of(context).textTheme.bodySmallWithOpacity,
                     ),
                   ],
                 ),
@@ -244,15 +160,18 @@ class FarmLockDepositFormSheet extends ConsumerWidget
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    aedappfm.ErrorMessage(
-                      failure: farmLockDeposit.failure,
-                      failureMessage: FailureMessage(
-                        context: context,
-                        failure: farmLockDeposit.failure,
-                      ).getMessage(),
+                    Text(
+                      localizations.farmLockDepositTitle3,
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      localizations.farmLockDepositDesc3,
+                      style: Theme.of(context).textTheme.bodySmallWithOpacity,
                     ),
                   ],
                 ),
+                const SizedBox(height: 20),
               ],
             ),
           ),

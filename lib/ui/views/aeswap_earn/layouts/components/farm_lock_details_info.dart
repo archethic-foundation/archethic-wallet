@@ -13,10 +13,10 @@ import 'package:aewallet/ui/views/aeswap_earn/layouts/components/farm_lock_detai
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/farm_lock_details_level_single.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
-import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class FarmLockDetailsInfo extends ConsumerWidget {
@@ -55,7 +55,11 @@ class FarmLockDetailsInfo extends ConsumerWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(
-                  left: 20, right: 20, bottom: 20, top: 40),
+                left: 20,
+                right: 20,
+                bottom: 20,
+                top: 40,
+              ),
               child: aedappfm.ArchethicScrollbar(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

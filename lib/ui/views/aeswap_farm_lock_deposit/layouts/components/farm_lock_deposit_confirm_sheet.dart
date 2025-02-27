@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
@@ -9,8 +11,10 @@ import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/provider.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/state.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_confirm_infos.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_result_sheet.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_step_popup.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
@@ -71,6 +75,7 @@ class FarmLockDepositConfirmSheetState
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final farmLockDeposit = ref.watch(farmLockDepositFormNotifierProvider);
+
     return Row(
       children: <Widget>[
         AppButtonTinyConnectivity(
@@ -81,8 +86,28 @@ class FarmLockDepositConfirmSheetState
             final farmLockDepositNotifier = ref.read(
               farmLockDepositFormNotifierProvider.notifier,
             )..setProcessInProgress(true);
-            final resultOk = await farmLockDepositNotifier
-                .lock(AppLocalizations.of(context)!);
+
+            var resultOk = false;
+            if (farmLockDeposit.farmLockDepositMode ==
+                FarmLockDepositMode.uco) {
+              unawaited(
+                farmLockDepositNotifier.lock(AppLocalizations.of(context)!),
+              );
+
+              resultOk = await showDialog<bool>(
+                    barrierDismissible: false,
+                    useRootNavigator: false,
+                    context: context,
+                    builder: (context) {
+                      return const FarmLockDepositStepPopup();
+                    },
+                  ) ??
+                  false;
+            } else {
+              resultOk = await farmLockDepositNotifier
+                  .lock(AppLocalizations.of(context)!);
+            }
+
             farmLockDepositNotifier.setProcessInProgress(false);
             if (resultOk) {
               await context.push(FarmLockDepositResultSheet.routerPage);

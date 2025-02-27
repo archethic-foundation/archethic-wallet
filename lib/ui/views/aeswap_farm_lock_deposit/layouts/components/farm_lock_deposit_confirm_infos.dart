@@ -156,7 +156,7 @@ class FarmLockDepositConfirmInfos extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   DexTokenBalance(
-                    tokenBalance: farmLockDeposit.lpTokenBalance,
+                    tokenBalance: farmLockDeposit.userBalance,
                     token: farmLockDeposit.pool!.lpToken,
                     withFiat: false,
                     digits: aedappfm.Responsive.isMobile(context) ? 2 : 8,
@@ -166,7 +166,7 @@ class FarmLockDepositConfirmInfos extends ConsumerWidget {
                   ),
                   DexTokenBalance(
                     tokenBalance: (Decimal.parse(
-                              farmLockDeposit.lpTokenBalance.toString(),
+                              farmLockDeposit.userBalance.toString(),
                             ) -
                             Decimal.parse(
                               farmLockDeposit.amount.toString(),

@@ -133,5 +133,24 @@ final withdrawFarmLockCaseProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef WithdrawFarmLockCaseRef = AutoDisposeProviderRef<WithdrawFarmLockCase>;
+String _$addFundsBeginnerCaseHash() =>
+    r'46ea793fcf5080d101d0f0a17e2f88c48db6f21d';
+
+/// See also [addFundsBeginnerCase].
+@ProviderFor(addFundsBeginnerCase)
+final addFundsBeginnerCaseProvider =
+    AutoDisposeProvider<AddFundsBeginnerCase>.internal(
+  addFundsBeginnerCase,
+  name: r'addFundsBeginnerCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$addFundsBeginnerCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef AddFundsBeginnerCaseRef = AutoDisposeProviderRef<AddFundsBeginnerCase>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

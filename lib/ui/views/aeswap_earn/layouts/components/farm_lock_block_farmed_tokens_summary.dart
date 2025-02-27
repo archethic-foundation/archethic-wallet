@@ -25,6 +25,7 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
   ) {
     final farmLock = ref.watch(farmLockFormFarmLockProvider).valueOrNull;
     final pool = ref.watch(farmLockFormPoolProvider).valueOrNull;
+    // TODO(reddwarf03): Put a skipLoadingOnReload: true,
     final farmLockFormSummary =
         ref.watch(farmLockFormSummaryProvider).valueOrNull;
 
