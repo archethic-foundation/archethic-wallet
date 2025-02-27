@@ -19,30 +19,34 @@ class BtnPrimary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: isLocked ? null : onTap,
-      child: IntrinsicWidth(
-        child: IntrinsicHeight(
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 8.5),
-            alignment: Alignment.center,
-            decoration: _getButtonDecoration(),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  buttonText,
-                  style: isLocked
-                      ? Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            color: Colors.white.withOpacity(0.2),
-                            fontWeight: FontWeight.w600,
-                          )
-                      : Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
-                ),
-              ],
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: isLocked ? null : onTap,
+        child: IntrinsicWidth(
+          child: IntrinsicHeight(
+            child: Container(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 17, vertical: 8.5),
+              alignment: Alignment.center,
+              decoration: _getButtonDecoration(),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    buttonText,
+                    style: isLocked
+                        ? Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              color: Colors.white.withOpacity(0.2),
+                              fontWeight: FontWeight.w600,
+                            )
+                        : Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

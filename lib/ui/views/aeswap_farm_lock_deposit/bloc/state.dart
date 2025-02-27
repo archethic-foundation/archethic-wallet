@@ -10,10 +10,13 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'state.freezed.dart';
 
+enum FarmLockDepositMode { lp, uco }
+
 @freezed
 class FarmLockDepositFormState with _$FarmLockDepositFormState {
   const factory FarmLockDepositFormState({
     @Default(ProcessStep.form) ProcessStep processStep,
+    FarmLockDepositMode? farmLockDepositMode,
     @Default(false) bool resumeProcess,
     @Default(0) int currentStep,
     DexPool? pool,
@@ -25,7 +28,7 @@ class FarmLockDepositFormState with _$FarmLockDepositFormState {
     @Default(FarmLockDepositDurationType.threeYears)
     FarmLockDepositDurationType farmLockDepositDuration,
     @Default('') String level,
-    @Default(0.0) double lpTokenBalance,
+    @Default(0.0) double userBalance,
     @Default(0.0) double feesEstimatedUCO,
     Transaction? transactionFarmLockDeposit,
     @Default({}) Map<String, int> filterAvailableLevels,

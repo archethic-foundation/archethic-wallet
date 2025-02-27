@@ -2,6 +2,7 @@ import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/transaction_repository.dart';
+import 'package:aewallet/domain/usecases/aeswap/add_funds_beginner.usecase.dart';
 import 'package:aewallet/domain/usecases/aeswap/add_liquidity.usecase.dart';
 import 'package:aewallet/domain/usecases/aeswap/claim_farm_lock.usecase.dart';
 import 'package:aewallet/domain/usecases/aeswap/deposit_farm_lock.usecase.dart';
@@ -153,6 +154,28 @@ WithdrawFarmLockCase withdrawFarmLockCase(
   Ref ref,
 ) =>
     WithdrawFarmLockCase(
+      apiService: ref.watch(apiServiceProvider),
+      verifiedTokensRepository: ref.watch(verifiedTokensRepositoryProvider),
+      notificationService: ref.watch(NotificationProviders.notificationService),
+      transactionRepository: ref.watch(archethicTransactionRepositoryProvider),
+      keychainSecuredInfos: ref
+          .watch(sessionNotifierProvider)
+          .loggedIn!
+          .wallet
+          .keychainSecuredInfos,
+      selectedAccount: ref
+          .watch(
+            accountsNotifierProvider,
+          )
+          .value!
+          .selectedAccount!,
+    );
+
+@riverpod
+AddFundsBeginnerCase addFundsBeginnerCase(
+  Ref ref,
+) =>
+    AddFundsBeginnerCase(
       apiService: ref.watch(apiServiceProvider),
       verifiedTokensRepository: ref.watch(verifiedTokensRepositoryProvider),
       notificationService: ref.watch(NotificationProviders.notificationService),

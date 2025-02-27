@@ -1,19 +1,26 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/aeswap/usecases.dart';
 import 'package:aewallet/application/airdrop/airdrop.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/step.dart';
+import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
+import 'package:aewallet/modules/aeswap/application/session/provider.dart';
+import 'package:aewallet/modules/aeswap/application/session/state.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
 import 'package:aewallet/modules/aeswap/util/browser_util_desktop.dart'
     if (dart.library.js) 'package:aewallet/modules/aeswap/util/browser_util_web.dart';
 import 'package:aewallet/modules/aeswap/util/riverpod.dart';
+import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/state.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
-import 'package:decimal/decimal.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -23,14 +30,25 @@ part 'provider.g.dart';
 class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
   FarmLockDepositFormNotifier();
 
+  CancelableTask<double?>? _calculateFeesTask;
+
   @override
   FarmLockDepositFormState build() {
-    final lpTokenBalance = _watchLPTokenBalance();
+    final earnUserLevel = ref.read(
+      SettingsProviders.settings.select((settings) => settings.earnUserLevel),
+    );
+
+    final userBalance = earnUserLevel == EarnUserLevelType.beginner
+        ? _watchUCOBalance()
+        : _watchLPTokenBalance();
 
     // Reuse previous state values.
     // If this is a first build, uses a default state.
     return (stateOrNull ?? const FarmLockDepositFormState()).copyWith(
-      lpTokenBalance: lpTokenBalance,
+      userBalance: userBalance,
+      farmLockDepositMode: earnUserLevel == EarnUserLevelType.beginner
+          ? FarmLockDepositMode.uco
+          : FarmLockDepositMode.lp,
     );
   }
 
@@ -46,6 +64,16 @@ class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
     return ref.watch(getBalanceProvider(lpTokenAddress)).valueOrNull ?? 0.0;
   }
 
+  double _watchUCOBalance() {
+    /// Rebuilds this provider when lpTokenAddress changes
+    /// That way, it will watch the appropriate lpBalanceProvider.
+    ref.invalidateSelfOnPropertyChange(
+      (state) => kUCOAddress,
+    );
+
+    return ref.watch(getBalanceProvider(kUCOAddress)).valueOrNull ?? 0.0;
+  }
+
   void setTransactionFarmLockDeposit(
     archethic.Transaction transactionFarmLockDeposit,
   ) {
@@ -53,28 +81,83 @@ class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
         state.copyWith(transactionFarmLockDeposit: transactionFarmLockDeposit);
   }
 
-  void setAmount(
+  Future<void> setAmount(
     double amount,
-  ) {
+  ) async {
     state = state.copyWith(
       failure: null,
       amount: amount,
     );
+
+    // Estimate fees
+    /*if (state.farmLockDepositMode == FarmLockDepositMode.uco) {
+      final feesEstimatedUCO = await estimateFees();
+      state = state.copyWith(feesEstimatedUCO: feesEstimatedUCO);
+    }*/
+  }
+
+/*
+  Future<void> _updateFees(
+    BuildContext context, {
+    Duration delay = const Duration(milliseconds: 800),
+  }) async {
+    state = state.copyWith(
+      feeEstimation: const AsyncValue.loading(),
+    );
+
+    try {
+      final fees = await _calculateFeesForTransfer(context, delay);
+
+      state = state.copyWith(
+        feeEstimation: AsyncValue.data(fees),
+        errorAmountText: _getErrorAmountText(context, fees),
+      );
+    } on CanceledTask {
+      return;
+    }
+  }*/
+
+  Future<double> estimateFees() async {
+    final environment = ref.read(environmentProvider);
+    try {
+      final results = await Future.wait([
+        ref.read(swapCaseProvider).estimateFees(
+              state.pool!.poolAddress,
+              const DexToken(address: kUCOAddress, symbol: kUCOAddress),
+              state.amount,
+              0,
+            ),
+        ref.read(addLiquidityCaseProvider).estimateFees(
+              state.pool!.poolAddress,
+              const DexToken(address: kUCOAddress, symbol: kUCOAddress),
+              state.amount,
+              DexToken(address: environment.aeETHAddress, symbol: 'aeETH'),
+              99999, // Default Value
+              0,
+            ),
+        ref.read(depositFarmLockCaseProvider).estimateFees(
+              state.farmLock!.farmAddress,
+              state.farmLock!.lpToken!.address,
+              99999, // Default Value
+              state.farmLockDepositDuration,
+              state.level,
+            ),
+      ]);
+
+      final totalFees = results[0] + results[1] + results[2];
+      return totalFees;
+    } catch (e) {
+      return 0.0;
+    }
   }
 
   void setAmountMax() {
-    setAmount(state.lpTokenBalance);
+    // TODO(reddwarf03): Warning with fees
+    setAmount(state.userBalance);
   }
 
   void setFilterAvailableLevels(Map<String, int> filterAvailableLevels) {
     state = state.copyWith(filterAvailableLevels: filterAvailableLevels);
-  }
-
-  void setAmountHalf() {
-    setAmount(
-      (Decimal.parse(state.lpTokenBalance.toString()) / Decimal.fromInt(2))
-          .toDouble(),
-    );
   }
 
   void setDexPool(DexPool pool) {
@@ -206,7 +289,7 @@ class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
       return false;
     }
 
-    if (state.amount > state.lpTokenBalance) {
+    if (state.amount > state.userBalance) {
       setFailure(
         aedappfm.Failure.other(
           cause: appLocalizations.farmDepositControlLPTokenAmountExceedBalance,
@@ -264,17 +347,33 @@ class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
     await aedappfm.ConsentRepositoryImpl()
         .addAddress(accountSelected!.genesisAddress);
 
-    await ref.read(depositFarmLockCaseProvider).run(
-          appLocalizations,
-          this,
-          state.farmLock!.farmAddress,
-          state.farmLock!.lpToken!.address,
-          state.amount,
-          state.farmLock!.farmAddress,
-          false,
-          state.farmLockDepositDuration,
-          state.level,
-        );
+    if (state.farmLockDepositMode == FarmLockDepositMode.lp) {
+      await ref.read(depositFarmLockCaseProvider).run(
+            appLocalizations,
+            this,
+            state.farmLock!.farmAddress,
+            state.farmLock!.lpToken!.address,
+            state.amount,
+            state.farmLock!.farmAddress,
+            false,
+            state.farmLockDepositDuration,
+            state.level,
+          );
+    } else {
+      final environment = ref.read(environmentProvider);
+      final stepsState = ref.read(stepsNotifierProvider.notifier);
+      await ref.read(addFundsBeginnerCaseProvider).run(
+            appLocalizations,
+            state.farmLock!.farmAddress,
+            state.amount,
+            state.farmLock!.poolAddress,
+            environment.aeETHAddress,
+            state.farmLock!.lpToken!.address,
+            state.farmLockDepositDuration,
+            state.level,
+            stepsState,
+          );
+    }
 
     ref
       ..invalidate(userBalanceProvider)

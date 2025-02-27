@@ -17,6 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$FarmLockDepositFormState {
   ProcessStep get processStep => throw _privateConstructorUsedError;
+  FarmLockDepositMode? get farmLockDepositMode =>
+      throw _privateConstructorUsedError;
   bool get resumeProcess => throw _privateConstructorUsedError;
   int get currentStep => throw _privateConstructorUsedError;
   DexPool? get pool => throw _privateConstructorUsedError;
@@ -28,7 +30,7 @@ mixin _$FarmLockDepositFormState {
   FarmLockDepositDurationType get farmLockDepositDuration =>
       throw _privateConstructorUsedError;
   String get level => throw _privateConstructorUsedError;
-  double get lpTokenBalance => throw _privateConstructorUsedError;
+  double get userBalance => throw _privateConstructorUsedError;
   double get feesEstimatedUCO => throw _privateConstructorUsedError;
   Transaction? get transactionFarmLockDeposit =>
       throw _privateConstructorUsedError;
@@ -53,6 +55,7 @@ abstract class $FarmLockDepositFormStateCopyWith<$Res> {
   @useResult
   $Res call(
       {ProcessStep processStep,
+      FarmLockDepositMode? farmLockDepositMode,
       bool resumeProcess,
       int currentStep,
       DexPool? pool,
@@ -63,7 +66,7 @@ abstract class $FarmLockDepositFormStateCopyWith<$Res> {
       double? aprEstimation,
       FarmLockDepositDurationType farmLockDepositDuration,
       String level,
-      double lpTokenBalance,
+      double userBalance,
       double feesEstimatedUCO,
       Transaction? transactionFarmLockDeposit,
       Map<String, int> filterAvailableLevels,
@@ -94,6 +97,7 @@ class _$FarmLockDepositFormStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? processStep = null,
+    Object? farmLockDepositMode = freezed,
     Object? resumeProcess = null,
     Object? currentStep = null,
     Object? pool = freezed,
@@ -104,7 +108,7 @@ class _$FarmLockDepositFormStateCopyWithImpl<$Res,
     Object? aprEstimation = freezed,
     Object? farmLockDepositDuration = null,
     Object? level = null,
-    Object? lpTokenBalance = null,
+    Object? userBalance = null,
     Object? feesEstimatedUCO = null,
     Object? transactionFarmLockDeposit = freezed,
     Object? filterAvailableLevels = null,
@@ -117,6 +121,10 @@ class _$FarmLockDepositFormStateCopyWithImpl<$Res,
           ? _value.processStep
           : processStep // ignore: cast_nullable_to_non_nullable
               as ProcessStep,
+      farmLockDepositMode: freezed == farmLockDepositMode
+          ? _value.farmLockDepositMode
+          : farmLockDepositMode // ignore: cast_nullable_to_non_nullable
+              as FarmLockDepositMode?,
       resumeProcess: null == resumeProcess
           ? _value.resumeProcess
           : resumeProcess // ignore: cast_nullable_to_non_nullable
@@ -157,9 +165,9 @@ class _$FarmLockDepositFormStateCopyWithImpl<$Res,
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
               as String,
-      lpTokenBalance: null == lpTokenBalance
-          ? _value.lpTokenBalance
-          : lpTokenBalance // ignore: cast_nullable_to_non_nullable
+      userBalance: null == userBalance
+          ? _value.userBalance
+          : userBalance // ignore: cast_nullable_to_non_nullable
               as double,
       feesEstimatedUCO: null == feesEstimatedUCO
           ? _value.feesEstimatedUCO
@@ -257,6 +265,7 @@ abstract class _$$FarmLockDepositFormStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {ProcessStep processStep,
+      FarmLockDepositMode? farmLockDepositMode,
       bool resumeProcess,
       int currentStep,
       DexPool? pool,
@@ -267,7 +276,7 @@ abstract class _$$FarmLockDepositFormStateImplCopyWith<$Res>
       double? aprEstimation,
       FarmLockDepositDurationType farmLockDepositDuration,
       String level,
-      double lpTokenBalance,
+      double userBalance,
       double feesEstimatedUCO,
       Transaction? transactionFarmLockDeposit,
       Map<String, int> filterAvailableLevels,
@@ -301,6 +310,7 @@ class __$$FarmLockDepositFormStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? processStep = null,
+    Object? farmLockDepositMode = freezed,
     Object? resumeProcess = null,
     Object? currentStep = null,
     Object? pool = freezed,
@@ -311,7 +321,7 @@ class __$$FarmLockDepositFormStateImplCopyWithImpl<$Res>
     Object? aprEstimation = freezed,
     Object? farmLockDepositDuration = null,
     Object? level = null,
-    Object? lpTokenBalance = null,
+    Object? userBalance = null,
     Object? feesEstimatedUCO = null,
     Object? transactionFarmLockDeposit = freezed,
     Object? filterAvailableLevels = null,
@@ -324,6 +334,10 @@ class __$$FarmLockDepositFormStateImplCopyWithImpl<$Res>
           ? _value.processStep
           : processStep // ignore: cast_nullable_to_non_nullable
               as ProcessStep,
+      farmLockDepositMode: freezed == farmLockDepositMode
+          ? _value.farmLockDepositMode
+          : farmLockDepositMode // ignore: cast_nullable_to_non_nullable
+              as FarmLockDepositMode?,
       resumeProcess: null == resumeProcess
           ? _value.resumeProcess
           : resumeProcess // ignore: cast_nullable_to_non_nullable
@@ -364,9 +378,9 @@ class __$$FarmLockDepositFormStateImplCopyWithImpl<$Res>
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
               as String,
-      lpTokenBalance: null == lpTokenBalance
-          ? _value.lpTokenBalance
-          : lpTokenBalance // ignore: cast_nullable_to_non_nullable
+      userBalance: null == userBalance
+          ? _value.userBalance
+          : userBalance // ignore: cast_nullable_to_non_nullable
               as double,
       feesEstimatedUCO: null == feesEstimatedUCO
           ? _value.feesEstimatedUCO
@@ -401,6 +415,7 @@ class __$$FarmLockDepositFormStateImplCopyWithImpl<$Res>
 class _$FarmLockDepositFormStateImpl extends _FarmLockDepositFormState {
   const _$FarmLockDepositFormStateImpl(
       {this.processStep = ProcessStep.form,
+      this.farmLockDepositMode,
       this.resumeProcess = false,
       this.currentStep = 0,
       this.pool,
@@ -411,7 +426,7 @@ class _$FarmLockDepositFormStateImpl extends _FarmLockDepositFormState {
       this.aprEstimation,
       this.farmLockDepositDuration = FarmLockDepositDurationType.threeYears,
       this.level = '',
-      this.lpTokenBalance = 0.0,
+      this.userBalance = 0.0,
       this.feesEstimatedUCO = 0.0,
       this.transactionFarmLockDeposit,
       final Map<String, int> filterAvailableLevels = const {},
@@ -424,6 +439,8 @@ class _$FarmLockDepositFormStateImpl extends _FarmLockDepositFormState {
   @override
   @JsonKey()
   final ProcessStep processStep;
+  @override
+  final FarmLockDepositMode? farmLockDepositMode;
   @override
   @JsonKey()
   final bool resumeProcess;
@@ -453,7 +470,7 @@ class _$FarmLockDepositFormStateImpl extends _FarmLockDepositFormState {
   final String level;
   @override
   @JsonKey()
-  final double lpTokenBalance;
+  final double userBalance;
   @override
   @JsonKey()
   final double feesEstimatedUCO;
@@ -478,7 +495,7 @@ class _$FarmLockDepositFormStateImpl extends _FarmLockDepositFormState {
 
   @override
   String toString() {
-    return 'FarmLockDepositFormState(processStep: $processStep, resumeProcess: $resumeProcess, currentStep: $currentStep, pool: $pool, farmLock: $farmLock, isProcessInProgress: $isProcessInProgress, farmLockDepositOk: $farmLockDepositOk, amount: $amount, aprEstimation: $aprEstimation, farmLockDepositDuration: $farmLockDepositDuration, level: $level, lpTokenBalance: $lpTokenBalance, feesEstimatedUCO: $feesEstimatedUCO, transactionFarmLockDeposit: $transactionFarmLockDeposit, filterAvailableLevels: $filterAvailableLevels, failure: $failure, finalAmount: $finalAmount, consentDateTime: $consentDateTime)';
+    return 'FarmLockDepositFormState(processStep: $processStep, farmLockDepositMode: $farmLockDepositMode, resumeProcess: $resumeProcess, currentStep: $currentStep, pool: $pool, farmLock: $farmLock, isProcessInProgress: $isProcessInProgress, farmLockDepositOk: $farmLockDepositOk, amount: $amount, aprEstimation: $aprEstimation, farmLockDepositDuration: $farmLockDepositDuration, level: $level, userBalance: $userBalance, feesEstimatedUCO: $feesEstimatedUCO, transactionFarmLockDeposit: $transactionFarmLockDeposit, filterAvailableLevels: $filterAvailableLevels, failure: $failure, finalAmount: $finalAmount, consentDateTime: $consentDateTime)';
   }
 
   @override
@@ -488,6 +505,8 @@ class _$FarmLockDepositFormStateImpl extends _FarmLockDepositFormState {
             other is _$FarmLockDepositFormStateImpl &&
             (identical(other.processStep, processStep) ||
                 other.processStep == processStep) &&
+            (identical(other.farmLockDepositMode, farmLockDepositMode) ||
+                other.farmLockDepositMode == farmLockDepositMode) &&
             (identical(other.resumeProcess, resumeProcess) ||
                 other.resumeProcess == resumeProcess) &&
             (identical(other.currentStep, currentStep) ||
@@ -506,8 +525,8 @@ class _$FarmLockDepositFormStateImpl extends _FarmLockDepositFormState {
                     other.farmLockDepositDuration, farmLockDepositDuration) ||
                 other.farmLockDepositDuration == farmLockDepositDuration) &&
             (identical(other.level, level) || other.level == level) &&
-            (identical(other.lpTokenBalance, lpTokenBalance) ||
-                other.lpTokenBalance == lpTokenBalance) &&
+            (identical(other.userBalance, userBalance) ||
+                other.userBalance == userBalance) &&
             (identical(other.feesEstimatedUCO, feesEstimatedUCO) ||
                 other.feesEstimatedUCO == feesEstimatedUCO) &&
             (identical(other.transactionFarmLockDeposit,
@@ -524,26 +543,28 @@ class _$FarmLockDepositFormStateImpl extends _FarmLockDepositFormState {
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      processStep,
-      resumeProcess,
-      currentStep,
-      pool,
-      farmLock,
-      isProcessInProgress,
-      farmLockDepositOk,
-      amount,
-      aprEstimation,
-      farmLockDepositDuration,
-      level,
-      lpTokenBalance,
-      feesEstimatedUCO,
-      transactionFarmLockDeposit,
-      const DeepCollectionEquality().hash(_filterAvailableLevels),
-      failure,
-      finalAmount,
-      consentDateTime);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        processStep,
+        farmLockDepositMode,
+        resumeProcess,
+        currentStep,
+        pool,
+        farmLock,
+        isProcessInProgress,
+        farmLockDepositOk,
+        amount,
+        aprEstimation,
+        farmLockDepositDuration,
+        level,
+        userBalance,
+        feesEstimatedUCO,
+        transactionFarmLockDeposit,
+        const DeepCollectionEquality().hash(_filterAvailableLevels),
+        failure,
+        finalAmount,
+        consentDateTime
+      ]);
 
   /// Create a copy of FarmLockDepositFormState
   /// with the given fields replaced by the non-null parameter values.
@@ -558,6 +579,7 @@ class _$FarmLockDepositFormStateImpl extends _FarmLockDepositFormState {
 abstract class _FarmLockDepositFormState extends FarmLockDepositFormState {
   const factory _FarmLockDepositFormState(
       {final ProcessStep processStep,
+      final FarmLockDepositMode? farmLockDepositMode,
       final bool resumeProcess,
       final int currentStep,
       final DexPool? pool,
@@ -568,7 +590,7 @@ abstract class _FarmLockDepositFormState extends FarmLockDepositFormState {
       final double? aprEstimation,
       final FarmLockDepositDurationType farmLockDepositDuration,
       final String level,
-      final double lpTokenBalance,
+      final double userBalance,
       final double feesEstimatedUCO,
       final Transaction? transactionFarmLockDeposit,
       final Map<String, int> filterAvailableLevels,
@@ -579,6 +601,8 @@ abstract class _FarmLockDepositFormState extends FarmLockDepositFormState {
 
   @override
   ProcessStep get processStep;
+  @override
+  FarmLockDepositMode? get farmLockDepositMode;
   @override
   bool get resumeProcess;
   @override
@@ -600,7 +624,7 @@ abstract class _FarmLockDepositFormState extends FarmLockDepositFormState {
   @override
   String get level;
   @override
-  double get lpTokenBalance;
+  double get userBalance;
   @override
   double get feesEstimatedUCO;
   @override

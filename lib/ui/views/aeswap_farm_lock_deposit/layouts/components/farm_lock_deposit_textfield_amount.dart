@@ -1,41 +1,57 @@
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_lp_token_fiat_value.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_token_balance.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/components/fiat_value.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_textfield.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/provider.dart';
-
+import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/state.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FarmLockDepositAmount extends ConsumerStatefulWidget {
-  const FarmLockDepositAmount({
+class FarmLockDepositLPAmount extends ConsumerStatefulWidget {
+  const FarmLockDepositLPAmount({
     super.key,
   });
 
   @override
-  ConsumerState<FarmLockDepositAmount> createState() =>
-      _FarmLockDepositToken1AmountState();
+  ConsumerState<FarmLockDepositLPAmount> createState() =>
+      _FarmLockDepositLPAmountState();
 }
 
-class _FarmLockDepositToken1AmountState
-    extends ConsumerState<FarmLockDepositAmount> {
-  late TextEditingController tokenAmountController;
-  late FocusNode tokenAmountFocusNode;
+class _FarmLockDepositLPAmountState
+    extends ConsumerState<FarmLockDepositLPAmount> {
+  late TextEditingController controller;
+
+  final FocusNode _focusNode = FocusNode();
+  bool _hasFocus = false;
+
+  @override
+  void dispose() {
+    controller.dispose();
+    _focusNode
+      ..removeListener(_onFocusChange)
+      ..dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
     super.initState();
-    tokenAmountFocusNode = FocusNode();
+    _focusNode.addListener(_onFocusChange);
     _updateAmountTextController();
   }
 
   void _updateAmountTextController() {
     final farmLockDeposit = ref.read(farmLockDepositFormNotifierProvider);
-    tokenAmountController = TextEditingController();
-    tokenAmountController.value = AmountTextInputFormatter(
+    controller = TextEditingController();
+    controller.value = AmountTextInputFormatter(
       precision: 8,
     ).formatEditUpdate(
       TextEditingValue.empty,
@@ -49,11 +65,10 @@ class _FarmLockDepositToken1AmountState
     );
   }
 
-  @override
-  void dispose() {
-    tokenAmountFocusNode.dispose();
-    tokenAmountController.dispose();
-    super.dispose();
+  void _onFocusChange() {
+    setState(() {
+      _hasFocus = _focusNode.hasFocus;
+    });
   }
 
   @override
@@ -64,90 +79,91 @@ class _FarmLockDepositToken1AmountState
         ref.watch(farmLockDepositFormNotifierProvider.notifier);
 
     final farmLockDeposit = ref.watch(farmLockDepositFormNotifierProvider);
-    final textNum = double.tryParse(tokenAmountController.text);
+    final textNum = double.tryParse(controller.text);
     if (!(farmLockDeposit.amount != 0.0 ||
-        tokenAmountController.text == '' ||
+        controller.text == '' ||
         (textNum != null && textNum == 0))) {
       _updateAmountTextController();
     }
 
     return Column(
       children: [
-        SizedBox(
+        Row(
+          children: [
+            SelectableText(
+              farmLockDeposit.farmLockDepositMode == FarmLockDepositMode.uco
+                  ? AppLocalizations.of(context)!
+                      .farmLockDepositTextFieldUCOLabel
+                  : AppLocalizations.of(context)!
+                      .farmLockDepositTextFieldLPLabel,
+              style: AppTextStyles.bodyMedium(context).copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 5),
           width: aedappfm.AppThemeBase.sizeBoxComponentWidth,
-          child: Row(
+          child: Stack(
+            alignment: Alignment.centerRight,
             children: [
-              Expanded(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
+              TextField(
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: _hasFocus ? Colors.black : null,
+                    ),
+                autocorrect: false,
+                controller: controller,
+                onChanged: (text) async {
+                  farmLockDepositNotifier.setAmount(
+                    double.tryParse(text.replaceAll(' ', '')) ?? 0,
+                  );
+                },
+                focusNode: _focusNode,
+                textAlign: TextAlign.left,
+                textInputAction: TextInputAction.done,
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
+                inputFormatters: <TextInputFormatter>[
+                  AmountTextInputFormatter(
+                    precision: 8,
                   ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                              10,
-                            ),
-                            border: Border.all(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primaryContainer,
-                              width: 0.5,
-                            ),
-                            gradient: LinearGradient(
-                              colors: [
-                                Theme.of(context)
-                                    .colorScheme
-                                    .surface
-                                    .withOpacity(1),
-                                Theme.of(context)
-                                    .colorScheme
-                                    .surface
-                                    .withOpacity(0.3),
-                              ],
-                              stops: const [0, 1],
-                            ),
-                          ),
-                          child: TextField(
-                            style: Theme.of(context).textTheme.bodyLarge,
-                            autocorrect: false,
-                            controller: tokenAmountController,
-                            onChanged: (text) async {
-                              farmLockDepositNotifier.setAmount(
-                                double.tryParse(text.replaceAll(' ', '')) ?? 0,
-                              );
-                            },
-                            focusNode: tokenAmountFocusNode,
-                            textAlign: TextAlign.right,
-                            textInputAction: TextInputAction.done,
-                            keyboardType: const TextInputType.numberWithOptions(
-                              decimal: true,
-                            ),
-                            inputFormatters: <TextInputFormatter>[
-                              AmountTextInputFormatter(
-                                precision: 8,
-                              ),
-                              LengthLimitingTextInputFormatter(
-                                farmLockDeposit.lpTokenBalance
-                                        .formatNumber(
-                                          precision: 0,
-                                        )
-                                        .length +
-                                    8 +
-                                    1,
-                              ),
-                            ],
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.only(right: 10),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                  LengthLimitingTextInputFormatter(
+                    farmLockDeposit.userBalance
+                            .formatNumber(
+                              precision: 0,
+                            )
+                            .length +
+                        8 +
+                        1,
                   ),
+                ],
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor:
+                      _hasFocus ? Colors.white : Colors.white.withOpacity(0.15),
+                  border: const OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                  focusColor: Colors.white,
+                  contentPadding: const EdgeInsets.only(left: 10),
+                ),
+              ),
+              Positioned(
+                right: 10,
+                child: BtnTextField(
+                  buttonText:
+                      aedappfm.AppLocalizations.of(context)!.aedappfm_btn_max,
+                  onTap: () {
+                    ref
+                        .read(
+                          farmLockDepositFormNotifierProvider.notifier,
+                        )
+                        .setAmountMax();
+                    _updateAmountTextController();
+                  },
                 ),
               ),
             ],
@@ -158,8 +174,14 @@ class _FarmLockDepositToken1AmountState
             Row(
               children: [
                 DexTokenBalance(
-                  tokenBalance: farmLockDeposit.lpTokenBalance,
-                  token: farmLockDeposit.pool!.lpToken,
+                  tokenBalance: farmLockDeposit.userBalance,
+                  token: farmLockDeposit.farmLockDepositMode ==
+                          FarmLockDepositMode.uco
+                      ? const DexToken(
+                          address: kUCOAddress,
+                          symbol: kUCOAddress,
+                        )
+                      : farmLockDeposit.pool!.lpToken,
                   withFiat: false,
                   fiatTextStyleMedium: true,
                   withOpacity: false,
@@ -167,60 +189,41 @@ class _FarmLockDepositToken1AmountState
                 const SizedBox(
                   width: 5,
                 ),
-                Opacity(
-                  opacity: AppTextStyles.kOpacityText,
-                  child: SelectableText(
+                if (farmLockDeposit.farmLockDepositMode ==
+                    FarmLockDepositMode.uco)
+                  SelectableText(
                     ref.watch(
                       dexLPTokenFiatValueProvider(
                         farmLockDeposit.pool!.pair.token1,
                         farmLockDeposit.pool!.pair.token2,
-                        farmLockDeposit.lpTokenBalance,
+                        farmLockDeposit.userBalance,
                         farmLockDeposit.pool!.poolAddress,
                       ),
                     ),
-                    style: AppTextStyles.bodyMedium(context),
+                    style: Theme.of(context).textTheme.bodySmallWithOpacity,
+                  )
+                else
+                  FutureBuilder<String>(
+                    future: FiatValue().display(
+                      ref,
+                      const DexToken(
+                        address: kUCOAddress,
+                        symbol: kUCOAddress,
+                      ),
+                      farmLockDeposit.userBalance,
+                    ),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return SelectableText(
+                          snapshot.data!,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        );
+                      }
+                      return const SizedBox.shrink();
+                    },
                   ),
-                ),
               ],
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  aedappfm.ButtonHalf(
-                    height: 40,
-                    balanceAmount: farmLockDeposit.lpTokenBalance,
-                    onTap: () {
-                      ref
-                          .read(
-                            farmLockDepositFormNotifierProvider.notifier,
-                          )
-                          .setAmountHalf();
-                      _updateAmountTextController();
-                    },
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  aedappfm.ButtonMax(
-                    height: 40,
-                    balanceAmount: farmLockDeposit.lpTokenBalance,
-                    onTap: () {
-                      ref
-                          .read(
-                            farmLockDepositFormNotifierProvider.notifier,
-                          )
-                          .setAmountMax();
-                      _updateAmountTextController();
-                    },
-                  ),
-                ],
-              ),
-            ),
+            )
           ],
         ),
       ],
