@@ -25,7 +25,7 @@ class SeedLanguageSwitch extends ConsumerWidget {
             Text(
               localizations.languageEnglish,
               style: language == 'en'
-                  ? Theme.of(context).textTheme.bodySmallWithOpacity.copyWith(
+                  ? Theme.of(context).textTheme.bodySmall!.copyWith(
                         fontWeight: FontWeightTelegraf.fontWeightSemibold,
                       )
                   : Theme.of(context).textTheme.bodySmallWithOpacity,
@@ -54,7 +54,7 @@ class SeedLanguageSwitch extends ConsumerWidget {
             Text(
               localizations.languageFrancais,
               style: language == 'fr'
-                  ? Theme.of(context).textTheme.bodySmallWithOpacity.copyWith(
+                  ? Theme.of(context).textTheme.bodySmall!.copyWith(
                         fontWeight: FontWeightTelegraf.fontWeightSemibold,
                       )
                   : Theme.of(context).textTheme.bodySmallWithOpacity,
