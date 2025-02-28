@@ -2,7 +2,6 @@
 
 import 'dart:ui';
 
-import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:auto_size_text/auto_size_text.dart';
