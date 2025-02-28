@@ -1,19 +1,31 @@
 import 'package:aewallet/application/airdrop/airdrop.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AirdropParticipantsCount extends ConsumerWidget {
   const AirdropParticipantsCount({
+    this.withShadow = false,
     super.key,
   });
 
+  final bool withShadow;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final airdropCountAsync = ref.watch(airdropCountProvider);
-    final bodyMedium = AppTextStyles.bodyMediumWithOpacity(context);
+    final bodyMedium = withShadow
+        ? Theme.of(context).textTheme.bodyMediumlWithOpacity.copyWith(
+            fontWeight: FontWeight.w600,
+            shadows: [
+              const Shadow(
+                offset: Offset(0, 1),
+                blurRadius: 8,
+              ),
+            ],
+          )
+        : Theme.of(context).textTheme.bodySmallWithOpacity;
 
     return Text.rich(
       textAlign: TextAlign.center,
