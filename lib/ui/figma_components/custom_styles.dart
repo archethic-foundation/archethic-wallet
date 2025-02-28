@@ -34,3 +34,15 @@ extension ArchethicGradients on LinearGradient {
         ],
       );
 }
+
+extension FontWeightTelegraf on FontWeight {
+  // TODO(reddwarf03): Use in project
+  static FontWeight get fontWeightUltralight => FontWeight.w200;
+  static FontWeight get fontWeightLight => FontWeight.w300;
+  static FontWeight get fontWeightRegular => FontWeight.w400;
+  static FontWeight get fontWeightMedium => FontWeight.w500;
+  static FontWeight get fontWeightSemibold => FontWeight.w600;
+  static FontWeight get fontWeightBold => FontWeight.w700;
+  static FontWeight get fontWeightUltrabold => FontWeight.w800;
+  static FontWeight get fontWeightBlack => FontWeight.w900;
+}

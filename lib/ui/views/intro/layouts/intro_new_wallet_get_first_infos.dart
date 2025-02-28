@@ -7,11 +7,10 @@ import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/network_choice_infos.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/intro/layouts/intro_new_wallet_disclaimer.dart';
+import 'package:aewallet/ui/views/intro/layouts/intro_new_wallet_account_confirmation_popup.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_welcome.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
@@ -75,7 +74,7 @@ class _IntroNewWalletDisclaimerState
           localizations.next,
           Dimens.buttonBottomDimens,
           key: const Key('okButton'),
-          onPressed: () {
+          onPressed: () async {
             if (nameController.text.trim().isEmpty) {
               UIUtil.showSnackbar(
                 localizations.introNewWalletGetFirstInfosNameBlank,
@@ -85,20 +84,15 @@ class _IntroNewWalletDisclaimerState
                 ArchethicTheme.snackBarShadow,
               );
             } else {
-              AppDialogs.showConfirmDialog(
-                context,
-                ref,
-                localizations.newAccount,
-                localizations.newAccountConfirmation
-                    .replaceAll('%1', nameController.text),
-                localizations.yes,
-                () async {
-                  context.go(
-                    IntroNewWalletDisclaimer.routerPage,
-                    extra: nameController.text,
+              await showDialog<bool>(
+                barrierDismissible: false,
+                useRootNavigator: false,
+                context: context,
+                builder: (context) {
+                  return IntroNewWalletAccountConfirmationPopup(
+                    nameController.text,
                   );
                 },
-                cancelText: localizations.no,
               );
             }
           },
