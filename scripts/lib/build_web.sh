@@ -5,6 +5,6 @@ BUILD_COMMAND=$3
 
 rm -Rf web
 cp -R "$SOURCE_PATH" web/
-$3
+$BUILD_COMMAND
 rm -Rf "$OUTPUT_PATH"
 mv  "build/web" "$OUTPUT_PATH"
