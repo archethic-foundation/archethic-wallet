@@ -2,6 +2,7 @@
 
 import 'dart:ui';
 
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -16,6 +17,7 @@ class MnemonicDisplay extends ConsumerStatefulWidget {
     required this.wordList,
     required this.seed,
     this.obscureSeed = false,
+    this.displaySeedHex = true,
     required this.explanation,
   });
 
@@ -23,6 +25,7 @@ class MnemonicDisplay extends ConsumerStatefulWidget {
   final bool obscureSeed;
   final Widget explanation;
   final String seed;
+  final bool displaySeedHex;
 
   @override
   ConsumerState<MnemonicDisplay> createState() => _MnemonicDisplayState();
@@ -42,140 +45,143 @@ class _MnemonicDisplayState extends ConsumerState<MnemonicDisplay> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () {
-            if (widget.obscureSeed) {
-              setState(() {
-                _seedObscured = !_seedObscured;
-              });
-            }
-          },
-          child: Column(
-            children: <Widget>[
-              Wrap(
-                alignment: WrapAlignment.center,
-                children: widget.wordList.asMap().entries.map((MapEntry entry) {
-                  return Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: ArchethicTheme.sheetBackground,
-                            border: Border.all(
-                              color: ArchethicTheme.sheetBorder,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                              top: 5,
-                              bottom: 7,
-                              left: 10,
-                              right: 7,
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                CircleAvatar(
-                                  maxRadius: 10,
-                                  child: Text(
-                                    (entry.key + 1).toString(),
-                                    style: ArchethicThemeStyles
-                                        .textStyleSize12W100Primary60,
-                                  ),
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        if (widget.obscureSeed) {
+          setState(() {
+            _seedObscured = !_seedObscured;
+          });
+        }
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          widget.explanation,
+          const SizedBox(
+            height: 20,
+          ),
+          Wrap(
+            children: widget.wordList.asMap().entries.map((MapEntry entry) {
+              return Padding(
+                padding: const EdgeInsets.all(5),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: ArchethicTheme.sheetBackground,
+                        border: Border.all(
+                          color: ArchethicTheme.sheetBorder,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          top: 5,
+                          bottom: 7,
+                          left: 10,
+                          right: 7,
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              width: 20,
+                              padding: const EdgeInsets.all(2),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    const Color(0xFF8A40BF).withOpacity(0.6),
+                                    const Color(0xFF8A40BF).withOpacity(0.6),
+                                    const Color(0xFFB98CD9).withOpacity(0.6),
+                                  ],
+                                  stops: const [0, 0.5, 1],
                                 ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  _seedObscured && widget.obscureSeed
-                                      ? '•' * 6
-                                      : entry.value,
-                                  style: ArchethicThemeStyles
-                                      .textStyleSize12W100Primary,
-                                ),
-                              ],
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Text(
+                                (entry.key + 1).toString(),
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
                             ),
-                          ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              _seedObscured && widget.obscureSeed
+                                  ? '•' * 6
+                                  : entry.value,
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  );
-                }).toList(),
-              ),
-              // Tap to reveal or hide
-              if (widget.obscureSeed)
-                Container(
-                  margin: const EdgeInsetsDirectional.only(top: 8),
-                  child: _seedObscured
-                      ? AutoSizeText(
-                          AppLocalizations.of(context)!.tapToReveal,
-                          style:
-                              ArchethicThemeStyles.textStyleSize14W600Primary,
-                        )
-                      : Text(
-                          AppLocalizations.of(context)!.tapToHide,
-                          style:
-                              ArchethicThemeStyles.textStyleSize14W600Primary,
-                        ),
+                  ),
                 ),
-              const SizedBox(
-                height: 30,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: ExpansionPanelList(
-                    expansionCallback: (int index, bool isExpanded) {
-                      setState(() {
-                        _isExpanded = isExpanded;
-                      });
-                    },
-                    children: [
-                      ExpansionPanel(
-                        backgroundColor: ArchethicTheme.seedInfoBackground,
-                        canTapOnHeader: true,
-                        headerBuilder: (BuildContext context, bool isExpanded) {
-                          return ListTile(
-                            title: Text(
-                              AppLocalizations.of(context)!.seedHex,
-                              style: ArchethicThemeStyles
-                                  .textStyleSize12W100Primary,
-                            ),
-                          );
-                        },
-                        body: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: SelectableText(
-                            widget.seed,
+              );
+            }).toList(),
+          ),
+          // Tap to reveal or hide
+          if (widget.obscureSeed)
+            Container(
+              margin: const EdgeInsetsDirectional.only(top: 8),
+              child: _seedObscured
+                  ? AutoSizeText(
+                      AppLocalizations.of(context)!.tapToReveal,
+                      style: ArchethicThemeStyles.textStyleSize14W600Primary,
+                    )
+                  : Text(
+                      AppLocalizations.of(context)!.tapToHide,
+                      style: ArchethicThemeStyles.textStyleSize14W600Primary,
+                    ),
+            ),
+          const SizedBox(
+            height: 30,
+          ),
+          if (widget.displaySeedHex)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: ExpansionPanelList(
+                  expansionCallback: (int index, bool isExpanded) {
+                    setState(() {
+                      _isExpanded = isExpanded;
+                    });
+                  },
+                  children: [
+                    ExpansionPanel(
+                      backgroundColor: ArchethicTheme.seedInfoBackground,
+                      canTapOnHeader: true,
+                      headerBuilder: (BuildContext context, bool isExpanded) {
+                        return ListTile(
+                          title: Text(
+                            AppLocalizations.of(context)!.seedHex,
                             style:
                                 ArchethicThemeStyles.textStyleSize12W100Primary,
                           ),
+                        );
+                      },
+                      body: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: SelectableText(
+                          widget.seed,
+                          style:
+                              ArchethicThemeStyles.textStyleSize12W100Primary,
                         ),
-                        isExpanded: _isExpanded,
                       ),
-                    ],
-                  ),
+                      isExpanded: _isExpanded,
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(
-                height: 30,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10, right: 10),
-                child: widget.explanation,
-              ),
-            ],
-          ),
-        ),
-      ],
+            ),
+        ],
+      ),
     );
   }
 }

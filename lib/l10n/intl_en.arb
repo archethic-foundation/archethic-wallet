@@ -137,9 +137,12 @@
         "placeholders": {}
     },
     "recoveryPhrase": "Recovery Phrase",
-    "recoveryPhraseIntroExplanation": "Here is the list of 24 words to remember. The following screen will prompt you to find them in order to help you verify that you have written them down correctly.\n\nThis list will also be available in your wallet in the \"Security\" menu.",
+    "yourRecoveryPhrase": "Your Recovery Phrase",
+    "recoveryPhraseIntroExplanation1": "Below is your unique ",
+    "recoveryPhraseIntroExplanation2": "24-word recovery phrase.",
+    "recoveryPhraseIntroExplanation3": "\nWrite it down in the correct order and keep it offline, safe, and confidential. Anyone who has these words can access your funds.",
     "dipslayPhraseExplanation": "Here is the list of 24 words to remember. This list allows you to find your funds at any time if you lose your application or device.\nDo not give it to anyone! Even in the context of a support. \nArchethic will never ask you for this information.",
-    "iveBackedItUp": "I've Backed It Up",
+    "iveBackedItUp": "I’ve Written It Down",
     "backupSafetyLabel1": "On the next screen, you will see your recovery phrase.",
     "backupSafetyLabel2": "What is a recovery phrase?",
     "backupSafetyLabel3": "A recovery phrase is essentially a human-readable form of your wallet's private key and is displayed as 24 mnemonic words.\n\nOne your words are saved, you can reopen your wallet from any computer.\n\nPlease keep your recovery phrase private and do not share it with a third party.",
@@ -209,9 +212,10 @@
     "introNewWalletGetFirstInfosNameBlank": "Please, enter the name of the new account",
     "accountsHeader": "Accounts",
     "transactionHeader": "Transactions",
-    "newAccount": "New account",
+    "newAccount": "Confirm Wallet Name",
     "addAccount": "Add account",
-    "newAccountConfirmation": "Are you sure you want to create in your keychain \"%1\"?",
+    "newAccountConfirmationDesc1": "You’re about to create a wallet named '",
+    "newAccountConfirmationDesc2": "' on your decentralized keychain. Once created, this name cannot be changed. Are you sure you want to proceed?",
     "addAccountConfirmation": "Are you sure you want to add in your keychain \"%1\"?",
     "addAccountNameWarning": "WARNING : This account will be added to your decentralized keychain and cannot be modified.",
     "primaryCurrency": "Primary currency",
@@ -830,5 +834,7 @@
     "addFundsStep22": "to ETH/UCO pool",
     "addFundsStep31": "Lock ",
     "addFundsStep32": "tokens",
-    "retryBtn": "Retry"
+    "retryBtn": "Retry",
+    "languageEnglish": "English",
+    "languageFrancais": "Français"
 }

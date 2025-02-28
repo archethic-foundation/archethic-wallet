@@ -1,3 +1,4 @@
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -7,7 +8,7 @@ class ArchethicThemeStyles {
   static TextStyle get textStyleSize16W100Primary {
     return TextStyle(
       fontSize: AppFontSizes.size16,
-      fontWeight: FontWeight.w200,
+      fontWeight: FontWeightTelegraf.fontWeightUltralight,
       color: ArchethicTheme.text,
     );
   }
@@ -104,7 +105,7 @@ class ArchethicThemeStyles {
   static TextStyle get textStyleSize14W200Text60 {
     return TextStyle(
       fontSize: AppFontSizes.size14,
-      fontWeight: FontWeight.w200,
+      fontWeight: FontWeightTelegraf.fontWeightUltralight,
       color: ArchethicTheme.text60,
     );
   }
@@ -112,7 +113,7 @@ class ArchethicThemeStyles {
   static TextStyle get textStyleSize14W200Primary {
     return TextStyle(
       fontSize: AppFontSizes.size14,
-      fontWeight: FontWeight.w200,
+      fontWeight: FontWeightTelegraf.fontWeightUltralight,
       color: ArchethicTheme.text,
     );
   }
@@ -120,7 +121,7 @@ class ArchethicThemeStyles {
   static TextStyle get textStyleSize14W200PrimaryPositiveValue {
     return TextStyle(
       fontSize: AppFontSizes.size14,
-      fontWeight: FontWeight.w200,
+      fontWeight: FontWeightTelegraf.fontWeightUltralight,
       color: ArchethicTheme.positiveValue,
     );
   }
