@@ -2,15 +2,15 @@
 
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/network_choice_infos.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_new_wallet_account_confirmation_popup.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_welcome.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
@@ -37,13 +37,14 @@ class IntroNewWalletGetFirstInfos extends ConsumerStatefulWidget {
 class _IntroNewWalletDisclaimerState
     extends ConsumerState<IntroNewWalletGetFirstInfos>
     implements SheetSkeletonInterface {
-  late FocusNode nameFocusNode;
   late TextEditingController nameController;
+  final FocusNode nameFocusNode = FocusNode();
+  bool _hasFocus = false;
 
   @override
   void initState() {
     super.initState();
-    nameFocusNode = FocusNode();
+    nameFocusNode.addListener(_onFocusChange);
     nameController = TextEditingController();
   }
 
@@ -51,7 +52,16 @@ class _IntroNewWalletDisclaimerState
   void dispose() {
     nameFocusNode.dispose();
     nameController.dispose();
+    nameFocusNode
+      ..removeListener(_onFocusChange)
+      ..dispose();
     super.dispose();
+  }
+
+  void _onFocusChange() {
+    setState(() {
+      _hasFocus = nameFocusNode.hasFocus;
+    });
   }
 
   @override
@@ -60,44 +70,37 @@ class _IntroNewWalletDisclaimerState
       appBar: getAppBar(context, ref),
       floatingActionButton: getFloatingActionButton(context, ref),
       sheetContent: getSheetContent(context, ref),
-      backgroundImage: ArchethicTheme.backgroundWelcome,
     );
   }
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        AppButtonTinyConnectivity(
-          localizations.next,
-          Dimens.buttonBottomDimens,
-          key: const Key('okButton'),
-          onPressed: () async {
-            if (nameController.text.trim().isEmpty) {
-              UIUtil.showSnackbar(
-                localizations.introNewWalletGetFirstInfosNameBlank,
-                context,
-                ref,
-                ArchethicTheme.text,
-                ArchethicTheme.snackBarShadow,
+    return BtnFooterPrimary(
+      buttonText: localizations.next,
+      key: const Key('okButton'),
+      onTap: () async {
+        if (nameController.text.trim().isEmpty) {
+          UIUtil.showSnackbar(
+            localizations.introNewWalletGetFirstInfosNameBlank,
+            context,
+            ref,
+            ArchethicTheme.text,
+            ArchethicTheme.snackBarShadow,
+          );
+        } else {
+          await showDialog<bool>(
+            barrierDismissible: false,
+            useRootNavigator: false,
+            context: context,
+            builder: (context) {
+              return IntroNewWalletAccountConfirmationPopup(
+                nameController.text,
               );
-            } else {
-              await showDialog<bool>(
-                barrierDismissible: false,
-                useRootNavigator: false,
-                context: context,
-                builder: (context) {
-                  return IntroNewWalletAccountConfirmationPopup(
-                    nameController.text,
-                  );
-                },
-              );
-            }
-          },
-        ),
-      ],
+            },
+          );
+        }
+      },
     );
   }
 
@@ -154,10 +157,29 @@ class _IntroNewWalletDisclaimerState
         const SizedBox(
           height: 30,
         ),
-        AutoSizeText(
-          localizations.introNewWalletGetFirstInfosNameRequest,
-          style: ArchethicThemeStyles.textStyleSize14W600Primary,
-          textAlign: TextAlign.left,
+        Text.rich(
+          TextSpan(
+            children: [
+              TextSpan(
+                text: AppLocalizations.of(context)!
+                    .introNewWalletGetFirstInfosDesc1,
+                style: Theme.of(context).textTheme.bodySmallWithOpacity,
+              ),
+              TextSpan(
+                text: AppLocalizations.of(context)!
+                    .introNewWalletGetFirstInfosDesc2,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmallWithOpacity
+                    .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold),
+              ),
+              TextSpan(
+                text: AppLocalizations.of(context)!
+                    .introNewWalletGetFirstInfosDesc3,
+                style: Theme.of(context).textTheme.bodySmallWithOpacity,
+              ),
+            ],
+          ),
         ),
         const SizedBox(
           height: 30,
@@ -165,75 +187,45 @@ class _IntroNewWalletDisclaimerState
         Padding(
           padding: const EdgeInsets.only(bottom: 5),
           child: Text(
-            AppLocalizations.of(context)!.introNewWalletGetFirstInfosNameBlank,
+            AppLocalizations.of(context)!
+                .introNewWalletGetFirstInfosTextfieldLabel,
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium!
+                .copyWith(fontWeight: FontWeightTelegraf.fontWeightSemibold),
           ),
         ),
-        SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: Row(
-            children: [
-              Expanded(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                              10,
-                            ),
-                            border: Border.all(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primaryContainer,
-                              width: 0.5,
-                            ),
-                            gradient:
-                                ArchethicTheme.gradientInputFormBackground,
-                          ),
-                          child: TextField(
-                            key: const Key(
-                              'newAccountName',
-                            ),
-                            style: const TextStyle(
-                              fontSize: 14,
-                            ),
-                            autocorrect: false,
-                            controller: nameController,
-                            focusNode: nameFocusNode,
-                            textInputAction: TextInputAction.next,
-                            keyboardType: TextInputType.text,
-                            inputFormatters: <TextInputFormatter>[
-                              LengthLimitingTextInputFormatter(
-                                20,
-                              ),
-                            ],
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.only(
-                                left: 10,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+        TextField(
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: _hasFocus ? Colors.black : null,
               ),
-            ],
+          autocorrect: false,
+          controller: nameController,
+          focusNode: nameFocusNode,
+          textAlign: TextAlign.left,
+          textInputAction: TextInputAction.done,
+          keyboardType: const TextInputType.numberWithOptions(
+            decimal: true,
+          ),
+          inputFormatters: <TextInputFormatter>[
+            LengthLimitingTextInputFormatter(
+              20,
+            ),
+          ],
+          decoration: InputDecoration(
+            filled: true,
+            fillColor:
+                _hasFocus ? Colors.white : Colors.white.withOpacity(0.15),
+            border: const OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            focusColor: Colors.white,
+            contentPadding: const EdgeInsets.only(left: 10),
           ),
         ),
         const SizedBox(
           height: 40,
-        ),
-        AutoSizeText(
-          localizations.introNewWalletGetFirstInfosNameInfos,
-          style: ArchethicThemeStyles.textStyleSize12W100Primary,
-          textAlign: TextAlign.justify,
         ),
       ],
     );
