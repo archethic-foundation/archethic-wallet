@@ -1,16 +1,21 @@
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:gradient_borders/box_borders/gradient_box_border.dart';
+
+enum BtnFooterPrimaryType { primary, outlinePrimary }
 
 class BtnFooterPrimary extends StatelessWidget {
   const BtnFooterPrimary({
     required this.buttonText,
     required this.onTap,
+    this.btnPrimaryType = BtnFooterPrimaryType.primary,
     this.isLocked = false,
     this.lockedIcon = false,
     super.key,
   });
   final String buttonText;
   final Function()? onTap;
+  final BtnFooterPrimaryType btnPrimaryType;
   final bool isLocked;
   final bool lockedIcon;
 
@@ -20,42 +25,40 @@ class BtnFooterPrimary extends StatelessWidget {
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: onTap,
-        child: IntrinsicWidth(
-          child: IntrinsicHeight(
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: 49,
-              padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 6),
-              alignment: Alignment.center,
-              decoration: _getButtonDecoration(),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    buttonText,
-                    style: isLocked == false || (isLocked && lockedIcon == true)
-                        ? Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                            )
-                        : Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              color: Colors.white.withOpacity(0.2),
-                              fontWeight: FontWeight.w500,
-                            ),
-                  ),
-                  if (isLocked && lockedIcon)
-                    const Padding(
-                      padding: EdgeInsets.only(left: 5, bottom: 3),
-                      child: Icon(
-                        Icons.lock_outline,
-                        size: 16,
-                        color: Colors.white,
-                      ),
-                    )
-                  else
-                    const SizedBox.shrink(),
-                ],
-              ),
+        child: IntrinsicHeight(
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.9,
+            height: 49,
+            padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 6),
+            alignment: Alignment.center,
+            decoration: _getButtonDecoration(),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  buttonText,
+                  style: isLocked == false || (isLocked && lockedIcon == true)
+                      ? Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeightTelegraf.fontWeightSemibold,
+                          )
+                      : Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            color: Colors.white.withOpacity(0.2),
+                            fontWeight: FontWeightTelegraf.fontWeightSemibold,
+                          ),
+                ),
+                if (isLocked && lockedIcon)
+                  const Padding(
+                    padding: EdgeInsets.only(left: 5, bottom: 3),
+                    child: Icon(
+                      Icons.lock_outline,
+                      size: 16,
+                      color: Colors.white,
+                    ),
+                  )
+                else
+                  const SizedBox.shrink(),
+              ],
             ),
           ),
         ),
@@ -64,16 +67,27 @@ class BtnFooterPrimary extends StatelessWidget {
   }
 
   BoxDecoration? _getButtonDecoration() {
-    if (isLocked == false || (isLocked && lockedIcon == false)) {
-      return BoxDecoration(
-        gradient: ArchethicGradients.archethicLinearBlue,
-        borderRadius: BorderRadius.circular(20),
-      );
-    }
+    switch (btnPrimaryType) {
+      case BtnFooterPrimaryType.primary:
+        if (isLocked == false || (isLocked && lockedIcon == false)) {
+          return BoxDecoration(
+            gradient: ArchethicGradients.archethicLinearBlue,
+            borderRadius: BorderRadius.circular(20),
+          );
+        }
 
-    return BoxDecoration(
-      color: const Color(0xFF888888),
-      borderRadius: BorderRadius.circular(20),
-    );
+        return BoxDecoration(
+          color: const Color(0xFF888888),
+          borderRadius: BorderRadius.circular(20),
+        );
+      case BtnFooterPrimaryType.outlinePrimary:
+        return BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: GradientBoxBorder(
+            gradient: ArchethicGradients.archethicLinearBlue,
+            width: 2,
+          ),
+        );
+    }
   }
 }
