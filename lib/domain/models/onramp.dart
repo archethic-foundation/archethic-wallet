@@ -99,12 +99,12 @@ sealed class OnRampEvent {
 }
 
 class OnRampDepositUpdateEvent extends OnRampEvent {
-  const OnRampDepositUpdateEvent(this.transfer);
-  final OnRampDeposit transfer;
+  const OnRampDepositUpdateEvent(this.deposit);
+  final OnRampDeposit deposit;
 }
 
-class OnRampTransfersSnapshotEvent extends OnRampEvent {
-  OnRampTransfersSnapshotEvent({required this.transfers});
+class OnRampDepositsSnapshotEvent extends OnRampEvent {
+  OnRampDepositsSnapshotEvent({required this.deposits});
 
-  final List<OnRampDeposit> transfers;
+  final List<OnRampDeposit> deposits;
 }

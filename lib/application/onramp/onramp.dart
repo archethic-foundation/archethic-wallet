@@ -168,25 +168,25 @@ Future<String> onrampDepositAddress(Ref ref) async {
 Stream<List<OnRampDeposit>> onrampTransfers(Ref ref) async* {
   final repository = await ref.watch(_onRampRepositoryProvider.future);
 
-  var transfers = <OnRampDeposit>[];
+  var deposits = <OnRampDeposit>[];
   await for (final event in repository.events) {
     switch (event) {
-      case OnRampTransfersSnapshotEvent(transfers: final newTransfers):
-        transfers = newTransfers;
+      case OnRampDepositsSnapshotEvent(deposits: final newDeposits):
+        deposits = newDeposits;
         break;
-      case OnRampDepositUpdateEvent(transfer: final updatedTransfer):
+      case OnRampDepositUpdateEvent(deposit: final updatedDeposit):
         var found = false;
-        transfers = transfers.map((transfer) {
-          if (transfer.id == updatedTransfer.id) {
+        deposits = deposits.map((deposit) {
+          if (deposit.id == updatedDeposit.id) {
             found = true;
-            return updatedTransfer;
+            return updatedDeposit;
           }
-          return transfer;
+          return deposit;
         }).toList();
-        if (!found) transfers = [updatedTransfer, ...transfers];
+        if (!found) deposits = [updatedDeposit, ...deposits];
         break;
     }
-    yield transfers;
+    yield deposits;
   }
   // unawaited(
   //   channel.messages.forEach((message) {
