@@ -38,6 +38,7 @@ class MessageBox extends StatelessWidget {
       ),
       child: ListTile(
         onTap: onTap,
+        titleAlignment: ListTileTitleAlignment.top,
         leading: messageBoxType == MessageBoxType.success
             ? const Icon(Icons.done_all, color: Colors.white, size: 16)
             : messageBoxType == MessageBoxType.warning

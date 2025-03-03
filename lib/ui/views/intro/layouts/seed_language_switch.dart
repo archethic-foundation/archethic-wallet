@@ -58,7 +58,7 @@ class SeedLanguageSwitch extends ConsumerWidget {
                         fontWeight: FontWeightTelegraf.fontWeightSemibold,
                       )
                   : Theme.of(context).textTheme.bodySmallWithOpacity,
-            )
+            ),
           ],
         ),
       ],

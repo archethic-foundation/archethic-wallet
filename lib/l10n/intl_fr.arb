@@ -864,7 +864,29 @@
     "addFundsStep22": "dans la pool ETH/UCO",
     "addFundsStep31": "Verrouillage ",
     "addFundsStep32": "des jetons",
-    "retryBtn": "Ressayer",
+    "resumeBtn": "Reprendre",
     "languageEnglish": "English",
-    "languageFrancais": "Français"
+    "languageFrancais": "Français",
+    "famLockDepositStepPopupFinalAmount": "Vous avez bloqué {finalAmount} jeton LP pour {duration}.",
+    "@famLockDepositStepPopupFinalAmount": {
+        "placeholders": {
+            "finalAmount": {
+                "type": "String"
+            },
+            "duration": {
+                "type": "String"
+            }
+        }
+    },
+    "famLockDepositStepPopupFinalAmounts": "Vous avez bloqué {finalAmount} jetons LP pour {duration}.",
+    "@famLockDepositStepPopupFinalAmounts": {
+        "placeholders": {
+            "finalAmount": {
+                "type": "String"
+            },
+            "duration": {
+                "type": "String"
+            }
+        }
+    }
 }

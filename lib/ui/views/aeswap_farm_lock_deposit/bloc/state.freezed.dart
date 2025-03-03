@@ -31,7 +31,7 @@ mixin _$FarmLockDepositFormState {
       throw _privateConstructorUsedError;
   String get level => throw _privateConstructorUsedError;
   double get userBalance => throw _privateConstructorUsedError;
-  double get feesEstimatedUCO => throw _privateConstructorUsedError;
+  AsyncValue<double>? get feeEstimation => throw _privateConstructorUsedError;
   Transaction? get transactionFarmLockDeposit =>
       throw _privateConstructorUsedError;
   Map<String, int> get filterAvailableLevels =>
@@ -67,7 +67,7 @@ abstract class $FarmLockDepositFormStateCopyWith<$Res> {
       FarmLockDepositDurationType farmLockDepositDuration,
       String level,
       double userBalance,
-      double feesEstimatedUCO,
+      AsyncValue<double>? feeEstimation,
       Transaction? transactionFarmLockDeposit,
       Map<String, int> filterAvailableLevels,
       Failure? failure,
@@ -109,7 +109,7 @@ class _$FarmLockDepositFormStateCopyWithImpl<$Res,
     Object? farmLockDepositDuration = null,
     Object? level = null,
     Object? userBalance = null,
-    Object? feesEstimatedUCO = null,
+    Object? feeEstimation = freezed,
     Object? transactionFarmLockDeposit = freezed,
     Object? filterAvailableLevels = null,
     Object? failure = freezed,
@@ -169,10 +169,10 @@ class _$FarmLockDepositFormStateCopyWithImpl<$Res,
           ? _value.userBalance
           : userBalance // ignore: cast_nullable_to_non_nullable
               as double,
-      feesEstimatedUCO: null == feesEstimatedUCO
-          ? _value.feesEstimatedUCO
-          : feesEstimatedUCO // ignore: cast_nullable_to_non_nullable
-              as double,
+      feeEstimation: freezed == feeEstimation
+          ? _value.feeEstimation
+          : feeEstimation // ignore: cast_nullable_to_non_nullable
+              as AsyncValue<double>?,
       transactionFarmLockDeposit: freezed == transactionFarmLockDeposit
           ? _value.transactionFarmLockDeposit
           : transactionFarmLockDeposit // ignore: cast_nullable_to_non_nullable
@@ -277,7 +277,7 @@ abstract class _$$FarmLockDepositFormStateImplCopyWith<$Res>
       FarmLockDepositDurationType farmLockDepositDuration,
       String level,
       double userBalance,
-      double feesEstimatedUCO,
+      AsyncValue<double>? feeEstimation,
       Transaction? transactionFarmLockDeposit,
       Map<String, int> filterAvailableLevels,
       Failure? failure,
@@ -322,7 +322,7 @@ class __$$FarmLockDepositFormStateImplCopyWithImpl<$Res>
     Object? farmLockDepositDuration = null,
     Object? level = null,
     Object? userBalance = null,
-    Object? feesEstimatedUCO = null,
+    Object? feeEstimation = freezed,
     Object? transactionFarmLockDeposit = freezed,
     Object? filterAvailableLevels = null,
     Object? failure = freezed,
@@ -382,10 +382,10 @@ class __$$FarmLockDepositFormStateImplCopyWithImpl<$Res>
           ? _value.userBalance
           : userBalance // ignore: cast_nullable_to_non_nullable
               as double,
-      feesEstimatedUCO: null == feesEstimatedUCO
-          ? _value.feesEstimatedUCO
-          : feesEstimatedUCO // ignore: cast_nullable_to_non_nullable
-              as double,
+      feeEstimation: freezed == feeEstimation
+          ? _value.feeEstimation
+          : feeEstimation // ignore: cast_nullable_to_non_nullable
+              as AsyncValue<double>?,
       transactionFarmLockDeposit: freezed == transactionFarmLockDeposit
           ? _value.transactionFarmLockDeposit
           : transactionFarmLockDeposit // ignore: cast_nullable_to_non_nullable
@@ -427,7 +427,7 @@ class _$FarmLockDepositFormStateImpl extends _FarmLockDepositFormState {
       this.farmLockDepositDuration = FarmLockDepositDurationType.threeYears,
       this.level = '',
       this.userBalance = 0.0,
-      this.feesEstimatedUCO = 0.0,
+      this.feeEstimation,
       this.transactionFarmLockDeposit,
       final Map<String, int> filterAvailableLevels = const {},
       this.failure,
@@ -472,8 +472,7 @@ class _$FarmLockDepositFormStateImpl extends _FarmLockDepositFormState {
   @JsonKey()
   final double userBalance;
   @override
-  @JsonKey()
-  final double feesEstimatedUCO;
+  final AsyncValue<double>? feeEstimation;
   @override
   final Transaction? transactionFarmLockDeposit;
   final Map<String, int> _filterAvailableLevels;
@@ -495,7 +494,7 @@ class _$FarmLockDepositFormStateImpl extends _FarmLockDepositFormState {
 
   @override
   String toString() {
-    return 'FarmLockDepositFormState(processStep: $processStep, farmLockDepositMode: $farmLockDepositMode, resumeProcess: $resumeProcess, currentStep: $currentStep, pool: $pool, farmLock: $farmLock, isProcessInProgress: $isProcessInProgress, farmLockDepositOk: $farmLockDepositOk, amount: $amount, aprEstimation: $aprEstimation, farmLockDepositDuration: $farmLockDepositDuration, level: $level, userBalance: $userBalance, feesEstimatedUCO: $feesEstimatedUCO, transactionFarmLockDeposit: $transactionFarmLockDeposit, filterAvailableLevels: $filterAvailableLevels, failure: $failure, finalAmount: $finalAmount, consentDateTime: $consentDateTime)';
+    return 'FarmLockDepositFormState(processStep: $processStep, farmLockDepositMode: $farmLockDepositMode, resumeProcess: $resumeProcess, currentStep: $currentStep, pool: $pool, farmLock: $farmLock, isProcessInProgress: $isProcessInProgress, farmLockDepositOk: $farmLockDepositOk, amount: $amount, aprEstimation: $aprEstimation, farmLockDepositDuration: $farmLockDepositDuration, level: $level, userBalance: $userBalance, feeEstimation: $feeEstimation, transactionFarmLockDeposit: $transactionFarmLockDeposit, filterAvailableLevels: $filterAvailableLevels, failure: $failure, finalAmount: $finalAmount, consentDateTime: $consentDateTime)';
   }
 
   @override
@@ -527,8 +526,8 @@ class _$FarmLockDepositFormStateImpl extends _FarmLockDepositFormState {
             (identical(other.level, level) || other.level == level) &&
             (identical(other.userBalance, userBalance) ||
                 other.userBalance == userBalance) &&
-            (identical(other.feesEstimatedUCO, feesEstimatedUCO) ||
-                other.feesEstimatedUCO == feesEstimatedUCO) &&
+            (identical(other.feeEstimation, feeEstimation) ||
+                other.feeEstimation == feeEstimation) &&
             (identical(other.transactionFarmLockDeposit,
                     transactionFarmLockDeposit) ||
                 other.transactionFarmLockDeposit ==
@@ -558,7 +557,7 @@ class _$FarmLockDepositFormStateImpl extends _FarmLockDepositFormState {
         farmLockDepositDuration,
         level,
         userBalance,
-        feesEstimatedUCO,
+        feeEstimation,
         transactionFarmLockDeposit,
         const DeepCollectionEquality().hash(_filterAvailableLevels),
         failure,
@@ -591,7 +590,7 @@ abstract class _FarmLockDepositFormState extends FarmLockDepositFormState {
       final FarmLockDepositDurationType farmLockDepositDuration,
       final String level,
       final double userBalance,
-      final double feesEstimatedUCO,
+      final AsyncValue<double>? feeEstimation,
       final Transaction? transactionFarmLockDeposit,
       final Map<String, int> filterAvailableLevels,
       final Failure? failure,
@@ -626,7 +625,7 @@ abstract class _FarmLockDepositFormState extends FarmLockDepositFormState {
   @override
   double get userBalance;
   @override
-  double get feesEstimatedUCO;
+  AsyncValue<double>? get feeEstimation;
   @override
   Transaction? get transactionFarmLockDeposit;
   @override

@@ -7,6 +7,7 @@ import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.da
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'state.freezed.dart';
 
@@ -29,7 +30,7 @@ class FarmLockDepositFormState with _$FarmLockDepositFormState {
     FarmLockDepositDurationType farmLockDepositDuration,
     @Default('') String level,
     @Default(0.0) double userBalance,
-    @Default(0.0) double feesEstimatedUCO,
+    AsyncValue<double>? feeEstimation,
     Transaction? transactionFarmLockDeposit,
     @Default({}) Map<String, int> filterAvailableLevels,
     Failure? failure,

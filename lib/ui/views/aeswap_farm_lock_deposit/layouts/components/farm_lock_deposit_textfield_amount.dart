@@ -115,7 +115,7 @@ class _FarmLockDepositLPAmountState
                 autocorrect: false,
                 controller: controller,
                 onChanged: (text) async {
-                  farmLockDepositNotifier.setAmount(
+                  await farmLockDepositNotifier.setAmount(
                     double.tryParse(text.replaceAll(' ', '')) ?? 0,
                   );
                 },
@@ -223,7 +223,7 @@ class _FarmLockDepositLPAmountState
                     },
                   ),
               ],
-            )
+            ),
           ],
         ),
       ],

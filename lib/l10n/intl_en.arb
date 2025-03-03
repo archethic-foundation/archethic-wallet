@@ -871,7 +871,29 @@
     "addFundsStep22": "to ETH/UCO pool",
     "addFundsStep31": "Lock ",
     "addFundsStep32": "tokens",
-    "retryBtn": "Retry",
+    "resumeBtn": "Resume",
     "languageEnglish": "English",
-    "languageFrancais": "Français"
+    "languageFrancais": "Français",
+    "famLockDepositStepPopupFinalAmount": "You have locked {finalAmount} LP Token for {duration}.",
+    "@famLockDepositStepPopupFinalAmount": {
+        "placeholders": {
+            "finalAmount": {
+                "type": "String"
+            },
+            "duration": {
+                "type": "String"
+            }
+        }
+    },
+    "famLockDepositStepPopupFinalAmounts": "You have locked {finalAmount} LP Tokens for {duration}.",
+    "@famLockDepositStepPopupFinalAmounts": {
+        "placeholders": {
+            "finalAmount": {
+                "type": "String"
+            },
+            "duration": {
+                "type": "String"
+            }
+        }
+    }
 }

@@ -1,15 +1,15 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
+import 'package:aewallet/ui/figma_components/complex/estimated_fees.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/figma_components/message_box/message_box.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_lock_duration_btn.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_textfield_amount.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:flutter/material.dart';
@@ -44,20 +44,21 @@ class FarmLockDepositFormSheet extends ConsumerWidget
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final farmLockDeposit = ref.watch(farmLockDepositFormNotifierProvider);
-    return Row(
-      children: <Widget>[
-        AppButtonTinyConnectivity(
-          localizations.btn_farmLockDeposit,
-          Dimens.buttonBottomDimens,
-          key: const Key('farmLockDeposit'),
-          onPressed: () async {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        EstimatedFees(farmLockDeposit.feeEstimation),
+        BtnFooterPrimary(
+          buttonText: localizations.btn_farmLockDeposit,
+          onTap: () async {
             await ref
                 .read(
                   farmLockDepositFormNotifierProvider.notifier,
                 )
                 .validateForm(localizations);
           },
-          disabled: !farmLockDeposit.isControlsOk,
+          key: const Key('farmLockDeposit'),
+          isLocked: !farmLockDeposit.isControlsOk,
         ),
       ],
     );
@@ -171,7 +172,7 @@ class FarmLockDepositFormSheet extends ConsumerWidget
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 70),
               ],
             ),
           ),

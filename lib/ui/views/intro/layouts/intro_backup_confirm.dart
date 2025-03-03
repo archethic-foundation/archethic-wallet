@@ -293,7 +293,8 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                                   .textTheme
                                   .labelSmall!
                                   .copyWith(
-                                      color: Colors.white.withOpacity(0.5)),
+                                    color: Colors.white.withOpacity(0.5),
+                                  ),
                             ),
                           ),
                           label: Text(

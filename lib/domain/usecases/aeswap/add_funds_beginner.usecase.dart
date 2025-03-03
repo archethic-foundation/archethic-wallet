@@ -9,14 +9,17 @@ import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/modules/aeswap/application/contracts/archethic_contract.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_notification.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
+import 'package:aewallet/modules/aeswap/infrastructure/pool_factory.repository.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
 import 'package:aewallet/modules/aeswap/util/notification_service/task_notification_service.dart'
     as ns;
+import 'package:aewallet/ui/views/rpc_command_receiver/rpc_failure_message.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:decimal/decimal.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
+import 'package:logging/logging.dart';
 
 class AddFundsBeginnerCase with aedappfm.TransactionMixin {
   AddFundsBeginnerCase({
@@ -36,7 +39,7 @@ class AddFundsBeginnerCase with aedappfm.TransactionMixin {
   final KeychainSecuredInfos keychainSecuredInfos;
   final Account selectedAccount;
 
-  Future<void> run(
+  Future<double?> run(
     AppLocalizations localizations,
     String farmGenesisAddress,
     double ucoAmount,
@@ -45,11 +48,15 @@ class AddFundsBeginnerCase with aedappfm.TransactionMixin {
     String lpTokenAddress,
     FarmLockDepositDurationType durationType,
     String level,
+    int currentStepIndex,
     StepsNotifier stepsNotifier,
+    Map<String, dynamic>? snapshot,
   ) async {
-    var currentStep = 0;
+    double? lpLocked;
 
-    stepsNotifier.initializeSteps(3);
+    var currentStep = currentStepIndex;
+
+    final _logger = Logger('AddFundsBeginnerCase');
 
     final archethicContract = ArchethicContract(
       apiService: apiService,
@@ -61,78 +68,168 @@ class AddFundsBeginnerCase with aedappfm.TransactionMixin {
     final ucoAmountHalf =
         (Decimal.parse(ucoAmount.toString()) / Decimal.fromInt(2)).toDouble();
 
+    double aeETHAmount = snapshot?['aeETHAmount'] ?? 0.0;
+
     try {
-      // SWAP
-      stepsNotifier.updateStepStatus(currentStep, StepStatus.inProgress);
-      final outputAmount = await _getOutputAmount(
-        archethicContract,
-        ucoToken,
-        ucoAmountHalf,
-        poolGenesisAddress,
-      );
-
-      final transactionSwap = await _getTransaction(
-        () => archethicContract.getSwapTx(
+      if (currentStep == 0) {
+        // SWAP
+        final outputAmount = await _getOutputAmount(
+          archethicContract,
           ucoToken,
           ucoAmountHalf,
           poolGenesisAddress,
-          0,
-          outputAmount,
-        ),
-      );
+        );
 
-      final aeETHAmount = await _sendTransactionAndGetAmount(
-        transactionSwap,
-        aeETHAddress,
-      );
-      stepsNotifier.updateStepStatus(currentStep, StepStatus.completed);
+        final transactionSwap = await _getTransaction(
+          () => archethicContract.getSwapTx(
+            ucoToken,
+            ucoAmountHalf,
+            poolGenesisAddress,
+            0.5,
+            outputAmount,
+          ),
+        );
 
-      // ADD LIQUIDITY
-      currentStep++;
-      stepsNotifier.updateStepStatus(currentStep, StepStatus.inProgress);
-      final transactionAddLiquidity = await _getTransaction(
-        () => archethicContract.getAddLiquidityTx(
-          ucoToken,
-          ucoAmountHalf,
-          aeETHToken,
-          aeETHAmount,
+        aeETHAmount = await _sendTransactionAndGetAmount(
+          transactionSwap,
+          aeETHAddress,
+        );
+
+        final swapSnapshot = {
+          'aeETHAmount': aeETHAmount,
+        };
+
+        stepsNotifier.updateStepStatus(
+          currentStep,
+          StepStatus.completed,
+          snapshot: swapSnapshot,
+        );
+        currentStep++;
+      }
+
+      var lpTokenAmount = snapshot?['lpTokenAmount'] ?? 0.0;
+      var addLiquidityUCOAmount = ucoAmountHalf;
+      var addLiquidityETHAmount = aeETHAmount;
+
+      if (currentStep == 1) {
+        stepsNotifier.updateStepStatus(currentStep, StepStatus.inProgress);
+        // Pool ratio's updated - Get new value
+        var equivalentAmountETH = 0.0;
+        var equivalentAmountUCO = 0.0;
+
+        final equivalentAmountETHResult = await PoolFactoryRepositoryImpl(
           poolGenesisAddress,
-          0,
-        ),
-      );
+          apiService,
+        ).getEquivalentAmount(kUCOAddress, ucoAmountHalf);
+        equivalentAmountETHResult.map(
+          success: (success) {
+            if (success != null) {
+              equivalentAmountETH = success;
+            }
+          },
+          failure: (_) {},
+        );
 
-      final lpTokenAmount = await _sendTransactionAndGetAmount(
-        transactionAddLiquidity,
-        lpTokenAddress,
-      );
-      stepsNotifier.updateStepStatus(currentStep, StepStatus.completed);
+        if (equivalentAmountETH > aeETHAmount) {
+          final equivalentAmountUCOResult = await PoolFactoryRepositoryImpl(
+            poolGenesisAddress,
+            apiService,
+          ).getEquivalentAmount(aeETHToken.address, aeETHAmount);
+          equivalentAmountUCOResult.map(
+            success: (success) {
+              if (success != null) {
+                equivalentAmountUCO = success;
 
-      // DEPOSIT LP
-      currentStep++;
-      stepsNotifier.updateStepStatus(currentStep, StepStatus.inProgress);
-      final transactionDeposit = await _getTransaction(
-        () => archethicContract.getFarmLockDepositTx(
-          farmGenesisAddress,
+                addLiquidityUCOAmount = equivalentAmountUCO;
+                addLiquidityETHAmount = aeETHAmount;
+              }
+            },
+            failure: (_) {},
+          );
+        } else {
+          addLiquidityUCOAmount = ucoAmountHalf;
+          addLiquidityETHAmount = equivalentAmountETH;
+        }
+
+        _logger
+          ..fine(
+            'equivalentAmountETH $equivalentAmountETH (swapped amount: $aeETHAmount) -> finalAmountETH : $addLiquidityETHAmount',
+          )
+          ..fine(
+            'equivalentAmountUCO $equivalentAmountUCO (swapped amount: $ucoAmountHalf) -> finalAmountETH : $addLiquidityUCOAmount',
+          );
+
+        // ADD LIQUIDITY
+        final transactionAddLiquidity = await _getTransaction(
+          () => archethicContract.getAddLiquidityTx(
+            ucoToken,
+            addLiquidityUCOAmount,
+            aeETHToken,
+            addLiquidityETHAmount,
+            poolGenesisAddress,
+            0.5,
+          ),
+        );
+
+        lpTokenAmount = await _sendTransactionAndGetAmount(
+          transactionAddLiquidity,
           lpTokenAddress,
-          lpTokenAmount,
-          durationType,
-          level,
+        );
+
+        final addLiquiditySnapshot = {
+          'lpTokenAmount': lpTokenAmount,
+        };
+
+        stepsNotifier.updateStepStatus(
+          currentStep,
+          StepStatus.completed,
+          snapshot: addLiquiditySnapshot,
+        );
+        currentStep++;
+      }
+
+      if (currentStep == 2) {
+        // DEPOSIT LP
+        stepsNotifier.updateStepStatus(currentStep, StepStatus.inProgress);
+        final transactionDeposit = await _getTransaction(
+          () => archethicContract.getFarmLockDepositTx(
+            farmGenesisAddress,
+            lpTokenAddress,
+            lpTokenAmount,
+            durationType,
+            level,
+          ),
+        );
+
+        await _sendTransactionAndVerifyExecution(
+          transactionDeposit,
+          farmGenesisAddress,
+        );
+        stepsNotifier.updateStepStatus(currentStep, StepStatus.completed);
+
+        lpLocked = lpTokenAmount;
+      }
+    } on archethic.TransactionError catch (error) {
+      stepsNotifier.updateStepStatus(
+        currentStep,
+        StepStatus.failed,
+        failure: aedappfm.Failure.other(
+          cause: error.localizedMessage(localizations),
         ),
       );
 
-      await _sendTransactionAndVerifyExecution(
-        transactionDeposit,
-        farmGenesisAddress,
+      throw aedappfm.Failure.other(
+        cause: error.localizedMessage(localizations),
       );
-      stepsNotifier.updateStepStatus(currentStep, StepStatus.completed);
     } catch (e) {
       stepsNotifier.updateStepStatus(
         currentStep,
         StepStatus.failed,
-        reason: e.toString(),
+        failure: aedappfm.Failure.fromError(e),
       );
       throw aedappfm.Failure.fromError(e);
     }
+    return lpLocked;
   }
 
   Future<double> _getOutputAmount(

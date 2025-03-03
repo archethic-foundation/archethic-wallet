@@ -2,17 +2,16 @@ import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/feature_flags.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/main.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/figma_components/box/box_purple_gradient.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_primary.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_participants_count.dart';
 import 'package:aewallet/ui/views/main/bloc/providers.dart';
-import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
-    as aedappfm;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:material_symbols_icons/symbols.dart';
 import 'package:numeral/numeral.dart';
 
 class AirdropBanner extends ConsumerWidget {
@@ -54,13 +53,6 @@ class AirdropBanner extends ConsumerWidget {
     String? email,
   ) {
     final localizations = AppLocalizations.of(context)!;
-    final titleTextStyle = AppTextStyles.bodyLarge(context).copyWith(
-      fontWeight: FontWeight.bold,
-      fontSize: state == AirdropState.newParticipation ? 26 : 22,
-    );
-    final buttonTextStyle = AppTextStyles.bodyMedium(context).copyWith(
-      fontWeight: FontWeight.bold,
-    );
 
     String title;
     String? description;
@@ -163,142 +155,106 @@ class AirdropBanner extends ConsumerWidget {
 
     return Padding(
       padding: const EdgeInsets.only(top: 20),
-      child: _buildBannerContainer(
-        context,
-        child: Stack(
-          alignment: Alignment.topRight,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: InkWell(
-                onTap: onButtonPressed,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+      child: BoxPurpleGradient(
+        content: InkWell(
+          onTap: onButtonPressed,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Stack(
                   children: [
-                    const AirdropParticipantsCount(),
-                    if (state != AirdropState.ok)
-                      Text(
-                        '\$${ucoPerParticipant?.numeral(digits: 2) ?? ''} ${localizations.airdropPerParticipant}',
-                        style: AppTextStyles.bodyMediumWithOpacity(context),
-                      ),
-                    if (state != AirdropState.ok) const SizedBox(height: 10),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: AutoSizeText(
-                        title,
-                        style: titleTextStyle,
-                        textAlign: TextAlign.center,
-                      ),
+                    Text(
+                      title,
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeight.w700,
+                            fontSize: state == AirdropState.newParticipation
+                                ? 26
+                                : 22,
+                            shadows: [
+                              const Shadow(
+                                offset: Offset(0, 1),
+                                blurRadius: 8,
+                              ),
+                            ],
+                            height: 1.2,
+                          ),
+                      textAlign: TextAlign.center,
                     ),
-                    if (description != null)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: AutoSizeText(
-                          description,
-                          style: AppTextStyles.bodySmallWithOpacity(context),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    SizedBox(
-                      height: 10,
-                      width: MediaQuery.of(context).size.width,
-                    ),
-                    InkWell(
-                      onTap: onButtonPressed,
-                      child: IntrinsicWidth(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 15,
-                            vertical: 5,
+                    Text(
+                      title,
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeight.w700,
+                            fontSize: state == AirdropState.newParticipation
+                                ? 26
+                                : 22,
+                            color: Colors.white,
+                            height: 1.2,
                           ),
-                          height: 35,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          child: Text(
-                            buttonText,
-                            style: buttonTextStyle,
-                          ),
-                        ),
-                      ),
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),
               ),
-            ),
-            Positioned(
-              child: IconButton(
-                onPressed: () async {
-                  await ref
-                      .read(SettingsProviders.settings.notifier)
-                      .setActiveAirdrop(false);
-                },
-                icon: const Icon(
-                  Symbols.close,
-                  color: Colors.white,
-                  size: 16,
-                ),
+              SizedBox(
+                height: 10,
+                width: MediaQuery.of(context).size.width,
               ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBannerContainer(
-    BuildContext context, {
-    required Widget child,
-  }) {
-    return aedappfm.BlockInfo(
-      borderWidth: 0,
-      paddingEdgeInsetsClipRRect: EdgeInsets.zero,
-      paddingEdgeInsetsInfo: EdgeInsets.zero,
-      width: MediaQuery.of(context).size.width,
-      info: Stack(
-        children: [
-          Positioned.fill(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    aedappfm.ArchethicThemeBase.raspberry500,
-                    aedappfm.ArchethicThemeBase.raspberry500.withOpacity(0.5),
-                    aedappfm.ArchethicThemeBase.blue600.withOpacity(0.5),
-                  ],
-                ),
+              const AirdropParticipantsCount(
+                withShadow: true,
               ),
-            ),
-          ),
-          _buildBackgroundImage(),
-          child,
-        ],
-      ),
-    );
-  }
-
-  Widget _buildBackgroundImage() {
-    return Positioned.fill(
-      top: -60,
-      left: -300,
-      child: Transform.rotate(
-        angle: -10 * 3.14 / 180,
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Opacity(
-            opacity: 0.2,
-            child: Image.asset(
-              'assets/themes/archethic/logo_crystal.png',
-            ),
+              if (state != AirdropState.ok)
+                Text(
+                  '\$${ucoPerParticipant?.numeral(digits: 2) ?? ''} ${localizations.airdropPerParticipant}',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMediumlWithOpacity
+                      .copyWith(
+                    fontWeight: FontWeight.w600,
+                    shadows: [
+                      const Shadow(
+                        offset: Offset(0, 1),
+                        blurRadius: 8,
+                      ),
+                    ],
+                  ),
+                ),
+              const SizedBox(height: 10),
+              if (description != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: AutoSizeText(
+                    description,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmallWithOpacity
+                        .copyWith(
+                      fontWeight: FontWeightTelegraf.fontWeightRegular,
+                      shadows: [
+                        const Shadow(
+                          offset: Offset(0, 1),
+                          blurRadius: 8,
+                        ),
+                      ],
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              const SizedBox(height: 10),
+              BtnPrimary(
+                buttonText: buttonText,
+                onTap: onButtonPressed,
+                btnPrimaryType: BtnPrimaryType.dark,
+              ),
+            ],
           ),
         ),
+        onClose: () async {
+          await ref
+              .read(SettingsProviders.settings.notifier)
+              .setActiveAirdrop(false);
+        },
       ),
     );
   }
