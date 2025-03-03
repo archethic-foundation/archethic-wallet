@@ -69,12 +69,12 @@ OnRampTransferStep _onRampTransferStepFromJson(Map<String, dynamic> json) =>
         'type': 'swap',
         'tx_hash': final String txHash,
         'tx_timestamp': final String txTimestamp,
-        'tx_data': {'swap_uco_output_amount': final double swapUcoOutputAmount},
+        'tx_data': {'swap_uco_output_amount': final String swapUcoOutputAmount},
       } =>
         OnRampTransferStepSwap(
           txHash: txHash,
           txTimestamp: DateTime.parse(txTimestamp),
-          ucoAmount: swapUcoOutputAmount,
+          ucoAmount: double.parse(swapUcoOutputAmount),
         ),
       {
         'type': 'debit',
@@ -102,7 +102,7 @@ OnRampTransferStep _onRampTransferStepFromJson(Map<String, dynamic> json) =>
 
 OnRampEvent _onRampEventFromJson(Map<String, dynamic>? json) => switch (json) {
       {
-        'event_type': 'DEPOSIT_UPDATE',
+        'event_type': 'NEW_DEPOSIT' || 'DEPOSIT_UPDATE',
         'deposit': final Map<String, dynamic> jsonTransfer
       } =>
         OnRampDepositUpdateEvent(_onRampDepositFromJson(jsonTransfer)),
