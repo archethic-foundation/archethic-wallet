@@ -228,9 +228,7 @@ Storage **Boxes** are split into  categories :
 
  - **[_preferencesBox](./lib/infrastructure/datasources/preferences.hive.dart)** : User settings
  - **[tokensListBox](./lib/infrastructure/datasources/tokens_list.hive.dart)** : Cache for [Tokens](./lib/infrastructure/datasources/wallet_token_dto.hive.dart) read from API
- - **[contacts](./lib/infrastructure/datasources/contacts.hive.dart)** : User registered [Contacts](./lib/model/data/contact.dart)
- - **[appWallet](./lib/infrastructure/datasources/appwallet.hive.dart)** : Non-sensitive [Wallet data](./lib/domain/models/app_wallet.dart)
- - **[price](./lib/infrastructure/datasources/price.hive.dart)** : Cache for currency [Prices](./lib/model/data/price.dart) read from Oracle
+ - **[appWallet](./lib/infrastructure/datasources/appwallet.hive.dart)** : Non-sensitive [Wallet data](./lib/model/data/hive_app_wallet_dto.dart)
 
 ### Vault
 
@@ -239,7 +237,6 @@ Storage **Boxes** are split into  categories :
     - [KeychainSecuredInfos](./lib/model/blockchain/keychain_secured_infos.dart)
 - **[CacheManagerHive](./lib/util/cache_manager_hive.dart)**: Blockchain cache for various data
     - Token images data
-- **[NotificationsSetup](./lib/infrastructure/datasources/notification.vault.dart)** : [Push notification data](./lib/model/data/notification_setup_dto.dart)
 
 ### Encrypted boxes
 
