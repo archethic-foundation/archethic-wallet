@@ -36,6 +36,8 @@ class FarmLockDepositFormState with _$FarmLockDepositFormState {
     Failure? failure,
     double? finalAmount,
     DateTime? consentDateTime,
+    @Default(false) bool confirmLockPeriod,
+    @Default(false) bool confirmPrivacyPolicy,
   }) = _FarmLockDepositFormState;
   const FarmLockDepositFormState._();
 

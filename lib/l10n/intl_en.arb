@@ -895,5 +895,19 @@
                 "type": "String"
             }
         }
-    }
+    },
+    "farmLockDepositConfirmUcoDesc1": "Once you click on \"Confirm\" at the bottom of this page, the following actions will automatically take place:",
+    "farmLockDepositConfirmUcoItem1Desc1": "50% ",
+    "farmLockDepositConfirmUcoItem1Desc2": "of your entered UCO amount will be exchanged for ETH",
+    "farmLockDepositConfirmUcoItem2Desc1": "The UCO and ETH will be added to a liquidity pool, and you will receive ",
+    "farmLockDepositConfirmUcoItem2Desc2": "LP tokens",
+    "farmLockDepositConfirmUcoItem2Desc3": " in return.",
+    "farmLockDepositConfirmUcoItem3Desc1": "These LP tokens will be locked for ",
+    "farmLockDepositConfirmUcoItem3Desc2": ", and you will be rewarded.",
+    "farmLockDepositConfirmUcoDesc2": "Actual reward rate: ",
+    "farmLockDepositConfirmLockPeriod": "I understand that I won’t be able to withdraw my funds during the lock period.",
+    "farmLockDepositConfirmPrivacyPolicyDesc1": "I accept the  ",
+    "farmLockDepositConfirmPrivacyPolicyDescTermsLink": "Terms of use",
+    "farmLockDepositConfirmPrivacyPolicyDesc2": " and the ",
+    "farmLockDepositConfirmPrivacyPolicyDescPrivacyLink": "Privacy Policy"
 }

@@ -4,7 +4,9 @@ import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/provider.dart';
-import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_confirm_sheet.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/state.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_confirm_sheet_lp.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_confirm_sheet_uco.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_form_sheet.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
 import 'package:flutter/material.dart';
@@ -68,6 +70,8 @@ class _FarmLockDepositSheetState extends ConsumerState<FarmLockDepositSheet> {
 
     return farmLockDepositForm.processStep == ProcessStep.form
         ? const FarmLockDepositFormSheet()
-        : const FarmLockDepositConfirmSheet();
+        : farmLockDepositForm.farmLockDepositMode == FarmLockDepositMode.uco
+            ? const FarmLockDepositConfirmSheetUCO()
+            : const FarmLockDepositConfirmSheetLP();
   }
 }

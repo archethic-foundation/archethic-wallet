@@ -888,5 +888,19 @@
                 "type": "String"
             }
         }
-    }
+    },
+    "farmLockDepositConfirmUcoDesc1": "Une fois que vous aurez cliqué sur \"Confirmer\" en bas de cette page, les actions suivantes auront lieu automatiquement :",
+    "farmLockDepositConfirmUcoItem1Desc1": "50% ",
+    "farmLockDepositConfirmUcoItem1Desc2": "du montant de vos UCO saisis seront échangés contre des ETH",
+    "farmLockDepositConfirmUcoItem2Desc1": "Les UCO et ETH seront ajoutés à une réserve de liquidité, et vous recevrez ",
+    "farmLockDepositConfirmUcoItem2Desc2": " jetons LP",
+    "farmLockDepositConfirmUcoItem2Desc3": " en retour.",
+    "farmLockDepositConfirmUcoItem3Desc1": "Ces jetons LP seront verrouillés pendant ",
+    "farmLockDepositConfirmUcoItem3Desc2": ", et vous serez récompensé.",
+    "farmLockDepositConfirmUcoDesc2": "Taux de récompense actuel: ",
+    "farmLockDepositConfirmLockPeriod": "Je comprends que je ne pourrai pas retirer mes fonds pendant la période de verrouillage.",
+    "farmLockDepositConfirmPrivacyPolicyDesc1": "J'accepte les ",
+    "farmLockDepositConfirmPrivacyPolicyDescTermsLink": "Conditions d'utilisation",
+    "farmLockDepositConfirmPrivacyPolicyDesc2": " et la ",
+    "farmLockDepositConfirmPrivacyPolicyDescPrivacyLink": "Politique de confidentialité"
 }

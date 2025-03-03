@@ -11,6 +11,7 @@ class BtnFooterPrimary extends StatelessWidget {
     this.btnPrimaryType = BtnFooterPrimaryType.primary,
     this.isLocked = false,
     this.lockedIcon = false,
+    this.showProgressIndicator = false,
     super.key,
   });
   final String buttonText;
@@ -18,13 +19,14 @@ class BtnFooterPrimary extends StatelessWidget {
   final BtnFooterPrimaryType btnPrimaryType;
   final bool isLocked;
   final bool lockedIcon;
+  final bool showProgressIndicator;
 
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: onTap,
+        onTap: isLocked ? null : onTap,
         child: IntrinsicHeight(
           child: Container(
             width: MediaQuery.of(context).size.width * 0.9,
@@ -54,6 +56,19 @@ class BtnFooterPrimary extends StatelessWidget {
                       Icons.lock_outline,
                       size: 16,
                       color: Colors.white,
+                    ),
+                  )
+                else
+                  const SizedBox.shrink(),
+                if (showProgressIndicator)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10, top: 1),
+                    child: SizedBox.square(
+                      dimension: 10,
+                      child: CircularProgressIndicator(
+                        color: Colors.white.withOpacity(0.2),
+                        strokeWidth: 2,
+                      ),
                     ),
                   )
                 else
