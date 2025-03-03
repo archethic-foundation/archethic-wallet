@@ -127,7 +127,7 @@ class FarmLockDepositConfirmSheetUCO extends ConsumerWidget
         ref.read(farmLockDepositFormNotifierProvider.notifier);
 
     return SheetAppBar(
-      title: localizations.farmLockDepositFormTitle,
+      title: localizations.farmLockDepositFormTitleBeginner,
       widgetLeft: BackButton(
         key: const Key('back'),
         color: ArchethicTheme.text,

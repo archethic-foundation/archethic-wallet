@@ -2,15 +2,14 @@ import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_remove/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_remove/layouts/components/liquidity_remove_confirm_infos.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_remove/layouts/components/liquidity_remove_result_sheet.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
@@ -57,42 +56,35 @@ class LiquidityRemoveConfirmFormSheetState
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final liquidityRemove = ref.watch(liquidityRemoveFormNotifierProvider);
-    return Row(
-      children: <Widget>[
-        AppButtonTinyConnectivity(
-          AppLocalizations.of(context)!.btn_confirm_liquidity_remove,
-          Dimens.buttonBottomDimens,
-          key: const Key('removeLiquidity'),
-          onPressed: () async {
-            final liquidityRemoveFormNotifier = ref
-                .read(liquidityRemoveFormNotifierProvider.notifier)
-              ..setProcessInProgress(true);
-            final resultOk = await liquidityRemoveFormNotifier
-                .remove(AppLocalizations.of(context)!);
-            liquidityRemoveFormNotifier.setProcessInProgress(false);
-            if (resultOk) {
-              await context.push(LiquidityRemoveResultSheet.routerPage);
-            } else {
-              UIUtil.showSnackbar(
-                FailureMessage(
-                  context: context,
-                  failure:
-                      ref.read(liquidityRemoveFormNotifierProvider).failure,
-                ).getMessage(),
-                context,
-                ref,
-                ArchethicTheme.text,
-                ArchethicTheme.snackBarShadow,
-                duration: const Duration(seconds: 5),
-              );
-            }
-          },
-          disabled:
-              (!consentChecked && liquidityRemove.consentDateTime == null) ||
-                  liquidityRemove.isProcessInProgress,
-          showProgressIndicator: liquidityRemove.isProcessInProgress,
-        ),
-      ],
+    return BtnFooterPrimary(
+      buttonText: AppLocalizations.of(context)!.btn_confirm_liquidity_remove,
+      key: const Key('removeLiquidity'),
+      onTap: () async {
+        final liquidityRemoveFormNotifier = ref
+            .read(liquidityRemoveFormNotifierProvider.notifier)
+          ..setProcessInProgress(true);
+        final resultOk = await liquidityRemoveFormNotifier
+            .remove(AppLocalizations.of(context)!);
+        liquidityRemoveFormNotifier.setProcessInProgress(false);
+        if (resultOk) {
+          await context.push(LiquidityRemoveResultSheet.routerPage);
+        } else {
+          UIUtil.showSnackbar(
+            FailureMessage(
+              context: context,
+              failure: ref.read(liquidityRemoveFormNotifierProvider).failure,
+            ).getMessage(),
+            context,
+            ref,
+            ArchethicTheme.text,
+            ArchethicTheme.snackBarShadow,
+            duration: const Duration(seconds: 5),
+          );
+        }
+      },
+      isLocked: (!consentChecked && liquidityRemove.consentDateTime == null) ||
+          liquidityRemove.isProcessInProgress,
+      showProgressIndicator: liquidityRemove.isProcessInProgress,
     );
   }
 

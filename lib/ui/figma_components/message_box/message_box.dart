@@ -1,4 +1,3 @@
-import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
@@ -19,61 +18,91 @@ class MessageBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: messageBoxType == MessageBoxType.success
-          ? const Color(0xFF00B67A).withOpacity(0.2)
-          : messageBoxType == MessageBoxType.warning
-              ? const Color(0xFFFF8400).withOpacity(0.2)
-              : const Color(0xFF262626),
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-          color: messageBoxType == MessageBoxType.success
-              ? const Color(0xFF00B67A)
-              : messageBoxType == MessageBoxType.warning
-                  ? const Color(0xFFFF8400)
-                  : const Color(0xFF343434),
+    if (text.isEmpty) {
+      return const SizedBox();
+    }
+
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: _getCardColor(messageBoxType),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: _getBorderColor(messageBoxType),
           width: 0.5,
         ),
-        borderRadius: BorderRadius.circular(8),
       ),
-      child: ListTile(
+      child: InkWell(
         onTap: onTap,
-        titleAlignment: ListTileTitleAlignment.top,
-        leading: messageBoxType == MessageBoxType.success
-            ? const Icon(Icons.done_all, color: Colors.white, size: 16)
-            : messageBoxType == MessageBoxType.warning
-                ? const Icon(
-                    Symbols.emergency_home,
-                    color: Color(0xFFFF8400),
-                    size: 16,
-                  )
-                : const Opacity(
-                    opacity: 0.8,
-                    child: Icon(
-                      Icons.lock_outline,
-                      color: Color(0xFFFFFFFF),
-                      size: 16,
-                    ),
+        borderRadius: BorderRadius.circular(8),
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Row(
+            children: [
+              _getLeadingIcon(messageBoxType),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 2),
+                  child: Text(
+                    text,
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
-        title: Padding(
-          padding: const EdgeInsets.only(top: 2),
-          child: Text(
-            text,
-            style: messageBoxType == MessageBoxType.warning
-                ? Theme.of(context).textTheme.bodySmall
-                : Theme.of(context).textTheme.bodySmallWithOpacity,
+                ),
+              ),
+              if (onTap != null && messageBoxType != MessageBoxType.locked)
+                const Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.white,
+                  size: 14,
+                ),
+            ],
           ),
         ),
-        trailing: onTap == null
-            ? null
-            : messageBoxType != MessageBoxType.locked
-                ? const Icon(
-                    Icons.arrow_forward_ios,
-                    color: Colors.white,
-                    size: 14,
-                  )
-                : null,
       ),
     );
+  }
+
+  Color _getCardColor(MessageBoxType messageBoxType) {
+    switch (messageBoxType) {
+      case MessageBoxType.success:
+        return const Color(0xFF00B67A).withOpacity(0.1);
+      case MessageBoxType.warning:
+        return const Color(0xFFFF8400).withOpacity(0.2);
+      case MessageBoxType.locked:
+        return const Color(0xFF262626);
+    }
+  }
+
+  Color _getBorderColor(MessageBoxType messageBoxType) {
+    switch (messageBoxType) {
+      case MessageBoxType.success:
+        return const Color(0xFF00B67A);
+      case MessageBoxType.warning:
+        return const Color(0xFFFF8400);
+      case MessageBoxType.locked:
+        return const Color(0xFF343434);
+    }
+  }
+
+  Widget _getLeadingIcon(MessageBoxType messageBoxType) {
+    switch (messageBoxType) {
+      case MessageBoxType.success:
+        return const Icon(Icons.done_all, color: Colors.white, size: 16);
+      case MessageBoxType.warning:
+        return const Icon(
+          Symbols.emergency_home,
+          color: Color(0xFFFF8400),
+          size: 16,
+        );
+      case MessageBoxType.locked:
+        return const Opacity(
+          opacity: 0.8,
+          child: Icon(
+            Icons.lock_outline,
+            color: Color(0xFFFFFFFF),
+            size: 16,
+          ),
+        );
+    }
   }
 }

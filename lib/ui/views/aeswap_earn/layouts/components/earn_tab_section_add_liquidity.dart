@@ -95,6 +95,7 @@ class EarnSectionAddLiquidity extends ConsumerWidget {
           ),
           const SizedBox(height: 30),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               BtnPrimary(
                 buttonText:
@@ -114,11 +115,6 @@ class EarnSectionAddLiquidity extends ConsumerWidget {
                   );
                 },
               ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Row(
-            children: [
               BtnPrimary(
                 buttonText:
                     localizations.earnSectionAddLiquidityWithdrawLiquidityBtn,

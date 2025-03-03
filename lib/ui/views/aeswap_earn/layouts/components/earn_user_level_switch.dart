@@ -1,7 +1,6 @@
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
-import 'package:aewallet/ui/figma_components/text/gradient_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,10 +29,12 @@ class EarnUserLevelSwitch extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             if (earnUserLevel == EarnUserLevelType.beginner)
-              GradientText(
+              Text(
                 localizations.earnUserLevelSwitchBeginner,
-                style: Theme.of(context).textTheme.bodySmallWithOpacity,
-                gradient: ArchethicGradients.gradientArchethic,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmallWithOpacity
+                    .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold),
               )
             else
               Text(
@@ -62,10 +63,12 @@ class EarnUserLevelSwitch extends ConsumerWidget {
               ),
             ),
             if (earnUserLevel == EarnUserLevelType.advanced)
-              GradientText(
+              Text(
                 localizations.earnUserLevelSwitchAdvanced,
-                style: Theme.of(context).textTheme.bodySmallWithOpacity,
-                gradient: ArchethicGradients.gradientArchethic,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmallWithOpacity
+                    .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold),
               )
             else
               Text(

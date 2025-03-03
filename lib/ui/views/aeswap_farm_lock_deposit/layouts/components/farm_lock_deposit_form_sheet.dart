@@ -1,4 +1,6 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
@@ -67,8 +69,14 @@ class FarmLockDepositFormSheet extends ConsumerWidget
   @override
   PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
+    final earnUserLevel = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.earnUserLevel),
+    );
+
     return SheetAppBar(
-      title: localizations.farmLockDepositFormTitle,
+      title: earnUserLevel == EarnUserLevelType.beginner
+          ? localizations.farmLockDepositFormTitleBeginner
+          : localizations.farmLockDepositFormTitle,
       widgetLeft: BackButton(
         key: const Key('back'),
         color: ArchethicTheme.text,
@@ -82,6 +90,9 @@ class FarmLockDepositFormSheet extends ConsumerWidget
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final farmLockDeposit = ref.watch(farmLockDepositFormNotifierProvider);
+    final earnUserLevel = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.earnUserLevel),
+    );
 
     if (farmLockDeposit.pool == null) {
       return const Padding(
@@ -158,20 +169,21 @@ class FarmLockDepositFormSheet extends ConsumerWidget
                 const SizedBox(
                   height: 10,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      localizations.farmLockDepositTitle3,
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      localizations.farmLockDepositDesc3,
-                      style: Theme.of(context).textTheme.bodySmallWithOpacity,
-                    ),
-                  ],
-                ),
+                if (earnUserLevel == EarnUserLevelType.beginner)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        localizations.farmLockDepositTitle3,
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        localizations.farmLockDepositDesc3,
+                        style: Theme.of(context).textTheme.bodySmallWithOpacity,
+                      ),
+                    ],
+                  ),
                 const SizedBox(height: 70),
               ],
             ),

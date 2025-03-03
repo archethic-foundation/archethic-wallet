@@ -2,17 +2,15 @@ import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
+import 'package:aewallet/ui/figma_components/message_box/message_box.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_remove/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_remove/layouts/components/liquidity_remove_lp_tokens_get_back.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_remove/layouts/components/liquidity_remove_textfield_lp_token_amount.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
-import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
-    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -48,22 +46,17 @@ class LiquidityRemoveFormSheet extends ConsumerWidget
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final liquidityRemove = ref.watch(liquidityRemoveFormNotifierProvider);
-    return Row(
-      children: <Widget>[
-        AppButtonTinyConnectivity(
-          localizations.btn_liquidity_remove,
-          Dimens.buttonBottomDimens,
-          key: const Key('removeLiquidity'),
-          onPressed: () async {
-            await ref
-                .read(
-                  liquidityRemoveFormNotifierProvider.notifier,
-                )
-                .validateForm(AppLocalizations.of(context)!);
-          },
-          disabled: !liquidityRemove.isControlsOk,
-        ),
-      ],
+    return BtnFooterPrimary(
+      buttonText: localizations.btn_liquidity_remove,
+      key: const Key('removeLiquidity'),
+      onTap: () async {
+        await ref
+            .read(
+              liquidityRemoveFormNotifierProvider.notifier,
+            )
+            .validateForm(AppLocalizations.of(context)!);
+      },
+      isLocked: !liquidityRemove.isControlsOk,
     );
   }
 
@@ -94,20 +87,21 @@ class LiquidityRemoveFormSheet extends ConsumerWidget
           children: [
             Text(
               AppLocalizations.of(context)!.liquidityRemoveTextFieldLPLabel,
-              style: AppTextStyles.bodyMedium(context)
-                  .copyWith(fontWeight: FontWeight.bold),
+              style: AppTextStyles.bodyMedium(context).copyWith(
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(
               height: 5,
             ),
             const LiquidityRemoveLPTokenAmount(),
             const SizedBox(
-              height: 10,
+              height: 30,
             ),
             const LiquidityRemoveTokensGetBack(),
-            aedappfm.ErrorMessage(
-              failure: liquidityRemove.failure,
-              failureMessage: FailureMessage(
+            MessageBox(
+              messageBoxType: MessageBoxType.warning,
+              text: FailureMessage(
                 context: context,
                 failure: liquidityRemove.failure,
               ).getMessage(),

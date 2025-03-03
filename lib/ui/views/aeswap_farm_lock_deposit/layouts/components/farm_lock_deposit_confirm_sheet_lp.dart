@@ -3,33 +3,29 @@ import 'dart:async';
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/step.dart';
 import 'package:aewallet/domain/models/step.dart';
-import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/consent_uri.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
+import 'package:aewallet/ui/figma_components/complex/estimated_fees.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
+import 'package:aewallet/ui/figma_components/text/gradient_text.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/util/amount_formatters.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/state.dart';
-import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_confirm_infos.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_confirm_lock_period.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_confirm_privacy_policy.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_result_sheet.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_step_popup.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
-import 'package:aewallet/ui/widgets/consent_widget.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class FarmLockDepositConfirmSheetLP extends ConsumerStatefulWidget {
   const FarmLockDepositConfirmSheetLP({
@@ -78,13 +74,14 @@ class FarmLockDepositConfirmSheetLPState
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final farmLockDeposit = ref.watch(farmLockDepositFormNotifierProvider);
 
-    return Row(
-      children: <Widget>[
-        AppButtonTinyConnectivity(
-          AppLocalizations.of(context)!.btn_confirm_farm_add_lock,
-          Dimens.buttonBottomDimens,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        EstimatedFees(farmLockDeposit.feeEstimation),
+        BtnFooterPrimary(
+          buttonText: AppLocalizations.of(context)!.btn_confirm_farm_add_lock,
           key: const Key('farmLockDeposit'),
-          onPressed: () async {
+          onTap: () async {
             final farmLockDepositNotifier = ref.read(
               farmLockDepositFormNotifierProvider.notifier,
             )..setProcessInProgress(true);
@@ -130,9 +127,8 @@ class FarmLockDepositConfirmSheetLPState
               }
             }
           },
-          disabled: (!warningChecked ||
-                  (!consentChecked &&
-                      farmLockDeposit.consentDateTime == null)) ||
+          isLocked: (!farmLockDeposit.confirmLockPeriod ||
+                  !farmLockDeposit.confirmPrivacyPolicy) ||
               farmLockDeposit.isProcessInProgress,
           showProgressIndicator: farmLockDeposit.isProcessInProgress,
         ),
@@ -156,6 +152,8 @@ class FarmLockDepositConfirmSheetLPState
             ..setFarmLockDepositProcessStep(
               aedappfm.ProcessStep.form,
             )
+            ..setConfirmLockPeriod(false)
+            ..setConfirmPrivacyPolicy(false)
             ..setFailure(null);
         },
       ),
@@ -164,7 +162,6 @@ class FarmLockDepositConfirmSheetLPState
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
     final farmLockDeposit = ref.read(farmLockDepositFormNotifierProvider);
     if (farmLockDeposit.pool == null) {
       return const SizedBox.shrink();
@@ -172,81 +169,58 @@ class FarmLockDepositConfirmSheetLPState
 
     return Column(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const FarmLockDepositConfirmInfos(),
-        if (farmLockDeposit.farmLockDepositDuration !=
-            FarmLockDepositDurationType.flexible)
-          Row(
+        Text.rich(
+          TextSpan(
             children: [
-              Expanded(
-                child: CheckboxListTile(
-                  title: Wrap(
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!
-                            .farmLockDepositConfirmCheckBoxUnderstand,
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              color:
-                                  aedappfm.ArchethicThemeBase.systemWarning500,
-                            ),
-                      ),
-                    ],
-                  ),
-                  dense: true,
-                  value: warningChecked,
-                  onChanged: (newValue) {
-                    setState(() {
-                      warningChecked = newValue!;
-                    });
-                  },
-                  controlAffinity: ListTileControlAffinity.leading,
-                  subtitle: InkWell(
-                    onTap: () async {
-                      final uri = Uri.parse(kURIFarmLockFarmTuto);
-                      if (!await canLaunchUrl(uri)) return;
-                      await launchUrl(uri);
-                    },
-                    child: Text(
-                      AppLocalizations.of(context)!
-                          .farmLockDepositConfirmMoreInfo,
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            decoration: TextDecoration.underline,
-                            color: aedappfm.ArchethicThemeBase.systemWarning500,
-                          ),
-                    ),
-                  ),
+              WidgetSpan(
+                child: Text(
+                  AppLocalizations.of(context)!.farmLockDepositConfirmInfosText,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ),
+              WidgetSpan(
+                child: GradientText(
+                  '${farmLockDeposit.amount.formatNumber(precision: 8)} ${farmLockDeposit.amount > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
+                  gradient: ArchethicGradients.gradientArchethic,
+                  style: Theme.of(context).textTheme.bodyMedium!,
+                ),
+              ),
+              WidgetSpan(
+                child: Text(
+                  AppLocalizations.of(context)!
+                      .farmLockDepositConfirmInfosText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ),
+              WidgetSpan(
+                child: GradientText(
+                  getFarmLockDepositDurationTypeLabel(
+                    context,
+                    farmLockDeposit.farmLockDepositDuration,
+                  ).toLowerCase(),
+                  gradient: ArchethicGradients.gradientArchethic,
+                  style: Theme.of(context).textTheme.bodyMedium!,
+                ),
+              ),
+              WidgetSpan(
+                child: Text(
+                  '.',
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
             ],
           ),
-        ConsentWidget(
-          consentDateTime: farmLockDeposit.consentDateTime,
-          consentChecked: consentChecked,
-          onToggleConsent: (newValue) {
-            setState(() {
-              consentChecked = newValue!;
-            });
-          },
-          textStyle: AppTextStyles.bodyMedium(
-            context,
-          ),
         ),
-        SheetDetailCard(
-          children: [
-            Text(
-              localizations.estimatedTxFees,
-              style: AppTextStyles.bodyMedium(context),
-            ),
-            Text(
-              AmountFormatters.standardSmallValue(
-                farmLockDeposit.feeEstimation!.value ?? 0,
-                kUCOAddress,
-                decimal: 3,
-              ),
-              style: AppTextStyles.bodyMedium(context),
-            ),
-          ],
+        const SizedBox(
+          height: 30,
         ),
+        const FarmLockDepositConfirmLockPeriod(),
+        const SizedBox(
+          height: 20,
+        ),
+        const FarmLockDepositConfirmPrivacyPolicy(),
       ],
     );
   }

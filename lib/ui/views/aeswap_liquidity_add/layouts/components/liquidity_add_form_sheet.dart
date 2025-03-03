@@ -5,15 +5,15 @@ import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_token_icon.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/fiat_value.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
+import 'package:aewallet/ui/figma_components/message_box/message_box.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/layouts/components/liquidity_add_icon_settings.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/layouts/components/liquidity_add_infos.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/layouts/components/liquidity_add_textfield_token_1_amount.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/layouts/components/liquidity_add_textfield_token_2_amount.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -53,22 +53,16 @@ class LiquidityAddFormSheet extends ConsumerWidget
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final liquidityAdd = ref.watch(liquidityAddFormNotifierProvider);
-    return Row(
-      children: <Widget>[
-        AppButtonTinyConnectivity(
-          localizations.btn_liquidity_add,
-          Dimens.buttonBottomDimens,
-          key: const Key('addLiquidity'),
-          onPressed: () async {
-            await ref
-                .read(
-                  liquidityAddFormNotifierProvider.notifier,
-                )
-                .validateForm(AppLocalizations.of(context)!);
-          },
-          disabled: !liquidityAdd.isControlsOk,
-        ),
-      ],
+    return BtnFooterPrimary(
+      buttonText: localizations.btn_liquidity_add,
+      onTap: () async {
+        await ref
+            .read(
+              liquidityAddFormNotifierProvider.notifier,
+            )
+            .validateForm(AppLocalizations.of(context)!);
+      },
+      isLocked: !liquidityAdd.isControlsOk,
     );
   }
 
@@ -262,9 +256,12 @@ class LiquidityAddFormSheet extends ConsumerWidget
                           ),
                         ),
                       ),
-                    aedappfm.ErrorMessage(
-                      failure: liquidityAdd.failure,
-                      failureMessage: FailureMessage(
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    MessageBox(
+                      messageBoxType: MessageBoxType.warning,
+                      text: FailureMessage(
                         context: context,
                         failure: liquidityAdd.failure,
                       ).getMessage(),

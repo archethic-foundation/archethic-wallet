@@ -104,7 +104,6 @@ class _FarmLockDepositLPAmountState
         ),
         Container(
           padding: const EdgeInsets.symmetric(vertical: 5),
-          width: aedappfm.AppThemeBase.sizeBoxComponentWidth,
           child: Stack(
             alignment: Alignment.centerRight,
             children: [
