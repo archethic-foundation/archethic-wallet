@@ -55,6 +55,22 @@ class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
     );
   }
 
+  void setConfirmLockPeriod(
+    bool confirmLockPeriod,
+  ) {
+    state = state.copyWith(
+      confirmLockPeriod: confirmLockPeriod,
+      failure: null,
+    );
+  }
+
+  void setConfirmPrivacyPolicy(bool confirmPrivacyPolicy) {
+    state = state.copyWith(
+      confirmPrivacyPolicy: confirmPrivacyPolicy,
+      failure: null,
+    );
+  }
+
   double _watchLPTokenBalance() {
     /// Rebuilds this provider when lpTokenAddress changes
     /// That way, it will watch the appropriate lpBalanceProvider.

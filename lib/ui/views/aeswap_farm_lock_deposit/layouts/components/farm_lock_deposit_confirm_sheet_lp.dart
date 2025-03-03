@@ -31,18 +31,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class FarmLockDepositConfirmSheet extends ConsumerStatefulWidget {
-  const FarmLockDepositConfirmSheet({
+class FarmLockDepositConfirmSheetLP extends ConsumerStatefulWidget {
+  const FarmLockDepositConfirmSheetLP({
     super.key,
   });
 
   @override
-  ConsumerState<FarmLockDepositConfirmSheet> createState() =>
-      FarmLockDepositConfirmSheetState();
+  ConsumerState<FarmLockDepositConfirmSheetLP> createState() =>
+      FarmLockDepositConfirmSheetLPState();
 }
 
-class FarmLockDepositConfirmSheetState
-    extends ConsumerState<FarmLockDepositConfirmSheet>
+class FarmLockDepositConfirmSheetLPState
+    extends ConsumerState<FarmLockDepositConfirmSheetLP>
     implements SheetSkeletonInterface {
   bool consentChecked = false;
   bool warningChecked = false;
