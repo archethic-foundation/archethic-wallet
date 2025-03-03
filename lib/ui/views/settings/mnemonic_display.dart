@@ -179,6 +179,9 @@ class _MnemonicDisplayState extends ConsumerState<MnemonicDisplay> {
                 ),
               ),
             ),
+          const SizedBox(
+            height: 60,
+          ),
         ],
       ),
     );

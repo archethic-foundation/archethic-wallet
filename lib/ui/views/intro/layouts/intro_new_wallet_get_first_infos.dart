@@ -203,10 +203,8 @@ class _IntroNewWalletDisclaimerState
           controller: nameController,
           focusNode: nameFocusNode,
           textAlign: TextAlign.left,
-          textInputAction: TextInputAction.done,
-          keyboardType: const TextInputType.numberWithOptions(
-            decimal: true,
-          ),
+          textInputAction: TextInputAction.next,
+          keyboardType: TextInputType.text,
           inputFormatters: <TextInputFormatter>[
             LengthLimitingTextInputFormatter(
               20,

@@ -30,7 +30,8 @@ class EarnSectionStartEarning extends ConsumerWidget {
       SettingsProviders.settings.select((settings) => settings.earnUserLevel),
     );
 
-    if (balances.lpTokenBalance <= 0) {
+    if (earnUserLevel == EarnUserLevelType.advanced &&
+        balances.lpTokenBalance <= 0) {
       return aedappfm.BlockInfo(
         blockInfoColor: aedappfm.BlockInfoColor.grey,
         borderWidth: 2,

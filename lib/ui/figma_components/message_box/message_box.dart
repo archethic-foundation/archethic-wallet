@@ -37,8 +37,12 @@ class MessageBox extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _getLeadingIcon(messageBoxType),
+              Padding(
+                padding: const EdgeInsets.only(top: 2),
+                child: _getLeadingIcon(messageBoxType),
+              ),
               const SizedBox(width: 12),
               Expanded(
                 child: Padding(
