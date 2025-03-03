@@ -1,18 +1,13 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/format_address_link_copy_big_icon.dart';
-import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
+import 'package:aewallet/ui/figma_components/message_box/message_box.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_remove/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_remove/layouts/components/liquidity_remove_final_amount.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
-import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
-    as aedappfm;
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -52,20 +47,15 @@ class LiquidityRemoveResultSheetState
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    return Row(
-      children: <Widget>[
-        AppButtonTinyConnectivity(
-          AppLocalizations.of(context)!.close,
-          Dimens.buttonBottomDimens,
-          key: const Key('close'),
-          onPressed: () async {
-            ref.invalidate(liquidityRemoveFormNotifierProvider);
-            context
-              ..pop()
-              ..pop();
-          },
-        ),
-      ],
+    return BtnFooterPrimary(
+      buttonText: AppLocalizations.of(context)!.close,
+      key: const Key('close'),
+      onTap: () async {
+        ref.invalidate(liquidityRemoveFormNotifierProvider);
+        context
+          ..pop()
+          ..pop();
+      },
     );
   }
 
@@ -98,47 +88,21 @@ class LiquidityRemoveResultSheetState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SheetDetailCard(
-              children: [
-                if (finalAmountToken1 == null &&
-                    finalAmountToken2 == null &&
-                    finalAmountLPToken == null)
-                  if (timeout == false)
-                    Row(
-                      children: [
-                        AutoSizeText(
-                          AppLocalizations.of(context)!.processingInProgress,
-                          style: AppTextStyles.bodyLarge(context),
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                          width: 10,
-                          child: CircularProgressIndicator(strokeWidth: 1),
-                        ),
-                      ],
-                    )
-                  else
-                    Text(
-                      FailureMessage(
-                        context: context,
-                        failure: liquidityRemove.failure,
-                      ).getMessage(),
-                      style: AppTextStyles.bodyLarge(context).copyWith(
-                        color: aedappfm.ArchethicThemeBase.systemDanger500,
-                      ),
-                    )
-                else
-                  Text(
-                    AppLocalizations.of(context)!.liquidityRemoveSuccessInfo,
-                    style: AppTextStyles.bodyLarge(context).copyWith(
-                      color: aedappfm.ArchethicThemeBase.systemPositive600,
-                    ),
-                  ),
-              ],
-            ),
+            if (finalAmountToken1 == null &&
+                finalAmountToken2 == null &&
+                finalAmountLPToken == null)
+              MessageBox(
+                messageBoxType: MessageBoxType.warning,
+                text: FailureMessage(
+                  context: context,
+                  failure: liquidityRemove.failure,
+                ).getMessage(),
+              )
+            else
+              MessageBox(
+                messageBoxType: MessageBoxType.success,
+                text: AppLocalizations.of(context)!.liquidityRemoveSuccessInfo,
+              ),
             const SizedBox(
               height: 20,
             ),
@@ -171,11 +135,7 @@ class LiquidityRemoveResultSheetState
                     finalAmountToken2 != null &&
                     finalAmountLPToken != null) ||
                 timeout)
-              const SheetDetailCard(
-                children: [
-                  LiquidityRemoveFinalAmount(),
-                ],
-              ),
+              const LiquidityRemoveFinalAmount(),
           ],
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_token_balance.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_textfield.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_remove/bloc/provider.dart';
 
@@ -21,12 +22,14 @@ class LiquidityRemoveLPTokenAmount extends ConsumerStatefulWidget {
 class _LiquidityRemoveLPTokenAmountState
     extends ConsumerState<LiquidityRemoveLPTokenAmount> {
   late TextEditingController tokenAmountController;
-  late FocusNode tokenAmountFocusNode;
+
+  final FocusNode _focusNode = FocusNode();
+  bool _hasFocus = false;
 
   @override
   void initState() {
     super.initState();
-    tokenAmountFocusNode = FocusNode();
+    _focusNode.addListener(_onFocusChange);
     _updateAmountTextController();
   }
 
@@ -49,9 +52,17 @@ class _LiquidityRemoveLPTokenAmountState
 
   @override
   void dispose() {
-    tokenAmountFocusNode.dispose();
     tokenAmountController.dispose();
+    _focusNode
+      ..removeListener(_onFocusChange)
+      ..dispose();
     super.dispose();
+  }
+
+  void _onFocusChange() {
+    setState(() {
+      _hasFocus = _focusNode.hasFocus;
+    });
   }
 
   @override
@@ -71,129 +82,75 @@ class _LiquidityRemoveLPTokenAmountState
 
     return Column(
       children: [
-        SizedBox(
-          width: aedappfm.AppThemeBase.sizeBoxComponentWidth,
-          child: Row(
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 5),
+          child: Stack(
+            alignment: Alignment.centerRight,
             children: [
-              Expanded(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
+              TextField(
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: _hasFocus ? Colors.black : null,
+                    ),
+                autocorrect: false,
+                controller: tokenAmountController,
+                onChanged: (text) async {
+                  await liquidityRemoveNotifier.setLPTokenAmount(
+                    double.tryParse(text.replaceAll(' ', '')) ?? 0,
+                  );
+                },
+                focusNode: _focusNode,
+                textAlign: TextAlign.left,
+                textInputAction: TextInputAction.done,
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
+                inputFormatters: <TextInputFormatter>[
+                  AmountTextInputFormatter(
+                    precision: 8,
                   ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                              10,
-                            ),
-                            border: Border.all(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primaryContainer,
-                              width: 0.5,
-                            ),
-                            gradient: LinearGradient(
-                              colors: [
-                                Theme.of(context)
-                                    .colorScheme
-                                    .surface
-                                    .withOpacity(1),
-                                Theme.of(context)
-                                    .colorScheme
-                                    .surface
-                                    .withOpacity(0.3),
-                              ],
-                              stops: const [0, 1],
-                            ),
-                          ),
-                          child: TextField(
-                            style: Theme.of(context).textTheme.bodyLarge,
-                            autocorrect: false,
-                            controller: tokenAmountController,
-                            onChanged: (text) async {
-                              await liquidityRemoveNotifier.setLPTokenAmount(
-                                double.tryParse(text.replaceAll(' ', '')) ?? 0,
-                              );
-                            },
-                            focusNode: tokenAmountFocusNode,
-                            textAlign: TextAlign.right,
-                            textInputAction: TextInputAction.done,
-                            keyboardType: const TextInputType.numberWithOptions(
-                              decimal: true,
-                            ),
-                            inputFormatters: <TextInputFormatter>[
-                              AmountTextInputFormatter(
-                                precision: 8,
-                              ),
-                              LengthLimitingTextInputFormatter(10),
-                            ],
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.only(right: 10),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                  LengthLimitingTextInputFormatter(10),
+                ],
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor:
+                      _hasFocus ? Colors.white : Colors.white.withOpacity(0.15),
+                  border: const OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
+                  focusColor: Colors.white,
+                  contentPadding: const EdgeInsets.only(left: 10),
+                ),
+              ),
+              Positioned(
+                right: 10,
+                child: BtnTextField(
+                  buttonText:
+                      aedappfm.AppLocalizations.of(context)!.aedappfm_btn_max,
+                  onTap: () async {
+                    await ref
+                        .read(
+                          liquidityRemoveFormNotifierProvider.notifier,
+                        )
+                        .setLpTokenAmountMax();
+                    _updateAmountTextController();
+                  },
                 ),
               ),
             ],
           ),
         ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            if (liquidityRemove.pool != null)
-              Row(
-                children: [
-                  DexTokenBalance(
-                    tokenBalance: liquidityRemove.lpTokenBalance,
-                    token: liquidityRemove.pool!.lpToken,
-                    pool: liquidityRemove.pool,
-                    fiatTextStyleMedium: true,
-                  ),
-                ],
+        if (liquidityRemove.pool != null)
+          Row(
+            children: [
+              DexTokenBalance(
+                tokenBalance: liquidityRemove.lpTokenBalance,
+                token: liquidityRemove.pool!.lpToken,
+                pool: liquidityRemove.pool,
+                fiatTextStyleMedium: true,
               ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  aedappfm.ButtonHalf(
-                    height: 40,
-                    balanceAmount: liquidityRemove.lpTokenBalance,
-                    onTap: () async {
-                      await ref
-                          .read(
-                            liquidityRemoveFormNotifierProvider.notifier,
-                          )
-                          .setLpTokenAmountHalf();
-                      _updateAmountTextController();
-                    },
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  aedappfm.ButtonMax(
-                    height: 40,
-                    balanceAmount: liquidityRemove.lpTokenBalance,
-                    onTap: () async {
-                      await ref
-                          .read(
-                            liquidityRemoveFormNotifierProvider.notifier,
-                          )
-                          .setLpTokenAmountMax();
-                      _updateAmountTextController();
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+            ],
+          ),
       ],
     );
   }

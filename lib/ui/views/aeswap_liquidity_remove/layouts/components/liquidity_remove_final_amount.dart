@@ -1,4 +1,5 @@
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
+import 'package:aewallet/ui/figma_components/text/gradient_text.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_remove/bloc/provider.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -20,112 +21,133 @@ class LiquidityRemoveFinalAmount extends ConsumerWidget {
           .select((value) => value.failure != null),
     );
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            if (finalAmountToken1 != null)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SelectableText(
-                    AppLocalizations.of(context)!
-                        .liquidityRemoveFinalAmountTokenObtained,
-                    style: AppTextStyles.bodyLarge(context),
-                  ),
-                  SelectableText(
-                    '${finalAmountToken1.formatNumber(precision: 8)} ${liquidityRemove.token1!.symbol}',
-                    style: AppTextStyles.bodyLargeSecondaryColor(context),
-                  ),
-                ],
-              )
-            else if (timeout)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SelectableText(
-                    AppLocalizations.of(context)!
-                        .liquidityRemoveFinalAmountTokenObtained,
-                    style: AppTextStyles.bodyLarge(context),
-                  ),
-                  SelectableText(
-                    AppLocalizations.of(context)!.finalAmountNotRecovered,
-                    style: AppTextStyles.bodyLarge(context),
-                  ),
-                ],
-              ),
-          ],
-        ),
-        Row(
-          children: [
-            if (finalAmountToken2 != null)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SelectableText(
-                    AppLocalizations.of(context)!
-                        .liquidityRemoveFinalAmountTokenObtained,
-                    style: AppTextStyles.bodyLarge(context),
-                  ),
-                  SelectableText(
-                    '${finalAmountToken2.formatNumber(precision: 8)} ${liquidityRemove.token2!.symbol}',
-                    style: AppTextStyles.bodyLargeSecondaryColor(context),
-                  ),
-                ],
-              )
-            else if (timeout)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SelectableText(
-                    AppLocalizations.of(context)!
-                        .liquidityRemoveFinalAmountTokenObtained,
-                    style: AppTextStyles.bodyLarge(context),
-                  ),
-                  SelectableText(
-                    AppLocalizations.of(context)!.finalAmountNotRecovered,
-                    style: AppTextStyles.bodyLarge(context),
-                  ),
-                ],
-              ),
-          ],
-        ),
-        Row(
-          children: [
-            if (finalAmountLPToken != null)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SelectableText(
-                    AppLocalizations.of(context)!
-                        .liquidityRemoveFinalAmountTokenBurned,
-                    style: AppTextStyles.bodyLarge(context),
-                  ),
-                  SelectableText(
-                    '${finalAmountLPToken.formatNumber(precision: 8)} ${finalAmountLPToken > 1 ? 'LP Tokens' : 'LP Token'}',
-                    style: AppTextStyles.bodyLargeSecondaryColor(context),
-                  ),
-                ],
-              )
-            else if (timeout)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SelectableText(
-                    AppLocalizations.of(context)!
-                        .liquidityRemoveFinalAmountTokenBurned,
-                    style: AppTextStyles.bodyLarge(context),
-                  ),
-                  SelectableText(
-                    AppLocalizations.of(context)!.finalAmountNotRecovered,
-                    style: AppTextStyles.bodyLarge(context),
-                  ),
-                ],
-              ),
-          ],
-        ),
-      ],
+    return aedappfm.BlockInfo(
+      blockInfoColor: aedappfm.BlockInfoColor.purple,
+      borderWidth: 0,
+      paddingEdgeInsetsInfo: const EdgeInsets.all(20),
+      width: MediaQuery.of(context).size.width,
+      info: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              if (finalAmountToken1 != null)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SelectableText(
+                      AppLocalizations.of(context)!
+                          .liquidityRemoveFinalAmountTokenObtained,
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeightTelegraf.fontWeightSemibold,
+                          ),
+                    ),
+                    GradientText(
+                      '${finalAmountToken1.formatNumber(precision: 8)} ${liquidityRemove.token1!.symbol}',
+                      gradient: ArchethicGradients.gradientArchethic,
+                      style: Theme.of(context).textTheme.bodyLarge!,
+                    ),
+                  ],
+                )
+              else if (timeout)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SelectableText(
+                      AppLocalizations.of(context)!
+                          .liquidityRemoveFinalAmountTokenObtained,
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeightTelegraf.fontWeightSemibold,
+                          ),
+                    ),
+                    SelectableText(
+                      AppLocalizations.of(context)!.finalAmountNotRecovered,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ],
+                ),
+            ],
+          ),
+          Row(
+            children: [
+              if (finalAmountToken2 != null)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SelectableText(
+                      AppLocalizations.of(context)!
+                          .liquidityRemoveFinalAmountTokenObtained,
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeightTelegraf.fontWeightSemibold,
+                          ),
+                    ),
+                    GradientText(
+                      '${finalAmountToken2.formatNumber(precision: 8)} ${liquidityRemove.token2!.symbol}',
+                      gradient: ArchethicGradients.gradientArchethic,
+                      style: Theme.of(context).textTheme.bodyLarge!,
+                    ),
+                  ],
+                )
+              else if (timeout)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SelectableText(
+                      AppLocalizations.of(context)!
+                          .liquidityRemoveFinalAmountTokenObtained,
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeightTelegraf.fontWeightSemibold,
+                          ),
+                    ),
+                    SelectableText(
+                      AppLocalizations.of(context)!.finalAmountNotRecovered,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ],
+                ),
+            ],
+          ),
+          Row(
+            children: [
+              if (finalAmountLPToken != null)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SelectableText(
+                      AppLocalizations.of(context)!
+                          .liquidityRemoveFinalAmountTokenBurned,
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeightTelegraf.fontWeightSemibold,
+                          ),
+                    ),
+                    GradientText(
+                      '${finalAmountLPToken.formatNumber(precision: 8)} ${finalAmountLPToken > 1 ? 'LP Tokens' : 'LP Token'}',
+                      gradient: ArchethicGradients.gradientArchethic,
+                      style: Theme.of(context).textTheme.bodyLarge!,
+                    ),
+                  ],
+                )
+              else if (timeout)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SelectableText(
+                      AppLocalizations.of(context)!
+                          .liquidityRemoveFinalAmountTokenBurned,
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeightTelegraf.fontWeightSemibold,
+                          ),
+                    ),
+                    SelectableText(
+                      AppLocalizations.of(context)!.finalAmountNotRecovered,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ],
+                ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
