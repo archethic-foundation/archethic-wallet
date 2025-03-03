@@ -112,8 +112,8 @@ Future<({double token1, double token2})> _getRemoveAmounts(
   if (amounts == null) return (token1: 0.0, token2: 0.0);
 
   return (
-    token1: amounts['token1'] as double? ?? 0.0,
-    token2: amounts['token2'] as double? ?? 0.0,
+    token1: (amounts['token1'] as num?)?.toDouble() ?? 0.0,
+    token2: (amounts['token2'] as num?)?.toDouble() ?? 0.0,
   );
 }
 

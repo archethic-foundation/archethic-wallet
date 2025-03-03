@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:aewallet/application/account/accounts_notifier.dart';
+import 'package:aewallet/application/step.dart';
+import 'package:aewallet/domain/models/step.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
@@ -87,43 +89,45 @@ class FarmLockDepositConfirmSheetState
               farmLockDepositFormNotifierProvider.notifier,
             )..setProcessInProgress(true);
 
-            var resultOk = false;
             if (farmLockDeposit.farmLockDepositMode ==
                 FarmLockDepositMode.uco) {
+              ref.read(stepsNotifierProvider.notifier)
+                ..initializeSteps(3)
+                ..updateStepStatus(0, StepStatus.inProgress);
+
               unawaited(
                 farmLockDepositNotifier.lock(AppLocalizations.of(context)!),
               );
 
-              resultOk = await showDialog<bool>(
-                    barrierDismissible: false,
-                    useRootNavigator: false,
-                    context: context,
-                    builder: (context) {
-                      return const FarmLockDepositStepPopup();
-                    },
-                  ) ??
-                  false;
-            } else {
-              resultOk = await farmLockDepositNotifier
-                  .lock(AppLocalizations.of(context)!);
-            }
-
-            farmLockDepositNotifier.setProcessInProgress(false);
-            if (resultOk) {
-              await context.push(FarmLockDepositResultSheet.routerPage);
-            } else {
-              UIUtil.showSnackbar(
-                FailureMessage(
-                  context: context,
-                  failure:
-                      ref.read(farmLockDepositFormNotifierProvider).failure,
-                ).getMessage(),
-                context,
-                ref,
-                ArchethicTheme.text,
-                ArchethicTheme.snackBarShadow,
-                duration: const Duration(seconds: 5),
+              await showDialog<bool>(
+                barrierDismissible: false,
+                useRootNavigator: false,
+                context: context,
+                builder: (context) {
+                  return const FarmLockDepositStepPopup();
+                },
               );
+            } else {
+              final resultOk = await farmLockDepositNotifier
+                  .lock(AppLocalizations.of(context)!);
+
+              farmLockDepositNotifier.setProcessInProgress(false);
+              if (resultOk) {
+                await context.push(FarmLockDepositResultSheet.routerPage);
+              } else {
+                UIUtil.showSnackbar(
+                  FailureMessage(
+                    context: context,
+                    failure:
+                        ref.read(farmLockDepositFormNotifierProvider).failure,
+                  ).getMessage(),
+                  context,
+                  ref,
+                  ArchethicTheme.text,
+                  ArchethicTheme.snackBarShadow,
+                  duration: const Duration(seconds: 5),
+                );
+              }
             }
           },
           disabled: (!warningChecked ||
@@ -235,7 +239,7 @@ class FarmLockDepositConfirmSheetState
             ),
             Text(
               AmountFormatters.standardSmallValue(
-                farmLockDeposit.feesEstimatedUCO,
+                farmLockDeposit.feeEstimation!.value ?? 0,
                 kUCOAddress,
                 decimal: 3,
               ),

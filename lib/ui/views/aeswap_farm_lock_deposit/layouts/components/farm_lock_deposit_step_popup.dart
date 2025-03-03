@@ -1,8 +1,13 @@
+import 'dart:async';
+
 import 'package:aewallet/application/step.dart';
 import 'package:aewallet/domain/models/step.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_primary.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
-import 'package:aewallet/ui/widgets/components/icon_widget.dart';
+import 'package:aewallet/ui/figma_components/message_box/message_box.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/provider.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -10,20 +15,17 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class FarmLockDepositStepPopup extends ConsumerStatefulWidget {
+class FarmLockDepositStepPopup extends ConsumerWidget {
   const FarmLockDepositStepPopup({super.key});
 
   @override
-  ConsumerState<FarmLockDepositStepPopup> createState() =>
-      _FarmLockDepositStepPopupState();
-}
-
-class _FarmLockDepositStepPopupState
-    extends ConsumerState<FarmLockDepositStepPopup> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(
+    BuildContext context,
+    WidgetRef ref,
+  ) {
     final stepsState = ref.watch(stepsNotifierProvider);
     final localizations = AppLocalizations.of(context)!;
+    final farmLockDeposit = ref.watch(farmLockDepositFormNotifierProvider);
 
     return aedappfm.PopupTemplate(
       popupContent: Column(
@@ -36,32 +38,79 @@ class _FarmLockDepositStepPopupState
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          _getStepIcon(step.stepIndex),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 5),
-                            child: _getStepLabel(
-                              step.stepIndex,
+                          SizedBox(
+                            width: constraints.maxWidth * 0.05,
+                            child: _getStepIcon(step.stepIndex),
+                          ),
+                          SizedBox(
+                            width: constraints.maxWidth * 0.90,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  _getStepLabel(
+                                    context,
+                                    step.stepIndex,
+                                  ),
+                                  if (step.failure != null)
+                                    Text(
+                                      FailureMessage(
+                                        context: context,
+                                        failure: step.failure,
+                                      ).getMessage(),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall!
+                                          .copyWith(
+                                            color: const Color(0xFFFF4800),
+                                          ),
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: constraints.maxWidth * 0.05,
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: _getStepStatusIcon(step.status),
                             ),
                           ),
                         ],
-                      ),
-                      _getStepStatusIcon(step.status),
-                    ],
+                      );
+                    },
                   ),
-                  if (step.reason != null)
-                    Text(
-                      step.reason!,
-                      style: Theme.of(context).textTheme.bodySmallWithOpacity,
-                    ),
                 ],
               ),
             );
           }),
+          if (farmLockDeposit.failure == null &&
+              farmLockDeposit.finalAmount != null)
+            MessageBox(
+              messageBoxType: MessageBoxType.success,
+              text: farmLockDeposit.finalAmount! > 1
+                  ? localizations.famLockDepositStepPopupFinalAmounts(
+                      farmLockDeposit.finalAmount!.formatNumber(precision: 2),
+                      getFarmLockDepositDurationTypeLabel(
+                        context,
+                        farmLockDeposit.farmLockDepositDuration,
+                      ).toLowerCase(),
+                    )
+                  : localizations.famLockDepositStepPopupFinalAmount(
+                      farmLockDeposit.finalAmount!.formatNumber(precision: 8),
+                      getFarmLockDepositDurationTypeLabel(
+                        context,
+                        farmLockDeposit.farmLockDepositDuration,
+                      ).toLowerCase(),
+                    ),
+            ),
           Padding(
             padding: const EdgeInsets.only(top: 20),
             child: Row(
@@ -69,11 +118,14 @@ class _FarmLockDepositStepPopupState
               children: [
                 if (stepsState.steps
                         .any((step) => step.status == StepStatus.failed) ||
-                    stepsState.steps[2].status == StepStatus.completed)
+                    (stepsState.steps.length == 3 &&
+                        stepsState.steps[2].status == StepStatus.completed))
                   BtnPrimary(
                     buttonText: localizations.close,
                     onTap: () {
-                      context.pop();
+                      context
+                        ..pop()
+                        ..pop();
                     },
                     btnPrimaryType: stepsState.steps
                             .any((step) => step.status == StepStatus.failed)
@@ -85,8 +137,14 @@ class _FarmLockDepositStepPopupState
                 if (stepsState.steps
                     .any((step) => step.status == StepStatus.failed))
                   BtnPrimary(
-                    buttonText: localizations.retryBtn,
-                    onTap: () {},
+                    buttonText: localizations.resumeBtn,
+                    onTap: () {
+                      unawaited(
+                        ref
+                            .read(farmLockDepositFormNotifierProvider.notifier)
+                            .lock(AppLocalizations.of(context)!),
+                      );
+                    },
                   ),
               ],
             ),
@@ -98,7 +156,7 @@ class _FarmLockDepositStepPopupState
     );
   }
 
-  Widget _getStepLabel(int stepIndex) {
+  Widget _getStepLabel(BuildContext context, int stepIndex) {
     final localizations = AppLocalizations.of(context)!;
 
     switch (stepIndex) {
@@ -110,12 +168,12 @@ class _FarmLockDepositStepPopupState
                 text: localizations.addFundsStep11,
                 style: Theme.of(context)
                     .textTheme
-                    .bodySmallWithOpacity
-                    .copyWith(fontWeight: FontWeight.bold),
+                    .bodyMedium!
+                    .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold),
               ),
               TextSpan(
                 text: localizations.addFundsStep12,
-                style: Theme.of(context).textTheme.bodySmallWithOpacity,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
             ],
           ),
@@ -129,12 +187,12 @@ class _FarmLockDepositStepPopupState
                 text: localizations.addFundsStep21,
                 style: Theme.of(context)
                     .textTheme
-                    .bodySmallWithOpacity
-                    .copyWith(fontWeight: FontWeight.bold),
+                    .bodyMedium!
+                    .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold),
               ),
               TextSpan(
                 text: localizations.addFundsStep22,
-                style: Theme.of(context).textTheme.bodySmallWithOpacity,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
             ],
           ),
@@ -147,12 +205,12 @@ class _FarmLockDepositStepPopupState
                 text: localizations.addFundsStep31,
                 style: Theme.of(context)
                     .textTheme
-                    .bodySmallWithOpacity
-                    .copyWith(fontWeight: FontWeight.bold),
+                    .bodyMedium!
+                    .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold),
               ),
               TextSpan(
                 text: localizations.addFundsStep32,
-                style: Theme.of(context).textTheme.bodySmallWithOpacity,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
             ],
           ),
@@ -165,25 +223,19 @@ class _FarmLockDepositStepPopupState
   Widget _getStepIcon(int stepIndex) {
     switch (stepIndex) {
       case 0:
-        return const GradientIcon(
-          icon: Icon(
-            Icons.looks_one_outlined,
-            size: 14,
-          ),
+        return const Icon(
+          Icons.looks_one_outlined,
+          size: 20,
         );
       case 1:
-        return const GradientIcon(
-          icon: Icon(
-            Icons.looks_two_outlined,
-            size: 14,
-          ),
+        return const Icon(
+          Icons.looks_two_outlined,
+          size: 20,
         );
       case 2:
-        return const GradientIcon(
-          icon: Icon(
-            Icons.looks_3_outlined,
-            size: 14,
-          ),
+        return const Icon(
+          Icons.looks_3_outlined,
+          size: 20,
         );
       default:
         return const SizedBox.shrink();
@@ -193,31 +245,35 @@ class _FarmLockDepositStepPopupState
   Widget _getStepStatusIcon(StepStatus status) {
     switch (status) {
       case StepStatus.pending:
+        return const Icon(
+          Icons.pending_outlined,
+          color: Colors.white30,
+          size: 20,
+        );
       case StepStatus.inProgress:
-        return const SizedBox(
-          width: 10,
-          height: 10,
-          child: CircularProgressIndicator(
-            strokeWidth: 0.5,
+        return const Padding(
+          padding: EdgeInsets.only(
+            top: 5,
+          ),
+          child: SizedBox(
+            width: 10,
+            height: 10,
+            child: CircularProgressIndicator(
+              strokeWidth: 0.5,
+            ),
           ),
         );
       case StepStatus.completed:
-        return const Padding(
-          padding: EdgeInsets.only(left: 4),
-          child: Icon(
-            Icons.done_all,
-            color: Color(0xFF00B67A),
-            size: 14,
-          ),
+        return const Icon(
+          Icons.done_all,
+          color: Color(0xFF00B67A),
+          size: 20,
         );
       case StepStatus.failed:
-        return const Padding(
-          padding: EdgeInsets.only(left: 4),
-          child: Icon(
-            Icons.error_outline,
-            color: Color(0xFFFF4800),
-            size: 14,
-          ),
+        return const Icon(
+          Icons.error_outline,
+          color: Color(0xFFFF4800),
+          size: 20,
         );
     }
   }

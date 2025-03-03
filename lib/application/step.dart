@@ -1,4 +1,6 @@
 import 'package:aewallet/domain/models/step.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class StepsNotifier extends StateNotifier<StepsState> {
@@ -17,14 +19,29 @@ class StepsNotifier extends StateNotifier<StepsState> {
     );
   }
 
-  void updateStepStatus(int stepIndex, StepStatus status, {String? reason}) {
+  void updateStepStatus(
+    int stepIndex,
+    StepStatus status, {
+    Map<String, dynamic>? snapshot,
+    aedappfm.Failure? failure,
+  }) {
     final updatedSteps = List<Step>.from(state.steps);
     updatedSteps[stepIndex] = Step(
       stepIndex,
       status,
-      reason,
+      failure,
     );
-    state = StepsState(updatedSteps);
+    if (snapshot != null) {
+      state = StepsState(
+        updatedSteps,
+        snapshot: snapshot,
+      );
+    } else {
+      state = StepsState(
+        updatedSteps,
+        snapshot: state.snapshot,
+      );
+    }
   }
 }
 

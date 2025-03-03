@@ -210,7 +210,7 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
 
     if (feesEstimatedUCO > 0) {
       final userBalance = await ref.read(userBalanceProvider.future);
-      if (feesEstimatedUCO > userBalance.uco) {
+      if (feesEstimatedUCO > archethic.fromBigInt(userBalance.uco).toDouble()) {
         setFailure(const aedappfm.Failure.insufficientFunds());
         return false;
       }

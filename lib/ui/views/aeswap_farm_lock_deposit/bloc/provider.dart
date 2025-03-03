@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/aeswap/usecases.dart';
 import 'package:aewallet/application/airdrop/airdrop.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/step.dart';
 import 'package:aewallet/domain/models/settings.dart';
+import 'package:aewallet/domain/models/step.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/application/session/state.dart';
@@ -20,7 +23,7 @@ import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/state.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
-import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -90,15 +93,10 @@ class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
     );
 
     // Estimate fees
-    /*if (state.farmLockDepositMode == FarmLockDepositMode.uco) {
-      final feesEstimatedUCO = await estimateFees();
-      state = state.copyWith(feesEstimatedUCO: feesEstimatedUCO);
-    }*/
+    unawaited(_updateFees());
   }
 
-/*
-  Future<void> _updateFees(
-    BuildContext context, {
+  Future<void> _updateFees({
     Duration delay = const Duration(milliseconds: 800),
   }) async {
     state = state.copyWith(
@@ -106,49 +104,77 @@ class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
     );
 
     try {
-      final fees = await _calculateFeesForTransfer(context, delay);
+      final fees = await _calculateFeesTaskCall(delay);
 
       state = state.copyWith(
         feeEstimation: AsyncValue.data(fees),
-        errorAmountText: _getErrorAmountText(context, fees),
       );
     } on CanceledTask {
       return;
     }
-  }*/
+  }
 
-  Future<double> estimateFees() async {
-    final environment = ref.read(environmentProvider);
-    try {
-      final results = await Future.wait([
-        ref.read(swapCaseProvider).estimateFees(
-              state.pool!.poolAddress,
-              const DexToken(address: kUCOAddress, symbol: kUCOAddress),
-              state.amount,
-              0,
-            ),
-        ref.read(addLiquidityCaseProvider).estimateFees(
-              state.pool!.poolAddress,
-              const DexToken(address: kUCOAddress, symbol: kUCOAddress),
-              state.amount,
-              DexToken(address: environment.aeETHAddress, symbol: 'aeETH'),
-              99999, // Default Value
-              0,
-            ),
-        ref.read(depositFarmLockCaseProvider).estimateFees(
-              state.farmLock!.farmAddress,
-              state.farmLock!.lpToken!.address,
-              99999, // Default Value
-              state.farmLockDepositDuration,
-              state.level,
-            ),
-      ]);
-
-      final totalFees = results[0] + results[1] + results[2];
-      return totalFees;
-    } catch (e) {
-      return 0.0;
+  Future<double> _calculateFeesTaskCall(
+    Duration delay,
+  ) async {
+    if (state.amount <= 0 || state.level.isEmpty) {
+      return 0;
     }
+
+    _calculateFeesTask?.cancel();
+    _calculateFeesTask = CancelableTask<double?>(
+      task: _calculateFees,
+    );
+
+    final fees = await _calculateFeesTask?.schedule(delay);
+    return fees ?? 0;
+  }
+
+  Future<double> _calculateFees() async {
+    var feeEstimation = 0.0;
+    if (state.farmLockDepositMode == FarmLockDepositMode.lp) {
+      feeEstimation = await ref.read(depositFarmLockCaseProvider).estimateFees(
+            state.farmLock!.farmAddress,
+            state.farmLock!.lpToken!.address,
+            state.amount,
+            state.farmLockDepositDuration,
+            state.level,
+          );
+    } else {
+      final environment = ref.read(environmentProvider);
+      try {
+        final results = await Future.wait([
+          ref.read(swapCaseProvider).estimateFees(
+                state.pool!.poolAddress,
+                const DexToken(address: kUCOAddress, symbol: kUCOAddress),
+                state.amount,
+                0,
+              ),
+          ref.read(addLiquidityCaseProvider).estimateFees(
+                state.pool!.poolAddress,
+                const DexToken(address: kUCOAddress, symbol: kUCOAddress),
+                state.amount,
+                DexToken(address: environment.aeETHAddress, symbol: 'aeETH'),
+                99999, // Default Value
+                0,
+              ),
+          ref.read(depositFarmLockCaseProvider).estimateFees(
+                state.farmLock!.farmAddress,
+                state.farmLock!.lpToken!.address,
+                99999, // Default Value
+                state.farmLockDepositDuration,
+                state.level,
+              ),
+        ]);
+
+        final totalFees = results[0] + results[1] + results[2];
+        const slippage = 1.5;
+        feeEstimation = totalFees * slippage;
+      } catch (e) {
+        return 0.0;
+      }
+    }
+    return feeEstimation;
   }
 
   void setAmountMax() {
@@ -200,6 +226,7 @@ class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
 
   void setLevel(String level) {
     state = state.copyWith(level: level);
+    unawaited(_updateFees());
   }
 
   void setResumeProcess(bool resumeProcess) {
@@ -307,23 +334,20 @@ class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
       return false;
     }
 
-    var feesEstimatedUCO = 0.0;
-    feesEstimatedUCO = await ref.read(depositFarmLockCaseProvider).estimateFees(
-          state.farmLock!.farmAddress,
-          state.farmLock!.lpToken!.address,
-          state.amount,
-          state.farmLockDepositDuration,
-          state.level,
-        );
-    state = state.copyWith(
-      feesEstimatedUCO: feesEstimatedUCO,
-    );
-
-    if (feesEstimatedUCO > 0) {
+    final feeEstimation = await _calculateFees();
+    if (feeEstimation > 0) {
       final userBalance = await ref.read(userBalanceProvider.future);
-      if (feesEstimatedUCO > userBalance.uco) {
-        setFailure(const aedappfm.Failure.insufficientFunds());
-        return false;
+      if (state.farmLockDepositMode == FarmLockDepositMode.lp) {
+        if (feeEstimation > archethic.fromBigInt(userBalance.uco).toDouble()) {
+          setFailure(const aedappfm.Failure.insufficientFunds());
+          return false;
+        }
+      } else {
+        if (feeEstimation + state.amount >
+            archethic.fromBigInt(userBalance.uco).toDouble()) {
+          setFailure(const aedappfm.Failure.insufficientFunds());
+          return false;
+        }
       }
     }
 
@@ -362,7 +386,15 @@ class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
     } else {
       final environment = ref.read(environmentProvider);
       final stepsState = ref.read(stepsNotifierProvider.notifier);
-      await ref.read(addFundsBeginnerCaseProvider).run(
+      final currentStep = ref
+          .read(stepsNotifierProvider)
+          .steps
+          .firstWhereOrNull((step) => step.status == StepStatus.failed)
+          ?.stepIndex;
+
+      stepsState.updateStepStatus(currentStep ?? 0, StepStatus.inProgress);
+
+      final lpLocked = await ref.read(addFundsBeginnerCaseProvider).run(
             appLocalizations,
             state.farmLock!.farmAddress,
             state.amount,
@@ -371,8 +403,14 @@ class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
             state.farmLock!.lpToken!.address,
             state.farmLockDepositDuration,
             state.level,
+            currentStep ?? 0,
             stepsState,
+            ref.read(stepsNotifierProvider).snapshot,
           );
+
+      if (lpLocked != null) {
+        state = state.copyWith(finalAmount: lpLocked);
+      }
     }
 
     ref
