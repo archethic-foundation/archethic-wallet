@@ -1,3 +1,5 @@
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/earn_tab_section_add_liquidity.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/earn_tab_section_deposit_funds.dart';
@@ -23,6 +25,9 @@ class EarnTabState extends ConsumerState<EarnTab> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
+    final earnUserLevel = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.earnUserLevel),
+    );
 
     return ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(
@@ -70,8 +75,10 @@ class EarnTabState extends ConsumerState<EarnTab> {
                       const EarnUserLevelSwitch(),
                       const SizedBox(height: 10),
                       const EarnSectionDepositFunds(),
-                      const SizedBox(height: 10),
-                      const EarnSectionAddLiquidity(),
+                      if (earnUserLevel == EarnUserLevelType.advanced)
+                        const SizedBox(height: 10),
+                      if (earnUserLevel == EarnUserLevelType.advanced)
+                        const EarnSectionAddLiquidity(),
                       const SizedBox(height: 10),
                       const EarnSectionStartEarning(),
                       const SizedBox(height: 80),
