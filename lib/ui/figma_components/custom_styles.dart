@@ -5,7 +5,7 @@ extension CustomTextStyles on TextTheme {
         color: bodySmall!.color?.withOpacity(0.8),
       );
 
-  TextStyle get bodyMediumlWithOpacity => bodyMedium!.copyWith(
+  TextStyle get bodyMediumWithOpacity => bodyMedium!.copyWith(
         color: bodyMedium!.color?.withOpacity(0.8),
       );
 

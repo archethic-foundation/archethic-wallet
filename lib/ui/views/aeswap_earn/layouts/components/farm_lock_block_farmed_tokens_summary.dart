@@ -1,4 +1,5 @@
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/state.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/farm_lock_block_list_single_line_lock.dart';
@@ -197,7 +198,7 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
                 else
                   Text(
                     '\$${summary.farmedTokensCapitalInFiat.formatNumber(precision: 2)}',
-                    style: AppTextStyles.bodyMediumWithOpacity(context),
+                    style: Theme.of(context).textTheme.bodyMediumWithOpacity,
                   ),
               ],
             ),

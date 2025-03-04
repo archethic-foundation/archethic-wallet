@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 // TODO(reddwarf03): Update locked
-enum MessageBoxType { success, warning, locked }
+enum MessageBoxType { success, warning, locked, info }
 
 class MessageBox extends StatelessWidget {
   const MessageBox({
@@ -74,6 +74,8 @@ class MessageBox extends StatelessWidget {
         return const Color(0xFFFF8400).withOpacity(0.2);
       case MessageBoxType.locked:
         return const Color(0xFF262626);
+      case MessageBoxType.info:
+        return const Color(0x1A8040BF);
     }
   }
 
@@ -85,6 +87,8 @@ class MessageBox extends StatelessWidget {
         return const Color(0xFFFF8400);
       case MessageBoxType.locked:
         return const Color(0xFF343434);
+      case MessageBoxType.info:
+        return const Color(0x1A8040BF);
     }
   }
 
@@ -103,6 +107,15 @@ class MessageBox extends StatelessWidget {
           opacity: 0.8,
           child: Icon(
             Icons.lock_outline,
+            color: Color(0xFFFFFFFF),
+            size: 16,
+          ),
+        );
+      case MessageBoxType.info:
+        return const Opacity(
+          opacity: 0.8,
+          child: Icon(
+            Icons.info_outlined,
             color: Color(0xFFFFFFFF),
             size: 16,
           ),

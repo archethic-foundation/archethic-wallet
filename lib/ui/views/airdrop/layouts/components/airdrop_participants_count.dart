@@ -16,7 +16,7 @@ class AirdropParticipantsCount extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
     final airdropCountAsync = ref.watch(airdropCountProvider);
     final bodyMedium = withShadow
-        ? Theme.of(context).textTheme.bodyMediumlWithOpacity.copyWith(
+        ? Theme.of(context).textTheme.bodyMediumWithOpacity.copyWith(
             fontWeight: FontWeightTelegraf.fontWeightSemibold,
             shadows: [
               const Shadow(

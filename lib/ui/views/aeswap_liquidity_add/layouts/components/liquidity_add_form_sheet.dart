@@ -94,7 +94,6 @@ class LiquidityAddFormSheet extends ConsumerWidget
         .textTheme
         .bodyLarge!
         .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold);
-    final bodyMediumWithOpacity = AppTextStyles.bodyMediumWithOpacity(context);
 
     return SingleChildScrollView(
       child: Column(
@@ -107,7 +106,7 @@ class LiquidityAddFormSheet extends ConsumerWidget
           const SizedBox(height: 10),
           Text(
             localizations.liquidityAddDesc,
-            style: bodyMediumWithOpacity,
+            style: Theme.of(context).textTheme.bodyMediumWithOpacity,
           ),
           const SizedBox(height: 20),
           Padding(
@@ -123,7 +122,8 @@ class LiquidityAddFormSheet extends ConsumerWidget
                       children: [
                         SelectableText(
                           '${localizations.slippage_tolerance} ${liquidityAdd.slippageTolerance}%',
-                          style: AppTextStyles.bodyMediumWithOpacity(context),
+                          style:
+                              Theme.of(context).textTheme.bodyMediumWithOpacity,
                         ),
                         const SizedBox(
                           width: 5,
@@ -172,9 +172,9 @@ class LiquidityAddFormSheet extends ConsumerWidget
                                 if (snapshot.hasData) {
                                   return SelectableText(
                                     snapshot.data!,
-                                    style: AppTextStyles.bodyMediumWithOpacity(
-                                      context,
-                                    ),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMediumWithOpacity,
                                   );
                                 }
                                 return const SizedBox.shrink();
@@ -222,9 +222,9 @@ class LiquidityAddFormSheet extends ConsumerWidget
                                 if (snapshot.hasData) {
                                   return SelectableText(
                                     snapshot.data!,
-                                    style: AppTextStyles.bodyMediumWithOpacity(
-                                      context,
-                                    ),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMediumWithOpacity,
                                   );
                                 }
                                 return const SizedBox.shrink();

@@ -3,6 +3,7 @@ import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/figma_components/message_box/message_box.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_remove/bloc/provider.dart';
@@ -78,6 +79,11 @@ class LiquidityRemoveFormSheet extends ConsumerWidget
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final liquidityRemove = ref.watch(liquidityRemoveFormNotifierProvider);
+    final localizations = AppLocalizations.of(context)!;
+    final boldBodyLarge = Theme.of(context)
+        .textTheme
+        .bodyLarge!
+        .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold);
 
     return Padding(
       padding: const EdgeInsets.only(top: 10),
@@ -86,7 +92,17 @@ class LiquidityRemoveFormSheet extends ConsumerWidget
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              AppLocalizations.of(context)!.liquidityRemoveTextFieldLPLabel,
+              localizations.liquidityAddTitle,
+              style: boldBodyLarge,
+            ),
+            const SizedBox(height: 10),
+            Text(
+              localizations.liquidityAddDesc,
+              style: Theme.of(context).textTheme.bodyMediumWithOpacity,
+            ),
+            const SizedBox(height: 20),
+            Text(
+              localizations.liquidityRemoveTextFieldLPLabel,
               style: AppTextStyles.bodyMedium(context).copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -96,9 +112,8 @@ class LiquidityRemoveFormSheet extends ConsumerWidget
             ),
             const LiquidityRemoveLPTokenAmount(),
             const SizedBox(
-              height: 30,
+              height: 10,
             ),
-            const LiquidityRemoveTokensGetBack(),
             MessageBox(
               messageBoxType: MessageBoxType.warning,
               text: FailureMessage(
@@ -106,6 +121,10 @@ class LiquidityRemoveFormSheet extends ConsumerWidget
                 failure: liquidityRemove.failure,
               ).getMessage(),
             ),
+            const SizedBox(
+              height: 20,
+            ),
+            const LiquidityRemoveTokensGetBack(),
           ],
         ),
       ),

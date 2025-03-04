@@ -153,12 +153,12 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome>
                   text: localizations.welcomeDesc1,
                   style: Theme.of(context)
                       .textTheme
-                      .bodyMediumlWithOpacity
+                      .bodyMediumWithOpacity
                       .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold),
                 ),
                 TextSpan(
                   text: localizations.welcomeDesc2,
-                  style: Theme.of(context).textTheme.bodyMediumlWithOpacity,
+                  style: Theme.of(context).textTheme.bodyMediumWithOpacity,
                 ),
               ],
             ),
@@ -171,40 +171,40 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome>
               children: [
                 TextSpan(
                   text: localizations.welcomeDesc3,
-                  style: Theme.of(context).textTheme.bodyMediumlWithOpacity,
+                  style: Theme.of(context).textTheme.bodyMediumWithOpacity,
                 ),
                 TextSpan(
                   text: localizations.welcomeDesc4,
                   style: Theme.of(context)
                       .textTheme
-                      .bodyMediumlWithOpacity
+                      .bodyMediumWithOpacity
                       .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold),
                 ),
                 TextSpan(
                   text: localizations.welcomeDesc5,
-                  style: Theme.of(context).textTheme.bodyMediumlWithOpacity,
+                  style: Theme.of(context).textTheme.bodyMediumWithOpacity,
                 ),
                 TextSpan(
                   text: localizations.welcomeDesc6,
                   style: Theme.of(context)
                       .textTheme
-                      .bodyMediumlWithOpacity
+                      .bodyMediumWithOpacity
                       .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold),
                 ),
                 TextSpan(
                   text: localizations.welcomeDesc7,
-                  style: Theme.of(context).textTheme.bodyMediumlWithOpacity,
+                  style: Theme.of(context).textTheme.bodyMediumWithOpacity,
                 ),
                 TextSpan(
                   text: localizations.welcomeDesc8,
                   style: Theme.of(context)
                       .textTheme
-                      .bodyMediumlWithOpacity
+                      .bodyMediumWithOpacity
                       .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold),
                 ),
                 TextSpan(
                   text: localizations.welcomeDesc9,
-                  style: Theme.of(context).textTheme.bodyMediumlWithOpacity,
+                  style: Theme.of(context).textTheme.bodyMediumWithOpacity,
                 ),
               ],
             ),
