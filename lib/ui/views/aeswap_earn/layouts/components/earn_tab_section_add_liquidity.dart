@@ -94,8 +94,8 @@ class EarnSectionAddLiquidity extends ConsumerWidget {
                 .copyWith(fontStyle: FontStyle.italic),
           ),
           const SizedBox(height: 30),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Wrap(
+            runSpacing: 10,
             children: [
               BtnPrimary(
                 buttonText:
@@ -114,6 +114,9 @@ class EarnSectionAddLiquidity extends ConsumerWidget {
                     ).toString(),
                   );
                 },
+              ),
+              const SizedBox(
+                width: 10,
               ),
               BtnPrimary(
                 buttonText:
