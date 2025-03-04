@@ -3,7 +3,7 @@ description: Fully decentralized and cryptocurrency non-custodial hot wallet tha
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 4.8.0+639
+version: 4.8.0+640
 
 environment:
   sdk: ">=3.5.0 <4.0.0"
