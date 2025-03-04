@@ -104,7 +104,7 @@ class OnRampDepositUpdateEvent extends OnRampEvent {
 }
 
 class OnRampDepositsSnapshotEvent extends OnRampEvent {
-  OnRampDepositsSnapshotEvent({required this.deposits});
+  OnRampDepositsSnapshotEvent(this.deposits);
 
   final List<OnRampDeposit> deposits;
 }

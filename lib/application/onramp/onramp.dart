@@ -167,8 +167,9 @@ Future<String> onrampDepositAddress(Ref ref) async {
 @riverpod
 Stream<List<OnRampDeposit>> onrampTransfers(Ref ref) async* {
   final repository = await ref.watch(_onRampRepositoryProvider.future);
-
-  var deposits = <OnRampDeposit>[];
+  final history = await repository.depositsHistory;
+  yield history;
+  var deposits = [];
   await for (final event in repository.events) {
     switch (event) {
       case OnRampDepositsSnapshotEvent(deposits: final newDeposits):
@@ -186,47 +187,9 @@ Stream<List<OnRampDeposit>> onrampTransfers(Ref ref) async* {
         if (!found) deposits = [updatedDeposit, ...deposits];
         break;
     }
-    yield deposits;
+    yield [
+      ...deposits,
+      ...history,
+    ];
   }
-  // unawaited(
-  //   channel.messages.forEach((message) {
-  //     message.
-  //   }),
-  // );
-  // await Future.delayed(const Duration(seconds: 3));
-  // return [
-  //   (
-  //     id: 'cc',
-  //     depositDate: DateTime.now().subtract(const Duration(minutes: 2)),
-  //     depositChainId: 'polygon',
-  //     depositTokenId: 'poly_eth',
-  //     depositAmount: 1234567890.1,
-  //     feeAmount: 1.02,
-  //     remainingAmount: 1234567889.08,
-  //     transferedUcoAmount: 0,
-  //     state: OnRampTransferState.rebalancing,
-  //   ),
-  //   (
-  //     id: 'bb',
-  //     depositDate: DateTime.now().subtract(const Duration(hours: 1)),
-  //     depositChainId: 'polygon',
-  //     depositTokenId: 'poly_eth',
-  //     depositAmount: 102.05,
-  //     feeAmount: 1.02,
-  //     remainingAmount: 25.53, //effectué 75.5
-  //     transferedUcoAmount: 123213445434343.45343,
-  //     state: OnRampTransferState.rebalancing,
-  //   ),
-  //   (
-  //     id: 'aa',
-  //     depositDate: DateTime.now().subtract(const Duration(hours: 2)),
-  //     depositChainId: 'polygon',
-  //     depositTokenId: 'poly_eth',
-  //     depositAmount: 100.05,
-  //     feeAmount: 1.02,
-  //     remainingAmount: 0,
-  //     transferedUcoAmount: 123213.45343,
-  //     state: OnRampTransferState.completed,
-  //   ),
-  // ];
 }

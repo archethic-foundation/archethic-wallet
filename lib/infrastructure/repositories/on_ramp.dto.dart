@@ -103,9 +103,21 @@ OnRampTransferStep _onRampTransferStepFromJson(Map<String, dynamic> json) =>
 OnRampEvent _onRampEventFromJson(Map<String, dynamic>? json) => switch (json) {
       {
         'event_type': 'NEW_DEPOSIT' || 'DEPOSIT_UPDATE',
-        'deposit': final Map<String, dynamic> jsonTransfer
+        'deposit': final Map<String, dynamic> jsonDeposit
       } =>
-        OnRampDepositUpdateEvent(_onRampDepositFromJson(jsonTransfer)),
+        OnRampDepositUpdateEvent(_onRampDepositFromJson(jsonDeposit)),
+      {
+        'event_type': 'DEPOSITS_SNAPSHOT',
+        'deposits': final List<dynamic> jsonDeposits
+      } =>
+        OnRampDepositsSnapshotEvent(
+          jsonDeposits
+              .map(
+                (jsonDeposit) =>
+                    _onRampDepositFromJson(jsonDeposit as Map<String, dynamic>),
+              )
+              .toList(),
+        ),
       _ => throw FormatException(
           'Invalid JSON format for OnRampEvent',
           json,
