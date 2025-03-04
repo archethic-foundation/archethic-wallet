@@ -62,21 +62,30 @@ class IntroNewWalletAccountConfirmationPopup extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  BtnPrimary(
-                    buttonText: localizations.cancel,
-                    onTap: () {
-                      context.pop();
-                    },
-                    btnPrimaryType: BtnPrimaryType.outlinePrimary,
+                  Expanded(
+                    child: BtnPrimary(
+                      buttonText: localizations.cancel,
+                      onTap: () {
+                        context.pop();
+                      },
+                      btnPrimaryType: BtnPrimaryType.outlinePrimary,
+                      widthExpanded: true,
+                    ),
                   ),
-                  BtnPrimary(
-                    buttonText: localizations.confirm,
-                    onTap: () {
-                      context.go(
-                        IntroNewWalletDisclaimer.routerPage,
-                        extra: name,
-                      );
-                    },
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: BtnPrimary(
+                      buttonText: localizations.confirm,
+                      onTap: () {
+                        context.go(
+                          IntroNewWalletDisclaimer.routerPage,
+                          extra: name,
+                        );
+                      },
+                      widthExpanded: true,
+                    ),
                   ),
                 ],
               ),

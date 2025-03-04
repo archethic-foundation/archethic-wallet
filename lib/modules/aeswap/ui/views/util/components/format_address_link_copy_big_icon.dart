@@ -49,11 +49,14 @@ class FormatAddressLinkCopyBigIcon extends ConsumerWidget {
                           '$header',
                           style: TextStyle(fontSize: fontSize),
                         ),
-                        SelectableText(
-                          reduceAddress
-                              ? aedappfm.AddressUtil.reduceAddress(address)
-                              : address,
-                          style: TextStyle(fontSize: fontSize),
+                        Opacity(
+                          opacity: 0.8,
+                          child: SelectableText(
+                            reduceAddress
+                                ? aedappfm.AddressUtil.reduceAddress(address)
+                                : address,
+                            style: TextStyle(fontSize: fontSize),
+                          ),
                         ),
                       ],
                     )

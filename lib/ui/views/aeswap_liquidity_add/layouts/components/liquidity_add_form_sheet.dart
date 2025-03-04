@@ -6,6 +6,7 @@ import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_token_icon.
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/fiat_value.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/figma_components/message_box/message_box.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/bloc/provider.dart';
@@ -89,8 +90,10 @@ class LiquidityAddFormSheet extends ConsumerWidget
       return const SizedBox.shrink();
     }
     final localizations = AppLocalizations.of(context)!;
-    final boldBodyLarge =
-        AppTextStyles.bodyLarge(context).copyWith(fontWeight: FontWeight.bold);
+    final boldBodyLarge = Theme.of(context)
+        .textTheme
+        .bodyLarge!
+        .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold);
     final bodyMediumWithOpacity = AppTextStyles.bodyMediumWithOpacity(context);
 
     return SingleChildScrollView(

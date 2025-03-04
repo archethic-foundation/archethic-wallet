@@ -10,6 +10,7 @@ import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/domain/usecases/new_keychain.usecase.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
+import 'package:aewallet/ui/figma_components/divider/divider_custom.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_backup_seed.dart';
@@ -277,8 +278,10 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                           color:
                               const WidgetStatePropertyAll(Colors.transparent),
                           shape: RoundedRectangleBorder(
-                            side: const BorderSide(color: Colors.transparent),
-                            borderRadius: BorderRadius.circular(10),
+                            side: BorderSide(
+                              color: const Color(0xFF343434).withOpacity(0.3),
+                            ),
+                            borderRadius: BorderRadius.circular(8),
                           ),
                           avatar: Container(
                             width: 20,
@@ -323,15 +326,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
             );
           }).toList(),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20),
-          child: Container(
-            height: 1,
-            decoration: BoxDecoration(
-              gradient: ArchethicGradients.archethicLinearBlue,
-            ),
-          ),
-        ),
+        const DividerCustom(),
         Wrap(
           spacing: 10,
           children: wordListToSelect.asMap().entries.map((MapEntry entry) {

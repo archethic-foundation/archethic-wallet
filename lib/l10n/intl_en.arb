@@ -279,7 +279,7 @@
     "sendMessageHeader": "Message",
     "sendMessageConfirmHeader": "Your message :",
     "pass": "Pass",
-    "passBackupConfirmationDisclaimer": "DISCLAIMER",
+    "passBackupConfirmationDisclaimer": "Disclaimer",
     "amountZero": "Your amount should be > 0",
     "maxSendRecipientMissing": "Please, enter the recipient to define the max amount.",
     "createFungibleToken": "Create a token",

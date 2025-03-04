@@ -45,25 +45,34 @@ class IntroBackupSeedPassPopup extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              BtnPrimary(
-                buttonText: localizations.cancel,
-                onTap: () => context.pop(),
-                btnPrimaryType: BtnPrimaryType.outlinePrimary,
+              Expanded(
+                child: BtnPrimary(
+                  buttonText: localizations.cancel,
+                  onTap: () => context.pop(),
+                  btnPrimaryType: BtnPrimaryType.outlinePrimary,
+                  widthExpanded: true,
+                ),
               ),
-              BtnPrimary(
-                buttonText: localizations.confirm,
-                onTap: () async {
-                  ref.read(
-                    RecoveryPhraseSavedProvider.setRecoveryPhraseSaved(false),
-                  );
-                  await context.push(
-                    IntroConfigureSecurity.routerPage,
-                    extra: {
-                      'name': name,
-                      'isImportProfile': false,
-                    },
-                  );
-                },
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                child: BtnPrimary(
+                  buttonText: localizations.confirm,
+                  onTap: () async {
+                    ref.read(
+                      RecoveryPhraseSavedProvider.setRecoveryPhraseSaved(false),
+                    );
+                    await context.push(
+                      IntroConfigureSecurity.routerPage,
+                      extra: {
+                        'name': name,
+                        'isImportProfile': false,
+                      },
+                    );
+                  },
+                  widthExpanded: true,
+                ),
               ),
             ],
           ),
