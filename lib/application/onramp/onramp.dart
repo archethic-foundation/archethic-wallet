@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:core';
 
 import 'package:aewallet/application/account/accounts_notifier.dart';
+import 'package:aewallet/application/recent_transactions.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/domain/models/onramp.dart';
 import 'package:aewallet/domain/repositories/on_ramp.dart';
@@ -173,6 +174,11 @@ Future<String> onrampDepositAddress(Ref ref) async {
 
 @riverpod
 Stream<List<OnRampDeposit>> onrampTransfers(Ref ref) async* {
+  void maybeInvalidateRecentTransactions(OnRampDeposit deposit) {
+    if (deposit.completedRatio < 1) return;
+    ref.invalidate(recentTransactionsProvider);
+  }
+
   final repository = await ref.watch(_onRampRepositoryProvider.future);
   final history = await repository.depositsHistory;
   yield history;
@@ -183,6 +189,7 @@ Stream<List<OnRampDeposit>> onrampTransfers(Ref ref) async* {
         deposits = newDeposits;
         break;
       case OnRampDepositUpdateEvent(deposit: final updatedDeposit):
+        maybeInvalidateRecentTransactions(updatedDeposit);
         var found = false;
         deposits = deposits.map((deposit) {
           if (deposit.id == updatedDeposit.id) {
