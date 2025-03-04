@@ -589,6 +589,8 @@
     "farmLockLevelUpConfirmMoreInfo": "Plus d'informations.",
     "farmLockClaimConfirmInfosText": "Veuillez confirmer la récupération de ",
     "farmLockClaimFinalAmount": "Montant récupéré : ",
+    "farmLockClaimTitle": "Comment ça marche ?",
+    "farmLockClaimDesc": "Réclamez les récompenses accumulées grâce à vos jetons LP farmés.",
     "farmLockClaimFormText": "sont disponibles pour être récupérés.",
     "farmLockClaimTxAddress": "Adresse de la transaction de récup. : ",
     "farmLockClaimConfirmTitle": "Confirmation",

@@ -1,12 +1,11 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/fiat_value.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_claim/bloc/provider.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -43,22 +42,17 @@ class FarmLockClaimFormSheet extends ConsumerWidget
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final farmLockClaim = ref.watch(farmLockClaimFormNotifierProvider);
-    return Row(
-      children: <Widget>[
-        AppButtonTinyConnectivity(
-          localizations.btn_farm_lock_claim,
-          Dimens.buttonBottomDimens,
-          key: const Key('farmLockClaim'),
-          onPressed: () async {
-            await ref
-                .read(
-                  farmLockClaimFormNotifierProvider.notifier,
-                )
-                .validateForm();
-          },
-          disabled: !farmLockClaim.isControlsOk,
-        ),
-      ],
+    return BtnFooterPrimary(
+      buttonText: localizations.btn_farm_lock_claim,
+      key: const Key('farmLockClaim'),
+      onTap: () async {
+        await ref
+            .read(
+              farmLockClaimFormNotifierProvider.notifier,
+            )
+            .validateForm();
+      },
+      isLocked: !farmLockClaim.isControlsOk,
     );
   }
 
@@ -91,13 +85,29 @@ class FarmLockClaimFormSheet extends ConsumerWidget
       );
     }
 
+    final localizations = AppLocalizations.of(context)!;
+    final boldBodyLarge = Theme.of(context)
+        .textTheme
+        .bodyLarge!
+        .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold);
+
     return Column(
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 10),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text(
+                localizations.farmLockClaimTitle,
+                style: boldBodyLarge,
+              ),
+              const SizedBox(height: 10),
+              Text(
+                localizations.farmLockClaimDesc,
+                style: Theme.of(context).textTheme.bodyMediumWithOpacity,
+              ),
+              const SizedBox(height: 20),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -113,24 +123,27 @@ class FarmLockClaimFormSheet extends ConsumerWidget
                           TextSpan(
                             children: [
                               TextSpan(
-                                text: farmLockClaim.rewardAmount!
-                                    .formatNumber(precision: 8),
-                                style: AppTextStyles.bodyLargeSecondaryColor(
-                                  context,
-                                ),
-                              ),
-                              TextSpan(
-                                text: ' ${farmLockClaim.rewardToken!.symbol}',
-                                style: AppTextStyles.bodyLarge(context),
+                                text:
+                                    '${farmLockClaim.rewardAmount!.formatNumber(precision: 8)} ${farmLockClaim.rewardToken!.symbol}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMediumWithOpacity
+                                    .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
                               ),
                               TextSpan(
                                 text: ' ${snapshot.data} ',
-                                style: AppTextStyles.bodyLarge(context),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMediumWithOpacity,
                               ),
                               TextSpan(
                                 text: AppLocalizations.of(context)!
                                     .farmLockClaimFormText,
-                                style: AppTextStyles.bodyLarge(context),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMediumWithOpacity,
                               ),
                             ],
                           ),
