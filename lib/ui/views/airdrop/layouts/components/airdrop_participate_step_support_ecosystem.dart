@@ -45,7 +45,7 @@ class _AirdropParticipateStepSupportEcosystemSheetState
                     const AirdropStepper(),
                     Text(
                       localizations.airdropParticipateStepSupportEcosystemTitle,
-                      style: Theme.of(context).textTheme.titleSmall,
+                      style: Theme.of(context).textTheme.titleSmallSemiBold,
                     ),
                     const SizedBox(height: 20),
                     Text(

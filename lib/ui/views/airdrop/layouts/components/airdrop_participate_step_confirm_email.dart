@@ -45,7 +45,7 @@ class _AirdropParticipateStepJoinWaitlistSheetState
                     const AirdropStepper(),
                     Text(
                       localizations.airdropParticipateStepConfirmEmailTitle,
-                      style: Theme.of(context).textTheme.titleSmall,
+                      style: Theme.of(context).textTheme.titleSmallSemiBold,
                     ),
                     const SizedBox(height: 20),
                     Text(

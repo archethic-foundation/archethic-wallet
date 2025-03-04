@@ -39,7 +39,7 @@ class _AirdropParticipateStepWelcomeSheetState
                   children: [
                     Text(
                       localizations.airdropParticipateStepWelcomeTitle,
-                      style: Theme.of(context).textTheme.titleSmall,
+                      style: Theme.of(context).textTheme.titleSmallSemiBold,
                     ),
                     const SizedBox(height: 10),
                     Text.rich(

@@ -3,7 +3,7 @@ description: Fully decentralized and cryptocurrency non-custodial hot wallet tha
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 4.7.5+637
+version: 4.8.0+639
 
 environment:
   sdk: ">=3.5.0 <4.0.0"
@@ -247,6 +247,7 @@ dependencies:
 dev_dependencies:
   build_runner: ^2.4.6
   custom_lint: ^0.6.4
+  daunused: ^1.6.1
   flutter_launcher_icons: ^0.13.1
   flutter_test:
     sdk: flutter

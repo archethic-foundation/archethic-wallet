@@ -108,20 +108,20 @@ class _PickerWidgetState<T> extends ConsumerState<PickerWidget<T>> {
               child: Container(
                 color: Colors.transparent,
                 alignment: Alignment.center,
-                margin: const EdgeInsets.symmetric(vertical: 4),
+                margin: const EdgeInsets.symmetric(vertical: 8),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(4),
                   child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                    filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                     child: DecoratedBox(
                       decoration: BoxDecoration(
-                        color: ArchethicTheme.sheetBackground,
+                        color: const Color(0xFF4B38A7).withOpacity(0.2),
                         border: Border.all(
                           color: isItemSelected
                               ? Colors.green
-                              : ArchethicTheme.sheetBorder,
+                              : const Color(0xFF5540BF).withOpacity(0.4),
                         ),
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(4),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8),
@@ -133,11 +133,11 @@ class _PickerWidgetState<T> extends ConsumerState<PickerWidget<T>> {
                                 if (pickerItem.icon == null)
                                   const SizedBox(
                                     width: 0,
-                                    height: 24,
+                                    height: 30,
                                   )
                                 else
                                   SizedBox(
-                                    height: 24,
+                                    height: 30,
                                     child:
                                         widget.pickerItems[index].iconColor ==
                                                 null

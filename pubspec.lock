@@ -390,6 +390,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.7"
+  daunused:
+    dependency: "direct dev"
+    description:
+      name: daunused
+      sha256: "67879471d67faa432009dbedb3a853f62a5cdf38f74fe05920a9578e3f9af862"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.6.1"
   dbus:
     dependency: transitive
     description:

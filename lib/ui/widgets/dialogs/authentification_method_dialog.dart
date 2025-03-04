@@ -42,7 +42,7 @@ class AuthentificationMethodDialog {
     final settingsNotifier = ref.read(
       AuthenticationProviders.settings.notifier,
     );
-    final pickerItemsList = await Future.wait(
+    final pickerItemsList = (await Future.wait(
       AuthMethod.values.map(
         (method) async => PickerItem<AuthMethod>(
           AuthenticationMethod(method).getDisplayName(context),
@@ -54,8 +54,17 @@ class AuthentificationMethodDialog {
           displayed: await method.isAvailable(ref),
         ),
       ),
-    ) as List<PickerItem>;
-
+    ) as List<PickerItem>)
+      ..add(
+        PickerItem<AuthMethod>(
+          AppLocalizations.of(context)!.byokeyMethod,
+          null,
+          'assets/icons/byokey.png',
+          ArchethicTheme.pickerItemIconDisabled,
+          AuthMethod.biometrics,
+          false,
+        ),
+      );
     await showDialog<AuthMethod>(
       context: context,
       useRootNavigator: false,
