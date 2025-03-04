@@ -47,7 +47,7 @@ class _AirdropParticipateStepSignSheetState
                     const AirdropStepper(),
                     Text(
                       localizations.airdropParticipateStepSignTitle,
-                      style: Theme.of(context).textTheme.titleSmall,
+                      style: Theme.of(context).textTheme.titleSmallSemiBold,
                     ),
                     const SizedBox(height: 10),
                     Text(

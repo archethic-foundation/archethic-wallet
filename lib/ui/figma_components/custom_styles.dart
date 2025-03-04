@@ -10,7 +10,7 @@ extension CustomTextStyles on TextTheme {
       );
 
   TextStyle get titleSmallSemiBold => titleSmall!.copyWith(
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeightTelegraf.fontWeightSemibold,
       );
 
   TextStyle get bodySmallLink => bodySmallWithOpacity.copyWith(

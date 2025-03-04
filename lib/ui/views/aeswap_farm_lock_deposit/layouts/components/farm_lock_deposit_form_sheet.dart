@@ -136,7 +136,7 @@ class FarmLockDepositFormSheet extends ConsumerWidget
                   children: [
                     Text(
                       localizations.farmLockDepositTitle2,
-                      style: Theme.of(context).textTheme.titleSmall,
+                      style: Theme.of(context).textTheme.titleSmallSemiBold,
                     ),
                     const SizedBox(height: 10),
                     Text(
@@ -175,7 +175,7 @@ class FarmLockDepositFormSheet extends ConsumerWidget
                     children: [
                       Text(
                         localizations.farmLockDepositTitle3,
-                        style: Theme.of(context).textTheme.titleSmall,
+                        style: Theme.of(context).textTheme.titleSmallSemiBold,
                       ),
                       const SizedBox(height: 10),
                       Text(

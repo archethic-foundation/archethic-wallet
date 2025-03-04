@@ -66,7 +66,7 @@ class FarmLockBlockListSingleLineLock extends ConsumerWidget {
                   context,
                 )!
                     .farmLockListLocksHeader,
-                style: Theme.of(context).textTheme.titleSmall,
+                style: Theme.of(context).textTheme.titleSmallSemiBold,
               ),
             ),
             Expanded(

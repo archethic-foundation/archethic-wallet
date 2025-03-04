@@ -4,8 +4,8 @@ import 'package:aewallet/bus/authenticated_event.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/infrastructure/datasources/vault/vault.dart';
 import 'package:aewallet/model/authentication_method.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/intro/bloc/provider.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
@@ -19,7 +19,6 @@ import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
@@ -113,27 +112,37 @@ class _IntroConfigureSecurityState extends ConsumerState<IntroConfigureSecurity>
         ref.watch(IntroProviders.accessModesProvider).valueOrNull;
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Container(
-          margin: const EdgeInsets.only(
+          padding: const EdgeInsets.only(
             top: 20,
           ),
-          alignment: AlignmentDirectional.centerStart,
           child: AutoSizeText(
             localizations.configureSecurityIntro,
-            style: ArchethicThemeStyles.textStyleSize14W600Primary,
+            style: Theme.of(context).textTheme.titleSmallSemiBold,
           ),
         ),
         Container(
-          margin: const EdgeInsets.only(
+          padding: const EdgeInsets.only(
             top: 20,
           ),
-          child: AutoSizeText(
-            localizations.configureSecurityExplanation,
-            style: ArchethicThemeStyles.textStyleSize12W100Primary,
-            textAlign: TextAlign.justify,
-            maxLines: 6,
-            stepGranularity: 0.5,
+          child: Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(
+                  text: localizations.configureSecurityExplanationDesc1,
+                  style: Theme.of(context).textTheme.bodySmallWithOpacity,
+                ),
+                TextSpan(
+                  text: localizations.configureSecurityExplanationDesc2,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmallWithOpacity
+                      .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold),
+                ),
+              ],
+            ),
           ),
         ),
         if (accessModes != null)
@@ -142,7 +151,17 @@ class _IntroConfigureSecurityState extends ConsumerState<IntroConfigureSecurity>
                 .map(
                   (accessMode) => accessMode.pickerItem(context),
                 )
-                .toList(),
+                .toList()
+              ..add(
+                PickerItem(
+                  localizations.byokeyMethod,
+                  null,
+                  'assets/icons/byokey.png',
+                  ArchethicTheme.pickerItemIconDisabled,
+                  '',
+                  false,
+                ),
+              ),
             onSelected: (value) async {
               setState(() {
                 _accessModesSelected = value;
