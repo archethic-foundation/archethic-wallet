@@ -209,19 +209,8 @@ class AppService {
     }
     final balanceMap = <String, Balance>{};
 
-    final fetchBalances = await addresses
-        .map(
-          (address) => Task(
-            name: 'getBalanceGetResponse - address: $address',
-            logger: _logger,
-            action: () => apiService.fetchBalance([address]),
-          ),
-        )
-        .autoRetry()
-        .batch();
-    for (final fetchBalance in fetchBalances) {
-      balanceMap.addAll(fetchBalance);
-    }
+    final fetchBalances = await apiService.fetchBalance(addresses);
+    balanceMap.addAll(fetchBalances);
 
     final balancesToReturn = <String, Balance>{};
     for (final address in addresses) {
