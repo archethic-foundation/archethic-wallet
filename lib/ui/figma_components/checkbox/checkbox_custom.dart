@@ -21,23 +21,23 @@ class CheckboxCustom extends StatelessWidget {
           width: 18,
           height: 18,
           decoration: BoxDecoration(
-            shape: BoxShape.circle,
             color: Colors.transparent,
             border: Border.all(
               color: ArchethicThemeBase.neutral0.withOpacity(0.8),
               width: 2,
             ),
+            borderRadius: BorderRadius.circular(4),
           ),
           child: value
               ? Container(
                   width: 16,
                   height: 16,
                   decoration: BoxDecoration(
-                    shape: BoxShape.circle,
                     gradient: ArchethicGradients.archethicLinearBlue,
                     border: Border.all(
                       width: 2,
                     ),
+                    borderRadius: BorderRadius.circular(2),
                   ),
                 )
               : null,

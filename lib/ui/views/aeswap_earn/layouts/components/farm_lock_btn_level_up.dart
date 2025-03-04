@@ -45,7 +45,7 @@ class FarmLockBtnLevelUp extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: BtnPrimary(
         buttonText: AppLocalizations.of(context)!.farmLockBtnLevelUp,
-        isLocked: enabled,
+        isLocked: !enabled,
         onTap: () async {
           if (context.mounted) {
             await context.push(

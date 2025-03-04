@@ -34,7 +34,7 @@ class FarmLockBtnClaim extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: BtnPrimary(
         buttonText: AppLocalizations.of(context)!.farmLockBtnClaim,
-        isLocked: enabled,
+        isLocked: !enabled,
         onTap: () async {
           await _validate(context);
         },
