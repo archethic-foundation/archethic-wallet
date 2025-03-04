@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:core';
 
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/domain/models/onramp.dart';
 import 'package:aewallet/domain/repositories/on_ramp.dart';
@@ -20,11 +21,17 @@ Future<OnRampRepository> _onRampRepository(Ref ref) async {
   });
 
   final session = ref.watch(sessionNotifierProvider).loggedIn!;
+  final accountSelected = ref.watch(
+    accountsNotifierProvider.select(
+      (accounts) => accounts.valueOrNull?.selectedAccount,
+    ),
+  )!;
 
   repository = OnRampRepositoryImpl(
     httpBaseUrl: 'http://localhost:4100/api/v1',
     wsBaseUrl: 'ws://localhost:4100/ws/websocket',
     wallet: session.wallet,
+    account: accountSelected,
   );
   await repository.connect();
   return repository;

@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:aewallet/domain/models/app_wallet.dart';
 import 'package:aewallet/domain/models/onramp.dart';
 import 'package:aewallet/domain/repositories/on_ramp.dart';
+import 'package:aewallet/model/data/account.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
@@ -16,13 +17,10 @@ class OnRampRepositoryImpl implements OnRampRepository {
     required this.httpBaseUrl,
     required this.wsBaseUrl,
     required AppWallet wallet,
+    required Account account,
   }) {
-    keyPair = archethic.deriveKeyPair(
-      archethic.uint8ListToHex(
-        Uint8List.fromList(wallet.keychainSecuredInfos.seed),
-      ),
-      0,
-    );
+    keyPair =
+        wallet.keychainSecuredInfos.services[account.name]!.keyPair!.toKeyPair;
 
     socket = PhoenixSocket(
       wsBaseUrl,
