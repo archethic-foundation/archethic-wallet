@@ -22,14 +22,14 @@ class EarnTotalDeposited extends ConsumerWidget {
               r'$__',
               style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     fontSize: 20,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeightTelegraf.fontWeightBold,
                   ),
             )
           : Text(
               '\$${farmLock.estimateLPTokenInFiat.numeral(digits: 0)}',
               style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     fontSize: 20,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeightTelegraf.fontWeightBold,
                   ),
             ),
       additionalWidget: Text(

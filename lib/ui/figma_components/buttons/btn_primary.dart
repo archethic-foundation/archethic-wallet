@@ -10,12 +10,14 @@ class BtnPrimary extends StatelessWidget {
     required this.onTap,
     this.btnPrimaryType = BtnPrimaryType.primary,
     this.isLocked = false,
+    this.widthExpanded = false,
     super.key,
   });
   final String buttonText;
   final Function()? onTap;
   final BtnPrimaryType btnPrimaryType;
   final bool isLocked;
+  final bool widthExpanded;
 
   @override
   Widget build(BuildContext context) {
@@ -23,32 +25,29 @@ class BtnPrimary extends StatelessWidget {
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: isLocked ? null : onTap,
-        child: IntrinsicWidth(
-          child: IntrinsicHeight(
-            child: Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 17, vertical: 8.5),
-              alignment: Alignment.center,
-              decoration: _getButtonDecoration(),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    buttonText,
-                    style: isLocked
-                        ? Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              color: Colors.white.withOpacity(0.2),
-                              fontWeight: FontWeight.w600,
-                            )
-                        : Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                            ),
-                  ),
-                ],
+        child: widthExpanded
+            ? _button(context)
+            : IntrinsicWidth(
+                child: _button(context),
               ),
-            ),
-          ),
+      ),
+    );
+  }
+
+  Widget _button(
+    BuildContext context,
+  ) {
+    return IntrinsicHeight(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 8.5),
+        alignment: Alignment.center,
+        decoration: _getButtonDecoration(),
+        child: Text(
+          buttonText,
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                color: isLocked ? Colors.white.withOpacity(0.2) : Colors.white,
+                fontWeight: FontWeightTelegraf.fontWeightBold,
+              ),
         ),
       ),
     );

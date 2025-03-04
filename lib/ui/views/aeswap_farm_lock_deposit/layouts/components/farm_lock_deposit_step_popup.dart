@@ -111,43 +111,59 @@ class FarmLockDepositStepPopup extends ConsumerWidget {
                       ).toLowerCase(),
                     ),
             ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                if (stepsState.steps
-                        .any((step) => step.status == StepStatus.failed) ||
-                    (stepsState.steps.length == 3 &&
-                        stepsState.steps[2].status == StepStatus.completed))
-                  BtnPrimary(
-                    buttonText: localizations.close,
-                    onTap: () {
-                      context
-                        ..pop()
-                        ..pop();
-                    },
-                    btnPrimaryType: stepsState.steps
-                            .any((step) => step.status == StepStatus.failed)
-                        ? BtnPrimaryType.outlinePrimary
-                        : BtnPrimaryType.primary,
-                  )
-                else
-                  const SizedBox.shrink(),
-                if (stepsState.steps
-                    .any((step) => step.status == StepStatus.failed))
-                  BtnPrimary(
-                    buttonText: localizations.resumeBtn,
-                    onTap: () {
-                      unawaited(
-                        ref
-                            .read(farmLockDepositFormNotifierProvider.notifier)
-                            .lock(AppLocalizations.of(context)!),
-                      );
-                    },
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              if (stepsState.steps
+                      .any((step) => step.status == StepStatus.failed) ||
+                  (stepsState.steps.length == 3 &&
+                      stepsState.steps[2].status == StepStatus.completed))
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: BtnPrimary(
+                      buttonText: localizations.close,
+                      onTap: () {
+                        context
+                          ..pop()
+                          ..pop();
+                      },
+                      btnPrimaryType: stepsState.steps
+                              .any((step) => step.status == StepStatus.failed)
+                          ? BtnPrimaryType.outlinePrimary
+                          : BtnPrimaryType.primary,
+                      widthExpanded: true,
+                    ),
                   ),
-              ],
-            ),
+                )
+              else
+                const SizedBox.shrink(),
+              if (stepsState.steps
+                  .any((step) => step.status == StepStatus.failed))
+                const SizedBox(
+                  width: 20,
+                ),
+              if (stepsState.steps
+                  .any((step) => step.status == StepStatus.failed))
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: BtnPrimary(
+                      buttonText: localizations.resumeBtn,
+                      onTap: () {
+                        unawaited(
+                          ref
+                              .read(
+                                farmLockDepositFormNotifierProvider.notifier,
+                              )
+                              .lock(AppLocalizations.of(context)!),
+                        );
+                      },
+                      widthExpanded: true,
+                    ),
+                  ),
+                ),
+            ],
           ),
         ],
       ),
