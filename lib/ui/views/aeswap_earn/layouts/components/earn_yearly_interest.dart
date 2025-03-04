@@ -30,7 +30,7 @@ class EarnYearlyInterest extends ConsumerWidget {
               '${(farmLock.apr3years * 100).toInt()}%',
               style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     fontSize: 20,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeightTelegraf.fontWeightBold,
                   ),
             )
           else
@@ -38,7 +38,7 @@ class EarnYearlyInterest extends ConsumerWidget {
               '__%',
               style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     fontSize: 20,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeightTelegraf.fontWeightBold,
                   ),
             ),
           const Padding(

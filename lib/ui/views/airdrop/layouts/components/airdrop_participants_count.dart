@@ -17,7 +17,7 @@ class AirdropParticipantsCount extends ConsumerWidget {
     final airdropCountAsync = ref.watch(airdropCountProvider);
     final bodyMedium = withShadow
         ? Theme.of(context).textTheme.bodyMediumlWithOpacity.copyWith(
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeightTelegraf.fontWeightSemibold,
             shadows: [
               const Shadow(
                 offset: Offset(0, 1),

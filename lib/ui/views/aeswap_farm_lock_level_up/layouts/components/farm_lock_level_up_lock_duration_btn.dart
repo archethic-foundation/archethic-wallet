@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/bloc/provider.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -72,10 +73,9 @@ class FarmLockLevelUpDurationButton extends ConsumerWidget {
                         context,
                         farmLockLevelUpDuration,
                       ),
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium!
-                          .copyWith(fontWeight: FontWeight.w700),
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontWeight: FontWeightTelegraf.fontWeightBold,
+                          ),
                     ),
                   ],
                 ),

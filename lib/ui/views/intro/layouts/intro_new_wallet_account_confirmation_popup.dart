@@ -43,7 +43,7 @@ class IntroNewWalletAccountConfirmationPopup extends ConsumerWidget {
                               .textTheme
                               .bodySmallWithOpacity
                               .copyWith(
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeightTelegraf.fontWeightBold,
                               ),
                         ),
                         TextSpan(

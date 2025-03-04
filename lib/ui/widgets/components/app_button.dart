@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -92,7 +93,7 @@ class AppButtonState extends State<AppButton> {
                   ? Colors.white.withOpacity(0.5)
                   : Colors.white,
               fontSize: widget.fontSize,
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeightTelegraf.fontWeightRegular,
             ),
             maxLines: 1,
           ),

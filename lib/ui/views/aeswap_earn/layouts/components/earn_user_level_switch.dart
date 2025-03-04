@@ -22,7 +22,7 @@ class EarnUserLevelSwitch extends ConsumerWidget {
         Text(
           localizations.earnUserLevelSwitchLabel,
           style: Theme.of(context).textTheme.bodySmallWithOpacity.copyWith(
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeightTelegraf.fontWeightSemibold,
               ),
         ),
         Row(

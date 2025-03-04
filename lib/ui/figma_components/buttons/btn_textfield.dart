@@ -1,3 +1,4 @@
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:flutter/material.dart';
 
 class BtnTextField extends StatelessWidget {
@@ -34,11 +35,11 @@ class BtnTextField extends StatelessWidget {
                     style: isLocked
                         ? Theme.of(context).textTheme.bodySmall!.copyWith(
                               color: Colors.white.withOpacity(0.2),
-                              fontWeight: FontWeight.w400,
+                              fontWeight: FontWeightTelegraf.fontWeightRegular,
                             )
                         : Theme.of(context).textTheme.bodySmall!.copyWith(
                               color: Colors.white.withOpacity(0.8),
-                              fontWeight: FontWeight.w400,
+                              fontWeight: FontWeightTelegraf.fontWeightRegular,
                             ),
                   ),
                 ],

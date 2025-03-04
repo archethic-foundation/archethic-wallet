@@ -106,7 +106,9 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage>
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final textStyle = Theme.of(context).textTheme.bodySmallWithOpacity;
-    final boldTextStyle = textStyle.copyWith(fontWeight: FontWeight.w700);
+    final boldTextStyle = textStyle.copyWith(
+      fontWeight: FontWeightTelegraf.fontWeightBold,
+    );
 
     return mnemonic != null
         ? Padding(

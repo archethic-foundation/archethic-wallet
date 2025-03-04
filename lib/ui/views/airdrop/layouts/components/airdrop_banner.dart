@@ -168,7 +168,7 @@ class AirdropBanner extends ConsumerWidget {
                     Text(
                       title,
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeightTelegraf.fontWeightBold,
                             fontSize: state == AirdropState.newParticipation
                                 ? 26
                                 : 22,
@@ -185,7 +185,7 @@ class AirdropBanner extends ConsumerWidget {
                     Text(
                       title,
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeightTelegraf.fontWeightBold,
                             fontSize: state == AirdropState.newParticipation
                                 ? 26
                                 : 22,
@@ -211,7 +211,7 @@ class AirdropBanner extends ConsumerWidget {
                       .textTheme
                       .bodyMediumlWithOpacity
                       .copyWith(
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeightTelegraf.fontWeightSemibold,
                     shadows: [
                       const Shadow(
                         offset: Offset(0, 1),
