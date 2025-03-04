@@ -2,6 +2,7 @@ import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/fiat_value.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/bloc/provider.dart';
@@ -98,7 +99,6 @@ class FarmLockLevelUpFormSheet extends ConsumerWidget
     final localizations = AppLocalizations.of(context)!;
     final boldBodyLarge =
         AppTextStyles.bodyLarge(context).copyWith(fontWeight: FontWeight.bold);
-    final bodyMediumWithOpacity = AppTextStyles.bodyMediumWithOpacity(context);
 
     return SingleChildScrollView(
       child: Column(
@@ -111,7 +111,7 @@ class FarmLockLevelUpFormSheet extends ConsumerWidget
           const SizedBox(height: 10),
           Text(
             localizations.farmLockLevelUpDesc,
-            style: bodyMediumWithOpacity,
+            style: Theme.of(context).textTheme.bodyMediumWithOpacity,
           ),
           const SizedBox(height: 20),
           Padding(
@@ -208,7 +208,7 @@ class FarmLockLevelUpFormSheet extends ConsumerWidget
                     const SizedBox(height: 10),
                     Text(
                       localizations.farmLockLevelUpDesc2,
-                      style: bodyMediumWithOpacity,
+                      style: Theme.of(context).textTheme.bodyMediumWithOpacity,
                     ),
                   ],
                 ),
@@ -238,7 +238,7 @@ class FarmLockLevelUpFormSheet extends ConsumerWidget
                     SelectableText(
                       AppLocalizations.of(context)!
                           .farmLockLevelUpCurrentLvlLbl,
-                      style: AppTextStyles.bodyMediumWithOpacity(context),
+                      style: Theme.of(context).textTheme.bodyMediumWithOpacity,
                     ),
                     if (farmLockLevelUp.currentLevel != null)
                       Row(
@@ -251,12 +251,16 @@ class FarmLockLevelUpFormSheet extends ConsumerWidget
                           ),
                           SelectableText(
                             '/',
-                            style: AppTextStyles.bodyMediumWithOpacity(context),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMediumWithOpacity,
                           ),
                           SelectableText(
                             farmLockLevelUp
                                 .farmLock!.availableLevels.entries.last.key,
-                            style: AppTextStyles.bodyMediumWithOpacity(context),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMediumWithOpacity,
                           ),
                         ],
                       ),

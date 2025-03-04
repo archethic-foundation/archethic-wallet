@@ -1,6 +1,7 @@
 import 'package:aewallet/application/airdrop/airdrop.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/figma_components/box/box_dark.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
@@ -45,12 +46,14 @@ class AirdropPersonalRewards extends ConsumerWidget {
         children: [
           Text(
             localizations.airdropPersonalValue,
-            style: AppTextStyles.bodyMediumWithOpacity(context),
+            style: Theme.of(context).textTheme.bodyMediumWithOpacity,
             textAlign: TextAlign.center,
           ),
           Text(
             localizations.airdropPersonalValueInfo,
-            style: AppTextStyles.bodySmallWithOpacity(context)
+            style: Theme.of(context)
+                .textTheme
+                .bodySmallWithOpacity
                 .copyWith(fontSize: 8),
             textAlign: TextAlign.center,
           ),

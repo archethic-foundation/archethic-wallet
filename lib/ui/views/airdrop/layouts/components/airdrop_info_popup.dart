@@ -1,5 +1,7 @@
 import 'dart:ui';
+
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -70,7 +72,7 @@ class AirdropInfoPopup extends ConsumerWidget {
                     ),
                     Text(
                       message ?? 'Unknown error',
-                      style: AppTextStyles.bodyMediumWithOpacity(context),
+                      style: Theme.of(context).textTheme.bodyMediumWithOpacity,
                     ),
                     const SizedBox(height: 40),
                     aedappfm.AppButton(

@@ -209,7 +209,7 @@ class AirdropBanner extends ConsumerWidget {
                   '\$${ucoPerParticipant?.numeral(digits: 2) ?? ''} ${localizations.airdropPerParticipant}',
                   style: Theme.of(context)
                       .textTheme
-                      .bodyMediumlWithOpacity
+                      .bodyMediumWithOpacity
                       .copyWith(
                     fontWeight: FontWeightTelegraf.fontWeightSemibold,
                     shadows: [

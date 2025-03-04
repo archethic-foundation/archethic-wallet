@@ -1,12 +1,11 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/format_address_link_copy_big_icon.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
 import 'package:aewallet/ui/figma_components/message_box/message_box.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/layouts/components/liquidity_add_final_amount.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:flutter/material.dart';
@@ -48,20 +47,15 @@ class LiquidityAddResultSheetState
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    return Row(
-      children: <Widget>[
-        AppButtonTinyConnectivity(
-          AppLocalizations.of(context)!.close,
-          Dimens.buttonBottomDimens,
-          key: const Key('close'),
-          onPressed: () async {
-            ref.invalidate(liquidityAddFormNotifierProvider);
-            context
-              ..pop()
-              ..pop();
-          },
-        ),
-      ],
+    return BtnFooterPrimary(
+      buttonText: AppLocalizations.of(context)!.close,
+      key: const Key('close'),
+      onTap: () async {
+        ref.invalidate(liquidityAddFormNotifierProvider);
+        context
+          ..pop()
+          ..pop();
+      },
     );
   }
 

@@ -1,4 +1,5 @@
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
+import 'package:aewallet/ui/figma_components/text/gradient_text.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/bloc/provider.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -19,58 +20,33 @@ class FarmLockWithdrawFinalAmount extends ConsumerWidget {
           .select((value) => value.failure != null),
     );
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            if (finalAmountWithdraw != null)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SelectableText(
-                    AppLocalizations.of(context)!.farmLockWithdrawFinalAmount,
-                    style: AppTextStyles.bodyLarge(context),
-                  ),
-                  SelectableText(
-                    '${finalAmountWithdraw.formatNumber(precision: 8)} ${finalAmountWithdraw > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
-                    style: AppTextStyles.bodyLargeSecondaryColor(context),
-                  ),
-                ],
-              )
-            else if (timeout)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SelectableText(
-                    AppLocalizations.of(context)!.farmLockWithdrawFinalAmount,
-                    style: AppTextStyles.bodyLarge(context),
-                  ),
-                  SelectableText(
-                    AppLocalizations.of(context)!.finalAmountNotRecovered,
-                    style: AppTextStyles.bodyLarge(context),
-                  ),
-                ],
-              ),
-          ],
-        ),
-        Row(
-          children: [
-            if (finalAmountReward != null)
-              if ((farmLockWithdraw.isFarmClose &&
-                      farmLockWithdraw.rewardAmount! > 0) ||
-                  farmLockWithdraw.isFarmClose == false)
+    return aedappfm.BlockInfo(
+      blockInfoColor: aedappfm.BlockInfoColor.purple,
+      borderWidth: 0,
+      paddingEdgeInsetsInfo: const EdgeInsets.all(20),
+      width: MediaQuery.of(context).size.width,
+      info: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              if (finalAmountWithdraw != null)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SelectableText(
-                      AppLocalizations.of(context)!
-                          .farmLockWithdrawFinalAmountReward,
-                      style: AppTextStyles.bodyLarge(context),
+                      AppLocalizations.of(context)!.farmLockWithdrawFinalAmount,
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeightTelegraf.fontWeightSemibold,
+                          ),
                     ),
-                    SelectableText(
-                      '${finalAmountReward.formatNumber(precision: 8)} ${farmLockWithdraw.rewardToken!.symbol}',
-                      style: AppTextStyles.bodyLargeSecondaryColor(context),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: GradientText(
+                        '${finalAmountWithdraw.formatNumber(precision: 8)} ${finalAmountWithdraw > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
+                        gradient: ArchethicGradients.gradientArchethic,
+                        style: Theme.of(context).textTheme.bodyLarge!,
+                      ),
                     ),
                   ],
                 )
@@ -79,19 +55,69 @@ class FarmLockWithdrawFinalAmount extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SelectableText(
-                      AppLocalizations.of(context)!
-                          .farmLockWithdrawFinalAmountReward,
-                      style: AppTextStyles.bodyLarge(context),
+                      AppLocalizations.of(context)!.farmLockWithdrawFinalAmount,
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeightTelegraf.fontWeightSemibold,
+                          ),
                     ),
                     SelectableText(
                       AppLocalizations.of(context)!.finalAmountNotRecovered,
-                      style: AppTextStyles.bodyLarge(context),
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ],
                 ),
-          ],
-        ),
-      ],
+            ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            children: [
+              if (finalAmountReward != null)
+                if ((farmLockWithdraw.isFarmClose &&
+                        farmLockWithdraw.rewardAmount! > 0) ||
+                    farmLockWithdraw.isFarmClose == false)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SelectableText(
+                        AppLocalizations.of(context)!
+                            .farmLockWithdrawFinalAmountReward,
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                              fontWeight: FontWeightTelegraf.fontWeightSemibold,
+                            ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: GradientText(
+                          '${finalAmountReward.formatNumber(precision: 8)} ${farmLockWithdraw.rewardToken!.symbol}',
+                          gradient: ArchethicGradients.gradientArchethic,
+                          style: Theme.of(context).textTheme.bodyLarge!,
+                        ),
+                      ),
+                    ],
+                  )
+                else if (timeout)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SelectableText(
+                        AppLocalizations.of(context)!
+                            .farmLockWithdrawFinalAmountReward,
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                              fontWeight: FontWeightTelegraf.fontWeightSemibold,
+                            ),
+                      ),
+                      SelectableText(
+                        AppLocalizations.of(context)!.finalAmountNotRecovered,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    ],
+                  ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

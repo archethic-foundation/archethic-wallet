@@ -51,19 +51,18 @@ class EstimatedFees extends ConsumerWidget {
                             aedappfm.Iconsax.receipt_disscount,
                             size: Theme.of(context)
                                 .textTheme
-                                .bodyMediumlWithOpacity
+                                .bodyMediumWithOpacity
                                 .fontSize,
                             color: Theme.of(context)
                                 .textTheme
-                                .bodyMediumlWithOpacity
+                                .bodyMediumWithOpacity
                                 .color,
                           ),
                         ),
                         Text(
                           '${localizations.estimatedFees} ',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMediumlWithOpacity,
+                          style:
+                              Theme.of(context).textTheme.bodyMediumWithOpacity,
                         ),
                         if (feeEstimation!.isLoading)
                           Row(
@@ -86,7 +85,7 @@ class EstimatedFees extends ConsumerWidget {
                                 ' UCO',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyMediumlWithOpacity,
+                                    .bodyMediumWithOpacity,
                               ),
                             ],
                           )
@@ -95,7 +94,7 @@ class EstimatedFees extends ConsumerWidget {
                             '${(feeEstimation?.valueOrNull ?? 0).formatNumber(precision: 2)} UCO',
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyMediumlWithOpacity,
+                                .bodyMediumWithOpacity,
                           ),
                       ],
                     ),
