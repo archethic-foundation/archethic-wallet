@@ -6,6 +6,7 @@ import 'package:aewallet/domain/models/onramp.dart';
 import 'package:aewallet/domain/repositories/on_ramp.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:http/http.dart' as http;
+import 'package:logging/logging.dart';
 import 'package:phoenix_socket/phoenix_socket.dart';
 
 part 'on_ramp.dto.dart';
@@ -39,6 +40,7 @@ class OnRampRepositoryImpl implements OnRampRepository {
     );
   }
 
+  final _logger = Logger('OnRampRepository');
   final String httpBaseUrl;
   final String wsBaseUrl;
   late final archethic.KeyPair keyPair;
@@ -83,6 +85,23 @@ class OnRampRepositoryImpl implements OnRampRepository {
   }
 
   @override
+  Future<List<OnRampDeposit>> get depositsHistory async {
+    final body = await _get('/deposits');
+
+    return switch (body) {
+      [] => [],
+      [...] => body
+          .map(
+            (jsonDeposit) => _onRampDepositFromJson(
+              jsonDeposit as Map<String, dynamic>,
+            ),
+          )
+          .toList(),
+      _ => throw Exception('Invalid response format'),
+    };
+  }
+
+  @override
   Stream<OnRampEvent> get events async* {
     late PhoenixChannel? channel;
     try {
@@ -93,8 +112,12 @@ class OnRampRepositoryImpl implements OnRampRepository {
       await for (final message in channel.messages) {
         try {
           yield _onRampEventFromJson(message.payload);
-        } catch (e) {
-          print(e);
+        } catch (e, stack) {
+          _logger.warning(
+            'Failed to convert notification `${jsonEncode(message.payload)}`',
+            e,
+            stack,
+          );
         }
       }
     } finally {
