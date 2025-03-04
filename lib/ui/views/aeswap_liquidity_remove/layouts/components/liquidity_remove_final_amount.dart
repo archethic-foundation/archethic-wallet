@@ -68,6 +68,9 @@ class LiquidityRemoveFinalAmount extends ConsumerWidget {
                 ),
             ],
           ),
+          const SizedBox(
+            height: 20,
+          ),
           Row(
             children: [
               if (finalAmountToken2 != null)
@@ -106,6 +109,9 @@ class LiquidityRemoveFinalAmount extends ConsumerWidget {
                   ],
                 ),
             ],
+          ),
+          const SizedBox(
+            height: 20,
           ),
           Row(
             children: [

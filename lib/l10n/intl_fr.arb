@@ -275,7 +275,7 @@
     "sendMessageHeader": "Message",
     "sendMessageConfirmHeader": "Votre message :",
     "pass": "Passer",
-    "passBackupConfirmationDisclaimer": "CLAUSE DE NON-RESPONSABILITE",
+    "passBackupConfirmationDisclaimer": "Clause de non-responsabilité",
     "amountZero": "Le montant doit être > 0",
     "maxSendRecipientMissing": "Svp, renseignez le destinataire pour que le montant max soit défini.",
     "tokenSymbolMissing": "Choisissez un symbole pour le jeton",

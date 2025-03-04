@@ -130,13 +130,15 @@ class FarmLockDepositFormSheet extends ConsumerWidget
                       failure: farmLockDeposit.failure,
                     ).getMessage(),
                   ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       localizations.farmLockDepositTitle2,
-                      style: Theme.of(context).textTheme.titleSmallSemiBold,
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                            fontWeight: FontWeightTelegraf.fontWeightSemibold,
+                          ),
                     ),
                     const SizedBox(height: 10),
                     Text(
@@ -145,8 +147,13 @@ class FarmLockDepositFormSheet extends ConsumerWidget
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
-                Wrap(
+                GridView.count(
+                  crossAxisCount: 4,
+                  padding: const EdgeInsets.only(top: 20),
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   children: [
                     ...farmLockDeposit.filterAvailableLevels.entries
                         .map((entry) {
@@ -167,7 +174,7 @@ class FarmLockDepositFormSheet extends ConsumerWidget
                   ],
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 if (earnUserLevel == EarnUserLevelType.beginner)
                   Column(
@@ -175,7 +182,9 @@ class FarmLockDepositFormSheet extends ConsumerWidget
                     children: [
                       Text(
                         localizations.farmLockDepositTitle3,
-                        style: Theme.of(context).textTheme.titleSmallSemiBold,
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                              fontWeight: FontWeightTelegraf.fontWeightBold,
+                            ),
                       ),
                       const SizedBox(height: 10),
                       Text(
