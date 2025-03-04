@@ -1,7 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aewallet/ui/figma_components/buttons/btn_primary.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/ui/widgets/components/app_button.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -36,17 +37,17 @@ class AppDialogs {
               Text.rich(
                 TextSpan(
                   text: '',
-                  style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                  style: Theme.of(context).textTheme.bodySmallWithOpacity,
                   children: <InlineSpan>[
                     TextSpan(
                       text: content,
-                      style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                      style: Theme.of(context).textTheme.bodySmallWithOpacity,
                     ),
                     if (additionalContent != null)
                       TextSpan(
                         text: '\n\n$additionalContent',
                         style: additionalContentStyle ??
-                            ArchethicThemeStyles.textStyleSize12W100Primary,
+                            Theme.of(context).textTheme.bodySmallWithOpacity,
                       ),
                   ],
                 ),
@@ -57,29 +58,35 @@ class AppDialogs {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  AppButton(
-                    key: const Key('cancelButton'),
-                    labelBtn: AppLocalizations.of(
-                      context,
-                    )!
-                        .no,
-                    onPressed: () async {
-                      context.pop();
-                      if (cancelAction != null) {
-                        cancelAction();
-                      }
-                    },
+                  Expanded(
+                    child: BtnPrimary(
+                      btnPrimaryType: BtnPrimaryType.outlinePrimary,
+                      buttonText: AppLocalizations.of(
+                        context,
+                      )!
+                          .no,
+                      key: const Key('cancelButton'),
+                      onTap: () {
+                        context.pop();
+                        if (cancelAction != null) {
+                          cancelAction();
+                        }
+                      },
+                    ),
                   ),
-                  AppButton(
-                    key: const Key('yesButton'),
-                    labelBtn: AppLocalizations.of(
-                      context,
-                    )!
-                        .yes,
-                    onPressed: () async {
-                      context.pop();
-                      onPressed();
-                    },
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: BtnPrimary(
+                      buttonText: AppLocalizations.of(
+                        context,
+                      )!
+                          .yes,
+                      key: const Key('yesButton'),
+                      onTap: () async {
+                        context.pop();
+                        onPressed();
+                      },
+                    ),
                   ),
                 ],
               ),

@@ -17,29 +17,14 @@ class IntroBackupSeedPassPopup extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final textStyle = Theme.of(context).textTheme.bodySmallWithOpacity;
-    final boldTextStyle = textStyle.copyWith(
-      fontWeight: FontWeightTelegraf.fontWeightBold,
-    );
 
     return aedappfm.PopupTemplate(
       popupContent: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildRichText(
+          Text(
             localizations.backupSeedPassDesc1,
-            localizations.backupSeedPassDesc2,
-            localizations.backupSeedPassDesc3,
-            textStyle,
-            boldTextStyle,
-          ),
-          const SizedBox(height: 10),
-          _buildRichText(
-            localizations.backupSeedPassDesc4,
-            localizations.backupSeedPassDesc5,
-            null,
-            boldTextStyle,
-            textStyle,
+            style: Theme.of(context).textTheme.bodySmallWithOpacity,
           ),
           const SizedBox(height: 30),
           Row(
@@ -80,24 +65,6 @@ class IntroBackupSeedPassPopup extends ConsumerWidget {
       ),
       popupTitle: localizations.passBackupConfirmationDisclaimer,
       displayCloseButton: false,
-    );
-  }
-
-  Widget _buildRichText(
-    String text1,
-    String text2,
-    String? text3,
-    TextStyle textStyle,
-    TextStyle boldTextStyle,
-  ) {
-    return Text.rich(
-      TextSpan(
-        children: [
-          TextSpan(text: text1, style: textStyle),
-          TextSpan(text: text2, style: boldTextStyle),
-          if (text3 != null) TextSpan(text: text3, style: textStyle),
-        ],
-      ),
     );
   }
 }

@@ -9,16 +9,18 @@ import 'package:aewallet/application/recovery_phrase_saved.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/data/account.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
+import 'package:aewallet/ui/figma_components/message_box/message_box.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_configure_security.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_welcome.dart';
+import 'package:aewallet/ui/views/intro/layouts/seed_language_switch.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
@@ -56,6 +58,8 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
     null,
   );
 
+  final List<bool> _hasFocusList = List.filled(24, false);
+
   Iterable<String> get phrase => wordEditingControllers.map(
         (textController) => textController?.text ?? '',
       );
@@ -73,7 +77,6 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
       appBar: getAppBar(context, ref),
       floatingActionButton: getFloatingActionButton(context, ref),
       sheetContent: getSheetContent(context, ref),
-      backgroundImage: ArchethicTheme.backgroundWelcome,
     );
   }
 
@@ -88,190 +91,175 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            AppButtonTinyConnectivity(
-              localizations.next,
-              Dimens.buttonTopDimens,
-              key: const Key('seedWordsOKbutton'),
-              onPressed: () async {
-                setState(() {
-                  _mnemonicError = '';
-                  isPressed = true;
-                });
+        BtnFooterPrimary(
+          buttonText: localizations.next,
+          key: const Key('seedWordsOKbutton'),
+          onTap: () async {
+            setState(() {
+              _mnemonicError = '';
+              isPressed = true;
+            });
 
-                _mnemonicIsValid = true;
-                for (final word in phrase) {
-                  final _word = word.trim();
-                  if (_word == '') {
-                    _mnemonicIsValid = false;
-                    _mnemonicError = localizations.mnemonicSizeError;
-                  } else {
-                    if (AppMnemomics.isValidWord(
-                          _word,
-                          languageCode: languageSeed,
-                        ) ==
-                        false) {
-                      _mnemonicIsValid = false;
-                      _mnemonicError = localizations.mnemonicInvalidWord
-                          .replaceAll('%1', _word);
-                    }
-                  }
+            _mnemonicIsValid = true;
+            for (final word in phrase) {
+              final _word = word.trim();
+              if (_word == '') {
+                _mnemonicIsValid = false;
+                _mnemonicError = localizations.mnemonicSizeError;
+              } else {
+                if (AppMnemomics.isValidWord(
+                      _word,
+                      languageCode: languageSeed,
+                    ) ==
+                    false) {
+                  _mnemonicIsValid = false;
+                  _mnemonicError =
+                      localizations.mnemonicInvalidWord.replaceAll('%1', _word);
                 }
+              }
+            }
 
-                if (!_mnemonicIsValid) {
-                  UIUtil.showSnackbar(
-                    _mnemonicError,
-                    context,
-                    ref,
-                    ArchethicTheme.text,
-                    ArchethicTheme.snackBarShadow,
-                  );
-                  setState(() {
-                    isPressed = false;
-                  });
-                  return;
-                }
+            if (!_mnemonicIsValid) {
+              setState(() {
+                isPressed = false;
+              });
+              return;
+            }
 
-                final result = await context.push(
-                  IntroConfigureSecurity.routerPage,
-                  extra: {
-                    'isImportProfile': true,
-                  },
-                );
-                if (result != null && result == false) {
-                  setState(() {
-                    _mnemonicError = '';
-                    isPressed = false;
-                  });
-                  return;
-                }
-                context.loadingOverlay.show(
-                  title: localizations.pleaseWait,
-                );
-
-                try {
-                  final newSession = await ref
-                      .read(sessionNotifierProvider.notifier)
-                      .restoreFromMnemonics(
-                        mnemonics: phrase.toList(),
-                        languageCode: languageSeed,
-                      );
-                  context.loadingOverlay.hide();
-                  if (newSession == null) {
-                    setState(() {
-                      _mnemonicIsValid = false;
-                      isPressed = false;
-                    });
-                    UIUtil.showSnackbar(
-                      localizations.noKeychain,
-                      context,
-                      ref,
-                      ArchethicTheme.text,
-                      ArchethicTheme.snackBarShadow,
-                    );
-                    context.go(IntroImportSeedPage.routerPage);
-                    return;
-                  }
-
-                  await _accountsDialog(
-                    newSession.wallet.appKeychain.accounts,
-                  );
-                  context.loadingOverlay.show(
-                    title: localizations.pleaseWait,
-                  );
-
-                  unawaited(
-                    (await ref
-                            .read(accountsNotifierProvider.notifier)
-                            .selectedAccountNotifier)
-                        ?.refreshAll(),
-                  );
-                  ref.read(
-                    RecoveryPhraseSavedProvider.setRecoveryPhraseSaved(true),
-                  );
-                  context.go(HomePage.routerPage);
-                  context.loadingOverlay.hide();
-
-                  setState(() {
-                    isPressed = false;
-                  });
-                } catch (e) {
-                  context.loadingOverlay.hide();
-                  setState(() {
-                    _mnemonicIsValid = false;
-                    isPressed = false;
-                  });
-                  UIUtil.showSnackbar(
-                    (e == ArchethicKeychainNotExistsException)
-                        ? localizations.noKeychain
-                        : e is TimeoutException
-                            ? localizations.failureTimeout
-                            : e.toString(),
-                    context,
-                    ref,
-                    ArchethicTheme.text,
-                    ArchethicTheme.snackBarShadow,
-                  );
-                  context.go(IntroImportSeedPage.routerPage);
-                  return;
-                }
+            final result = await context.push(
+              IntroConfigureSecurity.routerPage,
+              extra: {
+                'isImportProfile': true,
               },
-              disabled: isPressed == true,
-            ),
-          ],
+            );
+            if (result != null && result == false) {
+              setState(() {
+                _mnemonicError = '';
+                isPressed = false;
+              });
+              return;
+            }
+            context.loadingOverlay.show(
+              title: localizations.pleaseWait,
+            );
+
+            try {
+              final newSession = await ref
+                  .read(sessionNotifierProvider.notifier)
+                  .restoreFromMnemonics(
+                    mnemonics: phrase.toList(),
+                    languageCode: languageSeed,
+                  );
+              context.loadingOverlay.hide();
+              if (newSession == null) {
+                setState(() {
+                  _mnemonicIsValid = false;
+                  isPressed = false;
+                });
+                UIUtil.showSnackbar(
+                  localizations.noKeychain,
+                  context,
+                  ref,
+                  ArchethicTheme.text,
+                  ArchethicTheme.snackBarShadow,
+                );
+                context.go(IntroImportSeedPage.routerPage);
+                return;
+              }
+
+              await _accountsDialog(
+                newSession.wallet.appKeychain.accounts,
+              );
+              context.loadingOverlay.show(
+                title: localizations.pleaseWait,
+              );
+
+              unawaited(
+                (await ref
+                        .read(accountsNotifierProvider.notifier)
+                        .selectedAccountNotifier)
+                    ?.refreshAll(),
+              );
+              ref.read(
+                RecoveryPhraseSavedProvider.setRecoveryPhraseSaved(true),
+              );
+              context.go(HomePage.routerPage);
+              context.loadingOverlay.hide();
+
+              setState(() {
+                isPressed = false;
+              });
+            } catch (e) {
+              context.loadingOverlay.hide();
+              setState(() {
+                _mnemonicIsValid = false;
+                isPressed = false;
+              });
+              UIUtil.showSnackbar(
+                (e == ArchethicKeychainNotExistsException)
+                    ? localizations.noKeychain
+                    : e is TimeoutException
+                        ? localizations.failureTimeout
+                        : e.toString(),
+                context,
+                ref,
+                ArchethicTheme.text,
+                ArchethicTheme.snackBarShadow,
+              );
+              context.go(IntroImportSeedPage.routerPage);
+              return;
+            }
+          },
+          isLocked: isPressed == true,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            AppButtonTinyConnectivity(
-              localizations.paste24Words,
-              Dimens.buttonBottomDimens,
-              key: const Key('seedWordsPast24Words'),
-              onPressed: () async {
-                final data = await Clipboard.getData(
-                  'text/plain',
+        const SizedBox(
+          height: 10,
+        ),
+        BtnFooterPrimary(
+          btnPrimaryType: BtnFooterPrimaryType.outlinePrimary,
+          buttonText: localizations.paste24Words,
+          key: const Key('seedWordsPast24Words'),
+          onTap: () async {
+            final data = await Clipboard.getData(
+              'text/plain',
+            );
+
+            final pastedWords = data?.text
+                ?.trimLeft()
+                .trimRight()
+                .toLowerCase()
+                .split(RegExp('[^a-zA-ZÀ-ÿ]'))
+                .where(
+                  (element) => element.isNotEmpty,
                 );
 
-                final pastedWords = data?.text
-                    ?.trimLeft()
-                    .trimRight()
-                    .toLowerCase()
-                    .split(RegExp('[^a-zA-ZÀ-ÿ]'))
-                    .where(
-                      (element) => element.isNotEmpty,
-                    );
+            if (pastedWords == null ||
+                pastedWords.length != wordEditingControllers.length ||
+                pastedWords.any(
+                  (element) => !AppMnemomics.isValidWord(
+                    element,
+                    languageCode: languageSeed,
+                  ),
+                )) {
+              UIUtil.showSnackbar(
+                localizations.invalidSeedPaste,
+                context,
+                ref,
+                ArchethicTheme.text,
+                ArchethicTheme.snackBarShadow,
+              );
 
-                if (pastedWords == null ||
-                    pastedWords.length != wordEditingControllers.length ||
-                    pastedWords.any(
-                      (element) => !AppMnemomics.isValidWord(
-                        element,
-                        languageCode: languageSeed,
-                      ),
-                    )) {
-                  UIUtil.showSnackbar(
-                    localizations.invalidSeedPaste,
-                    context,
-                    ref,
-                    ArchethicTheme.text,
-                    ArchethicTheme.snackBarShadow,
-                  );
-
-                  return;
-                }
-                setState(() {
-                  for (var i = 0; i < wordEditingControllers.length; i++) {
-                    wordEditingControllers[i]?.text = pastedWords.elementAt(i);
-                  }
-                  _mnemonicError = '';
-                  _mnemonicIsValid = true;
-                });
-              },
-              disabled: isPressed == true,
-            ),
-          ],
+              return;
+            }
+            setState(() {
+              for (var i = 0; i < wordEditingControllers.length; i++) {
+                wordEditingControllers[i]?.text = pastedWords.elementAt(i);
+              }
+              _mnemonicError = '';
+              _mnemonicIsValid = true;
+            });
+          },
+          isLocked: isPressed == true,
         ),
       ],
     );
@@ -344,67 +332,17 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
 
     return Column(
       children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: Text(
-                '1) ${localizations.importSecretPhraseLanguage}',
-                style: ArchethicThemeStyles.textStyleSize14W200Primary,
-              ),
+            Text(
+              '1) ${localizations.importSecretPhraseLanguage}',
+              style: Theme.of(context).textTheme.bodySmallWithOpacity,
             ),
-            Row(
-              children: [
-                Container(
-                  margin: const EdgeInsetsDirectional.only(
-                    start: 15,
-                  ),
-                  height: 50,
-                  width: 50,
-                  child: TextButton(
-                    onPressed: () async {
-                      await ref
-                          .read(SettingsProviders.settings.notifier)
-                          .setLanguageSeed('en');
-                    },
-                    child: languageSeed == 'en'
-                        ? Image.asset(
-                            'assets/icons/languages/united-states.png',
-                          )
-                        : Opacity(
-                            opacity: 0.3,
-                            child: Image.asset(
-                              'assets/icons/languages/united-states.png',
-                            ),
-                          ),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsetsDirectional.only(
-                    start: 15,
-                  ),
-                  height: 50,
-                  width: 50,
-                  child: TextButton(
-                    onPressed: () async {
-                      await ref
-                          .read(SettingsProviders.settings.notifier)
-                          .setLanguageSeed('fr');
-                    },
-                    child: languageSeed == 'fr'
-                        ? Image.asset(
-                            'assets/icons/languages/france.png',
-                          )
-                        : Opacity(
-                            opacity: 0.3,
-                            child: Image.asset(
-                              'assets/icons/languages/france.png',
-                            ),
-                          ),
-                  ),
-                ),
-              ],
+            const SizedBox(
+              height: 10,
             ),
+            const SeedLanguageSwitch(),
           ],
         ),
         const SizedBox(
@@ -415,40 +353,36 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
             Expanded(
               child: Text(
                 '2) ${localizations.importSecretPhraseHint}',
-                style: ArchethicThemeStyles.textStyleSize14W200Primary,
+                style: Theme.of(context).textTheme.bodySmallWithOpacity,
                 textAlign: TextAlign.start,
               ),
             ),
           ],
         ),
-        const SizedBox(
-          height: 10,
-        ),
         if (_mnemonicError != '')
-          SizedBox(
-            height: 40,
-            child: Text(
-              _mnemonicError,
-              style: ArchethicThemeStyles.textStyleSize14W600PrimaryRed,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: MessageBox(
+              messageBoxType: MessageBoxType.warning,
+              text: _mnemonicError,
             ),
           )
         else
           const SizedBox(
-            height: 40,
+            height: 62,
           ),
         GridView.count(
           padding: EdgeInsets.zero,
           physics: const NeverScrollableScrollPhysics(),
-          childAspectRatio: 1 / 0.62,
+          childAspectRatio: 1 / 0.64,
           shrinkWrap: true,
           crossAxisCount: 4,
           children: List.generate(24, (index) {
             return SizedBox(
               height: 50,
               child: Padding(
-                padding: const EdgeInsets.only(
-                  left: 10,
-                  right: 10,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 5,
                 ),
                 child: Autocomplete<String>(
                   optionsBuilder: (
@@ -479,6 +413,13 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                     onFieldSubmitted,
                   ) {
                     wordEditingControllers[index] = textEditingController;
+
+                    focusNode.addListener(() {
+                      setState(() {
+                        _hasFocusList[index] = focusNode.hasFocus;
+                      });
+                    });
+
                     return Stack(
                       alignment: AlignmentDirectional.center,
                       children: <Widget>[
@@ -492,43 +433,43 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                                 child: Row(
                                   children: [
                                     Expanded(
-                                      child: DecoratedBox(
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            10,
+                                      child: TextField(
+                                        key: Key('seedWord$index'),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                              color: _hasFocusList[index]
+                                                  ? Colors.black
+                                                  : null,
+                                            ),
+                                        autocorrect: false,
+                                        controller: textEditingController,
+                                        focusNode: focusNode,
+                                        onChanged: (value) {
+                                          final _value = value.trim();
+                                          _validateWord(_value);
+                                        },
+                                        textInputAction: TextInputAction.next,
+                                        keyboardType: TextInputType.text,
+                                        inputFormatters: [
+                                          LowerCaseTextFormatter(),
+                                        ],
+                                        decoration: InputDecoration(
+                                          hintText: (index + 1).toString(),
+                                          contentPadding:
+                                              const EdgeInsets.only(left: 10),
+                                          filled: true,
+                                          fillColor: _hasFocusList[index]
+                                              ? Colors.white
+                                              : Colors.white.withOpacity(0.15),
+                                          border: const OutlineInputBorder(
+                                            borderSide: BorderSide.none,
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(10),
+                                            ),
                                           ),
-                                          border: Border.all(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primaryContainer,
-                                            width: 0.5,
-                                          ),
-                                          gradient: ArchethicTheme
-                                              .gradientInputFormBackground,
-                                        ),
-                                        child: TextField(
-                                          key: Key('seedWord$index'),
-                                          style: const TextStyle(
-                                            fontSize: 14,
-                                          ),
-                                          autocorrect: false,
-                                          controller: textEditingController,
-                                          focusNode: focusNode,
-                                          onChanged: (value) {
-                                            final _value = value.trim();
-                                            _validateWord(_value);
-                                          },
-                                          textInputAction: TextInputAction.next,
-                                          keyboardType: TextInputType.text,
-                                          inputFormatters: [
-                                            LowerCaseTextFormatter(),
-                                          ],
-                                          decoration: InputDecoration(
-                                            hintText: (index + 1).toString(),
-                                            border: InputBorder.none,
-                                            contentPadding:
-                                                const EdgeInsets.only(left: 10),
-                                          ),
+                                          focusColor: Colors.white,
                                         ),
                                       ),
                                     ),

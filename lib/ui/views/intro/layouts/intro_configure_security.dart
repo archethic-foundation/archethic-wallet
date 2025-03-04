@@ -14,7 +14,6 @@ import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/dialogs/authentification_method_dialog_help.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -118,9 +117,12 @@ class _IntroConfigureSecurityState extends ConsumerState<IntroConfigureSecurity>
           padding: const EdgeInsets.only(
             top: 20,
           ),
-          child: AutoSizeText(
+          child: Text(
             localizations.configureSecurityIntro,
-            style: Theme.of(context).textTheme.titleSmallSemiBold,
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold),
           ),
         ),
         Container(
