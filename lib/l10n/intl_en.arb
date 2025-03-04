@@ -599,6 +599,8 @@
     "withdrawFarmLockDone": "Withdraw successfully completed",
     "farmLockClaimConfirmInfosText": "Please confirm the claim of ",
     "farmLockClaimFinalAmount": "Amount claimed: ",
+    "farmLockClaimTitle": "How does it work?",
+    "farmLockClaimDesc": "Claim the rewards you have accumulated from your farmed LP tokens.",
     "farmLockClaimFormText": "are available for claiming.",
     "farmLockClaimTxAddress": "Claim transaction address: ",
     "farmLockClaimConfirmTitle": "Confirmation",
