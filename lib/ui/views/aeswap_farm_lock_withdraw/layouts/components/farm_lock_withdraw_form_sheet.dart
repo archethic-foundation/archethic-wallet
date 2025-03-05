@@ -5,6 +5,7 @@ import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_lp_token_fi
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/fiat_value.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
+import 'package:aewallet/ui/figma_components/complex/estimated_fees.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/figma_components/message_box/message_box.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -49,17 +50,23 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
     final localizations = AppLocalizations.of(context)!;
     final farmLockWithdraw = ref.watch(farmLockWithdrawFormNotifierProvider);
 
-    return BtnFooterPrimary(
-      buttonText: localizations.btn_farm_withdraw,
-      key: const Key('farmLockWithdraw'),
-      onTap: () async {
-        await ref
-            .read(
-              farmLockWithdrawFormNotifierProvider.notifier,
-            )
-            .validateForm(AppLocalizations.of(context)!);
-      },
-      isLocked: !farmLockWithdraw.isControlsOk,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        EstimatedFees(farmLockWithdraw.feeEstimation),
+        BtnFooterPrimary(
+          buttonText: localizations.btn_farm_withdraw,
+          key: const Key('farmLockWithdraw'),
+          onTap: () async {
+            await ref
+                .read(
+                  farmLockWithdrawFormNotifierProvider.notifier,
+                )
+                .validateForm(AppLocalizations.of(context)!);
+          },
+          isLocked: !farmLockWithdraw.isControlsOk,
+        ),
+      ],
     );
   }
 
@@ -124,6 +131,7 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
                   children: [
                     if (earnUserLevel == EarnUserLevelType.advanced)
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             localizations.farmLockWithdrawTitle,

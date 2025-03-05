@@ -1,8 +1,8 @@
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/application/feature_flags.dart';
+import 'package:aewallet/main.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_primary.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
-import 'package:aewallet/ui/views/sheets/bridge_sheet.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -18,6 +18,12 @@ class EarnSectionDepositFundsV2 extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
+    final onRampFiatFeatureFlag = ref
+        .watch(getFeatureFlagProvider(kApplicationCode, 'on-ramp-fiat'))
+        .valueOrNull;
+    final onRampCryptoFeatureFlag = ref
+        .watch(getFeatureFlagProvider(kApplicationCode, 'on-ramp-crypto'))
+        .valueOrNull;
 
     return aedappfm.BlockInfo(
       blockInfoColor: aedappfm.BlockInfoColor.purple,
@@ -29,41 +35,41 @@ class EarnSectionDepositFundsV2 extends ConsumerWidget {
         children: [
           Text(
             '1. ${localizations.earnSectionDepositFundsTitle}',
-            style: Theme.of(context).textTheme.titleSmall,
+            style: Theme.of(context).textTheme.titleSmallSemiBold,
           ),
-          const SizedBox(height: 20),
-          subSection(
-            context,
-            ref,
-            localizations.earnSectionDepositFundsBeginnerTitle,
-            localizations.earnSectionDepositFundsBeginnerDesc,
-            localizations.earnSectionDepositFundsBeginnerBuyBtn,
-            () async {
-              await context.push(BuySheet.routerPage);
-            },
-          ),
-          const SizedBox(height: 20),
-          subSection(
-            context,
-            ref,
-            localizations.earnSectionDepositFundsIntermediaryTitle,
-            localizations.earnSectionDepositFundsIntermediaryDesc,
-            localizations.earnSectionDepositFundsIntermediaryBuyBtn,
-            () async {
-              await context.push(BuySheet.routerPage);
-            },
-          ),
-          const SizedBox(height: 20),
-          subSection(
-            context,
-            ref,
-            localizations.earnSectionDepositFundsExpertTitle,
-            localizations.earnSectionDepositFundsExpertDesc,
-            localizations.earnSectionDepositFundsExpertBridgeBtn,
-            () async {
-              await context.push(BridgeSheet.routerPage);
-            },
-          ),
+          if (onRampFiatFeatureFlag != null && onRampFiatFeatureFlag == true)
+            Column(
+              children: [
+                const SizedBox(height: 20),
+                subSection(
+                  context,
+                  ref,
+                  localizations.earnSectionDepositFundsOptionFiatTitle,
+                  localizations.earnSectionDepositFundsOptionFiatDesc,
+                  localizations.earnSectionDepositFundsOptionFiatBuyBtn,
+                  () async {
+                    await context.push(BuySheet.routerPage);
+                  },
+                ),
+              ],
+            ),
+          if (onRampCryptoFeatureFlag != null &&
+              onRampCryptoFeatureFlag == true)
+            Column(
+              children: [
+                const SizedBox(height: 20),
+                subSection(
+                  context,
+                  ref,
+                  localizations.earnSectionDepositFundsOptionCryptoTitle,
+                  localizations.earnSectionDepositFundsOptionCryptoDesc,
+                  localizations.earnSectionDepositFundsOptionCryptoBuyBtn,
+                  () async {
+                    await context.push(BuySheet.routerPage);
+                  },
+                ),
+              ],
+            ),
         ],
       ),
     );
@@ -89,11 +95,13 @@ class EarnSectionDepositFundsV2 extends ConsumerWidget {
                 children: <InlineSpan>[
                   TextSpan(
                     text: '$descriptionTitle - ',
-                    style: Theme.of(context).textTheme.titleSmallSemiBold,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          fontWeight: FontWeightTelegraf.fontWeightBold,
+                        ),
                   ),
                   TextSpan(
                     text: description,
-                    style: AppTextStyles.bodySmall(context),
+                    style: Theme.of(context).textTheme.bodySmallWithOpacity,
                   ),
                 ],
               ),
@@ -101,9 +109,9 @@ class EarnSectionDepositFundsV2 extends ConsumerWidget {
             const SizedBox(height: 10),
             Row(
               children: [
-                CustomSmallBtn(
+                BtnPrimary(
                   buttonText: buttonText,
-                  onPressed: buttonAction,
+                  onTap: buttonAction,
                 ),
               ],
             ),

@@ -4,6 +4,7 @@ import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'state.freezed.dart';
 
@@ -27,7 +28,7 @@ class FarmLockWithdrawFormState with _$FarmLockWithdrawFormState {
     double? finalAmountWithdraw,
     DateTime? consentDateTime,
     double? depositedAmount,
-    @Default(0.0) double feesEstimatedUCO,
+    AsyncValue<double>? feeEstimation,
     double? rewardAmount,
     String? poolAddress,
     DateTime? endDate,
