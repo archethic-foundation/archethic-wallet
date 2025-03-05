@@ -268,6 +268,7 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
           );
     } else {
       final environment = ref.read(environmentProvider);
+      final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
       final stepsState = ref.read(stepsNotifierProvider.notifier);
       final currentStep = ref
           .read(stepsNotifierProvider)
@@ -279,12 +280,11 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
 
       final result = await ref.read(withdrawFundsBeginnerCaseProvider).run(
             localizations,
-            state.farmAddress!,
-            state.amount,
-            state.poolAddress!,
+            farmLock!.farmAddress,
+            farmLock.poolAddress,
             environment.aeETHAddress,
-            state.lpToken!.address,
-            state.depositId,
+            farmLock.lpToken!.address,
+            farmLock.userInfos,
             currentStep ?? 0,
             stepsState,
             ref.read(stepsNotifierProvider).snapshot,

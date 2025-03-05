@@ -1,12 +1,14 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/settings.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_lp_token_fiat_value.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/fiat_value.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/figma_components/message_box/message_box.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/layouts/components/farm_lock_withdraw_textfield_amount.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
@@ -94,9 +96,11 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
     final earnUserLevel = ref.watch(
       SettingsProviders.settings.select((settings) => settings.earnUserLevel),
     );
+    final pool = ref.watch(farmLockFormPoolProvider).valueOrNull;
 
     if (farmLockWithdraw.rewardToken == null ||
-        farmLockWithdraw.depositedAmount == null) {
+        farmLockWithdraw.depositedAmount == null ||
+        farmLockWithdraw.rewardAmount == null) {
       return const Padding(
         padding: EdgeInsets.only(top: 120, bottom: 120),
         child: SizedBox(
@@ -113,7 +117,7 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
           Padding(
             padding: const EdgeInsets.only(top: 10),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,72 +145,124 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
                             Theme.of(context).textTheme.bodyMediumWithOpacity,
                       ),
                     const SizedBox(height: 20),
-                    if (farmLockWithdraw.rewardAmount == 0)
+                    if (earnUserLevel == EarnUserLevelType.advanced)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            localizations.farmLockWithdrawTextFieldLPLabel,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                  fontWeight: FontWeightTelegraf.fontWeightBold,
+                                ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          const FarmLockWithdrawAmount(),
+                        ],
+                      )
+                    else if (farmLockWithdraw.depositedAmount == 0)
                       MessageBox(
                         messageBoxType: MessageBoxType.info,
                         text: AppLocalizations.of(context)!
-                            .farmLockWithdrawFormTextNoRewardText1,
+                            .farmLockWithdrawFormTextNoLPText1,
                       )
                     else
-                      FutureBuilder<String>(
-                        future: FiatValue().display(
-                          ref,
-                          farmLockWithdraw.rewardToken!,
-                          farmLockWithdraw.rewardAmount!,
-                        ),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return Text.rich(
-                              TextSpan(
-                                text: '',
-                                children: <InlineSpan>[
-                                  TextSpan(
-                                    text:
-                                        '${farmLockWithdraw.rewardAmount!.formatNumber()} ${farmLockWithdraw.rewardToken!.symbol} ',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMediumWithOpacity
-                                        .copyWith(
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                      Text.rich(
+                        TextSpan(
+                          children: <InlineSpan>[
+                            TextSpan(
+                              text:
+                                  '${farmLockWithdraw.depositedAmount!.formatNumber()} ${farmLockWithdraw.depositedAmount! > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken} ',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMediumWithOpacity
+                                  .copyWith(
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  TextSpan(
-                                    text: '${snapshot.data}',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMediumWithOpacity,
-                                  ),
-                                  TextSpan(
-                                    text: AppLocalizations.of(context)!
-                                        .farmLockWithdrawFormTextNoRewardText2,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMediumWithOpacity,
-                                  ),
-                                ],
+                            ),
+                            TextSpan(
+                              text: ref.watch(
+                                dexLPTokenFiatValueProvider(
+                                  pool!.pair.token1,
+                                  pool.pair.token2,
+                                  farmLockWithdraw.depositedAmount!,
+                                  pool.poolAddress,
+                                ),
                               ),
-                            );
-                          }
-                          return const SizedBox.shrink();
-                        },
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMediumWithOpacity,
+                            ),
+                            TextSpan(
+                              text: AppLocalizations.of(context)!
+                                  .farmLockWithdrawFormTextLPText2,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMediumWithOpacity,
+                            ),
+                          ],
+                        ),
                       ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      localizations.farmLockWithdrawTextFieldLPLabel,
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            fontWeight: FontWeightTelegraf.fontWeightBold,
-                          ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    const FarmLockWithdrawAmount(),
                   ],
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 10,
+                ),
+                if (farmLockWithdraw.rewardAmount == 0)
+                  MessageBox(
+                    messageBoxType: MessageBoxType.info,
+                    text: AppLocalizations.of(context)!
+                        .farmLockWithdrawFormTextNoRewardText1,
+                  )
+                else
+                  FutureBuilder<String>(
+                    future: FiatValue().display(
+                      ref,
+                      farmLockWithdraw.rewardToken!,
+                      farmLockWithdraw.rewardAmount!,
+                    ),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Text.rich(
+                          TextSpan(
+                            text: '',
+                            children: <InlineSpan>[
+                              TextSpan(
+                                text:
+                                    '${farmLockWithdraw.rewardAmount!.formatNumber()} ${farmLockWithdraw.rewardToken!.symbol} ',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMediumWithOpacity
+                                    .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
+                              TextSpan(
+                                text: '${snapshot.data}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMediumWithOpacity,
+                              ),
+                              TextSpan(
+                                text: AppLocalizations.of(context)!
+                                    .farmLockWithdrawFormTextRewardText2,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMediumWithOpacity,
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                      return const SizedBox.shrink();
+                    },
+                  ),
+                const SizedBox(
+                  height: 10,
                 ),
                 MessageBox(
                   messageBoxType: MessageBoxType.warning,
@@ -219,6 +275,7 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      const SizedBox(height: 10),
                       Text(
                         localizations.farmLockWithdrawTitle,
                         style: boldBodyLarge,
@@ -230,7 +287,7 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
                             Theme.of(context).textTheme.bodyMediumWithOpacity,
                       ),
                     ],
-                  )
+                  ),
               ],
             ),
           ),

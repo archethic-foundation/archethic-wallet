@@ -16,6 +16,7 @@ import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/farm_lock_dep
 import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/layouts/components/farm_lock_level_up_result_sheet.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/layouts/farm_lock_level_up_sheet.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/layouts/components/farm_lock_withdraw_result_sheet.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/layouts/farm_lock_withdraw_funds_sheet.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/layouts/farm_lock_withdraw_sheet.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/layouts/components/liquidity_add_result_sheet.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/layouts/liquidity_add_sheet.dart';

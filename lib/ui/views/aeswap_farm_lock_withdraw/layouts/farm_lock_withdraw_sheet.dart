@@ -1,11 +1,8 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
-import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pair.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/layouts/components/farm_lock_withdraw_confirm_sheet.dart';
-import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/layouts/components/farm_lock_withdraw_confirm_sheet_uco.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/layouts/components/farm_lock_withdraw_form_sheet.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
 import 'package:flutter/material.dart';
@@ -80,14 +77,9 @@ class _FarmLockWithdrawSheetState extends ConsumerState<FarmLockWithdrawSheet> {
 
     final farmLockWithdrawForm =
         ref.watch(farmLockWithdrawFormNotifierProvider);
-    final earnUserLevel = ref.watch(
-      SettingsProviders.settings.select((settings) => settings.earnUserLevel),
-    );
 
     return farmLockWithdrawForm.processStep == ProcessStep.form
         ? const FarmLockWithdrawFormSheet()
-        : earnUserLevel == EarnUserLevelType.beginner
-            ? const FarmLockWithdrawConfirmSheetUCO()
-            : const FarmLockWithdrawConfirmSheet();
+        : const FarmLockWithdrawConfirmSheet();
   }
 }

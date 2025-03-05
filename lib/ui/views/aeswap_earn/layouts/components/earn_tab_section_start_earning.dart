@@ -8,6 +8,7 @@ import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/farm_lock_block_list_single_line_lock.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/farm_lock_deposit_sheet.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/layouts/farm_lock_withdraw_funds_sheet.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -168,6 +169,17 @@ class EarnSectionStartEarning extends ConsumerWidget {
                           ),
                         );
                       },
+                    );
+                  },
+                  btnPrimaryType: BtnPrimaryType.outlinePrimary,
+                )
+              else
+                BtnPrimary(
+                  buttonText:
+                      localizations.earnSectionStartEarningWithdrawLPBtn,
+                  onTap: () async {
+                    await context.push(
+                      FarmLockWithdrawFundsSheet.routerPage,
                     );
                   },
                   btnPrimaryType: BtnPrimaryType.outlinePrimary,

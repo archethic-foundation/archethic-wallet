@@ -7,6 +7,7 @@ import 'package:aewallet/domain/repositories/transaction_remote.dart';
 import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/modules/aeswap/application/contracts/archethic_contract.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock_user_infos.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_notification.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/util/notification_service/task_notification_service.dart'
@@ -38,11 +39,10 @@ class WithdrawFundsBeginnerCase with aedappfm.TransactionMixin {
   Future<({double? amountReward, double? amountTokenUCOSwapped})> run(
     AppLocalizations localizations,
     String farmGenesisAddress,
-    double lpAmount,
     String poolGenesisAddress,
     String aeETHAddress,
     String lpTokenAddress,
-    String depositId,
+    Map<String, DexFarmLockUserInfos> userInfos,
     int currentStepIndex,
     StepsNotifier stepsNotifier,
     Map<String, dynamic>? snapshot,
@@ -68,69 +68,75 @@ class WithdrawFundsBeginnerCase with aedappfm.TransactionMixin {
 
     try {
       if (currentStep == 0) {
-        archethic.Transaction? transactionWithdraw;
-        // WITHDRAW LOCKED LP
-        final transactionWithdrawMap =
-            await archethicContract.getFarmLockWithdrawTx(
-          farmGenesisAddress,
-          lpAmount,
-          depositId,
-        );
+        for (final userInfo in userInfos.values) {
+          if (userInfo.level == '0') {
+            archethic.Transaction? transactionWithdraw;
+            // WITHDRAW LOCKED LP
+            final transactionWithdrawMap =
+                await archethicContract.getFarmLockWithdrawTx(
+              farmGenesisAddress,
+              userInfo.amount,
+              userInfo.id,
+            );
 
-        transactionWithdrawMap.map(
-          success: (success) {
-            transactionWithdraw = success;
-          },
-          failure: (failure) {
-            throw failure;
-          },
-        );
+            transactionWithdrawMap.map(
+              success: (success) {
+                transactionWithdraw = success;
+              },
+              failure: (failure) {
+                throw failure;
+              },
+            );
 
-        final transationSignedRaw =
-            await transactionRepository.buildTransactionRaw(
-          keychainSecuredInfos,
-          transactionWithdraw!,
-          selectedAccount.genesisAddress,
-          selectedAccount.name,
-        );
+            final transationSignedRaw =
+                await transactionRepository.buildTransactionRaw(
+              keychainSecuredInfos,
+              transactionWithdraw!,
+              selectedAccount.genesisAddress,
+              selectedAccount.name,
+            );
 
-        await transactionRepository.sendSignedRaw(
-          transaction: transationSignedRaw,
-        );
+            await transactionRepository.sendSignedRaw(
+              transaction: transationSignedRaw,
+            );
 
-        await aedappfm.PeriodicFuture.periodic<bool>(
-          () => isSCCallExecuted(
-            apiService,
-            farmGenesisAddress,
-            transationSignedRaw.address!.address!,
-          ),
-          sleepDuration: const Duration(seconds: 3),
-          until: (depositOk) => depositOk == true,
-          timeout: const Duration(minutes: 1),
-        );
+            await aedappfm.PeriodicFuture.periodic<bool>(
+              () => isSCCallExecuted(
+                apiService,
+                farmGenesisAddress,
+                transationSignedRaw.address!.address!,
+              ),
+              sleepDuration: const Duration(seconds: 3),
+              until: (depositOk) => depositOk == true,
+              timeout: const Duration(minutes: 1),
+            );
 
-        final amounts = await aedappfm.PeriodicFuture.periodic<List<double>>(
-          () => Future.wait([
-            getAmountFromTxInput(
-              transationSignedRaw.address!.address!,
-              kUCOAddress,
-              apiService,
-            ),
-            getAmountFromTxInput(
-              transationSignedRaw.address!.address!,
-              lpTokenAddress,
-              apiService,
-            ),
-          ]),
-          sleepDuration: const Duration(seconds: 3),
-          until: (amounts) {
-            return amounts[1] > 0;
-          },
-          timeout: const Duration(minutes: 1),
-        );
+            final amounts =
+                await aedappfm.PeriodicFuture.periodic<List<double>>(
+              () => Future.wait([
+                getAmountFromTxInput(
+                  transationSignedRaw.address!.address!,
+                  kUCOAddress,
+                  apiService,
+                ),
+                getAmountFromTxInput(
+                  transationSignedRaw.address!.address!,
+                  lpTokenAddress,
+                  apiService,
+                ),
+              ]),
+              sleepDuration: const Duration(seconds: 3),
+              until: (amounts) {
+                return amounts[1] > 0;
+              },
+              timeout: const Duration(minutes: 1),
+            );
 
-        amountReward = amounts[0];
-        amountWithdrawLocked = amounts[1];
+            amountReward += amounts[0];
+            amountWithdrawLocked += amounts[1];
+          }
+        }
+
         final withdrawLockedSnapshot = {
           'amountReward': amountReward,
           'amountWithdrawLocked': amountWithdrawLocked,
@@ -153,7 +159,7 @@ class WithdrawFundsBeginnerCase with aedappfm.TransactionMixin {
         final transactionRemoveLiquiditylMap =
             await archethicContract.getRemoveLiquidityTx(
           lpTokenAddress,
-          lpAmount,
+          amountWithdrawLocked,
           poolGenesisAddress,
         );
 
