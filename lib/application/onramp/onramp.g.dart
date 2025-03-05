@@ -6,7 +6,7 @@ part of 'onramp.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$onRampRepositoryHash() => r'b80651db185aa6c54ad6917dc79658245d4f0fd9';
+String _$onRampRepositoryHash() => r'8e47f8e97ca27916db00d99a8d0f987466f6b33e';
 
 /// See also [_onRampRepository].
 @ProviderFor(_onRampRepository)
@@ -24,26 +24,25 @@ final _onRampRepositoryProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef _OnRampRepositoryRef = AutoDisposeFutureProviderRef<OnRampRepository>;
-String _$onrampSetupHash() => r'a1d1c7cf18e50bc7444cc0c47262101f546ec5a8';
+String _$onrampEvmSetupHash() => r'29655d47c06f16ab9affd394248747eaa1d5ea49';
 
-/// See also [onrampSetup].
-@ProviderFor(onrampSetup)
-final onrampSetupProvider =
-    AutoDisposeFutureProvider<({List<OnRampChain> chains})>.internal(
-  onrampSetup,
-  name: r'onrampSetupProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$onrampSetupHash,
+/// See also [onrampEvmSetup].
+@ProviderFor(onrampEvmSetup)
+final onrampEvmSetupProvider = AutoDisposeFutureProvider<OnRampSetup>.internal(
+  onrampEvmSetup,
+  name: r'onrampEvmSetupProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$onrampEvmSetupHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef OnrampSetupRef
-    = AutoDisposeFutureProviderRef<({List<OnRampChain> chains})>;
+typedef OnrampEvmSetupRef = AutoDisposeFutureProviderRef<OnRampSetup>;
 String _$onrampChainsForTokenHash() =>
-    r'730e2f4d451d1bd715d5f1eafce81d61d026a971';
+    r'616a87fc7caba8621ed71d34c953f0b691c2da24';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -77,10 +76,10 @@ class OnrampChainsForTokenFamily extends Family<AsyncValue<List<OnRampChain>>> {
 
   /// See also [onrampChainsForToken].
   OnrampChainsForTokenProvider call(
-    String tokenSymbol,
+    String tokenId,
   ) {
     return OnrampChainsForTokenProvider(
-      tokenSymbol,
+      tokenId,
     );
   }
 
@@ -89,7 +88,7 @@ class OnrampChainsForTokenFamily extends Family<AsyncValue<List<OnRampChain>>> {
     covariant OnrampChainsForTokenProvider provider,
   ) {
     return call(
-      provider.tokenSymbol,
+      provider.tokenId,
     );
   }
 
@@ -113,11 +112,11 @@ class OnrampChainsForTokenProvider
     extends AutoDisposeFutureProvider<List<OnRampChain>> {
   /// See also [onrampChainsForToken].
   OnrampChainsForTokenProvider(
-    String tokenSymbol,
+    String tokenId,
   ) : this._internal(
           (ref) => onrampChainsForToken(
             ref as OnrampChainsForTokenRef,
-            tokenSymbol,
+            tokenId,
           ),
           from: onrampChainsForTokenProvider,
           name: r'onrampChainsForTokenProvider',
@@ -128,7 +127,7 @@ class OnrampChainsForTokenProvider
           dependencies: OnrampChainsForTokenFamily._dependencies,
           allTransitiveDependencies:
               OnrampChainsForTokenFamily._allTransitiveDependencies,
-          tokenSymbol: tokenSymbol,
+          tokenId: tokenId,
         );
 
   OnrampChainsForTokenProvider._internal(
@@ -138,10 +137,10 @@ class OnrampChainsForTokenProvider
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.tokenSymbol,
+    required this.tokenId,
   }) : super.internal();
 
-  final String tokenSymbol;
+  final String tokenId;
 
   @override
   Override overrideWith(
@@ -157,7 +156,7 @@ class OnrampChainsForTokenProvider
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        tokenSymbol: tokenSymbol,
+        tokenId: tokenId,
       ),
     );
   }
@@ -169,14 +168,13 @@ class OnrampChainsForTokenProvider
 
   @override
   bool operator ==(Object other) {
-    return other is OnrampChainsForTokenProvider &&
-        other.tokenSymbol == tokenSymbol;
+    return other is OnrampChainsForTokenProvider && other.tokenId == tokenId;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, tokenSymbol.hashCode);
+    hash = _SystemHash.combine(hash, tokenId.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -186,8 +184,8 @@ class OnrampChainsForTokenProvider
 // ignore: unused_element
 mixin OnrampChainsForTokenRef
     on AutoDisposeFutureProviderRef<List<OnRampChain>> {
-  /// The parameter `tokenSymbol` of this provider.
-  String get tokenSymbol;
+  /// The parameter `tokenId` of this provider.
+  String get tokenId;
 }
 
 class _OnrampChainsForTokenProviderElement
@@ -196,45 +194,167 @@ class _OnrampChainsForTokenProviderElement
   _OnrampChainsForTokenProviderElement(super.provider);
 
   @override
-  String get tokenSymbol =>
-      (origin as OnrampChainsForTokenProvider).tokenSymbol;
+  String get tokenId => (origin as OnrampChainsForTokenProvider).tokenId;
 }
 
-String _$onrampChainsHash() => r'b4b16737b32e3893dc607a0f7522cb9493285be8';
+String _$onrampTokensDisplayDataHash() =>
+    r'b70661f56e9071a7fab01d79a697891920bcc410';
 
-/// See also [onrampChains].
-@ProviderFor(onrampChains)
-final onrampChainsProvider =
-    AutoDisposeFutureProvider<List<OnRampChain>>.internal(
-  onrampChains,
-  name: r'onrampChainsProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$onrampChainsHash,
+/// See also [onrampTokensDisplayData].
+@ProviderFor(onrampTokensDisplayData)
+final onrampTokensDisplayDataProvider =
+    AutoDisposeFutureProvider<List<OnRampTokenDisplayData>>.internal(
+  onrampTokensDisplayData,
+  name: r'onrampTokensDisplayDataProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$onrampTokensDisplayDataHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef OnrampChainsRef = AutoDisposeFutureProviderRef<List<OnRampChain>>;
-String _$onrampTokensHash() => r'1dcfab2e7885ed236af28463a7947fc78a7eb292';
+typedef OnrampTokensDisplayDataRef
+    = AutoDisposeFutureProviderRef<List<OnRampTokenDisplayData>>;
+String _$onrampTokenDisplayDataHash() =>
+    r'fd4aa4a3fec52654406167e6f6acf806da7b8848';
 
-/// See also [onrampTokens].
-@ProviderFor(onrampTokens)
-final onrampTokensProvider =
-    AutoDisposeFutureProvider<List<OnRampToken>>.internal(
-  onrampTokens,
-  name: r'onrampTokensProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$onrampTokensHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+/// See also [onrampTokenDisplayData].
+@ProviderFor(onrampTokenDisplayData)
+const onrampTokenDisplayDataProvider = OnrampTokenDisplayDataFamily();
+
+/// See also [onrampTokenDisplayData].
+class OnrampTokenDisplayDataFamily
+    extends Family<AsyncValue<OnRampTokenDisplayData?>> {
+  /// See also [onrampTokenDisplayData].
+  const OnrampTokenDisplayDataFamily();
+
+  /// See also [onrampTokenDisplayData].
+  OnrampTokenDisplayDataProvider call(
+    String id,
+  ) {
+    return OnrampTokenDisplayDataProvider(
+      id,
+    );
+  }
+
+  @override
+  OnrampTokenDisplayDataProvider getProviderOverride(
+    covariant OnrampTokenDisplayDataProvider provider,
+  ) {
+    return call(
+      provider.id,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'onrampTokenDisplayDataProvider';
+}
+
+/// See also [onrampTokenDisplayData].
+class OnrampTokenDisplayDataProvider
+    extends AutoDisposeFutureProvider<OnRampTokenDisplayData?> {
+  /// See also [onrampTokenDisplayData].
+  OnrampTokenDisplayDataProvider(
+    String id,
+  ) : this._internal(
+          (ref) => onrampTokenDisplayData(
+            ref as OnrampTokenDisplayDataRef,
+            id,
+          ),
+          from: onrampTokenDisplayDataProvider,
+          name: r'onrampTokenDisplayDataProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$onrampTokenDisplayDataHash,
+          dependencies: OnrampTokenDisplayDataFamily._dependencies,
+          allTransitiveDependencies:
+              OnrampTokenDisplayDataFamily._allTransitiveDependencies,
+          id: id,
+        );
+
+  OnrampTokenDisplayDataProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.id,
+  }) : super.internal();
+
+  final String id;
+
+  @override
+  Override overrideWith(
+    FutureOr<OnRampTokenDisplayData?> Function(
+            OnrampTokenDisplayDataRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: OnrampTokenDisplayDataProvider._internal(
+        (ref) => create(ref as OnrampTokenDisplayDataRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        id: id,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<OnRampTokenDisplayData?> createElement() {
+    return _OnrampTokenDisplayDataProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is OnrampTokenDisplayDataProvider && other.id == id;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, id.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef OnrampTokensRef = AutoDisposeFutureProviderRef<List<OnRampToken>>;
-String _$onrampTokenHash() => r'886c49c125e3a0b7775d6f840b8cfe81adcbfff2';
+mixin OnrampTokenDisplayDataRef
+    on AutoDisposeFutureProviderRef<OnRampTokenDisplayData?> {
+  /// The parameter `id` of this provider.
+  String get id;
+}
+
+class _OnrampTokenDisplayDataProviderElement
+    extends AutoDisposeFutureProviderElement<OnRampTokenDisplayData?>
+    with OnrampTokenDisplayDataRef {
+  _OnrampTokenDisplayDataProviderElement(super.provider);
+
+  @override
+  String get id => (origin as OnrampTokenDisplayDataProvider).id;
+}
+
+String _$onrampTokenHash() => r'8a55a68257abf950c38665bd2c1584e9b429a58b';
 
 /// See also [onrampToken].
 @ProviderFor(onrampToken)
@@ -247,10 +367,12 @@ class OnrampTokenFamily extends Family<AsyncValue<OnRampToken?>> {
 
   /// See also [onrampToken].
   OnrampTokenProvider call(
-    String id,
+    String chainId,
+    String tokenId,
   ) {
     return OnrampTokenProvider(
-      id,
+      chainId,
+      tokenId,
     );
   }
 
@@ -259,7 +381,8 @@ class OnrampTokenFamily extends Family<AsyncValue<OnRampToken?>> {
     covariant OnrampTokenProvider provider,
   ) {
     return call(
-      provider.id,
+      provider.chainId,
+      provider.tokenId,
     );
   }
 
@@ -282,11 +405,13 @@ class OnrampTokenFamily extends Family<AsyncValue<OnRampToken?>> {
 class OnrampTokenProvider extends AutoDisposeFutureProvider<OnRampToken?> {
   /// See also [onrampToken].
   OnrampTokenProvider(
-    String id,
+    String chainId,
+    String tokenId,
   ) : this._internal(
           (ref) => onrampToken(
             ref as OnrampTokenRef,
-            id,
+            chainId,
+            tokenId,
           ),
           from: onrampTokenProvider,
           name: r'onrampTokenProvider',
@@ -297,7 +422,8 @@ class OnrampTokenProvider extends AutoDisposeFutureProvider<OnRampToken?> {
           dependencies: OnrampTokenFamily._dependencies,
           allTransitiveDependencies:
               OnrampTokenFamily._allTransitiveDependencies,
-          id: id,
+          chainId: chainId,
+          tokenId: tokenId,
         );
 
   OnrampTokenProvider._internal(
@@ -307,10 +433,12 @@ class OnrampTokenProvider extends AutoDisposeFutureProvider<OnRampToken?> {
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.id,
+    required this.chainId,
+    required this.tokenId,
   }) : super.internal();
 
-  final String id;
+  final String chainId;
+  final String tokenId;
 
   @override
   Override overrideWith(
@@ -325,7 +453,8 @@ class OnrampTokenProvider extends AutoDisposeFutureProvider<OnRampToken?> {
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        id: id,
+        chainId: chainId,
+        tokenId: tokenId,
       ),
     );
   }
@@ -337,13 +466,16 @@ class OnrampTokenProvider extends AutoDisposeFutureProvider<OnRampToken?> {
 
   @override
   bool operator ==(Object other) {
-    return other is OnrampTokenProvider && other.id == id;
+    return other is OnrampTokenProvider &&
+        other.chainId == chainId &&
+        other.tokenId == tokenId;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, id.hashCode);
+    hash = _SystemHash.combine(hash, chainId.hashCode);
+    hash = _SystemHash.combine(hash, tokenId.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -352,8 +484,11 @@ class OnrampTokenProvider extends AutoDisposeFutureProvider<OnRampToken?> {
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 mixin OnrampTokenRef on AutoDisposeFutureProviderRef<OnRampToken?> {
-  /// The parameter `id` of this provider.
-  String get id;
+  /// The parameter `chainId` of this provider.
+  String get chainId;
+
+  /// The parameter `tokenId` of this provider.
+  String get tokenId;
 }
 
 class _OnrampTokenProviderElement
@@ -361,7 +496,9 @@ class _OnrampTokenProviderElement
   _OnrampTokenProviderElement(super.provider);
 
   @override
-  String get id => (origin as OnrampTokenProvider).id;
+  String get chainId => (origin as OnrampTokenProvider).chainId;
+  @override
+  String get tokenId => (origin as OnrampTokenProvider).tokenId;
 }
 
 String _$onrampMaxAmountHash() => r'947d22bd1a39591b7e2048250088636c19baa0e4';
@@ -399,7 +536,7 @@ final onrampDepositAddressProvider = AutoDisposeFutureProvider<String>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef OnrampDepositAddressRef = AutoDisposeFutureProviderRef<String>;
-String _$onrampTransfersHash() => r'90964aba38b06839cdb8a310cd121481da9161d3';
+String _$onrampTransfersHash() => r'bd8214a58e4cbd5bc7a24cc2872c4ed895ccad57';
 
 /// See also [onrampTransfers].
 @ProviderFor(onrampTransfers)

@@ -7,7 +7,7 @@ part of 'buy_with_crypto_form_provider.dart';
 // **************************************************************************
 
 String _$onrampTokenDisplayDataHash() =>
-    r'2bd5397e94b8de307245531ffdb40e0a51f94f92';
+    r'9782b709c1184ff7e5ae1c78b146b7d939970ff6';
 
 /// See also [onrampTokenDisplayData].
 @ProviderFor(onrampTokenDisplayData)
@@ -26,8 +26,8 @@ final onrampTokenDisplayDataProvider =
 // ignore: unused_element
 typedef OnrampTokenDisplayDataRef
     = AutoDisposeFutureProviderRef<List<OnRampTokenDisplayData>>;
-String _$onrampTokenFromDisplayDataHash() =>
-    r'44e4cf0bc673d297a25001112f882146d284d737';
+String _$onrampTokenAvailableForChainHash() =>
+    r'ad36ad8a2e89d50043cf3c434b1fdf38d2c878ff';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -50,33 +50,33 @@ class _SystemHash {
   }
 }
 
-/// See also [onrampTokenFromDisplayData].
-@ProviderFor(onrampTokenFromDisplayData)
-const onrampTokenFromDisplayDataProvider = OnrampTokenFromDisplayDataFamily();
+/// See also [onrampTokenAvailableForChain].
+@ProviderFor(onrampTokenAvailableForChain)
+const onrampTokenAvailableForChainProvider =
+    OnrampTokenAvailableForChainFamily();
 
-/// See also [onrampTokenFromDisplayData].
-class OnrampTokenFromDisplayDataFamily
-    extends Family<AsyncValue<OnRampToken?>> {
-  /// See also [onrampTokenFromDisplayData].
-  const OnrampTokenFromDisplayDataFamily();
+/// See also [onrampTokenAvailableForChain].
+class OnrampTokenAvailableForChainFamily extends Family<AsyncValue<bool>> {
+  /// See also [onrampTokenAvailableForChain].
+  const OnrampTokenAvailableForChainFamily();
 
-  /// See also [onrampTokenFromDisplayData].
-  OnrampTokenFromDisplayDataProvider call(
-    ({String iconUrl, String name, String symbol}) tokenDisplayData,
+  /// See also [onrampTokenAvailableForChain].
+  OnrampTokenAvailableForChainProvider call(
+    String tokenId,
     String chainId,
   ) {
-    return OnrampTokenFromDisplayDataProvider(
-      tokenDisplayData,
+    return OnrampTokenAvailableForChainProvider(
+      tokenId,
       chainId,
     );
   }
 
   @override
-  OnrampTokenFromDisplayDataProvider getProviderOverride(
-    covariant OnrampTokenFromDisplayDataProvider provider,
+  OnrampTokenAvailableForChainProvider getProviderOverride(
+    covariant OnrampTokenAvailableForChainProvider provider,
   ) {
     return call(
-      provider.tokenDisplayData,
+      provider.tokenId,
       provider.chainId,
     );
   }
@@ -93,85 +93,84 @@ class OnrampTokenFromDisplayDataFamily
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'onrampTokenFromDisplayDataProvider';
+  String? get name => r'onrampTokenAvailableForChainProvider';
 }
 
-/// See also [onrampTokenFromDisplayData].
-class OnrampTokenFromDisplayDataProvider
-    extends AutoDisposeFutureProvider<OnRampToken?> {
-  /// See also [onrampTokenFromDisplayData].
-  OnrampTokenFromDisplayDataProvider(
-    ({String iconUrl, String name, String symbol}) tokenDisplayData,
+/// See also [onrampTokenAvailableForChain].
+class OnrampTokenAvailableForChainProvider
+    extends AutoDisposeFutureProvider<bool> {
+  /// See also [onrampTokenAvailableForChain].
+  OnrampTokenAvailableForChainProvider(
+    String tokenId,
     String chainId,
   ) : this._internal(
-          (ref) => onrampTokenFromDisplayData(
-            ref as OnrampTokenFromDisplayDataRef,
-            tokenDisplayData,
+          (ref) => onrampTokenAvailableForChain(
+            ref as OnrampTokenAvailableForChainRef,
+            tokenId,
             chainId,
           ),
-          from: onrampTokenFromDisplayDataProvider,
-          name: r'onrampTokenFromDisplayDataProvider',
+          from: onrampTokenAvailableForChainProvider,
+          name: r'onrampTokenAvailableForChainProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$onrampTokenFromDisplayDataHash,
-          dependencies: OnrampTokenFromDisplayDataFamily._dependencies,
+                  : _$onrampTokenAvailableForChainHash,
+          dependencies: OnrampTokenAvailableForChainFamily._dependencies,
           allTransitiveDependencies:
-              OnrampTokenFromDisplayDataFamily._allTransitiveDependencies,
-          tokenDisplayData: tokenDisplayData,
+              OnrampTokenAvailableForChainFamily._allTransitiveDependencies,
+          tokenId: tokenId,
           chainId: chainId,
         );
 
-  OnrampTokenFromDisplayDataProvider._internal(
+  OnrampTokenAvailableForChainProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.tokenDisplayData,
+    required this.tokenId,
     required this.chainId,
   }) : super.internal();
 
-  final ({String iconUrl, String name, String symbol}) tokenDisplayData;
+  final String tokenId;
   final String chainId;
 
   @override
   Override overrideWith(
-    FutureOr<OnRampToken?> Function(OnrampTokenFromDisplayDataRef provider)
-        create,
+    FutureOr<bool> Function(OnrampTokenAvailableForChainRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: OnrampTokenFromDisplayDataProvider._internal(
-        (ref) => create(ref as OnrampTokenFromDisplayDataRef),
+      override: OnrampTokenAvailableForChainProvider._internal(
+        (ref) => create(ref as OnrampTokenAvailableForChainRef),
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        tokenDisplayData: tokenDisplayData,
+        tokenId: tokenId,
         chainId: chainId,
       ),
     );
   }
 
   @override
-  AutoDisposeFutureProviderElement<OnRampToken?> createElement() {
-    return _OnrampTokenFromDisplayDataProviderElement(this);
+  AutoDisposeFutureProviderElement<bool> createElement() {
+    return _OnrampTokenAvailableForChainProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is OnrampTokenFromDisplayDataProvider &&
-        other.tokenDisplayData == tokenDisplayData &&
+    return other is OnrampTokenAvailableForChainProvider &&
+        other.tokenId == tokenId &&
         other.chainId == chainId;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, tokenDisplayData.hashCode);
+    hash = _SystemHash.combine(hash, tokenId.hashCode);
     hash = _SystemHash.combine(hash, chainId.hashCode);
 
     return _SystemHash.finish(hash);
@@ -180,28 +179,28 @@ class OnrampTokenFromDisplayDataProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin OnrampTokenFromDisplayDataRef
-    on AutoDisposeFutureProviderRef<OnRampToken?> {
-  /// The parameter `tokenDisplayData` of this provider.
-  ({String iconUrl, String name, String symbol}) get tokenDisplayData;
+mixin OnrampTokenAvailableForChainRef on AutoDisposeFutureProviderRef<bool> {
+  /// The parameter `tokenId` of this provider.
+  String get tokenId;
 
   /// The parameter `chainId` of this provider.
   String get chainId;
 }
 
-class _OnrampTokenFromDisplayDataProviderElement
-    extends AutoDisposeFutureProviderElement<OnRampToken?>
-    with OnrampTokenFromDisplayDataRef {
-  _OnrampTokenFromDisplayDataProviderElement(super.provider);
+class _OnrampTokenAvailableForChainProviderElement
+    extends AutoDisposeFutureProviderElement<bool>
+    with OnrampTokenAvailableForChainRef {
+  _OnrampTokenAvailableForChainProviderElement(super.provider);
 
   @override
-  ({String iconUrl, String name, String symbol}) get tokenDisplayData =>
-      (origin as OnrampTokenFromDisplayDataProvider).tokenDisplayData;
+  String get tokenId =>
+      (origin as OnrampTokenAvailableForChainProvider).tokenId;
   @override
-  String get chainId => (origin as OnrampTokenFromDisplayDataProvider).chainId;
+  String get chainId =>
+      (origin as OnrampTokenAvailableForChainProvider).chainId;
 }
 
-String _$buyWithCryptoFormHash() => r'b25c60ceb1beca4f443ec7f3add06359a7758279';
+String _$buyWithCryptoFormHash() => r'a3dd2702aa0eccea27c350fd7a844383bdf16cc7';
 
 /// See also [BuyWithCryptoForm].
 @ProviderFor(BuyWithCryptoForm)

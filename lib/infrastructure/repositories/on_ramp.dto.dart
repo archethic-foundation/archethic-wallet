@@ -1,5 +1,67 @@
 part of 'on_ramp.repository.dart';
 
+OnRampTokenDisplayData _onRampEvmTokenDisplayFromJson(
+  MapEntry<String, dynamic> jsonEntry,
+) =>
+    switch (jsonEntry.value) {
+      {
+        'svg_icon': final String svgIcon,
+        'display_name': final String displayName,
+      } =>
+        (
+          id: jsonEntry.key,
+          name: displayName,
+          svgIcon: svgIcon,
+          symbol: jsonEntry.key,
+        ),
+      _ => throw FormatException(
+          'Invalid JSON format for OnRampEvmTokenDisplayData',
+          jsonEntry,
+        ),
+    };
+
+OnRampChain _onRampEvmChainFromJson(
+  MapEntry<String, dynamic> jsonEntry,
+) =>
+    switch (jsonEntry.value) {
+      {
+        'fee': final double fee,
+        'chain_id': final int chainId,
+        'svg_icon': final String svgIcon,
+        'display_name': final String displayName,
+        'tokens': final Map<String, dynamic> tokens,
+      } =>
+        (
+          id: jsonEntry.key,
+          chainId: chainId,
+          displayName: displayName,
+          feeRate: fee,
+          svgIcon: svgIcon,
+          tokens: tokens.entries.map(_onRampEvmTokenFromJson).toList(),
+        ),
+      _ => throw FormatException(
+          'Invalid JSON format for OnRampEvmChain',
+          jsonEntry,
+        ),
+    };
+
+OnRampToken _onRampEvmTokenFromJson(MapEntry<String, dynamic> jsonEntry) =>
+    switch (jsonEntry.value) {
+      {
+        'decimals': final int decimals,
+        'address': final String address,
+      } =>
+        (
+          id: jsonEntry.key,
+          address: address,
+          decimals: decimals,
+        ),
+      _ => throw const FormatException(
+          'Invalid JSON format for OnRampEvmToken',
+          json,
+        ),
+    };
+
 OnRampDepositState _onRampDepositStateFromJson(bool json) => switch (json) {
       false => OnRampDepositState.processing,
       true => OnRampDepositState.completed,
@@ -23,7 +85,7 @@ OnRampDeposit _onRampDepositFromJson(Map<String, dynamic>? json) =>
           depositTxHash: txHash,
           depositChainId: chainId,
           depositTokenId: tokenId,
-          depositAmount: double.parse(amount),
+          depositAmount: int.parse(amount),
           transferState: _onRampDepositStateFromJson(completed),
           transfers: transfers
               .map(
@@ -47,8 +109,8 @@ OnRampTransfer _onRampTransferFromJson(Map<String, dynamic> json) =>
         'steps': final List<dynamic> steps,
       } =>
         (
-          fee: double.parse(fee),
-          amount: double.parse(amount),
+          fee: int.parse(fee),
+          amount: int.parse(amount),
           steps: steps
               .map(
                 (jsonStep) => _onRampTransferStepFromJson(
@@ -74,7 +136,7 @@ OnRampTransferStep _onRampTransferStepFromJson(Map<String, dynamic> json) =>
         OnRampTransferStepSwap(
           txHash: txHash,
           txTimestamp: DateTime.parse(txTimestamp),
-          ucoAmount: double.parse(swapUcoOutputAmount),
+          ucoAmount: int.parse(swapUcoOutputAmount),
         ),
       {
         'type': 'debit',

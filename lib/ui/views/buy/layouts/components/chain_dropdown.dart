@@ -5,6 +5,7 @@ import 'package:aewallet/ui/views/buy/layouts/components/dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
@@ -45,7 +46,6 @@ class ChainDropdown extends ConsumerWidget {
 
 class _ChainBadge extends ConsumerWidget {
   const _ChainBadge({
-    super.key,
     this.chain,
   });
 
@@ -57,12 +57,12 @@ class _ChainBadge extends ConsumerWidget {
       content: Row(
         children: [
           if (chain != null) ...[
-            Image.network(
-              chain!.iconUrl,
+            SvgPicture.string(
+              chain!.svgIcon,
               width: 20,
             ),
             const SizedBox(width: 10),
-            Text(chain!.name),
+            Text(chain!.displayName),
           ] else
             Text(localizations.btn_selectChain),
         ],

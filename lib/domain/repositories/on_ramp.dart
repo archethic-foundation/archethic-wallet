@@ -8,4 +8,6 @@ abstract class OnRampRepository {
   Future<String> get evmAddress;
 
   Future<num> get maxAmount;
+
+  Future<OnRampSetup> get evmSetup;
 }

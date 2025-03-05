@@ -124,6 +124,37 @@ class OnRampRepositoryImpl implements OnRampRepository {
   }
 
   @override
+  Future<OnRampSetup> get evmSetup async {
+    final body = await _get('/evm_setup');
+    return switch (body) {
+      {
+        'tokens_display': final Map<String, dynamic> jsonTokensDisplay,
+        'chains': final Map<String, dynamic> jsonChains,
+      } =>
+        (
+          tokensDisplayData: jsonTokensDisplay.entries
+              .map(_onRampEvmTokenDisplayFromJson)
+              .toList(),
+          chains: jsonChains.entries.map(_onRampEvmChainFromJson).toList(),
+        ),
+      _ => throw Exception('Invalid response format'),
+    };
+  }
+
+  // @override
+  // Future<List<OnRampChain>> get evm_chains async {
+  //   final body = await _get('/evm_chains');
+  //   return switch (body) {
+  //     {'chains': final List jsonChains} => jsonChains
+  //         .map(
+  //           (chain) => _onRampEvmChainFromJson(chain as Map<String, dynamic>),
+  //         )
+  //         .toList(),
+  //     _ => throw Exception('Invalid response format'),
+  //   };
+  // }
+
+  @override
   Future<num> get maxAmount async {
     final body = await _get('/max_amount');
 

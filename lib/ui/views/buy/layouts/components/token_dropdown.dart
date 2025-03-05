@@ -1,9 +1,11 @@
+import 'package:aewallet/domain/models/onramp.dart';
 import 'package:aewallet/ui/views/buy/bloc/buy_with_crypto_form_provider.dart';
 import 'package:aewallet/ui/views/buy/layouts/components/dropdown.dart';
 import 'package:aewallet/ui/views/buy/layouts/components/token_selection_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
@@ -30,14 +32,15 @@ class TokenDropdown extends ConsumerWidget {
             .read(buyWithCryptoFormProvider.notifier)
             .selectToken(selectedToken);
       },
-      badge: _TokenBadge(token: form?.selectedToken),
+      badge: _TokenBadge(
+        token: form?.selectedToken,
+      ),
     );
   }
 }
 
 class _TokenBadge extends ConsumerWidget {
   const _TokenBadge({
-    super.key,
     this.token,
   });
 
@@ -49,8 +52,8 @@ class _TokenBadge extends ConsumerWidget {
       content: Row(
         children: [
           if (token != null) ...[
-            Image.network(
-              token!.iconUrl,
+            SvgPicture.string(
+              token!.svgIcon,
               width: 20,
             ),
             const SizedBox(width: 10),

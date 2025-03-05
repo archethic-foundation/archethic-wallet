@@ -89,9 +89,7 @@ class BuySheet extends ConsumerWidget implements SheetSkeletonInterface {
                               ),
                               text: localizations.ucoBuyInAeWalletWithFiat,
                               onTap: () {
-                                context
-                                  ..pop()
-                                  ..push(BuyWithFiatSheet.routerPage);
+                                context.push(BuyWithFiatSheet.routerPage);
                               },
                             ),
                           ),
@@ -104,9 +102,7 @@ class BuySheet extends ConsumerWidget implements SheetSkeletonInterface {
                               ),
                               text: localizations.ucoBuyInAeWalletWithCrypto,
                               onTap: () {
-                                context
-                                  ..pop()
-                                  ..push(BuyWithCryptoSheet.routerPage);
+                                context.push(BuyWithCryptoSheet.routerPage);
                               },
                             ),
                           ),

@@ -8,17 +8,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'buy_with_crypto_form_provider.freezed.dart';
 part 'buy_with_crypto_form_provider.g.dart';
 
-extension OnRampTokenToDisplayData on OnRampToken {
-  OnRampTokenDisplayData get displayData =>
-      (iconUrl: iconUrl, symbol: symbol, name: name);
-}
-
-typedef OnRampTokenDisplayData = ({
-  String iconUrl,
-  String symbol,
-  String name,
-});
-
 extension OnRampTokenDisplayDataExt on OnRampTokenDisplayData {
   String get desc => '$symbol ($name)';
 }
@@ -40,9 +29,9 @@ class BuyWithCryptoFormState with _$BuyWithCryptoFormState {
 class BuyWithCryptoForm extends _$BuyWithCryptoForm {
   @override
   Future<BuyWithCryptoFormState> build() async {
-    final tokens = await ref.read(onrampTokensProvider.future);
+    final tokens = await ref.read(onrampTokenDisplayDataProvider.future);
     return BuyWithCryptoFormState(
-      selectedToken: tokens.firstOrNull?.displayData,
+      selectedToken: tokens.firstOrNull,
       depositAddressVisible: false,
     );
   }
@@ -52,7 +41,7 @@ class BuyWithCryptoForm extends _$BuyWithCryptoForm {
       if (state.selectedToken == token) return state;
 
       final chains =
-          await ref.read(onrampChainsForTokenProvider(token.symbol).future);
+          await ref.read(onrampChainsForTokenProvider(token.id).future);
       final selectedChainStillValid = chains.any(
         (chain) => chain == state.selectedChain,
       );
@@ -68,22 +57,28 @@ class BuyWithCryptoForm extends _$BuyWithCryptoForm {
     await update((state) async {
       if (state.selectedChain == chain) return state;
 
-      final selectedTokenForNewChain = switch (state.selectedToken) {
-        null => null,
-        final selectedToken => await ref
-            .read(
-              onrampTokenFromDisplayDataProvider(selectedToken, chain.id)
-                  .future,
-            )
-            .then((token) => token?.displayData),
-      };
-
       return state.copyWith(
         depositAddressVisible: false,
         selectedChain: chain,
-        selectedToken: selectedTokenForNewChain,
+        selectedToken: await _selectedTokenForNewChain(state, chain.id),
       );
     });
+  }
+
+  Future<OnRampTokenDisplayData?> _selectedTokenForNewChain(
+    BuyWithCryptoFormState state,
+    String chainId,
+  ) async {
+    final selectedToken = state.selectedToken;
+    if (selectedToken == null) return null;
+
+    final tokenAvailable = await ref.read(
+      onrampTokenAvailableForChainProvider(selectedToken.id, chainId).future,
+    );
+    if (!tokenAvailable) {
+      return null;
+    }
+    return selectedToken;
   }
 
   void showDepositAddress() {
@@ -95,23 +90,22 @@ class BuyWithCryptoForm extends _$BuyWithCryptoForm {
 Future<List<OnRampTokenDisplayData>> onrampTokenDisplayData(
   Ref ref,
 ) async {
-  final tokens = await ref.watch(onrampTokensProvider.future);
-  return tokens.map((token) => token.displayData).toSet().toList();
+  final setup = await ref.watch(onrampEvmSetupProvider.future);
+  return setup.tokensDisplayData;
 }
 
 @riverpod
-Future<OnRampToken?> onrampTokenFromDisplayData(
+Future<bool> onrampTokenAvailableForChain(
   Ref ref,
-  OnRampTokenDisplayData tokenDisplayData,
+  String tokenId,
   String chainId,
 ) async {
-  final setup = await ref.watch(onrampSetupProvider.future);
+  final setup = await ref.watch(onrampEvmSetupProvider.future);
   return setup.chains
-      .firstWhereOrNull((chain) => chain.id == chainId)
-      ?.tokens
-      .firstWhereOrNull(
-        (token) =>
-            token.symbol == tokenDisplayData.symbol &&
-            token.iconUrl == tokenDisplayData.iconUrl,
-      );
+          .firstWhereOrNull((chain) => chain.id == chainId)
+          ?.tokens
+          .any(
+            (token) => token.id == tokenId,
+          ) ??
+      false;
 }

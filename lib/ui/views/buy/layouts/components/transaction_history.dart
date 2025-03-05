@@ -106,13 +106,25 @@ class _OnRampTransactionHistoryTableRow extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final depositSymbol = ref
-            .watch(
-              onrampTokenProvider(deposit.depositTokenId),
-            )
-            .valueOrNull
-            ?.symbol ??
-        '--';
+    final depositToken = ref
+        .watch(
+          onrampTokenProvider(
+            deposit.depositChainId,
+            deposit.depositTokenId,
+          ),
+        )
+        .valueOrNull;
+
+    final depositTokenDisplay = ref
+        .watch(
+          onrampTokenDisplayDataProvider(
+            deposit.depositTokenId,
+          ),
+        )
+        .valueOrNull;
+
+    final depositSymbol = depositTokenDisplay?.symbol ?? '';
+    final depositAmount = depositToken?.toDecimal(deposit.depositAmount);
     final isReceived = deposit.transferedUcoAmount != 0;
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -134,7 +146,7 @@ class _OnRampTransactionHistoryTableRow extends ConsumerWidget {
                     children: [
                       Flexible(
                         child: Text(
-                          '+${deposit.depositAmount.numeral()} ',
+                          '+${depositAmount?.numeral() ?? '--'} ',
                           style: AppTextStyles.bodyLarge(context).copyWith(
                             fontWeight: FontWeight.w700,
                             fontSize: 13,
@@ -177,7 +189,7 @@ class _OnRampTransactionHistoryTableRow extends ConsumerWidget {
                     children: [
                       Flexible(
                         child: Text(
-                          '+${deposit.transferedUcoAmount.numeral()} ',
+                          '+${deposit.transferedUcoAmount.toDecimal(8).numeral()} ',
                           style: AppTextStyles.bodyLarge(context).copyWith(
                             fontWeight: FontWeight.w700,
                             fontSize: 13,
