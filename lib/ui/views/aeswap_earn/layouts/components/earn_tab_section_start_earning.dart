@@ -6,6 +6,7 @@ import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_primary.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
+import 'package:aewallet/ui/views/aeswap_earn/layouts/components/farm_lock_block_list_single_line_lock.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/farm_lock_deposit_sheet.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -14,6 +15,7 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class EarnSectionStartEarning extends ConsumerWidget {
   const EarnSectionStartEarning({
@@ -147,18 +149,31 @@ class EarnSectionStartEarning extends ConsumerWidget {
                   );
                 },
               ),
+              const SizedBox(width: 10),
+              if (earnUserLevel == EarnUserLevelType.advanced)
+                BtnPrimary(
+                  buttonText:
+                      localizations.earnSectionStartEarningWithdrawLPBtn,
+                  onTap: () async {
+                    await CupertinoScaffold.showCupertinoModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return FractionallySizedBox(
+                          heightFactor: 1,
+                          child: Scaffold(
+                            backgroundColor: aedappfm
+                                .AppThemeBase.sheetBackground
+                                .withOpacity(0.2),
+                            body: const FarmLockBlockListSingleLineLock(),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  btnPrimaryType: BtnPrimaryType.outlinePrimary,
+                ),
             ],
           ),
-          /*  const SizedBox(height: 20),
-          Row(
-            children: [
-              BtnPrimary(
-                buttonText: localizations.earnSectionStartEarningWithdrawLPBtn,
-                onTap: () async {},
-                btnPrimaryType: BtnPrimaryType.outlinePrimary,
-              ),
-            ],
-          ),*/
         ],
       ),
     );

@@ -1,10 +1,7 @@
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_lp_token_fiat_value.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_token_balance.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/components/fiat_value.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_textfield.dart';
-import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/state.dart';
@@ -181,46 +178,9 @@ class _FarmLockDepositLPAmountState
                           symbol: kUCOAddress,
                         )
                       : farmLockDeposit.pool!.lpToken,
-                  withFiat: false,
+                  pool: farmLockDeposit.pool,
                   fiatTextStyleMedium: true,
-                  withOpacity: false,
                 ),
-                const SizedBox(
-                  width: 5,
-                ),
-                if (farmLockDeposit.farmLockDepositMode ==
-                    FarmLockDepositMode.uco)
-                  SelectableText(
-                    ref.watch(
-                      dexLPTokenFiatValueProvider(
-                        farmLockDeposit.pool!.pair.token1,
-                        farmLockDeposit.pool!.pair.token2,
-                        farmLockDeposit.userBalance,
-                        farmLockDeposit.pool!.poolAddress,
-                      ),
-                    ),
-                    style: Theme.of(context).textTheme.bodySmallWithOpacity,
-                  )
-                else
-                  FutureBuilder<String>(
-                    future: FiatValue().display(
-                      ref,
-                      const DexToken(
-                        address: kUCOAddress,
-                        symbol: kUCOAddress,
-                      ),
-                      farmLockDeposit.userBalance,
-                    ),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return SelectableText(
-                          snapshot.data!,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        );
-                      }
-                      return const SizedBox.shrink();
-                    },
-                  ),
               ],
             ),
           ],
