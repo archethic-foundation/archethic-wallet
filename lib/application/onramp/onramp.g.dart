@@ -6,6 +6,25 @@ part of 'onramp.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+String _$onrampFeatureFlagHash() => r'5a53fb7bc870c873724ba863a9f4ae33badb48c5';
+
+/// See also [onrampFeatureFlag].
+@ProviderFor(onrampFeatureFlag)
+final onrampFeatureFlagProvider =
+    AutoDisposeProvider<({bool fromCrypto, bool fromFiat})>.internal(
+  onrampFeatureFlag,
+  name: r'onrampFeatureFlagProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$onrampFeatureFlagHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef OnrampFeatureFlagRef
+    = AutoDisposeProviderRef<({bool fromCrypto, bool fromFiat})>;
 String _$onRampRepositoryHash() => r'8e47f8e97ca27916db00d99a8d0f987466f6b33e';
 
 /// See also [_onRampRepository].

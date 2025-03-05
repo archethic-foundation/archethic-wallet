@@ -1,6 +1,5 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/connectivity_status.dart';
-import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/ui/views/receive/receive_modal.dart';
 import 'package:aewallet/ui/views/sheets/bridge_sheet.dart';
 import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
@@ -17,7 +16,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class MenuWidgetWallet extends ConsumerWidget {
   const MenuWidgetWallet({super.key});
@@ -31,7 +29,6 @@ class MenuWidgetWallet extends ConsumerWidget {
         .valueOrNull
         ?.selectedAccount;
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-    final environment = ref.watch(environmentProvider);
 
     if (accountSelected == null) return const SizedBox();
 
@@ -104,21 +101,10 @@ class MenuWidgetWallet extends ConsumerWidget {
                 .fade(duration: const Duration(milliseconds: 300))
                 .scale(duration: const Duration(milliseconds: 300)),
             ActionButton(
-              text: environment == aedappfm.Environment.mainnet
-                  ? localizations.buy
-                  : localizations.faucet,
+              text: localizations.buy,
               icon: Symbols.add,
               onTap: () async {
-                if (environment == aedappfm.Environment.mainnet) {
-                  await context.push(BuySheet.routerPage);
-                } else {
-                  await launchUrl(
-                    Uri.parse(
-                      '${ref.read(environmentProvider).endpoint}/faucet',
-                    ),
-                    mode: LaunchMode.externalApplication,
-                  );
-                }
+                await context.push(BuySheet.routerPage);
               },
               enabled:
                   connectivityStatusProvider == ConnectivityStatus.isConnected,

@@ -200,7 +200,7 @@ class _OnrampTokenAvailableForChainProviderElement
       (origin as OnrampTokenAvailableForChainProvider).chainId;
 }
 
-String _$buyWithCryptoFormHash() => r'a3dd2702aa0eccea27c350fd7a844383bdf16cc7';
+String _$buyWithCryptoFormHash() => r'a0e21332f1fc0b3fb8a7274499bdbc9a466a0a5e';
 
 /// See also [BuyWithCryptoForm].
 @ProviderFor(BuyWithCryptoForm)
