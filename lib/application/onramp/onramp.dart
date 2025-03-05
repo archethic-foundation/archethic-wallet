@@ -39,125 +39,53 @@ Future<OnRampRepository> _onRampRepository(Ref ref) async {
 }
 
 @riverpod
-Future<({List<OnRampChain> chains})> onrampSetup(
+Future<OnRampSetup> onrampEvmSetup(
   Ref ref,
-) async =>
-    (
-      chains: [
-        (
-          id: 'polygon',
-          name: 'polygon',
-          iconUrl:
-              'https://www.cryptologos.cc/logos/polygon-matic-logo.png?v=040',
-          tokens: [
-            (
-              id: 'poly_eth',
-              symbol: 'ETH',
-              name: 'Ethereum',
-              feeRate: 0.1,
-              address: 'poly_eth',
-              iconUrl:
-                  'https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/1024/Ethereum-ETH-icon.png'
-            ),
-            (
-              id: 'poly_btc',
-              symbol: 'BTC',
-              name: 'Bitcoin',
-              feeRate: 0.1,
-              address: 'poly_btc',
-              iconUrl:
-                  'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Ficons.iconarchive.com%2Ficons%2Fcjdowner%2Fcryptocurrency-flat%2F1024%2FBitcoin-BTC-icon.png&f=1&nofb=1&ipt=e13399a403e865bea373356838869d463d2a0eaca417f8eb42cb2dc4c1ba534b&ipo=images'
-            ),
-            (
-              id: 'poly_matic',
-              symbol: 'MATIC',
-              name: 'Matic',
-              feeRate: 0.1,
-              address: 'poly_matic',
-              iconUrl:
-                  'https://cdn.iconscout.com/icon/premium/png-256-thumb/polygon-matic-7151798-5795452.png'
-            ),
-          ]
-        ),
-        (
-          id: 'ethereum',
-          name: 'ethereum',
-          iconUrl:
-              'https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/1024/Ethereum-ETH-icon.png',
-          tokens: [
-            (
-              id: 'eth_eth',
-              symbol: 'ETH',
-              name: 'Ethereum',
-              feeRate: 0.1,
-              address: 'eth_eth',
-              iconUrl:
-                  'https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/1024/Ethereum-ETH-icon.png'
-            ),
-            (
-              id: 'eth_btc',
-              symbol: 'BTC',
-              name: 'Bitcoin',
-              feeRate: 0.1,
-              address: 'eth_btc',
-              iconUrl:
-                  'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Ficons.iconarchive.com%2Ficons%2Fcjdowner%2Fcryptocurrency-flat%2F1024%2FBitcoin-BTC-icon.png&f=1&nofb=1&ipt=e13399a403e865bea373356838869d463d2a0eaca417f8eb42cb2dc4c1ba534b&ipo=images'
-            ),
-          ]
-        ),
-        (
-          id: 'bitcoin',
-          name: 'bitcoin',
-          iconUrl:
-              'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Ficons.iconarchive.com%2Ficons%2Fcjdowner%2Fcryptocurrency-flat%2F1024%2FBitcoin-BTC-icon.png&f=1&nofb=1&ipt=e13399a403e865bea373356838869d463d2a0eaca417f8eb42cb2dc4c1ba534b&ipo=images',
-          tokens: [
-            (
-              id: 'btc_btc',
-              symbol: 'BTC',
-              name: 'Bitcoin',
-              feeRate: 0.1,
-              address: 'btc_btc',
-              iconUrl:
-                  'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Ficons.iconarchive.com%2Ficons%2Fcjdowner%2Fcryptocurrency-flat%2F1024%2FBitcoin-BTC-icon.png&f=1&nofb=1&ipt=e13399a403e865bea373356838869d463d2a0eaca417f8eb42cb2dc4c1ba534b&ipo=images'
-            ),
-          ]
-        ),
-      ],
-    );
+) async {
+  final repository = await ref.watch(_onRampRepositoryProvider.future);
+  return repository.evmSetup;
+}
 
 @riverpod
 Future<List<OnRampChain>> onrampChainsForToken(
   Ref ref,
-  String tokenSymbol,
+  String tokenId,
 ) async {
-  final setup = await ref.watch(onrampSetupProvider.future);
+  final setup = await ref.watch(onrampEvmSetupProvider.future);
   return setup.chains
       .where(
-        (chain) => chain.tokens.any((token) => token.symbol == tokenSymbol),
+        (chain) => chain.tokens.any((token) => token.id == tokenId),
       )
       .toList();
 }
 
 @riverpod
-Future<List<OnRampChain>> onrampChains(Ref ref) async {
-  final setup = await ref.watch(onrampSetupProvider.future);
-  return setup.chains;
+Future<List<OnRampTokenDisplayData>> onrampTokensDisplayData(Ref ref) async {
+  final setup = await ref.watch(onrampEvmSetupProvider.future);
+  return setup.tokensDisplayData;
 }
 
 @riverpod
-Future<List<OnRampToken>> onrampTokens(
+Future<OnRampTokenDisplayData?> onrampTokenDisplayData(
   Ref ref,
+  String id,
 ) async {
-  final setup = await ref.watch(onrampSetupProvider.future);
-  return setup.chains.expand((chain) => chain.tokens).toList();
+  final setup = await ref.watch(onrampEvmSetupProvider.future);
+  return setup.tokensDisplayData
+      .firstWhereOrNull((displayData) => displayData.id == id);
 }
 
 @riverpod
-Future<OnRampToken?> onrampToken(Ref ref, String id) async {
-  final setup = await ref.watch(onrampSetupProvider.future);
+Future<OnRampToken?> onrampToken(
+  Ref ref,
+  String chainId,
+  String tokenId,
+) async {
+  final setup = await ref.watch(onrampEvmSetupProvider.future);
   return setup.chains
-      .expand((chain) => chain.tokens)
-      .firstWhereOrNull((token) => token.id == id);
+      .firstWhereOrNull((chain) => chain.id == chainId)
+      ?.tokens
+      .firstWhereOrNull((token) => token.id == tokenId);
 }
 
 @riverpod

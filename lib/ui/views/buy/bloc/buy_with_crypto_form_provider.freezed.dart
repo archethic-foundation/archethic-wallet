@@ -16,21 +16,15 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$BuyWithCryptoFormState {
-  ({String iconUrl, String name, String symbol})? get selectedToken =>
-      throw _privateConstructorUsedError;
+  ({String id, String name, String svgIcon, String symbol})?
+      get selectedToken => throw _privateConstructorUsedError;
   ({
-    String iconUrl,
+    int chainId,
+    String displayName,
+    double feeRate,
     String id,
-    String name,
-    List<
-        ({
-          String address,
-          double feeRate,
-          String iconUrl,
-          String id,
-          String name,
-          String symbol
-        })> tokens
+    String svgIcon,
+    List<({String address, int decimals, String id})> tokens
   })? get selectedChain => throw _privateConstructorUsedError;
   bool get depositAddressVisible => throw _privateConstructorUsedError;
 
@@ -48,20 +42,14 @@ abstract class $BuyWithCryptoFormStateCopyWith<$Res> {
       _$BuyWithCryptoFormStateCopyWithImpl<$Res, BuyWithCryptoFormState>;
   @useResult
   $Res call(
-      {({String iconUrl, String name, String symbol})? selectedToken,
+      {({String id, String name, String svgIcon, String symbol})? selectedToken,
       ({
-        String iconUrl,
+        int chainId,
+        String displayName,
+        double feeRate,
         String id,
-        String name,
-        List<
-            ({
-              String address,
-              double feeRate,
-              String iconUrl,
-              String id,
-              String name,
-              String symbol
-            })> tokens
+        String svgIcon,
+        List<({String address, int decimals, String id})> tokens
       })? selectedChain,
       bool depositAddressVisible});
 }
@@ -90,23 +78,17 @@ class _$BuyWithCryptoFormStateCopyWithImpl<$Res,
       selectedToken: freezed == selectedToken
           ? _value.selectedToken
           : selectedToken // ignore: cast_nullable_to_non_nullable
-              as ({String iconUrl, String name, String symbol})?,
+              as ({String id, String name, String svgIcon, String symbol})?,
       selectedChain: freezed == selectedChain
           ? _value.selectedChain
           : selectedChain // ignore: cast_nullable_to_non_nullable
               as ({
-              String iconUrl,
+              int chainId,
+              String displayName,
+              double feeRate,
               String id,
-              String name,
-              List<
-                  ({
-                    String address,
-                    double feeRate,
-                    String iconUrl,
-                    String id,
-                    String name,
-                    String symbol
-                  })> tokens
+              String svgIcon,
+              List<({String address, int decimals, String id})> tokens
             })?,
       depositAddressVisible: null == depositAddressVisible
           ? _value.depositAddressVisible
@@ -126,20 +108,14 @@ abstract class _$$BuyWithCryptoFormStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {({String iconUrl, String name, String symbol})? selectedToken,
+      {({String id, String name, String svgIcon, String symbol})? selectedToken,
       ({
-        String iconUrl,
+        int chainId,
+        String displayName,
+        double feeRate,
         String id,
-        String name,
-        List<
-            ({
-              String address,
-              double feeRate,
-              String iconUrl,
-              String id,
-              String name,
-              String symbol
-            })> tokens
+        String svgIcon,
+        List<({String address, int decimals, String id})> tokens
       })? selectedChain,
       bool depositAddressVisible});
 }
@@ -167,23 +143,17 @@ class __$$BuyWithCryptoFormStateImplCopyWithImpl<$Res>
       selectedToken: freezed == selectedToken
           ? _value.selectedToken
           : selectedToken // ignore: cast_nullable_to_non_nullable
-              as ({String iconUrl, String name, String symbol})?,
+              as ({String id, String name, String svgIcon, String symbol})?,
       selectedChain: freezed == selectedChain
           ? _value.selectedChain
           : selectedChain // ignore: cast_nullable_to_non_nullable
               as ({
-              String iconUrl,
+              int chainId,
+              String displayName,
+              double feeRate,
               String id,
-              String name,
-              List<
-                  ({
-                    String address,
-                    double feeRate,
-                    String iconUrl,
-                    String id,
-                    String name,
-                    String symbol
-                  })> tokens
+              String svgIcon,
+              List<({String address, int decimals, String id})> tokens
             })?,
       depositAddressVisible: null == depositAddressVisible
           ? _value.depositAddressVisible
@@ -203,21 +173,20 @@ class _$BuyWithCryptoFormStateImpl extends _BuyWithCryptoFormState {
       : super._();
 
   @override
-  final ({String iconUrl, String name, String symbol})? selectedToken;
-  @override
   final ({
-    String iconUrl,
     String id,
     String name,
-    List<
-        ({
-          String address,
-          double feeRate,
-          String iconUrl,
-          String id,
-          String name,
-          String symbol
-        })> tokens
+    String svgIcon,
+    String symbol
+  })? selectedToken;
+  @override
+  final ({
+    int chainId,
+    String displayName,
+    double feeRate,
+    String id,
+    String svgIcon,
+    List<({String address, int decimals, String id})> tokens
   })? selectedChain;
   @override
   final bool depositAddressVisible;
@@ -256,41 +225,34 @@ class _$BuyWithCryptoFormStateImpl extends _BuyWithCryptoFormState {
 
 abstract class _BuyWithCryptoFormState extends BuyWithCryptoFormState {
   const factory _BuyWithCryptoFormState(
-          {final ({String iconUrl, String name, String symbol})? selectedToken,
-          final ({
-            String iconUrl,
+          {final ({
             String id,
             String name,
-            List<
-                ({
-                  String address,
-                  double feeRate,
-                  String iconUrl,
-                  String id,
-                  String name,
-                  String symbol
-                })> tokens
+            String svgIcon,
+            String symbol
+          })? selectedToken,
+          final ({
+            int chainId,
+            String displayName,
+            double feeRate,
+            String id,
+            String svgIcon,
+            List<({String address, int decimals, String id})> tokens
           })? selectedChain,
           required final bool depositAddressVisible}) =
       _$BuyWithCryptoFormStateImpl;
   const _BuyWithCryptoFormState._() : super._();
 
   @override
-  ({String iconUrl, String name, String symbol})? get selectedToken;
+  ({String id, String name, String svgIcon, String symbol})? get selectedToken;
   @override
   ({
-    String iconUrl,
+    int chainId,
+    String displayName,
+    double feeRate,
     String id,
-    String name,
-    List<
-        ({
-          String address,
-          double feeRate,
-          String iconUrl,
-          String id,
-          String name,
-          String symbol
-        })> tokens
+    String svgIcon,
+    List<({String address, int decimals, String id})> tokens
   })? get selectedChain;
   @override
   bool get depositAddressVisible;

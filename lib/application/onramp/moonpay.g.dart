@@ -6,7 +6,7 @@ part of 'moonpay.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$moonpaySettingsHash() => r'0ed57c4af61f265d29f2c67a319a761ecf866e2f';
+String _$moonpaySettingsHash() => r'3d213fcf5cc973dd8d298c7a1da083e5021f4277';
 
 /// See also [moonpaySettings].
 @ProviderFor(moonpaySettings)

@@ -1,18 +1,39 @@
+import 'dart:math' as math;
+
+typedef OnRampSetup = ({
+  List<OnRampTokenDisplayData> tokensDisplayData,
+  List<OnRampChain> chains,
+});
+
 typedef OnRampChain = ({
   String id,
-  String name,
-  String iconUrl,
+  int chainId,
+  String displayName,
+  String svgIcon,
+  double feeRate,
   List<OnRampToken> tokens,
+});
+
+typedef OnRampTokenDisplayData = ({
+  String id,
+  String svgIcon,
+  String symbol,
+  String name,
 });
 
 typedef OnRampToken = ({
   String id,
-  String symbol,
-  String name,
-  double feeRate,
   String address,
-  String iconUrl,
+  int decimals,
 });
+
+extension OnRampTokenExt on OnRampToken {
+  double toDecimal(int value) => value.toDecimal(decimals);
+}
+
+extension IntExt on int {
+  double toDecimal(int decimals) => this / math.pow(10, decimals);
+}
 
 enum OnRampDepositState {
   processing,
@@ -39,7 +60,7 @@ class OnRampTransferStepSwap extends OnRampTransferStep {
     required super.txTimestamp,
     required this.ucoAmount,
   });
-  final double ucoAmount;
+  final int ucoAmount;
 }
 
 class OnRampTransferStepUcoTransfer extends OnRampTransferStep {
@@ -50,13 +71,13 @@ class OnRampTransferStepUcoTransfer extends OnRampTransferStep {
 }
 
 typedef OnRampTransfer = ({
-  double fee,
-  double amount,
+  int fee,
+  int amount,
   List<OnRampTransferStep> steps,
 });
 
 extension OnRampTransferExt on OnRampTransfer {
-  double get swappedUcoAmount => steps.fold(
+  int get swappedUcoAmount => steps.fold(
         0,
         (acc, step) => switch (step) {
           OnRampTransferStepSwap(ucoAmount: final ucoAmount) => acc + ucoAmount,
@@ -71,7 +92,7 @@ typedef OnRampDeposit = ({
   String depositTxHash,
   String depositChainId,
   String depositTokenId,
-  double depositAmount,
+  int depositAmount,
   OnRampDepositState transferState,
   List<OnRampTransfer> transfers,
 });
@@ -79,16 +100,16 @@ typedef OnRampDeposit = ({
 extension OnRampDepositExt on OnRampDeposit {
   double get remainingRatio => remainingAmount / (depositAmount - feesAmount);
   double get completedRatio => 1.0 - remainingRatio;
-  double get feesAmount => transfers.fold(
+  int get feesAmount => transfers.fold(
         0,
         (acc, transfer) => acc + transfer.fee,
       );
-  double get remainingAmount => depositAmount - transferedAmount;
-  double get transferedAmount => transfers.fold(
+  int get remainingAmount => depositAmount - transferedAmount;
+  int get transferedAmount => transfers.fold(
         0,
         (acc, transfer) => acc + transfer.amount,
       );
-  double get transferedUcoAmount => transfers.fold(
+  int get transferedUcoAmount => transfers.fold(
         0,
         (acc, transfer) => acc + transfer.swappedUcoAmount,
       );

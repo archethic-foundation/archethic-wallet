@@ -1,12 +1,12 @@
 import 'package:aewallet/application/onramp/onramp.dart';
 import 'package:aewallet/domain/models/onramp.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
-import 'package:aewallet/ui/views/buy/bloc/buy_with_crypto_form_provider.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 
 class ChainSelectionSheet extends ConsumerWidget {
@@ -102,9 +102,9 @@ class _ChainSelector extends StatelessWidget {
             const SizedBox(
               width: 10,
             ),
-            if (chain.iconUrl != '')
-              Image.network(
-                chain.iconUrl,
+            if (chain.svgIcon != '')
+              SvgPicture.string(
+                chain.svgIcon,
                 width: 20,
               )
             else
@@ -124,7 +124,7 @@ class _ChainSelector extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 1),
                   child: Text(
-                    chain.name,
+                    chain.displayName,
                     style: AppTextStyles.bodyLarge(context),
                   ),
                 ),
