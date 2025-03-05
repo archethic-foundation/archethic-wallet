@@ -94,7 +94,7 @@ class FarmLockWithdrawStepPopup extends ConsumerWidget {
               farmLockWithdraw.finalAmountWithdraw != null)
             MessageBox(
               messageBoxType: MessageBoxType.success,
-              text: farmLockWithdraw.finalAmountReward! > 1
+              text: farmLockWithdraw.finalAmountReward! > 0
                   ? localizations.withdrawFundsStepPopupFinalAmountWithReward(
                       farmLockWithdraw.finalAmountWithdraw!
                           .formatNumber(precision: 2),

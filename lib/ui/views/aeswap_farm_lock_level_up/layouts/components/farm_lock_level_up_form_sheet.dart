@@ -179,7 +179,7 @@ class FarmLockLevelUpFormSheet extends ConsumerWidget
                               ),
                               SelectableText(
                                 AppLocalizations.of(context)!
-                                    .farmLockWithdrawFormTextNoRewardText2,
+                                    .farmLockWithdrawFormTextRewardText2,
                                 style: AppTextStyles.bodyMedium(context),
                               ),
                             ],

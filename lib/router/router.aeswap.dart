@@ -222,4 +222,13 @@ final _aeSwapRoutes = [
       child: const FarmLockLevelUpResultSheet(),
     ),
   ),
+  GoRoute(
+    path: FarmLockWithdrawFundsSheet.routerPage,
+    pageBuilder: (context, state) {
+      return NoTransitionPage<void>(
+        key: state.pageKey,
+        child: const FarmLockWithdrawFundsSheet(),
+      );
+    },
+  ),
 ];

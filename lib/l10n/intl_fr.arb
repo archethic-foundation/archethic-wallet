@@ -548,7 +548,7 @@
     "farmLockWithdrawDesc": "Vous pouvez retirer tout ou partie de vos jetons LP déposés. Cela permettra également de récupérer vos récompenses.",
     "farmLockWithdrawTextFieldLPLabel": "Combien de tokens LP souhaitez-vous retirer ?",
     "farmLockWithdrawFormTextNoRewardText1": "Aucune récompense disponible",
-    "farmLockWithdrawFormTextNoRewardText2": " est disponible pour être retiré.",
+    "farmLockWithdrawFormTextRewardText2": " est disponible pour être retiré.",
     "farmLockWithdrawTxAddress": "Adresse de la transaction de retrait : ",
     "farmLockWithdrawControlAmountEmpty": "Veuillez entrer le montant",
     "farmLockWithdrawFormTitle": "Retirer",
@@ -931,6 +931,8 @@
             }
         }
     },
-    "farmLockWithdrawDescBeginner": "Une fois que certains de vos fonds sont déverrouillés, vous pouvez les retirer. Techniquement, cela supprimera votre liquidité de la pool de liquidité, et vous recevrez une valeur équivalente en jetons UCO et en Ethereum.",
-    "farmLockWithdrawDesc2Beginner": "Lorsque vous retirez vos fonds, ils sont automatiquement supprimés de la pool ETH/UCO. Vous recevrez une valeur équivalente en jetons UCO et en Ethereum, et toutes les récompenses accumulées seront directement créditées sur votre portefeuille en UCO. Enfin, l'Ethereum sera échangé en UCO afin que vous receviez la totalité du montant en UCO."
+    "farmLockWithdrawDescBeginner": "Une fois que certains de vos fonds sont déverrouillés, vous pouvez les retirer. Techniquement, cela supprimera votre liquidité de la pool de liquidité, et vous recevrez une valeur équivalente en jetons UCO et en Ethereum. Après cela, l'Ethereum sera automatiquement échangé contre des UCO.",
+    "farmLockWithdrawDesc2Beginner": "Lorsque vous retirez vos fonds, ils sont automatiquement supprimés de la pool ETH/UCO. Vous recevrez une valeur équivalente en jetons UCO et en Ethereum, et toutes les récompenses accumulées seront directement créditées sur votre portefeuille en UCO. Enfin, l'Ethereum sera échangé en UCO afin que vous receviez la totalité du montant en UCO.",
+    "farmLockWithdrawFormTextNoLPText1": "Aucun jeton LP déverrouillé disponible",
+    "farmLockWithdrawFormTextLPText2": " est disponible pour le retrait."
 }
