@@ -1435,7 +1435,7 @@ packages:
     source: hosted
     version: "6.0.2"
   phoenix_socket:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: phoenix_socket
       sha256: "6f1a355177eb1bf61b388407cf18f200fdf06bc5c1d9d05ac87cdd8a27d3ddd6"

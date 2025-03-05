@@ -189,7 +189,14 @@
     "enterYubikeyClientAPIKey": "Enter the client API Key",
     "enterYubikeyClientIDEmpty": "The client ID is mandatory",
     "enterYubikeyAPIKeyEmpty": "The API Key is mandatory",
-    "transactionBuyHeader": "Where to Buy UCO ?",
+    "ucoBuyTitle": "Where to Buy UCO ?",
+    "ucoBuyInAeWalletTitle": "Buy in your Archethic Wallet",
+    "ucoBuyInAeWalletWithFiat": "With FIAT (€, $)",
+    "ucoBuyInAeWalletWithCrypto": "With Crypto (ETH)",
+    "ucoBuyOnCexTitle": "Buy on Centralized Exchanges ",
+    "ucoBuyOnCexSubtitle": "(CEX)",
+    "ucoBuyOnDexTitle": "Buy on Deentralized Exchanges ",
+    "ucoBuyOnDexSubtitle": "(DEX)",
     "receive": "Receive",
     "buy": "Buy UCO",
     "faucet": "Faucet",
@@ -379,6 +386,7 @@
     "receiveHeader": "Receive assets on Archethic",
     "receiveCopy": "Click to copy the address",
     "earnValueLbl": "Earn",
+    "btn_selectChain": "Select a chain",
     "btn_selectToken": "Select a token",
     "selectTokenTitle": "Select a token",
     "btn_save": "Save",
@@ -937,5 +945,34 @@
     "farmLockWithdrawDescBeginner": "Once some of your funds are unlocked, you can withdraw them. Technically, this will remove your liquidity from the liquidity pool, and you will receive an equivalent value in UCO tokens and Ethereum. After that, the Ethereum will be automatically swapped for UCO.",
     "farmLockWithdrawDesc2Beginner": "When you withdraw, your funds are automatically removed from the ETH/UCO pool. You'll receive an equivalent value in UCO tokens and Ethereum, and any accrued rewards will be directly credited to your wallet in UCO. Finally, the Ethereum will be swapped for UCO, so you receive the full amount in UCO.",
     "farmLockWithdrawFormTextNoLPText1": "No unlocked LP Token are available",
-    "farmLockWithdrawFormTextLPText2": " are available for withdrawal."
+    "farmLockWithdrawFormTextLPText2": " are available for withdrawal.",
+    "onrampWithFiatTitle": "Buy UCO (with €, $...)",
+    "onrampWithFiatHowDoesItWorkTitle": "How does it work ?",
+    "onrampWithFiatHowDoesItWorkBody": "To optimize your transaction fees, we've developed a system that lets you buy Ethereum and automatically converts it into UCO tokens—sent directly to your Archethic wallet.",
+    "onrampWithFiatDisclaimer": "I understand that I am purchasing Ethereum using fiat currency, and this transaction is subject to payment provider fees. Once acquired, my Ethereum will be automatically sent to my Archethic wallet and converted into UCO tokens at the current market rate with a 1% fee applied. Due to market fluctuations, the exact amount of UCO I receive may vary and cannot be precisely estimated in advance.",
+    "onrampWithFiatBuyNowButton": "Buy now",
+    "onrampHistoryTitle": "Transaction history",
+    "onrampHistoryFooter1": "Your ",
+    "onrampHistoryFooter2": "crypto deposit ",
+    "onrampHistoryFooter3": "was automatically ",
+    "onrampHistoryFooter4": "converted into UCO ",
+    "onrampHistoryFooter5": "and sent to your Archethic wallet. Amounts may vary due to market fluctuations and network fees.",
+    "onrampHistoryTransferStatusInitiated": "Transaction Initiated",
+    "onrampHistoryTransferStatusCompleted": "{progress}% Completed",
+    "@onrampHistoryTransferStatusCompleted": {
+        "placeholders": {
+            "progress": {
+                "type": "int"
+            }
+        }
+    },
+    "onrampWithCryptoTitle": "Buy UCO with Cryptos",
+    "onrampWithCryptoSelectChainTitle": "Select your chain",
+    "onrampWithCryptoSelectTokenTitle": "Select your Crypto",
+    "onrampWithCryptoDepositAddressTitle": "Your deposit address",
+    "onrampWithCryptoShowDepositAddress": "Show Deposit address",
+    "onrampWithCryptoPoolAmount1": "We currently have ",
+    "onrampWithCryptoPoolAmount2": "available for instant transactions.",
+    "onrampWithCryptoTreatmentDelayDisclaimer1": "Important : ",
+    "onrampWithCryptoTreatmentDelayDisclaimer2": "Because transactions take time, someone else might use some of this amount before we get yours. If the ETH you send is more than what’s available when we receive it, we’ll process the available part immediately, and handle the rest manually within 24 hours."
 }

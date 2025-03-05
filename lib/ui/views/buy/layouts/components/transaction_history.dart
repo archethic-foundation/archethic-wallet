@@ -1,0 +1,225 @@
+import 'package:aewallet/application/onramp/onramp.dart';
+import 'package:aewallet/domain/models/onramp.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
+import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:material_symbols_icons/symbols.dart';
+import 'package:numeral/numeral.dart';
+
+class OnRampTransactionHistory extends StatelessWidget {
+  const OnRampTransactionHistory({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          localizations.onrampHistoryTitle,
+          style: AppTextStyles.bodyLarge(context)
+              .copyWith(fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 15),
+        const _OnRampTransactionHistoryTable(),
+        const SizedBox(height: 15),
+        Text.rich(
+          TextSpan(
+            children: [
+              TextSpan(text: localizations.onrampHistoryFooter1),
+              TextSpan(
+                text: localizations.onrampHistoryFooter2,
+                style: TextStyle(color: aedappfm.AppThemeBase.secondaryColor),
+              ),
+              TextSpan(text: localizations.onrampHistoryFooter3),
+              TextSpan(
+                text: localizations.onrampHistoryFooter4,
+                style: TextStyle(color: aedappfm.AppThemeBase.secondaryColor),
+              ),
+              TextSpan(text: localizations.onrampHistoryFooter5),
+            ],
+          ),
+          style: AppTextStyles.bodySmall(context)
+              .copyWith(fontStyle: FontStyle.italic),
+        ),
+      ],
+    );
+  }
+}
+
+class _OnRampTransactionHistoryTable extends ConsumerWidget {
+  const _OnRampTransactionHistoryTable();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final transfers = ref.watch(onrampTransfersProvider).valueOrNull;
+
+    if (transfers == null || transfers.isEmpty) {
+      return const SizedBox(
+        height: 200,
+        child: Center(
+          child: CircularProgressIndicator(
+            strokeWidth: 0.5,
+          ),
+        ),
+      );
+    }
+
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: aedappfm.ArchethicThemeBase.brightPurpleBackground,
+        ),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: Column(
+          children: transfers
+              .mapIndexed(
+                (index, transfer) => _OnRampTransactionHistoryTableRow(
+                  key: Key(transfer.id),
+                  transfer: transfer,
+                  isEven: index.isEven,
+                ),
+              )
+              .toList(),
+        ),
+      ),
+    );
+  }
+}
+
+class _OnRampTransactionHistoryTableRow extends ConsumerWidget {
+  const _OnRampTransactionHistoryTableRow({
+    super.key,
+    required this.transfer,
+    required this.isEven,
+  });
+  final OnRampTransfer transfer;
+  final bool isEven;
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    final depositSymbol = ref
+            .watch(
+              onrampTokenProvider(transfer.depositTokenId),
+            )
+            .valueOrNull
+            ?.symbol ??
+        '--';
+    final isReceived = transfer.transferedUcoAmount != 0;
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: isEven
+            ? Colors.transparent
+            : aedappfm.ArchethicThemeBase.raspberry500.withOpacity(0.1),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          '+${transfer.depositAmount.numeral()} ',
+                          style: AppTextStyles.bodyLarge(context).copyWith(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 13,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      Text(
+                        depositSymbol,
+                        style: AppTextStyles.bodyLarge(context).copyWith(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 13,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 4,
+                      ),
+                      const Icon(
+                        Symbols.arrow_outward,
+                        size: 15,
+                        color: Colors.red,
+                        weight: 700,
+                      ),
+                    ],
+                  ),
+                  Text(
+                    DateFormat.yMd().add_Hms().format(transfer.depositDate),
+                    style: AppTextStyles.bodySmall(context),
+                  ),
+                ],
+              ),
+            ),
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          '+${transfer.transferedUcoAmount.numeral()} ',
+                          style: AppTextStyles.bodyLarge(context).copyWith(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 13,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      Text(
+                        aedappfm.ucoToken.symbol,
+                        style: AppTextStyles.bodyLarge(context).copyWith(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 13,
+                        ),
+                      ),
+                      if (isReceived)
+                        const SizedBox(
+                          width: 4,
+                        ),
+                      if (isReceived)
+                        const Icon(
+                          Symbols.call_received,
+                          size: 15,
+                          color: Colors.green,
+                          weight: 700,
+                        ),
+                    ],
+                  ),
+                  Text(
+                    isReceived
+                        ? localizations.onrampHistoryTransferStatusCompleted(
+                            (transfer.completedRatio * 100).round(),
+                          )
+                        : localizations.onrampHistoryTransferStatusInitiated,
+                    style: AppTextStyles.bodySmall(context),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

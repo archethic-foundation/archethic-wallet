@@ -1,1 +1,28 @@
-{}
+{
+  "fr": [
+    "ucoBuyInAeWalletWithFiat",
+    "ucoBuyInAeWalletWithCrypto",
+    "onrampWithFiatTitle",
+    "onrampWithFiatHowDoesItWorkTitle",
+    "onrampWithFiatHowDoesItWorkBody",
+    "onrampWithFiatDisclaimer",
+    "onrampWithFiatBuyNowButton",
+    "onrampHistoryTitle",
+    "onrampHistoryFooter1",
+    "onrampHistoryFooter2",
+    "onrampHistoryFooter3",
+    "onrampHistoryFooter4",
+    "onrampHistoryFooter5",
+    "onrampHistoryTransferStatusInitiated",
+    "onrampHistoryTransferStatusCompleted",
+    "onrampWithCryptoTitle",
+    "onrampWithCryptoSelectChainTitle",
+    "onrampWithCryptoSelectTokenTitle",
+    "onrampWithCryptoDepositAddressTitle",
+    "onrampWithCryptoShowDepositAddress",
+    "onrampWithCryptoPoolAmount1",
+    "onrampWithCryptoPoolAmount2",
+    "onrampWithCryptoTreatmentDelayDisclaimer1",
+    "onrampWithCryptoTreatmentDelayDisclaimer2"
+  ]
+}
