@@ -552,6 +552,7 @@
     "farmLockWithdrawTxAddress": "Adresse de la transaction de retrait : ",
     "farmLockWithdrawControlAmountEmpty": "Veuillez entrer le montant",
     "farmLockWithdrawFormTitle": "Retirer",
+    "farmLockWithdrawFormTitleBeginner": "Retirer des fonds",
     "farmLockWithdrawSuccessInfo": "Retrait effectué avec succès",
     "farmLockWithdrawControlLPTokenAmountExceedDeposited": "Le montant saisi dépasse le montant déposé.",
     "withdrawFarmLockProcessStep0": "Processus non démarré",
@@ -811,7 +812,7 @@
     "earnSectionDepositFundsIntermediaryTitle": "Intermédiaire",
     "earnSectionDepositFundsIntermediaryDesc": "Achetez des tokens UCO avec vos autres cryptomonnaies :",
     "earnSectionDepositFundsIntermediaryBuyBtn": "Acheter maintenant avec des cryptos",
-    "earnSectionDepositFundExpertTitle": "Expert",
+    "earnSectionDepositFundsExpertTitle": "Expert",
     "earnSectionDepositFundsExpertDesc": "Si vous êtes compétent en cryptomonnaies et que vous souhaitez transférer vous-même vos tokens UCO ou ETH dans votre portefeuille Archethic :",
     "earnSectionDepositFundsExpertBridgeBtn": "Bridger maintenant",
     "earnSectionAddLiquidityTitle": "Ajoutez de la liquidité (UCO ou ETH)",
@@ -840,6 +841,9 @@
     "farmLockDepositDesc2": "Plus vous verrouillez vos tokens LP longtemps, plus vous recevez de récompenses de la part d'Archethic.",
     "farmLockDepositTitle3": "Comment ça marche ?",
     "farmLockDepositDesc3": "Nous ajouterons automatiquement vos fonds dans la pool ETH/UCO. En retour, vous recevez des jetons représentant votre part dans la pool. Ces jetons sont bloqués pour la période que vous avez choisie, ce qui contribue à maintenir la stabilité du pool. Vous gagnerez des récompenses pour votre engagement et, une fois la période de blocage terminée, vous pourrez retirer vos fonds et vos bénéfices.",
+    "earnUserLevelSwitchBeginner": "Débutant",
+    "earnUserLevelSwitchAdvanced": "Avancé",
+    "earnUserLevelSwitchLabel": "Changer de mode : ",
     "liquidityRemoveTextFieldLPLabel": "Combien de tokens LP souhaitez-vous retirer ?",
     "farmLockDepositTextFieldUCOLabel": "Quelle quantité de UCO ajouter ?",
     "farmLockLevelUpTitle": "Comment ça marche ?",
@@ -859,8 +863,8 @@
     "resumeBtn": "Reprendre",
     "languageEnglish": "English",
     "languageFrancais": "Français",
-    "famLockDepositStepPopupFinalAmount": "Vous avez bloqué {finalAmount} jeton LP pour {duration}.",
-    "@famLockDepositStepPopupFinalAmount": {
+    "farmLockDepositStepPopupFinalAmount": "Vous avez bloqué {finalAmount} jeton LP pour {duration}.",
+    "@farmLockDepositStepPopupFinalAmount": {
         "placeholders": {
             "finalAmount": {
                 "type": "String"
@@ -870,8 +874,8 @@
             }
         }
     },
-    "famLockDepositStepPopupFinalAmounts": "Vous avez bloqué {finalAmount} jetons LP pour {duration}.",
-    "@famLockDepositStepPopupFinalAmounts": {
+    "farmLockDepositStepPopupFinalAmounts": "Vous avez bloqué {finalAmount} jetons LP pour {duration}.",
+    "@farmLockDepositStepPopupFinalAmounts": {
         "placeholders": {
             "finalAmount": {
                 "type": "String"
@@ -894,5 +898,39 @@
     "farmLockDepositConfirmPrivacyPolicyDesc1": "J'accepte les ",
     "farmLockDepositConfirmPrivacyPolicyDescTermsLink": "Conditions d'utilisation",
     "farmLockDepositConfirmPrivacyPolicyDesc2": " et la ",
-    "farmLockDepositConfirmPrivacyPolicyDescPrivacyLink": "Politique de confidentialité"
+    "farmLockDepositConfirmPrivacyPolicyDescPrivacyLink": "Politique de confidentialité",
+    "farmLockWithdrawLPItem1Desc1": "Vos jetons LP farmés seront déverrouillés,",
+    "farmLockWithdrawLPItem1Desc2": " vous permettant de les retirer ainsi que vos récompenses accumulées.",
+    "farmLockWithdrawLPItem2Desc1": "Vos jetons LP seront brûlés,",
+    "farmLockWithdrawLPItem2Desc2": " libérant les UCO et ETH que vous aviez initialement fournis à la réserve de liquidité.",
+    "farmLockWithdrawLPItem3Desc1": "Les ETH récupérés seront automatiquement échangés en UCO,",
+    "farmLockWithdrawLPItem3Desc2": " afin que vous receviez l'intégralité du montant en UCO.",
+    "withdrawFundsStepPopupTitle": "Retrait fonds - Etapes",
+    "withdrawFundsStep11": "Déverrouiller ",
+    "withdrawFundsStep12": "les jetons",
+    "withdrawFundsStep21": "Retirer les fonds ",
+    "withdrawFundsStep22": "de la pool ETH/UCO",
+    "withdrawFundsStep31": "Échanger ",
+    "withdrawFundsStep32": "les ETH en UCO",
+    "withdrawFundsStepPopupFinalAmountWithReward": "Vous avez reçu {finalAmountWithdraw} UCO provenant des jetons LP déverrouillés et {finalAmountReward} UCO de vos récompenses accumulées.",
+    "@withdrawFundsStepPopupFinalAmountWithReward": {
+        "placeholders": {
+            "finalAmountWithdraw": {
+                "type": "String"
+            },
+            "finalAmountReward": {
+                "type": "String"
+            }
+        }
+    },
+    "withdrawFundsStepPopupFinalAmountWithoutReward": "Vous avez reçu {finalAmountWithdraw} UCO provenant des jetons LP déverrouillés.",
+    "@withdrawFundsStepPopupFinalAmountWithoutReward": {
+        "placeholders": {
+            "finalAmountWithdraw": {
+                "type": "String"
+            }
+        }
+    },
+    "farmLockWithdrawDescBeginner": "Une fois que certains de vos fonds sont déverrouillés, vous pouvez les retirer. Techniquement, cela supprimera votre liquidité de la pool de liquidité, et vous recevrez une valeur équivalente en jetons UCO et en Ethereum.",
+    "farmLockWithdrawDesc2Beginner": "Lorsque vous retirez vos fonds, ils sont automatiquement supprimés de la pool ETH/UCO. Vous recevrez une valeur équivalente en jetons UCO et en Ethereum, et toutes les récompenses accumulées seront directement créditées sur votre portefeuille en UCO. Enfin, l'Ethereum sera échangé en UCO afin que vous receviez la totalité du montant en UCO."
 }

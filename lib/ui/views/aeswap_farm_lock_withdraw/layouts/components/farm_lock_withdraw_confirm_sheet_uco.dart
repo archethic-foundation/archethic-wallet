@@ -3,17 +3,12 @@ import 'dart:async';
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/step.dart';
 import 'package:aewallet/domain/models/step.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
-import 'package:aewallet/ui/figma_components/complex/estimated_fees.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
-import 'package:aewallet/ui/figma_components/text/gradient_text.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
-import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/provider.dart';
-import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_confirm_lock_period.dart';
-import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_confirm_privacy_policy.dart';
-import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_step_popup.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/bloc/provider.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/layouts/components/farm_lock_withdraw_confirm_privacy_policy.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/layouts/components/farm_lock_withdraw_step_popup.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
@@ -23,9 +18,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FarmLockDepositConfirmSheetUCO extends ConsumerWidget
+class FarmLockWithdrawConfirmSheetUCO extends ConsumerWidget
     implements SheetSkeletonInterface {
-  const FarmLockDepositConfirmSheetUCO({
+  const FarmLockWithdrawConfirmSheetUCO({
     super.key,
   });
 
@@ -51,18 +46,17 @@ class FarmLockDepositConfirmSheetUCO extends ConsumerWidget
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    final farmLockDeposit = ref.watch(farmLockDepositFormNotifierProvider);
+    final farmLockWithdraw = ref.watch(farmLockWithdrawFormNotifierProvider);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        EstimatedFees(farmLockDeposit.feeEstimation),
         BtnFooterPrimary(
-          buttonText: AppLocalizations.of(context)!.btn_confirm_farm_add_lock,
-          key: const Key('farmLockDeposit'),
+          buttonText: AppLocalizations.of(context)!.btn_confirm_farm_withdraw,
+          key: const Key('farmLockWithdraw'),
           onTap: () async {
-            final farmLockDepositNotifier = ref.read(
-              farmLockDepositFormNotifierProvider.notifier,
+            final farmLockWithdrawNotifier = ref.read(
+              farmLockWithdrawFormNotifierProvider.notifier,
             )..setProcessInProgress(true);
 
             ref.read(stepsNotifierProvider.notifier)
@@ -70,7 +64,7 @@ class FarmLockDepositConfirmSheetUCO extends ConsumerWidget
               ..updateStepStatus(0, StepStatus.inProgress);
 
             unawaited(
-              farmLockDepositNotifier.lock(AppLocalizations.of(context)!),
+              farmLockWithdrawNotifier.withdraw(AppLocalizations.of(context)!),
             );
 
             await showDialog<bool>(
@@ -78,14 +72,13 @@ class FarmLockDepositConfirmSheetUCO extends ConsumerWidget
               useRootNavigator: false,
               context: context,
               builder: (context) {
-                return const FarmLockDepositStepPopup();
+                return const FarmLockWithdrawStepPopup();
               },
             );
           },
-          isLocked: (!farmLockDeposit.confirmLockPeriod ||
-                  !farmLockDeposit.confirmPrivacyPolicy) ||
-              farmLockDeposit.isProcessInProgress,
-          showProgressIndicator: farmLockDeposit.isProcessInProgress,
+          isLocked: (!farmLockWithdraw.confirmPrivacyPolicy) ||
+              farmLockWithdraw.isProcessInProgress,
+          showProgressIndicator: farmLockWithdraw.isProcessInProgress,
         ),
       ],
     );
@@ -94,20 +87,19 @@ class FarmLockDepositConfirmSheetUCO extends ConsumerWidget
   @override
   PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final farmLockDepositNotifier =
-        ref.read(farmLockDepositFormNotifierProvider.notifier);
+    final farmLockWithdrawNotifier =
+        ref.watch(farmLockWithdrawFormNotifierProvider.notifier);
 
     return SheetAppBar(
-      title: localizations.farmLockDepositFormTitleBeginner,
+      title: localizations.farmLockWithdrawFormTitleBeginner,
       widgetLeft: BackButton(
         key: const Key('back'),
         color: ArchethicTheme.text,
         onPressed: () {
-          farmLockDepositNotifier
-            ..setFarmLockDepositProcessStep(
+          farmLockWithdrawNotifier
+            ..setFarmLockWithdrawProcessStep(
               aedappfm.ProcessStep.form,
             )
-            ..setConfirmLockPeriod(false)
             ..setConfirmPrivacyPolicy(false)
             ..setFailure(null);
         },
@@ -118,11 +110,6 @@ class FarmLockDepositConfirmSheetUCO extends ConsumerWidget
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final farmLock = ref.watch(farmLockFormFarmLockProvider).valueOrNull;
-    final farmLockDeposit = ref.read(farmLockDepositFormNotifierProvider);
-    if (farmLockDeposit.pool == null) {
-      return const SizedBox.shrink();
-    }
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -165,7 +152,7 @@ class FarmLockDepositConfirmSheetUCO extends ConsumerWidget
                               children: [
                                 TextSpan(
                                   text: localizations
-                                      .farmLockDepositConfirmUcoItem1Desc1,
+                                      .farmLockWithdrawLPItem1Desc1,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodySmall!
@@ -176,7 +163,7 @@ class FarmLockDepositConfirmSheetUCO extends ConsumerWidget
                                 ),
                                 TextSpan(
                                   text: localizations
-                                      .farmLockDepositConfirmUcoItem1Desc2,
+                                      .farmLockWithdrawLPItem1Desc2,
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
                               ],
@@ -213,12 +200,12 @@ class FarmLockDepositConfirmSheetUCO extends ConsumerWidget
                               children: [
                                 TextSpan(
                                   text: localizations
-                                      .farmLockDepositConfirmUcoItem2Desc1,
+                                      .farmLockWithdrawLPItem2Desc1,
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
                                 TextSpan(
                                   text: localizations
-                                      .farmLockDepositConfirmUcoItem2Desc2,
+                                      .farmLockWithdrawLPItem2Desc2,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodySmall!
@@ -226,11 +213,6 @@ class FarmLockDepositConfirmSheetUCO extends ConsumerWidget
                                         fontWeight:
                                             FontWeightTelegraf.fontWeightBold,
                                       ),
-                                ),
-                                TextSpan(
-                                  text: localizations
-                                      .farmLockDepositConfirmUcoItem2Desc3,
-                                  style: Theme.of(context).textTheme.bodySmall,
                                 ),
                               ],
                             ),
@@ -266,14 +248,12 @@ class FarmLockDepositConfirmSheetUCO extends ConsumerWidget
                               children: [
                                 TextSpan(
                                   text: localizations
-                                      .farmLockDepositConfirmUcoItem3Desc1,
+                                      .farmLockWithdrawLPItem3Desc1,
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
                                 TextSpan(
-                                  text: getFarmLockDepositDurationTypeLabel(
-                                    context,
-                                    farmLockDeposit.farmLockDepositDuration,
-                                  ).toLowerCase(),
+                                  text: localizations
+                                      .farmLockWithdrawLPItem3Desc2,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodySmall!
@@ -281,11 +261,6 @@ class FarmLockDepositConfirmSheetUCO extends ConsumerWidget
                                         fontWeight:
                                             FontWeightTelegraf.fontWeightBold,
                                       ),
-                                ),
-                                TextSpan(
-                                  text: localizations
-                                      .farmLockDepositConfirmUcoItem3Desc2,
-                                  style: Theme.of(context).textTheme.bodySmall,
                                 ),
                               ],
                             ),
@@ -296,45 +271,13 @@ class FarmLockDepositConfirmSheetUCO extends ConsumerWidget
                   );
                 },
               ),
-              const SizedBox(
-                height: 30,
-              ),
-              Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: localizations.farmLockDepositConfirmUcoDesc2,
-                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                            fontWeight: FontWeightTelegraf.fontWeightBold,
-                          ),
-                    ),
-                    if (farmLock != null)
-                      WidgetSpan(
-                        child: GradientText(
-                          '${(farmLock.apr3years * 100).formatNumber(precision: 0).replaceAll('.', '')}% ${localizations.farmLockDepositAPRLbl.replaceAll(':', '')}',
-                          gradient: ArchethicGradients.gradientArchethic,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(
-                                fontWeight: FontWeightTelegraf.fontWeightBold,
-                              ),
-                        ),
-                      ),
-                  ],
-                ),
-              ),
             ],
           ),
         ),
         const SizedBox(
           height: 30,
         ),
-        const FarmLockDepositConfirmLockPeriod(),
-        const SizedBox(
-          height: 20,
-        ),
-        const FarmLockDepositConfirmPrivacyPolicy(),
+        const FarmLockWithdrawConfirmPrivacyPolicy(),
       ],
     );
   }

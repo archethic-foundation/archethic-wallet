@@ -3,11 +3,10 @@ import 'dart:async';
 import 'package:aewallet/application/step.dart';
 import 'package:aewallet/domain/models/step.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_primary.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/figma_components/message_box/message_box.dart';
-import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/provider.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/bloc/provider.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -15,8 +14,8 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class FarmLockDepositStepPopup extends ConsumerWidget {
-  const FarmLockDepositStepPopup({super.key});
+class FarmLockWithdrawStepPopup extends ConsumerWidget {
+  const FarmLockWithdrawStepPopup({super.key});
 
   @override
   Widget build(
@@ -25,7 +24,7 @@ class FarmLockDepositStepPopup extends ConsumerWidget {
   ) {
     final stepsState = ref.watch(stepsNotifierProvider);
     final localizations = AppLocalizations.of(context)!;
-    final farmLockDeposit = ref.watch(farmLockDepositFormNotifierProvider);
+    final farmLockWithdraw = ref.watch(farmLockWithdrawFormNotifierProvider);
 
     return aedappfm.PopupTemplate(
       popupContent: Column(
@@ -91,24 +90,21 @@ class FarmLockDepositStepPopup extends ConsumerWidget {
               ),
             );
           }),
-          if (farmLockDeposit.failure == null &&
-              farmLockDeposit.finalAmount != null)
+          if (farmLockWithdraw.failure == null &&
+              farmLockWithdraw.finalAmountWithdraw != null)
             MessageBox(
               messageBoxType: MessageBoxType.success,
-              text: farmLockDeposit.finalAmount! > 1
-                  ? localizations.farmLockDepositStepPopupFinalAmounts(
-                      farmLockDeposit.finalAmount!.formatNumber(precision: 2),
-                      getFarmLockDepositDurationTypeLabel(
-                        context,
-                        farmLockDeposit.farmLockDepositDuration,
-                      ).toLowerCase(),
+              text: farmLockWithdraw.finalAmountReward! > 1
+                  ? localizations.withdrawFundsStepPopupFinalAmountWithReward(
+                      farmLockWithdraw.finalAmountWithdraw!
+                          .formatNumber(precision: 2),
+                      farmLockWithdraw.finalAmountReward!
+                          .formatNumber(precision: 2),
                     )
-                  : localizations.farmLockDepositStepPopupFinalAmount(
-                      farmLockDeposit.finalAmount!.formatNumber(precision: 8),
-                      getFarmLockDepositDurationTypeLabel(
-                        context,
-                        farmLockDeposit.farmLockDepositDuration,
-                      ).toLowerCase(),
+                  : localizations
+                      .withdrawFundsStepPopupFinalAmountWithoutReward(
+                      farmLockWithdraw.finalAmountWithdraw!
+                          .formatNumber(precision: 2),
                     ),
             ),
           Row(
@@ -154,9 +150,9 @@ class FarmLockDepositStepPopup extends ConsumerWidget {
                         unawaited(
                           ref
                               .read(
-                                farmLockDepositFormNotifierProvider.notifier,
+                                farmLockWithdrawFormNotifierProvider.notifier,
                               )
-                              .lock(AppLocalizations.of(context)!),
+                              .withdraw(AppLocalizations.of(context)!),
                         );
                       },
                       widthExpanded: true,
@@ -167,7 +163,7 @@ class FarmLockDepositStepPopup extends ConsumerWidget {
           ),
         ],
       ),
-      popupTitle: localizations.addFundsStepPopupTitle,
+      popupTitle: localizations.withdrawFundsStepPopupTitle,
       displayCloseButton: false,
     );
   }
@@ -181,14 +177,14 @@ class FarmLockDepositStepPopup extends ConsumerWidget {
           TextSpan(
             children: [
               TextSpan(
-                text: localizations.addFundsStep11,
+                text: localizations.withdrawFundsStep11,
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium!
                     .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold),
               ),
               TextSpan(
-                text: localizations.addFundsStep12,
+                text: localizations.withdrawFundsStep12,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
             ],
@@ -200,14 +196,14 @@ class FarmLockDepositStepPopup extends ConsumerWidget {
           TextSpan(
             children: [
               TextSpan(
-                text: localizations.addFundsStep21,
+                text: localizations.withdrawFundsStep21,
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium!
                     .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold),
               ),
               TextSpan(
-                text: localizations.addFundsStep22,
+                text: localizations.withdrawFundsStep22,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
             ],
@@ -218,14 +214,14 @@ class FarmLockDepositStepPopup extends ConsumerWidget {
           TextSpan(
             children: [
               TextSpan(
-                text: localizations.addFundsStep31,
+                text: localizations.withdrawFundsStep31,
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium!
                     .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold),
               ),
               TextSpan(
-                text: localizations.addFundsStep32,
+                text: localizations.withdrawFundsStep32,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
             ],

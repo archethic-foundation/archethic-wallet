@@ -31,6 +31,7 @@ class FarmLockWithdrawFormState with _$FarmLockWithdrawFormState {
     double? rewardAmount,
     String? poolAddress,
     DateTime? endDate,
+    @Default(false) bool confirmPrivacyPolicy,
   }) = _FarmLockWithdrawFormState;
   const FarmLockWithdrawFormState._();
 

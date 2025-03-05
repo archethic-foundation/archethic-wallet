@@ -1,7 +1,13 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/aeswap/usecases.dart';
 import 'package:aewallet/application/airdrop/airdrop.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/application/step.dart';
+import 'package:aewallet/domain/models/settings.dart';
+import 'package:aewallet/domain/models/step.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
+import 'package:aewallet/modules/aeswap/application/session/provider.dart';
+import 'package:aewallet/modules/aeswap/application/session/state.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pair.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/util/browser_util_desktop.dart';
@@ -10,6 +16,7 @@ import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/bloc/state.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
+import 'package:collection/collection.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -52,6 +59,13 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
         ),
       );
     }
+  }
+
+  void setConfirmPrivacyPolicy(bool confirmPrivacyPolicy) {
+    state = state.copyWith(
+      confirmPrivacyPolicy: confirmPrivacyPolicy,
+      failure: null,
+    );
   }
 
   void setDepositedAmount(double? depositedAmount) {
@@ -233,18 +247,57 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
+
+    final earnUserLevel = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.earnUserLevel),
+    );
+
     await aedappfm.ConsentRepositoryImpl()
         .addAddress(accountSelected!.genesisAddress);
-    await ref.read(withdrawFarmLockCaseProvider).run(
-          localizations,
-          this,
-          state.isFarmClose,
-          state.farmAddress!,
-          state.lpToken!.address,
-          state.amount,
-          state.depositId,
-          state.rewardToken!,
-        );
+
+    if (earnUserLevel == EarnUserLevelType.advanced) {
+      await ref.read(withdrawFarmLockCaseProvider).run(
+            localizations,
+            this,
+            state.isFarmClose,
+            state.farmAddress!,
+            state.lpToken!.address,
+            state.amount,
+            state.depositId,
+            state.rewardToken!,
+          );
+    } else {
+      final environment = ref.read(environmentProvider);
+      final stepsState = ref.read(stepsNotifierProvider.notifier);
+      final currentStep = ref
+          .read(stepsNotifierProvider)
+          .steps
+          .firstWhereOrNull((step) => step.status == StepStatus.failed)
+          ?.stepIndex;
+
+      stepsState.updateStepStatus(currentStep ?? 0, StepStatus.inProgress);
+
+      final result = await ref.read(withdrawFundsBeginnerCaseProvider).run(
+            localizations,
+            state.farmAddress!,
+            state.amount,
+            state.poolAddress!,
+            environment.aeETHAddress,
+            state.lpToken!.address,
+            state.depositId,
+            currentStep ?? 0,
+            stepsState,
+            ref.read(stepsNotifierProvider).snapshot,
+          );
+
+      if (result.amountTokenUCOSwapped != null) {
+        state =
+            state.copyWith(finalAmountWithdraw: result.amountTokenUCOSwapped);
+      }
+      if (result.amountReward != null) {
+        state = state.copyWith(finalAmountReward: result.amountReward);
+      }
+    }
 
     ref
       ..invalidate(userBalanceProvider)

@@ -38,6 +38,7 @@ mixin _$FarmLockWithdrawFormState {
   double? get rewardAmount => throw _privateConstructorUsedError;
   String? get poolAddress => throw _privateConstructorUsedError;
   DateTime? get endDate => throw _privateConstructorUsedError;
+  bool get confirmPrivacyPolicy => throw _privateConstructorUsedError;
 
   /// Create a copy of FarmLockWithdrawFormState
   /// with the given fields replaced by the non-null parameter values.
@@ -73,7 +74,8 @@ abstract class $FarmLockWithdrawFormStateCopyWith<$Res> {
       double feesEstimatedUCO,
       double? rewardAmount,
       String? poolAddress,
-      DateTime? endDate});
+      DateTime? endDate,
+      bool confirmPrivacyPolicy});
 
   $TransactionCopyWith<$Res>? get transactionWithdrawFarmLock;
   $FailureCopyWith<$Res>? get failure;
@@ -119,6 +121,7 @@ class _$FarmLockWithdrawFormStateCopyWithImpl<$Res,
     Object? rewardAmount = freezed,
     Object? poolAddress = freezed,
     Object? endDate = freezed,
+    Object? confirmPrivacyPolicy = null,
   }) {
     return _then(_value.copyWith(
       processStep: null == processStep
@@ -205,6 +208,10 @@ class _$FarmLockWithdrawFormStateCopyWithImpl<$Res,
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      confirmPrivacyPolicy: null == confirmPrivacyPolicy
+          ? _value.confirmPrivacyPolicy
+          : confirmPrivacyPolicy // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -310,7 +317,8 @@ abstract class _$$FarmLockWithdrawFormStateImplCopyWith<$Res>
       double feesEstimatedUCO,
       double? rewardAmount,
       String? poolAddress,
-      DateTime? endDate});
+      DateTime? endDate,
+      bool confirmPrivacyPolicy});
 
   @override
   $TransactionCopyWith<$Res>? get transactionWithdrawFarmLock;
@@ -360,6 +368,7 @@ class __$$FarmLockWithdrawFormStateImplCopyWithImpl<$Res>
     Object? rewardAmount = freezed,
     Object? poolAddress = freezed,
     Object? endDate = freezed,
+    Object? confirmPrivacyPolicy = null,
   }) {
     return _then(_$FarmLockWithdrawFormStateImpl(
       processStep: null == processStep
@@ -446,6 +455,10 @@ class __$$FarmLockWithdrawFormStateImplCopyWithImpl<$Res>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      confirmPrivacyPolicy: null == confirmPrivacyPolicy
+          ? _value.confirmPrivacyPolicy
+          : confirmPrivacyPolicy // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -474,7 +487,8 @@ class _$FarmLockWithdrawFormStateImpl extends _FarmLockWithdrawFormState {
       this.feesEstimatedUCO = 0.0,
       this.rewardAmount,
       this.poolAddress,
-      this.endDate})
+      this.endDate,
+      this.confirmPrivacyPolicy = false})
       : super._();
 
   @override
@@ -527,10 +541,13 @@ class _$FarmLockWithdrawFormStateImpl extends _FarmLockWithdrawFormState {
   final String? poolAddress;
   @override
   final DateTime? endDate;
+  @override
+  @JsonKey()
+  final bool confirmPrivacyPolicy;
 
   @override
   String toString() {
-    return 'FarmLockWithdrawFormState(processStep: $processStep, resumeProcess: $resumeProcess, currentStep: $currentStep, isProcessInProgress: $isProcessInProgress, farmLockWithdrawOk: $farmLockWithdrawOk, amount: $amount, depositId: $depositId, transactionWithdrawFarmLock: $transactionWithdrawFarmLock, failure: $failure, farmAddress: $farmAddress, rewardToken: $rewardToken, lpToken: $lpToken, lpTokenPair: $lpTokenPair, finalAmountReward: $finalAmountReward, finalAmountWithdraw: $finalAmountWithdraw, consentDateTime: $consentDateTime, depositedAmount: $depositedAmount, feesEstimatedUCO: $feesEstimatedUCO, rewardAmount: $rewardAmount, poolAddress: $poolAddress, endDate: $endDate)';
+    return 'FarmLockWithdrawFormState(processStep: $processStep, resumeProcess: $resumeProcess, currentStep: $currentStep, isProcessInProgress: $isProcessInProgress, farmLockWithdrawOk: $farmLockWithdrawOk, amount: $amount, depositId: $depositId, transactionWithdrawFarmLock: $transactionWithdrawFarmLock, failure: $failure, farmAddress: $farmAddress, rewardToken: $rewardToken, lpToken: $lpToken, lpTokenPair: $lpTokenPair, finalAmountReward: $finalAmountReward, finalAmountWithdraw: $finalAmountWithdraw, consentDateTime: $consentDateTime, depositedAmount: $depositedAmount, feesEstimatedUCO: $feesEstimatedUCO, rewardAmount: $rewardAmount, poolAddress: $poolAddress, endDate: $endDate, confirmPrivacyPolicy: $confirmPrivacyPolicy)';
   }
 
   @override
@@ -577,7 +594,9 @@ class _$FarmLockWithdrawFormStateImpl extends _FarmLockWithdrawFormState {
                 other.rewardAmount == rewardAmount) &&
             (identical(other.poolAddress, poolAddress) ||
                 other.poolAddress == poolAddress) &&
-            (identical(other.endDate, endDate) || other.endDate == endDate));
+            (identical(other.endDate, endDate) || other.endDate == endDate) &&
+            (identical(other.confirmPrivacyPolicy, confirmPrivacyPolicy) ||
+                other.confirmPrivacyPolicy == confirmPrivacyPolicy));
   }
 
   @override
@@ -603,7 +622,8 @@ class _$FarmLockWithdrawFormStateImpl extends _FarmLockWithdrawFormState {
         feesEstimatedUCO,
         rewardAmount,
         poolAddress,
-        endDate
+        endDate,
+        confirmPrivacyPolicy
       ]);
 
   /// Create a copy of FarmLockWithdrawFormState
@@ -638,7 +658,8 @@ abstract class _FarmLockWithdrawFormState extends FarmLockWithdrawFormState {
       final double feesEstimatedUCO,
       final double? rewardAmount,
       final String? poolAddress,
-      final DateTime? endDate}) = _$FarmLockWithdrawFormStateImpl;
+      final DateTime? endDate,
+      final bool confirmPrivacyPolicy}) = _$FarmLockWithdrawFormStateImpl;
   const _FarmLockWithdrawFormState._() : super._();
 
   @override
@@ -683,6 +704,8 @@ abstract class _FarmLockWithdrawFormState extends FarmLockWithdrawFormState {
   String? get poolAddress;
   @override
   DateTime? get endDate;
+  @override
+  bool get confirmPrivacyPolicy;
 
   /// Create a copy of FarmLockWithdrawFormState
   /// with the given fields replaced by the non-null parameter values.

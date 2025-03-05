@@ -557,6 +557,7 @@
     "farmLockWithdrawTxAddress": "Withdraw transaction address: ",
     "farmLockWithdrawControlAmountEmpty": "Please enter the amount",
     "farmLockWithdrawFormTitle": "Withdraw",
+    "farmLockWithdrawFormTitleBeginner": "Withdraw Funds",
     "farmLockWithdrawSuccessInfo": "Withdraw done successfully",
     "farmLockWithdrawControlLPTokenAmountExceedDeposited": "The amount entered exceeds the deposited amount.",
     "withdrawFarmLockProcessStep0": "Process not started",
@@ -822,7 +823,7 @@
     "earnSectionDepositFundsIntermediaryTitle": "Intermediary",
     "earnSectionDepositFundsIntermediaryDesc": "Buy UCO token with your other cryptos:",
     "earnSectionDepositFundsIntermediaryBuyBtn": "Buy now with cryptos",
-    "earnSectionDepositFundExpertTitle": "Expert",
+    "earnSectionDepositFundsExpertTitle": "Expert",
     "earnSectionDepositFundsExpertDesc": "If you are knowledgeable in crypto and you want to transfer yourself your UCO tokens or ETH in your Archethic wallet:",
     "earnSectionDepositFundsExpertBridgeBtn": "Bridge now",
     "earnSectionAddLiquidityTitle": "Add Liquidity in UCO or ETH",
@@ -866,8 +867,8 @@
     "resumeBtn": "Resume",
     "languageEnglish": "English",
     "languageFrancais": "Français",
-    "famLockDepositStepPopupFinalAmount": "You have locked {finalAmount} LP Token for {duration}.",
-    "@famLockDepositStepPopupFinalAmount": {
+    "farmLockDepositStepPopupFinalAmount": "You have locked {finalAmount} LP Token for {duration}.",
+    "@farmLockDepositStepPopupFinalAmount": {
         "placeholders": {
             "finalAmount": {
                 "type": "String"
@@ -877,8 +878,8 @@
             }
         }
     },
-    "famLockDepositStepPopupFinalAmounts": "You have locked {finalAmount} LP Tokens for {duration}.",
-    "@famLockDepositStepPopupFinalAmounts": {
+    "farmLockDepositStepPopupFinalAmounts": "You have locked {finalAmount} LP Tokens for {duration}.",
+    "@farmLockDepositStepPopupFinalAmounts": {
         "placeholders": {
             "finalAmount": {
                 "type": "String"
@@ -901,5 +902,39 @@
     "farmLockDepositConfirmPrivacyPolicyDesc1": "I accept the  ",
     "farmLockDepositConfirmPrivacyPolicyDescTermsLink": "Terms of use",
     "farmLockDepositConfirmPrivacyPolicyDesc2": " and the ",
-    "farmLockDepositConfirmPrivacyPolicyDescPrivacyLink": "Privacy Policy"
+    "farmLockDepositConfirmPrivacyPolicyDescPrivacyLink": "Privacy Policy",
+    "farmLockWithdrawLPItem1Desc1": "Your farmed LP tokens will be unlocked,",
+    "farmLockWithdrawLPItem1Desc2": " allowing you to withdraw them along with your accumulated rewards.",
+    "farmLockWithdrawLPItem2Desc1": "Your LP tokens will be burned,",
+    "farmLockWithdrawLPItem2Desc2": " releasing the UCO and ETH you initially provided to the liquidity pool.",
+    "farmLockWithdrawLPItem3Desc1": "The recovered ETH will be automatically swapped for UCO,",
+    "farmLockWithdrawLPItem3Desc2": " so you receive the full amount in UCO.",
+    "withdrawFundsStepPopupTitle": "Withdraw funds - Steps",
+    "withdrawFundsStep11": "Unlock ",
+    "withdrawFundsStep12": "tokens",
+    "withdrawFundsStep21": "Withdraw funds ",
+    "withdrawFundsStep22": "from ETH/UCO pool",
+    "withdrawFundsStep31": "Swap ",
+    "withdrawFundsStep32": "ETH to UCO",
+    "withdrawFundsStepPopupFinalAmountWithReward": "You have received {finalAmountWithdraw} UCO from unlocked LP Tokens and {finalAmountReward} UCO from your accumulated rewards.",
+    "@withdrawFundsStepPopupFinalAmountWithReward": {
+        "placeholders": {
+            "finalAmountWithdraw": {
+                "type": "String"
+            },
+            "finalAmountReward": {
+                "type": "String"
+            }
+        }
+    },
+    "withdrawFundsStepPopupFinalAmountWithoutReward": "You have received {finalAmountWithdraw} UCO from unlocked LP Tokens.",
+    "@withdrawFundsStepPopupFinalAmountWithoutReward": {
+        "placeholders": {
+            "finalAmountWithdraw": {
+                "type": "String"
+            }
+        }
+    },
+    "farmLockWithdrawDescBeginner": "Once some of your funds are unlocked you can withdraw them. Technically, it will remove your liquidity from the liquidity pool and you will receive an equal value of UCO token and Ethereum.",
+    "farmLockWithdrawDesc2Beginner": "When you withdraw, your funds are automatically removed from the ETH/UCO pool. You'll receive an equivalent value in UCO tokens and Ethereum, and any accrued rewards will be directly credited to your wallet in UCO. Finally, the Ethereum will be swapped for UCO, so you receive the full amount in UCO."
 }

@@ -15,7 +15,6 @@ extension CustomTextStyles on TextTheme {
 
   TextStyle get bodySmallLink => bodySmallWithOpacity.copyWith(
         decoration: TextDecoration.underline,
-        color: const Color(0xFF8A40BF),
       );
 }
 
@@ -36,7 +35,6 @@ extension ArchethicGradients on LinearGradient {
 }
 
 extension FontWeightTelegraf on FontWeight {
-  // TODO(reddwarf03): Use in project
   static FontWeight get fontWeightUltralight => FontWeight.w200;
   static FontWeight get fontWeightLight => FontWeight.w300;
   static FontWeight get fontWeightRegular => FontWeight.w400;
