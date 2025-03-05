@@ -2,14 +2,13 @@ import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
-import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
 import 'package:aewallet/ui/views/aeswap_swap/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_confirm_sheet.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_icon_info.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_icon_settings.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_textfield_token_swapped_amount.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_textfield_token_to_swap_amount.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -226,26 +225,21 @@ class SwapTabState extends ConsumerState<SwapTab> {
               padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).padding.bottom + 20,
               ),
-              child: Row(
-                children: [
-                  AppButtonTinyConnectivity(
-                    localizations.btn_swap,
-                    Dimens.buttonBottomDimens,
-                    key: const Key('swap'),
-                    onPressed: () async {
-                      final controlOk = await ref
-                          .read(
-                            swapFormNotifierProvider.notifier,
-                          )
-                          .validateForm(AppLocalizations.of(context)!);
+              child: BtnFooterPrimary(
+                buttonText: localizations.btn_swap,
+                key: const Key('swap'),
+                onTap: () async {
+                  final controlOk = await ref
+                      .read(
+                        swapFormNotifierProvider.notifier,
+                      )
+                      .validateForm(AppLocalizations.of(context)!);
 
-                      if (controlOk) {
-                        await context.push(SwapConfirmFormSheet.routerPage);
-                      }
-                    },
-                    disabled: !swap.isControlsOk,
-                  ),
-                ],
+                  if (controlOk) {
+                    await context.push(SwapConfirmFormSheet.routerPage);
+                  }
+                },
+                isLocked: !swap.isControlsOk,
               ),
             ),
           ),

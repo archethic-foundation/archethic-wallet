@@ -2,15 +2,14 @@ import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/aeswap_swap/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_confirm_infos.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_result_sheet.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
@@ -56,39 +55,34 @@ class SwapConfirmFormSheetState extends ConsumerState<SwapConfirmFormSheet>
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final swap = ref.watch(swapFormNotifierProvider);
-    return Row(
-      children: <Widget>[
-        AppButtonTinyConnectivity(
-          AppLocalizations.of(context)!.btn_confirm_swap,
-          Dimens.buttonBottomDimens,
-          key: const Key('swap'),
-          onPressed: () async {
-            final swapFormNotifier = ref.read(swapFormNotifierProvider.notifier)
-              ..setProcessInProgress(true);
-            final resultOk =
-                await swapFormNotifier.swap(AppLocalizations.of(context)!);
-            swapFormNotifier.setProcessInProgress(false);
-            if (resultOk) {
-              await context.push(SwapResultSheet.routerPage);
-            } else {
-              UIUtil.showSnackbar(
-                FailureMessage(
-                  context: context,
-                  failure: ref.read(swapFormNotifierProvider).failure,
-                ).getMessage(),
-                context,
-                ref,
-                ArchethicTheme.text,
-                ArchethicTheme.snackBarShadow,
-                duration: const Duration(seconds: 5),
-              );
-            }
-          },
-          disabled: (!consentChecked && swap.consentDateTime == null) ||
-              swap.isProcessInProgress,
-          showProgressIndicator: swap.isProcessInProgress,
-        ),
-      ],
+    return BtnFooterPrimary(
+      buttonText: AppLocalizations.of(context)!.btn_confirm_swap,
+      key: const Key('swap'),
+      onTap: () async {
+        final swapFormNotifier = ref.read(swapFormNotifierProvider.notifier)
+          ..setProcessInProgress(true);
+        final resultOk =
+            await swapFormNotifier.swap(AppLocalizations.of(context)!);
+        swapFormNotifier.setProcessInProgress(false);
+        if (resultOk) {
+          await context.push(SwapResultSheet.routerPage);
+        } else {
+          UIUtil.showSnackbar(
+            FailureMessage(
+              context: context,
+              failure: ref.read(swapFormNotifierProvider).failure,
+            ).getMessage(),
+            context,
+            ref,
+            ArchethicTheme.text,
+            ArchethicTheme.snackBarShadow,
+            duration: const Duration(seconds: 5),
+          );
+        }
+      },
+      isLocked: (!consentChecked && swap.consentDateTime == null) ||
+          swap.isProcessInProgress,
+      showProgressIndicator: swap.isProcessInProgress,
     );
   }
 

@@ -5,15 +5,14 @@ import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/consent_uri.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/layouts/components/farm_lock_level_up_confirm_infos.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/layouts/components/farm_lock_level_up_result_sheet.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
@@ -53,43 +52,36 @@ class FarmLockLevelUpConfirmSheetState
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final farmLockLevelUp = ref.watch(farmLockLevelUpFormNotifierProvider);
-    return Row(
-      children: <Widget>[
-        AppButtonTinyConnectivity(
-          AppLocalizations.of(context)!.btn_confirm_farm_add_lock,
-          Dimens.buttonBottomDimens,
-          key: const Key('farmLockLevelUp'),
-          onPressed: () async {
-            final farmLockLevelUpNotifier = ref.read(
-              farmLockLevelUpFormNotifierProvider.notifier,
-            )..setProcessInProgress(true);
-            final resultOk = await farmLockLevelUpNotifier
-                .lock(AppLocalizations.of(context)!);
-            farmLockLevelUpNotifier.setProcessInProgress(false);
-            if (resultOk) {
-              await context.push(FarmLockLevelUpResultSheet.routerPage);
-            } else {
-              UIUtil.showSnackbar(
-                FailureMessage(
-                  context: context,
-                  failure:
-                      ref.read(farmLockLevelUpFormNotifierProvider).failure,
-                ).getMessage(),
-                context,
-                ref,
-                ArchethicTheme.text,
-                ArchethicTheme.snackBarShadow,
-                duration: const Duration(seconds: 5),
-              );
-            }
-          },
-          disabled: (!warningChecked ||
-                  (!consentChecked &&
-                      farmLockLevelUp.consentDateTime == null)) ||
-              farmLockLevelUp.isProcessInProgress,
-          showProgressIndicator: farmLockLevelUp.isProcessInProgress,
-        ),
-      ],
+    return BtnFooterPrimary(
+      buttonText: AppLocalizations.of(context)!.btn_confirm_farm_add_lock,
+      key: const Key('farmLockLevelUp'),
+      onTap: () async {
+        final farmLockLevelUpNotifier = ref.read(
+          farmLockLevelUpFormNotifierProvider.notifier,
+        )..setProcessInProgress(true);
+        final resultOk =
+            await farmLockLevelUpNotifier.lock(AppLocalizations.of(context)!);
+        farmLockLevelUpNotifier.setProcessInProgress(false);
+        if (resultOk) {
+          await context.push(FarmLockLevelUpResultSheet.routerPage);
+        } else {
+          UIUtil.showSnackbar(
+            FailureMessage(
+              context: context,
+              failure: ref.read(farmLockLevelUpFormNotifierProvider).failure,
+            ).getMessage(),
+            context,
+            ref,
+            ArchethicTheme.text,
+            ArchethicTheme.snackBarShadow,
+            duration: const Duration(seconds: 5),
+          );
+        }
+      },
+      isLocked: (!warningChecked ||
+              (!consentChecked && farmLockLevelUp.consentDateTime == null)) ||
+          farmLockLevelUp.isProcessInProgress,
+      showProgressIndicator: farmLockLevelUp.isProcessInProgress,
     );
   }
 
