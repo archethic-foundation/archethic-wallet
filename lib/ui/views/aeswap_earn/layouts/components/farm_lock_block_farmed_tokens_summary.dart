@@ -24,16 +24,25 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
+    return ref.watch(farmLockFormSummaryProvider).when(
+          skipLoadingOnReload: true,
+          error: (error, stackTrace) => const SizedBox.shrink(),
+          loading: () => const SizedBox.shrink(),
+          data: (farmLockFormSummary) => _buildContent(
+            context,
+            ref,
+            farmLockFormSummary,
+          ),
+        );
+  }
+
+  Widget _buildContent(
+    BuildContext context,
+    WidgetRef ref,
+    FarmLockFormSummary farmLockFormSummary,
+  ) {
     final farmLock = ref.watch(farmLockFormFarmLockProvider).valueOrNull;
     final pool = ref.watch(farmLockFormPoolProvider).valueOrNull;
-    // TODO(reddwarf03): Put a skipLoadingOnReload: true,
-    final farmLockFormSummary =
-        ref.watch(farmLockFormSummaryProvider).valueOrNull;
-
-    if (farmLockFormSummary == null ||
-        farmLockFormSummary.farmedTokensInFiat == 0) {
-      return const SizedBox.shrink();
-    }
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
@@ -54,22 +63,7 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
             const SizedBox(
               height: 5,
             ),
-            FutureBuilder<FarmLockFormSummary>(
-              future: ref.watch(farmLockFormSummaryProvider.future),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return _blockInfo(context, ref, snapshot.data);
-                } else if (snapshot.hasError) {
-                  return const Text(
-                    r'$--.--',
-                  );
-                } else if (snapshot.hasData) {
-                  return _blockInfo(context, ref, snapshot.data);
-                }
-
-                return const SizedBox.shrink();
-              },
-            ),
+            _blockInfo(context, ref, farmLockFormSummary),
             const SizedBox(height: 10),
             if (farmLock != null &&
                 farmLock.userInfos.entries.isNotEmpty &&

@@ -175,7 +175,8 @@ class FarmLockClaimFormNotifier extends _$FarmLockClaimFormNotifier {
       ..invalidate(userBalanceProvider)
       ..invalidate(farmLockFormFarmLockProvider)
       ..invalidate(airdropUserInfoProvider)
-      ..invalidate(airdropPersonalLPProvider);
+      ..invalidate(airdropPersonalLPProvider)
+      ..invalidate(farmLockFormSummaryProvider);
 
     return true;
   }

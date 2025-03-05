@@ -258,7 +258,8 @@ class FarmLockLevelUpFormNotifier extends _$FarmLockLevelUpFormNotifier {
       ..invalidate(userBalanceProvider)
       ..invalidate(farmLockFormFarmLockProvider)
       ..invalidate(airdropUserInfoProvider)
-      ..invalidate(airdropPersonalLPProvider);
+      ..invalidate(airdropPersonalLPProvider)
+      ..invalidate(farmLockFormSummaryProvider);
 
     return true;
   }
