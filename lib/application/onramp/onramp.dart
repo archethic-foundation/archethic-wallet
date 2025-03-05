@@ -2,16 +2,30 @@ import 'dart:async';
 import 'dart:core';
 
 import 'package:aewallet/application/account/accounts_notifier.dart';
+import 'package:aewallet/application/feature_flags.dart';
 import 'package:aewallet/application/recent_transactions.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/domain/models/onramp.dart';
 import 'package:aewallet/domain/repositories/on_ramp.dart';
 import 'package:aewallet/infrastructure/repositories/on_ramp.repository.dart';
+import 'package:aewallet/main.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'onramp.g.dart';
+
+@riverpod
+({bool fromCrypto, bool fromFiat}) onrampFeatureFlag(Ref ref) => (
+      fromCrypto: ref
+              .watch(getFeatureFlagProvider(kApplicationCode, 'on-ramp-crypto'))
+              .valueOrNull ??
+          false,
+      fromFiat: ref
+              .watch(getFeatureFlagProvider(kApplicationCode, 'on-ramp-fiat'))
+              .valueOrNull ??
+          false
+    );
 
 @riverpod
 Future<OnRampRepository> _onRampRepository(Ref ref) async {
