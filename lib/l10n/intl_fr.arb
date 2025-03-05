@@ -188,6 +188,8 @@
     "enterYubikeyAPIKeyEmpty": "La clé client de l'API est obligatoire",
     "ucoBuyTitle": "Où acheter des UCO ?",
     "ucoBuyInAeWalletTitle": "Acheter dans votre Wallet Archethic",
+    "ucoBuyInAeWalletWithFiat": "Avec des €, $ ...",
+    "ucoBuyInAeWalletWithCrypto": "Avec des Cryptos (ETH)",
     "ucoBuyOnCexTitle": "Acheter sur un Échange Centralisé ",
     "ucoBuyOnCexSubtitle": "(CEX)",
     "ucoBuyOnDexTitle": "Acheter sur un Échange Décentralisé ",
@@ -939,5 +941,34 @@
     "farmLockWithdrawDescBeginner": "Une fois que certains de vos fonds sont déverrouillés, vous pouvez les retirer. Techniquement, cela supprimera votre liquidité de la pool de liquidité, et vous recevrez une valeur équivalente en jetons UCO et en Ethereum. Après cela, l'Ethereum sera automatiquement échangé contre des UCO.",
     "farmLockWithdrawDesc2Beginner": "Lorsque vous retirez vos fonds, ils sont automatiquement supprimés de la pool ETH/UCO. Vous recevrez une valeur équivalente en jetons UCO et en Ethereum, et toutes les récompenses accumulées seront directement créditées sur votre portefeuille en UCO. Enfin, l'Ethereum sera échangé en UCO afin que vous receviez la totalité du montant en UCO.",
     "farmLockWithdrawFormTextNoLPText1": "Aucun jeton LP déverrouillé disponible",
-    "farmLockWithdrawFormTextLPText2": " est disponible pour le retrait."
+    "farmLockWithdrawFormTextLPText2": " est disponible pour le retrait.",
+    "onrampWithFiatTitle": "Acheter des UCO (avec €, $...)",
+    "onrampWithFiatHowDoesItWorkTitle": "Comment ça marche ?",
+    "onrampWithFiatHowDoesItWorkBody": "Pour optimiser vos frais de transaction, nous avons développé un système qui vous permet d’acheter de l’Ethereum, lequel est automatiquement converti en tokens UCO et envoyé directement dans votre portefeuille Archethic.",
+    "onrampWithFiatDisclaimer": "Je comprends que j’achète de l’Ethereum avec une monnaie fiduciaire et que cette transaction est soumise aux frais du prestataire de paiement. Une fois acquis, mon Ethereum sera automatiquement envoyé dans mon portefeuille Archethic et converti en tokens UCO au taux du marché en vigueur, avec des frais de 1 % appliqués. En raison des fluctuations du marché, la quantité exacte de UCO que je recevrai peut varier et ne peut être estimée précisément à l’avance.",
+    "onrampWithFiatBuyNowButton": "Acheter maintenant",
+    "onrampHistoryTitle": "Historique des transactions",
+    "onrampHistoryFooter1": "Votre ",
+    "onrampHistoryFooter2": "dépôt en crypto a été ",
+    "onrampHistoryFooter3": "automatiquement ",
+    "onrampHistoryFooter4": "converti en UCO ",
+    "onrampHistoryFooter5": "et envoyé à votre wallet Archethic. Les montants peuvent varier en fonction des fluctuations du marché et des frais de réseau.",
+    "onrampHistoryTransferStatusInitiated": "Transaction Démarrée",
+    "onrampHistoryTransferStatusCompleted": "{progress}% Envoyés",
+    "@onrampHistoryTransferStatusCompleted": {
+        "placeholders": {
+            "progress": {
+                "type": "int"
+            }
+        }
+    },
+    "onrampWithCryptoTitle": "Acheter des UCO avec avec des Cryptos",
+    "onrampWithCryptoSelectChainTitle": "Choisissez votre chaîne",
+    "onrampWithCryptoSelectTokenTitle": "Choisissez votre Crypto",
+    "onrampWithCryptoDepositAddressTitle": "Votre adresse de dépôt",
+    "onrampWithCryptoShowDepositAddress": "Voir l'adresse de Dépôt",
+    "onrampWithCryptoPoolAmount1": "Nous avons actuellement ",
+    "onrampWithCryptoPoolAmount2": "disponibles pour une transaction instantanée.",
+    "onrampWithCryptoTreatmentDelayDisclaimer1": "Important : ",
+    "onrampWithCryptoTreatmentDelayDisclaimer2": "Les transactions prenant du temps, une partie du montant peut être utilisée par quelqu’un d’autre avant que nous recevions votre paiement. Si l’ETH que vous envoyez est supérieur au montant disponible au moment de la réception, nous traiterons immédiatement la partie disponible et gérerons le reste manuellement sous 24 heures."
 }
