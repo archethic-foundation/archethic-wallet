@@ -34,7 +34,7 @@ mixin _$FarmLockWithdrawFormState {
   double? get finalAmountWithdraw => throw _privateConstructorUsedError;
   DateTime? get consentDateTime => throw _privateConstructorUsedError;
   double? get depositedAmount => throw _privateConstructorUsedError;
-  double get feesEstimatedUCO => throw _privateConstructorUsedError;
+  AsyncValue<double>? get feeEstimation => throw _privateConstructorUsedError;
   double? get rewardAmount => throw _privateConstructorUsedError;
   String? get poolAddress => throw _privateConstructorUsedError;
   DateTime? get endDate => throw _privateConstructorUsedError;
@@ -71,7 +71,7 @@ abstract class $FarmLockWithdrawFormStateCopyWith<$Res> {
       double? finalAmountWithdraw,
       DateTime? consentDateTime,
       double? depositedAmount,
-      double feesEstimatedUCO,
+      AsyncValue<double>? feeEstimation,
       double? rewardAmount,
       String? poolAddress,
       DateTime? endDate,
@@ -117,7 +117,7 @@ class _$FarmLockWithdrawFormStateCopyWithImpl<$Res,
     Object? finalAmountWithdraw = freezed,
     Object? consentDateTime = freezed,
     Object? depositedAmount = freezed,
-    Object? feesEstimatedUCO = null,
+    Object? feeEstimation = freezed,
     Object? rewardAmount = freezed,
     Object? poolAddress = freezed,
     Object? endDate = freezed,
@@ -192,10 +192,10 @@ class _$FarmLockWithdrawFormStateCopyWithImpl<$Res,
           ? _value.depositedAmount
           : depositedAmount // ignore: cast_nullable_to_non_nullable
               as double?,
-      feesEstimatedUCO: null == feesEstimatedUCO
-          ? _value.feesEstimatedUCO
-          : feesEstimatedUCO // ignore: cast_nullable_to_non_nullable
-              as double,
+      feeEstimation: freezed == feeEstimation
+          ? _value.feeEstimation
+          : feeEstimation // ignore: cast_nullable_to_non_nullable
+              as AsyncValue<double>?,
       rewardAmount: freezed == rewardAmount
           ? _value.rewardAmount
           : rewardAmount // ignore: cast_nullable_to_non_nullable
@@ -314,7 +314,7 @@ abstract class _$$FarmLockWithdrawFormStateImplCopyWith<$Res>
       double? finalAmountWithdraw,
       DateTime? consentDateTime,
       double? depositedAmount,
-      double feesEstimatedUCO,
+      AsyncValue<double>? feeEstimation,
       double? rewardAmount,
       String? poolAddress,
       DateTime? endDate,
@@ -364,7 +364,7 @@ class __$$FarmLockWithdrawFormStateImplCopyWithImpl<$Res>
     Object? finalAmountWithdraw = freezed,
     Object? consentDateTime = freezed,
     Object? depositedAmount = freezed,
-    Object? feesEstimatedUCO = null,
+    Object? feeEstimation = freezed,
     Object? rewardAmount = freezed,
     Object? poolAddress = freezed,
     Object? endDate = freezed,
@@ -439,10 +439,10 @@ class __$$FarmLockWithdrawFormStateImplCopyWithImpl<$Res>
           ? _value.depositedAmount
           : depositedAmount // ignore: cast_nullable_to_non_nullable
               as double?,
-      feesEstimatedUCO: null == feesEstimatedUCO
-          ? _value.feesEstimatedUCO
-          : feesEstimatedUCO // ignore: cast_nullable_to_non_nullable
-              as double,
+      feeEstimation: freezed == feeEstimation
+          ? _value.feeEstimation
+          : feeEstimation // ignore: cast_nullable_to_non_nullable
+              as AsyncValue<double>?,
       rewardAmount: freezed == rewardAmount
           ? _value.rewardAmount
           : rewardAmount // ignore: cast_nullable_to_non_nullable
@@ -484,7 +484,7 @@ class _$FarmLockWithdrawFormStateImpl extends _FarmLockWithdrawFormState {
       this.finalAmountWithdraw,
       this.consentDateTime,
       this.depositedAmount,
-      this.feesEstimatedUCO = 0.0,
+      this.feeEstimation,
       this.rewardAmount,
       this.poolAddress,
       this.endDate,
@@ -533,8 +533,7 @@ class _$FarmLockWithdrawFormStateImpl extends _FarmLockWithdrawFormState {
   @override
   final double? depositedAmount;
   @override
-  @JsonKey()
-  final double feesEstimatedUCO;
+  final AsyncValue<double>? feeEstimation;
   @override
   final double? rewardAmount;
   @override
@@ -547,7 +546,7 @@ class _$FarmLockWithdrawFormStateImpl extends _FarmLockWithdrawFormState {
 
   @override
   String toString() {
-    return 'FarmLockWithdrawFormState(processStep: $processStep, resumeProcess: $resumeProcess, currentStep: $currentStep, isProcessInProgress: $isProcessInProgress, farmLockWithdrawOk: $farmLockWithdrawOk, amount: $amount, depositId: $depositId, transactionWithdrawFarmLock: $transactionWithdrawFarmLock, failure: $failure, farmAddress: $farmAddress, rewardToken: $rewardToken, lpToken: $lpToken, lpTokenPair: $lpTokenPair, finalAmountReward: $finalAmountReward, finalAmountWithdraw: $finalAmountWithdraw, consentDateTime: $consentDateTime, depositedAmount: $depositedAmount, feesEstimatedUCO: $feesEstimatedUCO, rewardAmount: $rewardAmount, poolAddress: $poolAddress, endDate: $endDate, confirmPrivacyPolicy: $confirmPrivacyPolicy)';
+    return 'FarmLockWithdrawFormState(processStep: $processStep, resumeProcess: $resumeProcess, currentStep: $currentStep, isProcessInProgress: $isProcessInProgress, farmLockWithdrawOk: $farmLockWithdrawOk, amount: $amount, depositId: $depositId, transactionWithdrawFarmLock: $transactionWithdrawFarmLock, failure: $failure, farmAddress: $farmAddress, rewardToken: $rewardToken, lpToken: $lpToken, lpTokenPair: $lpTokenPair, finalAmountReward: $finalAmountReward, finalAmountWithdraw: $finalAmountWithdraw, consentDateTime: $consentDateTime, depositedAmount: $depositedAmount, feeEstimation: $feeEstimation, rewardAmount: $rewardAmount, poolAddress: $poolAddress, endDate: $endDate, confirmPrivacyPolicy: $confirmPrivacyPolicy)';
   }
 
   @override
@@ -588,8 +587,8 @@ class _$FarmLockWithdrawFormStateImpl extends _FarmLockWithdrawFormState {
                 other.consentDateTime == consentDateTime) &&
             (identical(other.depositedAmount, depositedAmount) ||
                 other.depositedAmount == depositedAmount) &&
-            (identical(other.feesEstimatedUCO, feesEstimatedUCO) ||
-                other.feesEstimatedUCO == feesEstimatedUCO) &&
+            (identical(other.feeEstimation, feeEstimation) ||
+                other.feeEstimation == feeEstimation) &&
             (identical(other.rewardAmount, rewardAmount) ||
                 other.rewardAmount == rewardAmount) &&
             (identical(other.poolAddress, poolAddress) ||
@@ -619,7 +618,7 @@ class _$FarmLockWithdrawFormStateImpl extends _FarmLockWithdrawFormState {
         finalAmountWithdraw,
         consentDateTime,
         depositedAmount,
-        feesEstimatedUCO,
+        feeEstimation,
         rewardAmount,
         poolAddress,
         endDate,
@@ -655,7 +654,7 @@ abstract class _FarmLockWithdrawFormState extends FarmLockWithdrawFormState {
       final double? finalAmountWithdraw,
       final DateTime? consentDateTime,
       final double? depositedAmount,
-      final double feesEstimatedUCO,
+      final AsyncValue<double>? feeEstimation,
       final double? rewardAmount,
       final String? poolAddress,
       final DateTime? endDate,
@@ -697,7 +696,7 @@ abstract class _FarmLockWithdrawFormState extends FarmLockWithdrawFormState {
   @override
   double? get depositedAmount;
   @override
-  double get feesEstimatedUCO;
+  AsyncValue<double>? get feeEstimation;
   @override
   double? get rewardAmount;
   @override

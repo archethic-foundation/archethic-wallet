@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/aeswap/usecases.dart';
 import 'package:aewallet/application/airdrop/airdrop.dart';
@@ -11,6 +13,7 @@ import 'package:aewallet/modules/aeswap/application/session/state.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pair.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/util/browser_util_desktop.dart';
+import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/bloc/state.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -26,6 +29,8 @@ part 'provider.g.dart';
 @riverpod
 class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
   FarmLockWithdrawFormNotifier();
+
+  CancelableTask<double?>? _calculateFeesTask;
 
   @override
   FarmLockWithdrawFormState build() => const FarmLockWithdrawFormState();
@@ -59,6 +64,87 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
         ),
       );
     }
+    unawaited(_updateFees());
+  }
+
+  Future<void> _updateFees({
+    Duration delay = const Duration(milliseconds: 800),
+  }) async {
+    state = state.copyWith(
+      feeEstimation: const AsyncValue.loading(),
+    );
+
+    try {
+      final fees = await _calculateFeesTaskCall(delay);
+
+      state = state.copyWith(
+        feeEstimation: AsyncValue.data(fees),
+      );
+    } on CanceledTask {
+      return;
+    }
+  }
+
+  Future<double> _calculateFeesTaskCall(
+    Duration delay,
+  ) async {
+    if (state.amount <= 0) {
+      return 0;
+    }
+
+    _calculateFeesTask?.cancel();
+    _calculateFeesTask = CancelableTask<double?>(
+      task: _calculateFees,
+    );
+
+    final fees = await _calculateFeesTask?.schedule(delay);
+    return fees ?? 0;
+  }
+
+  Future<double> _calculateFees() async {
+    var feeEstimation = 0.0;
+    final earnUserLevel = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.earnUserLevel),
+    );
+
+    if (earnUserLevel == EarnUserLevelType.advanced) {
+      feeEstimation = await ref.read(withdrawFarmLockCaseProvider).estimateFees(
+            state.farmAddress!,
+            state.lpToken!.address,
+            state.amount,
+            state.depositId,
+          );
+    } else {
+      final environment = ref.read(environmentProvider);
+      try {
+        final results = await Future.wait([
+          ref.read(withdrawFarmLockCaseProvider).estimateFees(
+                state.farmAddress!,
+                state.lpToken!.address,
+                99999, // Default Value
+                '1', // Default Value
+              ),
+          ref.read(removeLiquidityCaseProvider).estimateFees(
+                state.poolAddress!,
+                state.lpToken!.address,
+                99999, // Default Value
+              ),
+          ref.read(swapCaseProvider).estimateFees(
+                state.poolAddress!,
+                DexToken(address: environment.aeETHAddress, symbol: 'aeETH'),
+                state.amount,
+                0,
+              ),
+        ]);
+
+        final totalFees = results[0] + results[1] + results[2];
+        const slippage = 1.5;
+        feeEstimation = totalFees * slippage;
+      } catch (e) {
+        return 0.0;
+      }
+    }
+    return feeEstimation;
   }
 
   void setConfirmPrivacyPolicy(bool confirmPrivacyPolicy) {
@@ -210,21 +296,10 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
       return false;
     }
 
-    var feesEstimatedUCO = 0.0;
-    feesEstimatedUCO =
-        await ref.read(withdrawFarmLockCaseProvider).estimateFees(
-              state.farmAddress!,
-              state.lpToken!.address,
-              state.amount,
-              state.depositId,
-            );
-    state = state.copyWith(
-      feesEstimatedUCO: feesEstimatedUCO,
-    );
-
-    if (feesEstimatedUCO > 0) {
+    final feeEstimation = await _calculateFees();
+    if (feeEstimation > 0) {
       final userBalance = await ref.read(userBalanceProvider.future);
-      if (feesEstimatedUCO > archethic.fromBigInt(userBalance.uco).toDouble()) {
+      if (feeEstimation > archethic.fromBigInt(userBalance.uco).toDouble()) {
         setFailure(const aedappfm.Failure.insufficientFunds());
         return false;
       }

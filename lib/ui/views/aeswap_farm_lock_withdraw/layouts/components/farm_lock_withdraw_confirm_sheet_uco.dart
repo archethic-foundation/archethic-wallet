@@ -4,6 +4,7 @@ import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/step.dart';
 import 'package:aewallet/domain/models/step.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
+import 'package:aewallet/ui/figma_components/complex/estimated_fees.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/bloc/provider.dart';
@@ -51,6 +52,7 @@ class FarmLockWithdrawConfirmSheetUCO extends ConsumerWidget
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        EstimatedFees(farmLockWithdraw.feeEstimation),
         BtnFooterPrimary(
           buttonText: AppLocalizations.of(context)!.btn_confirm_farm_withdraw,
           key: const Key('farmLockWithdraw'),

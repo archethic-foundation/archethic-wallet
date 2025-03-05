@@ -16,6 +16,7 @@ import 'package:aewallet/ui/views/rpc_command_receiver/rpc_failure_message.dart'
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
+import 'package:decimal/decimal.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 
 class WithdrawFundsBeginnerCase with aedappfm.TransactionMixin {
@@ -285,7 +286,9 @@ class WithdrawFundsBeginnerCase with aedappfm.TransactionMixin {
     }
     return (
       amountReward: amountReward,
-      amountTokenUCOSwapped: amountTokenUCOSwapped
+      amountTokenUCOSwapped: (Decimal.parse(amountTokenUCOSwapped.toString()) +
+              Decimal.parse(amountTokenUCO.toString()))
+          .toDouble(),
     );
   }
 
