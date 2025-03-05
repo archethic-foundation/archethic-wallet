@@ -75,7 +75,7 @@ class MessageBox extends StatelessWidget {
       case MessageBoxType.locked:
         return const Color(0xFF262626);
       case MessageBoxType.info:
-        return const Color(0x1A8040BF);
+        return const Color(0xFF5540BF).withOpacity(0.2);
     }
   }
 
@@ -88,7 +88,7 @@ class MessageBox extends StatelessWidget {
       case MessageBoxType.locked:
         return const Color(0xFF343434);
       case MessageBoxType.info:
-        return const Color(0x1A8040BF);
+        return const Color(0xFF5540BF);
     }
   }
 

@@ -1,7 +1,1 @@
-{
-  "fr": [
-    "earnUserLevelSwitchBeginner",
-    "earnUserLevelSwitchAdvanced",
-    "earnUserLevelSwitchLabel"
-  ]
-}
+{}

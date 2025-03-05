@@ -1,4 +1,6 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/fiat_value.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
@@ -44,6 +46,7 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final farmLockWithdraw = ref.watch(farmLockWithdrawFormNotifierProvider);
+
     return BtnFooterPrimary(
       buttonText: localizations.btn_farm_withdraw,
       key: const Key('farmLockWithdraw'),
@@ -61,8 +64,15 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
   @override
   PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
+
+    final earnUserLevel = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.earnUserLevel),
+    );
+
     return SheetAppBar(
-      title: localizations.farmLockWithdrawFormTitle,
+      title: earnUserLevel == EarnUserLevelType.beginner
+          ? localizations.farmLockWithdrawFormTitleBeginner
+          : localizations.farmLockWithdrawFormTitle,
       widgetLeft: BackButton(
         key: const Key('back'),
         color: ArchethicTheme.text,
@@ -81,6 +91,9 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
         .textTheme
         .bodyLarge!
         .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold);
+    final earnUserLevel = ref.watch(
+      SettingsProviders.settings.select((settings) => settings.earnUserLevel),
+    );
 
     if (farmLockWithdraw.rewardToken == null ||
         farmLockWithdraw.depositedAmount == null) {
@@ -105,15 +118,28 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      localizations.farmLockWithdrawTitle,
-                      style: boldBodyLarge,
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      localizations.farmLockWithdrawDesc,
-                      style: Theme.of(context).textTheme.bodyMediumWithOpacity,
-                    ),
+                    if (earnUserLevel == EarnUserLevelType.advanced)
+                      Column(
+                        children: [
+                          Text(
+                            localizations.farmLockWithdrawTitle,
+                            style: boldBodyLarge,
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            localizations.farmLockWithdrawDesc,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMediumWithOpacity,
+                          ),
+                        ],
+                      )
+                    else
+                      Text(
+                        localizations.farmLockWithdrawDescBeginner,
+                        style:
+                            Theme.of(context).textTheme.bodyMediumWithOpacity,
+                      ),
                     const SizedBox(height: 20),
                     if (farmLockWithdraw.rewardAmount == 0)
                       MessageBox(
@@ -189,6 +215,22 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
                     failure: farmLockWithdraw.failure,
                   ).getMessage(),
                 ),
+                if (earnUserLevel == EarnUserLevelType.beginner)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        localizations.farmLockWithdrawTitle,
+                        style: boldBodyLarge,
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        localizations.farmLockWithdrawDesc2Beginner,
+                        style:
+                            Theme.of(context).textTheme.bodyMediumWithOpacity,
+                      ),
+                    ],
+                  )
               ],
             ),
           ),

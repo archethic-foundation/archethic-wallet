@@ -57,7 +57,7 @@ class EarnSectionDepositFundsV2 extends ConsumerWidget {
           subSection(
             context,
             ref,
-            localizations.earnSectionDepositFundExpertTitle,
+            localizations.earnSectionDepositFundsExpertTitle,
             localizations.earnSectionDepositFundsExpertDesc,
             localizations.earnSectionDepositFundsExpertBridgeBtn,
             () async {

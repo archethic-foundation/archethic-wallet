@@ -1,8 +1,4 @@
-import 'dart:async';
-
 import 'package:aewallet/application/account/accounts_notifier.dart';
-import 'package:aewallet/application/step.dart';
-import 'package:aewallet/domain/models/step.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
@@ -12,11 +8,9 @@ import 'package:aewallet/ui/figma_components/text/gradient_text.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/provider.dart';
-import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/bloc/state.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_confirm_lock_period.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_confirm_privacy_policy.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_result_sheet.dart';
-import 'package:aewallet/ui/views/aeswap_farm_lock_deposit/layouts/components/farm_lock_deposit_step_popup.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
@@ -86,45 +80,25 @@ class FarmLockDepositConfirmSheetLPState
               farmLockDepositFormNotifierProvider.notifier,
             )..setProcessInProgress(true);
 
-            if (farmLockDeposit.farmLockDepositMode ==
-                FarmLockDepositMode.uco) {
-              ref.read(stepsNotifierProvider.notifier)
-                ..initializeSteps(3)
-                ..updateStepStatus(0, StepStatus.inProgress);
+            final resultOk = await farmLockDepositNotifier
+                .lock(AppLocalizations.of(context)!);
 
-              unawaited(
-                farmLockDepositNotifier.lock(AppLocalizations.of(context)!),
-              );
-
-              await showDialog<bool>(
-                barrierDismissible: false,
-                useRootNavigator: false,
-                context: context,
-                builder: (context) {
-                  return const FarmLockDepositStepPopup();
-                },
-              );
+            farmLockDepositNotifier.setProcessInProgress(false);
+            if (resultOk) {
+              await context.push(FarmLockDepositResultSheet.routerPage);
             } else {
-              final resultOk = await farmLockDepositNotifier
-                  .lock(AppLocalizations.of(context)!);
-
-              farmLockDepositNotifier.setProcessInProgress(false);
-              if (resultOk) {
-                await context.push(FarmLockDepositResultSheet.routerPage);
-              } else {
-                UIUtil.showSnackbar(
-                  FailureMessage(
-                    context: context,
-                    failure:
-                        ref.read(farmLockDepositFormNotifierProvider).failure,
-                  ).getMessage(),
-                  context,
-                  ref,
-                  ArchethicTheme.text,
-                  ArchethicTheme.snackBarShadow,
-                  duration: const Duration(seconds: 5),
-                );
-              }
+              UIUtil.showSnackbar(
+                FailureMessage(
+                  context: context,
+                  failure:
+                      ref.read(farmLockDepositFormNotifierProvider).failure,
+                ).getMessage(),
+                context,
+                ref,
+                ArchethicTheme.text,
+                ArchethicTheme.snackBarShadow,
+                duration: const Duration(seconds: 5),
+              );
             }
           },
           isLocked: (!farmLockDeposit.confirmLockPeriod ||
