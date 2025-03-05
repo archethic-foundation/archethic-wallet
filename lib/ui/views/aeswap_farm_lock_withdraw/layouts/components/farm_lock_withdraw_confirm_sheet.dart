@@ -3,15 +3,14 @@ import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/layouts/components/farm_lock_withdraw_confirm_infos.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/layouts/components/farm_lock_withdraw_result_sheet.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
@@ -57,42 +56,35 @@ class FarmLockWithdrawConfirmSheetState
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final farmLockWithdraw = ref.watch(farmLockWithdrawFormNotifierProvider);
 
-    return Row(
-      children: <Widget>[
-        AppButtonTinyConnectivity(
-          AppLocalizations.of(context)!.btn_confirm_farm_withdraw,
-          Dimens.buttonBottomDimens,
-          key: const Key('farmLockWithdraw'),
-          onPressed: () async {
-            final farmLockWithdrawFormNotifier = ref.read(
-              farmLockWithdrawFormNotifierProvider.notifier,
-            )..setProcessInProgress(true);
-            final resultOk = await farmLockWithdrawFormNotifier
-                .withdraw(AppLocalizations.of(context)!);
-            farmLockWithdrawFormNotifier.setProcessInProgress(false);
-            if (resultOk) {
-              await context.push(FarmLockWithdrawResultSheet.routerPage);
-            } else {
-              UIUtil.showSnackbar(
-                FailureMessage(
-                  context: context,
-                  failure:
-                      ref.read(farmLockWithdrawFormNotifierProvider).failure,
-                ).getMessage(),
-                context,
-                ref,
-                ArchethicTheme.text,
-                ArchethicTheme.snackBarShadow,
-                duration: const Duration(seconds: 5),
-              );
-            }
-          },
-          disabled:
-              (!consentChecked && farmLockWithdraw.consentDateTime == null) ||
-                  farmLockWithdraw.isProcessInProgress,
-          showProgressIndicator: farmLockWithdraw.isProcessInProgress,
-        ),
-      ],
+    return BtnFooterPrimary(
+      buttonText: AppLocalizations.of(context)!.btn_confirm_farm_withdraw,
+      key: const Key('farmLockWithdraw'),
+      onTap: () async {
+        final farmLockWithdrawFormNotifier = ref.read(
+          farmLockWithdrawFormNotifierProvider.notifier,
+        )..setProcessInProgress(true);
+        final resultOk = await farmLockWithdrawFormNotifier
+            .withdraw(AppLocalizations.of(context)!);
+        farmLockWithdrawFormNotifier.setProcessInProgress(false);
+        if (resultOk) {
+          await context.push(FarmLockWithdrawResultSheet.routerPage);
+        } else {
+          UIUtil.showSnackbar(
+            FailureMessage(
+              context: context,
+              failure: ref.read(farmLockWithdrawFormNotifierProvider).failure,
+            ).getMessage(),
+            context,
+            ref,
+            ArchethicTheme.text,
+            ArchethicTheme.snackBarShadow,
+            duration: const Duration(seconds: 5),
+          );
+        }
+      },
+      isLocked: (!consentChecked && farmLockWithdraw.consentDateTime == null) ||
+          farmLockWithdraw.isProcessInProgress,
+      showProgressIndicator: farmLockWithdraw.isProcessInProgress,
     );
   }
 

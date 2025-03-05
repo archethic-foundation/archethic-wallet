@@ -5,11 +5,10 @@ import 'dart:ui';
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
-import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
 import 'package:aewallet/ui/views/main/components/menu_widget_wallet.dart';
 import 'package:aewallet/ui/views/transactions/transactions_list.dart';
 import 'package:aewallet/ui/widgets/balance/balance_infos.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/refresh_indicator.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:flutter/gestures.dart';
@@ -39,22 +38,17 @@ class TransactionsTab extends ConsumerWidget {
               padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).padding.bottom + 20,
               ),
-              child: Row(
-                children: [
-                  AppButtonTinyConnectivity(
-                    AppLocalizations.of(context)!.viewExplorer,
-                    Dimens.buttonBottomDimens,
-                    key: const Key('viewExplorer'),
-                    onPressed: () async {
-                      await launchUrl(
-                        Uri.parse(
-                          '${ref.read(environmentProvider).endpoint}/explorer/chain?address=${accountSelected.genesisAddress}',
-                        ),
-                        mode: LaunchMode.externalApplication,
-                      );
-                    },
-                  ),
-                ],
+              child: BtnFooterPrimary(
+                buttonText: AppLocalizations.of(context)!.viewExplorer,
+                key: const Key('viewExplorer'),
+                onTap: () async {
+                  await launchUrl(
+                    Uri.parse(
+                      '${ref.read(environmentProvider).endpoint}/explorer/chain?address=${accountSelected.genesisAddress}',
+                    ),
+                    mode: LaunchMode.externalApplication,
+                  );
+                },
               ),
             ),
           ),

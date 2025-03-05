@@ -1,6 +1,6 @@
 import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_banner.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_info_no_lp.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_lp_available.dart';
@@ -11,7 +11,6 @@ import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_personal_re
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_step_tab.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_wallet_lp_current_value.dart';
 import 'package:aewallet/ui/views/main/bloc/providers.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -99,25 +98,20 @@ class _AirdropParticipateStepCongratsSheetState
             padding: EdgeInsets.only(
               bottom: MediaQuery.of(context).padding.bottom + 20,
             ),
-            child: Row(
-              children: <Widget>[
-                AppButtonTinyConnectivity(
-                  widget.personalMultiplier > 0
-                      ? localizations.airdropDashboardIncreaseAirdropBtn
-                      : localizations.airdropDashboardNoLPBtn,
-                  Dimens.buttonBottomDimens,
-                  onPressed: () async {
-                    await ref
-                        .read(SettingsProviders.settings.notifier)
-                        .setMainScreenCurrentPage(3);
-                    ref.read(mainTabControllerProvider)!.animateTo(
-                          3,
-                          duration: Duration.zero,
-                        );
-                    context.pop();
-                  },
-                ),
-              ],
+            child: BtnFooterPrimary(
+              buttonText: widget.personalMultiplier > 0
+                  ? localizations.airdropDashboardIncreaseAirdropBtn
+                  : localizations.airdropDashboardNoLPBtn,
+              onTap: () async {
+                await ref
+                    .read(SettingsProviders.settings.notifier)
+                    .setMainScreenCurrentPage(3);
+                ref.read(mainTabControllerProvider)!.animateTo(
+                      3,
+                      duration: Duration.zero,
+                    );
+                context.pop();
+              },
             ),
           ),
         ),
