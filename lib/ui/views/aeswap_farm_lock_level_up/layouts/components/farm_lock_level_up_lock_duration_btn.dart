@@ -24,119 +24,90 @@ class FarmLockLevelUpDurationButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final farmLockLevelUp = ref.watch(farmLockLevelUpFormNotifierProvider);
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10, left: 5, right: 5),
-      child: Container(
-        width: 100,
-        height: 80,
-        decoration: BoxDecoration(
-          color: farmLockLevelUp.farmLockLevelUpDuration ==
-                  farmLockLevelUpDuration
-              ? aedappfm.AppThemeBase.sheetBackgroundTertiary.withOpacity(0.9)
-              : aedappfm.AppThemeBase.sheetBackgroundTertiary.withOpacity(0.2),
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(
-            color: Theme.of(context).colorScheme.primaryContainer,
-            width: 0.5,
-          ),
+    return Container(
+      width: 80,
+      height: 80,
+      decoration: BoxDecoration(
+        color: farmLockLevelUp.farmLockLevelUpDuration ==
+                farmLockLevelUpDuration
+            ? aedappfm.AppThemeBase.sheetBackgroundTertiary.withOpacity(0.9)
+            : aedappfm.AppThemeBase.sheetBackgroundTertiary.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: Theme.of(context).colorScheme.primaryContainer,
+          width: 0.5,
         ),
-        child: InkWell(
-          onTap: () {
-            ref.read(
-              farmLockLevelUpFormNotifierProvider.notifier,
-            )
-              ..setFarmLockLevelUpDuration(farmLockLevelUpDuration)
-              ..setLevel(level)
-              ..setAPREstimation(
-                aprEstimation,
-              );
-          },
-          child: Padding(
-            padding: const EdgeInsets.only(top: 3),
-            child: Column(
+      ),
+      child: InkWell(
+        onTap: () {
+          ref.read(
+            farmLockLevelUpFormNotifierProvider.notifier,
+          )
+            ..setFarmLockLevelUpDuration(farmLockLevelUpDuration)
+            ..setLevel(level)
+            ..setAPREstimation(
+              aprEstimation,
+            );
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '${AppLocalizations.of(context)!.level} $level',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      getFarmLockDepositDurationTypeLabel(
-                        context,
-                        farmLockLevelUpDuration,
-                      ),
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            fontWeight: FontWeightTelegraf.fontWeightBold,
-                          ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '${AppLocalizations.of(context)!.farmLockLevelUpAPRLbl} ',
-                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                            fontSize: 8,
-                          ),
-                    ),
-                    if (aprEstimation > 0)
-                      Text(
-                        '${aprEstimation.formatNumber(precision: 2)}%',
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                              color: _getColor(farmLockLevelUpDuration),
-                            ),
-                      )
-                    else
-                      const Padding(
-                        padding: EdgeInsets.only(bottom: 2),
-                        child: Icon(
-                          Icons.all_inclusive,
-                          size: 16,
-                          color: Colors.white60,
-                        ),
-                      ),
-                  ],
+                Text(
+                  '${AppLocalizations.of(context)!.level} $level',
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],
             ),
-          ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  getFarmLockDepositDurationTypeLabel(
+                    context,
+                    farmLockLevelUpDuration,
+                  ),
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        fontWeight: FontWeightTelegraf.fontWeightBold,
+                      ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  '${AppLocalizations.of(context)!.farmLockLevelUpAPRLbl} ',
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        fontSize: 8,
+                      ),
+                ),
+                if (aprEstimation > 0)
+                  Text(
+                    '${aprEstimation.formatNumber(precision: 2)}%',
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          color: const Color(0xFF00B67A),
+                        ),
+                  )
+                else
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 2),
+                    child: Icon(
+                      Icons.all_inclusive,
+                      size: 16,
+                      color: Color(0xFF00B67A),
+                    ),
+                  ),
+              ],
+            ),
+          ],
         ),
       ),
     );
-  }
-
-  Color _getColor(FarmLockDepositDurationType farmLockLevelUpDuration) {
-    switch (farmLockLevelUpDuration) {
-      case FarmLockDepositDurationType.flexible:
-        return aedappfm.ArchethicThemeBase.neutral0;
-      case FarmLockDepositDurationType.oneWeek:
-        return Colors.green[50]!;
-      case FarmLockDepositDurationType.oneMonth:
-        return Colors.green[50]!;
-      case FarmLockDepositDurationType.threeMonths:
-        return Colors.green[100]!;
-      case FarmLockDepositDurationType.sixMonths:
-        return Colors.green[200]!;
-      case FarmLockDepositDurationType.oneYear:
-        return Colors.green[200]!;
-      case FarmLockDepositDurationType.twoYears:
-        return Colors.green[300]!;
-      case FarmLockDepositDurationType.threeYears:
-        return Colors.green[300]!;
-      case FarmLockDepositDurationType.max:
-        return Colors.green[300]!;
-    }
   }
 }

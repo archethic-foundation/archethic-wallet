@@ -2,13 +2,13 @@ import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/fiat_value.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
+import 'package:aewallet/ui/figma_components/message_box/message_box.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/layouts/components/farm_lock_level_up_lock_duration_btn.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -47,22 +47,17 @@ class FarmLockLevelUpFormSheet extends ConsumerWidget
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final farmLockLevelUp = ref.watch(farmLockLevelUpFormNotifierProvider);
-    return Row(
-      children: <Widget>[
-        AppButtonTinyConnectivity(
-          localizations.btn_farmLockLevelUp,
-          Dimens.buttonBottomDimens,
-          key: const Key('farmLockLevelUp'),
-          onPressed: () async {
-            await ref
-                .read(
-                  farmLockLevelUpFormNotifierProvider.notifier,
-                )
-                .validateForm(AppLocalizations.of(context)!);
-          },
-          disabled: !farmLockLevelUp.isControlsOk,
-        ),
-      ],
+    return BtnFooterPrimary(
+      buttonText: localizations.btn_farmLockLevelUp,
+      key: const Key('farmLockLevelUp'),
+      onTap: () async {
+        await ref
+            .read(
+              farmLockLevelUpFormNotifierProvider.notifier,
+            )
+            .validateForm(AppLocalizations.of(context)!);
+      },
+      isLocked: !farmLockLevelUp.isControlsOk,
     );
   }
 
@@ -97,8 +92,6 @@ class FarmLockLevelUpFormSheet extends ConsumerWidget
     }
 
     final localizations = AppLocalizations.of(context)!;
-    final boldBodyLarge =
-        AppTextStyles.bodyLarge(context).copyWith(fontWeight: FontWeight.bold);
 
     return SingleChildScrollView(
       child: Column(
@@ -106,12 +99,15 @@ class FarmLockLevelUpFormSheet extends ConsumerWidget
         children: [
           Text(
             localizations.farmLockLevelUpTitle,
-            style: boldBodyLarge,
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold),
           ),
           const SizedBox(height: 10),
           Text(
             localizations.farmLockLevelUpDesc,
-            style: Theme.of(context).textTheme.bodyMediumWithOpacity,
+            style: Theme.of(context).textTheme.bodySmallWithOpacity,
           ),
           const SizedBox(height: 20),
           Padding(
@@ -151,69 +147,72 @@ class FarmLockLevelUpFormSheet extends ConsumerWidget
                 const SizedBox(
                   height: 10,
                 ),
-                Row(
-                  children: [
-                    if (rewardAmount == 0)
-                      SelectableText(
-                        AppLocalizations.of(context)!
-                            .farmLockWithdrawFormTextNoRewardText1,
-                        style: AppTextStyles.bodyMedium(context),
-                      )
-                    else
-                      FutureBuilder<String>(
-                        future: FiatValue().display(
-                          ref,
-                          farmLockLevelUp.farmLock!.rewardToken!,
-                          rewardAmount,
-                        ),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return Expanded(
-                              child: Wrap(
-                                children: [
-                                  SelectableText(
-                                    rewardAmount.formatNumber(),
-                                    style: AppTextStyles.bodyMedium(context),
-                                  ),
-                                  SelectableText(
-                                    ' ${farmLockLevelUp.farmLock!.rewardToken!.symbol} ',
-                                    style: AppTextStyles.bodyMedium(context),
-                                  ),
-                                  SelectableText(
-                                    '${snapshot.data}',
-                                    style: AppTextStyles.bodyMedium(context),
-                                  ),
-                                  SelectableText(
-                                    AppLocalizations.of(context)!
-                                        .farmLockWithdrawFormTextNoRewardText2,
-                                    style: AppTextStyles.bodyMedium(context),
-                                  ),
-                                ],
+                if (rewardAmount == 0)
+                  MessageBox(
+                    messageBoxType: MessageBoxType.info,
+                    text: AppLocalizations.of(context)!
+                        .farmLockWithdrawFormTextNoRewardText1,
+                  )
+                else
+                  FutureBuilder<String>(
+                    future: FiatValue().display(
+                      ref,
+                      farmLockLevelUp.farmLock!.rewardToken!,
+                      rewardAmount,
+                    ),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Expanded(
+                          child: Wrap(
+                            children: [
+                              SelectableText(
+                                rewardAmount.formatNumber(),
+                                style: AppTextStyles.bodyMedium(context),
                               ),
-                            );
-                          }
-                          return const SizedBox.shrink();
-                        },
-                      ),
-                  ],
-                ),
+                              SelectableText(
+                                ' ${farmLockLevelUp.farmLock!.rewardToken!.symbol} ',
+                                style: AppTextStyles.bodyMedium(context),
+                              ),
+                              SelectableText(
+                                '${snapshot.data}',
+                                style: AppTextStyles.bodyMedium(context),
+                              ),
+                              SelectableText(
+                                AppLocalizations.of(context)!
+                                    .farmLockWithdrawFormTextNoRewardText2,
+                                style: AppTextStyles.bodyMedium(context),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                      return const SizedBox.shrink();
+                    },
+                  ),
                 const SizedBox(height: 30),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       localizations.farmLockLevelUpTitle2,
-                      style: boldBodyLarge,
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                            fontWeight: FontWeightTelegraf.fontWeightSemibold,
+                          ),
                     ),
                     const SizedBox(height: 10),
                     Text(
                       localizations.farmLockLevelUpDesc2,
-                      style: Theme.of(context).textTheme.bodyMediumWithOpacity,
+                      style: Theme.of(context).textTheme.bodySmallWithOpacity,
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
-                Wrap(
+                GridView.count(
+                  crossAxisCount: 4,
+                  padding: const EdgeInsets.only(top: 20),
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   children: [
                     ...farmLockLevelUp.filterAvailableLevels.entries
                         .map((entry) {
@@ -233,6 +232,7 @@ class FarmLockLevelUpFormSheet extends ConsumerWidget
                         .reversed,
                   ],
                 ),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     SelectableText(
