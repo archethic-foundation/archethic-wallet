@@ -105,14 +105,15 @@ class OnRampRepositoryImpl implements OnRampRepository {
     try {
       final pubkey = base64.encode(keyPair.publicKey!);
       channel = socket.addChannel(topic: 'transfers:$pubkey');
-      await channel.join().future;
+      final depositsSnapshot = await channel.join().future;
 
+      yield _onRampDepositSnapshotEventFromJson(depositsSnapshot.response);
       await for (final message in channel.messages) {
         try {
-          yield _onRampEventFromJson(message.payload);
+          yield _onRampEventFromJson(message);
         } catch (e, stack) {
           _logger.warning(
-            'Failed to convert notification `${jsonEncode(message.payload)}`',
+            'Failed to convert notification `${jsonEncode(message)}`',
             e,
             stack,
           );
