@@ -1,15 +1,14 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:aewallet/application/onramp/onramp.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/buy/bloc/buy_with_fiat_form_provider.dart';
 import 'package:aewallet/ui/views/buy/layouts/components/banxa_on_ramp_sheet.dart';
 import 'package:aewallet/ui/views/buy/layouts/components/checkbox_confirm.dart';
 import 'package:aewallet/ui/views/buy/layouts/components/transaction_history.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
@@ -38,22 +37,17 @@ class BuyWithFiatSheet extends ConsumerWidget
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final depositAddress = ref.watch(onrampDepositAddressProvider).valueOrNull;
-    return Row(
-      children: <Widget>[
-        AppButtonTinyConnectivity(
-          localizations.onrampWithFiatBuyNowButton,
-          Dimens.buttonBottomDimens,
-          key: const Key('buyNow'),
-          disabled: depositAddress == null ||
-              !ref.watch(buyWithFiatFormProvider).disclaimerAcknowledged,
-          onPressed: () async {
-            await context.push(
-              BanxaOnRampSheet.routerPage,
-              extra: {'depositAddress': depositAddress},
-            );
-          },
-        ),
-      ],
+    return BtnFooterPrimary(
+      buttonText: localizations.onrampWithFiatBuyNowButton,
+      key: const Key('buyNow'),
+      isLocked: depositAddress == null ||
+          !ref.watch(buyWithFiatFormProvider).disclaimerAcknowledged,
+      onTap: () async {
+        await context.push(
+          BanxaOnRampSheet.routerPage,
+          extra: {'depositAddress': depositAddress},
+        );
+      },
     );
   }
 
@@ -85,13 +79,15 @@ class BuyWithFiatSheet extends ConsumerWidget
             children: [
               Text(
                 localizations.onrampWithFiatHowDoesItWorkTitle,
-                style: AppTextStyles.bodyLarge(context)
-                    .copyWith(fontWeight: FontWeight.bold),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold),
               ),
               const SizedBox(height: 10),
               Text(
                 localizations.onrampWithFiatHowDoesItWorkBody,
-                style: AppTextStyles.bodyMediumWithOpacity(context),
+                style: Theme.of(context).textTheme.bodyMediumWithOpacity,
               ),
               const SizedBox(height: 20),
               CheckboxConfirm(

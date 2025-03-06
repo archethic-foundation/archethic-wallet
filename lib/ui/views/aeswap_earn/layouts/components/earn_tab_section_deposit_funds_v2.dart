@@ -1,8 +1,8 @@
-import 'package:aewallet/application/feature_flags.dart';
-import 'package:aewallet/main.dart';
+import 'package:aewallet/application/onramp/onramp.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_primary.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
-import 'package:aewallet/ui/views/sheets/buy_sheet.dart';
+import 'package:aewallet/ui/views/buy/layouts/buy_with_crypto_sheet.dart';
+import 'package:aewallet/ui/views/buy/layouts/buy_with_fiat_sheet.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -18,12 +18,7 @@ class EarnSectionDepositFundsV2 extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final onRampFiatFeatureFlag = ref
-        .watch(getFeatureFlagProvider(kApplicationCode, 'on-ramp-fiat'))
-        .valueOrNull;
-    final onRampCryptoFeatureFlag = ref
-        .watch(getFeatureFlagProvider(kApplicationCode, 'on-ramp-crypto'))
-        .valueOrNull;
+    final onrampFeatureFlag = ref.watch(onrampFeatureFlagProvider);
 
     return aedappfm.BlockInfo(
       blockInfoColor: aedappfm.BlockInfoColor.purple,
@@ -37,7 +32,7 @@ class EarnSectionDepositFundsV2 extends ConsumerWidget {
             '1. ${localizations.earnSectionDepositFundsTitle}',
             style: Theme.of(context).textTheme.titleSmallSemiBold,
           ),
-          if (onRampFiatFeatureFlag != null && onRampFiatFeatureFlag == true)
+          if (onrampFeatureFlag.fromFiat == true)
             Column(
               children: [
                 const SizedBox(height: 20),
@@ -48,13 +43,12 @@ class EarnSectionDepositFundsV2 extends ConsumerWidget {
                   localizations.earnSectionDepositFundsOptionFiatDesc,
                   localizations.earnSectionDepositFundsOptionFiatBuyBtn,
                   () async {
-                    await context.push(BuySheet.routerPage);
+                    await context.push(BuyWithFiatSheet.routerPage);
                   },
                 ),
               ],
             ),
-          if (onRampCryptoFeatureFlag != null &&
-              onRampCryptoFeatureFlag == true)
+          if (onrampFeatureFlag.fromCrypto == true)
             Column(
               children: [
                 const SizedBox(height: 20),
@@ -65,7 +59,7 @@ class EarnSectionDepositFundsV2 extends ConsumerWidget {
                   localizations.earnSectionDepositFundsOptionCryptoDesc,
                   localizations.earnSectionDepositFundsOptionCryptoBuyBtn,
                   () async {
-                    await context.push(BuySheet.routerPage);
+                    await context.push(BuyWithCryptoSheet.routerPage);
                   },
                 ),
               ],
