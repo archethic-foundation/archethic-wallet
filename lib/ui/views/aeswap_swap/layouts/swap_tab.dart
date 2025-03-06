@@ -3,6 +3,7 @@ import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
+import 'package:aewallet/ui/figma_components/message_box/message_box.dart';
 import 'package:aewallet/ui/views/aeswap_swap/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_confirm_sheet.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_icon_info.dart';
@@ -123,8 +124,40 @@ class SwapTabState extends ConsumerState<SwapTab> {
                               children: [
                                 const SwapTokenToSwapAmount(),
                                 const SwapTokenSwappedAmount(),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    if (swap.messageMaxHalfUCO)
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 10,
+                                        ),
+                                        child: MessageBox(
+                                          messageBoxType: MessageBoxType.info,
+                                          text: AppLocalizations.of(context)!
+                                              .swapMessageMaxHalfUCO
+                                              .replaceFirst(
+                                                '%1',
+                                                swap.feesEstimatedUCO
+                                                    .formatNumber(precision: 8),
+                                              ),
+                                        ),
+                                      ),
+                                    if (swap.failure != null)
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                    MessageBox(
+                                      messageBoxType: MessageBoxType.warning,
+                                      text: FailureMessage(
+                                        context: context,
+                                        failure: swap.failure,
+                                      ).getMessage(),
+                                    ),
+                                  ],
+                                ),
                                 Padding(
-                                  padding: const EdgeInsets.only(top: 10),
+                                  padding: const EdgeInsets.only(top: 20),
                                   child: Column(
                                     children: [
                                       Row(
@@ -177,36 +210,6 @@ class SwapTabState extends ConsumerState<SwapTab> {
                                         ),
                                     ],
                                   ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                if (swap.messageMaxHalfUCO)
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 10,
-                                    ),
-                                    child: SizedBox(
-                                      child: aedappfm.InfoBanner(
-                                        AppLocalizations.of(context)!
-                                            .swapMessageMaxHalfUCO
-                                            .replaceFirst(
-                                              '%1',
-                                              swap.feesEstimatedUCO
-                                                  .formatNumber(precision: 8),
-                                            ),
-                                        aedappfm.InfoBannerType.request,
-                                      ),
-                                    ),
-                                  ),
-                                aedappfm.ErrorMessage(
-                                  failure: swap.failure,
-                                  failureMessage: FailureMessage(
-                                    context: context,
-                                    failure: swap.failure,
-                                  ).getMessage(),
                                 ),
                               ],
                             ),
