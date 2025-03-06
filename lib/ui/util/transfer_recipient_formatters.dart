@@ -9,7 +9,7 @@ extension TransferRecipientFormatters on TransferRecipient {
                 '00000000000000000000000000000000000000000000000000000000000000000000'
             ? localizations.burnAddressLbl
             : AddressFormatters(address.address!).getShortString(),
-        account: (account) => account.format,
+        account: (account) => account.nameDisplayed,
         unknownContact: (name) => name,
       );
 }

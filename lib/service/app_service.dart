@@ -13,7 +13,6 @@ import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart';
-import 'package:aewallet/util/task.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';
@@ -50,18 +49,20 @@ class AppService {
       }
     }
 
-    final getTokens = await addressesOutCache
-        .map(
-          (address) => Task(
-            name: 'GetToken - address: $address',
-            logger: _logger,
-            action: () => apiService.getToken([address]),
-          ),
-        )
-        .autoRetry()
-        .batch();
+    final futures = addressesOutCache.map((address) async {
+      try {
+        final tokens = await apiService.getToken([address]);
 
-    for (final getToken in getTokens) {
+        return tokens;
+      } catch (e) {
+        _logger.severe('Failed to fetch token for address $address: $e');
+        return <String, Token>{};
+      }
+    }).toList();
+
+    final results = await Future.wait(futures);
+
+    for (final getToken in results) {
       tokenMap.addAll(getToken);
 
       getToken.forEach((key, value) async {
@@ -81,23 +82,26 @@ class AppService {
   }) async {
     final transactionInputs = <String, List<TransactionInput>>{};
 
-    final getTransactionInputs = await addresses
-        .toSet()
-        .map(
-          (address) => Task(
-            name: 'GetTransactionInputs : address: $address',
-            logger: _logger,
-            action: () => apiService.getTransactionInputs(
-              [address],
-              request: request,
-              limit: limit,
-              pagingOffset: pagingOffset,
-            ),
-          ),
-        )
-        .autoRetry()
-        .batch();
-    for (final getTransactionInput in getTransactionInputs) {
+    final futures = addresses.toSet().map((address) async {
+      try {
+        final inputs = await apiService.getTransactionInputs(
+          [address],
+          request: request,
+          limit: limit,
+          pagingOffset: pagingOffset,
+        );
+        return inputs;
+      } catch (e) {
+        _logger.severe(
+          'Failed to fetch transaction inputs for address $address: $e',
+        );
+        return <String, List<TransactionInput>>{};
+      }
+    }).toList();
+
+    final results = await Future.wait(futures);
+
+    for (final getTransactionInput in results) {
       transactionInputs.addAll(getTransactionInput);
     }
 

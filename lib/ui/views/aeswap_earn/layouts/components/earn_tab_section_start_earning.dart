@@ -141,7 +141,9 @@ class EarnSectionStartEarning extends ConsumerWidget {
               ),
             ),
           const SizedBox(height: 30),
-          Row(
+          Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
+            runSpacing: 10,
             children: [
               BtnPrimary(
                 buttonText: earnUserLevel == EarnUserLevelType.beginner
