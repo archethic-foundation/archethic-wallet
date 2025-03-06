@@ -12,7 +12,6 @@ import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/bloc/state.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
-import 'package:decimal/decimal.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -51,17 +50,6 @@ class FarmLockLevelUpFormNotifier extends _$FarmLockLevelUpFormNotifier {
     state = state.copyWith(
       failure: null,
       amount: amount,
-    );
-  }
-
-  void setAmountMax() {
-    setAmount(state.lpTokenBalance);
-  }
-
-  void setAmountHalf() {
-    setAmount(
-      (Decimal.parse(state.lpTokenBalance.toString()) / Decimal.fromInt(2))
-          .toDouble(),
     );
   }
 

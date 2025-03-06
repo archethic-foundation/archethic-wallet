@@ -61,7 +61,9 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
         ),
       MainScreenTab.earnTab => MainAppBarDetail(
           key: const Key('earn'),
-          actions: const [],
+          actions: const [
+            _RefreshButton(),
+          ],
           title: MainAppBarBasic(header: localizations.aeSwapEarnHeader),
         ),
       MainScreenTab.airdropTab => MainAppBarDetail(

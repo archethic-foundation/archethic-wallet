@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
@@ -32,9 +33,18 @@ class EarnSectionStartEarning extends ConsumerWidget {
     final earnUserLevel = ref.watch(
       SettingsProviders.settings.select((settings) => settings.earnUserLevel),
     );
+    final accountSelected = ref.watch(
+      accountsNotifierProvider.select(
+        (accounts) => accounts.valueOrNull?.selectedAccount,
+      ),
+    );
 
-    if (earnUserLevel == EarnUserLevelType.advanced &&
-        balances.lpTokenBalance <= 0) {
+    if ((earnUserLevel == EarnUserLevelType.beginner &&
+            accountSelected != null &&
+            accountSelected.balance != null &&
+            accountSelected.balance!.nativeTokenValue <= 0) ||
+        (earnUserLevel == EarnUserLevelType.advanced &&
+            balances.lpTokenBalance <= 0)) {
       return aedappfm.BlockInfo(
         blockInfoColor: aedappfm.BlockInfoColor.grey,
         borderWidth: 2,

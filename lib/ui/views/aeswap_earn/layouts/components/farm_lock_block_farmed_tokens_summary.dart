@@ -25,15 +25,20 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
     WidgetRef ref,
   ) {
     return ref.watch(farmLockFormSummaryProvider).when(
-          skipLoadingOnReload: true,
-          error: (error, stackTrace) => const SizedBox.shrink(),
-          loading: () => const SizedBox.shrink(),
-          data: (farmLockFormSummary) => _buildContent(
-            context,
-            ref,
-            farmLockFormSummary,
-          ),
+      error: (error, stackTrace) {
+        return const SizedBox.shrink();
+      },
+      loading: () {
+        return const SizedBox.shrink();
+      },
+      data: (farmLockFormSummary) {
+        return _buildContent(
+          context,
+          ref,
+          farmLockFormSummary,
         );
+      },
+    );
   }
 
   Widget _buildContent(
@@ -42,7 +47,6 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
     FarmLockFormSummary farmLockFormSummary,
   ) {
     final farmLock = ref.watch(farmLockFormFarmLockProvider).valueOrNull;
-    final pool = ref.watch(farmLockFormPoolProvider).valueOrNull;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
@@ -65,9 +69,7 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
             ),
             _blockInfo(context, ref, farmLockFormSummary),
             const SizedBox(height: 10),
-            if (farmLock != null &&
-                farmLock.userInfos.entries.isNotEmpty &&
-                pool != null)
+            if (farmLock != null && farmLock.userInfos.entries.isNotEmpty)
               BtnPrimary(
                 buttonText:
                     AppLocalizations.of(context)!.farmLockTokensSummaryMoreInfo,

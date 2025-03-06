@@ -56,7 +56,8 @@ class _FarmLockWithdrawFundsSheetState
             ..setRewardAmount(rewardAmount)
             ..setPoolAddress(farmLock.poolAddress)
             ..setLPTokenPair(farmLock.lpTokenPair!)
-            ..setLpToken(farmLock.lpToken!);
+            ..setLpToken(farmLock.lpToken!)
+            ..setAmount(AppLocalizations.of(context)!, depositedAmount);
         } else {
           if (mounted) {
             context.pop();
