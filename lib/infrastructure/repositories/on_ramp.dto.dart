@@ -70,7 +70,7 @@ OnRampDepositState _onRampDepositStateFromJson(bool json) => switch (json) {
 OnRampDeposit _onRampDepositFromJson(Map<String, dynamic>? json) =>
     switch (json) {
       {
-        'deposit_id': final int depositId,
+        'deposit_id': final String depositId,
         'timestamp': final String timestamp,
         'tx_hash': final String txHash,
         'completed': final bool completed,
@@ -80,7 +80,7 @@ OnRampDeposit _onRampDepositFromJson(Map<String, dynamic>? json) =>
         'transfers': final List transfers,
       } =>
         (
-          id: '$depositId',
+          id: depositId,
           depositDate: DateTime.parse(timestamp),
           depositTxHash: txHash,
           depositChainId: chainId,
