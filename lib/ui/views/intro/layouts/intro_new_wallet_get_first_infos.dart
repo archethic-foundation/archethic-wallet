@@ -50,7 +50,6 @@ class _IntroNewWalletDisclaimerState
 
   @override
   void dispose() {
-    nameFocusNode.dispose();
     nameController.dispose();
     nameFocusNode
       ..removeListener(_onFocusChange)

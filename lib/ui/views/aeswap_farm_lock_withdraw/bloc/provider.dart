@@ -103,7 +103,7 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
 
   Future<double> _calculateFees() async {
     var feeEstimation = 0.0;
-    final earnUserLevel = ref.watch(
+    final earnUserLevel = ref.read(
       SettingsProviders.settings.select((settings) => settings.earnUserLevel),
     );
 
@@ -116,7 +116,7 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
           );
     } else {
       var count = 0;
-      final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
+      final farmLock = ref.read(farmLockFormFarmLockProvider).value;
       if (farmLock != null) {
         farmLock.userInfos.forEach((depositId, userInfos) {
           if (userInfos.level == '0') {
@@ -329,7 +329,7 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
       ),
     );
 
-    final earnUserLevel = ref.watch(
+    final earnUserLevel = ref.read(
       SettingsProviders.settings.select((settings) => settings.earnUserLevel),
     );
 
@@ -349,7 +349,7 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
           );
     } else {
       final environment = ref.read(environmentProvider);
-      final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
+      final farmLock = ref.read(farmLockFormFarmLockProvider).value;
       final stepsState = ref.read(stepsNotifierProvider.notifier);
       final currentStep = ref
           .read(stepsNotifierProvider)
