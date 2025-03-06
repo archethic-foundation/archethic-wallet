@@ -1,18 +1,13 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/format_address_link_copy_big_icon.dart';
-import 'package:aewallet/ui/util/dimens.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
+import 'package:aewallet/ui/figma_components/message_box/message_box.dart';
 import 'package:aewallet/ui/views/aeswap_swap/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_final_amount.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
-import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
-import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
-    as aedappfm;
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -50,19 +45,14 @@ class SwapResultSheetState extends ConsumerState<SwapResultSheet>
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    return Row(
-      children: <Widget>[
-        AppButtonTinyConnectivity(
-          AppLocalizations.of(context)!.close,
-          Dimens.buttonBottomDimens,
-          key: const Key('close'),
-          onPressed: () async {
-            context
-              ..pop()
-              ..pop();
-          },
-        ),
-      ],
+    return BtnFooterPrimary(
+      buttonText: AppLocalizations.of(context)!.close,
+      key: const Key('close'),
+      onTap: () async {
+        context
+          ..pop()
+          ..pop();
+      },
     );
   }
 
@@ -92,45 +82,19 @@ class SwapResultSheetState extends ConsumerState<SwapResultSheet>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SheetDetailCard(
-              children: [
-                if (finalAmount == null)
-                  if (timeout == false)
-                    Row(
-                      children: [
-                        AutoSizeText(
-                          AppLocalizations.of(context)!.processingInProgress,
-                          style: AppTextStyles.bodyLarge(context),
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                          width: 10,
-                          child: CircularProgressIndicator(strokeWidth: 1),
-                        ),
-                      ],
-                    )
-                  else
-                    Text(
-                      FailureMessage(
-                        context: context,
-                        failure: swap.failure,
-                      ).getMessage(),
-                      style: AppTextStyles.bodyLarge(context).copyWith(
-                        color: aedappfm.ArchethicThemeBase.systemDanger500,
-                      ),
-                    )
-                else
-                  AutoSizeText(
-                    AppLocalizations.of(context)!.swapSuccessInfo,
-                    style: AppTextStyles.bodyLarge(context).copyWith(
-                      color: aedappfm.ArchethicThemeBase.systemPositive600,
-                    ),
-                  ),
-              ],
-            ),
+            if (finalAmount == null)
+              MessageBox(
+                messageBoxType: MessageBoxType.warning,
+                text: FailureMessage(
+                  context: context,
+                  failure: swap.failure,
+                ).getMessage(),
+              )
+            else
+              MessageBox(
+                messageBoxType: MessageBoxType.success,
+                text: AppLocalizations.of(context)!.swapSuccessInfo,
+              ),
             const SizedBox(
               height: 20,
             ),
@@ -155,12 +119,7 @@ class SwapResultSheetState extends ConsumerState<SwapResultSheet>
                   ),
                 ],
               ),
-            if (finalAmount != null || timeout)
-              const SheetDetailCard(
-                children: [
-                  SwapFinalAmount(),
-                ],
-              ),
+            if (finalAmount != null || timeout) const SwapFinalAmount(),
           ],
         ),
       ),
