@@ -101,12 +101,10 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet>
     );
 
     try {
-      unawaited(
-        (await ref
-                .read(accountsNotifierProvider.notifier)
-                .selectedAccountNotifier)
-            ?.refreshAll(),
-      );
+      await (await ref
+              .read(accountsNotifierProvider.notifier)
+              .selectedAccountNotifier)
+          ?.refreshAll();
     } finally {
       context.go(HomePage.routerPage);
       context.loadingOverlay.hide();

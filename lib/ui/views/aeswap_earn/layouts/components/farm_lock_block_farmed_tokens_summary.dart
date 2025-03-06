@@ -25,20 +25,21 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
     WidgetRef ref,
   ) {
     return ref.watch(farmLockFormSummaryProvider).when(
-      error: (error, stackTrace) {
-        return const SizedBox.shrink();
-      },
-      loading: () {
-        return const SizedBox.shrink();
-      },
-      data: (farmLockFormSummary) {
-        return _buildContent(
-          context,
-          ref,
-          farmLockFormSummary,
+          skipLoadingOnReload: true,
+          error: (error, stackTrace) {
+            return const SizedBox.shrink();
+          },
+          loading: () {
+            return const SizedBox.shrink();
+          },
+          data: (farmLockFormSummary) {
+            return _buildContent(
+              context,
+              ref,
+              farmLockFormSummary,
+            );
+          },
         );
-      },
-    );
   }
 
   Widget _buildContent(
