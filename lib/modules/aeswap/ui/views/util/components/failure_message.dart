@@ -58,6 +58,10 @@ class FailureMessage {
     }
 
     if (failure is aedappfm.OtherFailure) {
+      if ((failure! as aedappfm.OtherFailure).cause == 'Connection timeout') {
+        return AppLocalizations.of(context)!.failureTimeout;
+      }
+
       return (failure! as aedappfm.OtherFailure).cause.toString();
     }
 
