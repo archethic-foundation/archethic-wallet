@@ -7,8 +7,8 @@ import 'package:aewallet/domain/repositories/transaction/recent_transactions.rep
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/blockchain/token_information.dart';
 import 'package:aewallet/model/keychain_service_keypair.dart';
-import 'package:aewallet/util/task.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
+import 'package:logging/logging.dart';
 
 /// A repository implementation for fetching and processing recent transactions
 /// for a given account in a wallet. This class integrates with the Archethic
@@ -43,6 +43,8 @@ class RecentTransactionsRepositoryImpl
     required this.tokensRepository,
     required this.keyPair,
   });
+
+  static final _logger = Logger('RecentTransactionsRepositoryImpl');
 
   final archethic.ApiService apiService;
   final TokensRepository tokensRepository;
@@ -351,22 +353,24 @@ class RecentTransactionsRepositoryImpl
     }
 
     // Get List of ownerships
-    final getTransactionOwnerships = await ownershipsAddresses
-        .toSet()
-        .map(
-          (ownershipsAddress) => Task(
-            name:
-                'GetAccountRecentTransactions - ownershipsAddress: $ownershipsAddress',
-            action: () => apiService.getTransactionOwnerships(
-              [ownershipsAddress],
-            ),
-          ),
-        )
-        .autoRetry()
-        .batch();
+    final futures = ownershipsAddresses.toSet().map((ownershipsAddress) async {
+      try {
+        final ownerships = await apiService.getTransactionOwnerships(
+          [ownershipsAddress],
+        );
+        return ownerships;
+      } catch (e) {
+        _logger.severe(
+          'Failed to fetch transaction inputs for ownershipsAddress $ownershipsAddress: $e',
+        );
+        return <String, List<archethic.Ownership>>{};
+      }
+    }).toList();
+
+    final results = await Future.wait(futures);
 
     final ownershipsMap = <String, List<archethic.Ownership>>{};
-    for (final getTransactionOwnership in getTransactionOwnerships) {
+    for (final getTransactionOwnership in results) {
       ownershipsMap.addAll(getTransactionOwnership);
     }
 

@@ -37,33 +37,17 @@ class TokensRepositoryImpl with TokenParser implements TokensRepository {
       }
     }
 
-    var antiSpam = 0;
-    final futures = <Future>[];
-    for (final address in addressesOutCache) {
-      // Delay the API call if we have made more than 10 requests
-      if (antiSpam > 0 && antiSpam % 10 == 0) {
-        await Future.delayed(const Duration(seconds: 1));
+    final getTokens = await apiService.getToken(
+      addressesOutCache,
+    );
+
+    getTokens.forEach((key, value) async {
+      value = value.copyWith(address: key);
+      if (value.type == tokenFungibleType) {
+        await tokensListDatasource.setToken(value.toHive());
       }
-
-      // Make the API call and update the antiSpam counter
-      futures.add(
-        apiService.getToken(
-          [address],
-        ),
-      );
-      antiSpam++;
-    }
-
-    final getTokens = await Future.wait(futures);
-    for (final Map<String, archethic.Token> getToken in getTokens) {
-      getToken.forEach((key, value) async {
-        value = value.copyWith(address: key);
-        if (value.type == tokenFungibleType) {
-          await tokensListDatasource.setToken(value.toHive());
-        }
-        tokenMap[key] = value;
-      });
-    }
+      tokenMap[key] = value;
+    });
 
     return tokenMap;
   }
