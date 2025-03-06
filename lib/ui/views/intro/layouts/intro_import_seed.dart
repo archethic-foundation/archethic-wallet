@@ -174,12 +174,11 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                 title: localizations.pleaseWait,
               );
 
-              unawaited(
-                (await ref
-                        .read(accountsNotifierProvider.notifier)
-                        .selectedAccountNotifier)
-                    ?.refreshAll(),
-              );
+              await (await ref
+                      .read(accountsNotifierProvider.notifier)
+                      .selectedAccountNotifier)
+                  ?.refreshAll();
+
               ref.read(
                 RecoveryPhraseSavedProvider.setRecoveryPhraseSaved(true),
               );

@@ -2,7 +2,6 @@
 
 import 'dart:async';
 
-import 'package:aewallet/application/account/account_notifier.dart';
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/session/session.dart';
@@ -173,11 +172,10 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
               .read(accountsNotifierProvider.notifier)
               .selectAccount(widget.account);
 
-          await ref
-              .read(
-                accountNotifierProvider(widget.account.name).notifier,
-              )
-              .refreshAll();
+          await (await ref
+                  .read(accountsNotifierProvider.notifier)
+                  .selectedAccountNotifier)
+              ?.refreshAll();
 
           context.loadingOverlay.hide();
           context.pop();

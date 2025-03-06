@@ -251,12 +251,10 @@ class SecurityMenuView extends ConsumerWidget
             .read(accountsNotifierProvider.notifier)
             .selectAccount(accounts.first);
 
-        unawaited(
-          (await ref
-                  .read(accountsNotifierProvider.notifier)
-                  .selectedAccountNotifier)
-              ?.refreshAll(),
-        );
+        await (await ref
+                .read(accountsNotifierProvider.notifier)
+                .selectedAccountNotifier)
+            ?.refreshAll();
         context.loadingOverlay.hide();
       } catch (e) {
         UIUtil.showSnackbar(
