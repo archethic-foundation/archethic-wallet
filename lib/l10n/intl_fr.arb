@@ -427,7 +427,7 @@
     "failureConnectivityArchethic": "Veuillez ouvrir votre Archethic Wallet et autoriser la connexion aux DApps.",
     "failureConnectivityArchethicBrave": "Veuillez ouvrir votre Archethic Wallet, autoriser la connexion aux DApps et désactiver le bouclier de Brave.",
     "failureInsufficientFunds": "Fonds insuffisants.",
-    "failureTimeout": "Délai d'attente dépassé.",
+    "failureTimeout": "Délai dépassé. Le délai d'attente de l'application est expiré, mais la transaction est peut-être toujours en cours sur la blockchain. Veuillez vérifier dans l'onglet Transactions si la transaction a été effectuée avant de la soumettre à nouveau.",
     "failurePoolAlreadyExists": "La pool existe déjà pour cette paire",
     "failurePoolNotExists": "Aucune pool pour cette paire",
     "failureIncompatibleBrowser": "Désolé, mais votre navigateur n'est pas compatible avec l'application.\n\nVeuillez vous référer à la FAQ pour plus d'informations.\nhttps://wiki.archethic.net/FAQ/dex#what-web-browsers-are-not-supported",

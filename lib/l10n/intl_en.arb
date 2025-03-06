@@ -432,7 +432,7 @@
     "failureConnectivityArchethic": "Please, open your Archethic Wallet and allow DApps connection.",
     "failureConnectivityArchethicBrave": "Please, open your Archethic Wallet, allow DApps connection and disable Brave's shield.",
     "failureInsufficientFunds": "Funds are not sufficient.",
-    "failureTimeout": "Timeout occurred.",
+    "failureTimeout": "Timeout reached. The application’s waiting period has expired, but the transaction might still be processing on the blockchain. Please check the Transactions tab to verify if the transaction was completed before attempting to resubmit.",
     "failurePoolAlreadyExists": "Pool already exists for this pair",
     "failurePoolNotExists": "No pool for this pair",
     "failureIncompatibleBrowser": "Sorry, but your browser is not compatible with the app.\n\nPlease refer to the FAQ for more information.\nhttps://wiki.archethic.net/FAQ/dex#what-web-browsers-are-not-supported",
