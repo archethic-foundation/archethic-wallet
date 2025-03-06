@@ -1,15 +1,14 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/buy/bloc/buy_with_crypto_form_provider.dart';
 import 'package:aewallet/ui/views/buy/layouts/components/chain_dropdown.dart';
 import 'package:aewallet/ui/views/buy/layouts/components/deposit_address_bloc.dart';
 import 'package:aewallet/ui/views/buy/layouts/components/token_dropdown.dart';
 import 'package:aewallet/ui/views/buy/layouts/components/transaction_history.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:flutter/material.dart';
@@ -66,44 +65,45 @@ class BuyWithCryptoSheet extends ConsumerWidget {
             children: [
               Text(
                 localizations.onrampWithFiatHowDoesItWorkTitle,
-                style: AppTextStyles.bodyLarge(context)
-                    .copyWith(fontWeight: FontWeight.bold),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold),
               ),
               const SizedBox(height: 10),
               Text(
                 localizations.onrampWithFiatHowDoesItWorkBody,
-                style: AppTextStyles.bodyMediumWithOpacity(context),
+                style: Theme.of(context).textTheme.bodyMediumWithOpacity,
               ),
               const SizedBox(height: 20),
               Text(
                 localizations.onrampWithCryptoSelectTokenTitle,
-                style: AppTextStyles.bodyLarge(context)
-                    .copyWith(fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      fontWeight: FontWeightTelegraf.fontWeightBold,
+                    ),
               ),
               const SizedBox(height: 10),
               const TokenDropdown(),
               const SizedBox(height: 10),
               Text(
                 localizations.onrampWithCryptoSelectChainTitle,
-                style: AppTextStyles.bodyLarge(context)
-                    .copyWith(fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      fontWeight: FontWeightTelegraf.fontWeightBold,
+                    ),
               ),
+              const SizedBox(height: 10),
               const ChainDropdown(),
               const SizedBox(height: 30),
               switch (shouldShowDepositAddress) {
-                false => Row(
-                    children: <Widget>[
-                      AppButtonTinyConnectivity(
+                false => BtnFooterPrimary(
+                    buttonText:
                         localizations.onrampWithCryptoShowDepositAddress,
-                        Dimens.buttonBottomDimens,
-                        disabled: !canShowDepositAddress,
-                        onPressed: () async {
-                          ref
-                              .read(buyWithCryptoFormProvider.notifier)
-                              .showDepositAddress();
-                        },
-                      ),
-                    ],
+                    isLocked: !canShowDepositAddress,
+                    onTap: () async {
+                      ref
+                          .read(buyWithCryptoFormProvider.notifier)
+                          .showDepositAddress();
+                    },
                   ),
                 true => const DepositAddressBloc(),
               },

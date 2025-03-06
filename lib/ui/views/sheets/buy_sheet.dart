@@ -168,7 +168,7 @@ class _BuyFromWalletSection extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final onrampFeatureFlag = ref.watch(onrampFeatureFlagProvider);
     final localizations = AppLocalizations.of(context)!;
-
+    final environment = ref.watch(environmentProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -201,7 +201,7 @@ class _BuyFromWalletSection extends ConsumerWidget {
                       },
                     ),
                   )
-                else
+                else if (environment == aedappfm.Environment.testnet)
                   SizedBox(
                     width: itemWidth,
                     child: _ExchangeButton(

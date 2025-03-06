@@ -1,5 +1,4 @@
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_token_balance.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_textfield.dart';
 import 'package:aewallet/ui/util/formatters.dart';
@@ -93,9 +92,9 @@ class _FarmLockDepositLPAmountState
                       .farmLockDepositTextFieldUCOLabel
                   : AppLocalizations.of(context)!
                       .farmLockDepositTextFieldLPLabel,
-              style: AppTextStyles.bodyMedium(context).copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
           ],
         ),

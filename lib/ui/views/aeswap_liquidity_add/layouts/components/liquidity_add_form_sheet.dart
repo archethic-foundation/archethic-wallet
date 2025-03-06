@@ -1,7 +1,6 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_token_icon.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/fiat_value.dart';
@@ -153,8 +152,13 @@ class LiquidityAddFormSheet extends ConsumerWidget
                                 padding: const EdgeInsets.only(left: 10),
                                 child: Text(
                                   localizations.liquidityAddTextFieldUCOLabel,
-                                  style: AppTextStyles.bodyMedium(context)
-                                      .copyWith(fontWeight: FontWeight.bold),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                        fontWeight:
+                                            FontWeightTelegraf.fontWeightBold,
+                                      ),
                                 ),
                               ),
                             ],
@@ -203,8 +207,13 @@ class LiquidityAddFormSheet extends ConsumerWidget
                                 padding: const EdgeInsets.only(left: 10),
                                 child: Text(
                                   localizations.liquidityAddTextFieldETHLabel,
-                                  style: AppTextStyles.bodyMedium(context)
-                                      .copyWith(fontWeight: FontWeight.bold),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                        fontWeight:
+                                            FontWeightTelegraf.fontWeightBold,
+                                      ),
                                 ),
                               ),
                             ],
