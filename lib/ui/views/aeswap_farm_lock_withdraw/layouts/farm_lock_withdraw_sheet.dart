@@ -7,7 +7,6 @@ import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/layouts/components/f
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -57,8 +56,7 @@ class _FarmLockWithdrawSheetState extends ConsumerState<FarmLockWithdrawSheet> {
           ..setEndDate(widget.endDate)
           ..setPoolAddress(widget.poolAddress)
           ..setLPTokenPair(widget.lpTokenPair)
-          ..setLpToken(widget.lpToken)
-          ..setAmount(AppLocalizations.of(context)!, widget.depositedAmount);
+          ..setLpToken(widget.lpToken);
       } catch (e) {
         if (mounted) {
           context.pop();

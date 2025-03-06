@@ -115,6 +115,16 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
             state.depositId,
           );
     } else {
+      var count = 0;
+      final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
+      if (farmLock != null) {
+        farmLock.userInfos.forEach((depositId, userInfos) {
+          if (userInfos.level == '0') {
+            count++;
+          }
+        });
+      }
+
       final environment = ref.read(environmentProvider);
       try {
         final results = await Future.wait([
@@ -137,7 +147,11 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
               ),
         ]);
 
-        final totalFees = results[0] + results[1] + results[2];
+        final totalFees = (Decimal.parse(count.toString()) *
+                    Decimal.parse(results[0].toString()))
+                .toDouble() +
+            results[1] +
+            results[2];
         const slippage = 1.5;
         feeEstimation = totalFees * slippage;
       } catch (e) {
@@ -172,14 +186,6 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
 
   void setEndDate(DateTime endDate) {
     state = state.copyWith(endDate: endDate);
-  }
-
-  void setAmountHalf(AppLocalizations appLocalizations) {
-    setAmount(
-      appLocalizations,
-      (Decimal.parse(state.depositedAmount.toString()) / Decimal.fromInt(2))
-          .toDouble(),
-    );
   }
 
   void setFarmAddress(String farmAddress) {

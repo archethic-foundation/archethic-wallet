@@ -95,6 +95,7 @@ class EarnSectionAddLiquidity extends ConsumerWidget {
           ),
           const SizedBox(height: 30),
           Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
             runSpacing: 10,
             children: [
               BtnPrimary(

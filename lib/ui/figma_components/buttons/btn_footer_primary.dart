@@ -98,6 +98,7 @@ class BtnFooterPrimary extends StatelessWidget {
       case BtnFooterPrimaryType.outlinePrimary:
         return BoxDecoration(
           borderRadius: BorderRadius.circular(20),
+          color: Colors.black54,
           border: GradientBoxBorder(
             gradient: ArchethicGradients.archethicLinearBlue,
             width: 2,
