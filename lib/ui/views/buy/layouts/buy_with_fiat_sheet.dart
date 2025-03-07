@@ -107,7 +107,12 @@ class BuyWithFiatSheet extends ConsumerWidget
                 text: localizations.onrampWithFiatDisclaimer,
               ),
               const SizedBox(height: 30),
-              const OnRampTransactionHistory(),
+              OnRampTransactionHistory(
+                Text(
+                  localizations.onrampFiatHistoryFooter1,
+                  style: Theme.of(context).textTheme.bodyMediumWithOpacity,
+                ),
+              ),
               const SizedBox(height: 80),
             ],
           ),

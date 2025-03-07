@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
+import 'package:aewallet/application/onramp/onramp.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_primary.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/buy/bloc/buy_with_crypto_form_provider.dart';
@@ -11,6 +12,9 @@ import 'package:aewallet/ui/views/buy/layouts/components/transaction_history.dar
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -56,6 +60,21 @@ class BuyWithCryptoSheet extends ConsumerWidget {
         return state.valueOrNull?.canShowDepositAddress ?? false;
       }),
     );
+    final selectedChain = ref.watch(
+      buyWithCryptoFormProvider
+          .select((form) => form.valueOrNull?.selectedChain),
+    );
+
+    final feesRate = selectedChain != null
+        ? ref
+            .watch(
+              onrampTokenFeesProvider(
+                selectedChain.id,
+              ),
+            )
+            .valueOrNull
+        : 0.0;
+
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -76,26 +95,36 @@ class BuyWithCryptoSheet extends ConsumerWidget {
                 style: Theme.of(context).textTheme.bodyMediumWithOpacity,
               ),
               const SizedBox(height: 20),
-              Text(
-                localizations.onrampWithCryptoSelectTokenTitle,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      fontWeight: FontWeightTelegraf.fontWeightBold,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    localizations.onrampWithCryptoSelectTokenTitle,
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  if (feesRate != null && feesRate > 0)
+                    Text(
+                      '${localizations.fees}: ${(Decimal.parse(feesRate.toString()) * Decimal.fromInt(100)).toDouble().formatNumber(precision: 2)}%',
+                      style: Theme.of(context).textTheme.bodyMediumWithOpacity,
                     ),
+                ],
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 5),
               const TokenDropdown(),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               Text(
                 localizations.onrampWithCryptoSelectChainTitle,
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       fontWeight: FontWeightTelegraf.fontWeightBold,
                     ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 5),
               const ChainDropdown(),
               const SizedBox(height: 30),
               switch (shouldShowDepositAddress) {
-                false => BtnFooterPrimary(
+                false => BtnPrimary(
                     buttonText:
                         localizations.onrampWithCryptoShowDepositAddress,
                     isLocked: !canShowDepositAddress,
@@ -108,7 +137,12 @@ class BuyWithCryptoSheet extends ConsumerWidget {
                 true => const DepositAddressBloc(),
               },
               const SizedBox(height: 30),
-              const OnRampTransactionHistory(),
+              OnRampTransactionHistory(
+                Text(
+                  localizations.onrampCryptoHistoryFooter1,
+                  style: Theme.of(context).textTheme.bodyMediumWithOpacity,
+                ),
+              ),
               const SizedBox(height: 80),
             ],
           ),

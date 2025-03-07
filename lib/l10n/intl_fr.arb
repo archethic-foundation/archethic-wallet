@@ -948,11 +948,8 @@
     "onrampWithFiatDisclaimer": "Je comprends que j’achète de l’Ethereum avec une monnaie fiduciaire et que cette transaction est soumise aux frais du prestataire de paiement. Une fois acquis, mon Ethereum sera automatiquement envoyé dans mon portefeuille Archethic et converti en tokens UCO au taux du marché en vigueur, avec des frais de 1 % appliqués. En raison des fluctuations du marché, la quantité exacte de UCO que je recevrai peut varier et ne peut être estimée précisément à l’avance.",
     "onrampWithFiatBuyNowButton": "Acheter maintenant",
     "onrampHistoryTitle": "Historique des transactions",
-    "onrampHistoryFooter1": "Votre ",
-    "onrampHistoryFooter2": "dépôt en crypto a été ",
-    "onrampHistoryFooter3": "automatiquement ",
-    "onrampHistoryFooter4": "converti en UCO ",
-    "onrampHistoryFooter5": "et envoyé à votre wallet Archethic. Les montants peuvent varier en fonction des fluctuations du marché et des frais de réseau.",
+    "onrampCryptoHistoryFooter1": "Votre dépôt en crypto a été automatiquement converti en UCO et envoyé vers votre portefeuille Archethic. Les montants peuvent varier en raison des fluctuations du marché et des frais de réseau.",
+    "onrampFiatHistoryFooter1": "Votre achat en FIAT a été converti en ETH avant d'être échangé en UCO. Les montants peuvent varier en raison des frais du fournisseur et des fluctuations du marché.",
     "onrampHistoryTransferStatusInitiated": "Transaction Démarrée",
     "onrampHistoryTransferStatusCompleted": "{progress}% Envoyés",
     "@onrampHistoryTransferStatusCompleted": {

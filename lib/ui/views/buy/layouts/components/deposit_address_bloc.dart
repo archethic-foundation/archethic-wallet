@@ -1,5 +1,6 @@
 import 'package:aewallet/application/onramp/onramp.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -8,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:material_symbols_icons/symbols.dart';
 
 class DepositAddressBloc extends ConsumerWidget {
   const DepositAddressBloc({super.key});
@@ -30,17 +30,15 @@ class DepositAddressBloc extends ConsumerWidget {
           children: [
             Text(
               localizations.onrampWithCryptoDepositAddressTitle,
-              style: AppTextStyles.bodyLarge(context).copyWith(
-                fontWeight: FontWeight.bold,
-                decoration: TextDecoration.underline,
-                color: aedappfm.AppThemeBase.secondaryColor,
-              ),
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             DecoratedBox(
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.onSurface.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(5),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
               ),
               child: InkWell(
                 onTap: address == null
@@ -55,7 +53,7 @@ class DepositAddressBloc extends ConsumerWidget {
                           ref,
                           ArchethicTheme.text,
                           ArchethicTheme.snackBarShadow,
-                          icon: Symbols.info,
+                          icon: aedappfm.Iconsax.copy,
                         );
                       },
                 child: Padding(
@@ -68,11 +66,11 @@ class DepositAddressBloc extends ConsumerWidget {
                         child: Text(
                           address ?? '0x---',
                           style: AppTextStyles.bodyMedium(context),
-                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       Icon(
-                        Symbols.copy_all,
+                        aedappfm.Iconsax.copy,
+                        size: 16,
                         color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ],
@@ -83,17 +81,17 @@ class DepositAddressBloc extends ConsumerWidget {
             const SizedBox(height: 20),
             Text.rich(
               TextSpan(
-                style: AppTextStyles.bodyMedium(context)
-                    .copyWith(fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.bodyMediumWithOpacity,
                 children: [
                   TextSpan(
                     text: localizations.onrampWithCryptoPoolAmount1,
                   ),
                   TextSpan(
-                    text: '$poolMaxAmount ETH ',
-                    style: TextStyle(
-                      color: aedappfm.AppThemeBase.secondaryColor,
-                    ),
+                    text:
+                        '${poolMaxAmount?.toDouble().formatNumber(precision: 2)} ETH ',
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          fontWeight: FontWeightTelegraf.fontWeightBold,
+                        ),
                   ),
                   TextSpan(
                     text: localizations.onrampWithCryptoPoolAmount2,
@@ -108,13 +106,16 @@ class DepositAddressBloc extends ConsumerWidget {
                   TextSpan(
                     text:
                         localizations.onrampWithCryptoTreatmentDelayDisclaimer1,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          fontWeight: FontWeightTelegraf.fontWeightBold,
+                        ),
                   ),
                   TextSpan(
                     text:
                         localizations.onrampWithCryptoTreatmentDelayDisclaimer2,
                   ),
                 ],
+                style: Theme.of(context).textTheme.bodyMediumWithOpacity,
               ),
             ),
           ],
