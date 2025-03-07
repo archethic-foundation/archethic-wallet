@@ -63,9 +63,9 @@ class OnRampRepositoryImpl implements OnRampRepository {
       isDataHexa: false,
     );
     return (
-      publicKey: base64.encode(publicKey),
+      publicKey: base64Url.encode(publicKey),
       timestamp: timestamp,
-      signature: base64.encode(signedPayload),
+      signature: base64Url.encode(signedPayload),
     );
   }
 
