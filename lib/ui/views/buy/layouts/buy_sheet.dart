@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:ui';
 
+import 'package:aewallet/application/onramp/onramp.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
@@ -164,18 +165,26 @@ class _BuyFromWalletSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    const onrampFeatureFlag = (fromFiat: true, fromCrypto: true);
-    // final onrampFeatureFlag = ref.watch(onrampFeatureFlagProvider);
+    // const onrampFeatureFlag = (fromFiat: true, fromCrypto: true);
+    final onrampFeatureFlag = ref.watch(onrampFeatureFlagProvider);
     final localizations = AppLocalizations.of(context)!;
     final environment = ref.watch(environmentProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          localizations.ucoBuyInAeWalletTitle,
-          style: AppTextStyles.bodyLarge(context)
-              .copyWith(fontWeight: FontWeight.bold),
-        ),
+        if (onrampFeatureFlag.fromCrypto ||
+            onrampFeatureFlag.fromFiat ||
+            environment == aedappfm.Environment.testnet)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                localizations.ucoBuyInAeWalletTitle,
+                style: AppTextStyles.bodyLarge(context)
+                    .copyWith(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
         const SizedBox(height: 16),
         LayoutBuilder(
           builder: (context, constraints) {

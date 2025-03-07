@@ -138,6 +138,15 @@ Future<OnRampTokenDisplayData?> onrampTokenDisplayData(
 }
 
 @riverpod
+Future<double?> onrampTokenFees(
+  Ref ref,
+  String id,
+) async {
+  final setup = await ref.watch(onrampEvmSetupProvider.future);
+  return setup.chains.firstWhereOrNull((info) => info.id == id)?.feeRate;
+}
+
+@riverpod
 Future<OnRampToken?> onrampToken(
   Ref ref,
   String chainId,

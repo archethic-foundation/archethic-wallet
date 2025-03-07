@@ -648,6 +648,136 @@ class _OnrampTokenDisplayDataProviderElement
   String get id => (origin as OnrampTokenDisplayDataProvider).id;
 }
 
+String _$onrampTokenFeesHash() => r'748a7f6d4b3518d4d6fb802d63d6d78c66261906';
+
+/// See also [onrampTokenFees].
+@ProviderFor(onrampTokenFees)
+const onrampTokenFeesProvider = OnrampTokenFeesFamily();
+
+/// See also [onrampTokenFees].
+class OnrampTokenFeesFamily extends Family<AsyncValue<double?>> {
+  /// See also [onrampTokenFees].
+  const OnrampTokenFeesFamily();
+
+  /// See also [onrampTokenFees].
+  OnrampTokenFeesProvider call(
+    String id,
+  ) {
+    return OnrampTokenFeesProvider(
+      id,
+    );
+  }
+
+  @override
+  OnrampTokenFeesProvider getProviderOverride(
+    covariant OnrampTokenFeesProvider provider,
+  ) {
+    return call(
+      provider.id,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'onrampTokenFeesProvider';
+}
+
+/// See also [onrampTokenFees].
+class OnrampTokenFeesProvider extends AutoDisposeFutureProvider<double?> {
+  /// See also [onrampTokenFees].
+  OnrampTokenFeesProvider(
+    String id,
+  ) : this._internal(
+          (ref) => onrampTokenFees(
+            ref as OnrampTokenFeesRef,
+            id,
+          ),
+          from: onrampTokenFeesProvider,
+          name: r'onrampTokenFeesProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$onrampTokenFeesHash,
+          dependencies: OnrampTokenFeesFamily._dependencies,
+          allTransitiveDependencies:
+              OnrampTokenFeesFamily._allTransitiveDependencies,
+          id: id,
+        );
+
+  OnrampTokenFeesProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.id,
+  }) : super.internal();
+
+  final String id;
+
+  @override
+  Override overrideWith(
+    FutureOr<double?> Function(OnrampTokenFeesRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: OnrampTokenFeesProvider._internal(
+        (ref) => create(ref as OnrampTokenFeesRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        id: id,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<double?> createElement() {
+    return _OnrampTokenFeesProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is OnrampTokenFeesProvider && other.id == id;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, id.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin OnrampTokenFeesRef on AutoDisposeFutureProviderRef<double?> {
+  /// The parameter `id` of this provider.
+  String get id;
+}
+
+class _OnrampTokenFeesProviderElement
+    extends AutoDisposeFutureProviderElement<double?> with OnrampTokenFeesRef {
+  _OnrampTokenFeesProviderElement(super.provider);
+
+  @override
+  String get id => (origin as OnrampTokenFeesProvider).id;
+}
+
 String _$onrampTokenHash() => r'8a55a68257abf950c38665bd2c1584e9b429a58b';
 
 /// See also [onrampToken].

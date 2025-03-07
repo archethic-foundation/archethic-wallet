@@ -11,11 +11,21 @@ import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:numeral/numeral.dart';
 
-class OnRampTransactionHistory extends StatelessWidget {
-  const OnRampTransactionHistory({super.key});
+class OnRampTransactionHistory extends ConsumerWidget {
+  const OnRampTransactionHistory(this.footer, {super.key});
+
+  final Widget footer;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(
+    BuildContext context,
+    WidgetRef ref,
+  ) {
+    final transfers = ref.watch(onrampTransfersProvider).valueOrNull;
+
+    if (transfers == null || transfers.isEmpty) {
+      return const SizedBox.shrink();
+    }
     final localizations = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,71 +36,31 @@ class OnRampTransactionHistory extends StatelessWidget {
               .copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 15),
-        const _OnRampTransactionHistoryTable(),
+        DecoratedBox(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: aedappfm.ArchethicThemeBase.brightPurpleBackground,
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Column(
+              children: transfers
+                  .mapIndexed(
+                    (index, transfer) => _OnRampTransactionHistoryTableRow(
+                      key: Key(transfer.id),
+                      deposit: transfer,
+                      isEven: index.isEven,
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
+        ),
         const SizedBox(height: 15),
-        Text.rich(
-          TextSpan(
-            children: [
-              TextSpan(text: localizations.onrampHistoryFooter1),
-              TextSpan(
-                text: localizations.onrampHistoryFooter2,
-                style: TextStyle(color: aedappfm.AppThemeBase.secondaryColor),
-              ),
-              TextSpan(text: localizations.onrampHistoryFooter3),
-              TextSpan(
-                text: localizations.onrampHistoryFooter4,
-                style: TextStyle(color: aedappfm.AppThemeBase.secondaryColor),
-              ),
-              TextSpan(text: localizations.onrampHistoryFooter5),
-            ],
-          ),
-          style: AppTextStyles.bodySmall(context)
-              .copyWith(fontStyle: FontStyle.italic),
-        ),
+        footer,
       ],
-    );
-  }
-}
-
-class _OnRampTransactionHistoryTable extends ConsumerWidget {
-  const _OnRampTransactionHistoryTable();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final transfers = ref.watch(onrampTransfersProvider).valueOrNull;
-
-    if (transfers == null || transfers.isEmpty) {
-      return const SizedBox(
-        height: 200,
-        child: Center(
-          child: CircularProgressIndicator(
-            strokeWidth: 0.5,
-          ),
-        ),
-      );
-    }
-
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: aedappfm.ArchethicThemeBase.brightPurpleBackground,
-        ),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: Column(
-          children: transfers
-              .mapIndexed(
-                (index, transfer) => _OnRampTransactionHistoryTableRow(
-                  key: Key(transfer.id),
-                  deposit: transfer,
-                  isEven: index.isEven,
-                ),
-              )
-              .toList(),
-        ),
-      ),
     );
   }
 }
