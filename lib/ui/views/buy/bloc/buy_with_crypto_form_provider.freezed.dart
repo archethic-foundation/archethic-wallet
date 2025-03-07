@@ -23,6 +23,7 @@ mixin _$BuyWithCryptoFormState {
     String displayName,
     double feeRate,
     String id,
+    Map<String, ({String id, Map<String, ({String id})> tokens})> providers,
     String svgIcon,
     List<({String address, int decimals, String id})> tokens
   })? get selectedChain => throw _privateConstructorUsedError;
@@ -48,6 +49,7 @@ abstract class $BuyWithCryptoFormStateCopyWith<$Res> {
         String displayName,
         double feeRate,
         String id,
+        Map<String, ({String id, Map<String, ({String id})> tokens})> providers,
         String svgIcon,
         List<({String address, int decimals, String id})> tokens
       })? selectedChain,
@@ -87,6 +89,8 @@ class _$BuyWithCryptoFormStateCopyWithImpl<$Res,
               String displayName,
               double feeRate,
               String id,
+              Map<String,
+                  ({String id, Map<String, ({String id})> tokens})> providers,
               String svgIcon,
               List<({String address, int decimals, String id})> tokens
             })?,
@@ -114,6 +118,7 @@ abstract class _$$BuyWithCryptoFormStateImplCopyWith<$Res>
         String displayName,
         double feeRate,
         String id,
+        Map<String, ({String id, Map<String, ({String id})> tokens})> providers,
         String svgIcon,
         List<({String address, int decimals, String id})> tokens
       })? selectedChain,
@@ -152,6 +157,8 @@ class __$$BuyWithCryptoFormStateImplCopyWithImpl<$Res>
               String displayName,
               double feeRate,
               String id,
+              Map<String,
+                  ({String id, Map<String, ({String id})> tokens})> providers,
               String svgIcon,
               List<({String address, int decimals, String id})> tokens
             })?,
@@ -185,6 +192,7 @@ class _$BuyWithCryptoFormStateImpl extends _BuyWithCryptoFormState {
     String displayName,
     double feeRate,
     String id,
+    Map<String, ({String id, Map<String, ({String id})> tokens})> providers,
     String svgIcon,
     List<({String address, int decimals, String id})> tokens
   })? selectedChain;
@@ -225,22 +233,23 @@ class _$BuyWithCryptoFormStateImpl extends _BuyWithCryptoFormState {
 
 abstract class _BuyWithCryptoFormState extends BuyWithCryptoFormState {
   const factory _BuyWithCryptoFormState(
-          {final ({
-            String id,
-            String name,
-            String svgIcon,
-            String symbol
-          })? selectedToken,
-          final ({
-            int chainId,
-            String displayName,
-            double feeRate,
-            String id,
-            String svgIcon,
-            List<({String address, int decimals, String id})> tokens
-          })? selectedChain,
-          required final bool depositAddressVisible}) =
-      _$BuyWithCryptoFormStateImpl;
+      {final ({
+        String id,
+        String name,
+        String svgIcon,
+        String symbol
+      })? selectedToken,
+      final ({
+        int chainId,
+        String displayName,
+        double feeRate,
+        String id,
+        Map<String, ({String id, Map<String, ({String id})> tokens})> providers,
+        String svgIcon,
+        List<({String address, int decimals, String id})> tokens
+      })? selectedChain,
+      required final bool
+          depositAddressVisible}) = _$BuyWithCryptoFormStateImpl;
   const _BuyWithCryptoFormState._() : super._();
 
   @override
@@ -251,6 +260,7 @@ abstract class _BuyWithCryptoFormState extends BuyWithCryptoFormState {
     String displayName,
     double feeRate,
     String id,
+    Map<String, ({String id, Map<String, ({String id})> tokens})> providers,
     String svgIcon,
     List<({String address, int decimals, String id})> tokens
   })? get selectedChain;

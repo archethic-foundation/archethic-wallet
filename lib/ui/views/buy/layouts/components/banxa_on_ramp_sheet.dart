@@ -10,9 +10,13 @@ class BanxaOnRampSheet extends ConsumerStatefulWidget {
   const BanxaOnRampSheet({
     super.key,
     required this.depositAddress,
+    required this.tokenId,
+    required this.chainId,
   });
 
   final String depositAddress;
+  final String tokenId;
+  final String chainId;
   static const String routerPage = '/banxa_on_ramp';
 
   @override
@@ -50,10 +54,30 @@ class _BanxaOnRampSheetState extends ConsumerState<BanxaOnRampSheet> {
               urlRequest: URLRequest(
                 url: WebUri.uri(
                   Uri.parse(
-                    'https://checkout.banxa.com/?coinType=ETH&blockchain=BSC&orderType=buy&walletAddress=${widget.depositAddress}&backgroundColor=0d0621&primaryColor=2c1763&secondaryColor=5f33e2&textColor=000000&theme=dark',
+                    'https://checkout.banxa.com/?coinType=${widget.tokenId}&blockchain=${widget.chainId}&orderType=buy&walletAddress=${widget.depositAddress}&backgroundColor=0d0621&primaryColor=2c1763&secondaryColor=5f33e2&textColor=000000&theme=dark',
                   ),
                 ),
               ),
+            );
+          },
+          onLoadStop: (controller, url) {
+            controller.injectCSSCode(
+              source: '''
+  /* Buy/Sell selection */
+  .form .buy { display: none; };
+
+  /* Wallet address */
+  #walletAddress { pointer-events: none; }
+
+  /* Token selection */
+  #autoCompleteSelectcoin  { pointer-events: none; }
+
+  /* Wallet connect button */
+  .walletConnect-btn { display: none; }
+
+  /* chain selection */
+  #dropdowndefault-select { pointer-events: none; }
+''',
             );
           },
         ),

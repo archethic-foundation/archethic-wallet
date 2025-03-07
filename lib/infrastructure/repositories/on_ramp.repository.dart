@@ -103,7 +103,7 @@ class OnRampRepositoryImpl implements OnRampRepository {
   Stream<OnRampEvent> get events async* {
     late PhoenixChannel? channel;
     try {
-      final pubkey = base64.encode(keyPair.publicKey!);
+      final pubkey = base64Url.encode(keyPair.publicKey!);
       channel = socket.addChannel(topic: 'transfers:$pubkey');
       final depositsSnapshot = await channel.join().future;
 
