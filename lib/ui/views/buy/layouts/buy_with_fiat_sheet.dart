@@ -37,16 +37,25 @@ class BuyWithFiatSheet extends ConsumerWidget
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final depositAddress = ref.watch(onrampDepositAddressProvider).valueOrNull;
+    final onrampFavoriteSetup =
+        ref.watch(onrampProviderFavoriteSetupProvider('banxa')).valueOrNull;
     return BtnFooterPrimary(
       buttonText: localizations.onrampWithFiatBuyNowButton,
       key: const Key('buyNow'),
-      isLocked: depositAddress == null ||
+      isLocked: onrampFavoriteSetup == null ||
+          depositAddress == null ||
           !ref.watch(buyWithFiatFormProvider).disclaimerAcknowledged,
-      onTap: () async {
-        await context.push(
-          BanxaOnRampSheet.routerPage,
-          extra: {'depositAddress': depositAddress},
-        );
+      showProgressIndicator: onrampFavoriteSetup == null,
+      onTap: () async => switch (onrampFavoriteSetup) {
+        null => null,
+        final setup => await context.push(
+            BanxaOnRampSheet.routerPage,
+            extra: {
+              'depositAddress': depositAddress,
+              'tokenId': setup.tokenId,
+              'chainId': setup.chainId,
+            },
+          )
       },
     );
   }

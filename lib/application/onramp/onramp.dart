@@ -61,6 +61,36 @@ Future<OnRampSetup> onrampEvmSetup(
 }
 
 @riverpod
+Future<OnRampProvider> onrampProviderSetup(Ref ref, String providerId) async {
+  final setup = await ref.watch(onrampEvmSetupProvider.future);
+
+  final entries = setup.chains
+      .where((chainSetup) => chainSetup.providers[providerId] != null)
+      .map(
+        (chainSetup) =>
+            MapEntry(chainSetup.id, chainSetup.providers[providerId]!),
+      );
+
+  return Map.fromEntries(entries);
+}
+
+@riverpod
+Future<({String chainId, String tokenId})?> onrampProviderFavoriteSetup(
+  Ref ref,
+  String providerId,
+) async {
+  final setup = await ref.watch(onrampProviderSetupProvider(providerId).future);
+  final chainSetup = setup.entries.firstOrNull;
+  final chainId = chainSetup?.key;
+  final tokenSetup = chainSetup?.value.tokens.entries.firstOrNull;
+  final tokenId = tokenSetup?.value.id;
+
+  if (chainId == null || tokenId == null) return null;
+
+  return (chainId: chainId, tokenId: tokenId);
+}
+
+@riverpod
 Future<List<OnRampChain>> onrampChainsForToken(
   Ref ref,
   String tokenId,

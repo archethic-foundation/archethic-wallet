@@ -3,6 +3,8 @@ declare function extensionUrl(): string;
 declare function focusExtensionPopup(): Promise<boolean>;
 declare function findExtensionTab(): Promise<chrome.tabs.Tab | null>;
 declare function openExtensionPopup(): Promise<void>;
+declare function saveWindowId(windowId: number): Promise<void>;
+declare function readWindowId(): Promise<number | null>;
 declare function isExtensionPopupOpened(): Promise<boolean>;
 declare function areMultipleExtensionPopupsOpened(): Promise<boolean>;
 declare function ensureExtensionPopupOpened(): Promise<void>;

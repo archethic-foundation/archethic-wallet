@@ -3,15 +3,15 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i9;
+import 'dart:async' as _i8;
 import 'dart:typed_data' as _i16;
 
 import 'package:aewallet/domain/repositories/tokens/tokens.repository.dart'
-    as _i22;
-import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart'
     as _i23;
+import 'package:aewallet/modules/aeswap/domain/models/util/get_pool_list_response.dart'
+    as _i24;
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
-    as _i8;
+    as _i9;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as _i10;
 import 'package:archethic_lib_dart/src/model/address.dart' as _i6;
 import 'package:archethic_lib_dart/src/model/balance.dart' as _i12;
@@ -27,8 +27,9 @@ import 'package:archethic_lib_dart/src/model/transaction.dart' as _i4;
 import 'package:archethic_lib_dart/src/model/transaction_fee.dart' as _i3;
 import 'package:archethic_lib_dart/src/model/transaction_input.dart' as _i14;
 import 'package:archethic_lib_dart/src/model/transaction_status.dart' as _i2;
-import 'package:archethic_lib_dart/src/model/unspent_outputs.dart' as _i21;
-import 'package:graphql/client.dart' as _i20;
+import 'package:archethic_lib_dart/src/model/unspent_outputs.dart' as _i20;
+import 'package:archethic_lib_dart/src/services/api_service.dart' as _i22;
+import 'package:graphql/client.dart' as _i21;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i11;
 
@@ -45,9 +46,19 @@ import 'package:mockito/src/dummies.dart' as _i11;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeTransactionStatus_0 extends _i1.SmartFake
+class _FakeDuration_0 extends _i1.SmartFake implements Duration {
+  _FakeDuration_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeTransactionStatus_1 extends _i1.SmartFake
     implements _i2.TransactionStatus {
-  _FakeTransactionStatus_0(
+  _FakeTransactionStatus_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -56,9 +67,9 @@ class _FakeTransactionStatus_0 extends _i1.SmartFake
         );
 }
 
-class _FakeTransactionFee_1 extends _i1.SmartFake
+class _FakeTransactionFee_2 extends _i1.SmartFake
     implements _i3.TransactionFee {
-  _FakeTransactionFee_1(
+  _FakeTransactionFee_2(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -67,8 +78,8 @@ class _FakeTransactionFee_1 extends _i1.SmartFake
         );
 }
 
-class _FakeTransaction_2 extends _i1.SmartFake implements _i4.Transaction {
-  _FakeTransaction_2(
+class _FakeTransaction_3 extends _i1.SmartFake implements _i4.Transaction {
+  _FakeTransaction_3(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -77,8 +88,8 @@ class _FakeTransaction_2 extends _i1.SmartFake implements _i4.Transaction {
         );
 }
 
-class _FakeKeychain_3 extends _i1.SmartFake implements _i5.Keychain {
-  _FakeKeychain_3(
+class _FakeKeychain_4 extends _i1.SmartFake implements _i5.Keychain {
+  _FakeKeychain_4(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -87,8 +98,8 @@ class _FakeKeychain_3 extends _i1.SmartFake implements _i5.Keychain {
         );
 }
 
-class _FakeAddress_4 extends _i1.SmartFake implements _i6.Address {
-  _FakeAddress_4(
+class _FakeAddress_5 extends _i1.SmartFake implements _i6.Address {
+  _FakeAddress_5(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -97,8 +108,8 @@ class _FakeAddress_4 extends _i1.SmartFake implements _i6.Address {
         );
 }
 
-class _FakeObject_5 extends _i1.SmartFake implements Object {
-  _FakeObject_5(
+class _FakeObject_6 extends _i1.SmartFake implements Object {
+  _FakeObject_6(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -107,9 +118,19 @@ class _FakeObject_5 extends _i1.SmartFake implements Object {
         );
 }
 
-class _FakeBlockchainVersionModel_6 extends _i1.SmartFake
+class _FakeBlockchainVersionModel_7 extends _i1.SmartFake
     implements _i7.BlockchainVersionModel {
-  _FakeBlockchainVersionModel_6(
+  _FakeBlockchainVersionModel_7(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeFuture_8<T1> extends _i1.SmartFake implements _i8.Future<T1> {
+  _FakeFuture_8(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -122,10 +143,10 @@ class _FakeBlockchainVersionModel_6 extends _i1.SmartFake
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockDefTokensRepositoryInterface extends _i1.Mock
-    implements _i8.DefTokensRepositoryInterface {
+    implements _i9.DefTokensRepositoryInterface {
   @override
-  _i9.Future<_i8.AEToken?> getDefToken(
-    _i8.Environment? enviroment,
+  _i8.Future<_i9.AEToken?> getDefToken(
+    _i9.Environment? enviroment,
     String? address,
   ) =>
       (super.noSuchMethod(
@@ -136,15 +157,35 @@ class MockDefTokensRepositoryInterface extends _i1.Mock
             address,
           ],
         ),
-        returnValue: _i9.Future<_i8.AEToken?>.value(),
-        returnValueForMissingStub: _i9.Future<_i8.AEToken?>.value(),
-      ) as _i9.Future<_i8.AEToken?>);
+        returnValue: _i8.Future<_i9.AEToken?>.value(),
+        returnValueForMissingStub: _i8.Future<_i9.AEToken?>.value(),
+      ) as _i8.Future<_i9.AEToken?>);
 }
 
 /// A class which mocks [ApiService].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockApiService extends _i1.Mock implements _i10.ApiService {
+  @override
+  int get maxRetries => (super.noSuchMethod(
+        Invocation.getter(#maxRetries),
+        returnValue: 0,
+        returnValueForMissingStub: 0,
+      ) as int);
+
+  @override
+  Duration Function(int) get retryDelay => (super.noSuchMethod(
+        Invocation.getter(#retryDelay),
+        returnValue: (int retryCount) => _FakeDuration_0(
+          this,
+          Invocation.getter(#retryDelay),
+        ),
+        returnValueForMissingStub: (int retryCount) => _FakeDuration_0(
+          this,
+          Invocation.getter(#retryDelay),
+        ),
+      ) as Duration Function(int));
+
   @override
   String get endpoint => (super.noSuchMethod(
         Invocation.getter(#endpoint),
@@ -159,14 +200,14 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
       ) as String);
 
   @override
-  _i9.Future<_i2.TransactionStatus> sendTx(_i4.Transaction? transaction) =>
+  _i8.Future<_i2.TransactionStatus> sendTx(_i4.Transaction? transaction) =>
       (super.noSuchMethod(
         Invocation.method(
           #sendTx,
           [transaction],
         ),
         returnValue:
-            _i9.Future<_i2.TransactionStatus>.value(_FakeTransactionStatus_0(
+            _i8.Future<_i2.TransactionStatus>.value(_FakeTransactionStatus_1(
           this,
           Invocation.method(
             #sendTx,
@@ -174,17 +215,17 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
           ),
         )),
         returnValueForMissingStub:
-            _i9.Future<_i2.TransactionStatus>.value(_FakeTransactionStatus_0(
+            _i8.Future<_i2.TransactionStatus>.value(_FakeTransactionStatus_1(
           this,
           Invocation.method(
             #sendTx,
             [transaction],
           ),
         )),
-      ) as _i9.Future<_i2.TransactionStatus>);
+      ) as _i8.Future<_i2.TransactionStatus>);
 
   @override
-  _i9.Future<Map<String, _i4.Transaction>> getLastTransaction(
+  _i8.Future<Map<String, _i4.Transaction>> getLastTransaction(
     List<String>? addresses, {
     String? request =
         r' address, balance { token { address, amount }, uco }, chainLength, crossValidationStamps { nodePublicKey, signature }, data { content,  ownerships {  authorizedPublicKeys { encryptedSecretKey, publicKey } secret } ledger { uco { transfers { amount, to } }, token { transfers { amount, to, tokenAddress, tokenId } } } recipients, actionRecipients { action address args } } inputs { amount, from, tokenAddress, spent, tokenId, timestamp, type, }, originSignature, previousAddress, previousPublicKey, previousSignature, type, validationStamp { proofOfIntegrity, proofOfWork, signature, timestamp, ledgerOperations { fee, unspentOutputs { state } } }, version',
@@ -195,32 +236,32 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
           [addresses],
           {#request: request},
         ),
-        returnValue: _i9.Future<Map<String, _i4.Transaction>>.value(
+        returnValue: _i8.Future<Map<String, _i4.Transaction>>.value(
             <String, _i4.Transaction>{}),
         returnValueForMissingStub:
-            _i9.Future<Map<String, _i4.Transaction>>.value(
+            _i8.Future<Map<String, _i4.Transaction>>.value(
                 <String, _i4.Transaction>{}),
-      ) as _i9.Future<Map<String, _i4.Transaction>>);
+      ) as _i8.Future<Map<String, _i4.Transaction>>);
 
   @override
-  _i9.Future<Map<String, int>> getTransactionIndex(List<String>? addresses) =>
+  _i8.Future<Map<String, int>> getTransactionIndex(List<String>? addresses) =>
       (super.noSuchMethod(
         Invocation.method(
           #getTransactionIndex,
           [addresses],
         ),
-        returnValue: _i9.Future<Map<String, int>>.value(<String, int>{}),
+        returnValue: _i8.Future<Map<String, int>>.value(<String, int>{}),
         returnValueForMissingStub:
-            _i9.Future<Map<String, int>>.value(<String, int>{}),
-      ) as _i9.Future<Map<String, int>>);
+            _i8.Future<Map<String, int>>.value(<String, int>{}),
+      ) as _i8.Future<Map<String, int>>);
 
   @override
-  _i9.Future<String> getStorageNoncePublicKey() => (super.noSuchMethod(
+  _i8.Future<String> getStorageNoncePublicKey() => (super.noSuchMethod(
         Invocation.method(
           #getStorageNoncePublicKey,
           [],
         ),
-        returnValue: _i9.Future<String>.value(_i11.dummyValue<String>(
+        returnValue: _i8.Future<String>.value(_i11.dummyValue<String>(
           this,
           Invocation.method(
             #getStorageNoncePublicKey,
@@ -228,17 +269,17 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
           ),
         )),
         returnValueForMissingStub:
-            _i9.Future<String>.value(_i11.dummyValue<String>(
+            _i8.Future<String>.value(_i11.dummyValue<String>(
           this,
           Invocation.method(
             #getStorageNoncePublicKey,
             [],
           ),
         )),
-      ) as _i9.Future<String>);
+      ) as _i8.Future<String>);
 
   @override
-  _i9.Future<Map<String, _i12.Balance>> fetchBalance(
+  _i8.Future<Map<String, _i12.Balance>> fetchBalance(
     List<String>? addresses, {
     String? request = r' token { address, amount, tokenId }, uco ',
   }) =>
@@ -248,27 +289,27 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
           [addresses],
           {#request: request},
         ),
-        returnValue: _i9.Future<Map<String, _i12.Balance>>.value(
+        returnValue: _i8.Future<Map<String, _i12.Balance>>.value(
             <String, _i12.Balance>{}),
-        returnValueForMissingStub: _i9.Future<Map<String, _i12.Balance>>.value(
+        returnValueForMissingStub: _i8.Future<Map<String, _i12.Balance>>.value(
             <String, _i12.Balance>{}),
-      ) as _i9.Future<Map<String, _i12.Balance>>);
+      ) as _i8.Future<Map<String, _i12.Balance>>);
 
   @override
-  _i9.Future<Map<String, String>> getTransactionContent(
+  _i8.Future<Map<String, String>> getTransactionContent(
           List<String>? addresses) =>
       (super.noSuchMethod(
         Invocation.method(
           #getTransactionContent,
           [addresses],
         ),
-        returnValue: _i9.Future<Map<String, String>>.value(<String, String>{}),
+        returnValue: _i8.Future<Map<String, String>>.value(<String, String>{}),
         returnValueForMissingStub:
-            _i9.Future<Map<String, String>>.value(<String, String>{}),
-      ) as _i9.Future<Map<String, String>>);
+            _i8.Future<Map<String, String>>.value(<String, String>{}),
+      ) as _i8.Future<Map<String, String>>);
 
   @override
-  _i9.Future<Map<String, List<_i4.Transaction>>> getTransactionChain(
+  _i8.Future<Map<String, List<_i4.Transaction>>> getTransactionChain(
     Map<String, String>? addresses, {
     String? request =
         r' address, balance { token { address, amount }, uco }, chainLength, crossValidationStamps { nodePublicKey, signature }, data { content,  ownerships {  authorizedPublicKeys { encryptedSecretKey, publicKey } secret } ledger { uco { transfers { amount, to } }, token { transfers { amount, to, tokenAddress, tokenId } } } recipients, actionRecipients { action address args } } inputs { amount, from, tokenAddress, spent, tokenId, timestamp, type, }, originSignature, previousAddress, previousPublicKey, previousSignature, type, validationStamp { proofOfIntegrity, proofOfWork, signature, timestamp, ledgerOperations { fee, unspentOutputs { state } } }, version',
@@ -285,26 +326,26 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
             #fromCriteria: fromCriteria,
           },
         ),
-        returnValue: _i9.Future<Map<String, List<_i4.Transaction>>>.value(
+        returnValue: _i8.Future<Map<String, List<_i4.Transaction>>>.value(
             <String, List<_i4.Transaction>>{}),
         returnValueForMissingStub:
-            _i9.Future<Map<String, List<_i4.Transaction>>>.value(
+            _i8.Future<Map<String, List<_i4.Transaction>>>.value(
                 <String, List<_i4.Transaction>>{}),
-      ) as _i9.Future<Map<String, List<_i4.Transaction>>>);
+      ) as _i8.Future<Map<String, List<_i4.Transaction>>>);
 
   @override
-  _i9.Future<List<_i13.Node>> getNodeList() => (super.noSuchMethod(
+  _i8.Future<List<_i13.Node>> getNodeList() => (super.noSuchMethod(
         Invocation.method(
           #getNodeList,
           [],
         ),
-        returnValue: _i9.Future<List<_i13.Node>>.value(<_i13.Node>[]),
+        returnValue: _i8.Future<List<_i13.Node>>.value(<_i13.Node>[]),
         returnValueForMissingStub:
-            _i9.Future<List<_i13.Node>>.value(<_i13.Node>[]),
-      ) as _i9.Future<List<_i13.Node>>);
+            _i8.Future<List<_i13.Node>>.value(<_i13.Node>[]),
+      ) as _i8.Future<List<_i13.Node>>);
 
   @override
-  _i9.Future<List<_i4.Transaction>> networkTransactions(
+  _i8.Future<List<_i4.Transaction>> networkTransactions(
     String? type,
     int? page, {
     String? request =
@@ -320,13 +361,13 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
           {#request: request},
         ),
         returnValue:
-            _i9.Future<List<_i4.Transaction>>.value(<_i4.Transaction>[]),
+            _i8.Future<List<_i4.Transaction>>.value(<_i4.Transaction>[]),
         returnValueForMissingStub:
-            _i9.Future<List<_i4.Transaction>>.value(<_i4.Transaction>[]),
-      ) as _i9.Future<List<_i4.Transaction>>);
+            _i8.Future<List<_i4.Transaction>>.value(<_i4.Transaction>[]),
+      ) as _i8.Future<List<_i4.Transaction>>);
 
   @override
-  _i9.Future<Map<String, List<_i14.TransactionInput>>> getTransactionInputs(
+  _i8.Future<Map<String, List<_i14.TransactionInput>>> getTransactionInputs(
     List<String>? addresses, {
     String? request =
         r'amount, from, tokenAddress, spent, tokenId, timestamp, type',
@@ -343,15 +384,15 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
             #pagingOffset: pagingOffset,
           },
         ),
-        returnValue: _i9.Future<Map<String, List<_i14.TransactionInput>>>.value(
+        returnValue: _i8.Future<Map<String, List<_i14.TransactionInput>>>.value(
             <String, List<_i14.TransactionInput>>{}),
         returnValueForMissingStub:
-            _i9.Future<Map<String, List<_i14.TransactionInput>>>.value(
+            _i8.Future<Map<String, List<_i14.TransactionInput>>>.value(
                 <String, List<_i14.TransactionInput>>{}),
-      ) as _i9.Future<Map<String, List<_i14.TransactionInput>>>);
+      ) as _i8.Future<Map<String, List<_i14.TransactionInput>>>);
 
   @override
-  _i9.Future<Map<String, _i4.Transaction>> getTransaction(
+  _i8.Future<Map<String, _i4.Transaction>> getTransaction(
     List<String>? addresses, {
     String? request =
         r' address, balance { token { address, amount }, uco }, chainLength, crossValidationStamps { nodePublicKey, signature }, data { content,  ownerships {  authorizedPublicKeys { encryptedSecretKey, publicKey } secret } ledger { uco { transfers { amount, to } }, token { transfers { amount, to, tokenAddress, tokenId } } } recipients, actionRecipients { action address args } } inputs { amount, from, tokenAddress, spent, tokenId, timestamp, type, }, originSignature, previousAddress, previousPublicKey, previousSignature, type, validationStamp { proofOfIntegrity, proofOfWork, signature, timestamp, ledgerOperations { fee, unspentOutputs { state } } }, version',
@@ -362,22 +403,22 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
           [addresses],
           {#request: request},
         ),
-        returnValue: _i9.Future<Map<String, _i4.Transaction>>.value(
+        returnValue: _i8.Future<Map<String, _i4.Transaction>>.value(
             <String, _i4.Transaction>{}),
         returnValueForMissingStub:
-            _i9.Future<Map<String, _i4.Transaction>>.value(
+            _i8.Future<Map<String, _i4.Transaction>>.value(
                 <String, _i4.Transaction>{}),
-      ) as _i9.Future<Map<String, _i4.Transaction>>);
+      ) as _i8.Future<Map<String, _i4.Transaction>>);
 
   @override
-  _i9.Future<_i3.TransactionFee> getTransactionFee(
+  _i8.Future<_i3.TransactionFee> getTransactionFee(
           _i4.Transaction? transaction) =>
       (super.noSuchMethod(
         Invocation.method(
           #getTransactionFee,
           [transaction],
         ),
-        returnValue: _i9.Future<_i3.TransactionFee>.value(_FakeTransactionFee_1(
+        returnValue: _i8.Future<_i3.TransactionFee>.value(_FakeTransactionFee_2(
           this,
           Invocation.method(
             #getTransactionFee,
@@ -385,29 +426,29 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
           ),
         )),
         returnValueForMissingStub:
-            _i9.Future<_i3.TransactionFee>.value(_FakeTransactionFee_1(
+            _i8.Future<_i3.TransactionFee>.value(_FakeTransactionFee_2(
           this,
           Invocation.method(
             #getTransactionFee,
             [transaction],
           ),
         )),
-      ) as _i9.Future<_i3.TransactionFee>);
+      ) as _i8.Future<_i3.TransactionFee>);
 
   @override
-  _i9.Future<Map<String, List<_i15.Ownership>>> getTransactionOwnerships(
+  _i8.Future<Map<String, List<_i15.Ownership>>> getTransactionOwnerships(
           List<String>? addresses) =>
       (super.noSuchMethod(
         Invocation.method(
           #getTransactionOwnerships,
           [addresses],
         ),
-        returnValue: _i9.Future<Map<String, List<_i15.Ownership>>>.value(
+        returnValue: _i8.Future<Map<String, List<_i15.Ownership>>>.value(
             <String, List<_i15.Ownership>>{}),
         returnValueForMissingStub:
-            _i9.Future<Map<String, List<_i15.Ownership>>>.value(
+            _i8.Future<Map<String, List<_i15.Ownership>>>.value(
                 <String, List<_i15.Ownership>>{}),
-      ) as _i9.Future<Map<String, List<_i15.Ownership>>>);
+      ) as _i8.Future<Map<String, List<_i15.Ownership>>>);
 
   @override
   _i4.Transaction newKeychainTransaction(
@@ -428,7 +469,7 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
           ],
           {#servicesMap: servicesMap},
         ),
-        returnValue: _FakeTransaction_2(
+        returnValue: _FakeTransaction_3(
           this,
           Invocation.method(
             #newKeychainTransaction,
@@ -441,7 +482,7 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
             {#servicesMap: servicesMap},
           ),
         ),
-        returnValueForMissingStub: _FakeTransaction_2(
+        returnValueForMissingStub: _FakeTransaction_3(
           this,
           Invocation.method(
             #newKeychainTransaction,
@@ -473,7 +514,7 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
             blockchainTxVersion,
           ],
         ),
-        returnValue: _FakeTransaction_2(
+        returnValue: _FakeTransaction_3(
           this,
           Invocation.method(
             #newAccessKeychainTransaction,
@@ -485,7 +526,7 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
             ],
           ),
         ),
-        returnValueForMissingStub: _FakeTransaction_2(
+        returnValueForMissingStub: _FakeTransaction_3(
           this,
           Invocation.method(
             #newAccessKeychainTransaction,
@@ -500,12 +541,12 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
       ) as _i4.Transaction);
 
   @override
-  _i9.Future<_i5.Keychain> getKeychain(String? seed) => (super.noSuchMethod(
+  _i8.Future<_i5.Keychain> getKeychain(String? seed) => (super.noSuchMethod(
         Invocation.method(
           #getKeychain,
           [seed],
         ),
-        returnValue: _i9.Future<_i5.Keychain>.value(_FakeKeychain_3(
+        returnValue: _i8.Future<_i5.Keychain>.value(_FakeKeychain_4(
           this,
           Invocation.method(
             #getKeychain,
@@ -513,14 +554,14 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
           ),
         )),
         returnValueForMissingStub:
-            _i9.Future<_i5.Keychain>.value(_FakeKeychain_3(
+            _i8.Future<_i5.Keychain>.value(_FakeKeychain_4(
           this,
           Invocation.method(
             #getKeychain,
             [seed],
           ),
         )),
-      ) as _i9.Future<_i5.Keychain>);
+      ) as _i8.Future<_i5.Keychain>);
 
   @override
   String getOriginKey() => (super.noSuchMethod(
@@ -545,7 +586,7 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
       ) as String);
 
   @override
-  _i9.Future<String> addOriginKey({
+  _i8.Future<String> addOriginKey({
     String? originPublicKey,
     String? certificate,
   }) =>
@@ -558,7 +599,7 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
             #certificate: certificate,
           },
         ),
-        returnValue: _i9.Future<String>.value(_i11.dummyValue<String>(
+        returnValue: _i8.Future<String>.value(_i11.dummyValue<String>(
           this,
           Invocation.method(
             #addOriginKey,
@@ -570,7 +611,7 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
           ),
         )),
         returnValueForMissingStub:
-            _i9.Future<String>.value(_i11.dummyValue<String>(
+            _i8.Future<String>.value(_i11.dummyValue<String>(
           this,
           Invocation.method(
             #addOriginKey,
@@ -581,10 +622,10 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
             },
           ),
         )),
-      ) as _i9.Future<String>);
+      ) as _i8.Future<String>);
 
   @override
-  _i9.Future<Map<String, _i17.Token>> getToken(
+  _i8.Future<Map<String, _i17.Token>> getToken(
     List<String>? addresses, {
     String? request =
         r'genesis, name, id, supply, symbol, type, properties, decimals, collection, ownerships { authorizedPublicKeys { encryptedSecretKey,  publicKey }, secret }',
@@ -596,47 +637,47 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
           {#request: request},
         ),
         returnValue:
-            _i9.Future<Map<String, _i17.Token>>.value(<String, _i17.Token>{}),
+            _i8.Future<Map<String, _i17.Token>>.value(<String, _i17.Token>{}),
         returnValueForMissingStub:
-            _i9.Future<Map<String, _i17.Token>>.value(<String, _i17.Token>{}),
-      ) as _i9.Future<Map<String, _i17.Token>>);
+            _i8.Future<Map<String, _i17.Token>>.value(<String, _i17.Token>{}),
+      ) as _i8.Future<Map<String, _i17.Token>>);
 
   @override
-  _i9.Future<List<_i18.Endpoint>> getNearestEndpoints() => (super.noSuchMethod(
+  _i8.Future<List<_i18.Endpoint>> getNearestEndpoints() => (super.noSuchMethod(
         Invocation.method(
           #getNearestEndpoints,
           [],
         ),
-        returnValue: _i9.Future<List<_i18.Endpoint>>.value(<_i18.Endpoint>[]),
+        returnValue: _i8.Future<List<_i18.Endpoint>>.value(<_i18.Endpoint>[]),
         returnValueForMissingStub:
-            _i9.Future<List<_i18.Endpoint>>.value(<_i18.Endpoint>[]),
-      ) as _i9.Future<List<_i18.Endpoint>>);
+            _i8.Future<List<_i18.Endpoint>>.value(<_i18.Endpoint>[]),
+      ) as _i8.Future<List<_i18.Endpoint>>);
 
   @override
-  _i9.Future<_i6.Address> getGenesisAddress(String? address) =>
+  _i8.Future<_i6.Address> getGenesisAddress(String? address) =>
       (super.noSuchMethod(
         Invocation.method(
           #getGenesisAddress,
           [address],
         ),
-        returnValue: _i9.Future<_i6.Address>.value(_FakeAddress_4(
+        returnValue: _i8.Future<_i6.Address>.value(_FakeAddress_5(
           this,
           Invocation.method(
             #getGenesisAddress,
             [address],
           ),
         )),
-        returnValueForMissingStub: _i9.Future<_i6.Address>.value(_FakeAddress_4(
+        returnValueForMissingStub: _i8.Future<_i6.Address>.value(_FakeAddress_5(
           this,
           Invocation.method(
             #getGenesisAddress,
             [address],
           ),
         )),
-      ) as _i9.Future<_i6.Address>);
+      ) as _i8.Future<_i6.Address>);
 
   @override
-  _i9.Future<List<dynamic>> callSCFunctionMulti(
+  _i8.Future<List<dynamic>> callSCFunctionMulti(
           {required List<_i19.SCCallFunctionRequest>? jsonRPCRequests}) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -644,12 +685,12 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
           [],
           {#jsonRPCRequests: jsonRPCRequests},
         ),
-        returnValue: _i9.Future<List<dynamic>>.value(<dynamic>[]),
-        returnValueForMissingStub: _i9.Future<List<dynamic>>.value(<dynamic>[]),
-      ) as _i9.Future<List<dynamic>>);
+        returnValue: _i8.Future<List<dynamic>>.value(<dynamic>[]),
+        returnValueForMissingStub: _i8.Future<List<dynamic>>.value(<dynamic>[]),
+      ) as _i8.Future<List<dynamic>>);
 
   @override
-  _i9.Future<Object> callSCFunction({
+  _i8.Future<Object> callSCFunction({
     required _i19.SCCallFunctionRequest? jsonRPCRequest,
     bool? resultMap = false,
   }) =>
@@ -662,7 +703,7 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
             #resultMap: resultMap,
           },
         ),
-        returnValue: _i9.Future<Object>.value(_FakeObject_5(
+        returnValue: _i8.Future<Object>.value(_FakeObject_6(
           this,
           Invocation.method(
             #callSCFunction,
@@ -673,7 +714,7 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
             },
           ),
         )),
-        returnValueForMissingStub: _i9.Future<Object>.value(_FakeObject_5(
+        returnValueForMissingStub: _i8.Future<Object>.value(_FakeObject_6(
           this,
           Invocation.method(
             #callSCFunction,
@@ -684,45 +725,35 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
             },
           ),
         )),
-      ) as _i9.Future<Object>);
+      ) as _i8.Future<Object>);
 
   @override
-  _i9.Future<_i7.BlockchainVersionModel> getBlockchainVersion() =>
+  _i8.Future<_i7.BlockchainVersionModel> getBlockchainVersion() =>
       (super.noSuchMethod(
         Invocation.method(
           #getBlockchainVersion,
           [],
         ),
-        returnValue: _i9.Future<_i7.BlockchainVersionModel>.value(
-            _FakeBlockchainVersionModel_6(
+        returnValue: _i8.Future<_i7.BlockchainVersionModel>.value(
+            _FakeBlockchainVersionModel_7(
           this,
           Invocation.method(
             #getBlockchainVersion,
             [],
           ),
         )),
-        returnValueForMissingStub: _i9.Future<_i7.BlockchainVersionModel>.value(
-            _FakeBlockchainVersionModel_6(
+        returnValueForMissingStub: _i8.Future<_i7.BlockchainVersionModel>.value(
+            _FakeBlockchainVersionModel_7(
           this,
           Invocation.method(
             #getBlockchainVersion,
             [],
           ),
         )),
-      ) as _i9.Future<_i7.BlockchainVersionModel>);
+      ) as _i8.Future<_i7.BlockchainVersionModel>);
 
   @override
-  void manageLinkException(_i20.QueryResult<Object?>? result) =>
-      super.noSuchMethod(
-        Invocation.method(
-          #manageLinkException,
-          [result],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  _i9.Future<Map<String, List<_i21.UnspentOutputs>>> chainUnspentOutputs(
+  _i8.Future<Map<String, List<_i20.UnspentOutputs>>> chainUnspentOutputs(
     List<String>? genesisAddresses, {
     String? request = r'  amount, from, timestamp, tokenAddress, tokenId, type',
     int? limit = 0,
@@ -738,12 +769,100 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
             #pagingOffset: pagingOffset,
           },
         ),
-        returnValue: _i9.Future<Map<String, List<_i21.UnspentOutputs>>>.value(
-            <String, List<_i21.UnspentOutputs>>{}),
+        returnValue: _i8.Future<Map<String, List<_i20.UnspentOutputs>>>.value(
+            <String, List<_i20.UnspentOutputs>>{}),
         returnValueForMissingStub:
-            _i9.Future<Map<String, List<_i21.UnspentOutputs>>>.value(
-                <String, List<_i21.UnspentOutputs>>{}),
-      ) as _i9.Future<Map<String, List<_i21.UnspentOutputs>>>);
+            _i8.Future<Map<String, List<_i20.UnspentOutputs>>>.value(
+                <String, List<_i20.UnspentOutputs>>{}),
+      ) as _i8.Future<Map<String, List<_i20.UnspentOutputs>>>);
+
+  @override
+  void manageLinkException(_i21.QueryResult<Object?>? result) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #manageLinkException,
+          [result],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i8.Future<T> withRetry<T>({
+    required _i8.Future<T> Function()? action,
+    required String? actionName,
+    int? maxRetries = 5,
+    Duration Function(int)? retryDelay = _i22.ApiService._defaultRetryDelay,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #withRetry,
+          [],
+          {
+            #action: action,
+            #actionName: actionName,
+            #maxRetries: maxRetries,
+            #retryDelay: retryDelay,
+          },
+        ),
+        returnValue: _i11.ifNotNull(
+              _i11.dummyValueOrNull<T>(
+                this,
+                Invocation.method(
+                  #withRetry,
+                  [],
+                  {
+                    #action: action,
+                    #actionName: actionName,
+                    #maxRetries: maxRetries,
+                    #retryDelay: retryDelay,
+                  },
+                ),
+              ),
+              (T v) => _i8.Future<T>.value(v),
+            ) ??
+            _FakeFuture_8<T>(
+              this,
+              Invocation.method(
+                #withRetry,
+                [],
+                {
+                  #action: action,
+                  #actionName: actionName,
+                  #maxRetries: maxRetries,
+                  #retryDelay: retryDelay,
+                },
+              ),
+            ),
+        returnValueForMissingStub: _i11.ifNotNull(
+              _i11.dummyValueOrNull<T>(
+                this,
+                Invocation.method(
+                  #withRetry,
+                  [],
+                  {
+                    #action: action,
+                    #actionName: actionName,
+                    #maxRetries: maxRetries,
+                    #retryDelay: retryDelay,
+                  },
+                ),
+              ),
+              (T v) => _i8.Future<T>.value(v),
+            ) ??
+            _FakeFuture_8<T>(
+              this,
+              Invocation.method(
+                #withRetry,
+                [],
+                {
+                  #action: action,
+                  #actionName: actionName,
+                  #maxRetries: maxRetries,
+                  #retryDelay: retryDelay,
+                },
+              ),
+            ),
+      ) as _i8.Future<T>);
 
   @override
   String setJsonRPCRequest(
@@ -819,9 +938,9 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
 /// A class which mocks [TokensRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockTokensRepository extends _i1.Mock implements _i22.TokensRepository {
+class MockTokensRepository extends _i1.Mock implements _i23.TokensRepository {
   @override
-  _i9.Future<Map<String, _i17.Token>> getTokensFromAddresses(
+  _i8.Future<Map<String, _i17.Token>> getTokensFromAddresses(
           List<String>? addresses) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -829,17 +948,17 @@ class MockTokensRepository extends _i1.Mock implements _i22.TokensRepository {
           [addresses],
         ),
         returnValue:
-            _i9.Future<Map<String, _i17.Token>>.value(<String, _i17.Token>{}),
+            _i8.Future<Map<String, _i17.Token>>.value(<String, _i17.Token>{}),
         returnValueForMissingStub:
-            _i9.Future<Map<String, _i17.Token>>.value(<String, _i17.Token>{}),
-      ) as _i9.Future<Map<String, _i17.Token>>);
+            _i8.Future<Map<String, _i17.Token>>.value(<String, _i17.Token>{}),
+      ) as _i8.Future<Map<String, _i17.Token>>);
 
   @override
-  _i9.Future<List<_i8.AEToken>> getTokensFromUserBalance(
+  _i8.Future<List<_i9.AEToken>> getTokensFromUserBalance(
     String? userGenesisAddress,
     List<String>? userTokenLocalAddresses,
-    List<_i23.GetPoolListResponse>? poolsListRaw,
-    _i8.Environment? environment, {
+    List<_i24.GetPoolListResponse>? poolsListRaw,
+    _i9.Environment? environment, {
     bool? withUCO = true,
     bool? withVerified = true,
     bool? withLPToken = true,
@@ -863,8 +982,8 @@ class MockTokensRepository extends _i1.Mock implements _i22.TokensRepository {
             #withCustomToken: withCustomToken,
           },
         ),
-        returnValue: _i9.Future<List<_i8.AEToken>>.value(<_i8.AEToken>[]),
+        returnValue: _i8.Future<List<_i9.AEToken>>.value(<_i9.AEToken>[]),
         returnValueForMissingStub:
-            _i9.Future<List<_i8.AEToken>>.value(<_i8.AEToken>[]),
-      ) as _i9.Future<List<_i8.AEToken>>);
+            _i8.Future<List<_i9.AEToken>>.value(<_i9.AEToken>[]),
+      ) as _i8.Future<List<_i9.AEToken>>);
 }

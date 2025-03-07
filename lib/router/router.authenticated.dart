@@ -46,11 +46,16 @@ final _authenticatedRoutes = [
   GoRoute(
     path: BanxaOnRampSheet.routerPage,
     pageBuilder: (context, state) {
-      final {'depositAddress': depositAddress} =
-          state.extra! as Map<String, dynamic>;
+      final {
+        'depositAddress': depositAddress,
+        'tokenId': tokenId,
+        'chainId': chainId,
+      } = state.extra! as Map<String, dynamic>;
       return NoTransitionPage(
         child: BanxaOnRampSheet(
           depositAddress: depositAddress,
+          tokenId: tokenId,
+          chainId: chainId,
         ),
       );
     },

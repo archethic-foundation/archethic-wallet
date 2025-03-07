@@ -5,6 +5,14 @@ typedef OnRampSetup = ({
   List<OnRampChain> chains,
 });
 
+typedef OnRampProvider = Map<String, OnRampProviderChain>;
+
+typedef OnRampProviderChain = ({
+  String id,
+  Map<String, OnRampProviderToken> tokens,
+});
+typedef OnRampProviderToken = ({String id});
+
 typedef OnRampChain = ({
   String id,
   int chainId,
@@ -12,6 +20,7 @@ typedef OnRampChain = ({
   String svgIcon,
   double feeRate,
   List<OnRampToken> tokens,
+  Map<String, OnRampProviderChain> providers,
 });
 
 typedef OnRampTokenDisplayData = ({
