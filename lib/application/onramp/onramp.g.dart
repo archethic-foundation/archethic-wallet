@@ -25,7 +25,7 @@ final onrampFeatureFlagProvider =
 // ignore: unused_element
 typedef OnrampFeatureFlagRef
     = AutoDisposeProviderRef<({bool fromCrypto, bool fromFiat})>;
-String _$onRampRepositoryHash() => r'8e47f8e97ca27916db00d99a8d0f987466f6b33e';
+String _$onRampRepositoryHash() => r'a705241a7f5defb511cbd70ffd9c0d216015455f';
 
 /// See also [_onRampRepository].
 @ProviderFor(_onRampRepository)

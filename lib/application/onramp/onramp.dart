@@ -9,6 +9,8 @@ import 'package:aewallet/domain/models/onramp.dart';
 import 'package:aewallet/domain/repositories/on_ramp.dart';
 import 'package:aewallet/infrastructure/repositories/on_ramp.repository.dart';
 import 'package:aewallet/main.dart';
+import 'package:aewallet/modules/aeswap/application/session/provider.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -29,6 +31,22 @@ part 'onramp.g.dart';
 
 @riverpod
 Future<OnRampRepository> _onRampRepository(Ref ref) async {
+  final environment = ref.watch(environmentProvider);
+  final urls = switch (environment) {
+    Environment.devnet => (
+        http: 'http://localhost:4100/api/v1',
+        ws: 'ws://localhost:4100/ws/websocket'
+      ),
+    Environment.testnet => (
+        http: 'https://api.onramp.testnet.archethic.net/api/v1',
+        ws: 'wss://api.onramp.testnet.archethic.net/ws/websocket'
+      ),
+    Environment.mainnet => (
+        http: 'https://api.onramp.archethic.net/api/v1',
+        ws: 'wss://api.onramp.archethic.net/ws/websocket'
+      ),
+  };
+
   late OnRampRepository? repository;
 
   ref.onDispose(() {
@@ -43,8 +61,8 @@ Future<OnRampRepository> _onRampRepository(Ref ref) async {
   )!;
 
   repository = OnRampRepositoryImpl(
-    httpBaseUrl: 'http://localhost:4100/api/v1',
-    wsBaseUrl: 'ws://localhost:4100/ws/websocket',
+    httpBaseUrl: urls.http,
+    wsBaseUrl: urls.ws,
     wallet: session.wallet,
     account: accountSelected,
   );
