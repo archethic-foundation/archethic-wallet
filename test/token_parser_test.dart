@@ -1,5 +1,7 @@
+void main() {}
 // TODO(reddwarf03): Fix issue whith token_parser_test.mocks.dart and withRetry method
 /*
+
 import 'dart:io';
 
 import 'package:aewallet/domain/models/token_parser.dart';
