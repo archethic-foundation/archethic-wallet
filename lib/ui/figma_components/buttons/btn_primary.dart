@@ -27,8 +27,9 @@ class BtnPrimary extends StatelessWidget {
         onTap: isLocked ? null : onTap,
         child: widthExpanded
             ? _button(context)
-            : IntrinsicWidth(
-                child: _button(context),
+            : Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [_button(context)],
               ),
       ),
     );
@@ -37,17 +38,23 @@ class BtnPrimary extends StatelessWidget {
   Widget _button(
     BuildContext context,
   ) {
-    return IntrinsicHeight(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 8.5),
-        alignment: Alignment.center,
-        decoration: _getButtonDecoration(),
-        child: Text(
-          buttonText,
-          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                color: isLocked ? Colors.white.withOpacity(0.2) : Colors.white,
-                fontWeight: FontWeightTelegraf.fontWeightBold,
-              ),
+    return ConstrainedBox(
+      constraints: const BoxConstraints(minWidth: 40),
+      child: IntrinsicHeight(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 8.5),
+          alignment: Alignment.center,
+          decoration: _getButtonDecoration(),
+          child: Text(
+            buttonText,
+            overflow: TextOverflow.visible,
+            softWrap: false,
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color:
+                      isLocked ? Colors.white.withOpacity(0.2) : Colors.white,
+                  fontWeight: FontWeightTelegraf.fontWeightBold,
+                ),
+          ),
         ),
       ),
     );

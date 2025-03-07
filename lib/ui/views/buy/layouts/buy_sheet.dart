@@ -13,7 +13,6 @@ import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -366,7 +365,7 @@ class _ExchangeButton extends StatelessWidget {
               children: [
                 image,
                 const SizedBox(height: 8),
-                AutoSizeText(
+                Text(
                   text,
                   maxLines: 1,
                   textAlign: TextAlign.center,

@@ -104,41 +104,48 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome>
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text.rich(
             TextSpan(
+              style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                    fontSize: 40,
+                    fontWeight: FontWeightTelegraf.fontWeightUltrabold,
+                    height: 1.3,
+                    textBaseline: TextBaseline.alphabetic, // Ajoutez ceci
+                  ),
               children: [
                 TextSpan(
                   text: localizations.welcomeTitle,
-                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                        fontSize: 40,
-                        fontWeight: FontWeightTelegraf.fontWeightUltrabold,
-                        height: 1.3,
-                      ),
                 ),
                 WidgetSpan(
-                  alignment: PlaceholderAlignment.middle,
+                  alignment: PlaceholderAlignment.baseline,
+                  baseline: TextBaseline.alphabetic,
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 14),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 3,
-                        horizontal: 12,
-                      ),
-                      decoration: BoxDecoration(
-                        gradient: ArchethicGradients.gradientArchethic,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Text(
-                        localizations.welcomeTitle2,
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayLarge!
-                            .copyWith(
-                              fontSize: 40,
-                              color: Colors.black,
-                              fontWeight: FontWeightTelegraf.fontWeightBlack,
-                            ),
+                    child: Baseline(
+                      baseline: 0.6,
+                      baselineType: TextBaseline.alphabetic,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 3,
+                          horizontal: 12,
+                        ),
+                        decoration: BoxDecoration(
+                          gradient: ArchethicGradients.gradientArchethic,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          localizations.welcomeTitle2,
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayLarge!
+                              .copyWith(
+                                fontSize: 40,
+                                color: Colors.black,
+                                fontWeight: FontWeightTelegraf.fontWeightBlack,
+                              ),
+                        ),
                       ),
                     ),
                   ),

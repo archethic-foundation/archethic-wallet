@@ -72,6 +72,7 @@ class AppDialogs {
                           cancelAction();
                         }
                       },
+                      widthExpanded: true,
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -86,6 +87,7 @@ class AppDialogs {
                         context.pop();
                         onPressed();
                       },
+                      widthExpanded: true,
                     ),
                   ),
                 ],
