@@ -1,0 +1,4 @@
+Version 4.8.2
+
+- Fix Bugs
+- Improve User Experience
