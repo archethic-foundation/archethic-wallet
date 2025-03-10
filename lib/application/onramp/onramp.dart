@@ -99,7 +99,7 @@ Future<({String chainId, String tokenId})?> onrampProviderFavoriteSetup(
 ) async {
   final setup = await ref.watch(onrampProviderSetupProvider(providerId).future);
   final chainSetup = setup.entries.firstOrNull;
-  final chainId = chainSetup?.key;
+  final chainId = chainSetup?.value.id;
   final tokenSetup = chainSetup?.value.tokens.entries.firstOrNull;
   final tokenId = tokenSetup?.value.id;
 
