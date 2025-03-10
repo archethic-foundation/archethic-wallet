@@ -1,16 +1,14 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
-import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
+import 'package:aewallet/ui/figma_components/complex/estimated_fees.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_remove/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_remove/layouts/components/liquidity_remove_confirm_infos.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_remove/layouts/components/liquidity_remove_result_sheet.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/consent_widget.dart';
@@ -56,35 +54,46 @@ class LiquidityRemoveConfirmFormSheetState
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final liquidityRemove = ref.watch(liquidityRemoveFormNotifierProvider);
-    return BtnFooterPrimary(
-      buttonText: AppLocalizations.of(context)!.btn_confirm_liquidity_remove,
-      key: const Key('removeLiquidity'),
-      onTap: () async {
-        final liquidityRemoveFormNotifier = ref
-            .read(liquidityRemoveFormNotifierProvider.notifier)
-          ..setProcessInProgress(true);
-        final resultOk = await liquidityRemoveFormNotifier
-            .remove(AppLocalizations.of(context)!);
-        liquidityRemoveFormNotifier.setProcessInProgress(false);
-        if (resultOk) {
-          await context.push(LiquidityRemoveResultSheet.routerPage);
-        } else {
-          UIUtil.showSnackbar(
-            FailureMessage(
-              context: context,
-              failure: ref.read(liquidityRemoveFormNotifierProvider).failure,
-            ).getMessage(),
-            context,
-            ref,
-            ArchethicTheme.text,
-            ArchethicTheme.snackBarShadow,
-            duration: const Duration(seconds: 5),
-          );
-        }
-      },
-      isLocked: (!consentChecked && liquidityRemove.consentDateTime == null) ||
-          liquidityRemove.isProcessInProgress,
-      showProgressIndicator: liquidityRemove.isProcessInProgress,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        EstimatedFees(
+          AsyncData(liquidityRemove.feesEstimatedUCO),
+        ),
+        BtnFooterPrimary(
+          buttonText:
+              AppLocalizations.of(context)!.btn_confirm_liquidity_remove,
+          key: const Key('removeLiquidity'),
+          onTap: () async {
+            final liquidityRemoveFormNotifier = ref
+                .read(liquidityRemoveFormNotifierProvider.notifier)
+              ..setProcessInProgress(true);
+            final resultOk = await liquidityRemoveFormNotifier
+                .remove(AppLocalizations.of(context)!);
+            liquidityRemoveFormNotifier.setProcessInProgress(false);
+            if (resultOk) {
+              await context.push(LiquidityRemoveResultSheet.routerPage);
+            } else {
+              UIUtil.showSnackbar(
+                FailureMessage(
+                  context: context,
+                  failure:
+                      ref.read(liquidityRemoveFormNotifierProvider).failure,
+                ).getMessage(),
+                context,
+                ref,
+                ArchethicTheme.text,
+                ArchethicTheme.snackBarShadow,
+                duration: const Duration(seconds: 5),
+              );
+            }
+          },
+          isLocked:
+              (!consentChecked && liquidityRemove.consentDateTime == null) ||
+                  liquidityRemove.isProcessInProgress,
+          showProgressIndicator: liquidityRemove.isProcessInProgress,
+        ),
+      ],
     );
   }
 
@@ -112,8 +121,6 @@ class LiquidityRemoveConfirmFormSheetState
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-
     final liquidityRemove = ref.read(liquidityRemoveFormNotifierProvider);
 
     return SingleChildScrollView(
@@ -135,22 +142,6 @@ class LiquidityRemoveConfirmFormSheetState
             textStyle: AppTextStyles.bodyMedium(
               context,
             ),
-          ),
-          SheetDetailCard(
-            children: [
-              Text(
-                localizations.estimatedTxFees,
-                style: AppTextStyles.bodyMedium(context),
-              ),
-              Text(
-                AmountFormatters.standardSmallValue(
-                  liquidityRemove.feesEstimatedUCO,
-                  kUCOAddress,
-                  decimal: 3,
-                ),
-                style: AppTextStyles.bodyMedium(context),
-              ),
-            ],
           ),
         ],
       ),

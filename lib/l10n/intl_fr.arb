@@ -573,7 +573,7 @@
     "farmLockBlockFarmedTokensSummaryCapitalRewardsEarnedLbl": "Récompenses gagnées",
     "farmLockBlockListHeaderAmount": "Montant",
     "farmLockBlockListHeaderRewards": "Récompenses estimées",
-    "farmLockBlockListHeaderUnlocks": "Débloque",
+    "farmLockBlockListHeaderUnlocks": "Déblocage possible",
     "farmLockBlockListHeaderAPR": "TAEG",
     "farmLockBtnLevelUp": "Level Up",
     "farmLockBtnWithdraw": "Retirer LP",

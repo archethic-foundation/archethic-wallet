@@ -103,7 +103,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
   String _getErrorAmountText(BuildContext context, double fees) {
     final balanceUCO =
-        ref.watch(getBalanceProvider(kUCOAddress)).valueOrNull ?? 0.0;
+        ref.read(getBalanceProvider(kUCOAddress)).valueOrNull ?? 0.0;
     switch (state.transferType) {
       case TransferType.uco:
         return state.amountConverted > balanceUCO - fees
