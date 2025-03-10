@@ -44,6 +44,7 @@ class FarmLockBtnWithdraw extends ConsumerWidget {
       child: BtnPrimary(
         buttonText: AppLocalizations.of(context)!.farmLockBtnWithdraw,
         isLocked: !enabled,
+        widthExpanded: true,
         onTap: () async {
           if (context.mounted) {
             await context.push(

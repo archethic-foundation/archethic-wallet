@@ -340,28 +340,26 @@ class FarmLockBlockListSingleLineLock extends ConsumerWidget {
                                             )),
                                   ),
                                 ),
-                                if (isFlexDuration)
-                                  Expanded(
-                                    child: FarmLockBtnClaim(
-                                      farmAddress: farmLock.farmAddress,
-                                      lpTokenAddress: farmLock.lpToken!.address,
-                                      rewardToken: farmLock.rewardToken!,
-                                      depositId: farmLockUserInfos.id,
-                                      rewardAmount:
-                                          farmLockUserInfos.rewardAmount,
-                                      enabled: farmLockUserInfos.rewardAmount >
-                                              0 &&
-                                          (isFlexDuration ||
-                                              (!isFlexDuration &&
-                                                  DateTime
-                                                      .fromMillisecondsSinceEpoch(
-                                                    farmLockUserInfos.end! *
-                                                        1000,
-                                                  ).isBefore(
-                                                    DateTime.now().toUtc(),
-                                                  ))),
-                                    ),
+                                Expanded(
+                                  child: FarmLockBtnClaim(
+                                    farmAddress: farmLock.farmAddress,
+                                    lpTokenAddress: farmLock.lpToken!.address,
+                                    rewardToken: farmLock.rewardToken!,
+                                    depositId: farmLockUserInfos.id,
+                                    rewardAmount:
+                                        farmLockUserInfos.rewardAmount,
+                                    enabled: farmLockUserInfos.rewardAmount >
+                                            0 &&
+                                        (isFlexDuration ||
+                                            (!isFlexDuration &&
+                                                DateTime
+                                                    .fromMillisecondsSinceEpoch(
+                                                  farmLockUserInfos.end! * 1000,
+                                                ).isBefore(
+                                                  DateTime.now().toUtc(),
+                                                ))),
                                   ),
+                                ),
                               ],
                             ),
                           ],
