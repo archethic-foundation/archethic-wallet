@@ -20,21 +20,24 @@ class AirdropWalletLPCurrentValue extends ConsumerWidget {
       );
     }
 
-    return Text.rich(
-      TextSpan(
-        children: [
-          TextSpan(
-            text: localizations.airdropPersonalLPCurrentValue,
-            style: Theme.of(context).textTheme.bodySmallWithOpacity,
-          ),
-          WidgetSpan(
-            child: GradientText(
-              airdropForm.personalLP.formatNumber(precision: 2),
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      child: Text.rich(
+        TextSpan(
+          children: [
+            TextSpan(
+              text: localizations.airdropPersonalLPCurrentValue,
               style: Theme.of(context).textTheme.bodySmallWithOpacity,
-              gradient: ArchethicGradients.gradientArchethic,
             ),
-          ),
-        ],
+            WidgetSpan(
+              child: GradientText(
+                airdropForm.personalLP.formatNumber(precision: 2),
+                style: Theme.of(context).textTheme.bodySmallWithOpacity,
+                gradient: ArchethicGradients.gradientArchethic,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
