@@ -8,20 +8,16 @@ class MessageBox extends StatelessWidget {
   const MessageBox({
     super.key,
     required this.messageBoxType,
-    required this.text,
+    required this.content,
     this.onTap,
   });
 
   final MessageBoxType messageBoxType;
-  final String text;
+  final Widget content;
   final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
-    if (text.isEmpty) {
-      return const SizedBox();
-    }
-
     return DecoratedBox(
       decoration: BoxDecoration(
         color: _getCardColor(messageBoxType),
@@ -47,10 +43,7 @@ class MessageBox extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(top: 2),
-                  child: Text(
-                    text,
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
+                  child: content,
                 ),
               ),
               if (onTap != null && messageBoxType != MessageBoxType.locked)

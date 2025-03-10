@@ -158,13 +158,17 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
                   ),
                 ),
                 const SizedBox(height: 10),
-                MessageBox(
-                  messageBoxType: MessageBoxType.warning,
-                  text: FailureMessage(
-                    context: context,
-                    failure: farmLockWithdraw.failure,
-                  ).getMessage(),
-                ),
+                if (farmLockWithdraw.failure != null)
+                  MessageBox(
+                    messageBoxType: MessageBoxType.warning,
+                    content: Text(
+                      FailureMessage(
+                        context: context,
+                        failure: farmLockWithdraw.failure,
+                      ).getMessage(),
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ),
                 if (earnUserLevel == EarnUserLevelType.beginner)
                   _buildBeginnerSection(
                     context,
@@ -237,15 +241,19 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
     } else if (farmLockWithdraw.depositedAmount == 0) {
       return MessageBox(
         messageBoxType: MessageBoxType.info,
-        text: localizations.farmLockWithdrawFormTextNoLPText1,
+        content: Text(
+          localizations.farmLockWithdrawFormTextNoLPText1,
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
       );
     } else {
       return Text.rich(
         TextSpan(
           children: <InlineSpan>[
             TextSpan(
-              text:
-                  '${farmLockWithdraw.depositedAmount!.formatNumber()} ${farmLockWithdraw.depositedAmount! > 1 ? localizations.lpTokens : localizations.lpToken} ',
+              text: '${farmLockWithdraw.depositedAmount!.formatNumber(
+                precision: farmLockWithdraw.depositedAmount! < 1 ? 8 : 2,
+              )} ${farmLockWithdraw.depositedAmount! > 1 ? localizations.lpTokens : localizations.lpToken} ',
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -280,7 +288,10 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
     if (farmLockWithdraw.rewardAmount == 0) {
       return MessageBox(
         messageBoxType: MessageBoxType.info,
-        text: localizations.farmLockWithdrawFormTextNoRewardText1,
+        content: Text(
+          localizations.farmLockWithdrawFormTextNoRewardText1,
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
       );
     } else {
       return FutureBuilder<String>(
@@ -296,8 +307,9 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
                 text: '',
                 children: <InlineSpan>[
                   TextSpan(
-                    text:
-                        '${farmLockWithdraw.rewardAmount!.formatNumber()} ${farmLockWithdraw.rewardToken!.symbol} ',
+                    text: '${farmLockWithdraw.rewardAmount!.formatNumber(
+                      precision: farmLockWithdraw.rewardAmount! < 1 ? 8 : 2,
+                    )} ${farmLockWithdraw.rewardToken!.symbol} ',
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                           fontWeight: FontWeight.bold,
                         ),

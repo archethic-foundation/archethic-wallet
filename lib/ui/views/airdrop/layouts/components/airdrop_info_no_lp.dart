@@ -19,7 +19,10 @@ class AirdropInfoNoLP extends ConsumerWidget {
 
     return MessageBox(
       messageBoxType: MessageBoxType.warning,
-      text: localizations.airdropInfoNoLPDesc,
+      content: Text(
+        localizations.airdropInfoNoLPDesc,
+        style: Theme.of(context).textTheme.bodySmall,
+      ),
     );
   }
 }

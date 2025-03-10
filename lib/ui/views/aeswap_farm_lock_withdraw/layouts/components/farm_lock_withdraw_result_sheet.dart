@@ -91,15 +91,21 @@ class FarmLockWithdrawResultSheetState
             if (finalAmountReward == null && finalAmountWithdraw == null)
               MessageBox(
                 messageBoxType: MessageBoxType.warning,
-                text: FailureMessage(
-                  context: context,
-                  failure: farmLockWithdraw.failure,
-                ).getMessage(),
+                content: Text(
+                  FailureMessage(
+                    context: context,
+                    failure: farmLockWithdraw.failure,
+                  ).getMessage(),
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
               )
             else
               MessageBox(
                 messageBoxType: MessageBoxType.success,
-                text: AppLocalizations.of(context)!.farmLockWithdrawSuccessInfo,
+                content: Text(
+                  AppLocalizations.of(context)!.farmLockWithdrawSuccessInfo,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
               ),
             const SizedBox(
               height: 20,

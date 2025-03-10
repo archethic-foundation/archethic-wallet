@@ -39,6 +39,8 @@ mixin _$FarmLockLevelUpFormState {
   DateTime? get consentDateTime => throw _privateConstructorUsedError;
   String? get depositId => throw _privateConstructorUsedError;
   String? get currentLevel => throw _privateConstructorUsedError;
+  bool get confirmLockPeriod => throw _privateConstructorUsedError;
+  bool get confirmPrivacyPolicy => throw _privateConstructorUsedError;
 
   /// Create a copy of FarmLockLevelUpFormState
   /// with the given fields replaced by the non-null parameter values.
@@ -73,7 +75,9 @@ abstract class $FarmLockLevelUpFormStateCopyWith<$Res> {
       double? finalAmount,
       DateTime? consentDateTime,
       String? depositId,
-      String? currentLevel});
+      String? currentLevel,
+      bool confirmLockPeriod,
+      bool confirmPrivacyPolicy});
 
   $DexPoolCopyWith<$Res>? get pool;
   $DexFarmLockCopyWith<$Res>? get farmLock;
@@ -117,6 +121,8 @@ class _$FarmLockLevelUpFormStateCopyWithImpl<$Res,
     Object? consentDateTime = freezed,
     Object? depositId = freezed,
     Object? currentLevel = freezed,
+    Object? confirmLockPeriod = null,
+    Object? confirmPrivacyPolicy = null,
   }) {
     return _then(_value.copyWith(
       processStep: null == processStep
@@ -199,6 +205,14 @@ class _$FarmLockLevelUpFormStateCopyWithImpl<$Res,
           ? _value.currentLevel
           : currentLevel // ignore: cast_nullable_to_non_nullable
               as String?,
+      confirmLockPeriod: null == confirmLockPeriod
+          ? _value.confirmLockPeriod
+          : confirmLockPeriod // ignore: cast_nullable_to_non_nullable
+              as bool,
+      confirmPrivacyPolicy: null == confirmPrivacyPolicy
+          ? _value.confirmPrivacyPolicy
+          : confirmPrivacyPolicy // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -289,7 +303,9 @@ abstract class _$$FarmLockLevelUpFormStateImplCopyWith<$Res>
       double? finalAmount,
       DateTime? consentDateTime,
       String? depositId,
-      String? currentLevel});
+      String? currentLevel,
+      bool confirmLockPeriod,
+      bool confirmPrivacyPolicy});
 
   @override
   $DexPoolCopyWith<$Res>? get pool;
@@ -336,6 +352,8 @@ class __$$FarmLockLevelUpFormStateImplCopyWithImpl<$Res>
     Object? consentDateTime = freezed,
     Object? depositId = freezed,
     Object? currentLevel = freezed,
+    Object? confirmLockPeriod = null,
+    Object? confirmPrivacyPolicy = null,
   }) {
     return _then(_$FarmLockLevelUpFormStateImpl(
       processStep: null == processStep
@@ -418,6 +436,14 @@ class __$$FarmLockLevelUpFormStateImplCopyWithImpl<$Res>
           ? _value.currentLevel
           : currentLevel // ignore: cast_nullable_to_non_nullable
               as String?,
+      confirmLockPeriod: null == confirmLockPeriod
+          ? _value.confirmLockPeriod
+          : confirmLockPeriod // ignore: cast_nullable_to_non_nullable
+              as bool,
+      confirmPrivacyPolicy: null == confirmPrivacyPolicy
+          ? _value.confirmPrivacyPolicy
+          : confirmPrivacyPolicy // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -445,7 +471,9 @@ class _$FarmLockLevelUpFormStateImpl extends _FarmLockLevelUpFormState {
       this.finalAmount,
       this.consentDateTime,
       this.depositId,
-      this.currentLevel})
+      this.currentLevel,
+      this.confirmLockPeriod = false,
+      this.confirmPrivacyPolicy = false})
       : _filterAvailableLevels = filterAvailableLevels,
         super._();
 
@@ -507,10 +535,16 @@ class _$FarmLockLevelUpFormStateImpl extends _FarmLockLevelUpFormState {
   final String? depositId;
   @override
   final String? currentLevel;
+  @override
+  @JsonKey()
+  final bool confirmLockPeriod;
+  @override
+  @JsonKey()
+  final bool confirmPrivacyPolicy;
 
   @override
   String toString() {
-    return 'FarmLockLevelUpFormState(processStep: $processStep, resumeProcess: $resumeProcess, currentStep: $currentStep, pool: $pool, farmLock: $farmLock, isProcessInProgress: $isProcessInProgress, farmLockLevelUpOk: $farmLockLevelUpOk, amount: $amount, aprEstimation: $aprEstimation, farmLockLevelUpDuration: $farmLockLevelUpDuration, lpTokenBalance: $lpTokenBalance, transactionFarmLockLevelUp: $transactionFarmLockLevelUp, filterAvailableLevels: $filterAvailableLevels, level: $level, failure: $failure, feesEstimatedUCO: $feesEstimatedUCO, finalAmount: $finalAmount, consentDateTime: $consentDateTime, depositId: $depositId, currentLevel: $currentLevel)';
+    return 'FarmLockLevelUpFormState(processStep: $processStep, resumeProcess: $resumeProcess, currentStep: $currentStep, pool: $pool, farmLock: $farmLock, isProcessInProgress: $isProcessInProgress, farmLockLevelUpOk: $farmLockLevelUpOk, amount: $amount, aprEstimation: $aprEstimation, farmLockLevelUpDuration: $farmLockLevelUpDuration, lpTokenBalance: $lpTokenBalance, transactionFarmLockLevelUp: $transactionFarmLockLevelUp, filterAvailableLevels: $filterAvailableLevels, level: $level, failure: $failure, feesEstimatedUCO: $feesEstimatedUCO, finalAmount: $finalAmount, consentDateTime: $consentDateTime, depositId: $depositId, currentLevel: $currentLevel, confirmLockPeriod: $confirmLockPeriod, confirmPrivacyPolicy: $confirmPrivacyPolicy)';
   }
 
   @override
@@ -556,7 +590,11 @@ class _$FarmLockLevelUpFormStateImpl extends _FarmLockLevelUpFormState {
             (identical(other.depositId, depositId) ||
                 other.depositId == depositId) &&
             (identical(other.currentLevel, currentLevel) ||
-                other.currentLevel == currentLevel));
+                other.currentLevel == currentLevel) &&
+            (identical(other.confirmLockPeriod, confirmLockPeriod) ||
+                other.confirmLockPeriod == confirmLockPeriod) &&
+            (identical(other.confirmPrivacyPolicy, confirmPrivacyPolicy) ||
+                other.confirmPrivacyPolicy == confirmPrivacyPolicy));
   }
 
   @override
@@ -581,7 +619,9 @@ class _$FarmLockLevelUpFormStateImpl extends _FarmLockLevelUpFormState {
         finalAmount,
         consentDateTime,
         depositId,
-        currentLevel
+        currentLevel,
+        confirmLockPeriod,
+        confirmPrivacyPolicy
       ]);
 
   /// Create a copy of FarmLockLevelUpFormState
@@ -615,7 +655,9 @@ abstract class _FarmLockLevelUpFormState extends FarmLockLevelUpFormState {
       final double? finalAmount,
       final DateTime? consentDateTime,
       final String? depositId,
-      final String? currentLevel}) = _$FarmLockLevelUpFormStateImpl;
+      final String? currentLevel,
+      final bool confirmLockPeriod,
+      final bool confirmPrivacyPolicy}) = _$FarmLockLevelUpFormStateImpl;
   const _FarmLockLevelUpFormState._() : super._();
 
   @override
@@ -658,6 +700,10 @@ abstract class _FarmLockLevelUpFormState extends FarmLockLevelUpFormState {
   String? get depositId;
   @override
   String? get currentLevel;
+  @override
+  bool get confirmLockPeriod;
+  @override
+  bool get confirmPrivacyPolicy;
 
   /// Create a copy of FarmLockLevelUpFormState
   /// with the given fields replaced by the non-null parameter values.

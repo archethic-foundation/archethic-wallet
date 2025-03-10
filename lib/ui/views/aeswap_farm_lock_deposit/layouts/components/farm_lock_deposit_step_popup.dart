@@ -41,15 +41,14 @@ class FarmLockDepositStepPopup extends ConsumerWidget {
                   LayoutBuilder(
                     builder: (context, constraints) {
                       return Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(
-                            width: constraints.maxWidth * 0.05,
+                            width: constraints.maxWidth * 0.10,
                             child: _getStepIcon(step.stepIndex),
                           ),
                           SizedBox(
-                            width: constraints.maxWidth * 0.90,
+                            width: constraints.maxWidth * 0.85,
                             child: Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: Column(
@@ -95,21 +94,48 @@ class FarmLockDepositStepPopup extends ConsumerWidget {
               farmLockDeposit.finalAmount != null)
             MessageBox(
               messageBoxType: MessageBoxType.success,
-              text: farmLockDeposit.finalAmount! > 1
-                  ? localizations.farmLockDepositStepPopupFinalAmounts(
-                      farmLockDeposit.finalAmount!.formatNumber(precision: 2),
-                      getFarmLockDepositDurationTypeLabel(
-                        context,
-                        farmLockDeposit.farmLockDepositDuration,
-                      ).toLowerCase(),
-                    )
-                  : localizations.farmLockDepositStepPopupFinalAmount(
-                      farmLockDeposit.finalAmount!.formatNumber(precision: 8),
-                      getFarmLockDepositDurationTypeLabel(
-                        context,
-                        farmLockDeposit.farmLockDepositDuration,
-                      ).toLowerCase(),
+              content: Text.rich(
+                TextSpan(
+                  text: '',
+                  children: <InlineSpan>[
+                    TextSpan(
+                      text: localizations
+                          .farmLockDepositStepPopupFinalAmountDesc1,
+                      style: Theme.of(context).textTheme.bodySmallWithOpacity,
                     ),
+                    TextSpan(
+                      text: farmLockDeposit.finalAmount!.formatNumber(
+                        precision: farmLockDeposit.finalAmount! < 1 ? 8 : 2,
+                      ),
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                            fontWeight: FontWeightTelegraf.fontWeightBold,
+                          ),
+                    ),
+                    TextSpan(
+                      text: farmLockDeposit.finalAmount! <= 1
+                          ? ' ${localizations.lpToken}'
+                          : ' ${localizations.lpTokens}',
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                            fontWeight: FontWeightTelegraf.fontWeightBold,
+                          ),
+                    ),
+                    TextSpan(
+                      text: localizations
+                          .farmLockDepositStepPopupFinalAmountDesc2,
+                      style: Theme.of(context).textTheme.bodySmallWithOpacity,
+                    ),
+                    TextSpan(
+                      text: '${getFarmLockDepositDurationTypeLabel(
+                        context,
+                        farmLockDeposit.farmLockDepositDuration,
+                      ).toLowerCase()}.',
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                            fontWeight: FontWeightTelegraf.fontWeightBold,
+                          ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

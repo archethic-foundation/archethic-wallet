@@ -134,26 +134,39 @@ class SwapTabState extends ConsumerState<SwapTab> {
                                         ),
                                         child: MessageBox(
                                           messageBoxType: MessageBoxType.info,
-                                          text: AppLocalizations.of(context)!
-                                              .swapMessageMaxHalfUCO
-                                              .replaceFirst(
-                                                '%1',
-                                                swap.feesEstimatedUCO
-                                                    .formatNumber(precision: 8),
-                                              ),
+                                          content: Text(
+                                            AppLocalizations.of(context)!
+                                                .swapMessageMaxHalfUCO
+                                                .replaceFirst(
+                                                  '%1',
+                                                  swap.feesEstimatedUCO
+                                                      .formatNumber(
+                                                    precision: 8,
+                                                  ),
+                                                ),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall,
+                                          ),
                                         ),
                                       ),
                                     if (swap.failure != null)
                                       const SizedBox(
                                         height: 10,
                                       ),
-                                    MessageBox(
-                                      messageBoxType: MessageBoxType.warning,
-                                      text: FailureMessage(
-                                        context: context,
-                                        failure: swap.failure,
-                                      ).getMessage(),
-                                    ),
+                                    if (swap.failure != null)
+                                      MessageBox(
+                                        messageBoxType: MessageBoxType.warning,
+                                        content: Text(
+                                          FailureMessage(
+                                            context: context,
+                                            failure: swap.failure,
+                                          ).getMessage(),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                        ),
+                                      ),
                                   ],
                                 ),
                                 Padding(

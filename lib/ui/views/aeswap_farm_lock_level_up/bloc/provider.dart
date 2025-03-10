@@ -44,6 +44,22 @@ class FarmLockLevelUpFormNotifier extends _$FarmLockLevelUpFormNotifier {
         state.copyWith(transactionFarmLockLevelUp: transactionFarmLockLevelUp);
   }
 
+  void setConfirmLockPeriod(
+    bool confirmLockPeriod,
+  ) {
+    state = state.copyWith(
+      confirmLockPeriod: confirmLockPeriod,
+      failure: null,
+    );
+  }
+
+  void setConfirmPrivacyPolicy(bool confirmPrivacyPolicy) {
+    state = state.copyWith(
+      confirmPrivacyPolicy: confirmPrivacyPolicy,
+      failure: null,
+    );
+  }
+
   void setAmount(
     double amount,
   ) {

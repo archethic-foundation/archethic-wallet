@@ -271,13 +271,17 @@ class LiquidityAddFormSheet extends ConsumerWidget
                     const SizedBox(
                       height: 20,
                     ),
-                    MessageBox(
-                      messageBoxType: MessageBoxType.warning,
-                      text: FailureMessage(
-                        context: context,
-                        failure: liquidityAdd.failure,
-                      ).getMessage(),
-                    ),
+                    if (liquidityAdd.failure != null)
+                      MessageBox(
+                        messageBoxType: MessageBoxType.warning,
+                        content: Text(
+                          FailureMessage(
+                            context: context,
+                            failure: liquidityAdd.failure,
+                          ).getMessage(),
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ),
                   ],
                 ),
               ],

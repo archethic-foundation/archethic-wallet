@@ -145,55 +145,81 @@ class FarmLockDepositConfirmSheetLPState
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text.rich(
-          TextSpan(
+        aedappfm.BlockInfo(
+          blockInfoColor: aedappfm.BlockInfoColor.purple,
+          borderWidth: 0,
+          paddingEdgeInsetsInfo: const EdgeInsets.all(20),
+          width: MediaQuery.of(context).size.width,
+          info: Column(
             children: [
-              WidgetSpan(
-                child: Text(
-                  AppLocalizations.of(context)!.farmLockDepositConfirmInfosText,
-                  style: Theme.of(context).textTheme.bodyMedium,
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: AppLocalizations.of(context)!
+                          .farmLockDepositConfirmInfosText,
+                      style: Theme.of(context).textTheme.bodyMediumWithOpacity,
+                    ),
+                    TextSpan(
+                      text:
+                          '${farmLockDeposit.amount.formatNumber(precision: 8)} ${farmLockDeposit.amount > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontWeight: FontWeightTelegraf.fontWeightBold,
+                          ),
+                    ),
+                    TextSpan(
+                      text: AppLocalizations.of(context)!
+                          .farmLockDepositConfirmInfosText2,
+                      style: Theme.of(context).textTheme.bodyMediumWithOpacity,
+                    ),
+                    TextSpan(
+                      text: getFarmLockDepositDurationTypeLabel(
+                        context,
+                        farmLockDeposit.farmLockDepositDuration,
+                      ).toLowerCase(),
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontWeight: FontWeightTelegraf.fontWeightBold,
+                          ),
+                    ),
+                    TextSpan(
+                      text: '.',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ],
                 ),
               ),
-              WidgetSpan(
-                child: GradientText(
-                  '${farmLockDeposit.amount.formatNumber(precision: 8)} ${farmLockDeposit.amount > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
-                  gradient: ArchethicGradients.gradientArchethic,
-                  style: Theme.of(context).textTheme.bodyMedium!,
-                ),
+              const SizedBox(
+                height: 30,
               ),
-              WidgetSpan(
-                child: Text(
-                  AppLocalizations.of(context)!
-                      .farmLockDepositConfirmInfosText2,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ),
-              WidgetSpan(
-                child: GradientText(
-                  getFarmLockDepositDurationTypeLabel(
-                    context,
-                    farmLockDeposit.farmLockDepositDuration,
-                  ).toLowerCase(),
-                  gradient: ArchethicGradients.gradientArchethic,
-                  style: Theme.of(context).textTheme.bodyMedium!,
-                ),
-              ),
-              WidgetSpan(
-                child: Text(
-                  '.',
-                  style: Theme.of(context).textTheme.bodyMedium,
+              Text.rich(
+                TextSpan(
+                  children: [
+                    WidgetSpan(
+                      child: Text(
+                        AppLocalizations.of(context)!
+                            .farmLockDepositConfirmInfosText3,
+                        style:
+                            Theme.of(context).textTheme.bodyMediumWithOpacity,
+                      ),
+                    ),
+                    WidgetSpan(
+                      child: GradientText(
+                        '${((farmLockDeposit.farmLock!.stats[farmLockDeposit.level]?.aprEstimation ?? 0) * 100).formatNumber(precision: 2)}%',
+                        gradient: ArchethicGradients.gradientArchethic,
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              fontWeight: FontWeightTelegraf.fontWeightBold,
+                            ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
         ),
-        const SizedBox(
-          height: 30,
-        ),
+        const SizedBox(height: 20),
         const FarmLockDepositConfirmLockPeriod(),
-        const SizedBox(
-          height: 20,
-        ),
+        const SizedBox(height: 20),
         const FarmLockDepositConfirmPrivacyPolicy(),
       ],
     );

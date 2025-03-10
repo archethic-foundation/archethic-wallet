@@ -5,6 +5,7 @@ import 'package:aewallet/application/onramp/onramp.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/buy/layouts/buy_with_crypto_sheet.dart';
 import 'package:aewallet/ui/views/buy/layouts/buy_with_fiat_sheet.dart';
@@ -374,12 +375,32 @@ class _ExchangeButton extends StatelessWidget {
               children: [
                 image,
                 const SizedBox(height: 8),
-                Text(
-                  text,
-                  maxLines: 1,
-                  textAlign: TextAlign.center,
-                  style: AppTextStyles.bodyMedium(context)
-                      .copyWith(decoration: TextDecoration.underline),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      text,
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmallWithOpacity
+                          .copyWith(
+                            fontWeight: FontWeightTelegraf.fontWeightRegular,
+                          ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 3, top: 2),
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 10,
+                        color: Theme.of(context)
+                            .textTheme
+                            .bodySmallWithOpacity
+                            .color,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

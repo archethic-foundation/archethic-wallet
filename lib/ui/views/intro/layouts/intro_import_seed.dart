@@ -363,7 +363,10 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: MessageBox(
               messageBoxType: MessageBoxType.warning,
-              text: _mnemonicError,
+              content: Text(
+                _mnemonicError,
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
             ),
           )
         else

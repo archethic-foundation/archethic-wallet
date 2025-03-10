@@ -12,8 +12,6 @@ import 'package:aewallet/ui/views/buy/layouts/components/transaction_history.dar
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
-import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
-    as aedappfm;
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -106,7 +104,7 @@ class BuyWithCryptoSheet extends ConsumerWidget {
                   ),
                   if (feesRate != null && feesRate > 0)
                     Text(
-                      '${localizations.fees}: ${(Decimal.parse(feesRate.toString()) * Decimal.fromInt(100)).toDouble().formatNumber(precision: 2)}%',
+                      '${localizations.fee}: ${_formatPercentage((Decimal.parse(feesRate.toString()) * Decimal.fromInt(100)).toDouble())}%',
                       style: Theme.of(context).textTheme.bodyMediumWithOpacity,
                     ),
                 ],
@@ -149,5 +147,13 @@ class BuyWithCryptoSheet extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  String _formatPercentage(double value) {
+    final formattedValue = value.toStringAsFixed(2);
+    if (formattedValue.endsWith('.00')) {
+      return formattedValue.split('.').first;
+    }
+    return formattedValue;
   }
 }
