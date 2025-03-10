@@ -20,13 +20,13 @@ abstract class TransactionRemoteRepositoryInterface {
 
   Future<archethic.TransactionConfirmation?> send({
     required Transaction transaction,
-    Duration timeout = const Duration(seconds: 10),
+    Duration timeout = const Duration(seconds: 70),
     TransactionConfirmationHandler? onConfirmation,
   });
 
   Future<archethic.TransactionConfirmation?> sendSignedRaw({
     required archethic.Transaction transaction,
-    Duration timeout = const Duration(seconds: 10),
+    Duration timeout = const Duration(seconds: 70),
     TransactionConfirmationHandler? onConfirmation,
   });
 

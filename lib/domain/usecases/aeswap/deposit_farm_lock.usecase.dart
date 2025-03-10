@@ -121,7 +121,7 @@ class DepositFarmLockCase with aedappfm.TransactionMixin {
         ),
         sleepDuration: const Duration(seconds: 3),
         until: (depositOk) => depositOk == true,
-        timeout: const Duration(minutes: 1),
+        timeout: const Duration(seconds: 70),
       );
 
       farmLockDepositNotifier.setFinalAmount(amount);

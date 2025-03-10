@@ -115,7 +115,7 @@ class ClaimFarmLockCase with aedappfm.TransactionMixin {
         ),
         sleepDuration: const Duration(seconds: 3),
         until: (depositOk) => depositOk == true,
-        timeout: const Duration(minutes: 1),
+        timeout: const Duration(seconds: 70),
       );
 
       final amount = await aedappfm.PeriodicFuture.periodic<double>(
@@ -126,7 +126,7 @@ class ClaimFarmLockCase with aedappfm.TransactionMixin {
         ),
         sleepDuration: const Duration(seconds: 3),
         until: (amount) => amount > 0,
-        timeout: const Duration(minutes: 1),
+        timeout: const Duration(seconds: 70),
       );
 
       farmClaimLockNotifier.setFinalAmount(amount);
