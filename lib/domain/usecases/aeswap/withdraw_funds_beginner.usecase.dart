@@ -109,7 +109,7 @@ class WithdrawFundsBeginnerCase with aedappfm.TransactionMixin {
               ),
               sleepDuration: const Duration(seconds: 3),
               until: (depositOk) => depositOk == true,
-              timeout: const Duration(minutes: 1),
+              timeout: const Duration(seconds: 70),
             );
 
             final amounts =
@@ -130,7 +130,7 @@ class WithdrawFundsBeginnerCase with aedappfm.TransactionMixin {
               until: (amounts) {
                 return amounts[1] > 0;
               },
-              timeout: const Duration(minutes: 1),
+              timeout: const Duration(seconds: 70),
             );
 
             amountReward += amounts[0];
@@ -213,7 +213,7 @@ class WithdrawFundsBeginnerCase with aedappfm.TransactionMixin {
                 amountTokenETH > 0 &&
                 amountLPTokenBurnt > 0;
           },
-          timeout: const Duration(minutes: 1),
+          timeout: const Duration(seconds: 70),
         );
 
         amountTokenUCO = amounts[0];
@@ -351,7 +351,7 @@ class WithdrawFundsBeginnerCase with aedappfm.TransactionMixin {
       ),
       sleepDuration: const Duration(seconds: 3),
       until: (amount) => amount > 0,
-      timeout: const Duration(minutes: 1),
+      timeout: const Duration(seconds: 70),
     );
   }
 }

@@ -138,7 +138,7 @@ class RemoveLiquidityCase with aedappfm.TransactionMixin {
           final amountLPToken = amounts[2];
           return amountToken1 > 0 && amountToken2 > 0 && amountLPToken > 0;
         },
-        timeout: const Duration(minutes: 1),
+        timeout: const Duration(seconds: 70),
       );
 
       final amountToken1 = amounts[0];

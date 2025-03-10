@@ -151,7 +151,7 @@ class SwapCase with aedappfm.TransactionMixin {
         ),
         sleepDuration: const Duration(seconds: 3),
         until: (amount) => amount > 0,
-        timeout: const Duration(minutes: 1),
+        timeout: const Duration(seconds: 70),
       );
 
       swapNotifier.setFinalAmount(amount);

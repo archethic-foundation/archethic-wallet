@@ -291,7 +291,7 @@ class AddFundsBeginnerCase with aedappfm.TransactionMixin {
       ),
       sleepDuration: const Duration(seconds: 3),
       until: (amount) => amount > 0,
-      timeout: const Duration(minutes: 1),
+      timeout: const Duration(seconds: 70),
     );
   }
 
@@ -320,7 +320,7 @@ class AddFundsBeginnerCase with aedappfm.TransactionMixin {
       ),
       sleepDuration: const Duration(seconds: 3),
       until: (depositOk) => depositOk == true,
-      timeout: const Duration(minutes: 1),
+      timeout: const Duration(seconds: 70),
     );
   }
 }
