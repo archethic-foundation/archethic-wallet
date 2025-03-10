@@ -14,24 +14,40 @@ class EarnTotalDeposited extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
+    final farmLockAsync = ref.watch(farmLockFormFarmLockProvider);
 
     return BoxDark(
-      textWidget: farmLock == null
-          ? Text(
-              r'$__',
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    fontSize: 20,
-                    fontWeight: FontWeightTelegraf.fontWeightBold,
-                  ),
-            )
-          : Text(
-              '\$${farmLock.estimateLPTokenInFiat.numeral(digits: 0)}',
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    fontSize: 20,
-                    fontWeight: FontWeightTelegraf.fontWeightBold,
-                  ),
+      textWidget: farmLockAsync.when(
+        data: (farmLock) {
+          return Text(
+            '\$${farmLock!.estimateLPTokenInFiat.numeral(digits: 0)}',
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  fontSize: 20,
+                  fontWeight: FontWeightTelegraf.fontWeightBold,
+                ),
+          );
+        },
+        error: (_, __) {
+          return Text(
+            r'$__',
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  fontSize: 20,
+                  fontWeight: FontWeightTelegraf.fontWeightBold,
+                ),
+          );
+        },
+        loading: () {
+          return const Padding(
+            padding: EdgeInsets.only(top: 8, bottom: 7),
+            child: SizedBox.square(
+              dimension: 15,
+              child: CircularProgressIndicator(
+                strokeWidth: 1,
+              ),
             ),
+          );
+        },
+      ),
       additionalWidget: Text(
         localizations.earnTotalDeposited,
         style: Theme.of(context).textTheme.bodySmallWithOpacity,

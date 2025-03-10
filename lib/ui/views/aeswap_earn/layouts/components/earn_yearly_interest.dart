@@ -19,28 +19,53 @@ class EarnYearlyInterest extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final farmLock = ref.watch(farmLockFormFarmLockProvider).valueOrNull;
+    final farmLockAsync = ref.watch(farmLockFormFarmLockProvider);
 
     return BoxDark(
       textWidget: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (farmLock != null && farmLock.apr3years > 0)
-            Text(
-              '${(farmLock.apr3years * 100).toInt()}%',
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    fontSize: 20,
-                    fontWeight: FontWeightTelegraf.fontWeightBold,
+          farmLockAsync.when(
+            data: (farmLock) {
+              if (farmLock != null && farmLock.apr3years > 0) {
+                return Text(
+                  '${(farmLock.apr3years * 100).toInt()}%',
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        fontSize: 20,
+                        fontWeight: FontWeightTelegraf.fontWeightBold,
+                      ),
+                );
+              } else {
+                return Text(
+                  '__%',
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        fontSize: 20,
+                        fontWeight: FontWeightTelegraf.fontWeightBold,
+                      ),
+                );
+              }
+            },
+            error: (_, __) {
+              return Text(
+                r'$__',
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      fontSize: 20,
+                      fontWeight: FontWeightTelegraf.fontWeightBold,
+                    ),
+              );
+            },
+            loading: () {
+              return const Padding(
+                padding: EdgeInsets.only(top: 8, bottom: 7),
+                child: SizedBox.square(
+                  dimension: 15,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 1,
                   ),
-            )
-          else
-            Text(
-              '__%',
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    fontSize: 20,
-                    fontWeight: FontWeightTelegraf.fontWeightBold,
-                  ),
-            ),
+                ),
+              );
+            },
+          ),
           const Padding(
             padding: EdgeInsets.only(left: 5, bottom: 10),
             child: GradientIcon(
