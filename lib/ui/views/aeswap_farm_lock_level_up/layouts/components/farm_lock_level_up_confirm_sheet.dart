@@ -1,29 +1,26 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/accounts_notifier.dart';
-import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/consent_uri.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
+import 'package:aewallet/ui/figma_components/complex/estimated_fees.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
+import 'package:aewallet/ui/figma_components/text/gradient_text.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/bloc/provider.dart';
-import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/layouts/components/farm_lock_level_up_confirm_infos.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/layouts/components/farm_lock_level_up_confirm_lock_period.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/layouts/components/farm_lock_level_up_confirm_privacy_policy.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_level_up/layouts/components/farm_lock_level_up_result_sheet.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
-import 'package:aewallet/ui/widgets/consent_widget.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class FarmLockLevelUpConfirmSheet extends ConsumerStatefulWidget {
   const FarmLockLevelUpConfirmSheet({super.key});
@@ -52,36 +49,45 @@ class FarmLockLevelUpConfirmSheetState
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final farmLockLevelUp = ref.watch(farmLockLevelUpFormNotifierProvider);
-    return BtnFooterPrimary(
-      buttonText: AppLocalizations.of(context)!.btn_confirm_farm_add_lock,
-      key: const Key('farmLockLevelUp'),
-      onTap: () async {
-        final farmLockLevelUpNotifier = ref.read(
-          farmLockLevelUpFormNotifierProvider.notifier,
-        )..setProcessInProgress(true);
-        final resultOk =
-            await farmLockLevelUpNotifier.lock(AppLocalizations.of(context)!);
-        farmLockLevelUpNotifier.setProcessInProgress(false);
-        if (resultOk) {
-          await context.push(FarmLockLevelUpResultSheet.routerPage);
-        } else {
-          UIUtil.showSnackbar(
-            FailureMessage(
-              context: context,
-              failure: ref.read(farmLockLevelUpFormNotifierProvider).failure,
-            ).getMessage(),
-            context,
-            ref,
-            ArchethicTheme.text,
-            ArchethicTheme.snackBarShadow,
-            duration: const Duration(seconds: 5),
-          );
-        }
-      },
-      isLocked: (!warningChecked ||
-              (!consentChecked && farmLockLevelUp.consentDateTime == null)) ||
-          farmLockLevelUp.isProcessInProgress,
-      showProgressIndicator: farmLockLevelUp.isProcessInProgress,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        EstimatedFees(
+          AsyncData(farmLockLevelUp.feesEstimatedUCO),
+        ),
+        BtnFooterPrimary(
+          buttonText: AppLocalizations.of(context)!.btn_confirm_farm_add_lock,
+          key: const Key('farmLockLevelUp'),
+          onTap: () async {
+            final farmLockLevelUpNotifier = ref.read(
+              farmLockLevelUpFormNotifierProvider.notifier,
+            )..setProcessInProgress(true);
+            final resultOk = await farmLockLevelUpNotifier
+                .lock(AppLocalizations.of(context)!);
+            farmLockLevelUpNotifier.setProcessInProgress(false);
+            if (resultOk) {
+              await context.push(FarmLockLevelUpResultSheet.routerPage);
+            } else {
+              UIUtil.showSnackbar(
+                FailureMessage(
+                  context: context,
+                  failure:
+                      ref.read(farmLockLevelUpFormNotifierProvider).failure,
+                ).getMessage(),
+                context,
+                ref,
+                ArchethicTheme.text,
+                ArchethicTheme.snackBarShadow,
+                duration: const Duration(seconds: 5),
+              );
+            }
+          },
+          isLocked: (!farmLockLevelUp.confirmLockPeriod ||
+                  !farmLockLevelUp.confirmPrivacyPolicy) ||
+              farmLockLevelUp.isProcessInProgress,
+          showProgressIndicator: farmLockLevelUp.isProcessInProgress,
+        ),
+      ],
     );
   }
 
@@ -131,84 +137,86 @@ class FarmLockLevelUpConfirmSheetState
       return const SizedBox.shrink();
     }
 
-    final localizations = AppLocalizations.of(context)!;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const FarmLockLevelUpConfirmInfos(),
-        if (farmLockLevelUp.farmLockLevelUpDuration !=
-            FarmLockDepositDurationType.flexible)
-          Row(
+        aedappfm.BlockInfo(
+          blockInfoColor: aedappfm.BlockInfoColor.purple,
+          borderWidth: 0,
+          paddingEdgeInsetsInfo: const EdgeInsets.all(20),
+          width: MediaQuery.of(context).size.width,
+          info: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: CheckboxListTile(
-                  title: Wrap(
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!
-                            .farmLockLevelUpConfirmCheckBoxUnderstand,
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              color:
-                                  aedappfm.ArchethicThemeBase.systemWarning500,
-                            ),
-                      ),
-                    ],
-                  ),
-                  dense: true,
-                  value: warningChecked,
-                  onChanged: (newValue) {
-                    setState(() {
-                      warningChecked = newValue!;
-                    });
-                  },
-                  controlAffinity: ListTileControlAffinity.leading,
-                  subtitle: InkWell(
-                    onTap: () async {
-                      final uri = Uri.parse(kURIFarmLockFarmTuto);
-                      if (!await canLaunchUrl(uri)) return;
-                      await launchUrl(uri);
-                    },
-                    child: Text(
-                      AppLocalizations.of(context)!
-                          .farmLockLevelUpConfirmMoreInfo,
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: AppLocalizations.of(context)!
+                          .farmLockDepositConfirmInfosText,
+                      style: Theme.of(context).textTheme.bodyMediumWithOpacity,
+                    ),
+                    TextSpan(
+                      text:
+                          '${farmLockLevelUp.amount.formatNumber(precision: 8)} ${farmLockLevelUp.amount > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            decoration: TextDecoration.underline,
-                            color: aedappfm.ArchethicThemeBase.systemWarning500,
+                            fontWeight: FontWeightTelegraf.fontWeightBold,
                           ),
                     ),
-                  ),
+                    TextSpan(
+                      text: AppLocalizations.of(context)!
+                          .farmLockDepositConfirmInfosText2,
+                      style: Theme.of(context).textTheme.bodyMediumWithOpacity,
+                    ),
+                    TextSpan(
+                      text: getFarmLockDepositDurationTypeLabel(
+                        context,
+                        farmLockLevelUp.farmLockLevelUpDuration,
+                      ).toLowerCase(),
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontWeight: FontWeightTelegraf.fontWeightBold,
+                          ),
+                    ),
+                    TextSpan(
+                      text: '.',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Text.rich(
+                TextSpan(
+                  children: [
+                    WidgetSpan(
+                      child: Text(
+                        AppLocalizations.of(context)!
+                            .farmLockDepositConfirmInfosText3,
+                        style:
+                            Theme.of(context).textTheme.bodyMediumWithOpacity,
+                      ),
+                    ),
+                    WidgetSpan(
+                      child: GradientText(
+                        '${((farmLockLevelUp.farmLock!.stats[farmLockLevelUp.level]?.aprEstimation ?? 0) * 100).formatNumber(precision: 2)}%',
+                        gradient: ArchethicGradients.gradientArchethic,
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              fontWeight: FontWeightTelegraf.fontWeightBold,
+                            ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
-        ConsentWidget(
-          consentDateTime: farmLockLevelUp.consentDateTime,
-          consentChecked: consentChecked,
-          onToggleConsent: (newValue) {
-            setState(() {
-              consentChecked = newValue!;
-            });
-          },
-          textStyle: AppTextStyles.bodyMedium(
-            context,
-          ),
         ),
-        SheetDetailCard(
-          children: [
-            Text(
-              localizations.estimatedTxFees,
-              style: AppTextStyles.bodyMedium(context),
-            ),
-            Text(
-              AmountFormatters.standardSmallValue(
-                farmLockLevelUp.feesEstimatedUCO,
-                kUCOAddress,
-                decimal: 3,
-              ),
-              style: AppTextStyles.bodyMedium(context),
-            ),
-          ],
-        ),
+        const SizedBox(height: 20),
+        const FarmLockLevelUpConfirmLockPeriod(),
+        const SizedBox(height: 20),
+        const FarmLockLevelUpConfirmPrivacyPolicy(),
       ],
     );
   }

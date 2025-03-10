@@ -113,6 +113,7 @@ class FarmLockLevelUpFormSheet extends ConsumerWidget
           Padding(
             padding: const EdgeInsets.only(bottom: 80),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
@@ -150,8 +151,11 @@ class FarmLockLevelUpFormSheet extends ConsumerWidget
                 if (rewardAmount == 0)
                   MessageBox(
                     messageBoxType: MessageBoxType.info,
-                    text: AppLocalizations.of(context)!
-                        .farmLockWithdrawFormTextNoRewardText1,
+                    content: Text(
+                      AppLocalizations.of(context)!
+                          .farmLockWithdrawFormTextNoRewardText1,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
                   )
                 else
                   FutureBuilder<String>(
@@ -162,25 +166,33 @@ class FarmLockLevelUpFormSheet extends ConsumerWidget
                     ),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        return Expanded(
-                          child: Wrap(
+                        return Text.rich(
+                          TextSpan(
+                            text: '',
                             children: [
-                              SelectableText(
-                                rewardAmount.formatNumber(),
-                                style: AppTextStyles.bodyMedium(context),
+                              TextSpan(
+                                text:
+                                    '${rewardAmount.formatNumber()} ${farmLockLevelUp.farmLock!.rewardToken!.symbol} ',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      fontWeight:
+                                          FontWeightTelegraf.fontWeightBold,
+                                    ),
                               ),
-                              SelectableText(
-                                ' ${farmLockLevelUp.farmLock!.rewardToken!.symbol} ',
-                                style: AppTextStyles.bodyMedium(context),
+                              TextSpan(
+                                text: '${snapshot.data}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMediumWithOpacity,
                               ),
-                              SelectableText(
-                                '${snapshot.data}',
-                                style: AppTextStyles.bodyMedium(context),
-                              ),
-                              SelectableText(
-                                AppLocalizations.of(context)!
+                              TextSpan(
+                                text: AppLocalizations.of(context)!
                                     .farmLockWithdrawFormTextRewardText2,
-                                style: AppTextStyles.bodyMedium(context),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMediumWithOpacity,
                               ),
                             ],
                           ),

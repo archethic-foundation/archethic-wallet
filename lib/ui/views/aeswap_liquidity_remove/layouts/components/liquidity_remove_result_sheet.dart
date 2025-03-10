@@ -93,15 +93,21 @@ class LiquidityRemoveResultSheetState
                 finalAmountLPToken == null)
               MessageBox(
                 messageBoxType: MessageBoxType.warning,
-                text: FailureMessage(
-                  context: context,
-                  failure: liquidityRemove.failure,
-                ).getMessage(),
+                content: Text(
+                  FailureMessage(
+                    context: context,
+                    failure: liquidityRemove.failure,
+                  ).getMessage(),
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
               )
             else
               MessageBox(
                 messageBoxType: MessageBoxType.success,
-                text: AppLocalizations.of(context)!.liquidityRemoveSuccessInfo,
+                content: Text(
+                  AppLocalizations.of(context)!.liquidityRemoveSuccessInfo,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
               ),
             const SizedBox(
               height: 20,

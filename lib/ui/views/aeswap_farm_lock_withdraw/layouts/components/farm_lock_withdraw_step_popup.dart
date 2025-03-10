@@ -40,15 +40,14 @@ class FarmLockWithdrawStepPopup extends ConsumerWidget {
                   LayoutBuilder(
                     builder: (context, constraints) {
                       return Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(
-                            width: constraints.maxWidth * 0.05,
+                            width: constraints.maxWidth * 0.10,
                             child: _getStepIcon(step.stepIndex),
                           ),
                           SizedBox(
-                            width: constraints.maxWidth * 0.90,
+                            width: constraints.maxWidth * 0.85,
                             child: Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: Column(
@@ -94,18 +93,47 @@ class FarmLockWithdrawStepPopup extends ConsumerWidget {
               farmLockWithdraw.finalAmountWithdraw != null)
             MessageBox(
               messageBoxType: MessageBoxType.success,
-              text: farmLockWithdraw.finalAmountReward! > 0
-                  ? localizations.withdrawFundsStepPopupFinalAmountWithReward(
-                      farmLockWithdraw.finalAmountWithdraw!
-                          .formatNumber(precision: 2),
-                      farmLockWithdraw.finalAmountReward!
-                          .formatNumber(precision: 2),
-                    )
-                  : localizations
-                      .withdrawFundsStepPopupFinalAmountWithoutReward(
-                      farmLockWithdraw.finalAmountWithdraw!
-                          .formatNumber(precision: 2),
+              content: Text.rich(
+                TextSpan(
+                  text: '',
+                  children: <InlineSpan>[
+                    TextSpan(
+                      text: localizations
+                          .withdrawFundsStepPopupFinalAmountWithRewardDesc1,
+                      style: Theme.of(context).textTheme.bodySmallWithOpacity,
                     ),
+                    TextSpan(
+                      text:
+                          '${farmLockWithdraw.finalAmountWithdraw!.formatNumber(
+                        precision:
+                            farmLockWithdraw.finalAmountWithdraw! < 1 ? 8 : 2,
+                      )} ${aedappfm.ucoToken.symbol}',
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                            fontWeight: FontWeightTelegraf.fontWeightBold,
+                          ),
+                    ),
+                    TextSpan(
+                      text: localizations
+                          .withdrawFundsStepPopupFinalAmountWithRewardDesc2,
+                      style: Theme.of(context).textTheme.bodySmallWithOpacity,
+                    ),
+                    TextSpan(
+                      text: '${farmLockWithdraw.finalAmountReward!.formatNumber(
+                        precision:
+                            farmLockWithdraw.finalAmountReward! < 1 ? 8 : 2,
+                      )} ${aedappfm.ucoToken.symbol}',
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                            fontWeight: FontWeightTelegraf.fontWeightBold,
+                          ),
+                    ),
+                    TextSpan(
+                      text: localizations
+                          .withdrawFundsStepPopupFinalAmountWithRewardDesc3,
+                      style: Theme.of(context).textTheme.bodySmallWithOpacity,
+                    ),
+                  ],
+                ),
+              ),
             ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

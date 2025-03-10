@@ -53,6 +53,7 @@
     "addressMissing": "Entrez une adresse s'il vous plaît",
     "insufficientBalance": "Vous ne possédez pas assez de %1.",
     "fees": "Frais",
+    "fee": "Frais",
     "pinCreateTitle": "Créer un code à 6 chiffres (PIN)",
     "pinConfirmTitle": "Confirmez votre code PIN",
     "pinEnterTitle": "Entrez le code PIN",
@@ -188,8 +189,8 @@
     "enterYubikeyAPIKeyEmpty": "La clé client de l'API est obligatoire",
     "ucoBuyTitle": "Où acheter des UCO ?",
     "ucoBuyInAeWalletTitle": "Acheter dans votre Wallet Archethic",
-    "ucoBuyInAeWalletWithFiat": "Avec des €, $ ...",
-    "ucoBuyInAeWalletWithCrypto": "Avec des Cryptos (ETH)",
+    "ucoBuyInAeWalletWithFiat": "Via carte de crédit",
+    "ucoBuyInAeWalletWithCrypto": "Via cryptos",
     "ucoBuyOnCexTitle": "Acheter sur un Échange Centralisé ",
     "ucoBuyOnCexSubtitle": "(CEX)",
     "ucoBuyOnDexTitle": "Acheter sur un Échange Décentralisé ",
@@ -505,7 +506,7 @@
     "farmDetailsInfoPeriodStarted": "Début farming",
     "farmDetailsInfoPeriodEndAt": "Fin farming",
     "farmDetailsInfoPeriodEnded": "Le farming est terminé",
-    "farmDetailsInfoRemainingReward": "Récompense restante",
+    "farmDetailsInfoRemainingReward": "Récompenses restantes",
     "farmDetailsInfoTokenRewardEarn": "Gagner",
     "poolDetailsInfoSwapFees": "Frais d'échange",
     "poolDetailsInfoProtocolFees": "Frais de protocole",
@@ -533,10 +534,11 @@
     "farmLockDepositDurationThreeYears": "3 ans",
     "farmLockDepositDurationTwoYears": "2 ans",
     "farmLockDepositDurationMax": "Max",
-    "farmLockDepositAPRLbl": "TAEG :",
+    "farmLockDepositAPRLbl": "APR :",
     "btn_confirm_farm_add_lock": "Confirmer",
-    "farmLockDepositConfirmInfosText": "Veuillez confirmer le verrouillage de ",
-    "farmLockDepositConfirmInfosText2": " pour ",
+    "farmLockDepositConfirmInfosText": "Vous êtes sur le point de verrouiller ",
+    "farmLockDepositConfirmInfosText2": " pour une période de ",
+    "farmLockDepositConfirmInfosText3": "L'APR actuel pour cette période de verrouillage est de ",
     "depositFarmLockProcessStep0": "Processus non démarré",
     "depositFarmLockProcessStep1": "Création de la transaction",
     "depositFarmLockProcessStep2": "Dépôt en cours",
@@ -574,7 +576,7 @@
     "farmLockBlockListHeaderAmount": "Montant",
     "farmLockBlockListHeaderRewards": "Récompenses estimées",
     "farmLockBlockListHeaderUnlocks": "Déblocage possible",
-    "farmLockBlockListHeaderAPR": "TAEG",
+    "farmLockBlockListHeaderAPR": "APR",
     "farmLockBtnLevelUp": "Level Up",
     "farmLockBtnWithdraw": "Retirer LP",
     "levelUpFarmLockProcessStep0": "Processus non démarré",
@@ -584,8 +586,8 @@
     "btn_farmLockLevelUp": "Monter de niveau",
     "farmLockLevelUpFormTitle": "Monter de niveau",
     "farmLockLevelUpFormAmountLbl": "Montant",
-    "farmLockLevelUpAPREstimationLbl": "Estim. TAEG :",
-    "farmLockLevelUpAPRLbl": "TAEG :",
+    "farmLockLevelUpAPREstimationLbl": "Estim. APR :",
+    "farmLockLevelUpAPRLbl": "APR :",
     "farmLockLevelUpCurrentLvlLbl": "Niveau actuel :",
     "farmLockLevelUpConfirmTitle": "Confirmation",
     "farmLockLevelUpConfirmInfosText": "Veuillez confirmer le verrouillage de ",
@@ -593,7 +595,7 @@
     "farmLockLevelUpConfirmInfosText3": "Vous pouvez récupérer vos jetons LP et les récompenses associées à tout moment.",
     "farmLockLevelUpFinalAmount": "Montant : ",
     "farmLockLevelUpTxAddress": "Adresse de la transaction de montée de niveau : ",
-    "farmLockLevelUpDesc": "Vous pouvez prolonger la durée de votre verrouillage pour gagner plus de récompenses.\nPour ce faire, vous devez choisir une période plus longue qu'auparavant, ce qui vous fournira un niveau supérieur. Plus votre niveau est élevé, plus le TAEG est élevé.\nEn même temps, cela permettra de récupérer vos récompenses actuelles.",
+    "farmLockLevelUpDesc": "Vous pouvez prolonger la durée de votre verrouillage pour gagner plus de récompenses.\nPour ce faire, vous devez choisir une période plus longue qu'auparavant, ce qui vous fournira un niveau supérieur. Plus votre niveau est élevé, plus l'APR est élevé.\nEn même temps, cela permettra de récupérer vos récompenses actuelles.",
     "farmLockLevelUpConfirmCheckBoxUnderstand": "Je comprends que je ne peux pas récupérer mes jetons avant la date de libération.",
     "farmLockLevelUpConfirmMoreInfo": "Plus d'informations.",
     "farmLockClaimConfirmInfosText": "Veuillez confirmer la récupération de ",
@@ -864,34 +866,14 @@
     "addFundsStep11": "Échange ",
     "addFundsStep12": "des UCO contre des ETH",
     "addFundsStep21": "Ajout des fonds ",
-    "addFundsStep22": "dans la pool ETH/UCO",
+    "addFundsStep22": "\ndans la pool ETH/UCO",
     "addFundsStep31": "Verrouillage ",
     "addFundsStep32": "des jetons",
     "resumeBtn": "Reprendre",
     "languageEnglish": "English",
     "languageFrancais": "Français",
-    "farmLockDepositStepPopupFinalAmount": "Vous avez bloqué {finalAmount} jeton LP pour {duration}.",
-    "@farmLockDepositStepPopupFinalAmount": {
-        "placeholders": {
-            "finalAmount": {
-                "type": "String"
-            },
-            "duration": {
-                "type": "String"
-            }
-        }
-    },
-    "farmLockDepositStepPopupFinalAmounts": "Vous avez bloqué {finalAmount} jetons LP pour {duration}.",
-    "@farmLockDepositStepPopupFinalAmounts": {
-        "placeholders": {
-            "finalAmount": {
-                "type": "String"
-            },
-            "duration": {
-                "type": "String"
-            }
-        }
-    },
+    "farmLockDepositStepPopupFinalAmountDesc1": "Vous avez bloqué ",
+    "farmLockDepositStepPopupFinalAmountDesc2": " pour ",
     "farmLockDepositConfirmUcoDesc1": "Une fois que vous aurez cliqué sur \"Confirmer\" en bas de cette page, les actions suivantes auront lieu automatiquement :",
     "farmLockDepositConfirmUcoItem1Desc1": "50% ",
     "farmLockDepositConfirmUcoItem1Desc2": "du montant de vos UCO saisis seront échangés contre des ETH",
@@ -916,33 +898,17 @@
     "withdrawFundsStep11": "Déverrouiller ",
     "withdrawFundsStep12": "les jetons",
     "withdrawFundsStep21": "Retirer les fonds ",
-    "withdrawFundsStep22": "de la pool ETH/UCO",
+    "withdrawFundsStep22": "\nde la pool ETH/UCO",
     "withdrawFundsStep31": "Échanger ",
     "withdrawFundsStep32": "les ETH en UCO",
-    "withdrawFundsStepPopupFinalAmountWithReward": "Vous avez reçu {finalAmountWithdraw} UCO provenant des jetons LP déverrouillés et {finalAmountReward} UCO de vos récompenses accumulées.",
-    "@withdrawFundsStepPopupFinalAmountWithReward": {
-        "placeholders": {
-            "finalAmountWithdraw": {
-                "type": "String"
-            },
-            "finalAmountReward": {
-                "type": "String"
-            }
-        }
-    },
-    "withdrawFundsStepPopupFinalAmountWithoutReward": "Vous avez reçu {finalAmountWithdraw} UCO provenant des jetons LP déverrouillés.",
-    "@withdrawFundsStepPopupFinalAmountWithoutReward": {
-        "placeholders": {
-            "finalAmountWithdraw": {
-                "type": "String"
-            }
-        }
-    },
+    "withdrawFundsStepPopupFinalAmountWithRewardDesc1": "Vous avez reçu ",
+    "withdrawFundsStepPopupFinalAmountWithRewardDesc2": " provenant des jetons LP déverrouillés et ",
+    "withdrawFundsStepPopupFinalAmountWithRewardDesc3": " de vos récompenses accumulées.",
     "farmLockWithdrawDescBeginner": "Une fois que certains de vos fonds sont déverrouillés, vous pouvez les retirer. Techniquement, cela supprimera votre liquidité de la pool de liquidité, et vous recevrez une valeur équivalente en jetons UCO et en Ethereum. Après cela, l'Ethereum sera automatiquement échangé contre des UCO.",
     "farmLockWithdrawDesc2Beginner": "Lorsque vous retirez vos fonds, ils sont automatiquement supprimés de la pool ETH/UCO. Vous recevrez une valeur équivalente en jetons UCO et en Ethereum, et toutes les récompenses accumulées seront directement créditées sur votre portefeuille en UCO. Enfin, l'Ethereum sera échangé en UCO afin que vous receviez la totalité du montant en UCO.",
     "farmLockWithdrawFormTextNoLPText1": "Aucun jeton LP déverrouillé disponible",
     "farmLockWithdrawFormTextLPText2": " est disponible pour le retrait.",
-    "onrampWithFiatTitle": "Acheter des UCO (avec €, $...)",
+    "onrampWithFiatTitle": "Acheter des UCO via carte de crédit",
     "onrampWithFiatHowDoesItWorkTitle": "Comment ça marche ?",
     "onrampWithFiatHowDoesItWorkBody": "Pour optimiser vos frais de transaction, nous avons développé un système qui vous permet d’acheter de l’Ethereum, lequel est automatiquement converti en tokens UCO et envoyé directement dans votre portefeuille Archethic.",
     "onrampWithFiatDisclaimer": "Je comprends que j’achète de l’Ethereum avec une monnaie fiduciaire et que cette transaction est soumise aux frais du prestataire de paiement. Une fois acquis, mon Ethereum sera automatiquement envoyé dans mon portefeuille Archethic et converti en tokens UCO au taux du marché en vigueur, avec des frais de 1 % appliqués. En raison des fluctuations du marché, la quantité exacte de UCO que je recevrai peut varier et ne peut être estimée précisément à l’avance.",

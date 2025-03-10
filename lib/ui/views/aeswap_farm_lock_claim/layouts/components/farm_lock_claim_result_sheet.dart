@@ -89,15 +89,21 @@ class FarmLockClaimResultSheetState
             if (finalAmount == null)
               MessageBox(
                 messageBoxType: MessageBoxType.warning,
-                text: FailureMessage(
-                  context: context,
-                  failure: farmLockClaim.failure,
-                ).getMessage(),
+                content: Text(
+                  FailureMessage(
+                    context: context,
+                    failure: farmLockClaim.failure,
+                  ).getMessage(),
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
               )
             else
               MessageBox(
                 messageBoxType: MessageBoxType.success,
-                text: AppLocalizations.of(context)!.liquidityAddSuccessInfo,
+                content: Text(
+                  AppLocalizations.of(context)!.liquidityAddSuccessInfo,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
               ),
             const SizedBox(
               height: 20,

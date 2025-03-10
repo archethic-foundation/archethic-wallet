@@ -53,6 +53,7 @@
     "addressMissing": "Please Enter an Address",
     "insufficientBalance": "You don't have enough %1.",
     "fees": "Fees",
+    "fee": "Fee",
     "pinCreateTitle": "Create a 6-digit pin",
     "pinConfirmTitle": "Confirm your pin",
     "pinEnterTitle": "Enter pin",
@@ -191,8 +192,8 @@
     "enterYubikeyAPIKeyEmpty": "The API Key is mandatory",
     "ucoBuyTitle": "Where to Buy UCO ?",
     "ucoBuyInAeWalletTitle": "Buy in your Archethic Wallet",
-    "ucoBuyInAeWalletWithFiat": "With FIAT (€, $)",
-    "ucoBuyInAeWalletWithCrypto": "With Crypto (ETH)",
+    "ucoBuyInAeWalletWithFiat": "With Credit Card",
+    "ucoBuyInAeWalletWithCrypto": "With Crypto",
     "ucoBuyOnCexTitle": "Buy on Centralized Exchanges ",
     "ucoBuyOnCexSubtitle": "(CEX)",
     "ucoBuyOnDexTitle": "Buy on Deentralized Exchanges ",
@@ -540,8 +541,9 @@
     "farmLockDepositDurationMax": "Max",
     "farmLockDepositAPRLbl": "APR:",
     "btn_confirm_farm_add_lock": "Confirm",
-    "farmLockDepositConfirmInfosText": "Please confirm the lock of ",
-    "farmLockDepositConfirmInfosText2": " for ",
+    "farmLockDepositConfirmInfosText": "You are about to lock ",
+    "farmLockDepositConfirmInfosText2": " for the period of ",
+    "farmLockDepositConfirmInfosText3": "The actual APR for this lock period is ",
     "depositFarmLockProcessStep0": "Process not started",
     "depositFarmLockProcessStep1": "Build transaction",
     "depositFarmLockProcessStep2": "Deposit in progress",
@@ -868,34 +870,14 @@
     "addFundsStep11": "Swap ",
     "addFundsStep12": "UCO to ETH",
     "addFundsStep21": "Add funds ",
-    "addFundsStep22": "to ETH/UCO pool",
+    "addFundsStep22": "\nto ETH/UCO pool",
     "addFundsStep31": "Lock ",
     "addFundsStep32": "tokens",
     "resumeBtn": "Resume",
     "languageEnglish": "English",
     "languageFrancais": "Français",
-    "farmLockDepositStepPopupFinalAmount": "You have locked {finalAmount} LP Token for {duration}.",
-    "@farmLockDepositStepPopupFinalAmount": {
-        "placeholders": {
-            "finalAmount": {
-                "type": "String"
-            },
-            "duration": {
-                "type": "String"
-            }
-        }
-    },
-    "farmLockDepositStepPopupFinalAmounts": "You have locked {finalAmount} LP Tokens for {duration}.",
-    "@farmLockDepositStepPopupFinalAmounts": {
-        "placeholders": {
-            "finalAmount": {
-                "type": "String"
-            },
-            "duration": {
-                "type": "String"
-            }
-        }
-    },
+    "farmLockDepositStepPopupFinalAmountDesc1": "You have locked ",
+    "farmLockDepositStepPopupFinalAmountDesc2": " for ",
     "farmLockDepositConfirmUcoDesc1": "Once you click on \"Confirm\" at the bottom of this page, the following actions will automatically take place:",
     "farmLockDepositConfirmUcoItem1Desc1": "50% ",
     "farmLockDepositConfirmUcoItem1Desc2": "of your entered UCO amount will be exchanged for ETH",
@@ -920,33 +902,17 @@
     "withdrawFundsStep11": "Unlock ",
     "withdrawFundsStep12": "tokens",
     "withdrawFundsStep21": "Withdraw funds ",
-    "withdrawFundsStep22": "from ETH/UCO pool",
+    "withdrawFundsStep22": "\nfrom ETH/UCO pool",
     "withdrawFundsStep31": "Swap ",
     "withdrawFundsStep32": "ETH to UCO",
-    "withdrawFundsStepPopupFinalAmountWithReward": "You have received {finalAmountWithdraw} UCO from unlocked LP Tokens and {finalAmountReward} UCO from your accumulated rewards.",
-    "@withdrawFundsStepPopupFinalAmountWithReward": {
-        "placeholders": {
-            "finalAmountWithdraw": {
-                "type": "String"
-            },
-            "finalAmountReward": {
-                "type": "String"
-            }
-        }
-    },
-    "withdrawFundsStepPopupFinalAmountWithoutReward": "You have received {finalAmountWithdraw} UCO from unlocked LP Tokens.",
-    "@withdrawFundsStepPopupFinalAmountWithoutReward": {
-        "placeholders": {
-            "finalAmountWithdraw": {
-                "type": "String"
-            }
-        }
-    },
+    "withdrawFundsStepPopupFinalAmountWithRewardDesc1": "You have received ",
+    "withdrawFundsStepPopupFinalAmountWithRewardDesc2": " from unlocked LP Tokens and ",
+    "withdrawFundsStepPopupFinalAmountWithRewardDesc3": " from your accumulated rewards.",
     "farmLockWithdrawDescBeginner": "Once some of your funds are unlocked, you can withdraw them. Technically, this will remove your liquidity from the liquidity pool, and you will receive an equivalent value in UCO tokens and Ethereum. After that, the Ethereum will be automatically swapped for UCO.",
     "farmLockWithdrawDesc2Beginner": "When you withdraw, your funds are automatically removed from the ETH/UCO pool. You'll receive an equivalent value in UCO tokens and Ethereum, and any accrued rewards will be directly credited to your wallet in UCO. Finally, the Ethereum will be swapped for UCO, so you receive the full amount in UCO.",
     "farmLockWithdrawFormTextNoLPText1": "No unlocked LP Token are available",
     "farmLockWithdrawFormTextLPText2": " are available for withdrawal.",
-    "onrampWithFiatTitle": "Buy UCO (with €, $...)",
+    "onrampWithFiatTitle": "Buy UCO with credit card",
     "onrampWithFiatHowDoesItWorkTitle": "How does it work ?",
     "onrampWithFiatHowDoesItWorkBody": "To optimize your transaction fees, we've developed a system that lets you buy Ethereum and automatically converts it into UCO tokens—sent directly to your Archethic wallet.",
     "onrampWithFiatDisclaimer": "I understand that I am purchasing Ethereum using fiat currency, and this transaction is subject to payment provider fees. Once acquired, my Ethereum will be automatically sent to my Archethic wallet and converted into UCO tokens at the current market rate with a 1% fee applied. Due to market fluctuations, the exact amount of UCO I receive may vary and cannot be precisely estimated in advance.",

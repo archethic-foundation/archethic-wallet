@@ -125,10 +125,13 @@ class FarmLockDepositFormSheet extends ConsumerWidget
                 if (farmLockDeposit.failure != null)
                   MessageBox(
                     messageBoxType: MessageBoxType.warning,
-                    text: FailureMessage(
-                      context: context,
-                      failure: farmLockDeposit.failure,
-                    ).getMessage(),
+                    content: Text(
+                      FailureMessage(
+                        context: context,
+                        failure: farmLockDeposit.failure,
+                      ).getMessage(),
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
                   ),
                 const SizedBox(height: 20),
                 Column(

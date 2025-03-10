@@ -32,6 +32,8 @@ class FarmLockLevelUpFormState with _$FarmLockLevelUpFormState {
     DateTime? consentDateTime,
     String? depositId,
     String? currentLevel,
+    @Default(false) bool confirmLockPeriod,
+    @Default(false) bool confirmPrivacyPolicy,
   }) = _FarmLockLevelUpFormState;
   const FarmLockLevelUpFormState._();
 

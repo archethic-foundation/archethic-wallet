@@ -114,13 +114,17 @@ class LiquidityRemoveFormSheet extends ConsumerWidget
             const SizedBox(
               height: 10,
             ),
-            MessageBox(
-              messageBoxType: MessageBoxType.warning,
-              text: FailureMessage(
-                context: context,
-                failure: liquidityRemove.failure,
-              ).getMessage(),
-            ),
+            if (liquidityRemove.failure != null)
+              MessageBox(
+                messageBoxType: MessageBoxType.warning,
+                content: Text(
+                  FailureMessage(
+                    context: context,
+                    failure: liquidityRemove.failure,
+                  ).getMessage(),
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ),
             const SizedBox(
               height: 20,
             ),
