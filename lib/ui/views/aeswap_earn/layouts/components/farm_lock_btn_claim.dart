@@ -38,6 +38,7 @@ class FarmLockBtnClaim extends ConsumerWidget {
         onTap: () async {
           await _validate(context);
         },
+        widthExpanded: true,
       ),
     );
   }
