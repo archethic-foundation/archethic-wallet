@@ -144,7 +144,9 @@ class _OnRampTransactionHistoryTableRow extends ConsumerWidget {
                     ],
                   ),
                   Text(
-                    DateFormat.yMd().add_Hms().format(deposit.depositDate),
+                    DateFormat.yMd(
+                      Localizations.localeOf(context).languageCode,
+                    ).add_Hms().format(deposit.depositDate.toLocal()),
                     style: AppTextStyles.bodySmall(context),
                   ),
                 ],
