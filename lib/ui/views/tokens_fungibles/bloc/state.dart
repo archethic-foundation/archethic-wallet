@@ -14,7 +14,6 @@ class AddTokenFormState with _$AddTokenFormState {
   const factory AddTokenFormState({
     @Default(AddTokenProcessStep.form) AddTokenProcessStep addTokenProcessStep,
     required AsyncValue<double> feeEstimation,
-    required AccountBalance accountBalance,
     @Default('') String name,
     @Default('') String symbol,
     @Default(0.0) double initialSupply,

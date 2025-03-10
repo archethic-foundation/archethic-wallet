@@ -1,10 +1,11 @@
 import 'dart:ui';
 
-import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
 import 'package:aewallet/domain/usecases/usecase.dart';
 import 'package:aewallet/model/data/account_balance.dart';
+import 'package:aewallet/modules/aeswap/application/balance.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
@@ -113,11 +114,6 @@ class SendTransactionConfirmationForm extends ConsumerWidget
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final accountSelected = ref.watch(
-      accountsNotifierProvider.select(
-        (accounts) => accounts.valueOrNull?.selectedAccount,
-      ),
-    );
 
     final formState = ref.watch(
       SignTransactionConfirmationProviders.form(command),
@@ -166,8 +162,10 @@ class SendTransactionConfirmationForm extends ConsumerWidget
                         ),
                         Text(
                           AmountFormatters.standard(
-                            accountSelected!.balance!.nativeTokenValue -
-                                formData.value.feesEstimation,
+                            ref
+                                    .watch(getBalanceProvider(kUCOAddress))
+                                    .valueOrNull ??
+                                0.0 - formData.value.feesEstimation,
                             AccountBalance.cryptoCurrencyLabel,
                           ),
                           style:

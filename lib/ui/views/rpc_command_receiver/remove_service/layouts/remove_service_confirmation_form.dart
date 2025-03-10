@@ -3,6 +3,8 @@ import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
 import 'package:aewallet/domain/usecases/usecase.dart';
 import 'package:aewallet/model/data/account_balance.dart';
+import 'package:aewallet/modules/aeswap/application/balance.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
@@ -156,9 +158,6 @@ class RemoveServiceConfirmationForm extends ConsumerWidget
   Widget displayInfoDetail(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
-    final accountSelected =
-        ref.watch(accountsNotifierProvider).valueOrNull?.selectedAccount;
-
     return Container(
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.only(left: 10, right: 10),
@@ -199,7 +198,7 @@ class RemoveServiceConfirmationForm extends ConsumerWidget
               ),
               Text(
                 AmountFormatters.standard(
-                  accountSelected!.balance!.nativeTokenValue,
+                  ref.watch(getBalanceProvider(kUCOAddress)).valueOrNull ?? 0.0,
                   AccountBalance.cryptoCurrencyLabel,
                 ),
                 style: ArchethicThemeStyles.textStyleSize12W100Primary,

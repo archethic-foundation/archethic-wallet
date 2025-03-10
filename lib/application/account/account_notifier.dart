@@ -148,10 +148,7 @@ class AccountNotifier extends _$AccountNotifier {
     aedappfm.CryptoPrice cryptoPrice,
   ) async {
     final ucoAmount = fromBigInt(balanceGetResponse.uco).toDouble();
-    var accountBalance = AccountBalance(
-      nativeTokenName: AccountBalance.cryptoCurrencyLabel,
-      nativeTokenValue: ucoAmount,
-    );
+    var accountBalance = AccountBalance();
 
     var totalUSD = 0.0;
 

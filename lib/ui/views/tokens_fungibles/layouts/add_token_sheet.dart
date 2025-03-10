@@ -32,9 +32,8 @@ class AddTokenSheet extends ConsumerWidget {
     return ProviderScope(
       overrides: [
         AddTokenFormProvider.initialAddTokenForm.overrideWithValue(
-          AddTokenFormState(
-            feeEstimation: const AsyncValue.data(0),
-            accountBalance: selectedAccount.balance!,
+          const AddTokenFormState(
+            feeEstimation: AsyncValue.data(0),
           ),
         ),
       ],

@@ -12,6 +12,8 @@ import 'package:aewallet/domain/models/transfer.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/primary_currency.dart';
+import 'package:aewallet/modules/aeswap/application/balance.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/util/transaction_send_event_error_localization.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
@@ -100,10 +102,11 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
   }
 
   String _getErrorAmountText(BuildContext context, double fees) {
+    final balanceUCO =
+        ref.watch(getBalanceProvider(kUCOAddress)).valueOrNull ?? 0.0;
     switch (state.transferType) {
       case TransferType.uco:
-        return state.amountConverted >
-                state.accountBalance.nativeTokenValue - fees
+        return state.amountConverted > balanceUCO - fees
             ? AppLocalizations.of(context)!.insufficientBalance.replaceAll(
                   '%1',
                   state.symbol(context),
@@ -115,7 +118,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
                 '%1',
                 state.symbol(context),
               );
-        } else if (fees > state.accountBalance.nativeTokenValue) {
+        } else if (fees > balanceUCO) {
           return AppLocalizations.of(context)!.insufficientBalance.replaceAll(
                 '%1',
                 state.symbolFees(context),
@@ -123,7 +126,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         }
         break;
       case TransferType.nft:
-        if (fees > state.accountBalance.nativeTokenValue) {
+        if (fees > balanceUCO) {
           return AppLocalizations.of(context)!.insufficientBalance.replaceAll(
                 '%1',
                 state.symbolFees(context),
@@ -376,11 +379,11 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       return;
     }
 
-    final balance = state.accountBalance;
+    final balanceUCO = await ref.read(getBalanceProvider(kUCOAddress).future);
 
     final fees = await _calculateFees(
       context: context,
-      formState: state.copyWith(amount: balance.nativeTokenValue),
+      formState: state.copyWith(amount: balanceUCO),
     );
 
     if (fees == null) {
@@ -395,17 +398,13 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     switch (primaryCurrency.primaryCurrency) {
       case AvailablePrimaryCurrencyEnum.fiat:
         var amountMax = 0.0;
-        amountMax = (balance.nativeTokenValue > fees
-                ? balance.nativeTokenValue - fees
-                : 0) *
+        amountMax = (balanceUCO > fees ? balanceUCO - fees : 0) *
             archethicOracleUCO.usd;
         state = state.copyWith(
           amount: amountMax,
-          amountConverted: balance.nativeTokenValue > fees
-              ? balance.nativeTokenValue - fees
-              : 0,
+          amountConverted: balanceUCO > fees ? balanceUCO - fees : 0,
           feeEstimation: AsyncValue.data(fees),
-          errorAmountText: balance.nativeTokenValue > fees
+          errorAmountText: balanceUCO > fees
               ? ''
               : AppLocalizations.of(context)!.insufficientBalance.replaceAll(
                     '%1',
@@ -416,11 +415,9 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         break;
       case AvailablePrimaryCurrencyEnum.native:
         state = state.copyWith(
-          amount: balance.nativeTokenValue > fees
-              ? balance.nativeTokenValue - fees
-              : 0,
+          amount: balanceUCO > fees ? balanceUCO - fees : 0,
           feeEstimation: AsyncValue.data(fees),
-          errorAmountText: balance.nativeTokenValue > fees
+          errorAmountText: balanceUCO > fees
               ? ''
               : AppLocalizations.of(context)!.insufficientBalance.replaceAll(
                     '%1',
@@ -522,10 +519,10 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     return true;
   }
 
-  bool controlAmount(
+  Future<bool> controlAmount(
     BuildContext context,
     Account accountSelected,
-  ) {
+  ) async {
     if (state.amount <= 0) {
       state = state.copyWith(
         errorAmountText: AppLocalizations.of(context)!.amountZero,
@@ -535,6 +532,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
 
     final feeEstimation = state.feeEstimation.valueOrNull ?? 0;
 
+    final balanceUCO = await ref.read(getBalanceProvider(kUCOAddress).future);
     switch (state.transferType) {
       case TransferType.uco:
         var amountInUCO = state.amount;
@@ -544,8 +542,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
           amountInUCO = state.amountConverted;
         }
 
-        if (amountInUCO + feeEstimation >
-            accountSelected.balance!.nativeTokenValue) {
+        if (amountInUCO + feeEstimation > balanceUCO) {
           state = state.copyWith(
             errorAmountText:
                 AppLocalizations.of(context)!.insufficientBalance.replaceAll(
@@ -557,7 +554,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         }
         break;
       case TransferType.token:
-        if (feeEstimation > accountSelected.balance!.nativeTokenValue) {
+        if (feeEstimation > balanceUCO) {
           state = state.copyWith(
             errorAmountText:
                 AppLocalizations.of(context)!.insufficientBalance.replaceAll(
@@ -580,7 +577,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         }
         break;
       case TransferType.nft:
-        if (feeEstimation > accountSelected.balance!.nativeTokenValue) {
+        if (feeEstimation > balanceUCO) {
           state = state.copyWith(
             errorAmountText:
                 AppLocalizations.of(context)!.insufficientBalance.replaceAll(

@@ -1,7 +1,6 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-
-import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/model/data/account_balance.dart';
+import 'package:aewallet/modules/aeswap/application/balance.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/provider.dart';
@@ -21,11 +20,6 @@ class AddTokenDetail extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
 
     final addToken = ref.watch(AddTokenFormProvider.addTokenForm);
-    final accountSelected = ref.watch(
-      accountsNotifierProvider.select(
-        (accounts) => accounts.valueOrNull?.selectedAccount,
-      ),
-    );
 
     return SizedBox(
       width: MediaQuery.of(context).size.width,
@@ -93,8 +87,8 @@ class AddTokenDetail extends ConsumerWidget {
               ),
               Text(
                 AmountFormatters.standard(
-                  accountSelected!.balance!.nativeTokenValue -
-                      addToken.feeEstimationOrZero,
+                  ref.watch(getBalanceProvider(kUCOAddress)).valueOrNull ??
+                      0.0 - addToken.feeEstimationOrZero,
                   addToken.symbolFees(context),
                 ),
                 style: ArchethicThemeStyles.textStyleSize12W100Primary,

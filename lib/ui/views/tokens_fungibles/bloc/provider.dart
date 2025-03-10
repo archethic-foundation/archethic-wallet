@@ -9,6 +9,8 @@ import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/token.dart';
 import 'package:aewallet/domain/models/transaction.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
+import 'package:aewallet/modules/aeswap/application/balance.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
 import 'package:aewallet/ui/util/transaction_send_event_error_localization.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/state.dart';
@@ -79,11 +81,12 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
       return;
     }
 
+    final balanceUCO = await ref.read(getBalanceProvider(kUCOAddress).future);
     state = state.copyWith(
       feeEstimation: AsyncValue.data(fees),
       errorAmountText: '',
     );
-    if (state.feeEstimationOrZero > state.accountBalance.nativeTokenValue) {
+    if (state.feeEstimationOrZero > balanceUCO) {
       state = state.copyWith(
         errorAmountText:
             AppLocalizations.of(context)!.insufficientBalance.replaceAll(

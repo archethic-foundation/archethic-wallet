@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
-import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/model/data/account_balance.dart';
+import 'package:aewallet/modules/aeswap/application/balance.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/views/add_account/bloc/provider.dart';
@@ -20,11 +20,6 @@ class AddAccountDetail extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
 
     final addAccount = ref.watch(AddAccountFormProvider.addAccountForm);
-    final accountSelected = ref.watch(
-      accountsNotifierProvider.select(
-        (accounts) => accounts.valueOrNull?.selectedAccount,
-      ),
-    );
 
     return Column(
       children: [
@@ -63,7 +58,7 @@ class AddAccountDetail extends ConsumerWidget {
             ),
             Text(
               AmountFormatters.standard(
-                accountSelected!.balance!.nativeTokenValue,
+                ref.watch(getBalanceProvider(kUCOAddress)).valueOrNull ?? 0.0,
                 addAccount.symbolFees(context),
               ),
               style: ArchethicThemeStyles.textStyleSize12W100Primary,

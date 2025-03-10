@@ -1,7 +1,6 @@
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/account_token.dart';
-import 'package:aewallet/model/primary_currency.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +28,6 @@ class TransferFormState with _$TransferFormState {
     /// Amount converted in UCO if primary currency is native. Else in fiat currency
     // TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)
     @Default(0.0) double amountConverted,
-    required AccountBalance accountBalance,
     required TransferRecipient recipient,
     AEToken? aeToken,
     AccountToken? accountToken,
@@ -46,26 +44,6 @@ class TransferFormState with _$TransferFormState {
 
   bool get canTransfer =>
       feeEstimation.value != null && feeEstimation.value! > 0 && isControlsOk;
-
-  bool showMaxAmountButton(AvailablePrimaryCurrency primaryCurrency) {
-    switch (transferType) {
-      case TransferType.uco:
-        final fees = feeEstimation.valueOrNull ?? 0;
-        switch (primaryCurrency.primaryCurrency) {
-          case AvailablePrimaryCurrencyEnum.fiat:
-            // Due to rounding, it can be difficult to obtain the max
-            return true;
-          case AvailablePrimaryCurrencyEnum.native:
-            return (amount + fees) < accountBalance.nativeTokenValue;
-        }
-      case TransferType.token:
-        return amount != aeToken!.balance;
-      case TransferType.nft:
-        return false;
-      case null:
-        return false;
-    }
-  }
 
   double get feeEstimationOrZero => feeEstimation.valueOrNull ?? 0;
 
