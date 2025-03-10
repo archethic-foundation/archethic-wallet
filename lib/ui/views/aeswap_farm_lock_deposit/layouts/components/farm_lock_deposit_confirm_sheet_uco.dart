@@ -310,16 +310,32 @@ class FarmLockDepositConfirmSheetUCO extends ConsumerWidget
                     ),
                     if (farmLock != null)
                       WidgetSpan(
-                        child: GradientText(
-                          '${(farmLock.apr3years * 100).formatNumber(precision: 0).replaceAll('.', '')}% ${localizations.farmLockDepositAPRLbl.replaceAll(':', '')}',
-                          gradient: ArchethicGradients.gradientArchethic,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(
-                                fontWeight: FontWeightTelegraf.fontWeightBold,
+                        child: farmLockDeposit
+                                        .farmLock!
+                                        .stats[farmLockDeposit.level]
+                                        ?.aprEstimation !=
+                                    null &&
+                                farmLockDeposit
+                                        .farmLock!
+                                        .stats[farmLockDeposit.level]!
+                                        .aprEstimation >
+                                    0
+                            ? GradientText(
+                                '${((farmLockDeposit.farmLock!.stats[farmLockDeposit.level]?.aprEstimation ?? 0) * 100).formatNumber(precision: 2)}% ${localizations.farmLockDepositAPRLbl.replaceAll(':', '')}',
+                                gradient: ArchethicGradients.gradientArchethic,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall!
+                                    .copyWith(
+                                      fontWeight:
+                                          FontWeightTelegraf.fontWeightBold,
+                                    ),
+                              )
+                            : const Icon(
+                                Icons.all_inclusive,
+                                size: 16,
+                                color: Color(0xFF00B67A),
                               ),
-                        ),
                       ),
                   ],
                 ),
