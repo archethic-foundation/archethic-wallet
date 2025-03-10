@@ -111,7 +111,7 @@ class AddTokenFormSheet extends ConsumerWidget
           ),
         ),
         const SizedBox(height: 20),
-        const BalanceIndicatorWidget(allDigits: false),
+        const BalanceIndicatorWidget(),
         FeeInfos(
           asyncFeeEstimation: addToken.feeEstimation,
           estimatedFeesNote: localizations.estimatedFeesAddTokenNote,

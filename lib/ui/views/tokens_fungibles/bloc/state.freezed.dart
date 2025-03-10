@@ -19,7 +19,6 @@ mixin _$AddTokenFormState {
   AddTokenProcessStep get addTokenProcessStep =>
       throw _privateConstructorUsedError;
   AsyncValue<double> get feeEstimation => throw _privateConstructorUsedError;
-  AccountBalance get accountBalance => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get symbol => throw _privateConstructorUsedError;
   double get initialSupply => throw _privateConstructorUsedError;
@@ -44,7 +43,6 @@ abstract class $AddTokenFormStateCopyWith<$Res> {
   $Res call(
       {AddTokenProcessStep addTokenProcessStep,
       AsyncValue<double> feeEstimation,
-      AccountBalance accountBalance,
       String name,
       String symbol,
       double initialSupply,
@@ -52,8 +50,6 @@ abstract class $AddTokenFormStateCopyWith<$Res> {
       String errorSymbolText,
       String errorInitialSupplyText,
       String errorAmountText});
-
-  $AccountBalanceCopyWith<$Res> get accountBalance;
 }
 
 /// @nodoc
@@ -73,7 +69,6 @@ class _$AddTokenFormStateCopyWithImpl<$Res, $Val extends AddTokenFormState>
   $Res call({
     Object? addTokenProcessStep = null,
     Object? feeEstimation = null,
-    Object? accountBalance = null,
     Object? name = null,
     Object? symbol = null,
     Object? initialSupply = null,
@@ -91,10 +86,6 @@ class _$AddTokenFormStateCopyWithImpl<$Res, $Val extends AddTokenFormState>
           ? _value.feeEstimation
           : feeEstimation // ignore: cast_nullable_to_non_nullable
               as AsyncValue<double>,
-      accountBalance: null == accountBalance
-          ? _value.accountBalance
-          : accountBalance // ignore: cast_nullable_to_non_nullable
-              as AccountBalance,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -125,16 +116,6 @@ class _$AddTokenFormStateCopyWithImpl<$Res, $Val extends AddTokenFormState>
               as String,
     ) as $Val);
   }
-
-  /// Create a copy of AddTokenFormState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $AccountBalanceCopyWith<$Res> get accountBalance {
-    return $AccountBalanceCopyWith<$Res>(_value.accountBalance, (value) {
-      return _then(_value.copyWith(accountBalance: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -148,7 +129,6 @@ abstract class _$$AddTokenFormStateImplCopyWith<$Res>
   $Res call(
       {AddTokenProcessStep addTokenProcessStep,
       AsyncValue<double> feeEstimation,
-      AccountBalance accountBalance,
       String name,
       String symbol,
       double initialSupply,
@@ -156,9 +136,6 @@ abstract class _$$AddTokenFormStateImplCopyWith<$Res>
       String errorSymbolText,
       String errorInitialSupplyText,
       String errorAmountText});
-
-  @override
-  $AccountBalanceCopyWith<$Res> get accountBalance;
 }
 
 /// @nodoc
@@ -176,7 +153,6 @@ class __$$AddTokenFormStateImplCopyWithImpl<$Res>
   $Res call({
     Object? addTokenProcessStep = null,
     Object? feeEstimation = null,
-    Object? accountBalance = null,
     Object? name = null,
     Object? symbol = null,
     Object? initialSupply = null,
@@ -194,10 +170,6 @@ class __$$AddTokenFormStateImplCopyWithImpl<$Res>
           ? _value.feeEstimation
           : feeEstimation // ignore: cast_nullable_to_non_nullable
               as AsyncValue<double>,
-      accountBalance: null == accountBalance
-          ? _value.accountBalance
-          : accountBalance // ignore: cast_nullable_to_non_nullable
-              as AccountBalance,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -236,7 +208,6 @@ class _$AddTokenFormStateImpl extends _AddTokenFormState {
   const _$AddTokenFormStateImpl(
       {this.addTokenProcessStep = AddTokenProcessStep.form,
       required this.feeEstimation,
-      required this.accountBalance,
       this.name = '',
       this.symbol = '',
       this.initialSupply = 0.0,
@@ -251,8 +222,6 @@ class _$AddTokenFormStateImpl extends _AddTokenFormState {
   final AddTokenProcessStep addTokenProcessStep;
   @override
   final AsyncValue<double> feeEstimation;
-  @override
-  final AccountBalance accountBalance;
   @override
   @JsonKey()
   final String name;
@@ -277,7 +246,7 @@ class _$AddTokenFormStateImpl extends _AddTokenFormState {
 
   @override
   String toString() {
-    return 'AddTokenFormState(addTokenProcessStep: $addTokenProcessStep, feeEstimation: $feeEstimation, accountBalance: $accountBalance, name: $name, symbol: $symbol, initialSupply: $initialSupply, errorNameText: $errorNameText, errorSymbolText: $errorSymbolText, errorInitialSupplyText: $errorInitialSupplyText, errorAmountText: $errorAmountText)';
+    return 'AddTokenFormState(addTokenProcessStep: $addTokenProcessStep, feeEstimation: $feeEstimation, name: $name, symbol: $symbol, initialSupply: $initialSupply, errorNameText: $errorNameText, errorSymbolText: $errorSymbolText, errorInitialSupplyText: $errorInitialSupplyText, errorAmountText: $errorAmountText)';
   }
 
   @override
@@ -289,8 +258,6 @@ class _$AddTokenFormStateImpl extends _AddTokenFormState {
                 other.addTokenProcessStep == addTokenProcessStep) &&
             (identical(other.feeEstimation, feeEstimation) ||
                 other.feeEstimation == feeEstimation) &&
-            (identical(other.accountBalance, accountBalance) ||
-                other.accountBalance == accountBalance) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.symbol, symbol) || other.symbol == symbol) &&
             (identical(other.initialSupply, initialSupply) ||
@@ -310,7 +277,6 @@ class _$AddTokenFormStateImpl extends _AddTokenFormState {
       runtimeType,
       addTokenProcessStep,
       feeEstimation,
-      accountBalance,
       name,
       symbol,
       initialSupply,
@@ -333,7 +299,6 @@ abstract class _AddTokenFormState extends AddTokenFormState {
   const factory _AddTokenFormState(
       {final AddTokenProcessStep addTokenProcessStep,
       required final AsyncValue<double> feeEstimation,
-      required final AccountBalance accountBalance,
       final String name,
       final String symbol,
       final double initialSupply,
@@ -347,8 +312,6 @@ abstract class _AddTokenFormState extends AddTokenFormState {
   AddTokenProcessStep get addTokenProcessStep;
   @override
   AsyncValue<double> get feeEstimation;
-  @override
-  AccountBalance get accountBalance;
   @override
   String get name;
   @override

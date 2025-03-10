@@ -1,6 +1,5 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aewallet/application/account/accounts_notifier.dart';
-import 'package:aewallet/model/data/account_balance.dart';
+import 'package:aewallet/modules/aeswap/application/balance.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/layouts/add_token_sheet.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -16,12 +15,9 @@ class TokenAddBtn extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final accountSelected = ref.watch(
-      accountsNotifierProvider.select(
-        (accounts) => accounts.valueOrNull?.selectedAccount,
-      ),
-    );
-    if (accountSelected?.balance?.isNativeTokenValuePositive() == false) {
+    final balanceUCO =
+        ref.watch(getBalanceProvider(kUCOAddress)).valueOrNull ?? 0.0;
+    if (balanceUCO <= 0) {
       return const SizedBox.shrink();
     }
 

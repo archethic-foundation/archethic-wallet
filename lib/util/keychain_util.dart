@@ -174,10 +174,6 @@ mixin KeychainServiceMixin {
               Duration.millisecondsPerSecond,
           genesisAddress: uint8ListToHex(genesisAddress),
           name: name,
-          balance: AccountBalance(
-            nativeTokenName: 'UCO',
-            nativeTokenValue: 0,
-          ),
           serviceType: serviceType,
           selected: isSelected,
         );
@@ -216,10 +212,7 @@ mixin KeychainServiceMixin {
         if (balanceGetResponseMap[accounts[i].genesisAddress] != null) {
           final balanceGetResponse =
               balanceGetResponseMap[accounts[i].genesisAddress]!;
-          var accountBalance = AccountBalance(
-            nativeTokenName: AccountBalance.cryptoCurrencyLabel,
-            nativeTokenValue: fromBigInt(balanceGetResponse.uco).toDouble(),
-          );
+          var accountBalance = AccountBalance();
           if (balanceGetResponse.uco > 0) {
             accountBalance = accountBalance.copyWith(
               tokensFungiblesNb: accountBalance.tokensFungiblesNb + 1,

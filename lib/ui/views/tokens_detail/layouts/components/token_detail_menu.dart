@@ -1,7 +1,7 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/model/data/account_balance.dart';
+import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
@@ -41,6 +41,8 @@ class TokenDetailMenu extends ConsumerWidget {
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
     final pool = ref.watch(farmLockFormPoolProvider).value;
+    final balanceUCO =
+        ref.watch(getBalanceProvider(kUCOAddress)).valueOrNull ?? 0.0;
 
     if (accountSelected == null) return const SizedBox();
 
@@ -61,8 +63,7 @@ class TokenDetailMenu extends ConsumerWidget {
               children: <Widget>[
                 SizedBox(
                   width: constraints.maxWidth * 0.25,
-                  child: accountSelected.balance!
-                              .isNativeTokenValuePositive() &&
+                  child: balanceUCO > 0 &&
                           connectivityStatusProvider ==
                               ConnectivityStatus.isConnected
                       ? ActionButton(

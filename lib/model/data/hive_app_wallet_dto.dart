@@ -4,7 +4,6 @@ import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
 import 'package:aewallet/infrastructure/datasources/appwallet.hive.dart';
 import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
 import 'package:aewallet/model/data/account.dart';
-import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/app_keychain.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:hive/hive.dart';
@@ -52,10 +51,6 @@ class HiveAppWalletDTO extends HiveObject {
       lastLoadingTransactionInputs: 0,
       genesisAddress: uint8ListToHex(genesisAddress),
       name: kServiceName,
-      balance: AccountBalance(
-        nativeTokenName: AccountBalance.cryptoCurrencyLabel,
-        nativeTokenValue: 0,
-      ),
       selected: true,
       serviceType: 'archethicWallet',
     );

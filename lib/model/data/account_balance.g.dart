@@ -17,8 +17,6 @@ class AccountBalanceImplAdapter extends TypeAdapter<_$AccountBalanceImpl> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return _$AccountBalanceImpl(
-      nativeTokenValue: fields[0] as double,
-      nativeTokenName: fields[1] as String,
       tokensFungiblesNb: fields[5] == null ? 0 : fields[5] as int,
       nftNb: fields[6] == null ? 0 : fields[6] as int,
       totalUSD: fields[7] == null ? 0 : fields[7] as double,
@@ -28,11 +26,7 @@ class AccountBalanceImplAdapter extends TypeAdapter<_$AccountBalanceImpl> {
   @override
   void write(BinaryWriter writer, _$AccountBalanceImpl obj) {
     writer
-      ..writeByte(5)
-      ..writeByte(0)
-      ..write(obj.nativeTokenValue)
-      ..writeByte(1)
-      ..write(obj.nativeTokenName)
+      ..writeByte(3)
       ..writeByte(5)
       ..write(obj.tokensFungiblesNb)
       ..writeByte(6)
@@ -58,8 +52,6 @@ class AccountBalanceImplAdapter extends TypeAdapter<_$AccountBalanceImpl> {
 
 _$AccountBalanceImpl _$$AccountBalanceImplFromJson(Map<String, dynamic> json) =>
     _$AccountBalanceImpl(
-      nativeTokenValue: (json['nativeTokenValue'] as num).toDouble(),
-      nativeTokenName: json['nativeTokenName'] as String,
       tokensFungiblesNb: (json['tokensFungiblesNb'] as num?)?.toInt() ?? 0,
       nftNb: (json['nftNb'] as num?)?.toInt() ?? 0,
       totalUSD: (json['totalUSD'] as num?)?.toDouble() ?? 0,
@@ -68,8 +60,6 @@ _$AccountBalanceImpl _$$AccountBalanceImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$AccountBalanceImplToJson(
         _$AccountBalanceImpl instance) =>
     <String, dynamic>{
-      'nativeTokenValue': instance.nativeTokenValue,
-      'nativeTokenName': instance.nativeTokenName,
       'tokensFungiblesNb': instance.tokensFungiblesNb,
       'nftNb': instance.nftNb,
       'totalUSD': instance.totalUSD,

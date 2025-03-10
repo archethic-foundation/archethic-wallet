@@ -3,6 +3,8 @@ import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/primary_currency.dart';
+import 'package:aewallet/modules/aeswap/application/balance.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/util/transfer_recipient_formatters.dart';
@@ -114,8 +116,8 @@ class UCOTransferDetail extends ConsumerWidget {
               ),
               Text(
                 AmountFormatters.standard(
-                  accountSelected.balance!.nativeTokenValue -
-                      (transfer.feeEstimationOrZero + amountInUco),
+                  ref.watch(getBalanceProvider(kUCOAddress)).valueOrNull ??
+                      0.0 - (transfer.feeEstimationOrZero + amountInUco),
                   transfer.symbol(context),
                 ),
                 style: ArchethicThemeStyles.textStyleSize12W100Primary,

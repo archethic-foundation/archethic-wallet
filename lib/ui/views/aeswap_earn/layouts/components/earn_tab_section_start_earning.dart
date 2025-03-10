@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/settings.dart';
+import 'package:aewallet/modules/aeswap/application/balance.dart';
+import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_primary.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
@@ -38,11 +40,12 @@ class EarnSectionStartEarning extends ConsumerWidget {
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
-
+    final balanceUCO =
+        ref.watch(getBalanceProvider(kUCOAddress)).valueOrNull ?? 0.0;
     if ((earnUserLevel == EarnUserLevelType.beginner &&
             accountSelected != null &&
             accountSelected.balance != null &&
-            accountSelected.balance!.nativeTokenValue <= 0) ||
+            balanceUCO <= 0) ||
         (earnUserLevel == EarnUserLevelType.advanced &&
             balances.lpTokenBalance <= 0)) {
       return aedappfm.BlockInfo(

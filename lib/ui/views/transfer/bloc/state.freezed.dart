@@ -26,7 +26,6 @@ mixin _$TransferFormState {
   /// Amount converted in UCO if primary currency is native. Else in fiat currency
 // TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)
   double get amountConverted => throw _privateConstructorUsedError;
-  AccountBalance get accountBalance => throw _privateConstructorUsedError;
   TransferRecipient get recipient => throw _privateConstructorUsedError;
   AEToken? get aeToken => throw _privateConstructorUsedError;
   AccountToken? get accountToken => throw _privateConstructorUsedError;
@@ -56,7 +55,6 @@ abstract class $TransferFormStateCopyWith<$Res> {
       bool defineMaxAmountInProgress,
       double amount,
       double amountConverted,
-      AccountBalance accountBalance,
       TransferRecipient recipient,
       AEToken? aeToken,
       AccountToken? accountToken,
@@ -66,7 +64,6 @@ abstract class $TransferFormStateCopyWith<$Res> {
       String errorAmountText,
       String errorMessageText});
 
-  $AccountBalanceCopyWith<$Res> get accountBalance;
   $TransferRecipientCopyWith<$Res> get recipient;
   $AETokenCopyWith<$Res>? get aeToken;
   $AccountTokenCopyWith<$Res>? get accountToken;
@@ -93,7 +90,6 @@ class _$TransferFormStateCopyWithImpl<$Res, $Val extends TransferFormState>
     Object? defineMaxAmountInProgress = null,
     Object? amount = null,
     Object? amountConverted = null,
-    Object? accountBalance = null,
     Object? recipient = null,
     Object? aeToken = freezed,
     Object? accountToken = freezed,
@@ -128,10 +124,6 @@ class _$TransferFormStateCopyWithImpl<$Res, $Val extends TransferFormState>
           ? _value.amountConverted
           : amountConverted // ignore: cast_nullable_to_non_nullable
               as double,
-      accountBalance: null == accountBalance
-          ? _value.accountBalance
-          : accountBalance // ignore: cast_nullable_to_non_nullable
-              as AccountBalance,
       recipient: null == recipient
           ? _value.recipient
           : recipient // ignore: cast_nullable_to_non_nullable
@@ -165,16 +157,6 @@ class _$TransferFormStateCopyWithImpl<$Res, $Val extends TransferFormState>
           : errorMessageText // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
-  }
-
-  /// Create a copy of TransferFormState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $AccountBalanceCopyWith<$Res> get accountBalance {
-    return $AccountBalanceCopyWith<$Res>(_value.accountBalance, (value) {
-      return _then(_value.copyWith(accountBalance: value) as $Val);
-    });
   }
 
   /// Create a copy of TransferFormState
@@ -231,7 +213,6 @@ abstract class _$$TransferFormStateImplCopyWith<$Res>
       bool defineMaxAmountInProgress,
       double amount,
       double amountConverted,
-      AccountBalance accountBalance,
       TransferRecipient recipient,
       AEToken? aeToken,
       AccountToken? accountToken,
@@ -241,8 +222,6 @@ abstract class _$$TransferFormStateImplCopyWith<$Res>
       String errorAmountText,
       String errorMessageText});
 
-  @override
-  $AccountBalanceCopyWith<$Res> get accountBalance;
   @override
   $TransferRecipientCopyWith<$Res> get recipient;
   @override
@@ -270,7 +249,6 @@ class __$$TransferFormStateImplCopyWithImpl<$Res>
     Object? defineMaxAmountInProgress = null,
     Object? amount = null,
     Object? amountConverted = null,
-    Object? accountBalance = null,
     Object? recipient = null,
     Object? aeToken = freezed,
     Object? accountToken = freezed,
@@ -305,10 +283,6 @@ class __$$TransferFormStateImplCopyWithImpl<$Res>
           ? _value.amountConverted
           : amountConverted // ignore: cast_nullable_to_non_nullable
               as double,
-      accountBalance: null == accountBalance
-          ? _value.accountBalance
-          : accountBalance // ignore: cast_nullable_to_non_nullable
-              as AccountBalance,
       recipient: null == recipient
           ? _value.recipient
           : recipient // ignore: cast_nullable_to_non_nullable
@@ -355,7 +329,6 @@ class _$TransferFormStateImpl extends _TransferFormState {
       this.defineMaxAmountInProgress = false,
       this.amount = 0.0,
       this.amountConverted = 0.0,
-      required this.accountBalance,
       required this.recipient,
       this.aeToken,
       this.accountToken,
@@ -387,8 +360,6 @@ class _$TransferFormStateImpl extends _TransferFormState {
   @JsonKey()
   final double amountConverted;
   @override
-  final AccountBalance accountBalance;
-  @override
   final TransferRecipient recipient;
   @override
   final AEToken? aeToken;
@@ -412,7 +383,7 @@ class _$TransferFormStateImpl extends _TransferFormState {
 
   @override
   String toString() {
-    return 'TransferFormState(transferType: $transferType, transferProcessStep: $transferProcessStep, feeEstimation: $feeEstimation, defineMaxAmountInProgress: $defineMaxAmountInProgress, amount: $amount, amountConverted: $amountConverted, accountBalance: $accountBalance, recipient: $recipient, aeToken: $aeToken, accountToken: $accountToken, tokenId: $tokenId, message: $message, errorAddressText: $errorAddressText, errorAmountText: $errorAmountText, errorMessageText: $errorMessageText)';
+    return 'TransferFormState(transferType: $transferType, transferProcessStep: $transferProcessStep, feeEstimation: $feeEstimation, defineMaxAmountInProgress: $defineMaxAmountInProgress, amount: $amount, amountConverted: $amountConverted, recipient: $recipient, aeToken: $aeToken, accountToken: $accountToken, tokenId: $tokenId, message: $message, errorAddressText: $errorAddressText, errorAmountText: $errorAmountText, errorMessageText: $errorMessageText)';
   }
 
   @override
@@ -432,8 +403,6 @@ class _$TransferFormStateImpl extends _TransferFormState {
             (identical(other.amount, amount) || other.amount == amount) &&
             (identical(other.amountConverted, amountConverted) ||
                 other.amountConverted == amountConverted) &&
-            (identical(other.accountBalance, accountBalance) ||
-                other.accountBalance == accountBalance) &&
             (identical(other.recipient, recipient) ||
                 other.recipient == recipient) &&
             (identical(other.aeToken, aeToken) || other.aeToken == aeToken) &&
@@ -458,7 +427,6 @@ class _$TransferFormStateImpl extends _TransferFormState {
       defineMaxAmountInProgress,
       amount,
       amountConverted,
-      accountBalance,
       recipient,
       aeToken,
       accountToken,
@@ -486,7 +454,6 @@ abstract class _TransferFormState extends TransferFormState {
       final bool defineMaxAmountInProgress,
       final double amount,
       final double amountConverted,
-      required final AccountBalance accountBalance,
       required final TransferRecipient recipient,
       final AEToken? aeToken,
       final AccountToken? accountToken,
@@ -513,8 +480,6 @@ abstract class _TransferFormState extends TransferFormState {
 // TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)
   @override
   double get amountConverted;
-  @override
-  AccountBalance get accountBalance;
   @override
   TransferRecipient get recipient;
   @override

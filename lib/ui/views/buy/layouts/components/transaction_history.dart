@@ -116,7 +116,7 @@ class _OnRampTransactionHistoryTableRow extends ConsumerWidget {
                     children: [
                       Flexible(
                         child: Text(
-                          '+${depositAmount?.numeral() ?? '--'} ',
+                          '+${depositAmount?.numeral(digits: 8) ?? '--'} ',
                           style: AppTextStyles.bodyLarge(context).copyWith(
                             fontWeight: FontWeight.w700,
                             fontSize: 13,

@@ -67,7 +67,7 @@ class TransferFormSheet extends ConsumerWidget
               context,
               accountSelected!,
             );
-            final isAmountOk = transferNotifier.controlAmount(
+            final isAmountOk = await transferNotifier.controlAmount(
               context,
               accountSelected,
             );
@@ -114,10 +114,7 @@ class TransferFormSheet extends ConsumerWidget
         if (transfer.transferType != null)
           const Padding(
             padding: EdgeInsets.only(bottom: 10),
-            child: BalanceIndicatorWidget(
-              allDigits: false,
-              displaySwitchButton: false,
-            ),
+            child: BalanceIndicatorWidget(),
           ),
         FeeInfos(
           asyncFeeEstimation: transfer.feeEstimation,
