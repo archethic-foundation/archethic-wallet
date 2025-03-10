@@ -58,26 +58,26 @@ packages:
     dependency: "direct main"
     description:
       name: archethic_dapp_framework_flutter
-      sha256: dd3b4150457f325b65d732a167688c1875a9178db420d8e1903c3280a327f2d2
+      sha256: db7c12c1118c1b0830955026d1a56cfb034a751ccbd24896d437417b4f087f54
       url: "https://pub.dev"
     source: hosted
-    version: "3.3.1"
+    version: "3.3.2"
   archethic_lib_dart:
     dependency: transitive
     description:
       name: archethic_lib_dart
-      sha256: "55a8eedc39b6f666bf90ad93b2c35e98809c0d91d79f27f1febb8a837529860b"
+      sha256: "33968ff3d0ca8b77cb06318d51b2fe932c1236556d49424b3d48dc108b6f9fb6"
       url: "https://pub.dev"
     source: hosted
-    version: "7.5.1"
+    version: "7.6.0"
   archethic_wallet_client:
     dependency: "direct main"
     description:
       name: archethic_wallet_client
-      sha256: "7cedbb9b65ff81a7b4fd58023af64e61c5f7a602ae1611b9a6362318b16006ee"
+      sha256: b3302a28b75d65eb83c2bf7a22e59ffb73230d26262373fe039ceb3bebcaa98c
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.11"
+    version: "2.1.12"
   archive:
     dependency: transitive
     description:
@@ -242,10 +242,10 @@ packages:
     dependency: transitive
     description:
       name: chalkdart
-      sha256: "08c910ee341fcdd1e46f20ddce59b13c1d85f5d97f2fd2f12014c46ede670e40"
+      sha256: e7cfcc9a9d9546843304c1ff87fe0696c7eb82ee70e6df63f555f321b15a40d8
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.2"
+    version: "2.3.3"
   characters:
     dependency: transitive
     description:
@@ -466,10 +466,10 @@ packages:
     dependency: "direct main"
     description:
       name: elegant_notification
-      sha256: c640df49f572b7882d440fa4eec072de1d3a86c90d74f31dba587b2b0276386e
+      sha256: "10a58458b90905d5d715dfe72ba243ea6308722770d5df9b63729a28abc985f5"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.2"
+    version: "2.4.3"
   elliptic:
     dependency: transitive
     description:
@@ -1198,10 +1198,10 @@ packages:
     dependency: "direct main"
     description:
       name: material_symbols_icons
-      sha256: "1403944c2a68dbdf934fca2b2115a372e70a4a185c136ab71a9d16e2108d0b14"
+      sha256: ca30ccbd97763353bde6bb1076aa4f4d17a40db0804384da77df142102aa225d
       url: "https://pub.dev"
     source: hosted
-    version: "4.2805.1"
+    version: "4.2808.0"
   meta:
     dependency: transitive
     description:
@@ -1510,10 +1510,10 @@ packages:
     dependency: transitive
     description:
       name: pub_semver
-      sha256: "7b3cfbf654f3edd0c6298ecd5be782ce997ddf0e00531b9464b55245185bbbbd"
+      sha256: "5bfcf68ca79ef689f8990d1160781b4bad40a3bd5e5218ad4076ddb7f4081585"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.5"
+    version: "2.2.0"
   pubspec_parse:
     dependency: transitive
     description:
