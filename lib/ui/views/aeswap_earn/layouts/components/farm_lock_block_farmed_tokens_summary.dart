@@ -33,6 +33,11 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
             return const SizedBox.shrink();
           },
           data: (farmLockFormSummary) {
+            if (farmLockFormSummary.farmedTokensInFiat == 0 &&
+                farmLockFormSummary.farmedTokensCapital == 0 &&
+                farmLockFormSummary.farmedTokensRewards == 0) {
+              return const SizedBox.shrink();
+            }
             return _buildContent(
               context,
               ref,
