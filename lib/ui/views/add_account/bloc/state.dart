@@ -11,7 +11,7 @@ class AddAccountFormState with _$AddAccountFormState {
   const factory AddAccountFormState({
     required String seed,
     @Default(AddAccountProcessStep.form)
-        AddAccountProcessStep addAccountProcessStep,
+    AddAccountProcessStep addAccountProcessStep,
     @Default('') String name,
     @Default('') String errorText,
   }) = _AddAccountFormState;

@@ -56,18 +56,20 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
     _sendTxSub = EventTaxiImpl.singleton()
         .registerTo<TransactionSendEvent>()
         .listen((TransactionSendEvent event) async {
-      if (event.response != 'ok' && event.nbConfirmations == 0) {
-        // Send failed
-        _showSendFailed(event);
-        return;
-      }
+      if (event.transactionType == TransactionSendEventType.retireAccount) {
+        if (event.response != 'ok' && event.nbConfirmations == 0) {
+          // Send failed
+          _showSendFailed(event);
+          return;
+        }
 
-      if (event.response == 'ok') {
-        await _showSendSucceed(event);
-        return;
-      }
+        if (event.response == 'ok') {
+          await _showSendSucceed(event);
+          return;
+        }
 
-      _showNotEnoughConfirmation();
+        _showNotEnoughConfirmation();
+      }
     });
   }
 

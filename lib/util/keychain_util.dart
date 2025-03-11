@@ -108,7 +108,7 @@ mixin KeychainServiceMixin {
       if (confirmation == null) return;
       onConfirmation(
         confirmation,
-        TransactionSendEventType.keychain,
+        TransactionSendEventType.retireAccount,
         params: <String, Object>{
           'keychainAddress': transaction.address!.address!.toUpperCase(),
           'originPrivateKey': originPrivateKey,
@@ -118,7 +118,7 @@ mixin KeychainServiceMixin {
     } on TransactionError catch (error) {
       onError(
         error,
-        TransactionSendEventType.keychain,
+        TransactionSendEventType.retireAccount,
       );
     }
   }

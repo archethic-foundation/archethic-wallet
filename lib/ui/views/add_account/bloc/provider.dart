@@ -112,7 +112,7 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
       if (confirmation != null) {
         EventTaxiImpl.singleton().fire(
           TransactionSendEvent(
-            transactionType: TransactionSendEventType.keychain,
+            transactionType: TransactionSendEventType.addAccount,
             response: 'ok',
             nbConfirmations: confirmation.nbConfirmations,
             transactionAddress: confirmation.transactionAddress,

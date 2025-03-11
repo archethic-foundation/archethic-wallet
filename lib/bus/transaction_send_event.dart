@@ -3,7 +3,14 @@
 // Package imports:
 import 'package:event_taxi/event_taxi.dart';
 
-enum TransactionSendEventType { transfer, token, keychain, keychainAccess }
+enum TransactionSendEventType {
+  transfer,
+  token,
+  keychain,
+  keychainAccess,
+  addAccount,
+  retireAccount,
+}
 
 class TransactionSendEvent implements Event {
   TransactionSendEvent({
