@@ -31,7 +31,6 @@ class _BanxaOnRampSheetState extends ConsumerState<BanxaOnRampSheet> {
     final localizations = AppLocalizations.of(context)!;
     return SheetSkeleton(
       menu: true,
-      // resizeToAvoidBottomInset: false,
       appBar: SheetAppBar(
         title: localizations.onrampWithBanxaTitle,
         widgetLeft: BackButton(
@@ -45,13 +44,6 @@ class _BanxaOnRampSheetState extends ConsumerState<BanxaOnRampSheet> {
       sheetContent: SafeArea(
         child: InAppWebView(
           onWebViewCreated: (controller) async {
-            controller.addJavaScriptHandler(
-              handlerName: 'onRampDone',
-              callback: (event) {
-                context.pop();
-              },
-            );
-
             await controller.loadUrl(
               urlRequest: URLRequest(
                 url: WebUri.uri(
