@@ -102,11 +102,12 @@ class DepositAddressBloc extends ConsumerWidget {
             ),
             const SizedBox(height: 20),
             MessageBox(
-                messageBoxType: MessageBoxType.warning,
-                content: Text(
-                  localizations.onrampWithFiatWarningDecimal,
-                  style: Theme.of(context).textTheme.bodySmall,
-                )),
+              messageBoxType: MessageBoxType.warning,
+              content: Text(
+                localizations.onrampWithFiatWarningDecimal,
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ),
             const SizedBox(height: 20),
             Text.rich(
               TextSpan(
