@@ -5,16 +5,16 @@ import 'dart:async';
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
+import 'package:aewallet/ui/figma_components/complex/estimated_fees.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/add_account/bloc/provider.dart';
 import 'package:aewallet/ui/views/add_account/bloc/state.dart';
-import 'package:aewallet/ui/views/add_account/layouts/components/add_account_detail.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
+import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:event_taxi/event_taxi.dart';
@@ -42,18 +42,20 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet>
     _sendTxSub = EventTaxiImpl.singleton()
         .registerTo<TransactionSendEvent>()
         .listen((TransactionSendEvent event) async {
-      if (event.response != 'ok' && event.nbConfirmations == 0) {
-        // Send failed
-        _showSendFailed(event);
-        return;
-      }
+      if (event.transactionType == TransactionSendEventType.addAccount) {
+        if (event.response != 'ok' && event.nbConfirmations == 0) {
+          // Send failed
+          _showSendFailed(event);
+          return;
+        }
 
-      if (event.response == 'ok') {
-        await _showSendSucceed(event);
-        return;
-      }
+        if (event.response == 'ok') {
+          await _showSendSucceed(event);
+          return;
+        }
 
-      _showNotEnoughConfirmation();
+        _showNotEnoughConfirmation();
+      }
     });
   }
 
@@ -141,13 +143,14 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet>
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    return Row(
+    return Column(
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        AppButtonTinyConnectivity(
-          localizations.confirm,
-          Dimens.buttonBottomDimens,
+        const EstimatedFees(AsyncValue.data(0)),
+        BtnFooterPrimary(
+          buttonText: localizations.confirm,
           key: const Key('confirm'),
-          onPressed: () async {
+          onTap: () async {
             context.loadingOverlay.show(
               title: AppLocalizations.of(context)!.pleaseWait,
             );
@@ -185,6 +188,7 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet>
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
+    final addAccount = ref.watch(AddAccountFormProvider.addAccountForm);
     return Column(
       children: <Widget>[
         const SizedBox(height: 30),
@@ -195,7 +199,21 @@ class _AddAccountConfirmState extends ConsumerState<AddAccountConfirmSheet>
         const SizedBox(
           height: 20,
         ),
-        const AddAccountDetail(),
+        SheetDetailCard(
+          children: [
+            Text(
+              localizations.serviceName,
+              style: ArchethicThemeStyles.textStyleSize12W100Primary,
+            ),
+            Expanded(
+              child: Text(
+                addAccount.name,
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                textAlign: TextAlign.end,
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }

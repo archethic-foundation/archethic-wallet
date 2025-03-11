@@ -1,13 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:aewallet/application/account/accounts_notifier.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
+import 'package:aewallet/ui/figma_components/complex/estimated_fees.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/add_account/bloc/provider.dart';
 import 'package:aewallet/ui/views/add_account/bloc/state.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -49,13 +49,14 @@ class AddAccountFormSheet extends ConsumerWidget
     final addAccount = ref.watch(AddAccountFormProvider.addAccountForm);
     final addAccountNotifier =
         ref.watch(AddAccountFormProvider.addAccountForm.notifier);
-    return Row(
+    return Column(
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        AppButtonTinyConnectivity(
-          localizations.addAccount,
-          Dimens.buttonBottomDimens,
+        const EstimatedFees(AsyncValue.data(0)),
+        BtnFooterPrimary(
+          buttonText: localizations.addAccount,
           key: const Key('addAccount'),
-          onPressed: () async {
+          onTap: () async {
             final isNameOk = addAccountNotifier.controlName(context);
 
             if (isNameOk) {
@@ -64,7 +65,7 @@ class AddAccountFormSheet extends ConsumerWidget
               );
             }
           },
-          disabled: !addAccount.canAddAccount,
+          isLocked: !addAccount.canAddAccount || addAccount.name.trim().isEmpty,
         ),
       ],
     );
