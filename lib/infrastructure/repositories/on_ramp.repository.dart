@@ -113,7 +113,7 @@ class OnRampRepositoryImpl implements OnRampRepository {
           yield _onRampEventFromJson(message);
         } catch (e, stack) {
           _logger.warning(
-            'Failed to convert notification `${jsonEncode(message)}`',
+            'Failed to convert notification `$message`',
             e,
             stack,
           );
@@ -141,19 +141,6 @@ class OnRampRepositoryImpl implements OnRampRepository {
       _ => throw Exception('Invalid response format'),
     };
   }
-
-  // @override
-  // Future<List<OnRampChain>> get evm_chains async {
-  //   final body = await _get('/evm_chains');
-  //   return switch (body) {
-  //     {'chains': final List jsonChains} => jsonChains
-  //         .map(
-  //           (chain) => _onRampEvmChainFromJson(chain as Map<String, dynamic>),
-  //         )
-  //         .toList(),
-  //     _ => throw Exception('Invalid response format'),
-  //   };
-  // }
 
   @override
   Future<num> get maxAmount async {
