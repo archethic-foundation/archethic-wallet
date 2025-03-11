@@ -908,6 +908,7 @@
     "farmLockWithdrawDesc2Beginner": "Lorsque vous retirez vos fonds, ils sont automatiquement supprimés de la pool ETH/UCO. Vous recevrez une valeur équivalente en jetons UCO et en Ethereum, et toutes les récompenses accumulées seront directement créditées sur votre portefeuille en UCO. Enfin, l'Ethereum sera échangé en UCO afin que vous receviez la totalité du montant en UCO.",
     "farmLockWithdrawFormTextNoLPText1": "Aucun jeton LP déverrouillé disponible",
     "farmLockWithdrawFormTextLPText2": " est disponible pour le retrait.",
+    "onrampWithBanxaTitle": "Acheter avec Banxa",
     "onrampWithFiatTitle": "Acheter des UCO via carte de crédit",
     "onrampWithFiatHowDoesItWorkTitle": "Comment ça marche ?",
     "onrampWithFiatHowDoesItWorkBody": "Pour optimiser vos frais de transaction, nous avons développé un système qui vous permet d’acheter de l’Ethereum, lequel est automatiquement converti en tokens UCO et envoyé directement dans votre portefeuille Archethic.",

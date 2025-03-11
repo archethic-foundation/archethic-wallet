@@ -2,6 +2,7 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -27,11 +28,12 @@ class BanxaOnRampSheet extends ConsumerStatefulWidget {
 class _BanxaOnRampSheetState extends ConsumerState<BanxaOnRampSheet> {
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     return SheetSkeleton(
       menu: true,
       // resizeToAvoidBottomInset: false,
       appBar: SheetAppBar(
-        title: 'Buy with Banxa',
+        title: localizations.onrampWithBanxaTitle,
         widgetLeft: BackButton(
           key: const Key('back'),
           color: ArchethicTheme.text,
