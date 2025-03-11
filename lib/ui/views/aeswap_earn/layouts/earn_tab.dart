@@ -1,10 +1,8 @@
-import 'package:aewallet/application/onramp/onramp.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/earn_tab_section_add_liquidity.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/earn_tab_section_deposit_funds.dart';
-import 'package:aewallet/ui/views/aeswap_earn/layouts/components/earn_tab_section_deposit_funds_v2.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/earn_tab_section_start_earning.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/earn_total_deposited.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/components/earn_user_level_switch.dart';
@@ -30,8 +28,6 @@ class EarnTabState extends ConsumerState<EarnTab> {
     final earnUserLevel = ref.watch(
       SettingsProviders.settings.select((settings) => settings.earnUserLevel),
     );
-
-    final onrampFeatureFlag = ref.watch(onrampFeatureFlagProvider);
 
     return ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(
@@ -78,11 +74,7 @@ class EarnTabState extends ConsumerState<EarnTab> {
                       const SizedBox(height: 10),
                       const EarnUserLevelSwitch(),
                       const SizedBox(height: 10),
-                      if (onrampFeatureFlag.fromFiat == true ||
-                          onrampFeatureFlag.fromCrypto == true)
-                        const EarnSectionDepositFundsV2()
-                      else
-                        const EarnSectionDepositFunds(),
+                      const EarnSectionDepositFunds(),
                       if (earnUserLevel == EarnUserLevelType.advanced)
                         const SizedBox(height: 10),
                       if (earnUserLevel == EarnUserLevelType.advanced)

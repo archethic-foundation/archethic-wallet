@@ -19,8 +19,17 @@ class EarnTotalDeposited extends ConsumerWidget {
     return BoxDark(
       textWidget: farmLockAsync.when(
         data: (farmLock) {
+          if (farmLock == null) {
+            return Text(
+              r'$__',
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    fontSize: 20,
+                    fontWeight: FontWeightTelegraf.fontWeightBold,
+                  ),
+            );
+          }
           return Text(
-            '\$${farmLock!.estimateLPTokenInFiat.numeral(digits: 0)}',
+            '\$${farmLock.estimateLPTokenInFiat.numeral(digits: 0)}',
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   fontSize: 20,
                   fontWeight: FontWeightTelegraf.fontWeightBold,

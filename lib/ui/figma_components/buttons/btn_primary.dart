@@ -22,7 +22,7 @@ class BtnPrimary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
-      cursor: SystemMouseCursors.click,
+      cursor: isLocked ? MouseCursor.defer : SystemMouseCursors.click,
       child: GestureDetector(
         onTap: isLocked ? null : onTap,
         child: widthExpanded

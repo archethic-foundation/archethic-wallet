@@ -48,10 +48,10 @@ mixin TokenParser {
           tokenSymbolSearch,
         );
         pairSymbolToken1 = token1Address != kUCOAddress
-            ? tokensSymbolMap[token1Address]!.symbol
+            ? tokensSymbolMap[token1Address]?.symbol
             : kUCOAddress;
         pairSymbolToken2 = token2Address != kUCOAddress
-            ? tokensSymbolMap[token2Address]!.symbol
+            ? tokensSymbolMap[token2Address]?.symbol
             : kUCOAddress;
 
         final futureToken1 = defTokensRepository.getDefToken(

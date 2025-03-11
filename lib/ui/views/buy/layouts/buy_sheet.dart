@@ -166,26 +166,23 @@ class _BuyFromWalletSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // const onrampFeatureFlag = (fromFiat: true, fromCrypto: true);
+    //const onrampFeatureFlag = (fromFiat: true, fromCrypto: true);
     final onrampFeatureFlag = ref.watch(onrampFeatureFlagProvider);
     final localizations = AppLocalizations.of(context)!;
     final environment = ref.watch(environmentProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (onrampFeatureFlag.fromCrypto ||
-            onrampFeatureFlag.fromFiat ||
-            environment == aedappfm.Environment.testnet)
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                localizations.ucoBuyInAeWalletTitle,
-                style: AppTextStyles.bodyLarge(context)
-                    .copyWith(fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              localizations.ucoBuyInAeWalletTitle,
+              style: AppTextStyles.bodyLarge(context)
+                  .copyWith(fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
         const SizedBox(height: 16),
         LayoutBuilder(
           builder: (context, constraints) {
@@ -204,13 +201,27 @@ class _BuyFromWalletSection extends ConsumerWidget {
                         'assets/exchanges/aewallet_fiat.png',
                         height: 70,
                       ),
-                      text: localizations.ucoBuyInAeWalletWithFiat,
+                      text: '${localizations.ucoBuyInAeWalletWithFiat}\n',
                       onTap: () {
                         context.push(BuyWithFiatSheet.routerPage);
                       },
                     ),
                   )
-                else if (environment == aedappfm.Environment.testnet)
+                else
+                  SizedBox(
+                    width: itemWidth,
+                    child: _ExchangeButton(
+                      image: Image.asset(
+                        'assets/exchanges/aewallet_fiat.png',
+                        height: 70,
+                      ),
+                      text:
+                          '${localizations.ucoBuyInAeWalletWithFiat}\n(${localizations.comingSoon})',
+                      disabled: true,
+                      onTap: () {},
+                    ),
+                  ),
+                if (environment == aedappfm.Environment.testnet)
                   SizedBox(
                     width: itemWidth,
                     child: _ExchangeButton(
@@ -220,7 +231,7 @@ class _BuyFromWalletSection extends ConsumerWidget {
                         color: aedappfm.AppThemeBase.secondaryColor,
                         size: 70,
                       ),
-                      text: localizations.faucet,
+                      text: '${localizations.faucet}\n',
                       onTap: () async {
                         await launchUrl(
                           Uri.parse(
@@ -239,10 +250,24 @@ class _BuyFromWalletSection extends ConsumerWidget {
                         'assets/exchanges/aewallet_crypto.png',
                         height: 70,
                       ),
-                      text: localizations.ucoBuyInAeWalletWithCrypto,
+                      text: '${localizations.ucoBuyInAeWalletWithCrypto}\n',
                       onTap: () {
                         context.push(BuyWithCryptoSheet.routerPage);
                       },
+                    ),
+                  )
+                else
+                  SizedBox(
+                    width: itemWidth,
+                    child: _ExchangeButton(
+                      image: Image.asset(
+                        'assets/exchanges/aewallet_crypto.png',
+                        height: 70,
+                      ),
+                      text:
+                          '${localizations.ucoBuyInAeWalletWithCrypto}\n(${localizations.comingSoon})',
+                      onTap: () {},
+                      disabled: true,
                     ),
                   ),
               ],
@@ -286,7 +311,6 @@ class _BuyFromCEXSection extends ConsumerWidget {
             final maxWidth = constraints.maxWidth;
             final itemWidth = (maxWidth - 20) / 2;
             return Wrap(
-              alignment: WrapAlignment.center,
               spacing: 16,
               runSpacing: 16,
               children: [
@@ -332,6 +356,7 @@ class _ExchangeButton extends StatelessWidget {
     required this.image,
     required this.text,
     required this.onTap,
+    this.disabled = false,
   });
 
   factory _ExchangeButton.url({
@@ -350,6 +375,7 @@ class _ExchangeButton extends StatelessWidget {
   final Widget image;
   final String text;
   final VoidCallback onTap;
+  final bool disabled;
 
   @override
   Widget build(BuildContext context) {
@@ -376,11 +402,12 @@ class _ExchangeButton extends StatelessWidget {
                 image,
                 const SizedBox(height: 8),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       text,
-                      maxLines: 1,
+                      maxLines: 2,
                       textAlign: TextAlign.center,
                       style: Theme.of(context)
                           .textTheme
@@ -389,17 +416,18 @@ class _ExchangeButton extends StatelessWidget {
                             fontWeight: FontWeightTelegraf.fontWeightRegular,
                           ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 3, top: 2),
-                      child: Icon(
-                        Icons.arrow_forward_ios,
-                        size: 10,
-                        color: Theme.of(context)
-                            .textTheme
-                            .bodySmallWithOpacity
-                            .color,
+                    if (disabled == false)
+                      Padding(
+                        padding: const EdgeInsets.only(left: 3, top: 3),
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 10,
+                          color: Theme.of(context)
+                              .textTheme
+                              .bodySmallWithOpacity
+                              .color,
+                        ),
                       ),
-                    ),
                   ],
                 ),
               ],
