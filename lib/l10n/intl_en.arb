@@ -916,7 +916,6 @@
     "onrampWithFiatTitle": "Buy UCO with credit card",
     "onrampWithFiatHowDoesItWorkTitle": "How does it work ?",
     "onrampWithFiatHowDoesItWorkBody": "To optimize your transaction fees, we've developed a system that lets you buy Ethereum and automatically converts it into UCO tokens—sent directly to your Archethic wallet.",
-    "onrampWithFiatWarningDecimal": "Do not send an amount with more than 8 decimal places (10⁻⁸). Any excess value may be lost.",
     "onrampWithFiatDisclaimer": "I understand that I am purchasing Ethereum using fiat currency, and this transaction is subject to payment provider fees. Once acquired, my Ethereum will be automatically sent to my Archethic wallet and converted into UCO tokens at the current market rate with a 1% fee applied. Due to market fluctuations, the exact amount of UCO I receive may vary and cannot be precisely estimated in advance.",
     "onrampWithFiatBuyNowButton": "Buy now",
     "onrampHistoryTitle": "Transaction history",
