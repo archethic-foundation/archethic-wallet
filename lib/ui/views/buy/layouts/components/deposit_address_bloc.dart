@@ -1,6 +1,7 @@
 import 'package:aewallet/application/onramp/onramp.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
+import 'package:aewallet/ui/figma_components/message_box/message_box.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -99,6 +100,13 @@ class DepositAddressBloc extends ConsumerWidget {
                 ],
               ),
             ),
+            const SizedBox(height: 20),
+            MessageBox(
+                messageBoxType: MessageBoxType.warning,
+                content: Text(
+                  localizations.onrampWithFiatWarningDecimal,
+                  style: Theme.of(context).textTheme.bodySmall,
+                )),
             const SizedBox(height: 20),
             Text.rich(
               TextSpan(
