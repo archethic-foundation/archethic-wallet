@@ -6,7 +6,7 @@ part of 'onramp.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$onrampFeatureFlagHash() => r'5a53fb7bc870c873724ba863a9f4ae33badb48c5';
+String _$onrampFeatureFlagHash() => r'4bd38f457dc1d53e8f9fd9bb2000d21b83cf8cc6';
 
 /// See also [onrampFeatureFlag].
 @ProviderFor(onrampFeatureFlag)

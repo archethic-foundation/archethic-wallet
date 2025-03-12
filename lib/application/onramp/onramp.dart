@@ -20,7 +20,9 @@ part 'onramp.g.dart';
 @riverpod
 ({bool fromCrypto, bool fromFiat}) onrampFeatureFlag(Ref ref) => (
       fromCrypto: ref
-              .watch(getFeatureFlagProvider(kApplicationCode, 'on-ramp-crypto'))
+              .watch(
+                getFeatureFlagProvider(kApplicationCode, 'on-ramp-crypto-2'),
+              )
               .valueOrNull ??
           false,
       fromFiat: ref
