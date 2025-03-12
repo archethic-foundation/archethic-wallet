@@ -927,7 +927,7 @@
         }
     },
     "onrampWithCryptoTitle": "Acheter des UCO avec des Cryptos",
-    "onrampWithCryptoSelectChainTitle": "Choisissez votre chaîne",
+    "onrampWithCryptoSelectChainTitle": "Choisissez votre réseau (chaîne)",
     "onrampWithCryptoSelectTokenTitle": "Choisissez votre Crypto",
     "onrampWithCryptoDepositAddressTitle": "Votre adresse de dépôt",
     "onrampWithCryptoShowDepositAddress": "Voir l'adresse de Dépôt",

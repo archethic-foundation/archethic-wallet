@@ -931,7 +931,7 @@
         }
     },
     "onrampWithCryptoTitle": "Buy UCO with Cryptos",
-    "onrampWithCryptoSelectChainTitle": "Select your chain",
+    "onrampWithCryptoSelectChainTitle": "Select your network (chain)",
     "onrampWithCryptoSelectTokenTitle": "Select your Crypto",
     "onrampWithCryptoDepositAddressTitle": "Your deposit address",
     "onrampWithCryptoShowDepositAddress": "Show Deposit address",
