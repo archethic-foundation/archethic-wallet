@@ -1,4 +1,4 @@
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_participants_count.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -6,7 +6,6 @@ import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutte
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:numeral/numeral.dart';
 
 class AirdropBlocInfo extends ConsumerWidget {
   const AirdropBlocInfo({
@@ -17,14 +16,19 @@ class AirdropBlocInfo extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
-    final boldBodyLarge = AppTextStyles.bodyLarge(context).copyWith(
-      fontWeight: FontWeight.bold,
-    );
+    final boldBodyLarge = Theme.of(context).textTheme.bodyMedium!.copyWith(
+          fontWeight: FontWeightTelegraf.fontWeightBold,
+        );
+
     final boldBodyLargeSecondary =
-        AppTextStyles.bodyLargeSecondaryColor(context).copyWith(
-      fontWeight: FontWeight.bold,
-    );
-    final bodyMediumSecondary = AppTextStyles.bodyMediumSecondaryColor(context);
+        Theme.of(context).textTheme.bodyMedium!.copyWith(
+              fontWeight: FontWeightTelegraf.fontWeightBold,
+              color: aedappfm.AppThemeBase.secondaryColor,
+            );
+    final bodyMediumSecondary =
+        Theme.of(context).textTheme.bodyMedium!.copyWith(
+              color: aedappfm.AppThemeBase.secondaryColor,
+            );
 
     double? ucoPerParticipant;
     ref.watch(airdropUCOPerParticipantFiatValueProvider).when(
@@ -79,7 +83,7 @@ class AirdropBlocInfo extends ConsumerWidget {
                       Text(
                         ucoPerParticipant == null
                             ? '?'
-                            : '\$${ucoPerParticipant!.numeral(digits: 2)}',
+                            : '\$${ucoPerParticipant?.formatNumber(precision: 0).replaceAll('.', '') ?? ''}',
                         style: bodyMediumSecondary,
                       ),
                     ],

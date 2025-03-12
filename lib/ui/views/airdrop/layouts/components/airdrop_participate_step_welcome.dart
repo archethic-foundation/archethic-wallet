@@ -1,9 +1,8 @@
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/state.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_bloc_info.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -86,18 +85,13 @@ class _AirdropParticipateStepWelcomeSheetState
             padding: EdgeInsets.only(
               bottom: MediaQuery.of(context).padding.bottom + 20,
             ),
-            child: Row(
-              children: <Widget>[
-                AppButtonTinyConnectivity(
-                  localizations.airdropParticipateStepWelcomeBtn,
-                  Dimens.buttonBottomDimens,
-                  onPressed: () {
-                    ref
-                        .read(airdropFormNotifierProvider.notifier)
-                        .setAirdropProcessStep(AirdropProcessStep.joinWaitlist);
-                  },
-                ),
-              ],
+            child: BtnFooterPrimary(
+              buttonText: localizations.airdropParticipateStepWelcomeBtn,
+              onTap: () {
+                ref
+                    .read(airdropFormNotifierProvider.notifier)
+                    .setAirdropProcessStep(AirdropProcessStep.joinWaitlist);
+              },
             ),
           ),
         ),
