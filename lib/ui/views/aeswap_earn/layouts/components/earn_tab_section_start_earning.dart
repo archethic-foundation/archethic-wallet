@@ -5,7 +5,6 @@ import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_primary.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
@@ -70,16 +69,16 @@ class EarnSectionStartEarning extends ConsumerWidget {
                   earnUserLevel == EarnUserLevelType.beginner
                       ? '2. ${localizations.earnSectionStartEarningTitle} '
                       : '3. ${localizations.earnSectionStartEarningTitle} ',
-                  style: AppTextStyles.bodyLarge(context).copyWith(
-                    color: aedappfm.ArchethicThemeBase.neutral10,
-                  ),
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: aedappfm.ArchethicThemeBase.neutral10,
+                      ),
                 ),
                 if (farmLock != null && farmLock.apr3years > 0)
                   Text(
                     '${localizations.earnSectionStartEarningTitleAPR((farmLock.apr3years * 100).formatNumber(precision: 0).replaceAll('.', ''))} ',
-                    style: AppTextStyles.bodyLarge(context).copyWith(
-                      color: aedappfm.ArchethicThemeBase.neutral10,
-                    ),
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: aedappfm.ArchethicThemeBase.neutral10,
+                        ),
                   ),
               ],
             ),

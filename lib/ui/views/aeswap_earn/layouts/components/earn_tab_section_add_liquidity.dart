@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_primary.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
@@ -59,9 +58,9 @@ class EarnSectionAddLiquidity extends ConsumerWidget {
             ),
             Text(
               '2. ${localizations.earnSectionAddLiquidityTitle}',
-              style: AppTextStyles.bodyLarge(context).copyWith(
-                color: aedappfm.ArchethicThemeBase.neutral10,
-              ),
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: aedappfm.ArchethicThemeBase.neutral10,
+                  ),
             ),
           ],
         ),

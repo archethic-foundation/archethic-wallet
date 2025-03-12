@@ -824,7 +824,7 @@
     "earnSectionDepositFundsOptionCryptoBuyBtn": "Acheter avec des cryptos",
     "earnSectionDepositFundsExpertDesc": "Si vous êtes compétent en cryptomonnaies et que vous souhaitez transférer vous-même vos tokens UCO ou ETH dans votre portefeuille Archethic :",
     "earnSectionDepositFundsExpertBridgeBtn": "Bridger maintenant",
-    "earnSectionAddLiquidityTitle": "Ajoutez de la liquidité (UCO ou ETH)",
+    "earnSectionAddLiquidityTitle": "Ajoutez de la liquidité (UCO / ETH)",
     "earnSectionAddLiquidityDesc1": "Vous pouvez maintenant ajouter vos fonds dans le pool de liquidité UCO/ETH pour recevoir des tokens LP (Liquidity Pools Tokens).",
     "earnSectionAddLiquidityDesc2": "Ces tokens LP sont comme des titres de propriété, ils représentent la liquidité que vous avez déposée et vous permettent de retirer vos fonds à l'avenir.",
     "earnSectionAddLiquidityAddLiquidityBtn": "Ajouter de la liquidité",

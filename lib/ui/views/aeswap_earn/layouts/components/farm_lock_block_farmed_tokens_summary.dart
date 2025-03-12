@@ -26,6 +26,7 @@ class FarmLockBlockFarmedTokensSummary extends ConsumerWidget {
   ) {
     return ref.watch(farmLockFormSummaryProvider).when(
           skipLoadingOnReload: true,
+          skipLoadingOnRefresh: true,
           error: (error, stackTrace) {
             return const SizedBox.shrink();
           },
