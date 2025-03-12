@@ -909,6 +909,8 @@
     "farmLockWithdrawFormTextNoLPText1": "Aucun jeton LP déverrouillé disponible",
     "farmLockWithdrawFormTextLPText2": " est disponible pour le retrait.",
     "onrampWithBanxaTitle": "Acheter avec Banxa",
+    "onrampWithFiatIncompatiblePlatformTitle": "Acheter des UCO via carte de crédit n'est pas compatible avec votre appareil",
+    "onrampWithFiatIncompatiblePlatformBody": "Votre appareil ne respecte pas les prérequis techniques.\nContactez l'équipe support de Archethic pour en savoir plus.",
     "onrampWithFiatTitle": "Acheter des UCO via carte de crédit",
     "onrampWithFiatHowDoesItWorkTitle": "Comment ça marche ?",
     "onrampWithFiatHowDoesItWorkBody": "Pour optimiser vos frais de transaction, nous avons développé un système qui vous permet d’acheter de l’Ethereum, lequel est automatiquement converti en tokens UCO et envoyé directement dans votre portefeuille Archethic.",
