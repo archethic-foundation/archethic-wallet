@@ -62,9 +62,15 @@ class _ChainBadge extends ConsumerWidget {
               width: 20,
             ),
             const SizedBox(width: 10),
-            Text(chain!.displayName),
+            Text(
+              chain!.displayName,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
           ] else
-            Text(localizations.btn_selectChain),
+            Text(
+              localizations.btn_selectChain,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
         ],
       ),
     );

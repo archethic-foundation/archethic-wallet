@@ -125,7 +125,7 @@ class _ChainSelector extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 1),
                   child: Text(
                     chain.displayName,
-                    style: AppTextStyles.bodyLarge(context),
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
                 const SizedBox(

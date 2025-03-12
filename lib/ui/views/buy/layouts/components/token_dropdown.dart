@@ -57,9 +57,15 @@ class _TokenBadge extends ConsumerWidget {
               width: 20,
             ),
             const SizedBox(width: 10),
-            Text(token!.desc),
+            Text(
+              token!.desc,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
           ] else
-            Text(localizations.btn_selectToken),
+            Text(
+              localizations.btn_selectToken,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
         ],
       ),
     );

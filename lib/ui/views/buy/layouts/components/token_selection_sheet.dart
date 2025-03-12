@@ -120,7 +120,7 @@ class _TokenSelector extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 1),
                   child: Text(
                     token.name,
-                    style: AppTextStyles.bodyLarge(context),
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
                 const SizedBox(
