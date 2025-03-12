@@ -17,6 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$FarmLockWithdrawFormState {
   ProcessStep get processStep => throw _privateConstructorUsedError;
+  FarmLockWithdrawMode? get farmLockWithdrawMode =>
+      throw _privateConstructorUsedError;
   bool get resumeProcess => throw _privateConstructorUsedError;
   int get currentStep => throw _privateConstructorUsedError;
   bool get isProcessInProgress => throw _privateConstructorUsedError;
@@ -55,6 +57,7 @@ abstract class $FarmLockWithdrawFormStateCopyWith<$Res> {
   @useResult
   $Res call(
       {ProcessStep processStep,
+      FarmLockWithdrawMode? farmLockWithdrawMode,
       bool resumeProcess,
       int currentStep,
       bool isProcessInProgress,
@@ -101,6 +104,7 @@ class _$FarmLockWithdrawFormStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? processStep = null,
+    Object? farmLockWithdrawMode = freezed,
     Object? resumeProcess = null,
     Object? currentStep = null,
     Object? isProcessInProgress = null,
@@ -128,6 +132,10 @@ class _$FarmLockWithdrawFormStateCopyWithImpl<$Res,
           ? _value.processStep
           : processStep // ignore: cast_nullable_to_non_nullable
               as ProcessStep,
+      farmLockWithdrawMode: freezed == farmLockWithdrawMode
+          ? _value.farmLockWithdrawMode
+          : farmLockWithdrawMode // ignore: cast_nullable_to_non_nullable
+              as FarmLockWithdrawMode?,
       resumeProcess: null == resumeProcess
           ? _value.resumeProcess
           : resumeProcess // ignore: cast_nullable_to_non_nullable
@@ -298,6 +306,7 @@ abstract class _$$FarmLockWithdrawFormStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {ProcessStep processStep,
+      FarmLockWithdrawMode? farmLockWithdrawMode,
       bool resumeProcess,
       int currentStep,
       bool isProcessInProgress,
@@ -348,6 +357,7 @@ class __$$FarmLockWithdrawFormStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? processStep = null,
+    Object? farmLockWithdrawMode = freezed,
     Object? resumeProcess = null,
     Object? currentStep = null,
     Object? isProcessInProgress = null,
@@ -375,6 +385,10 @@ class __$$FarmLockWithdrawFormStateImplCopyWithImpl<$Res>
           ? _value.processStep
           : processStep // ignore: cast_nullable_to_non_nullable
               as ProcessStep,
+      farmLockWithdrawMode: freezed == farmLockWithdrawMode
+          ? _value.farmLockWithdrawMode
+          : farmLockWithdrawMode // ignore: cast_nullable_to_non_nullable
+              as FarmLockWithdrawMode?,
       resumeProcess: null == resumeProcess
           ? _value.resumeProcess
           : resumeProcess // ignore: cast_nullable_to_non_nullable
@@ -468,6 +482,7 @@ class __$$FarmLockWithdrawFormStateImplCopyWithImpl<$Res>
 class _$FarmLockWithdrawFormStateImpl extends _FarmLockWithdrawFormState {
   const _$FarmLockWithdrawFormStateImpl(
       {this.processStep = ProcessStep.form,
+      this.farmLockWithdrawMode,
       this.resumeProcess = false,
       this.currentStep = 0,
       this.isProcessInProgress = false,
@@ -494,6 +509,8 @@ class _$FarmLockWithdrawFormStateImpl extends _FarmLockWithdrawFormState {
   @override
   @JsonKey()
   final ProcessStep processStep;
+  @override
+  final FarmLockWithdrawMode? farmLockWithdrawMode;
   @override
   @JsonKey()
   final bool resumeProcess;
@@ -546,7 +563,7 @@ class _$FarmLockWithdrawFormStateImpl extends _FarmLockWithdrawFormState {
 
   @override
   String toString() {
-    return 'FarmLockWithdrawFormState(processStep: $processStep, resumeProcess: $resumeProcess, currentStep: $currentStep, isProcessInProgress: $isProcessInProgress, farmLockWithdrawOk: $farmLockWithdrawOk, amount: $amount, depositId: $depositId, transactionWithdrawFarmLock: $transactionWithdrawFarmLock, failure: $failure, farmAddress: $farmAddress, rewardToken: $rewardToken, lpToken: $lpToken, lpTokenPair: $lpTokenPair, finalAmountReward: $finalAmountReward, finalAmountWithdraw: $finalAmountWithdraw, consentDateTime: $consentDateTime, depositedAmount: $depositedAmount, feeEstimation: $feeEstimation, rewardAmount: $rewardAmount, poolAddress: $poolAddress, endDate: $endDate, confirmPrivacyPolicy: $confirmPrivacyPolicy)';
+    return 'FarmLockWithdrawFormState(processStep: $processStep, farmLockWithdrawMode: $farmLockWithdrawMode, resumeProcess: $resumeProcess, currentStep: $currentStep, isProcessInProgress: $isProcessInProgress, farmLockWithdrawOk: $farmLockWithdrawOk, amount: $amount, depositId: $depositId, transactionWithdrawFarmLock: $transactionWithdrawFarmLock, failure: $failure, farmAddress: $farmAddress, rewardToken: $rewardToken, lpToken: $lpToken, lpTokenPair: $lpTokenPair, finalAmountReward: $finalAmountReward, finalAmountWithdraw: $finalAmountWithdraw, consentDateTime: $consentDateTime, depositedAmount: $depositedAmount, feeEstimation: $feeEstimation, rewardAmount: $rewardAmount, poolAddress: $poolAddress, endDate: $endDate, confirmPrivacyPolicy: $confirmPrivacyPolicy)';
   }
 
   @override
@@ -556,6 +573,8 @@ class _$FarmLockWithdrawFormStateImpl extends _FarmLockWithdrawFormState {
             other is _$FarmLockWithdrawFormStateImpl &&
             (identical(other.processStep, processStep) ||
                 other.processStep == processStep) &&
+            (identical(other.farmLockWithdrawMode, farmLockWithdrawMode) ||
+                other.farmLockWithdrawMode == farmLockWithdrawMode) &&
             (identical(other.resumeProcess, resumeProcess) ||
                 other.resumeProcess == resumeProcess) &&
             (identical(other.currentStep, currentStep) ||
@@ -602,6 +621,7 @@ class _$FarmLockWithdrawFormStateImpl extends _FarmLockWithdrawFormState {
   int get hashCode => Object.hashAll([
         runtimeType,
         processStep,
+        farmLockWithdrawMode,
         resumeProcess,
         currentStep,
         isProcessInProgress,
@@ -638,6 +658,7 @@ class _$FarmLockWithdrawFormStateImpl extends _FarmLockWithdrawFormState {
 abstract class _FarmLockWithdrawFormState extends FarmLockWithdrawFormState {
   const factory _FarmLockWithdrawFormState(
       {final ProcessStep processStep,
+      final FarmLockWithdrawMode? farmLockWithdrawMode,
       final bool resumeProcess,
       final int currentStep,
       final bool isProcessInProgress,
@@ -663,6 +684,8 @@ abstract class _FarmLockWithdrawFormState extends FarmLockWithdrawFormState {
 
   @override
   ProcessStep get processStep;
+  @override
+  FarmLockWithdrawMode? get farmLockWithdrawMode;
   @override
   bool get resumeProcess;
   @override

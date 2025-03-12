@@ -2,6 +2,7 @@ import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/bloc/provider.dart';
+import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/bloc/state.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/layouts/components/farm_lock_withdraw_confirm_sheet_uco.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/layouts/components/farm_lock_withdraw_form_sheet.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -57,6 +58,7 @@ class _FarmLockWithdrawFundsSheetState
             ..setPoolAddress(farmLock.poolAddress)
             ..setLPTokenPair(farmLock.lpTokenPair!)
             ..setLpToken(farmLock.lpToken!)
+            ..setFarmLockWithdrawMode(FarmLockWithdrawMode.uco)
             ..setAmount(AppLocalizations.of(context)!, depositedAmount);
         } else {
           if (mounted) {

@@ -3,9 +3,7 @@ import 'dart:async';
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/aeswap/usecases.dart';
 import 'package:aewallet/application/airdrop/airdrop.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/step.dart';
-import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/domain/models/step.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
@@ -45,6 +43,10 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
 
   void setDepositId(String depositId) {
     state = state.copyWith(depositId: depositId);
+  }
+
+  void setFarmLockWithdrawMode(FarmLockWithdrawMode farmLockWithdrawMode) {
+    state = state.copyWith(farmLockWithdrawMode: farmLockWithdrawMode);
   }
 
   void setAmount(
@@ -103,11 +105,8 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
 
   Future<double> _calculateFees() async {
     var feeEstimation = 0.0;
-    final earnUserLevel = ref.read(
-      SettingsProviders.settings.select((settings) => settings.earnUserLevel),
-    );
 
-    if (earnUserLevel == EarnUserLevelType.advanced) {
+    if (state.farmLockWithdrawMode == FarmLockWithdrawMode.lp) {
       feeEstimation = await ref.read(withdrawFarmLockCaseProvider).estimateFees(
             state.farmAddress!,
             state.lpToken!.address,
@@ -329,14 +328,10 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
       ),
     );
 
-    final earnUserLevel = ref.read(
-      SettingsProviders.settings.select((settings) => settings.earnUserLevel),
-    );
-
     await aedappfm.ConsentRepositoryImpl()
         .addAddress(accountSelected!.genesisAddress);
 
-    if (earnUserLevel == EarnUserLevelType.advanced) {
+    if (state.farmLockWithdrawMode == FarmLockWithdrawMode.lp) {
       await ref.read(withdrawFarmLockCaseProvider).run(
             localizations,
             this,

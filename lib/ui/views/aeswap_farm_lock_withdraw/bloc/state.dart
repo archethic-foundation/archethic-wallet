@@ -8,10 +8,13 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'state.freezed.dart';
 
+enum FarmLockWithdrawMode { lp, uco }
+
 @freezed
 class FarmLockWithdrawFormState with _$FarmLockWithdrawFormState {
   const factory FarmLockWithdrawFormState({
     @Default(ProcessStep.form) ProcessStep processStep,
+    FarmLockWithdrawMode? farmLockWithdrawMode,
     @Default(false) bool resumeProcess,
     @Default(0) int currentStep,
     @Default(false) bool isProcessInProgress,

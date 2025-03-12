@@ -1,6 +1,4 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
-import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_lp_token_fiat_value.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
@@ -71,12 +69,10 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
   @override
   PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final earnUserLevel = ref.watch(
-      SettingsProviders.settings.select((settings) => settings.earnUserLevel),
-    );
+    final farmLockWithdraw = ref.watch(farmLockWithdrawFormNotifierProvider);
 
     return SheetAppBar(
-      title: earnUserLevel == EarnUserLevelType.beginner
+      title: farmLockWithdraw.farmLockWithdrawMode == FarmLockWithdrawMode.uco
           ? localizations.farmLockWithdrawFormTitleBeginner
           : localizations.farmLockWithdrawFormTitle,
       widgetLeft: BackButton(
@@ -95,9 +91,7 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
         .textTheme
         .bodyLarge!
         .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold);
-    final earnUserLevel = ref.watch(
-      SettingsProviders.settings.select((settings) => settings.earnUserLevel),
-    );
+
     final pool = ref.watch(farmLockFormPoolProvider).valueOrNull;
 
     if (farmLockWithdraw.rewardToken == null ||
@@ -123,7 +117,7 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
               children: [
                 _buildDescriptionSection(
                   context,
-                  earnUserLevel,
+                  ref,
                   localizations,
                   boldBodyLarge,
                 ),
@@ -142,8 +136,6 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
                       _buildLPTokenSection(
                         context,
                         ref,
-                        farmLockWithdraw,
-                        earnUserLevel,
                         localizations,
                         pool,
                       ),
@@ -151,7 +143,6 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
                       _buildRewardSection(
                         context,
                         ref,
-                        farmLockWithdraw,
                         localizations,
                       ),
                     ],
@@ -169,7 +160,8 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ),
-                if (earnUserLevel == EarnUserLevelType.beginner)
+                if (farmLockWithdraw.farmLockWithdrawMode ==
+                    FarmLockWithdrawMode.uco)
                   _buildBeginnerSection(
                     context,
                     localizations,
@@ -185,14 +177,16 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
 
   Widget _buildDescriptionSection(
     BuildContext context,
-    EarnUserLevelType earnUserLevel,
+    WidgetRef ref,
     AppLocalizations localizations,
     TextStyle boldBodyLarge,
   ) {
+    final farmLockWithdraw = ref.watch(farmLockWithdrawFormNotifierProvider);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (earnUserLevel == EarnUserLevelType.advanced)
+        if (farmLockWithdraw.farmLockWithdrawMode == FarmLockWithdrawMode.lp)
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -219,12 +213,11 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
   Widget _buildLPTokenSection(
     BuildContext context,
     WidgetRef ref,
-    FarmLockWithdrawFormState farmLockWithdraw,
-    EarnUserLevelType earnUserLevel,
     AppLocalizations localizations,
     DexPool? pool,
   ) {
-    if (earnUserLevel == EarnUserLevelType.advanced) {
+    final farmLockWithdraw = ref.watch(farmLockWithdrawFormNotifierProvider);
+    if (farmLockWithdraw.farmLockWithdrawMode == FarmLockWithdrawMode.lp) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -282,9 +275,9 @@ class FarmLockWithdrawFormSheet extends ConsumerWidget
   Widget _buildRewardSection(
     BuildContext context,
     WidgetRef ref,
-    FarmLockWithdrawFormState farmLockWithdraw,
     AppLocalizations localizations,
   ) {
+    final farmLockWithdraw = ref.watch(farmLockWithdrawFormNotifierProvider);
     if (farmLockWithdraw.rewardAmount == 0) {
       return MessageBox(
         messageBoxType: MessageBoxType.info,
