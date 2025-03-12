@@ -12,7 +12,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:numeral/numeral.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 
 class AirdropBanner extends ConsumerWidget {
   const AirdropBanner({super.key});
@@ -209,7 +210,7 @@ class AirdropBanner extends ConsumerWidget {
               ),
               if (state != AirdropState.ok)
                 Text(
-                  '\$${ucoPerParticipant?.numeral(digits: 2) ?? ''} ${localizations.airdropPerParticipant}',
+                  '\$${ucoPerParticipant?.formatNumber(precision: 0).replaceAll('.', '') ?? ''} ${localizations.airdropPerParticipant}',
                   style: Theme.of(context)
                       .textTheme
                       .bodyMediumWithOpacity

@@ -65,7 +65,7 @@ Future<double> airdropUCOPerParticipantFiatValue(
       airdropCount.totalMultiplier! > 0) {
     ucoPerParticipant = (Decimal.parse('100000000') /
             Decimal.fromInt(
-              airdropCount.totalMultiplier!,
+              airdropCount.participantCount!,
             ))
         .toDecimal(scaleOnInfinitePrecision: 8)
         .toDouble();
