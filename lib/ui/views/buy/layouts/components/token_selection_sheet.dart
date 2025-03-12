@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class TokenSelectionSheet extends ConsumerWidget {
   const TokenSelectionSheet({
@@ -24,33 +26,50 @@ class TokenSelectionSheet extends ConsumerWidget {
 
     if (tokens == null) return const SizedBox();
 
-    return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Text(
-              localizations.onrampWithCryptoSelectTokenTitle,
-              style: AppTextStyles.bodyLarge(context)
-                  .copyWith(fontWeight: FontWeight.bold),
+    return Stack(
+      children: [
+        Positioned(
+          right: 0,
+          child: IconButton(
+            onPressed: () async {
+              context.pop();
+            },
+            icon: const Icon(
+              Symbols.close,
+              color: Colors.white,
+              size: 16,
             ),
           ),
-          Wrap(
-            spacing: 10,
-            children: tokens.map((token) {
-              return _TokenSelector(
-                key: ValueKey(token),
-                token: token,
-                onTap: () {
-                  onSelect(token);
-                },
-              );
-            }).toList(),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                  localizations.onrampWithCryptoSelectTokenTitle,
+                  style: AppTextStyles.bodyLarge(context)
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+              ),
+              Wrap(
+                spacing: 10,
+                children: tokens.map((token) {
+                  return _TokenSelector(
+                    key: ValueKey(token),
+                    token: token,
+                    onTap: () {
+                      onSelect(token);
+                    },
+                  );
+                }).toList(),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -69,8 +88,7 @@ class _TokenSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5),
-      width: 150,
-      height: 35,
+      height: 40,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
