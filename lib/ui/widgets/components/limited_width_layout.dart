@@ -13,7 +13,7 @@ class LimitedWidthLayout extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.black,
               image: DecorationImage(
                 image: AssetImage(ArchethicTheme.backgroundSmall),

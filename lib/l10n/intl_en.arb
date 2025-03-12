@@ -913,6 +913,8 @@
     "farmLockWithdrawFormTextNoLPText1": "No unlocked LP Token are available",
     "farmLockWithdrawFormTextLPText2": " are available for withdrawal.",
     "onrampWithBanxaTitle": "Buy with Banxa",
+    "onrampWithFiatIncompatiblePlatformTitle": "Buy UCO with credit card is not compatible with your device",
+    "onrampWithFiatIncompatiblePlatformBody": "Your device is not compatible with technical requirements.\nGet in touch with the Archethic support team for more detailed informations.",
     "onrampWithFiatTitle": "Buy UCO with credit card",
     "onrampWithFiatHowDoesItWorkTitle": "How does it work ?",
     "onrampWithFiatHowDoesItWorkBody": "To optimize your transaction fees, we've developed a system that lets you buy Ethereum and automatically converts it into UCO tokens—sent directly to your Archethic wallet.",
