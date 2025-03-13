@@ -172,7 +172,7 @@ Future<({bool? isMailConfirmed, String? email, String? referralCode})>
       final json = jsonDecode(response.body);
       isMailConfirmed = json['confirmed'];
       email = json['email'];
-      referralCode = json['referralCode'];
+      referralCode = json['referral_code'];
     } else if (response.statusCode == 400) {
       _logger.severe('Bad Request: Missing headers or invalid timestamp');
     } else if (response.statusCode == 401) {

@@ -1,11 +1,14 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'dart:async';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:rxdart/rxdart.dart';
 
 class NotificationsUtil {
   static final _notifications = FlutterLocalNotificationsPlugin();
-  static final onNotifications = BehaviorSubject<String?>();
+  static final StreamController<String?> _notificationsController =
+      StreamController<String?>.broadcast();
+  static Stream<String?> get onNotifications => _notificationsController.stream;
 
   static Future _notificationDetails() async {
     return const NotificationDetails(
@@ -35,7 +38,7 @@ class NotificationsUtil {
     await _notifications.initialize(
       settings,
       onDidReceiveNotificationResponse: (response) async {
-        onNotifications.add(response.payload);
+        _notificationsController.add(response.payload);
       },
     );
   }

@@ -1,5 +1,6 @@
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_token_balance.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_textfield.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_add/layouts/components/liquidity_add_need_tokens.dart';
@@ -160,8 +161,12 @@ class _LiquidityAddToken1AmountState
               Positioned(
                 right: 10,
                 child: BtnTextField(
-                  buttonText:
-                      aedappfm.AppLocalizations.of(context)!.aedappfm_btn_max,
+                  buttonText: Text(
+                    aedappfm.AppLocalizations.of(context)!.aedappfm_btn_max,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          fontWeight: FontWeightTelegraf.fontWeightRegular,
+                        ),
+                  ),
                   onTap: () async {
                     tokenAmountController.value = AmountTextInputFormatter(
                       precision: 8,
