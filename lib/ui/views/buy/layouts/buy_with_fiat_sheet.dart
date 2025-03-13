@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'package:aewallet/application/onramp/banxa.dart';
 import 'package:aewallet/application/onramp/onramp.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
@@ -16,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BuyWithFiatSheet extends ConsumerWidget
     implements SheetSkeletonInterface {
@@ -39,6 +41,9 @@ class BuyWithFiatSheet extends ConsumerWidget
     final depositAddress = ref.watch(onrampDepositAddressProvider).valueOrNull;
     final onrampFavoriteSetup =
         ref.watch(onrampProviderFavoriteSetupProvider('banxa')).valueOrNull;
+
+    final isWebviewSupported = ref.watch(isBanxaWebviewSupportedProvider);
+
     return BtnFooterPrimary(
       buttonText: localizations.onrampWithFiatBuyNowButton,
       key: const Key('buyNow'),
@@ -48,15 +53,45 @@ class BuyWithFiatSheet extends ConsumerWidget
       showProgressIndicator: onrampFavoriteSetup == null,
       onTap: () async => switch (onrampFavoriteSetup) {
         null => null,
-        final setup => await context.push(
-            BanxaOnRampSheet.routerPage,
-            extra: {
-              'depositAddress': depositAddress,
-              'tokenId': setup.tokenId,
-              'chainId': setup.chainId,
-            },
+        final setup => _goToBanxa(
+            context: context,
+            ref: ref,
+            isWebviewSupported: isWebviewSupported,
+            depositAddress: depositAddress!,
+            chainId: setup.chainId,
+            tokenId: setup.tokenId,
           )
       },
+    );
+  }
+
+  Future<void> _goToBanxa({
+    required BuildContext context,
+    required WidgetRef ref,
+    required bool isWebviewSupported,
+    required String depositAddress,
+    required String chainId,
+    required String tokenId,
+  }) async {
+    if (isWebviewSupported) {
+      return context.push<void>(
+        BanxaOnRampSheet.routerPage,
+        extra: {
+          'depositAddress': depositAddress,
+          'tokenId': tokenId,
+          'chainId': chainId,
+        },
+      );
+    }
+
+    await launchUrl(
+      ref.read(
+        banxaWebpageUriProvider(
+          tokenId: tokenId,
+          chainId: chainId,
+          depositAddress: depositAddress,
+        ),
+      ),
     );
   }
 
