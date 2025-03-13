@@ -267,7 +267,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                       filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                       child: DecoratedBox(
                         decoration: BoxDecoration(
-                          color: const Color(0xFF262626).withOpacity(0.3),
+                          color: const Color(0xFF262626).withValues(alpha: 0.3),
                           border: Border.all(
                             color: const Color(0xFF343434),
                           ),
@@ -279,7 +279,8 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                               const WidgetStatePropertyAll(Colors.transparent),
                           shape: RoundedRectangleBorder(
                             side: BorderSide(
-                              color: const Color(0xFF343434).withOpacity(0.3),
+                              color: const Color(0xFF343434)
+                                  .withValues(alpha: 0.3),
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ),
@@ -296,7 +297,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                                   .textTheme
                                   .labelSmall!
                                   .copyWith(
-                                    color: Colors.white.withOpacity(0.5),
+                                    color: Colors.white.withValues(alpha: 0.5),
                                   ),
                             ),
                           ),
@@ -305,7 +306,9 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                             style: Theme.of(context)
                                 .textTheme
                                 .bodySmall!
-                                .copyWith(color: Colors.white.withOpacity(0.5)),
+                                .copyWith(
+                                  color: Colors.white.withValues(alpha: 0.5),
+                                ),
                           ),
                           onDeleted: () {
                             setState(() {
@@ -348,7 +351,8 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                           child: DecoratedBox(
                             decoration: BoxDecoration(
-                              color: const Color(0xFF262626).withOpacity(0.3),
+                              color: const Color(0xFF262626)
+                                  .withValues(alpha: 0.3),
                               border:
                                   Border.all(color: const Color(0xFF505050)),
                               borderRadius: BorderRadius.circular(8),

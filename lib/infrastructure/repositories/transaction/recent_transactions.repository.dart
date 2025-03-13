@@ -32,7 +32,7 @@ import 'package:logging/logging.dart';
 /// - Transactions are enriched with movements and token metadata.
 ///
 /// ### Dependencies
-/// - [ApiService]: For interacting with the Archethic blockchain API.
+/// - [archethic.ApiService]: For interacting with the Archethic blockchain API.
 /// - [TokensRepository]: For fetching token metadata and details.
 
 class RecentTransactionsRepositoryImpl

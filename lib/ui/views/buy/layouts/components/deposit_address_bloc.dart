@@ -20,7 +20,7 @@ class DepositAddressBloc extends ConsumerWidget {
     final address = ref.watch(onrampDepositAddressProvider).valueOrNull;
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
+        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Padding(
@@ -37,7 +37,10 @@ class DepositAddressBloc extends ConsumerWidget {
             const SizedBox(height: 10),
             DecoratedBox(
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.2),
+                color: Theme.of(context)
+                    .colorScheme
+                    .onSurface
+                    .withValues(alpha: 0.2),
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
               ),
               child: InkWell(

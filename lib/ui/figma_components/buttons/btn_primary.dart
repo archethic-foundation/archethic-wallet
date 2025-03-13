@@ -50,8 +50,9 @@ class BtnPrimary extends StatelessWidget {
             overflow: TextOverflow.visible,
             softWrap: false,
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color:
-                      isLocked ? Colors.white.withOpacity(0.2) : Colors.white,
+                  color: isLocked
+                      ? Colors.white.withValues(alpha: 0.2)
+                      : Colors.white,
                   fontWeight: FontWeightTelegraf.fontWeightBold,
                 ),
           ),

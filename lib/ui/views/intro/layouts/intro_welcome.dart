@@ -473,7 +473,7 @@ class LanguageToggleButtonState extends ConsumerState<LanguageToggleButton> {
                                   .textTheme
                                   .displaySmall!
                                   .color!
-                                  .withOpacity(0.5),
+                                  .withValues(alpha: 0.5),
                             ),
                   ),
                   Text(
@@ -485,7 +485,7 @@ class LanguageToggleButtonState extends ConsumerState<LanguageToggleButton> {
                                   .textTheme
                                   .displaySmall!
                                   .color!
-                                  .withOpacity(0.5),
+                                  .withValues(alpha: 0.5),
                             ),
                   ),
                 ],

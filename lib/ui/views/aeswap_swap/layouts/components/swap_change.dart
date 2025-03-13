@@ -21,7 +21,7 @@ class SwapChange extends ConsumerWidget {
           Icon(
             aedappfm.Iconsax.arrange_square_2,
             size: 24,
-            color: Colors.white.withOpacity(0.2),
+            color: Colors.white.withValues(alpha: 0.2),
           ),
         ],
       );

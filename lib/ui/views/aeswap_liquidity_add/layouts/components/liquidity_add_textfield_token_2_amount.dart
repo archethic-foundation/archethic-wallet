@@ -149,7 +149,7 @@ class _LiquidityAddToken2AmountState
                     filled: true,
                     fillColor: _hasFocus
                         ? Colors.white
-                        : Colors.white.withOpacity(0.15),
+                        : Colors.white.withValues(alpha: 0.15),
                     border: const OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.all(Radius.circular(10)),

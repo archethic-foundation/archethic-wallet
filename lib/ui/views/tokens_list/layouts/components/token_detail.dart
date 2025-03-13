@@ -101,7 +101,7 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                               height: 30,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: Colors.white.withOpacity(0.2),
+                                color: Colors.white.withValues(alpha: 0.2),
                               ),
                             ),
                             SvgPicture.asset(
@@ -141,8 +141,8 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                                           height: 15,
                                           decoration: BoxDecoration(
                                             shape: BoxShape.circle,
-                                            color:
-                                                Colors.white.withOpacity(0.2),
+                                            color: Colors.white
+                                                .withValues(alpha: 0.2),
                                           ),
                                         ),
                                         SvgPicture.asset(
@@ -161,7 +161,8 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                                       height: 15,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                        color: Colors.white.withOpacity(0.2),
+                                        color:
+                                            Colors.white.withValues(alpha: 0.2),
                                       ),
                                     ),
                                   ),
@@ -177,7 +178,8 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                                         height: 15,
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
-                                          color: Colors.white.withOpacity(0.2),
+                                          color: Colors.white
+                                              .withValues(alpha: 0.2),
                                         ),
                                       ),
                                       SvgPicture.asset(
@@ -193,7 +195,8 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                                     height: 15,
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color: Colors.white.withOpacity(0.2),
+                                      color:
+                                          Colors.white.withValues(alpha: 0.2),
                                     ),
                                   ),
                               ],
@@ -477,7 +480,7 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                   Container(
                     height: 10,
                     decoration: BoxDecoration(
-                      color: ArchethicTheme.text.withOpacity(0.05),
+                      color: ArchethicTheme.text.withValues(alpha: 0.05),
                       borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(10),
                         bottomRight: Radius.circular(10),

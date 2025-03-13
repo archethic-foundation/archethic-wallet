@@ -39,8 +39,8 @@ class AirdropLPAvailable extends ConsumerWidget {
               return FractionallySizedBox(
                 heightFactor: 1,
                 child: Scaffold(
-                  backgroundColor:
-                      aedappfm.AppThemeBase.sheetBackground.withOpacity(0.2),
+                  backgroundColor: aedappfm.AppThemeBase.sheetBackground
+                      .withValues(alpha: 0.2),
                   body: const FarmLockBlockListSingleLineLock(),
                 ),
               );

@@ -21,10 +21,10 @@ class BoxDark extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           border: Border.all(
-            color: const Color(0xFF5540BF).withOpacity(0.4),
+            color: const Color(0xFF5540BF).withValues(alpha: 0.4),
           ),
           borderRadius: BorderRadius.circular(10),
-          color: Colors.black.withOpacity(0.4),
+          color: Colors.black.withValues(alpha: 0.4),
         ),
         child: Column(
           children: [

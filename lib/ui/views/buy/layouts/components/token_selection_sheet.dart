@@ -92,7 +92,8 @@ class _TokenSelector extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            aedappfm.AppThemeBase.sheetBackgroundTertiary.withOpacity(0.4),
+            aedappfm.AppThemeBase.sheetBackgroundTertiary
+                .withValues(alpha: 0.4),
             aedappfm.AppThemeBase.sheetBackgroundTertiary,
           ],
           stops: const [0, 1],
@@ -100,7 +101,7 @@ class _TokenSelector extends StatelessWidget {
         border: GradientBoxBorder(
           gradient: LinearGradient(
             colors: [
-              aedappfm.AppThemeBase.sheetBorderTertiary.withOpacity(0.4),
+              aedappfm.AppThemeBase.sheetBorderTertiary.withValues(alpha: 0.4),
               aedappfm.AppThemeBase.sheetBorderTertiary,
             ],
             stops: const [0, 1],
@@ -126,7 +127,7 @@ class _TokenSelector extends StatelessWidget {
                 height: 20,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white.withOpacity(0.2),
+                  color: Colors.white.withValues(alpha: 0.2),
                 ),
               ),
             const SizedBox(

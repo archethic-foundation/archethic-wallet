@@ -105,7 +105,8 @@ class _IconDataWidgetEnabled extends ConsumerWidget {
         shape: BoxShape.circle,
         boxShadow: <BoxShadow>[
           BoxShadow(
-            color: ArchethicTheme.iconDataWidgetIconBackground.withOpacity(0.1),
+            color: ArchethicTheme.iconDataWidgetIconBackground
+                .withValues(alpha: 0.1),
           ),
         ],
       ),
@@ -144,7 +145,7 @@ class _IconDataWidgetDisabled extends ConsumerWidget {
       child: SizedBox(
         child: Icon(
           icon,
-          color: ArchethicTheme.text.withOpacity(0.3),
+          color: ArchethicTheme.text.withValues(alpha: 0.3),
           size: width,
           weight: 200,
         ),

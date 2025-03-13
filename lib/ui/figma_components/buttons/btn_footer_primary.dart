@@ -45,7 +45,7 @@ class BtnFooterPrimary extends StatelessWidget {
                             fontWeight: FontWeightTelegraf.fontWeightSemibold,
                           )
                       : Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            color: Colors.white.withOpacity(0.2),
+                            color: Colors.white.withValues(alpha: 0.2),
                             fontWeight: FontWeightTelegraf.fontWeightSemibold,
                           ),
                 ),
@@ -66,7 +66,7 @@ class BtnFooterPrimary extends StatelessWidget {
                     child: SizedBox.square(
                       dimension: 10,
                       child: CircularProgressIndicator(
-                        color: Colors.white.withOpacity(0.2),
+                        color: Colors.white.withValues(alpha: 0.2),
                         strokeWidth: 2,
                       ),
                     ),

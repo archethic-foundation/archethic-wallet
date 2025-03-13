@@ -117,7 +117,7 @@ class AccountsDialog {
           heightFactor: heightFactor,
           child: Scaffold(
             backgroundColor:
-                aedappfm.AppThemeBase.sheetBackground.withOpacity(0.2),
+                aedappfm.AppThemeBase.sheetBackground.withValues(alpha: 0.2),
             body: AccountsDialogContent(
               accounts: accounts,
               multipleSelectionsAllowed: multipleSelectionsAllowed,
@@ -174,7 +174,7 @@ class AccountsDialogContentState extends ConsumerState<AccountsDialogContent> {
             child: Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: ArchethicTheme.sheetBackground.withOpacity(0.2),
+                color: ArchethicTheme.sheetBackground.withValues(alpha: 0.2),
                 border: Border.all(
                   color: ArchethicTheme.sheetBorder,
                 ),

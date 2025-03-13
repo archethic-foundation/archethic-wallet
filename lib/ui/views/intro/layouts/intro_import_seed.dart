@@ -464,7 +464,8 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
                                           filled: true,
                                           fillColor: _hasFocusList[index]
                                               ? Colors.white
-                                              : Colors.white.withOpacity(0.15),
+                                              : Colors.white
+                                                  .withValues(alpha: 0.15),
                                           border: const OutlineInputBorder(
                                             borderSide: BorderSide.none,
                                             borderRadius: BorderRadius.all(
@@ -536,7 +537,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
               child: Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: ArchethicTheme.sheetBackground.withOpacity(0.2),
+                  color: ArchethicTheme.sheetBackground.withValues(alpha: 0.2),
                   border: Border.all(
                     color: ArchethicTheme.sheetBorder,
                   ),

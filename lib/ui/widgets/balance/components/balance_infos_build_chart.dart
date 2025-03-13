@@ -21,14 +21,14 @@ class BalanceInfosChart extends ConsumerWidget {
         intervals: chartInfos!,
         gradientColors: LinearGradient(
           colors: <Color>[
-            ArchethicTheme.text.withOpacity(0.05),
-            ArchethicTheme.text.withOpacity(0),
+            ArchethicTheme.text.withValues(alpha: 0.05),
+            ArchethicTheme.text.withValues(alpha: 0),
           ],
         ),
         gradientColorsBar: LinearGradient(
           colors: <Color>[
-            ArchethicTheme.text.withOpacity(0.1),
-            ArchethicTheme.text.withOpacity(0.05),
+            ArchethicTheme.text.withValues(alpha: 0.1),
+            ArchethicTheme.text.withValues(alpha: 0.05),
           ],
           begin: Alignment.center,
           end: Alignment.bottomCenter,

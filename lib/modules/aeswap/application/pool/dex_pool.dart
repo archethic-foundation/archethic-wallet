@@ -18,6 +18,7 @@ import 'package:aewallet/modules/aeswap/domain/repositories/dex_pool.repository.
 import 'package:aewallet/modules/aeswap/infrastructure/dex_pool.repository.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/hive/favorite_pools.hive.dart';
 import 'package:aewallet/modules/aeswap/infrastructure/pool_factory.repository.dart';
+// ignore: unused_import
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';

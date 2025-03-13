@@ -50,8 +50,8 @@ class _ArchethicRefreshIndicatorState extends State<ArchethicRefreshIndicator>
           strokeWidth: 2,
           backgroundColor: Theme.of(context)
               .scaffoldBackgroundColor
-              .withOpacity(_opacityAnimation.value),
-          color: ArchethicTheme.text.withOpacity(_opacityAnimation.value),
+              .withValues(alpha: _opacityAnimation.value),
+          color: ArchethicTheme.text.withValues(alpha: _opacityAnimation.value),
           onRefresh: () async {
             unawaited(_opacityController.forward());
             await widget.onRefresh();

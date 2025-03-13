@@ -59,7 +59,7 @@ class BoxPurpleGradient extends StatelessWidget {
                   radius: 1.1,
                   colors: [
                     const Color(0xFFC002FF),
-                    const Color(0xFFC002FF).withOpacity(0.8),
+                    const Color(0xFFC002FF).withValues(alpha: 0.8),
                     const Color(0xFF322070),
                   ],
                   stops: const [0.0, 0.3, 1.0],
@@ -71,7 +71,7 @@ class BoxPurpleGradient extends StatelessWidget {
             child: DecoratedBox(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: const Color(0xFF5540BF).withOpacity(0.4),
+                color: const Color(0xFF5540BF).withValues(alpha: 0.4),
               ),
             ),
           ),

@@ -18,7 +18,7 @@ class AppTextStyles {
               .textTheme
               .bodyLarge!
               .color
-              ?.withOpacity(kOpacityText),
+              ?.withValues(alpha: kOpacityText),
         );
   }
 
@@ -42,7 +42,7 @@ class AppTextStyles {
               .textTheme
               .bodyMedium!
               .color
-              ?.withOpacity(kOpacityText),
+              ?.withValues(alpha: kOpacityText),
         );
   }
 
@@ -66,7 +66,7 @@ class AppTextStyles {
               .textTheme
               .bodySmall!
               .color
-              ?.withOpacity(kOpacityText),
+              ?.withValues(alpha: kOpacityText),
         );
   }
 

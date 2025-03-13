@@ -58,7 +58,7 @@ class ArchethicThemeStyles {
     return TextStyle(
       fontSize: AppFontSizes.size14,
       fontWeight: FontWeight.w600,
-      color: ArchethicTheme.text.withOpacity(0.3),
+      color: ArchethicTheme.text.withValues(alpha: 0.3),
     );
   }
 
@@ -66,7 +66,7 @@ class ArchethicThemeStyles {
     return TextStyle(
       fontSize: AppFontSizes.size18,
       fontWeight: FontWeight.w600,
-      color: ArchethicTheme.mainButtonLabel.withOpacity(0.3),
+      color: ArchethicTheme.mainButtonLabel.withValues(alpha: 0.3),
     );
   }
 
@@ -74,7 +74,7 @@ class ArchethicThemeStyles {
     return TextStyle(
       fontSize: AppFontSizes.size16,
       fontWeight: FontWeight.w400,
-      color: ArchethicTheme.mainButtonLabel.withOpacity(0.3),
+      color: ArchethicTheme.mainButtonLabel.withValues(alpha: 0.3),
     );
   }
 
@@ -148,7 +148,7 @@ class ArchethicThemeStyles {
       fontSize: 25,
       fontWeight: FontWeight.w900,
       letterSpacing: 1,
-      color: ArchethicTheme.text.withOpacity(0.6),
+      color: ArchethicTheme.text.withValues(alpha: 0.6),
     );
   }
 
@@ -284,7 +284,7 @@ class ArchethicThemeStyles {
     return TextStyle(
       fontSize: AppFontSizes.size12,
       fontWeight: FontWeight.w600,
-      color: ArchethicTheme.text.withOpacity(0.6),
+      color: ArchethicTheme.text.withValues(alpha: 0.6),
     );
   }
 

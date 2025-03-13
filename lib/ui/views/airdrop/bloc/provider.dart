@@ -196,8 +196,7 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
       if (response.statusCode == 500) {
         final responseBody = jsonDecode(response.body);
         final errorMessage =
-            (responseBody['error'] ?? '') + ' - ' + responseBody['details'] ??
-                'Unknown error';
+            '${responseBody['error'] ?? ''} - ${responseBody['details'] ?? 'Unknown error'}';
         state = state.copyWith(
           failure: Failure.other(
             message: 'Error 500 - $errorMessage',
@@ -338,8 +337,7 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
         } else if (response.statusCode == 500) {
           final responseBody = jsonDecode(response.body);
           final errorMessage =
-              (responseBody['error'] ?? '') + ' - ' + responseBody['details'] ??
-                  'Unknown error';
+              '${responseBody['error'] ?? ''} - ${responseBody['details'] ?? 'Unknown error'}';
           failure = Failure.other(
             message: 'Error 500 - $errorMessage',
           );

@@ -294,10 +294,10 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: ArchethicTheme.backgroundDark
-                                    .withOpacity(0.3),
+                                    .withValues(alpha: 0.3),
                                 border: Border.all(
                                   color: ArchethicTheme.backgroundDarkest
-                                      .withOpacity(0.2),
+                                      .withValues(alpha: 0.2),
                                 ),
                               ),
                               child: Icon(
@@ -329,10 +329,10 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: ArchethicTheme.backgroundDark
-                                      .withOpacity(0.3),
+                                      .withValues(alpha: 0.3),
                                   border: Border.all(
                                     color: ArchethicTheme.backgroundDarkest
-                                        .withOpacity(0.2),
+                                        .withValues(alpha: 0.2),
                                   ),
                                 ),
                                 child: Icon(

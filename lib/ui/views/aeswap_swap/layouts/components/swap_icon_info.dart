@@ -31,7 +31,7 @@ class SwapTokenIconInfo extends ConsumerWidget {
                     heightFactor: 1,
                     child: Scaffold(
                       backgroundColor: aedappfm.AppThemeBase.sheetBackground
-                          .withOpacity(0.2),
+                          .withValues(alpha: 0.2),
                       body: const SwapInfos(),
                     ),
                   );

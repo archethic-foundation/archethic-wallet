@@ -100,7 +100,7 @@ class _OnRampTransactionHistoryTableRow extends ConsumerWidget {
       decoration: BoxDecoration(
         color: isEven
             ? Colors.transparent
-            : aedappfm.ArchethicThemeBase.raspberry500.withOpacity(0.1),
+            : aedappfm.ArchethicThemeBase.raspberry500.withValues(alpha: 0.1),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
