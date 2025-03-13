@@ -64,7 +64,7 @@ final airdropPersonalLPProvider = AutoDisposeFutureProvider<
 // ignore: unused_element
 typedef AirdropPersonalLPRef = AutoDisposeFutureProviderRef<
     ({int personalMultiplier, double personalLP, double personalLPFlexible})>;
-String _$airdropUserInfoHash() => r'18ed0770c602d061c6d888fcf8554163a74291df';
+String _$airdropUserInfoHash() => r'92510cd974fa1fa71902ea908b212a37bc67fe33';
 
 /// See also [airdropUserInfo].
 @ProviderFor(airdropUserInfo)

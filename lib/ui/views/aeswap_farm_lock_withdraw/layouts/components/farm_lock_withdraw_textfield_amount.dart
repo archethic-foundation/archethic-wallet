@@ -1,5 +1,6 @@
 import 'package:aewallet/modules/aeswap/ui/views/util/components/dex_token_balance.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_textfield.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/util/formatters.dart';
 import 'package:aewallet/ui/views/aeswap_farm_lock_withdraw/bloc/provider.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -127,8 +128,12 @@ class _FarmLockWithdrawToken1AmountState
               Positioned(
                 right: 10,
                 child: BtnTextField(
-                  buttonText:
-                      aedappfm.AppLocalizations.of(context)!.aedappfm_btn_max,
+                  buttonText: Text(
+                    aedappfm.AppLocalizations.of(context)!.aedappfm_btn_max,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          fontWeight: FontWeightTelegraf.fontWeightRegular,
+                        ),
+                  ),
                   onTap: () {
                     ref
                         .read(

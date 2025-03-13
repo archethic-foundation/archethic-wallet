@@ -33,6 +33,8 @@
     "transactionConfirmed1": "Transaction confirmed with %1 replication out of %2",
     "transactionConfirmed": "Transaction confirmed with %1 replications out of %2",
     "addressCopied": "Address copied",
+    "messageCopied": "Message copied",
+    "codeCopied": "Code copied",
     "qrInvalidAddress": "QR code doesn't contain a valid destination",
     "qrInvalidPermissions": "Please Grant Camera Permissions to scan QR Codes",
     "qrUnknownError": "Could not Read QR Code",
@@ -763,7 +765,10 @@
     "airdropParticipateStepSupportEcosystemBtn": "Start earning",
     "airdropDashboardNoLPBtn": "Lock LP Tokens Now",
     "airdropDashboardIncreaseAirdropBtn": "Increase my airdrop",
-    "airdropDashboardCongratsTitle": "Congratulations! You are participating to the airdrop",
+    "airdropDashboardTitleBanner": "Participant",
+    "airdropDashboardDescBanner": "The Airdrop will be sent when 1 UCO reaches $1",
+    "airdropDashboardTitle1": "How much is your share?",
+    "airdropDashboard1MultiplierDollars": "Right now, 1 Multiplier is worth",
     "airdropDashboardCompleteParticipationTitle": "Complete Your Airdrop Participation!",
     "airdropDashboardLPTokenAvailable": "You currently have {lpTokenAvailable} LP Token available in the farm at level 0. To increase your multiplier, you can relock them in the farm.",
     "@airdropDashboardLPTokenAvailable": {
@@ -782,6 +787,7 @@
     "airdropStepsNote": "Note: ",
     "airdropStepsNoteDesc": "To keep your multiplier and secure your airdrop participation, your LP tokens must remain locked at least at Level 1 until the airdrop date.",
     "airdropPersonalMultiplier": "Personal Multiplier",
+    "airdropReferrallMultiplier": "Referral Multiplier",
     "airdropPersonalValue": "Your airdrop in UCO",
     "airdropPersonalValueInfo": "(Recalculated hourly)",
     "airdropBannerTitle": "Your Airdrop Spot is Reserved!",
@@ -956,5 +962,23 @@
     "comingSoon": "Coming soon",
     "webBrowserCloseConfirmationDesc": "Are you sure you want to leave? Your progress will be lost.",
     "notAvailable": "Not available",
-    "seeTutorial": "See the tutorial"
+    "seeTutorial": "See the tutorial",
+    "airdropDashboardBlocInvitationTitle": "Increase your Referral Multiplier now!",
+    "airdropDashboardBlocInvitationDesc1": "For every 1 multiplier earned by one of your referrals, you'll also receive 1 additional multiplier.",
+    "airdropDashboardBlocInvitationDesc2": "Example: If your referrals accumulate a total of 21 multipliers, you'll receive 21 referral multipliers, resulting in an additional $12,234 worth of UCO in your airdrop.",
+    "airdropDashboardBlocInvitationBtn": "Invite someone NOW",
+    "airdropInvitationTitle": "Invite someone now",
+    "airdropInvitationDesc": "To participate in our airdrop, a referral code is required. As a participant, you can share your referral code with anyone who wants to claim their share of our $100M airdrop, and you'll earn an additional referral multiplier for each referral that joins.",
+    "airdropInvitationDescCodeTitle": "Your unique access code is:",
+    "airdropInvitationMessageTitle": "Message to send directly to a friend:",
+    "airdropInvitationMessageDesc1": "Hey, hope you're doing well. I wanted to share something interesting with you.\nArchethic is running a $100,000,000 giveaway as part of their innovative tech initiative. You need an access code to join, and you can use mine: {codeReferral}\n\nCheck it out here:",
+    "@airdropInvitationMessageDesc1": {
+        "placeholders": {
+            "codeReferral": {
+                "type": "String"
+            }
+        }
+    },
+    "airdropInvitationMessageDesc2": "Let me know what you think!",
+    "airdropInvitationBtnCopy": "Copy the message"
 }

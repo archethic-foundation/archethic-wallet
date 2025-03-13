@@ -141,6 +141,10 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
     );
   }
 
+  void setReferralCode(String referralCode) {
+    state = state.copyWith(referralCode: referralCode);
+  }
+
   void setPersonalLPFlexible(double personalLPFlexible) {
     state = state.copyWith(personalLPFlexible: personalLPFlexible);
   }

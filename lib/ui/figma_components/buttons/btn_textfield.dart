@@ -1,4 +1,3 @@
-import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:flutter/material.dart';
 
 class BtnTextField extends StatelessWidget {
@@ -8,7 +7,7 @@ class BtnTextField extends StatelessWidget {
     this.isLocked = false,
     super.key,
   });
-  final String buttonText;
+  final Widget buttonText;
   final Function()? onTap;
   final bool isLocked;
 
@@ -27,22 +26,17 @@ class BtnTextField extends StatelessWidget {
                 color: Colors.black,
                 borderRadius: BorderRadius.circular(6),
               ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    buttonText,
-                    style: isLocked
-                        ? Theme.of(context).textTheme.bodySmall!.copyWith(
-                              color: Colors.white.withValues(alpha: 0.2),
-                              fontWeight: FontWeightTelegraf.fontWeightRegular,
-                            )
-                        : Theme.of(context).textTheme.bodySmall!.copyWith(
-                              color: Colors.white.withValues(alpha: 0.8),
-                              fontWeight: FontWeightTelegraf.fontWeightRegular,
-                            ),
-                  ),
-                ],
+              child: SizedBox(
+                height: 22,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (isLocked)
+                      Opacity(opacity: 0.2, child: buttonText)
+                    else
+                      Opacity(opacity: 0.8, child: buttonText),
+                  ],
+                ),
               ),
             ),
           ),

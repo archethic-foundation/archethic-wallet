@@ -3,6 +3,8 @@ import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/figma_components/box/box_dark.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -34,31 +36,75 @@ class AirdropPersonalRewards extends ConsumerWidget {
           error: (error, stack) {},
         );
 
-    return BoxDark(
-      textWidget: Text(
-        '\$${personalRewards.numeral(digits: 2)}',
-        style: AppTextStyles.bodyLarge(context).copyWith(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
+    return Column(
+      spacing: 5,
+      children: [
+        BoxDark(
+          textWidget: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '\$${personalRewards.numeral(digits: 2)}',
+                style: AppTextStyles.bodyLarge(context).copyWith(
+                  fontSize: 24,
+                  fontWeight: FontWeightTelegraf.fontWeightBold,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 3),
+                child: Text(
+                  '*',
+                  style:
+                      Theme.of(context).textTheme.bodySmallWithOpacity.copyWith(
+                            fontSize: 24,
+                          ),
+                ),
+              ),
+            ],
+          ),
+          additionalWidget: Column(
+            children: [
+              Text(
+                localizations.airdropPersonalValue,
+                style: Theme.of(context).textTheme.bodyMediumWithOpacity,
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                localizations.airdropPersonalValueInfo,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmallWithOpacity
+                    .copyWith(fontSize: 8),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         ),
-      ),
-      additionalWidget: Column(
-        children: [
-          Text(
-            localizations.airdropPersonalValue,
-            style: Theme.of(context).textTheme.bodyMediumWithOpacity,
-            textAlign: TextAlign.center,
-          ),
-          Text(
-            localizations.airdropPersonalValueInfo,
-            style: Theme.of(context)
-                .textTheme
-                .bodySmallWithOpacity
-                .copyWith(fontSize: 8),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 3),
+              child: Text(
+                '*',
+                style:
+                    Theme.of(context).textTheme.bodySmallWithOpacity.copyWith(
+                          fontSize: 12,
+                          fontStyle: FontStyle.italic,
+                        ),
+              ),
+            ),
+            Text(
+              '${localizations.airdropDashboard1MultiplierDollars} \$${airdropForm.actualLPFiatValue.formatNumber(precision: 2)}',
+              style: Theme.of(context).textTheme.bodySmallWithOpacity.copyWith(
+                    fontStyle: FontStyle.italic,
+                  ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

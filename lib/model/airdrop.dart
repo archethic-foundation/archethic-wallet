@@ -2,6 +2,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'airdrop.freezed.dart';
 
+const kAirdropArchethicWebsiteUrl = 'https://www.archethic.net/uco-airdrop';
+
 @freezed
 class Airdrop with _$Airdrop {
   const factory Airdrop({

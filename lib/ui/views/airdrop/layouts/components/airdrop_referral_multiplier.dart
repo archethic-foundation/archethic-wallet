@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AirdropPersonalMultiplier extends ConsumerWidget {
-  const AirdropPersonalMultiplier({
+class AirdropReferralMultiplier extends ConsumerWidget {
+  const AirdropReferralMultiplier({
     super.key,
   });
 
@@ -18,7 +18,7 @@ class AirdropPersonalMultiplier extends ConsumerWidget {
 
     return BoxDark(
       textWidget: Text(
-        '${airdropForm.personalMultiplier}x',
+        '${airdropForm.referralMultiplier}x',
         style: AppTextStyles.bodyLarge(context).copyWith(
           fontSize: 24,
           fontWeight: FontWeightTelegraf.fontWeightBold,
@@ -27,7 +27,7 @@ class AirdropPersonalMultiplier extends ConsumerWidget {
       additionalWidget: Column(
         children: [
           Text(
-            localizations.airdropPersonalMultiplier,
+            localizations.airdropReferrallMultiplier,
             style: Theme.of(context).textTheme.bodyMediumWithOpacity,
             textAlign: TextAlign.center,
           ),

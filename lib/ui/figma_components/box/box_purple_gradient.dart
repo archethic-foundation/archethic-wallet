@@ -24,16 +24,17 @@ class BoxPurpleGradient extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: content,
           ),
-          Positioned(
-            child: IconButton(
-              onPressed: onClose,
-              icon: const Icon(
-                Symbols.close,
-                color: Colors.white,
-                size: 16,
+          if (onClose != null)
+            Positioned(
+              child: IconButton(
+                onPressed: onClose,
+                icon: const Icon(
+                  Symbols.close,
+                  color: Colors.white,
+                  size: 16,
+                ),
               ),
             ),
-          ),
         ],
       ),
     );

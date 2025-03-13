@@ -100,6 +100,7 @@ class _AirdropTabState extends ConsumerState<AirdropTab> {
         ..setPersonalLP(airdropPersonalLP.personalLP)
         ..setPersonalLPFlexible(airdropPersonalLP.personalLPFlexible)
         ..setActualLPFiatValue(actualLPFiatValue)
+        ..setReferralCode(airdropUserInfo.referralCode ?? '?')
         ..setLoading(false);
     });
     super.initState();

@@ -1,1 +1,22 @@
-{}
+{
+  "fr": [
+    "messageCopied",
+    "codeCopied",
+    "airdropDashboardTitleBanner",
+    "airdropDashboardDescBanner",
+    "airdropDashboardTitle1",
+    "airdropDashboard1MultiplierDollars",
+    "airdropReferrallMultiplier",
+    "airdropDashboardBlocInvitationTitle",
+    "airdropDashboardBlocInvitationDesc1",
+    "airdropDashboardBlocInvitationDesc2",
+    "airdropDashboardBlocInvitationBtn",
+    "airdropInvitationTitle",
+    "airdropInvitationDesc",
+    "airdropInvitationDescCodeTitle",
+    "airdropInvitationMessageTitle",
+    "airdropInvitationMessageDesc1",
+    "airdropInvitationMessageDesc2",
+    "airdropInvitationBtnCopy"
+  ]
+}
