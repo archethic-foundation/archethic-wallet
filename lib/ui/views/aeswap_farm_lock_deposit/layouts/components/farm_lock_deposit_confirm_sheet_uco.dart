@@ -7,6 +7,7 @@ import 'package:aewallet/modules/aeswap/ui/views/util/farm_lock_duration_type.da
 import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
 import 'package:aewallet/ui/figma_components/complex/estimated_fees.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
+import 'package:aewallet/ui/figma_components/numbered_list/numbered_list_item.dart';
 import 'package:aewallet/ui/figma_components/text/gradient_text.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
@@ -143,158 +144,67 @@ class FarmLockDepositConfirmSheetUCO extends ConsumerWidget
           info: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  return Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: constraints.maxWidth * 0.07,
-                        child: const Icon(
-                          Icons.looks_one_outlined,
-                          size: 20,
-                          color: Colors.white,
+              NumberedListItem.withRichText(
+                index: 1,
+                text: [
+                  TextSpan(
+                    text: localizations.farmLockDepositConfirmUcoItem1Desc1,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          fontWeight: FontWeightTelegraf.fontWeightBold,
                         ),
-                      ),
-                      SizedBox(
-                        width: constraints.maxWidth * 0.93,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Text.rich(
-                            TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: localizations
-                                      .farmLockDepositConfirmUcoItem1Desc1,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall!
-                                      .copyWith(
-                                        fontWeight:
-                                            FontWeightTelegraf.fontWeightBold,
-                                      ),
-                                ),
-                                TextSpan(
-                                  text: localizations
-                                      .farmLockDepositConfirmUcoItem1Desc2,
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
+                  ),
+                  TextSpan(
+                    text: localizations.farmLockDepositConfirmUcoItem1Desc2,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 30,
               ),
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  return Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: constraints.maxWidth * 0.07,
-                        child: const Icon(
-                          Icons.looks_two_outlined,
-                          size: 20,
-                          color: Colors.white,
+              NumberedListItem.withRichText(
+                index: 2,
+                text: [
+                  TextSpan(
+                    text: localizations.farmLockDepositConfirmUcoItem2Desc1,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  TextSpan(
+                    text: localizations.farmLockDepositConfirmUcoItem2Desc2,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          fontWeight: FontWeightTelegraf.fontWeightBold,
                         ),
-                      ),
-                      SizedBox(
-                        width: constraints.maxWidth * 0.93,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Text.rich(
-                            TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: localizations
-                                      .farmLockDepositConfirmUcoItem2Desc1,
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                                TextSpan(
-                                  text: localizations
-                                      .farmLockDepositConfirmUcoItem2Desc2,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall!
-                                      .copyWith(
-                                        fontWeight:
-                                            FontWeightTelegraf.fontWeightBold,
-                                      ),
-                                ),
-                                TextSpan(
-                                  text: localizations
-                                      .farmLockDepositConfirmUcoItem2Desc3,
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
+                  ),
+                  TextSpan(
+                    text: localizations.farmLockDepositConfirmUcoItem2Desc3,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 30,
               ),
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  return Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: constraints.maxWidth * 0.07,
-                        child: const Icon(
-                          Icons.looks_3_outlined,
-                          size: 20,
-                          color: Colors.white,
+              NumberedListItem.withRichText(
+                index: 3,
+                text: [
+                  TextSpan(
+                    text: localizations.farmLockDepositConfirmUcoItem3Desc1,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  TextSpan(
+                    text: getFarmLockDepositDurationTypeLabel(
+                      context,
+                      farmLockDeposit.farmLockDepositDuration,
+                    ).toLowerCase(),
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          fontWeight: FontWeightTelegraf.fontWeightBold,
                         ),
-                      ),
-                      SizedBox(
-                        width: constraints.maxWidth * 0.93,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Text.rich(
-                            TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: localizations
-                                      .farmLockDepositConfirmUcoItem3Desc1,
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                                TextSpan(
-                                  text: getFarmLockDepositDurationTypeLabel(
-                                    context,
-                                    farmLockDeposit.farmLockDepositDuration,
-                                  ).toLowerCase(),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall!
-                                      .copyWith(
-                                        fontWeight:
-                                            FontWeightTelegraf.fontWeightBold,
-                                      ),
-                                ),
-                                TextSpan(
-                                  text: localizations
-                                      .farmLockDepositConfirmUcoItem3Desc2,
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
+                  ),
+                  TextSpan(
+                    text: localizations.farmLockDepositConfirmUcoItem3Desc2,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 30,

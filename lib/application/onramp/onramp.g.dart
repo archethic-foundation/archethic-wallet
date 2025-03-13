@@ -6,7 +6,7 @@ part of 'onramp.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$onrampFeatureFlagHash() => r'4bd38f457dc1d53e8f9fd9bb2000d21b83cf8cc6';
+String _$onrampFeatureFlagHash() => r'e32063301dbe49f3e1f8227ece837ca6d60efe3a';
 
 /// See also [onrampFeatureFlag].
 @ProviderFor(onrampFeatureFlag)
@@ -216,15 +216,15 @@ class _OnrampProviderSetupProviderElement
 }
 
 String _$onrampProviderFavoriteSetupHash() =>
-    r'9d3f9d2d2ee5c033d792b9fa2e6652bd68e17245';
+    r'65d175f44f6b6651eeeb33bb8b1117d25c4a86ad';
 
 /// See also [onrampProviderFavoriteSetup].
 @ProviderFor(onrampProviderFavoriteSetup)
 const onrampProviderFavoriteSetupProvider = OnrampProviderFavoriteSetupFamily();
 
 /// See also [onrampProviderFavoriteSetup].
-class OnrampProviderFavoriteSetupFamily
-    extends Family<AsyncValue<({String chainId, String tokenId})?>> {
+class OnrampProviderFavoriteSetupFamily extends Family<
+    AsyncValue<({String chainId, String tokenId, double feeRate})?>> {
   /// See also [onrampProviderFavoriteSetup].
   const OnrampProviderFavoriteSetupFamily();
 
@@ -262,8 +262,8 @@ class OnrampProviderFavoriteSetupFamily
 }
 
 /// See also [onrampProviderFavoriteSetup].
-class OnrampProviderFavoriteSetupProvider
-    extends AutoDisposeFutureProvider<({String chainId, String tokenId})?> {
+class OnrampProviderFavoriteSetupProvider extends AutoDisposeFutureProvider<
+    ({String chainId, String tokenId, double feeRate})?> {
   /// See also [onrampProviderFavoriteSetup].
   OnrampProviderFavoriteSetupProvider(
     String providerId,
@@ -298,7 +298,7 @@ class OnrampProviderFavoriteSetupProvider
 
   @override
   Override overrideWith(
-    FutureOr<({String chainId, String tokenId})?> Function(
+    FutureOr<({String chainId, String tokenId, double feeRate})?> Function(
             OnrampProviderFavoriteSetupRef provider)
         create,
   ) {
@@ -317,8 +317,8 @@ class OnrampProviderFavoriteSetupProvider
   }
 
   @override
-  AutoDisposeFutureProviderElement<({String chainId, String tokenId})?>
-      createElement() {
+  AutoDisposeFutureProviderElement<
+      ({String chainId, String tokenId, double feeRate})?> createElement() {
     return _OnrampProviderFavoriteSetupProviderElement(this);
   }
 
@@ -339,15 +339,15 @@ class OnrampProviderFavoriteSetupProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin OnrampProviderFavoriteSetupRef
-    on AutoDisposeFutureProviderRef<({String chainId, String tokenId})?> {
+mixin OnrampProviderFavoriteSetupRef on AutoDisposeFutureProviderRef<
+    ({String chainId, String tokenId, double feeRate})?> {
   /// The parameter `providerId` of this provider.
   String get providerId;
 }
 
 class _OnrampProviderFavoriteSetupProviderElement
     extends AutoDisposeFutureProviderElement<
-        ({String chainId, String tokenId})?>
+        ({String chainId, String tokenId, double feeRate})?>
     with OnrampProviderFavoriteSetupRef {
   _OnrampProviderFavoriteSetupProviderElement(super.provider);
 

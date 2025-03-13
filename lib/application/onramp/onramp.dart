@@ -26,9 +26,9 @@ part 'onramp.g.dart';
               .valueOrNull ??
           false,
       fromFiat: ref
-              .watch(getFeatureFlagProvider(kApplicationCode, 'on-ramp-fiat'))
+              .watch(getFeatureFlagProvider(kApplicationCode, 'on-ramp-fiat-2'))
               .valueOrNull ??
-          false
+          false,
     );
 
 @riverpod
@@ -95,7 +95,8 @@ Future<OnRampProvider> onrampProviderSetup(Ref ref, String providerId) async {
 }
 
 @riverpod
-Future<({String chainId, String tokenId})?> onrampProviderFavoriteSetup(
+Future<({String chainId, String tokenId, double feeRate})?>
+    onrampProviderFavoriteSetup(
   Ref ref,
   String providerId,
 ) async {
@@ -105,9 +106,17 @@ Future<({String chainId, String tokenId})?> onrampProviderFavoriteSetup(
   final tokenSetup = chainSetup?.value.tokens.entries.firstOrNull;
   final tokenId = tokenSetup?.value.id;
 
+  final evmSetup = await ref.watch(onrampEvmSetupProvider.future);
+
   if (chainId == null || tokenId == null) return null;
 
-  return (chainId: chainId, tokenId: tokenId);
+  final feeRate = evmSetup.chains
+      .firstWhere(
+        (chain) => chain.id == chainSetup?.key,
+      )
+      .feeRate;
+
+  return (chainId: chainId, tokenId: tokenId, feeRate: feeRate);
 }
 
 @riverpod

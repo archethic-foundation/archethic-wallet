@@ -12,6 +12,19 @@ class MessageBox extends StatelessWidget {
     this.onTap,
   });
 
+  factory MessageBox.withRichText({
+    Key? key,
+    required MessageBoxType messageBoxType,
+    required List<TextSpan> text,
+    VoidCallback? onTap,
+  }) =>
+      MessageBox(
+        key: key,
+        messageBoxType: messageBoxType,
+        onTap: onTap,
+        content: Text.rich(TextSpan(children: text)),
+      );
+
   final MessageBoxType messageBoxType;
   final Widget content;
   final Function()? onTap;
