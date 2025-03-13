@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'package:aewallet/application/onramp/banxa.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/widgets/components/web_browser.dart';
 import 'package:flutter/material.dart';
@@ -21,10 +20,15 @@ class BanxaOnRampSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return WebBrowser(
-      uri: Uri.parse(
-        'https://checkout.banxa.com/?coinType=$tokenId&blockchain=$chainId&orderType=buy&walletAddress=$depositAddress&backgroundColor=0d0621&primaryColor=2c1763&secondaryColor=5f33e2&textColor=000000&theme=dark&nonce=${Random().nextInt(10000)}',
+    final webpageUri = ref.watch(
+      banxaWebpageUriProvider(
+        tokenId: tokenId,
+        chainId: chainId,
+        depositAddress: depositAddress,
       ),
+    );
+    return WebBrowser(
+      uri: webpageUri,
       unavailableBuilder: (cause) => OnRampWebviewNotCompatible(cause: cause),
       onLoadStop: (controller, url) {
         controller.injectCSSCode(
