@@ -132,11 +132,11 @@ class _SwapTokenToSwapAmountState extends ConsumerState<SwapTokenToSwapAmount> {
                                         Theme.of(context)
                                             .colorScheme
                                             .surface
-                                            .withOpacity(1),
+                                            .withValues(alpha: 1),
                                         Theme.of(context)
                                             .colorScheme
                                             .surface
-                                            .withOpacity(0.3),
+                                            .withValues(alpha: 0.3),
                                       ],
                                       stops: const [0, 1],
                                     ),

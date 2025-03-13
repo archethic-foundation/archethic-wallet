@@ -178,7 +178,7 @@ class EarnSectionStartEarning extends ConsumerWidget {
                           child: Scaffold(
                             backgroundColor: aedappfm
                                 .AppThemeBase.sheetBackground
-                                .withOpacity(0.2),
+                                .withValues(alpha: 0.2),
                             body: const FarmLockBlockListSingleLineLock(),
                           ),
                         );

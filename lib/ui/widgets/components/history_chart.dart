@@ -74,7 +74,7 @@ class HistoryChart extends StatelessWidget {
           fitInsideHorizontally: true,
           fitInsideVertically: true,
           tooltipPadding: const EdgeInsets.all(8),
-          tooltipBgColor: tooltipBg.withOpacity(1),
+          tooltipBgColor: tooltipBg.withValues(alpha: 1),
           getTooltipItems: (List<LineBarSpot> touchedSpots) {
             return touchedSpots.map((LineBarSpot touchedSpot) {
               var title = '';

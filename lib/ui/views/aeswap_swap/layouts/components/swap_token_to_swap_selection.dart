@@ -24,7 +24,8 @@ class SwapTokenToSwapSelection extends ConsumerWidget {
       width: aedappfm.Responsive.isMobile(context) ? 100 : 150,
       height: 30,
       decoration: BoxDecoration(
-        color: aedappfm.AppThemeBase.sheetBackgroundTertiary.withOpacity(0.5),
+        color: aedappfm.AppThemeBase.sheetBackgroundTertiary
+            .withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(6),
       ),
       child: InkWell(
@@ -37,7 +38,7 @@ class SwapTokenToSwapSelection extends ConsumerWidget {
                   builder: (BuildContext context) {
                     return Scaffold(
                       backgroundColor: aedappfm.AppThemeBase.sheetBackground
-                          .withOpacity(0.2),
+                          .withValues(alpha: 0.2),
                       body: const TokenSelection(),
                     );
                   },

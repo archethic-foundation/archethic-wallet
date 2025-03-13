@@ -44,8 +44,8 @@ class SeedLanguageSwitch extends ConsumerWidget {
                         )
                         .setLanguageSeed(isFrench ? 'fr' : 'en');
                   },
-                  inactiveTrackColor: Colors.white.withOpacity(0.2),
-                  activeTrackColor: Colors.white.withOpacity(0.2),
+                  inactiveTrackColor: Colors.white.withValues(alpha: 0.2),
+                  activeTrackColor: Colors.white.withValues(alpha: 0.2),
                   activeColor: Colors.white,
                   inactiveThumbColor: Colors.white,
                 ),

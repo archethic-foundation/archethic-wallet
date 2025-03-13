@@ -115,11 +115,11 @@ class _PickerWidgetState<T> extends ConsumerState<PickerWidget<T>> {
                     filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                     child: DecoratedBox(
                       decoration: BoxDecoration(
-                        color: const Color(0xFF4B38A7).withOpacity(0.2),
+                        color: const Color(0xFF4B38A7).withValues(alpha: 0.2),
                         border: Border.all(
                           color: isItemSelected
                               ? Colors.green
-                              : const Color(0xFF5540BF).withOpacity(0.4),
+                              : const Color(0xFF5540BF).withValues(alpha: 0.4),
                         ),
                         borderRadius: BorderRadius.circular(4),
                       ),

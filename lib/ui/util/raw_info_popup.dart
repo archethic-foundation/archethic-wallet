@@ -12,7 +12,7 @@ class RawInfoPopup {
     String info,
   ) async {
     return showMenu(
-      color: aedappfm.AppThemeBase.primaryColor.withOpacity(0.8),
+      color: aedappfm.AppThemeBase.primaryColor.withValues(alpha: 0.8),
       elevation: 5,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16).copyWith(topLeft: Radius.zero),

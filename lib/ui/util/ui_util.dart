@@ -214,7 +214,7 @@ class UIUtil {
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
           width: MediaQuery.of(context).size.width - 30,
           decoration: BoxDecoration(
-            color: boxDecorationColor.withOpacity(0.9),
+            color: boxDecorationColor.withValues(alpha: 0.9),
             borderRadius: BorderRadius.circular(15),
             boxShadow: <BoxShadow>[
               BoxShadow(

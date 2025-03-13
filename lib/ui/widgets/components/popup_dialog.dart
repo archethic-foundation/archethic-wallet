@@ -27,7 +27,7 @@ class PopupDialog extends ConsumerWidget {
             child: Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: ArchethicTheme.sheetBackground.withOpacity(0.2),
+                color: ArchethicTheme.sheetBackground.withValues(alpha: 0.2),
                 border: Border.all(
                   color: ArchethicTheme.sheetBorder,
                 ),

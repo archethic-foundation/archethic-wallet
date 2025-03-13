@@ -11,7 +11,7 @@ class DividerCustom extends StatelessWidget {
         child: SizedBox(
           width: MediaQuery.of(context).size.width * 0.7,
           child: Divider(
-            color: Colors.white.withOpacity(0.2),
+            color: Colors.white.withValues(alpha: 0.2),
           ),
         ),
       ),

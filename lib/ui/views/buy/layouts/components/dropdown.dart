@@ -29,8 +29,8 @@ class Dropdown extends StatelessWidget {
           ),
           gradient: LinearGradient(
             colors: [
-              Theme.of(context).colorScheme.surface.withOpacity(1),
-              Theme.of(context).colorScheme.surface.withOpacity(0.3),
+              Theme.of(context).colorScheme.surface.withValues(alpha: 1),
+              Theme.of(context).colorScheme.surface.withValues(alpha: 0.3),
             ],
             stops: const [0, 1],
           ),
@@ -72,7 +72,8 @@ class DropdownBadge extends ConsumerWidget {
         minWidth: aedappfm.Responsive.isMobile(context) ? 100 : 150,
       ),
       decoration: BoxDecoration(
-        color: aedappfm.AppThemeBase.sheetBackgroundTertiary.withOpacity(0.5),
+        color: aedappfm.AppThemeBase.sheetBackgroundTertiary
+            .withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(6),
       ),
       child: InkWell(

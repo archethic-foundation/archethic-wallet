@@ -37,8 +37,8 @@ class TokenDetailChart extends ConsumerWidget {
           ),
           gradientColorsBar: LinearGradient(
             colors: <Color>[
-              ArchethicTheme.text.withOpacity(0.9),
-              ArchethicTheme.text.withOpacity(0.1),
+              ArchethicTheme.text.withValues(alpha: 0.9),
+              ArchethicTheme.text.withValues(alpha: 0.1),
             ],
             begin: Alignment.center,
             end: Alignment.bottomCenter,

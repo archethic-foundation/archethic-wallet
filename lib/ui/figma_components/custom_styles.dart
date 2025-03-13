@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 extension CustomTextStyles on TextTheme {
   TextStyle get bodySmallWithOpacity => bodySmall!.copyWith(
-        color: bodySmall!.color?.withOpacity(0.8),
+        color: bodySmall!.color?.withValues(alpha: 0.8),
       );
 
   TextStyle get bodyMediumWithOpacity => bodyMedium!.copyWith(
-        color: bodyMedium!.color?.withOpacity(0.8),
+        color: bodyMedium!.color?.withValues(alpha: 0.8),
       );
 
   TextStyle get titleSmallSemiBold => titleSmall!.copyWith(

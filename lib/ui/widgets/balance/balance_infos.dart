@@ -155,7 +155,7 @@ class _BalanceVisibilityButton extends ConsumerWidget {
           opticalSize: IconSize.opticalSizeM,
           grade: IconSize.gradeM,
           size: 24,
-          color: Colors.white.withOpacity(AppTextStyles.kOpacityText),
+          color: Colors.white.withValues(alpha: AppTextStyles.kOpacityText),
         ),
         onPressed: () async {
           final preferencesNotifier =

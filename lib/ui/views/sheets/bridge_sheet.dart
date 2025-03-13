@@ -26,7 +26,8 @@ class BridgeSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const BridgeAppBar(),
-      backgroundColor: aedappfm.AppThemeBase.sheetBackground.withOpacity(0.2),
+      backgroundColor:
+          aedappfm.AppThemeBase.sheetBackground.withValues(alpha: 0.2),
       body: DAppSheet.withFeatureFlag(
         dappKey: 'aeBridge',
         launchMessage: AppLocalizations.of(context)!.aeBridgeLaunchMessage,

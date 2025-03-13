@@ -90,7 +90,7 @@ class AirdropStepTab extends ConsumerWidget {
                       ? TableRow(
                           decoration: BoxDecoration(
                             color: aedappfm.ArchethicThemeBase.raspberry500
-                                .withOpacity(0.5),
+                                .withValues(alpha: 0.5),
                           ),
                           children: [
                             tableCell(
@@ -224,7 +224,7 @@ class AirdropStepTab extends ConsumerWidget {
                                 .textTheme
                                 .bodySmall!
                                 .color
-                                ?.withOpacity(0.5),
+                                ?.withValues(alpha: 0.5),
                           ),
             ),
     );

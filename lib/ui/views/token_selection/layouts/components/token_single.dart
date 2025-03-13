@@ -33,7 +33,8 @@ class SingleTokenState extends State<SingleToken>
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            aedappfm.AppThemeBase.sheetBackgroundTertiary.withOpacity(0.4),
+            aedappfm.AppThemeBase.sheetBackgroundTertiary
+                .withValues(alpha: 0.4),
             aedappfm.AppThemeBase.sheetBackgroundTertiary,
           ],
           stops: const [0, 1],
@@ -41,7 +42,7 @@ class SingleTokenState extends State<SingleToken>
         border: GradientBoxBorder(
           gradient: LinearGradient(
             colors: [
-              aedappfm.AppThemeBase.sheetBorderTertiary.withOpacity(0.4),
+              aedappfm.AppThemeBase.sheetBorderTertiary.withValues(alpha: 0.4),
               aedappfm.AppThemeBase.sheetBorderTertiary,
             ],
             stops: const [0, 1],

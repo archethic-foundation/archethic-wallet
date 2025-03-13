@@ -23,7 +23,7 @@ class CheckboxCustom extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.transparent,
             border: Border.all(
-              color: ArchethicThemeBase.neutral0.withOpacity(0.8),
+              color: ArchethicThemeBase.neutral0.withValues(alpha: 0.8),
               width: 2,
             ),
             borderRadius: BorderRadius.circular(4),

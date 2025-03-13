@@ -93,9 +93,12 @@ class _MnemonicDisplayState extends ConsumerState<MnemonicDisplay> {
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
                                   colors: [
-                                    const Color(0xFF8A40BF).withOpacity(0.6),
-                                    const Color(0xFF8A40BF).withOpacity(0.6),
-                                    const Color(0xFFB98CD9).withOpacity(0.6),
+                                    const Color(0xFF8A40BF)
+                                        .withValues(alpha: 0.6),
+                                    const Color(0xFF8A40BF)
+                                        .withValues(alpha: 0.6),
+                                    const Color(0xFFB98CD9)
+                                        .withValues(alpha: 0.6),
                                   ],
                                   stops: const [0, 0.5, 1],
                                 ),

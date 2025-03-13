@@ -28,10 +28,12 @@ class FarmLockDepositDurationButton extends ConsumerWidget {
       width: 80,
       height: 80,
       decoration: BoxDecoration(
-        color: farmLockDeposit.farmLockDepositDuration ==
-                farmLockDepositDuration
-            ? aedappfm.AppThemeBase.sheetBackgroundTertiary.withOpacity(0.9)
-            : aedappfm.AppThemeBase.sheetBackgroundTertiary.withOpacity(0.2),
+        color:
+            farmLockDeposit.farmLockDepositDuration == farmLockDepositDuration
+                ? aedappfm.AppThemeBase.sheetBackgroundTertiary
+                    .withValues(alpha: 0.9)
+                : aedappfm.AppThemeBase.sheetBackgroundTertiary
+                    .withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
           color: Theme.of(context).colorScheme.primaryContainer,

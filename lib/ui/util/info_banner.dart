@@ -37,7 +37,7 @@ class InfoBanner extends ConsumerWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         elevation: 0,
-        color: ArchethicTheme.background.withOpacity(1),
+        color: ArchethicTheme.background.withValues(alpha: 1),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           width: MediaQuery.of(context).size.width,

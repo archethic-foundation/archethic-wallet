@@ -38,7 +38,7 @@ class ActionButton extends ConsumerWidget {
                         grade: IconSize.gradeM,
                         color: enabled
                             ? Colors.white
-                            : ArchethicTheme.text.withOpacity(0.3),
+                            : ArchethicTheme.text.withValues(alpha: 0.3),
                         size: 38,
                       ),
                     ),
@@ -74,7 +74,7 @@ class ActionButton extends ConsumerWidget {
                       icon,
                       color: enabled
                           ? Colors.white
-                          : ArchethicTheme.text.withOpacity(0.3),
+                          : ArchethicTheme.text.withValues(alpha: 0.3),
                       size: 38,
                     ),
                   ),

@@ -34,11 +34,11 @@ class BtnTextField extends StatelessWidget {
                     buttonText,
                     style: isLocked
                         ? Theme.of(context).textTheme.bodySmall!.copyWith(
-                              color: Colors.white.withOpacity(0.2),
+                              color: Colors.white.withValues(alpha: 0.2),
                               fontWeight: FontWeightTelegraf.fontWeightRegular,
                             )
                         : Theme.of(context).textTheme.bodySmall!.copyWith(
-                              color: Colors.white.withOpacity(0.8),
+                              color: Colors.white.withValues(alpha: 0.8),
                               fontWeight: FontWeightTelegraf.fontWeightRegular,
                             ),
                   ),

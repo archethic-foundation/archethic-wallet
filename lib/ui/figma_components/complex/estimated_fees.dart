@@ -37,7 +37,7 @@ class EstimatedFees extends ConsumerWidget {
                 ),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.8),
+                  color: Colors.black.withValues(alpha: 0.8),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Row(

@@ -90,7 +90,7 @@ class AppButtonState extends State<AppButton> {
             widget.labelBtn,
             style: TextStyle(
               color: widget.disabled
-                  ? Colors.white.withOpacity(0.5)
+                  ? Colors.white.withValues(alpha: 0.5)
                   : Colors.white,
               fontSize: widget.fontSize,
               fontWeight: FontWeightTelegraf.fontWeightRegular,

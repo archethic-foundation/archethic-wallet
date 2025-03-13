@@ -26,7 +26,8 @@ class TransferTokenSelection extends ConsumerWidget {
       width: 100,
       height: 30,
       decoration: BoxDecoration(
-        color: aedappfm.AppThemeBase.sheetBackgroundTertiary.withOpacity(0.5),
+        color: aedappfm.AppThemeBase.sheetBackgroundTertiary
+            .withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(6),
       ),
       child: InkWell(
@@ -38,8 +39,8 @@ class TransferTokenSelection extends ConsumerWidget {
               return FractionallySizedBox(
                 heightFactor: 1,
                 child: Scaffold(
-                  backgroundColor:
-                      aedappfm.AppThemeBase.sheetBackground.withOpacity(0.2),
+                  backgroundColor: aedappfm.AppThemeBase.sheetBackground
+                      .withValues(alpha: 0.2),
                   body: Stack(
                     children: [
                       Positioned(

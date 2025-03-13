@@ -45,8 +45,8 @@ class AboutMenuView extends ConsumerWidget implements SheetSkeletonInterface {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: <Color>[
-            aedappfm.ArchethicThemeBase.blue700.withOpacity(0.4),
-            aedappfm.ArchethicThemeBase.blue700.withOpacity(1),
+            aedappfm.ArchethicThemeBase.blue700.withValues(alpha: 0.4),
+            aedappfm.ArchethicThemeBase.blue700.withValues(alpha: 1),
           ],
           begin: Alignment.topLeft,
           end: const Alignment(5, 0),

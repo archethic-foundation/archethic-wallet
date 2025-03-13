@@ -7,7 +7,7 @@ version: 4.10.0+651
 
 environment:
   sdk: ">=3.5.0 <4.0.0"
-  flutter: ">=3.24.3"
+  flutter: ">=3.27.0"
 
 dependencies:
   archethic_dapp_framework_flutter: ^3.3.2
