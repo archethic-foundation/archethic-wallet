@@ -917,8 +917,20 @@
     "onrampWithFiatIncompatiblePlatformBody": "Your device is not compatible with technical requirements.\nGet in touch with the Archethic support team for more detailed informations.",
     "onrampWithFiatTitle": "Buy UCO with credit card",
     "onrampWithFiatHowDoesItWorkTitle": "How does it work ?",
-    "onrampWithFiatHowDoesItWorkBody": "To optimize your transaction fees, we've developed a system that lets you buy Ethereum and automatically converts it into UCO tokens—sent directly to your Archethic wallet.",
-    "onrampWithFiatDisclaimer": "I understand that I am purchasing Ethereum using fiat currency, and this transaction is subject to payment provider fees. Once acquired, my Ethereum will be automatically sent to my Archethic wallet and converted into UCO tokens at the current market rate with a 1% fee applied. Due to market fluctuations, the exact amount of UCO I receive may vary and cannot be precisely estimated in advance.",
+    "onrampWithFiatHowDoesItWorkBody": "We have developed a system that lets you buy Ethereum and automatically converts it into UCO tokens- sent directly to your Archethic wallet.",
+    "onrampWithFiatHowDoesItWork1": "You buy ETH directly on a third party provider",
+    "onrampWithFiatHowDoesItWork2": "We convert those ETH in UCO ({feeRate}% fee)",
+    "@onrampWithFiatHowDoesItWork2": {
+        "placeholders": {
+            "feeRate": {
+                "type": "String"
+            }
+        }
+    },
+    "onrampWithFiatHowDoesItWork3": "We deliver the UCO in your Archethic Wallet",
+    "onrampWithFiatBanxaWarning1": "WARNING: ",
+    "onrampWithFiatBanxaWarning2": "After clicking on the \"Buy Now\" button, DO NOT EDIT any information except for the amount you want to buy and the payment method. Any change may cause a complete loss of your funds",
+    "onrampWithFiatBanxaWarningApproval": "I understand the warning above and will not hold Archethic responsible for any loss of funds due to my failure to follow these instructions.",
     "onrampWithFiatBuyNowButton": "Buy now",
     "onrampHistoryTitle": "Transaction history",
     "onrampCryptoHistoryFooter1": "Your crypto deposit was automatically converted into UCO and sent to your Archethic wallet. Amounts may vary due to market fluctuations and network fees.",

@@ -446,6 +446,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.2"
+  easy_rich_text:
+    dependency: "direct main"
+    description:
+      name: easy_rich_text
+      sha256: "54e0ef20ee6de3f77a5db77d915db21e77d303467d934089a64c608e7f023e78"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.0"
   easy_stepper:
     dependency: "direct main"
     description:

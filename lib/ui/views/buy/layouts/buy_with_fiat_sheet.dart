@@ -2,17 +2,21 @@
 
 import 'package:aewallet/application/onramp/banxa.dart';
 import 'package:aewallet/application/onramp/onramp.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
+import 'package:aewallet/ui/figma_components/checkbox/checkbox_confirm.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
+import 'package:aewallet/ui/figma_components/message_box/message_box.dart';
+import 'package:aewallet/ui/figma_components/numbered_list/numbered_list_item.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/buy/bloc/buy_with_fiat_form_provider.dart';
 import 'package:aewallet/ui/views/buy/layouts/components/banxa_on_ramp_sheet.dart';
-import 'package:aewallet/ui/views/buy/layouts/components/checkbox_confirm.dart';
 import 'package:aewallet/ui/views/buy/layouts/components/transaction_history.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
+import 'package:easy_rich_text/easy_rich_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -114,6 +118,15 @@ class BuyWithFiatSheet extends ConsumerWidget
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final form = ref.watch(buyWithFiatFormProvider);
+    final textTheme = Theme.of(context).textTheme;
+    final isWebviewSupported = ref.watch(isBanxaWebviewSupportedProvider);
+
+    final feeRate = ref.watch(
+      onrampProviderFavoriteSetupProvider('banxa').select(
+        (setup) => setup.valueOrNull?.feeRate,
+      ),
+    );
+
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -123,29 +136,100 @@ class BuyWithFiatSheet extends ConsumerWidget
             children: [
               Text(
                 localizations.onrampWithFiatHowDoesItWorkTitle,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge!
+                style: textTheme.bodyLarge!
                     .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold),
               ),
               const SizedBox(height: 10),
               Text(
                 localizations.onrampWithFiatHowDoesItWorkBody,
-                style: Theme.of(context).textTheme.bodyMediumWithOpacity,
+                style: textTheme.bodyMedium,
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
+              NumberedListItem(
+                index: 1,
+                content: EasyRichText(
+                  localizations.onrampWithFiatHowDoesItWork1,
+                  defaultStyle: AppTextStyles.bodyMedium(context),
+                  patternList: [
+                    EasyRichTextPattern(
+                      targetString: 'ETH',
+                      style: textTheme.bodyMedium!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+              NumberedListItem(
+                index: 2,
+                content: EasyRichText(
+                  localizations.onrampWithFiatHowDoesItWork2(
+                    feeRate == null ? '--' : (feeRate * 100).round().toString(),
+                  ),
+                  defaultStyle: textTheme.bodyMedium,
+                  patternList: [
+                    EasyRichTextPattern(
+                      targetString: 'ETH',
+                      style: textTheme.bodyMedium!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    EasyRichTextPattern(
+                      targetString: 'UCO',
+                      style: textTheme.bodyMedium!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+              NumberedListItem(
+                index: 3,
+                content: EasyRichText(
+                  localizations.onrampWithFiatHowDoesItWork3,
+                  defaultStyle: textTheme.bodyMedium,
+                  patternList: [
+                    EasyRichTextPattern(
+                      targetString: 'UCO',
+                      style: textTheme.bodyMedium!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 30),
+              if (!isWebviewSupported) ...[
+                MessageBox.withRichText(
+                  messageBoxType: MessageBoxType.warning,
+                  text: [
+                    TextSpan(
+                      text: localizations.onrampWithFiatBanxaWarning1,
+                      style: textTheme.bodyMedium!.copyWith(
+                        fontWeight: FontWeightTelegraf.fontWeightBold,
+                      ),
+                    ),
+                    TextSpan(
+                      text: localizations.onrampWithFiatBanxaWarning2,
+                      style: textTheme.bodyMedium,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 30),
+              ],
               CheckboxConfirm(
                 onChanged: ref
                     .read(buyWithFiatFormProvider.notifier)
                     .acknowledgeDisclaimer,
                 value: form.disclaimerAcknowledged,
-                text: localizations.onrampWithFiatDisclaimer,
+                text: Text(
+                  localizations.onrampWithFiatBanxaWarningApproval,
+                  style: textTheme.bodyMedium,
+                ),
               ),
               const SizedBox(height: 30),
               OnRampTransactionHistory(
                 Text(
                   localizations.onrampFiatHistoryFooter1,
-                  style: Theme.of(context).textTheme.bodyMediumWithOpacity,
+                  style: textTheme.bodyMedium,
                 ),
               ),
               const SizedBox(height: 80),
