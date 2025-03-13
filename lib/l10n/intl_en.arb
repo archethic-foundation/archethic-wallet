@@ -980,5 +980,46 @@
         }
     },
     "airdropInvitationMessageDesc2": "Let me know what you think!",
-    "airdropInvitationBtnCopy": "Copy the message"
-}
+    "airdropInvitationBtnCopy": "Copy the message",
+    "airdropDashboardDetailPersonalMultiplierTitle": "Detail - Personal multiplier",
+    "airdropDashboardDetailPersonalMultiplierDesc": "The more liquidity you provide in our \"Earn\" section (by locking LP tokens), the higher your personal multiplier.",
+    "airdropDashboardDetailPersonalMultiplierLPLocked": "Your LP tokens locked:",
+    "airdropDashboardDetailPersonalMultiplierLPUnlocked": "Your LP tokens unlocked:",
+    "airdropDashboardDetailPersonalMultiplierValue": "Your Personal Multiplier:",
+    "airdropDashboardDetailPersonalMultiplierBtn":   "Open the Multiplier table",
+    "airdropDashboardDetailReferralMultiplierTitle": "Detail - Referral multiplier",
+    "airdropDashboardDetailReferralMultiplierDesc": "The more liquidity you provide in our \"Earn\" section (by locking LP tokens), the higher the number of referral participants you can have.",
+    "airdropDashboardDetailReferralMultiplierReferralsRegistered": "Your Referrals Registered:",
+    "airdropDashboardDetailReferralMultiplierReferralsParticipant": "Your Referrals Participant:",
+    "airdropDashboardDetailReferrallMultiplierValue": "Your Referrals Multiplier:",
+    "airdropDashboardDetailReferralMultiplierBtn": "Open the Referral table",
+    "airdropDashboardDetailReferralMultiplierWarningDesc1": "You have ",
+    "airdropDashboardDetailReferralMultiplierWarningDesc2": " referrals",
+    "airdropDashboardDetailReferralMultiplierWarningDesc3": ", and with your actual LP tokens locked, you are only being rewarded",
+    "airdropDashboardDetailReferralMultiplierWarningDesc4": " for {referralParticipantRewarded} out of those {referralParticipant}.",
+    "@airdropDashboardDetailReferralMultiplierWarningDesc4": {
+        "placeholders": {
+            "referralParticipantRewarded": {
+                "type": "int"
+            },
+            "referralParticipant": {
+                "type": "int"
+            }
+        }
+    },
+    "airdropDashboardDetailReferralMultiplierWarningDesc5": "\n\nIncrease your referral limit now.", 
+    "airdropPersonalMultiplierTableTitle": "Personal Multiplier Table",
+    "airdropPersonalMultiplierTableDesc": "The more LP tokens you lock, the bigger your personal multiplier, and therefore the larger your share in the airdrop.",
+    "airdropPersonalMultiplierTableLPValue": "Actual value of 1 LP token: ",
+    "airdropPersonalMultiplierTableYourLPValue": "Your LP tokens locked:",
+    "airdropPersonalMultiplierTableHeaderLPLocked": "LP token locked",
+    "airdropPersonalMultiplierTableHeaderPersonalMultiplier": "Personal Multiplier",
+    "airdropPersonalMultiplierTableHeaderBtn": "Add more in \"Earn\"",
+    "airdropReferralMultiplierTableTitle": "Referral Multiplier Table",
+    "airdropReferralMultiplierTableDesc": "The more LP tokens you lock, the more referrals you can bring, and the higher your referral multiplier becomes.",
+    "airdropReferralMultiplierTableLPValue": "Actual value of 1 LP token: ",
+    "airdropReferralMultiplierTableYourLPValue": "Your LP tokens locked:",
+    "airdropReferralMultiplierTableHeaderLPLocked": "LP token locked",
+    "airdropReferralMultiplierTableHeaderMaxReferral": "Max Referral",
+    "airdropReferralMultiplierTableHeaderBtn": "Add more in \"Earn\""
+}  

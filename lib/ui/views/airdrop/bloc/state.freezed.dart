@@ -29,6 +29,9 @@ mixin _$AirdropFormState {
   double get personalLPFlexible => throw _privateConstructorUsedError;
   int get personalMultiplier => throw _privateConstructorUsedError;
   int get referralMultiplier => throw _privateConstructorUsedError;
+  int get referralRegistered => throw _privateConstructorUsedError;
+  int get referralParticipant => throw _privateConstructorUsedError;
+  int get referralParticipantRewarded => throw _privateConstructorUsedError;
   String? get referralCode => throw _privateConstructorUsedError;
   String? get resendConfirmationEmailInfo => throw _privateConstructorUsedError;
   double get actualLPFiatValue => throw _privateConstructorUsedError;
@@ -60,6 +63,9 @@ abstract class $AirdropFormStateCopyWith<$Res> {
       double personalLPFlexible,
       int personalMultiplier,
       int referralMultiplier,
+      int referralRegistered,
+      int referralParticipant,
+      int referralParticipantRewarded,
       String? referralCode,
       String? resendConfirmationEmailInfo,
       double actualLPFiatValue,
@@ -95,6 +101,9 @@ class _$AirdropFormStateCopyWithImpl<$Res, $Val extends AirdropFormState>
     Object? personalLPFlexible = null,
     Object? personalMultiplier = null,
     Object? referralMultiplier = null,
+    Object? referralRegistered = null,
+    Object? referralParticipant = null,
+    Object? referralParticipantRewarded = null,
     Object? referralCode = freezed,
     Object? resendConfirmationEmailInfo = freezed,
     Object? actualLPFiatValue = null,
@@ -145,6 +154,18 @@ class _$AirdropFormStateCopyWithImpl<$Res, $Val extends AirdropFormState>
       referralMultiplier: null == referralMultiplier
           ? _value.referralMultiplier
           : referralMultiplier // ignore: cast_nullable_to_non_nullable
+              as int,
+      referralRegistered: null == referralRegistered
+          ? _value.referralRegistered
+          : referralRegistered // ignore: cast_nullable_to_non_nullable
+              as int,
+      referralParticipant: null == referralParticipant
+          ? _value.referralParticipant
+          : referralParticipant // ignore: cast_nullable_to_non_nullable
+              as int,
+      referralParticipantRewarded: null == referralParticipantRewarded
+          ? _value.referralParticipantRewarded
+          : referralParticipantRewarded // ignore: cast_nullable_to_non_nullable
               as int,
       referralCode: freezed == referralCode
           ? _value.referralCode
@@ -204,6 +225,9 @@ abstract class _$$AirdropFormStateImplCopyWith<$Res>
       double personalLPFlexible,
       int personalMultiplier,
       int referralMultiplier,
+      int referralRegistered,
+      int referralParticipant,
+      int referralParticipantRewarded,
       String? referralCode,
       String? resendConfirmationEmailInfo,
       double actualLPFiatValue,
@@ -238,6 +262,9 @@ class __$$AirdropFormStateImplCopyWithImpl<$Res>
     Object? personalLPFlexible = null,
     Object? personalMultiplier = null,
     Object? referralMultiplier = null,
+    Object? referralRegistered = null,
+    Object? referralParticipant = null,
+    Object? referralParticipantRewarded = null,
     Object? referralCode = freezed,
     Object? resendConfirmationEmailInfo = freezed,
     Object? actualLPFiatValue = null,
@@ -289,6 +316,18 @@ class __$$AirdropFormStateImplCopyWithImpl<$Res>
           ? _value.referralMultiplier
           : referralMultiplier // ignore: cast_nullable_to_non_nullable
               as int,
+      referralRegistered: null == referralRegistered
+          ? _value.referralRegistered
+          : referralRegistered // ignore: cast_nullable_to_non_nullable
+              as int,
+      referralParticipant: null == referralParticipant
+          ? _value.referralParticipant
+          : referralParticipant // ignore: cast_nullable_to_non_nullable
+              as int,
+      referralParticipantRewarded: null == referralParticipantRewarded
+          ? _value.referralParticipantRewarded
+          : referralParticipantRewarded // ignore: cast_nullable_to_non_nullable
+              as int,
       referralCode: freezed == referralCode
           ? _value.referralCode
           : referralCode // ignore: cast_nullable_to_non_nullable
@@ -328,6 +367,9 @@ class _$AirdropFormStateImpl extends _AirdropFormState {
       this.personalLPFlexible = 0.0,
       this.personalMultiplier = 0,
       this.referralMultiplier = 0,
+      this.referralRegistered = 0,
+      this.referralParticipant = 0,
+      this.referralParticipantRewarded = 0,
       this.referralCode,
       this.resendConfirmationEmailInfo,
       this.actualLPFiatValue = 0.0,
@@ -367,6 +409,15 @@ class _$AirdropFormStateImpl extends _AirdropFormState {
   @JsonKey()
   final int referralMultiplier;
   @override
+  @JsonKey()
+  final int referralRegistered;
+  @override
+  @JsonKey()
+  final int referralParticipant;
+  @override
+  @JsonKey()
+  final int referralParticipantRewarded;
+  @override
   final String? referralCode;
   @override
   final String? resendConfirmationEmailInfo;
@@ -381,7 +432,7 @@ class _$AirdropFormStateImpl extends _AirdropFormState {
 
   @override
   String toString() {
-    return 'AirdropFormState(airdropProcessStep: $airdropProcessStep, mailAddress: $mailAddress, confirmOnlyOneAirdrop: $confirmOnlyOneAirdrop, confirmNotMultipleRegistrations: $confirmNotMultipleRegistrations, confirmPrivacyPolicy: $confirmPrivacyPolicy, joinWaitlistInProgress: $joinWaitlistInProgress, checkConfirmInProgress: $checkConfirmInProgress, personalLP: $personalLP, personalLPFlexible: $personalLPFlexible, personalMultiplier: $personalMultiplier, referralMultiplier: $referralMultiplier, referralCode: $referralCode, resendConfirmationEmailInfo: $resendConfirmationEmailInfo, actualLPFiatValue: $actualLPFiatValue, loading: $loading, failure: $failure)';
+    return 'AirdropFormState(airdropProcessStep: $airdropProcessStep, mailAddress: $mailAddress, confirmOnlyOneAirdrop: $confirmOnlyOneAirdrop, confirmNotMultipleRegistrations: $confirmNotMultipleRegistrations, confirmPrivacyPolicy: $confirmPrivacyPolicy, joinWaitlistInProgress: $joinWaitlistInProgress, checkConfirmInProgress: $checkConfirmInProgress, personalLP: $personalLP, personalLPFlexible: $personalLPFlexible, personalMultiplier: $personalMultiplier, referralMultiplier: $referralMultiplier, referralRegistered: $referralRegistered, referralParticipant: $referralParticipant, referralParticipantRewarded: $referralParticipantRewarded, referralCode: $referralCode, resendConfirmationEmailInfo: $resendConfirmationEmailInfo, actualLPFiatValue: $actualLPFiatValue, loading: $loading, failure: $failure)';
   }
 
   @override
@@ -413,6 +464,14 @@ class _$AirdropFormStateImpl extends _AirdropFormState {
                 other.personalMultiplier == personalMultiplier) &&
             (identical(other.referralMultiplier, referralMultiplier) ||
                 other.referralMultiplier == referralMultiplier) &&
+            (identical(other.referralRegistered, referralRegistered) ||
+                other.referralRegistered == referralRegistered) &&
+            (identical(other.referralParticipant, referralParticipant) ||
+                other.referralParticipant == referralParticipant) &&
+            (identical(other.referralParticipantRewarded,
+                    referralParticipantRewarded) ||
+                other.referralParticipantRewarded ==
+                    referralParticipantRewarded) &&
             (identical(other.referralCode, referralCode) ||
                 other.referralCode == referralCode) &&
             (identical(other.resendConfirmationEmailInfo,
@@ -426,24 +485,28 @@ class _$AirdropFormStateImpl extends _AirdropFormState {
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      airdropProcessStep,
-      mailAddress,
-      confirmOnlyOneAirdrop,
-      confirmNotMultipleRegistrations,
-      confirmPrivacyPolicy,
-      joinWaitlistInProgress,
-      checkConfirmInProgress,
-      personalLP,
-      personalLPFlexible,
-      personalMultiplier,
-      referralMultiplier,
-      referralCode,
-      resendConfirmationEmailInfo,
-      actualLPFiatValue,
-      loading,
-      failure);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        airdropProcessStep,
+        mailAddress,
+        confirmOnlyOneAirdrop,
+        confirmNotMultipleRegistrations,
+        confirmPrivacyPolicy,
+        joinWaitlistInProgress,
+        checkConfirmInProgress,
+        personalLP,
+        personalLPFlexible,
+        personalMultiplier,
+        referralMultiplier,
+        referralRegistered,
+        referralParticipant,
+        referralParticipantRewarded,
+        referralCode,
+        resendConfirmationEmailInfo,
+        actualLPFiatValue,
+        loading,
+        failure
+      ]);
 
   /// Create a copy of AirdropFormState
   /// with the given fields replaced by the non-null parameter values.
@@ -468,6 +531,9 @@ abstract class _AirdropFormState extends AirdropFormState {
       final double personalLPFlexible,
       final int personalMultiplier,
       final int referralMultiplier,
+      final int referralRegistered,
+      final int referralParticipant,
+      final int referralParticipantRewarded,
       final String? referralCode,
       final String? resendConfirmationEmailInfo,
       final double actualLPFiatValue,
@@ -497,6 +563,12 @@ abstract class _AirdropFormState extends AirdropFormState {
   int get personalMultiplier;
   @override
   int get referralMultiplier;
+  @override
+  int get referralRegistered;
+  @override
+  int get referralParticipant;
+  @override
+  int get referralParticipantRewarded;
   @override
   String? get referralCode;
   @override
