@@ -52,32 +52,55 @@ OnRampProviderToken _onRampEvmProviderTokenFromJson(
 
 OnRampChain _onRampEvmChainFromJson(
   MapEntry<String, dynamic> jsonEntry,
-) =>
-    switch (jsonEntry.value) {
-      {
-        'fee': final double fee,
-        'chain_id': final int chainId,
-        'svg_icon': final String svgIcon,
-        'display_name': final String displayName,
-        'tokens': final Map<String, dynamic> tokens,
-        'provider_setup': final Map<String, dynamic> providers,
-      } =>
-        (
-          id: jsonEntry.key,
-          chainId: chainId,
-          displayName: displayName,
-          feeRate: fee,
-          svgIcon: svgIcon,
-          tokens: tokens.entries.map(_onRampEvmTokenFromJson).toList(),
-          providers: providers.map(
-            (key, json) => MapEntry(key, _onRampEvmProviderChainFromJson(json)),
-          ),
+) {
+  final available = jsonEntry.value['available'] as bool? ?? true;
+
+  if (!available) {
+    final tokens = (jsonEntry.value['tokens'] as Map<String, dynamic>?)
+            ?.entries
+            .map(_onRampEvmTokenFromJson)
+            .toList() ??
+        [];
+
+    return (
+      id: jsonEntry.key,
+      chainId: 0,
+      displayName: jsonEntry.value['display_name'] ?? '',
+      feeRate: 0.0,
+      svgIcon: jsonEntry.value['svg_icon'] ?? '',
+      tokens: tokens,
+      providers: {},
+      available: false,
+    );
+  }
+
+  return switch (jsonEntry.value) {
+    {
+      'fee': final double fee,
+      'chain_id': final int chainId,
+      'svg_icon': final String svgIcon,
+      'display_name': final String displayName,
+      'tokens': final Map<String, dynamic> tokens,
+      'provider_setup': final Map<String, dynamic> providers,
+    } =>
+      (
+        id: jsonEntry.key,
+        chainId: chainId,
+        displayName: displayName,
+        feeRate: fee,
+        svgIcon: svgIcon,
+        tokens: tokens.entries.map(_onRampEvmTokenFromJson).toList(),
+        providers: providers.map(
+          (key, json) => MapEntry(key, _onRampEvmProviderChainFromJson(json)),
         ),
-      _ => throw FormatException(
-          'Invalid JSON format for OnRampEvmChain',
-          jsonEntry,
-        ),
-    };
+        available: available,
+      ),
+    _ => throw FormatException(
+        'Invalid JSON format for OnRampEvmChain',
+        jsonEntry,
+      ),
+  };
+}
 
 OnRampToken _onRampEvmTokenFromJson(MapEntry<String, dynamic> jsonEntry) =>
     switch (jsonEntry.value) {

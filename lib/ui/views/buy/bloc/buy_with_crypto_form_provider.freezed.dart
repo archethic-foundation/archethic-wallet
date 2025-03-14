@@ -19,6 +19,7 @@ mixin _$BuyWithCryptoFormState {
   ({String id, String name, String svgIcon, String symbol})?
       get selectedToken => throw _privateConstructorUsedError;
   ({
+    bool available,
     int chainId,
     String displayName,
     double feeRate,
@@ -45,6 +46,7 @@ abstract class $BuyWithCryptoFormStateCopyWith<$Res> {
   $Res call(
       {({String id, String name, String svgIcon, String symbol})? selectedToken,
       ({
+        bool available,
         int chainId,
         String displayName,
         double feeRate,
@@ -85,6 +87,7 @@ class _$BuyWithCryptoFormStateCopyWithImpl<$Res,
           ? _value.selectedChain
           : selectedChain // ignore: cast_nullable_to_non_nullable
               as ({
+              bool available,
               int chainId,
               String displayName,
               double feeRate,
@@ -114,6 +117,7 @@ abstract class _$$BuyWithCryptoFormStateImplCopyWith<$Res>
   $Res call(
       {({String id, String name, String svgIcon, String symbol})? selectedToken,
       ({
+        bool available,
         int chainId,
         String displayName,
         double feeRate,
@@ -153,6 +157,7 @@ class __$$BuyWithCryptoFormStateImplCopyWithImpl<$Res>
           ? _value.selectedChain
           : selectedChain // ignore: cast_nullable_to_non_nullable
               as ({
+              bool available,
               int chainId,
               String displayName,
               double feeRate,
@@ -188,6 +193,7 @@ class _$BuyWithCryptoFormStateImpl extends _BuyWithCryptoFormState {
   })? selectedToken;
   @override
   final ({
+    bool available,
     int chainId,
     String displayName,
     double feeRate,
@@ -240,6 +246,7 @@ abstract class _BuyWithCryptoFormState extends BuyWithCryptoFormState {
         String symbol
       })? selectedToken,
       final ({
+        bool available,
         int chainId,
         String displayName,
         double feeRate,
@@ -256,6 +263,7 @@ abstract class _BuyWithCryptoFormState extends BuyWithCryptoFormState {
   ({String id, String name, String svgIcon, String symbol})? get selectedToken;
   @override
   ({
+    bool available,
     int chainId,
     String displayName,
     double feeRate,
