@@ -36,12 +36,15 @@ class AirdropBanner extends ConsumerWidget {
 
     return ref.watch(airdropBannerStatusProvider).when(
       error: (error, stackTrace) {
+        print('#### error');
         return const SizedBox.shrink();
       },
       loading: () {
+        print('#### loading');
         return const SizedBox.shrink();
       },
       data: (bannerStatus) {
+        print('#### data');
         return _buildAirdropContent(
           context,
           ref,

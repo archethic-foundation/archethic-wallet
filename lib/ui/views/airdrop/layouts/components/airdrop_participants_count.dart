@@ -49,8 +49,7 @@ class AirdropParticipantsCount extends ConsumerWidget {
             ),
           ),
           TextSpan(
-            text: localizations
-                .airdropParticipateStepWelcomeCardParticipantsCount,
+            text: localizations.airdropParticipants,
             style: bodyMedium,
           ),
         ],
