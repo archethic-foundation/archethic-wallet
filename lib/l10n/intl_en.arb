@@ -971,7 +971,7 @@
     "airdropInvitationDesc": "To participate in our airdrop, a referral code is required. As a participant, you can share your referral code with anyone who wants to claim their share of our $100M airdrop, and you'll earn an additional referral multiplier for each referral that joins.",
     "airdropInvitationDescCodeTitle": "Your unique access code is:",
     "airdropInvitationMessageTitle": "Message to send directly to a friend:",
-    "airdropInvitationMessageDesc1": "Hey, hope you're doing well. I wanted to share something interesting with you.\nArchethic is running a $100,000,000 giveaway as part of their innovative tech initiative. You need an access code to join, and you can use mine: {codeReferral}\n\nCheck it out here:",
+    "airdropInvitationMessageDesc1": "Hey, hope you're doing well. I wanted to share something interesting with you.\n\nArchethic is running a $100,000,000 giveaway as part of their innovative tech initiative. You need an access code to join, and you can use mine: {codeReferral}\n\nCheck it out here:",
     "@airdropInvitationMessageDesc1": {
         "placeholders": {
             "codeReferral": {

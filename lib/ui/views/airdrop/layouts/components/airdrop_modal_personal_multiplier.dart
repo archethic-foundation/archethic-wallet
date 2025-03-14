@@ -110,15 +110,30 @@ class AirdropModalPersonalMultiplier extends ConsumerWidget {
                                 .airdropPersonalMultiplierTableYourLPValue,
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
-                          Text(
-                            textAlign: TextAlign.end,
-                            '${airdropForm.personalLP.formatNumber(precision: 2)}\n${_lpIndollarsCalculation(airdropForm.actualLPFiatValue, airdropForm.personalLP)}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
-                                  fontWeight: FontWeightTelegraf.fontWeightBold,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                airdropForm.personalLP
+                                    .formatNumber(precision: 2),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      fontWeight:
+                                          FontWeightTelegraf.fontWeightBold,
+                                    ),
+                              ),
+                              Text(
+                                _lpIndollarsCalculation(
+                                  airdropForm.actualLPFiatValue,
+                                  airdropForm.personalLP,
                                 ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmallWithOpacity,
+                              ),
+                            ],
                           ),
                         ],
                       ),
