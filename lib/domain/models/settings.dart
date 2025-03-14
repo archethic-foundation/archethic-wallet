@@ -1,5 +1,4 @@
 import 'package:aewallet/model/available_language.dart';
-import 'package:aewallet/model/primary_currency.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -19,7 +18,6 @@ enum EarnUserLevelType { beginner, advanced }
 @freezed
 class Settings with _$Settings {
   const factory Settings({
-    required AvailablePrimaryCurrency primaryCurrency,
     required AvailableLanguage language,
     required aedappfm.Environment environment,
     required String languageSeed,
@@ -41,8 +39,6 @@ class Settings with _$Settings {
         languageSeed: '',
         mainScreenCurrentPage: 0,
         environment: aedappfm.Environment.mainnet,
-        primaryCurrency:
-            AvailablePrimaryCurrency(AvailablePrimaryCurrencyEnum.native),
         showBalances: true,
         showPriceChart: true,
         priceChartIntervalOption: aedappfm.MarketPriceHistoryInterval.hour,

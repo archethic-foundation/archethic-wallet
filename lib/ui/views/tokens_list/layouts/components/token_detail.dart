@@ -1,9 +1,7 @@
 import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/price_history/providers.dart';
-import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -41,7 +39,7 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
     final farmLock = ref.watch(farmLockFormFarmLockProvider).valueOrNull;
     final settings = ref.watch(SettingsProviders.settings);
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-    final primaryCurrency = ref.watch(selectedPrimaryCurrencyProvider);
+
     final priceToken =
         widget.aeToken.isLpToken && widget.aeToken.lpTokenPair != null
             ? ref
@@ -239,182 +237,147 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                             ),
 
                             if (settings.showBalances == true)
-                              if (primaryCurrency.primaryCurrency ==
-                                  AvailablePrimaryCurrencyEnum.native)
-                                Row(
-                                  children: [
-                                    if (widget.aeToken.isLpToken)
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              AutoSizeText(
-                                                minFontSize: 5,
-                                                widget.aeToken.lpTokenPair!
-                                                    .token1.symbol
-                                                    .reduceSymbol(),
-                                                style: AppTextStyles.bodyMedium(
-                                                  context,
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                  left: 4,
-                                                  top: 2,
-                                                  right: 4,
-                                                ),
-                                                child: VerifiedTokenIcon(
-                                                  iconSize: 12,
-                                                  address: widget
-                                                          .aeToken
-                                                          .lpTokenPair!
-                                                          .token1
-                                                          .isUCO
-                                                      ? kUCOAddress
-                                                      : widget
-                                                          .aeToken
-                                                          .lpTokenPair!
-                                                          .token1
-                                                          .address!,
-                                                ),
-                                              ),
-                                              AutoSizeText(
-                                                minFontSize: 5,
-                                                wrapWords: false,
-                                                '/ ',
-                                                style: ArchethicThemeStyles
-                                                    .textStyleSize12W100Primary,
-                                              ),
-                                              AutoSizeText(
-                                                minFontSize: 5,
-                                                wrapWords: false,
-                                                widget.aeToken.lpTokenPair!
-                                                    .token2.symbol
-                                                    .reduceSymbol(),
-                                                style: AppTextStyles.bodyMedium(
-                                                  context,
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                  left: 4,
-                                                  top: 2,
-                                                ),
-                                                child: VerifiedTokenIcon(
-                                                  iconSize: 12,
-                                                  address: widget
-                                                          .aeToken
-                                                          .lpTokenPair!
-                                                          .token2
-                                                          .isUCO
-                                                      ? kUCOAddress
-                                                      : widget
-                                                          .aeToken
-                                                          .lpTokenPair!
-                                                          .token2
-                                                          .address!,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width -
-                                                124,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                AutoSizeText(
-                                                  minFontSize: 5,
-                                                  wrapWords: false,
-                                                  '${widget.aeToken.balance.formatNumber(precision: widget.aeToken.balance > 1 ? 4 : 8)} ${widget.aeToken.balance > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
-                                                  style:
-                                                      AppTextStyles.bodyMedium(
-                                                    context,
-                                                  ),
-                                                ),
-                                                const SizedBox(width: 5),
-                                                AutoSizeText(
-                                                  minFontSize: 5,
-                                                  wrapWords: false,
-                                                  '\$${priceToken.formatNumber(precision: 2)}',
-                                                  textAlign: TextAlign.center,
-                                                  style:
-                                                      AppTextStyles.bodyMedium(
-                                                    context,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    else
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width -
-                                                124,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                              Row(
+                                children: [
+                                  if (widget.aeToken.isLpToken)
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
                                           children: [
                                             AutoSizeText(
                                               minFontSize: 5,
-                                              overflow: TextOverflow.ellipsis,
-                                              '${widget.aeToken.balance.formatNumber(precision: widget.aeToken.balance > 1 ? 4 : 8)} ${widget.aeToken.symbol.reduceSymbol(lengthMax: 6)}',
+                                              widget.aeToken.lpTokenPair!.token1
+                                                  .symbol
+                                                  .reduceSymbol(),
                                               style: AppTextStyles.bodyMedium(
                                                 context,
                                               ),
                                             ),
-                                            const SizedBox(width: 5),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                left: 4,
+                                                top: 2,
+                                                right: 4,
+                                              ),
+                                              child: VerifiedTokenIcon(
+                                                iconSize: 12,
+                                                address: widget
+                                                        .aeToken
+                                                        .lpTokenPair!
+                                                        .token1
+                                                        .isUCO
+                                                    ? kUCOAddress
+                                                    : widget
+                                                        .aeToken
+                                                        .lpTokenPair!
+                                                        .token1
+                                                        .address!,
+                                              ),
+                                            ),
                                             AutoSizeText(
                                               minFontSize: 5,
                                               wrapWords: false,
-                                              '\$${priceToken.formatNumber(precision: 2)}',
-                                              textAlign: TextAlign.center,
+                                              '/ ',
+                                              style: ArchethicThemeStyles
+                                                  .textStyleSize12W100Primary,
+                                            ),
+                                            AutoSizeText(
+                                              minFontSize: 5,
+                                              wrapWords: false,
+                                              widget.aeToken.lpTokenPair!.token2
+                                                  .symbol
+                                                  .reduceSymbol(),
                                               style: AppTextStyles.bodyMedium(
                                                 context,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                left: 4,
+                                                top: 2,
+                                              ),
+                                              child: VerifiedTokenIcon(
+                                                iconSize: 12,
+                                                address: widget
+                                                        .aeToken
+                                                        .lpTokenPair!
+                                                        .token2
+                                                        .isUCO
+                                                    ? kUCOAddress
+                                                    : widget
+                                                        .aeToken
+                                                        .lpTokenPair!
+                                                        .token2
+                                                        .address!,
                                               ),
                                             ),
                                           ],
                                         ),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width -
+                                              124,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              AutoSizeText(
+                                                minFontSize: 5,
+                                                wrapWords: false,
+                                                '${widget.aeToken.balance.formatNumber(precision: widget.aeToken.balance > 1 ? 4 : 8)} ${widget.aeToken.balance > 1 ? AppLocalizations.of(context)!.lpTokens : AppLocalizations.of(context)!.lpToken}',
+                                                style: AppTextStyles.bodyMedium(
+                                                  context,
+                                                ),
+                                              ),
+                                              const SizedBox(width: 5),
+                                              AutoSizeText(
+                                                minFontSize: 5,
+                                                wrapWords: false,
+                                                '\$${priceToken.formatNumber(precision: 2)}',
+                                                textAlign: TextAlign.center,
+                                                style: AppTextStyles.bodyMedium(
+                                                  context,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  else
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width -
+                                          124,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          AutoSizeText(
+                                            minFontSize: 5,
+                                            overflow: TextOverflow.ellipsis,
+                                            '${widget.aeToken.balance.formatNumber(precision: widget.aeToken.balance > 1 ? 4 : 8)} ${widget.aeToken.symbol.reduceSymbol(lengthMax: 6)}',
+                                            style: AppTextStyles.bodyMedium(
+                                              context,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 5),
+                                          AutoSizeText(
+                                            minFontSize: 5,
+                                            wrapWords: false,
+                                            '\$${priceToken.formatNumber(precision: 2)}',
+                                            textAlign: TextAlign.center,
+                                            style: AppTextStyles.bodyMedium(
+                                              context,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                  ],
-                                )
-                              else
-                                Row(
-                                  children: [
-                                    AutoSizeText(
-                                      minFontSize: 5,
-                                      wrapWords: false,
-                                      '\$${priceToken.formatNumber(precision: 2)}',
-                                      textAlign: TextAlign.center,
-                                      style: AppTextStyles.bodyMedium(context),
                                     ),
-                                    const SizedBox(width: 5),
-                                    if (widget.aeToken.isLpToken)
-                                      AutoSizeText(
-                                        minFontSize: 5,
-                                        wrapWords: false,
-                                        '${widget.aeToken.balance.formatNumber(precision: widget.aeToken.balance > 1 ? 4 : 8)} ${widget.aeToken.lpTokenPair!.token1.symbol.reduceSymbol()}/${widget.aeToken.lpTokenPair!.token2.symbol.reduceSymbol()}',
-                                        style:
-                                            AppTextStyles.bodyMedium(context),
-                                      )
-                                    else
-                                      AutoSizeText(
-                                        minFontSize: 5,
-                                        wrapWords: false,
-                                        '${widget.aeToken.balance.formatNumber(precision: widget.aeToken.balance > 1 ? 4 : 8)} ${widget.aeToken.symbol.reduceSymbol(lengthMax: 10)}',
-                                        style:
-                                            AppTextStyles.bodyMedium(context),
-                                      ),
-                                  ],
-                                )
+                                ],
+                              )
                             else
                               Row(
                                 children: [

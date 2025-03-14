@@ -1,9 +1,7 @@
 import 'dart:ui';
 
 import 'package:aewallet/application/settings/language.dart';
-import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/domain/rpc/commands/command.dart';
-import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
@@ -87,8 +85,6 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
       SignTransactionsConfirmationProviders.form(command),
     );
 
-    final primaryCurrency = ref.watch(selectedPrimaryCurrencyProvider);
-
     final archethicOracleUCO = ref
         .watch(aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO)
         .valueOrNull;
@@ -116,117 +112,58 @@ class SignTransactionsConfirmationForm extends ConsumerWidget
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                if (primaryCurrency.primaryCurrency ==
-                    AvailablePrimaryCurrencyEnum.native)
-                  Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(
-                          text: command.data.transactions.length == 1
-                              ? localizations
-                                  .sign1TransactionCommandReceivedNotification
-                                  .replaceAll(
-                                    '%1',
-                                    formData.value.signTransactionCommand.origin
-                                        .name,
-                                  )
-                                  .replaceAll(
-                                    '%2',
-                                    _getShortName(
-                                      formData.value.signTransactionCommand.data
-                                          .serviceName,
-                                    ),
-                                  )
-                              : localizations
-                                  .signXTransactionsCommandReceivedNotification
-                                  .replaceAll(
-                                    '%1',
-                                    formData.value.signTransactionCommand.origin
-                                        .name,
-                                  )
-                                  .replaceAll(
-                                    '%2',
-                                    command.data.transactions.length.toString(),
-                                  )
-                                  .replaceAll(
-                                    '%3',
-                                    _getShortName(
-                                      formData.value.signTransactionCommand.data
-                                          .serviceName,
-                                    ),
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: command.data.transactions.length == 1
+                            ? localizations
+                                .sign1TransactionCommandReceivedNotification
+                                .replaceAll(
+                                  '%1',
+                                  formData
+                                      .value.signTransactionCommand.origin.name,
+                                )
+                                .replaceAll(
+                                  '%2',
+                                  _getShortName(
+                                    formData.value.signTransactionCommand.data
+                                        .serviceName,
                                   ),
-                          style:
-                              ArchethicThemeStyles.textStyleSize12W100Primary,
-                        ),
-                        TextSpan(
-                          text:
-                              ' ${estimatedFees.formatNumber(precision: 4)} UCO',
-                          style: ArchethicThemeStyles
-                              .textStyleSize12W400Highlighted,
-                        ),
-                        TextSpan(
-                          text: ' ($amountInFiat)',
-                          style:
-                              ArchethicThemeStyles.textStyleSize12W100Primary,
-                        ),
-                      ],
-                    ),
-                  )
-                else
-                  Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(
-                          text: command.data.transactions.length == 1
-                              ? localizations
-                                  .sign1TransactionCommandReceivedNotification
-                                  .replaceAll(
-                                    '%1',
-                                    formData.value.signTransactionCommand.origin
-                                        .name,
-                                  )
-                                  .replaceAll(
-                                    '%2',
-                                    _getShortName(
-                                      formData.value.signTransactionCommand.data
-                                          .serviceName,
-                                    ),
-                                  )
-                              : localizations
-                                  .signXTransactionsCommandReceivedNotification
-                                  .replaceAll(
-                                    '%1',
-                                    formData.value.signTransactionCommand.origin
-                                        .name,
-                                  )
-                                  .replaceAll(
-                                    '%2',
-                                    command.data.transactions.length.toString(),
-                                  )
-                                  .replaceAll(
-                                    '%3',
-                                    _getShortName(
-                                      formData.value.signTransactionCommand.data
-                                          .serviceName,
-                                    ),
+                                )
+                            : localizations
+                                .signXTransactionsCommandReceivedNotification
+                                .replaceAll(
+                                  '%1',
+                                  formData
+                                      .value.signTransactionCommand.origin.name,
+                                )
+                                .replaceAll(
+                                  '%2',
+                                  command.data.transactions.length.toString(),
+                                )
+                                .replaceAll(
+                                  '%3',
+                                  _getShortName(
+                                    formData.value.signTransactionCommand.data
+                                        .serviceName,
                                   ),
-                          style:
-                              ArchethicThemeStyles.textStyleSize12W100Primary,
-                        ),
-                        TextSpan(
-                          text: ' $amountInFiat',
-                          style: ArchethicThemeStyles
-                              .textStyleSize12W400Highlighted,
-                        ),
-                        TextSpan(
-                          text:
-                              ' (${estimatedFees.formatNumber(precision: 4)} UCO)',
-                          style:
-                              ArchethicThemeStyles.textStyleSize12W100Primary,
-                        ),
-                      ],
-                    ),
+                                ),
+                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                      ),
+                      TextSpan(
+                        text:
+                            ' ${estimatedFees.formatNumber(precision: 4)} UCO',
+                        style:
+                            ArchethicThemeStyles.textStyleSize12W400Highlighted,
+                      ),
+                      TextSpan(
+                        text: ' ($amountInFiat)',
+                        style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                      ),
+                    ],
                   ),
+                ),
                 if (descriptionLocale.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.only(top: 10),

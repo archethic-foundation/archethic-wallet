@@ -1,6 +1,4 @@
-import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -23,7 +21,6 @@ class BalanceIndicatorWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final preferences = ref.watch(SettingsProviders.settings);
-    final primaryCurrency = ref.watch(selectedPrimaryCurrencyProvider);
     final localizations = AppLocalizations.of(context)!;
 
     return preferences.showBalances
@@ -39,43 +36,23 @@ class BalanceIndicatorWidget extends ConsumerWidget {
                     ),
                 ],
               ),
-              if (primaryCurrency.primaryCurrency ==
-                  AvailablePrimaryCurrencyEnum.native)
-                Row(
-                  children: [
-                    const _BalanceIndicatorNative(
-                      primary: true,
+              Row(
+                children: [
+                  const _BalanceIndicatorNative(
+                    primary: true,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 3),
+                    child: Text(
+                      '/',
+                      style: ArchethicThemeStyles.textStyleSize14W200Primary,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 3),
-                      child: Text(
-                        '/',
-                        style: ArchethicThemeStyles.textStyleSize14W200Primary,
-                      ),
-                    ),
-                    const _BalanceIndicatorFiat(
-                      primary: false,
-                    ),
-                  ],
-                )
-              else
-                Row(
-                  children: [
-                    const _BalanceIndicatorFiat(
-                      primary: true,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 3),
-                      child: Text(
-                        '/',
-                        style: ArchethicThemeStyles.textStyleSize14W200Primary,
-                      ),
-                    ),
-                    const _BalanceIndicatorNative(
-                      primary: false,
-                    ),
-                  ],
-                ),
+                  ),
+                  const _BalanceIndicatorFiat(
+                    primary: false,
+                  ),
+                ],
+              ),
             ],
           )
         : const SizedBox();

@@ -24,10 +24,6 @@ class TransferFormState with _$TransferFormState {
     required AsyncValue<double> feeEstimation,
     @Default(false) bool defineMaxAmountInProgress,
     @Default(0.0) double amount,
-
-    /// Amount converted in UCO if primary currency is native. Else in fiat currency
-    // TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)
-    @Default(0.0) double amountConverted,
     required TransferRecipient recipient,
     AEToken? aeToken,
     AccountToken? accountToken,

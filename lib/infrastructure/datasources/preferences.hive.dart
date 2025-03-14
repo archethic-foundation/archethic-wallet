@@ -5,7 +5,6 @@ import 'package:aewallet/infrastructure/datasources/hive.extension.dart';
 import 'package:aewallet/model/authentication_method.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/device_lock_timeout.dart';
-import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/model/privacy_mask_option.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -21,8 +20,6 @@ class PreferencesHiveDatasource {
   static const String firstLaunch = 'archethic_wallet_first_launch';
   static const String authMethod = 'archethic_wallet_auth_method';
   static const String curLanguage = 'archethic_wallet_cur_language';
-  static const String curPrimarySetting =
-      'archethic_wallet_cur_primary_setting';
   static const String curEnvironment = 'archethic_wallet_cur_environment';
   static const String curTheme = 'archethic_wallet_cur_theme';
   static const String lock = 'archethic_wallet_lock';
@@ -105,16 +102,6 @@ class PreferencesHiveDatasource {
         AvailableLanguage.values[_getValue(
           curLanguage,
           defaultValue: AvailableLanguage.systemDefault.index,
-        )],
-      );
-
-  Future<void> setPrimaryCurrency(AvailablePrimaryCurrency primaryCurrency) =>
-      _setValue(curPrimarySetting, primaryCurrency.getIndex());
-
-  AvailablePrimaryCurrency getPrimaryCurrency() => AvailablePrimaryCurrency(
-        AvailablePrimaryCurrencyEnum.values[_getValue(
-          curPrimarySetting,
-          defaultValue: AvailablePrimaryCurrencyEnum.native.index,
         )],
       );
 

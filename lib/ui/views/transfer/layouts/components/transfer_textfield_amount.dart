@@ -47,7 +47,6 @@ class _TransferTextFieldAmountState
   ) {
     final localizations = AppLocalizations.of(context)!;
     final transfer = ref.watch(TransferFormProvider.transferForm);
-    final primaryCurrency = ref.watch(selectedPrimaryCurrencyProvider);
     final accountSelected = ref.watch(
       accountsNotifierProvider.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
@@ -77,16 +76,8 @@ class _TransferTextFieldAmountState
             transfer.transferType == null
                 ? localizations.enterAmount
                 : transfer.transferType == TransferType.uco
-                    ? primaryCurrency.primaryCurrency ==
-                            AvailablePrimaryCurrencyEnum.native
-                        ? localizations.enterAmountIn
-                            .replaceFirst('%1', transfer.symbol(context))
-                        : AppLocalizations.of(context)!
-                            .enterAmountIn
-                            .replaceFirst(
-                              '%1',
-                              AvailableCurrencyEnum.usd.name.toUpperCase(),
-                            )
+                    ? localizations.enterAmountIn
+                        .replaceFirst('%1', transfer.symbol(context))
                     : localizations.enterAmountIn.replaceFirst(
                         '%1',
                         transfer.symbol(context),
@@ -140,13 +131,8 @@ class _TransferTextFieldAmountState
   }
 
   Widget _textFieldAmount() {
-    final localCurrencyFormat = NumberFormat.currency(
-      locale: CurrencyUtil.getLocale().toString(),
-      symbol: CurrencyUtil.getCurrencySymbol(),
-    );
     final transferNotifier =
         ref.watch(TransferFormProvider.transferForm.notifier);
-    final primaryCurrency = ref.watch(selectedPrimaryCurrencyProvider);
 
     return Row(
       children: [
@@ -190,10 +176,7 @@ class _TransferTextFieldAmountState
                 ),
                 inputFormatters: [
                   AmountTextInputFormatter(
-                    precision: primaryCurrency.primaryCurrency ==
-                            AvailablePrimaryCurrencyEnum.native
-                        ? 8
-                        : localCurrencyFormat.decimalDigits!,
+                    precision: 8,
                   ),
                   LengthLimitingTextInputFormatter(
                     16,

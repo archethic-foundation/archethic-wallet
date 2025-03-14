@@ -22,10 +22,6 @@ mixin _$TransferFormState {
   AsyncValue<double> get feeEstimation => throw _privateConstructorUsedError;
   bool get defineMaxAmountInProgress => throw _privateConstructorUsedError;
   double get amount => throw _privateConstructorUsedError;
-
-  /// Amount converted in UCO if primary currency is native. Else in fiat currency
-// TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)
-  double get amountConverted => throw _privateConstructorUsedError;
   TransferRecipient get recipient => throw _privateConstructorUsedError;
   AEToken? get aeToken => throw _privateConstructorUsedError;
   AccountToken? get accountToken => throw _privateConstructorUsedError;
@@ -54,7 +50,6 @@ abstract class $TransferFormStateCopyWith<$Res> {
       AsyncValue<double> feeEstimation,
       bool defineMaxAmountInProgress,
       double amount,
-      double amountConverted,
       TransferRecipient recipient,
       AEToken? aeToken,
       AccountToken? accountToken,
@@ -89,7 +84,6 @@ class _$TransferFormStateCopyWithImpl<$Res, $Val extends TransferFormState>
     Object? feeEstimation = null,
     Object? defineMaxAmountInProgress = null,
     Object? amount = null,
-    Object? amountConverted = null,
     Object? recipient = null,
     Object? aeToken = freezed,
     Object? accountToken = freezed,
@@ -119,10 +113,6 @@ class _$TransferFormStateCopyWithImpl<$Res, $Val extends TransferFormState>
       amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
-              as double,
-      amountConverted: null == amountConverted
-          ? _value.amountConverted
-          : amountConverted // ignore: cast_nullable_to_non_nullable
               as double,
       recipient: null == recipient
           ? _value.recipient
@@ -212,7 +202,6 @@ abstract class _$$TransferFormStateImplCopyWith<$Res>
       AsyncValue<double> feeEstimation,
       bool defineMaxAmountInProgress,
       double amount,
-      double amountConverted,
       TransferRecipient recipient,
       AEToken? aeToken,
       AccountToken? accountToken,
@@ -248,7 +237,6 @@ class __$$TransferFormStateImplCopyWithImpl<$Res>
     Object? feeEstimation = null,
     Object? defineMaxAmountInProgress = null,
     Object? amount = null,
-    Object? amountConverted = null,
     Object? recipient = null,
     Object? aeToken = freezed,
     Object? accountToken = freezed,
@@ -278,10 +266,6 @@ class __$$TransferFormStateImplCopyWithImpl<$Res>
       amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
-              as double,
-      amountConverted: null == amountConverted
-          ? _value.amountConverted
-          : amountConverted // ignore: cast_nullable_to_non_nullable
               as double,
       recipient: null == recipient
           ? _value.recipient
@@ -328,7 +312,6 @@ class _$TransferFormStateImpl extends _TransferFormState {
       required this.feeEstimation,
       this.defineMaxAmountInProgress = false,
       this.amount = 0.0,
-      this.amountConverted = 0.0,
       required this.recipient,
       this.aeToken,
       this.accountToken,
@@ -353,12 +336,6 @@ class _$TransferFormStateImpl extends _TransferFormState {
   @override
   @JsonKey()
   final double amount;
-
-  /// Amount converted in UCO if primary currency is native. Else in fiat currency
-// TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)
-  @override
-  @JsonKey()
-  final double amountConverted;
   @override
   final TransferRecipient recipient;
   @override
@@ -383,7 +360,7 @@ class _$TransferFormStateImpl extends _TransferFormState {
 
   @override
   String toString() {
-    return 'TransferFormState(transferType: $transferType, transferProcessStep: $transferProcessStep, feeEstimation: $feeEstimation, defineMaxAmountInProgress: $defineMaxAmountInProgress, amount: $amount, amountConverted: $amountConverted, recipient: $recipient, aeToken: $aeToken, accountToken: $accountToken, tokenId: $tokenId, message: $message, errorAddressText: $errorAddressText, errorAmountText: $errorAmountText, errorMessageText: $errorMessageText)';
+    return 'TransferFormState(transferType: $transferType, transferProcessStep: $transferProcessStep, feeEstimation: $feeEstimation, defineMaxAmountInProgress: $defineMaxAmountInProgress, amount: $amount, recipient: $recipient, aeToken: $aeToken, accountToken: $accountToken, tokenId: $tokenId, message: $message, errorAddressText: $errorAddressText, errorAmountText: $errorAmountText, errorMessageText: $errorMessageText)';
   }
 
   @override
@@ -401,8 +378,6 @@ class _$TransferFormStateImpl extends _TransferFormState {
                     defineMaxAmountInProgress) ||
                 other.defineMaxAmountInProgress == defineMaxAmountInProgress) &&
             (identical(other.amount, amount) || other.amount == amount) &&
-            (identical(other.amountConverted, amountConverted) ||
-                other.amountConverted == amountConverted) &&
             (identical(other.recipient, recipient) ||
                 other.recipient == recipient) &&
             (identical(other.aeToken, aeToken) || other.aeToken == aeToken) &&
@@ -426,7 +401,6 @@ class _$TransferFormStateImpl extends _TransferFormState {
       feeEstimation,
       defineMaxAmountInProgress,
       amount,
-      amountConverted,
       recipient,
       aeToken,
       accountToken,
@@ -453,7 +427,6 @@ abstract class _TransferFormState extends TransferFormState {
       required final AsyncValue<double> feeEstimation,
       final bool defineMaxAmountInProgress,
       final double amount,
-      final double amountConverted,
       required final TransferRecipient recipient,
       final AEToken? aeToken,
       final AccountToken? accountToken,
@@ -475,11 +448,6 @@ abstract class _TransferFormState extends TransferFormState {
   bool get defineMaxAmountInProgress;
   @override
   double get amount;
-
-  /// Amount converted in UCO if primary currency is native. Else in fiat currency
-// TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)
-  @override
-  double get amountConverted;
   @override
   TransferRecipient get recipient;
   @override

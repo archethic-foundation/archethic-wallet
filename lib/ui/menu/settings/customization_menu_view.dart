@@ -40,9 +40,6 @@ class CustomizationMenuView extends ConsumerWidget
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-
-    final primaryCurrency = ref.watch(selectedPrimaryCurrencyProvider);
     return DecoratedBox(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -61,21 +58,13 @@ class CustomizationMenuView extends ConsumerWidget
               child: Stack(
                 children: <Widget>[
                   ListView(
-                    children: <Widget>[
-                      _SettingsListItem.withDefaultValue(
-                        heading: localizations.primaryCurrency,
-                        defaultValue: primaryCurrency,
-                        icon: Symbols.currency_exchange,
-                        onPressed: () =>
-                            PrimaryCurrencyDialog.getDialog(context, ref),
-                      ),
-                      const _SettingsListItem.spacer(),
-                      const _LanguageSettingsListItem(),
-                      const _SettingsListItem.spacer(),
-                      const _ShowBalancesSettingsListItem(),
-                      const _SettingsListItem.spacer(),
-                      const _ShowPriceChartSettingsListItem(),
-                      const _SettingsListItem.spacer(),
+                    children: const <Widget>[
+                      _LanguageSettingsListItem(),
+                      _SettingsListItem.spacer(),
+                      _ShowBalancesSettingsListItem(),
+                      _SettingsListItem.spacer(),
+                      _ShowPriceChartSettingsListItem(),
+                      _SettingsListItem.spacer(),
                     ],
                   ),
                 ],

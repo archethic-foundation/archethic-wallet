@@ -1,6 +1,4 @@
-import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/model/data/account_balance.dart';
-import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/amount_formatters.dart';
@@ -25,7 +23,6 @@ class FeeInfos extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final primaryCurrency = ref.watch(selectedPrimaryCurrencyProvider);
 
     final nativeFeeEstimation = asyncFeeEstimation.valueOrNull;
     if (nativeFeeEstimation == null) {
@@ -52,31 +49,17 @@ class FeeInfos extends ConsumerWidget {
           Text(
             localizations.estimatedFees,
           ),
-          if (primaryCurrency.primaryCurrency ==
-              AvailablePrimaryCurrencyEnum.native)
-            Text(
-              '${AmountFormatters.standardSmallValue(
-                nativeFeeEstimation,
-                AccountBalance.cryptoCurrencyLabel,
-                decimal: 2,
-              )} / ${CurrencyUtil.formatWithNumberOfDigits(
-                fiatFeeEstimation,
-                2,
-              )}',
-              style: ArchethicThemeStyles.textStyleSize14W200Primary,
-            )
-          else
-            Text(
-              '${CurrencyUtil.formatWithNumberOfDigits(
-                fiatFeeEstimation,
-                2,
-              )} / ${AmountFormatters.standardSmallValue(
-                nativeFeeEstimation,
-                AccountBalance.cryptoCurrencyLabel,
-                decimal: 2,
-              )}',
-              style: ArchethicThemeStyles.textStyleSize14W200Primary,
-            ),
+          Text(
+            '${AmountFormatters.standardSmallValue(
+              nativeFeeEstimation,
+              AccountBalance.cryptoCurrencyLabel,
+              decimal: 2,
+            )} / ${CurrencyUtil.formatWithNumberOfDigits(
+              fiatFeeEstimation,
+              2,
+            )}',
+            style: ArchethicThemeStyles.textStyleSize14W200Primary,
+          ),
         ],
       ),
     );

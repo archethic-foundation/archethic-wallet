@@ -4,14 +4,12 @@ import 'package:aewallet/application/account/accounts.dart';
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/session/session.dart';
-import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/transaction_repository.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
 import 'package:aewallet/domain/models/transaction.dart';
 import 'package:aewallet/domain/models/transfer.dart';
 import 'package:aewallet/domain/usecases/transaction/calculate_fees.dart';
 import 'package:aewallet/model/data/account.dart';
-import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
@@ -40,8 +38,6 @@ final _transferFormProvider =
   dependencies: [
     TransferFormProvider.initialTransferForm,
     accountsNotifierProvider,
-    selectedPrimaryCurrencyProvider,
-    convertedValueProvider,
     sessionNotifierProvider,
   ],
 );
@@ -75,15 +71,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     BuildContext context,
     Duration delay,
   ) async {
-    var amount = state.amount;
-
-    if (state.transferType == TransferType.uco) {
-      final primaryCurrency = ref.read(selectedPrimaryCurrencyProvider);
-      if (primaryCurrency.primaryCurrency ==
-          AvailablePrimaryCurrencyEnum.fiat) {
-        amount = state.amountConverted;
-      }
-    }
+    final amount = state.amount;
 
     if (amount <= 0 || !state.recipient.isAddressValid) {
       return 0;
@@ -106,7 +94,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         ref.read(getBalanceProvider(kUCOAddress)).valueOrNull ?? 0.0;
     switch (state.transferType) {
       case TransferType.uco:
-        return state.amountConverted > balanceUCO - fees
+        return state.amount > balanceUCO - fees
             ? AppLocalizations.of(context)!.insufficientBalance.replaceAll(
                   '%1',
                   state.symbol(context),
@@ -390,42 +378,16 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       return;
     }
 
-    final primaryCurrency = ref.read(selectedPrimaryCurrencyProvider);
-
-    final archethicOracleUCO = await ref
-        .read(aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO.future);
-
-    switch (primaryCurrency.primaryCurrency) {
-      case AvailablePrimaryCurrencyEnum.fiat:
-        var amountMax = 0.0;
-        amountMax = (balanceUCO > fees ? balanceUCO - fees : 0) *
-            archethicOracleUCO.usd;
-        state = state.copyWith(
-          amount: amountMax,
-          amountConverted: balanceUCO > fees ? balanceUCO - fees : 0,
-          feeEstimation: AsyncValue.data(fees),
-          errorAmountText: balanceUCO > fees
-              ? ''
-              : AppLocalizations.of(context)!.insufficientBalance.replaceAll(
-                    '%1',
-                    state.symbol(context),
-                  ),
-        );
-
-        break;
-      case AvailablePrimaryCurrencyEnum.native:
-        state = state.copyWith(
-          amount: balanceUCO > fees ? balanceUCO - fees : 0,
-          feeEstimation: AsyncValue.data(fees),
-          errorAmountText: balanceUCO > fees
-              ? ''
-              : AppLocalizations.of(context)!.insufficientBalance.replaceAll(
-                    '%1',
-                    state.symbol(context),
-                  ),
-        );
-        break;
-    }
+    state = state.copyWith(
+      amount: balanceUCO > fees ? balanceUCO - fees : 0,
+      feeEstimation: AsyncValue.data(fees),
+      errorAmountText: balanceUCO > fees
+          ? ''
+          : AppLocalizations.of(context)!.insufficientBalance.replaceAll(
+                '%1',
+                state.symbol(context),
+              ),
+    );
   }
 
   Future<void> setAmount({
@@ -435,7 +397,6 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     if (state.transferType == TransferType.token) {
       state = state.copyWith(
         amount: amount,
-        amountConverted: 0,
         errorAmountText: '',
       );
       unawaited(_updateFees(context));
@@ -447,18 +408,8 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
       errorAmountText: '',
     );
 
-    var amountConverted = 0.0;
-    if (amount > 0) {
-      amountConverted = await ref.read(
-        convertedValueProvider(
-          amount: amount,
-        ).future,
-      );
-    }
-
     state = state.copyWith(
       amount: amount,
-      amountConverted: amountConverted,
       errorAmountText: '',
     );
 
@@ -535,12 +486,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
     final balanceUCO = await ref.read(getBalanceProvider(kUCOAddress).future);
     switch (state.transferType) {
       case TransferType.uco:
-        var amountInUCO = state.amount;
-        final primaryCurrency = ref.read(selectedPrimaryCurrencyProvider);
-        if (primaryCurrency.primaryCurrency ==
-            AvailablePrimaryCurrencyEnum.fiat) {
-          amountInUCO = state.amountConverted;
-        }
+        final amountInUCO = state.amount;
 
         if (amountInUCO + feeEstimation > balanceUCO) {
           state = state.copyWith(
@@ -668,12 +614,7 @@ class TransferFormNotifier extends AutoDisposeNotifier<TransferFormState> {
         )
         .selectedAccount;
 
-    var amountInUCO = state.amount;
-    final primaryCurrency = ref.read(selectedPrimaryCurrencyProvider);
-    if (primaryCurrency.primaryCurrency == AvailablePrimaryCurrencyEnum.fiat &&
-        state.transferType == TransferType.uco) {
-      amountInUCO = state.amountConverted;
-    }
+    final amountInUCO = state.amount;
 
     late Transaction transaction;
 

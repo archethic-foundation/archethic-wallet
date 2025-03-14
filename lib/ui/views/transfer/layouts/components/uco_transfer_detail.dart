@@ -1,8 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/accounts_notifier.dart';
-import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/model/data/account_balance.dart';
-import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -26,7 +24,6 @@ class UCOTransferDetail extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
 
     final transfer = ref.watch(TransferFormProvider.transferForm);
-    final primaryCurrency = ref.watch(selectedPrimaryCurrencyProvider);
     final accountSelected = ref.watch(
       accountsNotifierProvider.select(
         (accounts) => accounts.valueOrNull?.selectedAccount,
@@ -35,10 +32,8 @@ class UCOTransferDetail extends ConsumerWidget {
 
     if (accountSelected == null) return const SizedBox();
 
-    var amountInUco = transfer.amount;
-    if (primaryCurrency.primaryCurrency == AvailablePrimaryCurrencyEnum.fiat) {
-      amountInUco = transfer.amountConverted;
-    }
+    final amountInUco = transfer.amount;
+
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Column(

@@ -21,7 +21,6 @@ class SettingsRepository implements SettingsRepositoryInterface {
       languageSeed: loadedPreferences.getLanguageSeed(),
       mainScreenCurrentPage: loadedPreferences.getMainScreenCurrentPage(),
       environment: loadedPreferences.getEnvironment(),
-      primaryCurrency: loadedPreferences.getPrimaryCurrency(),
       showBalances: loadedPreferences.getShowBalances(),
       showPriceChart: loadedPreferences.getShowPriceChart(),
       priceChartIntervalOption: loadedPreferences.getPriceChartIntervalOption(),
@@ -40,7 +39,6 @@ class SettingsRepository implements SettingsRepositoryInterface {
     await loadedPreferences
         .setMainScreenCurrentPage(settings.mainScreenCurrentPage);
     await loadedPreferences.setEnvironment(settings.environment);
-    await loadedPreferences.setPrimaryCurrency(settings.primaryCurrency);
     await loadedPreferences.setShowBalances(settings.showBalances);
     await loadedPreferences.setShowPriceChart(settings.showPriceChart);
     await loadedPreferences

@@ -6,7 +6,6 @@ import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/feature_flags.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/language.dart';
-import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/settings/version.dart';
 import 'package:aewallet/application/usecases.dart';
@@ -40,7 +39,6 @@ import 'package:aewallet/ui/widgets/dialogs/authentification_method_dialog.dart'
 import 'package:aewallet/ui/widgets/dialogs/environment_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/language_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/lock_timeout_dialog.dart';
-import 'package:aewallet/ui/widgets/dialogs/primary_currency_dialog.dart';
 import 'package:aewallet/ui/widgets/dialogs/remove_wallet_dialog.dart';
 import 'package:aewallet/util/cache_manager_hive.dart';
 import 'package:aewallet/util/get_it_instance.dart';
