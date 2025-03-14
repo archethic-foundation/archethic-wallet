@@ -143,7 +143,7 @@ class _HomePageState extends ConsumerState<HomePage>
     }
 
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage(
             ArchethicTheme.backgroundSmall,
