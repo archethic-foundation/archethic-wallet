@@ -50,9 +50,10 @@ class BuyWithFiatSheet extends ConsumerWidget
     return BtnFooterPrimary(
       buttonText: localizations.onrampWithFiatBuyNowButton,
       key: const Key('buyNow'),
-      isLocked: onrampFavoriteSetup == null ||
-          depositAddress == null ||
-          !ref.watch(buyWithFiatFormProvider).disclaimerAcknowledged,
+      isLocked: !isWebviewSupported &&
+          (onrampFavoriteSetup == null ||
+              depositAddress == null ||
+              !ref.watch(buyWithFiatFormProvider).disclaimerAcknowledged),
       showProgressIndicator: onrampFavoriteSetup == null,
       onTap: () async => switch (onrampFavoriteSetup) {
         null => null,
@@ -213,17 +214,17 @@ class BuyWithFiatSheet extends ConsumerWidget
                   ],
                 ),
                 const SizedBox(height: 30),
-              ],
-              CheckboxConfirm(
-                onChanged: ref
-                    .read(buyWithFiatFormProvider.notifier)
-                    .acknowledgeDisclaimer,
-                value: form.disclaimerAcknowledged,
-                text: Text(
-                  localizations.onrampWithFiatBanxaWarningApproval,
-                  style: textTheme.bodyMedium,
+                CheckboxConfirm(
+                  onChanged: ref
+                      .read(buyWithFiatFormProvider.notifier)
+                      .acknowledgeDisclaimer,
+                  value: form.disclaimerAcknowledged,
+                  text: Text(
+                    localizations.onrampWithFiatBanxaWarningApproval,
+                    style: textTheme.bodyMedium,
+                  ),
                 ),
-              ),
+              ],
               const SizedBox(height: 30),
               OnRampTransactionHistory(
                 Text(

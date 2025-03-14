@@ -7,7 +7,7 @@
     "48": "icons/icon_48.png",
     "128": "icons/icon_128.png"
   },
-  "version": "4.7.5.637",
+  "version": "4.10.0.650",
   "content_security_policy": {
     "extension_pages": "script-src 'self' ; object-src 'self'"
   },
