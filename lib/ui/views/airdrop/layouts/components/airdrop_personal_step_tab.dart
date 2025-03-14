@@ -104,6 +104,15 @@ class AirdropPersonalStepTab extends ConsumerWidget {
     return TableRow(
       decoration: const BoxDecoration(
         color: Colors.black,
+        border: Border(
+          top: BorderSide(color: Color(0xFF4C2470)),
+          left: BorderSide(color: Color(0xFF4C2470)),
+          right: BorderSide(color: Color(0xFF4C2470)),
+        ),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),
       ),
       children: [
         _buildTableCell(
@@ -195,7 +204,7 @@ class AirdropPersonalStepTab extends ConsumerWidget {
               child: Icon(
                 Icons.lock_outline,
                 size: 12,
-                color: Colors.white.withValues(alpha: 0.8),
+                color: Colors.white.withValues(alpha: 0.6),
               ),
             ),
           if (textSmallOpacity != null)
@@ -207,7 +216,7 @@ class AirdropPersonalStepTab extends ConsumerWidget {
                   color: textStyle.color?.withValues(
                     alpha: lineType == LineType.afterCurrent ||
                             lineType == LineType.current
-                        ? 0.8
+                        ? 0.6
                         : 0.2,
                   ),
                 ),

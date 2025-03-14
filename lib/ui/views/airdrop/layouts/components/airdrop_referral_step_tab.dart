@@ -96,6 +96,15 @@ class AirdropReferralStepTab extends ConsumerWidget {
     return TableRow(
       decoration: const BoxDecoration(
         color: Colors.black,
+        border: Border(
+          top: BorderSide(color: Color(0xFF4C2470)),
+          left: BorderSide(color: Color(0xFF4C2470)),
+          right: BorderSide(color: Color(0xFF4C2470)),
+        ),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),
       ),
       children: [
         _buildTableCell(
@@ -118,14 +127,13 @@ class AirdropReferralStepTab extends ConsumerWidget {
     BuildContext context,
     AirdropReferralStepData row,
     AirdropFormState airdropForm,
-    int index, // Ajoutez l'index de la ligne
+    int index,
   ) {
     final isCurrentRow =
         airdropForm.referralParticipantRewarded == row.actualValue;
     final isBeforeCurrent =
         airdropForm.referralParticipantRewarded > row.actualValue;
 
-    // Utilisez l'index pour alterner la couleur de fond
     final backgroundColor = isCurrentRow
         ? aedappfm.ArchethicThemeBase.raspberry500.withValues(alpha: 0.5)
         : index.isEven
@@ -190,7 +198,7 @@ class AirdropReferralStepTab extends ConsumerWidget {
               child: Icon(
                 Icons.lock_outline,
                 size: 12,
-                color: Colors.white.withValues(alpha: 0.8),
+                color: Colors.white.withValues(alpha: 0.6),
               ),
             ),
           if (textSmallOpacity != null)
@@ -202,7 +210,7 @@ class AirdropReferralStepTab extends ConsumerWidget {
                   color: textStyle.color?.withValues(
                     alpha: lineType == LineType.afterCurrent ||
                             lineType == LineType.current
-                        ? 0.8
+                        ? 0.6
                         : 0.2,
                   ),
                 ),
