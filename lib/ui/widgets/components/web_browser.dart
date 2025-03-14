@@ -111,7 +111,7 @@ class _WebBrowserState extends ConsumerState<WebBrowser> {
         }
       },
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         appBar: WebBrowserAppBar(
           onClose: () async {
             await AppDialogs.showConfirmDialog(
