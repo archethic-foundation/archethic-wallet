@@ -216,7 +216,7 @@ class _OnrampProviderSetupProviderElement
 }
 
 String _$onrampProviderFavoriteSetupHash() =>
-    r'65d175f44f6b6651eeeb33bb8b1117d25c4a86ad';
+    r'0f46fcbf0eaec6a804c846e85f461a0d03be6987';
 
 /// See also [onrampProviderFavoriteSetup].
 @ProviderFor(onrampProviderFavoriteSetup)

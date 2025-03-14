@@ -36,7 +36,7 @@ class HomeFailure extends StatelessWidget {
       ),
       menu: true,
       sheetContent: DecoratedBox(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
               ArchethicTheme.backgroundSmall,
