@@ -21,6 +21,7 @@ typedef OnRampChain = ({
   double feeRate,
   List<OnRampToken> tokens,
   Map<String, OnRampProviderChain> providers,
+  bool available,
 });
 
 typedef OnRampTokenDisplayData = ({

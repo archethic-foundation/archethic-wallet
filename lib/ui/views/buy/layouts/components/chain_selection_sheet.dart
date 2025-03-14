@@ -91,6 +91,9 @@ class _ChainSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isAvailable = chain.available;
+    final localizations = AppLocalizations.of(context)!;
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5),
       height: 40,
@@ -113,45 +116,53 @@ class _ChainSelector extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(10),
       ),
-      child: InkWell(
-        onTap: onTap,
-        child: Row(
-          children: [
-            const SizedBox(
-              width: 10,
-            ),
-            if (chain.svgIcon != '')
-              SvgPicture.string(
-                chain.svgIcon,
-                width: 20,
-              )
-            else
-              Container(
-                width: 20,
-                height: 20,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white.withOpacity(0.2),
-                ),
-              ),
-            const SizedBox(
-              width: 10,
-            ),
-            Row(
+      child: MouseRegion(
+        cursor: isAvailable ? SystemMouseCursors.click : MouseCursor.defer,
+        child: GestureDetector(
+          onTap: isAvailable ? onTap : null,
+          child: Opacity(
+            opacity: isAvailable ? 1 : 0.5,
+            child: Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 1),
-                  child: Text(
-                    chain.displayName,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ),
                 const SizedBox(
-                  width: 3,
+                  width: 10,
+                ),
+                if (chain.svgIcon != '')
+                  SvgPicture.string(
+                    chain.svgIcon,
+                    width: 20,
+                  )
+                else
+                  Container(
+                    width: 20,
+                    height: 20,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white.withOpacity(0.2),
+                    ),
+                  ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 1),
+                      child: Text(
+                        isAvailable
+                            ? chain.displayName
+                            : '${chain.displayName} (${localizations.notAvailable})',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 3,
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );
