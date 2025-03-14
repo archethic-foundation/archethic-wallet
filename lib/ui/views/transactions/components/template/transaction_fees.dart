@@ -1,10 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/data/account_balance.dart';
-import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/util/currency_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -26,7 +24,6 @@ class TransactionFees extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
 
     final settings = ref.watch(SettingsProviders.settings);
-    final primaryCurrency = ref.watch(selectedPrimaryCurrencyProvider);
 
     final archethicOracleUCO = ref
         .watch(aedappfm.ArchethicOracleUCOProviders.archethicOracleUCO)
@@ -48,17 +45,10 @@ class TransactionFees extends ConsumerWidget {
                 '${localizations.txListFees} ',
                 style: ArchethicThemeStyles.textStyleSize12W100Primary60,
               ),
-              if (primaryCurrency.primaryCurrency ==
-                  AvailablePrimaryCurrencyEnum.native)
-                Text(
-                  '${transaction.fee!.toStringAsFixed(3)} ${AccountBalance.cryptoCurrencyLabel} ($amountConverted)',
-                  style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                )
-              else
-                Text(
-                  '$amountConverted (${transaction.fee!.toStringAsFixed(3)} ${AccountBalance.cryptoCurrencyLabel})',
-                  style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                ),
+              Text(
+                '${transaction.fee!.toStringAsFixed(3)} ${AccountBalance.cryptoCurrencyLabel} ($amountConverted)',
+                style: ArchethicThemeStyles.textStyleSize12W100Primary,
+              ),
             ],
           )
         else

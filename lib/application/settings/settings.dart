@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:aewallet/domain/models/settings.dart';
 import 'package:aewallet/domain/repositories/settings.dart';
 import 'package:aewallet/model/available_language.dart';
-import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -29,9 +28,6 @@ class SettingsNotifier extends StateNotifier<Settings> {
           activeRPCServer: true,
           language: AvailableLanguage.systemDefault,
           mainScreenCurrentPage: 0,
-          primaryCurrency: const AvailablePrimaryCurrency(
-            AvailablePrimaryCurrencyEnum.native,
-          ),
           showBalances: true,
           showPriceChart: true,
           activeAirdrop: true,
@@ -66,24 +62,6 @@ class SettingsNotifier extends StateNotifier<Settings> {
 
   Future<void> setEnvironment(aedappfm.Environment environment) => _update(
         state.copyWith(environment: environment),
-      );
-
-  Future<void> selectPrimaryCurrency(
-    AvailablePrimaryCurrency primaryCurrency,
-  ) =>
-      _update(
-        state.copyWith(
-          primaryCurrency: primaryCurrency,
-        ),
-      );
-
-  Future<void> switchSelectedPrimaryCurrency() => selectPrimaryCurrency(
-        AvailablePrimaryCurrency(
-          state.primaryCurrency.primaryCurrency ==
-                  AvailablePrimaryCurrencyEnum.native
-              ? AvailablePrimaryCurrencyEnum.fiat
-              : AvailablePrimaryCurrencyEnum.native,
-        ),
       );
 
   Future<void> selectLanguage(AvailableLanguage language) => _update(

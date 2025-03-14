@@ -1,9 +1,7 @@
 import 'package:aewallet/application/formated_name.dart';
-import 'package:aewallet/application/settings/primary_currency.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/model/blockchain/recent_transaction.dart';
 import 'package:aewallet/model/data/account_balance.dart';
-import 'package:aewallet/model/primary_currency.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/address_formatters.dart';
 import 'package:aewallet/ui/views/transactions/components/template/transaction_hidden_value.dart';
@@ -56,7 +54,6 @@ Widget _amount(
   final amount = mvtInfo.amount;
   final amountPrefix = isInput ? '' : '-';
   final hasTransactionInfo = mvtInfo.tokenInformation != null;
-  final primaryCurrency = ref.watch(selectedPrimaryCurrencyProvider);
   final localizations = AppLocalizations.of(context)!;
   final settings = ref.watch(SettingsProviders.settings);
 
@@ -76,7 +73,7 @@ Widget _amount(
             children: [
               Text(
                 hasTransactionInfo
-                    ? '$amountPrefix$amountFormatted ${primaryCurrency.primaryCurrency == AvailablePrimaryCurrencyEnum.native ? (mvtInfo.tokenInformation!.symbol != null && mvtInfo.tokenInformation!.symbol! == '' ? 'NFT' : mvtInfo.tokenInformation!.symbol ?? '') : mvtInfo.tokenInformation!.symbol ?? ''}'
+                    ? '$amountPrefix$amountFormatted ${mvtInfo.tokenInformation!.symbol != null && mvtInfo.tokenInformation!.symbol! == '' ? 'NFT' : mvtInfo.tokenInformation!.symbol ?? ''}'
                     : '$amountPrefix$amountFormatted ${AccountBalance.cryptoCurrencyLabel}',
                 style: ArchethicThemeStyles.textStyleSize12W100Primary,
               ),

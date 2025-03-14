@@ -16,8 +16,6 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Settings {
-  AvailablePrimaryCurrency get primaryCurrency =>
-      throw _privateConstructorUsedError;
   AvailableLanguage get language => throw _privateConstructorUsedError;
   aedappfm.Environment get environment => throw _privateConstructorUsedError;
   String get languageSeed => throw _privateConstructorUsedError;
@@ -44,8 +42,7 @@ abstract class $SettingsCopyWith<$Res> {
       _$SettingsCopyWithImpl<$Res, Settings>;
   @useResult
   $Res call(
-      {AvailablePrimaryCurrency primaryCurrency,
-      AvailableLanguage language,
+      {AvailableLanguage language,
       aedappfm.Environment environment,
       String languageSeed,
       bool firstLaunch,
@@ -73,7 +70,6 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? primaryCurrency = null,
     Object? language = null,
     Object? environment = null,
     Object? languageSeed = null,
@@ -87,10 +83,6 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
     Object? priceChartIntervalOption = null,
   }) {
     return _then(_value.copyWith(
-      primaryCurrency: null == primaryCurrency
-          ? _value.primaryCurrency
-          : primaryCurrency // ignore: cast_nullable_to_non_nullable
-              as AvailablePrimaryCurrency,
       language: null == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
@@ -148,8 +140,7 @@ abstract class _$$SettingsImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {AvailablePrimaryCurrency primaryCurrency,
-      AvailableLanguage language,
+      {AvailableLanguage language,
       aedappfm.Environment environment,
       String languageSeed,
       bool firstLaunch,
@@ -175,7 +166,6 @@ class __$$SettingsImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? primaryCurrency = null,
     Object? language = null,
     Object? environment = null,
     Object? languageSeed = null,
@@ -189,10 +179,6 @@ class __$$SettingsImplCopyWithImpl<$Res>
     Object? priceChartIntervalOption = null,
   }) {
     return _then(_$SettingsImpl(
-      primaryCurrency: null == primaryCurrency
-          ? _value.primaryCurrency
-          : primaryCurrency // ignore: cast_nullable_to_non_nullable
-              as AvailablePrimaryCurrency,
       language: null == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
@@ -245,8 +231,7 @@ class __$$SettingsImplCopyWithImpl<$Res>
 
 class _$SettingsImpl extends _Settings {
   const _$SettingsImpl(
-      {required this.primaryCurrency,
-      required this.language,
+      {required this.language,
       required this.environment,
       required this.languageSeed,
       required this.firstLaunch,
@@ -259,8 +244,6 @@ class _$SettingsImpl extends _Settings {
       required this.priceChartIntervalOption})
       : super._();
 
-  @override
-  final AvailablePrimaryCurrency primaryCurrency;
   @override
   final AvailableLanguage language;
   @override
@@ -286,7 +269,7 @@ class _$SettingsImpl extends _Settings {
 
   @override
   String toString() {
-    return 'Settings(primaryCurrency: $primaryCurrency, language: $language, environment: $environment, languageSeed: $languageSeed, firstLaunch: $firstLaunch, showBalances: $showBalances, activeRPCServer: $activeRPCServer, activeAirdrop: $activeAirdrop, earnUserLevel: $earnUserLevel, mainScreenCurrentPage: $mainScreenCurrentPage, showPriceChart: $showPriceChart, priceChartIntervalOption: $priceChartIntervalOption)';
+    return 'Settings(language: $language, environment: $environment, languageSeed: $languageSeed, firstLaunch: $firstLaunch, showBalances: $showBalances, activeRPCServer: $activeRPCServer, activeAirdrop: $activeAirdrop, earnUserLevel: $earnUserLevel, mainScreenCurrentPage: $mainScreenCurrentPage, showPriceChart: $showPriceChart, priceChartIntervalOption: $priceChartIntervalOption)';
   }
 
   @override
@@ -294,8 +277,6 @@ class _$SettingsImpl extends _Settings {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SettingsImpl &&
-            (identical(other.primaryCurrency, primaryCurrency) ||
-                other.primaryCurrency == primaryCurrency) &&
             (identical(other.language, language) ||
                 other.language == language) &&
             (identical(other.environment, environment) ||
@@ -324,7 +305,6 @@ class _$SettingsImpl extends _Settings {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      primaryCurrency,
       language,
       environment,
       languageSeed,
@@ -348,8 +328,7 @@ class _$SettingsImpl extends _Settings {
 
 abstract class _Settings extends Settings {
   const factory _Settings(
-      {required final AvailablePrimaryCurrency primaryCurrency,
-      required final AvailableLanguage language,
+      {required final AvailableLanguage language,
       required final aedappfm.Environment environment,
       required final String languageSeed,
       required final bool firstLaunch,
@@ -363,8 +342,6 @@ abstract class _Settings extends Settings {
           priceChartIntervalOption}) = _$SettingsImpl;
   const _Settings._() : super._();
 
-  @override
-  AvailablePrimaryCurrency get primaryCurrency;
   @override
   AvailableLanguage get language;
   @override
