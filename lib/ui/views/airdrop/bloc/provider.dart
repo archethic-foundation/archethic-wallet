@@ -24,34 +24,44 @@ part 'provider.g.dart';
 Future<({AirdropState state, String? email})> airdropBannerStatus(
   Ref ref,
 ) async {
+  print('#### debut status');
   final userInfo = await ref.watch(airdropUserInfoProvider.future);
+  print('#### 1');
   final personalLP = await ref.watch(airdropPersonalLPProvider.future);
-
+  print('#### 2');
   if (userInfo.email == null) {
+    print('#### 3');
     return (state: AirdropState.newParticipation, email: null);
   }
-
+  print('#### 4');
   if (userInfo.isMailConfirmed == null) {
+    print('#### 5');
     if (personalLP.personalLP < 1) {
+      print('#### 6');
       return (state: AirdropState.newParticipation, email: userInfo.email);
     }
-
+    print('#### 7');
     return (state: AirdropState.shouldAddMail, email: userInfo.email);
   }
-
+  print('#### 8');
   if (userInfo.isMailConfirmed == false) {
+    print('#### 9');
     if (personalLP.personalLP >= 1) {
+      print('#### 10');
       return (state: AirdropState.shouldConfirmMail, email: userInfo.email);
     }
+    print('#### 11');
     return (
       state: AirdropState.shouldConfirmMailAndFarm,
       email: userInfo.email
     );
   }
-
+  print('#### 12');
   if (personalLP.personalLP >= 1) {
+    print('#### 13');
     return (state: AirdropState.ok, email: userInfo.email);
   }
+  print('#### 14');
   return (state: AirdropState.shouldFarm, email: userInfo.email);
 }
 
