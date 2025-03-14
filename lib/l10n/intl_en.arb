@@ -953,5 +953,6 @@
     "onrampWithCryptoPoolAmount2": "available for instant transactions.",
     "onrampWithCryptoTreatmentDelayDisclaimer1": "Important : ",
     "onrampWithCryptoTreatmentDelayDisclaimer2": "Because transactions take time, someone else might use some of this amount before we get yours. If the ETH you send is more than what’s available when we receive it, we’ll process the available part immediately, and handle the rest manually within 24 hours.",
-    "comingSoon": "Coming soon"
+    "comingSoon": "Coming soon",
+    "webBrowserCloseConfirmationDesc": "Are you sure you want to leave? Your progress will be lost."
 }

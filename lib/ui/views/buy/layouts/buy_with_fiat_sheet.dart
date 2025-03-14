@@ -2,7 +2,6 @@
 
 import 'package:aewallet/application/onramp/banxa.dart';
 import 'package:aewallet/application/onramp/onramp.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
 import 'package:aewallet/ui/figma_components/checkbox/checkbox_confirm.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
@@ -142,14 +141,14 @@ class BuyWithFiatSheet extends ConsumerWidget
               const SizedBox(height: 10),
               Text(
                 localizations.onrampWithFiatHowDoesItWorkBody,
-                style: textTheme.bodyMedium,
+                style: textTheme.bodyMediumWithOpacity,
               ),
               const SizedBox(height: 30),
               NumberedListItem(
                 index: 1,
                 content: EasyRichText(
                   localizations.onrampWithFiatHowDoesItWork1,
-                  defaultStyle: AppTextStyles.bodyMedium(context),
+                  defaultStyle: textTheme.bodyMediumWithOpacity,
                   patternList: [
                     EasyRichTextPattern(
                       targetString: 'ETH',
@@ -166,7 +165,7 @@ class BuyWithFiatSheet extends ConsumerWidget
                   localizations.onrampWithFiatHowDoesItWork2(
                     feeRate == null ? '--' : (feeRate * 100).round().toString(),
                   ),
-                  defaultStyle: textTheme.bodyMedium,
+                  defaultStyle: textTheme.bodyMediumWithOpacity,
                   patternList: [
                     EasyRichTextPattern(
                       targetString: 'ETH',
@@ -186,7 +185,7 @@ class BuyWithFiatSheet extends ConsumerWidget
                 index: 3,
                 content: EasyRichText(
                   localizations.onrampWithFiatHowDoesItWork3,
-                  defaultStyle: textTheme.bodyMedium,
+                  defaultStyle: textTheme.bodyMediumWithOpacity,
                   patternList: [
                     EasyRichTextPattern(
                       targetString: 'UCO',
