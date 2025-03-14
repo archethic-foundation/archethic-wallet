@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar_basic.dart';
+import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/components/loading_placeholder.dart';
 import 'package:aewallet/util/device_info.dart';
@@ -112,7 +113,18 @@ class _WebBrowserState extends ConsumerState<WebBrowser> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: WebBrowserAppBar(
-          onClose: context.pop,
+          onClose: () async {
+            await AppDialogs.showConfirmDialog(
+              context,
+              ref,
+              localizations.warning,
+              localizations.webBrowserCloseConfirmationDesc,
+              localizations.yes,
+              () async {
+                context.pop();
+              },
+            );
+          },
           onRefresh: () => controller?.reload(),
           title: localizations.onrampWithBanxaTitle,
         ),
