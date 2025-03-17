@@ -9,17 +9,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum LineType { header, current, beforeCurrent, afterCurrent }
 
-class AirdropPersonalStepData {
-  AirdropPersonalStepData({
-    required this.actualValue,
-    required this.numberOfLP,
-    required this.multiplier,
-  });
-  final int actualValue;
-  final int numberOfLP;
-  final String multiplier;
-}
-
 class AirdropPersonalStepTab extends ConsumerWidget {
   const AirdropPersonalStepTab({
     this.displayNoteMultiplier = true,
@@ -30,7 +19,6 @@ class AirdropPersonalStepTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final data = _generateAirdropStepData();
     final airdropForm = ref.watch(airdropFormNotifierProvider);
     final localizations = AppLocalizations.of(context)!;
 
@@ -52,49 +40,19 @@ class AirdropPersonalStepTab extends ConsumerWidget {
               },
               children: [
                 _buildTableHeader(context, localizations),
-                for (final row in data)
-                  _buildTableRow(context, row, airdropForm),
+                for (var i = 0; i < airdropPersonalStepDataList.length; i++)
+                  _buildTableRow(
+                    context,
+                    airdropPersonalStepDataList[i],
+                    airdropForm,
+                    i,
+                  ),
               ],
             ),
           ),
         ),
       ],
     );
-  }
-
-  List<AirdropPersonalStepData> _generateAirdropStepData() {
-    return [
-      AirdropPersonalStepData(actualValue: 0, numberOfLP: 0, multiplier: '0x'),
-      AirdropPersonalStepData(actualValue: 1, numberOfLP: 1, multiplier: '1x'),
-      AirdropPersonalStepData(actualValue: 2, numberOfLP: 5, multiplier: '2x'),
-      AirdropPersonalStepData(actualValue: 3, numberOfLP: 20, multiplier: '3x'),
-      AirdropPersonalStepData(actualValue: 4, numberOfLP: 60, multiplier: '5x'),
-      AirdropPersonalStepData(
-        actualValue: 5,
-        numberOfLP: 150,
-        multiplier: '8x',
-      ),
-      AirdropPersonalStepData(
-        actualValue: 6,
-        numberOfLP: 300,
-        multiplier: '13x',
-      ),
-      AirdropPersonalStepData(
-        actualValue: 7,
-        numberOfLP: 500,
-        multiplier: '21x',
-      ),
-      AirdropPersonalStepData(
-        actualValue: 8,
-        numberOfLP: 750,
-        multiplier: '34x',
-      ),
-      AirdropPersonalStepData(
-        actualValue: 9,
-        numberOfLP: 1000,
-        multiplier: '55x',
-      ),
-    ];
   }
 
   TableRow _buildTableHeader(
@@ -135,14 +93,16 @@ class AirdropPersonalStepTab extends ConsumerWidget {
     BuildContext context,
     AirdropPersonalStepData row,
     AirdropFormState airdropForm,
+    int index,
   ) {
-    final isCurrentRow = '${airdropForm.personalMultiplier}x' == row.multiplier;
+    final isCurrentRow =
+        '${airdropForm.personalMultiplier}x' == row.personalMultiplier;
     final isBeforeCurrent = airdropForm.personalMultiplier >
-        int.parse(row.multiplier.replaceAll('x', ''));
+        int.parse(row.personalMultiplier.replaceAll('x', ''));
 
     final backgroundColor = isCurrentRow
         ? aedappfm.ArchethicThemeBase.raspberry500.withValues(alpha: 0.5)
-        : row.actualValue.isEven
+        : index.isEven
             ? aedappfm.ArchethicThemeBase.palePurpleBackground
             : Colors.transparent;
 
@@ -153,7 +113,7 @@ class AirdropPersonalStepTab extends ConsumerWidget {
       children: [
         _buildTableCell(
           context,
-          '${row.numberOfLP} LP ',
+          '${row.lpTokensLocked} LP ',
           isCurrentRow
               ? LineType.current
               : isBeforeCurrent
@@ -162,12 +122,12 @@ class AirdropPersonalStepTab extends ConsumerWidget {
           true,
           textSmallOpacity: _lpIndollarsCalculation(
             airdropForm.actualLPFiatValue,
-            row.numberOfLP,
+            row.lpTokensLocked,
           ),
         ),
         _buildTableCell(
           context,
-          row.multiplier,
+          row.personalMultiplier,
           isCurrentRow
               ? LineType.current
               : isBeforeCurrent

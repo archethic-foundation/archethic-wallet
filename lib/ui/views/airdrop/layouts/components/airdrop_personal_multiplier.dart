@@ -31,14 +31,6 @@ class AirdropPersonalMultiplier extends ConsumerWidget {
             style: Theme.of(context).textTheme.bodyMediumWithOpacity,
             textAlign: TextAlign.center,
           ),
-          Text(
-            ' ',
-            style: Theme.of(context)
-                .textTheme
-                .bodySmallWithOpacity
-                .copyWith(fontSize: 8),
-            textAlign: TextAlign.center,
-          ),
         ],
       ),
     );

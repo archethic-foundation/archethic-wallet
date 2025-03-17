@@ -37,10 +37,20 @@ String airdropBackendUrl(
 }
 
 @riverpod
-Future<({int? participantCount, int? totalMultiplier})> airdropCount(
+Future<
+    ({
+      int? participantCount,
+      int? totalPersonalMultiplier,
+      int? totalReferralMultiplier
+    })> airdropCount(
   Ref ref,
 ) async {
-  Future<({int? participantCount, int? totalMultiplier})> fetchData() async {
+  Future<
+      ({
+        int? participantCount,
+        int? totalPersonalMultiplier,
+        int? totalReferralMultiplier
+      })> fetchData() async {
     try {
       final airdropBackendUrl = ref.watch(airdropBackendUrlProvider);
       final response = await http.get(
@@ -51,7 +61,10 @@ Future<({int? participantCount, int? totalMultiplier})> airdropCount(
         final bodyJson = jsonDecode(response.body);
         return (
           participantCount: bodyJson['participant_count'] as int?,
-          totalMultiplier: bodyJson['total_multiplier'] as int?,
+          totalPersonalMultiplier:
+              bodyJson['total_personal_multiplier'] as int?,
+          totalReferralMultiplier:
+              bodyJson['total_referral_multiplier'] as int?,
         );
       }
     } catch (e) {
@@ -59,7 +72,8 @@ Future<({int? participantCount, int? totalMultiplier})> airdropCount(
     }
     return (
       participantCount: null,
-      totalMultiplier: null,
+      totalPersonalMultiplier: null,
+      totalReferralMultiplier: null,
     );
   }
 
@@ -131,13 +145,23 @@ Future<({int personalMultiplier, double personalLP, double personalLPFlexible})>
 }
 
 @riverpod
-Future<({bool? isMailConfirmed, String? email, String? referralCode})>
-    airdropUserInfo(
+Future<
+    ({
+      bool? isMailConfirmed,
+      String? email,
+      String? referralCode,
+      int? referralsRegistered,
+      int? referralsParticipant,
+      int? referralMultiplier,
+    })> airdropUserInfo(
   Ref ref,
 ) async {
   bool? isMailConfirmed;
   String? email;
   String? referralCode;
+  int? referralsParticipant;
+  int? referralsRegistered;
+  int? referralMultiplier;
   try {
     final session = ref.watch(sessionNotifierProvider).loggedIn;
     final keychainKeypair = archethic.deriveKeyPair(
@@ -173,6 +197,9 @@ Future<({bool? isMailConfirmed, String? email, String? referralCode})>
       isMailConfirmed = json['confirmed'];
       email = json['email'];
       referralCode = json['referral_code'];
+      referralsRegistered = json['referralsRegistered'] ?? 0;
+      referralsParticipant = json['referralsParticipant'] ?? 0;
+      referralMultiplier = json['referralMultiplier'] ?? 0;
     } else if (response.statusCode == 400) {
       _logger.severe('Bad Request: Missing headers or invalid timestamp');
     } else if (response.statusCode == 401) {
@@ -186,6 +213,9 @@ Future<({bool? isMailConfirmed, String? email, String? referralCode})>
     isMailConfirmed: isMailConfirmed,
     email: email,
     referralCode: referralCode,
+    referralsRegistered: referralsRegistered,
+    referralsParticipant: referralsParticipant,
+    referralMultiplier: referralMultiplier,
   );
 }
 
@@ -213,4 +243,54 @@ Future<http.Response?> resendConfirmationMail(
   } catch (e) {
     return null;
   }
+}
+
+@riverpod
+Future<bool> checkReferralCodeProvided(
+  Ref ref,
+  String referralCodeProvided,
+) async {
+  try {
+    final session = ref.watch(sessionNotifierProvider).loggedIn;
+    final keychainKeypair = archethic.deriveKeyPair(
+      archethic.uint8ListToHex(
+        Uint8List.fromList(session!.wallet.keychainSecuredInfos.seed),
+      ),
+      0,
+    );
+
+    final timestamp =
+        (DateTime.now().millisecondsSinceEpoch ~/ 1000).toString();
+    final publicKey = archethic.uint8ListToHex(keychainKeypair.publicKey!);
+    final signedPayload = archethic.sign(
+      '$publicKey$timestamp',
+      keychainKeypair.privateKey,
+      isDataHexa: false,
+    );
+
+    final airdropBackendUrl = ref.watch(airdropBackendUrlProvider);
+    final response = await http.get(
+      Uri.parse(
+        '$airdropBackendUrl/check-referral-code?referralCodeProvided=$referralCodeProvided',
+      ),
+      headers: {
+        'x-public-key': base64Encode(utf8.encode(publicKey)),
+        'x-timestamp': timestamp,
+        'x-signature': base64Url.encode(signedPayload),
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body) as bool;
+    } else if (response.statusCode == 400) {
+      _logger.severe(
+        'Bad Request: Missing headers or parameters or invalid timestamp',
+      );
+    } else if (response.statusCode == 401) {
+      _logger.severe('Unauthorized: Invalid signature');
+    }
+  } catch (e) {
+    _logger.severe('airdropUserInfo error : $e');
+  }
+  return false;
 }

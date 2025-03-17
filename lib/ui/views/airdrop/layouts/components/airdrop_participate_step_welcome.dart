@@ -25,15 +25,23 @@ class AirdropParticipateStepWelcomeSheet extends ConsumerStatefulWidget {
 
 class _AirdropParticipateStepWelcomeSheetState
     extends ConsumerState<AirdropParticipateStepWelcomeSheet> {
-  TextEditingController controller = TextEditingController(text: '');
+  late TextEditingController controller;
   final FocusNode _focusNode = FocusNode();
   bool _hasFocus = false;
 
   @override
   void initState() {
     super.initState();
-
     _focusNode.addListener(_onFocusChange);
+    _updateController();
+  }
+
+  void _updateController() {
+    final airdropForm = ref.read(airdropFormNotifierProvider);
+    controller = TextEditingController();
+    controller.value = TextEditingValue(
+      text: airdropForm.referralCodeProvided ?? '',
+    );
   }
 
   @override
@@ -70,7 +78,7 @@ class _AirdropParticipateStepWelcomeSheetState
               ),
               _help(
                 context,
-              )
+              ),
             ],
           ),
         ),
@@ -82,6 +90,7 @@ class _AirdropParticipateStepWelcomeSheetState
     BuildContext context,
   ) {
     final localizations = AppLocalizations.of(context)!;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -100,6 +109,8 @@ class _AirdropParticipateStepWelcomeSheetState
 
   Widget _howToParticipate(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
+    final airdropForm = ref.watch(airdropFormNotifierProvider);
+
     return ColoredBox(
       color: Colors.white.withValues(alpha: 0.1),
       child: Padding(
@@ -137,51 +148,87 @@ class _AirdropParticipateStepWelcomeSheetState
             Stack(
               alignment: Alignment.centerRight,
               children: [
-                Stack(
-                  alignment: Alignment.bottomLeft,
-                  children: [
-                    TextField(
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: _hasFocus ? Colors.black : null,
-                            letterSpacing: 7,
-                          ),
-                      autocorrect: false,
-                      controller: controller,
-                      focusNode: _focusNode,
-                      textAlign: TextAlign.left,
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: <TextInputFormatter>[
-                        aedappfm.UpperCaseTextFormatter(),
-                        LengthLimitingTextInputFormatter(
-                          6,
-                        ),
-                      ],
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: _hasFocus
-                            ? Colors.white
-                            : Colors.white.withValues(alpha: 0.15),
-                        border: const OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        focusColor: Colors.white,
-                        contentPadding: const EdgeInsets.only(left: 10),
-                      ),
-                    ),
-                    Positioned(
-                      left: 13,
-                      bottom: 8,
-                      child: Text(
-                        '_ _ _ _ _ _',
+                Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Stack(
+                    alignment: Alignment.bottomLeft,
+                    children: [
+                      TextField(
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: _hasFocus ? Colors.black : Colors.white,
-                              letterSpacing: 3,
+                              color: _hasFocus ? Colors.black : null,
+                              letterSpacing: 7,
                             ),
+                        autocorrect: false,
+                        controller: controller,
+                        focusNode: _focusNode,
+                        textAlign: TextAlign.left,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.text,
+                        inputFormatters: <TextInputFormatter>[
+                          aedappfm.UpperCaseTextFormatter(),
+                          LengthLimitingTextInputFormatter(
+                            6,
+                          ),
+                        ],
+                        onChanged: (value) {
+                          ref
+                              .read(airdropFormNotifierProvider.notifier)
+                              .setReferralCodeProvided(value);
+                        },
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: _hasFocus
+                              ? Colors.white
+                              : Colors.white.withValues(alpha: 0.15),
+                          border: const OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                          focusColor: Colors.white,
+                          contentPadding: const EdgeInsets.only(left: 10),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
+                ),
+                Positioned(
+                  left: 13,
+                  bottom: 8,
+                  child: Row(
+                    spacing: 7,
+                    children: [
+                      Container(
+                        width: 10,
+                        height: 1,
+                        color: _hasFocus ? Colors.black : Colors.white,
+                      ),
+                      Container(
+                        width: 10,
+                        height: 1,
+                        color: _hasFocus ? Colors.black : Colors.white,
+                      ),
+                      Container(
+                        width: 10,
+                        height: 1,
+                        color: _hasFocus ? Colors.black : Colors.white,
+                      ),
+                      Container(
+                        width: 10,
+                        height: 1,
+                        color: _hasFocus ? Colors.black : Colors.white,
+                      ),
+                      Container(
+                        width: 10,
+                        height: 1,
+                        color: _hasFocus ? Colors.black : Colors.white,
+                      ),
+                      Container(
+                        width: 10,
+                        height: 1,
+                        color: _hasFocus ? Colors.black : Colors.white,
+                      ),
+                    ],
+                  ),
                 ),
                 Positioned(
                   right: 10,
@@ -196,9 +243,14 @@ class _AirdropParticipateStepWelcomeSheetState
                         'text/plain',
                       );
                       if (data != null && data.text != null) {
-                        controller.text = data.text!
-                            .substring(0, min(6, data.text!.length))
-                            .toUpperCase();
+                        ref
+                            .read(airdropFormNotifierProvider.notifier)
+                            .setReferralCodeProvided(
+                              data.text!
+                                  .substring(0, min(6, data.text!.length))
+                                  .toUpperCase(),
+                            );
+                        _updateController();
                       }
                     },
                   ),
@@ -209,13 +261,22 @@ class _AirdropParticipateStepWelcomeSheetState
             BtnPrimary(
               buttonText:
                   localizations.airdropParticipateStepWelcomeHowParticipateBtn,
-              onTap: () {
-                ref
+              onTap: () async {
+                final airdropFormNotifier = ref
                     .read(airdropFormNotifierProvider.notifier)
-                    .setAirdropProcessStep(
-                      AirdropProcessStep.joinWaitlist,
-                    );
+                  ..setReferralCodeProvided(controller.text);
+
+                final result = await airdropFormNotifier
+                    .controlReferralCodeProvided(localizations);
+
+                if (result) {
+                  airdropFormNotifier.setAirdropProcessStep(
+                    AirdropProcessStep.joinWaitlist,
+                  );
+                }
               },
+              isLocked: airdropForm.referralCodeProvided == null ||
+                  airdropForm.referralCodeProvided!.trim().length < 6,
             ),
           ],
         ),

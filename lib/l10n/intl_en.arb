@@ -967,7 +967,14 @@
     "seeTutorial": "See the tutorial",
     "airdropDashboardBlocInvitationTitle": "Increase your Referral Multiplier now!",
     "airdropDashboardBlocInvitationDesc1": "For every 1 multiplier earned by one of your referrals, you'll also receive 1 additional multiplier.",
-    "airdropDashboardBlocInvitationDesc2": "Example: If your referrals accumulate a total of 21 multipliers, you'll receive 21 referral multipliers, resulting in an additional $12,234 worth of UCO in your airdrop.",
+    "airdropDashboardBlocInvitationDesc2": "Example: If your referrals accumulate a total of 21 multipliers, you'll receive 21 referral multipliers, resulting in an additional ${exampleAmountDollars} worth of UCO in your airdrop.",
+    "@airdropDashboardBlocInvitationDesc2": {
+        "placeholders": {
+            "exampleAmountDollars": {
+                "type": "String"
+            }
+        }
+    },
     "airdropDashboardBlocInvitationBtn": "Invite someone NOW",
     "airdropInvitationTitle": "Invite someone now",
     "airdropInvitationDesc": "To participate in our airdrop, a referral code is required. As a participant, you can share your referral code with anyone who wants to claim their share of our $100M airdrop, and you'll earn an additional referral multiplier for each referral that joins.",
@@ -1023,5 +1030,6 @@
     "airdropReferralMultiplierTableYourLPValue": "Your LP tokens locked:",
     "airdropReferralMultiplierTableHeaderLPLocked": "LP token locked",
     "airdropReferralMultiplierTableHeaderMaxReferral": "Max Referral",
-    "airdropReferralMultiplierTableHeaderBtn": "Add more in \"Earn\""
+    "airdropReferralMultiplierTableHeaderBtn": "Add more in \"Earn\"",
+    "airdropWrongReferralCodeProvided": "Oops! The referral code you entered is not recognized. Please verify it with the person who shared it or try a different one."
 }  

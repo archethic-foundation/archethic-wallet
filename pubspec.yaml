@@ -204,10 +204,7 @@ dependencies:
   pdfx: ^2.6.0
 
   # PhoenixSocket provides a feature-complete implementation of Phoenix Sockets, using a single API based on StreamChannels compatible with any deployment of Flutter
-  #phoenix_socket: ^0.7.6
-  phoenix_socket:
-    git:
-      url: git@github.com:braverhealth/phoenix-socket-dart.git
+  phoenix_socket: ^0.7.7
 
   # Client for Plausible.io
   plausible: ^1.0.0

@@ -1,5 +1,6 @@
 import 'package:aewallet/ui/figma_components/buttons/btn_primary.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
+import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_modal_invitation.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -14,6 +15,8 @@ class AirdropBlocInvitation extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
+    final airdropForm = ref.watch(airdropFormNotifierProvider);
+    final exampleAmountDollars = 21 * airdropForm.actualLPFiatValue;
     return Padding(
       padding: const EdgeInsets.only(top: 20),
       child: Stack(
@@ -56,7 +59,9 @@ class AirdropBlocInvitation extends ConsumerWidget {
                           const SizedBox(height: 20),
                           Text(
                             textAlign: TextAlign.center,
-                            localizations.airdropDashboardBlocInvitationDesc2,
+                            localizations.airdropDashboardBlocInvitationDesc2(
+                              exampleAmountDollars.formatNumber(precision: 2),
+                            ),
                             style: Theme.of(context)
                                 .textTheme
                                 .bodySmallWithOpacity

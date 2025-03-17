@@ -102,27 +102,32 @@ class _AirdropParticipateStepCongratsSheetState
                                   ),
                         ),
                         const SizedBox(height: 20),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Flexible(
-                              child: AirdropPersonalMultiplier(),
-                            ),
-                            SizedBox(width: 20),
-                            Flexible(
-                              child: AirdropReferralMultiplier(),
-                            ),
-                          ],
+                        const SizedBox(
+                          height: 110,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Flexible(
+                                child: AirdropPersonalMultiplier(),
+                              ),
+                              SizedBox(width: 20),
+                              Flexible(
+                                child: AirdropReferralMultiplier(),
+                              ),
+                            ],
+                          ),
                         ),
                         const SizedBox(height: 20),
                         const Row(
                           children: [
                             Flexible(
-                              child: AirdropPersonalRewards(),
+                              child: SizedBox(
+                                height: 130,
+                                child: AirdropPersonalRewards(),
+                              ),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 10),
                         const AirdropBlocInvitation(),
                         const SizedBox(height: 30),
                       ],

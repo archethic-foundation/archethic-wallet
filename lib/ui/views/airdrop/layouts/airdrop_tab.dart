@@ -8,6 +8,7 @@ import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/application/session/state.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
+import 'package:aewallet/ui/views/airdrop/bloc/airdrop_banner_status.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/state.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/airdrop_participate_sheet.dart';
@@ -42,12 +43,14 @@ class _AirdropTabState extends ConsumerState<AirdropTab> {
         airdropPersonalLPFuture,
       ]);
 
-      airdropState =
-          (results[0] as ({AirdropState state, String? email})).state;
+      airdropState = (results[0] as AirdropBannerStatus).state;
       final airdropUserInfo = results[1] as ({
         bool? isMailConfirmed,
         String? email,
-        String? referralCode
+        String? referralCode,
+        int? referralsRegistered,
+        int? referralsParticipant,
+        int? referralMultiplier,
       });
       final airdropPersonalLP = results[2] as ({
         int personalMultiplier,
@@ -101,6 +104,9 @@ class _AirdropTabState extends ConsumerState<AirdropTab> {
         ..setPersonalLPFlexible(airdropPersonalLP.personalLPFlexible)
         ..setActualLPFiatValue(actualLPFiatValue)
         ..setReferralCode(airdropUserInfo.referralCode ?? '?')
+        ..setReferralsParticipant(airdropUserInfo.referralsParticipant ?? 0)
+        ..setReferralsRegistered(airdropUserInfo.referralsRegistered ?? 0)
+        ..setReferralMultiplier(airdropUserInfo.referralMultiplier ?? 0)
         ..setLoading(false);
     });
     super.initState();

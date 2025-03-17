@@ -57,6 +57,7 @@
     "airdropReferralMultiplierTableYourLPValue",
     "airdropReferralMultiplierTableHeaderLPLocked",
     "airdropReferralMultiplierTableHeaderMaxReferral",
-    "airdropReferralMultiplierTableHeaderBtn"
+    "airdropReferralMultiplierTableHeaderBtn",
+    "airdropWrongReferralCodeProvided"
   ]
 }

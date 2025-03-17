@@ -9,15 +9,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum LineType { header, current, beforeCurrent, afterCurrent }
 
-class AirdropReferralStepData {
-  AirdropReferralStepData({
-    required this.actualValue,
-    required this.numberOfLP,
-  });
-  final int actualValue;
-  final int numberOfLP;
-}
-
 class AirdropReferralStepTab extends ConsumerWidget {
   const AirdropReferralStepTab({
     this.displayNoteMultiplier = true,
@@ -27,7 +18,6 @@ class AirdropReferralStepTab extends ConsumerWidget {
   final bool displayNoteMultiplier;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final data = _generateAirdropStepData();
     final airdropForm = ref.watch(airdropFormNotifierProvider);
     final localizations = AppLocalizations.of(context)!;
 
@@ -49,44 +39,19 @@ class AirdropReferralStepTab extends ConsumerWidget {
               },
               children: [
                 _buildTableHeader(context, localizations),
-                for (var i = 0; i < data.length; i++)
-                  _buildTableRow(context, data[i], airdropForm, i),
+                for (var i = 0; i < airdropReferralStepDataList.length; i++)
+                  _buildTableRow(
+                    context,
+                    airdropReferralStepDataList[i],
+                    airdropForm,
+                    i,
+                  ),
               ],
             ),
           ),
         ),
       ],
     );
-  }
-
-  List<AirdropReferralStepData> _generateAirdropStepData() {
-    return [
-      AirdropReferralStepData(actualValue: 0, numberOfLP: 0),
-      AirdropReferralStepData(actualValue: 1, numberOfLP: 1),
-      AirdropReferralStepData(actualValue: 2, numberOfLP: 5),
-      AirdropReferralStepData(actualValue: 3, numberOfLP: 20),
-      AirdropReferralStepData(actualValue: 5, numberOfLP: 60),
-      AirdropReferralStepData(
-        actualValue: 10,
-        numberOfLP: 150,
-      ),
-      AirdropReferralStepData(
-        actualValue: 20,
-        numberOfLP: 300,
-      ),
-      AirdropReferralStepData(
-        actualValue: 40,
-        numberOfLP: 500,
-      ),
-      AirdropReferralStepData(
-        actualValue: 100,
-        numberOfLP: 750,
-      ),
-      AirdropReferralStepData(
-        actualValue: 1000,
-        numberOfLP: 1000,
-      ),
-    ];
   }
 
   TableRow _buildTableHeader(
@@ -129,10 +94,8 @@ class AirdropReferralStepTab extends ConsumerWidget {
     AirdropFormState airdropForm,
     int index,
   ) {
-    final isCurrentRow =
-        airdropForm.referralParticipantRewarded == row.actualValue;
-    final isBeforeCurrent =
-        airdropForm.referralParticipantRewarded > row.actualValue;
+    final isCurrentRow = airdropForm.personalMultiplier == row.maxReferrals;
+    final isBeforeCurrent = airdropForm.personalMultiplier > row.maxReferrals;
 
     final backgroundColor = isCurrentRow
         ? aedappfm.ArchethicThemeBase.raspberry500.withValues(alpha: 0.5)
@@ -147,7 +110,7 @@ class AirdropReferralStepTab extends ConsumerWidget {
       children: [
         _buildTableCell(
           context,
-          '${row.numberOfLP} LP ',
+          '${row.lpTokensLocked} LP ',
           isCurrentRow
               ? LineType.current
               : isBeforeCurrent
@@ -156,12 +119,12 @@ class AirdropReferralStepTab extends ConsumerWidget {
           true,
           textSmallOpacity: _lpIndollarsCalculation(
             airdropForm.actualLPFiatValue,
-            row.numberOfLP,
+            row.lpTokensLocked,
           ),
         ),
         _buildTableCell(
           context,
-          row.actualValue.toString(),
+          row.maxReferrals.toString(),
           isCurrentRow
               ? LineType.current
               : isBeforeCurrent
