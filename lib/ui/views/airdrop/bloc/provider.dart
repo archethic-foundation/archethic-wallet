@@ -9,6 +9,7 @@ import 'package:aewallet/model/airdrop.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/application/session/state.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
+import 'package:aewallet/ui/views/airdrop/bloc/airdrop_banner_status.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/state.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_banner.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
@@ -21,7 +22,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'provider.g.dart';
 
 @riverpod
-Future<({AirdropState state, String? email})> airdropBannerStatus(
+Future<AirdropBannerStatus> airdropBannerStatus(
   Ref ref,
 ) async {
   print('#### debut status');
@@ -31,38 +32,50 @@ Future<({AirdropState state, String? email})> airdropBannerStatus(
   print('#### 2');
   if (userInfo.email == null) {
     print('#### 3');
-    return (state: AirdropState.newParticipation, email: null);
+    return const AirdropBannerStatus(state: AirdropState.newParticipation);
   }
   print('#### 4');
   if (userInfo.isMailConfirmed == null) {
     print('#### 5');
     if (personalLP.personalLP < 1) {
       print('#### 6');
-      return (state: AirdropState.newParticipation, email: userInfo.email);
+      return AirdropBannerStatus(
+        state: AirdropState.newParticipation,
+        email: userInfo.email,
+      );
     }
     print('#### 7');
-    return (state: AirdropState.shouldAddMail, email: userInfo.email);
+    return AirdropBannerStatus(
+      state: AirdropState.shouldAddMail,
+      email: userInfo.email,
+    );
   }
   print('#### 8');
   if (userInfo.isMailConfirmed == false) {
     print('#### 9');
     if (personalLP.personalLP >= 1) {
       print('#### 10');
-      return (state: AirdropState.shouldConfirmMail, email: userInfo.email);
+      return AirdropBannerStatus(
+        state: AirdropState.shouldConfirmMail,
+        email: userInfo.email,
+      );
     }
     print('#### 11');
-    return (
+    return AirdropBannerStatus(
       state: AirdropState.shouldConfirmMailAndFarm,
-      email: userInfo.email
+      email: userInfo.email,
     );
   }
   print('#### 12');
   if (personalLP.personalLP >= 1) {
     print('#### 13');
-    return (state: AirdropState.ok, email: userInfo.email);
+    return AirdropBannerStatus(state: AirdropState.ok, email: userInfo.email);
   }
   print('#### 14');
-  return (state: AirdropState.shouldFarm, email: userInfo.email);
+  return AirdropBannerStatus(
+    state: AirdropState.shouldFarm,
+    email: userInfo.email,
+  );
 }
 
 @riverpod
@@ -71,8 +84,8 @@ Future<double> airdropUCOPerParticipantFiatValue(
 ) async {
   var ucoPerParticipant = 0.0;
   final airdropCount = await ref.watch(airdropCountProvider.future);
-  if (airdropCount.totalMultiplier != null &&
-      airdropCount.totalMultiplier! > 0) {
+  if (airdropCount.participantCount != null &&
+      airdropCount.participantCount! > 0) {
     ucoPerParticipant = (Decimal.parse('100000000') /
             Decimal.fromInt(
               airdropCount.participantCount!,
@@ -104,6 +117,13 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
   void setLoading(bool loading) {
     state = state.copyWith(
       loading: loading,
+    );
+  }
+
+  void setReferralCodeProvided(String referralCodeProvided) {
+    state = state.copyWith(
+      referralCodeProvided: referralCodeProvided,
+      failure: null,
     );
   }
 
@@ -155,12 +175,44 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
     state = state.copyWith(referralCode: referralCode);
   }
 
+  void setReferralsRegistered(int referralsRegistered) {
+    state = state.copyWith(referralsRegistered: referralsRegistered);
+  }
+
+  void setReferralsParticipant(int referralsParticipant) {
+    state = state.copyWith(referralsParticipant: referralsParticipant);
+  }
+
+  void setReferralMultiplier(int referralMultiplier) {
+    state = state.copyWith(referralMultiplier: referralMultiplier);
+  }
+
   void setPersonalLPFlexible(double personalLPFlexible) {
     state = state.copyWith(personalLPFlexible: personalLPFlexible);
   }
 
   void setActualLPFiatValue(double actualLPFiatValue) {
     state = state.copyWith(actualLPFiatValue: actualLPFiatValue);
+  }
+
+  Future<bool> controlReferralCodeProvided(
+    AppLocalizations localizations,
+  ) async {
+    state = state.copyWith(failure: null);
+
+    final response = await ref.read(
+      checkReferralCodeProvidedProvider(state.referralCodeProvided!).future,
+    );
+    if (response == false) {
+      state = state.copyWith(
+        failure: Failure.other(
+          message: localizations.airdropWrongReferralCodeProvided,
+        ),
+      );
+      return false;
+    }
+
+    return true;
   }
 
   Future<void> resendConfirmationMail(AppLocalizations localizations) async {
@@ -284,6 +336,7 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
         'email': state.mailAddress,
         'pubkey': archethic.uint8ListToHex(keychainKeypair.publicKey!),
         'signedPayload': base64Url.encode(signedPayload),
+        'usedReferralCode': state.referralCodeProvided,
       };
 
       const airdropAPISecret = String.fromEnvironment('AIRDROP_API_SECRET');
@@ -299,7 +352,6 @@ class AirdropFormNotifier extends _$AirdropFormNotifier {
       final airdropBackendUrl = ref.read(airdropBackendUrlProvider);
       final response = await http.post(
         Uri.parse('$airdropBackendUrl/airdrop-subscription'),
-        // Uri.parse('http://localhost:4000/airdrop-subscription'),
         headers: {
           'Authorization': 'Bearer $airdropAPISecret',
           'Content-Type': 'application/json',

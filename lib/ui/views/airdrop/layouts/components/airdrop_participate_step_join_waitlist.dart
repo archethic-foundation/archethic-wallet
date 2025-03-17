@@ -68,6 +68,32 @@ class _AirdropParticipateStepJoinWaitlistSheetState
                     const AirdropCheckboxConfirmNotMultipleRegistrations(),
                     const SizedBox(height: 20),
                     const AirdropCheckboxConfirmPrivacyPolicy(),
+                    const SizedBox(height: 20),
+                    InkWell(
+                      onTap: () {
+                        ref
+                            .read(airdropFormNotifierProvider.notifier)
+                            .setAirdropProcessStep(
+                              AirdropProcessStep.welcome,
+                            );
+                      },
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.arrow_back_ios,
+                            color: Colors.white,
+                            size: 14,
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            localizations.back,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmallWithOpacity,
+                          ),
+                        ],
+                      ),
+                    ),
                     const SizedBox(height: 80),
                   ],
                 ),

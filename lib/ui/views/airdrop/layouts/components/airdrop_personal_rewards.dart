@@ -22,13 +22,15 @@ class AirdropPersonalRewards extends ConsumerWidget {
 
     ref.watch(airdropCountProvider).when(
           data: (airdropCount) {
-            if (airdropCount.totalMultiplier != null &&
-                airdropCount.totalMultiplier! > 0 &&
+            final totalMultiplier =
+                Decimal.fromInt(airdropCount.totalPersonalMultiplier ?? 0) +
+                    Decimal.fromInt(airdropCount.totalReferralMultiplier ?? 0);
+
+            if (totalMultiplier.toDouble() > 0 &&
                 airdropForm.personalMultiplier > 0) {
-              final result = (Decimal.parse('100000000') /
-                          Decimal.fromInt(airdropCount.totalMultiplier!))
+              final result = (Decimal.parse('100000000') / totalMultiplier)
                       .toDecimal(scaleOnInfinitePrecision: 8) *
-                  Decimal.fromInt(airdropForm.personalMultiplier);
+                  Decimal.fromInt(airdropForm.totalUserMultiplier);
               personalRewards = result.toDouble();
             }
           },

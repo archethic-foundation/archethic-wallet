@@ -32,7 +32,7 @@ class AirdropReferralMultiplier extends ConsumerWidget {
             textAlign: TextAlign.center,
           ),
           Text(
-            ' ',
+            localizations.airdropPersonalValueInfo,
             style: Theme.of(context)
                 .textTheme
                 .bodySmallWithOpacity

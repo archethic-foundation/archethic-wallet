@@ -23,12 +23,16 @@ final airdropBackendUrlProvider = AutoDisposeProvider<String>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef AirdropBackendUrlRef = AutoDisposeProviderRef<String>;
-String _$airdropCountHash() => r'83721ca39c85398060a3a4d912fd588ae28b9888';
+String _$airdropCountHash() => r'5aa92537a5e7f95e24a271d869f22e229aed0d5c';
 
 /// See also [airdropCount].
 @ProviderFor(airdropCount)
 final airdropCountProvider = AutoDisposeFutureProvider<
-    ({int? participantCount, int? totalMultiplier})>.internal(
+    ({
+      int? participantCount,
+      int? totalPersonalMultiplier,
+      int? totalReferralMultiplier
+    })>.internal(
   airdropCount,
   name: r'airdropCountProvider',
   debugGetCreateSourceHash:
@@ -40,7 +44,11 @@ final airdropCountProvider = AutoDisposeFutureProvider<
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef AirdropCountRef = AutoDisposeFutureProviderRef<
-    ({int? participantCount, int? totalMultiplier})>;
+    ({
+      int? participantCount,
+      int? totalPersonalMultiplier,
+      int? totalReferralMultiplier
+    })>;
 String _$airdropPersonalLPHash() => r'94626dadd26ddec3c851f5c6d6e5d93436ea8162';
 
 /// See also [airdropPersonalLP].
@@ -64,12 +72,19 @@ final airdropPersonalLPProvider = AutoDisposeFutureProvider<
 // ignore: unused_element
 typedef AirdropPersonalLPRef = AutoDisposeFutureProviderRef<
     ({int personalMultiplier, double personalLP, double personalLPFlexible})>;
-String _$airdropUserInfoHash() => r'92510cd974fa1fa71902ea908b212a37bc67fe33';
+String _$airdropUserInfoHash() => r'8b929100b1dda5fcb1cc07c7b427c03a7c18a6a0';
 
 /// See also [airdropUserInfo].
 @ProviderFor(airdropUserInfo)
 final airdropUserInfoProvider = AutoDisposeFutureProvider<
-    ({bool? isMailConfirmed, String? email, String? referralCode})>.internal(
+    ({
+      bool? isMailConfirmed,
+      String? email,
+      String? referralCode,
+      int? referralsRegistered,
+      int? referralsParticipant,
+      int? referralMultiplier
+    })>.internal(
   airdropUserInfo,
   name: r'airdropUserInfoProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -82,7 +97,14 @@ final airdropUserInfoProvider = AutoDisposeFutureProvider<
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef AirdropUserInfoRef = AutoDisposeFutureProviderRef<
-    ({bool? isMailConfirmed, String? email, String? referralCode})>;
+    ({
+      bool? isMailConfirmed,
+      String? email,
+      String? referralCode,
+      int? referralsRegistered,
+      int? referralsParticipant,
+      int? referralMultiplier
+    })>;
 String _$resendConfirmationMailHash() =>
     r'45c817013de6fc6ec3a74600c3671646ee189d55';
 
@@ -239,6 +261,141 @@ class _ResendConfirmationMailProviderElement
   @override
   String get mailAddress =>
       (origin as ResendConfirmationMailProvider).mailAddress;
+}
+
+String _$checkReferralCodeProvidedHash() =>
+    r'db5b3786ce2cbecd956bf55b1ce587f7c701ffa2';
+
+/// See also [checkReferralCodeProvided].
+@ProviderFor(checkReferralCodeProvided)
+const checkReferralCodeProvidedProvider = CheckReferralCodeProvidedFamily();
+
+/// See also [checkReferralCodeProvided].
+class CheckReferralCodeProvidedFamily extends Family<AsyncValue<bool>> {
+  /// See also [checkReferralCodeProvided].
+  const CheckReferralCodeProvidedFamily();
+
+  /// See also [checkReferralCodeProvided].
+  CheckReferralCodeProvidedProvider call(
+    String referralCodeProvided,
+  ) {
+    return CheckReferralCodeProvidedProvider(
+      referralCodeProvided,
+    );
+  }
+
+  @override
+  CheckReferralCodeProvidedProvider getProviderOverride(
+    covariant CheckReferralCodeProvidedProvider provider,
+  ) {
+    return call(
+      provider.referralCodeProvided,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'checkReferralCodeProvidedProvider';
+}
+
+/// See also [checkReferralCodeProvided].
+class CheckReferralCodeProvidedProvider
+    extends AutoDisposeFutureProvider<bool> {
+  /// See also [checkReferralCodeProvided].
+  CheckReferralCodeProvidedProvider(
+    String referralCodeProvided,
+  ) : this._internal(
+          (ref) => checkReferralCodeProvided(
+            ref as CheckReferralCodeProvidedRef,
+            referralCodeProvided,
+          ),
+          from: checkReferralCodeProvidedProvider,
+          name: r'checkReferralCodeProvidedProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$checkReferralCodeProvidedHash,
+          dependencies: CheckReferralCodeProvidedFamily._dependencies,
+          allTransitiveDependencies:
+              CheckReferralCodeProvidedFamily._allTransitiveDependencies,
+          referralCodeProvided: referralCodeProvided,
+        );
+
+  CheckReferralCodeProvidedProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.referralCodeProvided,
+  }) : super.internal();
+
+  final String referralCodeProvided;
+
+  @override
+  Override overrideWith(
+    FutureOr<bool> Function(CheckReferralCodeProvidedRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: CheckReferralCodeProvidedProvider._internal(
+        (ref) => create(ref as CheckReferralCodeProvidedRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        referralCodeProvided: referralCodeProvided,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<bool> createElement() {
+    return _CheckReferralCodeProvidedProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is CheckReferralCodeProvidedProvider &&
+        other.referralCodeProvided == referralCodeProvided;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, referralCodeProvided.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin CheckReferralCodeProvidedRef on AutoDisposeFutureProviderRef<bool> {
+  /// The parameter `referralCodeProvided` of this provider.
+  String get referralCodeProvided;
+}
+
+class _CheckReferralCodeProvidedProviderElement
+    extends AutoDisposeFutureProviderElement<bool>
+    with CheckReferralCodeProvidedRef {
+  _CheckReferralCodeProvidedProviderElement(super.provider);
+
+  @override
+  String get referralCodeProvided =>
+      (origin as CheckReferralCodeProvidedProvider).referralCodeProvided;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

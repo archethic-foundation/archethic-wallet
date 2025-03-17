@@ -49,24 +49,27 @@ packages:
   archethic_dapp_framework_flutter:
     dependency: "direct main"
     description:
-      path: "../archethic-dapp-framework-flutter"
-      relative: true
-    source: path
-    version: "3.3.2"
+      name: archethic_dapp_framework_flutter
+      sha256: b19df6c457ccf52dca133c89c37fc5303eaa1f1d096394f799cca6a31797d2a7
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.4.0"
   archethic_lib_dart:
     dependency: transitive
     description:
-      path: "../libdart-2"
-      relative: true
-    source: path
-    version: "7.6.0"
+      name: archethic_lib_dart
+      sha256: e7a71880cedf9b26e664bea7a4a91b61100ac1044d0a0e2c789c7a63cd7da458
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.7.0"
   archethic_wallet_client:
     dependency: "direct main"
     description:
-      path: "../archethic-wallet-client-dart"
-      relative: true
-    source: path
-    version: "2.1.12"
+      name: archethic_wallet_client
+      sha256: a07d1e5631b02d7fd59ac9ff4601485dd5776d7c88502a52dcfd70313f006b06
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.0"
   archive:
     dependency: transitive
     description:
@@ -1203,10 +1206,10 @@ packages:
     dependency: "direct main"
     description:
       name: material_symbols_icons
-      sha256: ee916e08fc0e15d4544a3544b3a46821808b8c965629b56e076e4da1cfe69915
+      sha256: "5f359722bb52bc91c4351d7e575268a9d944a0c2d3b19befd70e4ff60cdbfc9b"
       url: "https://pub.dev"
     source: hosted
-    version: "4.2808.1"
+    version: "4.2810.1"
   meta:
     dependency: transitive
     description:
@@ -1458,12 +1461,11 @@ packages:
   phoenix_socket:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "1fc2c337de18897ff044d297441a6ea75ef863b8"
-      url: "git@github.com:braverhealth/phoenix-socket-dart.git"
-    source: git
-    version: "0.7.6"
+      name: phoenix_socket
+      sha256: "5a7853170dfa4b9312fadd6797cc2bd54dc8ab7f222b640cbc36216e67a92796"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.7"
   photo_view:
     dependency: transitive
     description:

@@ -108,6 +108,7 @@ class AirdropModalInvitation extends ConsumerWidget {
                                       const TextInputType.numberWithOptions(
                                     decimal: true,
                                   ),
+                                  readOnly: true,
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor:

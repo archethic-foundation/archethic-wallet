@@ -54,7 +54,7 @@ class AirdropDetailReferralMultiplier extends ConsumerWidget {
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               Text(
-                airdropForm.referralRegistered.toString(),
+                airdropForm.referralsRegistered.toString(),
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium!
@@ -80,7 +80,7 @@ class AirdropDetailReferralMultiplier extends ConsumerWidget {
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               Text(
-                '${airdropForm.referralParticipant}/${airdropForm.referralParticipantRewarded}',
+                '${airdropForm.referralsParticipant}/${airdropForm.referralsParticipantMax}',
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium!
@@ -92,8 +92,8 @@ class AirdropDetailReferralMultiplier extends ConsumerWidget {
         const SizedBox(
           height: 10,
         ),
-        if (airdropForm.referralParticipant >
-            airdropForm.referralParticipantRewarded)
+        if (airdropForm.referralsParticipant >
+            airdropForm.referralsParticipantMax)
           Column(
             children: [
               MessageBox(
@@ -110,7 +110,7 @@ class AirdropDetailReferralMultiplier extends ConsumerWidget {
                       ),
                       TextSpan(
                         text:
-                            '${airdropForm.referralParticipant}${localizations.airdropDashboardDetailReferralMultiplierWarningDesc2}',
+                            '${airdropForm.referralsParticipant}${localizations.airdropDashboardDetailReferralMultiplierWarningDesc2}',
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                               fontWeight: FontWeightTelegraf.fontWeightSemibold,
                             ),
@@ -124,8 +124,8 @@ class AirdropDetailReferralMultiplier extends ConsumerWidget {
                       TextSpan(
                         text: localizations
                             .airdropDashboardDetailReferralMultiplierWarningDesc4(
-                          airdropForm.referralParticipantRewarded,
-                          airdropForm.referralParticipant,
+                          airdropForm.referralsParticipantMax,
+                          airdropForm.referralsParticipant,
                         ),
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                               fontWeight: FontWeightTelegraf.fontWeightSemibold,
