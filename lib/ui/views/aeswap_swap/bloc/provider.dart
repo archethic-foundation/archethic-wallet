@@ -831,22 +831,20 @@ class SwapFormNotifier extends _$SwapFormNotifier
       return false;
     }
 
-    var feesEstimatedUCO = 0.0;
-    if (state.tokenToSwap != null && state.tokenToSwap!.isUCO) {
-      state = state.copyWith(calculationInProgress: true);
-      feesEstimatedUCO = await ref.read(swapCaseProvider).estimateFees(
-            state.poolGenesisAddress,
-            state.tokenToSwap!,
-            state.tokenToSwapAmount,
-            state.slippageTolerance,
-          );
-      state = state.copyWith(calculationInProgress: false);
-    }
+    state = state.copyWith(calculationInProgress: true);
+    final feesEstimatedUCO = await ref.read(swapCaseProvider).estimateFees(
+          state.poolGenesisAddress,
+          state.tokenToSwap!,
+          state.tokenToSwapAmount,
+          state.slippageTolerance,
+        );
     state = state.copyWith(
+      calculationInProgress: false,
       feesEstimatedUCO: feesEstimatedUCO,
     );
     if (feesEstimatedUCO > 0) {
-      if (state.tokenToSwapAmount + feesEstimatedUCO > tokenToSwapBalance) {
+      if (state.tokenToSwap!.isUCO &&
+          state.tokenToSwapAmount + feesEstimatedUCO > tokenToSwapBalance) {
         final adjustedAmount = tokenToSwapBalance - feesEstimatedUCO;
         if (adjustedAmount < 0) {
           state = state.copyWith(messageMaxHalfUCO: true);
@@ -856,6 +854,13 @@ class SwapFormNotifier extends _$SwapFormNotifier
           await setTokenToSwapAmount(adjustedAmount);
           state = state.copyWith(messageMaxHalfUCO: true);
         }
+      }
+      final userBalance = await ref.read(userBalanceProvider.future);
+      if (!state.tokenToSwap!.isUCO &&
+          feesEstimatedUCO > archethic.fromBigInt(userBalance.uco).toDouble()) {
+        state = state.copyWith(messageMaxHalfUCO: true);
+        setFailure(const aedappfm.Failure.insufficientFunds());
+        return false;
       }
     }
 
