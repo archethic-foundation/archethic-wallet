@@ -94,33 +94,34 @@ class _ChainSelector extends StatelessWidget {
     final isAvailable = chain.available;
     final localizations = AppLocalizations.of(context)!;
 
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 5),
-      height: 40,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            aedappfm.AppThemeBase.sheetBackgroundTertiary
-                .withValues(alpha: 0.4),
-            aedappfm.AppThemeBase.sheetBackgroundTertiary,
-          ],
-          stops: const [0, 1],
-        ),
-        border: GradientBoxBorder(
-          gradient: LinearGradient(
-            colors: [
-              aedappfm.AppThemeBase.sheetBorderTertiary.withValues(alpha: 0.4),
-              aedappfm.AppThemeBase.sheetBorderTertiary,
-            ],
-            stops: const [0, 1],
+    return MouseRegion(
+      cursor: isAvailable ? SystemMouseCursors.click : MouseCursor.defer,
+      child: GestureDetector(
+        onTap: isAvailable ? onTap : null,
+        child: Container(
+          margin: const EdgeInsets.symmetric(vertical: 5),
+          height: 40,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                aedappfm.AppThemeBase.sheetBackgroundTertiary
+                    .withValues(alpha: 0.4),
+                aedappfm.AppThemeBase.sheetBackgroundTertiary,
+              ],
+              stops: const [0, 1],
+            ),
+            border: GradientBoxBorder(
+              gradient: LinearGradient(
+                colors: [
+                  aedappfm.AppThemeBase.sheetBorderTertiary
+                      .withValues(alpha: 0.4),
+                  aedappfm.AppThemeBase.sheetBorderTertiary,
+                ],
+                stops: const [0, 1],
+              ),
+            ),
+            borderRadius: BorderRadius.circular(10),
           ),
-        ),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: MouseRegion(
-        cursor: isAvailable ? SystemMouseCursors.click : MouseCursor.defer,
-        child: GestureDetector(
-          onTap: isAvailable ? onTap : null,
           child: Opacity(
             opacity: isAvailable ? 1 : 0.5,
             child: Row(
