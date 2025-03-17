@@ -5,7 +5,6 @@ import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/address_formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_banner.dart';
-import 'package:aewallet/ui/views/main/components/app_update_button.dart';
 import 'package:aewallet/ui/views/main/components/menu_widget_wallet.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_list.dart';
@@ -14,7 +13,6 @@ import 'package:aewallet/ui/views/tokens_list/layouts/tokens_list_sheet.dart';
 import 'package:aewallet/ui/widgets/balance/balance_infos.dart';
 import 'package:aewallet/ui/widgets/components/refresh_indicator.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
-import 'package:aewallet/util/universal_platform.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -56,96 +54,91 @@ class AccountTab extends ConsumerWidget {
           },
         ),
         child: SingleChildScrollView(
-          child: Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: <Widget>[
-                    ArchethicScrollbar(
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).padding.top + 10,
-                          bottom: 80,
-                        ),
-                        child: Column(
-                          children: <Widget>[
-                            const BalanceInfos(),
-                            InkWell(
-                              onTap: () {
-                                Clipboard.setData(
-                                  ClipboardData(
-                                    text: selectedAccount?.genesisAddress
-                                            .toLowerCase() ??
-                                        '',
-                                  ),
-                                );
-                                UIUtil.showSnackbar(
-                                  '${localizations.addressCopied}\n${selectedAccount?.genesisAddress.toUpperCase()}',
-                                  context,
-                                  ref,
-                                  ArchethicTheme.text,
-                                  ArchethicTheme.snackBarShadow,
-                                  icon: Symbols.info,
-                                );
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 10),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      AddressFormatters(
-                                        selectedAccount?.genesisAddress ?? '',
-                                      ).getShortString().toUpperCase(),
-                                      style: ArchethicThemeStyles
-                                          .textStyleSize14W600Primary,
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    const Icon(
-                                      Symbols.content_copy,
-                                      color: Colors.white,
-                                      weight: IconSize.weightM,
-                                      opticalSize: IconSize.opticalSizeM,
-                                      grade: IconSize.gradeM,
-                                      size: 16,
-                                    ),
-                                  ],
-                                ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              children: <Widget>[
+                ArchethicScrollbar(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).padding.top + 10,
+                      bottom: 80,
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        const BalanceInfos(),
+                        InkWell(
+                          onTap: () {
+                            Clipboard.setData(
+                              ClipboardData(
+                                text: selectedAccount?.genesisAddress
+                                        .toLowerCase() ??
+                                    '',
                               ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const MenuWidgetWallet(),
-                            const AirdropBanner(),
-                            const ExpandablePageView(
+                            );
+                            UIUtil.showSnackbar(
+                              '${localizations.addressCopied}\n${selectedAccount?.genesisAddress.toUpperCase()}',
+                              context,
+                              ref,
+                              ArchethicTheme.text,
+                              ArchethicTheme.snackBarShadow,
+                              icon: Symbols.info,
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: Row(
                               children: [
-                                TokensList(),
-                                Column(
-                                  children: [
-                                    NFTSearchBar(),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    NFTList(),
-                                  ],
+                                Text(
+                                  AddressFormatters(
+                                    selectedAccount?.genesisAddress ?? '',
+                                  ).getShortString().toUpperCase(),
+                                  style: ArchethicThemeStyles
+                                      .textStyleSize14W600Primary,
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                const Icon(
+                                  Symbols.content_copy,
+                                  color: Colors.white,
+                                  weight: IconSize.weightM,
+                                  opticalSize: IconSize.opticalSizeM,
+                                  grade: IconSize.gradeM,
+                                  size: 16,
                                 ),
                               ],
                             ),
-                            const SizedBox(
-                              height: 80,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const MenuWidgetWallet(),
+                        const AirdropBanner(),
+                        const ExpandablePageView(
+                          children: [
+                            TokensList(),
+                            Column(
+                              children: [
+                                NFTSearchBar(),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                NFTList(),
+                              ],
                             ),
                           ],
                         ),
-                      ),
+                        const SizedBox(
+                          height: 80,
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-              if (UniversalPlatform.isMobile) const AppUpdateButton(),
-            ],
+              ],
+            ),
           ),
         ),
       ),

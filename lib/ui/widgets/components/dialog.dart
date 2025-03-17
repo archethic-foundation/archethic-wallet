@@ -101,46 +101,38 @@ class AppDialogs {
     );
   }
 
-  static void showInfoDialog(
+  static Future showInfoDialog(
     BuildContext context,
     WidgetRef ref,
     String title,
     String content, {
     String? buttonLabel,
     Function? onPressed,
-  }) {
-    showDialog(
+  }) async {
+    await showDialog(
       context: context,
       useRootNavigator: false,
       builder: (BuildContext context) {
         buttonLabel = buttonLabel ?? AppLocalizations.of(context)!.ok;
-
         return aedappfm.PopupTemplate(
           popupContent: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 content,
-                style: ArchethicThemeStyles.textStyleSize12W100Primary,
+                style: Theme.of(context).textTheme.bodyMediumWithOpacity,
               ),
-              const SizedBox(
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
                 height: 20,
               ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  child: Container(
-                    constraints: const BoxConstraints(maxWidth: 100),
-                    child: Text(
-                      buttonLabel!,
-                      style: ArchethicThemeStyles.textStyleSize12W100Primary,
-                    ),
-                  ),
-                  onPressed: () {
-                    onPressed?.call();
-                    context.pop();
-                  },
-                ),
+              BtnPrimary(
+                buttonText: buttonLabel!,
+                key: const Key('yesButton'),
+                onTap: () {
+                  onPressed?.call();
+                  context.pop();
+                },
               ),
             ],
           ),
