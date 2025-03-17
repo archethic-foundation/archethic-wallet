@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import 'package:aewallet/ui/widgets/components/web_browser.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -9,10 +7,7 @@ part 'banxa.g.dart';
 
 @riverpod
 bool isBanxaWebviewSupported(Ref ref) {
-  if (kIsWeb) {
-    return false;
-  }
-  return WebBrowser.isPlatformSupported == const WebBrowserAvailable();
+  return false;
 }
 
 @riverpod

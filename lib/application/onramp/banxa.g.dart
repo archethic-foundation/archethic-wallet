@@ -7,7 +7,7 @@ part of 'banxa.dart';
 // **************************************************************************
 
 String _$isBanxaWebviewSupportedHash() =>
-    r'd6642673a28b7841ead7a559507895a69b6a02b4';
+    r'dc6594e93b9b9683c7e1ec393a3b1498c9c855d4';
 
 /// See also [isBanxaWebviewSupported].
 @ProviderFor(isBanxaWebviewSupported)
