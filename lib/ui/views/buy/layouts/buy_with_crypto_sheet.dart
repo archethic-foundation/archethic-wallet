@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:aewallet/application/onramp/onramp.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/components/video_player.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_primary.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -17,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 class BuyWithCryptoSheet extends ConsumerWidget {
   const BuyWithCryptoSheet({
@@ -92,6 +94,8 @@ class BuyWithCryptoSheet extends ConsumerWidget {
                 localizations.onrampWithFiatHowDoesItWorkBody,
                 style: Theme.of(context).textTheme.bodyMediumWithOpacity,
               ),
+              const SizedBox(height: 10),
+              const TutoButton(),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -155,5 +159,42 @@ class BuyWithCryptoSheet extends ConsumerWidget {
       return formattedValue.split('.').first;
     }
     return formattedValue;
+  }
+}
+
+class TutoButton extends StatelessWidget {
+  const TutoButton({super.key});
+  @override
+  Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    return InkWell(
+      onTap: () async {
+        return context.push<void>(
+          VideoPlayer.routerPage,
+          extra: {
+            'videoId': '1066707668',
+          },
+        );
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Text(
+            localizations.seeTutorial,
+            style: Theme.of(context).textTheme.bodyMediumWithOpacity.copyWith(
+                  decoration: TextDecoration.underline,
+                ),
+          ),
+          const SizedBox(
+            width: 5,
+          ),
+          Icon(
+            Symbols.movie,
+            size: 20,
+            color: Theme.of(context).textTheme.bodyMediumWithOpacity.color,
+          ),
+        ],
+      ),
+    );
   }
 }

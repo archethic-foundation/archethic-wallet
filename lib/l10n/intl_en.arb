@@ -929,7 +929,7 @@
     },
     "onrampWithFiatHowDoesItWork3": "We deliver the UCO in your Archethic Wallet",
     "onrampWithFiatBanxaWarning1": "WARNING: ",
-    "onrampWithFiatBanxaWarning2": "After clicking \"Buy Now\", you will be redirected to a third-party service to complete your purchase. Once on this service, DO NOT MODIFY any information except for the amount, currency, and payment method. Any other modifications could result in the total loss of your funds.\n\nOnce your transaction is completed, it may take some time to appear on this screen.",
+    "onrampWithFiatBanxaWarning2": "After clicking \"Buy Now\", you will be redirected to a third-party service to complete your purchase. Once on this service, DO NOT MODIFY any information except for the amount, currency, and payment method. The blockchain \"Binance Smart Chain (BEP20)\" must remain unchanged, as well as the cryptocurrency (ETH). These modifications could result in the total loss of your funds.\n\nOnce your transaction is completed, it may take some time to appear on this screen.",
     "onrampWithFiatBanxaWarningApproval": "I understand the warning above and will not hold Archethic responsible for any loss of funds due to my failure to follow these instructions.",
     "onrampWithFiatBuyNowButton": "Buy now",
     "onrampHistoryTitle": "Transaction history",
@@ -955,5 +955,6 @@
     "onrampWithCryptoTreatmentDelayDisclaimer2": "Because transactions take time, someone else might use some of this amount before we get yours. If the ETH you send is more than what’s available when we receive it, we’ll process the available part immediately, and handle the rest manually within 24 hours.",
     "comingSoon": "Coming soon",
     "webBrowserCloseConfirmationDesc": "Are you sure you want to leave? Your progress will be lost.",
-    "notAvailable": "Not available"
+    "notAvailable": "Not available",
+    "seeTutorial": "See the tutorial"
 }

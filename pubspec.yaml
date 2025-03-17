@@ -241,6 +241,9 @@ dependencies:
   # String validation and sanitization for Dart
   validators: ^3.0.0
 
+  # Vimeo video player
+  vimeo_video_player: ^1.0.1
+
   # RPC server
   web_socket_channel: ^3.0.1
 

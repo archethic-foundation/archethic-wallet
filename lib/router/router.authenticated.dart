@@ -230,4 +230,17 @@ final _authenticatedRoutes = [
       child: const BridgeSheet(),
     ),
   ),
+  GoRoute(
+    path: VideoPlayer.routerPage,
+    pageBuilder: (context, state) {
+      final {
+        'videoId': videoId,
+      } = state.extra! as Map<String, dynamic>;
+      return NoTransitionPage(
+        child: VideoPlayer(
+          videoId: videoId,
+        ),
+      );
+    },
+  ),
 ];
