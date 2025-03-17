@@ -13,12 +13,14 @@ import 'package:aewallet/ui/views/buy/layouts/components/transaction_history.dar
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
+import 'package:aewallet/util/universal_platform.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BuyWithCryptoSheet extends ConsumerWidget {
   const BuyWithCryptoSheet({
@@ -164,15 +166,26 @@ class BuyWithCryptoSheet extends ConsumerWidget {
 
 class TutoButton extends StatelessWidget {
   const TutoButton({super.key});
+
   @override
   Widget build(BuildContext context) {
+    const videoId = '1066707668';
     final localizations = AppLocalizations.of(context)!;
     return InkWell(
       onTap: () async {
+        if (UniversalPlatform.isWeb) {
+          await launchUrl(
+            Uri.parse(
+              'https://vimeo.com/$videoId',
+            ),
+          );
+          return;
+        }
+
         return context.push<void>(
           VideoPlayer.routerPage,
           extra: {
-            'videoId': '1066707668',
+            'videoId': videoId,
           },
         );
       },
