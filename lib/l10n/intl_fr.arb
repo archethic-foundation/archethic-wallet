@@ -925,7 +925,7 @@
     },
     "onrampWithFiatHowDoesItWork3": "Nous livrons les UCO dans votre portefeuille Archethic",
     "onrampWithFiatBanxaWarning1": "AVERTISSEMENT : ",
-    "onrampWithFiatBanxaWarning2": "Après avoir cliqué sur \"Acheter maintenant\", vous serez redirigé vers un service tiers pour finaliser votre achat. Une fois sur ce service, NE MODIFIEZ AUCUNE information, à l'exception du montant, de la devise et du moyen de paiement. Toute autre modification des informations pourrait entraîner une perte totale de vos fonds.\n\nUne fois votre transaction effectuée, elle prendra un certain temps avant d’apparaître dans cet écran.",
+    "onrampWithFiatBanxaWarning2": "Après avoir cliqué sur \"Acheter maintenant\", vous serez redirigé vers un service tiers pour finaliser votre achat. Une fois sur ce service, NE MODIFIEZ AUCUNE information, à l'exception du montant, de la devise et du moyen de paiement. La blockchain \"Binance Smart Chain (BEP20)\" doit rester inchangée, tout comme la cryptomonnaie (ETH). Ces modifications pourraient entraîner une perte totale de vos fonds.\n\nUne fois votre transaction effectuée, elle peut prendre un certain temps avant d’apparaître sur cet écran",
     "onrampWithFiatBanxaWarningApproval": "Je comprends l'avertissement ci-dessus et je ne tiendrai pas Archethic responsable de toute perte de fonds due à mon non-respect de ces instructions.",
     "onrampWithFiatBuyNowButton": "Acheter maintenant",
     "onrampHistoryTitle": "Historique des transactions",
@@ -951,5 +951,6 @@
     "onrampWithCryptoTreatmentDelayDisclaimer2": "Les transactions prenant du temps, une partie du montant peut être utilisée par quelqu’un d’autre avant que nous recevions votre paiement. Si l’ETH que vous envoyez est supérieur au montant disponible au moment de la réception, nous traiterons immédiatement la partie disponible et gérerons le reste manuellement sous 24 heures.",
     "comingSoon": "Prochainement",
     "webBrowserCloseConfirmationDesc": "Êtes-vous sûr de vouloir quitter ? Votre progression sera perdue.",
-    "notAvailable": "Non disponible"
+    "notAvailable": "Non disponible",
+    "seeTutorial": "Voir le tutoriel"
 }

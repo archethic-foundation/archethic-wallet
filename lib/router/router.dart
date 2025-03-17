@@ -6,6 +6,7 @@ import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pair.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
+import 'package:aewallet/modules/aeswap/ui/views/util/components/video_player.dart';
 import 'package:aewallet/router/dialog_page.dart';
 import 'package:aewallet/ui/menu/settings/settings_sheet.dart';
 import 'package:aewallet/ui/views/add_account/layouts/add_account_sheet.dart';
