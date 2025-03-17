@@ -12,10 +12,12 @@ import 'package:aewallet/ui/menu/settings/settings_sheet.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_icon_refresh.dart';
+import 'package:aewallet/ui/views/main/components/app_update_button.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar_account.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar_basic.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar_transactions.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
+import 'package:aewallet/util/universal_platform.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -38,12 +40,14 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
     final tab = preferences.mainScreenTab;
     return switch (tab) {
-      MainScreenTab.accountTab => const MainAppBarDetail(
-          key: Key('account'),
+      MainScreenTab.accountTab => MainAppBarDetail(
+          key: const Key('account'),
           actions: [
-            _RefreshButton(),
+            if (UniversalPlatform.isMobile || UniversalPlatform.isMacOS)
+              const AppUpdateButton(),
+            const _RefreshButton(),
           ],
-          title: MainAppBarAccount(),
+          title: const MainAppBarAccount(),
         ),
       MainScreenTab.transactionTab => const MainAppBarDetail(
           key: Key('transaction'),

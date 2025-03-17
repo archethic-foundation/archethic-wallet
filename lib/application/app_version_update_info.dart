@@ -1,6 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'package:aewallet/domain/models/app_version_info.dart';
 import 'package:aewallet/infrastructure/repositories/app_version_update_info.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -14,7 +13,7 @@ AppVersionInfoRepository _appVersionInfoRepository(
     AppVersionInfoRepository();
 
 @Riverpod(keepAlive: true)
-Future<AppVersionInfo> _getAppVersionInfo(
+Future<({bool canUpdate, String storeVersion})> _getAppVersionInfo(
   Ref ref,
 ) async {
   final appVersionInfo =
@@ -23,7 +22,7 @@ Future<AppVersionInfo> _getAppVersionInfo(
 }
 
 class AppVersionInfoRepository {
-  Future<AppVersionInfo> getAppVersionInfo() async {
+  Future<({bool canUpdate, String storeVersion})> getAppVersionInfo() async {
     return AppVersionUpdateInfo().getAppVersionInfo();
   }
 }

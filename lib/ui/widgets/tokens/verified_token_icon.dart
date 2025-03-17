@@ -42,9 +42,17 @@ class VerifiedTokenIcon extends ConsumerWidget {
             address,
           ),
         )
-        .value;
+        .valueOrNull;
 
-    if (isVerifiedToken == null) return const CircularProgressIndicator();
+    if (isVerifiedToken == null) {
+      return const SizedBox(
+        width: 10,
+        height: 10,
+        child: CircularProgressIndicator(
+          strokeWidth: 1,
+        ),
+      );
+    }
     if (isVerifiedToken == false) return const SizedBox();
 
     return Padding(

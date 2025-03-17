@@ -25,11 +25,12 @@ final _appVersionInfoRepositoryProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef _AppVersionInfoRepositoryRef = ProviderRef<AppVersionInfoRepository>;
-String _$getAppVersionInfoHash() => r'857e5fcd909aed792eb12c4998b28e2bbbc13f63';
+String _$getAppVersionInfoHash() => r'9e312320febac38daacb3fd41e9c863edbecc9f7';
 
 /// See also [_getAppVersionInfo].
 @ProviderFor(_getAppVersionInfo)
-final _getAppVersionInfoProvider = FutureProvider<AppVersionInfo>.internal(
+final _getAppVersionInfoProvider =
+    FutureProvider<({bool canUpdate, String storeVersion})>.internal(
   _getAppVersionInfo,
   name: r'_getAppVersionInfoProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -41,6 +42,7 @@ final _getAppVersionInfoProvider = FutureProvider<AppVersionInfo>.internal(
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef _GetAppVersionInfoRef = FutureProviderRef<AppVersionInfo>;
+typedef _GetAppVersionInfoRef
+    = FutureProviderRef<({bool canUpdate, String storeVersion})>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

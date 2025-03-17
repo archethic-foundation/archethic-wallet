@@ -1,10 +1,7 @@
-import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/infrastructure/datasources/preferences.hive.dart';
-import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
-import 'package:aewallet/util/case_converter.dart';
 import 'package:aewallet/util/universal_platform.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -57,19 +54,12 @@ class SecurityManager {
     // User never saw the error saying his device is unsafe, we will let him know that there is a mistake via a popup
     // Next time he will launch the app he will only see a snack bar
     if (preferences.getHasSeenRootWarning() == false) {
-      final language = ref.read(
-        LanguageProviders.selectedLanguage,
-      );
-      AppDialogs.showInfoDialog(
+      await AppDialogs.showInfoDialog(
         context,
         ref,
-        CaseChange.toUpperCase(
-          localizations.warning,
-          language.getLocaleString(),
-        ),
+        localizations.warning,
         localizations.rootWarning,
-        buttonLabel:
-            AppLocalizations.of(context)!.iUnderstandTheRisks.toUpperCase(),
+        buttonLabel: AppLocalizations.of(context)!.iUnderstandTheRisks,
         onPressed: () async {
           await preferences.setHasShownRootWarning(true);
         },

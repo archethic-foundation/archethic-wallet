@@ -46,14 +46,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
-  app_version_update:
-    dependency: "direct main"
-    description:
-      name: app_version_update
-      sha256: "50153853360143b9dc40992800b258dae7f4b7854ef7cc3918453f572781ab37"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.0.3"
   archethic_dapp_framework_flutter:
     dependency: "direct main"
     description:
@@ -1266,6 +1258,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.16.8"
+  new_version_plus:
+    dependency: "direct main"
+    description:
+      name: new_version_plus
+      sha256: "595001d98f2c6bea05eff2cd6614c1c42e344a13f2dc2aed3b836593d0a9621c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.12"
   nfc_manager:
     dependency: "direct main"
     description:
