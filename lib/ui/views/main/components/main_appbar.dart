@@ -43,8 +43,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
       MainScreenTab.accountTab => MainAppBarDetail(
           key: const Key('account'),
           actions: [
-            if (UniversalPlatform.isMobile || UniversalPlatform.isMacOS)
-              const AppUpdateButton(),
+            if (UniversalPlatform.isMobile) const AppUpdateButton(),
             const _RefreshButton(),
           ],
           title: const MainAppBarAccount(),
