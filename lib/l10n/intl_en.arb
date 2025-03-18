@@ -966,8 +966,8 @@
     "notAvailable": "Not available",
     "seeTutorial": "See the tutorial",
     "airdropDashboardBlocInvitationTitle": "Increase your Referral Multiplier now!",
-    "airdropDashboardBlocInvitationDesc1": "For every 1 multiplier earned by one of your referrals, you'll also receive 1 additional multiplier.",
-    "airdropDashboardBlocInvitationDesc2": "Example: If your referrals accumulate a total of 21 multipliers, you'll receive 21 referral multipliers, resulting in an additional ${exampleAmountDollars} worth of UCO in your airdrop.",
+    "airdropDashboardBlocInvitationDesc1": "For every 1 personal multiplier earned by one of your referrals, you'll also receive 1 additional multiplier.",
+    "airdropDashboardBlocInvitationDesc2": "Example: If your referrals accumulate a total of 21 personal multipliers, you'll receive 21 referral multipliers, resulting in an additional ${exampleAmountDollars} worth of UCO in your airdrop.",
     "@airdropDashboardBlocInvitationDesc2": {
         "placeholders": {
             "exampleAmountDollars": {
