@@ -9,6 +9,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
 import 'package:phoenix_socket/phoenix_socket.dart';
+import 'package:plausible/plausible.dart';
 
 part 'on_ramp.dto.dart';
 
@@ -18,6 +19,7 @@ class OnRampRepositoryImpl implements OnRampRepository {
     required this.wsBaseUrl,
     required AppWallet wallet,
     required Account account,
+    required this.plausible,
   }) {
     keyPair =
         wallet.keychainSecuredInfos.services[account.name]!.keyPair!.toKeyPair;
@@ -38,6 +40,7 @@ class OnRampRepositoryImpl implements OnRampRepository {
     );
   }
 
+  final Plausible plausible;
   final _logger = Logger('OnRampRepository');
   final String httpBaseUrl;
   final String wsBaseUrl;
@@ -182,4 +185,11 @@ class OnRampRepositoryImpl implements OnRampRepository {
       _ => throw Exception('Unexpected error: ${response.statusCode}')
     };
   }
+
+  @override
+  Future<void> sendEventOnrampWithFiat({required String provider}) async =>
+      plausible.send(
+        event: 'click_onramp_fiat',
+        props: {'provider': provider},
+      );
 }

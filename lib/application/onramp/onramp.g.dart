@@ -25,14 +25,14 @@ final onrampFeatureFlagProvider =
 // ignore: unused_element
 typedef OnrampFeatureFlagRef
     = AutoDisposeProviderRef<({bool fromCrypto, bool fromFiat})>;
-String _$onRampRepositoryHash() => r'a705241a7f5defb511cbd70ffd9c0d216015455f';
+String _$onRampRepositoryHash() => r'b7b219d110367b7fde025af8f8c975a2d0460c09';
 
-/// See also [_onRampRepository].
-@ProviderFor(_onRampRepository)
-final _onRampRepositoryProvider =
+/// See also [onRampRepository].
+@ProviderFor(onRampRepository)
+final onRampRepositoryProvider =
     AutoDisposeFutureProvider<OnRampRepository>.internal(
-  _onRampRepository,
-  name: r'_onRampRepositoryProvider',
+  onRampRepository,
+  name: r'onRampRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : _$onRampRepositoryHash,
@@ -42,8 +42,8 @@ final _onRampRepositoryProvider =
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef _OnRampRepositoryRef = AutoDisposeFutureProviderRef<OnRampRepository>;
-String _$onrampEvmSetupHash() => r'29655d47c06f16ab9affd394248747eaa1d5ea49';
+typedef OnRampRepositoryRef = AutoDisposeFutureProviderRef<OnRampRepository>;
+String _$onrampEvmSetupHash() => r'fe5573674ed4a395ad5f7ea8fbabcb8096dcec72';
 
 /// See also [onrampEvmSetup].
 @ProviderFor(onrampEvmSetup)
@@ -925,7 +925,7 @@ class _OnrampTokenProviderElement
   String get tokenId => (origin as OnrampTokenProvider).tokenId;
 }
 
-String _$onrampMaxAmountHash() => r'947d22bd1a39591b7e2048250088636c19baa0e4';
+String _$onrampMaxAmountHash() => r'6e6447236f8389a401837c88adcad7b68e03bd33';
 
 /// See also [onrampMaxAmount].
 @ProviderFor(onrampMaxAmount)
@@ -943,7 +943,7 @@ final onrampMaxAmountProvider = AutoDisposeFutureProvider<num>.internal(
 // ignore: unused_element
 typedef OnrampMaxAmountRef = AutoDisposeFutureProviderRef<num>;
 String _$onrampDepositAddressHash() =>
-    r'b1b94d3b7cdf2cc4c4cc3200d0171bfc1e498f26';
+    r'8491366902a1869c3f1868dd712c452e7b27432e';
 
 /// See also [onrampDepositAddress].
 @ProviderFor(onrampDepositAddress)
@@ -960,7 +960,7 @@ final onrampDepositAddressProvider = AutoDisposeFutureProvider<String>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef OnrampDepositAddressRef = AutoDisposeFutureProviderRef<String>;
-String _$onrampTransfersHash() => r'bd8214a58e4cbd5bc7a24cc2872c4ed895ccad57';
+String _$onrampTransfersHash() => r'5a4fd5fbed8e0cb0130edae737fc0953128b8445';
 
 /// See also [onrampTransfers].
 @ProviderFor(onrampTransfers)

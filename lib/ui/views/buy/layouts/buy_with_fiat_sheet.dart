@@ -77,6 +77,8 @@ class BuyWithFiatSheet extends ConsumerWidget
     required String chainId,
     required String tokenId,
   }) async {
+    final repository = await ref.read(onRampRepositoryProvider.future);
+    await repository.sendEventOnrampWithFiat(provider: 'banxa');
     if (isWebviewSupported) {
       return context.push<void>(
         BanxaOnRampSheet.routerPage,

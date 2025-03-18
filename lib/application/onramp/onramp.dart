@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:core';
 
 import 'package:aewallet/application/account/accounts_notifier.dart';
+import 'package:aewallet/application/analytics.dart';
 import 'package:aewallet/application/feature_flags.dart';
 import 'package:aewallet/application/recent_transactions.dart';
 import 'package:aewallet/application/session/session.dart';
@@ -32,7 +33,7 @@ part 'onramp.g.dart';
     );
 
 @riverpod
-Future<OnRampRepository> _onRampRepository(Ref ref) async {
+Future<OnRampRepository> onRampRepository(Ref ref) async {
   final environment = ref.watch(environmentProvider);
   final urls = switch (environment) {
     Environment.devnet => (
@@ -62,11 +63,13 @@ Future<OnRampRepository> _onRampRepository(Ref ref) async {
     ),
   )!;
 
+  final plausibleClient = await ref.watch(plausibleClientProvider.future);
   repository = OnRampRepositoryImpl(
     httpBaseUrl: urls.http,
     wsBaseUrl: urls.ws,
     wallet: session.wallet,
     account: accountSelected,
+    plausible: plausibleClient,
   );
   await repository.connect();
   return repository;
@@ -76,7 +79,7 @@ Future<OnRampRepository> _onRampRepository(Ref ref) async {
 Future<OnRampSetup> onrampEvmSetup(
   Ref ref,
 ) async {
-  final repository = await ref.watch(_onRampRepositoryProvider.future);
+  final repository = await ref.watch(onRampRepositoryProvider.future);
   return repository.evmSetup;
 }
 
@@ -172,13 +175,13 @@ Future<OnRampToken?> onrampToken(
 
 @riverpod
 Future<num> onrampMaxAmount(Ref ref) async {
-  final repository = await ref.watch(_onRampRepositoryProvider.future);
+  final repository = await ref.watch(onRampRepositoryProvider.future);
   return repository.maxAmount;
 }
 
 @riverpod
 Future<String> onrampDepositAddress(Ref ref) async {
-  final repository = await ref.watch(_onRampRepositoryProvider.future);
+  final repository = await ref.watch(onRampRepositoryProvider.future);
   return repository.evmAddress;
 }
 
@@ -189,7 +192,7 @@ Stream<List<OnRampDeposit>> onrampTransfers(Ref ref) async* {
     ref.invalidate(recentTransactionsProvider);
   }
 
-  final repository = await ref.watch(_onRampRepositoryProvider.future);
+  final repository = await ref.watch(onRampRepositoryProvider.future);
   final history = await repository.depositsHistory;
   yield history;
   var deposits = [];

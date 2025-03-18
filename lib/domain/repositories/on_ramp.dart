@@ -10,4 +10,6 @@ abstract class OnRampRepository {
   Future<num> get maxAmount;
 
   Future<OnRampSetup> get evmSetup;
+
+  Future<void> sendEventOnrampWithFiat({required String provider});
 }
