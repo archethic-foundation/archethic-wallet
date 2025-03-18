@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AirdropBannerStatus {
-  AirdropState get state => throw _privateConstructorUsedError;
+  AirdropState get airdropState => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
 
   /// Create a copy of AirdropBannerStatus
@@ -32,7 +32,7 @@ abstract class $AirdropBannerStatusCopyWith<$Res> {
           AirdropBannerStatus value, $Res Function(AirdropBannerStatus) then) =
       _$AirdropBannerStatusCopyWithImpl<$Res, AirdropBannerStatus>;
   @useResult
-  $Res call({AirdropState state, String? email});
+  $Res call({AirdropState airdropState, String? email});
 }
 
 /// @nodoc
@@ -50,13 +50,13 @@ class _$AirdropBannerStatusCopyWithImpl<$Res, $Val extends AirdropBannerStatus>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? state = null,
+    Object? airdropState = null,
     Object? email = freezed,
   }) {
     return _then(_value.copyWith(
-      state: null == state
-          ? _value.state
-          : state // ignore: cast_nullable_to_non_nullable
+      airdropState: null == airdropState
+          ? _value.airdropState
+          : airdropState // ignore: cast_nullable_to_non_nullable
               as AirdropState,
       email: freezed == email
           ? _value.email
@@ -74,7 +74,7 @@ abstract class _$$AirdropBannerStatusImplCopyWith<$Res>
       __$$AirdropBannerStatusImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({AirdropState state, String? email});
+  $Res call({AirdropState airdropState, String? email});
 }
 
 /// @nodoc
@@ -90,13 +90,13 @@ class __$$AirdropBannerStatusImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? state = null,
+    Object? airdropState = null,
     Object? email = freezed,
   }) {
     return _then(_$AirdropBannerStatusImpl(
-      state: null == state
-          ? _value.state
-          : state // ignore: cast_nullable_to_non_nullable
+      airdropState: null == airdropState
+          ? _value.airdropState
+          : airdropState // ignore: cast_nullable_to_non_nullable
               as AirdropState,
       email: freezed == email
           ? _value.email
@@ -109,16 +109,16 @@ class __$$AirdropBannerStatusImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$AirdropBannerStatusImpl implements _AirdropBannerStatus {
-  const _$AirdropBannerStatusImpl({required this.state, this.email});
+  const _$AirdropBannerStatusImpl({required this.airdropState, this.email});
 
   @override
-  final AirdropState state;
+  final AirdropState airdropState;
   @override
   final String? email;
 
   @override
   String toString() {
-    return 'AirdropBannerStatus(state: $state, email: $email)';
+    return 'AirdropBannerStatus(airdropState: $airdropState, email: $email)';
   }
 
   @override
@@ -126,12 +126,13 @@ class _$AirdropBannerStatusImpl implements _AirdropBannerStatus {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AirdropBannerStatusImpl &&
-            (identical(other.state, state) || other.state == state) &&
+            (identical(other.airdropState, airdropState) ||
+                other.airdropState == airdropState) &&
             (identical(other.email, email) || other.email == email));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, state, email);
+  int get hashCode => Object.hash(runtimeType, airdropState, email);
 
   /// Create a copy of AirdropBannerStatus
   /// with the given fields replaced by the non-null parameter values.
@@ -145,11 +146,11 @@ class _$AirdropBannerStatusImpl implements _AirdropBannerStatus {
 
 abstract class _AirdropBannerStatus implements AirdropBannerStatus {
   const factory _AirdropBannerStatus(
-      {required final AirdropState state,
+      {required final AirdropState airdropState,
       final String? email}) = _$AirdropBannerStatusImpl;
 
   @override
-  AirdropState get state;
+  AirdropState get airdropState;
   @override
   String? get email;
 

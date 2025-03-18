@@ -25,55 +25,52 @@ part 'provider.g.dart';
 Future<AirdropBannerStatus> airdropBannerStatus(
   Ref ref,
 ) async {
-  print('#### debut status');
   final userInfo = await ref.watch(airdropUserInfoProvider.future);
-  print('#### 1');
   final personalLP = await ref.watch(airdropPersonalLPProvider.future);
-  print('#### 2');
+
   if (userInfo.email == null) {
-    print('#### 3');
-    return const AirdropBannerStatus(state: AirdropState.newParticipation);
+    return const AirdropBannerStatus(
+      airdropState: AirdropState.newParticipation,
+    );
   }
-  print('#### 4');
+
   if (userInfo.isMailConfirmed == null) {
-    print('#### 5');
     if (personalLP.personalLP < 1) {
-      print('#### 6');
       return AirdropBannerStatus(
-        state: AirdropState.newParticipation,
+        airdropState: AirdropState.newParticipation,
         email: userInfo.email,
       );
     }
-    print('#### 7');
+
     return AirdropBannerStatus(
-      state: AirdropState.shouldAddMail,
+      airdropState: AirdropState.shouldAddMail,
       email: userInfo.email,
     );
   }
-  print('#### 8');
+
   if (userInfo.isMailConfirmed == false) {
-    print('#### 9');
     if (personalLP.personalLP >= 1) {
-      print('#### 10');
       return AirdropBannerStatus(
-        state: AirdropState.shouldConfirmMail,
+        airdropState: AirdropState.shouldConfirmMail,
         email: userInfo.email,
       );
     }
-    print('#### 11');
+
     return AirdropBannerStatus(
-      state: AirdropState.shouldConfirmMailAndFarm,
+      airdropState: AirdropState.shouldConfirmMailAndFarm,
       email: userInfo.email,
     );
   }
-  print('#### 12');
+
   if (personalLP.personalLP >= 1) {
-    print('#### 13');
-    return AirdropBannerStatus(state: AirdropState.ok, email: userInfo.email);
+    return AirdropBannerStatus(
+      airdropState: AirdropState.ok,
+      email: userInfo.email,
+    );
   }
-  print('#### 14');
+
   return AirdropBannerStatus(
-    state: AirdropState.shouldFarm,
+    airdropState: AirdropState.shouldFarm,
     email: userInfo.email,
   );
 }

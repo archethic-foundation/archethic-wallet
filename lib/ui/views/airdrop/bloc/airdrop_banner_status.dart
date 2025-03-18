@@ -6,11 +6,11 @@ part 'airdrop_banner_status.freezed.dart';
 @freezed
 class AirdropBannerStatus with _$AirdropBannerStatus {
   const factory AirdropBannerStatus({
-    required AirdropState state,
+    required AirdropState airdropState,
     String? email,
   }) = _AirdropBannerStatus;
 
   factory AirdropBannerStatus.initial() => const AirdropBannerStatus(
-        state: AirdropState.newParticipation,
+        airdropState: AirdropState.newParticipation,
       );
 }

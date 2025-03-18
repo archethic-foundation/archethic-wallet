@@ -7,7 +7,7 @@ import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/state.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_banner.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_participate_step_confirm_email.dart';
-import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_participate_step_congrats.dart';
+import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_participate_step_dashboard.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_participate_step_join_waitlist.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_participate_step_sign.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_participate_step_support_ecosystem.dart';
@@ -73,7 +73,7 @@ class _AirdropParticipateSheetState
                     : airdropForm.airdropProcessStep ==
                             AirdropProcessStep.supportEcosystem
                         ? const AirdropParticipateStepSupportEcosystemSheet()
-                        : AirdropParticipateStepCongratsSheet(
+                        : AirdropParticipateStepDashboardSheet(
                             airdropState: AirdropState.ok,
                             personalMultiplier: airdropForm.personalMultiplier,
                           );
