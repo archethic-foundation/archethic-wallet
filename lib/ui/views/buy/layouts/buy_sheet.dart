@@ -351,7 +351,7 @@ class _BuyFromCEXSection extends ConsumerWidget {
   }
 }
 
-class _ExchangeButton extends StatelessWidget {
+class _ExchangeButton extends StatefulWidget {
   const _ExchangeButton({
     required this.image,
     required this.text,
@@ -378,59 +378,76 @@ class _ExchangeButton extends StatelessWidget {
   final bool disabled;
 
   @override
+  __ExchangeButtonState createState() => __ExchangeButtonState();
+}
+
+class __ExchangeButtonState extends State<_ExchangeButton> {
+  bool _isHovered = false;
+
+  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: ArchethicTheme.backgroundRecentTxListCardTransferOutput,
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: ArchethicTheme.backgroundRecentTxListCardTokenCreation
-                    .withValues(alpha: 0.3),
-              ),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                image,
-                const SizedBox(height: 8),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      text,
-                      maxLines: 2,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmallWithOpacity
-                          .copyWith(
-                            fontWeight: FontWeightTelegraf.fontWeightRegular,
-                          ),
-                    ),
-                    if (disabled == false)
-                      Padding(
-                        padding: const EdgeInsets.only(left: 3, top: 3),
-                        child: Icon(
-                          Icons.arrow_forward_ios,
-                          size: 10,
-                          color: Theme.of(context)
-                              .textTheme
-                              .bodySmallWithOpacity
-                              .color,
-                        ),
-                      ),
-                  ],
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: GestureDetector(
+        onTap: widget.onTap,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: _isHovered
+                    ? aedappfm.ArchethicThemeBase.purple500
+                        .withValues(alpha: 0.5)
+                    : ArchethicTheme.backgroundRecentTxListCardTransferOutput,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: ArchethicTheme.backgroundRecentTxListCardTokenCreation
+                      .withValues(alpha: 0.3),
                 ),
-              ],
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  widget.image,
+                  const SizedBox(height: 8),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        widget.text,
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmallWithOpacity
+                            .copyWith(
+                              fontWeight: FontWeightTelegraf.fontWeightRegular,
+                            ),
+                      ),
+                      if (widget.disabled == false)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 3, top: 3),
+                          child: Icon(
+                            Icons.arrow_forward_ios,
+                            size: 10,
+                            color: Theme.of(context)
+                                .textTheme
+                                .bodySmallWithOpacity
+                                .color,
+                          ),
+                        ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
