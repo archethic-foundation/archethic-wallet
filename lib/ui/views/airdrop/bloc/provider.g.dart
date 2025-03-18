@@ -7,7 +7,7 @@ part of 'provider.dart';
 // **************************************************************************
 
 String _$airdropBannerStatusHash() =>
-    r'a637562b32d936994ff74229129d4b2a1168dda8';
+    r'ecaeb3d10249aed25ee5734edf42a17607d57b3e';
 
 /// See also [airdropBannerStatus].
 @ProviderFor(airdropBannerStatus)

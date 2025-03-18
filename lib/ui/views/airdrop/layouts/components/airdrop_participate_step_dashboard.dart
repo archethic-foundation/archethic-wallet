@@ -11,8 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AirdropParticipateStepCongratsSheet extends ConsumerStatefulWidget {
-  const AirdropParticipateStepCongratsSheet({
+class AirdropParticipateStepDashboardSheet extends ConsumerStatefulWidget {
+  const AirdropParticipateStepDashboardSheet({
     required this.airdropState,
     required this.personalMultiplier,
     super.key,
@@ -22,12 +22,12 @@ class AirdropParticipateStepCongratsSheet extends ConsumerStatefulWidget {
   final int personalMultiplier;
 
   @override
-  ConsumerState<AirdropParticipateStepCongratsSheet> createState() =>
-      _AirdropParticipateStepCongratsSheetState();
+  ConsumerState<AirdropParticipateStepDashboardSheet> createState() =>
+      _AirdropParticipateStepDashboardSheetState();
 }
 
-class _AirdropParticipateStepCongratsSheetState
-    extends ConsumerState<AirdropParticipateStepCongratsSheet> {
+class _AirdropParticipateStepDashboardSheetState
+    extends ConsumerState<AirdropParticipateStepDashboardSheet> {
   @override
   Widget build(
     BuildContext context,

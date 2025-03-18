@@ -13,7 +13,7 @@ import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/state.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/airdrop_participate_sheet.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_banner.dart';
-import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_participate_step_congrats.dart';
+import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_participate_step_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -43,7 +43,7 @@ class _AirdropTabState extends ConsumerState<AirdropTab> {
         airdropPersonalLPFuture,
       ]);
 
-      airdropState = (results[0] as AirdropBannerStatus).state;
+      airdropState = (results[0] as AirdropBannerStatus).airdropState;
       final airdropUserInfo = results[1] as ({
         bool? isMailConfirmed,
         String? email,
@@ -191,7 +191,7 @@ class _AirdropTabState extends ConsumerState<AirdropTab> {
         return const AirdropParticipateSheet();
       case AirdropState.shouldFarm:
       case AirdropState.ok:
-        return AirdropParticipateStepCongratsSheet(
+        return AirdropParticipateStepDashboardSheet(
           airdropState: airdropState,
           personalMultiplier: airdropForm.personalMultiplier,
         );

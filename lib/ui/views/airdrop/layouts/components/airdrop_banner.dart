@@ -31,27 +31,23 @@ class AirdropBanner extends ConsumerWidget {
     if (activeAirdrop == false ||
         flag != true ||
         connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
-      print(
-          '#### condition error $flag $activeAirdrop $connectivityStatusProvider');
       return const SizedBox.shrink();
     }
-    print('#### condition ok $flag $activeAirdrop $connectivityStatusProvider');
 
-    return ref.watch(airdropBannerStatusProvider).when(
+    final airdropBanerAsync = ref.watch(airdropBannerStatusProvider);
+
+    return airdropBanerAsync.when(
       error: (error, stackTrace) {
-        print('#### error');
         return const SizedBox.shrink();
       },
       loading: () {
-        print('#### loading');
         return const SizedBox.shrink();
       },
       data: (bannerStatus) {
-        print('#### data');
         return _buildAirdropContent(
           context,
           ref,
-          bannerStatus.state,
+          bannerStatus.airdropState,
           bannerStatus.email,
         );
       },
