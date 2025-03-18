@@ -1,7 +1,7 @@
 import 'package:aewallet/application/airdrop/airdrop.dart';
-import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/figma_components/box/box_dark.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
+import 'package:aewallet/ui/figma_components/message_box/message_box.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -38,75 +38,91 @@ class AirdropPersonalRewards extends ConsumerWidget {
           error: (error, stack) {},
         );
 
-    return Column(
-      spacing: 5,
-      children: [
-        BoxDark(
-          textWidget: Row(
+    return IntrinsicHeight(
+      child: Column(
+        spacing: 5,
+        children: [
+          BoxDark(
+            textWidget: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '\$${personalRewards.numeral(digits: 2)}',
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        fontSize: 24,
+                        fontWeight: FontWeightTelegraf.fontWeightBold,
+                      ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 3),
+                  child: Text(
+                    '*',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmallWithOpacity
+                        .copyWith(
+                          fontSize: 24,
+                        ),
+                  ),
+                ),
+              ],
+            ),
+            additionalWidget: Column(
+              children: [
+                Text(
+                  localizations.airdropPersonalValue,
+                  style: Theme.of(context).textTheme.bodyMediumWithOpacity,
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  localizations.airdropPersonalValueInfo,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmallWithOpacity
+                      .copyWith(fontSize: 8),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                '\$${personalRewards.numeral(digits: 2)}',
-                style: AppTextStyles.bodyLarge(context).copyWith(
-                  fontSize: 24,
-                  fontWeight: FontWeightTelegraf.fontWeightBold,
-                ),
-              ),
               Padding(
-                padding: const EdgeInsets.only(left: 3),
+                padding: const EdgeInsets.only(right: 3),
                 child: Text(
                   '*',
                   style:
                       Theme.of(context).textTheme.bodySmallWithOpacity.copyWith(
-                            fontSize: 24,
+                            fontSize: 12,
+                            fontStyle: FontStyle.italic,
                           ),
                 ),
               ),
-            ],
-          ),
-          additionalWidget: Column(
-            children: [
               Text(
-                localizations.airdropPersonalValue,
-                style: Theme.of(context).textTheme.bodyMediumWithOpacity,
-                textAlign: TextAlign.center,
-              ),
-              Text(
-                localizations.airdropPersonalValueInfo,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmallWithOpacity
-                    .copyWith(fontSize: 8),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 3),
-              child: Text(
-                '*',
+                '${localizations.airdropDashboard1MultiplierDollars} \$${airdropForm.actualLPFiatValue.formatNumber(precision: 2)}',
                 style:
                     Theme.of(context).textTheme.bodySmallWithOpacity.copyWith(
-                          fontSize: 12,
                           fontStyle: FontStyle.italic,
                         ),
               ),
+            ],
+          ),
+          if (personalRewards <= 0)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: MessageBox(
+                messageBoxType: MessageBoxType.warning,
+                content: Text(
+                  localizations.airdropNoRewards,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ),
             ),
-            Text(
-              '${localizations.airdropDashboard1MultiplierDollars} \$${airdropForm.actualLPFiatValue.formatNumber(precision: 2)}',
-              style: Theme.of(context).textTheme.bodySmallWithOpacity.copyWith(
-                    fontStyle: FontStyle.italic,
-                  ),
-            ),
-          ],
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -103,7 +103,7 @@ class _AirdropParticipateStepCongratsSheetState
                         ),
                         const SizedBox(height: 20),
                         const SizedBox(
-                          height: 110,
+                          height: 120,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -118,16 +118,7 @@ class _AirdropParticipateStepCongratsSheetState
                           ),
                         ),
                         const SizedBox(height: 20),
-                        const Row(
-                          children: [
-                            Flexible(
-                              child: SizedBox(
-                                height: 130,
-                                child: AirdropPersonalRewards(),
-                              ),
-                            ),
-                          ],
-                        ),
+                        const AirdropPersonalRewards(),
                         const AirdropBlocInvitation(),
                         const SizedBox(height: 30),
                       ],

@@ -28,19 +28,6 @@ class AirdropModalInvitation extends ConsumerWidget {
     final controller = TextEditingController(text: airdropForm.referralCode);
     return Stack(
       children: [
-        Positioned(
-          right: 0,
-          child: IconButton(
-            onPressed: () async {
-              context.pop();
-            },
-            icon: const Icon(
-              Symbols.close,
-              color: Colors.white,
-              size: 16,
-            ),
-          ),
-        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
@@ -245,7 +232,7 @@ class AirdropModalInvitation extends ConsumerWidget {
                         await Clipboard.setData(
                           ClipboardData(
                             text:
-                                '${localizations.airdropInvitationMessageDesc1('')}\n$kAirdropArchethicWebsiteUrl\n\n${localizations.airdropInvitationMessageDesc2}',
+                                '${localizations.airdropInvitationMessageDesc1(airdropForm.referralCode ?? '')}\n$kAirdropArchethicWebsiteUrl\n\n${localizations.airdropInvitationMessageDesc2}',
                           ),
                         );
                         UIUtil.showSnackbar(
@@ -261,6 +248,19 @@ class AirdropModalInvitation extends ConsumerWidget {
                   ],
                 ),
               ),
+            ),
+          ),
+        ),
+        Positioned(
+          right: 0,
+          child: IconButton(
+            onPressed: () async {
+              context.pop();
+            },
+            icon: const Icon(
+              Symbols.close,
+              color: Colors.white,
+              size: 16,
             ),
           ),
         ),

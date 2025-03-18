@@ -31,8 +31,11 @@ class AirdropBanner extends ConsumerWidget {
     if (activeAirdrop == false ||
         flag != true ||
         connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
+      print(
+          '#### condition error $flag $activeAirdrop $connectivityStatusProvider');
       return const SizedBox.shrink();
     }
+    print('#### condition ok $flag $activeAirdrop $connectivityStatusProvider');
 
     return ref.watch(airdropBannerStatusProvider).when(
       error: (error, stackTrace) {

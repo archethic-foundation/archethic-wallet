@@ -26,19 +26,6 @@ class AirdropModalPersonalMultiplier extends ConsumerWidget {
 
     return Stack(
       children: [
-        Positioned(
-          right: 0,
-          child: IconButton(
-            onPressed: () async {
-              context.pop();
-            },
-            icon: const Icon(
-              Symbols.close,
-              color: Colors.white,
-              size: 16,
-            ),
-          ),
-        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
@@ -54,15 +41,17 @@ class AirdropModalPersonalMultiplier extends ConsumerWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          localizations.airdropPersonalMultiplierTableTitle,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge!
-                              .copyWith(
-                                fontSize: 20,
-                                fontWeight: FontWeightTelegraf.fontWeightBold,
-                              ),
+                        Expanded(
+                          child: Text(
+                            localizations.airdropPersonalMultiplierTableTitle,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .copyWith(
+                                  fontSize: 20,
+                                  fontWeight: FontWeightTelegraf.fontWeightBold,
+                                ),
+                          ),
                         ),
                       ],
                     ),
@@ -143,6 +132,19 @@ class AirdropModalPersonalMultiplier extends ConsumerWidget {
                   ],
                 ),
               ),
+            ),
+          ),
+        ),
+        Positioned(
+          right: 0,
+          child: IconButton(
+            onPressed: () async {
+              context.pop();
+            },
+            icon: const Icon(
+              Symbols.close,
+              color: Colors.white,
+              size: 16,
             ),
           ),
         ),
