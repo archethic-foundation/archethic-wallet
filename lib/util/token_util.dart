@@ -4,9 +4,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:aewallet/util/mime_util.dart';
-import 'package:pdfx/pdfx.dart';
-
 class TokenUtil {
   static bool isTokenFile(Map<String, dynamic> properties) {
     return properties['content'] != null &&
@@ -28,27 +25,11 @@ class TokenUtil {
         properties['content']['aeweb'] != null;
   }
 
-  static Future<Uint8List?> getImageDecodedForPdf(
-    Uint8List valueFileDecoded,
-  ) async {
-    final pdfDocument = await PdfDocument.openData(
-      valueFileDecoded,
-    );
-    final pdfPage = await pdfDocument.getPage(1);
-
-    final pdfPageImage =
-        await pdfPage.render(width: pdfPage.width, height: pdfPage.height);
-    return pdfPageImage!.bytes;
-  }
-
   static Future<Uint8List?> getImageDecoded(
     Uint8List valueFileDecoded,
     String typeMime,
   ) async {
-    if (MimeUtil.isPdf(typeMime) == false) {
-      return valueFileDecoded;
-    }
-    return getImageDecodedForPdf(valueFileDecoded);
+    return valueFileDecoded;
   }
 
   static Future<Uint8List?> getImageFromToken(

@@ -50,10 +50,10 @@ packages:
     dependency: "direct main"
     description:
       name: archethic_dapp_framework_flutter
-      sha256: b19df6c457ccf52dca133c89c37fc5303eaa1f1d096394f799cca6a31797d2a7
+      sha256: "6c3ba8127b99435a62cc6d0e3e21464f7e4973591213d8cae08fe133242284b8"
       url: "https://pub.dev"
     source: hosted
-    version: "3.4.0"
+    version: "3.4.1"
   archethic_lib_dart:
     dependency: transitive
     description:
@@ -66,10 +66,10 @@ packages:
     dependency: "direct main"
     description:
       name: archethic_wallet_client
-      sha256: a07d1e5631b02d7fd59ac9ff4601485dd5776d7c88502a52dcfd70313f006b06
+      sha256: fe3643bee8271828f334ed639c582832375826e4009cae8af985bf1d90322045
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.0"
+    version: "2.2.1"
   archive:
     dependency: transitive
     description:
@@ -510,14 +510,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
-  extension:
-    dependency: transitive
-    description:
-      name: extension
-      sha256: be3a6b7f8adad2f6e2e8c63c895d19811fcf203e23466c6296267941d0ff4f24
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.6.0"
   fake_async:
     dependency: transitive
     description:
@@ -1434,14 +1426,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.0"
-  pdfx:
-    dependency: "direct main"
-    description:
-      name: pdfx
-      sha256: cbbd7bf54d6f37524df85d06a816fa095d124cd32d42909effddc0027f9db10b
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.8.0"
   pem:
     dependency: transitive
     description:
@@ -1466,14 +1450,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.7"
-  photo_view:
-    dependency: transitive
-    description:
-      name: photo_view
-      sha256: "1fc3d970a91295fbd1364296575f854c9863f225505c28c46e0a03e48960c75e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.15.0"
   pinenacl:
     dependency: transitive
     description:
@@ -1871,14 +1847,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.2"
-  universal_platform:
-    dependency: transitive
-    description:
-      name: universal_platform
-      sha256: "64e16458a0ea9b99260ceb5467a214c1f298d647c659af1bff6d3bf82536b1ec"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.0"
   unorm_dart:
     dependency: "direct main"
     description:

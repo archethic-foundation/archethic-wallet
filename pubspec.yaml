@@ -3,16 +3,14 @@ description: Fully decentralized and cryptocurrency non-custodial hot wallet tha
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 4.11.0+653
+version: 4.11.1+654
 
 environment:
   sdk: ">=3.6.0 <4.0.0"
   flutter: ">=3.27.0"
 
 dependencies:
-  archethic_dapp_framework_flutter: ^3.4.0
-
-  #archethic_dapp_framework_flutter: ^3.2.6-beta.3
+  archethic_dapp_framework_flutter: ^3.4.1
   #archethic_dapp_framework_flutter:
   #  git:
   #    url: https://github.com/archethic-foundation/archethic-dapp-framework-flutter.git
@@ -21,7 +19,7 @@ dependencies:
   #  path: ../archethic-dapp-framework-flutter
 
   # AWC
-  archethic_wallet_client: ^2.2.0
+  archethic_wallet_client: ^2.2.1
   #archethic_wallet_client:
   #  git:
   #    url: https://github.com/archethic-foundation/archethic-wallet-client-dart.git
@@ -200,9 +198,6 @@ dependencies:
   # Flutter plugin for getting commonly used locations on host platform file systems, such as the temp and app data directories.
   path_provider: ^2.1.0
 
-  # Flutter plugin to render & show PDF pages as images on Web, MacOS, Windows, Android and iOS.
-  pdfx: ^2.6.0
-
   # PhoenixSocket provides a feature-complete implementation of Phoenix Sockets, using a single API based on StreamChannels compatible with any deployment of Flutter
   phoenix_socket: ^0.7.7
 
@@ -280,7 +275,7 @@ msix_config:
   publisher_display_name: Archethic Technologies SARL
   identity_name: ArchethicTechnologiesSARL.ArchethicWallet
   publisher: CN=9687A561-7463-4BA7-BD4D-A04574BAF854
-  msix_version: 4.110.652.0
+  msix_version: 4.111.654.0
   icons_background_color: "#000000"
   languages: en-us
   store: true
