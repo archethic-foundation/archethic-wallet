@@ -43,7 +43,6 @@ class EarnSectionStartEarning extends ConsumerWidget {
         ref.watch(getBalanceProvider(kUCOAddress)).valueOrNull ?? 0.0;
     if ((earnUserLevel == EarnUserLevelType.beginner &&
             accountSelected != null &&
-            accountSelected.balance != null &&
             balanceUCO <= 0) ||
         (earnUserLevel == EarnUserLevelType.advanced &&
             balances.lpTokenBalance <= 0)) {

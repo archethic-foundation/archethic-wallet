@@ -834,7 +834,7 @@
     "earnSectionDepositFundsV1Desc2": "For now, we’ve prepared a comprehensive tutorial that guides you through the process of purchasing and depositing UCO on your own.",
     "earnSectionDepositFundsTutoBtn": "Tutorial",
     "earnSectionDepositFundsNote": "Please Note - This process assumes a basic understanding of cryptocurrency. If it seems too complex, please wait for our beginner-friendly solutions, which will be available in the coming weeks.",
-    "earnSectionDepositFundsTitle": "Deposit funds in UCO or ETH",
+    "earnSectionDepositFundsTitle": "Add UCO to your wallet",
     "earnSectionDepositFundsOptionFiatTitle": "Option 1",
     "earnSectionDepositFundsOptionFiatDesc": "Buy UCO token directly with credit card:",
     "earnSectionDepositFundsOptionFiatBuyBtn": "Buy with credit card",
@@ -1022,7 +1022,7 @@
     "airdropPersonalMultiplierTableLPValue": "Actual value of 1 LP token: ",
     "airdropPersonalMultiplierTableYourLPValue": "Your LP tokens locked:",
     "airdropPersonalMultiplierTableHeaderLPLocked": "LP token locked",
-    "airdropPersonalMultiplierTableHeaderPersonalMultiplier": "Personal Multiplier",
+    "airdropPersonalMultiplierTableHeaderPersonalMultiplier": "Personal\nMultiplier",
     "airdropPersonalMultiplierTableHeaderBtn": "Add more in \"Earn\"",
     "airdropReferralMultiplierTableTitle": "Referral Multiplier Table",
     "airdropReferralMultiplierTableDesc": "The more LP tokens you lock, the more referrals you can bring, and the higher your referral multiplier becomes.",
@@ -1031,5 +1031,6 @@
     "airdropReferralMultiplierTableHeaderLPLocked": "LP token locked",
     "airdropReferralMultiplierTableHeaderMaxReferral": "Max Referral",
     "airdropReferralMultiplierTableHeaderBtn": "Add more in \"Earn\"",
-    "airdropWrongReferralCodeProvided": "Oops! The referral code you entered is not recognized. Please verify it with the person who shared it or try a different one."
+    "airdropWrongReferralCodeProvided": "Oops! The referral code you entered is not recognized. Please verify it with the person who shared it or try a different one.",
+    "airdropNoRewards": "You are currently participating in the airdrop, but no rewards have been assigned to your account yet. To learn how to earn rewards, please refer to the information below."
 }  
