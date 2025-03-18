@@ -1482,6 +1482,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.6"
+  plausible:
+    dependency: "direct main"
+    description:
+      name: plausible
+      sha256: "33497911106b0dce8a4ee70e08e27ba2a90be051b5d7c3a02bf1b9b22c87e599"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   plugin_platform_interface:
     dependency: transitive
     description:

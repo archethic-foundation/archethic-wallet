@@ -205,6 +205,9 @@ dependencies:
   # PhoenixSocket provides a feature-complete implementation of Phoenix Sockets, using a single API based on StreamChannels compatible with any deployment of Flutter
   phoenix_socket: ^0.7.4
 
+  # Client for Plausible.io
+  plausible: ^1.0.0
+
   # A Dart library implementing cryptographic algorithms and primitives, modeled on the BouncyCastle library
   pointycastle: ^3.7.0
 
