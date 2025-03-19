@@ -3,13 +3,17 @@ description: Fully decentralized and cryptocurrency non-custodial hot wallet tha
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 4.11.1+654
+version: 4.11.2+655
 
 environment:
   sdk: ">=3.6.0 <4.0.0"
   flutter: ">=3.27.0"
 
 dependencies:
+
+  # Retrieve version and url for local app update against store app Android and iOS
+  app_version_update: ^6.1.2
+  
   archethic_dapp_framework_flutter: ^3.4.1
   #archethic_dapp_framework_flutter:
   #  git:
@@ -177,9 +181,6 @@ dependencies:
   # Utilities to make working with 'Duration's easier.
   moment_dart: ^2.1.0
 
-  # Retrieve version and url for local app update against store app Android and iOS
-  new_version_plus: ^0.0.9
-
   # Flutter plugin for accessing the NFC features on Android and iOS.
   nfc_manager: ^3.3.0
 
@@ -275,7 +276,7 @@ msix_config:
   publisher_display_name: Archethic Technologies SARL
   identity_name: ArchethicTechnologiesSARL.ArchethicWallet
   publisher: CN=9687A561-7463-4BA7-BD4D-A04574BAF854
-  msix_version: 4.111.654.0
+  msix_version: 4.112.655.0
   icons_background_color: "#000000"
   languages: en-us
   store: true

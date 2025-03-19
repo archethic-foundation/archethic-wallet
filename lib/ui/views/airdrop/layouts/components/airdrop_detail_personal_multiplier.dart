@@ -1,6 +1,8 @@
 import 'package:aewallet/ui/figma_components/buttons/btn_primary.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
+import 'package:aewallet/ui/figma_components/message_box/message_box.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
+import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_lp_available.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_modal_personal_multiplier.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -72,43 +74,18 @@ class AirdropDetailPersonalMultiplier extends ConsumerWidget {
             ],
           ),
         ),
-        const SizedBox(
-          height: 10,
-        ),
-        aedappfm.BlockInfo(
-          width: MediaQuery.of(context).size.width,
-          paddingEdgeInsetsClipRRect: EdgeInsets.zero,
-          paddingEdgeInsetsInfo: const EdgeInsets.all(10),
-          blockInfoColor: aedappfm.BlockInfoColor.neutral,
-          info: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                localizations
-                    .airdropDashboardDetailPersonalMultiplierLPUnlocked,
-                style: Theme.of(context).textTheme.bodyMedium,
+        if (airdropForm.personalMultiplier <= 0)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: MessageBox(
+              messageBoxType: MessageBoxType.warning,
+              content: Text(
+                localizations.airdropNoRewards,
+                style: Theme.of(context).textTheme.bodySmall,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    airdropForm.personalLPFlexible.formatNumber(precision: 2),
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          fontWeight: FontWeightTelegraf.fontWeightBold,
-                        ),
-                  ),
-                  Text(
-                    _lpIndollarsCalculation(
-                      airdropForm.actualLPFiatValue,
-                      airdropForm.personalLPFlexible,
-                    ),
-                    style: Theme.of(context).textTheme.bodySmallWithOpacity,
-                  ),
-                ],
-              ),
-            ],
+            ),
           ),
-        ),
+        if (airdropForm.personalLPFlexible > 0) const AirdropLPAvailable(),
         const SizedBox(
           height: 10,
         ),

@@ -21,6 +21,8 @@ class AirdropReferralStepTab extends ConsumerWidget {
     final airdropForm = ref.watch(airdropFormNotifierProvider);
     final localizations = AppLocalizations.of(context)!;
 
+    final currentRowIndex = _findCurrentRowIndex(airdropForm.personalLP);
+
     return Column(
       children: [
         DecoratedBox(
@@ -45,6 +47,7 @@ class AirdropReferralStepTab extends ConsumerWidget {
                     airdropReferralStepDataList[i],
                     airdropForm,
                     i,
+                    currentRowIndex,
                   ),
               ],
             ),
@@ -52,6 +55,15 @@ class AirdropReferralStepTab extends ConsumerWidget {
         ),
       ],
     );
+  }
+
+  int _findCurrentRowIndex(double personalLP) {
+    for (var i = 0; i < airdropReferralStepDataList.length; i++) {
+      if (airdropReferralStepDataList[i].lpTokensLocked > personalLP) {
+        return i - 1;
+      }
+    }
+    return airdropReferralStepDataList.length - 1;
   }
 
   TableRow _buildTableHeader(
@@ -93,9 +105,10 @@ class AirdropReferralStepTab extends ConsumerWidget {
     AirdropReferralStepData row,
     AirdropFormState airdropForm,
     int index,
+    int currentRowIndex,
   ) {
-    final isCurrentRow = airdropForm.personalMultiplier == row.maxReferrals;
-    final isBeforeCurrent = airdropForm.personalMultiplier > row.maxReferrals;
+    final isCurrentRow = index == currentRowIndex;
+    final isBeforeCurrent = index < currentRowIndex;
 
     final backgroundColor = isCurrentRow
         ? aedappfm.ArchethicThemeBase.raspberry500.withValues(alpha: 0.5)

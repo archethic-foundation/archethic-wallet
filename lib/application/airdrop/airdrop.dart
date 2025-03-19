@@ -61,8 +61,11 @@ Future<
         final bodyJson = jsonDecode(response.body);
         return (
           participantCount: bodyJson['participant_count'] as int?,
-          totalPersonalMultiplier:
-              bodyJson['total_personal_multiplier'] as int?,
+          totalPersonalMultiplier: bodyJson['total_personal_multiplier'] != null
+              ? bodyJson['total_personal_multiplier'] as int?
+              : bodyJson['total_multiplier'] != null
+                  ? bodyJson['total_multiplier'] as int?
+                  : null,
           totalReferralMultiplier:
               bodyJson['total_referral_multiplier'] as int?,
         );

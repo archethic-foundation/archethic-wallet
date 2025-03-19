@@ -23,7 +23,7 @@ final airdropBackendUrlProvider = AutoDisposeProvider<String>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef AirdropBackendUrlRef = AutoDisposeProviderRef<String>;
-String _$airdropCountHash() => r'5aa92537a5e7f95e24a271d869f22e229aed0d5c';
+String _$airdropCountHash() => r'6bc0012dc67623ce1dca8f30fe8264076f0cdd2f';
 
 /// See also [airdropCount].
 @ProviderFor(airdropCount)

@@ -95,9 +95,9 @@ class AirdropPersonalStepTab extends ConsumerWidget {
     AirdropFormState airdropForm,
     int index,
   ) {
-    final isCurrentRow =
-        '${airdropForm.personalMultiplier}x' == row.personalMultiplier;
-    final isBeforeCurrent = airdropForm.personalMultiplier >
+    final personalMultiplier = airdropForm.personalMultiplier;
+    final isCurrentRow = '${personalMultiplier}x' == row.personalMultiplier;
+    final isBeforeCurrent = personalMultiplier >
         int.parse(row.personalMultiplier.replaceAll('x', ''));
 
     final backgroundColor = isCurrentRow
@@ -168,17 +168,14 @@ class AirdropPersonalStepTab extends ConsumerWidget {
               ),
             ),
           if (textSmallOpacity != null)
-            Padding(
-              padding: const EdgeInsets.only(top: 2),
-              child: Text(
-                textSmallOpacity,
-                style: textStyle.copyWith(
-                  color: textStyle.color?.withValues(
-                    alpha: lineType == LineType.afterCurrent ||
-                            lineType == LineType.current
-                        ? 0.6
-                        : 0.2,
-                  ),
+            Text(
+              textSmallOpacity,
+              style: textStyle.copyWith(
+                color: textStyle.color?.withValues(
+                  alpha: lineType == LineType.afterCurrent ||
+                          lineType == LineType.current
+                      ? 0.6
+                      : 0.2,
                 ),
               ),
             ),

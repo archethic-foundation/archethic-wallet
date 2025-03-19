@@ -745,7 +745,7 @@
     "airdropDashboardNoLPBtn": "Verrouiller les tokens LP maintenant",
     "airdropDashboardIncreaseAirdropBtn": "Augmenter mon airdrop",
     "airdropDashboardCompleteParticipationTitle": "Complétez votre participation à l'airdrop !",
-    "airdropDashboardLPTokenAvailable": "Vous avez actuellement {lpTokenAvailable} tokens LP disponibles dans la farm au niveau 0. Pour augmenter votre multiplicateur, vous pouvez les verrouiller à nouveau dans la ferme.",
+    "airdropDashboardLPTokenAvailable": "Vous avez actuellement {lpTokenAvailable} tokens LP disponibles dans la farm au niveau 0. Pour augmenter votre multiplicateur, vous pouvez les verrouiller à nouveau dans la farm.",
     "@airdropDashboardLPTokenAvailable": {
         "placeholders": {
             "lpTokenAvailable": {

@@ -1,7 +1,6 @@
 import 'package:aewallet/application/airdrop/airdrop.dart';
 import 'package:aewallet/ui/figma_components/box/box_dark.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
-import 'package:aewallet/ui/figma_components/message_box/message_box.dart';
 import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -110,17 +109,6 @@ class AirdropPersonalRewards extends ConsumerWidget {
               ),
             ],
           ),
-          if (personalRewards <= 0)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: MessageBox(
-                messageBoxType: MessageBoxType.warning,
-                content: Text(
-                  localizations.airdropNoRewards,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ),
-            ),
         ],
       ),
     );
