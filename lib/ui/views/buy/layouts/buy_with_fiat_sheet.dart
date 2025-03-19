@@ -2,6 +2,7 @@
 
 import 'package:aewallet/application/onramp/banxa.dart';
 import 'package:aewallet/application/onramp/onramp.dart';
+import 'package:aewallet/application/onramp/transak.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
 import 'package:aewallet/ui/figma_components/checkbox/checkbox_confirm.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
@@ -9,7 +10,6 @@ import 'package:aewallet/ui/figma_components/message_box/message_box.dart';
 import 'package:aewallet/ui/figma_components/numbered_list/numbered_list_item.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/buy/bloc/buy_with_fiat_form_provider.dart';
-import 'package:aewallet/ui/views/buy/layouts/components/banxa_on_ramp_sheet.dart';
 import 'package:aewallet/ui/views/buy/layouts/components/transaction_history.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
@@ -57,7 +57,7 @@ class BuyWithFiatSheet extends ConsumerWidget
       showProgressIndicator: onrampFavoriteSetup == null,
       onTap: () async => switch (onrampFavoriteSetup) {
         null => null,
-        final setup => _goToBanxa(
+        final setup => _goToTransak(
             context: context,
             ref: ref,
             isWebviewSupported: isWebviewSupported,
@@ -69,7 +69,7 @@ class BuyWithFiatSheet extends ConsumerWidget
     );
   }
 
-  Future<void> _goToBanxa({
+  Future<void> _goToTransak({
     required BuildContext context,
     required WidgetRef ref,
     required bool isWebviewSupported,
@@ -77,28 +77,9 @@ class BuyWithFiatSheet extends ConsumerWidget
     required String chainId,
     required String tokenId,
   }) async {
-    final repository = await ref.read(onRampRepositoryProvider.future);
-    await repository.sendEventOnrampWithFiat(provider: 'banxa');
-    if (isWebviewSupported) {
-      return context.push<void>(
-        BanxaOnRampSheet.routerPage,
-        extra: {
-          'depositAddress': depositAddress,
-          'tokenId': tokenId,
-          'chainId': chainId,
-        },
-      );
-    }
-
-    await launchUrl(
-      ref.read(
-        banxaWebpageUriProvider(
-          tokenId: tokenId,
-          chainId: chainId,
-          depositAddress: depositAddress,
-        ),
-      ),
-    );
+    final uri =
+        ref.read(transakWebpageUriProvider(depositAddress: depositAddress));
+    await launchUrl(uri);
   }
 
   @override
@@ -125,6 +106,7 @@ class BuyWithFiatSheet extends ConsumerWidget
 
     final feeRate = ref.watch(
       onrampProviderFavoriteSetupProvider('banxa').select(
+        // TODO(Chralu): use fee related to selected chain
         (setup) => setup.valueOrNull?.feeRate,
       ),
     );
