@@ -18,7 +18,7 @@ class AirdropPersonalRewards extends ConsumerWidget {
     final localizations = AppLocalizations.of(context)!;
     final airdropForm = ref.watch(airdropFormNotifierProvider);
     var personalRewards = 0.0;
-
+    var oneMultiplierInDollars = 0.0;
     ref.watch(airdropCountProvider).when(
           data: (airdropCount) {
             final totalMultiplier =
@@ -32,6 +32,9 @@ class AirdropPersonalRewards extends ConsumerWidget {
                   Decimal.fromInt(airdropForm.totalUserMultiplier);
               personalRewards = result.toDouble();
             }
+
+            oneMultiplierInDollars =
+                (Decimal.parse('100000000') / totalMultiplier).toDouble();
           },
           loading: () {},
           error: (error, stack) {},
@@ -101,7 +104,7 @@ class AirdropPersonalRewards extends ConsumerWidget {
                 ),
               ),
               Text(
-                '${localizations.airdropDashboard1MultiplierDollars} \$${airdropForm.actualLPFiatValue.formatNumber(precision: 2)}',
+                '${localizations.airdropDashboard1MultiplierDollars} \$${oneMultiplierInDollars.formatNumber(precision: 0).replaceAll('.', '')}',
                 style:
                     Theme.of(context).textTheme.bodySmallWithOpacity.copyWith(
                           fontStyle: FontStyle.italic,

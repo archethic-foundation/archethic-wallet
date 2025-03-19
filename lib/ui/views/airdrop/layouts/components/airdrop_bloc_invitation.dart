@@ -1,9 +1,10 @@
+import 'package:aewallet/application/airdrop/airdrop.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_primary.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
-import 'package:aewallet/ui/views/airdrop/bloc/provider.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_modal_invitation.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,8 +16,24 @@ class AirdropBlocInvitation extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final airdropForm = ref.watch(airdropFormNotifierProvider);
-    final exampleAmountDollars = 21 * airdropForm.actualLPFiatValue;
+    var exampleAmountDollars = 0.0;
+    var oneMultiplierInDollars = 0.0;
+    ref.watch(airdropCountProvider).when(
+          data: (airdropCount) {
+            final totalMultiplier =
+                Decimal.fromInt(airdropCount.totalPersonalMultiplier ?? 0) +
+                    Decimal.fromInt(airdropCount.totalReferralMultiplier ?? 0);
+
+            oneMultiplierInDollars =
+                (Decimal.parse('100000000') / totalMultiplier).toDouble();
+            exampleAmountDollars =
+                (Decimal.parse('21') * Decimal.parse('$oneMultiplierInDollars'))
+                    .toDouble();
+          },
+          loading: () {},
+          error: (error, stack) {},
+        );
+
     return Padding(
       padding: const EdgeInsets.only(top: 20),
       child: Stack(
@@ -60,7 +77,9 @@ class AirdropBlocInvitation extends ConsumerWidget {
                           Text(
                             textAlign: TextAlign.center,
                             localizations.airdropDashboardBlocInvitationDesc2(
-                              exampleAmountDollars.formatNumber(precision: 2),
+                              exampleAmountDollars
+                                  .formatNumber(precision: 0)
+                                  .replaceAll('.', ''),
                             ),
                             style: Theme.of(context)
                                 .textTheme
