@@ -8,7 +8,6 @@ import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/local_data_migration_widget.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/earn_tab.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/swap_tab.dart';
 import 'package:aewallet/ui/views/airdrop/layouts/airdrop_tab.dart';
@@ -215,9 +214,11 @@ class _HomePageState extends ConsumerState<HomePage>
 class ExpandablePageView extends ConsumerStatefulWidget {
   const ExpandablePageView({
     super.key,
-    @required this.children,
+    required this.children,
+    required this.tabs,
   });
-  final List<Widget>? children;
+  final List<Widget> children;
+  final List<Widget> tabs;
 
   @override
   ConsumerState<ExpandablePageView> createState() => _ExpandablePageViewState();
@@ -233,7 +234,7 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
 
   @override
   void initState() {
-    _heights = widget.children!.map((e) => 0.0).toList();
+    _heights = widget.children.map((e) => 0.0).toList();
     super.initState();
     _pageController = PageController()
       ..addListener(() {
@@ -252,13 +253,11 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
-
     final session = ref.watch(sessionNotifierProvider).loggedIn;
     if (session == null) return const SizedBox();
 
     return DefaultTabController(
-      length: 2,
+      length: widget.children.length,
       child: Column(
         children: [
           Container(
@@ -270,29 +269,7 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
               labelColor: ArchethicTheme.text,
               indicatorColor: ArchethicTheme.text,
               labelPadding: EdgeInsets.zero,
-              tabs: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      key: const Key('fungibleTokenTab'),
-                      localizations.tokensHeader,
-                      style: ArchethicThemeStyles.textStyleSize14W600Primary,
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      localizations.nft,
-                      style: ArchethicThemeStyles.textStyleSize14W600Primary,
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ],
+              tabs: widget.tabs,
               onTap: (index) {
                 _pageController!.jumpToPage(index);
               },
@@ -319,7 +296,7 @@ class _ExpandablePageViewState extends ConsumerState<ExpandablePageView>
     );
   }
 
-  List<Widget> get _sizeReportingChildren => widget.children!
+  List<Widget> get _sizeReportingChildren => widget.children
       .asMap() //
       .map(
         (index, child) => MapEntry(

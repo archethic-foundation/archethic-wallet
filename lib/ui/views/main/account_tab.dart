@@ -116,8 +116,33 @@ class AccountTab extends ConsumerWidget {
                         ),
                         const MenuWidgetWallet(),
                         const AirdropBanner(),
-                        const ExpandablePageView(
-                          children: [
+                        ExpandablePageView(
+                          tabs: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  key: const Key('fungibleTokenTab'),
+                                  localizations.tokensHeader,
+                                  style: ArchethicThemeStyles
+                                      .textStyleSize14W600Primary,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  localizations.nft,
+                                  style: ArchethicThemeStyles
+                                      .textStyleSize14W600Primary,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ],
+                          children: const [
                             TokensList(),
                             Column(
                               children: [
