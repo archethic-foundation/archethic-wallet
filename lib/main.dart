@@ -143,7 +143,6 @@ class App extends ConsumerStatefulWidget {
 class AppState extends ConsumerState<App> with WidgetsBindingObserver {
   static final GlobalKey<NavigatorState> rootNavigatorKey =
       GlobalKey<NavigatorState>();
-  final router = RoutesPath(rootNavigatorKey).createRouter();
   final _logger = Logger('AppWidget');
 
   @override
@@ -199,6 +198,8 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
     SystemChrome.setSystemUIOverlayStyle(
       ArchethicTheme.statusBar,
     );
+    final router =
+        ref.watch(routerProvider(rootNavigatorKey: rootNavigatorKey));
 
     return LimitedWidthLayout(
       child: GestureDetector(

@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:aewallet/application/onramp/onramp.dart';
+import 'package:aewallet/domain/models/onramp.dart';
+import 'package:aewallet/infrastructure/repositories/transak.dto.dart';
 import 'package:aewallet/infrastructure/rpc/deeplink_server.dart';
 import 'package:aewallet/main.dart';
 import 'package:aewallet/model/data/account_token.dart';
@@ -66,99 +69,104 @@ import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutte
     as aedappfm;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'router.aeswap.dart';
 part 'router.authenticated.dart';
 part 'router.authentication.dart';
+part 'router.g.dart';
 part 'router.introduction.dart';
 
-class RoutesPath {
-  RoutesPath(
-    this.rootNavigatorKey,
-  );
+@riverpod
+GoRouter router(
+  Ref ref, {
+  required GlobalKey<NavigatorState> rootNavigatorKey,
+}) {
+  final deeplinkRpcReceiver = sl.get<ArchethicDeeplinkRPCServer>();
 
-  final GlobalKey<NavigatorState> rootNavigatorKey;
-
-  GoRouter createRouter() {
-    final deeplinkRpcReceiver = sl.get<ArchethicDeeplinkRPCServer>();
-
-    return GoRouter(
-      navigatorKey: rootNavigatorKey,
-      initialLocation: '/',
-      debugLogDiagnostics: true,
-      extraCodec: const JsonCodec(),
-      routes: [
-        ShellRoute(
-          builder: (context, state, child) => GuardInputListener(
-            child: AuthFactory(
-              child: TasksNotificationWidget(
-                child: LoadingOverlay(
-                  child: child,
-                ),
+  return GoRouter(
+    navigatorKey: rootNavigatorKey,
+    initialLocation: '/',
+    debugLogDiagnostics: true,
+    extraCodec: const JsonCodec(),
+    routes: [
+      ShellRoute(
+        builder: (context, state, child) => GuardInputListener(
+          child: AuthFactory(
+            child: TasksNotificationWidget(
+              child: LoadingOverlay(
+                child: child,
               ),
             ),
           ),
-          routes: [
-            GoRoute(
-              path: Splash.routerPage,
-              pageBuilder: (context, state) => NoTransitionPage<void>(
-                key: state.pageKey,
-                child: const Splash(),
-              ),
-            ),
-            ..._authenticationRoutes,
-            ..._introductionRoutes,
-            AutoLockGuardRoute(
-              routes: [
-                RPCCommandReceiverRoute(
-                  routes: [
-                    ..._authenticatedRoutes,
-                    ..._aeSwapRoutes,
-                  ],
-                ),
-              ],
-            ),
-          ],
         ),
-      ],
-      redirect: (context, state) async {
-        if (deeplinkRpcReceiver.canHandle(state.matchedLocation)) {
-          await deeplinkRpcReceiver.handle(state.matchedLocation);
-        }
-        if (state.uri.scheme == 'aewallet' &&
-            state.uri.path + state.uri.host == DAppsBoardWebview.routerPage) {
-          final query = utf8.decode(
-            base64Url.decode(
-              state.uri.query,
+        routes: [
+          GoRoute(
+            path: Splash.routerPage,
+            pageBuilder: (context, state) => NoTransitionPage<void>(
+              key: state.pageKey,
+              child: const Splash(),
             ),
-          );
-          return '${DAppsBoardWebview.routerPage}?deeplink&$query';
-        }
-        return null;
-      },
-      errorBuilder: (context, state) => SheetSkeleton(
-        appBar: AppBar(),
-        menu: true,
-        sheetContent: Text('Something went wrong: ${state.error}'),
+          ),
+          ..._authenticationRoutes,
+          ..._introductionRoutes,
+          AutoLockGuardRoute(
+            routes: [
+              RPCCommandReceiverRoute(
+                routes: [
+                  ..._authenticatedRoutes,
+                  ..._aeSwapRoutes,
+                ],
+              ),
+            ],
+          ),
+        ],
       ),
-    );
-  }
+    ],
+    redirect: (context, state) async {
+      if (deeplinkRpcReceiver.canHandle(state.matchedLocation)) {
+        await deeplinkRpcReceiver.handle(state.matchedLocation);
+      }
+      if (state.uri.scheme == 'aewallet' &&
+          state.uri.path + state.uri.host == DAppsBoardWebview.routerPage) {
+        final query = utf8.decode(
+          base64Url.decode(
+            state.uri.query,
+          ),
+        );
+        return '${DAppsBoardWebview.routerPage}?deeplink&$query';
+      }
+
+      if (state.uri.queryParameters.toOnRampProviderOrder()
+          case final OnRampProviderOrder onRampProviderOrder) {
+        ref
+            .read(onRampProviderOrdersProvider.notifier)
+            .add(onRampProviderOrder);
+      }
+
+      return null;
+    },
+    errorBuilder: (context, state) => SheetSkeleton(
+      appBar: AppBar(),
+      menu: true,
+      sheetContent: Text('Something went wrong: ${state.error}'),
+    ),
+  );
 }
 
 class AutoLockGuardRoute extends ShellRoute {
   AutoLockGuardRoute({required super.routes})
       : super(
-          pageBuilder: (context, state, child) {
-            return NoTransitionPage<void>(
-              key: state.pageKey,
-              child: PrivacyMaskGuard(
-                child: AutoLockGuard(
-                  child: LockIconUpdater(child: child),
-                ),
+          pageBuilder: (context, state, child) => NoTransitionPage<void>(
+            key: state.pageKey,
+            child: PrivacyMaskGuard(
+              child: AutoLockGuard(
+                child: LockIconUpdater(child: child),
               ),
-            );
-          },
+            ),
+          ),
         );
 }
 

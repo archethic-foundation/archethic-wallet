@@ -1,5 +1,20 @@
 import 'dart:math' as math;
 
+enum OnRampProviderOrderStatus {
+  canceled,
+  processing,
+  completed,
+  failed,
+}
+
+typedef OnRampProviderOrder = ({
+  String providerId,
+  String orderId,
+  double cryptoAmount,
+  String cryptoSymbol,
+  OnRampProviderOrderStatus status,
+});
+
 typedef OnRampSetup = ({
   List<OnRampTokenDisplayData> tokensDisplayData,
   List<OnRampChain> chains,
