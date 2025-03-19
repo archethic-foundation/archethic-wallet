@@ -3,6 +3,16 @@ chrome.runtime.onMessageExternal.addListener((message, sender, sendResponse) => 
         ensureExtensionPopupOpened().then(() => { sendResponse() })
         return true
     }
+   if (message.action === "openExtensionPopup") {
+        openExtensionPopup().then(() => {
+            sendResponse({ status: "Popup opened" });
+        });
+        return true
+    }
+})
+
+chrome.runtime.onMessageExternal.addListener((message, sender, sendResponse) => {
+
 })
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
