@@ -10,6 +10,7 @@ import 'package:aewallet/util/device_info.dart';
 import 'package:aewallet/util/universal_platform.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -128,58 +129,52 @@ class _WebBrowserState extends ConsumerState<WebBrowser> {
           onRefresh: () => controller?.reload(),
           title: localizations.onrampWithBanxaTitle,
         ),
-        body: Column(
-          children: [
-            Expanded(
-              child: LoadingPlaceholder(
-                loaded: _loaded,
-                child: switch (_availability) {
-                  null => const SizedBox(),
-                  final WebBrowserUnavailable unavailable =>
-                    widget.unavailableBuilder(unavailable),
-                  _ => InAppWebView(
-                      initialSettings: InAppWebViewSettings(
-                        disableHorizontalScroll: true,
-                      ),
-                      onPageCommitVisible: (controller, url) {
-                        setState(() {
-                          _loaded = true;
-                        });
-                      },
-                      onWebViewCreated: (controller) async {
-                        setState(() {
-                          this.controller = controller;
-                        });
-                        await controller.loadUrl(
-                          urlRequest: URLRequest(
-                            url: WebUri.uri(widget.uri),
-                          ),
-                        );
-                      },
-                      onUpdateVisitedHistory: (controller, url, isReload) {
-                        _updateNavigation(controller);
-                      },
-                      onDownloadStarting:
-                          (controller, downloadStartRequest) async {
-                        final uri = downloadStartRequest.url.uriValue;
-                        if (!await canLaunchUrl(uri)) return null;
-
-                        await launchUrl(
-                          uri,
-                          mode: LaunchMode.externalApplication,
-                        );
-                        return DownloadStartResponse(handled: true);
-                      },
-                      onLoadStop: widget.onLoadStop,
-                    )
+        body: LoadingPlaceholder(
+          loaded: _loaded,
+          child: switch (_availability) {
+            null => const SizedBox(),
+            final WebBrowserUnavailable unavailable =>
+              widget.unavailableBuilder(unavailable),
+            _ => InAppWebView(
+                initialSettings: InAppWebViewSettings(
+                  isInspectable: kDebugMode,
+                  disableHorizontalScroll: true,
+                ),
+                onPageCommitVisible: (controller, url) {
+                  setState(() {
+                    _loaded = true;
+                  });
                 },
-              ),
-            ),
-            WebBrowserNavigationButtons(
-              goForward: _canGoForward ? controller?.goForward : null,
-              goBack: _canGoBack ? controller?.goBack : null,
-            ),
-          ],
+                onWebViewCreated: (controller) async {
+                  setState(() {
+                    this.controller = controller;
+                  });
+                  await controller.loadUrl(
+                    urlRequest: URLRequest(
+                      url: WebUri.uri(widget.uri),
+                    ),
+                  );
+                },
+                onUpdateVisitedHistory: (controller, url, isReload) {
+                  _updateNavigation(controller);
+                },
+                onDownloadStarting: (controller, downloadStartRequest) async {
+                  final uri = downloadStartRequest.url.uriValue;
+                  if (!await canLaunchUrl(uri)) return null;
+
+                  await launchUrl(
+                    uri,
+                    mode: LaunchMode.externalApplication,
+                  );
+                  return DownloadStartResponse(handled: true);
+                },
+                onLoadStop: widget.onLoadStop,
+              )
+          },
+        ),
+        bottomNavigationBar: WebBrowserNavigationButtons(
+          goForward: _canGoForward ? controller?.goForward : null,
+          goBack: _canGoBack ? controller?.goBack : null,
         ),
       ),
     );
