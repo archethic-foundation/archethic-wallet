@@ -1,6 +1,4 @@
 import 'package:aewallet/infrastructure/datasources/preferences.hive.dart';
-import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/util/universal_platform.dart';
 import 'package:flutter/material.dart';
@@ -63,15 +61,6 @@ class SecurityManager {
         onPressed: () async {
           await preferences.setHasShownRootWarning(true);
         },
-      );
-    } else {
-      UIUtil.showSnackbar(
-        localizations.rootWarning,
-        context,
-        ref,
-        ArchethicTheme.text,
-        ArchethicTheme.snackBarShadow,
-        duration: const Duration(seconds: 10),
       );
     }
   }

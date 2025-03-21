@@ -66,20 +66,15 @@ class _IntroBackupSeedState extends ConsumerState<IntroBackupSeedPage>
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        BtnFooterPrimary(
-          buttonText: localizations.iveBackedItUp,
-          onTap: () async {
-            context.go(
-              IntroBackupConfirm.routerPage,
-              extra: {'name': widget.name, 'seed': seed},
-            );
-          },
-          isLocked: isPressed,
-        ),
-      ],
+    return BtnFooterPrimary(
+      buttonText: localizations.iveBackedItUp,
+      onTap: () async {
+        context.go(
+          IntroBackupConfirm.routerPage,
+          extra: {'name': widget.name, 'seed': seed},
+        );
+      },
+      isLocked: isPressed,
     );
   }
 

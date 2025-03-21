@@ -1,10 +1,11 @@
 import 'package:aewallet/ui/figma_components/box/box_dark.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:numeral/numeral.dart';
 
 class EarnTotalDeposited extends ConsumerWidget {
   const EarnTotalDeposited({
@@ -29,7 +30,7 @@ class EarnTotalDeposited extends ConsumerWidget {
             );
           }
           return Text(
-            '\$${farmLock.estimateLPTokenInFiat.numeral(digits: 0)}',
+            '\$${farmLock.estimateLPTokenInFiat.formatNumber(precision: 0).replaceAll('.', '')}',
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   fontSize: 20,
                   fontWeight: FontWeightTelegraf.fontWeightBold,

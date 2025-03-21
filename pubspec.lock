@@ -50,10 +50,10 @@ packages:
     dependency: "direct main"
     description:
       name: app_version_update
-      sha256: e0bcb086515a1d9948bf3219343ea607d2a5c09bd6f280d4a5265d576b2609ae
+      sha256: "9277bd6539b4ced74fbcabd5d6aba47b183b2f0ebc56e1d2689be0e6025ab458"
       url: "https://pub.dev"
     source: hosted
-    version: "6.1.2"
+    version: "6.1.3"
   archethic_dapp_framework_flutter:
     dependency: "direct main"
     description:
@@ -130,10 +130,10 @@ packages:
     dependency: "direct main"
     description:
       name: bip39_mnemonic
-      sha256: "24855a62fb9dd930f697063a274e084b0a574e1cc55ec270ca4756f579ab512c"
+      sha256: e36c1f1fecd938d433b8f7a1e74d5bc721e16816b59dbac5b31307f079d3b3bc
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.6"
+    version: "3.0.9"
   boolean_selector:
     dependency: transitive
     description:
@@ -406,14 +406,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.8"
-  daunused:
-    dependency: "direct dev"
-    description:
-      name: daunused
-      sha256: "67879471d67faa432009dbedb3a853f62a5cdf38f74fe05920a9578e3f9af862"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.6.1"
   dbus:
     dependency: transitive
     description:
@@ -554,10 +546,10 @@ packages:
     dependency: "direct main"
     description:
       name: fl_chart
-      sha256: "00b74ae680df6b1135bdbea00a7d1fc072a9180b7c3f3702e4b19a9943f5ed7d"
+      sha256: "5276944c6ffc975ae796569a826c38a62d2abcf264e26b88fa6f482e107f4237"
       url: "https://pub.dev"
     source: hosted
-    version: "0.66.2"
+    version: "0.70.2"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -583,10 +575,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_hooks
-      sha256: cde36b12f7188c85286fba9b38cc5a902e7279f36dd676967106c041dc9dde70
+      sha256: b772e710d16d7a20c0740c4f855095026b31c7eb5ba3ab67d2bd52021cd9461d
       url: "https://pub.dev"
     source: hosted
-    version: "0.20.5"
+    version: "0.21.2"
   flutter_inappwebview:
     dependency: "direct main"
     description:
@@ -1027,7 +1019,7 @@ packages:
     source: hosted
     version: "1.0.5"
   js:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: js
       sha256: f2c445dce49627136094980615a031419f7f3eb393237e4ecd97ac15dea343f3
@@ -1851,10 +1843,10 @@ packages:
     dependency: "direct main"
     description:
       name: unorm_dart
-      sha256: "5b35bff83fce4d76467641438f9e867dc9bcfdb8c1694854f230579d68cd8f4b"
+      sha256: "23d8bf65605401a6a32cff99435fed66ef3dab3ddcad3454059165df46496a3b"
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.0"
+    version: "0.3.0"
   uri:
     dependency: transitive
     description:

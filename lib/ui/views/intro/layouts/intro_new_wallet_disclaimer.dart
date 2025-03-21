@@ -34,19 +34,14 @@ class IntroNewWalletDisclaimer extends ConsumerWidget
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        BtnFooterPrimary(
-          buttonText: localizations.readAndUnderstandButton,
-          onTap: () {
-            context.go(
-              IntroBackupSeedPage.routerPage,
-              extra: name,
-            );
-          },
-        ),
-      ],
+    return BtnFooterPrimary(
+      buttonText: localizations.readAndUnderstandButton,
+      onTap: () {
+        context.go(
+          IntroBackupSeedPage.routerPage,
+          extra: name,
+        );
+      },
     );
   }
 
