@@ -15,6 +15,7 @@ import 'package:aewallet/ui/views/main/account_tab.dart';
 import 'package:aewallet/ui/views/main/bloc/providers.dart';
 import 'package:aewallet/ui/views/main/components/home_providers_keepalive.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar.dart';
+import 'package:aewallet/ui/views/main/components/notification_zone.dart';
 import 'package:aewallet/ui/views/main/components/recovery_phrase_banner.dart';
 import 'package:aewallet/ui/views/main/transactions_tab.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
@@ -187,25 +188,34 @@ class _HomePageState extends ConsumerState<HomePage>
           opacity: 0.7,
         ),
       ),
-      child: TabBarView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: tabController,
-        children: const [
-          Stack(
-            alignment: Alignment.topCenter,
-            children: [
-              AccountTab(),
-              Positioned(
-                bottom: 0,
-                child: RecoveryPhraseBanner(),
+      child: SafeArea(
+        child: Column(
+          children: [
+            const NotificationZone(),
+            Expanded(
+              child: TabBarView(
+                physics: const NeverScrollableScrollPhysics(),
+                controller: tabController,
+                children: const [
+                  Stack(
+                    alignment: Alignment.topCenter,
+                    children: [
+                      AccountTab(),
+                      Positioned(
+                        bottom: 0,
+                        child: RecoveryPhraseBanner(),
+                      ),
+                    ],
+                  ),
+                  TransactionsTab(),
+                  SwapTab(),
+                  EarnTab(),
+                  AirdropTab(),
+                ],
               ),
-            ],
-          ),
-          TransactionsTab(),
-          SwapTab(),
-          EarnTab(),
-          AirdropTab(),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }
