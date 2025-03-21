@@ -13,6 +13,7 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_icon_refresh.dart';
 import 'package:aewallet/ui/views/main/components/app_update_button.dart';
+import 'package:aewallet/ui/views/main/components/intercom_button.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar_account.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar_basic.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar_transactions.dart';
@@ -44,6 +45,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
           key: const Key('account'),
           actions: [
             if (UniversalPlatform.isMobile) const AppUpdateButton(),
+            const IntercomButton(),
             const _RefreshButton(),
           ],
           title: const MainAppBarAccount(),
