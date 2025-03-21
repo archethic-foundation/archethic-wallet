@@ -3,7 +3,7 @@ description: Fully decentralized and cryptocurrency non-custodial hot wallet tha
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 4.11.4+657
+version: 4.12.0+657
 
 environment:
   sdk: ">=3.6.0 <4.0.0"
@@ -145,6 +145,9 @@ dependencies:
   # Convert all *.svg icons from dir to icon-font (.ttf) and generates flutter compatible dart class
   icon_font_generator: ^3.2.0
 
+  # Flutter wrapper for Intercom Android, iOS, and Web projects.
+  intercom_flutter: ^9.2.7
+
   # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
   intl: ^0.19.0
 
@@ -272,7 +275,7 @@ msix_config:
   publisher_display_name: Archethic Technologies SARL
   identity_name: ArchethicTechnologiesSARL.ArchethicWallet
   publisher: CN=9687A561-7463-4BA7-BD4D-A04574BAF854
-  msix_version: 4.114.657.0
+  msix_version: 4.120.657.0
   icons_background_color: "#000000"
   languages: en-us
   store: true

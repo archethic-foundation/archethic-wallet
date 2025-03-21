@@ -45,8 +45,8 @@ jobs:
           mv web_chrome_extension/public/manifest_tmp.json web_chrome_extension/public/manifest.json
 
       - name: Build Chrome Extension
-        run: bash ./scripts/build_chrome_extension.sh --dart-define=AIRDROP_API_SECRET=${{ secrets.AIRDROP_API_SECRET }}
-
+        run: bash ./scripts/build_chrome_extension.sh --dart-define=AIRDROP_API_SECRET=${{ secrets.AIRDROP_API_SECRET }} --dart-define=${{ secrets.INTERCOM_APP_ID }} --dart-define=${{ secrets.INTERCOM_ANDROID_KEY }} --dart-define=${{ secrets.INTERCOM_IOS_KEY }}",
+ 
       - name: Get Version from pubspec.yaml
         id: get_version
         run: |
