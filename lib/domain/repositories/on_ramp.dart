@@ -13,3 +13,14 @@ abstract class OnRampRepository {
 
   Future<void> sendEventOnrampWithFiat({required String provider});
 }
+
+abstract class OnRampProviderRepository {
+  Future<List<OnRampProviderToken>> tokens();
+
+  Uri checkoutUri({
+    required String depositAddress,
+    required String tokenId,
+    required String chainId,
+  });
+  Uri orderTrackUrl({required String orderId});
+}

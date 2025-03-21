@@ -1,15 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'package:aewallet/application/onramp/banxa.dart';
 import 'package:aewallet/application/onramp/onramp.dart';
-import 'package:aewallet/application/onramp/transak.dart';
+import 'package:aewallet/domain/models/onramp.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
-import 'package:aewallet/ui/figma_components/checkbox/checkbox_confirm.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
-import 'package:aewallet/ui/figma_components/message_box/message_box.dart';
 import 'package:aewallet/ui/figma_components/numbered_list/numbered_list_item.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/views/buy/bloc/buy_with_fiat_form_provider.dart';
 import 'package:aewallet/ui/views/buy/layouts/components/transaction_history.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
@@ -28,6 +24,7 @@ class BuyWithFiatSheet extends ConsumerWidget
     super.key,
   });
   static const String routerPage = '/buy_with_fiat';
+  static const selectedProvider = OnRampProvider.transak;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,43 +39,40 @@ class BuyWithFiatSheet extends ConsumerWidget
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final depositAddress = ref.watch(onrampDepositAddressProvider).valueOrNull;
-    final onrampFavoriteSetup =
-        ref.watch(onrampProviderFavoriteSetupProvider('banxa')).valueOrNull;
-
-    final isWebviewSupported = ref.watch(isBanxaWebviewSupportedProvider);
+    final onrampSelectedToken = ref
+        .watch(onrampProviderFavoriteTokenProvider(selectedProvider))
+        .valueOrNull;
 
     return BtnFooterPrimary(
       buttonText: localizations.onrampWithFiatBuyNowButton,
       key: const Key('buyNow'),
-      isLocked: !isWebviewSupported &&
-          (onrampFavoriteSetup == null ||
-              depositAddress == null ||
-              !ref.watch(buyWithFiatFormProvider).disclaimerAcknowledged),
-      showProgressIndicator: onrampFavoriteSetup == null,
-      onTap: () async => switch (onrampFavoriteSetup) {
+      isLocked: onrampSelectedToken == null || depositAddress == null,
+      showProgressIndicator: onrampSelectedToken == null,
+      onTap: () async => switch (onrampSelectedToken) {
         null => null,
-        final setup => _goToTransak(
+        final token => _goToCheckout(
             context: context,
             ref: ref,
-            isWebviewSupported: isWebviewSupported,
             depositAddress: depositAddress!,
-            chainId: setup.chainId,
-            tokenId: setup.tokenId,
+            token: token,
           )
       },
     );
   }
 
-  Future<void> _goToTransak({
+  Future<void> _goToCheckout({
     required BuildContext context,
     required WidgetRef ref,
-    required bool isWebviewSupported,
     required String depositAddress,
-    required String chainId,
-    required String tokenId,
+    required OnRampProviderToken token,
   }) async {
-    final uri =
-        ref.read(transakWebpageUriProvider(depositAddress: depositAddress));
+    final uri = ref
+        .read(onrampProviderRepositoryProvider(selectedProvider))
+        .checkoutUri(
+          depositAddress: depositAddress,
+          chainId: token.chain.providerChainId,
+          tokenId: token.providerTokenId,
+        );
     await launchUrl(uri);
   }
 
@@ -100,16 +94,23 @@ class BuyWithFiatSheet extends ConsumerWidget
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final form = ref.watch(buyWithFiatFormProvider);
     final textTheme = Theme.of(context).textTheme;
-    final isWebviewSupported = ref.watch(isBanxaWebviewSupportedProvider);
+    final selectedToken = ref
+        .watch(
+          onrampProviderFavoriteTokenProvider(selectedProvider),
+        )
+        .valueOrNull;
 
-    final feeRate = ref.watch(
-      onrampProviderFavoriteSetupProvider('banxa').select(
-        // TODO(Chralu): use fee related to selected chain
-        (setup) => setup.valueOrNull?.feeRate,
-      ),
-    );
+    final feeRate = switch (selectedToken) {
+      null => null,
+      OnRampProviderToken _ => ref.watch(
+          onrampEvmSetupProvider.select(
+            (setup) => setup.valueOrNull
+                ?.findChain(selectedToken.chain.chainId)
+                ?.feeRate,
+          ),
+        )
+    };
 
     return SingleChildScrollView(
       child: Padding(
@@ -180,35 +181,6 @@ class BuyWithFiatSheet extends ConsumerWidget
                   ],
                 ),
               ),
-              const SizedBox(height: 30),
-              if (!isWebviewSupported) ...[
-                MessageBox.withRichText(
-                  messageBoxType: MessageBoxType.warning,
-                  text: [
-                    TextSpan(
-                      text: localizations.onrampWithFiatBanxaWarning1,
-                      style: textTheme.bodyMedium!.copyWith(
-                        fontWeight: FontWeightTelegraf.fontWeightBold,
-                      ),
-                    ),
-                    TextSpan(
-                      text: localizations.onrampWithFiatBanxaWarning2,
-                      style: textTheme.bodyMedium,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 30),
-                CheckboxConfirm(
-                  onChanged: ref
-                      .read(buyWithFiatFormProvider.notifier)
-                      .acknowledgeDisclaimer,
-                  value: form.disclaimerAcknowledged,
-                  text: Text(
-                    localizations.onrampWithFiatBanxaWarningApproval,
-                    style: textTheme.bodyMedium,
-                  ),
-                ),
-              ],
               const SizedBox(height: 30),
               OnRampTransactionHistory(
                 Text(

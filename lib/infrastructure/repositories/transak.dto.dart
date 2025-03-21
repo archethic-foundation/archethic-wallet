@@ -10,7 +10,7 @@ extension OnRampProviderOrderFromDTO on Map<String, dynamic> {
         'status': final status,
       } =>
         (
-          providerId: 'transak',
+          onRampProvider: OnRampProvider.transak,
           orderId: orderId,
           cryptoSymbol: cryptoSymbol,
           cryptoAmount: double.parse(cryptoAmount),

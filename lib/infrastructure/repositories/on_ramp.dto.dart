@@ -20,36 +20,6 @@ OnRampTokenDisplayData _onRampEvmTokenDisplayFromJson(
         ),
     };
 
-OnRampProviderChain _onRampEvmProviderChainFromJson(
-  dynamic json,
-) =>
-    switch (json) {
-      {
-        'id': final String chainId,
-        'tokens': final Map<String, dynamic> jsonTokens,
-      } =>
-        (
-          id: chainId,
-          tokens: jsonTokens.map(
-            (key, json) => MapEntry(key, _onRampEvmProviderTokenFromJson(json)),
-          ),
-        ),
-      _ => throw FormatException(
-          'Invalid JSON format for OnRampEvmProviderChain',
-          json,
-        )
-    };
-OnRampProviderToken _onRampEvmProviderTokenFromJson(
-  dynamic json,
-) =>
-    switch (json) {
-      {'id': final String tokenId} => (id: tokenId),
-      _ => throw FormatException(
-          'Invalid JSON format for OnRampEvmProviderToken',
-          json,
-        )
-    };
-
 OnRampChain _onRampEvmChainFromJson(
   MapEntry<String, dynamic> jsonEntry,
 ) {
@@ -69,7 +39,6 @@ OnRampChain _onRampEvmChainFromJson(
       feeRate: 0.0,
       svgIcon: jsonEntry.value['svg_icon'] ?? '',
       tokens: tokens,
-      providers: {},
       available: false,
     );
   }
@@ -81,7 +50,6 @@ OnRampChain _onRampEvmChainFromJson(
       'svg_icon': final String svgIcon,
       'display_name': final String displayName,
       'tokens': final Map<String, dynamic> tokens,
-      'provider_setup': final Map<String, dynamic> providers,
     } =>
       (
         id: jsonEntry.key,
@@ -90,9 +58,6 @@ OnRampChain _onRampEvmChainFromJson(
         feeRate: fee,
         svgIcon: svgIcon,
         tokens: tokens.entries.map(_onRampEvmTokenFromJson).toList(),
-        providers: providers.map(
-          (key, json) => MapEntry(key, _onRampEvmProviderChainFromJson(json)),
-        ),
         available: available,
       ),
     _ => throw FormatException(
@@ -110,7 +75,7 @@ OnRampToken _onRampEvmTokenFromJson(MapEntry<String, dynamic> jsonEntry) =>
       } =>
         (
           id: jsonEntry.key,
-          address: address,
+          address: address.toLowerCase(),
           decimals: decimals,
         ),
       _ => throw const FormatException(
@@ -139,7 +104,7 @@ OnRampDeposit _onRampDepositFromJson(Map<String, dynamic>? json) =>
         (
           id: depositId,
           depositDate: DateTime.parse(timestamp),
-          depositTxHash: txHash,
+          depositTxHash: txHash.toLowerCase(),
           depositChainId: chainId,
           depositTokenId: tokenId,
           depositAmount: int.parse(amount),

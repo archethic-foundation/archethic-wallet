@@ -9,6 +9,7 @@ import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/domain/models/onramp.dart';
 import 'package:aewallet/domain/repositories/on_ramp.dart';
 import 'package:aewallet/infrastructure/repositories/on_ramp.repository.dart';
+import 'package:aewallet/infrastructure/repositories/on_ramp_provider.transak.repository.dart';
 import 'package:aewallet/main.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
@@ -17,33 +18,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'onramp.g.dart';
-
-// TODO(Chralu): save in local database
-@riverpod
-class OnRampProviderOrders extends _$OnRampProviderOrders {
-  @override
-  List<OnRampProviderOrder> build() => [];
-
-  void add(OnRampProviderOrder order) {
-    if (state.any(
-      (element) => _isSameOrder(element, order),
-    )) {
-      return;
-    }
-
-    state = [
-      ...state,
-      order,
-    ];
-  }
-
-  void dismiss(OnRampProviderOrder order) {
-    state = state.whereNot((element) => _isSameOrder(element, order)).toList();
-  }
-
-  bool _isSameOrder(OnRampProviderOrder o1, OnRampProviderOrder o2) =>
-      o1.orderId == o2.orderId && o1.providerId == o2.providerId;
-}
+part 'onramp_provider.dart';
 
 @riverpod
 ({bool fromCrypto, bool fromFiat}) onrampFeatureFlag(Ref ref) => (
@@ -54,7 +29,7 @@ class OnRampProviderOrders extends _$OnRampProviderOrders {
               .valueOrNull ??
           false,
       fromFiat: ref
-              .watch(getFeatureFlagProvider(kApplicationCode, 'on-ramp-fiat-2'))
+              .watch(getFeatureFlagProvider(kApplicationCode, 'on-ramp-fiat-3'))
               .valueOrNull ??
           false,
     );
@@ -108,45 +83,6 @@ Future<OnRampSetup> onrampEvmSetup(
 ) async {
   final repository = await ref.watch(onRampRepositoryProvider.future);
   return repository.evmSetup;
-}
-
-@riverpod
-Future<OnRampProvider> onrampProviderSetup(Ref ref, String providerId) async {
-  final setup = await ref.watch(onrampEvmSetupProvider.future);
-
-  final entries = setup.chains
-      .where((chainSetup) => chainSetup.providers[providerId] != null)
-      .map(
-        (chainSetup) =>
-            MapEntry(chainSetup.id, chainSetup.providers[providerId]!),
-      );
-
-  return Map.fromEntries(entries);
-}
-
-@riverpod
-Future<({String chainId, String tokenId, double feeRate})?>
-    onrampProviderFavoriteSetup(
-  Ref ref,
-  String providerId,
-) async {
-  final setup = await ref.watch(onrampProviderSetupProvider(providerId).future);
-  final chainSetup = setup.entries.firstOrNull;
-  final chainId = chainSetup?.value.id;
-  final tokenSetup = chainSetup?.value.tokens.entries.firstOrNull;
-  final tokenId = tokenSetup?.value.id;
-
-  final evmSetup = await ref.watch(onrampEvmSetupProvider.future);
-
-  if (chainId == null || tokenId == null) return null;
-
-  final feeRate = evmSetup.chains
-      .firstWhere(
-        (chain) => chain.id == chainSetup?.key,
-      )
-      .feeRate;
-
-  return (chainId: chainId, tokenId: tokenId, feeRate: feeRate);
 }
 
 @riverpod

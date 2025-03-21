@@ -1,5 +1,11 @@
 import 'dart:math' as math;
 
+import 'package:collection/collection.dart';
+
+enum OnRampProvider {
+  transak,
+}
+
 enum OnRampProviderOrderStatus {
   canceled,
   processing,
@@ -8,7 +14,7 @@ enum OnRampProviderOrderStatus {
 }
 
 typedef OnRampProviderOrder = ({
-  String providerId,
+  OnRampProvider onRampProvider,
   String orderId,
   double cryptoAmount,
   String cryptoSymbol,
@@ -20,13 +26,20 @@ typedef OnRampSetup = ({
   List<OnRampChain> chains,
 });
 
-typedef OnRampProvider = Map<String, OnRampProviderChain>;
+extension OnRampSetupExt on OnRampSetup {
+  OnRampChain? findChain(int chainId) =>
+      chains.firstWhereOrNull((chain) => chain.chainId == chainId);
+}
 
 typedef OnRampProviderChain = ({
-  String id,
-  Map<String, OnRampProviderToken> tokens,
+  int chainId,
+  String providerChainId, // ID used by the provider for that chain
 });
-typedef OnRampProviderToken = ({String id});
+typedef OnRampProviderToken = ({
+  String address,
+  String providerTokenId, // ID used by the provider for that token
+  OnRampProviderChain chain,
+});
 
 typedef OnRampChain = ({
   String id,
@@ -35,7 +48,6 @@ typedef OnRampChain = ({
   String svgIcon,
   double feeRate,
   List<OnRampToken> tokens,
-  Map<String, OnRampProviderChain> providers,
   bool available,
 });
 

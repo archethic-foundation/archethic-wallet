@@ -6,7 +6,7 @@ part of 'onramp.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$onrampFeatureFlagHash() => r'e32063301dbe49f3e1f8227ece837ca6d60efe3a';
+String _$onrampFeatureFlagHash() => r'f9cff88010409bd61de5c7eb2b1aa1dfc1eeb104';
 
 /// See also [onrampFeatureFlag].
 @ProviderFor(onrampFeatureFlag)
@@ -60,8 +60,8 @@ final onrampEvmSetupProvider = AutoDisposeFutureProvider<OnRampSetup>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef OnrampEvmSetupRef = AutoDisposeFutureProviderRef<OnRampSetup>;
-String _$onrampProviderSetupHash() =>
-    r'82d12f5d90e4978618c3bc9600c4a579cea57688';
+String _$onrampChainsForTokenHash() =>
+    r'616a87fc7caba8621ed71d34c953f0b691c2da24';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -83,281 +83,6 @@ class _SystemHash {
     return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
   }
 }
-
-/// See also [onrampProviderSetup].
-@ProviderFor(onrampProviderSetup)
-const onrampProviderSetupProvider = OnrampProviderSetupFamily();
-
-/// See also [onrampProviderSetup].
-class OnrampProviderSetupFamily extends Family<AsyncValue<OnRampProvider>> {
-  /// See also [onrampProviderSetup].
-  const OnrampProviderSetupFamily();
-
-  /// See also [onrampProviderSetup].
-  OnrampProviderSetupProvider call(
-    String providerId,
-  ) {
-    return OnrampProviderSetupProvider(
-      providerId,
-    );
-  }
-
-  @override
-  OnrampProviderSetupProvider getProviderOverride(
-    covariant OnrampProviderSetupProvider provider,
-  ) {
-    return call(
-      provider.providerId,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'onrampProviderSetupProvider';
-}
-
-/// See also [onrampProviderSetup].
-class OnrampProviderSetupProvider
-    extends AutoDisposeFutureProvider<OnRampProvider> {
-  /// See also [onrampProviderSetup].
-  OnrampProviderSetupProvider(
-    String providerId,
-  ) : this._internal(
-          (ref) => onrampProviderSetup(
-            ref as OnrampProviderSetupRef,
-            providerId,
-          ),
-          from: onrampProviderSetupProvider,
-          name: r'onrampProviderSetupProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$onrampProviderSetupHash,
-          dependencies: OnrampProviderSetupFamily._dependencies,
-          allTransitiveDependencies:
-              OnrampProviderSetupFamily._allTransitiveDependencies,
-          providerId: providerId,
-        );
-
-  OnrampProviderSetupProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.providerId,
-  }) : super.internal();
-
-  final String providerId;
-
-  @override
-  Override overrideWith(
-    FutureOr<OnRampProvider> Function(OnrampProviderSetupRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: OnrampProviderSetupProvider._internal(
-        (ref) => create(ref as OnrampProviderSetupRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        providerId: providerId,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeFutureProviderElement<OnRampProvider> createElement() {
-    return _OnrampProviderSetupProviderElement(this);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is OnrampProviderSetupProvider &&
-        other.providerId == providerId;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, providerId.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin OnrampProviderSetupRef on AutoDisposeFutureProviderRef<OnRampProvider> {
-  /// The parameter `providerId` of this provider.
-  String get providerId;
-}
-
-class _OnrampProviderSetupProviderElement
-    extends AutoDisposeFutureProviderElement<OnRampProvider>
-    with OnrampProviderSetupRef {
-  _OnrampProviderSetupProviderElement(super.provider);
-
-  @override
-  String get providerId => (origin as OnrampProviderSetupProvider).providerId;
-}
-
-String _$onrampProviderFavoriteSetupHash() =>
-    r'0f46fcbf0eaec6a804c846e85f461a0d03be6987';
-
-/// See also [onrampProviderFavoriteSetup].
-@ProviderFor(onrampProviderFavoriteSetup)
-const onrampProviderFavoriteSetupProvider = OnrampProviderFavoriteSetupFamily();
-
-/// See also [onrampProviderFavoriteSetup].
-class OnrampProviderFavoriteSetupFamily extends Family<
-    AsyncValue<({String chainId, String tokenId, double feeRate})?>> {
-  /// See also [onrampProviderFavoriteSetup].
-  const OnrampProviderFavoriteSetupFamily();
-
-  /// See also [onrampProviderFavoriteSetup].
-  OnrampProviderFavoriteSetupProvider call(
-    String providerId,
-  ) {
-    return OnrampProviderFavoriteSetupProvider(
-      providerId,
-    );
-  }
-
-  @override
-  OnrampProviderFavoriteSetupProvider getProviderOverride(
-    covariant OnrampProviderFavoriteSetupProvider provider,
-  ) {
-    return call(
-      provider.providerId,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'onrampProviderFavoriteSetupProvider';
-}
-
-/// See also [onrampProviderFavoriteSetup].
-class OnrampProviderFavoriteSetupProvider extends AutoDisposeFutureProvider<
-    ({String chainId, String tokenId, double feeRate})?> {
-  /// See also [onrampProviderFavoriteSetup].
-  OnrampProviderFavoriteSetupProvider(
-    String providerId,
-  ) : this._internal(
-          (ref) => onrampProviderFavoriteSetup(
-            ref as OnrampProviderFavoriteSetupRef,
-            providerId,
-          ),
-          from: onrampProviderFavoriteSetupProvider,
-          name: r'onrampProviderFavoriteSetupProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$onrampProviderFavoriteSetupHash,
-          dependencies: OnrampProviderFavoriteSetupFamily._dependencies,
-          allTransitiveDependencies:
-              OnrampProviderFavoriteSetupFamily._allTransitiveDependencies,
-          providerId: providerId,
-        );
-
-  OnrampProviderFavoriteSetupProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.providerId,
-  }) : super.internal();
-
-  final String providerId;
-
-  @override
-  Override overrideWith(
-    FutureOr<({String chainId, String tokenId, double feeRate})?> Function(
-            OnrampProviderFavoriteSetupRef provider)
-        create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: OnrampProviderFavoriteSetupProvider._internal(
-        (ref) => create(ref as OnrampProviderFavoriteSetupRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        providerId: providerId,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeFutureProviderElement<
-      ({String chainId, String tokenId, double feeRate})?> createElement() {
-    return _OnrampProviderFavoriteSetupProviderElement(this);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is OnrampProviderFavoriteSetupProvider &&
-        other.providerId == providerId;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, providerId.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin OnrampProviderFavoriteSetupRef on AutoDisposeFutureProviderRef<
-    ({String chainId, String tokenId, double feeRate})?> {
-  /// The parameter `providerId` of this provider.
-  String get providerId;
-}
-
-class _OnrampProviderFavoriteSetupProviderElement
-    extends AutoDisposeFutureProviderElement<
-        ({String chainId, String tokenId, double feeRate})?>
-    with OnrampProviderFavoriteSetupRef {
-  _OnrampProviderFavoriteSetupProviderElement(super.provider);
-
-  @override
-  String get providerId =>
-      (origin as OnrampProviderFavoriteSetupProvider).providerId;
-}
-
-String _$onrampChainsForTokenHash() =>
-    r'616a87fc7caba8621ed71d34c953f0b691c2da24';
 
 /// See also [onrampChainsForToken].
 @ProviderFor(onrampChainsForToken)
@@ -978,8 +703,423 @@ final onrampTransfersProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef OnrampTransfersRef = AutoDisposeStreamProviderRef<List<OnRampDeposit>>;
+String _$onrampProviderRepositoryHash() =>
+    r'176fb88df0f5b5f5e80f76a29127850352a7998d';
+
+/// See also [onrampProviderRepository].
+@ProviderFor(onrampProviderRepository)
+const onrampProviderRepositoryProvider = OnrampProviderRepositoryFamily();
+
+/// See also [onrampProviderRepository].
+class OnrampProviderRepositoryFamily extends Family<OnRampProviderRepository> {
+  /// See also [onrampProviderRepository].
+  const OnrampProviderRepositoryFamily();
+
+  /// See also [onrampProviderRepository].
+  OnrampProviderRepositoryProvider call(
+    OnRampProvider onRampProvider,
+  ) {
+    return OnrampProviderRepositoryProvider(
+      onRampProvider,
+    );
+  }
+
+  @override
+  OnrampProviderRepositoryProvider getProviderOverride(
+    covariant OnrampProviderRepositoryProvider provider,
+  ) {
+    return call(
+      provider.onRampProvider,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'onrampProviderRepositoryProvider';
+}
+
+/// See also [onrampProviderRepository].
+class OnrampProviderRepositoryProvider
+    extends AutoDisposeProvider<OnRampProviderRepository> {
+  /// See also [onrampProviderRepository].
+  OnrampProviderRepositoryProvider(
+    OnRampProvider onRampProvider,
+  ) : this._internal(
+          (ref) => onrampProviderRepository(
+            ref as OnrampProviderRepositoryRef,
+            onRampProvider,
+          ),
+          from: onrampProviderRepositoryProvider,
+          name: r'onrampProviderRepositoryProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$onrampProviderRepositoryHash,
+          dependencies: OnrampProviderRepositoryFamily._dependencies,
+          allTransitiveDependencies:
+              OnrampProviderRepositoryFamily._allTransitiveDependencies,
+          onRampProvider: onRampProvider,
+        );
+
+  OnrampProviderRepositoryProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.onRampProvider,
+  }) : super.internal();
+
+  final OnRampProvider onRampProvider;
+
+  @override
+  Override overrideWith(
+    OnRampProviderRepository Function(OnrampProviderRepositoryRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: OnrampProviderRepositoryProvider._internal(
+        (ref) => create(ref as OnrampProviderRepositoryRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        onRampProvider: onRampProvider,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeProviderElement<OnRampProviderRepository> createElement() {
+    return _OnrampProviderRepositoryProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is OnrampProviderRepositoryProvider &&
+        other.onRampProvider == onRampProvider;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, onRampProvider.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin OnrampProviderRepositoryRef
+    on AutoDisposeProviderRef<OnRampProviderRepository> {
+  /// The parameter `onRampProvider` of this provider.
+  OnRampProvider get onRampProvider;
+}
+
+class _OnrampProviderRepositoryProviderElement
+    extends AutoDisposeProviderElement<OnRampProviderRepository>
+    with OnrampProviderRepositoryRef {
+  _OnrampProviderRepositoryProviderElement(super.provider);
+
+  @override
+  OnRampProvider get onRampProvider =>
+      (origin as OnrampProviderRepositoryProvider).onRampProvider;
+}
+
+String _$onrampProviderTokensHash() =>
+    r'c261834b7f4bfd89384777313b5d1e3838fccf05';
+
+/// See also [onrampProviderTokens].
+@ProviderFor(onrampProviderTokens)
+const onrampProviderTokensProvider = OnrampProviderTokensFamily();
+
+/// See also [onrampProviderTokens].
+class OnrampProviderTokensFamily
+    extends Family<AsyncValue<List<OnRampProviderToken>>> {
+  /// See also [onrampProviderTokens].
+  const OnrampProviderTokensFamily();
+
+  /// See also [onrampProviderTokens].
+  OnrampProviderTokensProvider call(
+    OnRampProvider onRampProvider,
+  ) {
+    return OnrampProviderTokensProvider(
+      onRampProvider,
+    );
+  }
+
+  @override
+  OnrampProviderTokensProvider getProviderOverride(
+    covariant OnrampProviderTokensProvider provider,
+  ) {
+    return call(
+      provider.onRampProvider,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'onrampProviderTokensProvider';
+}
+
+/// See also [onrampProviderTokens].
+class OnrampProviderTokensProvider
+    extends AutoDisposeFutureProvider<List<OnRampProviderToken>> {
+  /// See also [onrampProviderTokens].
+  OnrampProviderTokensProvider(
+    OnRampProvider onRampProvider,
+  ) : this._internal(
+          (ref) => onrampProviderTokens(
+            ref as OnrampProviderTokensRef,
+            onRampProvider,
+          ),
+          from: onrampProviderTokensProvider,
+          name: r'onrampProviderTokensProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$onrampProviderTokensHash,
+          dependencies: OnrampProviderTokensFamily._dependencies,
+          allTransitiveDependencies:
+              OnrampProviderTokensFamily._allTransitiveDependencies,
+          onRampProvider: onRampProvider,
+        );
+
+  OnrampProviderTokensProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.onRampProvider,
+  }) : super.internal();
+
+  final OnRampProvider onRampProvider;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<OnRampProviderToken>> Function(
+            OnrampProviderTokensRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: OnrampProviderTokensProvider._internal(
+        (ref) => create(ref as OnrampProviderTokensRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        onRampProvider: onRampProvider,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<List<OnRampProviderToken>> createElement() {
+    return _OnrampProviderTokensProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is OnrampProviderTokensProvider &&
+        other.onRampProvider == onRampProvider;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, onRampProvider.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin OnrampProviderTokensRef
+    on AutoDisposeFutureProviderRef<List<OnRampProviderToken>> {
+  /// The parameter `onRampProvider` of this provider.
+  OnRampProvider get onRampProvider;
+}
+
+class _OnrampProviderTokensProviderElement
+    extends AutoDisposeFutureProviderElement<List<OnRampProviderToken>>
+    with OnrampProviderTokensRef {
+  _OnrampProviderTokensProviderElement(super.provider);
+
+  @override
+  OnRampProvider get onRampProvider =>
+      (origin as OnrampProviderTokensProvider).onRampProvider;
+}
+
+String _$onrampProviderFavoriteTokenHash() =>
+    r'7c1d9eff6b05caeae12366463d9c02982ca40073';
+
+/// See also [onrampProviderFavoriteToken].
+@ProviderFor(onrampProviderFavoriteToken)
+const onrampProviderFavoriteTokenProvider = OnrampProviderFavoriteTokenFamily();
+
+/// See also [onrampProviderFavoriteToken].
+class OnrampProviderFavoriteTokenFamily
+    extends Family<AsyncValue<OnRampProviderToken?>> {
+  /// See also [onrampProviderFavoriteToken].
+  const OnrampProviderFavoriteTokenFamily();
+
+  /// See also [onrampProviderFavoriteToken].
+  OnrampProviderFavoriteTokenProvider call(
+    OnRampProvider onRampProvider,
+  ) {
+    return OnrampProviderFavoriteTokenProvider(
+      onRampProvider,
+    );
+  }
+
+  @override
+  OnrampProviderFavoriteTokenProvider getProviderOverride(
+    covariant OnrampProviderFavoriteTokenProvider provider,
+  ) {
+    return call(
+      provider.onRampProvider,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'onrampProviderFavoriteTokenProvider';
+}
+
+/// See also [onrampProviderFavoriteToken].
+class OnrampProviderFavoriteTokenProvider
+    extends AutoDisposeFutureProvider<OnRampProviderToken?> {
+  /// See also [onrampProviderFavoriteToken].
+  OnrampProviderFavoriteTokenProvider(
+    OnRampProvider onRampProvider,
+  ) : this._internal(
+          (ref) => onrampProviderFavoriteToken(
+            ref as OnrampProviderFavoriteTokenRef,
+            onRampProvider,
+          ),
+          from: onrampProviderFavoriteTokenProvider,
+          name: r'onrampProviderFavoriteTokenProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$onrampProviderFavoriteTokenHash,
+          dependencies: OnrampProviderFavoriteTokenFamily._dependencies,
+          allTransitiveDependencies:
+              OnrampProviderFavoriteTokenFamily._allTransitiveDependencies,
+          onRampProvider: onRampProvider,
+        );
+
+  OnrampProviderFavoriteTokenProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.onRampProvider,
+  }) : super.internal();
+
+  final OnRampProvider onRampProvider;
+
+  @override
+  Override overrideWith(
+    FutureOr<OnRampProviderToken?> Function(
+            OnrampProviderFavoriteTokenRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: OnrampProviderFavoriteTokenProvider._internal(
+        (ref) => create(ref as OnrampProviderFavoriteTokenRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        onRampProvider: onRampProvider,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<OnRampProviderToken?> createElement() {
+    return _OnrampProviderFavoriteTokenProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is OnrampProviderFavoriteTokenProvider &&
+        other.onRampProvider == onRampProvider;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, onRampProvider.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin OnrampProviderFavoriteTokenRef
+    on AutoDisposeFutureProviderRef<OnRampProviderToken?> {
+  /// The parameter `onRampProvider` of this provider.
+  OnRampProvider get onRampProvider;
+}
+
+class _OnrampProviderFavoriteTokenProviderElement
+    extends AutoDisposeFutureProviderElement<OnRampProviderToken?>
+    with OnrampProviderFavoriteTokenRef {
+  _OnrampProviderFavoriteTokenProviderElement(super.provider);
+
+  @override
+  OnRampProvider get onRampProvider =>
+      (origin as OnrampProviderFavoriteTokenProvider).onRampProvider;
+}
+
 String _$onRampProviderOrdersHash() =>
-    r'773273452b15925dd8ee89139392b0cf2e2f4dc0';
+    r'78ce12699b9382a93a86c57a2265b2f70efccb9d';
 
 /// See also [OnRampProviderOrders].
 @ProviderFor(OnRampProviderOrders)

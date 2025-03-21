@@ -39,8 +39,6 @@ import 'package:aewallet/ui/views/authenticate/set_yubikey_screen.dart';
 import 'package:aewallet/ui/views/buy/layouts/buy_sheet.dart';
 import 'package:aewallet/ui/views/buy/layouts/buy_with_crypto_sheet.dart';
 import 'package:aewallet/ui/views/buy/layouts/buy_with_fiat_sheet.dart';
-import 'package:aewallet/ui/views/buy/layouts/components/banxa_on_ramp_sheet.dart';
-import 'package:aewallet/ui/views/buy/layouts/components/moonpay_on_ramp_sheet.dart';
 import 'package:aewallet/ui/views/dapps_board/layouts/dapps_board_sheet.dart';
 import 'package:aewallet/ui/views/dapps_board/layouts/dapps_board_webview.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_backup_confirm.dart';
