@@ -8,7 +8,6 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:numeral/numeral.dart';
 
 class AirdropPersonalRewards extends ConsumerWidget {
   const AirdropPersonalRewards({super.key});
@@ -50,7 +49,7 @@ class AirdropPersonalRewards extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '\$${personalRewards.numeral(digits: 2)}',
+                  '\$${personalRewards.formatNumber(precision: 2)}',
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         fontSize: 24,
                         fontWeight: FontWeightTelegraf.fontWeightBold,
