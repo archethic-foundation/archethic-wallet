@@ -7,7 +7,7 @@
     "moduleResolution": "node",
     "removeComments": true,
     "declaration": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "skipLibCheck": true,
     "rootDir": "./src",
     "outDir": "./dist",
