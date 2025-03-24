@@ -9,7 +9,7 @@ const __dirname = path.dirname(__filename);
 
 // Copy files from the "public" folder to "dist"
 copyfiles(['public/**/*', 'dist'], { up: 1 }, () => {
-    console.log('📂 Fichiers copiés dans dist/');
+    console.log('📂 Files copied to dist/');
 });
 
 // List of entry files and their global names
@@ -38,7 +38,7 @@ async function buildAll() {
             tsconfig: path.resolve(__dirname, "tsconfig.json"),
         });
 
-        console.log(`✅ Build terminé pour ${entry.file} -> ${entry.globalName}`);
+        console.log(`✅ Build finished for ${entry.file} -> ${entry.globalName}`);
     }
 }
 
