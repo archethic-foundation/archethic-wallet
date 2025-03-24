@@ -1005,5 +1005,9 @@
     "airdropReferralMultiplierTableHeaderMaxReferral": "Max Referral",
     "airdropReferralMultiplierTableHeaderBtn": "Add more in \"Earn\"",
     "airdropWrongReferralCodeProvided": "Oops! The referral code you entered is not recognized. Please verify it with the person who shared it or try a different one.",
-    "airdropNoRewards": "You are currently participating in the airdrop, but no rewards have been assigned to your account yet. To learn how to earn rewards, please refer to the information below."
+    "airdropNoRewards": "You are currently participating in the airdrop, but no rewards have been assigned to your account yet. To learn how to earn rewards, please refer to the information below.",
+    "goToSupportTitle": "Contact Support",
+    "goToSupportDesc": "You will be redirected to the Archethic website, where you can find the support contact option at the bottom right.",
+    "bottomMainMenuSupport": "Support"
+    
 }
