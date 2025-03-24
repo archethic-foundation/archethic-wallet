@@ -977,5 +977,8 @@
     "airdropReferralMultiplierTableHeaderMaxReferral": "Filleuls max",
     "airdropReferralMultiplierTableHeaderBtn": "Ajouter plus dans \"Gagner\"",
     "airdropWrongReferralCodeProvided": "Oups ! Le code de parrainage que vous avez entré n'est pas reconnu. Veuillez le vérifier auprès de la personne qui l'a partagé ou essayez-en un autre.",
-    "airdropNoRewards": "Vous participez actuellement à l'airdrop, mais aucun reward n'a encore été attribué à votre compte. Pour savoir comment gagner des rewards, veuillez consulter les informations ci-dessous."
+    "airdropNoRewards": "Vous participez actuellement à l'airdrop, mais aucun reward n'a encore été attribué à votre compte. Pour savoir comment gagner des rewards, veuillez consulter les informations ci-dessous.",
+    "goToSupportTitle": "Contacter le support",
+    "goToSupportDesc": "Vous allez être redirigé vers le site Archethic, où vous trouverez l'option de contact du support en bas à droite..",
+    "bottomMainMenuSupport": "Support"
 }
