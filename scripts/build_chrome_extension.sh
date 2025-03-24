@@ -8,4 +8,4 @@ BUILD_PARAMS=$@
 
 cd "$SCRIPT_DIRECTORY/../web_chrome_extension" && npm install && npm run clean && npm run build && cd -
 
-. "$SCRIPT_DIRECTORY/lib/build_web.sh" "web_chrome_extension/dist" "build/chrome-extension" "flutter build web --web-renderer html --csp $BUILD_PARAMS"
+. "$SCRIPT_DIRECTORY/lib/build_web.sh" "web_chrome_extension/dist" "build/chrome-extension" "flutter build web --no-web-resources-cdn --csp $BUILD_PARAMS"
