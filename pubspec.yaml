@@ -182,7 +182,7 @@ dependencies:
   moment_dart: ^2.1.0
 
   # Flutter plugin for accessing the NFC features on Android and iOS.
-  nfc_manager: ^3.3.0
+  nfc_manager: ^3.5.0
 
   # A Dart library for Format number into beautiful string, Format the number into a beautiful, readable and short string.
   numeral: ^3.0.0
