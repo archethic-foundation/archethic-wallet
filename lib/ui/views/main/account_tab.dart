@@ -4,7 +4,6 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/address_formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/airdrop/layouts/components/airdrop_banner.dart';
 import 'package:aewallet/ui/views/main/components/menu_widget_wallet.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_list.dart';
@@ -115,7 +114,6 @@ class AccountTab extends ConsumerWidget {
                           height: 10,
                         ),
                         const MenuWidgetWallet(),
-                        const AirdropBanner(),
                         const ExpandablePageView(
                           children: [
                             TokensList(),

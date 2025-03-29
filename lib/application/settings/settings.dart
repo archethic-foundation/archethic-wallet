@@ -30,7 +30,6 @@ class SettingsNotifier extends StateNotifier<Settings> {
           mainScreenCurrentPage: 0,
           showBalances: true,
           showPriceChart: true,
-          activeAirdrop: true,
           earnUserLevel: EarnUserLevelType.beginner,
         ),
       );
@@ -50,10 +49,6 @@ class SettingsNotifier extends StateNotifier<Settings> {
 
   Future<void> setActiveRPCServer(bool activeRPCServer) => _update(
         state.copyWith(activeRPCServer: activeRPCServer),
-      );
-
-  Future<void> setActiveAirdrop(bool activeAirdrop) => _update(
-        state.copyWith(activeAirdrop: activeAirdrop),
       );
 
   Future<void> setEarnUserLevel(EarnUserLevelType earnUserLevel) => _update(

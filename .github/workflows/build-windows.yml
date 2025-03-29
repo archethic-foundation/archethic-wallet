@@ -28,7 +28,7 @@ jobs:
           choco install -y visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64"
 
       - name: Publish to store
-        run: flutter pub run msix:create --store --windows-build-args '--release --dart-define=AIRDROP_API_SECRET=${{ secrets.AIRDROP_API_SECRET }}'
+        run: flutter pub run msix:create --store --windows-build-args '--release'
 
       - name: Copy MSIX file to /artifacts
         run: |

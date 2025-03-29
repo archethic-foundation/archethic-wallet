@@ -34,7 +34,6 @@
     "transactionConfirmed": "Transaction confirmed with %1 replications out of %2",
     "addressCopied": "Address copied",
     "messageCopied": "Message copied",
-    "codeCopied": "Code copied",
     "qrInvalidAddress": "QR code doesn't contain a valid destination",
     "qrInvalidPermissions": "Please Grant Camera Permissions to scan QR Codes",
     "qrUnknownError": "Could not Read QR Code",
@@ -344,7 +343,6 @@
     "bottomMainMenuAccounts": "Accounts",
     "bottomMainMenuSwap": "Swap",
     "bottomMainMenuEarn": "Earn",
-    "bottomMainMenuAirdrop": "Airdrop",
     "tokenDetailMenuEarn": "Earn",
     "localDataMigrationMessage": "Update your current application.\nPlease wait...",
     "nftNotOwnerInfo": "You are not the owner of this NFT",
@@ -511,8 +509,6 @@
     "farmDetailsInfoPeriodEnded": "Farm ended",
     "farmDetailsInfoRemainingReward": "Remaining reward",
     "farmDetailsInfoTokenRewardEarn": "Earn",
-    "poolDetailsInfoSwapFees": "Swap fees",
-    "poolDetailsInfoProtocolFees": "Protocol fees",
     "poolDetailsInfoDeposited": "Deposited",
     "poolDetailsInfoDepositedEquivalent": "Equivalent",
     "finalAmountNotRecovered": "The amount could not be recovered",
@@ -714,99 +710,6 @@
             }
         }
     },
-    "airdropMenu": "$100M Airdrop",
-    "airdropParticipateStepWelcomeDesc1": "$100,000,000 worth of UCO tokens will be distributed to all participants as soon as the UCO price reaches $1. Secure your spot now, and your rewards will be sent directly to your wallet when the airdrop occurs.",
-    "airdropParticipateStepWelcomeHowParticipateTitle": "How to participate?",
-    "airdropParticipateStepWelcomeHowParticipateDesc1": "We believe in the power of communities!",
-    "airdropParticipateStepWelcomeHowParticipateDesc2": "To participate in the airdrop, you'll need a referral code from someone who's already participating.",
-    "airdropParticipateStepWelcomeHowParticipateTextfieldTitle": "Enter a valid Referral Code",
-    "airdropParticipateStepWelcomeHowParticipateBtn": "Participate in the Airdrop",
-    "airdropParticipateStepWelcomeHelpTitle": "Don’t have a Referral Code?",
-    "airdropParticipateStepWelcomeHelpDesc": "Ask the community directly in our Telegram channel if they have a referral code for you:",
-    "airdropParticipateStepWelcomeHelpTGLink": "Open Archethic Telegram",
-    "airdropPerParticipant": "per participant",
-    "airdropParticipants": "participants",
-    "airdropParticipateStepWelcomeConfirmItem1": "I confirm that I am registering for only one airdrop.",
-    "airdropParticipateStepWelcomeConfirmItem2": "I understand that multiple registrations will result in the cancellation of all my associated airdrops.",
-    "airdropParticipateStepWelcomeConfirmItem3": "I have read and accept the ",
-    "airdropParticipateStepWelcomeConfirmItem3link": "Privacy Policy.",
-    "airdropParticipateStepWaitlistTitle": "First of all, in order to join the $100M Airdrop, you have to join the Archethic Cold Wallet waitlist by providing your email below.",
-    "airdropParticipateStepWaitlistDesc2": "Only one airdrop registration is allowed per person. If multiple registrations are detected, all associated airdrops will be canceled.",
-    "airdropParticipateStepWaitlistInputField": "Email Address",
-    "airdropParticipateStepWaitlistBtn": "Next",
-    "airdropParticipateStepConfirmEmailTitle": "Confirm your email address!",
-    "airdropParticipateStepConfirmEmailDesc1": "We have just sent an email to your address {email} that contains a confirmation link. Click the link in order to validate your email.",
-    "@airdropParticipateStepConfirmEmailDesc1": {
-        "placeholders": {
-            "email": {
-                "type": "String"
-            }
-        }
-    },
-    "airdropParticipateStepConfirmEmailDesc2": "Didn’t receive the email? Check your spam folder or ",
-    "airdropParticipateStepConfirmEmailDesc3": "click here to resend the confirmation email.",
-    "airdropParticipateStepConfirmEmailDesc4": "Wrong email?",
-    "airdropParticipateStepConfirmEmailDesc5": "Edit it here.",
-    "airdropParticipateStepConfirmEmailDesc6": "Once your email is confirmed, you’ll access the next step: farming — a required step to unlock your rewards and maximize their potential!",
-    "airdropParticipateStepSupportEcosystemTitle": "The Final Step to Join the Airdrop:\nEarn Rewards & Support Our Ecosystem.",
-    "airdropParticipateStepSupportEcosystemDesc1": "If you’re here, you likely already own some UCO—the official cryptocurrency of Archethic.",
-    "airdropParticipateStepSupportEcosystemDesc2": "To help our ecosystem grow and reward loyal UCO holders like you, we’ve created an easy passive income program. Simply deposit your UCO and start earning rewards over time.",
-    "airdropParticipateStepSupportEcosystemDesc3": "By joining this program and earning rewards, you’ll qualify for our $100M Airdrop. It’s our way of saying thank you for helping build a stronger community.",
-    "airdropParticipateStepSupportEcosystemBtn": "Start earning",
-    "airdropDashboardTitleBanner": "Participant",
-    "airdropDashboardDescBanner": "The Airdrop will be sent when 1 UCO reaches $1",
-    "airdropDashboardTitle1": "How much is your share?",
-    "airdropDashboard1MultiplierDollars": "Right now, 1 Multiplier is worth",
-    "airdropDashboardCompleteParticipationTitle": "Complete Your Airdrop Participation!",
-    "airdropDashboardLPTokenAvailable": "You currently have {lpTokenAvailable} LP Token available in the farm at level 0. To increase your multiplier, you can relock them in the farm.",
-    "@airdropDashboardLPTokenAvailable": {
-        "placeholders": {
-            "lpTokenAvailable": {
-                "type": "String"
-            }
-        }
-    },
-    "airdropParticipateStepSignTitle": "Airdrop Participation Confirmation",
-    "airdropParticipateStepSignDesc1": "The application requests your signature to confirm your participation in the airdrop.",
-    "airdropParticipateStepSignDesc2": "I confirm that I am participating in the Archethic UCO airdrop. This signature is solely used to verify my participation and does not authorize the transfer of funds or any other actions involving my wallet.",
-    "airdropParticipateStepSignWarn": "This action is secure and does not affect your funds.",
-    "airdropParticipateStepSignBtn": "Sign & Confirm",
-    "airdropLPValue": "Actual LP Value",
-    "airdropStepsNote": "Note: ",
-    "airdropStepsNoteDesc": "To keep your multiplier and secure your airdrop participation, your LP tokens must remain locked at least at Level 1 until the airdrop date.",
-    "airdropPersonalMultiplier": "Personal Multiplier",
-    "airdropReferrallMultiplier": "Referral Multiplier",
-    "airdropPersonalValue": "Your airdrop in UCO",
-    "airdropPersonalValueInfo": "(Recalculated hourly)",
-    "airdropBannerTitle": "Your Airdrop Spot is Reserved!",
-    "airdropBackendAlreadySubscribe": "Sorry but there is already a subscription for this wallet or this e-mail address.",
-    "airdropBackendMissingParameters": "Please complete all required fields to proceed.",
-    "airdropBackendInvalidEmail": "Please enter a valid email address.",
-    "airdropBackendEmailSent": "Confirmation email sent.",
-    "airdropBackendEmailNotFound": "Email not found.",
-    "airdropBackendEmailAlreadyConfirmed": "This email has been already confirmed.",
-    "airdropBackendEmailNotConfirmed": "Your email has not been confirmed. Please confirm it before continuing.",
-    "airdropBackendInvalidPubKey": "The wallet you are using is not valid. Please check and try again.",
-    "airdropBackendInvalidSignature": "The signature is invalid. Please verify and try again.",
-    "airdropBackendUnknownError": "An unknown error occurred. Please try again or contact support if the issue persists.",
-    "airdropLinkHeader": "Follow the $100M Airdrop",
-    "airdropLinkDesc": "Track your airdrop status on the main page.",
-    "airdropBannerNewParticipationTitle": "Claim Your Share\nin the $100M Airdrop!",
-    "airdropBannerNewParticipationBtn": "Participate to the airdrop",
-    "airdropBannerShouldAddMailTitle": "Almost There—Secure Your Share of the $100M Airdrop!",
-    "airdropBannerShouldAddMailDesc": "You’ve locked your LP tokens, but you need to verify your email to claim your share.",
-    "airdropBannerShouldAddMailBtn": "Verify My Eligibility",
-    "airdropBannerShouldFarmTitle": "Your $100M Airdrop\nSpot Is NOT Secured!",
-    "airdropBannerShouldFarmDesc": "Before you can officially participate in the airdrop, there's one final step: earn your first rewards in our Earn section.",
-    "airdropBannerShouldFarmBtn": "Complete this step",
-    "airdropBannerOkBtn": "Airdrop details",
-    "airdropBannerShouldConfirmMailTitle": "Don’t Miss Out on the $100M Airdrop—Confirm Your Email!",
-    "airdropBannerShouldConfirmMailDesc": "You've locked LP tokens, but your eligibility isn’t confirmed. Verify your email now to secure your spot.",
-    "airdropBannerShouldConfirmMailBtn": "Complete this step",
-    "airdropBannerShouldConfirmMailAndFarmTitle": "Your $100M Airdrop\nSpot Is NOT Secured!",
-    "airdropBannerShouldConfirmMailAndFarmDesc": "You've registered, but you haven't confirmed your email address yet. Please complete this step to become a participant in the airdrop.",
-    "airdropBannerShouldConfirmMailAndFarmBtn": "Complete this step",
-    "airdropInfoNoLPDesc": "You have to add some liquidity in our Earn section to earn rewards. It will show your support and qualify you for the Airdrop.",
     "earnTabDesc": "To support the growth of our ecosystem, we reward generously those who deposit liquidity in ETH (Ethereum) or in UCO token (Official Archethic coin).",
     "earnTotalDeposited": "Total deposited",
     "earnTotalYearlyInterest": "Yearly interest (max)",
@@ -847,7 +750,6 @@
     "earnUserLevelSwitchBeginner": "Beginner",
     "earnUserLevelSwitchAdvanced": "Advanced",
     "earnUserLevelSwitchLabel": "Switch mode: ",
-    "airdropPersonalLPCurrentValue": "Current amount of LP tokens locked: ",
     "addFundsStepPopupTitle": "Add funds - Steps",
     "addFundsStep11": "Swap ",
     "addFundsStep12": "UCO to ETH",
@@ -939,75 +841,7 @@
     "webBrowserCloseConfirmationDesc": "Are you sure you want to leave? Your progress will be lost.",
     "notAvailable": "Not available",
     "seeTutorial": "See the tutorial",
-    "airdropDashboardBlocInvitationTitle": "Increase your Referral Multiplier now!",
-    "airdropDashboardBlocInvitationDesc1": "For every 1 personal multiplier earned by one of your referrals, you'll also receive 1 additional multiplier.",
-    "airdropDashboardBlocInvitationDesc2": "Example: If your referrals accumulate a total of 21 personal multipliers, you'll receive 21 referral multipliers, resulting in an additional ${exampleAmountDollars} worth of UCO in your airdrop.",
-    "@airdropDashboardBlocInvitationDesc2": {
-        "placeholders": {
-            "exampleAmountDollars": {
-                "type": "String"
-            }
-        }
-    },
-    "airdropDashboardBlocInvitationBtn": "Invite someone NOW",
-    "airdropInvitationTitle": "Invite someone now",
-    "airdropInvitationDesc": "To participate in our airdrop, a referral code is required. As a participant, you can share your referral code with anyone who wants to claim their share of our $100M airdrop, and you'll earn an additional referral multiplier for each referral that joins.",
-    "airdropInvitationDescCodeTitle": "Your unique access code is:",
-    "airdropInvitationMessageTitle": "Message to send directly to a friend:",
-    "airdropInvitationMessageDesc1": "Hey, hope you're doing well. I wanted to share something interesting with you.\n\nArchethic is running a $100,000,000 giveaway as part of their innovative tech initiative. You need an access code to join, and you can use mine: {codeReferral}\n\nCheck it out here:",
-    "@airdropInvitationMessageDesc1": {
-        "placeholders": {
-            "codeReferral": {
-                "type": "String"
-            }
-        }
-    },
-    "airdropInvitationMessageDesc2": "Let me know what you think!",
-    "airdropInvitationBtnCopy": "Copy the message",
-    "airdropDashboardDetailPersonalMultiplierTitle": "Detail - Personal multiplier",
-    "airdropDashboardDetailPersonalMultiplierDesc": "The more liquidity you provide in our \"Earn\" section (by locking LP tokens), the higher your personal multiplier.",
-    "airdropDashboardDetailPersonalMultiplierLPLocked": "Your LP tokens locked:",
-    "airdropDashboardDetailPersonalMultiplierValue": "Your Personal Multiplier:",
-    "airdropDashboardDetailPersonalMultiplierBtn": "Open the Multiplier table",
-    "airdropDashboardDetailReferralMultiplierTitle": "Detail - Referral multiplier",
-    "airdropDashboardDetailReferralMultiplierDesc": "The more liquidity you provide in our \"Earn\" section (by locking LP tokens), the higher the number of referral participants you can have.",
-    "airdropDashboardDetailReferralMultiplierReferralsRegistered": "Your Referrals Registered:",
-    "airdropDashboardDetailReferralMultiplierReferralsParticipant": "Your Referrals Participant:",
-    "airdropDashboardDetailReferrallMultiplierValue": "Your Referrals Multiplier:",
-    "airdropDashboardDetailReferralMultiplierBtn": "Open the Referral table",
-    "airdropDashboardDetailReferralMultiplierWarningDesc1": "You have ",
-    "airdropDashboardDetailReferralMultiplierWarningDesc2": " referrals",
-    "airdropDashboardDetailReferralMultiplierWarningDesc3": ", and with your actual LP tokens locked, you are only being rewarded",
-    "airdropDashboardDetailReferralMultiplierWarningDesc4": " for {referralParticipantRewarded} out of those {referralParticipant}.",
-    "@airdropDashboardDetailReferralMultiplierWarningDesc4": {
-        "placeholders": {
-            "referralParticipantRewarded": {
-                "type": "int"
-            },
-            "referralParticipant": {
-                "type": "int"
-            }
-        }
-    },
-    "airdropDashboardDetailReferralMultiplierWarningDesc5": "\n\nIncrease your referral limit now.",
-    "airdropPersonalMultiplierTableTitle": "Personal Multiplier Table",
-    "airdropPersonalMultiplierTableDesc": "The more LP tokens you lock, the bigger your personal multiplier, and therefore the larger your share in the airdrop.",
-    "airdropPersonalMultiplierTableLPValue": "Actual value of 1 LP token: ",
-    "airdropPersonalMultiplierTableYourLPValue": "Your LP tokens locked:",
-    "airdropPersonalMultiplierTableHeaderLPLocked": "LP token locked",
-    "airdropPersonalMultiplierTableHeaderPersonalMultiplier": "Personal\nMultiplier",
-    "airdropPersonalMultiplierTableHeaderBtn": "Add more in \"Earn\"",
-    "airdropReferralMultiplierTableTitle": "Referral Multiplier Table",
-    "airdropReferralMultiplierTableDesc": "The more LP tokens you lock, the more referrals you can bring, and the higher your referral multiplier becomes.",
-    "airdropReferralMultiplierTableLPValue": "Actual value of 1 LP token: ",
-    "airdropReferralMultiplierTableYourLPValue": "Your LP tokens locked:",
-    "airdropReferralMultiplierTableHeaderLPLocked": "LP token locked",
-    "airdropReferralMultiplierTableHeaderMaxReferral": "Max Referral",
-    "airdropReferralMultiplierTableHeaderBtn": "Add more in \"Earn\"",
-    "airdropWrongReferralCodeProvided": "Oops! The referral code you entered is not recognized. Please verify it with the person who shared it or try a different one.",
-    "airdropNoRewards": "You are currently participating in the airdrop, but no rewards have been assigned to your account yet. To learn how to earn rewards, please refer to the information below.",
     "goToSupportTitle": "Contact Support",
     "goToSupportDesc": "You will be redirected to the Archethic website, where you can find the support contact option at the bottom right.",
     "bottomMainMenuSupport": "Support"
-    
 }

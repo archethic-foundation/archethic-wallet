@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/aeswap/usecases.dart';
-import 'package:aewallet/application/airdrop/airdrop.dart';
 import 'package:aewallet/application/step.dart';
 import 'package:aewallet/domain/models/step.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
@@ -378,8 +377,6 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
     ref
       ..invalidate(userBalanceProvider)
       ..invalidate(farmLockFormFarmLockProvider)
-      ..invalidate(airdropUserInfoProvider)
-      ..invalidate(airdropPersonalLPProvider)
       ..invalidate(farmLockFormSummaryProvider);
 
     return true;

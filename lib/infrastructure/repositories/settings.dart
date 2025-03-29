@@ -15,7 +15,6 @@ class SettingsRepository implements SettingsRepositoryInterface {
 
     return Settings(
       activeRPCServer: loadedPreferences.getActiveRPCServer(),
-      activeAirdrop: loadedPreferences.getActiveAirdrop(),
       firstLaunch: loadedPreferences.getFirstLaunch(),
       language: loadedPreferences.getLanguage().language,
       languageSeed: loadedPreferences.getLanguageSeed(),
@@ -32,7 +31,6 @@ class SettingsRepository implements SettingsRepositoryInterface {
   Future<void> setSettings(Settings settings) async {
     final loadedPreferences = await preferences;
     await loadedPreferences.setActiveRPCServer(settings.activeRPCServer);
-    await loadedPreferences.setActiveAirdrop(settings.activeAirdrop);
     await loadedPreferences.setFirstLaunch(settings.firstLaunch);
     await loadedPreferences.setLanguage(LanguageSetting(settings.language));
     await loadedPreferences.setLanguageSeed(settings.languageSeed);
