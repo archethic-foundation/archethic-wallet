@@ -15,10 +15,6 @@ class MainMenuView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final airdropFeatureFlag = ref
-        .watch(getFeatureFlagProvider(kApplicationCode, 'airdrop'))
-        .valueOrNull;
-    final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
     final localizations = AppLocalizations.of(context)!;
     final selectedAccount = ref.watch(
       accountsNotifierProvider.select(
@@ -107,14 +103,6 @@ class MainMenuView extends ConsumerWidget {
                             );
                           },
                         ),
-                      if (connectivityStatusProvider ==
-                              ConnectivityStatus.isConnected &&
-                          airdropFeatureFlag == true)
-                        const _SettingsListItem.spacer(),
-                      if (connectivityStatusProvider ==
-                              ConnectivityStatus.isConnected &&
-                          airdropFeatureFlag == true)
-                        const _ActiveAirdropSettingsListItem(),
                       const _SettingsListItem.spacer(),
                       _SettingsListItem.singleLineWithInfos(
                         heading: localizations.mediumLinkHeader,
@@ -181,31 +169,6 @@ class MainMenuView extends ConsumerWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _ActiveAirdropSettingsListItem extends ConsumerWidget {
-  const _ActiveAirdropSettingsListItem();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final localizations = AppLocalizations.of(context)!;
-
-    final activeAirdrop = ref.watch(
-      SettingsProviders.settings.select((settings) => settings.activeAirdrop),
-    );
-    final preferencesNotifier = ref.read(SettingsProviders.settings.notifier);
-
-    return _SettingsListItem.withSwitch(
-      heading: localizations.airdropLinkHeader,
-      info: localizations.airdropLinkDesc,
-      background: ArchethicTheme.backgroundBlocLogo,
-      icon: Symbols.paragliding,
-      isSwitched: activeAirdrop,
-      onChanged: (bool isSwitched) async {
-        await preferencesNotifier.setActiveAirdrop(isSwitched);
-      },
     );
   }
 }

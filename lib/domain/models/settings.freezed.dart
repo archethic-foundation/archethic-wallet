@@ -22,7 +22,6 @@ mixin _$Settings {
   bool get firstLaunch => throw _privateConstructorUsedError;
   bool get showBalances => throw _privateConstructorUsedError;
   bool get activeRPCServer => throw _privateConstructorUsedError;
-  bool get activeAirdrop => throw _privateConstructorUsedError;
   EarnUserLevelType get earnUserLevel => throw _privateConstructorUsedError;
   int get mainScreenCurrentPage => throw _privateConstructorUsedError;
   bool get showPriceChart => throw _privateConstructorUsedError;
@@ -48,7 +47,6 @@ abstract class $SettingsCopyWith<$Res> {
       bool firstLaunch,
       bool showBalances,
       bool activeRPCServer,
-      bool activeAirdrop,
       EarnUserLevelType earnUserLevel,
       int mainScreenCurrentPage,
       bool showPriceChart,
@@ -76,7 +74,6 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
     Object? firstLaunch = null,
     Object? showBalances = null,
     Object? activeRPCServer = null,
-    Object? activeAirdrop = null,
     Object? earnUserLevel = null,
     Object? mainScreenCurrentPage = null,
     Object? showPriceChart = null,
@@ -106,10 +103,6 @@ class _$SettingsCopyWithImpl<$Res, $Val extends Settings>
       activeRPCServer: null == activeRPCServer
           ? _value.activeRPCServer
           : activeRPCServer // ignore: cast_nullable_to_non_nullable
-              as bool,
-      activeAirdrop: null == activeAirdrop
-          ? _value.activeAirdrop
-          : activeAirdrop // ignore: cast_nullable_to_non_nullable
               as bool,
       earnUserLevel: null == earnUserLevel
           ? _value.earnUserLevel
@@ -146,7 +139,6 @@ abstract class _$$SettingsImplCopyWith<$Res>
       bool firstLaunch,
       bool showBalances,
       bool activeRPCServer,
-      bool activeAirdrop,
       EarnUserLevelType earnUserLevel,
       int mainScreenCurrentPage,
       bool showPriceChart,
@@ -172,7 +164,6 @@ class __$$SettingsImplCopyWithImpl<$Res>
     Object? firstLaunch = null,
     Object? showBalances = null,
     Object? activeRPCServer = null,
-    Object? activeAirdrop = null,
     Object? earnUserLevel = null,
     Object? mainScreenCurrentPage = null,
     Object? showPriceChart = null,
@@ -202,10 +193,6 @@ class __$$SettingsImplCopyWithImpl<$Res>
       activeRPCServer: null == activeRPCServer
           ? _value.activeRPCServer
           : activeRPCServer // ignore: cast_nullable_to_non_nullable
-              as bool,
-      activeAirdrop: null == activeAirdrop
-          ? _value.activeAirdrop
-          : activeAirdrop // ignore: cast_nullable_to_non_nullable
               as bool,
       earnUserLevel: null == earnUserLevel
           ? _value.earnUserLevel
@@ -237,7 +224,6 @@ class _$SettingsImpl extends _Settings {
       required this.firstLaunch,
       required this.showBalances,
       required this.activeRPCServer,
-      required this.activeAirdrop,
       required this.earnUserLevel,
       required this.mainScreenCurrentPage,
       required this.showPriceChart,
@@ -257,8 +243,6 @@ class _$SettingsImpl extends _Settings {
   @override
   final bool activeRPCServer;
   @override
-  final bool activeAirdrop;
-  @override
   final EarnUserLevelType earnUserLevel;
   @override
   final int mainScreenCurrentPage;
@@ -269,7 +253,7 @@ class _$SettingsImpl extends _Settings {
 
   @override
   String toString() {
-    return 'Settings(language: $language, environment: $environment, languageSeed: $languageSeed, firstLaunch: $firstLaunch, showBalances: $showBalances, activeRPCServer: $activeRPCServer, activeAirdrop: $activeAirdrop, earnUserLevel: $earnUserLevel, mainScreenCurrentPage: $mainScreenCurrentPage, showPriceChart: $showPriceChart, priceChartIntervalOption: $priceChartIntervalOption)';
+    return 'Settings(language: $language, environment: $environment, languageSeed: $languageSeed, firstLaunch: $firstLaunch, showBalances: $showBalances, activeRPCServer: $activeRPCServer, earnUserLevel: $earnUserLevel, mainScreenCurrentPage: $mainScreenCurrentPage, showPriceChart: $showPriceChart, priceChartIntervalOption: $priceChartIntervalOption)';
   }
 
   @override
@@ -289,8 +273,6 @@ class _$SettingsImpl extends _Settings {
                 other.showBalances == showBalances) &&
             (identical(other.activeRPCServer, activeRPCServer) ||
                 other.activeRPCServer == activeRPCServer) &&
-            (identical(other.activeAirdrop, activeAirdrop) ||
-                other.activeAirdrop == activeAirdrop) &&
             (identical(other.earnUserLevel, earnUserLevel) ||
                 other.earnUserLevel == earnUserLevel) &&
             (identical(other.mainScreenCurrentPage, mainScreenCurrentPage) ||
@@ -311,7 +293,6 @@ class _$SettingsImpl extends _Settings {
       firstLaunch,
       showBalances,
       activeRPCServer,
-      activeAirdrop,
       earnUserLevel,
       mainScreenCurrentPage,
       showPriceChart,
@@ -334,7 +315,6 @@ abstract class _Settings extends Settings {
       required final bool firstLaunch,
       required final bool showBalances,
       required final bool activeRPCServer,
-      required final bool activeAirdrop,
       required final EarnUserLevelType earnUserLevel,
       required final int mainScreenCurrentPage,
       required final bool showPriceChart,
@@ -354,8 +334,6 @@ abstract class _Settings extends Settings {
   bool get showBalances;
   @override
   bool get activeRPCServer;
-  @override
-  bool get activeAirdrop;
   @override
   EarnUserLevelType get earnUserLevel;
   @override

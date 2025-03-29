@@ -11,7 +11,6 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/earn_tab.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/swap_tab.dart';
-import 'package:aewallet/ui/views/airdrop/layouts/airdrop_tab.dart';
 import 'package:aewallet/ui/views/main/account_tab.dart';
 import 'package:aewallet/ui/views/main/bloc/providers.dart';
 import 'package:aewallet/ui/views/main/components/home_providers_keepalive.dart';
@@ -124,10 +123,6 @@ class _HomePageState extends ConsumerState<HomePage>
                   icon: aedappfm.Iconsax.wallet_add,
                   label: AppLocalizations.of(context)!.bottomMainMenuEarn,
                 ),
-                TabItem(
-                  icon: Symbols.paragliding,
-                  label: AppLocalizations.of(context)!.bottomMainMenuAirdrop,
-                ),
                 GestureDetector(
                   onTap: () async {
                     if (isIntercomEnabled == false) {
@@ -205,7 +200,6 @@ class _HomePageState extends ConsumerState<HomePage>
           TransactionsTab(),
           SwapTab(),
           EarnTab(),
-          AirdropTab(),
         ],
       ),
     );

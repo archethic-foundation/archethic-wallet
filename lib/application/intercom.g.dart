@@ -6,7 +6,7 @@ part of 'intercom.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$isIntercomEnabledHash() => r'ba0d55b9246bba7debb8a4d8b29a810e65004460';
+String _$isIntercomEnabledHash() => r'a68d804207139001151342cfaa81d5ed3a9c5bd4';
 
 /// See also [isIntercomEnabled].
 @ProviderFor(isIntercomEnabled)
@@ -24,7 +24,7 @@ final isIntercomEnabledProvider = AutoDisposeProvider<bool>.internal(
 // ignore: unused_element
 typedef IsIntercomEnabledRef = AutoDisposeProviderRef<bool>;
 String _$isIntercomConnectedHash() =>
-    r'2e62b6d3e0af906d95935906b08ad566544659a1';
+    r'7d0a8b49c6dd13e820c57311642793f8f495c2ca';
 
 /// See also [isIntercomConnected].
 @ProviderFor(isIntercomConnected)
@@ -41,7 +41,7 @@ final isIntercomConnectedProvider = AutoDisposeFutureProvider<bool>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef IsIntercomConnectedRef = AutoDisposeFutureProviderRef<bool>;
-String _$connectIntercomHash() => r'3d1814c2ed0b24efd95bbcc9f255870cae944ee1';
+String _$connectIntercomHash() => r'335fb6e9d5084a1c42e17b830d2fe3a4eb198d4f';
 
 /// See also [connectIntercom].
 @ProviderFor(connectIntercom)
@@ -59,7 +59,7 @@ final connectIntercomProvider = AutoDisposeFutureProvider<void>.internal(
 // ignore: unused_element
 typedef ConnectIntercomRef = AutoDisposeFutureProviderRef<void>;
 String _$disconnectIntercomHash() =>
-    r'7123d24bd18d6e3fe876c5ea8ba8eadfc78de3d7';
+    r'0c165359d834d197366cad24cafc3141795bc985';
 
 /// See also [disconnectIntercom].
 @ProviderFor(disconnectIntercom)

@@ -10,7 +10,6 @@ enum MainScreenTab {
   transactionTab,
   swapTab,
   earnTab,
-  airdropTab,
 }
 
 enum EarnUserLevelType { beginner, advanced }
@@ -24,7 +23,6 @@ class Settings with _$Settings {
     required bool firstLaunch,
     required bool showBalances,
     required bool activeRPCServer,
-    required bool activeAirdrop,
     required EarnUserLevelType earnUserLevel,
     required int mainScreenCurrentPage,
     required bool showPriceChart,
@@ -33,7 +31,6 @@ class Settings with _$Settings {
 
   factory Settings.empty() => const Settings(
         activeRPCServer: true,
-        activeAirdrop: true,
         firstLaunch: true,
         language: AvailableLanguage.english,
         languageSeed: '',

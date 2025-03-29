@@ -37,7 +37,6 @@ class PreferencesHiveDatasource {
   static const String showPriceChart = 'archethic_wallet_showPriceChart';
   static const String priceChartScale = 'archethic_wallet_priceChartScale';
   static const String activeRPCServer = 'archethic_wallet_activeRPCServer';
-  static const String activeAirdrop = 'archethic_wallet_activeAirdrop';
   static const String earnUserLevel = 'archethic_wallet_earnUserLevel';
   static const String recoveryPhraseSaved =
       'archethic_wallet_recoveryPhraseSaved';
@@ -138,10 +137,6 @@ class PreferencesHiveDatasource {
       _setValue(activeRPCServer, value);
 
   bool getActiveRPCServer() => _getValue(activeRPCServer, defaultValue: true);
-
-  Future<void> setActiveAirdrop(bool value) => _setValue(activeAirdrop, value);
-
-  bool getActiveAirdrop() => _getValue(activeAirdrop, defaultValue: true);
 
   Future<void> setEarnUserLevel(EarnUserLevelType value) =>
       _setValue(earnUserLevel, value);
