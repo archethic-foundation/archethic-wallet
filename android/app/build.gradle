@@ -37,10 +37,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    buildFeatures {
-        buildConfig = true
-    }
-
+ 
     namespace = "net.archethic.archethic_wallet"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "27.0.12077973"
@@ -63,8 +60,6 @@ android {
         targetSdk = 35
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-        buildConfigField "String", "INTERCOM_APP_ID", "\"${getDartDefine('INTERCOM_APP_ID')}\""
-        buildConfigField "String", "INTERCOM_ANDROID_KEY", "\"${getDartDefine('INTERCOM_ANDROID_KEY')}\""
     }
 
     signingConfigs {
@@ -93,33 +88,4 @@ android {
 
 flutter {
     source = "../.."
-}
-
-import java.util.Base64
-
-String getDartDefine(String key) {
-    if (project.hasProperty('dart-defines')) {
-        def encodedDartDefines = project.property('dart-defines')
-    
-        try {
-            def keyValuePairsEncoded = encodedDartDefines.split(',')
-            
-            for (keyValuePairEncoded in keyValuePairsEncoded) {
-                 def keyValuePairDecoded = new String(Base64.decoder.decode(keyValuePairEncoded))
-
-                def parts = keyValuePairDecoded.split('=', 2) 
-                if (parts.size() == 2) {
-                    def currentKey = parts[0]
-                    def value = parts[1]
-
-                   if (currentKey == key) {
-                        return value
-                    }
-                }
-            }
-        } catch (e) {
-            println("Failed to decode dart-defines: $e")
-        }
-    }
-    return ''
 }

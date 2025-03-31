@@ -7,7 +7,7 @@
     "48": "icons/icon_48.png",
     "128": "icons/icon_128.png"
   },
-  "version": "4.13.0.658",
+  "version": "4.13.1.659",
   "content_security_policy": {
     "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
   },
