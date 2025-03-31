@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-// TODO(reddwarf03): Update locked
+// TODO(dev): Update locked
 enum MessageBoxType { success, warning, locked, info }
 
 class MessageBox extends StatelessWidget {

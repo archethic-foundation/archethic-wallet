@@ -75,7 +75,7 @@ Future<String?> _getTokenIcon(
   return tokenDescription?.icon;
 }
 
-// TODO(reddwarf03): Doublon with ae_token.dart in aedappfm (ae_token is perhaps obsolete now)
+// TODO(dev): Doublon with ae_token.dart in aedappfm (ae_token is perhaps obsolete now)
 @riverpod
 Future<double> _estimateTokenInFiat(
   Ref ref,

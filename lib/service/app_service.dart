@@ -28,7 +28,7 @@ class AppService {
 
   final ApiService apiService;
 
-  // TODO(reddwarf03): doublons with TokenRepositoryImpl
+  // TODO(dev): doublons with TokenRepositoryImpl
   Future<Map<String, Token>> getToken(
     List<String> addresses,
   ) async {
@@ -108,7 +108,7 @@ class AppService {
     return transactionInputs;
   }
 
-  // TODO(reddwarf03): USE PROVIDER
+  // TODO(dev): USE PROVIDER
   Future<List<AccountToken>> getFungiblesTokensList(
     String address,
     List<GetPoolListResponse> poolsListRaw,

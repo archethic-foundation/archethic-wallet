@@ -20,7 +20,7 @@ class TransferFormState with _$TransferFormState {
     TransferType? transferType,
     @Default(TransferProcessStep.form) TransferProcessStep transferProcessStep,
 
-    // TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)
+    // TODO(dev): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)
     required AsyncValue<double> feeEstimation,
     @Default(false) bool defineMaxAmountInProgress,
     @Default(0.0) double amount,

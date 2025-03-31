@@ -66,7 +66,7 @@ class EarnSectionStartEarning extends ConsumerWidget {
               children: [
                 Text(
                   earnUserLevel == EarnUserLevelType.beginner
-                      ? '2. ${localizations.earnSectionStartEarningTitle} '
+                      ? localizations.earnSectionStartEarningTitle
                       : '3. ${localizations.earnSectionStartEarningTitle} ',
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         color: aedappfm.ArchethicThemeBase.neutral10,

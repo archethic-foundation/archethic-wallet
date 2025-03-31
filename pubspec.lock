@@ -1002,30 +1002,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.3.0"
-  intercom_flutter:
-    dependency: "direct main"
-    description:
-      name: intercom_flutter
-      sha256: "76e6aa2b8c55816aedbf35509fa8407ff815588ca59f8eca3425b2e3cf3a0d85"
-      url: "https://pub.dev"
-    source: hosted
-    version: "9.2.7"
-  intercom_flutter_platform_interface:
-    dependency: transitive
-    description:
-      name: intercom_flutter_platform_interface
-      sha256: "42cd30ff7fb987567d5e58092c3625e01ddb3d1831ec269df7567f333236aa51"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.2"
-  intercom_flutter_web:
-    dependency: transitive
-    description:
-      name: intercom_flutter_web
-      sha256: "410f624093a30972c13df8775eaf84a8dd958629aadb90e5d367518cbea79f70"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.5"
   intl:
     dependency: "direct main"
     description:

@@ -3,7 +3,6 @@ import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/components/failure_message.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
-import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/figma_components/message_box/message_box.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/aeswap_liquidity_remove/bloc/provider.dart';
@@ -80,10 +79,6 @@ class LiquidityRemoveFormSheet extends ConsumerWidget
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final liquidityRemove = ref.watch(liquidityRemoveFormNotifierProvider);
     final localizations = AppLocalizations.of(context)!;
-    final boldBodyLarge = Theme.of(context)
-        .textTheme
-        .bodyLarge!
-        .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold);
 
     return Padding(
       padding: const EdgeInsets.only(top: 10),
@@ -91,16 +86,6 @@ class LiquidityRemoveFormSheet extends ConsumerWidget
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              localizations.liquidityAddTitle,
-              style: boldBodyLarge,
-            ),
-            const SizedBox(height: 10),
-            Text(
-              localizations.liquidityAddDesc,
-              style: Theme.of(context).textTheme.bodyMediumWithOpacity,
-            ),
-            const SizedBox(height: 20),
             Text(
               localizations.liquidityRemoveTextFieldLPLabel,
               style: AppTextStyles.bodyMedium(context).copyWith(

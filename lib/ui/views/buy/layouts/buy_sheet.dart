@@ -1,14 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:ui';
 
-import 'package:aewallet/application/onramp/onramp.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
-import 'package:aewallet/ui/views/buy/layouts/buy_with_crypto_sheet.dart';
-import 'package:aewallet/ui/views/buy/layouts/buy_with_fiat_sheet.dart';
 import 'package:aewallet/ui/views/main/bloc/providers.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
@@ -166,24 +163,11 @@ class _BuyFromWalletSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    //const onrampFeatureFlag = (fromFiat: true, fromCrypto: true);
-    final onrampFeatureFlag = ref.watch(onrampFeatureFlagProvider);
     final localizations = AppLocalizations.of(context)!;
     final environment = ref.watch(environmentProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              localizations.ucoBuyInAeWalletTitle,
-              style: AppTextStyles.bodyLarge(context)
-                  .copyWith(fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
         LayoutBuilder(
           builder: (context, constraints) {
             final maxWidth = constraints.maxWidth;
@@ -193,34 +177,6 @@ class _BuyFromWalletSection extends ConsumerWidget {
               spacing: 16,
               runSpacing: 16,
               children: [
-                if (onrampFeatureFlag.fromFiat)
-                  SizedBox(
-                    width: itemWidth,
-                    child: _ExchangeButton(
-                      image: Image.asset(
-                        'assets/exchanges/aewallet_fiat.png',
-                        height: 70,
-                      ),
-                      text: '${localizations.ucoBuyInAeWalletWithFiat}\n',
-                      onTap: () {
-                        context.push(BuyWithFiatSheet.routerPage);
-                      },
-                    ),
-                  )
-                else
-                  SizedBox(
-                    width: itemWidth,
-                    child: _ExchangeButton(
-                      image: Image.asset(
-                        'assets/exchanges/aewallet_fiat.png',
-                        height: 70,
-                      ),
-                      text:
-                          '${localizations.ucoBuyInAeWalletWithFiat}\n(${localizations.comingSoon})',
-                      disabled: true,
-                      onTap: () {},
-                    ),
-                  ),
                 if (environment == aedappfm.Environment.testnet)
                   SizedBox(
                     width: itemWidth,
@@ -240,34 +196,6 @@ class _BuyFromWalletSection extends ConsumerWidget {
                           mode: LaunchMode.externalApplication,
                         );
                       },
-                    ),
-                  ),
-                if (onrampFeatureFlag.fromCrypto)
-                  SizedBox(
-                    width: itemWidth,
-                    child: _ExchangeButton(
-                      image: Image.asset(
-                        'assets/exchanges/aewallet_crypto.png',
-                        height: 70,
-                      ),
-                      text: '${localizations.ucoBuyInAeWalletWithCrypto}\n',
-                      onTap: () {
-                        context.push(BuyWithCryptoSheet.routerPage);
-                      },
-                    ),
-                  )
-                else
-                  SizedBox(
-                    width: itemWidth,
-                    child: _ExchangeButton(
-                      image: Image.asset(
-                        'assets/exchanges/aewallet_crypto.png',
-                        height: 70,
-                      ),
-                      text:
-                          '${localizations.ucoBuyInAeWalletWithCrypto}\n(${localizations.comingSoon})',
-                      onTap: () {},
-                      disabled: true,
                     ),
                   ),
               ],
@@ -356,7 +284,6 @@ class _ExchangeButton extends StatefulWidget {
     required this.image,
     required this.text,
     required this.onTap,
-    this.disabled = false,
   });
 
   factory _ExchangeButton.url({
@@ -375,7 +302,6 @@ class _ExchangeButton extends StatefulWidget {
   final Widget image;
   final String text;
   final VoidCallback onTap;
-  final bool disabled;
 
   @override
   __ExchangeButtonState createState() => __ExchangeButtonState();
@@ -432,18 +358,17 @@ class __ExchangeButtonState extends State<_ExchangeButton> {
                               fontWeight: FontWeightTelegraf.fontWeightRegular,
                             ),
                       ),
-                      if (widget.disabled == false)
-                        Padding(
-                          padding: const EdgeInsets.only(left: 3, top: 3),
-                          child: Icon(
-                            Icons.arrow_forward_ios,
-                            size: 10,
-                            color: Theme.of(context)
-                                .textTheme
-                                .bodySmallWithOpacity
-                                .color,
-                          ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 3, top: 3),
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 10,
+                          color: Theme.of(context)
+                              .textTheme
+                              .bodySmallWithOpacity
+                              .color,
                         ),
+                      ),
                     ],
                   ),
                 ],
