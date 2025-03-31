@@ -193,7 +193,7 @@ class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
   }
 
   void setAmountMax() {
-    // TODO(reddwarf03): Warning with fees
+    // TODO(dev): Warning with fees
     setAmount(state.userBalance);
   }
 

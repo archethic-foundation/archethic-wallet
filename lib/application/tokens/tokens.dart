@@ -61,7 +61,7 @@ Future<List<aedappfm.AEToken>> tokensFromUserBalance(
 
   if (selectedAccount == null) return [];
 
-// TODO(reddwarf03): Hardcoded aeETH & LP (aeETH/UCO)...
+// TODO(dev): Hardcoded aeETH & LP (aeETH/UCO)...
   final customTokenAddressListWithDefaultValue =
       List<String>.from(selectedAccount.customTokenAddressList ?? <String>[]);
   switch (environment) {

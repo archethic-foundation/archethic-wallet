@@ -25,42 +25,6 @@ final _authenticatedRoutes = [
     ),
   ),
   GoRoute(
-    path: BuyWithFiatSheet.routerPage,
-    pageBuilder: (context, state) => NoTransitionPage<void>(
-      key: state.pageKey,
-      child: const BuyWithFiatSheet(),
-    ),
-  ),
-  GoRoute(
-    path: BuyWithCryptoSheet.routerPage,
-    pageBuilder: (context, state) => NoTransitionPage<void>(
-      key: state.pageKey,
-      child: const BuyWithCryptoSheet(),
-    ),
-  ),
-  GoRoute(
-    path: MoonpayOnRampSheet.routerPage,
-    pageBuilder: (context, state) =>
-        const NoTransitionPage(child: MoonpayOnRampSheet()),
-  ),
-  GoRoute(
-    path: BanxaOnRampSheet.routerPage,
-    pageBuilder: (context, state) {
-      final {
-        'depositAddress': depositAddress,
-        'tokenId': tokenId,
-        'chainId': chainId,
-      } = state.extra! as Map<String, dynamic>;
-      return NoTransitionPage(
-        child: BanxaOnRampSheet(
-          depositAddress: depositAddress,
-          tokenId: tokenId,
-          chainId: chainId,
-        ),
-      );
-    },
-  ),
-  GoRoute(
     path: ConnectivityWarning.routerPage,
     pageBuilder: (context, state) => NoTransitionPage<void>(
       key: state.pageKey,

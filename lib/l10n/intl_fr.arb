@@ -188,9 +188,6 @@
     "enterYubikeyClientIDEmpty": "L'ID client est obligatoire",
     "enterYubikeyAPIKeyEmpty": "La clé client de l'API est obligatoire",
     "ucoBuyTitle": "Où acheter des UCO ?",
-    "ucoBuyInAeWalletTitle": "Acheter dans votre Wallet Archethic",
-    "ucoBuyInAeWalletWithFiat": "Via carte de crédit",
-    "ucoBuyInAeWalletWithCrypto": "Via cryptos",
     "ucoBuyOnCexTitle": "Acheter sur un Échange Centralisé ",
     "ucoBuyOnCexSubtitle": "(CEX)",
     "ucoBuyOnDexTitle": "Acheter sur un Échange Décentralisé ",
@@ -337,7 +334,7 @@
     "bottomMainMenuTransactions": "Transactions",
     "bottomMainMenuAccounts": "Comptes",
     "bottomMainMenuSwap": "Echanger",
-    "bottomMainMenuEarn": "Gagner",
+    "bottomMainMenuEarn": "Pool UCO/ETH",
     "tokenDetailMenuEarn": "Gagner",
     "localDataMigrationMessage": "Mise à jour de votre application en cours.\nVeuillez patienter...",
     "nftNotOwnerInfo": "Vous n'êtes pas propriétaire de ce NFT",
@@ -372,7 +369,7 @@
     "transactionRawFormattedOption": "Formaté",
     "swapHeader": "Échanger",
     "aeBridgeHeader": "Bridge",
-    "aeSwapEarnHeader": "Gagner un revenu passif",
+    "aeSwapEarnHeader": "Pool UCO/ETH",
     "price": "Prix",
     "aeBridgeLaunchMessage": "Veuillez lancer l'application aeBridge pour continuer. Elle s'ouvrira dans votre navigateur par défaut.",
     "aeBridgeLaunchButton": "Lancer aeBridge",
@@ -381,7 +378,6 @@
     "receiveHeader": "Recevoir des actifs sur Archethic",
     "receiveCopy": "Cliquez pour copier l'adresse",
     "earnValueLbl": "Gagner",
-    "btn_selectChain": "Sélect. une chaîne",
     "btn_selectToken": "Sélect. un token",
     "selectTokenTitle": "Sélect. un token",
     "btn_save": "Sauvegarder",
@@ -698,20 +694,9 @@
             }
         }
     },
-    "earnTabDesc": "Pour soutenir la croissance de notre écosystème, nous récompensons généreusement ceux qui déposent de la liquidité en ETH (Ethereum) ou en UCO (la cryptomonnaie officielle d'Archethic).",
     "earnTotalDeposited": "Total déposé",
     "earnTotalYearlyInterest": "Intérêt annuel (max)",
-    "earnSectionDepositFundsTitle": "Ajoutez des UCO à votre portefeuille",
-    "earnSectionDepositFundsOptionFiatTitle": "Option 1",
-    "earnSectionDepositFundsOptionFiatDesc": "Achetez des tokens UCO directement avec une carte de crédit :",
-    "earnSectionDepositFundsOptionFiatBuyBtn": "Acheter avec une carte de crédit",
-    "earnSectionDepositFundsOptionCryptoTitle": "Option 2",
-    "earnSectionDepositFundsOptionCryptoDesc": "Achetez des tokens UCO avec vos autres cryptomonnaies :",
-    "earnSectionDepositFundsOptionCryptoBuyBtn": "Acheter avec des cryptos",
-    "earnSectionAddLiquidityTitle": "Ajoutez de la liquidité (UCO / ETH)",
-    "earnSectionAddLiquidityDesc1": "Vous pouvez maintenant ajouter vos fonds dans le pool de liquidité UCO/ETH pour recevoir des tokens LP (Liquidity Pools Tokens).",
-    "earnSectionAddLiquidityDesc2": "Ces tokens LP sont comme des titres de propriété, ils représentent la liquidité que vous avez déposée et vous permettent de retirer vos fonds à l'avenir.",
-    "earnSectionAddLiquidityAddLiquidityBtn": "Ajouter de la liquidité",
+    "earnSectionAddLiquidityTitle": "Retirez de la liquidité (UCO / ETH)",
     "earnSectionAddLiquidityWithdrawLiquidityBtn": "Retirer de la liquidité",
     "earnSectionStartEarningTitle": "Gagnez",
     "earnSectionStartEarningTitleAPR": "(jusqu'à {apr}% APR)",
@@ -734,9 +719,6 @@
     "farmLockDepositDesc2": "Plus vous verrouillez vos tokens LP longtemps, plus vous recevez de récompenses de la part d'Archethic.",
     "farmLockDepositTitle3": "Comment ça marche ?",
     "farmLockDepositDesc3": "Nous ajouterons automatiquement vos fonds dans la pool ETH/UCO. En retour, vous recevez des jetons représentant votre part dans la pool. Ces jetons sont bloqués pour la période que vous avez choisie, ce qui contribue à maintenir la stabilité du pool. Vous gagnerez des récompenses pour votre engagement et, une fois la période de blocage terminée, vous pourrez retirer vos fonds et vos bénéfices.",
-    "earnUserLevelSwitchBeginner": "Débutant",
-    "earnUserLevelSwitchAdvanced": "Avancé",
-    "earnUserLevelSwitchLabel": "Changer de mode : ",
     "liquidityRemoveTextFieldLPLabel": "Combien de tokens LP souhaitez-vous retirer ?",
     "farmLockDepositTextFieldUCOLabel": "Quelle quantité de UCO ajouter ?",
     "farmLockLevelUpTitle": "Comment ça marche ?",
@@ -792,52 +774,6 @@
     "farmLockWithdrawFormTextNoLPText1": "Aucun jeton LP déverrouillé disponible",
     "farmLockWithdrawFormTextLPText2": " est disponible pour le retrait.",
     "onrampWithBanxaTitle": "Acheter avec Banxa",
-    "onrampWithFiatIncompatiblePlatformTitle": "Acheter des UCO via carte de crédit n'est pas compatible avec votre appareil",
-    "onrampWithFiatIncompatiblePlatformBody": "Votre appareil ne respecte pas les prérequis techniques.\nContactez l'équipe support de Archethic pour en savoir plus.",
-    "onrampWithFiatTitle": "Acheter des UCO via carte de crédit",
-    "onrampWithFiatHowDoesItWorkTitle": "Comment ça marche ?",
-    "onrampWithFiatHowDoesItWorkBody": "Nous avons développé un système qui vous permet d'acheter de l'Ethereum et de le convertir automatiquement en tokens UCO, envoyés directement sur votre portefeuille Archethic.",
-    "onrampWithFiatHowDoesItWork1": "Vous achetez des ETH directement auprès d'un fournisseur tiers",
-    "onrampWithFiatHowDoesItWork2": "Nous convertissons ces ETH en UCO (frais de {feeRate}%)",
-    "@onrampWithFiatHowDoesItWork2": {
-        "placeholders": {
-            "feeRate": {
-                "type": "String"
-            }
-        }
-    },
-    "onrampWithFiatHowDoesItWork3": "Nous livrons les UCO dans votre portefeuille Archethic",
-    "onrampWithFiatBanxaWarning1": "AVERTISSEMENT : ",
-    "onrampWithFiatBanxaWarning2": "Après avoir cliqué sur \"Acheter maintenant\", vous serez redirigé vers un service tiers pour finaliser votre achat. Une fois sur ce service, NE MODIFIEZ AUCUNE information, à l'exception du montant, de la devise et du moyen de paiement. La blockchain \"Binance Smart Chain (BEP20)\" doit rester inchangée, tout comme la cryptomonnaie (ETH). Ces modifications pourraient entraîner une perte totale de vos fonds.\n\nUne fois votre transaction effectuée, elle peut prendre un certain temps avant d’apparaître sur cet écran",
-    "onrampWithFiatBanxaWarningApproval": "Je comprends l'avertissement ci-dessus et je ne tiendrai pas Archethic responsable de toute perte de fonds due à mon non-respect de ces instructions.",
-    "onrampWithFiatBuyNowButton": "Acheter maintenant",
-    "onrampHistoryTitle": "Historique des transactions",
-    "onrampCryptoHistoryFooter1": "Votre dépôt en crypto a été automatiquement converti en UCO et envoyé vers votre portefeuille Archethic. Les montants peuvent varier en raison des fluctuations du marché et des frais de réseau.",
-    "onrampFiatHistoryFooter1": "Votre achat en FIAT a été converti en ETH avant d'être échangé en UCO. Les montants peuvent varier en raison des frais du fournisseur et des fluctuations du marché.",
-    "onrampHistoryTransferStatusInitiated": "Transaction Démarrée",
-    "onrampHistoryTransferStatusCompleted": "{progress}% Envoyés",
-    "@onrampHistoryTransferStatusCompleted": {
-        "placeholders": {
-            "progress": {
-                "type": "int"
-            }
-        }
-    },
-    "onrampWithCryptoTitle": "Acheter des UCO avec des Cryptos",
-    "onrampWithCryptoSelectChainTitle": "Choisissez votre réseau (chaîne)",
-    "onrampWithCryptoSelectTokenTitle": "Choisissez votre Crypto",
-    "onrampWithCryptoDepositAddressTitle": "Votre adresse de dépôt",
-    "onrampWithCryptoShowDepositAddress": "Voir l'adresse de Dépôt",
-    "onrampWithCryptoPoolAmount1": "Nous avons actuellement ",
-    "onrampWithCryptoPoolAmount2": "disponibles pour une transaction instantanée.",
-    "onrampWithCryptoTreatmentDelayDisclaimer1": "Important : ",
-    "onrampWithCryptoTreatmentDelayDisclaimer2": "Les transactions prenant du temps, une partie du montant peut être utilisée par quelqu’un d’autre avant que nous recevions votre paiement. Si l’ETH que vous envoyez est supérieur au montant disponible au moment de la réception, nous traiterons immédiatement la partie disponible et gérerons le reste manuellement sous 24 heures.",
-    "comingSoon": "Prochainement",
     "webBrowserCloseConfirmationDesc": "Êtes-vous sûr de vouloir quitter ? Votre progression sera perdue.",
-    "notAvailable": "Non disponible",
-    "seeTutorial": "Voir le tutoriel",
-    "messageCopied": "Message copié",
-    "goToSupportTitle": "Contacter le support",
-    "goToSupportDesc": "Vous allez être redirigé vers le site Archethic, où vous trouverez l'option de contact du support en bas à droite..",
-    "bottomMainMenuSupport": "Support"
+    "messageCopied": "Message copié"
 }

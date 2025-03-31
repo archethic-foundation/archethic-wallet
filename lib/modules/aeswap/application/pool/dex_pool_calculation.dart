@@ -98,7 +98,7 @@ Future<DexPoolStats> _estimateStats(
   var token1TotalFee24h = 0.0;
   var token2TotalFee24h = 0.0;
 
-  // TODO(Chralu): separate api calls in a private provider.
+  // TODO(dev): separate api calls in a private provider.
   // This would prevent re-requesting api every time the Oracle gets updated.
   final fromCriteria24h =
       (DateTime.now().subtract(const Duration(days: 1)).millisecondsSinceEpoch /

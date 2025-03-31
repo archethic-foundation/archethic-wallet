@@ -105,7 +105,7 @@ mixin ModelParser {
       );
     }
 
-    // TODO(Chralu): Wrong idea to act as if we had data about that token
+    // TODO(dev): Wrong idea to act as if we had data about that token
     return DexToken(
       address: tokenAddress,
     );

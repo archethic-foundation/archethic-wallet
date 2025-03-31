@@ -54,7 +54,7 @@ class _LoggedInProvidersState extends ConsumerState<HomeProvidersKeepalive>
             )
             .startSubscription();
 
-        // TODO(Chralu): Check Issue https://github.com/archethic-foundation/archethic-wallet/issues/1199
+        // TODO(dev): Check Issue https://github.com/archethic-foundation/archethic-wallet/issues/1199
         // await ref.read(homePageProvider.notifier).startSubscriptions();
         break;
       case AppLifecycleState.inactive:

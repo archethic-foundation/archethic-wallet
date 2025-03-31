@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:core';
 import 'dart:ui';
 
-import 'package:aewallet/application/intercom.dart';
 import 'package:aewallet/application/migrations/migration_manager.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -17,7 +16,6 @@ import 'package:aewallet/ui/views/main/components/home_providers_keepalive.dart'
 import 'package:aewallet/ui/views/main/components/main_appbar.dart';
 import 'package:aewallet/ui/views/main/components/recovery_phrase_banner.dart';
 import 'package:aewallet/ui/views/main/transactions_tab.dart';
-import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/tab_item.dart';
@@ -26,9 +24,7 @@ import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutte
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intercom_flutter/intercom_flutter.dart';
 import 'package:material_symbols_icons/symbols.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -82,8 +78,6 @@ class _HomePageState extends ConsumerState<HomePage>
     if (tabController == null) {
       return Container();
     }
-    final isIntercomEnabled = ref.watch(isIntercomEnabledProvider);
-    final localizations = AppLocalizations.of(context)!;
 
     return Padding(
       padding: const EdgeInsets.only(top: 8),
@@ -120,36 +114,8 @@ class _HomePageState extends ConsumerState<HomePage>
                   label: AppLocalizations.of(context)!.bottomMainMenuSwap,
                 ),
                 TabItem(
-                  icon: aedappfm.Iconsax.wallet_add,
+                  icon: aedappfm.Iconsax.wallet_money,
                   label: AppLocalizations.of(context)!.bottomMainMenuEarn,
-                ),
-                GestureDetector(
-                  onTap: () async {
-                    if (isIntercomEnabled == false) {
-                      await AppDialogs.showInfoDialog(
-                        context,
-                        ref,
-                        localizations.goToSupportTitle,
-                        localizations.goToSupportDesc,
-                        buttonLabel: localizations.ok,
-                        onPressed: () async {
-                          await launchUrl(
-                            Uri.parse(
-                              'https://www.archethic.net',
-                            ),
-                            mode: LaunchMode.externalApplication,
-                          );
-                        },
-                      );
-                      return;
-                    }
-                    await ref.read(connectIntercomProvider.future);
-                    await Intercom.instance.displayMessenger();
-                  },
-                  child: TabItem(
-                    icon: Symbols.support_agent,
-                    label: localizations.bottomMainMenuSupport,
-                  ),
                 ),
               ],
             ),
