@@ -47,7 +47,33 @@ To test Archethic Wallet with Faucet:
 - Refresh your dashboard</br>
 Now, you can send some UCO and see your transactions
 
-### Patrol installation and configuration
+## How to deploy Archethic Wallet
+
+### Prerequisites
+
+#### Versionning
+
+Considering M=Major Version, m=minor version, p=patch version, +build
+
+- in `pubspec.yaml` update the version of the app `M.m.p+build` (ex: `version: 2.3.8+528`)
+- Execute `scripts/update_version.sh` to update versions in other conf files
+    - in `pubspec.yaml` section `msix_config`
+    - in `/web_chrome_extension/public/manifest.json`
+
+#### Changelog
+
+- Create a new changelog file `build.txt` in `/fastlane/metadata/android/en-US/changelogs/` .
+
+
+### Build app
+
+3 ways to build app depending of platforms
+
+- For iOS, macOS, android → cmd `Fastlane`
+- For Linux, Windows, Chrome Extension → Github actions on new github version
+
+
+## Patrol installation and configuration
 
 Patrol is a flutter package, you can install it using a simple `flutter pub get`
 
