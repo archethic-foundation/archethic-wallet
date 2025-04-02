@@ -1,5 +1,6 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/connectivity_status.dart';
+import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/ui/views/buy/layouts/buy_sheet.dart';
 import 'package:aewallet/ui/views/receive/receive_modal.dart';
 import 'package:aewallet/ui/views/sheets/bridge_sheet.dart';
@@ -100,18 +101,19 @@ class MenuWidgetWallet extends ConsumerWidget {
                 .animate()
                 .fade(duration: const Duration(milliseconds: 300))
                 .scale(duration: const Duration(milliseconds: 300)),
-            ActionButton(
-              text: localizations.buy,
-              icon: Symbols.add,
-              onTap: () async {
-                await context.push(BuySheet.routerPage);
-              },
-              enabled:
-                  connectivityStatusProvider == ConnectivityStatus.isConnected,
-            )
-                .animate()
-                .fade(duration: const Duration(milliseconds: 350))
-                .scale(duration: const Duration(milliseconds: 350)),
+            if (FeatureFlags.buyFeature)
+              ActionButton(
+                text: localizations.buy,
+                icon: Symbols.add,
+                onTap: () async {
+                  await context.push(BuySheet.routerPage);
+                },
+                enabled: connectivityStatusProvider ==
+                    ConnectivityStatus.isConnected,
+              )
+                  .animate()
+                  .fade(duration: const Duration(milliseconds: 350))
+                  .scale(duration: const Duration(milliseconds: 350)),
           ],
         ),
       ),

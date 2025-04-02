@@ -10,6 +10,7 @@ import 'package:aewallet/ui/views/transfer/bloc/provider.dart';
 import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:aewallet/util/account_formatters.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -111,8 +112,14 @@ class UCOTransferDetail extends ConsumerWidget {
               ),
               Text(
                 AmountFormatters.standard(
-                  ref.watch(getBalanceProvider(kUCOAddress)).valueOrNull ??
-                      0.0 - (transfer.feeEstimationOrZero + amountInUco),
+                  (Decimal.parse(
+                            '${ref.watch(getBalanceProvider(kUCOAddress)).valueOrNull ?? 0.0}',
+                          ) -
+                          (Decimal.parse(
+                                transfer.feeEstimationOrZero.toString(),
+                              ) +
+                              Decimal.parse(amountInUco.toString())))
+                      .toDouble(),
                   transfer.symbol(context),
                 ),
                 style: ArchethicThemeStyles.textStyleSize12W100Primary,

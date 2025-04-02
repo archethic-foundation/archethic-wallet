@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:aewallet/application/migrations/migration_manager.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/local_data_migration_widget.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
@@ -109,10 +110,11 @@ class _HomePageState extends ConsumerState<HomePage>
                   label:
                       AppLocalizations.of(context)!.bottomMainMenuTransactions,
                 ),
-                TabItem(
-                  icon: aedappfm.Iconsax.arrange_circle_2,
-                  label: AppLocalizations.of(context)!.bottomMainMenuSwap,
-                ),
+                if (FeatureFlags.swapFeature)
+                  TabItem(
+                    icon: aedappfm.Iconsax.arrange_circle_2,
+                    label: AppLocalizations.of(context)!.bottomMainMenuSwap,
+                  ),
                 TabItem(
                   icon: aedappfm.Iconsax.wallet_money,
                   label: AppLocalizations.of(context)!.bottomMainMenuEarn,
@@ -164,7 +166,7 @@ class _HomePageState extends ConsumerState<HomePage>
             ],
           ),
           TransactionsTab(),
-          SwapTab(),
+          if (FeatureFlags.swapFeature) SwapTab(),
           EarnTab(),
         ],
       ),

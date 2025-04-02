@@ -1,10 +1,10 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
-import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/aeswap_swap/layouts/swap_tab.dart';
 import 'package:aewallet/ui/views/main/bloc/providers.dart';
 import 'package:aewallet/ui/views/receive/receive_modal.dart';
@@ -39,8 +39,6 @@ class TokenDetailMenu extends ConsumerWidget {
       ),
     );
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-    final farmLock = ref.watch(farmLockFormFarmLockProvider).value;
-    final pool = ref.watch(farmLockFormPoolProvider).value;
     final balanceUCO =
         ref.watch(getBalanceProvider(kUCOAddress)).valueOrNull ?? 0.0;
 
@@ -58,75 +56,69 @@ class TokenDetailMenu extends ConsumerWidget {
         child: LayoutBuilder(
           builder: (context, constraints) {
             return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                SizedBox(
-                  width: constraints.maxWidth * 0.25,
-                  child: balanceUCO > 0 &&
-                          connectivityStatusProvider ==
-                              ConnectivityStatus.isConnected
-                      ? ActionButton(
-                          key: const Key('sendButton'),
-                          text: localizations.send,
-                          icon: Symbols.call_made,
-                          onTap: () async {
-                            await context.push(
-                              TransferSheet.routerPage,
-                              extra: {
-                                'transferType': aeToken.isUCO
-                                    ? TransferType.uco.name
-                                    : TransferType.token.name,
-                                'recipient': const TransferRecipient.address(
-                                  address: Address(address: ''),
-                                ).toJson(),
-                                'aeToken': aeToken.toJson(),
-                              },
-                            );
-                          },
-                        )
-                          .animate()
-                          .fade(duration: const Duration(milliseconds: 200))
-                          .scale(duration: const Duration(milliseconds: 200))
-                      : ActionButton(
-                          text: localizations.send,
-                          icon: Symbols.call_made,
-                          enabled: false,
-                        )
-                          .animate()
-                          .fade(duration: const Duration(milliseconds: 200))
-                          .scale(duration: const Duration(milliseconds: 200)),
-                ),
-                SizedBox(
-                  width: constraints.maxWidth * 0.25,
-                  child: ActionButton(
-                    key: const Key('receivebutton'),
-                    text: localizations.receive,
-                    icon: Symbols.call_received,
-                    onTap: () {
-                      CupertinoScaffold.showCupertinoModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return FractionallySizedBox(
-                            heightFactor: 1,
-                            child: Scaffold(
-                              backgroundColor: aedappfm
-                                  .AppThemeBase.sheetBackground
-                                  .withValues(alpha: 0.2),
-                              body: const ReceiveModal(),
-                            ),
-                          );
+                if (balanceUCO > 0 &&
+                    connectivityStatusProvider ==
+                        ConnectivityStatus.isConnected)
+                  ActionButton(
+                    key: const Key('sendButton'),
+                    text: localizations.send,
+                    icon: Symbols.call_made,
+                    onTap: () async {
+                      await context.push(
+                        TransferSheet.routerPage,
+                        extra: {
+                          'transferType': aeToken.isUCO
+                              ? TransferType.uco.name
+                              : TransferType.token.name,
+                          'recipient': const TransferRecipient.address(
+                            address: Address(address: ''),
+                          ).toJson(),
+                          'aeToken': aeToken.toJson(),
                         },
                       );
                     },
                   )
                       .animate()
-                      .fade(duration: const Duration(milliseconds: 250))
-                      .scale(duration: const Duration(milliseconds: 250)),
-                ),
-                SizedBox(
-                  width: constraints.maxWidth * 0.25,
-                  child: ActionButton(
+                      .fade(duration: const Duration(milliseconds: 200))
+                      .scale(duration: const Duration(milliseconds: 200))
+                else
+                  ActionButton(
+                    text: localizations.send,
+                    icon: Symbols.call_made,
+                    enabled: false,
+                  )
+                      .animate()
+                      .fade(duration: const Duration(milliseconds: 200))
+                      .scale(duration: const Duration(milliseconds: 200)),
+                ActionButton(
+                  key: const Key('receivebutton'),
+                  text: localizations.receive,
+                  icon: Symbols.call_received,
+                  onTap: () {
+                    CupertinoScaffold.showCupertinoModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return FractionallySizedBox(
+                          heightFactor: 1,
+                          child: Scaffold(
+                            backgroundColor: aedappfm
+                                .AppThemeBase.sheetBackground
+                                .withValues(alpha: 0.2),
+                            body: const ReceiveModal(),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                )
+                    .animate()
+                    .fade(duration: const Duration(milliseconds: 250))
+                    .scale(duration: const Duration(milliseconds: 250)),
+                if (FeatureFlags.swapFeature)
+                  ActionButton(
                     key: const Key('swapButton'),
                     text: localizations.swapHeader,
                     icon: aedappfm.Iconsax.arrange_circle_2,
@@ -152,85 +144,52 @@ class TokenDetailMenu extends ConsumerWidget {
                       .animate()
                       .fade(duration: const Duration(milliseconds: 250))
                       .scale(duration: const Duration(milliseconds: 250)),
-                ),
-                SizedBox(
-                  width: constraints.maxWidth * 0.25,
-                  child: aeToken.isUCO == false
-                      ? connectivityStatusProvider ==
-                              ConnectivityStatus.isConnected
-                          ? ActionButton(
-                              text: localizations.explorer,
-                              icon: Symbols.manage_search,
-                              onTap: () async {
-                                await launchUrl(
-                                  Uri.parse(
-                                    '${ref.read(environmentProvider).endpoint}/explorer/transaction/${aeToken.address}',
-                                  ),
-                                  mode: LaunchMode.externalApplication,
-                                );
-                              },
-                            )
-                              .animate()
-                              .fade(
-                                duration: const Duration(milliseconds: 300),
-                              )
-                              .scale(
-                                duration: const Duration(milliseconds: 300),
-                              )
-                          : ActionButton(
-                              text: localizations.explorer,
-                              icon: Symbols.manage_search,
-                              enabled: false,
-                            )
-                              .animate()
-                              .fade(
-                                duration: const Duration(milliseconds: 300),
-                              )
-                              .scale(
-                                duration: const Duration(milliseconds: 300),
-                              )
-                      : connectivityStatusProvider ==
-                              ConnectivityStatus.isConnected
-                          ? ActionButton(
-                              text: farmLock != null
-                                  ? '${localizations.tokenDetailMenuEarn}\nAPR\n${(farmLock.apr3years * 100).formatNumber(precision: 0).replaceAll('.', '')}%'
-                                  : '${localizations.tokenDetailMenuEarn}\nUCO',
-                              icon: aedappfm.Iconsax.wallet_add,
-                              enabled: pool != null && farmLock != null,
-                              onTap: () async {
-                                ref.read(mainTabControllerProvider)!.animateTo(
-                                      3,
-                                      duration: Duration.zero,
-                                    );
-                                await ref
-                                    .read(SettingsProviders.settings.notifier)
-                                    .setMainScreenCurrentPage(3);
-
-                                context.pop();
-                              },
-                            )
-                              .animate()
-                              .fade(
-                                duration: const Duration(milliseconds: 300),
-                              )
-                              .scale(
-                                duration: const Duration(milliseconds: 300),
-                              )
-                          : ActionButton(
-                              text: farmLock != null
-                                  ? '${localizations.tokenDetailMenuEarn}\nAPR\n${(farmLock.apr3years * 100).formatNumber(precision: 2)}%'
-                                  : '${localizations.tokenDetailMenuEarn}\nUCO',
-                              icon: aedappfm.Iconsax.wallet_add,
-                              enabled: false,
-                            )
-                              .animate()
-                              .fade(
-                                duration: const Duration(milliseconds: 300),
-                              )
-                              .scale(
-                                duration: const Duration(milliseconds: 300),
+                if (aeToken.isUCO == false)
+                  connectivityStatusProvider == ConnectivityStatus.isConnected
+                      ? ActionButton(
+                          text: localizations.explorer,
+                          icon: Symbols.manage_search,
+                          onTap: () async {
+                            await launchUrl(
+                              Uri.parse(
+                                '${ref.read(environmentProvider).endpoint}/explorer/transaction/${aeToken.address}',
                               ),
-                ),
+                              mode: LaunchMode.externalApplication,
+                            );
+                          },
+                        )
+                          .animate()
+                          .fade(
+                            duration: const Duration(milliseconds: 300),
+                          )
+                          .scale(
+                            duration: const Duration(milliseconds: 300),
+                          )
+                      : ActionButton(
+                          text: localizations.explorer,
+                          icon: Symbols.manage_search,
+                          enabled: false,
+                        )
+                          .animate()
+                          .fade(
+                            duration: const Duration(milliseconds: 300),
+                          )
+                          .scale(
+                            duration: const Duration(milliseconds: 300),
+                          )
+                else
+                  ActionButton(
+                    text: localizations.explorer,
+                    icon: Symbols.manage_search,
+                    enabled: false,
+                  )
+                      .animate()
+                      .fade(
+                        duration: const Duration(milliseconds: 300),
+                      )
+                      .scale(
+                        duration: const Duration(milliseconds: 300),
+                      ),
               ],
             );
           },

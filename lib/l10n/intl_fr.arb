@@ -62,7 +62,6 @@
     "authMethod": "Méthode d'authentification",
     "pinMethod": "PIN",
     "biometricsMethod": "Biométrie",
-    "byokeyMethod": "Archethic ByoKey (Prochainement)",
     "language": "Langue",
     "languageDefaultSettings": "Langue du système",
     "removeWallet": "Supprimer le wallet de cet appareil",

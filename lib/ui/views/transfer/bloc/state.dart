@@ -38,8 +38,7 @@ class TransferFormState with _$TransferFormState {
   bool get isControlsOk =>
       errorAddressText == '' && errorAmountText == '' && errorMessageText == '';
 
-  bool get canTransfer =>
-      feeEstimation.value != null && feeEstimation.value! > 0 && isControlsOk;
+  bool get canTransfer => feeEstimation.value != null && isControlsOk;
 
   double get feeEstimationOrZero => feeEstimation.valueOrNull ?? 0;
 

@@ -153,17 +153,7 @@ class _IntroConfigureSecurityState extends ConsumerState<IntroConfigureSecurity>
                 .map(
                   (accessMode) => accessMode.pickerItem(context),
                 )
-                .toList()
-              ..add(
-                PickerItem(
-                  localizations.byokeyMethod,
-                  null,
-                  'assets/icons/byokey.png',
-                  ArchethicTheme.pickerItemIconDisabled,
-                  '',
-                  false,
-                ),
-              ),
+                .toList(),
             onSelected: (value) async {
               setState(() {
                 _accessModesSelected = value;

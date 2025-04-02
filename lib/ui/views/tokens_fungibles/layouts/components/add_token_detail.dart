@@ -6,6 +6,7 @@ import 'package:aewallet/ui/util/amount_formatters.dart';
 import 'package:aewallet/ui/views/tokens_fungibles/bloc/provider.dart';
 import 'package:aewallet/ui/widgets/components/sheet_detail_card.dart';
 import 'package:aewallet/util/number_util.dart';
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -87,8 +88,13 @@ class AddTokenDetail extends ConsumerWidget {
               ),
               Text(
                 AmountFormatters.standard(
-                  ref.watch(getBalanceProvider(kUCOAddress)).valueOrNull ??
-                      0.0 - addToken.feeEstimationOrZero,
+                  (Decimal.parse(
+                            '${ref.watch(getBalanceProvider(kUCOAddress)).valueOrNull ?? 0.0}',
+                          ) -
+                          (Decimal.parse(
+                            addToken.feeEstimationOrZero.toString(),
+                          )))
+                      .toDouble(),
                   addToken.symbolFees(context),
                 ),
                 style: ArchethicThemeStyles.textStyleSize12W100Primary,

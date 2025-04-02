@@ -30,10 +30,7 @@ class AddTokenFormState with _$AddTokenFormState {
       errorInitialSupplyText == '' &&
       errorAmountText == '';
 
-  bool get canAddToken =>
-      feeEstimation.value != null &&
-      feeEstimation.value! > 0 &&
-      isControlsOk == true;
+  bool get canAddToken => feeEstimation.value != null && isControlsOk == true;
 
   double get feeEstimationOrZero => feeEstimation.valueOrNull ?? 0;
 
