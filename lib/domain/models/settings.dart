@@ -8,7 +8,6 @@ part 'settings.freezed.dart';
 enum MainScreenTab {
   accountTab,
   transactionTab,
-  swapTab,
   earnTab,
 }
 

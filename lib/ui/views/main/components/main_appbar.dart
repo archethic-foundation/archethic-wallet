@@ -11,7 +11,6 @@ import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/menu/settings/settings_sheet.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
-import 'package:aewallet/ui/views/aeswap_swap/layouts/components/swap_icon_refresh.dart';
 import 'package:aewallet/ui/views/main/components/app_update_button.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar_account.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar_basic.dart';
@@ -54,13 +53,6 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
             _RefreshButton(),
           ],
           title: MainAppBarTransactions(),
-        ),
-      MainScreenTab.swapTab => MainAppBarDetail(
-          key: const Key('swap'),
-          actions: const [
-            SwapTokenIconRefresh(),
-          ],
-          title: MainAppBarBasic(header: localizations.swapHeader),
         ),
       MainScreenTab.earnTab => MainAppBarDetail(
           key: const Key('earn'),
