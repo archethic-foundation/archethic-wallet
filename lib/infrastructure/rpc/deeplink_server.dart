@@ -18,7 +18,7 @@ import 'package:aewallet/infrastructure/rpc/sign_transactions/command_handler.da
 import 'package:deeplink_rpc/deeplink_rpc.dart';
 import 'package:logging/logging.dart';
 
-class ArchethicDeeplinkRPCServer extends DeeplinkRpcRequestReceiver {
+class ArchethicDeeplinkRPCServer extends DeeplinkRpcServer {
   ArchethicDeeplinkRPCServer() {
     registerHandler(
       DeeplinkRpcRequestHandler(
