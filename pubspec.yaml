@@ -65,9 +65,9 @@ dependencies:
   decimal: ^3.0.2
 
   # A RPC-via-deeplink communication library coded in Dart. This is dedicated to Flutter mobile applications (iOS / Android).
-  #deeplink_rpc: ^1.1.0
-  deeplink_rpc:
-    path: ../lib-deeplink-rpc
+  deeplink_rpc: ^2.0.0-beta.2
+  #deeplink_rpc:
+  #  path: ../lib-deeplink-rpc
 
   # Get infos about the device
   device_info_plus: ^10.1.2
