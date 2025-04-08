@@ -219,16 +219,6 @@ class _IntroWelcomeState extends ConsumerState<IntroWelcome>
           const SizedBox(
             height: 20,
           ),
-          Text(
-            localizations.welcomeDesc10,
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium!
-                .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
           CheckboxConfirm(
             text: Row(
               children: [
