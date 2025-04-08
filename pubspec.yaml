@@ -108,9 +108,6 @@ dependencies:
   # Makes in-text links clickable
   flutter_linkify: ^6.0.0
 
-  # A cross platform plugin for displaying local notifications.
-  flutter_local_notifications: ^17.2.0
-
   flutter_localizations:
     sdk: flutter
 

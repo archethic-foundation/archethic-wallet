@@ -12,12 +12,9 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/window_util_desktop.dart'
     if (dart.library.js) 'package:aewallet/ui/util/window_util_web.dart';
 import 'package:aewallet/ui/views/rpc_command_receiver/add_service/layouts/add_service_confirmation_form.dart';
-import 'package:aewallet/util/account_formatters.dart';
-import 'package:aewallet/util/notifications_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AddServiceHandler extends CommandHandler {
@@ -27,12 +24,6 @@ class AddServiceHandler extends CommandHandler {
   }) : super(
           canHandle: (command) => command is RPCCommand<awc.AddServiceRequest>,
           handle: (command) async {
-            _showNotification(
-              context: context,
-              ref: ref,
-              command: command,
-            );
-
             if (command.data.name.isEmpty) {
               return const Result.failure(
                 awc.Failure.invalidParams,
@@ -127,29 +118,4 @@ class AddServiceHandler extends CommandHandler {
                 );
           },
         );
-
-  static void _showNotification({
-    required BuildContext context,
-    required WidgetRef ref,
-    required RPCCommand<awc.AddServiceRequest> command,
-  }) {
-    final accountSelected = ref.watch(
-      accountsNotifierProvider.select(
-        (accounts) => accounts.valueOrNull?.selectedAccount,
-      ),
-    );
-
-    final message =
-        AppLocalizations.of(context)!.addServiceCommandReceivedNotification;
-
-    NotificationsUtil.showNotification(
-      title: 'Archethic',
-      body: message
-          .replaceAll(
-            '%1',
-            command.origin.name,
-          )
-          .replaceAll('%2', accountSelected!.nameDisplayed),
-    );
-  }
 }
