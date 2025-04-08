@@ -5,18 +5,18 @@ import 'dart:ui';
 import 'package:aewallet/application/migrations/migration_manager.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/domain/repositories/features_flags.dart';
 import 'package:aewallet/local_data_migration_widget.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/earn_tab.dart';
-import 'package:aewallet/ui/views/aeswap_swap/layouts/swap_tab.dart';
 import 'package:aewallet/ui/views/main/account_tab.dart';
+import 'package:aewallet/ui/views/main/address_book_tab.dart';
 import 'package:aewallet/ui/views/main/bloc/providers.dart';
 import 'package:aewallet/ui/views/main/components/home_providers_keepalive.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar.dart';
 import 'package:aewallet/ui/views/main/components/recovery_phrase_banner.dart';
 import 'package:aewallet/ui/views/main/transactions_tab.dart';
+import 'package:aewallet/ui/views/messenger/layouts/messenger_tab.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/tab_item.dart';
@@ -101,6 +101,11 @@ class _HomePageState extends ConsumerState<HomePage>
               },
               tabs: [
                 TabItem(
+                  icon: Symbols.contacts,
+                  label:
+                      AppLocalizations.of(context)!.bottomMainMenuAddressBook,
+                ),
+                TabItem(
                   icon: Symbols.account_box,
                   label: AppLocalizations.of(context)!.bottomMainMenuAccounts,
                 ),
@@ -109,14 +114,13 @@ class _HomePageState extends ConsumerState<HomePage>
                   label:
                       AppLocalizations.of(context)!.bottomMainMenuTransactions,
                 ),
-                if (FeatureFlags.swapFeature)
-                  TabItem(
-                    icon: aedappfm.Iconsax.arrange_circle_2,
-                    label: AppLocalizations.of(context)!.bottomMainMenuSwap,
-                  ),
                 TabItem(
                   icon: aedappfm.Iconsax.wallet_money,
                   label: AppLocalizations.of(context)!.bottomMainMenuEarn,
+                ),
+                TabItem(
+                  icon: aedappfm.Iconsax.message,
+                  label: AppLocalizations.of(context)!.bottomMainMenuMessenger,
                 ),
               ],
             ),
@@ -154,6 +158,7 @@ class _HomePageState extends ConsumerState<HomePage>
         physics: const NeverScrollableScrollPhysics(),
         controller: tabController,
         children: const [
+          AddressBookTab(),
           Stack(
             alignment: Alignment.topCenter,
             children: [
@@ -165,8 +170,8 @@ class _HomePageState extends ConsumerState<HomePage>
             ],
           ),
           TransactionsTab(),
-          if (FeatureFlags.swapFeature) SwapTab(),
           EarnTab(),
+          MessengerTab(),
         ],
       ),
     );

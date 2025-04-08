@@ -6,9 +6,11 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'settings.freezed.dart';
 
 enum MainScreenTab {
+  addressBookTab,
   accountTab,
   transactionTab,
   earnTab,
+  messengerTab,
 }
 
 enum EarnUserLevelType { beginner, advanced }

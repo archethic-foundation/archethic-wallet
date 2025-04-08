@@ -841,5 +841,6 @@
     "propertyAccessDescriptionReadOnly": "The following list contains contacts that can access this element.",
     "newContact": "New contact",
     "addressHint": "Enter Address",
-    "favorites": "Favorites"
+    "favorites": "Favorites",
+    "bottomMainMenuAddressBook": "Address book"
 }

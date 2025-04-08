@@ -177,7 +177,7 @@ class _FetchContactsProviderElement
 }
 
 String _$getSelectedContactHash() =>
-    r'bbf655d7266f9446ec246c8c9873cce82bd04c16';
+    r'edc3619d060317dbce7b3bbd51d0af7866b0413c';
 
 /// See also [_getSelectedContact].
 @ProviderFor(_getSelectedContact)
@@ -329,7 +329,7 @@ class _GetContactWithNameProviderElement
 }
 
 String _$getContactWithAddressHash() =>
-    r'f598570c914bd31ae4f539328cb7685f161a1ee5';
+    r'3fb44eaa5b098b11e67298a871061eefa88ac439';
 
 /// See also [_getContactWithAddress].
 @ProviderFor(_getContactWithAddress)
@@ -462,7 +462,7 @@ class _GetContactWithAddressProviderElement
 }
 
 String _$getContactWithPublicKeyHash() =>
-    r'32f11edee21ae4485656e045ff66e306e78e0e11';
+    r'd1fae6c9c88050a8ca00c8bc45682e3b8ed084ca';
 
 /// See also [_getContactWithPublicKey].
 @ProviderFor(_getContactWithPublicKey)
@@ -1130,7 +1130,7 @@ class _IsContactExistsWithNameProviderElement
 }
 
 String _$isContactExistsWithAddressHash() =>
-    r'75d1cbaac06d465b02f5871c63155779b5f2a7f9';
+    r'269daebaae0a78ab02546e4f3ec4356a9380bd4b';
 
 /// See also [_isContactExistsWithAddress].
 @ProviderFor(_isContactExistsWithAddress)
@@ -1262,137 +1262,6 @@ class _IsContactExistsWithAddressProviderElement
   @override
   String? get address =>
       (origin as _IsContactExistsWithAddressProvider).address;
-}
-
-String _$getBalanceHash() => r'8dc96a499de2d5972c550c19d4d997dff1b87e40';
-
-/// See also [_getBalance].
-@ProviderFor(_getBalance)
-const _getBalanceProvider = _GetBalanceFamily();
-
-/// See also [_getBalance].
-class _GetBalanceFamily extends Family<AsyncValue<AccountBalance>> {
-  /// See also [_getBalance].
-  const _GetBalanceFamily();
-
-  /// See also [_getBalance].
-  _GetBalanceProvider call({
-    String? address,
-  }) {
-    return _GetBalanceProvider(
-      address: address,
-    );
-  }
-
-  @override
-  _GetBalanceProvider getProviderOverride(
-    covariant _GetBalanceProvider provider,
-  ) {
-    return call(
-      address: provider.address,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'_getBalanceProvider';
-}
-
-/// See also [_getBalance].
-class _GetBalanceProvider extends AutoDisposeFutureProvider<AccountBalance> {
-  /// See also [_getBalance].
-  _GetBalanceProvider({
-    String? address,
-  }) : this._internal(
-          (ref) => _getBalance(
-            ref as _GetBalanceRef,
-            address: address,
-          ),
-          from: _getBalanceProvider,
-          name: r'_getBalanceProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$getBalanceHash,
-          dependencies: _GetBalanceFamily._dependencies,
-          allTransitiveDependencies:
-              _GetBalanceFamily._allTransitiveDependencies,
-          address: address,
-        );
-
-  _GetBalanceProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.address,
-  }) : super.internal();
-
-  final String? address;
-
-  @override
-  Override overrideWith(
-    FutureOr<AccountBalance> Function(_GetBalanceRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: _GetBalanceProvider._internal(
-        (ref) => create(ref as _GetBalanceRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        address: address,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeFutureProviderElement<AccountBalance> createElement() {
-    return _GetBalanceProviderElement(this);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is _GetBalanceProvider && other.address == address;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, address.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin _GetBalanceRef on AutoDisposeFutureProviderRef<AccountBalance> {
-  /// The parameter `address` of this provider.
-  String? get address;
-}
-
-class _GetBalanceProviderElement
-    extends AutoDisposeFutureProviderElement<AccountBalance>
-    with _GetBalanceRef {
-  _GetBalanceProviderElement(super.provider);
-
-  @override
-  String? get address => (origin as _GetBalanceProvider).address;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

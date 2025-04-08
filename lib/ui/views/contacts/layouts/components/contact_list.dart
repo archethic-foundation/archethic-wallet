@@ -1,5 +1,4 @@
 import 'package:aewallet/application/account/providers.dart';
-import 'package:aewallet/application/contact.dart';
 
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
@@ -67,9 +66,7 @@ class ContactList extends ConsumerWidget {
     if (contact.type == ContactType.keychainService.name && account != null) {
       return AsyncValue.data(account.balance!);
     } else {
-      return ref.watch(
-        ContactProviders.getBalance(address: contact.address),
-      );
+      return AsyncValue.data(AccountBalance());
     }
   }
 }

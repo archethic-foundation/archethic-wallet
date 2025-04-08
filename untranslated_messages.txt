@@ -54,6 +54,7 @@
     "propertyAccessDescriptionReadOnly",
     "newContact",
     "addressHint",
-    "favorites"
+    "favorites",
+    "bottomMainMenuAddressBook"
   ]
 }

@@ -101,7 +101,7 @@ class _CreateDiscussionValidationSheetState
 
         final result = await formNotifier.createDiscussion();
         context.pop(); // wait popup
-
+        context.loadingOverlay.hide();
         result.map(
           success: (success) {
             context

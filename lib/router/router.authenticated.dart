@@ -208,12 +208,36 @@ final _authenticatedRoutes = [
     },
   ),
   GoRoute(
-    path: MessengerTab.routerPage,
+    path: ContactDetail.routerPage,
     pageBuilder: (context, state) => CustomTransitionPage<void>(
       transitionDuration: Duration.zero,
       reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
-      child: const MessengerTab(),
+      child: ContactDetail(
+        contactAddress: ContactDetailsRouteParams.fromJson(
+          state.extra! as Map<String, dynamic>,
+        ).contactAddress,
+        readOnly: ContactDetailsRouteParams.fromJson(
+              state.extra! as Map<String, dynamic>,
+            ).readOnly ??
+            false,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
+  ),
+  GoRoute(
+    path: AddContactSheet.routerPage,
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
+      key: state.pageKey,
+      child: AddContactSheet(
+        address: state.extra as String?,
+      ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
           FadeTransition(
         opacity: animation,

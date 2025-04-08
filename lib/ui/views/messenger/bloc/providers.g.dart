@@ -579,7 +579,7 @@ final _sortedDiscussionsProvider =
 // ignore: unused_element
 typedef _SortedDiscussionsRef = AutoDisposeFutureProviderRef<List<Discussion>>;
 String _$messageCreationFeesHash() =>
-    r'3ec8528f6d71769203817e46b0270d9cf5a64e15';
+    r'30b55b0e053ba55a7f5503defa3751c884f0fca3';
 
 /// See also [_messageCreationFees].
 @ProviderFor(_messageCreationFees)
@@ -898,7 +898,7 @@ class _DiscussionMessagesProviderElement
   int get pageSize => (origin as _DiscussionMessagesProvider).pageSize;
 }
 
-String _$discussionsHash() => r'80bf93271a90253bcd79579831e9c1b1383dcd13';
+String _$discussionsHash() => r'99b52a70c2f7c4d98457bd0182dd37c7dece78df';
 
 /// See also [_Discussions].
 @ProviderFor(_Discussions)
@@ -1067,7 +1067,7 @@ class _MessageCreationFormNotifierProviderElement
 }
 
 String _$paginatedDiscussionMessagesNotifierHash() =>
-    r'77c21df57f19be3fee09950ab3a3c16f4accca27';
+    r'a036b46811bf7463fa0fa87b879c525a57e2b252';
 
 abstract class _$PaginatedDiscussionMessagesNotifier
     extends BuildlessAutoDisposeNotifier<

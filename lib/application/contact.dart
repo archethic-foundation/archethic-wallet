@@ -2,13 +2,11 @@
 
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/infrastructure/datasources/contacts.hive.dart';
-import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/contact.dart';
-import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/util/account_formatters.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -65,9 +63,10 @@ Future<Contact?> _getContactWithAddress(
   Ref ref,
   String address,
 ) async {
+  final apiService = ref.watch(apiServiceProvider);
   final searchedContact = await ref
       .watch(_contactRepositoryProvider)
-      .getContactWithAddress(address);
+      .getContactWithAddress(address, apiService);
   return searchedContact;
 }
 
@@ -77,9 +76,10 @@ Future<Contact?> _getContactWithPublicKey(
   String publicKey,
 ) async {
   try {
+    final apiService = ref.watch(apiServiceProvider);
     final searchedContact = await ref
         .watch(_contactRepositoryProvider)
-        .getContactWithPublicKey(publicKey);
+        .getContactWithPublicKey(publicKey, apiService);
     return searchedContact;
   } catch (e) {
     return null;
@@ -146,9 +146,10 @@ Future<bool> _isContactExistsWithAddress(
   if (address == null) {
     throw Exception('Address is null');
   }
+  final apiService = ref.watch(apiServiceProvider);
   return ref
       .watch(_contactRepositoryProvider)
-      .isContactExistsWithAddress(address);
+      .isContactExistsWithAddress(address, apiService);
 }
 
 class ContactRepository {
@@ -184,16 +185,25 @@ class ContactRepository {
     return hiveDatasource.getContactWithName(contactName);
   }
 
-  Future<Contact?> getContactWithAddress(String address) async {
-    return hiveDatasource.getContactWithAddress(address);
+  Future<Contact?> getContactWithAddress(
+    String address,
+    ApiService apiService,
+  ) async {
+    return hiveDatasource.getContactWithAddress(address, apiService);
   }
 
-  Future<bool> isContactExistsWithAddress(String address) async {
-    return hiveDatasource.contactExistsWithAddress(address);
+  Future<bool> isContactExistsWithAddress(
+    String address,
+    ApiService apiService,
+  ) async {
+    return hiveDatasource.contactExistsWithAddress(address, apiService);
   }
 
-  Future<Contact> getContactWithPublicKey(String publicKey) async {
-    return hiveDatasource.getContactWithPublicKey(publicKey);
+  Future<Contact> getContactWithPublicKey(
+    String publicKey,
+    ApiService apiService,
+  ) async {
+    return hiveDatasource.getContactWithPublicKey(publicKey, apiService);
   }
 
   Future<Contact> getContactWithGenesisPublicKey(
@@ -219,7 +229,6 @@ abstract class ContactProviders {
   static const getContactWithGenesisPublicKey =
       _getContactWithGenesisPublicKeyProvider;
   static final getSelectedContact = _getSelectedContactProvider;
-  static const getBalance = _getBalanceProvider;
 
   static Future<void> reset(Ref ref) async {
     await ref.read(_contactRepositoryProvider).clear();
@@ -230,7 +239,6 @@ abstract class ContactProviders {
       ..invalidate(getContactWithName)
       ..invalidate(getContactWithAddress)
       ..invalidate(getContactWithPublicKey)
-      ..invalidate(getContactWithGenesisPublicKey)
-      ..invalidate(getBalance);
+      ..invalidate(getContactWithGenesisPublicKey);
   }
 }

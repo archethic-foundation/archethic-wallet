@@ -113,7 +113,7 @@ class DiscussionDetailsFormNotifier
                   .where((element) => element != selectedContact.publicKey)
                   .toList(),
               discussionName: state.name,
-              adminAddress: selectedAccount.lastAddress!,
+              adminAddress: selectedAccount.genesisAddress,
               serviceName: selectedAccount.name,
               session: session,
               adminKeyPair: keyPair,

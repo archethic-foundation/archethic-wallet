@@ -213,7 +213,7 @@ class UpdateDiscussionFormNotifier
               adminsPubKeys: state.admins,
               membersPubKeys: state.members,
               discussionName: state.name,
-              adminAddress: selectedAccount.lastAddress!,
+              adminAddress: selectedAccount.genesisAddress,
               serviceName: selectedAccount.name,
               session: session,
               adminKeyPair: keyPair,
