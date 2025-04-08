@@ -4,6 +4,7 @@ import 'package:aewallet/infrastructure/datasources/appdb.hive.dart';
 import 'package:aewallet/infrastructure/repositories/settings.dart';
 import 'package:aewallet/infrastructure/rpc/deeplink_server.dart';
 import 'package:aewallet/infrastructure/rpc/websocket_server.dart';
+import 'package:aewallet/modules/messaging_sdk/services/messaging_service.dart';
 import 'package:aewallet/util/biometrics_util.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 
@@ -16,6 +17,11 @@ Future<void> setupServiceLocator() async {
     ..registerLazySingleton<NFCUtil>(NFCUtil.new)
     ..registerLazySingleton<CommandDispatcher>(
       CommandDispatcher.new,
+    )
+    ..registerLazySingleton<MessagingService>(
+      () => MessagingService(
+        logsActivation: false,
+      ),
     )
     ..registerLazySingleton<ArchethicWebsocketRPCServer>(
       ArchethicWebsocketRPCServer.new,

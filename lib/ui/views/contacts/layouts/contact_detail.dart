@@ -1,0 +1,338 @@
+/// SPDX-License-Identifier: AGPL-3.0-or-later
+
+import 'dart:async';
+
+import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/contact.dart';
+import 'package:aewallet/application/settings/settings.dart';
+import 'package:aewallet/domain/repositories/features_flags.dart';
+import 'package:aewallet/model/data/account_balance.dart';
+import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/model/public_key.dart';
+import 'package:aewallet/ui/themes/archethic_theme.dart';
+import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/ui/util/contact_formatters.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
+import 'package:aewallet/ui/views/contacts/layouts/components/contact_detail_tab.dart';
+import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
+import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
+import 'package:aewallet/ui/views/messenger/layouts/create_discussion_validation_sheet.dart';
+import 'package:aewallet/ui/widgets/components/dialog.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
+import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
+import 'package:aewallet/util/get_it_instance.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:go_router/go_router.dart';
+import 'package:material_symbols_icons/symbols.dart';
+
+part 'contact_detail.freezed.dart';
+part 'contact_detail.g.dart';
+
+@freezed
+class ContactDetailsRouteParams with _$ContactDetailsRouteParams {
+  const factory ContactDetailsRouteParams({
+    required String contactAddress,
+    bool? readOnly,
+  }) = _ContactDetailsRouteParams;
+  const ContactDetailsRouteParams._();
+
+  factory ContactDetailsRouteParams.fromJson(Map<String, dynamic> json) =>
+      _$ContactDetailsRouteParamsFromJson(json);
+}
+
+class ContactDetail extends ConsumerWidget implements SheetSkeletonInterface {
+  const ContactDetail({
+    required this.contactAddress,
+    this.readOnly = false,
+    super.key,
+  });
+
+  final String contactAddress;
+  final bool readOnly;
+  static const String routerPage = '/contact_detail';
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SheetSkeleton(
+      appBar: getAppBar(context, ref),
+      floatingActionButton: getFloatingActionButton(context, ref),
+      sheetContent: getSheetContent(context, ref),
+      thumbVisibility: false,
+    );
+  }
+
+  @override
+  Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
+    return const SizedBox.shrink();
+  }
+
+  @override
+  PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
+    final contact = ref
+        .watch(ContactProviders.getContactWithAddress(contactAddress))
+        .valueOrNull;
+
+    if (contact == null) {
+      return AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+      );
+    }
+
+    return SheetAppBar(
+      title: contact.format,
+      widgetLeft: BackButton(
+        key: const Key('back'),
+        color: ArchethicTheme.text,
+        onPressed: () {
+          context.pop();
+        },
+      ),
+    );
+  }
+
+  @override
+  Widget getSheetContent(BuildContext context, WidgetRef ref) {
+    final contact = ref
+        .watch(ContactProviders.getContactWithAddress(contactAddress))
+        .valueOrNull;
+    return contact == null
+        ? Center(
+            child: CircularProgressIndicator(
+              color: ArchethicTheme.text,
+              strokeWidth: 1,
+            ),
+          )
+        : _ContactDetailBody(
+            contact: contact,
+            readOnly: readOnly,
+          );
+  }
+}
+
+class _ContactDetailBody extends ConsumerWidget {
+  const _ContactDetailBody({
+    required this.contact,
+    required this.readOnly,
+  });
+
+  final Contact contact;
+  final bool readOnly;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+
+    return Column(
+      children: <Widget>[
+        _ContactDetailActions(contact: contact, readOnly: readOnly),
+        ContactDetailTab(
+          infoQRCode: contact.genesisAddress!.toUpperCase(),
+          description: contact.type == ContactType.keychainService.name
+              ? localizations.contactAddressInfoKeychainService
+              : localizations.contactAddressInfoExternalContact,
+          messageCopied: localizations.addressCopied,
+        ),
+        Visibility(
+          visible: contact.type != ContactType.keychainService.name &&
+              readOnly == false,
+          child: Column(
+            children: [
+              TextButton(
+                key: const Key('removeContact'),
+                onPressed: () {
+                  AppDialogs.showConfirmDialog(
+                    context,
+                    ref,
+                    localizations.removeContact,
+                    localizations.removeContactConfirmation.replaceAll(
+                      '%1',
+                      contact.format,
+                    ),
+                    localizations.yes,
+                    () async {
+                      ref.read(
+                        ContactProviders.deleteContact(
+                          contact: contact,
+                        ),
+                      );
+
+                      unawaited(
+                        (await ref
+                                .read(
+                                  AccountProviders.accounts.notifier,
+                                )
+                                .selectedAccountNotifier)
+                            ?.refreshRecentTransactions(),
+                      );
+                      UIUtil.showSnackbar(
+                        localizations.contactRemoved.replaceAll(
+                          '%1',
+                          contact.format,
+                        ),
+                        context,
+                        ref,
+                        ArchethicTheme.text,
+                        ArchethicTheme.snackBarShadow,
+                        icon: Symbols.info,
+                      );
+                      context.pop();
+                    },
+                    cancelText: localizations.no,
+                  );
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Symbols.delete,
+                      color: ArchethicThemeStyles
+                          .textStyleSize14W600PrimaryRed.color,
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      localizations.deleteContact,
+                      style: ArchethicThemeStyles.textStyleSize14W600PrimaryRed,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ContactDetailActions extends ConsumerWidget {
+  const _ContactDetailActions({
+    required this.contact,
+    this.readOnly = false,
+  });
+
+  final Contact contact;
+  final bool readOnly;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    final _contact = ref.watch(
+      ContactProviders.getContactWithName(
+        contact.format,
+      ),
+    );
+
+    final selectedAccount =
+        ref.read(AccountProviders.accounts).valueOrNull?.selectedAccount;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        if (contact.type != ContactType.keychainService.name &&
+            readOnly == false)
+          IconButton(
+            key: const Key('favorite'),
+            onPressed: () {
+              final updatedContact = contact;
+              if (contact.favorite == null) {
+                updatedContact.favorite = true;
+              } else {
+                updatedContact.favorite = !contact.favorite!;
+              }
+
+              ref.read(
+                ContactProviders.saveContact(
+                  contact: updatedContact,
+                ),
+              );
+            },
+            icon: Column(
+              children: [
+                _contact.maybeWhen(
+                  data: (data) {
+                    return Icon(
+                      Symbols.favorite,
+                      color: ArchethicTheme.favoriteIconColor,
+                      fill: data?.favorite == null || data!.favorite == false
+                          ? 0
+                          : 1,
+                    );
+                  },
+                  orElse: () => Icon(
+                    Symbols.favorite,
+                    color: ArchethicTheme.favoriteIconColor,
+                  ),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                Text(localizations.favorites),
+              ],
+            ),
+          ),
+        if (readOnly == false &&
+                PublicKey(contact.publicKey)
+                    .isValid // we can create discussion only with contact with valid public keys
+                &&
+                contact.format.toUpperCase() !=
+                    selectedAccount?.nameDisplayed
+                        .toUpperCase() // we will not create a discussion with ourselves
+            )
+          IconButton(
+            key: const Key('newDiscussion'),
+            onPressed: () {
+              ref
+                  .watch(MessengerProviders.createDiscussionForm.notifier)
+                  .addMember(contact);
+              context.push(
+                CreateDiscussionValidationSheet.routerPage,
+                extra: {
+                  'discussionCreationSuccess': () {
+                    ref
+                        .read(SettingsProviders.settings.notifier)
+                        .setMainScreenCurrentPage(4);
+                  },
+                  'fromRouterPage': CreateDiscussionValidationSheet.routerPage,
+                },
+              );
+            },
+            icon: Column(
+              children: [
+                const Icon(Symbols.edit_square),
+                const SizedBox(
+                  height: 4,
+                ),
+                Text(localizations.discussion),
+              ],
+            ),
+          ),
+        IconButton(
+          key: const Key('viewExplorer'),
+          onPressed: () {
+            UIUtil.showWebview(
+              context,
+              '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/chain?address=${contact.genesisAddress}',
+              '',
+            );
+          },
+          icon: Column(
+            children: [
+              const Icon(Symbols.open_in_new),
+              const SizedBox(
+                height: 4,
+              ),
+              Text(localizations.explorer),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}

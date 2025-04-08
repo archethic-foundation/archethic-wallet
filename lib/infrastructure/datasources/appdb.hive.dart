@@ -8,6 +8,8 @@ import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/app_keychain.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
+import 'package:aewallet/model/data/messenger/discussion.dart';
+import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/model/data/nft_infos_off_chain.dart';
 import 'package:aewallet/util/cache_manager_hive.dart';
 import 'package:flutter/foundation.dart';
@@ -34,6 +36,8 @@ class HiveTypeIds {
   static const walletTokenOwnership = 20;
   static const walletTokenOwnershipAuthorizedKey = 21;
   static const myDApps = 22;
+  static const discussion = 23;
+  static const discussionMessage = 24;
 }
 
 class DBHelper {
@@ -64,6 +68,9 @@ class DBHelper {
       ..registerAdapter(WalletTokenHiveDtoAdapter())
       ..registerAdapter(WalletTokenOwnershipHiveDtoAdapter())
       ..registerAdapter(WalletTokenOwnershipAuthorizedKeyHiveDtoAdapter())
+      ..registerAdapter(DiscussionImplAdapter())
+      ..registerAdapter(DiscussionMessageImplAdapter())
+      ..registerAdapter(ContactAccessRecipientAdapter())
       ..registerAdapter(DAppHiveDtoAdapter());
   }
 }
