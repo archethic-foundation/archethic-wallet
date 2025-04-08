@@ -1,10 +1,10 @@
 import 'dart:async';
 
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/session/session.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/repositories/messenger_repository.dart';
@@ -15,10 +15,7 @@ import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/model/public_key.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
-import 'package:aewallet/ui/views/main/bloc/providers.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
-import 'package:aewallet/util/get_it_instance.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -217,7 +214,9 @@ void _subscribeNotificationsWorker(WidgetRef ref) {
     if (previous != null && previous.value != null) {
       for (final account in previous.value!) {
         final contact = ref
-            .read(ContactProviders.getContactWithAddress(account.lastAddress!))
+            .read(
+              ContactProviders.getContactWithAddress(account.genesisAddress),
+            )
             .valueOrNull;
         if (contact != null) {
           previousContactPublicKeys.add(contact.publicKey);
@@ -229,7 +228,7 @@ void _subscribeNotificationsWorker(WidgetRef ref) {
     if (next.value != null) {
       for (final account in next.value!) {
         final contact = await ref.read(
-          ContactProviders.getContactWithAddress(account.lastAddress!).future,
+          ContactProviders.getContactWithAddress(account.genesisAddress).future,
         );
         if (contact != null) {
           nextContactPublicKeys.add(contact.publicKey);

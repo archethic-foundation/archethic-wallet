@@ -1,4 +1,4 @@
-import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -14,6 +14,7 @@ import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
+import 'package:aewallet/util/account_formatters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -42,8 +43,11 @@ class CreateDiscussionSheetState extends ConsumerState<CreateDiscussionSheet>
       final contactsList = await ref.read(
         ContactProviders.fetchContacts().future,
       );
-      final selectedAccount =
-          await ref.read(AccountProviders.accounts.future).selectedAccount;
+      final selectedAccount = ref.watch(
+        accountsNotifierProvider.select(
+          (accounts) => accounts.valueOrNull?.selectedAccount,
+        ),
+      );
 
       if (contactsList.isNotEmpty) {
         for (final contact in contactsList) {

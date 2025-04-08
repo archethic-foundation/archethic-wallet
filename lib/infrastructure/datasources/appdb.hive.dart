@@ -70,7 +70,6 @@ class DBHelper {
       ..registerAdapter(WalletTokenOwnershipAuthorizedKeyHiveDtoAdapter())
       ..registerAdapter(DiscussionImplAdapter())
       ..registerAdapter(DiscussionMessageImplAdapter())
-      ..registerAdapter(ContactAccessRecipientAdapter())
       ..registerAdapter(DAppHiveDtoAdapter());
   }
 }

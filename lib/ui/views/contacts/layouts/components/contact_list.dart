@@ -37,7 +37,7 @@ class ContactList extends ConsumerWidget {
           contact: contactsList[index],
           accountBalance: getAsyncAccountBalance(
             contactsList[index],
-            accounts,
+            accounts!.toList(),
             ref,
           ),
         );

@@ -1,11 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/infrastructure/datasources/contacts.hive.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
+import 'package:aewallet/util/account_formatters.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,8 +34,8 @@ Future<List<Contact>> _fetchContacts(
 
 @riverpod
 Future<Contact?> _getSelectedContact(Ref ref) async {
-  final selectedAccount =
-      await ref.watch(AccountProviders.accounts.future).selectedAccount;
+  final accounts = await ref.watch(AccountProviders.accounts.future);
+  final selectedAccount = accounts.selectedAccount;
   if (selectedAccount == null) {
     return null;
   }

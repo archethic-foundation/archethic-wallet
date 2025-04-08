@@ -87,8 +87,12 @@ class DiscussionDetailsFormNotifier
         final session = ref.read(sessionNotifierProvider).loggedIn;
         if (session == null) throw const Failure.loggedOut();
 
-        final selectedAccount =
-            await ref.read(AccountProviders.accounts.future).selectedAccount;
+        final selectedAccount = ref.watch(
+          accountsNotifierProvider.select(
+            (accounts) => accounts.valueOrNull?.selectedAccount,
+          ),
+        );
+
         if (selectedAccount == null) throw const Failure.loggedOut();
 
         final selectedContact =

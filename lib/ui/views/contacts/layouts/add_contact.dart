@@ -2,7 +2,6 @@
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/device_abilities.dart';
-import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/dimens.dart';
@@ -15,7 +14,6 @@ import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/paste_icon.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/user_data_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

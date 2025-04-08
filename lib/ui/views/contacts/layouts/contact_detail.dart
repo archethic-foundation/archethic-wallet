@@ -2,13 +2,13 @@
 
 import 'dart:async';
 
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/domain/repositories/features_flags.dart';
-import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/public_key.dart';
+import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
@@ -20,13 +20,14 @@ import 'package:aewallet/ui/views/messenger/layouts/create_discussion_validation
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
-import 'package:aewallet/util/get_it_instance.dart';
+import 'package:aewallet/util/account_formatters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 part 'contact_detail.freezed.dart';
 part 'contact_detail.g.dart';
@@ -229,8 +230,12 @@ class _ContactDetailActions extends ConsumerWidget {
       ),
     );
 
-    final selectedAccount =
-        ref.read(AccountProviders.accounts).valueOrNull?.selectedAccount;
+    final selectedAccount = ref
+        .watch(
+          accountsNotifierProvider,
+        )
+        .valueOrNull
+        ?.selectedAccount;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -315,11 +320,12 @@ class _ContactDetailActions extends ConsumerWidget {
           ),
         IconButton(
           key: const Key('viewExplorer'),
-          onPressed: () {
-            UIUtil.showWebview(
-              context,
-              '${ref.read(SettingsProviders.settings).network.getLink()}/explorer/chain?address=${contact.genesisAddress}',
-              '',
+          onPressed: () async {
+            await launchUrl(
+              Uri.parse(
+                '${ref.read(environmentProvider).endpoint}/explorer/chain?address=${selectedAccount!.genesisAddress}',
+              ),
+              mode: LaunchMode.externalApplication,
             );
           },
           icon: Column(
