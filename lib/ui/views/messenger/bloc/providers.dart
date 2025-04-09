@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/address_service.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/session/session.dart';
@@ -65,9 +66,6 @@ class _Discussions extends AutoDisposeAsyncNotifier<Iterable<Discussion>> {
   }
 
   Future<Discussion> addRemoteDiscussion(Discussion discussion) async {
-    final discussions = state.valueOrNull;
-    if (discussions == null) throw const Failure.other();
-
     final selectedAccount = await ref
         .read(
           AccountProviders.accounts.future,
@@ -136,31 +134,28 @@ String _discussionDisplayName(
   if (discussion.name != null && discussion.name!.isNotEmpty) {
     return discussion.name!;
   }
-  return ref
-          .watch(
-            ContactProviders.getSelectedContact,
-          )
-          .mapOrNull(
-            data: (contactData) {
-              final memberToDisplayPubKey =
-                  discussion.membersPubKeys.firstWhereOrNull(
-                (memberPublicKey) =>
-                    memberPublicKey != contactData.value!.publicKey,
-              );
-              if (memberToDisplayPubKey == null) return null;
 
-              return ref
-                  .watch(
-                    _accessRecipientWithPublicKeyProvider(
-                      memberToDisplayPubKey,
-                    ),
-                  )
-                  .asData;
-            },
-          )
-          ?.value
-          .name ??
-      '...';
+  final selectedAccount = ref
+      .watch(
+        accountsNotifierProvider,
+      )
+      .valueOrNull
+      ?.selectedAccount;
+  final memberToDisplayPubKey = discussion.membersPubKeys.firstWhereOrNull(
+    (memberPublicKey) => memberPublicKey != selectedAccount!.publicKey,
+  );
+
+  if (memberToDisplayPubKey == null) return '...';
+
+  final accessRecipient = ref.watch(
+    _accessRecipientWithPublicKeyProvider(
+      memberToDisplayPubKey,
+    ),
+  );
+  return accessRecipient.maybeMap(
+    data: (data) => data.value.name,
+    orElse: () => '...',
+  );
 }
 
 @riverpod
@@ -198,6 +193,7 @@ Future<Discussion> _remoteDiscussion(
         session: session,
         discussionGenesisAddress: address,
         apiService: ref.watch(apiServiceProvider),
+        addressService: ref.watch(addressServiceProvider),
       )
       .valueOrThrow;
 }

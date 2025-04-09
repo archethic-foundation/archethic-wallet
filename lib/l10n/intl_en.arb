@@ -823,7 +823,6 @@
     "doYouWantNewUsersReadOldMessages": "Allow the new members to see the previous messages?",
     "youHaveBeenDeletedFromADiscussion": "You have been deleted from a discussion",
     "dappsMessagingDesc": "Communicate securely",
-
     "removeContact": "Remove Contact",
     "removeContactConfirmation": "Are you sure you want to delete %1?",
     "addressBookHeader": "Address book",
@@ -839,8 +838,11 @@
     "contactExistsAddress": "You already have a contact with this address",
     "propertyAccessDescription": "Add or remove contacts that can access this property.",
     "propertyAccessDescriptionReadOnly": "The following list contains contacts that can access this element.",
-    "newContact": "New contact",
+    "newContact": "Add a new contact",
     "addressHint": "Enter Address",
     "favorites": "Favorites",
-    "bottomMainMenuAddressBook": "Address book"
+    "bottomMainMenuAddressBook": "Address book",
+    "me": "Me",
+    "newContactDesc": "Pick a contact to start chatting! If they’re not in the list, just add them to your address book.",
+    "discussionNameHint": "Enter a name for this discussion"
 }

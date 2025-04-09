@@ -95,10 +95,6 @@ class DiscussionDetailsFormNotifier
 
         if (selectedAccount == null) throw const Failure.loggedOut();
 
-        final selectedContact =
-            await ref.watch(ContactProviders.getSelectedContact.future);
-        if (selectedContact == null) throw const Failure.loggedOut();
-
         final keyPair = session.wallet.keychainSecuredInfos
             .services[selectedAccount.name]!.keyPair!.toKeyPair;
 
@@ -107,10 +103,10 @@ class DiscussionDetailsFormNotifier
             .updateDiscussion(
               discussionSCAddress: state.discussionAddress,
               adminsPubKeys: state.admins
-                  .where((element) => element != selectedContact.publicKey)
+                  .where((element) => element != selectedAccount.publicKey)
                   .toList(),
               membersPubKeys: state.members
-                  .where((element) => element != selectedContact.publicKey)
+                  .where((element) => element != selectedAccount.publicKey)
                   .toList(),
               discussionName: state.name,
               adminAddress: selectedAccount.genesisAddress,
@@ -121,6 +117,7 @@ class DiscussionDetailsFormNotifier
               updateSCAESKey:
                   true, // the user is not going to read the next messages
               apiService: ref.watch(apiServiceProvider),
+              addressService: ref.watch(addressServiceProvider),
             )
             .valueOrThrow;
 

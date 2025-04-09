@@ -41,7 +41,9 @@ class ContactsHiveDatasource {
   }
 
   Future<Contact?> getContactWithAddress(
-      String address, ApiService apiService) async {
+    String address,
+    ApiService apiService,
+  ) async {
     final box = await Hive.openBox<Contact>(contactsTable);
     final contactsList = box.values.toList();
     final addressContact = <String>[];

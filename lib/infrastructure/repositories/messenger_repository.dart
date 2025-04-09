@@ -103,6 +103,7 @@ class MessengerRepository
     required KeyPair adminKeyPair,
     required Account owner,
     required ApiService apiService,
+    required AddressService addressService,
     bool updateSCAESKey = false,
     List<String> membersAddedToNotify = const [],
     List<String> membersDeletedToNotify = const [],
@@ -120,6 +121,7 @@ class MessengerRepository
           serviceName: serviceName,
           adminKeyPair: adminKeyPair,
           updateSCAESKey: updateSCAESKey,
+          addressService: addressService,
         );
 
         final localDatasource = await _localDatasource;
@@ -172,6 +174,7 @@ class MessengerRepository
     required LoggedInSession session,
     required String discussionGenesisAddress,
     required ApiService apiService,
+    required AddressService addressService,
     int limit = 0,
     int pagingOffset = 0,
   }) async =>
@@ -180,8 +183,7 @@ class MessengerRepository
           final keyPair = session
               .wallet.keychainSecuredInfos.services[reader.name]!.keyPair!;
 
-          final lastAddressForDiscussion = await sl
-              .get<AddressService>()
+          final lastAddressForDiscussion = await addressService
               .lastAddressFromAddress([discussionGenesisAddress]);
 
           final aeMessages = await messagingService.readMessages(
@@ -216,14 +218,14 @@ class MessengerRepository
     required LoggedInSession session,
     required String discussionGenesisAddress,
     required ApiService apiService,
+    required AddressService addressService,
   }) async =>
       Result.guard(
         () async {
           final keyPair = session.wallet.keychainSecuredInfos
               .services[currentAccount.name]!.keyPair!;
 
-          final lastAddressForDiscussion = await sl
-              .get<AddressService>()
+          final lastAddressForDiscussion = await addressService
               .lastAddressFromAddress([discussionGenesisAddress]);
 
           final aeGroupMessage = await messagingService.getDiscussion(
@@ -255,14 +257,14 @@ class MessengerRepository
     required Account creator,
     required String content,
     required ApiService apiService,
+    required AddressService addressService,
   }) async =>
       Result.guard(
         () async {
           final keyPair = session
               .wallet.keychainSecuredInfos.services[creator.name]!.keyPair!;
 
-          final lastAddressForDiscussion = await sl
-              .get<AddressService>()
+          final lastAddressForDiscussion = await addressService
               .lastAddressFromAddress([discussionGenesisAddress]);
 
           return _remoteDatasource.calculateMessageSendFees(
@@ -286,13 +288,13 @@ class MessengerRepository
     required String content,
     required List<String> membersPublicKeysForNotifications,
     required ApiService apiService,
+    required AddressService addressService,
   }) =>
       Result.guard(() async {
         final keyPair = session
             .wallet.keychainSecuredInfos.services[creator.name]!.keyPair!;
 
-        final lastAddressForDiscussion = await sl
-            .get<AddressService>()
+        final lastAddressForDiscussion = await addressService
             .lastAddressFromAddress([discussionGenesisAddress]);
 
         final sendMessageResult = await messagingService.sendMessage(

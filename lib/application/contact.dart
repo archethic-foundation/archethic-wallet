@@ -1,12 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 
-import 'package:aewallet/application/account/accounts_notifier.dart';
-import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/infrastructure/datasources/contacts.hive.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
-import 'package:aewallet/util/account_formatters.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -28,21 +25,6 @@ Future<List<Contact>> _fetchContacts(
       .watch(_contactRepositoryProvider)
       .searchContacts(search: search);
   return searchedContacts;
-}
-
-@riverpod
-Future<Contact?> _getSelectedContact(Ref ref) async {
-  final accounts = await ref.watch(AccountProviders.accounts.future);
-  final selectedAccount = accounts.selectedAccount;
-  if (selectedAccount == null) {
-    return null;
-  }
-
-  return ref.watch(
-    _getContactWithNameProvider(
-      selectedAccount.nameDisplayed,
-    ).future,
-  );
 }
 
 @riverpod
@@ -228,7 +210,6 @@ abstract class ContactProviders {
   static const getContactWithPublicKey = _getContactWithPublicKeyProvider;
   static const getContactWithGenesisPublicKey =
       _getContactWithGenesisPublicKeyProvider;
-  static final getSelectedContact = _getSelectedContactProvider;
 
   static Future<void> reset(Ref ref) async {
     await ref.read(_contactRepositoryProvider).clear();

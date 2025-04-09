@@ -28,12 +28,9 @@ mixin MessagesMixin {
       }
     ''';
 
-    final blockchainTxVersion = int.parse(
-      (await apiService.getBlockchainVersion()).version.transaction,
-    );
     final tx = Transaction(
       type: 'transfer',
-      version: blockchainTxVersion,
+      version: 3, // Old SC
       data: Transaction.initData(),
     ).setContent(message).addRecipient(discussionSCAddress);
 

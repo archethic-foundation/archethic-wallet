@@ -6,7 +6,38 @@ import 'package:hive/hive.dart';
 part 'discussion.freezed.dart';
 part 'discussion.g.dart';
 
+class DiscussionConverter
+    implements JsonConverter<Discussion, Map<String, dynamic>> {
+  const DiscussionConverter();
+
+  @override
+  Discussion fromJson(Map<String, dynamic> json) {
+    return Discussion(
+      address: json['address'] as String,
+      name: json['name'] as String?,
+      membersPubKeys: json['membersPubKeys'] as List<String>,
+      adminsPubKeys: json['adminsPubKeys'] as List<String>,
+      creationDate:
+          DateTime.fromMillisecondsSinceEpoch(json['creationDate'] as int),
+      lastMessage: json['lastMessage'] as DiscussionMessage?,
+    );
+  }
+
+  @override
+  Map<String, dynamic> toJson(Discussion discussion) {
+    return {
+      'address': discussion.address,
+      'name': discussion.name,
+      'membersPubKeys': discussion.membersPubKeys,
+      'adminsPubKeys': discussion.adminsPubKeys,
+      'creationDate': discussion.creationDate.millisecondsSinceEpoch,
+      'lastMessage': discussion.lastMessage,
+    };
+  }
+}
+
 @freezed
+@DiscussionConverter()
 class Discussion with _$Discussion {
   @HiveType(typeId: HiveTypeIds.discussion)
   const factory Discussion({

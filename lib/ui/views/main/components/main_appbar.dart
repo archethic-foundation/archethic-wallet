@@ -74,7 +74,7 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
           actions: [
             IconButton(
               icon: const Icon(
-                Symbols.edit_square,
+                Symbols.add_circle,
                 weight: IconSize.weightM,
                 opticalSize: IconSize.opticalSizeM,
                 grade: IconSize.gradeM,

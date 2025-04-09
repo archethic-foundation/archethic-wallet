@@ -1,7 +1,6 @@
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/modules/messaging_sdk/services/messaging_service.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
 class DiscussionRemoteDatasource {
@@ -73,11 +72,11 @@ class DiscussionRemoteDatasource {
     required String serviceName,
     required Keychain keychain,
     required KeyPair adminKeyPair,
+    required AddressService addressService,
     bool updateSCAESKey = false,
   }) async {
-    final lastAddressForDiscussion = await sl
-        .get<AddressService>()
-        .lastAddressFromAddress([discussionSCAddress]);
+    final lastAddressForDiscussion =
+        await addressService.lastAddressFromAddress([discussionSCAddress]);
 
     final discussion = await messagingService.updateDiscussion(
       keychain: keychain,

@@ -158,7 +158,7 @@ class _DiscussionProviderElement
 }
 
 String _$discussionDisplayNameHash() =>
-    r'73a2dcaaaac76e568422aa6b6167338a8ab50e89';
+    r'80bf1d62b4b54483d5cfe081ec170027e7a3d90b';
 
 /// See also [_discussionDisplayName].
 @ProviderFor(_discussionDisplayName)
@@ -429,7 +429,7 @@ class _AccessRecipientWithPublicKeyProviderElement
   String get pubKey => (origin as _AccessRecipientWithPublicKeyProvider).pubKey;
 }
 
-String _$remoteDiscussionHash() => r'd056f06b101a2d82b98bf88d0a5116bd6b4de215';
+String _$remoteDiscussionHash() => r'c70bfba765a15f97d8b69bf82885f080bd8c135c';
 
 /// See also [_remoteDiscussion].
 @ProviderFor(_remoteDiscussion)
@@ -579,7 +579,7 @@ final _sortedDiscussionsProvider =
 // ignore: unused_element
 typedef _SortedDiscussionsRef = AutoDisposeFutureProviderRef<List<Discussion>>;
 String _$messageCreationFeesHash() =>
-    r'30b55b0e053ba55a7f5503defa3751c884f0fca3';
+    r'83650af2555c41231a9a297752142657d04bc90c';
 
 /// See also [_messageCreationFees].
 @ProviderFor(_messageCreationFees)
@@ -729,7 +729,7 @@ class _MessageCreationFeesProviderElement
 }
 
 String _$discussionMessagesHash() =>
-    r'94b33332f801340ec2aeb2172f00c15db372c7a0';
+    r'a90b41bcb20215cbaa5eeef3b9077a5cc3f69c1e';
 
 /// See also [_discussionMessages].
 @ProviderFor(_discussionMessages)
@@ -914,7 +914,7 @@ final _discussionsProvider = AutoDisposeAsyncNotifierProvider<_Discussions,
 
 typedef _$Discussions = AutoDisposeAsyncNotifier<Iterable<Discussion>>;
 String _$messageCreationFormNotifierHash() =>
-    r'b849f5dc4563e88ce6ff905b385b7fef40a4eeec';
+    r'07915ab5e0801cc44222d7cc489568092da1a35b';
 
 abstract class _$MessageCreationFormNotifier
     extends BuildlessAutoDisposeNotifier<MessageCreationFormState> {
@@ -1067,7 +1067,7 @@ class _MessageCreationFormNotifierProviderElement
 }
 
 String _$paginatedDiscussionMessagesNotifierHash() =>
-    r'a036b46811bf7463fa0fa87b879c525a57e2b252';
+    r'65ef50829827c22f8f55bb4b1c129e5c05ac704e';
 
 abstract class _$PaginatedDiscussionMessagesNotifier
     extends BuildlessAutoDisposeNotifier<

@@ -1,3 +1,4 @@
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
@@ -7,6 +8,7 @@ import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/util/date_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class DiscussionListItem extends ConsumerWidget {
@@ -152,7 +154,7 @@ class _LastMessagePreview extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final contactName = ref
+    var contactName = ref
         .watch(
           ContactProviders.getContactWithGenesisPublicKey(
             message.senderGenesisPublicKey,
@@ -163,6 +165,20 @@ class _LastMessagePreview extends ConsumerWidget {
           data: (contact) => contact.value?.format,
         );
 
+    if (contactName == null) {
+      final selectedAccount = ref
+          .watch(
+            accountsNotifierProvider,
+          )
+          .valueOrNull
+          ?.selectedAccount;
+      final isSentByMe =
+          message.senderGenesisPublicKey == selectedAccount?.publicKey;
+
+      if (isSentByMe) {
+        contactName = AppLocalizations.of(context)!.me;
+      }
+    }
     return Text.rich(
       maxLines: 2,
       overflow: TextOverflow.ellipsis,

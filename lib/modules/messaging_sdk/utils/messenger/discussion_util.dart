@@ -77,13 +77,9 @@ mixin DiscussionMixin {
       };
     }
 
-    final blockchainTxVersion = int.parse(
-      (await apiService.getBlockchainVersion()).version.transaction,
-    );
-
     final transactionTransfer = Transaction(
       type: 'transfer',
-      version: blockchainTxVersion,
+      version: 3, // Old SC
       data: Transaction.initData(),
     ).addRecipient(
       discussionSCAddress,
@@ -151,15 +147,11 @@ mixin DiscussionMixin {
 
     final originPrivateKey = apiService.getOriginKey();
 
-    final blockchainTxVersion = int.parse(
-      (await apiService.getBlockchainVersion()).version.transaction,
-    );
-
     /// Create a new transaction typed Smart Contract to manage a discussion
     final transactionSCBuildResult = Transaction(
       type: 'contract',
       data: Transaction.initData(),
-      version: blockchainTxVersion,
+      version: 3, // Old SC
     )
         .setCode(_generateDiscussionSCCode(membersPubKey: membersPubKey))
         .setContent(
@@ -298,13 +290,9 @@ end
     final transactionFee = await apiService.getTransactionFee(transactionSC);
     final fees = fromBigInt(transactionFee.fee) * slippage;
     final genesisAddressSC = deriveAddress(seedSC, 0);
-    final blockchainTxVersion = int.parse(
-      (await apiService.getBlockchainVersion()).version.transaction,
-    );
 
     final transactionTransfer = Transaction(
       type: 'transfer',
-      version: blockchainTxVersion,
       data: Transaction.initData(),
     ).addUCOTransfer(genesisAddressSC, toBigInt(fees));
 

@@ -1,8 +1,8 @@
 import 'package:aewallet/model/data/messenger/discussion.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/access_recipient_formatters.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
@@ -11,7 +11,6 @@ import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/views/messenger/layouts/components/public_key_line.dart';
 import 'package:aewallet/ui/views/messenger/layouts/components/section_title.dart';
 import 'package:aewallet/ui/views/messenger/layouts/update_discussion_add_members.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
@@ -68,11 +67,10 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage>
     final formNotifier =
         ref.watch(MessengerProviders.updateDiscussionForm.notifier);
 
-    return AppButtonTinyConnectivity(
-      localizations.save,
-      Dimens.buttonBottomDimens,
+    return BtnFooterPrimary(
+      buttonText: localizations.save,
       key: const Key('modifyDiscussion'),
-      onPressed: () async {
+      onTap: () async {
         final auth = await AuthFactory.of(context).authenticate();
         if (!auth) return;
 
@@ -336,6 +334,7 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage>
                     );
                   },
                   publicKey: (_) => null,
+                  account: (_) => null,
                 ),
               ),
             );

@@ -14,6 +14,7 @@ import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/layouts/components/contact_detail_tab.dart';
+import 'package:aewallet/ui/views/main/bloc/providers.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/views/messenger/layouts/create_discussion_validation_sheet.dart';
@@ -300,6 +301,11 @@ class _ContactDetailActions extends ConsumerWidget {
                 CreateDiscussionValidationSheet.routerPage,
                 extra: {
                   'discussionCreationSuccess': () {
+                    ref.read(mainTabControllerProvider)!.animateTo(
+                          4,
+                          duration: Duration.zero,
+                        );
+
                     ref
                         .read(SettingsProviders.settings.notifier)
                         .setMainScreenCurrentPage(4);

@@ -1,4 +1,4 @@
-import 'package:aewallet/application/contact.dart';
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/access_recipient.dart';
@@ -6,7 +6,6 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
-import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/views/messenger/layouts/components/public_key_line.dart';
@@ -71,8 +70,12 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage>
   @override
   PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final selectedContact =
-        ref.watch(ContactProviders.getSelectedContact).valueOrNull;
+    final selectedAccount = ref
+        .watch(
+          accountsNotifierProvider,
+        )
+        .valueOrNull
+        ?.selectedAccount;
     final discussion =
         ref.watch(MessengerProviders.discussion(widget.discussionAddress));
 
@@ -87,9 +90,9 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage>
       ),
       widgetRight: discussion.maybeMap(
         data: (data) {
-          return (selectedContact != null &&
+          return (selectedAccount != null &&
                   data.value.adminsPubKeys.contains(
-                    AccessRecipient.contact(contact: selectedContact).publicKey,
+                    AccessRecipient.account(account: selectedAccount).publicKey,
                   ))
               ? TextButton(
                   onPressed: () => context.push(
@@ -114,8 +117,12 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage>
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
-    final selectedContact =
-        ref.watch(ContactProviders.getSelectedContact).valueOrNull;
+    final selectedAccount = ref
+        .watch(
+          accountsNotifierProvider,
+        )
+        .valueOrNull
+        ?.selectedAccount;
     final discussion =
         ref.watch(MessengerProviders.discussion(widget.discussionAddress));
 
@@ -189,30 +196,9 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage>
                     children: [
                       Column(
                         children: data.value.membersPubKeys.map((pubKey) {
-                          final accessRecipient = ref.watch(
-                            MessengerProviders.accessRecipientWithPublicKey(
-                              pubKey,
-                            ),
-                          );
-
                           return PublicKeyLine(
                             listAdmins: data.value.adminsPubKeys,
                             pubKey: pubKey,
-                            onInfoTap: accessRecipient.maybeMap(
-                              orElse: () => null,
-                              data: (recipient) => recipient.value.map(
-                                contact: (contact) => () {
-                                  context.push(
-                                    ContactDetail.routerPage,
-                                    extra: ContactDetailsRouteParams(
-                                      contactAddress:
-                                          contact.contact.genesisAddress!,
-                                    ).toJson(),
-                                  );
-                                },
-                                publicKey: (_) => null,
-                              ),
-                            ),
                           );
                         }).toList(),
                       ),
@@ -226,7 +212,7 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage>
             ),
             if (discussion.value != null &&
                 discussion.value!.membersPubKeys.any(
-                  (element) => element == selectedContact?.publicKey,
+                  (element) => element == selectedAccount?.publicKey,
                 ))
               TextButton(
                 onPressed: () {

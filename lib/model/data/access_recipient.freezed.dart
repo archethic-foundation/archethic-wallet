@@ -20,18 +20,21 @@ mixin _$AccessRecipient {
   TResult when<TResult extends Object?>({
     required TResult Function(@HiveField(0) String publicKey) publicKey,
     required TResult Function(@HiveField(0) Contact contact) contact,
+    required TResult Function(@HiveField(0) Account account) account,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(@HiveField(0) String publicKey)? publicKey,
     TResult? Function(@HiveField(0) Contact contact)? contact,
+    TResult? Function(@HiveField(0) Account account)? account,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(@HiveField(0) String publicKey)? publicKey,
     TResult Function(@HiveField(0) Contact contact)? contact,
+    TResult Function(@HiveField(0) Account account)? account,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +42,21 @@ mixin _$AccessRecipient {
   TResult map<TResult extends Object?>({
     required TResult Function(_AccessPublicKey value) publicKey,
     required TResult Function(_AccessContact value) contact,
+    required TResult Function(_AccessRecipient value) account,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_AccessPublicKey value)? publicKey,
     TResult? Function(_AccessContact value)? contact,
+    TResult? Function(_AccessRecipient value)? account,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_AccessPublicKey value)? publicKey,
     TResult Function(_AccessContact value)? contact,
+    TResult Function(_AccessRecipient value)? account,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -154,6 +160,7 @@ class _$AccessPublicKeyImpl extends _AccessPublicKey {
   TResult when<TResult extends Object?>({
     required TResult Function(@HiveField(0) String publicKey) publicKey,
     required TResult Function(@HiveField(0) Contact contact) contact,
+    required TResult Function(@HiveField(0) Account account) account,
   }) {
     return publicKey(this.publicKey);
   }
@@ -163,6 +170,7 @@ class _$AccessPublicKeyImpl extends _AccessPublicKey {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(@HiveField(0) String publicKey)? publicKey,
     TResult? Function(@HiveField(0) Contact contact)? contact,
+    TResult? Function(@HiveField(0) Account account)? account,
   }) {
     return publicKey?.call(this.publicKey);
   }
@@ -172,6 +180,7 @@ class _$AccessPublicKeyImpl extends _AccessPublicKey {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(@HiveField(0) String publicKey)? publicKey,
     TResult Function(@HiveField(0) Contact contact)? contact,
+    TResult Function(@HiveField(0) Account account)? account,
     required TResult orElse(),
   }) {
     if (publicKey != null) {
@@ -185,6 +194,7 @@ class _$AccessPublicKeyImpl extends _AccessPublicKey {
   TResult map<TResult extends Object?>({
     required TResult Function(_AccessPublicKey value) publicKey,
     required TResult Function(_AccessContact value) contact,
+    required TResult Function(_AccessRecipient value) account,
   }) {
     return publicKey(this);
   }
@@ -194,6 +204,7 @@ class _$AccessPublicKeyImpl extends _AccessPublicKey {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_AccessPublicKey value)? publicKey,
     TResult? Function(_AccessContact value)? contact,
+    TResult? Function(_AccessRecipient value)? account,
   }) {
     return publicKey?.call(this);
   }
@@ -203,6 +214,7 @@ class _$AccessPublicKeyImpl extends _AccessPublicKey {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_AccessPublicKey value)? publicKey,
     TResult Function(_AccessContact value)? contact,
+    TResult Function(_AccessRecipient value)? account,
     required TResult orElse(),
   }) {
     if (publicKey != null) {
@@ -301,6 +313,7 @@ class _$AccessContactImpl extends _AccessContact {
   TResult when<TResult extends Object?>({
     required TResult Function(@HiveField(0) String publicKey) publicKey,
     required TResult Function(@HiveField(0) Contact contact) contact,
+    required TResult Function(@HiveField(0) Account account) account,
   }) {
     return contact(this.contact);
   }
@@ -310,6 +323,7 @@ class _$AccessContactImpl extends _AccessContact {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(@HiveField(0) String publicKey)? publicKey,
     TResult? Function(@HiveField(0) Contact contact)? contact,
+    TResult? Function(@HiveField(0) Account account)? account,
   }) {
     return contact?.call(this.contact);
   }
@@ -319,6 +333,7 @@ class _$AccessContactImpl extends _AccessContact {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(@HiveField(0) String publicKey)? publicKey,
     TResult Function(@HiveField(0) Contact contact)? contact,
+    TResult Function(@HiveField(0) Account account)? account,
     required TResult orElse(),
   }) {
     if (contact != null) {
@@ -332,6 +347,7 @@ class _$AccessContactImpl extends _AccessContact {
   TResult map<TResult extends Object?>({
     required TResult Function(_AccessPublicKey value) publicKey,
     required TResult Function(_AccessContact value) contact,
+    required TResult Function(_AccessRecipient value) account,
   }) {
     return contact(this);
   }
@@ -341,6 +357,7 @@ class _$AccessContactImpl extends _AccessContact {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_AccessPublicKey value)? publicKey,
     TResult? Function(_AccessContact value)? contact,
+    TResult? Function(_AccessRecipient value)? account,
   }) {
     return contact?.call(this);
   }
@@ -350,6 +367,7 @@ class _$AccessContactImpl extends _AccessContact {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_AccessPublicKey value)? publicKey,
     TResult Function(_AccessContact value)? contact,
+    TResult Function(_AccessRecipient value)? account,
     required TResult orElse(),
   }) {
     if (contact != null) {
@@ -371,5 +389,169 @@ abstract class _AccessContact extends AccessRecipient {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AccessContactImplCopyWith<_$AccessContactImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$AccessRecipientImplCopyWith<$Res> {
+  factory _$$AccessRecipientImplCopyWith(_$AccessRecipientImpl value,
+          $Res Function(_$AccessRecipientImpl) then) =
+      __$$AccessRecipientImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({@HiveField(0) Account account});
+
+  $AccountCopyWith<$Res> get account;
+}
+
+/// @nodoc
+class __$$AccessRecipientImplCopyWithImpl<$Res>
+    extends _$AccessRecipientCopyWithImpl<$Res, _$AccessRecipientImpl>
+    implements _$$AccessRecipientImplCopyWith<$Res> {
+  __$$AccessRecipientImplCopyWithImpl(
+      _$AccessRecipientImpl _value, $Res Function(_$AccessRecipientImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of AccessRecipient
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? account = null,
+  }) {
+    return _then(_$AccessRecipientImpl(
+      account: null == account
+          ? _value.account
+          : account // ignore: cast_nullable_to_non_nullable
+              as Account,
+    ));
+  }
+
+  /// Create a copy of AccessRecipient
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AccountCopyWith<$Res> get account {
+    return $AccountCopyWith<$Res>(_value.account, (value) {
+      return _then(_value.copyWith(account: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$AccessRecipientImpl extends _AccessRecipient {
+  const _$AccessRecipientImpl({@HiveField(0) required this.account})
+      : super._();
+
+  @override
+  @HiveField(0)
+  final Account account;
+
+  @override
+  String toString() {
+    return 'AccessRecipient.account(account: $account)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AccessRecipientImpl &&
+            (identical(other.account, account) || other.account == account));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, account);
+
+  /// Create a copy of AccessRecipient
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AccessRecipientImplCopyWith<_$AccessRecipientImpl> get copyWith =>
+      __$$AccessRecipientImplCopyWithImpl<_$AccessRecipientImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(@HiveField(0) String publicKey) publicKey,
+    required TResult Function(@HiveField(0) Contact contact) contact,
+    required TResult Function(@HiveField(0) Account account) account,
+  }) {
+    return account(this.account);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(@HiveField(0) String publicKey)? publicKey,
+    TResult? Function(@HiveField(0) Contact contact)? contact,
+    TResult? Function(@HiveField(0) Account account)? account,
+  }) {
+    return account?.call(this.account);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(@HiveField(0) String publicKey)? publicKey,
+    TResult Function(@HiveField(0) Contact contact)? contact,
+    TResult Function(@HiveField(0) Account account)? account,
+    required TResult orElse(),
+  }) {
+    if (account != null) {
+      return account(this.account);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_AccessPublicKey value) publicKey,
+    required TResult Function(_AccessContact value) contact,
+    required TResult Function(_AccessRecipient value) account,
+  }) {
+    return account(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_AccessPublicKey value)? publicKey,
+    TResult? Function(_AccessContact value)? contact,
+    TResult? Function(_AccessRecipient value)? account,
+  }) {
+    return account?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_AccessPublicKey value)? publicKey,
+    TResult Function(_AccessContact value)? contact,
+    TResult Function(_AccessRecipient value)? account,
+    required TResult orElse(),
+  }) {
+    if (account != null) {
+      return account(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _AccessRecipient extends AccessRecipient {
+  const factory _AccessRecipient(
+      {@HiveField(0) required final Account account}) = _$AccessRecipientImpl;
+  const _AccessRecipient._() : super._();
+
+  @HiveField(0)
+  Account get account;
+
+  /// Create a copy of AccessRecipient
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$AccessRecipientImplCopyWith<_$AccessRecipientImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

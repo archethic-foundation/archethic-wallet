@@ -76,6 +76,10 @@ mixin _$Account {
   List<String>? get customTokenAddressList =>
       throw _privateConstructorUsedError;
 
+  /// Public Key
+  @HiveField(16)
+  String? get publicKey => throw _privateConstructorUsedError;
+
   /// Serializes this Account to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
@@ -107,7 +111,8 @@ abstract class $AccountCopyWith<$Res> {
       List<NftInfosOffChain>? nftInfosOffChainList,
       @HiveField(13) String? serviceType,
       @HiveField(14) List<AccountToken>? accountNFTCollections,
-      @HiveField(15) List<String>? customTokenAddressList});
+      @HiveField(15) List<String>? customTokenAddressList,
+      @HiveField(16) String? publicKey});
 
   $AccountBalanceCopyWith<$Res>? get balance;
 }
@@ -139,6 +144,7 @@ class _$AccountCopyWithImpl<$Res, $Val extends Account>
     Object? serviceType = freezed,
     Object? accountNFTCollections = freezed,
     Object? customTokenAddressList = freezed,
+    Object? publicKey = freezed,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -189,6 +195,10 @@ class _$AccountCopyWithImpl<$Res, $Val extends Account>
           ? _value.customTokenAddressList
           : customTokenAddressList // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      publicKey: freezed == publicKey
+          ? _value.publicKey
+          : publicKey // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -231,7 +241,8 @@ abstract class _$$AccountImplCopyWith<$Res> implements $AccountCopyWith<$Res> {
       List<NftInfosOffChain>? nftInfosOffChainList,
       @HiveField(13) String? serviceType,
       @HiveField(14) List<AccountToken>? accountNFTCollections,
-      @HiveField(15) List<String>? customTokenAddressList});
+      @HiveField(15) List<String>? customTokenAddressList,
+      @HiveField(16) String? publicKey});
 
   @override
   $AccountBalanceCopyWith<$Res>? get balance;
@@ -262,6 +273,7 @@ class __$$AccountImplCopyWithImpl<$Res>
     Object? serviceType = freezed,
     Object? accountNFTCollections = freezed,
     Object? customTokenAddressList = freezed,
+    Object? publicKey = freezed,
   }) {
     return _then(_$AccountImpl(
       name: null == name
@@ -312,6 +324,10 @@ class __$$AccountImplCopyWithImpl<$Res>
           ? _value._customTokenAddressList
           : customTokenAddressList // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      publicKey: freezed == publicKey
+          ? _value.publicKey
+          : publicKey // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -337,7 +353,8 @@ class _$AccountImpl implements _Account {
       final List<NftInfosOffChain>? nftInfosOffChainList,
       @HiveField(13) this.serviceType,
       @HiveField(14) final List<AccountToken>? accountNFTCollections,
-      @HiveField(15) final List<String>? customTokenAddressList})
+      @HiveField(15) final List<String>? customTokenAddressList,
+      @HiveField(16) this.publicKey})
       : _accountTokens = accountTokens,
         _accountNFT = accountNFT,
         _nftInfosOffChainList = nftInfosOffChainList,
@@ -462,9 +479,14 @@ class _$AccountImpl implements _Account {
     return EqualUnmodifiableListView(value);
   }
 
+  /// Public Key
+  @override
+  @HiveField(16)
+  final String? publicKey;
+
   @override
   String toString() {
-    return 'Account(name: $name, genesisAddress: $genesisAddress, lastLoadingTransactionInputs: $lastLoadingTransactionInputs, selected: $selected, lastAddress: $lastAddress, balance: $balance, accountTokens: $accountTokens, accountNFT: $accountNFT, nftInfosOffChainList: $nftInfosOffChainList, serviceType: $serviceType, accountNFTCollections: $accountNFTCollections, customTokenAddressList: $customTokenAddressList)';
+    return 'Account(name: $name, genesisAddress: $genesisAddress, lastLoadingTransactionInputs: $lastLoadingTransactionInputs, selected: $selected, lastAddress: $lastAddress, balance: $balance, accountTokens: $accountTokens, accountNFT: $accountNFT, nftInfosOffChainList: $nftInfosOffChainList, serviceType: $serviceType, accountNFTCollections: $accountNFTCollections, customTokenAddressList: $customTokenAddressList, publicKey: $publicKey)';
   }
 
   @override
@@ -495,7 +517,9 @@ class _$AccountImpl implements _Account {
             const DeepCollectionEquality()
                 .equals(other._accountNFTCollections, _accountNFTCollections) &&
             const DeepCollectionEquality().equals(
-                other._customTokenAddressList, _customTokenAddressList));
+                other._customTokenAddressList, _customTokenAddressList) &&
+            (identical(other.publicKey, publicKey) ||
+                other.publicKey == publicKey));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -513,7 +537,8 @@ class _$AccountImpl implements _Account {
       const DeepCollectionEquality().hash(_nftInfosOffChainList),
       serviceType,
       const DeepCollectionEquality().hash(_accountNFTCollections),
-      const DeepCollectionEquality().hash(_customTokenAddressList));
+      const DeepCollectionEquality().hash(_customTokenAddressList),
+      publicKey);
 
   /// Create a copy of Account
   /// with the given fields replaced by the non-null parameter values.
@@ -549,8 +574,8 @@ abstract class _Account implements Account {
       final List<NftInfosOffChain>? nftInfosOffChainList,
       @HiveField(13) final String? serviceType,
       @HiveField(14) final List<AccountToken>? accountNFTCollections,
-      @HiveField(15)
-      final List<String>? customTokenAddressList}) = _$AccountImpl;
+      @HiveField(15) final List<String>? customTokenAddressList,
+      @HiveField(16) final String? publicKey}) = _$AccountImpl;
 
   factory _Account.fromJson(Map<String, dynamic> json) = _$AccountImpl.fromJson;
 
@@ -618,6 +643,11 @@ abstract class _Account implements Account {
   @override
   @HiveField(15)
   List<String>? get customTokenAddressList;
+
+  /// Public Key
+  @override
+  @HiveField(16)
+  String? get publicKey;
 
   /// Create a copy of Account
   /// with the given fields replaced by the non-null parameter values.

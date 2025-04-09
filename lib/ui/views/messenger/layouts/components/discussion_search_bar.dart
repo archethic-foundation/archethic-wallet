@@ -1,5 +1,6 @@
 import 'package:aewallet/application/device_abilities.dart';
 import 'package:aewallet/application/session/session.dart';
+import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/formatters.dart';
@@ -65,9 +66,10 @@ class _DiscussionSearchBarState extends ConsumerState<DiscussionSearchBar> {
           _updateAdressTextController();
         }
         if (discussionSearchBar.isControlsOk) {
-          context.go(
+          context.push(
             AddDiscussionSheet.routerPage,
-            extra: discussionSearchBar.discussion,
+            extra: const DiscussionConverter()
+                .toJson(discussionSearchBar.discussion!),
           );
           discussionSearchBarNotifier.reset();
           return;

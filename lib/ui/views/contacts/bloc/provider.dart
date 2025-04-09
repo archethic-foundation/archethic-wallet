@@ -3,6 +3,7 @@ import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/views/contacts/bloc/state.dart';
+import 'package:aewallet/util/pubkey_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -47,27 +48,6 @@ class ContactCreationFormNotifier
 
   void setCreationInProgress(bool creationInProgress) {
     state = state.copyWith(creationInProgress: creationInProgress);
-  }
-
-  Future<String> _getGenesisPublicKey(String address) async {
-    final connectivityStatusProvider = ref.read(connectivityStatusProviders);
-    if (connectivityStatusProvider == ConnectivityStatus.isDisconnected) {
-      return '';
-    }
-
-    final apiService = ref.watch(apiServiceProvider);
-    final publicKeyMap = await apiService.getTransactionChain(
-      {address: ''},
-      request: 'previousPublicKey',
-    );
-    var publicKey = '';
-    if (publicKeyMap.isNotEmpty &&
-        publicKeyMap[state.address] != null &&
-        publicKeyMap[state.address]!.isNotEmpty) {
-      publicKey = publicKeyMap[state.address]![0].previousPublicKey!;
-    }
-
-    return publicKey;
   }
 
   void setFavorite(bool favorite) {
@@ -134,8 +114,11 @@ class ContactCreationFormNotifier
   }
 
   Future<Contact> addContact() async {
-    final publicKey = await _getGenesisPublicKey(state.address);
     final apiService = ref.watch(apiServiceProvider);
+    final publicKey = await PubKeyUtil.getGenesisPublicKey(
+      state.address,
+      apiService,
+    );
     final genesisAddress = await apiService.getGenesisAddress(state.address);
 
     final newContact = Contact(
@@ -143,7 +126,7 @@ class ContactCreationFormNotifier
       address: state.address,
       genesisAddress: genesisAddress.address,
       type: ContactType.externalContact.name,
-      publicKey: publicKey.toUpperCase(),
+      publicKey: publicKey?.toUpperCase() ?? '',
       favorite: false,
     );
     ref.read(

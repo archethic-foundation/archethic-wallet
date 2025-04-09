@@ -1,14 +1,13 @@
 import 'package:aewallet/model/data/messenger/discussion.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/access_recipient_formatters.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/messenger/bloc/discussion_search_bar_provider.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_header.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
@@ -41,6 +40,7 @@ class AddDiscussionSheet extends ConsumerWidget
       floatingActionButton: getFloatingActionButton(context, ref),
       sheetContent: getSheetContent(context, ref),
       thumbVisibility: false,
+      menu: true,
     );
   }
 
@@ -48,12 +48,10 @@ class AddDiscussionSheet extends ConsumerWidget
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
-    return AppButtonTiny(
-      AppButtonTinyType.primary,
-      localizations.addRemoteMessengerGroup,
-      Dimens.buttonBottomDimens,
+    return BtnFooterPrimary(
+      buttonText: localizations.addRemoteMessengerGroup,
       key: const Key('addRemoteMessengerGroup'),
-      onPressed: () async {
+      onTap: () async {
         await ref
             .read(MessengerProviders.discussions.notifier)
             .addRemoteDiscussion(discussion);
@@ -150,6 +148,7 @@ class AddDiscussionSheet extends ConsumerWidget
                               );
                             },
                             publicKey: (_) => null,
+                            account: (_) => null,
                           ),
                         ),
                       )

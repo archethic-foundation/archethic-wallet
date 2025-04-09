@@ -45,6 +45,7 @@ class PickerWidget<T> extends ConsumerStatefulWidget {
     this.multipleSelectionsAllowed = false,
     this.height,
     this.scrollable = false,
+    this.paddingListView,
   }) {
     this.selectedIndexes = selectedIndexes ?? [];
   }
@@ -57,6 +58,7 @@ class PickerWidget<T> extends ConsumerStatefulWidget {
   final bool multipleSelectionsAllowed;
   final double? height;
   final bool scrollable;
+  final EdgeInsets? paddingListView;
 
   @override
   ConsumerState<PickerWidget<T>> createState() => _PickerWidgetState();
@@ -78,6 +80,7 @@ class _PickerWidgetState<T> extends ConsumerState<PickerWidget<T>> {
       height: widget.height,
       child: ListView.builder(
         shrinkWrap: true,
+        padding: widget.paddingListView,
         physics:
             widget.scrollable ? null : const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {

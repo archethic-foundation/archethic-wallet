@@ -55,6 +55,9 @@
     "newContact",
     "addressHint",
     "favorites",
-    "bottomMainMenuAddressBook"
+    "bottomMainMenuAddressBook",
+    "me",
+    "newContactDesc",
+    "discussionNameHint"
   ]
 }

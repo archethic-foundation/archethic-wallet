@@ -1,3 +1,4 @@
+import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
@@ -43,13 +44,16 @@ class MessengerDiscussionPage extends ConsumerWidget
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    final selectedContact =
-        ref.watch(ContactProviders.getSelectedContact).valueOrNull;
+    final selectedAccount = ref.watch(
+      accountsNotifierProvider.select(
+        (accounts) => accounts.valueOrNull?.selectedAccount,
+      ),
+    );
     final discussion =
         ref.watch(MessengerProviders.discussion(discussionAddress));
     if (discussion.value != null &&
         discussion.value!.membersPubKeys.any(
-          (element) => element == selectedContact?.publicKey,
+          (element) => element == selectedAccount?.publicKey,
         )) {
       // User can only send a message when he is still in the discussion
       return _MessageSendForm(
@@ -229,9 +233,9 @@ class __MessageSendFormState extends ConsumerState<_MessageSendForm> {
                 ],
               ),
               const SizedBox(height: 6),
-              _MessageCreationFormFees(
+              /* _MessageCreationFormFees(
                 discussion: data.value,
-              ),
+              ),*/
             ],
           ),
         );
@@ -283,6 +287,7 @@ class _MessageTextField extends ConsumerWidget {
   }
 }
 
+// ignore: unused_element
 class _MessageCreationFormFees extends ConsumerWidget {
   const _MessageCreationFormFees({
     required this.discussion,
@@ -339,12 +344,18 @@ class _MessagesList extends ConsumerStatefulWidget {
 class _MessagesListState extends ConsumerState<_MessagesList> {
   @override
   Widget build(BuildContext context) {
-    final me = ref.watch(ContactProviders.getSelectedContact).valueOrNull;
+    final selectedAccount = ref
+        .watch(
+          accountsNotifierProvider,
+        )
+        .valueOrNull
+        ?.selectedAccount;
+
     final pagingController = ref
         .watch(MessengerProviders.paginatedMessages(widget.discussionAddress));
     final localizations = AppLocalizations.of(context)!;
 
-    if (me == null) return Container();
+    if (selectedAccount == null) return Container();
 
     return PagedListView(
       pagingController: pagingController,
@@ -358,7 +369,8 @@ class _MessagesListState extends ConsumerState<_MessagesList> {
           ),
         ),
         itemBuilder: (context, message, index) {
-          final isSentByMe = message.senderGenesisPublicKey == me.publicKey;
+          final isSentByMe =
+              message.senderGenesisPublicKey == selectedAccount.publicKey;
 
           if (isSentByMe) {
             return Align(

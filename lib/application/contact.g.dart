@@ -176,25 +176,6 @@ class _FetchContactsProviderElement
   String get search => (origin as _FetchContactsProvider).search;
 }
 
-String _$getSelectedContactHash() =>
-    r'edc3619d060317dbce7b3bbd51d0af7866b0413c';
-
-/// See also [_getSelectedContact].
-@ProviderFor(_getSelectedContact)
-final _getSelectedContactProvider =
-    AutoDisposeFutureProvider<Contact?>.internal(
-  _getSelectedContact,
-  name: r'_getSelectedContactProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$getSelectedContactHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef _GetSelectedContactRef = AutoDisposeFutureProviderRef<Contact?>;
 String _$getContactWithNameHash() =>
     r'afe398dfeb748aa4f5ccd1306ef17c1ed19eddd7';
 

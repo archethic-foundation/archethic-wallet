@@ -2,14 +2,13 @@
 
 import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/device_abilities.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/bloc/provider.dart';
 import 'package:aewallet/ui/views/contacts/bloc/state.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/app_text_field.dart';
 import 'package:aewallet/ui/widgets/components/paste_icon.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
@@ -94,44 +93,39 @@ class AddContactSheetBody extends ConsumerWidget
         ref.watch(ContactCreationFormProvider.contactCreationForm.notifier);
     final contactCreation =
         ref.watch(ContactCreationFormProvider.contactCreationForm);
-    return Row(
-      children: <Widget>[
-        AppButtonTinyConnectivity(
-          localizations.addContact,
-          Dimens.buttonBottomDimens,
-          key: const Key('addContact'),
-          onPressed: () async {
-            contactCreationNotifier.setCreationInProgress(true);
-            final isNameOk = await contactCreationNotifier.controlName(
-              context,
-            );
+    return BtnFooterPrimary(
+      buttonText: localizations.addContact,
+      key: const Key('addContact'),
+      onTap: () async {
+        contactCreationNotifier.setCreationInProgress(true);
+        final isNameOk = await contactCreationNotifier.controlName(
+          context,
+        );
 
-            final isAddressOk = await contactCreationNotifier.controlAddress(
-              context,
-            );
+        final isAddressOk = await contactCreationNotifier.controlAddress(
+          context,
+        );
 
-            if (isNameOk && isAddressOk) {
-              final newContact = await contactCreationNotifier.addContact();
+        if (isNameOk && isAddressOk) {
+          final newContact = await contactCreationNotifier.addContact();
 
-              await (await ref
-                      .read(AccountProviders.accounts.notifier)
-                      .selectedAccountNotifier)
-                  ?.refreshRecentTransactions();
-              UIUtil.showSnackbar(
-                localizations.contactAdded.replaceAll('%1', newContact.format),
-                context,
-                ref,
-                ArchethicTheme.text,
-                ArchethicTheme.snackBarShadow,
-                icon: Symbols.info,
-              );
-              context.pop();
-            }
-            contactCreationNotifier.setCreationInProgress(false);
-          },
-          disabled: !contactCreation.canCreateContact,
-        ),
-      ],
+          await (await ref
+                  .read(AccountProviders.accounts.notifier)
+                  .selectedAccountNotifier)
+              ?.refreshRecentTransactions();
+          UIUtil.showSnackbar(
+            localizations.contactAdded.replaceAll('%1', newContact.format),
+            context,
+            ref,
+            ArchethicTheme.text,
+            ArchethicTheme.snackBarShadow,
+            icon: Symbols.info,
+          );
+          context.pop();
+        }
+        contactCreationNotifier.setCreationInProgress(false);
+      },
+      isLocked: !contactCreation.canCreateContact,
     );
   }
 

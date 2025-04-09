@@ -325,19 +325,25 @@ final _authenticatedRoutes = [
   ),
   GoRoute(
     path: AddDiscussionSheet.routerPage,
-    pageBuilder: (context, state) => CustomTransitionPage<void>(
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
-      key: state.pageKey,
-      child: AddDiscussionSheet(
-        discussion: state.extra! as Discussion,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
-    ),
+    pageBuilder: (context, state) {
+      final discussion = const DiscussionConverter().fromJson(
+        state.extra! as Map<String, dynamic>,
+      );
+
+      return CustomTransitionPage<void>(
+        transitionDuration: Duration.zero,
+        reverseTransitionDuration: Duration.zero,
+        key: state.pageKey,
+        child: AddDiscussionSheet(
+          discussion: discussion,
+        ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(
+          opacity: animation,
+          child: child,
+        ),
+      );
+    },
   ),
   GoRoute(
     path: UpdateDiscussionAddMembers.routerPage,

@@ -1,12 +1,11 @@
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/public_key.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
@@ -107,15 +106,14 @@ class UpdateDiscussionAddMembersState
         ref.watch(MessengerProviders.updateDiscussionForm.notifier);
     final formState = ref.watch(MessengerProviders.updateDiscussionForm);
 
-    return AppButtonTinyConnectivity(
-      localizations.add,
-      Dimens.none,
+    return BtnFooterPrimary(
+      buttonText: localizations.add,
       key: const Key('addMembers'),
-      onPressed: () {
+      onTap: () {
         formNotifier.addAllMembersToAdd();
         context.pop();
       },
-      disabled: formState.canAddMembers == false,
+      isLocked: formState.canAddMembers == false,
     );
   }
 

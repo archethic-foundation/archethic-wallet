@@ -223,6 +223,7 @@ class UpdateDiscussionFormNotifier
                   List<String>.from(membersDeleted.toList()),
               membersAddedToNotify: List<String>.from(membersAdded.toList()),
               apiService: ref.watch(apiServiceProvider),
+              addressService: ref.watch(addressServiceProvider),
             )
             .valueOrThrow;
 

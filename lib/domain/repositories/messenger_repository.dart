@@ -30,6 +30,7 @@ abstract class MessengerRepositoryInterface {
     required LoggedInSession session,
     required String discussionGenesisAddress,
     required ApiService apiService,
+    required AddressService addressService,
     int limit = 0,
     int pagingOffset = 0,
   });
@@ -39,6 +40,7 @@ abstract class MessengerRepositoryInterface {
     required LoggedInSession session,
     required String discussionGenesisAddress,
     required ApiService apiService,
+    required AddressService addressService,
   });
 
   Future<Result<Discussion, Failure>> addRemoteDiscussion({
@@ -58,6 +60,7 @@ abstract class MessengerRepositoryInterface {
     required String content,
     required List<String> membersPublicKeysForNotifications,
     required ApiService apiService,
+    required AddressService addressService,
   });
 
   Future<void> updateDiscussionLastMessage({
@@ -72,6 +75,7 @@ abstract class MessengerRepositoryInterface {
     required Account creator,
     required String content,
     required ApiService apiService,
+    required AddressService addressService,
   });
 
   Future<void> clear();
@@ -87,6 +91,7 @@ abstract class MessengerRepositoryInterface {
     required KeyPair adminKeyPair,
     required Account owner,
     required ApiService apiService,
+    required AddressService addressService,
     bool updateSCAESKey = false,
     List<String> membersAddedToNotify = const [],
     List<String> membersDeletedToNotify = const [],

@@ -47,6 +47,7 @@ class _MessageCreationFormNotifier extends _$MessageCreationFormNotifier {
             session: session,
             membersPublicKeysForNotifications: discussion.membersPubKeys,
             apiService: ref.watch(apiServiceProvider),
+            addressService: ref.watch(addressServiceProvider),
           )
           .valueOrThrow;
 
@@ -93,6 +94,7 @@ Future<double> _messageCreationFees(
             discussionGenesisAddress: discussionAddress,
             content: content,
             apiService: ref.watch(apiServiceProvider),
+            addressService: ref.watch(addressServiceProvider),
           )
           .valueOrThrow;
     },
@@ -123,10 +125,12 @@ class _PaginatedDiscussionMessagesNotifier
   }
 
   Future _addIncomingMessagesListener() async {
-    final selectedContact =
-        await ref.read(ContactProviders.getSelectedContact.future);
-
-    if (selectedContact == null) {
+    final selectedAccount = ref.watch(
+      accountsNotifierProvider.select(
+        (accounts) => accounts.valueOrNull?.selectedAccount,
+      ),
+    );
+    if (selectedAccount == null) {
       return;
     }
   }
@@ -215,6 +219,7 @@ Future<List<DiscussionMessage>> _discussionMessages(
         pagingOffset: offset,
         limit: pageSize,
         apiService: ref.watch(apiServiceProvider),
+        addressService: ref.watch(addressServiceProvider),
       )
       .valueOrThrow;
 

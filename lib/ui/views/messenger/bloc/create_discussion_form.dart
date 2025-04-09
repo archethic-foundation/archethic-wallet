@@ -84,20 +84,19 @@ class CreateDiscussionFormNotifier
         final selectedAccount =
             await ref.read(AccountProviders.accounts.future).selectedAccount;
         if (selectedAccount == null) throw const Failure.loggedOut();
-
-        final creator = AccessRecipient.contact(
-          contact:
-              (await ref.read(ContactProviders.getSelectedContact.future))!,
-        );
+        if (selectedAccount.publicKey == null ||
+            selectedAccount.publicKey!.isEmpty) {
+          throw const Failure.other(message: 'No public key found');
+        }
 
         await ref.read(MessengerProviders.messengerRepository).createDiscussion(
           adminsPubKeys: [
             ...state.admins.map((recipient) => recipient.publicKey),
-            creator.publicKey,
+            selectedAccount.publicKey!,
           ],
           membersPubKeys: [
             ...state.members.map((recipient) => recipient.publicKey),
-            creator.publicKey,
+            selectedAccount.publicKey!,
           ],
           creator: selectedAccount,
           session: session,

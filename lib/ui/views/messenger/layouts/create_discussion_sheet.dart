@@ -1,25 +1,29 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
+import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_primary.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
-import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/views/contacts/layouts/add_contact.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/main/home_page.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/views/messenger/layouts/create_discussion_validation_sheet.dart';
-import 'package:aewallet/ui/widgets/components/app_button_tiny.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/util/account_formatters.dart';
+import 'package:aewallet/util/pubkey_util.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedapppfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:material_symbols_icons/symbols.dart';
 
 class CreateDiscussionSheet extends ConsumerStatefulWidget {
   const CreateDiscussionSheet({super.key});
@@ -43,6 +47,7 @@ class CreateDiscussionSheetState extends ConsumerState<CreateDiscussionSheet>
       final contactsList = await ref.read(
         ContactProviders.fetchContacts().future,
       );
+      final apiService = ref.watch(apiServiceProvider);
       final selectedAccount = ref.watch(
         accountsNotifierProvider.select(
           (accounts) => accounts.valueOrNull?.selectedAccount,
@@ -51,6 +56,17 @@ class CreateDiscussionSheetState extends ConsumerState<CreateDiscussionSheet>
 
       if (contactsList.isNotEmpty) {
         for (final contact in contactsList) {
+          if (contact.publicKey.isEmpty) {
+            final contactPubKey = await PubKeyUtil.getGenesisPublicKey(
+              contact.address,
+              apiService,
+            );
+            if (contactPubKey != null) {
+              contact.publicKey = contactPubKey;
+              ref.read(ContactProviders.saveContact(contact: contact));
+            }
+          }
+
           if (contact.format.toUpperCase() !=
               selectedAccount?.nameDisplayed.toUpperCase()) {
             pickerItemsList.add(
@@ -100,11 +116,10 @@ class CreateDiscussionSheetState extends ConsumerState<CreateDiscussionSheet>
     final formState = ref.watch(MessengerProviders.createDiscussionForm);
     final localizations = AppLocalizations.of(context)!;
 
-    return AppButtonTinyConnectivity(
-      localizations.next,
-      Dimens.buttonBottomDimens,
+    return BtnFooterPrimary(
+      buttonText: localizations.next,
       key: const Key('discussionNextButton'),
-      onPressed: () {
+      onTap: () {
         context.push(
           CreateDiscussionValidationSheet.routerPage,
           extra: {
@@ -112,7 +127,7 @@ class CreateDiscussionSheetState extends ConsumerState<CreateDiscussionSheet>
           },
         );
       },
-      disabled: formState.canGoNext == false,
+      isLocked: formState.canGoNext == false,
     );
   }
 
@@ -123,39 +138,42 @@ class CreateDiscussionSheetState extends ConsumerState<CreateDiscussionSheet>
         ref.watch(MessengerProviders.createDiscussionForm.notifier);
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextButton(
-          onPressed: () {
-            context.push(AddContactSheet.routerPage);
-          },
-          child: Row(
+        aedapppfm.BlockInfo(
+          borderWidth: 0,
+          blockInfoColor: aedapppfm.BlockInfoColor.purple,
+          paddingEdgeInsetsInfo: const EdgeInsets.all(20),
+          width: MediaQuery.of(context).size.width,
+          info: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(
-                Symbols.person_add,
-                color: ArchethicTheme.text,
-                weight: IconSize.weightM,
-                opticalSize: IconSize.opticalSizeM,
-                grade: IconSize.gradeM,
+              Text(
+                localizations.newContactDesc,
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      fontWeight: FontWeightTelegraf.fontWeightRegular,
+                    ),
               ),
               const SizedBox(
-                width: 8,
+                height: 20,
               ),
-              Text(
-                localizations.newContact,
-                style: ArchethicThemeStyles.textStyleSize14W700Primary,
+              BtnPrimary(
+                buttonText: localizations.newContact,
+                onTap: () async {
+                  await context.push(AddContactSheet.routerPage);
+                },
               ),
             ],
           ),
         ),
-        Divider(color: ArchethicTheme.text),
         const SizedBox(
           height: 15,
         ),
         Text(
           localizations.contactsHeader,
-          style: ArchethicThemeStyles.textStyleSize14W200Primary
-              .copyWith(fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                fontWeight: FontWeightTelegraf.fontWeightBold,
+              ),
         ),
         const SizedBox(
           height: 8,
@@ -173,6 +191,7 @@ class CreateDiscussionSheetState extends ConsumerState<CreateDiscussionSheet>
         else
           PickerWidget(
             multipleSelectionsAllowed: true,
+            paddingListView: EdgeInsets.zero,
             pickerItems: pickerItemsList,
             onSelected: (member) {
               formNotifier.addMember(
