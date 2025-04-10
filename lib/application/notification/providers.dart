@@ -6,7 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'providers.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 NotificationsRepository _notificationRepository(
   Ref ref,
 ) =>
@@ -22,9 +22,8 @@ Stream<TxSentEvent> _txSentEvents(
               event.listenAddress.toUpperCase() == listenAddress.toUpperCase(),
         );
 
-Future<void> _keepPushSettingsUpToDateWorker(
-  WidgetRef ref,
-) async {
+@riverpod
+Future<void> _keepPushSettingsUpToDateWorker(Ref ref) async {
   final locale = ref.watch(
     LanguageProviders.selectedLocale.select((value) => value.languageCode),
   );
@@ -35,6 +34,7 @@ Future<void> _keepPushSettingsUpToDateWorker(
 
 abstract class NotificationProviders {
   static final repository = _notificationRepositoryProvider;
-  static const keepPushSettingsUpToDateWorker = _keepPushSettingsUpToDateWorker;
+  static final keepPushSettingsUpToDateWorker =
+      _keepPushSettingsUpToDateWorkerProvider;
   static const txSentEvents = _txSentEventsProvider;
 }

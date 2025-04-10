@@ -177,5 +177,25 @@ class _TxSentEventsProviderElement
   @override
   String get listenAddress => (origin as _TxSentEventsProvider).listenAddress;
 }
+
+String _$keepPushSettingsUpToDateWorkerHash() =>
+    r'203d3b1946843eb57706e4e7028def53a215d2d4';
+
+/// See also [_keepPushSettingsUpToDateWorker].
+@ProviderFor(_keepPushSettingsUpToDateWorker)
+final _keepPushSettingsUpToDateWorkerProvider =
+    AutoDisposeFutureProvider<void>.internal(
+  _keepPushSettingsUpToDateWorker,
+  name: r'_keepPushSettingsUpToDateWorkerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$keepPushSettingsUpToDateWorkerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef _KeepPushSettingsUpToDateWorkerRef = AutoDisposeFutureProviderRef<void>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

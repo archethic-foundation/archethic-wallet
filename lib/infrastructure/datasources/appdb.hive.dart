@@ -39,7 +39,7 @@ class HiveTypeIds {
   static const myDApps = 22;
   static const discussion = 23;
   static const discussionMessage = 24;
-  static const notificationsSetup = 25;
+  static const notificationsSetup = 26;
 }
 
 class DBHelper {

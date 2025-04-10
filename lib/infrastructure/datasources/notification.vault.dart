@@ -7,10 +7,10 @@ class NotificationVaultDatasource {
 
   static const _key = 'singleton';
 
-  final LazyBox<NotificationsSetup> _notificationsSetupBox;
+  final Box<NotificationsSetup> _notificationsSetupBox;
 
   Future<NotificationsSetup> _getSetup() async =>
-      (await _notificationsSetupBox.get(_key)) ??
+      (_notificationsSetupBox.get(_key)) ??
       const NotificationsSetup(
         listenedAddresses: [],
       );
@@ -22,7 +22,7 @@ class NotificationVaultDatasource {
   static Future<NotificationVaultDatasource> getInstance() async {
     if (_instance?._notificationsSetupBox.isOpen == true) return _instance!;
 
-    final encryptedBox = await Vault.instance().openLazyBox<NotificationsSetup>(
+    final encryptedBox = await Vault.instance().openBox<NotificationsSetup>(
       'NotificationsSetup',
     );
 

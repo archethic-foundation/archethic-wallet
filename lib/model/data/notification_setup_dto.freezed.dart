@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$NotificationsSetup {
-  @HiveField(0, defaultValue: [])
+  @HiveField(0)
   List<String> get listenedAddresses => throw _privateConstructorUsedError;
   @HiveField(1)
   String? get lastFcmToken => throw _privateConstructorUsedError;
@@ -35,7 +35,7 @@ abstract class $NotificationsSetupCopyWith<$Res> {
       _$NotificationsSetupCopyWithImpl<$Res, NotificationsSetup>;
   @useResult
   $Res call(
-      {@HiveField(0, defaultValue: []) List<String> listenedAddresses,
+      {@HiveField(0) List<String> listenedAddresses,
       @HiveField(1) String? lastFcmToken});
 }
 
@@ -79,7 +79,7 @@ abstract class _$$NotificationsSetupImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@HiveField(0, defaultValue: []) List<String> listenedAddresses,
+      {@HiveField(0) List<String> listenedAddresses,
       @HiveField(1) String? lastFcmToken});
 }
 
@@ -117,15 +117,14 @@ class __$$NotificationsSetupImplCopyWithImpl<$Res>
 @HiveType(typeId: HiveTypeIds.notificationsSetup)
 class _$NotificationsSetupImpl extends _NotificationsSetup {
   const _$NotificationsSetupImpl(
-      {@HiveField(0, defaultValue: [])
-      required final List<String> listenedAddresses,
+      {@HiveField(0) required final List<String> listenedAddresses,
       @HiveField(1) this.lastFcmToken})
       : _listenedAddresses = listenedAddresses,
         super._();
 
   final List<String> _listenedAddresses;
   @override
-  @HiveField(0, defaultValue: [])
+  @HiveField(0)
   List<String> get listenedAddresses {
     if (_listenedAddresses is EqualUnmodifiableListView)
       return _listenedAddresses;
@@ -169,13 +168,12 @@ class _$NotificationsSetupImpl extends _NotificationsSetup {
 
 abstract class _NotificationsSetup extends NotificationsSetup {
   const factory _NotificationsSetup(
-      {@HiveField(0, defaultValue: [])
-      required final List<String> listenedAddresses,
+      {@HiveField(0) required final List<String> listenedAddresses,
       @HiveField(1) final String? lastFcmToken}) = _$NotificationsSetupImpl;
   const _NotificationsSetup._() : super._();
 
   @override
-  @HiveField(0, defaultValue: [])
+  @HiveField(0)
   List<String> get listenedAddresses;
   @override
   @HiveField(1)

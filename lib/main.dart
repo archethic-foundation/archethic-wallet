@@ -5,7 +5,6 @@ import 'dart:io';
 
 import 'package:aewallet/application/authentication/authentication.dart';
 import 'package:aewallet/application/migrations/migration_manager.dart';
-import 'package:aewallet/application/notification/providers.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -196,7 +195,6 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final language = ref.watch(LanguageProviders.selectedLanguage);
-    NotificationProviders.keepPushSettingsUpToDateWorker(ref);
     SystemChrome.setSystemUIOverlayStyle(
       ArchethicTheme.statusBar,
     );
@@ -263,7 +261,6 @@ class SplashState extends ConsumerState<Splash> {
     final locale = ref.read(LanguageProviders.selectedLocale);
     await ref.read(SettingsProviders.settings.notifier).initialize(locale);
     await ref.read(AuthenticationProviders.settings.notifier).initialize();
-    await ref.read(NotificationProviders.repository).initialize();
     await SecurityManager().checkDeviceSecurity(ref, context);
 
     AuthFactory.of(context).init();

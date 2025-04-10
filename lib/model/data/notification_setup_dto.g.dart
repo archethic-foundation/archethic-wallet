@@ -9,7 +9,7 @@ part of 'notification_setup_dto.dart';
 class NotificationsSetupImplAdapter
     extends TypeAdapter<_$NotificationsSetupImpl> {
   @override
-  final int typeId = 25;
+  final int typeId = 26;
 
   @override
   _$NotificationsSetupImpl read(BinaryReader reader) {
@@ -18,8 +18,7 @@ class NotificationsSetupImplAdapter
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return _$NotificationsSetupImpl(
-      listenedAddresses:
-          fields[0] == null ? [] : (fields[0] as List).cast<String>(),
+      listenedAddresses: (fields[0] as List).cast<String>(),
       lastFcmToken: fields[1] as String?,
     );
   }
