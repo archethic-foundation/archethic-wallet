@@ -1,4 +1,5 @@
 import 'package:aewallet/domain/repositories/notifications_repository.dart';
+import 'package:aewallet/firebase_options.dart';
 import 'package:aewallet/infrastructure/datasources/notification.remote.dart';
 import 'package:aewallet/infrastructure/datasources/notification.vault.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -92,7 +93,9 @@ class NotificationsRepositoryImpl
   @override
   Future<void> initialize() async {
     await _client.connect();
-    await Firebase.initializeApp();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
 
     FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) async {
       final previousFcmToken = await cachedFcmToken;

@@ -1,16 +1,1 @@
-{
-  "hosting": {
-    "public": "build/webapp",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
-  }
-}
+{"flutter":{"platforms":{"android":{"default":{"projectId":"ae-wallet","appId":"1:329689363769:android:404e2e22d694f07d0fe4e8","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"ae-wallet","appId":"1:329689363769:ios:a0df2fae4b37b34b0fe4e8","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"ae-wallet","configurations":{"android":"1:329689363769:android:404e2e22d694f07d0fe4e8","ios":"1:329689363769:ios:a0df2fae4b37b34b0fe4e8"}}}}}}
