@@ -87,6 +87,12 @@ dependencies:
   # EventTaxi could be used to send events through different layers of the application decoupled from the architecture
   event_taxi: ^1.0.0
 
+  # A Flutter plugin to use the Firebase Core API, which enables connecting to multiple Firebase apps.
+  firebase_core: ^3.13.0
+
+  # A package to use FCM
+  firebase_messaging: ^15.2.5
+
   # A powerful Flutter chart library, currently supporting Line Chart, Bar Chart and Pie Chart.
   fl_chart: ^0.70.2
 
@@ -218,6 +224,9 @@ dependencies:
 
   # Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
   share_plus: ^7.1.0
+
+  # Dartlang port of socket.io-client for web, flutter, dartvm to use
+  socket_io_client: ^2.0.3+1
 
   # An abstraction for two-way communication channels based on the Dart Stream class.
   stream_channel: any

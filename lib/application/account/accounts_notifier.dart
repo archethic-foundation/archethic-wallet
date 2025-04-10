@@ -72,6 +72,14 @@ extension AccountsExt on Iterable<Account> {
     );
   }
 
+  Account? getAccountWithPubKey(
+    String pubKey,
+  ) {
+    return firstWhereOrNull(
+      (account) => account.publicKey?.toLowerCase() == pubKey.toLowerCase(),
+    );
+  }
+
   Account? getAccountWithName(
     String nameAccount,
   ) {

@@ -898,7 +898,7 @@ class _DiscussionMessagesProviderElement
   int get pageSize => (origin as _DiscussionMessagesProvider).pageSize;
 }
 
-String _$discussionsHash() => r'99b52a70c2f7c4d98457bd0182dd37c7dece78df';
+String _$discussionsHash() => r'c462f7d6a4f094e4c6d68b280da8480b6918e5c7';
 
 /// See also [_Discussions].
 @ProviderFor(_Discussions)

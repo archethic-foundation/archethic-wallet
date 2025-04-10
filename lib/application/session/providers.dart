@@ -88,6 +88,7 @@ class SessionNotifier extends _$SessionNotifier with KeychainServiceMixin {
   }
 
   Future<void> logout() async {
+    await ref.read(NotificationProviders.repository).unsubscribeAll();
     await ref.read(SettingsProviders.settings.notifier).reset();
     await AuthenticationProviders.reset(ref);
     await KeychainInfoVaultDatasource.clear();

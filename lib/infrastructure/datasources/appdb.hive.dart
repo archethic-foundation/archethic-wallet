@@ -11,6 +11,7 @@ import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/model/data/nft_infos_off_chain.dart';
+import 'package:aewallet/model/data/notification_setup_dto.dart';
 import 'package:aewallet/util/cache_manager_hive.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -69,6 +70,7 @@ class DBHelper {
       ..registerAdapter(WalletTokenOwnershipHiveDtoAdapter())
       ..registerAdapter(WalletTokenOwnershipAuthorizedKeyHiveDtoAdapter())
       ..registerAdapter(DiscussionImplAdapter())
+      ..registerAdapter(NotificationsSetupImplAdapter())
       ..registerAdapter(DiscussionMessageImplAdapter())
       ..registerAdapter(DAppHiveDtoAdapter());
   }

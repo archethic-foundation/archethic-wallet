@@ -9,7 +9,6 @@ import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/views/messenger/layouts/components/public_key_line.dart';
-import 'package:aewallet/ui/views/messenger/layouts/components/section_title.dart';
 import 'package:aewallet/ui/views/messenger/layouts/update_discussion_add_members.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
@@ -181,10 +180,11 @@ class _UpdateDiscussionPageState extends ConsumerState<UpdateDiscussionPage>
             ],
           ),
         ),
-        SectionTitle(
-          text: localizations.messengerDiscussionMembersCount(
+        Text(
+          localizations.messengerDiscussionMembersCount(
             formState.numberOfMembers,
           ),
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
         Column(
           children: formState.listMembers.map((pubKey) {

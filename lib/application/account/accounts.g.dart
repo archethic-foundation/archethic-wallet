@@ -178,6 +178,137 @@ class _AccountWithGenesisAddressProviderElement
       (origin as AccountWithGenesisAddressProvider).searchGenesisAddress;
 }
 
+String _$accountWithPubKeyHash() => r'5b8d70475aa3df58c91fa387b5c54c94ba24f08d';
+
+/// See also [accountWithPubKey].
+@ProviderFor(accountWithPubKey)
+const accountWithPubKeyProvider = AccountWithPubKeyFamily();
+
+/// See also [accountWithPubKey].
+class AccountWithPubKeyFamily extends Family<AsyncValue<Account?>> {
+  /// See also [accountWithPubKey].
+  const AccountWithPubKeyFamily();
+
+  /// See also [accountWithPubKey].
+  AccountWithPubKeyProvider call(
+    String pubKey,
+  ) {
+    return AccountWithPubKeyProvider(
+      pubKey,
+    );
+  }
+
+  @override
+  AccountWithPubKeyProvider getProviderOverride(
+    covariant AccountWithPubKeyProvider provider,
+  ) {
+    return call(
+      provider.pubKey,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'accountWithPubKeyProvider';
+}
+
+/// See also [accountWithPubKey].
+class AccountWithPubKeyProvider extends AutoDisposeFutureProvider<Account?> {
+  /// See also [accountWithPubKey].
+  AccountWithPubKeyProvider(
+    String pubKey,
+  ) : this._internal(
+          (ref) => accountWithPubKey(
+            ref as AccountWithPubKeyRef,
+            pubKey,
+          ),
+          from: accountWithPubKeyProvider,
+          name: r'accountWithPubKeyProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$accountWithPubKeyHash,
+          dependencies: AccountWithPubKeyFamily._dependencies,
+          allTransitiveDependencies:
+              AccountWithPubKeyFamily._allTransitiveDependencies,
+          pubKey: pubKey,
+        );
+
+  AccountWithPubKeyProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.pubKey,
+  }) : super.internal();
+
+  final String pubKey;
+
+  @override
+  Override overrideWith(
+    FutureOr<Account?> Function(AccountWithPubKeyRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: AccountWithPubKeyProvider._internal(
+        (ref) => create(ref as AccountWithPubKeyRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        pubKey: pubKey,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<Account?> createElement() {
+    return _AccountWithPubKeyProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is AccountWithPubKeyProvider && other.pubKey == pubKey;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, pubKey.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin AccountWithPubKeyRef on AutoDisposeFutureProviderRef<Account?> {
+  /// The parameter `pubKey` of this provider.
+  String get pubKey;
+}
+
+class _AccountWithPubKeyProviderElement
+    extends AutoDisposeFutureProviderElement<Account?>
+    with AccountWithPubKeyRef {
+  _AccountWithPubKeyProviderElement(super.provider);
+
+  @override
+  String get pubKey => (origin as AccountWithPubKeyProvider).pubKey;
+}
+
 String _$accountWithNameHash() => r'4cddbfdc930ca6db516b0f16e45758305c853224';
 
 /// See also [accountWithName].

@@ -9,7 +9,6 @@ import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/views/messenger/layouts/components/public_key_line.dart';
-import 'package:aewallet/ui/views/messenger/layouts/components/section_title.dart';
 import 'package:aewallet/ui/views/messenger/layouts/update_discussion_page.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/scrollbar.dart';
@@ -92,7 +91,7 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage>
         data: (data) {
           return (selectedAccount != null &&
                   data.value.adminsPubKeys.contains(
-                    AccessRecipient.account(account: selectedAccount).publicKey,
+                    AccessRecipient.account(account: selectedAccount).name,
                   ))
               ? TextButton(
                   onPressed: () => context.push(
@@ -188,10 +187,11 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage>
                   child: ExpansionTile(
                     shape: const Border(),
                     initiallyExpanded: true,
-                    title: SectionTitle(
-                      text: localizations.messengerDiscussionMembersCount(
+                    title: Text(
+                      localizations.messengerDiscussionMembersCount(
                         data.value.membersPubKeys.length,
                       ),
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     children: [
                       Column(
