@@ -53,6 +53,20 @@ class AccountsNotifier extends _$AccountsNotifier {
 
     return ref.read(accountNotifierProvider(accountName).notifier);
   }
+
+  Future<void> fetchMissingGenesisPublicKeys() async {
+    final accountNames = await AccountLocalRepository().accountNames();
+    final accountNotifierProviders = await Future.wait(
+      accountNames.map(
+        (accountName) async => ref.read(
+          accountNotifierProvider(accountName).notifier,
+        ),
+      ),
+    );
+    for (final accountNotifierProvider in accountNotifierProviders) {
+      await accountNotifierProvider.fetchMissingGenesisPubliKey();
+    }
+  }
 }
 
 extension AccountsExt on Iterable<Account> {

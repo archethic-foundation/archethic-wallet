@@ -37,16 +37,13 @@ class CreateDiscussionSheet extends ConsumerStatefulWidget {
 
 class CreateDiscussionSheetState extends ConsumerState<CreateDiscussionSheet>
     implements SheetSkeletonInterface {
-  final pickerItemsList = List<PickerItem>.empty(growable: true);
+  List<PickerItem> pickerItemsList = [];
 
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final contactsList = await ref.read(
-        ContactProviders.fetchContacts().future,
-      );
       final apiService = ref.watch(apiServiceProvider);
       final selectedAccount = ref.watch(
         accountsNotifierProvider.select(
@@ -54,22 +51,30 @@ class CreateDiscussionSheetState extends ConsumerState<CreateDiscussionSheet>
         ),
       );
 
-      if (contactsList.isNotEmpty) {
-        for (final contact in contactsList) {
-          if (contact.publicKey.isEmpty) {
-            final contactPubKey = await PubKeyUtil.getGenesisPublicKey(
-              contact.address,
-              apiService,
-            );
-            if (contactPubKey != null) {
-              contact.publicKey = contactPubKey;
-              ref.read(ContactProviders.saveContact(contact: contact));
-            }
-          }
+      await ref
+          .read(accountsNotifierProvider.notifier)
+          .fetchMissingGenesisPublicKeys();
 
-          if (contact.format.toUpperCase() !=
-              selectedAccount?.nameDisplayed.toUpperCase()) {
-            pickerItemsList.add(
+      final contactsList = await ref.read(
+        ContactProviders.fetchContacts().future,
+      );
+      for (final contact in contactsList) {
+        if (contact.publicKey.isEmpty) {
+          final contactPubKey = await PubKeyUtil.getGenesisPublicKey(
+            contact.address,
+            apiService,
+          );
+          if (contactPubKey != null) {
+            contact.publicKey = contactPubKey;
+            ref.read(ContactProviders.saveContact(contact: contact));
+          }
+        }
+      }
+      setState(() {
+        pickerItemsList = [
+          for (final contact in contactsList)
+            if (contact.format.toUpperCase() !=
+                selectedAccount?.nameDisplayed.toUpperCase())
               PickerItem(
                 contact.format,
                 null,
@@ -78,11 +83,8 @@ class CreateDiscussionSheetState extends ConsumerState<CreateDiscussionSheet>
                 contact,
                 true,
               ),
-            );
-          }
-        }
-        setState(() {});
-      }
+        ];
+      });
     });
   }
 
