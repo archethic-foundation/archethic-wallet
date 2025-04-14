@@ -16,10 +16,14 @@ typedef TransactionErrorHandler = Future<void> Function(
 abstract class TransactionRemoteRepositoryInterface {
   const TransactionRemoteRepositoryInterface();
 
-  Future<Result<double, Failure>> calculateFees(Transaction transaction);
+  Future<Result<double, Failure>> calculateFees(
+    Transaction transaction,
+    int blockchainTxVersion,
+  );
 
   Future<archethic.TransactionConfirmation?> send({
     required Transaction transaction,
+    required int blockchainTxVersion,
     Duration timeout = const Duration(seconds: 70),
     TransactionConfirmationHandler? onConfirmation,
   });

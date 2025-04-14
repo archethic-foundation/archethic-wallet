@@ -26,6 +26,7 @@ class AddLiquidityCase with aedappfm.TransactionMixin {
     required this.transactionRepository,
     required this.keychainSecuredInfos,
     required this.selectedAccount,
+    required this.blockchainTxVersion,
   });
 
   final archethic.ApiService apiService;
@@ -36,6 +37,7 @@ class AddLiquidityCase with aedappfm.TransactionMixin {
   final TransactionRemoteRepositoryInterface transactionRepository;
   final KeychainSecuredInfos keychainSecuredInfos;
   final Account selectedAccount;
+  final int blockchainTxVersion;
 
   Future<void> run(
     AppLocalizations localizations,
@@ -52,6 +54,7 @@ class AddLiquidityCase with aedappfm.TransactionMixin {
     final archethicContract = ArchethicContract(
       apiService: apiService,
       verifiedTokensRepository: verifiedTokensRepository,
+      blockchainTxVersion: blockchainTxVersion,
     );
 
     archethic.Transaction? transactionAddLiquidity;
@@ -180,6 +183,7 @@ class AddLiquidityCase with aedappfm.TransactionMixin {
     final archethicContract = ArchethicContract(
       apiService: apiService,
       verifiedTokensRepository: verifiedTokensRepository,
+      blockchainTxVersion: blockchainTxVersion,
     );
     archethic.Transaction? transactionAddLiquidity;
 

@@ -6,14 +6,13 @@ import 'dart:math';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:flutter/foundation.dart';
 
-const blockchainTxVersion = 3;
-
 extension KeychainTransactionBuilder on archethic.Transaction {
   /// Builds a creation of keychain Transaction
   static Future<archethic.Transaction> build({
     required archethic.Keychain keychain,
     required String originPrivateKey,
     required archethic.ApiService apiService,
+    required int blockchainTxVersion,
   }) async {
     final genesisAddressKeychain =
         archethic.deriveAddress(archethic.uint8ListToHex(keychain.seed!), 0);
@@ -32,8 +31,8 @@ extension KeychainTransactionBuilder on archethic.Transaction {
 
     final keychainTransaction = archethic.Transaction(
       type: 'keychain',
-      version: blockchainTxVersion,
       data: archethic.Transaction.initData(),
+      version: blockchainTxVersion,
     ).setContent(jsonEncode(keychain.toDID()));
 
     final authorizedKeys = List<archethic.AuthorizedKey>.empty(growable: true);

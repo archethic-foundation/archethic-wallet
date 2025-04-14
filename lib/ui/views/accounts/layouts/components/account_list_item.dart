@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/api_service.dart';
+import 'package:aewallet/application/blockchain_tx_version.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -395,11 +396,16 @@ class _AccountListItemState extends ConsumerState<AccountListItem>
                                       localizations.yes,
                                       () async {
                                         context.loadingOverlay.show();
-
+                                        final blockchainTxVersion =
+                                            await ref.read(
+                                          blockchainTxCurrentVersionProvider
+                                              .future,
+                                        );
                                         await removeService(
                                           widget.account.name,
                                           keychain,
                                           apiService,
+                                          blockchainTxVersion,
                                         );
                                       },
                                     );

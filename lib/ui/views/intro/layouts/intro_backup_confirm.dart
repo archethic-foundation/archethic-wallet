@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:aewallet/application/api_service.dart';
+import 'package:aewallet/application/blockchain_tx_version.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/recovery_phrase_saved.dart';
 import 'package:aewallet/application/settings/settings.dart';
@@ -403,11 +404,15 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
 
     try {
       final apiService = ref.read(apiServiceProvider);
-      await ref.read(createNewAppWalletCaseProvider).run(
-        widget.seed!,
-        apiService,
-        ['archethic-wallet-${widget.name!}'],
+      final blockchainTxVersion = await ref.read(
+        blockchainTxCurrentVersionProvider.future,
       );
+      await ref.read(createNewAppWalletCaseProvider).run(
+            widget.seed!,
+            apiService,
+            ['archethic-wallet-${widget.name!}'],
+            blockchainTxVersion,
+          );
 
       context.loadingOverlay.hide();
       context.go(

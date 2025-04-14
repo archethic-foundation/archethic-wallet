@@ -15,8 +15,6 @@ import 'package:aewallet/model/blockchain/keychain_secured_infos.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 
-const blockchainTxVersion = 3;
-
 class ArchethicTransactionRepository
     implements TransactionRemoteRepositoryInterface {
   ArchethicTransactionRepository({
@@ -28,9 +26,13 @@ class ArchethicTransactionRepository
   @override
   Future<Result<double, Failure>> calculateFees(
     Transaction transaction,
+    int blockchainTxVersion,
   ) async {
     try {
-      final transactionBuilt = await _buildTransaction(transaction);
+      final transactionBuilt = await _buildTransaction(
+        transaction,
+        blockchainTxVersion,
+      );
 
       final transactionFee = await apiService.getTransactionFee(
         transactionBuilt,
@@ -62,6 +64,7 @@ class ArchethicTransactionRepository
 
   Future<archethic.Transaction> _buildTransactionTransfer(
     Transfer transfer,
+    int blockchainTxVersion,
   ) async {
     final originPrivateKey = apiService.getOriginKey();
 
@@ -115,13 +118,14 @@ class ArchethicTransactionRepository
       tokenTransferList: tokenTransferList,
       ucoTransferList: ucoTransferList,
       message: transfer.message,
-      txVersion: blockchainTxVersion,
       apiService: apiService,
+      blockchainTxVersion: blockchainTxVersion,
     );
   }
 
   Future<archethic.Transaction> _buildTransactionToken(
     Token token,
+    int blockchainTxVersion,
   ) async {
     final originPrivateKey = apiService.getOriginKey();
     final keychain = token.keychainSecuredInfos.toKeychain();
@@ -153,13 +157,14 @@ class ArchethicTransactionRepository
       serviceName: token.accountSelectedName,
       aeip: token.aeip,
       tokenProperties: token.properties,
-      txVersion: blockchainTxVersion,
+      blockchainTxVersion: blockchainTxVersion,
     );
   }
 
   Future<archethic.Transaction> _buildTransactionKeychain(
     String seed,
     String nameAccount,
+    int blockchainTxVersion,
   ) async {
     final originPrivateKey = apiService.getOriginKey();
     final keychain = await apiService.getKeychain(seed);
@@ -172,6 +177,7 @@ class ArchethicTransactionRepository
       keychain: keychain.copyWithService(nameAccount, kDerivationPath),
       originPrivateKey: originPrivateKey,
       apiService: apiService,
+      blockchainTxVersion: blockchainTxVersion,
     );
   }
 
@@ -206,16 +212,24 @@ class ArchethicTransactionRepository
 
   Future<archethic.Transaction> _buildTransaction(
     Transaction transaction,
+    int blockchainTxVersion,
   ) async {
     return await transaction.map(
       transfer: (transfer) async {
-        return _buildTransactionTransfer(transfer.transfer);
+        return _buildTransactionTransfer(
+          transfer.transfer,
+          blockchainTxVersion,
+        );
       },
       token: (token) async {
-        return _buildTransactionToken(token.token);
+        return _buildTransactionToken(token.token, blockchainTxVersion);
       },
       keychain: (keychain) async {
-        return _buildTransactionKeychain(keychain.seed, keychain.name);
+        return _buildTransactionKeychain(
+          keychain.seed,
+          keychain.name,
+          blockchainTxVersion,
+        );
       },
     );
   }
@@ -223,11 +237,15 @@ class ArchethicTransactionRepository
   @override
   Future<archethic.TransactionConfirmation?> send({
     required Transaction transaction,
+    required int blockchainTxVersion,
     Duration timeout = const Duration(seconds: 70),
     TransactionConfirmationHandler? onConfirmation,
   }) async =>
       sendSignedRaw(
-        transaction: await _buildTransaction(transaction),
+        transaction: await _buildTransaction(
+          transaction,
+          blockchainTxVersion,
+        ),
         timeout: timeout,
         onConfirmation: onConfirmation,
       );

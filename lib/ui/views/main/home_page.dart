@@ -93,7 +93,6 @@ class _HomePageState extends ConsumerState<HomePage>
               indicatorColor: ArchethicTheme.text,
               labelPadding: EdgeInsets.zero,
               onTap: (selectedIndex) async {
-                if (selectedIndex == 5) return;
                 unawaited(
                   ref
                       .read(SettingsProviders.settings.notifier)

@@ -1,6 +1,7 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/aeswap/usecases.dart';
 import 'package:aewallet/application/api_service.dart';
+import 'package:aewallet/application/blockchain_tx_version.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
@@ -462,10 +463,15 @@ class LiquidityAddFormNotifier extends _$LiquidityAddFormNotifier {
       return false;
     }
 
+    final blockchainTxVersion =
+        await ref.read(blockchainTxCurrentVersionProvider.future);
+
     var feesEstimatedUCO = 0.0;
     if (state.token1 != null && state.token1!.isUCO) {
       state = state.copyWith(calculationInProgress: true);
-      feesEstimatedUCO = await ref.read(addLiquidityCaseProvider).estimateFees(
+      feesEstimatedUCO = await ref
+          .read(addLiquidityCaseProvider(blockchainTxVersion))
+          .estimateFees(
             state.pool!.poolAddress,
             state.token1!,
             state.token1Amount,
@@ -495,7 +501,9 @@ class LiquidityAddFormNotifier extends _$LiquidityAddFormNotifier {
 
     if (state.token2 != null && state.token2!.isUCO) {
       state = state.copyWith(calculationInProgress: true);
-      feesEstimatedUCO = await ref.read(addLiquidityCaseProvider).estimateFees(
+      feesEstimatedUCO = await ref
+          .read(addLiquidityCaseProvider(blockchainTxVersion))
+          .estimateFees(
             state.pool!.poolAddress,
             state.token1!,
             state.token1Amount,
@@ -539,9 +547,11 @@ class LiquidityAddFormNotifier extends _$LiquidityAddFormNotifier {
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
+    final blockchainTxVersion =
+        await ref.read(blockchainTxCurrentVersionProvider.future);
     await aedappfm.ConsentRepositoryImpl()
         .addAddress(accountSelected!.genesisAddress);
-    await ref.read(addLiquidityCaseProvider).run(
+    await ref.read(addLiquidityCaseProvider(blockchainTxVersion)).run(
           appLocalizations,
           this,
           state.pool!.poolAddress,

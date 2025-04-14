@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/aeswap/usecases.dart';
+import 'package:aewallet/application/blockchain_tx_version.dart';
 import 'package:aewallet/application/step.dart';
 import 'package:aewallet/domain/models/step.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
@@ -104,9 +105,13 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
 
   Future<double> _calculateFees() async {
     var feeEstimation = 0.0;
+    final blockchainTxVersion =
+        await ref.read(blockchainTxCurrentVersionProvider.future);
 
     if (state.farmLockWithdrawMode == FarmLockWithdrawMode.lp) {
-      feeEstimation = await ref.read(withdrawFarmLockCaseProvider).estimateFees(
+      feeEstimation = await ref
+          .read(withdrawFarmLockCaseProvider(blockchainTxVersion))
+          .estimateFees(
             state.farmAddress!,
             state.lpToken!.address,
             state.amount,
@@ -126,18 +131,22 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
       final environment = ref.read(environmentProvider);
       try {
         final results = await Future.wait([
-          ref.read(withdrawFarmLockCaseProvider).estimateFees(
+          ref
+              .read(withdrawFarmLockCaseProvider(blockchainTxVersion))
+              .estimateFees(
                 state.farmAddress!,
                 state.lpToken!.address,
                 99999, // Default Value
                 '1', // Default Value
               ),
-          ref.read(removeLiquidityCaseProvider).estimateFees(
+          ref
+              .read(removeLiquidityCaseProvider(blockchainTxVersion))
+              .estimateFees(
                 state.poolAddress!,
                 state.lpToken!.address,
                 99999, // Default Value
               ),
-          ref.read(swapCaseProvider).estimateFees(
+          ref.read(swapCaseProvider(blockchainTxVersion)).estimateFees(
                 state.poolAddress!,
                 DexToken(address: environment.aeETHAddress, symbol: 'aeETH'),
                 state.amount,
@@ -327,11 +336,14 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
       ),
     );
 
+    final blockchainTxVersion =
+        await ref.read(blockchainTxCurrentVersionProvider.future);
+
     await aedappfm.ConsentRepositoryImpl()
         .addAddress(accountSelected!.genesisAddress);
 
     if (state.farmLockWithdrawMode == FarmLockWithdrawMode.lp) {
-      await ref.read(withdrawFarmLockCaseProvider).run(
+      await ref.read(withdrawFarmLockCaseProvider(blockchainTxVersion)).run(
             localizations,
             this,
             state.isFarmClose,
@@ -353,7 +365,9 @@ class FarmLockWithdrawFormNotifier extends _$FarmLockWithdrawFormNotifier {
 
       stepsState.updateStepStatus(currentStep ?? 0, StepStatus.inProgress);
 
-      final result = await ref.read(withdrawFundsBeginnerCaseProvider).run(
+      final result = await ref
+          .read(withdrawFundsBeginnerCaseProvider(blockchainTxVersion))
+          .run(
             localizations,
             farmLock!.farmAddress,
             farmLock.poolAddress,

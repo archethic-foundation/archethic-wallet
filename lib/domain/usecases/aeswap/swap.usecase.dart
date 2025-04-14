@@ -28,6 +28,7 @@ class SwapCase with aedappfm.TransactionMixin {
     required this.transactionRepository,
     required this.keychainSecuredInfos,
     required this.selectedAccount,
+    required this.blockchainTxVersion,
   });
 
   final archethic.ApiService apiService;
@@ -37,6 +38,7 @@ class SwapCase with aedappfm.TransactionMixin {
   final TransactionRemoteRepositoryInterface transactionRepository;
   final KeychainSecuredInfos keychainSecuredInfos;
   final Account selectedAccount;
+  final int blockchainTxVersion;
 
   Future<void> run(
     SwapFormNotifier swapNotifier,
@@ -52,6 +54,7 @@ class SwapCase with aedappfm.TransactionMixin {
     final archethicContract = ArchethicContract(
       apiService: apiService,
       verifiedTokensRepository: verifiedTokensRepository,
+      blockchainTxVersion: blockchainTxVersion,
     );
 
     archethic.Transaction? transactionSwap;
@@ -232,6 +235,7 @@ class SwapCase with aedappfm.TransactionMixin {
     final archethicContract = ArchethicContract(
       apiService: apiService,
       verifiedTokensRepository: verifiedTokensRepository,
+      blockchainTxVersion: blockchainTxVersion,
     );
     archethic.Transaction? transactionSwap;
     var outputAmount = 0.0;

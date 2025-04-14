@@ -1,5 +1,6 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/aeswap/usecases.dart';
+import 'package:aewallet/application/blockchain_tx_version.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_token.dart';
 import 'package:aewallet/modules/aeswap/util/browser_util_desktop.dart';
@@ -126,7 +127,11 @@ class FarmLockClaimFormNotifier extends _$FarmLockClaimFormNotifier {
     }
 
     var feesEstimatedUCO = 0.0;
-    feesEstimatedUCO = await ref.read(claimFarmLockCaseProvider).estimateFees(
+    final blockchainTxVersion =
+        await ref.read(blockchainTxCurrentVersionProvider.future);
+    feesEstimatedUCO = await ref
+        .read(claimFarmLockCaseProvider(blockchainTxVersion))
+        .estimateFees(
           state.farmAddress!,
           state.depositId!,
         );
@@ -162,7 +167,9 @@ class FarmLockClaimFormNotifier extends _$FarmLockClaimFormNotifier {
     await aedappfm.ConsentRepositoryImpl()
         .addAddress(accountSelected!.genesisAddress);
 
-    await ref.read(claimFarmLockCaseProvider).run(
+    final blockchainTxVersion =
+        await ref.read(blockchainTxCurrentVersionProvider.future);
+    await ref.read(claimFarmLockCaseProvider(blockchainTxVersion)).run(
           localizations,
           this,
           state.farmAddress!,

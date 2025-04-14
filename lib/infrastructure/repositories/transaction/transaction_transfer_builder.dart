@@ -15,12 +15,12 @@ extension TransferTransactionBuilder on archethic.Transaction {
     required archethic.KeyPair keyPair,
     required int index,
     required String originPrivateKey,
-    required int txVersion,
     required archethic.ApiService apiService,
+    required int blockchainTxVersion,
   }) async {
     final transaction = archethic.Transaction(
       type: 'transfer',
-      version: txVersion,
+      version: blockchainTxVersion,
       data: archethic.Transaction.initData(),
     );
     for (final transfer in ucoTransferList) {

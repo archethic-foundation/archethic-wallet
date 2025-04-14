@@ -29,6 +29,7 @@ class AddFundsBeginnerCase with aedappfm.TransactionMixin {
     required this.transactionRepository,
     required this.keychainSecuredInfos,
     required this.selectedAccount,
+    required this.blockchainTxVersion,
   });
 
   final archethic.ApiService apiService;
@@ -38,6 +39,7 @@ class AddFundsBeginnerCase with aedappfm.TransactionMixin {
   final TransactionRemoteRepositoryInterface transactionRepository;
   final KeychainSecuredInfos keychainSecuredInfos;
   final Account selectedAccount;
+  final int blockchainTxVersion;
 
   Future<double?> run(
     AppLocalizations localizations,
@@ -61,6 +63,7 @@ class AddFundsBeginnerCase with aedappfm.TransactionMixin {
     final archethicContract = ArchethicContract(
       apiService: apiService,
       verifiedTokensRepository: verifiedTokensRepository,
+      blockchainTxVersion: blockchainTxVersion,
     );
 
     const ucoToken = DexToken(address: kUCOAddress, symbol: kUCOAddress);

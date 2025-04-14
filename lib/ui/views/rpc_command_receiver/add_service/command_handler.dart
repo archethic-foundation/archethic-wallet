@@ -1,5 +1,6 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/api_service.dart';
+import 'package:aewallet/application/blockchain_tx_version.dart';
 import 'package:aewallet/application/connectivity_status.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/domain/models/core/result.dart';
@@ -54,11 +55,14 @@ class AddServiceHandler extends CommandHandler {
               );
             }
             keychain = keychain.copyWithService(nameEncoded, kDerivationPath);
-
+            final blockchainTxVersion = await ref.read(
+              blockchainTxCurrentVersionProvider.future,
+            );
             final keychainTransaction = await KeychainTransactionBuilder.build(
               keychain: keychain,
               originPrivateKey: originPrivateKey,
               apiService: apiService,
+              blockchainTxVersion: blockchainTxVersion,
             );
 
             final newCommand = RPCCommand<awc.SendTransactionRequest>(

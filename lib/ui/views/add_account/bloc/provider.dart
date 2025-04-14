@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aewallet/application/account/accounts_notifier.dart';
+import 'package:aewallet/application/blockchain_tx_version.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/transaction_repository.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
@@ -106,8 +107,12 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
     );
 
     try {
+      final blockchainTxVersion = await ref.read(
+        blockchainTxCurrentVersionProvider.future,
+      );
       final confirmation = await transactionRepository.send(
         transaction: transaction,
+        blockchainTxVersion: blockchainTxVersion,
       );
       if (confirmation != null) {
         EventTaxiImpl.singleton().fire(
@@ -144,8 +149,12 @@ class AddAccountFormNotifier extends AutoDisposeNotifier<AddAccountFormState> {
     );
 
     try {
+      final blockchainTxVersion = await ref.read(
+        blockchainTxCurrentVersionProvider.future,
+      );
       final confirmation = await transactionRepository.send(
         transaction: transaction,
+        blockchainTxVersion: blockchainTxVersion,
       );
       if (confirmation != null) {
         EventTaxiImpl.singleton().fire(

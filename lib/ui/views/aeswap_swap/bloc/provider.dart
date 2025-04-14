@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/aeswap/usecases.dart';
 import 'package:aewallet/application/api_service.dart';
+import 'package:aewallet/application/blockchain_tx_version.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/application/dex_config.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
@@ -832,12 +833,16 @@ class SwapFormNotifier extends _$SwapFormNotifier
     }
 
     state = state.copyWith(calculationInProgress: true);
-    final feesEstimatedUCO = await ref.read(swapCaseProvider).estimateFees(
-          state.poolGenesisAddress,
-          state.tokenToSwap!,
-          state.tokenToSwapAmount,
-          state.slippageTolerance,
-        );
+    final blockchainTxVersion =
+        await ref.read(blockchainTxCurrentVersionProvider.future);
+
+    final feesEstimatedUCO =
+        await ref.read(swapCaseProvider(blockchainTxVersion)).estimateFees(
+              state.poolGenesisAddress,
+              state.tokenToSwap!,
+              state.tokenToSwapAmount,
+              state.slippageTolerance,
+            );
     state = state.copyWith(
       calculationInProgress: false,
       feesEstimatedUCO: feesEstimatedUCO,
@@ -903,11 +908,15 @@ class SwapFormNotifier extends _$SwapFormNotifier
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
+
+    final blockchainTxVersion =
+        await ref.read(blockchainTxCurrentVersionProvider.future);
+
     await aedappfm.ConsentRepositoryImpl()
         .addAddress(accountSelected!.genesisAddress);
 
     try {
-      await ref.read(swapCaseProvider).run(
+      await ref.read(swapCaseProvider(blockchainTxVersion)).run(
         this,
         appLocalizations,
         state.poolGenesisAddress,

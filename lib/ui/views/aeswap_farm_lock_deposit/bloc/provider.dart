@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/aeswap/usecases.dart';
+import 'package:aewallet/application/blockchain_tx_version.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/application/step.dart';
 import 'package:aewallet/domain/models/settings.dart';
@@ -147,8 +148,12 @@ class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
 
   Future<double> _calculateFees() async {
     var feeEstimation = 0.0;
+    final blockchainTxVersion =
+        await ref.read(blockchainTxCurrentVersionProvider.future);
     if (state.farmLockDepositMode == FarmLockDepositMode.lp) {
-      feeEstimation = await ref.read(depositFarmLockCaseProvider).estimateFees(
+      feeEstimation = await ref
+          .read(depositFarmLockCaseProvider(blockchainTxVersion))
+          .estimateFees(
             state.farmLock!.farmAddress,
             state.farmLock!.lpToken!.address,
             state.amount,
@@ -159,13 +164,13 @@ class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
       final environment = ref.read(environmentProvider);
       try {
         final results = await Future.wait([
-          ref.read(swapCaseProvider).estimateFees(
+          ref.read(swapCaseProvider(blockchainTxVersion)).estimateFees(
                 state.pool!.poolAddress,
                 const DexToken(address: kUCOAddress, symbol: kUCOAddress),
                 state.amount,
                 0,
               ),
-          ref.read(addLiquidityCaseProvider).estimateFees(
+          ref.read(addLiquidityCaseProvider(blockchainTxVersion)).estimateFees(
                 state.pool!.poolAddress,
                 const DexToken(address: kUCOAddress, symbol: kUCOAddress),
                 state.amount,
@@ -173,7 +178,9 @@ class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
                 99999, // Default Value
                 0,
               ),
-          ref.read(depositFarmLockCaseProvider).estimateFees(
+          ref
+              .read(depositFarmLockCaseProvider(blockchainTxVersion))
+              .estimateFees(
                 state.farmLock!.farmAddress,
                 state.farmLock!.lpToken!.address,
                 99999, // Default Value
@@ -383,11 +390,14 @@ class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
+    final blockchainTxVersion =
+        await ref.read(blockchainTxCurrentVersionProvider.future);
+
     await aedappfm.ConsentRepositoryImpl()
         .addAddress(accountSelected!.genesisAddress);
 
     if (state.farmLockDepositMode == FarmLockDepositMode.lp) {
-      await ref.read(depositFarmLockCaseProvider).run(
+      await ref.read(depositFarmLockCaseProvider(blockchainTxVersion)).run(
             appLocalizations,
             this,
             state.farmLock!.farmAddress,
@@ -409,19 +419,20 @@ class FarmLockDepositFormNotifier extends _$FarmLockDepositFormNotifier {
 
       stepsState.updateStepStatus(currentStep ?? 0, StepStatus.inProgress);
 
-      final lpLocked = await ref.read(addFundsBeginnerCaseProvider).run(
-            appLocalizations,
-            state.farmLock!.farmAddress,
-            state.amount,
-            state.farmLock!.poolAddress,
-            environment.aeETHAddress,
-            state.farmLock!.lpToken!.address,
-            state.farmLockDepositDuration,
-            state.level,
-            currentStep ?? 0,
-            stepsState,
-            ref.read(stepsNotifierProvider).snapshot,
-          );
+      final lpLocked =
+          await ref.read(addFundsBeginnerCaseProvider(blockchainTxVersion)).run(
+                appLocalizations,
+                state.farmLock!.farmAddress,
+                state.amount,
+                state.farmLock!.poolAddress,
+                environment.aeETHAddress,
+                state.farmLock!.lpToken!.address,
+                state.farmLockDepositDuration,
+                state.level,
+                currentStep ?? 0,
+                stepsState,
+                ref.read(stepsNotifierProvider).snapshot,
+              );
 
       if (lpLocked != null) {
         state = state.copyWith(finalAmount: lpLocked);

@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:aewallet/application/account/accounts_notifier.dart';
+import 'package:aewallet/application/blockchain_tx_version.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/transaction_repository.dart';
 import 'package:aewallet/bus/transaction_send_event.dart';
@@ -131,9 +132,15 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
       ),
     );
 
+    final blockchainTxVersion = await ref.read(
+      blockchainTxCurrentVersionProvider.future,
+    );
     final calculateFeesResult = await CalculateFeesUsecase(
       repository: ref.read(archethicTransactionRepositoryProvider),
-    ).run(transaction);
+      blockchainTxVersion: blockchainTxVersion,
+    ).run(
+      transaction,
+    );
 
     return calculateFeesResult.valueOrNull;
   }
@@ -292,8 +299,12 @@ class AddTokenFormNotifier extends AutoDisposeNotifier<AddTokenFormState> {
     );
 
     try {
+      final blockchainTxVersion = await ref.read(
+        blockchainTxCurrentVersionProvider.future,
+      );
       final confirmation = await transactionRepository.send(
         transaction: transaction,
+        blockchainTxVersion: blockchainTxVersion,
       );
 
       if (confirmation == null) return;
