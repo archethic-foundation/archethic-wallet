@@ -20,7 +20,7 @@ class DiscussionVaultDatasource {
   }
 
   static Future<void> clear() async {
-    await Vault.instance().clear<Discussion>(_discussionBoxName);
+    await Vault.instance().clearLazy<Discussion>(_discussionBoxName);
   }
 
   String _discussionKey({
