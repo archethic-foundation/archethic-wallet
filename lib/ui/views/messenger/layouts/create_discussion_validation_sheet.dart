@@ -122,7 +122,7 @@ class _CreateDiscussionValidationSheetState
           },
           failure: (failure) {
             UIUtil.showSnackbar(
-              localizations.addMessengerDiscussionFailure,
+              '${localizations.addMessengerDiscussionFailure} (${failure.message ?? 'Unknown'})',
               context,
               ref,
               ArchethicTheme.text,

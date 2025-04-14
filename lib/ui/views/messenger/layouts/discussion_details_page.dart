@@ -69,6 +69,7 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage>
   @override
   PreferredSizeWidget getAppBar(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
+
     final selectedAccount = ref
         .watch(
           accountsNotifierProvider,
