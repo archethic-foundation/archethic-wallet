@@ -251,7 +251,7 @@ abstract class MessengerProviders {
   static const messages = _discussionMessagesProvider;
   static const paginatedMessages = _paginatedDiscussionMessagesNotifierProvider;
 
-  static final createDiscussionForm = _createDiscussionFormProvider;
+  static final createDiscussionForm = _createDiscussionFormNotifierProvider;
   static const messageCreationForm = _messageCreationFormNotifierProvider;
   static const messageCreationFees = _messageCreationFeesProvider;
   static final updateDiscussionForm = _updateDiscussionFormProvider;
@@ -261,7 +261,7 @@ abstract class MessengerProviders {
     await ref.read(messengerRepository).clear();
     ref
       ..invalidate(_discussionProvider)
-      ..invalidate(_createDiscussionFormProvider)
+      ..invalidate(_createDiscussionFormNotifierProvider)
       ..invalidate(_discussionMessagesProvider);
   }
 }

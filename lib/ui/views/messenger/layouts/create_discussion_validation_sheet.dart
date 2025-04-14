@@ -7,7 +7,6 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
-import 'package:aewallet/ui/views/messenger/layouts/create_discussion_sheet.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
@@ -46,17 +45,6 @@ class _CreateDiscussionValidationSheetState
 
   @override
   void dispose() {
-    if (widget.fromRouterPage == CreateDiscussionValidationSheet.routerPage) {
-      ref
-          .watch(MessengerProviders.createDiscussionForm.notifier)
-          .removeAllMembers();
-    }
-
-    if (widget.fromRouterPage == CreateDiscussionSheet.routerPage) {
-      ref
-          .read(MessengerProviders.createDiscussionForm.notifier)
-          .resetValidation();
-    }
     _focusNode
       ..removeListener(_onFocusChange)
       ..dispose();

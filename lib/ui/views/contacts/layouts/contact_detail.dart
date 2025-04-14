@@ -295,7 +295,7 @@ class _ContactDetailActions extends ConsumerWidget {
             key: const Key('newDiscussion'),
             onPressed: () {
               ref
-                  .watch(MessengerProviders.createDiscussionForm.notifier)
+                  .read(MessengerProviders.createDiscussionForm.notifier)
                   .addMember(contact);
               context.push(
                 CreateDiscussionValidationSheet.routerPage,

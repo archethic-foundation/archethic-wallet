@@ -7,12 +7,12 @@ part of 'providers.dart';
 // **************************************************************************
 
 String _$notificationRepositoryHash() =>
-    r'd4b4048fd6f52a225939801bf30a6ffe9c93a151';
+    r'4e86056e7ba9390289014c455c153f7a9b1ba534';
 
 /// See also [_notificationRepository].
 @ProviderFor(_notificationRepository)
 final _notificationRepositoryProvider =
-    Provider<NotificationsRepository>.internal(
+    AutoDisposeProvider<NotificationsRepository>.internal(
   _notificationRepository,
   name: r'_notificationRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -24,7 +24,8 @@ final _notificationRepositoryProvider =
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef _NotificationRepositoryRef = ProviderRef<NotificationsRepository>;
+typedef _NotificationRepositoryRef
+    = AutoDisposeProviderRef<NotificationsRepository>;
 String _$txSentEventsHash() => r'01e9047b125a2d735523a5f5b209a24b05d24d11';
 
 /// Copied from Dart SDK

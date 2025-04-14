@@ -1,12 +1,5 @@
 part of 'providers.dart';
 
-final _createDiscussionFormProvider = NotifierProvider.autoDispose<
-    CreateDiscussionFormNotifier, CreateDiscussionFormState>(
-  () {
-    return CreateDiscussionFormNotifier();
-  },
-);
-
 @freezed
 class CreateDiscussionFormState with _$CreateDiscussionFormState {
   const factory CreateDiscussionFormState({
@@ -25,12 +18,10 @@ class CreateDiscussionFormState with _$CreateDiscussionFormState {
   List<Contact> get membersList => members;
 }
 
-class CreateDiscussionFormNotifier
-    extends AutoDisposeNotifier<CreateDiscussionFormState> {
-  CreateDiscussionFormNotifier();
-
+@riverpod
+class _CreateDiscussionFormNotifier extends _$CreateDiscussionFormNotifier {
   @override
-  CreateDiscussionFormState build() => const CreateDiscussionFormState();
+  _CreateDiscussionFormState build() => const _CreateDiscussionFormState();
 
   void addMember(Contact member) {
     if (state.members.contains(member)) return;
@@ -84,19 +75,19 @@ class CreateDiscussionFormNotifier
         final selectedAccount =
             await ref.read(AccountProviders.accounts.future).selectedAccount;
         if (selectedAccount == null) throw const Failure.loggedOut();
-        if (selectedAccount.publicKey == null ||
-            selectedAccount.publicKey!.isEmpty) {
+        final selectedAccountPubKey = selectedAccount.publicKey;
+        if (selectedAccountPubKey == null || selectedAccountPubKey.isEmpty) {
           throw const Failure.other(message: 'No public key found');
         }
 
         await ref.read(MessengerProviders.messengerRepository).createDiscussion(
           adminsPubKeys: [
             ...state.admins.map((recipient) => recipient.publicKey),
-            selectedAccount.publicKey!,
+            selectedAccountPubKey,
           ],
           membersPubKeys: [
             ...state.members.map((recipient) => recipient.publicKey),
-            selectedAccount.publicKey!,
+            selectedAccountPubKey,
           ],
           creator: selectedAccount,
           session: session,

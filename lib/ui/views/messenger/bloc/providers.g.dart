@@ -913,6 +913,24 @@ final _discussionsProvider = AutoDisposeAsyncNotifierProvider<_Discussions,
 );
 
 typedef _$Discussions = AutoDisposeAsyncNotifier<Iterable<Discussion>>;
+String _$createDiscussionFormNotifierHash() =>
+    r'764439ad1b17a1eb4470e91ab96b48f4edc4c81c';
+
+/// See also [_CreateDiscussionFormNotifier].
+@ProviderFor(_CreateDiscussionFormNotifier)
+final _createDiscussionFormNotifierProvider = AutoDisposeNotifierProvider<
+    _CreateDiscussionFormNotifier, _CreateDiscussionFormState>.internal(
+  _CreateDiscussionFormNotifier.new,
+  name: r'_createDiscussionFormNotifierProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$createDiscussionFormNotifierHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$CreateDiscussionFormNotifier
+    = AutoDisposeNotifier<_CreateDiscussionFormState>;
 String _$messageCreationFormNotifierHash() =>
     r'07915ab5e0801cc44222d7cc489568092da1a35b';
 
