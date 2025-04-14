@@ -21,6 +21,7 @@ part 'usecases.g.dart';
 @riverpod
 AddLiquidityCase addLiquidityCase(
   Ref ref,
+  int blockchainTxVersion,
 ) =>
     AddLiquidityCase(
       apiService: ref.watch(apiServiceProvider),
@@ -38,11 +39,13 @@ AddLiquidityCase addLiquidityCase(
           )
           .value!
           .selectedAccount!,
+      blockchainTxVersion: blockchainTxVersion,
     );
 
 @riverpod
 ClaimFarmLockCase claimFarmLockCase(
   Ref ref,
+  int blockchainTxVersion,
 ) =>
     ClaimFarmLockCase(
       apiService: ref.watch(apiServiceProvider),
@@ -60,11 +63,13 @@ ClaimFarmLockCase claimFarmLockCase(
           )
           .value!
           .selectedAccount!,
+      blockchainTxVersion: blockchainTxVersion,
     );
 
 @riverpod
 DepositFarmLockCase depositFarmLockCase(
   Ref ref,
+  int blockchainTxVersion,
 ) =>
     DepositFarmLockCase(
       apiService: ref.watch(apiServiceProvider),
@@ -82,11 +87,13 @@ DepositFarmLockCase depositFarmLockCase(
           )
           .value!
           .selectedAccount!,
+      blockchainTxVersion: blockchainTxVersion,
     );
 
 @riverpod
 LevelUpFarmLockCase levelUpFarmLockCase(
   Ref ref,
+  int blockchainTxVersion,
 ) =>
     LevelUpFarmLockCase(
       apiService: ref.watch(apiServiceProvider),
@@ -104,11 +111,13 @@ LevelUpFarmLockCase levelUpFarmLockCase(
           )
           .value!
           .selectedAccount!,
+      blockchainTxVersion: blockchainTxVersion,
     );
 
 @riverpod
 RemoveLiquidityCase removeLiquidityCase(
   Ref ref,
+  int blockchainTxVersion,
 ) =>
     RemoveLiquidityCase(
       apiService: ref.watch(apiServiceProvider),
@@ -126,11 +135,13 @@ RemoveLiquidityCase removeLiquidityCase(
           )
           .value!
           .selectedAccount!,
+      blockchainTxVersion: blockchainTxVersion,
     );
 
 @riverpod
 SwapCase swapCase(
   Ref ref,
+  int blockchainTxVersion,
 ) =>
     SwapCase(
       apiService: ref.watch(apiServiceProvider),
@@ -148,11 +159,13 @@ SwapCase swapCase(
           )
           .value!
           .selectedAccount!,
+      blockchainTxVersion: blockchainTxVersion,
     );
 
 @riverpod
 WithdrawFarmLockCase withdrawFarmLockCase(
   Ref ref,
+  int blockchainTxVersion,
 ) =>
     WithdrawFarmLockCase(
       apiService: ref.watch(apiServiceProvider),
@@ -170,11 +183,13 @@ WithdrawFarmLockCase withdrawFarmLockCase(
           )
           .value!
           .selectedAccount!,
+      blockchainTxVersion: blockchainTxVersion,
     );
 
 @riverpod
 AddFundsBeginnerCase addFundsBeginnerCase(
   Ref ref,
+  int blockchainTxVersion,
 ) =>
     AddFundsBeginnerCase(
       apiService: ref.watch(apiServiceProvider),
@@ -192,11 +207,13 @@ AddFundsBeginnerCase addFundsBeginnerCase(
           )
           .value!
           .selectedAccount!,
+      blockchainTxVersion: blockchainTxVersion,
     );
 
 @riverpod
 WithdrawFundsBeginnerCase withdrawFundsBeginnerCase(
   Ref ref,
+  int blockchainTxVersion,
 ) =>
     WithdrawFundsBeginnerCase(
       apiService: ref.watch(apiServiceProvider),
@@ -214,4 +231,5 @@ WithdrawFundsBeginnerCase withdrawFundsBeginnerCase(
           )
           .value!
           .selectedAccount!,
+      blockchainTxVersion: blockchainTxVersion,
     );

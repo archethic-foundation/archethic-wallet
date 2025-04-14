@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$TransferFormState {
   TransferType? get transferType => throw _privateConstructorUsedError;
   TransferProcessStep get transferProcessStep =>
-      throw _privateConstructorUsedError; // TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)
+      throw _privateConstructorUsedError; // TODO(dev): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)
   AsyncValue<double> get feeEstimation => throw _privateConstructorUsedError;
   bool get defineMaxAmountInProgress => throw _privateConstructorUsedError;
   double get amount => throw _privateConstructorUsedError;
@@ -327,7 +327,7 @@ class _$TransferFormStateImpl extends _TransferFormState {
   @override
   @JsonKey()
   final TransferProcessStep transferProcessStep;
-// TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)
+// TODO(dev): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)
   @override
   final AsyncValue<double> feeEstimation;
   @override
@@ -441,7 +441,7 @@ abstract class _TransferFormState extends TransferFormState {
   TransferType? get transferType;
   @override
   TransferProcessStep
-      get transferProcessStep; // TODO(reddwarf03): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)
+      get transferProcessStep; // TODO(dev): too complicated to manage by hand in [TransferFormNotifier]. Use a small dedicated [FutureProvider] (3)
   @override
   AsyncValue<double> get feeEstimation;
   @override

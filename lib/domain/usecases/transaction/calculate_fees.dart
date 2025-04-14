@@ -10,9 +10,11 @@ class CalculateFeesUsecase
     implements UseCase<Transaction, Result<double, Failure>> {
   const CalculateFeesUsecase({
     required this.repository,
+    required this.blockchainTxVersion,
   });
 
   final TransactionRemoteRepositoryInterface repository;
+  final int blockchainTxVersion;
 
   @override
   Future<Result<double, Failure>> run(
@@ -40,6 +42,9 @@ class CalculateFeesUsecase
       },
     );
 
-    return repository.calculateFees(transaction);
+    return repository.calculateFees(
+      transaction,
+      blockchainTxVersion,
+    );
   }
 }

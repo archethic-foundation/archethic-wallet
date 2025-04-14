@@ -15,15 +15,15 @@ import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutte
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:decimal/decimal.dart';
 
-const blockchainTxVersion = 3;
-
 class ArchethicContract with aedappfm.TransactionMixin {
   const ArchethicContract({
     required this.apiService,
     required this.verifiedTokensRepository,
+    required this.blockchainTxVersion,
   });
   final archethic.ApiService apiService;
   final aedappfm.VerifiedTokensRepositoryInterface verifiedTokensRepository;
+  final int blockchainTxVersion;
 
   Future<aedappfm.Result<archethic.Transaction, aedappfm.Failure>> getAddPoolTx(
     String routerAddress,
@@ -107,7 +107,8 @@ class ArchethicContract with aedappfm.TransactionMixin {
 
       final transactionPool = archethic.Transaction(
         type: 'token',
-        version: blockchainTxVersion,
+        // Interpreted SC version / No WASM
+        version: 3,
         data: archethic.Transaction.initData(),
       )
           .setContent(tokenDefinition!)
@@ -538,7 +539,6 @@ class ArchethicContract with aedappfm.TransactionMixin {
     return aedappfm.Result.guard(() async {
       final transaction = archethic.Transaction(
         type: 'transfer',
-        version: blockchainTxVersion,
         data: archethic.Transaction.initData(),
       ).addRecipient(
         farmGenesisAddress,

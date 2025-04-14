@@ -28,6 +28,7 @@ class WithdrawFarmLockCase with aedappfm.TransactionMixin {
     required this.transactionRepository,
     required this.keychainSecuredInfos,
     required this.selectedAccount,
+    required this.blockchainTxVersion,
   });
 
   final archethic.ApiService apiService;
@@ -37,6 +38,7 @@ class WithdrawFarmLockCase with aedappfm.TransactionMixin {
   final TransactionRemoteRepositoryInterface transactionRepository;
   final KeychainSecuredInfos keychainSecuredInfos;
   final Account selectedAccount;
+  final int blockchainTxVersion;
 
   Future<void> run(
     AppLocalizations localizations,
@@ -52,6 +54,7 @@ class WithdrawFarmLockCase with aedappfm.TransactionMixin {
     final archethicContract = ArchethicContract(
       apiService: apiService,
       verifiedTokensRepository: verifiedTokensRepository,
+      blockchainTxVersion: blockchainTxVersion,
     );
 
     archethic.Transaction? transactionWithdraw;
@@ -210,6 +213,7 @@ class WithdrawFarmLockCase with aedappfm.TransactionMixin {
     final archethicContract = ArchethicContract(
       apiService: apiService,
       verifiedTokensRepository: verifiedTokensRepository,
+      blockchainTxVersion: blockchainTxVersion,
     );
     archethic.Transaction? transactionWithdraw;
 

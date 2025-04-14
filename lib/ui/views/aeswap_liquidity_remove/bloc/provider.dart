@@ -1,6 +1,7 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/aeswap/usecases.dart';
 import 'package:aewallet/application/api_service.dart';
+import 'package:aewallet/application/blockchain_tx_version.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
@@ -310,8 +311,13 @@ class LiquidityRemoveFormNotifier extends _$LiquidityRemoveFormNotifier {
       return false;
     }
 
+    final blockchainTxVersion =
+        await ref.read(blockchainTxCurrentVersionProvider.future);
+
     var feesEstimatedUCO = 0.0;
-    feesEstimatedUCO = await ref.read(removeLiquidityCaseProvider).estimateFees(
+    feesEstimatedUCO = await ref
+        .read(removeLiquidityCaseProvider(blockchainTxVersion))
+        .estimateFees(
           state.pool!.poolAddress,
           state.lpToken!.address,
           state.lpTokenAmount,
@@ -345,9 +351,12 @@ class LiquidityRemoveFormNotifier extends _$LiquidityRemoveFormNotifier {
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
+    final blockchainTxVersion =
+        await ref.read(blockchainTxCurrentVersionProvider.future);
+
     await aedappfm.ConsentRepositoryImpl()
         .addAddress(accountSelected!.genesisAddress);
-    await ref.read(removeLiquidityCaseProvider).run(
+    await ref.read(removeLiquidityCaseProvider(blockchainTxVersion)).run(
           appLocalizations,
           this,
           state.pool!.poolAddress,

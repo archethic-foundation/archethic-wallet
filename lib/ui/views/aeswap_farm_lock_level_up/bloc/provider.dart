@@ -1,5 +1,6 @@
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/aeswap/usecases.dart';
+import 'package:aewallet/application/blockchain_tx_version.dart';
 import 'package:aewallet/modules/aeswap/application/balance.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_farm_lock.dart';
 import 'package:aewallet/modules/aeswap/domain/models/dex_pool.dart';
@@ -203,8 +204,13 @@ class FarmLockLevelUpFormNotifier extends _$FarmLockLevelUpFormNotifier {
       return false;
     }
 
+    final blockchainTxVersion =
+        await ref.read(blockchainTxCurrentVersionProvider.future);
+
     var feesEstimatedUCO = 0.0;
-    feesEstimatedUCO = await ref.read(levelUpFarmLockCaseProvider).estimateFees(
+    feesEstimatedUCO = await ref
+        .read(levelUpFarmLockCaseProvider(blockchainTxVersion))
+        .estimateFees(
           state.farmLock!.farmAddress,
           state.farmLock!.lpToken!.address,
           state.amount,
@@ -241,10 +247,13 @@ class FarmLockLevelUpFormNotifier extends _$FarmLockLevelUpFormNotifier {
         (accounts) => accounts.valueOrNull?.selectedAccount,
       ),
     );
+    final blockchainTxVersion =
+        await ref.read(blockchainTxCurrentVersionProvider.future);
+
     await aedappfm.ConsentRepositoryImpl()
         .addAddress(accountSelected!.genesisAddress);
 
-    await ref.read(levelUpFarmLockCaseProvider).run(
+    await ref.read(levelUpFarmLockCaseProvider(blockchainTxVersion)).run(
           appLocalizations,
           this,
           state.farmLock!.farmAddress,

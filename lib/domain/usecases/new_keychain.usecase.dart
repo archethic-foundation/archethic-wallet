@@ -11,8 +11,6 @@ import 'package:logging/logging.dart';
 
 final _logger = Logger('KeychainUtil');
 
-const blockchainTxVersion = 3;
-
 class CreateNewAppWalletCase with aedappfm.TransactionMixin {
   CreateNewAppWalletCase({
     required this.sessionNotifier,
@@ -23,7 +21,8 @@ class CreateNewAppWalletCase with aedappfm.TransactionMixin {
   Future<void> run(
     String seed,
     archethic.ApiService targetApiService,
-    List<String> nameList, {
+    List<String> nameList,
+    int blockchainTxVersion, {
     String? keychainSeed,
   }) async {
     /// Get Wallet KeyPair

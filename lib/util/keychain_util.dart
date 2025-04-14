@@ -18,7 +18,6 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:logging/logging.dart';
 
-const blockchainTxVersion = 3;
 mixin KeychainServiceMixin {
   final kMainDerivation = "m/650'/";
 
@@ -46,6 +45,7 @@ mixin KeychainServiceMixin {
     String keychainAddress,
     Keychain keychain,
     ApiService apiService,
+    int blockchainTxVersion,
   ) async {
     final _logger = Logger('createKeyChainAccess');
 
@@ -88,6 +88,7 @@ mixin KeychainServiceMixin {
     String service,
     Keychain keychain,
     ApiService apiService,
+    int blockchainTxVersion,
   ) async {
     final originPrivateKey = apiService.getOriginKey();
     final servicesRemoved = Map<String, Service>.from(keychain.services)
@@ -96,6 +97,7 @@ mixin KeychainServiceMixin {
       keychain: keychain.copyWith(services: servicesRemoved),
       originPrivateKey: originPrivateKey,
       apiService: apiService,
+      blockchainTxVersion: blockchainTxVersion,
     );
 
     try {

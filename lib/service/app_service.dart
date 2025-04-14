@@ -17,8 +17,6 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';
 
-const blockchainTxVersion = 3;
-
 class AppService {
   AppService({
     required this.apiService,
@@ -231,6 +229,7 @@ class AppService {
     List<TokenTransfer> listTokenTransfer,
     String message,
     KeychainServiceKeyPair keychainServiceKeyPair,
+    int blockchainTxVersion,
   ) async {
     final lastTransactionMap =
         await apiService.getLastTransaction([address], request: 'chainLength');

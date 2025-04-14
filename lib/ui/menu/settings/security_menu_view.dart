@@ -190,10 +190,13 @@ class SecurityMenuView extends ConsumerWidget
           final originKeychain = await archethic.ApiService(
             _saveEnvironment.endpoint,
           ).getKeychain(seed!);
+          final blockchainTxVersion =
+              await ref.read(blockchainTxCurrentVersionProvider.future);
           await ref.read(createNewAppWalletCaseProvider).run(
                 seed,
                 archethic.ApiService(_selectedEnvironment.endpoint),
                 nameList,
+                blockchainTxVersion,
                 keychainSeed: originKeychain.seed == null
                     ? null
                     : archethic.uint8ListToHex(originKeychain.seed!),
