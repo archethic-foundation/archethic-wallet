@@ -6,10 +6,12 @@ import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/repositories/messenger_repository.dart';
 import 'package:aewallet/infrastructure/datasources/discussion.remote.dart';
 import 'package:aewallet/infrastructure/datasources/discussion.vault.dart';
+import 'package:aewallet/infrastructure/repositories/notifications_repository.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/modules/messaging_sdk/services/messaging_service.dart';
+import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -88,6 +90,25 @@ class MessengerRepository
           discussion: newDiscussion.discussion,
         );
 
+        await _sendTransactionNotification(
+          notificationRecipientAddress: newDiscussion.discussion.address,
+          listenAddresses: membersPubKeys,
+          creator: creator,
+          session: session,
+          previousKeyPair: newDiscussion.previousKeyPair,
+          pushNotification: {
+            'en': const PushNotification(
+              title: 'Archethic',
+              body: 'A new discussion has been created',
+            ),
+            'fr': const PushNotification(
+              title: 'Archethic',
+              body: 'Une nouvelle discussion a été créée',
+            ),
+          },
+          transactionType: MessengerConstants.notificationTypeNewDiscussion,
+        );
+
         return newDiscussion.discussion;
       });
 
@@ -133,6 +154,38 @@ class MessengerRepository
                 discussionSCAddress, // we are always saving in DB the genesis address of the discussion
           ),
           discussionName: discussionName,
+        );
+
+        var listenAddresses = membersPubKeys;
+        // If there are users added or deleted, we will notify only them. Otherwise (like a name changed), we will notify everybody.
+        if (membersAddedToNotify.isNotEmpty ||
+            membersDeletedToNotify.isNotEmpty) {
+          // https://stackoverflow.com/questions/21826342/how-do-i-combine-two-lists-in-dart with If you want to merge two lists and remove duplicates
+          listenAddresses =
+              {...membersAddedToNotify, ...membersDeletedToNotify}.toList();
+        }
+
+        await _sendTransactionNotification(
+          notificationRecipientAddress: updatedDiscussion.discussion.address,
+          listenAddresses: listenAddresses,
+          creator: owner,
+          session: session,
+          previousKeyPair: updatedDiscussion.previousKeyPair,
+          pushNotification: {
+            'en': const PushNotification(
+              title: 'Archethic',
+              body: 'A discussion has been updated',
+            ),
+            'fr': const PushNotification(
+              title: 'Archethic',
+              body: 'Une discussion a été mise à jour',
+            ),
+          },
+          transactionType: MessengerConstants.notificationTypeDiscussionUpdated,
+          extra: {
+            'membersAddedToNotify': membersAddedToNotify,
+            'membersDeletedToNotify': membersDeletedToNotify,
+          },
         );
 
         return updatedDiscussion.discussion;
@@ -320,8 +373,50 @@ class MessengerRepository
                   .toUpperCase(),
         );
 
+        await _sendTransactionNotification(
+          notificationRecipientAddress: notificationRecipientAddress.address!,
+          listenAddresses: membersPublicKeysForNotifications,
+          creator: creator,
+          session: session,
+          previousKeyPair: sendMessageResult.previousKeyPair,
+          pushNotification: {
+            'en': const PushNotification(
+              title: 'Archethic',
+              body: 'You have received a new message',
+            ),
+            'fr': const PushNotification(
+              title: 'Archethic',
+              body: 'Vous avez reçu un nouveau message',
+            ),
+          },
+          transactionType: MessengerConstants.notificationTypeNewMessage,
+        );
+
         return message;
       });
+
+  Future<void> _sendTransactionNotification({
+    required LoggedInSession session,
+    required String notificationRecipientAddress,
+    required List<String> listenAddresses,
+    required Account creator,
+    required Map<String, PushNotification> pushNotification,
+    required KeyPair previousKeyPair,
+    required String transactionType,
+    dynamic extra,
+  }) async {
+    await sendTransactionNotification(
+      notification: TransactionNotification(
+        notificationRecipientAddress: notificationRecipientAddress,
+        listenAddresses: listenAddresses,
+      ),
+      pushNotification: pushNotification,
+      senderKeyPair: previousKeyPair,
+      notifBackendBaseUrl: NotificationsRepositoryImpl().notificationBackendUrl,
+      transactionType: transactionType,
+      extra: extra,
+    );
+  }
 
   @override
   Future<void> updateDiscussionLastMessage({
