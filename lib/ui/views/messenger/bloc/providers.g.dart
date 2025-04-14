@@ -914,7 +914,7 @@ final _discussionsProvider = AutoDisposeAsyncNotifierProvider<_Discussions,
 
 typedef _$Discussions = AutoDisposeAsyncNotifier<Iterable<Discussion>>;
 String _$createDiscussionFormNotifierHash() =>
-    r'764439ad1b17a1eb4470e91ab96b48f4edc4c81c';
+    r'71848a87b4d3226bf1405d6fee1466c35f103d67';
 
 /// See also [_CreateDiscussionFormNotifier].
 @ProviderFor(_CreateDiscussionFormNotifier)

@@ -5,6 +5,7 @@ import 'package:aewallet/application/account/providers.dart';
 import 'package:aewallet/application/address_service.dart';
 import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/contact.dart';
+import 'package:aewallet/application/notification/providers.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
@@ -16,6 +17,7 @@ import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/model/public_key.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
+import 'package:aewallet/ui/views/main/bloc/providers.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -230,6 +232,32 @@ void _subscribeNotificationsWorker(WidgetRef ref) {
           nextContactPublicKeys.add(contact.publicKey);
         }
       }
+    }
+
+    final publicKeysToUnsubscribe = previousContactPublicKeys
+        .toSet()
+        .difference(nextContactPublicKeys.toSet())
+        .toList();
+    final publicKeysToSubscribe = nextContactPublicKeys
+        .toSet()
+        .difference(previousContactPublicKeys.toSet())
+        .toList();
+
+    if (publicKeysToUnsubscribe.isNotEmpty) {
+      await ref
+          .read(NotificationProviders.repository)
+          .unsubscribe(publicKeysToUnsubscribe);
+      ref
+          .read(listenAddressesProvider.notifier)
+          .removeListenAddresses(publicKeysToUnsubscribe);
+    }
+    if (publicKeysToSubscribe.isNotEmpty) {
+      await ref
+          .read(NotificationProviders.repository)
+          .subscribe(publicKeysToSubscribe);
+      ref
+          .read(listenAddressesProvider.notifier)
+          .addListenAddresses(publicKeysToSubscribe);
     }
   });
 }
