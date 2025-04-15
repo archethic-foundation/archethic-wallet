@@ -9,7 +9,7 @@ part of 'notification_setup_dto.dart';
 class NotificationsSetupImplAdapter
     extends TypeAdapter<_$NotificationsSetupImpl> {
   @override
-  final int typeId = 16;
+  final int typeId = 25;
 
   @override
   _$NotificationsSetupImpl read(BinaryReader reader) {

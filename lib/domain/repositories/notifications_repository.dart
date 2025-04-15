@@ -45,6 +45,7 @@ abstract class NotificationsRepository {
     required String notifBackendBaseUrl,
     required Map<String, PushNotification> pushNotification,
     required String transactionType,
+    dynamic extra,
   });
 
   /// Updates settings about the notifications

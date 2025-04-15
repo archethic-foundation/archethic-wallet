@@ -30,7 +30,7 @@ class HiveTypeIds {
   static const nftInfosOffChain = 11;
   static const pubKeyAccessRecipient = 13;
   static const contactAccessRecipient = 14;
-  static const notificationsSetup = 16;
+  static const notificationsSetupOld = 16;
   static const cacheItem = 17;
   static const tokenCollection = 18;
   static const walletToken = 19;
@@ -39,6 +39,7 @@ class HiveTypeIds {
   static const myDApps = 22;
   static const discussion = 23;
   static const discussionMessage = 24;
+  static const notificationsSetup = 25;
 }
 
 class DBHelper {
@@ -51,7 +52,7 @@ class DBHelper {
     }
 
     Hive
-      ..ignoreTypeId(HiveTypeIds.notificationsSetup)
+      ..ignoreTypeId(HiveTypeIds.notificationsSetupOld)
       ..ignoreTypeId(HiveTypeIds.pubKeyAccessRecipient)
       ..ignoreTypeId(HiveTypeIds.contactAccessRecipient)
       ..ignoreTypeId(HiveTypeIds.tokenCollection)
