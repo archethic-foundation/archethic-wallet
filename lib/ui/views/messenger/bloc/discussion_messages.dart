@@ -116,7 +116,7 @@ class _PaginatedDiscussionMessagesNotifier
     );
     _addPageRequestListener(pagingController);
 
-    _addIncomingMessagesListener();
+    _addIncomingMessagesListener(discussionAddress, pagingController);
 
     ref.onDispose(() {
       _pagingController.dispose();
@@ -124,15 +124,46 @@ class _PaginatedDiscussionMessagesNotifier
     return pagingController;
   }
 
-  Future _addIncomingMessagesListener() async {
-    final selectedAccount = ref.watch(
-      accountsNotifierProvider.select(
-        (accounts) => accounts.valueOrNull?.selectedAccount,
-      ),
+  Future _addIncomingMessagesListener(
+    String discussionAddress,
+    PagingController<int, DiscussionMessage> pagingController,
+  ) async {
+    ref.listen(
+      NotificationProviders.txSentEvents(discussionAddress.toUpperCase()),
+      (_, next) async {
+        final nextValue = next.value;
+        if (nextValue == null) {
+          return;
+        }
+
+        final nextPageKey = pagingController.value.nextPageKey;
+        if (nextPageKey == null) return;
+
+        final newFirstPage = await ref.read(
+          MessengerProviders.messages(
+            discussionAddress,
+            0,
+            _pageSize,
+          ).future,
+        );
+
+        final filteredNewMessages = newFirstPage.whereNot(
+          (newMessage) =>
+              pagingController.value.itemList
+                  ?.any((message) => message.address == newMessage.address) ==
+              true,
+        );
+
+        pagingController.value = PagingState(
+          nextPageKey: (pagingController.value.nextPageKey ?? 0) +
+              filteredNewMessages.length,
+          itemList: [
+            ...filteredNewMessages,
+            ...pagingController.value.itemList ?? [],
+          ],
+        );
+      },
     );
-    if (selectedAccount == null) {
-      return;
-    }
   }
 
   void _addPageRequestListener(

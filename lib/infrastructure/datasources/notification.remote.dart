@@ -30,7 +30,14 @@ class NotificationBackendClient {
       })
       ..onDisconnect((_) {
         _logger.info('Did disconnect');
-      });
+      })
+      ..on(
+        'TxSent',
+        (event) {
+          _logger.info('TxSent event received');
+          _eventsStreamController.add(TxSentEvent.fromJson(event));
+        },
+      );
   }
 
   final VoidCallback onConnect;
@@ -43,16 +50,6 @@ class NotificationBackendClient {
   Stream<TxSentEvent> get events => _eventsStreamController.stream;
 
   late final socket_io.Socket socket;
-
-  Future<void> connect() async {
-    socket.on(
-      'TxSent',
-      (event) {
-        _logger.info('TxSent event received');
-        _eventsStreamController.add(TxSentEvent.fromJson(event));
-      },
-    );
-  }
 
   Future<void> updatePushSettings({
     required String token,

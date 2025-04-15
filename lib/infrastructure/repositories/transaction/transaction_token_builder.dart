@@ -25,7 +25,7 @@ extension AddTokenTransactionBuilder on archethic.Transaction {
   }) {
     final transaction = archethic.Transaction(
       type: 'token',
-      version: blockchainTxVersion,
+      version: 3, //TODO restore blockchainTxVersion,
       data: archethic.Transaction.initData(),
     );
 

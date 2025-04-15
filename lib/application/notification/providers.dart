@@ -15,11 +15,12 @@ NotificationsRepository _notificationRepository(
 @riverpod
 Stream<TxSentEvent> _txSentEvents(
   Ref ref,
-  String listenAddress,
+  String txChainGenesisAddress,
 ) =>
     ref.watch(_notificationRepositoryProvider).events.where(
           (event) =>
-              event.listenAddress.toUpperCase() == listenAddress.toUpperCase(),
+              event.txChainGenesisAddress.toUpperCase() ==
+              txChainGenesisAddress.toUpperCase(),
         );
 
 @riverpod

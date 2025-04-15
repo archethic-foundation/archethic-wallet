@@ -578,6 +578,22 @@ final _sortedDiscussionsProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef _SortedDiscussionsRef = AutoDisposeFutureProviderRef<List<Discussion>>;
+String _$txSentEventsHash() => r'2b28212bb5fc45c178aadaeab7fd540720967e8f';
+
+/// See also [_txSentEvents].
+@ProviderFor(_txSentEvents)
+final _txSentEventsProvider = AutoDisposeStreamProvider<TxSentEvent>.internal(
+  _txSentEvents,
+  name: r'_txSentEventsProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$txSentEventsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef _TxSentEventsRef = AutoDisposeStreamProviderRef<TxSentEvent>;
 String _$messageCreationFeesHash() =>
     r'83650af2555c41231a9a297752142657d04bc90c';
 

@@ -1,3 +1,4 @@
+import 'package:aewallet/domain/models/transaction_notification.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -9,12 +10,11 @@ class TxSentEvent with _$TxSentEvent {
   const factory TxSentEvent({
     // https://github.com/rrousselGit/freezed/issues/488
     // ignore: invalid_annotation_target
-    @JsonKey(name: 'txAddress') required String notificationRecipientAddress,
+    @JsonKey(name: 'txAddress') required String txAddress,
     // => https://github.com/rrousselGit/freezed/issues/488
     // ignore: invalid_annotation_target
-    @JsonKey(name: 'txChainGenesisAddress') required String listenAddress,
-    required String type,
-    required dynamic extra,
+    @JsonKey(name: 'txChainGenesisAddress')
+    required String txChainGenesisAddress,
   }) = _TxSentEvent;
   const TxSentEvent._();
 
@@ -42,10 +42,7 @@ abstract class NotificationsRepository {
   Future<void> sendTransactionNotification({
     required TransactionNotification notification,
     required KeyPair senderKeyPair,
-    required String notifBackendBaseUrl,
     required Map<String, PushNotification> pushNotification,
-    required String transactionType,
-    dynamic extra,
   });
 
   /// Updates settings about the notifications

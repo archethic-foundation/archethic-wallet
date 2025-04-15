@@ -3,6 +3,7 @@
 
 import 'dart:convert';
 import 'dart:math';
+
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:flutter/foundation.dart';
 
@@ -32,7 +33,7 @@ extension KeychainTransactionBuilder on archethic.Transaction {
     final keychainTransaction = archethic.Transaction(
       type: 'keychain',
       data: archethic.Transaction.initData(),
-      version: blockchainTxVersion,
+      version: 3, //TODO restore blockchainTxVersion,
     ).setContent(jsonEncode(keychain.toDID()));
 
     final authorizedKeys = List<archethic.AuthorizedKey>.empty(growable: true);

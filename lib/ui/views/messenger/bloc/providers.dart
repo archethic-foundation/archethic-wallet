@@ -10,14 +10,15 @@ import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
 import 'package:aewallet/domain/repositories/messenger_repository.dart';
+import 'package:aewallet/domain/repositories/notifications_repository.dart';
 import 'package:aewallet/infrastructure/repositories/messenger_repository.dart';
 import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/model/public_key.dart';
+import 'package:aewallet/modules/messaging_sdk/services/messaging_service.dart';
 import 'package:aewallet/ui/util/delayed_task.dart';
-import 'package:aewallet/ui/views/main/bloc/providers.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -34,11 +35,12 @@ part 'providers.freezed.dart';
 part 'providers.g.dart';
 part 'update_discussion_form.dart';
 
-class MessengerConstants {
-  static const String notificationTypeNewDiscussion = 'newDiscussion';
-  static const String notificationTypeNewMessage = 'newMessage';
-  static const String notificationTypeDiscussionUpdated = 'discussionUpdated';
-}
+// TODO(Chralu): Put this back when notifications about Chat creation/update will be added
+// class MessengerConstants {
+//   static const String notificationTypeNewDiscussion = 'newDiscussion';
+//   static const String notificationTypeNewMessage = 'newMessage';
+//   static const String notificationTypeDiscussionUpdated = 'discussionUpdated';
+// }
 
 @riverpod
 class _Discussions extends AutoDisposeAsyncNotifier<Iterable<Discussion>> {
@@ -207,64 +209,71 @@ Future<List<Discussion>> _sortedDiscussions(Ref ref) async {
 }
 
 void _subscribeNotificationsWorker(WidgetRef ref) {
-  ref.listen(AccountProviders.accounts, (previous, next) async {
-    final previousContactPublicKeys = <String>[];
-    if (previous != null && previous.value != null) {
-      for (final account in previous.value!) {
-        final contact = ref
-            .read(
-              ContactProviders.getContactWithAddress(account.genesisAddress),
-            )
-            .valueOrNull;
-        if (contact != null) {
-          previousContactPublicKeys.add(contact.publicKey);
-        }
-      }
-    }
+  ref.listen(_discussionsProvider, (previous, next) {
+    final previousDiscussionsAddress = previous?.value
+            ?.map((discussion) => discussion.address.toLowerCase())
+            .toSet() ??
+        {};
+    final nextDiscussionsAddress = next.value
+            ?.map((discussion) => discussion.address.toLowerCase())
+            .toSet() ??
+        {};
 
-    final nextContactPublicKeys = <String>[];
-    if (next.value != null) {
-      for (final account in next.value!) {
-        final contact = await ref.read(
-          ContactProviders.getContactWithAddress(account.genesisAddress).future,
-        );
-        if (contact != null) {
-          nextContactPublicKeys.add(contact.publicKey);
-        }
-      }
-    }
+    final discussionsToUnsubscribe =
+        previousDiscussionsAddress.difference(nextDiscussionsAddress).toList();
+    final discussionsToSubscribe =
+        nextDiscussionsAddress.difference(previousDiscussionsAddress).toList();
 
-    final publicKeysToUnsubscribe = previousContactPublicKeys
-        .toSet()
-        .difference(nextContactPublicKeys.toSet())
-        .toList();
-    final publicKeysToSubscribe = nextContactPublicKeys
-        .toSet()
-        .difference(previousContactPublicKeys.toSet())
-        .toList();
-
-    if (publicKeysToUnsubscribe.isNotEmpty) {
-      await ref
-          .read(NotificationProviders.repository)
-          .unsubscribe(publicKeysToUnsubscribe);
+    if (discussionsToUnsubscribe.isNotEmpty) {
       ref
-          .read(listenAddressesProvider.notifier)
-          .removeListenAddresses(publicKeysToUnsubscribe);
-    }
-    if (publicKeysToSubscribe.isNotEmpty) {
-      await ref
           .read(NotificationProviders.repository)
-          .subscribe(publicKeysToSubscribe);
+          .unsubscribe(discussionsToUnsubscribe);
+    }
+    if (discussionsToSubscribe.isNotEmpty) {
       ref
-          .read(listenAddressesProvider.notifier)
-          .addListenAddresses(publicKeysToSubscribe);
+          .read(NotificationProviders.repository)
+          .subscribe(discussionsToSubscribe);
     }
   });
 }
 
+@riverpod
+Stream<TxSentEvent> _txSentEvents(
+  Ref ref,
+) async* {
+  final discussions = await ref.watch(MessengerProviders.discussions.future);
+
+  final streamController = StreamController<TxSentEvent>();
+  ref.onCancel(() async {
+    await streamController.close();
+  });
+
+  for (final discussion in discussions) {
+    ref.listen(
+      NotificationProviders.txSentEvents(discussion.address.toUpperCase()),
+      (_, next) {
+        if (streamController.isClosed) {
+          return;
+        }
+        final nextValue = next.value;
+        if (nextValue == null) {
+          return;
+        }
+        streamController.add(nextValue);
+      },
+    );
+  }
+  yield* streamController.stream;
+}
+
 abstract class MessengerProviders {
   static final messengerRepository = Provider<MessengerRepositoryInterface>(
-    (ref) => MessengerRepository(),
+    (ref) => MessengerRepository(
+      messagingService: MessagingService(
+        logsActivation: false,
+      ),
+      notificationRepository: ref.watch(NotificationProviders.repository),
+    ),
   );
 
   /// Watches Discussions creation/deletion to update notifications subscriptions
@@ -284,6 +293,8 @@ abstract class MessengerProviders {
   static const messageCreationFees = _messageCreationFeesProvider;
   static final updateDiscussionForm = _updateDiscussionFormProvider;
   static final discussionDetailsForm = _discussionDetailsFormProvider;
+
+  static final txSentEvents = _txSentEventsProvider;
 
   static Future<void> reset(Ref ref) async {
     await ref.read(messengerRepository).clear();

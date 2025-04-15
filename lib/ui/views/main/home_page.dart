@@ -4,14 +4,13 @@ import 'dart:ui';
 
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/migrations/migration_manager.dart';
-import 'package:aewallet/application/notification/providers.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/domain/repositories/notifications_repository.dart';
 import 'package:aewallet/local_data_migration_widget.dart';
-import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
@@ -29,11 +28,9 @@ import 'package:aewallet/ui/views/messenger/layouts/messenger_tab.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/tab_item.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/notifications_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -70,6 +67,8 @@ class _HomePageState extends ConsumerState<HomePage>
 
   @override
   Widget build(BuildContext context) {
+    _manageNotifications();
+
     return HomeProvidersKeepalive(
       child: SheetSkeleton(
         appBar: getAppBar(context, ref),
@@ -145,8 +144,6 @@ class _HomePageState extends ConsumerState<HomePage>
 
   @override
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
-    _manageNotifications();
-
     final tabController = ref.watch(mainTabControllerProvider);
     if (tabController == null) {
       return Container();
@@ -193,60 +190,61 @@ class _HomePageState extends ConsumerState<HomePage>
   }
 
   void _manageNotifications() {
-    MessengerProviders.subscribeNotificationsWorker(ref);
+    ref.listen(
+      MessengerProviders.txSentEvents,
+      (previous, next) async {
+        final previousTxEvent = previous?.value;
+        final txEvent = next.value;
+        if (txEvent == null) return;
 
-    final listenAddresses = ref.watch(listenAddressesProvider);
-    for (final listenAddress in listenAddresses) {
-      ref.listen(
-        NotificationProviders.txSentEvents(listenAddress),
-        (_, event) async {
-          final txEvent = event.valueOrNull;
-          if (txEvent == null) return;
+        if (txEvent.txAddress == previousTxEvent?.txAddress) {
+          return;
+        }
 
-          debugPrint('Event type : ${txEvent.type}');
+        // debugPrint('Event type : ${txEvent.type}');
 
-          if (txEvent.type == MessengerConstants.notificationTypeNewMessage) {
-            await manageNewMessageNotification(txEvent);
-          }
-          if (txEvent.type ==
-              MessengerConstants.notificationTypeNewDiscussion) {
-            await manageNewDiscussionNotification(txEvent);
-          }
-          if (txEvent.type ==
-              MessengerConstants.notificationTypeDiscussionUpdated) {
-            await manageNewDiscussionUpdatedNotification(txEvent);
-          }
-        },
-      );
-    }
-  }
-
-  Future manageNewDiscussionNotification(TxSentEvent event) async {
-    final localizations = AppLocalizations.of(context)!;
-
-    final discussion = await ref.read(
-      MessengerProviders.remoteDiscussion(
-        event.notificationRecipientAddress,
-      ).future,
-    );
-
-    await ref
-        .read(MessengerProviders.discussions.notifier)
-        .addRemoteDiscussion(discussion);
-
-    UIUtil.showSnackbar(
-      localizations.youHaveBeenAddedToADiscussion,
-      context,
-      ref,
-      ArchethicTheme.text,
-      ArchethicTheme.snackBarShadow,
-      icon: Symbols.chat,
+        // if (txEvent.type == MessengerConstants.notificationTypeNewMessage) {
+        await manageNewMessageNotification(txEvent);
+        // }
+        // if (txEvent.type ==
+        //     MessengerConstants.notificationTypeNewDiscussion) {
+        //   await manageNewDiscussionNotification(txEvent);
+        // }
+        // if (txEvent.type ==
+        //     MessengerConstants.notificationTypeDiscussionUpdated) {
+        //   await manageNewDiscussionUpdatedNotification(txEvent);
+        // }
+      },
     );
   }
+
+  // Future manageNewDiscussionNotification(TxSentEvent event) async {
+  //   final localizations = AppLocalizations.of(context)!;
+
+  //   final discussion = await ref.read(
+  //     MessengerProviders.remoteDiscussion(
+  //       event.notificationRecipientAddress,
+  //     ).future,
+  //   );
+
+  //   await ref
+  //       .read(MessengerProviders.discussions.notifier)
+  //       .addRemoteDiscussion(discussion);
+
+  //   UIUtil.showSnackbar(
+  //     localizations.youHaveBeenAddedToADiscussion,
+  //     context,
+  //     ref,
+  //     ArchethicTheme.text,
+  //     ArchethicTheme.snackBarShadow,
+  //     icon: Symbols.chat,
+  //   );
+  // }
 
   Future manageNewMessageNotification(TxSentEvent event) async {
-    final transaction = await sl.get<ApiService>().getTransaction(
-      [event.notificationRecipientAddress],
+    final apiService = ref.read(apiServiceProvider);
+    final transaction = await apiService.getTransaction(
+      [event.txAddress],
     );
     final discussionGenesisAddress =
         transaction.values.first.data?.recipients.first;
@@ -275,7 +273,7 @@ class _HomePageState extends ConsumerState<HomePage>
         );
 
     final contactName = ref
-        .watch(
+        .read(
           ContactProviders.getContactWithGenesisPublicKey(
             newMessage.senderGenesisPublicKey,
           ),
@@ -299,83 +297,83 @@ class _HomePageState extends ConsumerState<HomePage>
     );
   }
 
-  Future manageNewDiscussionUpdatedNotification(TxSentEvent event) async {
-    final localizations = AppLocalizations.of(context)!;
+  // Future manageNewDiscussionUpdatedNotification(TxSentEvent event) async {
+  //   final localizations = AppLocalizations.of(context)!;
 
-    if (event.extra == null) {
-      return;
-    }
+  //   if (event.extra == null) {
+  //     return;
+  //   }
 
-    final extra = event.extra as Map<String, dynamic>;
+  //   final extra = event.extra as Map<String, dynamic>;
 
-    if (extra.containsKey('membersAddedToNotify')) {
-      final listMembersAdded = extra['membersAddedToNotify'];
-      if (listMembersAdded!.isNotEmpty) {
-        for (final memberPubKey in listMembersAdded) {
-          final contact = await ref.read(
-            ContactProviders.getContactWithGenesisPublicKey(memberPubKey)
-                .future,
-          );
-          // Contact does not exist or contact is not an internal one
-          if (contact == null ||
-              contact.type != ContactType.keychainService.name) {
-            continue;
-          }
+  //   if (extra.containsKey('membersAddedToNotify')) {
+  //     final listMembersAdded = extra['membersAddedToNotify'];
+  //     if (listMembersAdded!.isNotEmpty) {
+  //       for (final memberPubKey in listMembersAdded) {
+  //         final contact = await ref.read(
+  //           ContactProviders.getContactWithGenesisPublicKey(memberPubKey)
+  //               .future,
+  //         );
+  //         // Contact does not exist or contact is not an internal one
+  //         if (contact == null ||
+  //             contact.type != ContactType.keychainService.name) {
+  //           continue;
+  //         }
 
-          final transaction = await sl.get<ApiService>().getTransaction(
-            [event.notificationRecipientAddress],
-          );
-          final discussionGenesisAddress =
-              transaction.values.first.data!.recipients.first;
+  //         final transaction = await sl.get<ApiService>().getTransaction(
+  //           [event.notificationRecipientAddress],
+  //         );
+  //         final discussionGenesisAddress =
+  //             transaction.values.first.data!.recipients.first;
 
-          final discussion = await ref.read(
-            MessengerProviders.remoteDiscussion(
-              discussionGenesisAddress.address!,
-            ).future,
-          );
+  //         final discussion = await ref.read(
+  //           MessengerProviders.remoteDiscussion(
+  //             discussionGenesisAddress.address!,
+  //           ).future,
+  //         );
 
-          await ref
-              .read(MessengerProviders.discussions.notifier)
-              .addRemoteDiscussion(discussion);
+  //         await ref
+  //             .read(MessengerProviders.discussions.notifier)
+  //             .addRemoteDiscussion(discussion);
 
-          UIUtil.showSnackbar(
-            localizations.youHaveBeenAddedToADiscussion,
-            context,
-            ref,
-            ArchethicTheme.text,
-            ArchethicTheme.snackBarShadow,
-            icon: Symbols.chat,
-          );
-        }
-      }
-    }
+  //         UIUtil.showSnackbar(
+  //           localizations.youHaveBeenAddedToADiscussion,
+  //           context,
+  //           ref,
+  //           ArchethicTheme.text,
+  //           ArchethicTheme.snackBarShadow,
+  //           icon: Symbols.chat,
+  //         );
+  //       }
+  //     }
+  //   }
 
-    if (extra.containsKey('membersDeletedToNotify')) {
-      final listMembersDeleted = extra['membersDeletedToNotify'];
-      if (listMembersDeleted!.isNotEmpty) {
-        for (final memberPubKey in listMembersDeleted) {
-          final contact = await ref.read(
-            ContactProviders.getContactWithGenesisPublicKey(memberPubKey)
-                .future,
-          );
-          // Contact does not exist or contact is not an internal one
-          if (contact == null ||
-              contact.type != ContactType.keychainService.name) {
-            continue;
-          }
+  //   if (extra.containsKey('membersDeletedToNotify')) {
+  //     final listMembersDeleted = extra['membersDeletedToNotify'];
+  //     if (listMembersDeleted!.isNotEmpty) {
+  //       for (final memberPubKey in listMembersDeleted) {
+  //         final contact = await ref.read(
+  //           ContactProviders.getContactWithGenesisPublicKey(memberPubKey)
+  //               .future,
+  //         );
+  //         // Contact does not exist or contact is not an internal one
+  //         if (contact == null ||
+  //             contact.type != ContactType.keychainService.name) {
+  //           continue;
+  //         }
 
-          UIUtil.showSnackbar(
-            localizations.youHaveBeenDeletedFromADiscussion,
-            context,
-            ref,
-            ArchethicTheme.text,
-            ArchethicTheme.snackBarShadow,
-            icon: Symbols.comments_disabled,
-          );
-        }
-      }
-    }
-  }
+  //         UIUtil.showSnackbar(
+  //           localizations.youHaveBeenDeletedFromADiscussion,
+  //           context,
+  //           ref,
+  //           ArchethicTheme.text,
+  //           ArchethicTheme.snackBarShadow,
+  //           icon: Symbols.comments_disabled,
+  //         );
+  //       }
+  //     }
+  //   }
+  // }
 }
 
 class ExpandablePageView extends ConsumerStatefulWidget {

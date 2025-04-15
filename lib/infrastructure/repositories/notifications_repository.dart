@@ -1,3 +1,8 @@
+import 'dart:convert';
+import 'dart:developer';
+import 'dart:typed_data';
+
+import 'package:aewallet/domain/models/transaction_notification.dart';
 import 'package:aewallet/domain/repositories/notifications_repository.dart';
 import 'package:aewallet/firebase_options.dart';
 import 'package:aewallet/infrastructure/datasources/notification.remote.dart';
@@ -5,10 +10,9 @@ import 'package:aewallet/infrastructure/datasources/notification.vault.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:http/http.dart' as http;
 
-class NotificationsRepositoryImpl
-    with NotificationUtil
-    implements NotificationsRepository {
+class NotificationsRepositoryImpl implements NotificationsRepository {
   NotificationsRepositoryImpl() {
     _client = NotificationBackendClient(
       notificationBackendUrl: notificationBackendUrl,
@@ -23,7 +27,9 @@ class NotificationsRepositoryImpl
   late final NotificationBackendClient _client;
 
   @override
-  Stream<TxSentEvent> get events => _client.events;
+  Stream<TxSentEvent> get events {
+    return _client.events;
+  }
 
   Future<NotificationVaultDatasource> get _localSetup =>
       NotificationVaultDatasource.getInstance();
@@ -92,7 +98,6 @@ class NotificationsRepositoryImpl
 
   @override
   Future<void> initialize() async {
-    await _client.connect();
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
@@ -108,6 +113,36 @@ class NotificationsRepositoryImpl
         await (await _localSetup).updateFcmToken(fcmToken);
       }
     });
+  }
+
+  @override
+  Future<void> sendTransactionNotification({
+    required TransactionNotification notification,
+    required KeyPair senderKeyPair,
+    required Map<String, PushNotification> pushNotification,
+  }) async {
+    final signature = uint8ListToHex(
+      await _signTransactionNotification(
+        notification: notification,
+        senderKeyPair: senderKeyPair,
+      ),
+    );
+
+    final body = jsonEncode({
+      'txAddress': notification.txAddress,
+      'txChainGenesisAddress': notification.txChainGenesisAddress,
+      'payloadSignature': signature,
+      'pushNotification': pushNotification,
+    });
+    log('Sending notification. $body');
+    await http.post(
+      Uri.parse('$notificationBackendUrl/transactionSent'),
+      body: body,
+      headers: <String, String>{
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+      },
+    );
   }
 
   Future<void> _updatePushSubscriptions({
@@ -133,5 +168,17 @@ class NotificationsRepositoryImpl
     final listenAddresses = await (await _localSetup).getListenedAddresses();
 
     await _client.subscribeWebsocketNotifs(listenAddresses);
+  }
+
+  Future<Uint8List> _signTransactionNotification({
+    required TransactionNotification notification,
+    required KeyPair senderKeyPair,
+  }) async {
+    final payload = concatUint8List(<Uint8List>[
+      Uint8List.fromList(hexToUint8List(notification.txAddress)),
+      Uint8List.fromList(hexToUint8List(notification.txChainGenesisAddress)),
+    ]);
+
+    return sign(payload, senderKeyPair.privateKey);
   }
 }

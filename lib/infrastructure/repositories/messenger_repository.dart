@@ -3,35 +3,31 @@ import 'dart:typed_data';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/domain/models/core/failures.dart';
 import 'package:aewallet/domain/models/core/result.dart';
+import 'package:aewallet/domain/models/transaction_notification.dart';
 import 'package:aewallet/domain/repositories/messenger_repository.dart';
+import 'package:aewallet/domain/repositories/notifications_repository.dart';
 import 'package:aewallet/infrastructure/datasources/discussion.remote.dart';
 import 'package:aewallet/infrastructure/datasources/discussion.vault.dart';
-import 'package:aewallet/infrastructure/repositories/notifications_repository.dart';
 import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/messenger/discussion.dart';
 import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/modules/messaging_sdk/services/messaging_service.dart';
-import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
-import 'package:aewallet/util/get_it_instance.dart';
 import 'package:aewallet/util/keychain_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
-class MessengerRepository
-    with NotificationUtil
-    implements MessengerRepositoryInterface {
-  MessengerRepository();
+class MessengerRepository implements MessengerRepositoryInterface {
+  MessengerRepository({
+    required this.notificationRepository,
+    required this.messagingService,
+  });
 
   Future<DiscussionVaultDatasource> get _localDatasource =>
       DiscussionVaultDatasource.getInstance();
-  MessagingService? _messagingService;
-  MessagingService get messagingService =>
-      _messagingService ??= sl.get<MessagingService>();
-
-  // late HiveVaultDatasource? __vaultDatasource;
-  // Future<HiveVaultDatasource> get _vaultDatasource async =>
-  //     __vaultDatasource ??= await HiveVaultDatasource.getInstance();
-
   final _remoteDatasource = DiscussionRemoteDatasource();
+
+  final MessagingService messagingService;
+
+  final NotificationsRepository notificationRepository;
 
   @override
   Future<Result<List<String>, Failure>> getDiscussionAddresses({
@@ -90,24 +86,25 @@ class MessengerRepository
           discussion: newDiscussion.discussion,
         );
 
-        await _sendTransactionNotification(
-          notificationRecipientAddress: newDiscussion.discussion.address,
-          listenAddresses: membersPubKeys,
-          creator: creator,
-          session: session,
-          previousKeyPair: newDiscussion.previousKeyPair,
-          pushNotification: {
-            'en': const PushNotification(
-              title: 'Archethic',
-              body: 'A new discussion has been created',
-            ),
-            'fr': const PushNotification(
-              title: 'Archethic',
-              body: 'Une nouvelle discussion a été créée',
-            ),
-          },
-          transactionType: MessengerConstants.notificationTypeNewDiscussion,
-        );
+        // TODO(Chralu): notif backend not designed for those kind of messages.
+        // await _sendTransactionNotification(
+        //   notificationRecipientAddress: newDiscussion.discussion.address,
+        //   listenAddresses: membersPubKeys,
+        //   creator: creator,
+        //   session: session,
+        //   previousKeyPair: newDiscussion.previousKeyPair,
+        //   pushNotification: {
+        //     'en': const PushNotification(
+        //       title: 'Archethic',
+        //       body: 'A new discussion has been created',
+        //     ),
+        //     'fr': const PushNotification(
+        //       title: 'Archethic',
+        //       body: 'Une nouvelle discussion a été créée',
+        //     ),
+        //   },
+        //   transactionType: MessengerConstants.notificationTypeNewDiscussion,
+        // );
 
         return newDiscussion.discussion;
       });
@@ -156,37 +153,37 @@ class MessengerRepository
           discussionName: discussionName,
         );
 
-        var listenAddresses = membersPubKeys;
-        // If there are users added or deleted, we will notify only them. Otherwise (like a name changed), we will notify everybody.
-        if (membersAddedToNotify.isNotEmpty ||
-            membersDeletedToNotify.isNotEmpty) {
-          // https://stackoverflow.com/questions/21826342/how-do-i-combine-two-lists-in-dart with If you want to merge two lists and remove duplicates
-          listenAddresses =
-              {...membersAddedToNotify, ...membersDeletedToNotify}.toList();
-        }
+        // TODO(Chralu): notif backend not designed for those kind of messages.
+        // var listenAddresses = membersPubKeys;
+        // // If there are users added or deleted, we will notify only them. Otherwise (like a name changed), we will notify everybody.
+        // if (membersAddedToNotify.isNotEmpty ||
+        //     membersDeletedToNotify.isNotEmpty) {
+        //   // https://stackoverflow.com/questions/21826342/how-do-i-combine-two-lists-in-dart with If you want to merge two lists and remove duplicates
+        //   listenAddresses =
+        //       {...membersAddedToNotify, ...membersDeletedToNotify}.toList();
+        // }
 
-        await _sendTransactionNotification(
-          notificationRecipientAddress: updatedDiscussion.discussion.address,
-          listenAddresses: listenAddresses,
-          creator: owner,
-          session: session,
-          previousKeyPair: updatedDiscussion.previousKeyPair,
-          pushNotification: {
-            'en': const PushNotification(
-              title: 'Archethic',
-              body: 'A discussion has been updated',
-            ),
-            'fr': const PushNotification(
-              title: 'Archethic',
-              body: 'Une discussion a été mise à jour',
-            ),
-          },
-          transactionType: MessengerConstants.notificationTypeDiscussionUpdated,
-          extra: {
-            'membersAddedToNotify': membersAddedToNotify,
-            'membersDeletedToNotify': membersDeletedToNotify,
-          },
-        );
+        // await _sendTransactionNotification(
+        //   notificationRecipientAddress: updatedDiscussion.discussion.address,
+        //   listenAddresses: listenAddresses,
+        //   creator: owner,
+        //   session: session,
+        //   previousKeyPair: updatedDiscussion.previousKeyPair,
+        //   pushNotification: {
+        //     'en': const PushNotification(
+        //       title: 'Archethic',
+        //       body: 'A discussion has been updated',
+        //     ),
+        //     'fr': const PushNotification(
+        //       title: 'Archethic',
+        //       body: 'Une discussion a été mise à jour',
+        //     ),
+        //   },
+        //   extra: {
+        //     'membersAddedToNotify': membersAddedToNotify,
+        //     'membersDeletedToNotify': membersDeletedToNotify,
+        //   },
+        // );
 
         return updatedDiscussion.discussion;
       });
@@ -361,11 +358,10 @@ class MessengerRepository
           senderKeyPair: keyPair.toKeyPair,
         );
 
-        final notificationRecipientAddress =
-            sendMessageResult.transactionAddress;
+        final messageTxAddress = sendMessageResult.transactionAddress.address!;
 
         final message = DiscussionMessage(
-          address: notificationRecipientAddress.address!,
+          address: messageTxAddress,
           content: content,
           date: DateTime.now(),
           senderGenesisPublicKey:
@@ -373,12 +369,11 @@ class MessengerRepository
                   .toUpperCase(),
         );
 
-        await _sendTransactionNotification(
-          notificationRecipientAddress: notificationRecipientAddress.address!,
-          listenAddresses: membersPublicKeysForNotifications,
-          creator: creator,
-          session: session,
-          previousKeyPair: sendMessageResult.previousKeyPair,
+        await notificationRepository.sendTransactionNotification(
+          notification: TransactionNotification(
+            txAddress: messageTxAddress,
+            txChainGenesisAddress: discussionGenesisAddress,
+          ),
           pushNotification: {
             'en': const PushNotification(
               title: 'Archethic',
@@ -389,34 +384,11 @@ class MessengerRepository
               body: 'Vous avez reçu un nouveau message',
             ),
           },
-          transactionType: MessengerConstants.notificationTypeNewMessage,
+          senderKeyPair: sendMessageResult.previousKeyPair,
         );
 
         return message;
       });
-
-  Future<void> _sendTransactionNotification({
-    required LoggedInSession session,
-    required String notificationRecipientAddress,
-    required List<String> listenAddresses,
-    required Account creator,
-    required Map<String, PushNotification> pushNotification,
-    required KeyPair previousKeyPair,
-    required String transactionType,
-    dynamic extra,
-  }) async {
-    await sendTransactionNotification(
-      notification: TransactionNotification(
-        notificationRecipientAddress: notificationRecipientAddress,
-        listenAddresses: listenAddresses,
-      ),
-      pushNotification: pushNotification,
-      senderKeyPair: previousKeyPair,
-      notifBackendBaseUrl: NotificationsRepositoryImpl().notificationBackendUrl,
-      transactionType: transactionType,
-      extra: extra,
-    );
-  }
 
   @override
   Future<void> updateDiscussionLastMessage({

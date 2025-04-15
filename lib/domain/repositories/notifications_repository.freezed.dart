@@ -23,13 +23,11 @@ mixin _$TxSentEvent {
 // https://github.com/rrousselGit/freezed/issues/488
 // ignore: invalid_annotation_target
   @JsonKey(name: 'txAddress')
-  String get notificationRecipientAddress =>
+  String get txAddress =>
       throw _privateConstructorUsedError; // => https://github.com/rrousselGit/freezed/issues/488
 // ignore: invalid_annotation_target
   @JsonKey(name: 'txChainGenesisAddress')
-  String get listenAddress => throw _privateConstructorUsedError;
-  String get type => throw _privateConstructorUsedError;
-  dynamic get extra => throw _privateConstructorUsedError;
+  String get txChainGenesisAddress => throw _privateConstructorUsedError;
 
   /// Serializes this TxSentEvent to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,10 +46,8 @@ abstract class $TxSentEventCopyWith<$Res> {
       _$TxSentEventCopyWithImpl<$Res, TxSentEvent>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'txAddress') String notificationRecipientAddress,
-      @JsonKey(name: 'txChainGenesisAddress') String listenAddress,
-      String type,
-      dynamic extra});
+      {@JsonKey(name: 'txAddress') String txAddress,
+      @JsonKey(name: 'txChainGenesisAddress') String txChainGenesisAddress});
 }
 
 /// @nodoc
@@ -69,28 +65,18 @@ class _$TxSentEventCopyWithImpl<$Res, $Val extends TxSentEvent>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? notificationRecipientAddress = null,
-    Object? listenAddress = null,
-    Object? type = null,
-    Object? extra = freezed,
+    Object? txAddress = null,
+    Object? txChainGenesisAddress = null,
   }) {
     return _then(_value.copyWith(
-      notificationRecipientAddress: null == notificationRecipientAddress
-          ? _value.notificationRecipientAddress
-          : notificationRecipientAddress // ignore: cast_nullable_to_non_nullable
+      txAddress: null == txAddress
+          ? _value.txAddress
+          : txAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      listenAddress: null == listenAddress
-          ? _value.listenAddress
-          : listenAddress // ignore: cast_nullable_to_non_nullable
+      txChainGenesisAddress: null == txChainGenesisAddress
+          ? _value.txChainGenesisAddress
+          : txChainGenesisAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String,
-      extra: freezed == extra
-          ? _value.extra
-          : extra // ignore: cast_nullable_to_non_nullable
-              as dynamic,
     ) as $Val);
   }
 }
@@ -104,10 +90,8 @@ abstract class _$$TxSentEventImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'txAddress') String notificationRecipientAddress,
-      @JsonKey(name: 'txChainGenesisAddress') String listenAddress,
-      String type,
-      dynamic extra});
+      {@JsonKey(name: 'txAddress') String txAddress,
+      @JsonKey(name: 'txChainGenesisAddress') String txChainGenesisAddress});
 }
 
 /// @nodoc
@@ -123,28 +107,18 @@ class __$$TxSentEventImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? notificationRecipientAddress = null,
-    Object? listenAddress = null,
-    Object? type = null,
-    Object? extra = freezed,
+    Object? txAddress = null,
+    Object? txChainGenesisAddress = null,
   }) {
     return _then(_$TxSentEventImpl(
-      notificationRecipientAddress: null == notificationRecipientAddress
-          ? _value.notificationRecipientAddress
-          : notificationRecipientAddress // ignore: cast_nullable_to_non_nullable
+      txAddress: null == txAddress
+          ? _value.txAddress
+          : txAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      listenAddress: null == listenAddress
-          ? _value.listenAddress
-          : listenAddress // ignore: cast_nullable_to_non_nullable
+      txChainGenesisAddress: null == txChainGenesisAddress
+          ? _value.txChainGenesisAddress
+          : txChainGenesisAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String,
-      extra: freezed == extra
-          ? _value.extra
-          : extra // ignore: cast_nullable_to_non_nullable
-              as dynamic,
     ));
   }
 }
@@ -153,10 +127,9 @@ class __$$TxSentEventImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TxSentEventImpl extends _TxSentEvent {
   const _$TxSentEventImpl(
-      {@JsonKey(name: 'txAddress') required this.notificationRecipientAddress,
-      @JsonKey(name: 'txChainGenesisAddress') required this.listenAddress,
-      required this.type,
-      required this.extra})
+      {@JsonKey(name: 'txAddress') required this.txAddress,
+      @JsonKey(name: 'txChainGenesisAddress')
+      required this.txChainGenesisAddress})
       : super._();
 
   factory _$TxSentEventImpl.fromJson(Map<String, dynamic> json) =>
@@ -166,20 +139,16 @@ class _$TxSentEventImpl extends _TxSentEvent {
 // ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'txAddress')
-  final String notificationRecipientAddress;
+  final String txAddress;
 // => https://github.com/rrousselGit/freezed/issues/488
 // ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'txChainGenesisAddress')
-  final String listenAddress;
-  @override
-  final String type;
-  @override
-  final dynamic extra;
+  final String txChainGenesisAddress;
 
   @override
   String toString() {
-    return 'TxSentEvent(notificationRecipientAddress: $notificationRecipientAddress, listenAddress: $listenAddress, type: $type, extra: $extra)';
+    return 'TxSentEvent(txAddress: $txAddress, txChainGenesisAddress: $txChainGenesisAddress)';
   }
 
   @override
@@ -187,20 +156,16 @@ class _$TxSentEventImpl extends _TxSentEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TxSentEventImpl &&
-            (identical(other.notificationRecipientAddress,
-                    notificationRecipientAddress) ||
-                other.notificationRecipientAddress ==
-                    notificationRecipientAddress) &&
-            (identical(other.listenAddress, listenAddress) ||
-                other.listenAddress == listenAddress) &&
-            (identical(other.type, type) || other.type == type) &&
-            const DeepCollectionEquality().equals(other.extra, extra));
+            (identical(other.txAddress, txAddress) ||
+                other.txAddress == txAddress) &&
+            (identical(other.txChainGenesisAddress, txChainGenesisAddress) ||
+                other.txChainGenesisAddress == txChainGenesisAddress));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, notificationRecipientAddress,
-      listenAddress, type, const DeepCollectionEquality().hash(extra));
+  int get hashCode =>
+      Object.hash(runtimeType, txAddress, txChainGenesisAddress);
 
   /// Create a copy of TxSentEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -220,12 +185,9 @@ class _$TxSentEventImpl extends _TxSentEvent {
 
 abstract class _TxSentEvent extends TxSentEvent {
   const factory _TxSentEvent(
-      {@JsonKey(name: 'txAddress')
-      required final String notificationRecipientAddress,
+      {@JsonKey(name: 'txAddress') required final String txAddress,
       @JsonKey(name: 'txChainGenesisAddress')
-      required final String listenAddress,
-      required final String type,
-      required final dynamic extra}) = _$TxSentEventImpl;
+      required final String txChainGenesisAddress}) = _$TxSentEventImpl;
   const _TxSentEvent._() : super._();
 
   factory _TxSentEvent.fromJson(Map<String, dynamic> json) =
@@ -235,16 +197,11 @@ abstract class _TxSentEvent extends TxSentEvent {
 // ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'txAddress')
-  String
-      get notificationRecipientAddress; // => https://github.com/rrousselGit/freezed/issues/488
+  String get txAddress; // => https://github.com/rrousselGit/freezed/issues/488
 // ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'txChainGenesisAddress')
-  String get listenAddress;
-  @override
-  String get type;
-  @override
-  dynamic get extra;
+  String get txChainGenesisAddress;
 
   /// Create a copy of TxSentEvent
   /// with the given fields replaced by the non-null parameter values.

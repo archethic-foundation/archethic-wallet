@@ -143,6 +143,9 @@ mixin MessagesMixin {
         )
         .map((txContentMessage) => txContentMessage.from)
         .whereType<String>()
+        // TODO(Chralu): I'm forcing limit and pagingOffset here because it doesn't seem to work on apiService.getTransactionInputs
+        .skip(pagingOffset)
+        .take(limit)
         .toList();
 
     final aeMessages = <AEMessage>[];

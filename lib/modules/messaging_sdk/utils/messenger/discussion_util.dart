@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer' as dev;
 import 'dart:typed_data';
+
 import 'package:aewallet/modules/messaging_sdk/model/messaging/ae_discussion.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -294,6 +295,7 @@ end
     final transactionTransfer = Transaction(
       type: 'transfer',
       data: Transaction.initData(),
+      version: 3, //TODO restore blockchainTxVersion,
     ).addUCOTransfer(genesisAddressSC, toBigInt(fees));
 
     final indexMap = await apiService.getTransactionIndex(
