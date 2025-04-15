@@ -103,7 +103,7 @@ final mainTabControllerProvider =
 class TabControllerNotifier extends StateNotifier<TabController?> {
   TabControllerNotifier() : super(null);
 
-  int tabCount = 3;
+  int tabCount = 5;
 
   void initState(TickerProvider tickerProvider) {
     state = TabController(

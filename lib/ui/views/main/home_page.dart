@@ -51,7 +51,7 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage>
     with TickerProviderStateMixin
     implements SheetSkeletonInterface {
-  int tabCount = 4;
+  int tabCount = 5;
 
   @override
   void initState() {
