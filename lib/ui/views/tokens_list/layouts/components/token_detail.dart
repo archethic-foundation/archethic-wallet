@@ -7,7 +7,6 @@ import 'package:aewallet/modules/aeswap/ui/views/util/app_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/address_formatters.dart';
-import 'package:aewallet/ui/views/aeswap_earn/bloc/provider.dart';
 import 'package:aewallet/ui/views/tokens_detail/layouts/token_detail_sheet.dart';
 import 'package:aewallet/ui/widgets/balance/balance_infos.dart';
 import 'package:aewallet/ui/widgets/tokens/verified_token_icon.dart';
@@ -36,7 +35,6 @@ class TokenDetail extends ConsumerStatefulWidget {
 class _TokenDetailState extends ConsumerState<TokenDetail> {
   @override
   Widget build(BuildContext context) {
-    final farmLock = ref.watch(farmLockFormFarmLockProvider).valueOrNull;
     final settings = ref.watch(SettingsProviders.settings);
     final connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
@@ -410,34 +408,6 @@ class _TokenDetailState extends ConsumerState<TokenDetail> {
                               BalanceInfosKpi(
                                 chartInfos: priceHistory,
                                 aeToken: widget.aeToken,
-                              ),
-
-                            if (widget.aeToken.isUCO &&
-                                farmLock != null &&
-                                farmLock.apr3years > 0)
-                              Padding(
-                                padding: const EdgeInsets.only(top: 10),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      AppLocalizations.of(context)!
-                                          .earnValueLbl,
-                                      style: ArchethicThemeStyles
-                                          .textStyleSize14W200Primary,
-                                    ),
-                                    Text(
-                                      ' ${(farmLock.apr3years * 100).formatNumber(precision: 2)}% ',
-                                      style: ArchethicThemeStyles
-                                          .textStyleSize14W200PrimaryPositiveValue,
-                                    ),
-                                    Text(
-                                      'APR',
-                                      style: ArchethicThemeStyles
-                                          .textStyleSize14W200Primary,
-                                    ),
-                                  ],
-                                ),
                               ),
                           ],
                         ),
