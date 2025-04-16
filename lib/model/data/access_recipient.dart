@@ -42,7 +42,7 @@ class AccessRecipient with _$AccessRecipient {
 
   String get name => map(
         contact: (contact) => contact.contact.format,
-        publicKey: (value) => value.publicKey,
+        publicKey: (value) => '',
         account: (account) => account.account.nameDisplayed,
       );
 }

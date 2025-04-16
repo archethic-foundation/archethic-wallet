@@ -2,10 +2,10 @@ import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/access_recipient.dart';
+import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
-import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/views/messenger/layouts/components/public_key_line.dart';
@@ -63,7 +63,97 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage>
 
   @override
   Widget getFloatingActionButton(BuildContext context, WidgetRef ref) {
-    return const SizedBox.shrink();
+    final formNotifier =
+        ref.watch(MessengerProviders.discussionDetailsForm.notifier);
+    final localizations = AppLocalizations.of(context)!;
+    final discussion =
+        ref.watch(MessengerProviders.discussion(widget.discussionAddress));
+    final selectedAccount = ref
+        .watch(
+          accountsNotifierProvider,
+        )
+        .valueOrNull
+        ?.selectedAccount;
+
+    if (discussion.value != null &&
+        discussion.value!.membersPubKeys.any(
+          (element) => element == selectedAccount?.publicKey,
+        )) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          BtnFooterPrimary(
+            buttonText: localizations.addressCopy,
+            onTap: () {
+              Clipboard.setData(
+                ClipboardData(text: widget.discussionAddress),
+              );
+              UIUtil.showSnackbar(
+                localizations.addressCopied,
+                context,
+                ref,
+                ArchethicTheme.text,
+                ArchethicTheme.snackBarShadow,
+                icon: Symbols.info,
+              );
+            },
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          BtnFooterPrimary(
+            buttonText: localizations.leaveDiscussion,
+            onTap: () {
+              final language = ref.read(
+                LanguageProviders.selectedLanguage,
+              );
+
+              AppDialogs.showConfirmDialog(
+                context,
+                ref,
+                CaseChange.toUpperCase(
+                  localizations.leaveDiscussion,
+                  language.getLocaleString(),
+                ),
+                localizations.areYouSureLeaveDiscussion,
+                localizations.yes,
+                () async {
+                  context.loadingOverlay.show();
+                  final result = await formNotifier.leaveDiscussion();
+
+                  context.loadingOverlay.hide();
+                  context.pop(); // wait popup
+
+                  result.map(
+                    success: (_) {
+                      context.pop(); // Going back to discussion page
+                    },
+                    failure: (failure) {
+                      UIUtil.showSnackbar(
+                        localizations.updateDiscussionFailure,
+                        context,
+                        ref,
+                        ArchethicTheme.text,
+                        ArchethicTheme.snackBarShadow,
+                        duration: const Duration(seconds: 5),
+                      );
+                    },
+                  );
+                },
+                cancelText: localizations.no,
+              );
+            },
+          ),
+        ],
+      );
+    }
+
+    return BtnFooterPrimary(
+      buttonText: localizations.youAreNoLongPartOfDiscussion,
+      onTap: null,
+      isLocked: true,
+      lockedIcon: true,
+    );
   }
 
   @override
@@ -117,17 +207,8 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage>
   Widget getSheetContent(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
-    final selectedAccount = ref
-        .watch(
-          accountsNotifierProvider,
-        )
-        .valueOrNull
-        ?.selectedAccount;
     final discussion =
         ref.watch(MessengerProviders.discussion(widget.discussionAddress));
-
-    final formNotifier =
-        ref.watch(MessengerProviders.discussionDetailsForm.notifier);
 
     return discussion.maybeMap(
       data: (data) {
@@ -147,39 +228,6 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage>
             ),
             const SizedBox(
               height: 15,
-            ),
-            TextButton(
-              onPressed: () {
-                Clipboard.setData(
-                  ClipboardData(text: widget.discussionAddress),
-                );
-                UIUtil.showSnackbar(
-                  localizations.addressCopied,
-                  context,
-                  ref,
-                  ArchethicTheme.text,
-                  ArchethicTheme.snackBarShadow,
-                  icon: Symbols.info,
-                );
-              },
-              child: Row(
-                children: [
-                  Icon(
-                    Symbols.content_copy,
-                    color: ArchethicTheme.text,
-                    weight: IconSize.weightM,
-                    opticalSize: IconSize.opticalSizeM,
-                    grade: IconSize.gradeM,
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    localizations.addressCopy,
-                    style: ArchethicThemeStyles.textStyleSize14W700Primary,
-                  ),
-                ],
-              ),
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height - 150,
@@ -208,79 +256,6 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage>
                 ),
               ),
             ),
-            const SizedBox(
-              height: 8,
-            ),
-            if (discussion.value != null &&
-                discussion.value!.membersPubKeys.any(
-                  (element) => element == selectedAccount?.publicKey,
-                ))
-              TextButton(
-                onPressed: () {
-                  final language = ref.read(
-                    LanguageProviders.selectedLanguage,
-                  );
-
-                  AppDialogs.showConfirmDialog(
-                    context,
-                    ref,
-                    CaseChange.toUpperCase(
-                      localizations.leaveDiscussion,
-                      language.getLocaleString(),
-                    ),
-                    localizations.areYouSureLeaveDiscussion,
-                    localizations.yes,
-                    () async {
-                      final auth = await AuthFactory.of(context).authenticate();
-                      if (!auth) return;
-
-                      context.loadingOverlay.show();
-                      final result = await formNotifier.leaveDiscussion();
-
-                      context.pop(); // wait popup
-
-                      result.map(
-                        success: (_) {
-                          context.pop(); // Going back to discussion page
-                        },
-                        failure: (failure) {
-                          UIUtil.showSnackbar(
-                            localizations.updateDiscussionFailure,
-                            context,
-                            ref,
-                            ArchethicTheme.text,
-                            ArchethicTheme.snackBarShadow,
-                            duration: const Duration(seconds: 5),
-                          );
-                        },
-                      );
-                    },
-                    cancelText: localizations.no,
-                  );
-                },
-                child: Row(
-                  children: [
-                    Icon(
-                      Symbols.logout,
-                      color: ArchethicThemeStyles
-                          .textStyleSize14W600PrimaryRed.color,
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Text(
-                      localizations.leaveDiscussion,
-                      style: ArchethicThemeStyles.textStyleSize14W600PrimaryRed,
-                    ),
-                  ],
-                ),
-              )
-            else
-              Text(
-                localizations.youAreNoLongPartOfDiscussion,
-                textAlign: TextAlign.center,
-                style: ArchethicThemeStyles.textStyleSize14W200Primary,
-              ),
           ],
         );
       },

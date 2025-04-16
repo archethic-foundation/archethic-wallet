@@ -39,33 +39,34 @@ class MessengerBody extends ConsumerWidget {
             const SizedBox(
               height: 20,
             ),
-            asyncDiscussions.map(
-              loading: (_) => Container(),
-              error: (_) => Container(),
-              data: (discussions) => ListView.builder(
-                shrinkWrap: true,
-                itemCount: discussions.value.length,
-                itemBuilder: (context, index) {
-                  final discussion = discussions.value[index];
-                  return DiscussionListItem.loaded(
-                    key: Key(discussion.address),
-                    onTap: () => context.push(
-                      MessengerDiscussionPage.routerPage,
-                      extra: discussion.address,
-                    ),
-                    discussion: discussion,
-                  )
-                      .animate(delay: (100 * index).ms)
-                      .fadeIn(duration: 300.ms, delay: 30.ms)
-                      .shimmer(
-                        blendMode: BlendMode.srcOver,
-                        color: Colors.white12,
-                      )
-                      .move(
-                        begin: const Offset(-16, 0),
-                        curve: Curves.easeOutQuad,
-                      );
-                },
+            Expanded(
+              child: asyncDiscussions.map(
+                loading: (_) => Container(),
+                error: (_) => Container(),
+                data: (discussions) => ListView.builder(
+                  itemCount: discussions.value.length,
+                  itemBuilder: (context, index) {
+                    final discussion = discussions.value[index];
+                    return DiscussionListItem.loaded(
+                      key: Key(discussion.address),
+                      onTap: () => context.push(
+                        MessengerDiscussionPage.routerPage,
+                        extra: discussion.address,
+                      ),
+                      discussion: discussion,
+                    )
+                        .animate(delay: (100 * index).ms)
+                        .fadeIn(duration: 300.ms, delay: 30.ms)
+                        .shimmer(
+                          blendMode: BlendMode.srcOver,
+                          color: Colors.white12,
+                        )
+                        .move(
+                          begin: const Offset(-16, 0),
+                          curve: Curves.easeOutQuad,
+                        );
+                  },
+                ),
               ),
             ),
           ],
