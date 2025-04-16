@@ -1,0 +1,78 @@
+import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
+import 'package:aewallet/ui/views/messenger/layouts/components/discussion_list_item.dart';
+import 'package:aewallet/ui/views/messenger/layouts/components/discussion_search_bar.dart';
+import 'package:aewallet/ui/views/messenger/layouts/messenger_discussion_page.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+class MessengerTab extends ConsumerWidget {
+  const MessengerTab({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return const MessengerBody();
+  }
+}
+
+class MessengerBody extends ConsumerWidget {
+  const MessengerBody({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final asyncDiscussions = ref.watch(MessengerProviders.sortedDiscussions);
+
+    return Padding(
+      padding: EdgeInsets.only(
+        top: MediaQuery.of(context).padding.top + 10,
+        bottom: 100,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const DiscussionSearchBar(),
+            const SizedBox(
+              height: 20,
+            ),
+            Expanded(
+              child: asyncDiscussions.map(
+                loading: (_) => Container(),
+                error: (_) => Container(),
+                data: (discussions) => ListView.builder(
+                  itemCount: discussions.value.length,
+                  padding: const EdgeInsets.only(top: 10),
+                  itemBuilder: (context, index) {
+                    final discussion = discussions.value[index];
+                    return DiscussionListItem.loaded(
+                      key: Key(discussion.address),
+                      onTap: () => context.push(
+                        MessengerDiscussionPage.routerPage,
+                        extra: discussion.address,
+                      ),
+                      discussion: discussion,
+                    )
+                        .animate(delay: (100 * index).ms)
+                        .fadeIn(duration: 300.ms, delay: 30.ms)
+                        .shimmer(
+                          blendMode: BlendMode.srcOver,
+                          color: Colors.white12,
+                        )
+                        .move(
+                          begin: const Offset(-16, 0),
+                          curve: Curves.easeOutQuad,
+                        );
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

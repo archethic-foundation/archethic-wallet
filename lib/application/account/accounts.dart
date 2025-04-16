@@ -26,6 +26,12 @@ Future<Account?> accountWithGenesisAddress(
 }
 
 @riverpod
+Future<Account?> accountWithPubKey(Ref ref, String pubKey) async {
+  final accounts = await ref.watch(accountsNotifierProvider.future);
+  return accounts.getAccountWithPubKey(pubKey);
+}
+
+@riverpod
 Future<Account?> accountWithName(
   Ref ref,
   String nameAccount,

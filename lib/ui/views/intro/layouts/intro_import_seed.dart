@@ -20,7 +20,7 @@ import 'package:aewallet/ui/views/intro/layouts/intro_configure_security.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_welcome.dart';
 import 'package:aewallet/ui/views/intro/layouts/seed_language_switch.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/views/main/home_page.dart';
+import 'package:aewallet/ui/views/main/home.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
@@ -182,7 +182,7 @@ class _IntroImportSeedState extends ConsumerState<IntroImportSeedPage>
               ref.read(
                 RecoveryPhraseSavedProvider.setRecoveryPhraseSaved(true),
               );
-              context.go(HomePage.routerPage);
+              context.go(Home.routerPage);
               context.loadingOverlay.hide();
 
               setState(() {

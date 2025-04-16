@@ -3,6 +3,7 @@ part of 'session.dart';
 @Riverpod(keepAlive: true)
 class SessionNotifier extends _$SessionNotifier with KeychainServiceMixin {
   final _appWalletDatasource = AppWalletHiveDatasource.instance();
+  final _logger = Logger('SessionNotifier');
 
   @override
   Session build() {
@@ -88,14 +89,22 @@ class SessionNotifier extends _$SessionNotifier with KeychainServiceMixin {
   }
 
   Future<void> logout() async {
-    await ref.read(SettingsProviders.settings.notifier).reset();
-    await AuthenticationProviders.reset(ref);
-    await KeychainInfoVaultDatasource.clear();
-    await TokensListHiveDatasource.clear();
-    await _appWalletDatasource.clearAppWallet();
-    await CacheManagerHive.clear();
-    await Vault.instance().clearSecureKey();
-    ref.read(clearMyDAppsProvider);
+    try {
+      await ref.read(NotificationProviders.repository).unsubscribeAll();
+
+      await ref.read(SettingsProviders.settings.notifier).reset();
+      await AuthenticationProviders.reset(ref);
+      await KeychainInfoVaultDatasource.clear();
+      await TokensListHiveDatasource.clear();
+      await ContactProviders.reset(ref);
+      await MessengerProviders.reset(ref);
+      await _appWalletDatasource.clearAppWallet();
+      await CacheManagerHive.clear();
+      await Vault.instance().clearSecureKey();
+      ref.read(clearMyDAppsProvider);
+    } catch (e, stack) {
+      _logger.warning('Failed to clean data on logout', e, stack);
+    }
 
     state = const Session.loggedOut();
   }

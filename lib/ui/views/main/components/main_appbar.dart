@@ -15,6 +15,7 @@ import 'package:aewallet/ui/views/main/components/app_update_button.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar_account.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar_basic.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar_transactions.dart';
+import 'package:aewallet/ui/views/messenger/layouts/create_discussion_sheet.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/util/universal_platform.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -39,6 +40,13 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
     final tab = preferences.mainScreenTab;
     return switch (tab) {
+      MainScreenTab.addressBookTab => const MainAppBarDetail(
+          key: Key('addressBook'),
+          actions: [
+            _RefreshButton(),
+          ],
+          title: MainAppBarAccount(),
+        ),
       MainScreenTab.accountTab => MainAppBarDetail(
           key: const Key('account'),
           actions: [
@@ -60,6 +68,23 @@ class MainAppBar extends ConsumerWidget implements PreferredSizeWidget {
             _RefreshButton(),
           ],
           title: MainAppBarBasic(header: localizations.aeSwapEarnHeader),
+        ),
+      MainScreenTab.messengerTab => MainAppBarDetail(
+          key: const Key('messenger'),
+          actions: [
+            IconButton(
+              icon: const Icon(
+                Symbols.add_circle,
+                weight: IconSize.weightM,
+                opticalSize: IconSize.opticalSizeM,
+                grade: IconSize.gradeM,
+              ),
+              onPressed: () async {
+                context.go(CreateDiscussionSheet.routerPage);
+              },
+            ),
+          ],
+          title: MainAppBarBasic(header: localizations.messengerHeader),
         ),
     };
   }

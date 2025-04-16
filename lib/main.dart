@@ -20,7 +20,7 @@ import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/authenticate/auto_lock_guard.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_welcome.dart';
-import 'package:aewallet/ui/views/main/home_page.dart';
+import 'package:aewallet/ui/views/main/home.dart';
 import 'package:aewallet/ui/widgets/components/home_failure.dart';
 import 'package:aewallet/ui/widgets/components/limited_width_layout.dart';
 import 'package:aewallet/ui/widgets/components/window_size.dart';
@@ -195,7 +195,6 @@ class AppState extends ConsumerState<App> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final language = ref.watch(LanguageProviders.selectedLanguage);
-
     SystemChrome.setSystemUIOverlayStyle(
       ArchethicTheme.statusBar,
     );
@@ -294,7 +293,7 @@ class SplashState extends ConsumerState<Splash> {
         context.go(IntroWelcome.routerPage);
         return;
       }
-      context.go(HomePage.routerPage);
+      context.go(Home.routerPage);
     } catch (e, stack) {
       _logger.severe(
         'Failed to restore session',

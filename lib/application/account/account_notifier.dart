@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:aewallet/application/api_service.dart';
 import 'package:aewallet/application/app_service.dart';
 import 'package:aewallet/application/nft/nft.dart';
 import 'package:aewallet/application/refresh_in_progress.dart';
@@ -12,6 +13,7 @@ import 'package:aewallet/model/data/account.dart';
 import 'package:aewallet/model/data/account_balance.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
+import 'package:aewallet/util/pubkey_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -240,12 +242,6 @@ class AccountNotifier extends _$AccountNotifier {
   _RefreshOperation get _updateRecentTransactionsOperation => (
         name: 'Recent Transactions',
         operation: (Account account) async {
-          // TODO(dev): Supp ?
-          /* ref.invalidate(
-            recentTransactionsProvider(
-              account.genesisAddress,
-            ),
-          );*/
           return account;
         },
       );
@@ -346,5 +342,24 @@ class AccountNotifier extends _$AccountNotifier {
       _logger.severe('Failed to check custom token address', e, stack);
       return false;
     }
+  }
+
+  Future<void> fetchMissingGenesisPubliKey() async {
+    await update((account) async {
+      if (account == null) return null;
+      if (account.publicKey != null && account.publicKey!.isNotEmpty) {
+        return account;
+      }
+
+      final apiService = ref.read(apiServiceProvider);
+
+      final accountPubKey = await PubKeyUtil.getGenesisPublicKey(
+        account.genesisAddress,
+        apiService,
+      );
+      final updatedAccount = account.copyWith(publicKey: accountPubKey);
+      await _saveLocally(updatedAccount);
+      return updatedAccount;
+    });
   }
 }

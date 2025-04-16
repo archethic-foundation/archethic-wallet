@@ -2,24 +2,33 @@ import 'dart:async';
 import 'dart:core';
 import 'dart:ui';
 
+import 'package:aewallet/application/account/accounts_notifier.dart';
+import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/api_service.dart';
+import 'package:aewallet/application/contact.dart';
 import 'package:aewallet/application/migrations/migration_manager.dart';
 import 'package:aewallet/application/session/session.dart';
 import 'package:aewallet/application/settings/settings.dart';
-import 'package:aewallet/domain/repositories/features_flags.dart';
+import 'package:aewallet/domain/repositories/notifications_repository.dart';
 import 'package:aewallet/local_data_migration_widget.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
+import 'package:aewallet/ui/util/contact_formatters.dart';
+import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/aeswap_earn/layouts/earn_tab.dart';
-import 'package:aewallet/ui/views/aeswap_swap/layouts/swap_tab.dart';
 import 'package:aewallet/ui/views/main/account_tab.dart';
+import 'package:aewallet/ui/views/main/address_book_tab.dart';
 import 'package:aewallet/ui/views/main/bloc/providers.dart';
 import 'package:aewallet/ui/views/main/components/home_providers_keepalive.dart';
 import 'package:aewallet/ui/views/main/components/main_appbar.dart';
 import 'package:aewallet/ui/views/main/components/recovery_phrase_banner.dart';
 import 'package:aewallet/ui/views/main/transactions_tab.dart';
+import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
+import 'package:aewallet/ui/views/messenger/layouts/messenger_tab.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/ui/widgets/tab_item.dart';
+import 'package:aewallet/util/notifications_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -27,23 +36,24 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-class HomePage extends ConsumerStatefulWidget {
-  const HomePage({super.key});
+class Home extends ConsumerStatefulWidget {
+  const Home({super.key});
 
   static const routerPage = '/home';
 
   @override
-  ConsumerState<HomePage> createState() => _HomePageState();
+  ConsumerState<Home> createState() => _HomeState();
 }
 
-class _HomePageState extends ConsumerState<HomePage>
+class _HomeState extends ConsumerState<Home>
     with TickerProviderStateMixin
     implements SheetSkeletonInterface {
-  int tabCount = 4;
+  int tabCount = 5;
 
   @override
   void initState() {
     super.initState();
+    NotificationsUtil.init();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       ref.read(mainTabControllerProvider.notifier).initState(this);
@@ -57,6 +67,8 @@ class _HomePageState extends ConsumerState<HomePage>
 
   @override
   Widget build(BuildContext context) {
+    _manageNotifications();
+
     return HomeProvidersKeepalive(
       child: SheetSkeleton(
         appBar: getAppBar(context, ref),
@@ -101,6 +113,11 @@ class _HomePageState extends ConsumerState<HomePage>
               },
               tabs: [
                 TabItem(
+                  icon: Symbols.contacts,
+                  label:
+                      AppLocalizations.of(context)!.bottomMainMenuAddressBook,
+                ),
+                TabItem(
                   icon: Symbols.account_box,
                   label: AppLocalizations.of(context)!.bottomMainMenuAccounts,
                 ),
@@ -109,14 +126,13 @@ class _HomePageState extends ConsumerState<HomePage>
                   label:
                       AppLocalizations.of(context)!.bottomMainMenuTransactions,
                 ),
-                if (FeatureFlags.swapFeature)
-                  TabItem(
-                    icon: aedappfm.Iconsax.arrange_circle_2,
-                    label: AppLocalizations.of(context)!.bottomMainMenuSwap,
-                  ),
                 TabItem(
                   icon: aedappfm.Iconsax.wallet_money,
                   label: AppLocalizations.of(context)!.bottomMainMenuEarn,
+                ),
+                TabItem(
+                  icon: aedappfm.Iconsax.message,
+                  label: AppLocalizations.of(context)!.bottomMainMenuMessenger,
                 ),
               ],
             ),
@@ -154,6 +170,7 @@ class _HomePageState extends ConsumerState<HomePage>
         physics: const NeverScrollableScrollPhysics(),
         controller: tabController,
         children: const [
+          AddressBookTab(),
           Stack(
             alignment: Alignment.topCenter,
             children: [
@@ -165,12 +182,198 @@ class _HomePageState extends ConsumerState<HomePage>
             ],
           ),
           TransactionsTab(),
-          if (FeatureFlags.swapFeature) SwapTab(),
           EarnTab(),
+          MessengerTab(),
         ],
       ),
     );
   }
+
+  void _manageNotifications() {
+    ref.listen(
+      MessengerProviders.txSentEvents,
+      (previous, next) async {
+        final previousTxEvent = previous?.value;
+        final txEvent = next.value;
+        if (txEvent == null) return;
+
+        if (txEvent.txAddress == previousTxEvent?.txAddress) {
+          return;
+        }
+
+        // debugPrint('Event type : ${txEvent.type}');
+
+        // if (txEvent.type == MessengerConstants.notificationTypeNewMessage) {
+        await manageNewMessageNotification(txEvent);
+        // }
+        // if (txEvent.type ==
+        //     MessengerConstants.notificationTypeNewDiscussion) {
+        //   await manageNewDiscussionNotification(txEvent);
+        // }
+        // if (txEvent.type ==
+        //     MessengerConstants.notificationTypeDiscussionUpdated) {
+        //   await manageNewDiscussionUpdatedNotification(txEvent);
+        // }
+      },
+    );
+  }
+
+  // Future manageNewDiscussionNotification(TxSentEvent event) async {
+  //   final localizations = AppLocalizations.of(context)!;
+
+  //   final discussion = await ref.read(
+  //     MessengerProviders.remoteDiscussion(
+  //       event.notificationRecipientAddress,
+  //     ).future,
+  //   );
+
+  //   await ref
+  //       .read(MessengerProviders.discussions.notifier)
+  //       .addRemoteDiscussion(discussion);
+
+  //   UIUtil.showSnackbar(
+  //     localizations.youHaveBeenAddedToADiscussion,
+  //     context,
+  //     ref,
+  //     ArchethicTheme.text,
+  //     ArchethicTheme.snackBarShadow,
+  //     icon: Symbols.chat,
+  //   );
+  // }
+
+  Future manageNewMessageNotification(TxSentEvent event) async {
+    final apiService = ref.read(apiServiceProvider);
+    final transaction = await apiService.getTransaction(
+      [event.txAddress],
+    );
+    final discussionGenesisAddress =
+        transaction.values.first.data?.recipients.first;
+
+    if (discussionGenesisAddress == null) {
+      return;
+    }
+
+    final newMessage = (await ref.read(
+      MessengerProviders.messages(
+        discussionGenesisAddress.address!,
+        0,
+        1,
+      ).future,
+    ))
+        .last;
+
+    await ref
+        .read(MessengerProviders.messengerRepository)
+        .updateDiscussionLastMessage(
+          discussionAddress: discussionGenesisAddress.address!,
+          creator: (await ref
+              .read(AccountProviders.accounts.future)
+              .selectedAccount)!,
+          message: newMessage,
+        );
+
+    final contactName = ref
+        .read(
+          ContactProviders.getContactWithGenesisPublicKey(
+            newMessage.senderGenesisPublicKey,
+          ),
+        )
+        .maybeMap(
+          orElse: () => newMessage.senderGenesisPublicKey,
+          data: (contact) => contact.value?.format,
+        );
+
+    UIUtil.showSnackbar(
+      '$contactName : ${newMessage.content}',
+      context,
+      ref,
+      ArchethicTheme.text,
+      ArchethicTheme.snackBarShadow,
+      icon: Symbols.chat,
+    );
+
+    ref.invalidate(
+      MessengerProviders.discussion(discussionGenesisAddress.address!),
+    );
+  }
+
+  // Future manageNewDiscussionUpdatedNotification(TxSentEvent event) async {
+  //   final localizations = AppLocalizations.of(context)!;
+
+  //   if (event.extra == null) {
+  //     return;
+  //   }
+
+  //   final extra = event.extra as Map<String, dynamic>;
+
+  //   if (extra.containsKey('membersAddedToNotify')) {
+  //     final listMembersAdded = extra['membersAddedToNotify'];
+  //     if (listMembersAdded!.isNotEmpty) {
+  //       for (final memberPubKey in listMembersAdded) {
+  //         final contact = await ref.read(
+  //           ContactProviders.getContactWithGenesisPublicKey(memberPubKey)
+  //               .future,
+  //         );
+  //         // Contact does not exist or contact is not an internal one
+  //         if (contact == null ||
+  //             contact.type != ContactType.keychainService.name) {
+  //           continue;
+  //         }
+
+  //         final transaction = await sl.get<ApiService>().getTransaction(
+  //           [event.notificationRecipientAddress],
+  //         );
+  //         final discussionGenesisAddress =
+  //             transaction.values.first.data!.recipients.first;
+
+  //         final discussion = await ref.read(
+  //           MessengerProviders.remoteDiscussion(
+  //             discussionGenesisAddress.address!,
+  //           ).future,
+  //         );
+
+  //         await ref
+  //             .read(MessengerProviders.discussions.notifier)
+  //             .addRemoteDiscussion(discussion);
+
+  //         UIUtil.showSnackbar(
+  //           localizations.youHaveBeenAddedToADiscussion,
+  //           context,
+  //           ref,
+  //           ArchethicTheme.text,
+  //           ArchethicTheme.snackBarShadow,
+  //           icon: Symbols.chat,
+  //         );
+  //       }
+  //     }
+  //   }
+
+  //   if (extra.containsKey('membersDeletedToNotify')) {
+  //     final listMembersDeleted = extra['membersDeletedToNotify'];
+  //     if (listMembersDeleted!.isNotEmpty) {
+  //       for (final memberPubKey in listMembersDeleted) {
+  //         final contact = await ref.read(
+  //           ContactProviders.getContactWithGenesisPublicKey(memberPubKey)
+  //               .future,
+  //         );
+  //         // Contact does not exist or contact is not an internal one
+  //         if (contact == null ||
+  //             contact.type != ContactType.keychainService.name) {
+  //           continue;
+  //         }
+
+  //         UIUtil.showSnackbar(
+  //           localizations.youHaveBeenDeletedFromADiscussion,
+  //           context,
+  //           ref,
+  //           ArchethicTheme.text,
+  //           ArchethicTheme.snackBarShadow,
+  //           icon: Symbols.comments_disabled,
+  //         );
+  //       }
+  //     }
+  //   }
+  // }
 }
 
 class ExpandablePageView extends ConsumerStatefulWidget {

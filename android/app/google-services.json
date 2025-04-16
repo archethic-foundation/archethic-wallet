@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "329689363769",
     "project_id": "ae-wallet",
-    "storage_bucket": "ae-wallet.appspot.com"
+    "storage_bucket": "ae-wallet.firebasestorage.app"
   },
   "client": [
     {
@@ -29,6 +29,14 @@
             {
               "client_id": "329689363769-asrrmmau1hdjvvjkq6mdh7hmems0rseg.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "329689363769-re7ceq81mq45tb1tpcc3lsdtrldhcjkb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "tech.archethic.wallet",
+                "app_store_id": "6443334906"
+              }
             }
           ]
         }

@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
+
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 
 extension TransferTransactionBuilder on archethic.Transaction {
@@ -20,7 +21,7 @@ extension TransferTransactionBuilder on archethic.Transaction {
   }) async {
     final transaction = archethic.Transaction(
       type: 'transfer',
-      version: blockchainTxVersion,
+      version: 3, //TODO restore blockchainTxVersion,
       data: archethic.Transaction.initData(),
     );
     for (final transfer in ucoTransferList) {

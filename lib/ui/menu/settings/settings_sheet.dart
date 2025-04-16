@@ -27,7 +27,7 @@ import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/authenticate/auth_factory.dart';
 import 'package:aewallet/ui/views/dapps_board/layouts/dapps_board_sheet.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/views/main/home_page.dart';
+import 'package:aewallet/ui/views/main/home.dart';
 import 'package:aewallet/ui/views/settings/backupseed_sheet.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/home_failure.dart';

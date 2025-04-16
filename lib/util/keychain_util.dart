@@ -14,6 +14,7 @@ import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
 import 'package:aewallet/model/keychain_service_keypair.dart';
 import 'package:aewallet/service/app_service.dart';
 import 'package:aewallet/util/account_formatters.dart';
+import 'package:aewallet/util/pubkey_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:event_taxi/event_taxi.dart';
 import 'package:logging/logging.dart';
@@ -171,6 +172,11 @@ mixin KeychainServiceMixin {
             selectedAccount.name == name &&
             serviceType == 'archethicWallet';
 
+        final publicKey = await PubKeyUtil.getGenesisPublicKey(
+          uint8ListToHex(genesisAddress),
+          apiService,
+        );
+
         final account = Account(
           lastLoadingTransactionInputs: DateTime.now().millisecondsSinceEpoch ~/
               Duration.millisecondsPerSecond,
@@ -178,6 +184,7 @@ mixin KeychainServiceMixin {
           name: name,
           serviceType: serviceType,
           selected: isSelected,
+          publicKey: publicKey,
         );
 
         accounts.add(account);

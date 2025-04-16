@@ -1,0 +1,126 @@
+part of 'providers.dart';
+
+final _discussionDetailsFormProvider = NotifierProvider.autoDispose<
+    DiscussionDetailsFormNotifier, DiscussionDetailsFormState>(
+  () {
+    return DiscussionDetailsFormNotifier();
+  },
+);
+
+@freezed
+class DiscussionDetailsFormState with _$DiscussionDetailsFormState {
+  const factory DiscussionDetailsFormState({
+    @Default('') String name,
+    @Default('') String discussionAddress,
+    @Default([]) List<String> members,
+    @Default([]) List<String> admins,
+    AppLocalizations? localizations,
+  }) = _DiscussionDetailsFormState;
+  const DiscussionDetailsFormState._();
+}
+
+class DiscussionDetailsFormNotifier
+    extends AutoDisposeNotifier<DiscussionDetailsFormState> {
+  DiscussionDetailsFormNotifier();
+
+  @override
+  DiscussionDetailsFormState build() => const DiscussionDetailsFormState();
+
+  void init(Discussion discussion) {
+    setName(discussion.name ?? '');
+    setAddress(discussion.address);
+    _initMembers(discussion.membersPubKeys);
+    _initAdmins(discussion.adminsPubKeys);
+  }
+
+  void _initMembers(List<String> members) {
+    for (final member in members) {
+      addMember(member);
+    }
+  }
+
+  void _initAdmins(List<String> admins) {
+    for (final admin in admins) {
+      addAdmin(admin);
+    }
+  }
+
+  Future<void> setName(
+    String name,
+  ) async {
+    state = state.copyWith(
+      name: name,
+    );
+    return;
+  }
+
+  Future<void> setAddress(
+    String address,
+  ) async {
+    state = state.copyWith(
+      discussionAddress: address,
+    );
+    return;
+  }
+
+  void addMember(String member) {
+    if (state.members.contains(member)) return;
+    state = state.copyWith(
+      members: [
+        ...state.members,
+        member,
+      ],
+    );
+  }
+
+  void addAdmin(String admin) {
+    if (state.admins.contains(admin)) return;
+    state = state.copyWith(
+      admins: [
+        ...state.admins,
+        admin,
+      ],
+    );
+  }
+
+  Future<Result<void, Failure>> leaveDiscussion() => Result.guard(() async {
+        final session = ref.read(sessionNotifierProvider).loggedIn;
+        if (session == null) throw const Failure.loggedOut();
+
+        final selectedAccount = ref.watch(
+          accountsNotifierProvider.select(
+            (accounts) => accounts.valueOrNull?.selectedAccount,
+          ),
+        );
+
+        if (selectedAccount == null) throw const Failure.loggedOut();
+
+        final keyPair = session.wallet.keychainSecuredInfos
+            .services[selectedAccount.name]!.keyPair!.toKeyPair;
+
+        await ref
+            .read(MessengerProviders.messengerRepository)
+            .updateDiscussion(
+              discussionSCAddress: state.discussionAddress,
+              adminsPubKeys: state.admins
+                  .where((element) => element != selectedAccount.publicKey)
+                  .toList(),
+              membersPubKeys: state.members
+                  .where((element) => element != selectedAccount.publicKey)
+                  .toList(),
+              discussionName: state.name,
+              adminAddress: selectedAccount.genesisAddress,
+              serviceName: selectedAccount.name,
+              session: session,
+              adminKeyPair: keyPair,
+              owner: selectedAccount,
+              updateSCAESKey:
+                  true, // the user is not going to read the next messages
+              apiService: ref.watch(apiServiceProvider),
+              addressService: ref.watch(addressServiceProvider),
+            )
+            .valueOrThrow;
+
+        ref.invalidate(_discussionProvider);
+      });
+}

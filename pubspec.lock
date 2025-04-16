@@ -9,6 +9,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "76.0.0"
+  _flutterfire_internals:
+    dependency: transitive
+    description:
+      name: _flutterfire_internals
+      sha256: de9ecbb3ddafd446095f7e833c853aff2fa1682b017921fe63a833f9d6f0e422
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.54"
   _macros:
     dependency: transitive
     description: dart
@@ -58,26 +66,26 @@ packages:
     dependency: "direct main"
     description:
       name: archethic_dapp_framework_flutter
-      sha256: "5f657d6a8f131138818863bc4d58550c53ae4740daff01fde75f3fcd2e77c250"
+      sha256: "1adb8b98e60c7977abbace92ae0226bade9bb7cfb3248ac31ab5c7a965794260"
       url: "https://pub.dev"
     source: hosted
-    version: "3.5.0"
+    version: "3.5.1"
   archethic_lib_dart:
     dependency: transitive
     description:
       name: archethic_lib_dart
-      sha256: "20f3fc9ed073e182cddff60e90f754ea0408a09dec9975921fc4f5c5490a70e8"
+      sha256: de0c2fcdad8c83c057130a614239277d895b8293116ec1c667ae0d2a7c9a8682
       url: "https://pub.dev"
     source: hosted
-    version: "7.8.1"
+    version: "7.9.0"
   archethic_wallet_client:
     dependency: "direct main"
     description:
       name: archethic_wallet_client
-      sha256: beed3581fe4437ee24176ae4934c2d212e9faa84b5f8afa22eea3dbef88487ef
+      sha256: "1b454d886831f60fdf145d1807ba59e54cef931cfb16a42ceb44bb50878ee673"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.0"
+    version: "2.3.1"
   archive:
     dependency: transitive
     description:
@@ -534,6 +542,54 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.1"
+  firebase_core:
+    dependency: "direct main"
+    description:
+      name: firebase_core
+      sha256: "017d17d9915670e6117497e640b2859e0b868026ea36bf3a57feb28c3b97debe"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.13.0"
+  firebase_core_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_core_platform_interface
+      sha256: d7253d255ff10f85cfd2adaba9ac17bae878fa3ba577462451163bd9f1d1f0bf
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.4.0"
+  firebase_core_web:
+    dependency: transitive
+    description:
+      name: firebase_core_web
+      sha256: "129a34d1e0fb62e2b488d988a1fc26cc15636357e50944ffee2862efe8929b23"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.22.0"
+  firebase_messaging:
+    dependency: "direct main"
+    description:
+      name: firebase_messaging
+      sha256: "5f8918848ee0c8eb172fc7698619b2bcd7dda9ade8b93522c6297dd8f9178356"
+      url: "https://pub.dev"
+    source: hosted
+    version: "15.2.5"
+  firebase_messaging_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_messaging_platform_interface
+      sha256: "0bbea00680249595fc896e7313a2bd90bd55be6e0abbe8b9a39d81b6b306acb6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.6.5"
+  firebase_messaging_web:
+    dependency: transitive
+    description:
+      name: firebase_messaging_web
+      sha256: ffb392ce2a7e8439cd0a9a80e3c702194e73c927e5c7b4f0adf6faa00b245b17
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.10.5"
   fixnum:
     dependency: transitive
     description:
@@ -776,6 +832,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.3"
+  flutter_staggered_grid_view:
+    dependency: transitive
+    description:
+      name: flutter_staggered_grid_view
+      sha256: "19e7abb550c96fbfeb546b23f3ff356ee7c59a019a651f8f102a4ba9b7349395"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.0"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -1002,6 +1066,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.5.4"
+  infinite_scroll_pagination:
+    dependency: "direct main"
+    description:
+      name: infinite_scroll_pagination
+      sha256: "4047eb8191e8b33573690922a9e995af64c3949dc87efc844f936b039ea279df"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.0"
   intl:
     dependency: "direct main"
     description:
@@ -1663,6 +1735,30 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  sliver_tools:
+    dependency: transitive
+    description:
+      name: sliver_tools
+      sha256: eae28220badfb9d0559207badcbbc9ad5331aac829a88cb0964d330d2a4636a6
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.12"
+  socket_io_client:
+    dependency: "direct main"
+    description:
+      name: socket_io_client
+      sha256: ede469f3e4c55e8528b4e023bdedbc20832e8811ab9b61679d1ba3ed5f01f23b
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.3+1"
+  socket_io_common:
+    dependency: transitive
+    description:
+      name: socket_io_common
+      sha256: "2ab92f8ff3ebbd4b353bf4a98bee45cc157e3255464b2f90f66e09c4472047eb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.3"
   source_gen:
     dependency: transitive
     description:

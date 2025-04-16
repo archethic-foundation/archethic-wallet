@@ -2,7 +2,7 @@ import 'package:aewallet/domain/models/dapp.dart';
 import 'package:aewallet/infrastructure/rpc/awc_webview.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/views/main/home_page.dart';
+import 'package:aewallet/ui/views/main/home.dart';
 import 'package:aewallet/ui/views/sheets/dapp_sheet_icon_favorite.dart';
 import 'package:aewallet/ui/views/sheets/dapp_sheet_icon_refresh.dart';
 import 'package:aewallet/ui/views/sheets/unavailable_feature_warning.dart';
@@ -61,7 +61,7 @@ class DAppsBoardWebview extends ConsumerWidget
         color: ArchethicTheme.text,
         onPressed: () {
           if (deeplink != null) {
-            context.go(HomePage.routerPage);
+            context.go(Home.routerPage);
             return;
           }
           context.pop();

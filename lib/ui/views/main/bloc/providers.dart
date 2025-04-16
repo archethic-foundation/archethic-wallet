@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:aewallet/application/account/accounts_notifier.dart';
 import 'package:aewallet/application/aeswap/dex_token.dart';
 import 'package:aewallet/application/connectivity_status.dart';
+import 'package:aewallet/application/notification/providers.dart';
 import 'package:aewallet/modules/aeswap/application/pool/dex_pool.dart';
 import 'package:aewallet/modules/aeswap/application/session/provider.dart';
 import 'package:aewallet/modules/aeswap/application/verified_tokens.dart';
@@ -56,7 +57,10 @@ class HomePage extends _$HomePage {
           /// When network becomes online, start the subscriptions again
           await startSubscriptions();
         },
-      );
+      )
+      ..watch(NotificationProviders.keepPushSettingsUpToDateWorker);
+
+    unawaited(ref.watch(NotificationProviders.repository).initialize());
   }
 
   Future<void> startSubscriptions() async {
@@ -99,7 +103,7 @@ final mainTabControllerProvider =
 class TabControllerNotifier extends StateNotifier<TabController?> {
   TabControllerNotifier() : super(null);
 
-  int tabCount = 3;
+  int tabCount = 5;
 
   void initState(TickerProvider tickerProvider) {
     state = TabController(
@@ -112,32 +116,5 @@ class TabControllerNotifier extends StateNotifier<TabController?> {
   void dispose() {
     state?.dispose();
     super.dispose();
-  }
-}
-
-final listenAddressesProvider =
-    StateNotifierProvider.autoDispose<ListenAddressesNotifier, List<String>>(
-        (ref) {
-  return ListenAddressesNotifier();
-});
-
-class ListenAddressesNotifier extends StateNotifier<List<String>> {
-  ListenAddressesNotifier() : super([]);
-
-  void addListenAddresses(List<String> listenAddresses) {
-    state = [
-      ...state,
-      ...listenAddresses,
-    ];
-  }
-
-  void removeListenAddresses(List<String> listenAddresses) {
-    // https://stackoverflow.com/questions/59423310/remove-list-from-another-list-in-dart
-    final set1 = Set.from(state);
-    final set2 = Set.from(listenAddresses);
-
-    state = [
-      ...List.from(set1.difference(set2)),
-    ];
   }
 }

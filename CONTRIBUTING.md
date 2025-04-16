@@ -241,3 +241,4 @@ Storage **Boxes** are split into  categories :
 ### Encrypted boxes
 
 - **[NonWebAuthentication](./lib/infrastructure/datasources/authent_nonweb.secured_hive.dart)** : User authentication data (pin/password)
+- **[MessengerDiscussion](./lib/infrastructure/datasources/discussion.vault.dart)** : [Discussions data](./lib/model/data/messenger/discussion.dart)

@@ -29,13 +29,14 @@ class AccountImplAdapter extends TypeAdapter<_$AccountImpl> {
       serviceType: fields[13] as String?,
       accountNFTCollections: (fields[14] as List?)?.cast<AccountToken>(),
       customTokenAddressList: (fields[15] as List?)?.cast<String>(),
+      publicKey: fields[16] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, _$AccountImpl obj) {
     writer
-      ..writeByte(12)
+      ..writeByte(13)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -50,6 +51,8 @@ class AccountImplAdapter extends TypeAdapter<_$AccountImpl> {
       ..write(obj.balance)
       ..writeByte(13)
       ..write(obj.serviceType)
+      ..writeByte(16)
+      ..write(obj.publicKey)
       ..writeByte(7)
       ..write(obj.accountTokens)
       ..writeByte(8)
@@ -104,6 +107,7 @@ _$AccountImpl _$$AccountImplFromJson(Map<String, dynamic> json) =>
       customTokenAddressList: (json['customTokenAddressList'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
+      publicKey: json['publicKey'] as String?,
     );
 
 Map<String, dynamic> _$$AccountImplToJson(_$AccountImpl instance) =>
@@ -120,4 +124,5 @@ Map<String, dynamic> _$$AccountImplToJson(_$AccountImpl instance) =>
       'serviceType': instance.serviceType,
       'accountNFTCollections': instance.accountNFTCollections,
       'customTokenAddressList': instance.customTokenAddressList,
+      'publicKey': instance.publicKey,
     };

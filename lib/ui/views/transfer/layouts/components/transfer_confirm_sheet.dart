@@ -11,7 +11,7 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/util/dimens.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/views/main/home_page.dart';
+import 'package:aewallet/ui/views/main/home.dart';
 import 'package:aewallet/ui/views/transfer/bloc/provider.dart';
 import 'package:aewallet/ui/views/transfer/bloc/state.dart';
 import 'package:aewallet/ui/views/transfer/layouts/components/token_transfer_detail.dart';
@@ -106,7 +106,7 @@ class _TransferConfirmSheetState extends ConsumerState<TransferConfirmSheet>
               .selectedAccountNotifier)
           ?.refreshAll();
     } finally {
-      context.go(HomePage.routerPage);
+      context.go(Home.routerPage);
       context.loadingOverlay.hide();
     }
   }

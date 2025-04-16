@@ -8,7 +8,10 @@ import 'package:aewallet/model/data/account_token.dart';
 import 'package:aewallet/model/data/app_keychain.dart';
 import 'package:aewallet/model/data/contact.dart';
 import 'package:aewallet/model/data/hive_app_wallet_dto.dart';
+import 'package:aewallet/model/data/messenger/discussion.dart';
+import 'package:aewallet/model/data/messenger/message.dart';
 import 'package:aewallet/model/data/nft_infos_off_chain.dart';
+import 'package:aewallet/model/data/notification_setup_dto.dart';
 import 'package:aewallet/util/cache_manager_hive.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -27,13 +30,16 @@ class HiveTypeIds {
   static const nftInfosOffChain = 11;
   static const pubKeyAccessRecipient = 13;
   static const contactAccessRecipient = 14;
-  static const notificationsSetup = 16;
+  static const notificationsSetupOld = 16;
   static const cacheItem = 17;
   static const tokenCollection = 18;
   static const walletToken = 19;
   static const walletTokenOwnership = 20;
   static const walletTokenOwnershipAuthorizedKey = 21;
   static const myDApps = 22;
+  static const discussion = 23;
+  static const discussionMessage = 24;
+  static const notificationsSetup = 26;
 }
 
 class DBHelper {
@@ -46,7 +52,7 @@ class DBHelper {
     }
 
     Hive
-      ..ignoreTypeId(HiveTypeIds.notificationsSetup)
+      ..ignoreTypeId(HiveTypeIds.notificationsSetupOld)
       ..ignoreTypeId(HiveTypeIds.pubKeyAccessRecipient)
       ..ignoreTypeId(HiveTypeIds.contactAccessRecipient)
       ..ignoreTypeId(HiveTypeIds.tokenCollection)
@@ -64,6 +70,9 @@ class DBHelper {
       ..registerAdapter(WalletTokenHiveDtoAdapter())
       ..registerAdapter(WalletTokenOwnershipHiveDtoAdapter())
       ..registerAdapter(WalletTokenOwnershipAuthorizedKeyHiveDtoAdapter())
+      ..registerAdapter(DiscussionImplAdapter())
+      ..registerAdapter(NotificationsSetupImplAdapter())
+      ..registerAdapter(DiscussionMessageImplAdapter())
       ..registerAdapter(DAppHiveDtoAdapter());
   }
 }

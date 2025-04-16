@@ -2,10 +2,10 @@ part of 'router.dart';
 
 final _authenticatedRoutes = [
   GoRoute(
-    path: HomePage.routerPage,
+    path: Home.routerPage,
     pageBuilder: (context, state) => NoTransitionPage<void>(
       key: state.pageKey,
-      child: const HomePage(),
+      child: const Home(),
     ),
   ),
   GoRoute(
@@ -206,5 +206,160 @@ final _authenticatedRoutes = [
         ),
       );
     },
+  ),
+  GoRoute(
+    path: ContactDetail.routerPage,
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
+      key: state.pageKey,
+      child: ContactDetail(
+        contactAddress: ContactDetailsRouteParams.fromJson(
+          state.extra! as Map<String, dynamic>,
+        ).contactAddress,
+        readOnly: ContactDetailsRouteParams.fromJson(
+              state.extra! as Map<String, dynamic>,
+            ).readOnly ??
+            false,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
+  ),
+  GoRoute(
+    path: AddContactSheet.routerPage,
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
+      key: state.pageKey,
+      child: AddContactSheet(
+        address: state.extra as String?,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
+  ),
+  GoRoute(
+    path: MessengerDiscussionPage.routerPage,
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
+      key: state.pageKey,
+      child: MessengerDiscussionPage(
+        discussionAddress: state.extra! as String,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
+  ),
+  GoRoute(
+    path: DiscussionDetailsPage.routerPage,
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
+      key: state.pageKey,
+      child: DiscussionDetailsPage(
+        discussionAddress: state.extra! as String,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
+  ),
+  GoRoute(
+    path: UpdateDiscussionPage.routerPage,
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
+      key: state.pageKey,
+      child: UpdateDiscussionPage(
+        discussion: state.extra! as Discussion,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
+  ),
+  GoRoute(
+    path: CreateDiscussionSheet.routerPage,
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
+      key: state.pageKey,
+      child: const CreateDiscussionSheet(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
+  ),
+  GoRoute(
+    path: CreateDiscussionValidationSheet.routerPage,
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
+      key: state.pageKey,
+      child: CreateDiscussionValidationSheet(
+        fromRouterPage:
+            (state.extra! as Map<String, dynamic>)['fromRouterPage'] as String?,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
+  ),
+  GoRoute(
+    path: AddDiscussionSheet.routerPage,
+    pageBuilder: (context, state) {
+      final discussion = const DiscussionConverter().fromJson(
+        state.extra! as Map<String, dynamic>,
+      );
+
+      return CustomTransitionPage<void>(
+        transitionDuration: Duration.zero,
+        reverseTransitionDuration: Duration.zero,
+        key: state.pageKey,
+        child: AddDiscussionSheet(
+          discussion: discussion,
+        ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(
+          opacity: animation,
+          child: child,
+        ),
+      );
+    },
+  ),
+  GoRoute(
+    path: UpdateDiscussionAddMembers.routerPage,
+    pageBuilder: (context, state) => CustomTransitionPage<void>(
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
+      key: state.pageKey,
+      child: UpdateDiscussionAddMembers(
+        listMembers: (state.extra! as Map<String, dynamic>)['listMembers']!
+            as List<String>,
+        onDisposed:
+            (state.extra! as Map<String, dynamic>)['onDisposed'] as Function?,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
   ),
 ];

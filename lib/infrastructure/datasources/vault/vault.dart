@@ -193,6 +193,16 @@ class Vault {
     return Hive.boxExists(name);
   }
 
+  Future<void> clearLazy<E>(String name) async {
+    _logger.info(
+      'Deleting vault box $name...',
+    );
+    await Hive.deleteLazyBox<E>(name);
+    _logger.info(
+      '... vault box $name deleted',
+    );
+  }
+
   Future<void> clear<E>(String name) async {
     _logger.info(
       'Deleting vault box $name...',

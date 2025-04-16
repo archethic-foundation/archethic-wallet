@@ -12,7 +12,6 @@ enum ContactType { keychainService, externalContact }
 @HiveType(typeId: HiveTypeIds.contact)
 @AccountBalanceConverter()
 class Contact extends HiveObject {
-  @Deprecated('Thanks to hive, we should keep this unused class...')
   Contact({
     required this.name,
     required this.address,

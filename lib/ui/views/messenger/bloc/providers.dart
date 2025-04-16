@@ -1,0 +1,328 @@
+import 'dart:async';
+
+import 'package:aewallet/application/account/accounts_notifier.dart';
+import 'package:aewallet/application/account/providers.dart';
+import 'package:aewallet/application/address_service.dart';
+import 'package:aewallet/application/api_service.dart';
+import 'package:aewallet/application/contact.dart';
+import 'package:aewallet/application/notification/providers.dart';
+import 'package:aewallet/application/session/session.dart';
+import 'package:aewallet/domain/models/core/failures.dart';
+import 'package:aewallet/domain/models/core/result.dart';
+import 'package:aewallet/domain/repositories/messenger_repository.dart';
+import 'package:aewallet/domain/repositories/notifications_repository.dart';
+import 'package:aewallet/infrastructure/repositories/messenger_repository.dart';
+import 'package:aewallet/model/data/access_recipient.dart';
+import 'package:aewallet/model/data/contact.dart';
+import 'package:aewallet/model/data/messenger/discussion.dart';
+import 'package:aewallet/model/data/messenger/message.dart';
+import 'package:aewallet/model/public_key.dart';
+import 'package:aewallet/modules/messaging_sdk/services/messaging_service.dart';
+import 'package:aewallet/ui/util/delayed_task.dart';
+import 'package:aewallet/ui/widgets/components/dialog.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
+import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'create_discussion_form.dart';
+part 'discussion_details_form.dart';
+part 'discussion_messages.dart';
+part 'providers.freezed.dart';
+part 'providers.g.dart';
+part 'update_discussion_form.dart';
+
+// TODO(Chralu): Put this back when notifications about Chat creation/update will be added
+// class MessengerConstants {
+//   static const String notificationTypeNewDiscussion = 'newDiscussion';
+//   static const String notificationTypeNewMessage = 'newMessage';
+//   static const String notificationTypeDiscussionUpdated = 'discussionUpdated';
+// }
+
+@riverpod
+class _Discussions extends AutoDisposeAsyncNotifier<Iterable<Discussion>> {
+  @override
+  FutureOr<Iterable<Discussion>> build() async {
+    final selectedAccount = await ref
+        .watch(
+          AccountProviders.accounts.future,
+        )
+        .selectedAccount;
+    if (selectedAccount == null) throw const Failure.loggedOut();
+
+    final repository = ref.watch(MessengerProviders.messengerRepository);
+
+    final discussionAddresses = await repository
+        .getDiscussionAddresses(
+          owner: selectedAccount,
+        )
+        .valueOrThrow;
+
+    return Future.wait(
+      discussionAddresses.map(
+        (discussionAddress) =>
+            ref.watch(_discussionProvider(discussionAddress).future),
+      ),
+    );
+  }
+
+  Future<Discussion> addRemoteDiscussion(Discussion discussion) async {
+    final selectedAccount = await ref
+        .read(
+          AccountProviders.accounts.future,
+        )
+        .selectedAccount;
+    if (selectedAccount == null) throw const Failure.loggedOut();
+
+    final createdDiscussion = await ref
+        .read(MessengerProviders.messengerRepository)
+        .addRemoteDiscussion(
+          creator: selectedAccount,
+          discussion: discussion,
+        )
+        .valueOrThrow;
+
+    ref.invalidateSelf();
+    return createdDiscussion;
+  }
+
+  Future<void> removeDiscussion(Discussion discussion) async {
+    final discussions = state.valueOrNull;
+    if (discussions == null) throw const Failure.other();
+
+    final selectedAccount = await ref
+        .read(
+          AccountProviders.accounts.future,
+        )
+        .selectedAccount;
+    if (selectedAccount == null) throw const Failure.loggedOut();
+
+    await ref
+        .read(MessengerProviders.messengerRepository)
+        .removeDiscussion(
+          owner: selectedAccount,
+          discussion: discussion,
+        )
+        .valueOrThrow;
+
+    ref.invalidateSelf();
+  }
+}
+
+@riverpod
+Future<Discussion> _discussion(Ref ref, String address) async {
+  final selectedAccount = await ref
+      .watch(
+        AccountProviders.accounts.future,
+      )
+      .selectedAccount;
+  if (selectedAccount == null) throw const Failure.loggedOut();
+
+  return ref
+      .watch(MessengerProviders.messengerRepository)
+      .getDiscussion(
+        owner: selectedAccount,
+        discussionAddress: address,
+      )
+      .valueOrThrow;
+}
+
+@riverpod
+String _discussionDisplayName(
+  Ref ref,
+  Discussion discussion,
+) {
+  if (discussion.name != null && discussion.name!.isNotEmpty) {
+    return discussion.name!;
+  }
+
+  final selectedAccount = ref
+      .watch(
+        accountsNotifierProvider,
+      )
+      .valueOrNull
+      ?.selectedAccount;
+  final memberToDisplayPubKey = discussion.membersPubKeys.firstWhereOrNull(
+    (memberPublicKey) => memberPublicKey != selectedAccount!.publicKey,
+  );
+
+  if (memberToDisplayPubKey == null) return '...';
+
+  final accessRecipient = ref.watch(
+    _accessRecipientWithPublicKeyProvider(
+      memberToDisplayPubKey,
+    ),
+  );
+  return accessRecipient.maybeMap(
+    data: (data) {
+      if (data.value.name.isEmpty) {
+        final address =
+            '00${archethic.uint8ListToHex(archethic.hash(archethic.hexToUint8List(data.value.publicKey))).toUpperCase()}';
+        return '${address.substring(0, 8)}...${address.substring(60)}';
+      }
+      return data.value.name;
+    },
+    orElse: () => '...',
+  );
+}
+
+@riverpod
+Future<AccessRecipient> _accessRecipientWithPublicKey(
+  Ref ref,
+  String pubKey,
+) async {
+  final contact = await ref.watch(
+    ContactProviders.getContactWithGenesisPublicKey(pubKey).future,
+  );
+
+  if (contact != null) {
+    return AccessRecipient.contact(contact: contact);
+  }
+
+  final selectedAccount = ref
+      .watch(
+        accountsNotifierProvider,
+      )
+      .valueOrNull
+      ?.selectedAccount;
+
+  if (selectedAccount != null && selectedAccount.publicKey == pubKey) {
+    return AccessRecipient.account(account: selectedAccount);
+  }
+
+  return AccessRecipient.publicKey(publicKey: pubKey);
+}
+
+@riverpod
+Future<Discussion> _remoteDiscussion(
+  Ref ref,
+  String address,
+) async {
+  final selectedAccount = await ref
+      .watch(
+        AccountProviders.accounts.future,
+      )
+      .selectedAccount;
+  if (selectedAccount == null) throw const Failure.loggedOut();
+
+  final session = ref.read(sessionNotifierProvider).loggedIn;
+  if (session == null) throw const Failure.loggedOut();
+
+  return ref
+      .watch(MessengerProviders.messengerRepository)
+      .getRemoteDiscussion(
+        currentAccount: selectedAccount,
+        session: session,
+        discussionGenesisAddress: address,
+        apiService: ref.watch(apiServiceProvider),
+        addressService: ref.watch(addressServiceProvider),
+      )
+      .valueOrThrow;
+}
+
+@riverpod
+Future<List<Discussion>> _sortedDiscussions(Ref ref) async {
+  final discussions = await ref.watch(_discussionsProvider.future);
+  return discussions.sorted((a, b) => b.updateDate.compareTo(a.updateDate));
+}
+
+void _subscribeNotificationsWorker(WidgetRef ref) {
+  ref.listen(_discussionsProvider, (previous, next) {
+    final previousDiscussionsAddress = previous?.value
+            ?.map((discussion) => discussion.address.toLowerCase())
+            .toSet() ??
+        {};
+    final nextDiscussionsAddress = next.value
+            ?.map((discussion) => discussion.address.toLowerCase())
+            .toSet() ??
+        {};
+
+    final discussionsToUnsubscribe =
+        previousDiscussionsAddress.difference(nextDiscussionsAddress).toList();
+    final discussionsToSubscribe =
+        nextDiscussionsAddress.difference(previousDiscussionsAddress).toList();
+
+    if (discussionsToUnsubscribe.isNotEmpty) {
+      ref
+          .read(NotificationProviders.repository)
+          .unsubscribe(discussionsToUnsubscribe);
+    }
+    if (discussionsToSubscribe.isNotEmpty) {
+      ref
+          .read(NotificationProviders.repository)
+          .subscribe(discussionsToSubscribe);
+    }
+  });
+}
+
+@riverpod
+Stream<TxSentEvent> _txSentEvents(
+  Ref ref,
+) async* {
+  final discussions = await ref.watch(MessengerProviders.discussions.future);
+
+  final streamController = StreamController<TxSentEvent>();
+  ref.onCancel(() async {
+    await streamController.close();
+  });
+
+  for (final discussion in discussions) {
+    ref.listen(
+      NotificationProviders.txSentEvents(discussion.address.toUpperCase()),
+      (_, next) {
+        if (streamController.isClosed) {
+          return;
+        }
+        final nextValue = next.value;
+        if (nextValue == null) {
+          return;
+        }
+        streamController.add(nextValue);
+      },
+    );
+  }
+  yield* streamController.stream;
+}
+
+abstract class MessengerProviders {
+  static final messengerRepository = Provider<MessengerRepositoryInterface>(
+    (ref) => MessengerRepository(
+      messagingService: MessagingService(
+        logsActivation: false,
+      ),
+      notificationRepository: ref.watch(NotificationProviders.repository),
+    ),
+  );
+
+  /// Watches Discussions creation/deletion to update notifications subscriptions
+  static const subscribeNotificationsWorker = _subscribeNotificationsWorker;
+  static final discussions = _discussionsProvider;
+  static final sortedDiscussions = _sortedDiscussionsProvider;
+  static const discussion = _discussionProvider;
+  static const discussionDisplayName = _discussionDisplayNameProvider;
+  static const accessRecipientWithPublicKey =
+      _accessRecipientWithPublicKeyProvider;
+  static const remoteDiscussion = _remoteDiscussionProvider;
+  static const messages = _discussionMessagesProvider;
+  static const paginatedMessages = _paginatedDiscussionMessagesNotifierProvider;
+
+  static final createDiscussionForm = _createDiscussionFormNotifierProvider;
+  static const messageCreationForm = _messageCreationFormNotifierProvider;
+  static const messageCreationFees = _messageCreationFeesProvider;
+  static final updateDiscussionForm = _updateDiscussionFormProvider;
+  static final discussionDetailsForm = _discussionDetailsFormProvider;
+
+  static final txSentEvents = _txSentEventsProvider;
+
+  static Future<void> reset(Ref ref) async {
+    await ref.read(messengerRepository).clear();
+    ref
+      ..invalidate(_discussionProvider)
+      ..invalidate(_createDiscussionFormNotifierProvider)
+      ..invalidate(_discussionMessagesProvider);
+  }
+}

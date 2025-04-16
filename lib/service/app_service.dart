@@ -236,7 +236,7 @@ class AppService {
 
     final transaction = Transaction(
       type: 'transfer',
-      version: blockchainTxVersion,
+      version: 3, //TODO restore blockchainTxVersion,
       data: Transaction.initData(),
     );
     for (final transfer in listUcoTransfer) {

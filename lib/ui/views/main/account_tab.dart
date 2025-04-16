@@ -5,7 +5,7 @@ import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/address_formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/main/components/menu_widget_wallet.dart';
-import 'package:aewallet/ui/views/main/home_page.dart';
+import 'package:aewallet/ui/views/main/home.dart';
 import 'package:aewallet/ui/views/nft/layouts/components/nft_list.dart';
 import 'package:aewallet/ui/views/nft_search/layouts/nft_search_bar.dart';
 import 'package:aewallet/ui/views/tokens_list/layouts/tokens_list_sheet.dart';
