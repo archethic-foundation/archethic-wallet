@@ -176,7 +176,7 @@ mixin MessagesMixin {
         final message = utf8.decode(
           _decodeMessage(
             transactionContentIM.message,
-            discussionKeyAccess!,
+            discussionKeyAccess,
             compressionAlgo: transactionContentIM.compressionAlgo,
           ),
         );
