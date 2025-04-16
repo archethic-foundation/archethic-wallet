@@ -28,7 +28,7 @@ class MessengerBody extends ConsumerWidget {
     return Padding(
       padding: EdgeInsets.only(
         top: MediaQuery.of(context).padding.top + 10,
-        bottom: 80,
+        bottom: 100,
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),

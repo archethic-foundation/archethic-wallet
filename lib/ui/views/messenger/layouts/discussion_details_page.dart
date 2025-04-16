@@ -3,6 +3,7 @@ import 'package:aewallet/application/settings/language.dart';
 import 'package:aewallet/model/available_language.dart';
 import 'package:aewallet/model/data/access_recipient.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
+import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
@@ -11,10 +12,11 @@ import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/views/messenger/layouts/components/public_key_line.dart';
 import 'package:aewallet/ui/views/messenger/layouts/update_discussion_page.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
-import 'package:aewallet/ui/widgets/components/scrollbar.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton_interface.dart';
 import 'package:aewallet/util/case_converter.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -217,44 +219,47 @@ class _DiscussionDetailsPageState extends ConsumerState<DiscussionDetailsPage>
             const SizedBox(
               height: 15,
             ),
-            Text(
-              ref.watch(
-                MessengerProviders.discussionDisplayName(
-                  data.value,
-                ),
-              ),
-              textAlign: TextAlign.center,
-              style: ArchethicThemeStyles.textStyleSize28W700Primary,
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height - 150,
-              child: Expanded(
-                child: ArchethicScrollbar(
-                  child: ExpansionTile(
-                    shape: const Border(),
-                    initiallyExpanded: true,
-                    title: Text(
-                      localizations.messengerDiscussionMembersCount(
-                        data.value.membersPubKeys.length,
-                      ),
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    children: [
-                      Column(
-                        children: data.value.membersPubKeys.map((pubKey) {
-                          return PublicKeyLine(
-                            listAdmins: data.value.adminsPubKeys,
-                            pubKey: pubKey,
-                          );
-                        }).toList(),
-                      ),
-                    ],
+            aedappfm.BlockInfo(
+              width: MediaQuery.of(context).size.width,
+              blockInfoColor: aedappfm.BlockInfoColor.purple,
+              borderWidth: 0,
+              info: Text(
+                ref.watch(
+                  MessengerProviders.discussionDisplayName(
+                    data.value,
                   ),
                 ),
+                textAlign: TextAlign.center,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(fontWeight: FontWeightTelegraf.fontWeightBold),
               ),
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 5),
+                  child: Text(
+                    localizations.messengerDiscussionMembersCount(
+                      data.value.membersPubKeys.length,
+                    ),
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ),
+              ],
+            ),
+            Column(
+              children: data.value.membersPubKeys.map((pubKey) {
+                return PublicKeyLine(
+                  listAdmins: data.value.adminsPubKeys,
+                  pubKey: pubKey,
+                );
+              }).toList(),
             ),
           ],
         );

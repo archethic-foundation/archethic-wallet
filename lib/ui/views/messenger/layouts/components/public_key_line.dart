@@ -2,7 +2,6 @@ import 'package:aewallet/ui/themes/archethic_theme.dart';
 import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/access_recipient_formatters.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -47,37 +46,39 @@ class PublicKeyLine extends ConsumerWidget {
       child: InkWell(
         onTap: onTap,
         child: Container(
+          height: 40,
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           color: ArchethicTheme.backgroundAccountsListCard,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: AutoSizeText(
+                child: Text(
                   accessRecipient.maybeMap(
                     data: (data) => data.value.format(localizations),
                     orElse: () => '...',
                   ),
-                  style: ArchethicThemeStyles.textStyleSize12W600Primary,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
               _MemberRole(
                 listAdmins: listAdmins,
                 memberPubKey: pubKey,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: IconButton(
-                  onPressed: onInfoTap ?? onTap,
-                  icon: const Icon(
-                    Symbols.info,
-                    size: 22,
-                    weight: IconSize.weightM,
-                    opticalSize: IconSize.opticalSizeM,
-                    grade: IconSize.gradeM,
+              if (onInfoTap != null || onTap != null)
+                Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: IconButton(
+                    onPressed: onInfoTap ?? onTap,
+                    icon: const Icon(
+                      Symbols.info,
+                      size: 22,
+                      weight: IconSize.weightM,
+                      opticalSize: IconSize.opticalSizeM,
+                      grade: IconSize.gradeM,
+                    ),
                   ),
                 ),
-              ),
             ],
           ),
         ),
@@ -105,10 +106,13 @@ class _MemberRole extends ConsumerWidget {
     if (isAdmin) {
       return Text(
         localizations.admin,
-        style: ArchethicThemeStyles.textStyleSize10W600Primary,
+        style: Theme.of(context).textTheme.bodyMedium,
       );
     }
 
-    return Container();
+    return Text(
+      localizations.member,
+      style: Theme.of(context).textTheme.bodyMedium,
+    );
   }
 }

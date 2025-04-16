@@ -179,7 +179,21 @@ Future<AccessRecipient> _accessRecipientWithPublicKey(
     ContactProviders.getContactWithGenesisPublicKey(pubKey).future,
   );
 
-  if (contact != null) return AccessRecipient.contact(contact: contact);
+  if (contact != null) {
+    return AccessRecipient.contact(contact: contact);
+  }
+
+  final selectedAccount = ref
+      .watch(
+        accountsNotifierProvider,
+      )
+      .valueOrNull
+      ?.selectedAccount;
+
+  if (selectedAccount != null && selectedAccount.publicKey == pubKey) {
+    return AccessRecipient.account(account: selectedAccount);
+  }
+
   return AccessRecipient.publicKey(publicKey: pubKey);
 }
 

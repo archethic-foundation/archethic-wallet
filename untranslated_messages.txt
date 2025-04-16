@@ -17,6 +17,7 @@
     "modify",
     "discussionModifying",
     "admin",
+    "member",
     "discussionNoMessages",
     "deleteContact",
     "discussion",

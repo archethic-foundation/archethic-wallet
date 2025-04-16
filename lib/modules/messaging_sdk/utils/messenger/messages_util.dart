@@ -157,60 +157,62 @@ mixin MessagesMixin {
 
     if (contents.isEmpty) return [];
 
-    final discussionKeyAccess = uint8ListToHex(
-      await DiscussionUtil().getDiscussionKeyAccess(
-        apiService: apiService,
-        discussionSCAddress: discussionSCAddress,
-        keyPair: readerKeyPair,
-      ),
-    );
-
-    for (final contentMessageAddress in txContentMessagesAddresses) {
-      final contentMessageTransaction = contents[contentMessageAddress];
-      if (contentMessageTransaction == null) continue;
-
-      final transactionContentIM = TransactionContentMessaging.fromJson(
-        jsonDecode(contentMessageTransaction.data!.content!),
-      );
-      final message = utf8.decode(
-        _decodeMessage(
-          transactionContentIM.message,
-          discussionKeyAccess,
-          compressionAlgo: transactionContentIM.compressionAlgo,
+    try {
+      final discussionKeyAccess = uint8ListToHex(
+        await DiscussionUtil().getDiscussionKeyAccess(
+          apiService: apiService,
+          discussionSCAddress: discussionSCAddress,
+          keyPair: readerKeyPair,
         ),
       );
 
-      final senderGenesisPublicKeyMap = await apiService.getTransactionChain(
-        {contentMessageTransaction.address!.address!: ''},
-        request: 'previousPublicKey',
-      );
-      var senderGenesisPublicKey = '';
-      if (senderGenesisPublicKeyMap.isNotEmpty &&
-          senderGenesisPublicKeyMap[
-                  contentMessageTransaction.address!.address!] !=
-              null &&
-          senderGenesisPublicKeyMap[
-                  contentMessageTransaction.address!.address!]!
-              .isNotEmpty) {
-        senderGenesisPublicKey = senderGenesisPublicKeyMap[
-                    contentMessageTransaction.address!.address!]?[0]
-                .previousPublicKey ??
-            '';
+      for (final contentMessageAddress in txContentMessagesAddresses) {
+        final contentMessageTransaction = contents[contentMessageAddress];
+        if (contentMessageTransaction == null) continue;
+
+        final transactionContentIM = TransactionContentMessaging.fromJson(
+          jsonDecode(contentMessageTransaction.data!.content!),
+        );
+        final message = utf8.decode(
+          _decodeMessage(
+            transactionContentIM.message,
+            discussionKeyAccess!,
+            compressionAlgo: transactionContentIM.compressionAlgo,
+          ),
+        );
+
+        final senderGenesisPublicKeyMap = await apiService.getTransactionChain(
+          {contentMessageTransaction.address!.address!: ''},
+          request: 'previousPublicKey',
+        );
+        var senderGenesisPublicKey = '';
+        if (senderGenesisPublicKeyMap.isNotEmpty &&
+            senderGenesisPublicKeyMap[
+                    contentMessageTransaction.address!.address!] !=
+                null &&
+            senderGenesisPublicKeyMap[
+                    contentMessageTransaction.address!.address!]!
+                .isNotEmpty) {
+          senderGenesisPublicKey = senderGenesisPublicKeyMap[
+                      contentMessageTransaction.address!.address!]?[0]
+                  .previousPublicKey ??
+              '';
+        }
+
+        final aeMEssage = AEMessage(
+          senderGenesisPublicKey: senderGenesisPublicKey,
+          address: contentMessageTransaction.address!.address!,
+          sender: contentMessageTransaction.previousPublicKey!,
+          timestampCreation:
+              contentMessageTransaction.validationStamp!.timestamp!,
+          content: message,
+        );
+
+        aeMessages.add(
+          aeMEssage,
+        );
       }
-
-      final aeMEssage = AEMessage(
-        senderGenesisPublicKey: senderGenesisPublicKey,
-        address: contentMessageTransaction.address!.address!,
-        sender: contentMessageTransaction.previousPublicKey!,
-        timestampCreation:
-            contentMessageTransaction.validationStamp!.timestamp!,
-        content: message,
-      );
-
-      aeMessages.add(
-        aeMEssage,
-      );
-    }
+    } catch (e) {}
 
     return aeMessages;
   }
