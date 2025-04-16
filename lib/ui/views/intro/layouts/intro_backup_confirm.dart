@@ -18,7 +18,7 @@ import 'package:aewallet/ui/views/intro/layouts/intro_backup_seed.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_backup_seed_pass_popup.dart';
 import 'package:aewallet/ui/views/intro/layouts/intro_configure_security.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/views/main/home_page.dart';
+import 'package:aewallet/ui/views/main/home.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/icon_network_warning.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
@@ -160,7 +160,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
                   icon: Symbols.info,
                 );
                 context.go(
-                  HomePage.routerPage,
+                  Home.routerPage,
                 );
               }
             }
@@ -416,7 +416,7 @@ class _IntroBackupConfirmState extends ConsumerState<IntroBackupConfirm>
 
       context.loadingOverlay.hide();
       context.go(
-        HomePage.routerPage,
+        Home.routerPage,
       );
     } catch (e) {
       final localizations = AppLocalizations.of(context)!;

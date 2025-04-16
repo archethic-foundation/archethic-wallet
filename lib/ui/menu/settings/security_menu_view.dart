@@ -444,7 +444,7 @@ class _BackupSecretPhraseListItem extends ConsumerWidget {
           AppSeedBackupSheet.routerPage,
           extra: {'mnemonic': mnemonic, 'seed': seed},
         );
-        context.go(HomePage.routerPage);
+        context.go(Home.routerPage);
       },
     );
   }

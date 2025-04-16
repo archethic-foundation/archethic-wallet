@@ -2,10 +2,10 @@ part of 'router.dart';
 
 final _authenticatedRoutes = [
   GoRoute(
-    path: HomePage.routerPage,
+    path: Home.routerPage,
     pageBuilder: (context, state) => NoTransitionPage<void>(
       key: state.pageKey,
-      child: const HomePage(),
+      child: const Home(),
     ),
   ),
   GoRoute(
@@ -311,8 +311,6 @@ final _authenticatedRoutes = [
       reverseTransitionDuration: Duration.zero,
       key: state.pageKey,
       child: CreateDiscussionValidationSheet(
-        discussionCreationSuccess: (state.extra!
-            as Map<String, dynamic>)['discussionCreationSuccess'] as Function?,
         fromRouterPage:
             (state.extra! as Map<String, dynamic>)['fromRouterPage'] as String?,
       ),

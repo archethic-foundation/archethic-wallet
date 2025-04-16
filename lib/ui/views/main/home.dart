@@ -36,16 +36,16 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
-class HomePage extends ConsumerStatefulWidget {
-  const HomePage({super.key});
+class Home extends ConsumerStatefulWidget {
+  const Home({super.key});
 
   static const routerPage = '/home';
 
   @override
-  ConsumerState<HomePage> createState() => _HomePageState();
+  ConsumerState<Home> createState() => _HomeState();
 }
 
-class _HomePageState extends ConsumerState<HomePage>
+class _HomeState extends ConsumerState<Home>
     with TickerProviderStateMixin
     implements SheetSkeletonInterface {
   int tabCount = 5;

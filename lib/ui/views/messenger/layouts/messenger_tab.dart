@@ -45,6 +45,7 @@ class MessengerBody extends ConsumerWidget {
                 error: (_) => Container(),
                 data: (discussions) => ListView.builder(
                   itemCount: discussions.value.length,
+                  padding: const EdgeInsets.only(top: 10),
                   itemBuilder: (context, index) {
                     final discussion = discussions.value[index];
                     return DiscussionListItem.loaded(

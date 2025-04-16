@@ -10,7 +10,7 @@ import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/views/contacts/layouts/add_contact.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
-import 'package:aewallet/ui/views/main/home_page.dart';
+import 'package:aewallet/ui/views/main/home.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/views/messenger/layouts/create_discussion_validation_sheet.dart';
 import 'package:aewallet/ui/widgets/components/picker_item.dart';
@@ -107,7 +107,7 @@ class CreateDiscussionSheetState extends ConsumerState<CreateDiscussionSheet>
         key: const Key('back'),
         color: ArchethicTheme.text,
         onPressed: () {
-          context.go(HomePage.routerPage);
+          context.go(Home.routerPage);
         },
       ),
     );

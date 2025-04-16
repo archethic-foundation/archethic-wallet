@@ -260,7 +260,11 @@ class _MessagesListState extends ConsumerState<MessagesList> {
     return PagedListView<int, DiscussionMessage>(
       pagingController: pagingController,
       reverse: true,
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      padding: const EdgeInsets.only(
+        left: 10,
+        right: 10,
+        top: 130,
+      ),
       builderDelegate: PagedChildBuilderDelegate<DiscussionMessage>(
         itemBuilder: (context, message, index) {
           final isSentByMe =

@@ -89,7 +89,8 @@ mixin DiscussionMixin {
         newContent,
         ownershipToJson(ownership),
       ],
-    ).addUCOTransfer(discussionSCAddress, toBigInt(5));
+      // Fees - 0 UCO
+    ).addUCOTransfer(discussionSCAddress, toBigInt(0));
 
     final transactionTransferBuildResult = keychain.buildTransaction(
       transactionTransfer,

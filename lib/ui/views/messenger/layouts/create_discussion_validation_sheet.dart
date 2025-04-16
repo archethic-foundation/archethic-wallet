@@ -1,3 +1,4 @@
+import 'package:aewallet/application/settings/settings.dart';
 import 'package:aewallet/ui/figma_components/buttons/btn_footer_primary.dart';
 import 'package:aewallet/ui/figma_components/custom_styles.dart';
 import 'package:aewallet/ui/themes/archethic_theme.dart';
@@ -5,7 +6,9 @@ import 'package:aewallet/ui/themes/styles.dart';
 import 'package:aewallet/ui/util/contact_formatters.dart';
 import 'package:aewallet/ui/util/ui_util.dart';
 import 'package:aewallet/ui/views/contacts/layouts/contact_detail.dart';
+import 'package:aewallet/ui/views/main/bloc/providers.dart';
 import 'package:aewallet/ui/views/main/components/sheet_appbar.dart';
+import 'package:aewallet/ui/views/main/home.dart';
 import 'package:aewallet/ui/views/messenger/bloc/providers.dart';
 import 'package:aewallet/ui/widgets/components/dialog.dart';
 import 'package:aewallet/ui/widgets/components/sheet_skeleton.dart';
@@ -22,11 +25,9 @@ import 'package:material_symbols_icons/symbols.dart';
 class CreateDiscussionValidationSheet extends ConsumerStatefulWidget {
   const CreateDiscussionValidationSheet({
     super.key,
-    this.discussionCreationSuccess,
     this.fromRouterPage,
   });
 
-  final Function? discussionCreationSuccess;
   final String? fromRouterPage;
 
   static const String routerPage = '/create_discussion_validation';
@@ -106,7 +107,16 @@ class _CreateDiscussionValidationSheetState
         context.loadingOverlay.hide();
         result.map(
           success: (success) {
-            widget.discussionCreationSuccess?.call();
+            context.go(Home.routerPage);
+
+            ref.read(mainTabControllerProvider)!.animateTo(
+                  4,
+                  duration: Duration.zero,
+                );
+
+            ref
+                .read(SettingsProviders.settings.notifier)
+                .setMainScreenCurrentPage(4);
           },
           failure: (failure) {
             UIUtil.showSnackbar(
@@ -175,9 +185,6 @@ class _CreateDiscussionValidationSheetState
                   focusNode: _focusNode,
                   textAlign: TextAlign.left,
                   textInputAction: TextInputAction.done,
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
-                  ),
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: _hasFocus
