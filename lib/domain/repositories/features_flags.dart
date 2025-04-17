@@ -4,7 +4,7 @@ import 'package:aewallet/util/universal_platform.dart';
 class FeatureFlags {
   static const forceLogout = false;
   static const tokenFungibleCreationFeature = true;
-  static const dappBoard = false;
+  static const dappBoard = true;
   static const swapFeature = false;
   static const buyFeature = false;
   static final privacyMask = !UniversalPlatform

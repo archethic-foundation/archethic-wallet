@@ -342,22 +342,62 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
                                           style: ArchethicThemeStyles
                                               .textStyleSize12W400Highlighted,
                                         ),
-                                        ...actionRecipient.args!
-                                            .asMap()
-                                            .entries
-                                            .map((entry) {
-                                          final index = entry.key;
-                                          final arg = entry.value;
-                                          return Padding(
+                                        if (actionRecipient.args!
+                                            is List<dynamic>)
+                                          ...(actionRecipient.args!
+                                                  as List<dynamic>)
+                                              .asMap()
+                                              .entries
+                                              .map((entry) {
+                                            final index = entry.key;
+                                            final arg = entry.value;
+                                            return Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 15),
+                                              child: Text(
+                                                '${_getSmartContractCallArgName(code, actionRecipient.action ?? '', index)}: $arg',
+                                                style: ArchethicThemeStyles
+                                                    .textStyleSize12W100Primary,
+                                              ),
+                                            );
+                                          })
+                                        else if (actionRecipient.args!
+                                            is Map<String, dynamic>)
+                                          ...(actionRecipient.args!
+                                                  as Map<String, dynamic>)
+                                              .entries
+                                              .map((entry) {
+                                            return Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 15),
+                                              child: Text.rich(
+                                                TextSpan(
+                                                  children: [
+                                                    TextSpan(
+                                                      text: '${entry.key}: ',
+                                                      style: ArchethicThemeStyles
+                                                          .textStyleSize12W400Highlighted,
+                                                    ),
+                                                    TextSpan(
+                                                      text: '${entry.value}',
+                                                      style: ArchethicThemeStyles
+                                                          .textStyleSize12W100Primary,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          })
+                                        else
+                                          Padding(
                                             padding:
                                                 const EdgeInsets.only(left: 15),
                                             child: Text(
-                                              '${_getSmartContractCallArgName(code, actionRecipient.action ?? '', index)}: $arg',
+                                              actionRecipient.args.toString(),
                                               style: ArchethicThemeStyles
                                                   .textStyleSize12W100Primary,
                                             ),
-                                          );
-                                        }),
+                                          ),
                                       ],
                                     );
                                   }
@@ -370,17 +410,35 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
                                         style: ArchethicThemeStyles
                                             .textStyleSize12W400Highlighted,
                                       ),
-                                      ...actionRecipient.args!.map((arg) {
-                                        return Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 15),
-                                          child: Text(
-                                            arg.toString(),
-                                            style: ArchethicThemeStyles
-                                                .textStyleSize12W100Primary,
+                                      if (actionRecipient.args!
+                                          is Map<String, dynamic>) ...{
+                                        for (final entry in (actionRecipient
+                                                .args! as Map<String, dynamic>)
+                                            .entries) ...[
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 15),
+                                            child: Text(
+                                              '${entry.key}: ${entry.value}',
+                                              style: ArchethicThemeStyles
+                                                  .textStyleSize12W100Primary,
+                                            ),
                                           ),
-                                        );
-                                      }),
+                                        ],
+                                      } else ...{
+                                        for (final arg in (actionRecipient.args!
+                                            as List<dynamic>)) ...[
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 15),
+                                            child: Text(
+                                              arg.toString(),
+                                              style: ArchethicThemeStyles
+                                                  .textStyleSize12W100Primary,
+                                            ),
+                                          ),
+                                        ],
+                                      },
                                     ],
                                   );
                                 },
