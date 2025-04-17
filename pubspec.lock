@@ -58,26 +58,26 @@ packages:
     dependency: "direct main"
     description:
       name: archethic_dapp_framework_flutter
-      sha256: "5f657d6a8f131138818863bc4d58550c53ae4740daff01fde75f3fcd2e77c250"
+      sha256: "861ecb7b3ccff28b87388597528b993df2ca6e72bef5cd6d6e49725225ddb0a4"
       url: "https://pub.dev"
     source: hosted
-    version: "3.5.0"
+    version: "3.5.2"
   archethic_lib_dart:
     dependency: transitive
     description:
       name: archethic_lib_dart
-      sha256: "20f3fc9ed073e182cddff60e90f754ea0408a09dec9975921fc4f5c5490a70e8"
+      sha256: "2c525fcd05860e096a2938655091833063ca5c8e369fd09d2046783ad0374213"
       url: "https://pub.dev"
     source: hosted
-    version: "7.8.1"
+    version: "7.9.1"
   archethic_wallet_client:
     dependency: "direct main"
     description:
       name: archethic_wallet_client
-      sha256: beed3581fe4437ee24176ae4934c2d212e9faa84b5f8afa22eea3dbef88487ef
+      sha256: b8c4019b6c5013daed06ca27829e3ad469e523ed7768435e31b20578b5cb56ce
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.0"
+    version: "2.3.2"
   archive:
     dependency: transitive
     description:
@@ -242,10 +242,10 @@ packages:
     dependency: transitive
     description:
       name: chalkdart
-      sha256: "82dfa884e3cf97641eb0742a3b9ffd41490666b9ece548b2e32cbfefe540bf86"
+      sha256: "7ffc6bd39c81453fb9ba8dbce042a9c960219b75ea1c07196a7fa41c2fab9e86"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.0"
+    version: "3.0.5"
   characters:
     dependency: transitive
     description:
@@ -474,10 +474,10 @@ packages:
     dependency: "direct main"
     description:
       name: elegant_notification
-      sha256: "1bbe03d2c0917b72446ad0d346a548697d6f3627ba3dc9ed6491cade5ea75623"
+      sha256: "5468d72ce677edb862bd01a289a636ab0a168554a02f2ac6e64076549c856fed"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.4"
+    version: "2.4.5"
   elliptic:
     dependency: transitive
     description:
@@ -1198,10 +1198,10 @@ packages:
     dependency: "direct main"
     description:
       name: material_symbols_icons
-      sha256: "99d5b0e7c65232dfe1247e0ac67eeeee2cab9da2d860748fc495d34f5e9e6397"
+      sha256: d45b6c36c3effa8cb51b1afb8698107d5ff1f88fa4631428f34a8a01abc295d7
       url: "https://pub.dev"
     source: hosted
-    version: "4.2811.0"
+    version: "4.2815.0"
   meta:
     dependency: transitive
     description:
