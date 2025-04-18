@@ -353,7 +353,8 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
                                             final arg = entry.value;
                                             return Padding(
                                               padding: const EdgeInsets.only(
-                                                  left: 15),
+                                                left: 15,
+                                              ),
                                               child: Text(
                                                 '${_getSmartContractCallArgName(code, actionRecipient.action ?? '', index)}: $arg',
                                                 style: ArchethicThemeStyles
@@ -369,7 +370,8 @@ class TransactionRawState extends ConsumerState<TransactionRaw> {
                                               .map((entry) {
                                             return Padding(
                                               padding: const EdgeInsets.only(
-                                                  left: 15),
+                                                left: 15,
+                                              ),
                                               child: Text.rich(
                                                 TextSpan(
                                                   children: [
