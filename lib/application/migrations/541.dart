@@ -26,7 +26,7 @@ final migration_541 = LocalDataMigration(
     }
 
     Future<void> _migrateNonWehAuthentSecureKey() async {
-      final key = await secureStorage.read(key: kVaultSecureKey);
+      final key = await secureStorage.read(key: kNonWebAuthenticationSecureKey);
       if (key == null) {
         logger.info('No NonWebAuthent secure key to migrate');
         return;
